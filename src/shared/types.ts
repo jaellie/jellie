@@ -93,7 +93,7 @@ export const DEFAULT_SETTINGS: PawprintSettings = {
 };
 
 /** Minimum active-tab seconds required for an activity to be meaningful. */
-export const MEANINGFUL_ACTIVE_SECONDS = 60;
+export const MEANINGFUL_ACTIVE_SECONDS = 20;
 
 /** Minimum number of related qualifying activities required to form a journey candidate. */
 export const MIN_JOURNEY_ACTIVITIES = 3;

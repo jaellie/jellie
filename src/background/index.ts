@@ -1,11 +1,24 @@
 import * as tabState from "./tabState";
-import { finalizeTabState, regroupJourneys, runMaintenance } from "./activityEngine";
+import {
+  checkAndPersistIfQualifies,
+  finalizeTabState,
+  regroupJourneys,
+  runMaintenance,
+} from "./activityEngine";
 import { getSettings, saveSettings } from "../shared/storage";
 import { DEFAULT_SETTINGS } from "../shared/types";
 
 const MAINTENANCE_ALARM = "pawprint-maintenance";
 
 let initialized = false;
+
+// A page visit must be recorded as soon as it becomes meaningful — not only
+// once the user navigates away or closes the tab. tabState schedules its
+// own checkpoint timers but doesn't persist anything itself (it has no
+// notion of storage/AI/journeys), so it calls back into the engine here.
+tabState.setQualifyCheckHandler((tabId) => {
+  void checkAndPersistIfQualifies(tabId);
+});
 
 /** Rehydrates in-memory tab timer state after a service worker restart
  * (idle termination, browser restart, crash) and figures out which tab is
@@ -145,7 +158,12 @@ chrome.runtime.onMessage.addListener((message, sender) => {
   if (message?.type === "PAWPRINT_INTERACTION" && sender.tab?.id != null) {
     void (async () => {
       await ensureInitialized();
-      tabState.recordInteraction(sender.tab!.id!, message.interaction);
+      const tabId = sender.tab!.id!;
+      tabState.recordInteraction(tabId, message.interaction);
+      // Re-check immediately: if active time already cleared the threshold
+      // by the time this interaction arrives, the visit qualifies right now
+      // rather than waiting for the scheduled checkpoint or a navigation.
+      await checkAndPersistIfQualifies(tabId);
     })();
   }
   return false;

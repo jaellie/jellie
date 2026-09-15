@@ -56,6 +56,20 @@ export async function getActivities(): Promise<Activity[]> {
   return getRaw<Activity[]>(KEYS.activities, []);
 }
 
+/** Merges fields into an already-persisted activity (e.g. growing duration
+ * and interaction types while the user stays on the same page) rather than
+ * creating a new record for the same visit. No-ops if the id is unknown. */
+export async function updateActivity(
+  id: string,
+  patch: Partial<Omit<Activity, "id">>
+): Promise<void> {
+  const activities = await getActivities();
+  const activity = activities.find((a) => a.id === id);
+  if (!activity) return;
+  Object.assign(activity, patch);
+  await setRaw(KEYS.activities, activities);
+}
+
 export async function saveActivity(activity: Activity): Promise<void> {
   const activities = await getActivities();
   const idx = activities.findIndex((a) => a.id === activity.id);

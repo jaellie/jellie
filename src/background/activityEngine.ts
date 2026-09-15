@@ -8,6 +8,7 @@ import {
   saveActivities,
   saveActivity,
   saveJourneys,
+  updateActivity,
   pruneExpiredActivities,
 } from "../shared/storage";
 import {
@@ -15,17 +16,21 @@ import {
   findJourneyCandidates,
   generateJourneyTitle,
 } from "../shared/journeyGrouping";
+import * as tabState from "./tabState";
 import { TabState, getActiveMs } from "./tabState";
 
 function newId(): string {
   return crypto.randomUUID();
 }
 
-/** Evaluates a finished/paused page visit against the meaningful-activity
- * rule and, if it qualifies and isn't excluded, persists it and kicks off
- * journey regrouping. Safe to call on every navigation/tab-close/tab-switch
- * — non-qualifying visits are silently dropped, never stored. */
-export async function finalizeTabState(state: TabState): Promise<void> {
+/** Evaluates a page visit against the meaningful-activity rule and, if it
+ * qualifies and isn't excluded, persists it (or updates the Activity
+ * already persisted for this visit, so staying on one page never creates
+ * duplicates) and kicks off journey regrouping. Safe to call repeatedly —
+ * on every interaction, on a scheduled checkpoint once active time reaches
+ * the threshold, and on navigation/tab-close/tab-switch as a final catch-
+ * all. Non-qualifying visits are silently left unsaved. */
+async function evaluateAndPersist(state: TabState): Promise<void> {
   const settings = await getSettings();
   if (settings.trackingPaused) return;
   if (!state.url || !state.url.startsWith("http")) return;
@@ -33,6 +38,16 @@ export async function finalizeTabState(state: TabState): Promise<void> {
 
   const activeMs = getActiveMs(state);
   if (!qualifiesFromMs(activeMs, state.interactions)) return;
+
+  if (state.activityId) {
+    await updateActivity(state.activityId, {
+      durationMs: activeMs,
+      interactionTypes: [...state.interactions],
+      title: state.title,
+      favicon: state.favicon,
+    });
+    return;
+  }
 
   const activity: Activity = {
     id: newId(),
@@ -46,7 +61,24 @@ export async function finalizeTabState(state: TabState): Promise<void> {
   };
 
   await saveActivity(activity);
+  tabState.setActivityId(state.tabId, activity.id);
   await regroupJourneys();
+}
+
+/** Re-checks a still-open tab (called after an interaction, or from the
+ * scheduled checkpoint timer once active time is expected to cross the
+ * threshold) — the live path that lets an activity qualify while the user
+ * is still on the page. */
+export async function checkAndPersistIfQualifies(tabId: number): Promise<void> {
+  const state = tabState.getTabState(tabId);
+  if (state) await evaluateAndPersist(state);
+}
+
+/** Final catch-all evaluation for a page visit that's ending (navigation,
+ * tab close). Idempotent with checkAndPersistIfQualifies — if the visit was
+ * already saved, this just updates its final duration. */
+export async function finalizeTabState(state: TabState): Promise<void> {
+  await evaluateAndPersist(state);
 }
 
 /** Re-derives journey membership from scratch for ungrouped activities:

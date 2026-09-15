@@ -1,11 +1,11 @@
-import { InteractionType } from "../shared/types";
+import { InteractionType, MEANINGFUL_ACTIVE_SECONDS } from "../shared/types";
 import { getDomain } from "../shared/sensitiveSites";
 
 // Per-tab active-time tracking. "Active" means: this tab is the selected
 // tab AND its browser window has focus. Switching tabs pauses the timer
 // (accumulated time is preserved, not reset) rather than finalizing the
 // visit — a tab can regain focus later and keep accumulating toward the
-// 60-second threshold.
+// active-time threshold (see MEANINGFUL_ACTIVE_SECONDS).
 
 export interface TabState {
   tabId: number;
@@ -20,6 +20,10 @@ export interface TabState {
   /** Timestamp the timer most recently started running, or null if paused. */
   timerRunningSince: number | null;
   interactions: InteractionType[];
+  /** Id of the Activity already persisted for this page visit, if the
+   * meaningful-activity rule has been met — prevents saving duplicate
+   * records while the user stays on the same page. */
+  activityId?: string;
 }
 
 const SESSION_STORAGE_KEY = "pawprint_session_tab_state";
@@ -114,6 +118,7 @@ export function updateTabMeta(
 
 export function removeTabState(tabId: number): void {
   tabStates.delete(tabId);
+  clearPendingCheck(tabId);
   if (activeTabId === tabId) activeTabId = null;
   schedulePersist();
 }
@@ -130,10 +135,66 @@ export function recordInteraction(
   }
 }
 
+/** Marks the current visit as already persisted as the given Activity, so
+ * later qualification checks update that record instead of creating a new
+ * one for the same page visit. */
+export function setActivityId(tabId: number, activityId: string): void {
+  const state = tabStates.get(tabId);
+  if (!state) return;
+  state.activityId = activityId;
+  schedulePersist();
+}
+
+// ---- Qualification checkpoint scheduling ----
+//
+// An activity must be persisted as soon as it becomes meaningful, without
+// waiting for the user to navigate away or close the tab. Two triggers
+// cover this:
+//   1. Every interaction message immediately re-checks qualification (the
+//      caller does this after recordInteraction).
+//   2. This module also schedules a one-shot timer for the moment active
+//      time will *reach* the threshold, so a page that got its one
+//      interaction early (e.g. a single scroll at 5s) and is then just
+//      read quietly still gets recorded once it crosses 20s, rather than
+//      only being caught when the tab is eventually switched away from.
+// If the service worker is killed before a scheduled check fires, nothing
+// is lost — qualification is always recomputed from real timestamps at the
+// next event (interaction, tab switch, navigation, close), just possibly a
+// little later than the ideal moment.
+
+let onQualifyCheck: ((tabId: number) => void) | null = null;
+export function setQualifyCheckHandler(handler: (tabId: number) => void): void {
+  onQualifyCheck = handler;
+}
+
+const pendingCheckTimers = new Map<number, ReturnType<typeof setTimeout>>();
+
+function clearPendingCheck(tabId: number): void {
+  const timer = pendingCheckTimers.get(tabId);
+  if (timer != null) {
+    clearTimeout(timer);
+    pendingCheckTimers.delete(tabId);
+  }
+}
+
+function scheduleQualifyCheck(state: TabState): void {
+  clearPendingCheck(state.tabId);
+  const remainingMs = MEANINGFUL_ACTIVE_SECONDS * 1000 - state.accumulatedMs;
+  const timer = setTimeout(
+    () => {
+      pendingCheckTimers.delete(state.tabId);
+      onQualifyCheck?.(state.tabId);
+    },
+    Math.max(0, remainingMs) + 50
+  );
+  pendingCheckTimers.set(state.tabId, timer);
+}
+
 function startTimer(state: TabState): void {
   if (state.timerRunningSince == null) {
     state.timerRunningSince = Date.now();
   }
+  scheduleQualifyCheck(state);
 }
 
 function pauseTimer(state: TabState): void {
@@ -141,6 +202,7 @@ function pauseTimer(state: TabState): void {
     state.accumulatedMs += Date.now() - state.timerRunningSince;
     state.timerRunningSince = null;
   }
+  clearPendingCheck(state.tabId);
 }
 
 export function getActiveMs(state: TabState): number {
