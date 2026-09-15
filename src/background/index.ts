@@ -10,8 +10,6 @@ import { DEFAULT_SETTINGS } from "../shared/types";
 
 const MAINTENANCE_ALARM = "pawprint-maintenance";
 
-let initialized = false;
-
 // A page visit must be recorded as soon as it becomes meaningful — not only
 // once the user navigates away or closes the tab. tabState schedules its
 // own checkpoint timers but doesn't persist anything itself (it has no
@@ -23,34 +21,45 @@ tabState.setQualifyCheckHandler((tabId) => {
 /** Rehydrates in-memory tab timer state after a service worker restart
  * (idle termination, browser restart, crash) and figures out which tab is
  * currently active/focused so timing resumes correctly instead of either
- * losing progress or double-counting. Idempotent per SW lifetime. */
-async function ensureInitialized(): Promise<void> {
-  if (initialized) return;
-  initialized = true;
-  await tabState.hydrate();
-
-  try {
-    const win = await chrome.windows.getLastFocused({ populate: false });
-    if (win?.focused && win.id != null) {
-      const [activeTab] = await chrome.tabs.query({
-        active: true,
-        windowId: win.id,
-      });
-      const activeTabId =
-        activeTab?.id != null && !activeTab.incognito ? activeTab.id : null;
-      if (activeTabId != null && !tabState.getTabState(activeTabId)) {
-        tabState.createTabState(
-          activeTabId,
-          activeTab!.url ?? "",
-          activeTab!.title ?? "",
-          activeTab!.favIconUrl
-        );
+ * losing progress or double-counting.
+ *
+ * The service worker restarts constantly during normal use (Chrome kills
+ * it after ~30s idle), and the event that wakes it up is almost always
+ * itself an event this file handles (a tab switch, a navigation...). Every
+ * one of those handlers calls this function, so it's critical that they
+ * all await the *same* in-flight initialization rather than each checking
+ * a boolean and racing ahead with stale (still-null) focused-window state
+ * — that race was silently dropping the very event that triggered it. */
+let initPromise: Promise<void> | null = null;
+function ensureInitialized(): Promise<void> {
+  if (!initPromise) {
+    initPromise = (async () => {
+      await tabState.hydrate();
+      try {
+        const win = await chrome.windows.getLastFocused({ populate: false });
+        if (win?.focused && win.id != null) {
+          const [activeTab] = await chrome.tabs.query({
+            active: true,
+            windowId: win.id,
+          });
+          const activeTabId =
+            activeTab?.id != null && !activeTab.incognito ? activeTab.id : null;
+          if (activeTabId != null && !tabState.getTabState(activeTabId)) {
+            tabState.createTabState(
+              activeTabId,
+              activeTab!.url ?? "",
+              activeTab!.title ?? "",
+              activeTab!.favIconUrl
+            );
+          }
+          tabState.setFocusedWindow(win.id, activeTabId);
+        }
+      } catch {
+        // No focused window yet (e.g. browser just launched with none open).
       }
-      tabState.setFocusedWindow(win.id, activeTabId);
-    }
-  } catch {
-    // No focused window yet (e.g. browser just launched with none open).
+    })();
   }
+  return initPromise;
 }
 
 chrome.runtime.onInstalled.addListener(() => {
