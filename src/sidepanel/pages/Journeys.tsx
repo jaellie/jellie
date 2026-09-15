@@ -2,7 +2,10 @@ import React from "react";
 import { PawprintData } from "../useStore";
 import { formatRelativeTime } from "../format";
 import StatusPill from "../components/StatusPill";
+import PawTrail from "../components/PawTrail";
+import JourneyDot from "../components/JourneyDot";
 import PawIcon from "../components/PawIcon";
+import { journeyColorName } from "../journeyColor";
 import { JourneyStatus } from "../../shared/types";
 
 const ORDER: JourneyStatus[] = ["candidate", "active", "completed", "archived"];
@@ -15,18 +18,28 @@ export default function Journeys({
   onOpenJourney: (journeyId: string) => void;
 }) {
   if (data.loading) {
-    return <p className="text-sm text-stone-400">Loading…</p>;
+    return <p className="text-sm text-ink-500">Loading…</p>;
   }
 
   if (data.journeys.length === 0) {
+    const hasActivity = data.activities.some((a) => !a.excluded);
     return (
-      <div className="flex flex-col items-center gap-3 pt-16 text-center">
-        <PawIcon className="h-10 w-10 text-paw-300" />
-        <p className="text-sm font-medium text-stone-600">No clear journey yet.</p>
-        <p className="max-w-xs text-xs text-stone-400">
-          Keep browsing. Pawprint needs a little more context before
-          connecting these activities into a journey.
-        </p>
+      <div className="flex flex-col items-center gap-3 pt-20 text-center">
+        <PawIcon className="h-8 w-8 text-ink-300" />
+        {hasActivity ? (
+          <>
+            <p className="text-sm font-medium text-ink-900">No clear journey yet.</p>
+            <p className="max-w-[240px] text-xs text-ink-500">
+              Pawprint needs a little more context before connecting these
+              pawprints.
+            </p>
+          </>
+        ) : (
+          <p className="max-w-[240px] text-sm text-ink-500">
+            Your journeys will appear here. Start browsing and Pawprint will
+            help you remember what you were looking for.
+          </p>
+        )}
       </div>
     );
   }
@@ -39,31 +52,38 @@ export default function Journeys({
 
   return (
     <div className="flex flex-col gap-3">
-      <h1 className="text-sm font-semibold text-stone-500">Browsing journeys</h1>
-      {sorted.map((journey) => (
-        <button
-          key={journey.id}
-          onClick={() => onOpenJourney(journey.id)}
-          className="flex flex-col gap-1.5 rounded-lg border border-paw-100 bg-white px-3 py-3 text-left hover:border-paw-300"
-        >
-          <div className="flex items-center justify-between gap-2">
-            <span className="truncate text-sm font-medium text-stone-800">
-              {journey.title}
-            </span>
-            <StatusPill status={journey.status} />
-          </div>
-          <p className="text-xs text-stone-400">
-            {journey.activityIds.length} page
-            {journey.activityIds.length === 1 ? "" : "s"} · updated{" "}
-            {formatRelativeTime(journey.updatedAt)}
-          </p>
-          {journey.goal && (
-            <p className="truncate text-xs text-paw-700">
-              Goal: {journey.goal.text}
-            </p>
-          )}
-        </button>
-      ))}
+      <h1 className="font-serif text-[15px] text-ink-900">Browsing journeys</h1>
+      {sorted.map((journey) => {
+        const color = journeyColorName(journey.id);
+        return (
+          <button
+            key={journey.id}
+            onClick={() => onOpenJourney(journey.id)}
+            className="flex flex-col gap-2 rounded-lg border border-ink-200/60 bg-cream-50 px-3.5 py-3 text-left shadow-subtle hover:border-ink-300"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex min-w-0 items-center gap-2">
+                <JourneyDot color={color} />
+                <span className="truncate text-sm font-medium text-ink-900">
+                  {journey.title}
+                </span>
+              </div>
+              <StatusPill status={journey.status} />
+            </div>
+            <div className="flex items-center justify-between gap-2">
+              <PawTrail count={journey.activityIds.length} color={color} />
+              <span className="flex-shrink-0 text-[11px] text-ink-500">
+                updated {formatRelativeTime(journey.updatedAt)}
+              </span>
+            </div>
+            {journey.goal && (
+              <p className="truncate text-xs text-ink-700">
+                Goal: {journey.goal.text}
+              </p>
+            )}
+          </button>
+        );
+      })}
     </div>
   );
 }

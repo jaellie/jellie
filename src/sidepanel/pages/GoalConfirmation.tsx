@@ -3,6 +3,7 @@ import { PawprintData } from "../useStore";
 import { setJourneyGoal } from "../../shared/storage";
 import { aiService } from "../../shared/aiService";
 import { AdaptiveQuestion, GoalCandidate } from "../../shared/types";
+import { AIUnavailableNotice } from "./JourneyDetail";
 
 type Step =
   | { kind: "loading" }
@@ -56,7 +57,7 @@ export default function GoalConfirmation({
   }, [journeyId]);
 
   if (!journey) {
-    return <p className="text-sm text-stone-400">This journey was deleted.</p>;
+    return <p className="text-sm text-ink-500">This journey was deleted.</p>;
   }
 
   async function confirmGoal(
@@ -99,39 +100,23 @@ export default function GoalConfirmation({
     <div className="flex flex-col gap-4">
       <button
         onClick={onCancel}
-        className="self-start text-sm text-stone-400 hover:text-stone-600"
+        className="self-start text-xs text-ink-300 hover:text-ink-500"
       >
         ← Back
       </button>
 
-      <div>
-        <h1 className="text-base font-semibold text-stone-800">
-          What were you looking for?
-        </h1>
-        <p className="mt-1 text-xs text-stone-400">
-          Based on the pages in &ldquo;{journey.title}&rdquo;, here&apos;s what Pawprint
-          could tell — you know best.
+      <div className="rounded-lg border border-ink-200/60 bg-cream-50 px-3.5 py-3">
+        <p className="text-sm text-ink-900">
+          Pawprint noticed a possible connection.
+        </p>
+        <p className="mt-0.5 text-sm text-ink-700">
+          Which goal is closest to what you were trying to do?
         </p>
       </div>
 
-      {step.kind === "loading" && (
-        <p className="text-sm text-stone-400">Thinking…</p>
-      )}
+      {step.kind === "loading" && <p className="text-sm text-ink-500">Thinking…</p>}
 
-      {step.kind === "error" && (
-        <div className="flex flex-col gap-2 rounded-lg border border-stone-200 bg-white px-3 py-3">
-          <p className="text-sm text-stone-600">
-            AI unavailable. Your browsing memory is still safely stored
-            locally.
-          </p>
-          <button
-            onClick={loadCandidates}
-            className="self-start rounded bg-paw-600 px-3 py-1.5 text-xs font-medium text-white"
-          >
-            Try again
-          </button>
-        </div>
-      )}
+      {step.kind === "error" && <AIUnavailableNotice onRetry={loadCandidates} />}
 
       {step.kind === "initial" && (
         <div className="flex flex-col gap-2">
@@ -151,7 +136,7 @@ export default function GoalConfirmation({
 
       {step.kind === "followup" && (
         <div className="flex flex-col gap-2">
-          <p className="text-sm font-medium text-stone-700">{step.question.text}</p>
+          <p className="text-sm text-ink-700">Were you mainly:</p>
           {step.question.options.map((opt) => (
             <CandidateButton
               key={opt.id}
@@ -174,14 +159,14 @@ export default function GoalConfirmation({
             value={freeTextValue}
             onChange={(e) => setFreeTextValue(e.target.value)}
             placeholder="Tell Pawprint what you were actually trying to do…"
-            className="min-h-[80px] rounded-lg border border-paw-200 px-3 py-2 text-sm"
+            className="min-h-[80px] rounded-lg border border-ink-200 bg-cream-50 px-3 py-2 text-sm text-ink-900"
           />
           <button
             disabled={!freeTextValue.trim()}
             onClick={() =>
               void confirmGoal(freeTextValue.trim(), "something_else", step.candidates)
             }
-            className="self-start rounded bg-paw-600 px-3 py-1.5 text-xs font-medium text-white disabled:opacity-40"
+            className="self-start rounded-full bg-ink-900 px-3.5 py-1.5 text-xs font-medium text-cream-50 disabled:opacity-40"
           >
             Confirm
           </button>
@@ -203,10 +188,10 @@ function CandidateButton({
   return (
     <button
       onClick={onClick}
-      className="rounded-lg border border-paw-200 bg-white px-3 py-2 text-left hover:border-paw-400 hover:bg-paw-50"
+      className="rounded-lg border border-ink-200/60 bg-cream-50 px-3.5 py-2.5 text-left shadow-subtle hover:border-ink-300"
     >
-      <p className="text-sm font-medium text-stone-800">{text}</p>
-      {rationale && <p className="mt-0.5 text-xs text-stone-400">{rationale}</p>}
+      <p className="text-sm text-ink-900">{text}</p>
+      {rationale && <p className="mt-0.5 text-xs text-ink-500">{rationale}</p>}
     </button>
   );
 }
@@ -215,7 +200,7 @@ function SomethingElseButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="rounded-lg border border-dashed border-stone-300 px-3 py-2 text-left text-sm text-stone-500 hover:border-stone-400"
+      className="rounded-lg border border-dashed border-ink-200 px-3.5 py-2.5 text-left text-sm text-ink-500 hover:border-ink-300"
     >
       Something else…
     </button>

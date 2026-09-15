@@ -9,16 +9,16 @@ const LABELS: Record<JourneyStatus, string> = {
 };
 
 const STYLES: Record<JourneyStatus, string> = {
-  candidate: "bg-amber-100 text-amber-700",
-  active: "bg-emerald-100 text-emerald-700",
-  completed: "bg-blue-100 text-blue-700",
-  archived: "bg-stone-200 text-stone-500",
+  candidate: "bg-cream-200 text-ink-500",
+  active: "bg-ink-900 text-cream-50",
+  completed: "bg-ink-200 text-ink-700",
+  archived: "bg-cream-100 text-ink-300",
 };
 
 export default function StatusPill({ status }: { status: JourneyStatus }) {
   return (
     <span
-      className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${STYLES[status]}`}
+      className={`inline-block rounded-full px-2 py-0.5 text-[11px] font-medium tracking-wide ${STYLES[status]}`}
     >
       {LABELS[status]}
     </span>

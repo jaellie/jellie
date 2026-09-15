@@ -10,9 +10,12 @@ import {
 } from "../../shared/storage";
 import { findPossiblyUnrelated } from "../../shared/journeyGrouping";
 import { aiService } from "../../shared/aiService";
-import { formatRelativeTime } from "../format";
+import { formatDuration, formatRelativeTime } from "../format";
 import ActivityRow from "../components/ActivityRow";
 import StatusPill from "../components/StatusPill";
+import JourneyDot from "../components/JourneyDot";
+import PawTrail from "../components/PawTrail";
+import { journeyColorName } from "../journeyColor";
 import { JourneyStatus } from "../../shared/types";
 
 const INACTIVITY_THRESHOLD_MS = 3 * 24 * 60 * 60 * 1000; // 3 days
@@ -32,9 +35,9 @@ export default function JourneyDetail({
   const journey = data.journeys.find((j) => j.id === journeyId);
   const [renaming, setRenaming] = useState(false);
   const [titleDraft, setTitleDraft] = useState(journey?.title ?? "");
-  const [summaryState, setSummaryState] = useState<
-    "idle" | "loading" | "error"
-  >("idle");
+  const [summaryState, setSummaryState] = useState<"idle" | "loading" | "error">(
+    "idle"
+  );
 
   const members = useMemo(
     () =>
@@ -56,11 +59,13 @@ export default function JourneyDetail({
     return (
       <div className="flex flex-col gap-3">
         <BackButton onBack={onBack} />
-        <p className="text-sm text-stone-400">This journey was deleted.</p>
+        <p className="text-sm text-ink-500">This journey was deleted.</p>
       </div>
     );
   }
 
+  const color = journeyColorName(journey.id);
+  const totalMs = members.reduce((sum, a) => sum + a.durationMs, 0);
   const isInactive =
     journey.status === "active" &&
     Date.now() - journey.updatedAt > INACTIVITY_THRESHOLD_MS;
@@ -69,14 +74,10 @@ export default function JourneyDetail({
     if (!journey) return;
     setSummaryState("loading");
     try {
-      const summary = await aiService.generateSummary(
-        journey,
-        members,
-        unrelated
-      );
+      const summary = await aiService.generateSummary(journey, members, unrelated);
       await setJourneySummary(journey.id, summary);
       setSummaryState("idle");
-    } catch (e) {
+    } catch {
       setSummaryState("error");
     }
   }
@@ -118,77 +119,86 @@ export default function JourneyDetail({
               autoFocus
               value={titleDraft}
               onChange={(e) => setTitleDraft(e.target.value)}
-              className="flex-1 rounded border border-paw-200 px-2 py-1 text-base font-semibold"
+              className="flex-1 rounded border border-ink-200 bg-cream-50 px-2 py-1 font-serif text-base text-ink-900"
             />
             <button
               onClick={handleRenameSave}
-              className="rounded bg-paw-600 px-2 py-1 text-xs font-medium text-white"
+              className="rounded bg-ink-900 px-2 py-1 text-xs font-medium text-cream-50"
             >
               Save
             </button>
           </div>
         ) : (
           <div className="flex items-center justify-between gap-2">
-            <h1 className="text-base font-semibold text-stone-800">
-              {journey.title}
-            </h1>
+            <div className="flex min-w-0 items-center gap-2">
+              <JourneyDot color={color} />
+              <h1 className="truncate font-serif text-base text-ink-900">
+                {journey.title}
+              </h1>
+            </div>
             <button
               onClick={() => {
                 setTitleDraft(journey.title);
                 setRenaming(true);
               }}
-              className="text-xs text-stone-400 hover:text-stone-600"
+              className="flex-shrink-0 text-xs text-ink-300 hover:text-ink-500"
             >
               Rename
             </button>
           </div>
         )}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <StatusPill status={journey.status} />
-          <span className="text-xs text-stone-400">
-            {members.length} page{members.length === 1 ? "" : "s"} · updated{" "}
-            {formatRelativeTime(journey.updatedAt)}
+          {journey.goal && (
+            <span className="text-[11px] text-ink-500">Confirmed by you</span>
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          <PawTrail count={members.length} color={color} size="md" />
+          <span className="text-[11px] text-ink-500">
+            {members.length} pawprint{members.length === 1 ? "" : "s"} ·{" "}
+            {formatDuration(totalMs)}
           </span>
         </div>
       </div>
 
       {journey.goal ? (
-        <div className="rounded-lg bg-paw-100 px-3 py-2">
-          <p className="text-xs font-medium uppercase tracking-wide text-paw-700">
+        <div className="rounded-lg border border-ink-200/60 bg-cream-50 px-3.5 py-3">
+          <p className="text-[11px] font-medium uppercase tracking-wide text-ink-500">
             Confirmed goal
           </p>
-          <p className="text-sm text-stone-800">{journey.goal.text}</p>
+          <p className="mt-0.5 text-sm text-ink-900">{journey.goal.text}</p>
           <button
             onClick={onConfirmGoal}
-            className="mt-1 text-xs text-paw-600 hover:underline"
+            className="mt-1.5 text-xs text-ink-500 underline decoration-ink-200 underline-offset-2 hover:text-ink-700"
           >
-            Change goal
+            Edit goal
           </button>
         </div>
       ) : (
         <button
           onClick={onConfirmGoal}
-          className="rounded-lg bg-paw-600 px-3 py-2 text-sm font-medium text-white hover:bg-paw-700"
+          className="rounded-lg bg-ink-900 px-3.5 py-2.5 text-left text-sm font-medium text-cream-50 hover:bg-ink-700"
         >
           What were you looking for?
         </button>
       )}
 
       {isInactive && (
-        <div className="flex flex-col gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2">
-          <p className="text-sm text-stone-700">
+        <div className="flex flex-col gap-2 rounded-lg border border-ink-200/60 bg-cream-100 px-3.5 py-3">
+          <p className="text-sm text-ink-700">
             Looks like you may be done with this journey.
           </p>
           <div className="flex gap-2">
             <button
               onClick={() => handleStatusChange("active")}
-              className="rounded border border-stone-300 px-2 py-1 text-xs font-medium text-stone-600"
+              className="rounded border border-ink-200 px-2.5 py-1 text-xs font-medium text-ink-700"
             >
               Keep active
             </button>
             <button
               onClick={() => handleStatusChange("completed")}
-              className="rounded bg-paw-600 px-2 py-1 text-xs font-medium text-white"
+              className="rounded bg-ink-900 px-2.5 py-1 text-xs font-medium text-cream-50"
             >
               Mark complete
             </button>
@@ -198,11 +208,13 @@ export default function JourneyDetail({
 
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-stone-500">Summary</h2>
+          <h2 className="text-xs font-medium uppercase tracking-wide text-ink-500">
+            Summary
+          </h2>
           {!journey.summary && (
             <button
               onClick={handleGenerateSummary}
-              className="text-xs text-paw-600 hover:underline"
+              className="text-xs text-ink-500 underline decoration-ink-200 underline-offset-2 hover:text-ink-700"
               disabled={summaryState === "loading"}
             >
               {summaryState === "loading" ? "Generating…" : "Generate summary"}
@@ -210,21 +222,17 @@ export default function JourneyDetail({
           )}
         </div>
         {summaryState === "error" && (
-          <p className="text-xs text-stone-500">
-            AI unavailable. Your browsing memory is still safely stored
-            locally.{" "}
-            <button onClick={handleGenerateSummary} className="text-paw-600 underline">
-              Try again
-            </button>
-          </p>
+          <AIUnavailableNotice onRetry={handleGenerateSummary} />
         )}
         {journey.summary && (
-          <div className="rounded-lg border border-paw-100 bg-white px-3 py-2">
-            <p className="text-sm text-stone-700">{journey.summary.narrative}</p>
+          <div className="rounded-lg border border-ink-200/60 bg-cream-50 px-3.5 py-3">
+            <p className="text-sm text-ink-700">{journey.summary.narrative}</p>
             {journey.summary.explored.length > 0 && (
               <>
-                <p className="mt-2 text-xs font-medium text-stone-500">Explored:</p>
-                <ul className="ml-4 list-disc text-xs text-stone-500">
+                <p className="mt-2.5 text-[11px] font-medium text-ink-500">
+                  Explored
+                </p>
+                <ul className="ml-4 list-disc text-xs text-ink-500">
                   {journey.summary.explored.map((e) => (
                     <li key={e}>{e}</li>
                   ))}
@@ -233,10 +241,10 @@ export default function JourneyDetail({
             )}
             {journey.summary.potentiallyUnrelated.length > 0 && (
               <>
-                <p className="mt-2 text-xs font-medium text-stone-500">
-                  Potentially unrelated:
+                <p className="mt-2.5 text-[11px] font-medium text-ink-500">
+                  Potentially unrelated
                 </p>
-                <ul className="ml-4 list-disc text-xs text-stone-500">
+                <ul className="ml-4 list-disc text-xs text-ink-500">
                   {journey.summary.potentiallyUnrelated.map((e) => (
                     <li key={e}>{e}</li>
                   ))}
@@ -248,7 +256,9 @@ export default function JourneyDetail({
       </div>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-sm font-semibold text-stone-500">Explored</h2>
+        <h2 className="text-xs font-medium uppercase tracking-wide text-ink-500">
+          Your browsing trail
+        </h2>
         {members
           .sort((a, b) => a.timestamp - b.timestamp)
           .map((a) => (
@@ -258,7 +268,7 @@ export default function JourneyDetail({
 
       {unrelated.length > 0 && (
         <div className="flex flex-col gap-2">
-          <h2 className="text-sm font-semibold text-stone-500">
+          <h2 className="text-xs font-medium uppercase tracking-wide text-ink-500">
             Possibly unrelated
           </h2>
           {unrelated.map((a) => (
@@ -269,13 +279,13 @@ export default function JourneyDetail({
                 <div className="flex flex-shrink-0 gap-1">
                   <button
                     onClick={() => addActivityToJourney(a.id, journeyId)}
-                    className="rounded border border-paw-300 px-1.5 py-0.5 text-xs text-paw-700 hover:bg-paw-50"
+                    className="rounded border border-ink-200 px-1.5 py-0.5 text-[11px] text-ink-700 hover:bg-cream-100"
                   >
-                    Add
+                    Add to journey
                   </button>
                   <button
                     onClick={() => keepActivitySeparate(a.id, journeyId)}
-                    className="rounded border border-stone-200 px-1.5 py-0.5 text-xs text-stone-500 hover:bg-stone-50"
+                    className="rounded border border-ink-200/60 px-1.5 py-0.5 text-[11px] text-ink-500 hover:bg-cream-100"
                   >
                     Keep separate
                   </button>
@@ -286,17 +296,17 @@ export default function JourneyDetail({
         </div>
       )}
 
-      <div className="flex flex-wrap gap-2 border-t border-paw-100 pt-3">
+      <div className="flex flex-wrap gap-2 border-t border-ink-200/70 pt-3">
         <button
           onClick={handleContinueJourney}
-          className="rounded bg-paw-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-paw-700"
+          className="rounded-full bg-ink-900 px-3.5 py-1.5 text-xs font-medium text-cream-50 hover:bg-ink-700"
         >
           Continue journey
         </button>
         {journey.status !== "archived" && (
           <button
             onClick={() => handleStatusChange("archived")}
-            className="rounded border border-stone-300 px-3 py-1.5 text-xs font-medium text-stone-600"
+            className="rounded-full border border-ink-200 px-3.5 py-1.5 text-xs font-medium text-ink-700"
           >
             Archive
           </button>
@@ -304,14 +314,14 @@ export default function JourneyDetail({
         {journey.status === "completed" && (
           <button
             onClick={() => handleStatusChange("active")}
-            className="rounded border border-stone-300 px-3 py-1.5 text-xs font-medium text-stone-600"
+            className="rounded-full border border-ink-200 px-3.5 py-1.5 text-xs font-medium text-ink-700"
           >
             Reopen
           </button>
         )}
         <button
           onClick={handleDelete}
-          className="ml-auto rounded border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+          className="ml-auto rounded-full border border-ink-200 px-3.5 py-1.5 text-xs font-medium text-ink-500 hover:text-ink-900"
         >
           Delete journey
         </button>
@@ -320,11 +330,28 @@ export default function JourneyDetail({
   );
 }
 
+export function AIUnavailableNotice({ onRetry }: { onRetry: () => void }) {
+  return (
+    <div className="flex flex-col gap-1.5 rounded-lg border border-ink-200/60 bg-cream-100 px-3.5 py-3">
+      <p className="text-xs font-medium text-ink-700">AI unavailable</p>
+      <p className="text-xs text-ink-500">
+        Your browsing memory is still safely stored locally.
+      </p>
+      <button
+        onClick={onRetry}
+        className="mt-0.5 self-start text-xs text-ink-500 underline decoration-ink-200 underline-offset-2 hover:text-ink-700"
+      >
+        Try again
+      </button>
+    </div>
+  );
+}
+
 function BackButton({ onBack }: { onBack: () => void }) {
   return (
     <button
       onClick={onBack}
-      className="self-start text-sm text-stone-400 hover:text-stone-600"
+      className="self-start text-xs text-ink-300 hover:text-ink-500"
     >
       ← Back
     </button>
