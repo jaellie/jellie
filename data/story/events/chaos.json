@@ -1,0 +1,1730 @@
+{
+ "_doc": "Life events: chaos. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "FLOOR_NOISE",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=19"
+   ],
+   "repeatable": true,
+   "cooldown": 96,
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@month": 0.4,
+     "SATURN@H4": 0.4,
+     "URANUS@H4": 0.4
+    },
+    "mods": {
+     "stability": -0.2
+    }
+   },
+   "location": "home",
+   "activity": "sleep",
+   "who": "me",
+   "line": {
+    "ko": "(쿵쿵쿵. 새벽 1시, 윗집이 또 뛴다. 오늘로 17일째.)",
+    "en": "(Thud, thud, thud. 1 a.m., and upstairs is running around again. Day seventeen.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "정중한 쪽지를 붙인다",
+      "en": "Leave a polite note"
+     },
+     "w": {
+      "PEACE": 0.6,
+      "WAR": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(천장을 두드린다)",
+      "en": "(Bang on the ceiling)"
+     },
+     "w": {
+      "WAR": 0.7,
+      "PEACE": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(귀마개를 산다)",
+      "en": "(Buy earplugs)"
+     },
+     "w": {
+      "EARPLUGS": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "PEACE": {
+     "r": {
+      "ko": "다음 날 윗집 아이가 사과 편지와 귤 한 봉지를 들고 내려왔다.",
+      "en": "The next day the kid from upstairs came down with an apology letter and a bag of tangerines."
+     }
+    },
+    "WAR": {
+     "r": {
+      "ko": "쪽지에 쪽지가 달리고, 관리사무소가 중재에 나섰다.",
+      "en": "Notes got replies, then counter-replies. The building office had to step in."
+     },
+     "chain": [
+      {
+       "to": "NEIGHBOR_FEUD",
+       "after": [
+        2,
+        8
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "EARPLUGS": {
+     "r": {
+      "ko": "귀마개는 소리를 막았지만, 알람 소리도 막았다. 지각했다.",
+      "en": "The earplugs blocked the noise — and the alarm. You were late."
+     }
+    }
+   }
+  },
+  {
+   "id": "NEIGHBOR_FEUD",
+   "cat": "chaos",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=19"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@month": 0.5,
+     "PUNISHMENT@month": 0.4
+    },
+    "mods": {
+     "stability": -0.3
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "neighbor",
+   "line": {
+    "ko": "(엘리베이터에서 마주친 이웃이 대놓고 말했다.) 댁 때문에 이 동네 못 살겠어요.",
+    "en": "(In the elevator, the neighbor said it to your face.) This building's unlivable because of you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "저도 할 말 많은데요",
+      "en": "I have plenty to say too"
+     },
+     "w": {
+      "ESCALATE": 0.6,
+      "TRUCE": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "차 한잔하면서 얘기하시죠",
+      "en": "Let's talk it over with some tea"
+     },
+     "w": {
+      "TRUCE": 0.7,
+      "ESCALATE": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "ESCALATE": {
+     "r": {
+      "ko": "결국 관리사무소, 경찰, 조정위원회까지 갔다. 이사를 알아보기 시작했다.",
+      "en": "It went to the building office, then the police, then mediation. You started looking at other apartments."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -2
+      }
+     ]
+    },
+    "TRUCE": {
+     "r": {
+      "ko": "알고 보니 그 집도 사정이 있었다. 명절에 떡을 나눠 먹는 사이가 됐다.",
+      "en": "Turns out they had their own troubles. Now you share rice cakes at the holidays."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "WRONG_KAKAO",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "employed",
+    "!selfEmployed"
+   ],
+   "repeatable": true,
+   "cooldown": 120,
+   "trigger": {
+    "signals": {
+     "group:SANG_GWAN": 0.5,
+     "URANUS>MOON:hard": 0.3
+    },
+    "mods": {
+     "communication": -0.4
+    },
+    "traits": {
+     "spontaneity": 0.3
+    }
+   },
+   "location": "office",
+   "activity": "work",
+   "who": "me",
+   "line": {
+    "ko": "(친구에게 보낸다는 게… 팀장님께 보냈다. '아 진짜 오늘 팀장 왜 저래 ㅋㅋㅋ' 1이 사라졌다.)",
+    "en": "(Meant for a friend… sent to your manager: 'omg what is wrong with the boss today lol'. It's been read.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "'팀장님 저희 팀장님이 오늘 최고시라는 뜻이었습니다!'",
+      "en": "'I meant you're the BEST today, sir!'"
+     },
+     "w": {
+      "SAVED": 0.4,
+      "COLD": 0.6
+     }
+    },
+    {
+     "t": {
+      "ko": "(그냥 죽은 척한다)",
+      "en": "(Play dead)"
+     },
+     "w": {
+      "COLD": 0.6,
+      "LAUGH": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "SAVED": {
+     "r": {
+      "ko": "팀장님 답장: 'ㅋㅋ 알아요.' 그 'ㅋㅋ'의 의미를 일주일 동안 해석했다.",
+      "en": "Your manager replied: 'lol I know.' You spent a week decoding that 'lol'."
+     }
+    },
+    "COLD": {
+     "r": {
+      "ko": "다음 날 회의 분위기가 유난히 차가웠다.",
+      "en": "The next day's meeting was noticeably chilly."
+     }
+    },
+    "LAUGH": {
+     "r": {
+      "ko": "팀장님이 점심을 사주며 말했다. '나도 우리 팀장 욕 많이 해.'",
+      "en": "Your manager bought you lunch: 'I trash-talk my boss too, you know.'"
+     }
+    }
+   }
+  },
+  {
+   "id": "WRONG_KAKAO_LOVE",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "partnered",
+    "momAlive"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.36,
+     "STEM_COMBINATION@day": 0.24,
+     "SIX_HARMONY@day": 0.2,
+     "JUPITER@H5": 0.16,
+     "JUPITER@H7": 0.16,
+     "SR:SUN@H5": 0.16,
+     "SR:SUN@H7": 0.16
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "({partner}에게 보낸다는 게… 엄마에게 보냈다. '보고 싶어 ♥ 오늘 밤에 올 거지?')",
+    "en": "(Meant for {partner}… sent to Mom: 'Miss you ♥ you're coming over tonight, right?')"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(수습 문자를 보낸다)",
+      "en": "(Send a damage-control text)"
+     },
+     "w": {
+      "MOM": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(휴대폰을 던진다)",
+      "en": "(Throw your phone across the room)"
+     },
+     "w": {
+      "MOM": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "MOM": {
+     "r": {
+      "ko": "엄마 답장: '엄마도 보고 싶어 ♥ 근데 누구니? 데려와.' 가족 단톡방까지 소문이 났다.",
+      "en": "Mom's reply: 'Miss you too ♥ But who is it? Bring them over.' Word reached the family group chat."
+     }
+    }
+   }
+  },
+  {
+   "id": "PET_RUNS_AWAY",
+   "cat": "chaos",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "사라진 {pet}",
+    "en": "{pet} is gone"
+   },
+   "requires": [
+    "hasPet"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.5,
+     "BRANCH_CLASH@month": 0.3,
+     "SAMJAE": 0.3
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "me",
+   "line": {
+    "ko": "(현관문이 열린 틈에 {pet}이(가) 뛰쳐나가 골목 저편으로 사라졌다.)",
+    "en": "(The front door was open for a second — and {pet} bolted out and vanished down the alley.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(밤새 동네를 뛰어다닌다)",
+      "en": "(Run through the neighborhood all night)"
+     },
+     "w": {
+      "FOUND": 0.5,
+      "LOST": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "전단지를 붙이고 SNS에 올린다",
+      "en": "Put up flyers and post online"
+     },
+     "w": {
+      "LOST": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "FOUND": {
+     "r": {
+      "ko": "새벽 네 시, 놀이터 미끄럼틀 밑에서 떨고 있는 {pet}을(를) 찾았다. 둘 다 울었다.",
+      "en": "At 4 a.m., you found {pet} shivering under the playground slide. You both cried."
+     }
+    },
+    "LOST": {
+     "r": {
+      "ko": "동네 전봇대마다 {pet}의 얼굴이 붙었다. 휴대폰이 울릴 때마다 심장이 뛰었다.",
+      "en": "{pet}'s face went up on every pole in the neighborhood. Every time your phone rang, your heart leapt."
+     },
+     "effects": [
+      {
+       "kind": "petLost"
+      }
+     ],
+     "chain": [
+      {
+       "to": "PET_FOUND",
+       "after": [
+        0,
+        2
+       ],
+       "p": 0.75,
+       "urgent": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PET_FOUND",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "joy",
+   "requires": [
+    "f_lostPet"
+   ],
+   "chainOnly": true,
+   "location": "street",
+   "activity": "walk",
+   "who": "unknown",
+   "line": {
+    "ko": "(모르는 번호로 사진 한 장이 왔다.) 혹시 전단지에 있던 아이 맞나요? 저희 가게 앞에 며칠째 앉아 있어요.",
+    "en": "(A photo from an unknown number.) Is this the one from the flyer? It's been sitting outside my shop for days."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(달려간다)",
+      "en": "(Run there)"
+     },
+     "w": {
+      "HOME": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "HOME": {
+     "r": {
+      "ko": "이름을 부르자마자 꼬리가 헬리콥터처럼 돌았다. 집에 오는 길 내내 품에서 놓지 않았다.",
+      "en": "The moment you called its name, the tail spun like a helicopter. You held it tight the whole way home."
+     },
+     "effects": [
+      {
+       "kind": "petFound"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "돌아온 우리 아이",
+       "en": "Our baby came home"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "pet"
+      ],
+      "priority": 7
+     }
+    }
+   }
+  },
+  {
+   "id": "ADOPT_STRAY",
+   "cat": "chaos",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "group:SIK_SHIN": 0.3,
+     "JUPITER@H6": 0.4
+    },
+    "mods": {
+     "family": 0.2
+    },
+    "traits": {
+     "emotionalExpression": 0.3
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "me",
+   "line": {
+    "ko": "(비 오는 밤, 편의점 앞 박스 안에서 새끼 고양이가 떨고 있다. 눈이 마주쳤다.)",
+    "en": "(A rainy night. In a box outside the convenience store, a kitten is shivering. Your eyes meet.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(품에 안고 집에 간다)",
+      "en": "(Scoop it up and take it home)"
+     },
+     "w": {
+      "ADOPT": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "구조 단체에 연락한다",
+      "en": "Call a rescue group"
+     },
+     "w": {
+      "RESCUE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "ADOPT": {
+     "r": {
+      "ko": "수건으로 닦아주자 골골송을 불렀다. 오늘부터 우리 식구다.",
+      "en": "When you dried it with a towel, it started purring. As of today, it's family."
+     },
+     "effects": [
+      {
+       "kind": "adoptPet",
+       "species": "CAT"
+      }
+     ],
+     "card": "PET_ADOPT"
+    },
+    "RESCUE": {
+     "r": {
+      "ko": "구조 단체가 좋은 가족을 찾아줬다. 가끔 입양 가족이 사진을 보내준다.",
+      "en": "The rescue found it a good family. Sometimes they send you photos."
+     }
+    }
+   }
+  },
+  {
+   "id": "LOCKED_OUT",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=19"
+   ],
+   "repeatable": true,
+   "cooldown": 120,
+   "trigger": {
+    "signals": {
+     "SAMJAE": 0.4,
+     "URANUS@H4": 0.3
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "me",
+   "line": {
+    "ko": "(새벽 3시. 도어락 배터리가 나갔다. 휴대폰 배터리는 2%.)",
+    "en": "(3 a.m. The door lock's battery is dead. Your phone's at 2%.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "열쇠 기사님을 부른다",
+      "en": "Call a locksmith"
+     },
+     "w": {
+      "PAY": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(9V 건전지를 사러 편의점으로 뛴다)",
+      "en": "(Sprint to the convenience store for a 9-volt battery)"
+     },
+     "w": {
+      "HACK": 0.7,
+      "SLEEP_OUT": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "PAY": {
+     "r": {
+      "ko": "기사님이 30초 만에 열었다. 출장비는 30초 치가 아니었다.",
+      "en": "The locksmith opened it in thirty seconds. The fee was not thirty seconds' worth."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.1
+      }
+     ]
+    },
+    "HACK": {
+     "r": {
+      "ko": "도어락 밑에 건전지를 대자 삐— 문이 열렸다. 혼자 박수를 쳤다.",
+      "en": "You held the battery to the terminals — beep — the door opened. You applauded yourself."
+     }
+    },
+    "SLEEP_OUT": {
+     "r": {
+      "ko": "편의점도 문을 닫았다. 24시 찜질방에서 잤다.",
+      "en": "Even the store was closed. You slept at a 24-hour sauna."
+     }
+    }
+   }
+  },
+  {
+   "id": "FOOD_POISONING_DATE",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "dating"
+   ],
+   "trigger": {
+    "signals": {
+     "SAMJAE": 0.3,
+     "DOHWA": 0.3
+    }
+   },
+   "location": "restaurant",
+   "activity": "date",
+   "who": "partner",
+   "line": {
+    "ko": "(데이트로 간 횟집. 그날 밤…) 나 배가 좀… 너도 그래?",
+    "en": "(A sashimi place for your date. That night…) My stomach… you too?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(화장실 앞에서 순서를 기다린다)",
+      "en": "(Wait your turn outside the bathroom)"
+     },
+     "w": {
+      "BOND": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "응급실 가자!",
+      "en": "To the ER!"
+     },
+     "w": {
+      "ER": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "BOND": {
+     "r": {
+      "ko": "밤새 번갈아 화장실을 드나들다 새벽에 둘이 기절하듯 웃었다. 이런 모습까지 봤으면 끝까지 가야지.",
+      "en": "Taking turns all night, by dawn you were both laughing, half-dead. After seeing each other like this, you're in it for good."
+     }
+    },
+    "ER": {
+     "r": {
+      "ko": "나란히 수액을 맞았다. 링거 두 개가 커플템 같았다.",
+      "en": "You got IV drips side by side. Matching drips, like a couple accessory."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.3
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "커플 수액",
+       "en": "Matching IV drips"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 4
+     }
+    }
+   }
+  },
+  {
+   "id": "PHONE_DIES",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=15"
+   ],
+   "repeatable": true,
+   "cooldown": 120,
+   "trigger": {
+    "signals": {
+     "URANUS@H3": 0.4,
+     "SAMJAE": 0.3
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "me",
+   "line": {
+    "ko": "(처음 가보는 동네, 중요한 약속까지 10분. 지도를 보던 휴대폰이 꺼졌다.)",
+    "en": "(An unfamiliar neighborhood, ten minutes to an important appointment. The phone showing you the map just died.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(길 가는 사람에게 묻는다)",
+      "en": "(Ask a passerby)"
+     },
+     "w": {
+      "KIND": 0.7,
+      "LATE": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(감으로 간다)",
+      "en": "(Go by instinct)"
+     },
+     "w": {
+      "LATE": 0.6,
+      "LUCKY": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "KIND": {
+     "r": {
+      "ko": "할머니 한 분이 직접 데려다주셨다. 5분 일찍 도착했다.",
+      "en": "An old woman walked you there herself. You arrived five minutes early."
+     }
+    },
+    "LATE": {
+     "r": {
+      "ko": "30분 늦었다. 공중전화 쓰는 법을 20년 만에 다시 배웠다.",
+      "en": "Thirty minutes late. You relearned how to use a payphone for the first time in years."
+     }
+    },
+    "LUCKY": {
+     "r": {
+      "ko": "감이 맞았다. 가끔은 지도보다 내가 낫다.",
+      "en": "Your instinct was right. Sometimes you're better than the map."
+     }
+    }
+   }
+  },
+  {
+   "id": "PARKING_FIGHT",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=20"
+   ],
+   "repeatable": true,
+   "cooldown": 120,
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@month": 0.4,
+     "group:GYEOB_JAE": 0.3
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "neighbor",
+   "line": {
+    "ko": "(내 자리에 또 그 차. 연락처도 없다. 오늘은 차주가 나왔다.) 뭘 봐요? 잠깐 댄 건데.",
+    "en": "(That car is in your spot again. No phone number. Today the owner came out.) What are you looking at? I only parked for a minute."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "사흘째 잠깐이시네요",
+      "en": "A minute for three days now"
+     },
+     "w": {
+      "FIGHT": 0.6,
+      "SORRY": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(참고 딴 데 댄다)",
+      "en": "(Swallow it and park elsewhere)"
+     },
+     "w": {
+      "SWALLOW": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "FIGHT": {
+     "r": {
+      "ko": "언성이 높아졌다. 주민들이 창문으로 구경했다.",
+      "en": "Voices rose. Neighbors watched from their windows."
+     },
+     "chain": [
+      {
+       "to": "NEIGHBOR_FEUD",
+       "after": [
+        1,
+        6
+       ],
+       "p": 0.4
+      }
+     ]
+    },
+    "SORRY": {
+     "r": {
+      "ko": "차주가 머쓱하게 차를 뺐다. 다음 날 와이퍼에 음료수가 꽂혀 있었다.",
+      "en": "The owner moved the car, embarrassed. The next day, a drink was tucked under your wiper."
+     }
+    },
+    "SWALLOW": {
+     "r": {
+      "ko": "삼백 미터 떨어진 곳에 댔다. 걸으면서 혼자 대사를 연습했다.",
+      "en": "You parked 300 meters away and rehearsed comebacks the whole walk."
+     }
+    }
+   }
+  },
+  {
+   "id": "PACKAGE_MIXUP_MEET",
+   "cat": "chaos",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "requires": [
+    "single",
+    "age>=19"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.54,
+     "STEM_COMBINATION@day": 0.36,
+     "SIX_HARMONY@day": 0.3,
+     "JUPITER@H5": 0.24,
+     "JUPITER@H7": 0.24,
+     "SR:SUN@H5": 0.24,
+     "SR:SUN@H7": 0.24
+    }
+   },
+   "location": "home",
+   "who": "neighbor",
+   "line": {
+    "ko": "(초인종. 문 앞의 사람이 내 이름이 적힌 상자를 들고 있다.) 택배가 바뀌었나 봐요. 저 앞 동 살아요. …혹시 이거, 제 거 맞죠?",
+    "en": "(The doorbell. Someone at the door holds a box with your name on it.) I think our packages got swapped. I'm in the next building. …Is that one mine?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(상자를 바꾸며 웃는다)",
+      "en": "(Swap boxes and laugh)"
+     },
+     "w": {
+      "SPARK": 0.45,
+      "FRIEND": 0.55
+     }
+    },
+    {
+     "t": {
+      "ko": "감사합니다! (문을 닫는다)",
+      "en": "Thanks! (Close the door)"
+     },
+     "w": {
+      "NOTHING": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SPARK": {
+     "r": {
+      "ko": "다음 주에 또 바뀌었다. 이번엔 일부러였다고, 나중에 고백했다.",
+      "en": "The next week, they got swapped again. On purpose this time, they later confessed."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "바뀐 택배",
+       "en": "The swapped package"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 6
+     }
+    },
+    "FRIEND": {
+     "r": {
+      "ko": "같은 쇼핑몰 단골이었다. 이제 공동구매 메이트다.",
+      "en": "Turns out you shop at the same stores. Now you split bulk orders."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    },
+    "NOTHING": {
+     "r": {
+      "ko": "문을 닫고 나서야, 꽤 괜찮은 사람이었다는 생각이 들었다.",
+      "en": "Only after closing the door did you think: they seemed pretty nice."
+     }
+    }
+   }
+  },
+  {
+   "id": "EMBARRASSING_VIRAL",
+   "cat": "chaos",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=16"
+   ],
+   "trigger": {
+    "signals": {
+     "group:SANG_GWAN": 0.4,
+     "URANUS>SUN:conjunction": 0.3
+    },
+    "mods": {
+     "volatility": 0.3
+    }
+   },
+   "location": "online_community",
+   "activity": "post",
+   "who": "app",
+   "line": {
+    "ko": "[SNS] (친구 결혼식 뒤풀이 노래방에서 막춤을 추던 영상이 '오늘의 짤'이 됐다. 조회수 80만.)",
+    "en": "[Social media] (A clip of you dancing like a maniac at a friend's wedding after-party went viral as today's meme. 800K views.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(본인 등판: '네, 접니다')",
+      "en": "(Show up in the comments: 'Yep, that's me')"
+     },
+     "w": {
+      "LEGEND": 0.7,
+      "CRINGE": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(삭제 요청을 넣는다)",
+      "en": "(Request a takedown)"
+     },
+     "w": {
+      "CRINGE": 0.6,
+      "FADES": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "LEGEND": {
+     "r": {
+      "ko": "댓글이 '형/언니 멋있다'로 바뀌었다. 광고 제의까지 하나 들어왔다.",
+      "en": "The comments turned into 'absolute legend'. You even got one ad offer."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 1
+      }
+     ]
+    },
+    "CRINGE": {
+     "r": {
+      "ko": "한 달 동안 엘리베이터에서 사람들이 나를 알아봤다.",
+      "en": "For a month, people recognized you in elevators."
+     }
+    },
+    "FADES": {
+     "r": {
+      "ko": "일주일 뒤, 새 짤이 나타났다. 살았다.",
+      "en": "A week later, a new meme took over. Saved."
+     }
+    }
+   }
+  },
+  {
+   "id": "LOST_ABROAD",
+   "cat": "chaos",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "abroad"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.6,
+     "JUPITER@H9": 0.4
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "me",
+   "line": {
+    "ko": "(구글맵이 멈췄다. 표지판은 한 글자도 못 읽겠고, 해는 지고 있다.)",
+    "en": "(Google Maps froze. You can't read a single sign, and the sun is going down.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(현지인에게 몸짓으로 묻는다)",
+      "en": "(Ask a local with gestures)"
+     },
+     "w": {
+      "KIND": 0.75,
+      "WORSE": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "(감으로 걷는다)",
+      "en": "(Walk by instinct)"
+     },
+     "w": {
+      "WORSE": 0.5,
+      "DISCOVERY": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "KIND": {
+     "r": {
+      "ko": "할아버지 한 분이 직접 숙소까지 데려다주고 동네 빵까지 쥐여줬다.",
+      "en": "An old man walked you all the way home and pressed some local bread into your hands."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    },
+    "WORSE": {
+     "r": {
+      "ko": "두 시간을 헤맸다. 택시비로 하루 식비가 나갔다.",
+      "en": "Two hours lost. The taxi ate a day's food budget."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.5
+      }
+     ]
+    },
+    "DISCOVERY": {
+     "r": {
+      "ko": "길을 잃은 덕에 여행 책에 없는 골목 식당을 찾았다. 인생 맛집이었다.",
+      "en": "Getting lost led you to a back-alley diner no guidebook knows. Best meal of your life."
+     }
+    }
+   }
+  },
+  {
+   "id": "GIVEAWAY_WIN",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "joy",
+   "requires": [
+    "age>=15"
+   ],
+   "repeatable": true,
+   "cooldown": 120,
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.32,
+     "JUPITER@H2": 0.28,
+     "JUPITER@H8": 0.24,
+     "CHEONEUL_GWIIN": 0.2,
+     "favorable": 0.16,
+     "JUPITER>SUN:harmonious": 0.16
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[이벤트 당첨] 축하합니다! 댓글 이벤트 1등 — 제주 왕복 항공권 2매!",
+    "en": "[Giveaway] Congratulations! First place in the comment giveaway — two round-trip tickets to Jeju!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당장 떠난다",
+      "en": "Go right away"
+     },
+     "w": {
+      "TRIP": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(중고로 판다)",
+      "en": "(Sell them secondhand)"
+     },
+     "w": {
+      "SELL": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "TRIP": {
+     "r": {
+      "ko": "귤밭 사이를 걸으며 생각했다. 댓글 하나로 여기까지 왔다.",
+      "en": "Walking through the tangerine orchards, you thought: one comment got you here."
+     },
+     "effects": [
+      {
+       "kind": "trip",
+       "scope": "DOMESTIC"
+      }
+     ]
+    },
+    "SELL": {
+     "r": {
+      "ko": "항공권은 팔고, 그 돈으로 고기를 먹었다. 합리적이다.",
+      "en": "You sold the tickets and spent it on barbecue. Very sensible."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 0.3
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "MOVING_HOUSE",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=20"
+   ],
+   "repeatable": true,
+   "cooldown": 84,
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.6,
+     "JUPITER@H4": 0.5,
+     "URANUS@H4": 0.4
+    },
+    "mods": {
+     "relocation": 0.4
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(이사 날. 사다리차는 안 오고, 비는 오고, 짐은 반만 쌌다.)",
+    "en": "(Moving day. The ladder truck isn't here, it's raining, and you're half packed.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(친구들을 부른다, 짜장면 쏜다)",
+      "en": "(Call in friends — jajangmyeon's on you)"
+     },
+     "w": {
+      "FRIENDS": 0.7,
+      "CHAOS": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(혼자 해낸다)",
+      "en": "(Do it all yourself)"
+     },
+     "w": {
+      "CHAOS": 0.6,
+      "DONE": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "FRIENDS": {
+     "r": {
+      "ko": "빈 바닥에 신문지를 깔고 짜장면을 먹었다. 새 집의 첫 끼였다.",
+      "en": "You spread newspaper on the bare floor and ate jajangmyeon. The first meal in the new place."
+     },
+     "card": {
+      "caption": {
+       "ko": "새 집의 첫 짜장면",
+       "en": "First jajangmyeon in the new place"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "friend",
+       "guest"
+      ],
+      "priority": 5
+     }
+    },
+    "CHAOS": {
+     "r": {
+      "ko": "상자 하나가 사라졌다. 하필 속옷 상자였다.",
+      "en": "One box went missing. Of course, it was the underwear box."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.5
+      }
+     ]
+    },
+    "DONE": {
+     "r": {
+      "ko": "새벽 두 시, 마지막 상자를 풀었다. 드디어 내 공간이다.",
+      "en": "At 2 a.m. you unpacked the last box. Finally, your own space."
+     }
+    }
+   }
+  },
+  {
+   "id": "NORAEBANG_CONFESSION",
+   "cat": "chaos",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "requires": [
+    "hasFriend",
+    "single",
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.54,
+     "STEM_COMBINATION@day": 0.36,
+     "SIX_HARMONY@day": 0.3,
+     "JUPITER@H5": 0.24,
+     "JUPITER@H7": 0.24,
+     "SR:SUN@H5": 0.24,
+     "SR:SUN@H7": 0.24,
+     "group:BI_GYEON": 0.36,
+     "SIX_HARMONY@month": 0.18,
+     "JUPITER@H11": 0.36
+    }
+   },
+   "who": "friend",
+   "line": {
+    "ko": "(노래방. {friend}이(가) 부른 노래 가사가 전부 나한테 하는 말 같다. 노래가 끝나고 마이크를 내려놓았다.) …들었어?",
+    "en": "(Karaoke. Every lyric {friend} sang felt aimed at you. The song ended; they set the mic down.) …Did you hear it?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…나도",
+      "en": "…Me too"
+     },
+     "w": {
+      "COUPLE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(다음 곡을 누른다)",
+      "en": "(Queue the next song)"
+     },
+     "w": {
+      "AWKWARD": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "무슨 소리야 ㅋㅋ 노래 잘한다!",
+      "en": "What are you talking about lol, great singing!"
+     },
+     "w": {
+      "ZONE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "COUPLE": {
+     "r": {
+      "ko": "반주기 화면의 점수는 98점. 그날 밤 우리는 친구가 아니게 됐다.",
+      "en": "The karaoke score: 98. That night you stopped being just friends."
+     },
+     "effects": [
+      {
+       "kind": "startDatingFriend"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "노래방 고백",
+       "en": "The karaoke confession"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "friend"
+      ],
+      "priority": 7
+     }
+    },
+    "AWKWARD": {
+     "r": {
+      "ko": "다음 곡은 신나는 댄스곡이었다. 아무도 웃지 않았다.",
+      "en": "The next song was an upbeat dance track. Nobody laughed."
+     }
+    },
+    "ZONE": {
+     "r": {
+      "ko": "{friend}은(는) 웃었다. 조금 늦게.",
+      "en": "{friend} laughed. A beat too late."
+     }
+    }
+   }
+  },
+  {
+   "id": "DRUNK_TEXT_EX",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "hasEx",
+    "single",
+    "age>=20"
+   ],
+   "repeatable": true,
+   "cooldown": 120,
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.3,
+     "BRANCH_CLASH@day": 0.3
+    },
+    "traits": {
+     "spontaneity": 0.4,
+     "emotionalExpression": 0.3
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(새벽 2시, 소주 세 병. 정신을 차려보니 {ex}에게 '자니…?'를 보낸 뒤였다. 1이 사라졌다.)",
+    "en": "(2 a.m., three bottles of soju. When you came to, you'd already sent {ex} 'u up…?'. It shows as read.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(휴대폰을 베개 밑에 숨긴다)",
+      "en": "(Hide the phone under your pillow)"
+     },
+     "w": {
+      "REPLY": 0.35,
+      "NOREPLY": 0.65
+     }
+    },
+    {
+     "t": {
+      "ko": "'잘못 보냈어' 라고 보낸다",
+      "en": "Send: 'wrong person lol'"
+     },
+     "w": {
+      "CAUGHT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "REPLY": {
+     "r": {
+      "ko": "'안 자. 나도 네 생각 했어.' 그 한 줄에 술이 확 깼다.",
+      "en": "'Not asleep. I was thinking about you too.' That one line sobered you right up."
+     },
+     "chain": [
+      {
+       "to": "EX_TALK",
+       "after": [
+        0,
+        2
+       ],
+       "p": 0.8
+      }
+     ]
+    },
+    "NOREPLY": {
+     "r": {
+      "ko": "답은 오지 않았다. 아침에 이불을 발로 백 번 찼다.",
+      "en": "No reply. In the morning you kicked your blanket a hundred times."
+     }
+    },
+    "CAUGHT": {
+     "r": {
+      "ko": "'…그래.' 답장이 더 아팠다.",
+      "en": "'…ok.' The reply hurt more."
+     }
+    }
+   }
+  },
+  {
+   "id": "EX_TALK",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "romance",
+   "requires": [
+    "hasEx",
+    "single"
+   ],
+   "chainOnly": true,
+   "location": "cafe",
+   "activity": "sit_alone",
+   "who": "ex",
+   "line": {
+    "ko": "그날 새벽 문자… 진심이었어? 한번 만나서 얘기하자.",
+    "en": "That text at 2 a.m.… did you mean it? Let's meet and talk."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "만나자",
+      "en": "Let's meet"
+     },
+     "w": {
+      "AGAIN": 0.5,
+      "CLOSURE": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "…술 때문이었어",
+      "en": "…It was the alcohol"
+     },
+     "w": {
+      "CLOSURE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "AGAIN": {
+     "r": {
+      "ko": "같은 카페, 같은 자리. 우리는 다시 시작하기로 했다. 이번엔 다르게.",
+      "en": "Same café, same seats. You decided to start again. Differently this time."
+     },
+     "effects": [
+      {
+       "kind": "startDatingEx"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시, 우리",
+       "en": "Us, again"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 7
+     }
+    },
+    "CLOSURE": {
+     "r": {
+      "ko": "웃으며 헤어졌다. 이번엔 진짜 안녕이었다.",
+      "en": "You parted with a smile. This time, a real goodbye."
+     }
+    }
+   }
+  },
+  {
+   "id": "LIKED_EX_PHOTO",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "hasEx",
+    "age>=18"
+   ],
+   "repeatable": true,
+   "cooldown": 120,
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.2,
+     "SATURN>VENUS:hard": 0.3
+    },
+    "traits": {
+     "spontaneity": 0.3
+    }
+   },
+   "location": "instagram",
+   "activity": "browse",
+   "who": "me",
+   "line": {
+    "ko": "(새벽에 {ex}의 5년 전 사진을 몰래 보다가… 엄지가 미끄러졌다. ♥)",
+    "en": "(Late at night, secretly scrolling {ex}'s photos from five years ago… your thumb slipped. ♥)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(0.1초 만에 취소한다)",
+      "en": "(Undo it in 0.1 seconds)"
+     },
+     "w": {
+      "SAFE": 0.5,
+      "SEEN": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "(이왕 이렇게 된 거, DM을 보낸다)",
+      "en": "(In for a penny — send a DM)"
+     },
+     "w": {
+      "DM": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SAFE": {
+     "r": {
+      "ko": "알림은 가지 않았…을 거다. 아마도. 제발.",
+      "en": "The notification didn't go through… probably. Please."
+     }
+    },
+    "SEEN": {
+     "r": {
+      "ko": "다음 날 {ex}의 스토리: '누가 새벽에 옛날 사진 좋아요 누름 ㅋㅋ'",
+      "en": "The next day, {ex}'s story: 'someone liked my ancient photo at 3am lol'"
+     }
+    },
+    "DM": {
+     "r": {
+      "ko": "'오랜만이야' 한 줄. 답장은 '누구세요?'였다. 번호도 계정도 바뀐 거였다.",
+      "en": "'Long time no see.' The reply: 'Who is this?' Different person — they'd changed accounts."
+     }
+    }
+   }
+  },
+  {
+   "id": "DANGGEUN_SCAM",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=16"
+   ],
+   "repeatable": true,
+   "cooldown": 96,
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.32,
+     "URANUS@H2": 0.24,
+     "URANUS@H8": 0.2,
+     "SAMJAE": 0.24,
+     "unfavorable": 0.2,
+     "BRANCH_CLASH@month": 0.12
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[중고거래] 입금 확인되면 바로 택배 보내드릴게요~ 오늘까지만 이 가격이에요 😊",
+    "en": "[Secondhand app] I'll ship it as soon as the payment clears~ This price is only good today 😊"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(입금한다)",
+      "en": "(Send the money)"
+     },
+     "w": {
+      "SCAM": 0.6,
+      "FINE": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "직거래만 할게요",
+      "en": "In-person trades only"
+     },
+     "w": {
+      "SAFE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SCAM": {
+     "r": {
+      "ko": "상대가 탈퇴했다. 같은 수법 피해자 단톡방에 초대됐다.",
+      "en": "The seller deleted their account. You got invited to a chat for victims of the same scam."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.3
+      }
+     ]
+    },
+    "FINE": {
+     "r": {
+      "ko": "멀쩡한 물건이 왔다. 의심해서 미안했다.",
+      "en": "The item arrived just fine. You felt bad for doubting."
+     }
+    },
+    "SAFE": {
+     "r": {
+      "ko": "상대가 답이 없어졌다. 역시.",
+      "en": "They went silent. Figures."
+     }
+    }
+   }
+  },
+  {
+   "id": "DANGGEUN_ROMANCE",
+   "cat": "chaos",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "requires": [
+    "single",
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.54,
+     "STEM_COMBINATION@day": 0.36,
+     "SIX_HARMONY@day": 0.3,
+     "JUPITER@H5": 0.24,
+     "JUPITER@H7": 0.24,
+     "SR:SUN@H5": 0.24,
+     "SR:SUN@H7": 0.24
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "stranger",
+   "line": {
+    "ko": "(중고거래 장소. 거래 물건은 커플 머그컵. 상대가 수줍게 말했다.) 헤어져서 파는 거예요. …그쪽은 누구랑 쓰시려고요?",
+    "en": "(The secondhand meetup. The item: a pair of couple mugs. The seller said shyly:) I'm selling them because we broke up. …Who are you going to use them with?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…아직 없어요",
+      "en": "…No one yet"
+     },
+     "w": {
+      "SPARK": 0.55,
+      "FRIEND": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "(물건만 받고 온다)",
+      "en": "(Just take the mugs and go)"
+     },
+     "w": {
+      "NOTHING": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SPARK": {
+     "r": {
+      "ko": "그 머그컵에 처음 커피를 담은 건 둘이서였다.",
+      "en": "The first time those mugs held coffee, it was the two of you."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "커플 머그컵",
+       "en": "The couple mugs"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 6
+     }
+    },
+    "FRIEND": {
+     "r": {
+      "ko": "거래는 끝났는데 대화는 한 시간 더 이어졌다. 매너 온도 99도.",
+      "en": "The deal was done; the chat went on another hour. Five-star manners."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    },
+    "NOTHING": {
+     "r": {
+      "ko": "머그컵 두 개가 찬장에 나란히 놓였다. 하나는 아직 비어 있다.",
+      "en": "Two mugs sit side by side in the cupboard. One is still empty."
+     }
+    }
+   }
+  },
+  {
+   "id": "KITCHEN_FIRE",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=18"
+   ],
+   "repeatable": true,
+   "cooldown": 120,
+   "trigger": {
+    "signals": {
+     "SAMJAE": 0.4,
+     "SR:angular:MARS": 0.4
+    }
+   },
+   "location": "home",
+   "activity": "cook",
+   "who": "me",
+   "line": {
+    "ko": "(라면 물을 올려놓고 깜빡 잠들었다. 연기 냄새에 눈을 떴다. 화재경보기가 울린다.)",
+    "en": "(You put water on for ramen and dozed off. You wake to the smell of smoke. The fire alarm is screaming.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(젖은 수건을 던진다)",
+      "en": "(Throw a wet towel on it)"
+     },
+     "w": {
+      "OUT": 0.8,
+      "DAMAGE": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "(소화기를 찾는다)",
+      "en": "(Look for the extinguisher)"
+     },
+     "w": {
+      "OUT": 0.6,
+      "DAMAGE": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "OUT": {
+     "r": {
+      "ko": "불은 금방 꺼졌다. 냄비 하나와 자존심을 잃었다.",
+      "en": "It went out fast. You lost one pot and some pride."
+     }
+    },
+    "DAMAGE": {
+     "r": {
+      "ko": "주방 벽이 새까매졌다. 관리사무소가 소방 교육 전단을 붙이고 갔다.",
+      "en": "The kitchen wall turned black. The building office posted a fire-safety flyer on your door."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -2
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

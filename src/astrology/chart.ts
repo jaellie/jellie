@@ -23,9 +23,18 @@ export interface SignInfo { id: ZodiacSign; ko: string; glyph: string; element: 
 export const SIGNS = signData.signs as SignInfo[];
 const ASPECTS = aspectData.aspects as Array<{ id: AspectType; angle: number; natalOrb: number; transitOrb: number; nature: "harmonious" | "hard" | "conjunction" }>;
 
-export interface BirthPlace { lat: number; lon: number; name?: string }
+export interface BirthPlace {
+  lat: number;
+  lon: number;
+  name?: string;
+  /** Korean display name ("부산"). */
+  ko?: string;
+  /** IANA time zone ("Asia/Seoul") — see destiny/birthplace.ts. */
+  tz?: string;
+  country?: string;
+}
 /** Seoul — the default when no birthplace is given. */
-export const DEFAULT_BIRTHPLACE: BirthPlace = { lat: 37.5665, lon: 126.978, name: "Seoul" };
+export const DEFAULT_BIRTHPLACE: BirthPlace = { lat: 37.5665, lon: 126.978, name: "Seoul", ko: "서울", tz: "Asia/Seoul", country: "KR" };
 
 export interface PlanetPosition {
   planet: ChartPoint;

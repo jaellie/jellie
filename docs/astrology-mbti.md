@@ -14,7 +14,7 @@ MBTI ─────────────────────► DestinyM
 | Layer | File | Contents |
 |---|---|---|
 | A. Ephemeris | `ephemeris.ts` | Geocentric tropical positions for Sun through Pluto. Planets use the JPL Keplerian elements (1800–2050) with precession to date. The Sun uses the Meeus solar theory shared with Saju. The Moon uses a truncated Meeus series. Also computes the Ascendant and Midheaven. Tested against 2000-01-01 reference positions (within 0.6°, Moon within 1°). |
-| B. Chart | `chart.ts` | Signs, whole-sign houses, element/modality balance, natal aspects, and transits (house, aspects to natal points, planetary returns). Without a birth time it uses solar whole-sign houses (the Sun's sign is the 1st house). The default birthplace is Seoul. |
+| B. Chart | `chart.ts` | Signs, whole-sign houses, element/modality balance, natal aspects, and transits (house, aspects to natal points, planetary returns). Without a birth time it uses solar whole-sign houses (the Sun's sign is the 1st house). Birthplace: see below (default Seoul). |
 | C. Interpretation | `interpretation.ts`, `modifierMappings.json` | Houses define life areas (for example, the 9th is travel, overseas and education). Planets set how strongly each house is activated (Jupiter expands, Saturn structures, Uranus disrupts). Aspects and returns add timing. |
 
 Layer scales:
@@ -26,6 +26,16 @@ Layer scales:
 | monthly | 0.12 | Fast planets: Sun, Mercury, Venus, Mars |
 
 Example: Jupiter moving through your 9th house raises the chances of travel, overseas and education opportunities. It raises chances only; nothing is forced.
+
+### Birthplace and the birth clock (`src/destiny/birthplace.ts`, `data/destiny/birthplaces.json`)
+
+A chart needs *where* as well as *when*:
+
+- **Place → angles.** Latitude/longitude set the Ascendant, MC and whole-sign houses of the natal chart — and so of everything built on it: solar-arc progressed angles, and the Solar/Lunar Return charts (cast for the birthplace), whose Ascendant sets the year's and the month's tone.
+- **Clock → instant.** The birth time is the clock on the wall where the person was born. The engine converts it with the UTC offset in force at that place and moment, from the IANA time-zone history built into every browser (Intl): Korea's summer time in 1948–51, 1955–60 and 1987–88, its UTC+8:30 years (1954–61), DST abroad. A one-hour error moves the Moon ~0.5° and the Ascendant ~15°.
+- **사주 in standard time.** Day and hour pillars are read off the clock, so daylight time is taken out first (a 09:30 birth in July 1987 is read as 08:30 KST), as 만세력 do. The instant — and every astrological position — is unchanged. A permanent change of standard time (Korea, August 1961) isn't treated as daylight time.
+- **Input.** A city name in Korean or English (`"부산"`, `"LA"`, `"New York, NY"`), a city id, or `{ lat, lon, tz? }` (no zone → the nearest listed city's). Unknown text falls back to Seoul, flagged `known: false`. The destined person's birthplace defaults to the player's. The gazetteer lists ~50 Korean and ~95 world cities; add one with a line of JSON.
+- Birth time unknown → no angles or houses from the place (solar whole-sign houses), and no daylight-time correction (there's no hour pillar to move).
 
 ## MBTI (`src/mbti/`, `data/mbti/mbti.json`)
 

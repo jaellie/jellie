@@ -1,0 +1,2180 @@
+{
+ "_doc": "Life events: career. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "FIRED",
+   "cat": "career",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "해고",
+    "en": "Fired"
+   },
+   "requires": [
+    "employed",
+    "!selfEmployed"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.6,
+     "SATURN>MC:conjunction": 0.5,
+     "group:PYEON_GWAN": 0.6,
+     "group:SANG_GWAN": 0.4,
+     "unfavorable": 0.4
+    },
+    "mods": {
+     "career": -0.5,
+     "stability": -0.3
+    }
+   },
+   "location": "office",
+   "activity": "meeting",
+   "who": "boss",
+   "line": {
+    "ko": "잠깐 회의실로 올래요? …미안하게 됐어요. 오늘부로 해고입니다. 짐은 인사팀에서 보내줄 거예요.",
+    "en": "Can you come to the conference room for a minute? …I'm sorry. As of today, you're fired. HR will send your things."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "이유라도 알려주세요",
+      "en": "At least tell me why"
+     },
+     "w": {
+      "NUMB": 0.6,
+      "FIGHT": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "부당해고로 신고하겠습니다",
+      "en": "I'll report this as unfair dismissal"
+     },
+     "w": {
+      "FIGHT": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(말없이 사원증을 내려놓는다)",
+      "en": "(Put your ID badge down without a word)"
+     },
+     "w": {
+      "NUMB": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "NUMB": {
+     "r": {
+      "ko": "상자 하나에 몇 년이 다 들어갔다. 엘리베이터 거울 속 얼굴이 낯설었다.",
+      "en": "Years fit into one box. The face in the elevator mirror looked like a stranger's."
+     },
+     "effects": [
+      {
+       "kind": "quitJob"
+      }
+     ],
+     "card": "LAYOFF"
+    },
+    "FIGHT": {
+     "r": {
+      "ko": "노동위원회에서 부당해고 판정을 받았다. 복직 대신 합의금을 받았다.",
+      "en": "The labor board ruled it unfair. Instead of going back, you took a settlement."
+     },
+     "effects": [
+      {
+       "kind": "quitJob"
+      },
+      {
+       "kind": "money",
+       "amount": 15
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "부당해고 판정",
+       "en": "Ruled an unfair dismissal"
+      },
+      "location": "court",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     }
+    }
+   }
+  },
+  {
+   "id": "HEADHUNTED",
+   "cat": "career",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "employed",
+    "!selfEmployed",
+    "age>=27"
+   ],
+   "trigger": {
+    "signals": {
+     "group:JEONG_GWAN": 0.6,
+     "JUPITER@H10": 0.7,
+     "JUPITER>MC:conjunction": 0.6,
+     "favorable": 0.4
+    },
+    "mods": {
+     "career": 0.5,
+     "opportunity": 0.4
+    },
+    "traits": {
+     "ambition": 0.4
+    }
+   },
+   "location": "cafe",
+   "activity": "sit_alone",
+   "who": "recruiter",
+   "line": {
+    "ko": "링크드인 보고 연락드렸습니다. 연봉 1.5배, 직급 한 단계 위. 관심 있으세요?",
+    "en": "I found you on LinkedIn. One and a half times your salary, one level up. Interested?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "만나보죠",
+      "en": "Let's talk"
+     },
+     "w": {
+      "MOVE": 0.75,
+      "COUNTER": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "지금 회사에 카운터오퍼를 받아본다",
+      "en": "Get a counteroffer from your current company"
+     },
+     "w": {
+      "COUNTER": 0.6,
+      "MOVE": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "괜찮습니다",
+      "en": "No, thank you"
+     },
+     "w": {
+      "STAY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "MOVE": {
+     "r": {
+      "ko": "새 명함을 받았다. 이름 옆 직함이 낯설고 좋았다.",
+      "en": "New business cards. The title next to your name felt strange — and great."
+     },
+     "effects": [
+      {
+       "kind": "job"
+      },
+      {
+       "kind": "careerLevel",
+       "delta": 1
+      },
+      {
+       "kind": "money",
+       "amount": 10
+      }
+     ],
+     "card": "JOB_CHANGE"
+    },
+    "COUNTER": {
+     "r": {
+      "ko": "팀장님이 연봉을 맞춰줬다. 대신 눈치가 조금 보인다.",
+      "en": "Your manager matched the offer. Things are a little awkward now."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 8
+      }
+     ]
+    },
+    "STAY": {
+     "r": {
+      "ko": "정중히 거절했다. 가끔 그 제안이 생각난다.",
+      "en": "You politely declined. Sometimes you think about that offer."
+     }
+    }
+   }
+  },
+  {
+   "id": "QUIT_TO_START_BUSINESS",
+   "cat": "career",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "내 가게",
+    "en": "My own shop"
+   },
+   "requires": [
+    "employed",
+    "!selfEmployed",
+    "age>=28",
+    "money>=15"
+   ],
+   "trigger": {
+    "signals": {
+     "group:JEONG_GWAN": 0.3,
+     "JUPITER@H10": 0.35,
+     "JUPITER>MC:conjunction": 0.3,
+     "favorable": 0.4,
+     "group:PYEON_JAE": 0.4,
+     "JUPITER@H2": 0.35,
+     "JUPITER@H8": 0.3,
+     "CHEONEUL_GWIIN": 0.25,
+     "JUPITER>SUN:harmonious": 0.2
+    },
+    "mods": {
+     "business": 0.5,
+     "change": 0.4
+    },
+    "traits": {
+     "independence": 0.4,
+     "riskTolerance": 0.3
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(사표를 가방에 넣고 다닌 지 석 달. 내 가게를 차리고 싶다는 생각이 떠나지 않는다.)",
+    "en": "(A resignation letter has lived in your bag for three months. The idea of your own shop won't leave you.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "오늘 낸다",
+      "en": "Hand it in today"
+     },
+     "w": {
+      "OPEN": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "1년만 더 모으고",
+      "en": "One more year of saving"
+     },
+     "w": {
+      "WAIT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "OPEN": {
+     "r": {
+      "ko": "가게 문을 연 첫날, 첫 손님은 엄마 친구였다. 그래도 첫 손님이었다.",
+      "en": "On opening day, your first customer was a friend of your mom's. Still — a first customer."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "own-business"
+      },
+      {
+       "kind": "money",
+       "amount": -20
+      }
+     ],
+     "card": "INDEPENDENCE",
+     "chain": [
+      {
+       "to": "BUSINESS_BANKRUPT",
+       "after": [
+        18,
+        60
+       ],
+       "p": 0.2
+      }
+     ],
+     "lean": {
+      "traits": {
+       "riskTolerance": 0.3
+      }
+     }
+    },
+    "WAIT": {
+     "r": {
+      "ko": "1년 뒤 통장은 두둑해졌다. 사표는 아직 가방 안에 있다.",
+      "en": "A year later the account is fatter. The letter is still in your bag."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 8
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "YOUTUBE_BOOM",
+   "cat": "career",
+   "rarity": "rare",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "구독자 100만",
+    "en": "One million subscribers"
+   },
+   "requires": [
+    "age>=16"
+   ],
+   "trigger": {
+    "signals": {
+     "group:SIK_SHIN": 0.49,
+     "group:SANG_GWAN": 0.35,
+     "JUPITER@H5": 0.28,
+     "URANUS>SUN:conjunction": 0.28,
+     "group:JEONG_GWAN": 0.42,
+     "JUPITER@H10": 0.49,
+     "JUPITER>MC:conjunction": 0.42,
+     "favorable": 0.28
+    },
+    "mods": {
+     "creativity": 0.5,
+     "communication": 0.5
+    },
+    "traits": {
+     "creativity": 0.3,
+     "socialEnergy": 0.3
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[유튜브] 축하합니다! 구독자 100만 명 — 골드 버튼이 발송됩니다.",
+    "en": "[YouTube] Congratulations! One million subscribers — your Gold Play Button is on its way."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "전업 유튜버가 된다",
+      "en": "Go full-time"
+     },
+     "w": {
+      "FULL": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "취미로만 한다",
+      "en": "Keep it a hobby"
+     },
+     "w": {
+      "HOBBY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "FULL": {
+     "r": {
+      "ko": "골드 버튼을 방에 걸었다. 광고 문의가 매일 들어온다.",
+      "en": "You hung the Gold Button in your room. Sponsorship emails arrive daily."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "own-business"
+      },
+      {
+       "kind": "setFlag",
+       "name": "famous",
+       "value": true
+      },
+      {
+       "kind": "setFlag",
+       "name": "influencer",
+       "value": true
+      },
+      {
+       "kind": "money",
+       "amount": 40
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "골드 버튼",
+       "en": "The Gold Play Button"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     },
+     "chain": [
+      {
+       "to": "INFLUENCER_FLOP",
+       "after": [
+        24,
+        72
+       ],
+       "p": 0.45
+      }
+     ]
+    },
+    "HOBBY": {
+     "r": {
+      "ko": "구독자는 늘었지만 삶은 그대로다. 가끔 길에서 알아보는 사람이 있다.",
+      "en": "The subscribers grew; life stayed the same. Sometimes someone recognizes you on the street."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "famous",
+       "value": true
+      },
+      {
+       "kind": "money",
+       "amount": 15
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "INFLUENCER_FLOP",
+   "cat": "career",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "f_influencer"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[스튜디오] 최근 28일 조회수 -87%. 알고리즘이 나를 잊었다.",
+    "en": "[Studio] Views over the last 28 days: −87%. The algorithm has forgotten you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "콘셉트를 완전히 바꾼다",
+      "en": "Reinvent the channel completely"
+     },
+     "w": {
+      "REBORN": 0.4,
+      "FADE": 0.6
+     }
+    },
+    {
+     "t": {
+      "ko": "정리하고 다른 일을 찾는다",
+      "en": "Wrap it up and find other work"
+     },
+     "w": {
+      "EXIT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "REBORN": {
+     "r": {
+      "ko": "시골 생활 브이로그가 다시 터졌다. 이번엔 진짜 나를 찍었다.",
+      "en": "A countryside-life vlog took off again. This time you filmed the real you."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 10
+      }
+     ]
+    },
+    "FADE": {
+     "r": {
+      "ko": "업로드 주기가 길어졌다. 댓글 창이 조용해졌다.",
+      "en": "Uploads grew further apart. The comments went quiet."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "influencer"
+      },
+      {
+       "kind": "clearFlag",
+       "name": "famous"
+      }
+     ]
+    },
+    "EXIT": {
+     "r": {
+      "ko": "마지막 영상 제목은 '그동안 감사했습니다'였다. 댓글이 3천 개 달렸다.",
+      "en": "The last video was titled 'Thank you for everything'. It got three thousand comments."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "influencer"
+      },
+      {
+       "kind": "clearFlag",
+       "name": "famous"
+      },
+      {
+       "kind": "quitJob"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CIVIL_SERVICE_EXAM",
+   "cat": "career",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "합격자 발표",
+    "en": "Exam results"
+   },
+   "requires": [
+    "!employed",
+    "age>=22",
+    "age<=35"
+   ],
+   "trigger": {
+    "signals": {
+     "group:JEONG_GWAN": 0.36,
+     "JUPITER@H10": 0.42,
+     "JUPITER>MC:conjunction": 0.36,
+     "favorable": 0.24,
+     "group:JEONG_IN": 0.4
+    },
+    "mods": {
+     "education": 0.4,
+     "stability": 0.3
+    },
+    "facts": {
+     "jobless": 0.6
+    }
+   },
+   "location": "library",
+   "activity": "study",
+   "who": "app",
+   "line": {
+    "ko": "[국가고시센터] 최종 합격자 발표가 게시되었습니다. (노량진 독서실에서 1년, 떨리는 손으로 클릭한다.)",
+    "en": "[National exam center] Final results are posted. (After a year in a Noryangjin study room, you click with shaking hands.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(눈을 감고 누른다)",
+      "en": "(Close your eyes and click)"
+     },
+     "w": {
+      "PASS": 0.35,
+      "FAIL": 0.65
+     }
+    }
+   ],
+   "outcomes": {
+    "PASS": {
+     "r": {
+      "ko": "수험번호가 있었다. 독서실 책상에 엎드려 한참 울었다.",
+      "en": "Your exam number was there. You put your head down on the desk and cried a long time."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "civil-service"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "최종 합격",
+       "en": "Passed"
+      },
+      "location": "library",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     },
+     "lean": {
+      "traits": {
+       "planning": 0.4
+      },
+      "mods": {
+       "education": 0.4
+      }
+     }
+    },
+    "FAIL": {
+     "r": {
+      "ko": "없었다. 열 번을 새로고침해도.",
+      "en": "It wasn't there. Not after ten refreshes."
+     },
+     "chain": [
+      {
+       "to": "CIVIL_SERVICE_RETRY",
+       "after": [
+        10,
+        13
+       ],
+       "p": 0.8
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CIVIL_SERVICE_RETRY",
+   "cat": "career",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "N수",
+    "en": "One more year"
+   },
+   "requires": [
+    "!employed"
+   ],
+   "chainOnly": true,
+   "location": "library",
+   "activity": "study",
+   "who": "me",
+   "line": {
+    "ko": "(노량진, 다시 1년. 같은 자리, 같은 컵밥. 오늘이 또 발표 날이다.)",
+    "en": "(Noryangjin, another year. Same seat, same cup-rice. Results day, again.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(이번엔 된다)",
+      "en": "(This time it'll happen)"
+     },
+     "w": {
+      "PASS": 0.45,
+      "FAIL": 0.55
+     }
+    },
+    {
+     "t": {
+      "ko": "이번이 마지막이다",
+      "en": "This is the last try"
+     },
+     "w": {
+      "PASS": 0.4,
+      "QUIT": 0.6
+     }
+    }
+   ],
+   "outcomes": {
+    "PASS": {
+     "r": {
+      "ko": "붙었다. 부모님께 전화하는데 목소리가 안 나왔다.",
+      "en": "You passed. When you called home, your voice wouldn't come out."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "civil-service"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "N수 끝의 합격",
+       "en": "Passed, at last"
+      },
+      "location": "library",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     }
+    },
+    "FAIL": {
+     "r": {
+      "ko": "또 떨어졌다. 독서실 사장님이 컵라면을 하나 주셨다.",
+      "en": "Failed again. The study-room owner gave you a cup of instant noodles."
+     },
+     "chain": [
+      {
+       "to": "CIVIL_SERVICE_RETRY",
+       "after": [
+        10,
+        13
+       ],
+       "p": 0.6
+      }
+     ]
+    },
+    "QUIT": {
+     "r": {
+      "ko": "수험서를 중고로 팔았다. 가벼운 가방으로 새 길을 찾기로 했다.",
+      "en": "You sold the prep books secondhand. With a lighter bag, you set off to find a new path."
+     }
+    }
+   }
+  },
+  {
+   "id": "WORKPLACE_BULLYING",
+   "cat": "career",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "employed",
+    "!selfEmployed"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.6,
+     "SATURN>MC:conjunction": 0.5,
+     "group:PYEON_GWAN": 0.6,
+     "group:SANG_GWAN": 0.4,
+     "unfavorable": 0.4
+    },
+    "mods": {
+     "career": -0.3,
+     "stability": -0.3
+    }
+   },
+   "location": "office",
+   "activity": "work",
+   "who": "boss",
+   "line": {
+    "ko": "이것도 못 해? 머리는 장식이야? (오늘도 모두가 보는 앞에서였다.)",
+    "en": "You can't even do this? Is your head just for decoration? (In front of everyone, again.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "녹음하고 신고한다",
+      "en": "Record it and report it"
+     },
+     "w": {
+      "REPORT": 0.6,
+      "RETALIATE": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(참는다)",
+      "en": "(Endure it)"
+     },
+     "w": {
+      "ENDURE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "사표를 던진다",
+      "en": "Throw down your resignation"
+     },
+     "w": {
+      "LEAVE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "REPORT": {
+     "r": {
+      "ko": "녹음 파일 열두 개. 팀장은 징계를 받고 다른 부서로 갔다.",
+      "en": "Twelve recordings. The manager was disciplined and transferred."
+     },
+     "card": {
+      "caption": {
+       "ko": "열두 개의 녹음 파일",
+       "en": "Twelve recordings"
+      },
+      "location": "office",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     }
+    },
+    "RETALIATE": {
+     "r": {
+      "ko": "신고 후 오히려 내가 이상한 사람이 됐다. 몇 달을 버티다 결국 나왔다.",
+      "en": "After reporting, you became the problem. You held on for months, then left."
+     },
+     "effects": [
+      {
+       "kind": "quitJob"
+      }
+     ]
+    },
+    "ENDURE": {
+     "r": {
+      "ko": "출근길 지하철에서 이유 없이 눈물이 났다.",
+      "en": "On the subway to work, you cried for no reason."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "burnout",
+       "value": true
+      }
+     ]
+    },
+    "LEAVE": {
+     "r": {
+      "ko": "사원증을 책상에 올려두고 나왔다. 하늘이 파랬다.",
+      "en": "You left your badge on the desk and walked out. The sky was so blue."
+     },
+     "effects": [
+      {
+       "kind": "quitJob"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "WHISTLEBLOWING",
+   "cat": "career",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "공익신고",
+    "en": "The whistle"
+   },
+   "requires": [
+    "employed",
+    "!selfEmployed"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.36,
+     "SATURN>MC:conjunction": 0.3,
+     "group:PYEON_GWAN": 0.36,
+     "group:SANG_GWAN": 0.24,
+     "unfavorable": 0.24,
+     "HWAGAE": 0.3,
+     "group:PYEON_IN": 0.3,
+     "BRANCH_CLASH@year": 0.24,
+     "URANUS>MOON:hard": 0.36,
+     "URANUS>SUN:hard": 0.24
+    },
+    "mods": {
+     "career": -0.2
+    },
+    "traits": {
+     "conflictAvoidance": -0.4
+    }
+   },
+   "location": "office",
+   "activity": "overtime",
+   "who": "me",
+   "line": {
+    "ko": "(회계 파일에서 이상한 숫자를 발견했다. 윗선 결재가 다 되어 있다.)",
+    "en": "(You found strange numbers in the accounting files. Signed off all the way up.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "공익신고한다",
+      "en": "Blow the whistle"
+     },
+     "w": {
+      "VINDICATED": 0.45,
+      "PUNISHED": 0.55
+     }
+    },
+    {
+     "t": {
+      "ko": "(못 본 걸로 한다)",
+      "en": "(Pretend you never saw it)"
+     },
+     "w": {
+      "SILENT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "VINDICATED": {
+     "r": {
+      "ko": "뉴스에 회사 이름이 나왔다. 내 이름은 보호됐다. 수사가 시작됐다.",
+      "en": "The company's name was on the news. Yours was protected. An investigation began."
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "Blew the whistle",
+       "tags": [
+        "event"
+       ]
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "공익신고",
+       "en": "Blowing the whistle"
+      },
+      "location": "court",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     },
+     "chain": [
+      {
+       "to": "LAWSUIT_WIN",
+       "after": [
+        12,
+        36
+       ],
+       "p": 0.3
+      }
+     ]
+    },
+    "PUNISHED": {
+     "r": {
+      "ko": "나는 창고 관리 부서로 발령 났다. 그래도 후회하지 않는다.",
+      "en": "They transferred you to warehouse management. You don't regret it."
+     },
+     "effects": [
+      {
+       "kind": "careerLevel",
+       "delta": -1
+      }
+     ]
+    },
+    "SILENT": {
+     "r": {
+      "ko": "1년 뒤, 그 일이 다른 사람의 신고로 터졌다. 마음 한쪽이 무거웠다.",
+      "en": "A year later someone else blew the whistle. Part of you felt heavy."
+     }
+    }
+   }
+  },
+  {
+   "id": "IDEA_STOLEN",
+   "cat": "career",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "employed",
+    "!selfEmployed"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.36,
+     "SATURN>MC:conjunction": 0.3,
+     "group:PYEON_GWAN": 0.36,
+     "group:SANG_GWAN": 0.54,
+     "unfavorable": 0.24,
+     "group:SIK_SHIN": 0.42,
+     "JUPITER@H5": 0.24,
+     "URANUS>SUN:conjunction": 0.24
+    }
+   },
+   "location": "office",
+   "activity": "meeting",
+   "who": "me",
+   "line": {
+    "ko": "(임원 보고 자리. 팀장이 발표하는 기획안은 — 지난주 내가 쓴 것이었다. 내 이름은 없었다.)",
+    "en": "(At the executive briefing, your manager presented a proposal — the one you wrote last week. Your name wasn't on it.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "회의 끝나고 따로 따진다",
+      "en": "Confront them after"
+     },
+     "w": {
+      "CREDIT": 0.4,
+      "COLD": 0.6
+     }
+    },
+    {
+     "t": {
+      "ko": "임원에게 메일로 초안 기록을 보낸다",
+      "en": "Email the executive your draft history"
+     },
+     "w": {
+      "CREDIT": 0.6,
+      "ENEMY": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(삼킨다)",
+      "en": "(Swallow it)"
+     },
+     "w": {
+      "COLD": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CREDIT": {
+     "r": {
+      "ko": "다음 보고서부터 내 이름이 맨 앞에 올라갔다.",
+      "en": "From the next report on, your name went first."
+     },
+     "effects": [
+      {
+       "kind": "careerLevel",
+       "delta": 1
+      }
+     ]
+    },
+    "ENEMY": {
+     "r": {
+      "ko": "인정은 받았지만, 팀장과는 원수가 됐다.",
+      "en": "You got the credit — and a manager who's now your enemy."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "workEnemy",
+       "value": true
+      }
+     ]
+    },
+    "COLD": {
+     "r": {
+      "ko": "그 뒤로 기획안에 날짜와 이름을 꼭 적는다.",
+      "en": "Since then, you date and sign every proposal."
+     }
+    }
+   }
+  },
+  {
+   "id": "COMPANY_UNDER",
+   "cat": "career",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "폐업 공지",
+    "en": "The closing notice"
+   },
+   "requires": [
+    "employed",
+    "!selfEmployed"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.36,
+     "SATURN>MC:conjunction": 0.3,
+     "group:PYEON_GWAN": 0.36,
+     "group:SANG_GWAN": 0.24,
+     "unfavorable": 0.54,
+     "group:GYEOB_JAE": 0.48,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "SAMJAE": 0.36,
+     "BRANCH_CLASH@month": 0.18
+    },
+    "mods": {
+     "career": -0.4
+    }
+   },
+   "location": "office",
+   "activity": "farewell",
+   "who": "work",
+   "line": {
+    "ko": "[전체 공지] 경영 악화로 이달 말부로 회사 운영을 종료합니다. 그동안 감사했습니다.",
+    "en": "[All-staff notice] Due to financial trouble, the company will cease operations at the end of the month. Thank you for everything."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(동료들과 마지막 회식을 한다)",
+      "en": "(Have one last team dinner)"
+     },
+     "w": {
+      "END": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(바로 이력서를 쓴다)",
+      "en": "(Start your résumé right away)"
+     },
+     "w": {
+      "QUICK": 0.5,
+      "END": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "END": {
+     "r": {
+      "ko": "마지막 날, 텅 빈 사무실 불을 내가 껐다.",
+      "en": "On the last day, you were the one who switched off the lights in the empty office."
+     },
+     "effects": [
+      {
+       "kind": "quitJob"
+      }
+     ],
+     "card": "LAYOFF"
+    },
+    "QUICK": {
+     "r": {
+      "ko": "공지 3주 만에 새 회사에 붙었다. 운이 좋았다.",
+      "en": "Three weeks after the notice, you landed somewhere new. Lucky."
+     },
+     "effects": [
+      {
+       "kind": "job"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "TRANSFER_ABROAD",
+   "cat": "career",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "해외 발령",
+    "en": "Posted abroad"
+   },
+   "requires": [
+    "employed",
+    "!selfEmployed",
+    "!abroad",
+    "age>=26",
+    "age<=50"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.63,
+     "JUPITER@H9": 0.42,
+     "JUPITER@H4": 0.28,
+     "URANUS>ASC:conjunction": 0.28,
+     "group:JEONG_GWAN": 0.42,
+     "JUPITER@H10": 0.49,
+     "JUPITER>MC:conjunction": 0.42,
+     "favorable": 0.28
+    },
+    "mods": {
+     "overseas": 0.6,
+     "career": 0.3
+    }
+   },
+   "location": "office",
+   "activity": "meeting",
+   "who": "boss",
+   "line": {
+    "ko": "해외 지사에 자리가 났어요. 3년 파견. 가줄 수 있겠어요?",
+    "en": "There's an opening at an overseas branch. A three-year posting. Would you go?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "가겠습니다",
+      "en": "I'll go"
+     },
+     "w": {
+      "GO": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "가족과 상의해 볼게요",
+      "en": "Let me talk it over with family"
+     },
+     "w": {
+      "GO": 0.5,
+      "STAY": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "어렵겠습니다",
+      "en": "I can't"
+     },
+     "w": {
+      "STAY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "GO": {
+     "r": {
+      "ko": "공항에서 사원증 대신 여권을 꽉 쥐었다. 새 도시, 새 책상.",
+      "en": "At the airport you gripped your passport instead of your ID badge. A new city, a new desk."
+     },
+     "effects": [
+      {
+       "kind": "moveAbroad"
+      },
+      {
+       "kind": "job",
+       "abroad": true
+      },
+      {
+       "kind": "careerLevel",
+       "delta": 1
+      }
+     ],
+     "card": "FLIGHT"
+    },
+    "STAY": {
+     "r": {
+      "ko": "다른 사람이 갔다. 그 사람의 SNS 사진을 가끔 본다.",
+      "en": "Someone else went. Sometimes you look at their photos online."
+     }
+    }
+   }
+  },
+  {
+   "id": "BURNOUT",
+   "cat": "career",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "employed",
+    "!selfEmployed",
+    "age>=25"
+   ],
+   "repeatable": true,
+   "cooldown": 120,
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.78,
+     "SATURN>MC:conjunction": 0.3,
+     "group:PYEON_GWAN": 0.36,
+     "group:SANG_GWAN": 0.24,
+     "unfavorable": 0.48,
+     "SATURN>MOON:hard": 0.36,
+     "SATURN@H6": 0.3,
+     "SATURN@H12": 0.24,
+     "SAMJAE": 0.24
+    },
+    "mods": {
+     "stability": -0.4,
+     "career": 0.2
+    },
+    "traits": {
+     "careerDrive": 0.3
+    }
+   },
+   "location": "home",
+   "activity": "sleep",
+   "who": "me",
+   "line": {
+    "ko": "(월요일 아침, 알람이 울려도 몸이 움직이지 않는다. 회사 메신저 알림만 봐도 가슴이 뛴다.)",
+    "en": "(Monday morning. The alarm rings and your body won't move. Your heart races at the sight of a work-chat notification.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "휴직계를 낸다",
+      "en": "File for leave"
+     },
+     "w": {
+      "REST": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(오늘도 출근한다)",
+      "en": "(Go to work anyway)"
+     },
+     "w": {
+      "PUSH": 0.6,
+      "CRASH": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "상담을 받아본다",
+      "en": "See a counselor"
+     },
+     "w": {
+      "HELP": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "REST": {
+     "r": {
+      "ko": "석 달을 쉬었다. 처음으로 동네 공원에 벚꽃이 피는 걸 봤다.",
+      "en": "Three months off. For the first time, you watched the cherry blossoms open in the neighborhood park."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -5
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "처음 본 동네 벚꽃",
+       "en": "The first cherry blossoms I noticed"
+      },
+      "location": "park",
+      "actors": [
+       "me"
+      ],
+      "priority": 5
+     }
+    },
+    "PUSH": {
+     "r": {
+      "ko": "버텼다. 주말은 잠으로만 채워졌다.",
+      "en": "You pushed through. Weekends were only for sleep."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "burnout",
+       "value": true
+      }
+     ]
+    },
+    "CRASH": {
+     "r": {
+      "ko": "회의 도중 숨이 막혀 쓰러졌다. 병원 침대에서 사표를 생각했다.",
+      "en": "Mid-meeting, you couldn't breathe and collapsed. In a hospital bed, you thought about quitting."
+     },
+     "effects": [
+      {
+       "kind": "quitJob"
+      }
+     ]
+    },
+    "HELP": {
+     "r": {
+      "ko": "'많이 애쓰셨네요.' 그 한마디에 한참 울었다.",
+      "en": "'You've been trying so hard.' At those words, you cried for a long time."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "burnout"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CAREER_CHANGE_40",
+   "cat": "career",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "두 번째 인생",
+    "en": "A second life"
+   },
+   "requires": [
+    "age>=38",
+    "age<=50"
+   ],
+   "trigger": {
+    "signals": {
+     "daeunShift": 0.8,
+     "URANUS>SUN:hard": 0.5,
+     "URANUS>MC:conjunction": 0.5,
+     "group:SIK_SHIN": 0.3
+    },
+    "mods": {
+     "change": 0.6,
+     "career": -0.2
+    },
+    "traits": {
+     "novelty": 0.4
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(마흔. 문득, 평생 이 일만 하다 끝나는 게 무서워졌다. 오래전 접어둔 꿈이 떠오른다.)",
+    "en": "(Forty. Suddenly, ending your life having done only this terrifies you. A dream you folded away long ago comes back.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "학원에 등록한다",
+      "en": "Sign up for classes"
+     },
+     "w": {
+      "NEW": 0.6,
+      "HARD": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(지금은 현실을 산다)",
+      "en": "(Live in reality for now)"
+     },
+     "w": {
+      "STAY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "NEW": {
+     "r": {
+      "ko": "제빵 학원 최고령 수강생이 됐다. 1년 뒤, 작은 빵집 간판을 달았다.",
+      "en": "You became the oldest student at baking school. A year later, you hung the sign on a tiny bakery."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "second-career"
+      },
+      {
+       "kind": "money",
+       "amount": -10
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "마흔의 빵집",
+       "en": "A bakery at forty"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     },
+     "lean": {
+      "traits": {
+       "novelty": 0.4
+      }
+     }
+    },
+    "HARD": {
+     "r": {
+      "ko": "생각보다 어려웠다. 그래도 주말마다 빵을 굽는 사람이 됐다.",
+      "en": "Harder than you thought. Still, you became someone who bakes every weekend."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      }
+     ]
+    },
+    "STAY": {
+     "r": {
+      "ko": "꿈은 서랍에 넣어두었다. 가끔 꺼내 본다.",
+      "en": "You put the dream back in the drawer. You take it out now and then."
+     }
+    }
+   }
+  },
+  {
+   "id": "SCOUTED",
+   "cat": "career",
+   "rarity": "rare",
+   "tone": "light",
+   "requires": [
+    "age>=16",
+    "age<=30"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.3,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2,
+     "group:JEONG_GWAN": 0.3,
+     "JUPITER@H10": 0.35,
+     "JUPITER>MC:conjunction": 0.3,
+     "favorable": 0.2
+    },
+    "mods": {
+     "opportunity": 0.4
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "scout",
+   "line": {
+    "ko": "(명동 한복판) 저기요! 혹시 연예계 관심 있으세요? 저희 기획사에서 모델을 찾고 있어요.",
+    "en": "(In the middle of Myeongdong) Excuse me! Are you interested in entertainment? Our agency is looking for models."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "명함을 받는다",
+      "en": "Take the card"
+     },
+     "w": {
+      "REAL": 0.5,
+      "SCAM": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "괜찮아요",
+      "en": "No thanks"
+     },
+     "w": {
+      "NO": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "REAL": {
+     "r": {
+      "ko": "잡지 한 페이지에 내 얼굴이 실렸다. 부모님이 열 권을 샀다.",
+      "en": "Your face ended up on one magazine page. Your parents bought ten copies."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 5
+      },
+      {
+       "kind": "setFlag",
+       "name": "famous",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "잡지 한 페이지",
+       "en": "One magazine page"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 6
+     }
+    },
+    "SCAM": {
+     "r": {
+      "ko": "'프로필 촬영비'부터 내라고 했다. 백만 원을 내고서야 알았다.",
+      "en": "First, pay for 'profile photos,' they said. You only realized after paying a million won."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -1
+      }
+     ]
+    },
+    "NO": {
+     "r": {
+      "ko": "명함을 받지 않았다. 가끔 '그때 받았으면' 하고 생각한다.",
+      "en": "You didn't take the card. Sometimes you wonder, 'What if?'"
+     }
+    }
+   }
+  },
+  {
+   "id": "CONTEST_WIN",
+   "cat": "career",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "age>=16"
+   ],
+   "trigger": {
+    "signals": {
+     "group:SIK_SHIN": 0.49,
+     "group:SANG_GWAN": 0.35,
+     "JUPITER@H5": 0.28,
+     "URANUS>SUN:conjunction": 0.28,
+     "group:JEONG_GWAN": 0.42,
+     "JUPITER@H10": 0.49,
+     "JUPITER>MC:conjunction": 0.42,
+     "favorable": 0.28
+    },
+    "mods": {
+     "creativity": 0.5
+    },
+    "traits": {
+     "creativity": 0.4
+    }
+   },
+   "location": "university",
+   "activity": "club_activity",
+   "who": "app",
+   "line": {
+    "ko": "[공모전] 축하드립니다. 귀하의 작품이 대상으로 선정되었습니다.",
+    "en": "[Contest] Congratulations. Your entry has been selected for the grand prize."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(시상식에 간다)",
+      "en": "(Go to the ceremony)"
+     },
+     "w": {
+      "PRIZE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "PRIZE": {
+     "r": {
+      "ko": "무대 위에서 상패를 받았다. 소감은 하나도 기억이 안 난다.",
+      "en": "You accepted the plaque on stage. You can't remember a word of your speech."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 10
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "대상",
+       "en": "Grand prize"
+      },
+      "location": "university",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 7
+     },
+     "chain": [
+      {
+       "to": "PLAGIARISM_ACCUSED",
+       "after": [
+        2,
+        10
+       ],
+       "p": 0.15
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "VIRAL_POST",
+   "cat": "career",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=15"
+   ],
+   "trigger": {
+    "signals": {
+     "group:SIK_SHIN": 0.42,
+     "group:SANG_GWAN": 0.3,
+     "JUPITER@H5": 0.24,
+     "URANUS>SUN:conjunction": 0.24
+    },
+    "mods": {
+     "communication": 0.5,
+     "volatility": 0.3
+    }
+   },
+   "location": "online_community",
+   "activity": "post",
+   "who": "app",
+   "line": {
+    "ko": "[SNS] 자고 일어났더니 어젯밤 올린 글이 조회수 300만. 휴대폰이 뜨겁다.",
+    "en": "[Social media] You woke up to three million views on last night's post. Your phone is hot."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "인터뷰 요청에 응한다",
+      "en": "Accept the interview requests"
+     },
+     "w": {
+      "FAME": 0.7,
+      "BACKLASH": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(알림을 끄고 잔다)",
+      "en": "(Mute notifications and go back to sleep)"
+     },
+     "w": {
+      "QUIET": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "FAME": {
+     "r": {
+      "ko": "아침 뉴스에 내 글이 소개됐다. 일주일 동안 유명인이었다.",
+      "en": "Your post was featured on the morning news. You were famous for a week."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "famous",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "CYBER_WRECKER",
+       "after": [
+        6,
+        24
+       ],
+       "p": 0.2
+      }
+     ]
+    },
+    "BACKLASH": {
+     "r": {
+      "ko": "칭찬 반, 악플 반. 인터넷은 무서운 곳이었다.",
+      "en": "Half praise, half hate. The internet is a scary place."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "famous",
+       "value": true
+      },
+      {
+       "kind": "social",
+       "delta": -0.05
+      }
+     ]
+    },
+    "QUIET": {
+     "r": {
+      "ko": "일주일 뒤 모두가 잊었다. 나만 캡처해 뒀다.",
+      "en": "A week later, everyone forgot. Only you kept a screenshot."
+     }
+    }
+   }
+  },
+  {
+   "id": "EX_IS_COWORKER",
+   "cat": "career",
+   "rarity": "rare",
+   "tone": "romance",
+   "requires": [
+    "employed",
+    "!selfEmployed",
+    "hasEx"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.36,
+     "STEM_COMBINATION@day": 0.24,
+     "SIX_HARMONY@day": 0.2,
+     "JUPITER@H5": 0.16,
+     "JUPITER@H7": 0.16,
+     "SR:SUN@H5": 0.16,
+     "SR:SUN@H7": 0.16,
+     "BRANCH_CLASH@day": 0.32,
+     "HARM@day": 0.2,
+     "PUNISHMENT@day": 0.16,
+     "URANUS>VENUS:hard": 0.28,
+     "group:GYEOB_JAE": 0.2,
+     "SATURN>VENUS:hard": 0.16
+    }
+   },
+   "location": "office",
+   "activity": "work",
+   "who": "boss",
+   "line": {
+    "ko": "다들 인사해요. 오늘부터 우리 팀에서 같이 일할 분입니다. (…헤어진 {ex}였다.)",
+    "en": "Everyone, say hello. This is our new team member, starting today. (…It was {ex}. Your ex.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(프로답게 악수한다)",
+      "en": "(Shake hands like a professional)"
+     },
+     "w": {
+      "PRO": 0.7,
+      "SPARK": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(화장실로 도망친다)",
+      "en": "(Flee to the restroom)"
+     },
+     "w": {
+      "AWKWARD": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "PRO": {
+     "r": {
+      "ko": "일은 일이다. 회의에서 {ex}와(과) 눈을 마주치지 않는 기술이 늘었다.",
+      "en": "Work is work. You got very good at not meeting {ex}'s eyes in meetings."
+     }
+    },
+    "SPARK": {
+     "r": {
+      "ko": "야근 끝 엘리베이터. {ex}이(가) 말했다. '우리 그때 왜 헤어졌지?'",
+      "en": "The elevator after a late night. {ex} said, 'Why did we break up, back then?'"
+     },
+     "chain": [
+      {
+       "to": "EX_COWORKER_AGAIN",
+       "after": [
+        2,
+        8
+       ],
+       "p": 0.8
+      }
+     ]
+    },
+    "AWKWARD": {
+     "r": {
+      "ko": "화장실 거울 앞에서 5분 동안 심호흡을 했다.",
+      "en": "You spent five minutes breathing deeply in front of the restroom mirror."
+     }
+    }
+   }
+  },
+  {
+   "id": "EX_COWORKER_AGAIN",
+   "cat": "career",
+   "rarity": "common",
+   "tone": "romance",
+   "requires": [
+    "single",
+    "hasEx",
+    "employed"
+   ],
+   "chainOnly": true,
+   "location": "restaurant",
+   "activity": "eat",
+   "who": "ex",
+   "line": {
+    "ko": "오늘 끝나고 저녁 먹을래? 그냥… 옛날 얘기나 하자.",
+    "en": "Want to get dinner after work today? Just… to talk about old times."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "그래, 먹자",
+      "en": "Sure, let's eat"
+     },
+     "w": {
+      "AGAIN": 0.5,
+      "CLOSURE": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "미안, 선은 지키자",
+      "en": "Sorry — let's keep it professional"
+     },
+     "w": {
+      "CLOSURE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "AGAIN": {
+     "r": {
+      "ko": "같은 식당, 같은 메뉴. 그리고 같은 설렘.",
+      "en": "Same restaurant, same dish. Same flutter."
+     },
+     "effects": [
+      {
+       "kind": "startDatingEx"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시, 같은 식당",
+       "en": "The same restaurant, again"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 7
+     }
+    },
+    "CLOSURE": {
+     "r": {
+      "ko": "처음으로 그때 이야기를 담담하게 나눴다. 그걸로 충분했다.",
+      "en": "For the first time, you talked calmly about back then. That was enough."
+     }
+    }
+   }
+  },
+  {
+   "id": "BOSS_IS_PARTNERS_PARENT",
+   "cat": "career",
+   "rarity": "rare",
+   "tone": "light",
+   "requires": [
+    "employed",
+    "!selfEmployed",
+    "dating"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.36,
+     "STEM_COMBINATION@day": 0.24,
+     "SIX_HARMONY@day": 0.2,
+     "JUPITER@H5": 0.16,
+     "JUPITER@H7": 0.16,
+     "SR:SUN@H5": 0.16,
+     "SR:SUN@H7": 0.16,
+     "group:JEONG_GWAN": 0.24,
+     "JUPITER@H10": 0.28,
+     "JUPITER>MC:conjunction": 0.24,
+     "favorable": 0.16
+    }
+   },
+   "location": "restaurant",
+   "activity": "meet_parents",
+   "who": "me",
+   "line": {
+    "ko": "({partner}의 부모님을 처음 뵙는 날. 문을 열고 들어오신 분은 — 우리 회사 본부장님이었다.)",
+    "en": "(Meeting {partner}'s parents for the first time. The person who walked in was — the head of your division at work.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(90도로 인사한다)",
+      "en": "(Bow at a perfect ninety degrees)"
+     },
+     "w": {
+      "LAUGH": 0.6,
+      "TENSE": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "본부장님, 아니 아버님…?",
+      "en": "Director— I mean, sir…?"
+     },
+     "w": {
+      "LAUGH": 0.7,
+      "TENSE": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "LAUGH": {
+     "r": {
+      "ko": "정적 끝에 본부장님이 크게 웃으셨다. '어쩐지 보고서가 낯익더라.'",
+      "en": "After a silence, the director burst out laughing. 'No wonder your reports looked familiar.'"
+     },
+     "card": {
+      "caption": {
+       "ko": "본부장님이 아버님",
+       "en": "My boss, my future in-law"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "partner",
+       "inlaw"
+      ],
+      "priority": 7
+     }
+    },
+    "TENSE": {
+     "r": {
+      "ko": "그 주 월요일, 회의실 공기가 유난히 무거웠다.",
+      "en": "That Monday, the conference room felt unusually heavy."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "inlawTension",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "FREELANCE_NOT_PAID",
+   "cat": "career",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "selfEmployed"
+   ],
+   "repeatable": true,
+   "cooldown": 72,
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.4,
+     "URANUS@H2": 0.3,
+     "URANUS@H8": 0.25,
+     "SAMJAE": 0.3,
+     "unfavorable": 0.45,
+     "BRANCH_CLASH@month": 0.15,
+     "SATURN>SUN:hard": 0.3,
+     "SATURN>MC:conjunction": 0.25,
+     "group:PYEON_GWAN": 0.3,
+     "group:SANG_GWAN": 0.2
+    },
+    "mods": {
+     "business": -0.3
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(납품한 지 석 달. 클라이언트가 전화도, 메일도 받지 않는다. 받을 돈은 두 달 치 생활비.)",
+    "en": "(Three months since delivery. The client won't answer calls or emails. They owe you two months of living costs.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "내용증명을 보낸다",
+      "en": "Send a formal demand letter"
+     },
+     "w": {
+      "PAID": 0.6,
+      "SUE": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(수업료라고 생각한다)",
+      "en": "(Call it tuition)"
+     },
+     "w": {
+      "LOST": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "PAID": {
+     "r": {
+      "ko": "내용증명 도착 이틀 만에 입금됐다. '담당자가 바뀌어서…'",
+      "en": "Two days after the letter arrived, the money came in. 'The person in charge changed, so…'"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 6
+      }
+     ]
+    },
+    "SUE": {
+     "r": {
+      "ko": "소액 소송을 걸었다. 긴 싸움이 됐다.",
+      "en": "You filed a small-claims suit. It turned into a long fight."
+     },
+     "chain": [
+      {
+       "to": "LAWSUIT_WIN",
+       "after": [
+        6,
+        18
+       ],
+       "p": 0.6
+      }
+     ]
+    },
+    "LOST": {
+     "r": {
+      "ko": "계약서 쓰는 법을 제대로 배웠다. 비싼 수업이었다.",
+      "en": "You learned how to write a proper contract. An expensive lesson."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "COWORKER_HEIR",
+   "cat": "career",
+   "rarity": "rare",
+   "tone": "light",
+   "requires": [
+    "employed",
+    "!selfEmployed"
+   ],
+   "trigger": {
+    "signals": {
+     "group:JEONG_GWAN": 0.3,
+     "JUPITER@H10": 0.35,
+     "JUPITER>MC:conjunction": 0.3,
+     "favorable": 0.4,
+     "group:PYEON_JAE": 0.4,
+     "JUPITER@H2": 0.35,
+     "JUPITER@H8": 0.3,
+     "CHEONEUL_GWIIN": 0.5,
+     "JUPITER>SUN:harmonious": 0.2
+    }
+   },
+   "location": "office",
+   "activity": "lunch_with_coworkers",
+   "who": "coworker",
+   "line": {
+    "ko": "사실 나… 이 회사 회장 손주야. 조용히 현장부터 배우라고 해서. 비밀 지켜줄 수 있지?",
+    "en": "Actually… I'm the chairman's grandchild. They told me to learn from the ground up, quietly. You'll keep it a secret, right?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(편의점 도시락 같이 먹던 너가?!)",
+      "en": "(You — the one who ate convenience-store lunches with me?!)"
+     },
+     "w": {
+      "FRIENDS": 0.7,
+      "DISTANCE": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "그래서 뭐, 우리 사이는 그대로야",
+      "en": "So what? Nothing changes between us"
+     },
+     "w": {
+      "FRIENDS": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "FRIENDS": {
+     "r": {
+      "ko": "몇 년 뒤 그 동료가 대표가 됐다. 첫 인사 발령에 내 이름이 있었다.",
+      "en": "Years later, that coworker became CEO. Your name was on the first round of promotions."
+     },
+     "effects": [
+      {
+       "kind": "careerLevel",
+       "delta": 1
+      },
+      {
+       "kind": "newFriend"
+      }
+     ]
+    },
+    "DISTANCE": {
+     "r": {
+      "ko": "그날 이후 점심이 어색해졌다. 비밀은 끝까지 지켰다.",
+      "en": "Lunch got awkward after that. You kept the secret to the end."
+     }
+    }
+   }
+  }
+ ]
+}

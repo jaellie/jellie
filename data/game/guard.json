@@ -177,6 +177,33 @@
    "requires": [
     "abroad"
    ]
+  },
+  {
+   "id": "weekday",
+   "keywords": [
+    "내일 회의",
+    "오늘 회의",
+    "Tomorrow's meeting",
+    "today's meeting"
+   ],
+   "requires": [
+    "!weekend"
+   ]
+  },
+  {
+   "id": "boss",
+   "keywords": [
+    "[팀장]",
+    "팀장님",
+    "[Manager]",
+    "[부장]",
+    "부장님",
+    "과장님"
+   ],
+   "requires": [
+    "employed",
+    "!selfEmployed"
+   ]
   }
  ]
 }

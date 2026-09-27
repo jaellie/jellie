@@ -33,7 +33,13 @@ import { weekdayOf, seasonOf } from "../world/clock";
 import { generateNpc, habitSlot, knowsName } from "../world/npcs";
 import { aliveSiblings, siblingSender } from "../story/family";
 import { type CrowdState, stepCrowd } from "../world/walkers";
+import { lifeEvent, nextDueEvent, pendingApplies, rollLifeEvents, weekdayOnly } from "../story/lifeEvents";
+import { resolveLifeEvent, resolveStaleEvents } from "../story/lifeEventRuntime";
+import "../story/eventLibrary";
+import { yearSignalMap } from "../story/destinyScript";
+import { type AstrologyChart, calculateAstrologyChart } from "../astrology/chart";
 import { compatibility } from "../destiny/compatibility";
+import { type BirthplaceInput, resolveBirth } from "../destiny/birthplace";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
 import type { RelationshipOriginType } from "../world/types";
 import { resolveWorldEvent } from "../world/decisions";
@@ -44,12 +50,12 @@ import { toPrototypeScene, type PrototypeScene } from "../integration/prototype"
 import { WorldEngine } from "../world/worldEngine";
 import type { NPCSchedule } from "../world/types";
 import { type LifeFacts, computeFacts, meets } from "./facts";
-import { STORY_ONLY_TEMPLATES, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
+import { STORY_ONLY_TEMPLATES, eventDayWanted, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
 import { buildCards, type MemoryCard } from "../story/cards";
 import memorialData from "../../data/story/memorial.json";
 import { AutoWorldPolicy } from "../world/decisions";
 import { DIRECTOR_CONFIG as CFG, Director, type DirectorMemory, newDirectorMemory, SPEAKER_FALLBACK, SPEAKER_REQUIRES } from "./director";
-import { type Bi, type Lang, CITY_KO, COUNTRY_KO, DEST_KO, EDU_KO, SPEAKER_NAME, bi, fillNames, fixJosa, krw } from "./text";
+import { type Bi, type Lang, CITY_KO, COUNTRY_KO, DEST_KO, EDU_KO, SPEAKER_NAME, bi, fillNames, fixJosa, krw, langVars } from "./text";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -63,6 +69,13 @@ export interface GameSetup {
   /** Solar birth date (convert lunar in the UI first). Time optional. */
   birth: { year: number; month: number; day: number; hour?: number; minute?: number };
   mbti?: string;
+  /**
+   * Where the player was born: a city name ("부산", "New York", "LA") or coordinates
+   * ({ lat, lon, tz? }). Sets the Ascendant/MC/houses and the clock (historical UTC offset,
+   * daylight time) for the birth time. Default: Seoul.
+   */
+  birthplace?: BirthplaceInput;
+  /** @deprecated coordinates only — use `birthplace`. */
   place?: BirthPlace;
   lang?: Lang;
   seed?: number;
@@ -79,6 +92,8 @@ export interface GameSetup {
     gender?: "F" | "M";
     mbti?: string;
     birth?: { year: number; month: number; day: number; hour?: number; minute?: number };
+    /** Where they were born (city name or coordinates). Default: the player's birthplace. */
+    birthplace?: BirthplaceInput;
     from?: "same" | "city" | "abroad";
     status?: "crush" | "dating" | "stranger";
     job?: string;
@@ -107,7 +122,7 @@ export interface DayInfo {
 
 export interface Popup {
   id: string;
-  source: "opportunity" | "world" | "story" | "plan";
+  source: "opportunity" | "world" | "story" | "plan" | "event";
   /** Portrait role: me | mom | dad | boss | partner | friend | npc | stranger … */
   who: string;
   name?: string;
@@ -152,6 +167,8 @@ interface Pending {
   storyRef?: string;
   patient?: string;
   vars?: Record<string, string>;
+  /** A life event from the library (see story/lifeEvents). */
+  eventUid?: string;
 }
 
 export interface PlanOption {
@@ -166,7 +183,7 @@ export interface PlanOption {
 
 interface AgendaItem {
   t: number;
-  k: "major" | "small" | "message" | "plan" | "story" | "story2" | "hint";
+  k: "major" | "small" | "message" | "plan" | "story" | "story2" | "hint" | "event";
 }
 
 export interface GameSave {
@@ -195,6 +212,8 @@ export interface GameSave {
   /** A second, lighter story moment sharing today (afternoon). */
   dayKind2?: "fated" | "arc";
   dayRef2?: string;
+  /** Today's life event (library), if one surfaces. */
+  eventUid?: string;
   /** Fated event foreshadowed today. */
   hintRef?: string;
   pending?: Pending;
@@ -268,8 +287,11 @@ export class Game {
     return new SeededRandom(hash(this.s.seed, this.s.dayIndex, this.s.minute, ...purpose));
   }
   private birthData(): BirthData {
-    const b = this.s.setup.birth;
-    return { year: b.year, month: b.month, day: b.day, hour: b.hour, minute: b.minute, sex: this.s.setup.gender === "M" ? "MALE" : "FEMALE" };
+    return birthOf(this.s.setup);
+  }
+  /** The player's birth as the charts read it: birthplace, clock offset, daylight time taken out for 사주. */
+  birthInfo(): { birth: BirthData; place: BirthPlace; clockOffsetMinutes: number; dstMinutes: number; known: boolean } {
+    return birthResolved(this.s.setup);
   }
   attraction(): "MALE" | "FEMALE" | "ANY" {
     const l = this.s.setup.likes;
@@ -281,7 +303,7 @@ export class Game {
       seed,
       birthData: this.birthData(),
       duration: 0,
-      profile: { name: st.name, mbti: st.mbti, birthPlace: st.place },
+      profile: { name: st.name, mbti: st.mbti, birthPlace: placeOf(st) },
       world: { attraction: this.attraction(), maxHabitVisits: 4, policy: new OffscreenPolicy() },
       mortality: true,
       excludeTemplates: STORY_ONLY_TEMPLATES,
@@ -320,6 +342,15 @@ export class Game {
       const sib = aliveSiblings(st)[0];
       if (sib) return { gender: sib.sex === "MALE" ? "M" : "F", seed: sib.spriteSeed };
     }
+    if (role === "kid" && st.kids?.[0]) return { gender: st.kids[0].sex === "MALE" ? "M" : "F", seed: st.kids[0].spriteSeed };
+    if (role === "ex") {
+      const ex = [...st.npcs].reverse().find((n) => n.role === "EX");
+      if (ex) return fromNpc(ex.id) ?? {};
+    }
+    if (role === "fated" && w) {
+      const fated = Object.values(w.npcs).find((n) => n.fated);
+      if (fated) return fromNpc(fated.id) ?? {};
+    }
     if (role === "friend" && w) {
       const best = Object.values(w.relationships).filter((r) => r.stage === "FRIEND" || r.stage === "CLOSE_FRIEND").sort((a, b) => b.closeness - a.closeness)[0];
       if (best) return fromNpc(best.npcId) ?? {};
@@ -339,6 +370,9 @@ export class Game {
     if (role === "partner") return f.partnerName ?? this.L(bi("연인", "Partner"));
     if (role === "friend") return f.friendName ?? this.L(bi("친구", "Friend"));
     if (role === "sibling") return this.siblingSender() ?? this.L(bi("형제", "Sibling"));
+    if (role === "kid") return f.kidName ?? this.L(bi("아이", "My kid"));
+    if (role === "ex") return f.exName ?? this.L(bi("전 애인", "My ex"));
+    if (role === "fated" && f.fatedName) return f.fatedName;
     return this.L(SPEAKER_NAME[role] ?? bi(role, role));
   }
   /** The living sibling who texts you: an older one by title (오빠), a younger one by name. */
@@ -353,10 +387,15 @@ export class Game {
     const st = this.state;
     const rng = this.rng("day");
     const date = { year: st.date.year, month: st.date.month, day: rng.int(1, 28) };
-    // Quiet days are often weekends — that's when you choose how to spend your time.
-    if ((s.dayKind ?? "calm") === "calm" && rng.chance(0.5)) {
-      while (![0, 6].includes(weekdayOf(date.year, date.month, date.day))) date.day = date.day >= 28 ? 1 : date.day + 1;
+    // Quiet days are often weekends — that's when you choose how to spend your time —
+    // unless today's life event happens somewhere closed at weekends (the court, the office).
+    const upcoming = st.story ? nextDueEvent(st, { ...computeFacts(st), weekend: false }) : undefined;
+    const needWeekday = !!upcoming && weekdayOnly(upcoming.def);
+    const nextDay = (d: typeof date) => (d.day = d.day >= 28 ? 1 : d.day + 1);
+    if ((s.dayKind ?? "calm") === "calm" && rng.chance(0.5) && !needWeekday) {
+      while (![0, 6].includes(weekdayOf(date.year, date.month, date.day))) nextDay(date);
     }
+    if (needWeekday) while ([0, 6].includes(weekdayOf(date.year, date.month, date.day))) nextDay(date);
     st.date = { ...date };
     const weekday = weekdayOf(date.year, date.month, date.day);
     const weekend = weekday === 0 || weekday === 6;
@@ -413,6 +452,23 @@ export class Game {
     } else {
       agenda.push({ t: rng.int(620, 1020), k: "major" });
       if (weekend) agenda.push({ t: 600, k: "plan" });
+    }
+    // A life event (the library) surfaces on any day that isn't grave — at most one, never beside a second story moment.
+    s.eventUid = undefined;
+    const graveDay = !!storyDef && isGrave(st, s.dayKind!, s.dayRef!);
+    const ev = !graveDay && !s.dayRef2 ? nextDueEvent(st, this.facts()) : undefined;
+    if (ev) {
+      s.eventUid = ev.pending.uid;
+      const t = storyDef ? 900 : rng.int(660, 960);
+      agenda.push({ t, k: "event" });
+      if (!storyDef) b.major = 0; // the event is today's big thing
+      if (ev.def.location) {
+        const seg = { locationId: ev.def.location, activityId: ev.def.activity, from: storyDef ? 840 : t - 30, until: storyDef ? 1080 : Math.min(1260, t + 150), keep: true };
+        if (storyDef) {
+          s.dayPlan.override = undefined;
+          s.dayPlan.sequence = [{ locationId: storyDef.location, activityId: storyDef.activity, from: 600, until: 840 }, seg];
+        } else s.dayPlan.sequence = [seg];
+      }
     }
     const soon = upcomingHint(st);
     if (soon && soon.id !== s.dayRef && soon.id !== s.dayRef2) {
@@ -596,6 +652,7 @@ export class Game {
   private fire(item: AgendaItem): Beat | undefined {
     if (item.k === "story") return this.fireStory();
     if (item.k === "story2") return this.fireStory(2);
+    if (item.k === "event") return this.fireEvent();
     if (item.k === "hint") {
       const h = this.s.hintRef ? hintFor(this.state, this.s.hintRef) : undefined;
       return h ? { kind: "log", text: this.L(h) } : undefined;
@@ -604,6 +661,31 @@ export class Game {
     if (item.k === "small") return this.fireSmall();
     if (item.k === "message") return this.fireMessage();
     return this.firePlan();
+  }
+
+  /** A life event from the library: re-checked now (facts may have changed), big ones get the big popup. */
+  private fireEvent(): Beat | undefined {
+    const s = this.s;
+    const st = this.state;
+    const f = this.facts();
+    const p = st.story?.events?.pending.find((x) => x.uid === s.eventUid);
+    const def = p ? lifeEvent(p.id) : undefined;
+    if (!p || !def || !pendingApplies(st, p, def, f)) return;
+    const vars = langVars({ sibling: f.siblingName ?? "", sister: f.sisterName ?? "", brother: f.brotherName ?? "", ex: f.exName ?? "", kid: f.kidName ?? "", me: s.setup.name, ...p.vars }, s.lang);
+    const popup: Popup = {
+      id: `ev${s.dayIndex}`,
+      source: "event",
+      who: def.who,
+      name: this.speaker(def.who),
+      ...this.portrait(def.who),
+      title: def.title ? this.fill(fillStory(this.L(def.title), st, f, vars)) : undefined,
+      line: this.fill(fillStory(this.L(def.line), st, f, vars)),
+      ch: def.choices.map((c) => ({ t: this.fill(fillStory(this.L(c.t), st, f, vars)) })),
+      big: !!def.big,
+      scene: def.big && s.lastScene ? (JSON.parse(JSON.stringify(s.lastScene)) as PrototypeScene) : undefined,
+    };
+    s.pending = { popup, eventUid: p.uid, vars };
+    return { kind: "popup", popup };
   }
 
   private fireStory(slot: 1 | 2 = 1): Beat | undefined {
@@ -717,6 +799,31 @@ export class Game {
     return (lr.anglesReliable ? lr.houses.MOON : lr.natalHouses.SUN) ?? 1;
   }
 
+  // ---- life events (library) -----------------------------------------------
+  private signalCache?: { age: number; map: Record<string, number> };
+  private astroChart?: AstrologyChart;
+
+  /** This age-year's 사주/점성술 signals (도화, 역마, 편재, 삼재, transits, progressions…). */
+  private yearSignals(): Record<string, number> {
+    const st = this.state;
+    const age = Math.floor(st.age);
+    if (this.signalCache?.age === age) return this.signalCache.map;
+    this.astroChart ??= calculateAstrologyChart(birthOf(this.s.setup), placeOf(this.s.setup));
+    const map = yearSignalMap(st.chart ?? calculateNatalChart(birthOf(this.s.setup)), this.astroChart, st.birth.year, age);
+    this.signalCache = { age, map };
+    return map;
+  }
+
+  /** Monthly while time passes: maybe a new life event; long-waiting ones resolve off-screen. */
+  private eventTick(runner: LifeRunner, rng: SeededRandom): void {
+    const st = this.state;
+    if (!st.story || !st.alive) return;
+    const mods = runner.modifiers();
+    const facts = computeFacts(st);
+    rollLifeEvents(st, rng, { signals: this.yearSignals(), mods, facts });
+    resolveStaleEvents({ state: st, seed: this.s.seed, rng, mods, facts });
+  }
+
   // ---- weekend menu ---------------------------------------------------------
   weekendMenu(): PlanOption[] {
     const st = this.state;
@@ -782,7 +889,9 @@ export class Game {
   }
 
   private firePlan(): Beat | undefined {
-    const opts = this.weekendMenu();
+    // A life event with its own place today (the court, 본가…) rules out leaving town.
+    const eventPlace = (this.s.dayPlan.sequence ?? []).some((q) => q.keep);
+    const opts = this.weekendMenu().filter((o) => !(eventPlace && o.kind === "trip"));
     if (!opts.length) return;
     const f = this.facts();
     const popup: Popup = {
@@ -833,6 +942,13 @@ export class Game {
       const line = r.success === undefined ? bi("(그렇게 하기로 했다.)", "(So be it.)") : r.success ? bi("(좋다고 했다!)", "(They said yes!)") : bi("(…어색하게 웃었다.)", "(…an awkward smile.)");
       return { who: r.success === false ? p.popup.who : "me", name: p.popup.name, line: this.L(line) };
     }
+    if (p.eventUid) {
+      const label = p.popup.ch[index]?.t;
+      const res = resolveLifeEvent(p.eventUid, index, { state: st, seed: s.seed, rng, mods, facts: this.facts() });
+      if (!res) return;
+      const text = [this.L(res.r), ...res.extra.map((x) => this.L(x))].join(" ");
+      return { who: "me", line: this.fill(fillStory(text, st, this.facts(), p.vars ?? {})), log: label };
+    }
     if (p.storyRef) {
       const label = p.popup.ch[index]?.t;
       const res = resolveStory(p.storyRef, index, { state: st, seed: s.seed, rng, mods, facts: this.facts() }, label);
@@ -854,7 +970,8 @@ export class Game {
         st.money -= (CFG.tripCostUnits as Record<string, number>)[o.destination!];
         return { who: "me", line: this.L(bi("(가방 하나 메고 출발!)", "(One bag, let's go!)")), log: this.L(o.label) };
       }
-      s.dayPlan = { locationId: o.locationId, activityId: o.activityId, withPartner: o.withPartner };
+      // Today's life event keeps its own time and place (the court, 본가…); the weekend plan fills the rest.
+      s.dayPlan = { locationId: o.locationId, activityId: o.activityId, withPartner: o.withPartner, sequence: (s.dayPlan.sequence ?? []).filter((q) => q.keep) };
       return { who: "me", line: this.L(o.kind === "home" ? bi("(이불 밖은 위험해.)", "(Outside the blanket is dangerous.)") : bi("(좋아, 가보자!)", "(Okay, let's go!)")), log: this.L(o.label) };
     }
     return;
@@ -942,7 +1059,7 @@ export class Game {
    * like 상견례/결혼식/법원, or a calm day). Returns the 시간이 흐른다 data:
    * memory cards (framed scenes) for big moments, plus short summary lines.
    */
-  endDay(): { over: boolean; fromAge: number; toAge: number; lines: string[]; cards: MemoryCard[] } {
+  endDay(): { over: boolean; fromAge: number; toAge: number; lines: string[]; cards: MemoryCard[]; notes: string[] } {
     const s = this.s;
     const st = this.state;
     if (st.world?.travel) endTrip(st.world, this.rng("endtrip"));
@@ -956,10 +1073,17 @@ export class Game {
       while (st.alive && st.monthIndex < next.month) {
         runner.stepMonth();
         monthlyStoryTick(st, rng);
+        this.eventTick(runner, rng);
         // A newly started arc step (e.g. a parent's last days) can pull the next day earlier.
         const dueArc = st.story.arcs.find((x) => x.steps[x.step] && x.steps[x.step].dueMonth <= st.monthIndex + 1);
         if (dueArc && next.kind !== "arc") {
           st.story.nextDay = { month: st.monthIndex + 1, kind: "arc", ref: dueArc.id };
+          break;
+        }
+        // So can a life event that came up meanwhile: an urgent follow-up, or a life-changing one that has waited long enough.
+        const wanted = eventDayWanted(st);
+        if (wanted !== undefined && wanted <= st.monthIndex + 1 && st.story.nextDay!.month > st.monthIndex + 1) {
+          st.story.nextDay = { month: st.monthIndex + 1, kind: "calm" };
           break;
         }
       }
@@ -968,6 +1092,7 @@ export class Game {
         while (st.alive && st.monthIndex < st.story.nextDay!.month) {
           runner.stepMonth();
           monthlyStoryTick(st, rng);
+          this.eventTick(runner, rng);
         }
       }
       s.dayKind = st.story.nextDay!.kind;
@@ -980,10 +1105,16 @@ export class Game {
     }
     pruneWorld(st);
     const cards = buildCards(st, s.lang, s.seed);
-    const lines = cards.length ? cards.map((c) => c.caption) : summarize(before, snapshot(st), s.lang).bi.map((l) => l[s.lang]);
+    // Life events that resolved off-screen while time passed.
+    const nf = this.facts();
+    const notes = (st.story?.events?.notes.splice(0) ?? []).map((n) =>
+      this.fill(fillStory(this.L(n), st, nf, langVars({ sibling: nf.siblingName ?? "", ex: nf.exName ?? "", kid: nf.kidName ?? "", me: s.setup.name, ...(n.vars ?? {}) }, s.lang))),
+    );
+    const lines = [...notes, ...(cards.length ? cards.map((c) => c.caption) : summarize(before, snapshot(st), s.lang).bi.map((l) => l[s.lang]))];
     for (const c of cards) s.milestones.push({ age: c.age, ko: s.lang === "ko" ? c.caption : c.caption, en: c.caption });
     if (!cards.length) for (const l of summarize(before, snapshot(st), s.lang).bi) s.milestones.push({ age: Math.floor(st.age), ko: l.ko, en: l.en });
-    const out = { over: !st.alive, fromAge, toAge: Math.floor(st.age), lines, cards };
+    // notes: what happened meanwhile, off-screen ("사채 — 불법 이자는 무효라고 했다…"), also at the top of `lines`.
+    const out = { over: !st.alive, fromAge, toAge: Math.floor(st.age), lines, cards, notes };
     if (!st.alive) {
       s.over = true;
       return out;
@@ -1062,7 +1193,7 @@ export class Game {
   hud() {
     const st = this.state;
     const f = this.facts();
-    const job = f.employed ? bi(`회사원 L${st.career.level}`, `Employee L${st.career.level}`) : f.student ? bi("학생", "Student") : f.retired ? bi("은퇴", "Retired") : bi("구직 중", "Job hunting");
+    const job = f.employed ? jobLabel(st) : f.student ? bi("학생", "Student") : f.retired ? bi("은퇴", "Retired") : bi("구직 중", "Job hunting");
     const rel = f.married ? bi(`${f.partnerName}와(과) 결혼`, `Married to ${f.partnerName}`) : f.dating ? bi(`${f.partnerName}와(과) 연애 중`, `Dating ${f.partnerName}`) : bi("싱글", "Single");
     return {
       date: this.s.day ? this.L(this.s.day.label) : "",
@@ -1155,15 +1286,19 @@ export function createGame(input: GameSetup): Game {
   }
   st.money = Math.max(st.money, 1.85);
   st.flags.likes = setup.likes ?? (setup.gender === "F" ? "M" : "F");
+  st.flags.mbti = (setup.mbti ?? "").toUpperCase();
+  // Most Korean men have served by 25; the rest may get the letter.
+  if (setup.gender === "M") st.flags.militaryDone = new SeededRandom(hash(seed, "military")).chance(0.85);
   applyFamilySetup(st, setup, new SeededRandom(hash(seed, "family")));
   addFatedPerson(st, setup, new SeededRandom(hash(seed, "fated")));
-  initStory(st, birthOf(setup), setup.place, seed);
+  initStory(st, birthOf(setup), placeOf(setup), seed);
   // Hidden 궁합 with the destined person (never shown; it bends love outcomes as part of the chart's 70%).
   const fx = setup.fated;
   if (fx && (fx.birth || fx.mbti)) {
     const fatedNpc = Object.values(st.world?.npcs ?? {}).find((n) => n.fated);
     const sex = fatedNpc?.sex ?? (fx.gender === "M" ? "MALE" : "FEMALE");
-    const c = compatibility({ birth: birthOf(setup), mbti: setup.mbti }, { birth: fx.birth ? { ...fx.birth, sex } : undefined, mbti: fx.mbti });
+    const theirs = fx.birth ? resolveBirth({ ...fx.birth, sex }, fx.birthplace, placeOf(setup)) : undefined;
+    const c = compatibility({ birth: birthOf(setup), place: placeOf(setup), mbti: setup.mbti }, { birth: theirs?.birth, place: theirs?.place, mbti: fx.mbti });
     st.story!.compat = { score: c.score, chemistry: c.chemistry, stability: c.stability, friction: c.friction };
   }
   save.dayKind = "calm";
@@ -1179,9 +1314,30 @@ export function loadGame(json: string): Game {
   return new Game(s);
 }
 
-function birthOf(setup: GameSetup): BirthData {
+/** What the HUD calls the player's work (the career field, plus what life events made of it). */
+function jobLabel(st: LifeState): Bi {
+  const lv = st.career.level;
+  if (st.flags.shaman) return bi("무속인", "Shaman");
+  if (st.career.field === "civil-service") {
+    const grade = Math.max(1, 10 - Math.max(1, lv)); // 9급 → 1급
+    return bi(`공무원 ${grade}급`, `Civil servant, grade ${grade}`);
+  }
+  if (st.career.field === "own-business") return st.flags.influencer ? bi("크리에이터", "Creator") : bi("사장님", "Owner");
+  if (st.career.field === "second-career") return bi("새로운 일", "Second career");
+  return bi(`회사원 L${lv}`, `Employee L${lv}`);
+}
+
+/** The player's birth for the charts: local standard time at the birthplace + its UTC offset (see destiny/birthplace.ts). */
+function birthResolved(setup: GameSetup) {
   const b = setup.birth;
-  return { year: b.year, month: b.month, day: b.day, hour: b.hour, minute: b.minute, sex: setup.gender === "M" ? "MALE" : "FEMALE" };
+  const input = setup.birthplace ?? (setup.place ? { name: setup.place.name, lat: setup.place.lat, lon: setup.place.lon, tz: setup.place.tz } : undefined);
+  return resolveBirth({ year: b.year, month: b.month, day: b.day, hour: b.hour, minute: b.minute, sex: setup.gender === "M" ? "MALE" : "FEMALE" }, input);
+}
+function birthOf(setup: GameSetup): BirthData {
+  return birthResolved(setup).birth;
+}
+function placeOf(setup: GameSetup): BirthPlace {
+  return birthResolved(setup).place;
 }
 
 /** Place the destined person in the world according to setup ("same" neighborhood, another city, abroad). */

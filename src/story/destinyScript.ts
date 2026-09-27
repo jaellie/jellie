@@ -19,6 +19,7 @@
 import { SeededRandom } from "../core/rng";
 import type { SajuChart } from "../saju/chart";
 import { getAnnualFortune } from "../saju/chart";
+import { annualPillar } from "../saju/analysis/fortune";
 import { type AstrologyChart, type ChartPoint, calculateTransits } from "../astrology/chart";
 import { calculateProgressions, calculateSolarReturn, orbWeight, phaseWeight } from "../astrology/techniques";
 import type { FatedEvent, FatedTheme } from "./types";
@@ -179,6 +180,40 @@ function techniqueWeights(theme: FatedTheme, y: YearSignals, w: Record<string, n
   const out = { ...w };
   if (d.good && out[d.good] !== undefined) out[d.good] += 0.4 * t.soft;
   if (d.bad && out[d.bad] !== undefined) out[d.bad] += 0.4 * t.hard;
+  return out;
+}
+
+/** 삼재: three unlucky years by birth-year branch group (들삼재 1, 눌삼재 1.3, 날삼재 1). */
+const SAMJAE: Array<[string[], string[]]> = [
+  [["SHEN", "ZI", "CHEN"], ["YIN", "MAO", "CHEN"]],
+  [["SI", "YOU", "CHOU"], ["HAI", "ZI", "CHOU"]],
+  [["YIN", "WU", "XU"], ["SHEN", "YOU", "XU"]],
+  [["HAI", "MAO", "WEI"], ["SI", "WU", "WEI"]],
+];
+export function samjae(birthBranch: string, yearBranch: string): number {
+  const g = SAMJAE.find(([born]) => born.includes(birthBranch));
+  const i = g ? g[1].indexOf(yearBranch) : -1;
+  return i < 0 ? 0 : i === 1 ? 1.3 : 1;
+}
+
+/**
+ * Every signal of one age-year as a flat map, for life-event triggers: 신살 (DOHWA, YEOKMA…),
+ * 합충 with the pillars (BRANCH_CLASH@day…), ten-god groups (group:PYEON_JAE…), 대운 shifts,
+ * favorable/unfavorable, transits (SATURN>SUN:hard, JUPITER@H5…), progressions (P:…),
+ * the Solar Return (SR:…) and 삼재 (SAMJAE).
+ */
+export function yearSignalMap(saju: SajuChart, astro: AstrologyChart, birthYear: number, age: number): Record<string, number> {
+  const y = yearSignals(saju, astro, birthYear, age);
+  const out: Record<string, number> = { ...y.s };
+  const put = (k: string, v: number) => (out[k] = Math.max(out[k] ?? 0, v));
+  for (const c of y.contacts) put(`${c.src}:${c.a}>${c.b}:${c.nature}`, c.w);
+  for (const h of y.houses) put(`${h.src}@H${h.house}`, h.w);
+  for (const p of y.angular) put(`SR:angular:${p}`, 1);
+  const fav = out.favorable ?? 0;
+  out.favorable = Math.max(0, fav);
+  out.unfavorable = Math.max(0, -fav);
+  const sj = samjae(saju.fourPillars.year.earthlyBranch, annualPillar(birthYear + age).earthlyBranch);
+  if (sj) out.SAMJAE = sj;
   return out;
 }
 

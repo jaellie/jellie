@@ -81,6 +81,9 @@
   #end .fade { position: absolute; inset: 0; background: #000; opacity: 0; transition: opacity 4s ease; }
   #end .ep { position: relative; margin-top: 220px; font-size: 16px; opacity: 0; transition: opacity 2s; }
   #end .ql { position: relative; margin: 24px 36px 0; font-size: 13px; line-height: 1.8; opacity: 0; transition: opacity 2s; }
+  .notes { font-size: 11px; color: #6b5d52; margin: 6px 14px; line-height: 1.5; text-align: left; }
+  .hint { font-size: 11px; color: #6c8f5a; min-height: 14px; margin: 2px 0 4px; }
+  .hint.warn { color: #d9534f; }
 </style>
 </head>
 <body>
@@ -92,6 +95,9 @@
     <div class="row"><input id="fY" value="1997"><input id="fM" value="9"><input id="fD" value="28"></div>
     <label>태어난 시간 (모르면 비워두기)</label>
     <div class="row"><input id="fH" value="" placeholder="시"><input id="fMin" value="" placeholder="분"></div>
+    <label>태어난 곳</label><input id="fPlace" value="서울" list="places" data-testid="birthplace" autocomplete="off">
+    <div id="fPlaceHint" class="hint" data-testid="birthplace-hint"></div>
+    <datalist id="places"></datalist>
     <div class="row"><div><label>나는</label><select id="fG"><option value="F">여자</option><option value="M">남자</option></select></div>
       <div><label>좋아하는 사람</label><select id="fL"><option value="M">남자</option><option value="F">여자</option><option value="A">상관없음</option></select></div></div>
     <label>MBTI</label><input id="fMbti" value="ENFP">
@@ -105,6 +111,7 @@
     <label>그 사람과 나는</label><select id="fFs"><option value="crush">내가 좋아하는 사람 (아직 연인 아님)</option><option value="dating">이미 연인</option><option value="stranger">아직 모르는 사람</option></select>
     <label>그 사람 생일 (선택, 궁합에 쓰임)</label>
     <div class="row"><input id="fFY" placeholder="년"><input id="fFM" placeholder="월"><input id="fFD" placeholder="일"></div>
+    <label>그 사람이 태어난 곳 (선택, 비우면 나와 같은 곳)</label><input id="fFPlace" value="" list="places" autocomplete="off">
     <div style="margin-top:14px"><button class="btn pink" id="start" data-testid="start" style="width:100%;font-size:18px">▶ 새 게임</button></div>
   </div>
 
@@ -127,6 +134,7 @@
     <div class="t">시간이 흐른다…</div>
     <div class="ages"><span id="sFrom"></span> → <b id="sTo"></b></div>
     <div class="card" id="sCard" data-testid="card"></div>
+    <div class="notes" id="sNotes" data-testid="skip-notes"></div>
     <div class="caption" id="sCap" data-testid="caption"></div>
     <button class="btn" id="skipNext" data-testid="skip-next">▶</button>
     <div class="bar" id="sBar"></div>
@@ -258,7 +266,8 @@
     $("sCard").dataset.kind = card ? card.kind : "none";
     const box = $("sCard"); box.style.background = "#1e2a5a";
     if (card) picture(box, card.scene, 294, 277); else box.innerHTML = "";
-    $("sCap").textContent = card ? card.caption : r.lines.join(" · ");
+    $("sNotes").innerHTML = (r.notes ?? []).map((n) => `<div class="sn">· ${n}</div>`).join("");
+    $("sCap").textContent = card ? card.caption : r.lines.filter((l) => !(r.notes ?? []).includes(l)).join(" · ");
   }
   $("skipNext").onclick = () => {
     skipIdx++;
@@ -277,6 +286,17 @@
     document.body.dataset.over = "1";
   }
 
+  // Birthplace picker: the engine's city list; unknown text is flagged (it would be read as Seoul).
+  $("places").innerHTML = LoveSim.birthplaceOptions("ko").map((p) => `<option value="${p.name}">`).join("");
+  const placeHint = () => {
+    const q = $("fPlace").value.trim();
+    const hit = q ? LoveSim.findPlace(q) : undefined;
+    $("fPlaceHint").textContent = !q || hit ? (hit ? `✓ ${hit.ko} (${hit.en})` : "") : "목록에 없는 곳이에요 — 가장 가까운 도시를 골라주세요 (지금은 서울로 계산돼요)";
+    $("fPlaceHint").className = "hint" + (q && !hit ? " warn" : "");
+  };
+  $("fPlace").oninput = placeHint;
+  placeHint();
+
   $("start").onclick = () => {
     const v = (id) => $(id).value.trim();
     const num = (id) => (v(id) === "" ? undefined : +v(id));
@@ -287,7 +307,8 @@
       birth: { year: +v("fY"), month: +v("fM"), day: +v("fD"), hour: num("fH"), minute: num("fMin") },
       mbti: v("fMbti"), lang: "ko", seed: P.get("seed") ? +P.get("seed") : undefined,
       family: { mom: { alive: v("fMom") === "1" }, dad: { alive: v("fDad") === "1" }, siblings, grandparents: num("fGp") },
-      fated: { name: v("fFated") || undefined, from: "same", status: v("fFs"), birth: fb },
+      birthplace: v("fPlace") || undefined,
+      fated: { name: v("fFated") || undefined, from: "same", status: v("fFs"), birth: fb, birthplace: v("fFPlace") || undefined },
     });
     window.__qa.game = game;
     show("play"); hud(); logLine(game.s.day.label.ko);

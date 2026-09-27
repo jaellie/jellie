@@ -1,0 +1,1455 @@
+{
+ "_doc": "Life events: health. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "CHECKUP_FINDS",
+   "cat": "health",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "재검 통보",
+    "en": "A callback"
+   },
+   "requires": [
+    "age>=30"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.7,
+     "SATURN>MOON:hard": 0.6,
+     "SATURN@H6": 0.5,
+     "SATURN@H12": 0.4,
+     "unfavorable": 0.4,
+     "SAMJAE": 0.4
+    },
+    "mods": {
+     "stability": -0.2
+    }
+   },
+   "location": "hospital",
+   "activity": "checkup",
+   "who": "doctor",
+   "line": {
+    "ko": "건강검진 결과에서 재검이 필요한 부분이 보여요. 너무 걱정하진 마시고, 정밀검사를 받아보시죠.",
+    "en": "Your checkup shows something we should look at again. Don't panic — but let's do a detailed exam."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "바로 정밀검사를 잡는다",
+      "en": "Book the detailed exam right away"
+     },
+     "w": {
+      "BENIGN": 0.55,
+      "EARLY": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "(바빠서 미룬다)",
+      "en": "(Too busy — put it off)"
+     },
+     "w": {
+      "BENIGN": 0.4,
+      "LATE": 0.6
+     }
+    }
+   ],
+   "outcomes": {
+    "BENIGN": {
+     "r": {
+      "ko": "양성이었다. 병원 앞 벤치에서 한참 하늘을 봤다.",
+      "en": "Benign. You sat on the bench outside the hospital, staring at the sky for a long time."
+     }
+    },
+    "EARLY": {
+     "r": {
+      "ko": "초기에 발견됐다고 했다. '지금이라 다행입니다.' 수술 날짜를 잡았다.",
+      "en": "Caught early, they said. 'Good thing it's now.' You scheduled the surgery."
+     },
+     "effects": [
+      {
+       "kind": "illness",
+       "patient": "self",
+       "outlook": "good"
+      }
+     ],
+     "card": "HOSPITAL"
+    },
+    "LATE": {
+     "r": {
+      "ko": "몇 달을 미룬 사이, 조금 자라 있었다.",
+      "en": "In the months you put it off, it had grown a little."
+     },
+     "effects": [
+      {
+       "kind": "illness",
+       "patient": "self"
+      }
+     ],
+     "card": "HOSPITAL"
+    }
+   }
+  },
+  {
+   "id": "SERIOUS_ACCIDENT",
+   "cat": "health",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "사고",
+    "en": "The accident"
+   },
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.4,
+     "BRANCH_CLASH@year": 0.5,
+     "URANUS>ASC:conjunction": 0.6,
+     "SAMJAE": 0.6,
+     "SR:angular:MARS": 0.4
+    },
+    "mods": {
+     "stability": -0.4,
+     "mobility": 0.3
+    }
+   },
+   "location": "hospital",
+   "activity": "checkup",
+   "who": "doctor",
+   "line": {
+    "ko": "(눈을 뜨니 중환자실이었다.) 교통사고로 실려 오셨어요. 다리가… 다시 걷기는 쉽지 않을 수도 있습니다.",
+    "en": "(You wake up in the ICU.) You were brought in after a car accident. Your legs… walking again may not be easy."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(재활하겠다고 이를 악문다)",
+      "en": "(Grit your teeth: you'll rehab)"
+     },
+     "w": {
+      "FIGHT": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(천장만 바라본다)",
+      "en": "(Just stare at the ceiling)"
+     },
+     "w": {
+      "SLOW": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "FIGHT": {
+     "r": {
+      "ko": "첫 재활 치료 날, 평행봉 사이에서 한 발도 못 뗐다. 그래도 다음 날 또 갔다.",
+      "en": "At the first rehab session, you couldn't take a single step between the bars. You went back the next day anyway."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -15
+      },
+      {
+       "kind": "setFlag",
+       "name": "injured",
+       "value": true
+      }
+     ],
+     "card": "HOSPITAL",
+     "chain": [
+      {
+       "to": "RECOVERY_AGAINST_ODDS",
+       "after": [
+        8,
+        20
+       ],
+       "p": 0.8
+      }
+     ]
+    },
+    "SLOW": {
+     "r": {
+      "ko": "몇 달 동안 창밖만 봤다. 병문안 온 사람들이 두고 간 꽃이 시들어 갔다.",
+      "en": "For months you only looked out the window. The flowers from visitors wilted."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -15
+      },
+      {
+       "kind": "setFlag",
+       "name": "injured",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "RECOVERY_AGAINST_ODDS",
+       "after": [
+        12,
+        30
+       ],
+       "p": 0.6
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "RECOVERY_AGAINST_ODDS",
+   "cat": "health",
+   "rarity": "common",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "기적",
+    "en": "A miracle"
+   },
+   "chainOnly": true,
+   "location": "hospital",
+   "activity": "checkup",
+   "who": "nurse",
+   "line": {
+    "ko": "오늘 목표는 복도 끝까지예요. 천천히, 할 수 있어요.",
+    "en": "Today's goal: the end of the hallway. Slowly — you can do it."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(한 걸음, 또 한 걸음)",
+      "en": "(One step, then another)"
+     },
+     "w": {
+      "WALK": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "WALK": {
+     "r": {
+      "ko": "복도 끝에서 뒤를 돌아보니 간호사들이 박수를 치고 있었다. 의사들은 기적이라고 했다.",
+      "en": "At the end of the hallway you turned around — the nurses were clapping. The doctors called it a miracle."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "injured"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "복도 끝까지",
+       "en": "To the end of the hallway"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 8
+     }
+    }
+   }
+  },
+  {
+   "id": "CHRONIC_ILLNESS",
+   "cat": "health",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=28"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.7,
+     "SATURN>MOON:hard": 0.6,
+     "SATURN@H6": 0.5,
+     "SATURN@H12": 0.4,
+     "unfavorable": 0.4,
+     "SAMJAE": 0.4
+    },
+    "mods": {
+     "stability": -0.3
+    }
+   },
+   "location": "hospital",
+   "activity": "checkup",
+   "who": "doctor",
+   "line": {
+    "ko": "평생 관리하셔야 하는 병이에요. 완치는 어렵지만, 잘 관리하면 충분히 일상생활 가능합니다.",
+    "en": "It's a condition you'll manage for life. There's no cure — but with care, you can live a full, normal life."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "생활 습관부터 바꾼다",
+      "en": "Change your habits first"
+     },
+     "w": {
+      "MANAGE": 0.75,
+      "STRUGGLE": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "(왜 하필 나야…)",
+      "en": "(Why me…)"
+     },
+     "w": {
+      "STRUGGLE": 0.6,
+      "MANAGE": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "MANAGE": {
+     "r": {
+      "ko": "약통에 요일을 적었다. 아침 산책이 생겼다. 몸이 조금씩 대답했다.",
+      "en": "You labeled a pill box by day. Morning walks became routine. Your body started answering back."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "chronic",
+       "value": true
+      },
+      {
+       "kind": "startHabit",
+       "locationId": "park",
+       "activityId": "walk"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "요일이 적힌 약통",
+       "en": "A pill box, labeled by day"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     }
+    },
+    "STRUGGLE": {
+     "r": {
+      "ko": "한동안 화가 났다. 그러다 같은 병을 가진 사람들의 모임을 알게 됐다.",
+      "en": "For a while you were angry. Then you found a group of people with the same condition."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "chronic",
+       "value": true
+      },
+      {
+       "kind": "newFriend"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "GLOW_UP",
+   "cat": "health",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "JUPITER@H1": 0.6,
+     "JUPITER@H6": 0.5,
+     "favorable": 0.4,
+     "group:SIK_SHIN": 0.3
+    },
+    "mods": {
+     "change": 0.4
+    },
+    "traits": {
+     "planning": 0.3
+    }
+   },
+   "location": "gym",
+   "activity": "workout",
+   "who": "me",
+   "line": {
+    "ko": "(운동 1년, 식단 1년. 오랜만에 만난 친구들이 '너 누구야?'라고 했다.)",
+    "en": "(A year of workouts, a year of eating right. Old friends you ran into asked, 'Who ARE you?')"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(사진을 찍어 둔다)",
+      "en": "(Take a picture for the record)"
+     },
+     "w": {
+      "SHINE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(계속 간다)",
+      "en": "(Keep going)"
+     },
+     "w": {
+      "HABIT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SHINE": {
+     "r": {
+      "ko": "거울 속 내가 처음으로 좋아졌다.",
+      "en": "For the first time, you liked the person in the mirror."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.15
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "거울 속의 나",
+       "en": "Me, in the mirror"
+      },
+      "location": "gym",
+      "actors": [
+       "me"
+      ],
+      "priority": 5
+     }
+    },
+    "HABIT": {
+     "r": {
+      "ko": "운동이 벌이 아니라 습관이 됐다.",
+      "en": "Working out stopped being a punishment. It became a habit."
+     },
+     "effects": [
+      {
+       "kind": "startHabit",
+       "locationId": "gym",
+       "activityId": "workout"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PLASTIC_SURGERY",
+   "cat": "health",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=19",
+    "age<=55"
+   ],
+   "trigger": {
+    "signals": {
+     "JUPITER@H1": 0.4,
+     "group:SANG_GWAN": 0.4
+    },
+    "mods": {
+     "change": 0.4
+    }
+   },
+   "location": "hospital",
+   "activity": "checkup",
+   "who": "doctor",
+   "line": {
+    "ko": "(성형외과 상담실) 어디가 제일 신경 쓰이세요? 요즘은 자연스럽게 많이들 하세요.",
+    "en": "(Plastic-surgery consultation) What bothers you most? These days, lots of people get subtle work done."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "쌍꺼풀만 살짝",
+      "en": "Just subtle double eyelids"
+     },
+     "w": {
+      "HAPPY": 0.7,
+      "REGRET": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(견적서를 받고 나온다)",
+      "en": "(Take the quote and leave)"
+     },
+     "w": {
+      "NATURAL": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "HAPPY": {
+     "r": {
+      "ko": "붓기가 빠지자 인상이 한결 밝아졌다. 아무도 눈치채지 못했다. 그게 좋았다.",
+      "en": "When the swelling went down, you looked brighter. No one could tell. That was the point."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      }
+     ]
+    },
+    "REGRET": {
+     "r": {
+      "ko": "거울을 볼 때마다 예전 얼굴이 그리웠다. 사진 속 옛날 내가 더 나 같았다.",
+      "en": "Every time you looked in the mirror, you missed your old face. The old photos looked more like you."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      }
+     ]
+    },
+    "NATURAL": {
+     "r": {
+      "ko": "견적서는 서랍에 넣었다. 대신 좋은 선크림을 샀다.",
+      "en": "The quote went in a drawer. You bought good sunscreen instead."
+     }
+    }
+   }
+  },
+  {
+   "id": "DEPRESSION",
+   "cat": "health",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=16"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>MOON:hard": 0.8,
+     "SATURN>SUN:hard": 0.4,
+     "SATURN@H12": 0.5,
+     "unfavorable": 0.4,
+     "SAMJAE": 0.3
+    },
+    "mods": {
+     "stability": -0.4,
+     "social": -0.4,
+     "introspection": 0.3
+    }
+   },
+   "location": "home",
+   "activity": "sleep",
+   "who": "me",
+   "line": {
+    "ko": "(몇 주째 아무것도 하고 싶지 않다. 좋아하던 것들도 회색으로 보인다.)",
+    "en": "(For weeks you haven't wanted to do anything. Even the things you loved look gray.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "병원에 가본다",
+      "en": "See a doctor"
+     },
+     "w": {
+      "CARE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "누군가에게 털어놓는다",
+      "en": "Tell someone"
+     },
+     "w": {
+      "TALK": 0.8,
+      "SLOW": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "(괜찮은 척한다)",
+      "en": "(Pretend you're fine)"
+     },
+     "w": {
+      "SLOW": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CARE": {
+     "r": {
+      "ko": "'마음의 감기 같은 거예요. 같이 해봐요.' 약과 상담이 시작됐다. 몇 달 뒤, 색이 조금씩 돌아왔다.",
+      "en": "'Think of it like a cold of the mind. Let's work on it together.' Medication and counseling began. Months later, color slowly came back."
+     },
+     "card": {
+      "caption": {
+       "ko": "색이 돌아온 날",
+       "en": "The day the color came back"
+      },
+      "location": "park",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     }
+    },
+    "TALK": {
+     "r": {
+      "ko": "말을 꺼내자마자 눈물이 났다. 듣던 사람이 병원에 같이 가자고 했다.",
+      "en": "The moment you started talking, you cried. The person listening offered to go to the doctor with you."
+     },
+     "chain": [
+      {
+       "to": "DEPRESSION_HELP",
+       "after": [
+        1,
+        4
+       ],
+       "p": 0.9
+      }
+     ]
+    },
+    "SLOW": {
+     "r": {
+      "ko": "웃는 얼굴로 하루를 버텼다. 밤이 길었다.",
+      "en": "You got through the days with a smile on. The nights were long."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "depressed",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "DEPRESSION_HELP",
+       "after": [
+        3,
+        12
+       ],
+       "p": 0.85
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "DEPRESSION_HELP",
+   "cat": "health",
+   "rarity": "common",
+   "tone": "joy",
+   "chainOnly": true,
+   "location": "hospital",
+   "activity": "checkup",
+   "who": "counselor",
+   "line": {
+    "ko": "여기까지 오신 것만으로도 큰 걸음이에요. 천천히, 편하게 이야기해 주세요.",
+    "en": "Coming here at all is a big step. Take your time — tell me whatever feels okay."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(처음부터 이야기한다)",
+      "en": "(Start from the beginning)"
+     },
+     "w": {
+      "BETTER": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(오늘은 그냥 앉아 있고 싶다)",
+      "en": "(Today you just want to sit)"
+     },
+     "w": {
+      "BETTER": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "BETTER": {
+     "r": {
+      "ko": "매주 목요일이 기다려지기 시작했다. 어느 날 아침, 커튼을 걷고 싶어졌다.",
+      "en": "You started looking forward to Thursdays. One morning, you wanted to open the curtains."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "depressed"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "커튼을 걷은 아침",
+       "en": "The morning I opened the curtains"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     }
+    }
+   }
+  },
+  {
+   "id": "PANIC_ATTACK",
+   "cat": "health",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>MOON:hard": 0.6,
+     "URANUS>MOON:hard": 0.6,
+     "unfavorable": 0.3
+    },
+    "mods": {
+     "stability": -0.5
+    }
+   },
+   "location": "street",
+   "activity": "commute",
+   "who": "me",
+   "line": {
+    "ko": "(지하철 안. 갑자기 숨이 막히고, 심장이 터질 것 같다. 문이 열리자마자 뛰쳐나왔다.)",
+    "en": "(On the subway. Suddenly you can't breathe; your heart feels like it'll burst. You bolt the moment the doors open.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "병원에서 진료를 받는다",
+      "en": "Get it checked out"
+     },
+     "w": {
+      "TREAT": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(한동안 지하철을 피한다)",
+      "en": "(Avoid the subway for a while)"
+     },
+     "w": {
+      "AVOID": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "TREAT": {
+     "r": {
+      "ko": "공황장애라고 했다. 호흡법을 배웠다. 가방에 작은 약통이 생겼다.",
+      "en": "Panic disorder, they said. You learned breathing techniques. A tiny pill case lives in your bag now."
+     }
+    },
+    "AVOID": {
+     "r": {
+      "ko": "버스로 한 시간 돌아서 다녔다. 몇 달 뒤, 친구와 함께 한 정거장부터 다시 탔다.",
+      "en": "You took the bus the long way — an extra hour. Months later, with a friend beside you, you rode one stop again."
+     }
+    }
+   }
+  },
+  {
+   "id": "NEAR_DEATH",
+   "cat": "health",
+   "rarity": "rare",
+   "tone": "revelation",
+   "big": true,
+   "title": {
+    "ko": "다시 본 하늘",
+    "en": "A second chance"
+   },
+   "requires": [
+    "age>=15"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.32,
+     "BRANCH_CLASH@year": 0.4,
+     "URANUS>ASC:conjunction": 0.48,
+     "SAMJAE": 0.48,
+     "SR:angular:MARS": 0.32
+    }
+   },
+   "location": "beach",
+   "activity": "swim",
+   "who": "me",
+   "line": {
+    "ko": "(바다에서 수영하다 다리에 쥐가 났다. 물속에서 모든 게 느려졌다. 그리고 누군가 팔을 잡아당겼다.)",
+    "en": "(Swimming in the sea, your leg cramped. Underwater, everything slowed down. Then someone grabbed your arm.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(모래사장에 누워 하늘을 본다)",
+      "en": "(Lie on the sand, looking at the sky)"
+     },
+     "w": {
+      "CHANGED": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CHANGED": {
+     "r": {
+      "ko": "그날 이후 하고 싶은 걸 미루지 않는다. 오늘 할 수 있는 말은 오늘 한다.",
+      "en": "Since that day, you don't put things off. What you can say today, you say today."
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "Nearly drowned; life changed",
+       "tags": [
+        "event"
+       ]
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시 본 하늘",
+       "en": "The sky, again"
+      },
+      "location": "beach",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 8
+     }
+    }
+   }
+  },
+  {
+   "id": "ORGAN_DONATION",
+   "cat": "health",
+   "rarity": "rare",
+   "tone": "revelation",
+   "big": true,
+   "title": {
+    "ko": "이식",
+    "en": "The transplant"
+   },
+   "requires": [
+    "hasSibling",
+    "age>=25"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.35,
+     "SATURN>MOON:hard": 0.55,
+     "SATURN@H6": 0.25,
+     "SATURN@H12": 0.2,
+     "unfavorable": 0.2,
+     "SAMJAE": 0.2,
+     "BRANCH_CLASH@year": 0.4,
+     "BRANCH_CLASH@month": 0.3,
+     "PUNISHMENT@month": 0.2,
+     "group:GYEOB_JAE": 0.15
+    },
+    "mods": {
+     "family": 0.5
+    }
+   },
+   "location": "hospital",
+   "activity": "visit_patient",
+   "who": "doctor",
+   "line": {
+    "ko": "{sibling} 님께 신장 이식이 필요합니다. 가족 중 조직 적합 판정이 나온 분은… 당신뿐입니다.",
+    "en": "{sibling} needs a kidney transplant. The only family member who's a tissue match is… you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "하겠습니다",
+      "en": "I'll do it"
+     },
+     "w": {
+      "DONATE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "…생각할 시간을 주세요",
+      "en": "…Give me time to think"
+     },
+     "w": {
+      "DONATE": 0.7,
+      "WAIT": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "DONATE": {
+     "r": {
+      "ko": "수술실 앞에서 {sibling}와(과) 손을 잡았다. '이제 너 반쪽은 내 거다.' 둘 다 웃었다.",
+      "en": "Outside the operating room you held {sibling}'s hand. 'Half of you is mine now.' You both laughed."
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": 0.3
+      },
+      {
+       "kind": "money",
+       "amount": -5
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "{sibling}에게 준 반쪽",
+       "en": "The half I gave {sibling}"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "patient"
+      ],
+      "priority": 9
+     }
+    },
+    "WAIT": {
+     "r": {
+      "ko": "망설이는 사이 다른 기증자가 나타났다. {sibling}은(는) 괜찮다고 웃었다. 그 웃음이 오래 남았다.",
+      "en": "While you hesitated, another donor turned up. {sibling} smiled and said it was okay. That smile stayed with you."
+     }
+    }
+   }
+  },
+  {
+   "id": "HEARING_LOSS",
+   "cat": "health",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.49,
+     "SATURN>MOON:hard": 0.42,
+     "SATURN@H6": 0.35,
+     "SATURN@H12": 0.28,
+     "unfavorable": 0.28,
+     "SAMJAE": 0.28
+    },
+    "mods": {
+     "stability": -0.3
+    }
+   },
+   "location": "hospital",
+   "activity": "checkup",
+   "who": "doctor",
+   "line": {
+    "ko": "돌발성 난청입니다. 72시간 안의 치료가 중요해요. 오늘 바로 입원하시죠.",
+    "en": "It's sudden hearing loss. Treatment in the first 72 hours matters. Let's admit you today."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "바로 입원한다",
+      "en": "Get admitted right away"
+     },
+     "w": {
+      "BACK": 0.75,
+      "PARTIAL": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "(내일 할 일이 있는데…)",
+      "en": "(But I have things to do tomorrow…)"
+     },
+     "w": {
+      "PARTIAL": 0.6,
+      "BACK": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "BACK": {
+     "r": {
+      "ko": "일주일 뒤, 빗소리가 다시 들렸다. 그렇게 좋은 소리인 줄 몰랐다.",
+      "en": "A week later, you could hear the rain again. You never knew it was such a beautiful sound."
+     }
+    },
+    "PARTIAL": {
+     "r": {
+      "ko": "한쪽 귀가 조금 먹먹하게 남았다. 이제 사람들의 왼쪽에 서는 습관이 생겼다.",
+      "en": "One ear stayed a little muffled. Now you always stand on people's left."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "hearingLoss",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PREGNANCY_COMPLICATIONS",
+   "cat": "health",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "입원",
+    "en": "Admitted"
+   },
+   "requires": [
+    "pregnant"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.35,
+     "SATURN>MOON:hard": 0.3,
+     "SATURN@H6": 0.25,
+     "SATURN@H12": 0.2,
+     "unfavorable": 0.2,
+     "SAMJAE": 0.2,
+     "SIX_HARMONY@hour": 0.25,
+     "STEM_COMBINATION@hour": 0.25,
+     "HALF_HARMONY@hour": 0.15,
+     "BRANCH_CLASH@hour": 0.3
+    }
+   },
+   "location": "hospital",
+   "activity": "visit_patient",
+   "who": "doctor",
+   "line": {
+    "ko": "임신중독증 소견이 보여요. 아기와 산모 모두를 위해 당분간 입원이 필요합니다.",
+    "en": "There are signs of preeclampsia. For the baby and the mother, a hospital stay is needed for now."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(밤새 곁을 지킨다)",
+      "en": "(Stay by the bedside all night)"
+     },
+     "w": {
+      "SAFE": 0.8,
+      "SCARE": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "(담당의에게 모든 걸 묻는다)",
+      "en": "(Ask the doctor everything)"
+     },
+     "w": {
+      "SAFE": 0.75,
+      "SCARE": 0.25
+     }
+    }
+   ],
+   "outcomes": {
+    "SAFE": {
+     "r": {
+      "ko": "3주의 입원 끝에 수치가 안정됐다. 초음파 속 작은 심장이 힘차게 뛰었다.",
+      "en": "After three weeks in the hospital, the numbers settled. On the ultrasound, a tiny heart beat strong."
+     },
+     "card": {
+      "caption": {
+       "ko": "힘차게 뛰는 작은 심장",
+       "en": "A tiny heart, beating strong"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "patient"
+      ],
+      "priority": 7
+     }
+    },
+    "SCARE": {
+     "r": {
+      "ko": "한밤중 긴급 호출에 심장이 멎는 줄 알았다. 다행히, 괜찮았다.",
+      "en": "An emergency call in the night stopped your heart. Thankfully, everything was okay."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PARENT_COLLAPSE_MOM",
+   "cat": "health",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "쓰러지셨다",
+    "en": "Collapsed"
+   },
+   "requires": [
+    "momAlive",
+    "age>=30"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.42,
+     "SATURN>MOON:hard": 0.66,
+     "SATURN@H6": 0.3,
+     "SATURN@H12": 0.24,
+     "unfavorable": 0.24,
+     "SAMJAE": 0.24,
+     "BRANCH_CLASH@year": 0.48,
+     "BRANCH_CLASH@month": 0.36,
+     "PUNISHMENT@month": 0.24,
+     "group:GYEOB_JAE": 0.18
+    },
+    "mods": {
+     "family": 0.3
+    }
+   },
+   "location": "hospital",
+   "activity": "visit_patient",
+   "who": "relative",
+   "line": {
+    "ko": "(엄마이(가) 쓰러지셨다는 전화가 왔다. 구급차가 이미 출발했다고 했다.)",
+    "en": "(A call: Mom collapsed. The ambulance is already on its way.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당장 간다",
+      "en": "Go right now"
+     },
+     "w": {
+      "RECOVER": 0.7,
+      "LONG": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(택시 안에서 손이 떨린다)",
+      "en": "(Your hands shake in the taxi)"
+     },
+     "w": {
+      "RECOVER": 0.65,
+      "LONG": 0.35
+     }
+    }
+   ],
+   "outcomes": {
+    "RECOVER": {
+     "r": {
+      "ko": "다행히 늦지 않았다. 엄마은(는) '호들갑은' 하며 웃었다. 그 웃음에 다리가 풀렸다.",
+      "en": "Thankfully you weren't too late. Mom laughed, 'All this fuss.' Your legs gave out at that laugh."
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": 0.15
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "엄마의 병실",
+       "en": "Mom's hospital room"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "patient"
+      ],
+      "priority": 6
+     }
+    },
+    "LONG": {
+     "r": {
+      "ko": "엄마의 입원이 길어졌다. 주말마다 병원으로 향했다.",
+      "en": "Mom's stay grew longer. Every weekend, you headed to the hospital."
+     },
+     "effects": [
+      {
+       "kind": "illness",
+       "patient": "mom",
+       "outlook": "good"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PARENT_COLLAPSE_DAD",
+   "cat": "health",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "쓰러지셨다",
+    "en": "Collapsed"
+   },
+   "requires": [
+    "dadAlive",
+    "age>=30"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.42,
+     "SATURN>MOON:hard": 0.66,
+     "SATURN@H6": 0.3,
+     "SATURN@H12": 0.24,
+     "unfavorable": 0.24,
+     "SAMJAE": 0.24,
+     "BRANCH_CLASH@year": 0.48,
+     "BRANCH_CLASH@month": 0.36,
+     "PUNISHMENT@month": 0.24,
+     "group:GYEOB_JAE": 0.18
+    },
+    "mods": {
+     "family": 0.3
+    }
+   },
+   "location": "hospital",
+   "activity": "visit_patient",
+   "who": "relative",
+   "line": {
+    "ko": "(아빠이(가) 쓰러지셨다는 전화가 왔다. 구급차가 이미 출발했다고 했다.)",
+    "en": "(A call: Dad collapsed. The ambulance is already on its way.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당장 간다",
+      "en": "Go right now"
+     },
+     "w": {
+      "RECOVER": 0.7,
+      "LONG": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(택시 안에서 손이 떨린다)",
+      "en": "(Your hands shake in the taxi)"
+     },
+     "w": {
+      "RECOVER": 0.65,
+      "LONG": 0.35
+     }
+    }
+   ],
+   "outcomes": {
+    "RECOVER": {
+     "r": {
+      "ko": "다행히 늦지 않았다. 아빠은(는) '호들갑은' 하며 웃었다. 그 웃음에 다리가 풀렸다.",
+      "en": "Thankfully you weren't too late. Dad laughed, 'All this fuss.' Your legs gave out at that laugh."
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": 0.15
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "아빠의 병실",
+       "en": "Dad's hospital room"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "patient"
+      ],
+      "priority": 6
+     }
+    },
+    "LONG": {
+     "r": {
+      "ko": "아빠의 입원이 길어졌다. 주말마다 병원으로 향했다.",
+      "en": "Dad's stay grew longer. Every weekend, you headed to the hospital."
+     },
+     "effects": [
+      {
+       "kind": "illness",
+       "patient": "dad",
+       "outlook": "good"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "MARATHON",
+   "cat": "health",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "age>=18",
+    "age<=70"
+   ],
+   "trigger": {
+    "signals": {
+     "JUPITER@H6": 0.5,
+     "JUPITER@H1": 0.4,
+     "favorable": 0.3,
+     "group:BI_GYEON": 0.3
+    },
+    "mods": {
+     "change": 0.4
+    },
+    "traits": {
+     "planning": 0.2
+    }
+   },
+   "location": "park",
+   "activity": "jog",
+   "who": "me",
+   "line": {
+    "ko": "(동네 10km 마라톤 신청서. 한 번도 5km 이상 뛰어본 적 없다. 신청 버튼 위에서 손가락이 멈췄다.)",
+    "en": "(A sign-up page for a local 10K. You've never run more than 5K. Your finger hovers over the button.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(누른다)",
+      "en": "(Press it)"
+     },
+     "w": {
+      "FINISH": 0.8,
+      "WALK": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "(다음에…)",
+      "en": "(Next time…)"
+     },
+     "w": {
+      "SKIP": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "FINISH": {
+     "r": {
+      "ko": "결승선에서 모르는 사람들이 박수를 쳐줬다. 다음 날 새벽 러닝 모임에 가입했다.",
+      "en": "Strangers clapped at the finish line. The next day you joined a dawn running club."
+     },
+     "effects": [
+      {
+       "kind": "startHabit",
+       "locationId": "park",
+       "activityId": "jog"
+      },
+      {
+       "kind": "newFriend"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "첫 10km",
+       "en": "My first 10K"
+      },
+      "location": "park",
+      "actors": [
+       "me",
+       "stranger",
+       "stranger"
+      ],
+      "priority": 6
+     },
+     "chain": [
+      {
+       "to": "MARATHON_FULL",
+       "after": [
+        18,
+        48
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "WALK": {
+     "r": {
+      "ko": "절반은 걸었다. 그래도 완주 메달은 똑같이 반짝였다.",
+      "en": "You walked half of it. The finisher's medal shone just the same."
+     }
+    },
+    "SKIP": {
+     "r": {
+      "ko": "대회 날 아침, 창밖으로 달리는 사람들을 봤다.",
+      "en": "On race morning, you watched the runners go by from your window."
+     }
+    }
+   }
+  },
+  {
+   "id": "MARATHON_FULL",
+   "cat": "health",
+   "rarity": "common",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "풀코스",
+    "en": "The full marathon"
+   },
+   "chainOnly": true,
+   "location": "park",
+   "activity": "jog",
+   "who": "me",
+   "line": {
+    "ko": "(42.195km 출발선. 3년 전의 나는 5km도 못 뛰었다.)",
+    "en": "(The 42.195K start line. Three years ago, you couldn't run 5K.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(출발 총소리를 기다린다)",
+      "en": "(Wait for the starting gun)"
+     },
+     "w": {
+      "DONE": 0.85,
+      "DNF": 0.15
+     }
+    }
+   ],
+   "outcomes": {
+    "DONE": {
+     "r": {
+      "ko": "35km에서 다리가 멈췄다. 누군가 '할 수 있어!'라고 외쳤다. 결승선에서 울었다.",
+      "en": "At 35K your legs stopped. Someone yelled, 'You've got this!' You cried at the finish."
+     },
+     "card": {
+      "caption": {
+       "ko": "풀코스 완주",
+       "en": "Finished the full marathon"
+      },
+      "location": "park",
+      "actors": [
+       "me",
+       "stranger",
+       "stranger"
+      ],
+      "priority": 7
+     }
+    },
+    "DNF": {
+     "r": {
+      "ko": "30km에서 멈췄다. 회수 버스 안에서 내년을 다짐했다.",
+      "en": "You stopped at 30K. On the sweep bus, you promised yourself: next year."
+     }
+    }
+   }
+  }
+ ]
+}

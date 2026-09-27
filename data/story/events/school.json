@@ -1,0 +1,852 @@
+{
+ "_doc": "Life events: school. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "KID_TOP_OF_CLASS",
+   "cat": "school",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "hasKid",
+    "kidAge>=9",
+    "kidAge<=18"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.25,
+     "STEM_COMBINATION@hour": 0.25,
+     "HALF_HARMONY@hour": 0.15,
+     "BRANCH_CLASH@hour": 0.3,
+     "group:JEONG_GWAN": 0.3,
+     "JUPITER@H10": 0.35,
+     "JUPITER>MC:conjunction": 0.3,
+     "favorable": 0.2
+    },
+    "mods": {
+     "education": 0.5
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "teacher",
+   "line": {
+    "ko": "{kid}이(가) 이번 시험에서 전교 1등을 했습니다. 집에서 어떻게 지도하셨어요?",
+    "en": "{kid} came first in the whole school on this exam. How do you do it at home?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "저도 몰랐어요!",
+      "en": "I had no idea!"
+     },
+     "w": {
+      "PROUD": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "학원을 하나 더 보내야겠네요",
+      "en": "Maybe one more cram school, then"
+     },
+     "w": {
+      "PRESSURE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "PROUD": {
+     "r": {
+      "ko": "그날 저녁, {kid}이(가) 좋아하는 치킨을 시켰다. {kid}은(는) 쑥스러워했다.",
+      "en": "That night you ordered {kid}'s favorite fried chicken. {kid} was all embarrassed."
+     },
+     "card": {
+      "caption": {
+       "ko": "전교 1등 치킨",
+       "en": "First-in-school fried chicken"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "kid"
+      ],
+      "priority": 5
+     }
+    },
+    "PRESSURE": {
+     "r": {
+      "ko": "{kid}은(는) 학원 가방을 멘 채 한숨을 쉬었다. 그 한숨이 오래 마음에 남았다.",
+      "en": "{kid} sighed, cram-school bag on their back. That sigh stayed with you."
+     }
+    }
+   }
+  },
+  {
+   "id": "KID_SUNEUNG",
+   "cat": "school",
+   "rarity": "common",
+   "tone": "light",
+   "big": true,
+   "title": {
+    "ko": "수능 날",
+    "en": "Exam day"
+   },
+   "requires": [
+    "hasKid",
+    "kidAge>=18",
+    "kidAge<=19"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.3,
+     "STEM_COMBINATION@hour": 0.3,
+     "HALF_HARMONY@hour": 0.18,
+     "BRANCH_CLASH@hour": 0.36
+    },
+    "mods": {
+     "education": 0.4
+    }
+   },
+   "location": "home",
+   "activity": "cook",
+   "who": "kid",
+   "line": {
+    "ko": "(수능 날 아침. {kid}이(가) 현관에서 신발 끈을 두 번 묶었다.) …다녀올게요.",
+    "en": "(College entrance exam day. At the door, {kid} double-knotted their shoes.) …I'm off."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "도시락에 편지를 넣어준다",
+      "en": "Slip a note into their lunchbox"
+     },
+     "w": {
+      "JACKPOT": 0.3,
+      "OKAY": 0.45,
+      "FAIL": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "평소처럼 보낸다",
+      "en": "See them off like any other day"
+     },
+     "w": {
+      "JACKPOT": 0.25,
+      "OKAY": 0.5,
+      "FAIL": 0.25
+     }
+    }
+   ],
+   "outcomes": {
+    "JACKPOT": {
+     "r": {
+      "ko": "가채점을 하던 {kid}이(가) 소리를 질렀다. 수능 대박이었다.",
+      "en": "Checking the answer key, {kid} screamed. They'd aced it."
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": 0.1
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "수능 대박",
+       "en": "Aced the exam"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "kid"
+      ],
+      "priority": 7
+     },
+     "lean": {
+      "mods": {
+       "education": 0.5
+      }
+     }
+    },
+    "OKAY": {
+     "r": {
+      "ko": "무난했다. {kid}은(는) 그날 밤 열두 시간을 잤다.",
+      "en": "It went fine. {kid} slept for twelve hours that night."
+     }
+    },
+    "FAIL": {
+     "r": {
+      "ko": "{kid}은(는) 방에서 나오지 않았다. 문 앞에 좋아하는 떡볶이를 두었다.",
+      "en": "{kid} wouldn't come out of their room. You left their favorite tteokbokki at the door."
+     },
+     "chain": [
+      {
+       "to": "KID_RETAKE",
+       "after": [
+        10,
+        12
+       ],
+       "p": 0.7
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "KID_RETAKE",
+   "cat": "school",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "hasKid"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "activity": "cook",
+   "who": "kid",
+   "line": {
+    "ko": "(재수 1년. 다시 수능 날 아침이다.) 이번엔 진짜 다녀올게요.",
+    "en": "(A year of retaking. It's exam morning again.) This time, for real."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(꼭 안아준다)",
+      "en": "(Hug them tight)"
+     },
+     "w": {
+      "JACKPOT": 0.45,
+      "OKAY": 0.55
+     }
+    }
+   ],
+   "outcomes": {
+    "JACKPOT": {
+     "r": {
+      "ko": "재수 성공. {kid}이(가) 합격증을 들고 울었다. 나도 울었다.",
+      "en": "The retake paid off. {kid} cried holding the acceptance letter. So did you."
+     },
+     "card": {
+      "caption": {
+       "ko": "재수 성공",
+       "en": "The retake that worked"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "kid"
+      ],
+      "priority": 7
+     }
+    },
+    "OKAY": {
+     "r": {
+      "ko": "원하던 곳은 아니었지만, {kid}은(는) 웃으며 '거기서 잘해볼게요' 했다.",
+      "en": "Not their first choice — but {kid} smiled and said, 'I'll make it work there.'"
+     }
+    }
+   }
+  },
+  {
+   "id": "KID_ABROAD_ACCEPTED",
+   "cat": "school",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "hasKid",
+    "kidAge>=17",
+    "kidAge<=20"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.25,
+     "STEM_COMBINATION@hour": 0.25,
+     "HALF_HARMONY@hour": 0.15,
+     "BRANCH_CLASH@hour": 0.3,
+     "YEOKMA": 0.45,
+     "JUPITER@H9": 0.3,
+     "JUPITER@H4": 0.2,
+     "URANUS>ASC:conjunction": 0.2
+    },
+    "mods": {
+     "education": 0.4,
+     "overseas": 0.4
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "kid",
+   "line": {
+    "ko": "(노트북을 들고 뛰어왔다.) 합격했어요! 미국 대학이요! …근데 학비가…",
+    "en": "(They ran in with the laptop.) I got in! A university in the U.S.! …But the tuition…"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "가라. 학비는 어떻게든 해볼게",
+      "en": "Go. We'll figure out the tuition"
+     },
+     "w": {
+      "GO": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "장학금을 알아보자",
+      "en": "Let's look for scholarships"
+     },
+     "w": {
+      "SCHOLAR": 0.5,
+      "STAY": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "GO": {
+     "r": {
+      "ko": "공항에서 {kid}이(가) 몇 번이나 뒤를 돌아봤다. 통장은 가벼워졌고, 마음은 무거워졌다.",
+      "en": "At the airport, {kid} looked back again and again. The bank account got lighter; your heart got heavier."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -40
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "공항에서 뒤돌아본 {kid}",
+       "en": "{kid}, looking back at the airport"
+      },
+      "location": "airport",
+      "actors": [
+       "me",
+       "kid"
+      ],
+      "priority": 7
+     }
+    },
+    "SCHOLAR": {
+     "r": {
+      "ko": "장학금이 나왔다! {kid}은(는) 반값으로 비행기를 탔다.",
+      "en": "The scholarship came through! {kid} flew off at half the cost."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -15
+      }
+     ]
+    },
+    "STAY": {
+     "r": {
+      "ko": "{kid}은(는) 국내 대학을 택했다. '대학원은 꼭 거기로 갈 거예요.'",
+      "en": "{kid} chose a university at home. 'I'm going there for grad school, though.'"
+     }
+    }
+   }
+  },
+  {
+   "id": "DROP_OUT",
+   "cat": "school",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "student"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.3,
+     "SATURN>MC:conjunction": 0.25,
+     "group:PYEON_GWAN": 0.3,
+     "group:SANG_GWAN": 0.2,
+     "unfavorable": 0.45,
+     "group:GYEOB_JAE": 0.4,
+     "URANUS@H2": 0.3,
+     "URANUS@H8": 0.25,
+     "SAMJAE": 0.3,
+     "BRANCH_CLASH@month": 0.15
+    },
+    "mods": {
+     "education": -0.5
+    }
+   },
+   "location": "university",
+   "activity": "study",
+   "who": "me",
+   "line": {
+    "ko": "(학위 과정 몇 학기째. 논문도, 통장도 한계다. 휴학 신청서와 자퇴서가 나란히 놓여 있다.)",
+    "en": "(Several semesters into the degree. The thesis and the bank account have both hit the wall. A leave-of-absence form and a withdrawal form sit side by side.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "자퇴서를 낸다",
+      "en": "Hand in the withdrawal form"
+     },
+     "w": {
+      "OUT": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "한 학기만 더 버틴다",
+      "en": "Hold on one more semester"
+     },
+     "w": {
+      "PUSH": 0.6,
+      "OUT": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "OUT": {
+     "r": {
+      "ko": "학생증을 반납하고 나오는데, 이상하게 발걸음이 가벼웠다.",
+      "en": "Handing in your student ID, your steps felt strangely light."
+     },
+     "effects": [
+      {
+       "kind": "dropOut"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "반납한 학생증",
+       "en": "The student ID I gave back"
+      },
+      "location": "university",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     }
+    },
+    "PUSH": {
+     "r": {
+      "ko": "한 학기를 더 버텼다. 지도교수가 처음으로 '좋네요'라고 했다.",
+      "en": "You held on one more semester. For the first time, your advisor said, 'That's good.'"
+     }
+    }
+   }
+  },
+  {
+   "id": "LATE_DEGREE",
+   "cat": "school",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "age>=35",
+    "!student"
+   ],
+   "trigger": {
+    "signals": {
+     "group:JEONG_GWAN": 0.24,
+     "JUPITER@H10": 0.28,
+     "JUPITER>MC:conjunction": 0.24,
+     "favorable": 0.16,
+     "group:JEONG_IN": 0.5,
+     "JUPITER@H9": 0.5
+    },
+    "mods": {
+     "education": 0.6
+    }
+   },
+   "location": "university",
+   "activity": "attend_lecture",
+   "who": "me",
+   "line": {
+    "ko": "(야간 대학원 모집 공고. 오래전에 접었던 공부가 다시 하고 싶어졌다.)",
+    "en": "(An ad for a night graduate program. You find you want to study again — something you gave up long ago.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "원서를 낸다",
+      "en": "Apply"
+     },
+     "w": {
+      "ENROLL": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(나이가 좀…)",
+      "en": "(Aren't I a bit old…)"
+     },
+     "w": {
+      "NOT_YET": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "ENROLL": {
+     "r": {
+      "ko": "강의실 맨 앞자리, 제일 나이 많은 학생이 됐다. 필기가 제일 꼼꼼했다.",
+      "en": "Front row, oldest student in the room. Your notes were the neatest."
+     },
+     "effects": [
+      {
+       "kind": "enroll",
+       "program": "MASTER",
+       "months": 12
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "맨 앞자리 늦깎이",
+       "en": "The late bloomer in the front row"
+      },
+      "location": "university",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 6
+     }
+    },
+    "NOT_YET": {
+     "r": {
+      "ko": "공고를 스크랩해 두었다. 내년엔, 어쩌면.",
+      "en": "You saved the ad. Next year, maybe."
+     }
+    }
+   }
+  },
+  {
+   "id": "KID_SCHOLARSHIP",
+   "cat": "school",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "hasKid",
+    "kidAge>=17",
+    "kidAge<=22"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.25,
+     "STEM_COMBINATION@hour": 0.25,
+     "HALF_HARMONY@hour": 0.15,
+     "BRANCH_CLASH@hour": 0.3,
+     "group:PYEON_JAE": 0.4,
+     "JUPITER@H2": 0.35,
+     "JUPITER@H8": 0.3,
+     "CHEONEUL_GWIIN": 0.25,
+     "favorable": 0.2,
+     "JUPITER>SUN:harmonious": 0.2
+    },
+    "mods": {
+     "education": 0.5
+    }
+   },
+   "location": "home",
+   "activity": "eat",
+   "who": "kid",
+   "line": {
+    "ko": "저 전액 장학금 받았어요! 4년 내내요!",
+    "en": "I got a full scholarship! All four years!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(소리를 지른다)",
+      "en": "(Scream)"
+     },
+     "w": {
+      "PROUD": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "우리 {kid}, 고생했다",
+      "en": "You worked so hard, {kid}"
+     },
+     "w": {
+      "PROUD": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "PROUD": {
+     "r": {
+      "ko": "그날 밤 가족 단톡방이 축하 이모티콘으로 도배됐다.",
+      "en": "That night the family chat was flooded with celebration emojis."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 20
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "전액 장학금",
+       "en": "A full scholarship"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "kid"
+      ],
+      "priority": 6
+     }
+    }
+   }
+  },
+  {
+   "id": "PLAGIARISM_ACCUSED",
+   "cat": "school",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "표절 의혹",
+    "en": "Plagiarism allegations"
+   },
+   "chainOnly": true,
+   "location": "online_community",
+   "activity": "post",
+   "who": "app",
+   "line": {
+    "ko": "[커뮤니티] '올해 대상 작품, 해외 작품 표절 의혹' — 비교 이미지가 퍼지고 있다.",
+    "en": "[Online forum] 'This year's grand-prize entry: plagiarism allegations' — comparison images are spreading."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "작업 기록을 전부 공개한다",
+      "en": "Publish all your working files"
+     },
+     "w": {
+      "CLEARED": 0.75,
+      "STRIPPED": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "(아무 말도 하지 않는다)",
+      "en": "(Say nothing)"
+     },
+     "w": {
+      "STRIPPED": 0.5,
+      "CLEARED": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "CLEARED": {
+     "r": {
+      "ko": "스케치 날짜가 원작보다 앞섰다. 의혹을 퍼뜨린 사람이 사과문을 올렸다.",
+      "en": "Your sketches were dated before the 'original'. The accuser posted an apology."
+     },
+     "card": {
+      "caption": {
+       "ko": "날짜가 증명한 것",
+       "en": "What the dates proved"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     }
+    },
+    "STRIPPED": {
+     "r": {
+      "ko": "주최 측이 수상을 취소했다. 억울함을 설명할 곳이 없었다.",
+      "en": "The organizers revoked the prize. There was nowhere to explain."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -10
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "EXCHANGE_ROMANCE",
+   "cat": "school",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "requires": [
+    "single",
+    "abroad",
+    "age>=19",
+    "age<=40"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.54,
+     "STEM_COMBINATION@day": 0.36,
+     "SIX_HARMONY@day": 0.3,
+     "JUPITER@H5": 0.24,
+     "JUPITER@H7": 0.24,
+     "SR:SUN@H5": 0.24,
+     "SR:SUN@H7": 0.24,
+     "YEOKMA": 0.54,
+     "JUPITER@H9": 0.36,
+     "JUPITER@H4": 0.24,
+     "URANUS>ASC:conjunction": 0.24
+    }
+   },
+   "location": "cafe",
+   "activity": "drink_coffee",
+   "who": "stranger",
+   "line": {
+    "ko": "(어학원 옆자리. 매일 먼저 인사를 건네던 사람이 오늘은 커피를 두 잔 들고 왔다.) 이번 주말에… 같이 바다 볼래요?",
+    "en": "(The seat next to you at language school. The one who always says hi first came in today with two coffees.) This weekend… want to go see the ocean together?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "좋아요",
+      "en": "I'd love to"
+     },
+     "w": {
+      "LOVE": 0.7,
+      "FRIENDS": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "친구로 지내요",
+      "en": "Let's stay friends"
+     },
+     "w": {
+      "FRIENDS": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "LOVE": {
+     "r": {
+      "ko": "서툰 영어와 서툰 한국어로 밤새 이야기했다. 국경이 문제가 아니었다.",
+      "en": "You talked all night in clumsy English and clumsy Korean. Borders weren't the problem."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "서툰 말로 시작된 사랑",
+       "en": "A love that began in broken words"
+      },
+      "location": "beach",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 7
+     }
+    },
+    "FRIENDS": {
+     "r": {
+      "ko": "평생 친구가 생겼다. 서로의 나라에 놀러 가기로 약속했다.",
+      "en": "A friend for life. You promised to visit each other's countries."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "LANGUAGE_EXCHANGE_ROMANCE",
+   "cat": "school",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "requires": [
+    "single",
+    "!abroad",
+    "age>=19",
+    "age<=40"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.54,
+     "STEM_COMBINATION@day": 0.36,
+     "SIX_HARMONY@day": 0.3,
+     "JUPITER@H5": 0.24,
+     "JUPITER@H7": 0.24,
+     "SR:SUN@H5": 0.24,
+     "SR:SUN@H7": 0.24
+    },
+    "mods": {
+     "communication": 0.4,
+     "overseas": 0.3
+    }
+   },
+   "location": "language_exchange_app",
+   "activity": "video_call",
+   "who": "app",
+   "line": {
+    "ko": "[언어교환 앱] 3개월째 한국어-영어 교환 중인 상대: '이번엔 화상 말고… 직접 만나서 공부할래요?'",
+    "en": "[Language-exchange app] Your Korean–English partner of three months: 'Instead of video this time… want to study together in person?'"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "좋아요!",
+      "en": "Sure!"
+     },
+     "w": {
+      "LOVE": 0.6,
+      "FRIENDS": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(조금 떨린다)",
+      "en": "(A little nervous)"
+     },
+     "w": {
+      "FRIENDS": 0.6,
+      "LOVE": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "LOVE": {
+     "r": {
+      "ko": "단어장 대신 서로의 얼굴을 보는 시간이 길어졌다.",
+      "en": "Less time on vocabulary, more time looking at each other."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "언어교환에서 연인으로",
+       "en": "From language partners to lovers"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 6
+     }
+    },
+    "FRIENDS": {
+     "r": {
+      "ko": "실력은 늘었고, 좋은 친구가 생겼다.",
+      "en": "Your skills improved — and you gained a good friend."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

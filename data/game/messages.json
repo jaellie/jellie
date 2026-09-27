@@ -659,7 +659,9 @@
    "id": "work_53",
    "from": "work",
    "requires": [
-    "employed"
+    "employed",
+    "!weekend",
+    "!selfEmployed"
    ],
    "weight": 1,
    "text": {
@@ -671,7 +673,8 @@
    "id": "work_54",
    "from": "work",
    "requires": [
-    "employed"
+    "employed",
+    "!selfEmployed"
    ],
    "weight": 1,
    "text": {
@@ -683,7 +686,8 @@
    "id": "work_55",
    "from": "work",
    "requires": [
-    "employed"
+    "employed",
+    "!selfEmployed"
    ],
    "weight": 1,
    "text": {
@@ -719,7 +723,8 @@
    "id": "work_58",
    "from": "work",
    "requires": [
-    "employed"
+    "employed",
+    "!selfEmployed"
    ],
    "weight": 1,
    "text": {
@@ -744,7 +749,8 @@
    "from": "work",
    "requires": [
     "employed",
-    "recentlyPromoted"
+    "recentlyPromoted",
+    "!selfEmployed"
    ],
    "weight": 2,
    "text": {

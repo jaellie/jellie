@@ -310,7 +310,8 @@
     "WORKPLACE"
    ],
    "requires": [
-    "employed"
+    "employed",
+    "!selfEmployed"
    ],
    "weight": 1,
    "cooldownDays": 4,

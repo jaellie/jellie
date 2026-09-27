@@ -1,0 +1,2473 @@
+{
+ "_doc": "Life events: money_down. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "STOCK_CRASH",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=20",
+    "money>=10"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.8,
+     "URANUS@H2": 0.6,
+     "URANUS@H8": 0.5,
+     "SAMJAE": 0.6,
+     "unfavorable": 0.5,
+     "BRANCH_CLASH@month": 0.3
+    },
+    "mods": {
+     "volatility": 0.6,
+     "wealth": -0.4
+    },
+    "traits": {
+     "riskTolerance": 0.3
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[증권 앱] 보유 종목 거래정지 — 상장폐지 사유가 발생했습니다.",
+    "en": "[Brokerage app] Trading halted on your holding — grounds for delisting."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(앱을 지운다)",
+      "en": "(Delete the app)"
+     },
+     "w": {
+      "GONE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "정리매매에서라도 판다",
+      "en": "Sell in the liquidation window"
+     },
+     "w": {
+      "SALVAGE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "물타기 한다",
+      "en": "Double down"
+     },
+     "w": {
+      "GONE": 0.7,
+      "BOUNCE": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "GONE": {
+     "r": {
+      "ko": "휴지 조각이 된 주식을 보며 한참 웃었다. 웃음밖에 안 나왔다.",
+      "en": "You laughed for a long time at shares that turned into scrap paper. Laughing was all you could do."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.35,
+       "min": 5
+      }
+     ],
+     "card": "LOSS"
+    },
+    "SALVAGE": {
+     "r": {
+      "ko": "원금의 10%를 건졌다. 그걸로 소주를 샀다.",
+      "en": "You salvaged 10% of what you'd put in. You spent it on soju."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.2,
+       "min": 3
+      }
+     ]
+    },
+    "BOUNCE": {
+     "r": {
+      "ko": "기적처럼 거래가 재개됐다. 본전에서 탈출했다. 다시는 안 한다.",
+      "en": "Miraculously, trading resumed. You got out at break-even. Never again."
+     },
+     "lean": {
+      "mods": {
+       "volatility": 0.4
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "CRYPTO_RUGPULL",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=19"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.8,
+     "URANUS@H2": 0.6,
+     "URANUS@H8": 0.5,
+     "SAMJAE": 0.6,
+     "unfavorable": 0.5,
+     "BRANCH_CLASH@month": 0.3
+    },
+    "mods": {
+     "volatility": 0.7,
+     "risk": 0.4
+    },
+    "traits": {
+     "riskTolerance": 0.4,
+     "planning": -0.3
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[커뮤니티 속보] 개발자 지갑에서 전량 매도. 코인 가격 -99%. 공식 홈페이지 접속 불가.",
+    "en": "[Community alert] The dev wallet dumped everything. Price −99%. The official site is down."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "피해자 소송에 참여한다",
+      "en": "Join the victims' lawsuit"
+     },
+     "w": {
+      "SUE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(조용히 이불을 덮는다)",
+      "en": "(Quietly pull the covers over your head)"
+     },
+     "w": {
+      "LOST": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SUE": {
+     "r": {
+      "ko": "단톡방 피해자만 3천 명. 변호사는 '시간이 걸린다'고만 했다.",
+      "en": "Three thousand victims in the chat. The lawyer only said 'it'll take time'."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.2,
+       "min": 3
+      }
+     ],
+     "chain": [
+      {
+       "to": "LAWSUIT_WIN",
+       "after": [
+        18,
+        48
+       ],
+       "p": 0.2
+      }
+     ]
+    },
+    "LOST": {
+     "r": {
+      "ko": "다음 날 아침에도 해는 떴다. 통장만 가벼워졌다.",
+      "en": "The sun still came up the next morning. Your account was just lighter."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.25,
+       "min": 3
+      }
+     ],
+     "card": "LOSS"
+    }
+   }
+  },
+  {
+   "id": "GAMBLING",
+   "cat": "money_down",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "딱 한 번만",
+    "en": "Just once"
+   },
+   "requires": [
+    "age>=20",
+    "!f_gambling"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.9,
+     "unfavorable": 0.5,
+     "URANUS@H2": 0.3,
+     "SAMJAE": 0.3
+    },
+    "mods": {
+     "risk": 0.6,
+     "wealth": -0.5,
+     "volatility": 0.4
+    },
+    "traits": {
+     "riskTolerance": 0.6,
+     "spontaneity": 0.4,
+     "planning": -0.4
+    },
+    "facts": {
+     "mbtiP": 0.3
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "stranger",
+   "line": {
+    "ko": "(동창이 휴대폰 화면을 보여줬다.) 이거 봐, 어제 하룻밤에 삼백 땄어. 너도 딱 한 번만 해봐.",
+    "en": "(An old classmate shows you their phone.) Look — I made three million won in one night. Try it, just once."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "딱 한 번만…",
+      "en": "Just once…"
+     },
+     "w": {
+      "HOOKED": 0.55,
+      "LUCKY": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "난 됐어",
+      "en": "I'll pass"
+     },
+     "w": {
+      "WALK": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "HOOKED": {
+     "r": {
+      "ko": "첫날 땄다. 그게 문제였다. 한 달 뒤, 월세 낼 돈까지 걸고 있었다.",
+      "en": "You won the first night. That was the problem. A month later you were betting the rent."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "gambling",
+       "value": true
+      },
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.4,
+       "min": 5
+      }
+     ],
+     "chain": [
+      {
+       "to": "LOAN_SHARK",
+       "after": [
+        3,
+        12
+       ],
+       "p": 0.65,
+       "urgent": true
+      }
+     ],
+     "lean": {
+      "traits": {
+       "riskTolerance": 0.6,
+       "spontaneity": 0.4,
+       "planning": -0.4
+      },
+      "mods": {
+       "risk": 0.5
+      }
+     }
+    },
+    "LUCKY": {
+     "r": {
+      "ko": "조금 따고 바로 앱을 지웠다. 그 동창은 요즘 연락이 안 된다.",
+      "en": "You won a little and deleted the app right away. That classmate doesn't answer anymore."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 2
+      }
+     ]
+    },
+    "WALK": {
+     "r": {
+      "ko": "'재미없는 놈.' 그 말이 오늘따라 칭찬처럼 들렸다.",
+      "en": "'You're no fun.' Today it sounded like a compliment."
+     }
+    }
+   }
+  },
+  {
+   "id": "LOAN_SHARK",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "사채",
+    "en": "The loan shark"
+   },
+   "requires": [
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.32,
+     "URANUS@H2": 0.24,
+     "URANUS@H8": 0.2,
+     "SAMJAE": 0.44,
+     "unfavorable": 0.44,
+     "BRANCH_CLASH@month": 0.12,
+     "SATURN>SUN:hard": 0.2,
+     "SATURN>MOON:hard": 0.2,
+     "group:PYEON_GWAN": 0.16
+    },
+    "mods": {
+     "wealth": -0.6
+    },
+    "facts": {
+     "broke": 1.0,
+     "inDebt": 0.8
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "loanShark",
+   "line": {
+    "ko": "이자 날짜 지난 거 알지? 우리가 가족들 주소도 다 알아. 이번 주까지다.",
+    "en": "You know the interest is overdue, right? We have your family's addresses too. You've got until the end of the week."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "가족에게 도움을 청한다",
+      "en": "Ask your family for help"
+     },
+     "w": {
+      "BAILOUT": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "다른 데서 또 빌려서 막는다",
+      "en": "Borrow elsewhere to cover it"
+     },
+     "w": {
+      "DEEPER": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "경찰과 법률구조공단에 신고한다",
+      "en": "Report it to the police and legal aid"
+     },
+     "w": {
+      "LEGAL": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "BAILOUT": {
+     "r": {
+      "ko": "부모님이 적금을 깨셨다. 아무 말씀도 안 하셨다. 그게 더 아팠다.",
+      "en": "Your parents broke their savings. They didn't say a word. That hurt the most."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 15
+      },
+      {
+       "kind": "familySupport",
+       "delta": -0.2
+      }
+     ],
+     "chain": [
+      {
+       "to": "GAMBLING_RECOVERY",
+       "after": [
+        6,
+        24
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "DEEPER": {
+     "r": {
+      "ko": "빚이 빚을 갚았다. 휴대폰이 울릴 때마다 심장이 내려앉았다.",
+      "en": "Debt paid off debt. Every time the phone rang, your heart dropped."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": 40
+      }
+     ],
+     "chain": [
+      {
+       "to": "DEBT_MARRIAGE_CRISIS",
+       "after": [
+        2,
+        10
+       ],
+       "p": 0.8,
+       "urgent": true
+      },
+      {
+       "to": "BANKRUPTCY",
+       "after": [
+        12,
+        30
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "LEGAL": {
+     "r": {
+      "ko": "불법 이자는 무효라고 했다. 원금만 갚기로 했다. 처음으로 숨이 쉬어졌다.",
+      "en": "The illegal interest was void, they said. You'd only repay the principal. For the first time, you could breathe."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": 10
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "처음 쉬어진 숨",
+       "en": "The first real breath"
+      },
+      "location": "court",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     },
+     "chain": [
+      {
+       "to": "GAMBLING_RECOVERY",
+       "after": [
+        6,
+        24
+       ],
+       "p": 0.5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "DEBT_MARRIAGE_CRISIS",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "무너진 신뢰",
+    "en": "Broken trust"
+   },
+   "requires": [
+    "partnered",
+    "f_gambling"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "activity": "invite_partner",
+   "who": "partner",
+   "line": {
+    "ko": "(카드 명세서를 든 {partner}의 손이 떨렸다.) 이게 다 뭐야? 우리 보증금까지 손댄 거야?",
+    "en": "({partner}'s hands shook, holding the card statements.) What is all this? Did you touch our deposit too?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "다 털어놓고 치료받을게",
+      "en": "I'll tell you everything and get treatment"
+     },
+     "w": {
+      "RECOVER": 0.7,
+      "LEAVE": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "…한 번만 믿어줘",
+      "en": "…Trust me just once more"
+     },
+     "w": {
+      "LEAVE": 0.6,
+      "RECOVER": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "RECOVER": {
+     "r": {
+      "ko": "{partner}은(는) 한참 울다가 말했다. '같이 가. 병원도, 모임도.'",
+      "en": "{partner} cried a long time, then said, 'We go together. The clinic, the meetings — all of it.'"
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": 0.1
+      }
+     ],
+     "chain": [
+      {
+       "to": "GAMBLING_RECOVERY",
+       "after": [
+        6,
+        18
+       ],
+       "p": 0.9
+      }
+     ]
+    },
+    "LEAVE": {
+     "r": {
+      "ko": "{partner}은(는) 짐을 쌌다. '미안해. 나도 살아야겠어.'",
+      "en": "{partner} packed a bag. 'I'm sorry. I have to save myself too.'"
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "짐을 싼 {partner}",
+       "en": "{partner}, packing"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 8
+     },
+     "chain": [
+      {
+       "to": "BANKRUPTCY",
+       "after": [
+        6,
+        24
+       ],
+       "p": 0.5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "GAMBLING_RECOVERY",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "단도박 1년",
+    "en": "One year clean"
+   },
+   "requires": [
+    "f_gambling"
+   ],
+   "chainOnly": true,
+   "location": "library",
+   "activity": "read",
+   "who": "me",
+   "line": {
+    "ko": "(단도박 모임 1년째. 오늘, 1년 칩을 받는 날이다.)",
+    "en": "(A year in the gamblers' recovery group. Today you get your one-year chip.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(소감을 말한다)",
+      "en": "(Say a few words)"
+     },
+     "w": {
+      "CHIP": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(조용히 칩만 받는다)",
+      "en": "(Just take the chip quietly)"
+     },
+     "w": {
+      "CHIP": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CHIP": {
+     "r": {
+      "ko": "'저는 오늘도 하루를 이겼습니다.' 박수 소리가 오래 이어졌다.",
+      "en": "'Today, I won one more day.' The applause went on a long time."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "gambling"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "1년 칩",
+       "en": "The one-year chip"
+      },
+      "location": "library",
+      "actors": [
+       "me",
+       "stranger",
+       "stranger"
+      ],
+      "priority": 7
+     }
+    }
+   }
+  },
+  {
+   "id": "BANKRUPTCY",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "파산",
+    "en": "Bankruptcy"
+   },
+   "chainOnly": true,
+   "location": "court",
+   "activity": "court_hearing",
+   "who": "judge",
+   "line": {
+    "ko": "(법원) 신청인의 개인파산 및 면책을 허가합니다.",
+    "en": "(Court) The applicant's personal bankruptcy and discharge are granted."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(고개를 숙인다)",
+      "en": "(Bow your head)"
+     },
+     "w": {
+      "RESET": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(다시 시작하겠다고 다짐한다)",
+      "en": "(Promise yourself you'll start over)"
+     },
+     "w": {
+      "RESET": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "RESET": {
+     "r": {
+      "ko": "빚은 사라졌고, 신용도 사라졌다. 남은 건 나 하나. 거기서부터 다시.",
+      "en": "The debt was gone — and your credit with it. Just you, left. Start from there."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": -200
+      },
+      {
+       "kind": "clearFlag",
+       "name": "gambling"
+      },
+      {
+       "kind": "setFlag",
+       "name": "bankrupt",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시 0에서",
+       "en": "Back to zero"
+      },
+      "location": "court",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     },
+     "chain": [
+      {
+       "to": "COMEBACK",
+       "after": [
+        24,
+        60
+       ],
+       "p": 0.5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ILLEGAL_TOTO",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=19",
+    "!f_gambling"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.7,
+     "unfavorable": 0.4
+    },
+    "mods": {
+     "risk": 0.5,
+     "wealth": -0.3
+    },
+    "traits": {
+     "riskTolerance": 0.5,
+     "spontaneity": 0.3
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "unknown",
+   "line": {
+    "ko": "[텔레그램] 오늘 경기 확실한 픽 드립니다. 첫 충전 보너스 100%! 🔥",
+    "en": "[Telegram] Sure-thing picks for tonight's games. 100% first-deposit bonus! 🔥"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(소액만 충전해본다)",
+      "en": "(Deposit a little, just to try)"
+     },
+     "w": {
+      "WINLOSE": 0.6,
+      "BUSTED": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(차단한다)",
+      "en": "(Block)"
+     },
+     "w": {
+      "BLOCK": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "WINLOSE": {
+     "r": {
+      "ko": "처음엔 땄다. 출금 버튼은 끝내 작동하지 않았다.",
+      "en": "You won at first. The withdraw button never worked."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.15,
+       "min": 2
+      },
+      {
+       "kind": "setFlag",
+       "name": "gambling",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "LOAN_SHARK",
+       "after": [
+        4,
+        14
+       ],
+       "p": 0.35,
+       "urgent": true
+      }
+     ],
+     "lean": {
+      "traits": {
+       "riskTolerance": 0.4
+      }
+     }
+    },
+    "BUSTED": {
+     "r": {
+      "ko": "사이트가 단속됐다. 경찰서에서 참고인 조사를 받았다. 부끄러웠다.",
+      "en": "The site was raided. You were questioned at the police station as a witness. Mortifying."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      }
+     ]
+    },
+    "BLOCK": {
+     "r": {
+      "ko": "차단 버튼을 눌렀다. 스팸은 다음 날 또 왔다.",
+      "en": "You hit block. The spam came back the next day."
+     }
+    }
+   }
+  },
+  {
+   "id": "LOAN_GUARANTEE",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=25"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.66,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "SAMJAE": 0.36,
+     "unfavorable": 0.3,
+     "BRANCH_CLASH@month": 0.54,
+     "BRANCH_CLASH@year": 0.48,
+     "PUNISHMENT@month": 0.24,
+     "SATURN>MOON:hard": 0.3
+    },
+    "mods": {
+     "family": 0.3
+    },
+    "traits": {
+     "conflictAvoidance": 0.4
+    }
+   },
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "relative",
+   "line": {
+    "ko": "(작은아버지가 서류를 내밀었다.) 보증 좀 서줘라. 서류상으로만이야. 절대 너한테 피해 안 가.",
+    "en": "(Your uncle slides papers across the table.) Just co-sign for me. It's only on paper. It'll never come back on you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(도장을 찍는다)",
+      "en": "(Stamp your seal)"
+     },
+     "w": {
+      "FINE": 0.5,
+      "TROUBLE": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "죄송해요. 보증은 안 서요",
+      "en": "I'm sorry. I don't co-sign"
+     },
+     "w": {
+      "REFUSE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "FINE": {
+     "r": {
+      "ko": "다행히 아무 일도 없었다. 그래도 그 서류 생각이 날 때마다 식은땀이 났다.",
+      "en": "Luckily nothing happened. But every time you remembered that paper, you broke into a cold sweat."
+     }
+    },
+    "TROUBLE": {
+     "r": {
+      "ko": "몇 달째 작은아버지 전화가 안 된다. 불길했다.",
+      "en": "Your uncle hasn't picked up in months. It felt ominous."
+     },
+     "chain": [
+      {
+       "to": "GUARANTEE_COLLAPSE",
+       "after": [
+        3,
+        18
+       ],
+       "p": 1.0,
+       "urgent": true
+      }
+     ]
+    },
+    "REFUSE": {
+     "r": {
+      "ko": "'정 없는 놈.' 명절마다 그 말이 따라다녔다.",
+      "en": "'Heartless.' That word followed you to every holiday."
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": -0.1
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "GUARANTEE_COLLAPSE",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "빚보증",
+    "en": "The co-signed loan"
+   },
+   "chainOnly": true,
+   "location": "home",
+   "activity": "use_phone",
+   "who": "bank",
+   "line": {
+    "ko": "[은행] 연대보증 채무 이행 안내: 주채무자의 연락 두절로 보증인께 상환을 청구합니다.",
+    "en": "[Bank] Notice to guarantor: the primary borrower is unreachable. Repayment is now due from you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "분할 상환을 신청한다",
+      "en": "Apply for installments"
+     },
+     "w": {
+      "PAY": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(서류를 찢는다)",
+      "en": "(Tear up the letter)"
+     },
+     "w": {
+      "WORSE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "PAY": {
+     "r": {
+      "ko": "앞으로 몇 년, 남의 빚을 갚게 됐다.",
+      "en": "For the next few years, you'll be paying off someone else's debt."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": 40
+      }
+     ],
+     "card": "LOSS"
+    },
+    "WORSE": {
+     "r": {
+      "ko": "찢어도 빚은 사라지지 않았다. 통장이 압류됐다.",
+      "en": "Tearing it up didn't make it go away. Your account was frozen."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": 40
+      },
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.3,
+       "min": 5
+      }
+     ],
+     "chain": [
+      {
+       "to": "BANKRUPTCY",
+       "after": [
+        12,
+        30
+       ],
+       "p": 0.3
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "JEONSE_FRAUD",
+   "cat": "money_down",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "전세사기",
+    "en": "The lease scam"
+   },
+   "requires": [
+    "!homeOwner",
+    "age>=22",
+    "money>=15"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.8,
+     "URANUS@H2": 0.6,
+     "URANUS@H8": 0.5,
+     "SAMJAE": 0.6,
+     "unfavorable": 0.5,
+     "BRANCH_CLASH@month": 0.3
+    },
+    "mods": {
+     "stability": -0.4,
+     "wealth": -0.4
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(전세 만기 한 달 전. 집주인 연락이 끊겼다. 등기부를 떼어보니 — 이 집은 이미 경매에 넘어가 있었다.)",
+    "en": "(A month before your lease ends, the landlord goes silent. You pull the registry — the place is already up for auction.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "소송한다",
+      "en": "Sue"
+     },
+     "w": {
+      "SUE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "피해자 모임에 나간다",
+      "en": "Join the victims' group"
+     },
+     "w": {
+      "GROUP": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(주저앉는다)",
+      "en": "(Sink to the floor)"
+     },
+     "w": {
+      "LOSS": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SUE": {
+     "r": {
+      "ko": "변호사비가 먼저 나갔다. 긴 싸움이 시작됐다.",
+      "en": "The lawyer's fees went out first. A long fight began."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.5,
+       "min": 10
+      }
+     ],
+     "chain": [
+      {
+       "to": "LAWSUIT_WIN",
+       "after": [
+        12,
+        36
+       ],
+       "p": 0.4
+      }
+     ]
+    },
+    "GROUP": {
+     "r": {
+      "ko": "같은 건물에만 피해자가 스물세 명. 서로의 이야기를 들으며 버텼다.",
+      "en": "Twenty-three victims in the same building alone. You got through it by listening to each other."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.45,
+       "min": 10
+      },
+      {
+       "kind": "newFriend"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "스물세 개의 보증금",
+       "en": "Twenty-three deposits"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "stranger",
+       "stranger"
+      ],
+      "priority": 7
+     }
+    },
+    "LOSS": {
+     "r": {
+      "ko": "몇 년을 모은 돈이 서류 한 장에 사라졌다.",
+      "en": "Years of savings vanished on one piece of paper."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.6,
+       "min": 10
+      }
+     ],
+     "card": "LOSS"
+    }
+   }
+  },
+  {
+   "id": "BUSINESS_BANKRUPT",
+   "cat": "money_down",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "부도",
+    "en": "Bankrupt"
+   },
+   "requires": [
+    "selfEmployed"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.56,
+     "URANUS@H2": 0.42,
+     "URANUS@H8": 0.35,
+     "SAMJAE": 0.42,
+     "unfavorable": 0.63,
+     "BRANCH_CLASH@month": 0.21,
+     "SATURN>SUN:hard": 0.42,
+     "SATURN>MC:conjunction": 0.35,
+     "group:PYEON_GWAN": 0.42,
+     "group:SANG_GWAN": 0.28
+    },
+    "mods": {
+     "business": -0.6
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "bank",
+   "line": {
+    "ko": "[은행] 어음 부도 처리 안내. 사업자 계좌가 정지되었습니다.",
+    "en": "[Bank] Notice of dishonored bills. Your business account has been suspended."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "가게를 정리한다",
+      "en": "Close the business"
+     },
+     "w": {
+      "CLOSE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "끝까지 버틴다",
+      "en": "Hold on to the end"
+     },
+     "w": {
+      "HOLD": 0.4,
+      "CLOSE": 0.6
+     }
+    }
+   ],
+   "outcomes": {
+    "CLOSE": {
+     "r": {
+      "ko": "간판을 내리던 날, 마지막 손님이 '고생했어요'라고 했다.",
+      "en": "The day the sign came down, the last customer said, 'You worked so hard.'"
+     },
+     "effects": [
+      {
+       "kind": "quitJob"
+      },
+      {
+       "kind": "debt",
+       "amount": 30
+      }
+     ],
+     "card": "SHOP_CLOSE",
+     "chain": [
+      {
+       "to": "COMEBACK",
+       "after": [
+        24,
+        60
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "HOLD": {
+     "r": {
+      "ko": "대출에 대출을 얹어 버텼다. 기적처럼 거래처 하나가 살아났다.",
+      "en": "You held on with loan upon loan. Miraculously, one client came back to life."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": 20
+      }
+     ],
+     "lean": {
+      "mods": {
+       "business": 0.5
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "COMEBACK",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "재기",
+    "en": "The comeback"
+   },
+   "chainOnly": true,
+   "location": "street",
+   "activity": "walk",
+   "who": "me",
+   "line": {
+    "ko": "(무너진 지 몇 년. 작은 트럭 한 대를 샀다. 다시 해보기로 했다.)",
+    "en": "(Years after it all fell apart, you bought a small truck. You're going to try again.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "새벽 시장으로 간다",
+      "en": "Head to the early-morning market"
+     },
+     "w": {
+      "RISE": 0.65,
+      "SLOW": 0.35
+     }
+    },
+    {
+     "t": {
+      "ko": "(천천히, 작게 시작한다)",
+      "en": "(Start slowly, small)"
+     },
+     "w": {
+      "SLOW": 0.6,
+      "RISE": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "RISE": {
+     "r": {
+      "ko": "트럭 앞에 줄이 생겼다. 1년 만에 가게를 다시 얻었다.",
+      "en": "A line formed at the truck. Within a year you had a shop again."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "own-business"
+      },
+      {
+       "kind": "money",
+       "amount": 20
+      },
+      {
+       "kind": "clearFlag",
+       "name": "bankrupt"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시 올린 간판",
+       "en": "A sign, raised again"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 8
+     }
+    },
+    "SLOW": {
+     "r": {
+      "ko": "크게 벌진 못했다. 그래도 매일 아침 일어날 이유가 생겼다.",
+      "en": "No fortune. But there's a reason to get up every morning now."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "own-business"
+      },
+      {
+       "kind": "money",
+       "amount": 5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SCAMMED_BY_FRIEND",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "hasFriend",
+    "money>=10",
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 1.05,
+     "URANUS@H2": 0.42,
+     "URANUS@H8": 0.35,
+     "SAMJAE": 0.42,
+     "unfavorable": 0.35,
+     "BRANCH_CLASH@month": 0.49,
+     "group:BI_GYEON": 0.21
+    },
+    "mods": {
+     "social": 0.3
+    }
+   },
+   "location": "cafe",
+   "activity": "meet_friend",
+   "who": "friend",
+   "line": {
+    "ko": "좋은 정보가 있어. 너니까 알려주는 거야. 석 달이면 두 배야. 나도 넣었어.",
+    "en": "I've got a great tip. I'm only telling you because it's you. It doubles in three months. I'm in too."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "너를 믿고 넣는다",
+      "en": "Put money in — I trust you"
+     },
+     "w": {
+      "SCAM": 0.7,
+      "REAL": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "난 괜찮아",
+      "en": "I'm good"
+     },
+     "w": {
+      "SAFE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SCAM": {
+     "r": {
+      "ko": "석 달 뒤, {friend}의 번호는 없는 번호가 됐다. 나 말고도 열두 명이었다.",
+      "en": "Three months later, {friend}'s number was disconnected. You weren't the only one — there were twelve."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.4,
+       "min": 5
+      },
+      {
+       "kind": "loseFriend"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "없는 번호",
+       "en": "A disconnected number"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    },
+    "REAL": {
+     "r": {
+      "ko": "정말 두 배가 됐다. 다음 제안은 정중히 거절했다.",
+      "en": "It really did double. You politely declined the next offer."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 8
+      }
+     ]
+    },
+    "SAFE": {
+     "r": {
+      "ko": "몇 달 뒤, {friend}이(가) 사기로 입건됐다는 소식을 들었다.",
+      "en": "Months later, you heard {friend} had been charged with fraud."
+     },
+     "effects": [
+      {
+       "kind": "loseFriend"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "VOICE_PHISHING",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.48,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "SAMJAE": 0.36,
+     "unfavorable": 0.3,
+     "BRANCH_CLASH@month": 0.18
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "unknown",
+   "line": {
+    "ko": "[서울중앙지검] 고객님 명의 계좌가 금융범죄에 연루되어 확인이 필요합니다. 안전계좌로 이체하시면…",
+    "en": "[Seoul Prosecutors] An account in your name is linked to financial crimes. Please transfer your funds to a secure account so we can…"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(시키는 대로 한다)",
+      "en": "(Do as they say)"
+     },
+     "w": {
+      "SCAMMED": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(끊고 경찰에 확인한다)",
+      "en": "(Hang up and check with the police)"
+     },
+     "w": {
+      "SAFE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SCAMMED": {
+     "r": {
+      "ko": "'안전계좌'는 없었다. 은행 창구에서 손이 떨렸다.",
+      "en": "There was no 'secure account'. At the bank counter, your hands shook."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.3,
+       "min": 3
+      }
+     ],
+     "card": "LOSS",
+     "lean": {
+      "traits": {
+       "conflictAvoidance": 0.3,
+       "planning": -0.2
+      }
+     }
+    },
+    "SAFE": {
+     "r": {
+      "ko": "'그런 전화 안 합니다.' 경찰의 한마디에 다리가 풀렸다.",
+      "en": "'We never make calls like that.' When the police said that, your knees gave out."
+     }
+    }
+   }
+  },
+  {
+   "id": "VOICE_PHISHING_KID",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "hasKid",
+    "kidAge>=15",
+    "age>=45"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.4,
+     "URANUS@H2": 0.3,
+     "URANUS@H8": 0.25,
+     "SAMJAE": 0.3,
+     "unfavorable": 0.25,
+     "BRANCH_CLASH@month": 0.15
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "unknown",
+   "line": {
+    "ko": "(문자) 나야. 폰 액정 깨져서 이 번호로 보내. 급하게 결제할 게 있는데 카드 사진이랑 인증번호 좀…",
+    "en": "(Text) It's me. My screen broke, so I'm using this number. I need to pay for something urgently — can you send your card photo and the code…"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "({kid}에게 직접 전화해본다)",
+      "en": "(Call {kid} directly)"
+     },
+     "w": {
+      "SAFE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(급하다니 보내준다)",
+      "en": "(It sounds urgent — send it)"
+     },
+     "w": {
+      "SCAMMED": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SAFE": {
+     "r": {
+      "ko": "{kid}은(는) 멀쩡한 휴대폰으로 전화를 받았다. '그거 사기야!'",
+      "en": "{kid} picked up on a perfectly fine phone. 'That's a scam!'"
+     }
+    },
+    "SCAMMED": {
+     "r": {
+      "ko": "몇 분 만에 카드가 한도까지 긁혔다.",
+      "en": "Within minutes, the card was maxed out."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.2,
+       "min": 3
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "MLM",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=20",
+    "!f_mlm"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.48,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "SAMJAE": 0.36,
+     "unfavorable": 0.3,
+     "BRANCH_CLASH@month": 0.18
+    },
+    "mods": {
+     "social": 0.3,
+     "opportunity": 0.3
+    },
+    "traits": {
+     "planning": -0.3
+    }
+   },
+   "location": "cafe",
+   "activity": "sit_alone",
+   "who": "stranger",
+   "line": {
+    "ko": "(오랜만에 연락 온 동창) 좋은 사업 기회가 있어. 세미나 딱 한 번만 와봐. 인생이 바뀐다니까?",
+    "en": "(An old classmate you haven't heard from in years) There's an amazing business opportunity. Just come to one seminar. It'll change your life!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "한 번만 가본다",
+      "en": "Go once"
+     },
+     "w": {
+      "JOIN": 0.5,
+      "ESCAPE": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "다단계지?",
+      "en": "That's a pyramid scheme, right?"
+     },
+     "w": {
+      "REFUSE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "JOIN": {
+     "r": {
+      "ko": "합숙소에서 박수를 치다 보니 카드에 천만 원이 긁혀 있었다. 창고에 화장품이 쌓였다.",
+      "en": "Somewhere between the clapping at the retreat, ten million won went on your card. Cosmetics piled up in storage."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.25,
+       "min": 5
+      },
+      {
+       "kind": "debt",
+       "amount": 10
+      },
+      {
+       "kind": "setFlag",
+       "name": "mlm",
+       "value": true
+      }
+     ],
+     "lean": {
+      "traits": {
+       "sociability": 0.3,
+       "planning": -0.3
+      }
+     }
+    },
+    "ESCAPE": {
+     "r": {
+      "ko": "쉬는 시간에 화장실 창문으로 나왔다. 버스 정류장까지 뛰었다.",
+      "en": "At the break, you slipped out the bathroom window and ran for the bus stop."
+     }
+    },
+    "REFUSE": {
+     "r": {
+      "ko": "'너 같은 애는 평생 월급쟁이야.' 동창은 그 말을 남기고 차단했다.",
+      "en": "'People like you stay wage slaves forever.' The classmate said that and blocked you."
+     }
+    }
+   }
+  },
+  {
+   "id": "CREDIT_CARD_DEBT",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "age>=20"
+   ],
+   "repeatable": true,
+   "cooldown": 96,
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.48,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "SAMJAE": 0.36,
+     "unfavorable": 0.3,
+     "BRANCH_CLASH@month": 0.18
+    },
+    "mods": {
+     "wealth": -0.3
+    },
+    "traits": {
+     "spontaneity": 0.4,
+     "planning": -0.4
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "card",
+   "line": {
+    "ko": "[카드사] 이번 달 결제 예정 금액: 리볼빙 포함 ₩4,870,000. 연체 시 신용등급이 하락할 수 있습니다.",
+    "en": "[Card company] Amount due this month: ₩4,870,000 including revolving balance. Late payment may lower your credit score."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "가계부를 쓰고 갚아나간다",
+      "en": "Start a budget and pay it down"
+     },
+     "w": {
+      "PLAN": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "최소 금액만 낸다",
+      "en": "Pay the minimum"
+     },
+     "w": {
+      "SPIRAL": 0.6,
+      "OK": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(다른 카드로 돌려막는다)",
+      "en": "(Juggle it onto another card)"
+     },
+     "w": {
+      "SPIRAL": 0.8,
+      "OK": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "PLAN": {
+     "r": {
+      "ko": "일 년 동안 배달앱을 지웠다. 마지막 할부가 끝나던 날 치킨을 시켰다.",
+      "en": "You deleted the delivery apps for a year. The day the last installment cleared, you ordered fried chicken."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -5
+      }
+     ],
+     "lean": {
+      "traits": {
+       "planning": 0.4
+      }
+     }
+    },
+    "SPIRAL": {
+     "r": {
+      "ko": "이자가 이자를 불렀다.",
+      "en": "Interest breeds interest."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": 8
+      }
+     ],
+     "chain": [
+      {
+       "to": "LOAN_SHARK",
+       "after": [
+        6,
+        18
+       ],
+       "p": 0.15
+      }
+     ]
+    },
+    "OK": {
+     "r": {
+      "ko": "아슬아슬하게 버텼다. 쇼핑앱 알림을 전부 껐다.",
+      "en": "You scraped by. You turned off every shopping-app notification."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "TAX_AUDIT",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "selfEmployed"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.4,
+     "URANUS@H2": 0.3,
+     "URANUS@H8": 0.25,
+     "SAMJAE": 0.3,
+     "unfavorable": 0.45,
+     "BRANCH_CLASH@month": 0.15,
+     "SATURN>SUN:hard": 0.3,
+     "SATURN>MC:conjunction": 0.25,
+     "group:PYEON_GWAN": 0.3,
+     "group:SANG_GWAN": 0.2
+    },
+    "mods": {
+     "business": -0.2
+    }
+   },
+   "location": "home",
+   "activity": "study",
+   "who": "tax",
+   "line": {
+    "ko": "세무조사 대상으로 선정되셨습니다. 최근 5년 치 장부를 준비해 주세요.",
+    "en": "You've been selected for a tax audit. Please prepare your books for the last five years."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "세무사와 꼼꼼히 대응한다",
+      "en": "Work through it carefully with an accountant"
+     },
+     "w": {
+      "CLEAN": 0.6,
+      "FINE": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(영수증 상자를 뒤진다)",
+      "en": "(Dig through the box of receipts)"
+     },
+     "w": {
+      "FINE": 0.6,
+      "CLEAN": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "CLEAN": {
+     "r": {
+      "ko": "문제없음. 세무사 비용만 나갔다. 그래도 개운했다.",
+      "en": "All clear. Just the accountant's fee. Still, it felt good."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -2
+      }
+     ],
+     "lean": {
+      "traits": {
+       "planning": 0.4
+      }
+     }
+    },
+    "FINE": {
+     "r": {
+      "ko": "빠뜨린 게 있었다. 가산세까지 붙었다.",
+      "en": "You'd missed something. Penalties on top."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -12
+      }
+     ],
+     "card": "LOSS"
+    }
+   }
+  },
+  {
+   "id": "LOTTO_BROKE",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "사라진 행운",
+    "en": "The fortune that vanished"
+   },
+   "chainOnly": true,
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(큰돈이 들어온 지 몇 해. 통장 잔고를 보고 눈을 의심했다. 그 많던 돈이 다 어디 갔을까.)",
+    "en": "(A few years after the windfall, you stare at your balance in disbelief. Where did it all go?)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "처음부터 다시 계획을 세운다",
+      "en": "Make a plan from scratch"
+     },
+     "w": {
+      "REBUILD": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(한 방이면 돼…)",
+      "en": "(One big win and it's all back…)"
+     },
+     "w": {
+      "RUIN": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "REBUILD": {
+     "r": {
+      "ko": "남은 돈으로 작은 집 하나를 샀다. 이번엔 아무에게도 말하지 않았다.",
+      "en": "With what was left you bought a small place. This time you told no one."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.8,
+       "min": 20
+      },
+      {
+       "kind": "setFlag",
+       "name": "homeOwner",
+       "value": true
+      }
+     ],
+     "card": "LOSS"
+    },
+    "RUIN": {
+     "r": {
+      "ko": "한 방은 오지 않았다. 남은 건 빚과, 떠나간 사람들.",
+      "en": "The big win never came. Only debt was left, and the people who'd drifted away."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.95,
+       "min": 20
+      },
+      {
+       "kind": "debt",
+       "amount": 30
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "사라진 당첨금",
+       "en": "The vanished fortune"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     },
+     "chain": [
+      {
+       "to": "BANKRUPTCY",
+       "after": [
+        12,
+        30
+       ],
+       "p": 0.4
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "FAMILY_DRAINS_MONEY",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=25",
+    "money>=10"
+   ],
+   "repeatable": true,
+   "cooldown": 72,
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.66,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "SAMJAE": 0.36,
+     "unfavorable": 0.3,
+     "BRANCH_CLASH@month": 0.54,
+     "BRANCH_CLASH@year": 0.48,
+     "PUNISHMENT@month": 0.24,
+     "SATURN>MOON:hard": 0.3
+    },
+    "mods": {
+     "family": 0.4,
+     "wealth": -0.2
+    },
+    "traits": {
+     "conflictAvoidance": 0.4
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "relative",
+   "line": {
+    "ko": "이번 한 번만 도와줘라. 급한 불만 끄면 돼. 가족끼리 이러는 거 아니잖니.",
+    "en": "Help us out just this once. It's only to put out the fire. Family doesn't say no to family."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(또 보낸다)",
+      "en": "(Send it again)"
+     },
+     "w": {
+      "GIVE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "이번이 정말 마지막이에요",
+      "en": "This is really the last time"
+     },
+     "w": {
+      "BOUNDARY": 0.6,
+      "GUILT": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(연락을 피한다)",
+      "en": "(Avoid their calls)"
+     },
+     "w": {
+      "AVOID": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "GIVE": {
+     "r": {
+      "ko": "이번 달만 벌써 세 번째 송금이다. 내 적금은 또 깨졌다.",
+      "en": "The third transfer this month. Your savings broke again."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.2,
+       "min": 3
+      },
+      {
+       "kind": "familyObligation",
+       "delta": 0.1
+      }
+     ]
+    },
+    "BOUNDARY": {
+     "r": {
+      "ko": "처음으로 선을 그었다. 서운한 소리를 들었지만, 다음 달엔 연락이 줄었다.",
+      "en": "For the first time, you drew a line. You got an earful — but the calls dropped off the next month."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      }
+     ],
+     "lean": {
+      "traits": {
+       "independence": 0.4
+      }
+     }
+    },
+    "GUILT": {
+     "r": {
+      "ko": "'너 하나 믿고 살았는데.' 그 말에 결국 또 송금 버튼을 눌렀다.",
+      "en": "'You were all we had.' And so you pressed 'send' again."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.15,
+       "min": 3
+      }
+     ]
+    },
+    "AVOID": {
+     "r": {
+      "ko": "전화를 안 받는 동안 마음이 편하지 않았다. 명절이 두려워졌다.",
+      "en": "Not answering didn't bring peace. You started dreading the holidays."
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": -0.1
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CAR_ACCIDENT_BILL",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=20"
+   ],
+   "repeatable": true,
+   "cooldown": 120,
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.24,
+     "BRANCH_CLASH@year": 0.3,
+     "URANUS>ASC:conjunction": 0.36,
+     "SAMJAE": 0.36,
+     "SR:angular:MARS": 0.24
+    }
+   },
+   "location": "street",
+   "activity": "commute",
+   "who": "stranger",
+   "line": {
+    "ko": "(주차장에서 후진하다 쿵. 하필 외제차였다. 차주가 내렸다.) …보험 처리하실 거죠?",
+    "en": "(Backing out of a parking spot — thud. Of course it was an imported car. The owner got out.) …You'll go through insurance, right?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "보험 처리할게요",
+      "en": "Yes, insurance"
+     },
+     "w": {
+      "INSURE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "현금으로 합의하죠",
+      "en": "Let's settle in cash"
+     },
+     "w": {
+      "CASH": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "…저만 잘못한 건 아니잖아요",
+      "en": "…It's not all my fault"
+     },
+     "w": {
+      "DISPUTE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "INSURE": {
+     "r": {
+      "ko": "보험료가 올랐다. 범퍼 하나가 이렇게 비쌀 줄이야.",
+      "en": "Your premium went up. Who knew one bumper could cost this much."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -2
+      }
+     ]
+    },
+    "CASH": {
+     "r": {
+      "ko": "범퍼 값이 한 달 생활비였다.",
+      "en": "The bumper cost a whole month's living expenses."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -4
+      }
+     ]
+    },
+    "DISPUTE": {
+     "r": {
+      "ko": "블랙박스를 돌려보니 50대 50. 둘이 동시에 한숨을 쉬었다.",
+      "en": "The dashcam said fifty-fifty. You both sighed at the same time."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -2
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "HOUSE_FLOOD",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.2,
+     "BRANCH_CLASH@year": 0.25,
+     "URANUS>ASC:conjunction": 0.3,
+     "SAMJAE": 0.6,
+     "SR:angular:MARS": 0.2,
+     "group:GYEOB_JAE": 0.4,
+     "URANUS@H2": 0.3,
+     "URANUS@H8": 0.25,
+     "unfavorable": 0.25,
+     "BRANCH_CLASH@month": 0.15
+    }
+   },
+   "location": "home",
+   "activity": "sleep",
+   "who": "neighbor",
+   "line": {
+    "ko": "(새벽 세 시, 초인종) 죄송해요! 저희 집 배관이 터져서 아래층으로 물이… 지금 천장에서 물 새죠?!",
+    "en": "(3 a.m., the doorbell) I'm so sorry! Our pipe burst and the water's going downstairs — is it leaking through your ceiling?!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(양동이부터 찾는다)",
+      "en": "(Grab a bucket first)"
+     },
+     "w": {
+      "DAMAGE": 0.6,
+      "OK": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "보험사부터 부르세요!",
+      "en": "Call your insurance, now!"
+     },
+     "w": {
+      "INSURED": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "DAMAGE": {
+     "r": {
+      "ko": "벽지와 가구가 다 젖었다. 이웃과 새벽까지 걸레질을 했다.",
+      "en": "The wallpaper and furniture were soaked. You and your neighbor mopped until dawn."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -6
+      }
+     ],
+     "lean": {
+      "mods": {
+       "stability": -0.3
+      }
+     }
+    },
+    "OK": {
+     "r": {
+      "ko": "다행히 금방 잡혔다. 윗집이 다음 날 과일 상자를 들고 왔다.",
+      "en": "Luckily it was caught fast. The neighbors upstairs brought a box of fruit the next day."
+     }
+    },
+    "INSURED": {
+     "r": {
+      "ko": "보험사가 도배를 새로 해줬다. 오히려 집이 깨끗해졌다.",
+      "en": "Their insurance paid for new wallpaper. The place looked better than before."
+     }
+    }
+   }
+  },
+  {
+   "id": "HOUSE_FIRE",
+   "cat": "money_down",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "화재",
+    "en": "Fire"
+   },
+   "requires": [
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.24,
+     "BRANCH_CLASH@year": 0.3,
+     "URANUS>ASC:conjunction": 0.36,
+     "SAMJAE": 0.72,
+     "SR:angular:MARS": 0.24,
+     "group:GYEOB_JAE": 0.48,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "unfavorable": 0.3,
+     "BRANCH_CLASH@month": 0.18
+    },
+    "mods": {
+     "stability": -0.4
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "me",
+   "line": {
+    "ko": "(귀갓길, 우리 동네 쪽 하늘이 붉다. 소방차가 줄지어 지나간다. …우리 건물이었다.)",
+    "en": "(On the way home, the sky over your neighborhood is red. Fire engines stream past. …It's your building.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(달려간다)",
+      "en": "(Run)"
+     },
+     "w": {
+      "LOST": 0.5,
+      "SAVED": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "(가족에게 먼저 전화한다)",
+      "en": "(Call family first)"
+     },
+     "w": {
+      "LOST": 0.5,
+      "SAVED": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "LOST": {
+     "r": {
+      "ko": "잿더미 속에서 사진 앨범 한 권을 건졌다. 다른 건 다 괜찮다고 생각했다.",
+      "en": "From the ashes you pulled one photo album. Everything else, you told yourself, was fine."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.35,
+       "min": 8
+      },
+      {
+       "kind": "moveCity"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "잿더미 속 앨범",
+       "en": "An album from the ashes"
+      },
+      "location": "street",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     }
+    },
+    "SAVED": {
+     "r": {
+      "ko": "우리 층까지는 번지지 않았다. 그을린 냄새는 몇 달이 가도 빠지지 않았다.",
+      "en": "It didn't reach your floor. The smell of smoke lingered for months."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "IDENTITY_THEFT",
+   "cat": "money_down",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.48,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "SAMJAE": 0.36,
+     "unfavorable": 0.3,
+     "BRANCH_CLASH@month": 0.18
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "bank",
+   "line": {
+    "ko": "[은행] 고객님 명의로 비대면 대출 3건이 실행되었습니다. 본인이 아니시면 즉시 연락 바랍니다.",
+    "en": "[Bank] Three online loans were just taken out in your name. If this wasn't you, contact us immediately."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당장 지급정지하고 신고한다",
+      "en": "Freeze everything and report it now"
+     },
+     "w": {
+      "FROZEN": 0.7,
+      "PARTIAL": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(설마… 하며 다음 날 확인한다)",
+      "en": "(Surely not… check tomorrow)"
+     },
+     "w": {
+      "PARTIAL": 0.6,
+      "FROZEN": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "FROZEN": {
+     "r": {
+      "ko": "30분 만에 막았다. 명의 도용 방지 서비스에 전부 가입했다.",
+      "en": "You stopped it within thirty minutes. Then signed up for every identity-protection service there is."
+     }
+    },
+    "PARTIAL": {
+     "r": {
+      "ko": "한 건은 이미 빠져나갔다. 되찾는 데 1년이 걸렸다.",
+      "en": "One loan had already cleared. It took a year to get it back."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": 8
+      }
+     ],
+     "card": "LOSS"
+    }
+   }
+  }
+ ]
+}

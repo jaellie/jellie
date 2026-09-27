@@ -5,7 +5,8 @@
  * keyword guard so content that forgets a requirement still can't contradict
  * the player's life.
  */
-import type { LifeState } from "../sim/types";
+import type { LifeState, SiblingRel } from "../sim/types";
+import { siblingWord } from "../story/family";
 import { isAbroad } from "../sim/types";
 
 export interface LifeFacts {
@@ -42,6 +43,47 @@ export interface LifeFacts {
   fatedName?: string;
   /** The partner is in a critical state (accident/collapse) — they can't text you. */
   partnerCritical: boolean;
+  male: boolean;
+  female: boolean;
+  /** Years together with the current partner. */
+  partnerYears: number;
+  exName?: string;
+  hasKid: boolean;
+  /** Age of the oldest child (0 without kids). */
+  kidAge: number;
+  kidName?: string;
+  hasSister: boolean;
+  hasBrother: boolean;
+  /** The first living sibling ({sibling}) is married. */
+  siblingMarried: boolean;
+  /** "오빠 민수" — the first living sibling / sister / brother, for texts. */
+  siblingName?: string;
+  sisterName?: string;
+  brotherName?: string;
+  parentsTogether: boolean;
+  hasPet: boolean;
+  homeOwner: boolean;
+  famous: boolean;
+  /** Money and debt in game units (₩1,000,000). */
+  money: number;
+  debt: number;
+  inDebt: boolean;
+  rich: boolean;
+  /** Engaged (between the proposal and the wedding). */
+  engaged: boolean;
+  /** A pregnancy is under way (the PREGNANCY arc). */
+  pregnant: boolean;
+  /** Years between the player and the partner. */
+  partnerAgeGap: number;
+  /** Who the player is drawn to (setup "likes"): only their own sex / any sex. */
+  likesSameSex: boolean;
+  likesBoth: boolean;
+  /** The current partner is the same sex as the player. */
+  partnerSameSex: boolean;
+  mbtiE: boolean;
+  mbtiN: boolean;
+  mbtiF: boolean;
+  mbtiP: boolean;
   hasFriend: boolean;
   friendName?: string;
   abroad: boolean;
@@ -71,7 +113,19 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
   const fatedKnown = !!fatedRel && fatedRel.stage !== "STRANGER" && fatedRel.stage !== "FAMILIAR_FACE";
   const fatedPartner = partnered && !!fated && s.relationship.partnerId === fated.id;
   const fatedSingle = !!fated && fated.single && !fated.deceased;
+  const sibs = (s.family?.siblings ?? []).filter((x) => x.alive);
+  const label = (x: { rel: string; name: string }) => `${siblingWord(s, x.rel as SiblingRel).ko} ${x.name}`;
+  const mbti = String(s.flags.mbti ?? "").toUpperCase();
+  const pid = s.relationship.partnerId;
+  const likes = String(s.flags.likes ?? "");
+  const own = s.birth.sex === "MALE" ? "M" : "F";
+  const partnerSex = pid ? (s.npcs.find((n) => n.id === pid)?.birth.sex ?? w?.npcs[pid]?.sex) : undefined;
+  const partnerBirthYear = pid ? (s.npcs.find((n) => n.id === pid)?.birth.year ?? w?.npcs[pid]?.birthYear) : undefined;
+  // Any flag set by an event can be required directly as "f_<name>" (e.g. "f_gambling", "!f_cult").
+  const flagFacts: Record<string, boolean> = {};
+  for (const [k, v] of Object.entries(s.flags)) if (v) flagFacts[`f_${k}`] = true;
   return {
+    ...flagFacts,
     age: Math.floor(s.age),
     alive: s.alive,
     employed: s.career.employed,
@@ -99,6 +153,37 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
     fatedAvailable: fatedKnown && fatedSingle && !fatedPartner && fatedRel?.stage !== "DECEASED",
     fatedName: fatedKnown ? fated!.name : undefined,
     partnerCritical: partnered && !!s.flags.partnerCritical,
+    male: s.birth.sex === "MALE",
+    female: s.birth.sex === "FEMALE",
+    partnerYears: partnered ? Math.floor((s.monthIndex - (s.relationship.sinceMonth ?? s.monthIndex)) / 12) : 0,
+    exName: exes > 0 ? ((s.flags.lastPartnerName as string) || undefined) : undefined,
+    hasKid: (s.kids ?? []).length > 0,
+    kidAge: (s.kids ?? []).length ? Math.max(...s.kids!.map((k) => s.date.year - k.bornYear)) : 0,
+    kidName: s.kids?.[0]?.name,
+    hasSister: sibs.some((x) => x.sex === "FEMALE"),
+    hasBrother: sibs.some((x) => x.sex === "MALE"),
+    siblingMarried: !!sibs[0]?.married,
+    siblingName: sibs[0] ? label(sibs[0]) : undefined,
+    sisterName: sibs.find((x) => x.sex === "FEMALE") ? label(sibs.find((x) => x.sex === "FEMALE")!) : undefined,
+    brotherName: sibs.find((x) => x.sex === "MALE") ? label(sibs.find((x) => x.sex === "MALE")!) : undefined,
+    parentsTogether: (s.family?.mom.alive ?? true) && (s.family?.dad.alive ?? true) && !s.flags.parentsDivorced,
+    hasPet: (s.pets ?? []).some((p) => p.alive),
+    homeOwner: !!s.flags.homeOwner,
+    famous: !!s.flags.famous,
+    money: Math.round(s.money),
+    debt: Math.round(s.debt),
+    inDebt: s.debt > 20 || s.money < -5,
+    rich: s.money > 300,
+    engaged: partnered && !!s.engaged,
+    pregnant: !!s.story?.arcs.some((a) => a.type === "PREGNANCY"),
+    partnerAgeGap: partnered && partnerBirthYear ? Math.abs(s.birth.year - partnerBirthYear) : 0,
+    likesSameSex: likes === own,
+    likesBoth: likes === "A",
+    partnerSameSex: partnered && !!partnerSex && partnerSex === s.birth.sex,
+    mbtiE: mbti[0] === "E",
+    mbtiN: mbti[1] === "N",
+    mbtiF: mbti[2] === "F",
+    mbtiP: mbti[3] === "P",
     hasFriend: friends.length > 0,
     friendName: friends[0] ? w!.npcs[friends[0].npcId]?.name : undefined,
     abroad: isAbroad(s),

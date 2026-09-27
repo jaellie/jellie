@@ -77,4 +77,6 @@ export interface StoryState {
   cards: Array<{ kind: string; age: number; vars: Record<string, string> }>;
   /** Hidden 궁합 with the destined person from setup (0..1 score + flavour). */
   compat?: { score: number; chemistry: number; stability: number; friction: number };
+  /** Life events (library): queue, history, rate limit. */
+  events?: import("./lifeEvents").LifeEventState;
 }

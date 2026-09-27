@@ -18,6 +18,12 @@ const IMPLIES: Record<string, string[]> = {
   married: ["partnered"],
   recentlyBrokeUp: ["single", "!partnered"],
   single: ["!partnered"],
+  engaged: ["partnered", "dating"],
+  fatedPartner: ["partnered"],
+  selfEmployed: ["employed"],
+  hasSister: ["hasSibling"],
+  hasBrother: ["hasSibling"],
+  parentsTogether: ["momAlive", "dadAlive"],
 };
 
 function closure(reqs: string[]): Set<string> {
@@ -51,6 +57,19 @@ export function lintContent(): LintIssue[] {
     for (const g of guardRequirements(it.texts)) {
       const missing = g.requires.filter((r) => !have.has(r));
       if (missing.length) issues.push({ id: it.id, rule: g.rule, missing });
+    }
+  }
+  return issues;
+}
+
+/** The same check for the life-event library: what a popup says (line + choices) must be guaranteed by `requires`. */
+export function lintLifeEvents(events: Array<{ id: string; requires?: string[]; line: { ko: string; en: string }; choices: Array<{ t: { ko: string; en: string } }> }>): LintIssue[] {
+  const issues: LintIssue[] = [];
+  for (const e of events) {
+    const have = closure(e.requires ?? []);
+    for (const g of guardRequirements([e.line.ko, e.line.en, ...e.choices.flatMap((c) => [c.t.ko, c.t.en])])) {
+      const missing = g.requires.filter((r) => !have.has(r));
+      if (missing.length) issues.push({ id: e.id, rule: g.rule, missing });
     }
   }
   return issues;

@@ -37,6 +37,16 @@ const issue = (msg) => { if (!issues.includes(msg)) issues.push(msg); };
 await snap("setup");
 if ((await page.locator("#fName").inputValue()) !== "제이") issue("default name is not 제이");
 if ((await page.locator("#fY").inputValue()) !== "1997" || (await page.locator("#fM").inputValue()) !== "9" || (await page.locator("#fD").inputValue()) !== "28") issue("default birth date is not 1997-09-28");
+// Birthplace: defaults to 서울; unknown places are flagged; the chosen city reaches the engine.
+if ((await page.locator("#fPlace").inputValue()) !== "서울") issue("default birthplace is not 서울");
+if (!(await page.getByTestId("birthplace-hint").textContent()).includes("서울")) issue("birthplace hint doesn't confirm 서울");
+await page.locator("#fPlace").fill("아틀란티스");
+if (!(await page.getByTestId("birthplace-hint").textContent()).includes("목록에 없는")) issue("unknown birthplace isn't flagged");
+await snap("birthplace-unknown");
+const wantPlace = args.place ?? "서울";
+await page.locator("#fPlace").fill(wantPlace);
+if (!(await page.getByTestId("birthplace-hint").textContent()).startsWith("✓")) issue(`birthplace ${wantPlace} not recognized`);
+if (args.place) await snap("birthplace");
 if (args.family) {
   await page.locator("#fMom").selectOption("0");
   await page.locator("#fSib").fill("오빠 민수, 여동생");
@@ -45,8 +55,12 @@ if (args.family) {
 await page.getByTestId("start").click();
 await page.waitForTimeout(600);
 await snap("first-day");
+const bi = await page.evaluate(() => window.__qa.game.birthInfo());
+if (!bi.known) issue(`engine didn't recognize birthplace ${wantPlace}`);
 
-const stats = { days: 1, popups: {}, bigTitles: {}, cards: {}, choicesClicked: 0, walkChecks: 0, walkMoved: 0, offscreenSeen: 0, notes: 0 };
+
+const stats = { days: 1, popups: {}, bigTitles: {}, cards: {}, choicesClicked: 0, walkChecks: 0, walkMoved: 0, offscreenSeen: 0, notes: 0, eventNotes: 0, birthplace: `${bi.place.ko ?? bi.place.name} (UTC${bi.clockOffsetMinutes >= 0 ? "+" : ""}${bi.clockOffsetMinutes / 60}${bi.dstMinutes ? `, DST ${bi.dstMinutes}m` : ""})` };
+let eventShots = 0;
 const seenCardShot = new Set(), seenTitleShot = new Set();
 const deadline = Date.now() + Number(args.maxMinutes ?? 5) * 60_000;
 let lastWalkCheck = 0;
@@ -64,6 +78,11 @@ while (Date.now() < deadline) {
         seenCardShot.add(kind);
         await snap(`card-${kind}`);
       }
+    }
+    for (const n of await page.locator("#sNotes .sn").allTextContents()) {
+      stats.eventNotes++;
+      if (/[{}]|undefined|\((과|와|이|가|은|는|을|를)\)/.test(n)) issue(`skip-screen note has a raw placeholder: ${n}`);
+      if (stats.eventNotes === 1) await snap("skip-notes");
     }
     await page.getByTestId("skip-next").click();
     const back = await page.evaluate(() => window.__qa.screen);
@@ -86,10 +105,15 @@ while (Date.now() < deadline) {
       stats.bigTitles[title] = (stats.bigTitles[title] ?? 0) + 1;
       if (!seenTitleShot.has(title)) { seenTitleShot.add(title); shoot = true; await snap(`big-${title}`); }
     }
+    const line = await page.locator("#pLine").textContent();
+    if (/[{}]|undefined|\((과|와|이|가|은|는|을|를)\)/.test(line)) issue(`popup text has a raw placeholder: ${line}`);
+    if (src === "event" && !big && eventShots < 2) { eventShots++; shoot = true; await snap(`event-${eventShots}`); }
     const n = await page.locator('[data-testid^="choice-"]').count();
     await page.getByTestId(`choice-${Math.floor(Math.random() * n)}`).click();
     stats.choicesClicked++;
-    if (shoot) await snap(`big-${[...seenTitleShot].at(-1)}-result`);
+    const res = await page.locator("#pRes").textContent();
+    if (/[{}]|undefined|\((과|와|이|가|은|는|을|를)\)/.test(res)) issue(`result text has a raw placeholder: ${res}`);
+    if (shoot) await snap(big ? `big-${[...seenTitleShot].at(-1)}-result` : `event-${eventShots}-result`);
     await page.getByTestId("continue").click();
     continue;
   }
@@ -98,6 +122,10 @@ while (Date.now() < deadline) {
   const nNotes = await page.locator(".note").count();
   if (nNotes) {
     stats.notes++;
+    // Nobody's boss texts the owner (or anyone without an employer).
+    const job = (await page.locator("#hJob").textContent().catch(() => "")) ?? "";
+    const texts = await page.locator(".note").allTextContents();
+    if (job && !job.startsWith("회사원") && texts.some((t) => /팀장|부장님|과장님/.test(t))) issue(`boss text while "${job}": ${texts.find((t) => /팀장|부장님|과장님/.test(t))}`);
     const lb = await page.locator("#log").boundingBox();
     // Measure a note that has finished sliding in (they slide out from behind the log bar, then fade).
     const settled = page.locator(".note:not(.out)").last();

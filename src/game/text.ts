@@ -35,6 +35,23 @@ export const SPEAKER_NAME: Record<string, Bi> = {
   nurse: bi("간호사", "Nurse"),
   doctor: bi("의사 선생님", "Doctor"),
   fated: bi("그 사람", "That person"),
+  police: bi("경찰", "Police"),
+  lawyer: bi("변호사", "Lawyer"),
+  fortune: bi("점집 할머니", "The fortune teller"),
+  neighbor: bi("이웃", "Neighbor"),
+  loanShark: bi("사채업자", "Loan shark"),
+  cultist: bi("포교하던 사람", "The recruiter"),
+  bank: bi("은행", "Bank"),
+  landlord: bi("집주인", "Landlord"),
+  unknown: bi("모르는 번호", "Unknown number"),
+  reporter: bi("기자", "Reporter"),
+  scout: bi("캐스팅 담당자", "Talent scout"),
+  teacher: bi("담임 선생님", "Homeroom teacher"),
+  counselor: bi("상담 선생님", "Counselor"),
+  officer: bi("병무청", "Military Manpower Office"),
+  tax: bi("세무서", "Tax office"),
+  card: bi("카드사", "Card company"),
+  insurer: bi("보험사", "Insurance company"),
 };
 
 export function krw(units: number, unitWon: number): string {
@@ -83,6 +100,16 @@ export function fillNames(text: string, vars: Record<string, string | undefined>
     if (withB === "으로" && rieul) return name + "로";
     return name + (hasBatchim(name) ? withB : without);
   });
+}
+
+/** Vars given as a language pair (who_ko / who_en) resolve to their base name ({who}) for the language. */
+export function langVars(vars: Record<string, string>, lang: "ko" | "en"): Record<string, string> {
+  const out = { ...vars };
+  for (const [k, v] of Object.entries(vars)) {
+    const m = /^(\w+)_(ko|en)$/.exec(k);
+    if (m && m[2] === lang) out[m[1]] = v;
+  }
+  return out;
 }
 
 export const CITY_KO: Record<string, string> = {

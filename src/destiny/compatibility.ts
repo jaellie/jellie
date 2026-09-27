@@ -14,7 +14,7 @@
  *
  * Missing data just means a neutral part (no birth date → only MBTI speaks).
  */
-import { type AstrologyChart, type ChartPoint, calculateAstrologyChart, findAspectWithin } from "../astrology/chart";
+import { type AstrologyChart, type BirthPlace, type ChartPoint, calculateAstrologyChart, findAspectWithin } from "../astrology/chart";
 import type { Planet } from "../astrology/ephemeris";
 import { parseMbti } from "../mbti/mbti";
 import { findInteractions } from "../saju/analysis/relations";
@@ -24,6 +24,8 @@ import type { BirthData } from "../saju/calendar/fourPillars";
 
 export interface CompatPerson {
   birth?: BirthData;
+  /** Birthplace (ASC/houses for synastry); default Seoul. */
+  place?: BirthPlace;
   mbti?: string;
 }
 
@@ -140,7 +142,7 @@ export function compatibility(a: CompatPerson, b: CompatPerson): Compatibility {
   let chemistry = 0.5, stability = 0.5, friction = 0.5;
   if (a.birth && b.birth) {
     parts.saju = sajuCompatibility(calculateNatalChart(a.birth), calculateNatalChart(b.birth));
-    const syn = synastry(calculateAstrologyChart(a.birth), calculateAstrologyChart(b.birth));
+    const syn = synastry(calculateAstrologyChart(a.birth, a.place), calculateAstrologyChart(b.birth, b.place));
     ({ chemistry, stability, friction } = syn);
     // Centered so an average pair lands near 0 (calibrated on random pairs).
     parts.astrology = clamp1(Math.tanh(0.9 * (syn.chemistry + syn.stability - 1.2 * syn.friction - 0.55)));

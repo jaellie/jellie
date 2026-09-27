@@ -1,0 +1,1799 @@
+{
+ "_doc": "Life events: money_up. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "STOCK_BOOM",
+   "cat": "money_up",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "age>=20",
+    "money>=10"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.8,
+     "JUPITER@H2": 0.7,
+     "JUPITER@H8": 0.6,
+     "CHEONEUL_GWIIN": 0.5,
+     "favorable": 0.4,
+     "JUPITER>SUN:harmonious": 0.4
+    },
+    "mods": {
+     "wealth": 0.5,
+     "volatility": 0.3
+    },
+    "traits": {
+     "riskTolerance": 0.3
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[증권 앱] 보유 종목 +312% — 몇 년 전 사두고 잊고 있던 그 종목이었다.",
+    "en": "[Brokerage app] Holding up +312% — a stock you bought years ago and completely forgot about."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "전부 판다",
+      "en": "Sell it all"
+     },
+     "w": {
+      "SELL": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "더 오를 거야. 버틴다",
+      "en": "It'll go higher. Hold"
+     },
+     "w": {
+      "MOON": 0.4,
+      "DROP": 0.6
+     }
+    },
+    {
+     "t": {
+      "ko": "절반만 판다",
+      "en": "Sell half"
+     },
+     "w": {
+      "HALF": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SELL": {
+     "r": {
+      "ko": "매도 버튼을 누르는 손가락이 떨렸다. 통장에 찍힌 숫자를 세 번 셌다.",
+      "en": "Your finger shook on the sell button. You counted the digits in your account three times."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 45
+      }
+     ],
+     "card": "WINDFALL"
+    },
+    "MOON": {
+     "r": {
+      "ko": "두 배가 더 올랐다. 이번엔 진짜로 팔았다.",
+      "en": "It doubled again. This time you really sold."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 90
+      }
+     ],
+     "card": "WINDFALL",
+     "chain": [
+      {
+       "to": "LOTTO_BROKE",
+       "after": [
+        24,
+        72
+       ],
+       "p": 0.3
+      }
+     ],
+     "lean": {
+      "traits": {
+       "riskTolerance": 0.3
+      },
+      "mods": {
+       "volatility": 0.3
+      }
+     }
+    },
+    "DROP": {
+     "r": {
+      "ko": "다음 달, 절반으로 꺾였다. 그래도 본전보다는 많다.",
+      "en": "Next month it fell by half. Still more than you started with."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 15
+      }
+     ],
+     "chain": [
+      {
+       "to": "STOCK_CRASH",
+       "after": [
+        6,
+        24
+       ],
+       "p": 0.25
+      }
+     ]
+    },
+    "HALF": {
+     "r": {
+      "ko": "반은 챙기고, 반은 꿈으로 남겨뒀다.",
+      "en": "Half in the bank, half left to dream on."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 25
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CRYPTO_MOON",
+   "cat": "money_up",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "age>=19"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.8,
+     "JUPITER@H2": 0.7,
+     "JUPITER@H8": 0.6,
+     "CHEONEUL_GWIIN": 0.5,
+     "favorable": 0.4,
+     "JUPITER>SUN:harmonious": 0.4
+    },
+    "mods": {
+     "volatility": 0.6,
+     "risk": 0.4
+    },
+    "traits": {
+     "riskTolerance": 0.4,
+     "spontaneity": 0.3
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[코인 거래소] 장난삼아 사둔 코인이 하루 만에 +1,800%. 단톡방이 난리가 났다.",
+    "en": "[Crypto exchange] A coin you bought as a joke: +1,800% in a day. The group chats are going wild."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "바로 익절한다",
+      "en": "Take the profit now"
+     },
+     "w": {
+      "CASH": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "가즈아!!! (더 산다)",
+      "en": "To the moon!!! (Buy more)"
+     },
+     "w": {
+      "RICH": 0.25,
+      "RUG": 0.75
+     }
+    },
+    {
+     "t": {
+      "ko": "원금만 뺀다",
+      "en": "Pull out just what you put in"
+     },
+     "w": {
+      "SAFE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CASH": {
+     "r": {
+      "ko": "치킨 백 마리 값이 들어왔다. 친구들에게 한 마리씩 쐈다.",
+      "en": "A hundred fried chickens' worth landed. You treated your friends to one each."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 20
+      }
+     ]
+    },
+    "RICH": {
+     "r": {
+      "ko": "믿기지 않게 또 올랐다. 이번엔 진짜 떡상이었다.",
+      "en": "Unbelievably, it climbed again. A real moonshot this time."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 120
+      }
+     ],
+     "card": "WINDFALL",
+     "chain": [
+      {
+       "to": "LOTTO_BROKE",
+       "after": [
+        18,
+        60
+       ],
+       "p": 0.4
+      }
+     ],
+     "lean": {
+      "traits": {
+       "riskTolerance": 0.4
+      }
+     }
+    },
+    "RUG": {
+     "r": {
+      "ko": "새벽 3시, 차트가 절벽처럼 떨어졌다. 개발자가 사라졌다고 했다.",
+      "en": "At 3 a.m. the chart fell off a cliff. The developers had vanished."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.35,
+       "min": 5
+      }
+     ],
+     "chain": [
+      {
+       "to": "CRYPTO_RUGPULL",
+       "after": [
+        0,
+        2
+       ],
+       "p": 0.5,
+       "urgent": true
+      }
+     ]
+    },
+    "SAFE": {
+     "r": {
+      "ko": "원금은 지켰다. 나머지는 공짜 복권이 됐다.",
+      "en": "Your stake is safe. The rest is a free lottery ticket now."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "LOTTO_WIN",
+   "cat": "money_up",
+   "rarity": "legendary",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "로또 1등",
+    "en": "Jackpot"
+   },
+   "requires": [
+    "age>=19"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.96,
+     "JUPITER@H2": 0.84,
+     "JUPITER@H8": 0.72,
+     "CHEONEUL_GWIIN": 0.6,
+     "favorable": 0.48,
+     "JUPITER>SUN:harmonious": 0.48
+    },
+    "mods": {
+     "wealth": 0.5,
+     "opportunity": 0.4
+    }
+   },
+   "location": "home",
+   "activity": "watch_tv",
+   "who": "me",
+   "line": {
+    "ko": "(토요일 밤, 번호를 맞춰보던 손이 떨렸다. 하나, 둘, 셋… 여섯 개가 전부 맞았다.)",
+    "en": "(Saturday night, your hands shook as you checked the numbers. One, two, three… all six matched.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(아무에게도 말하지 않는다)",
+      "en": "(Tell no one)"
+     },
+     "w": {
+      "QUIET": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "가족에게 먼저 알린다",
+      "en": "Tell the family first"
+     },
+     "w": {
+      "FAMILY": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(당장 세계일주 계획을 짠다)",
+      "en": "(Start planning a trip around the world right now)"
+     },
+     "w": {
+      "SPREE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "QUIET": {
+     "r": {
+      "ko": "다음 날도 평소처럼 버스를 탔다. 주머니 속 영수증만 뜨거웠다.",
+      "en": "The next day you took the bus as usual. Only the slip in your pocket felt hot."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 1300
+      },
+      {
+       "kind": "setFlag",
+       "name": "lottoWinner",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "여섯 개의 숫자",
+       "en": "Six numbers"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 9
+     },
+     "chain": [
+      {
+       "to": "LOTTO_BROKE",
+       "after": [
+        36,
+        120
+       ],
+       "p": 0.1
+      }
+     ]
+    },
+    "FAMILY": {
+     "r": {
+      "ko": "온 가족이 거실 바닥에서 소리를 질렀다. 그날 밤 친척 전화가 열두 통 왔다.",
+      "en": "The whole family screamed on the living-room floor. Twelve relatives called that night."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 1000
+      },
+      {
+       "kind": "setFlag",
+       "name": "lottoWinner",
+       "value": true
+      },
+      {
+       "kind": "familySupport",
+       "delta": 0.2
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "거실 바닥의 비명",
+       "en": "Screams on the living-room floor"
+      },
+      "location": "family_home",
+      "actors": [
+       "me",
+       "relative",
+       "relative"
+      ],
+      "priority": 9
+     },
+     "chain": [
+      {
+       "to": "FAMILY_DRAINS_MONEY",
+       "after": [
+        6,
+        30
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "SPREE": {
+     "r": {
+      "ko": "일등석, 스위트룸, 명품관. 통장의 숫자가 빠르게 줄어드는 게 보였다.",
+      "en": "First class, suites, flagship stores. You could watch the balance fall."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 1100
+      },
+      {
+       "kind": "setFlag",
+       "name": "lottoWinner",
+       "value": true
+      },
+      {
+       "kind": "trip",
+       "scope": "INTERNATIONAL"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "일등석의 창밖",
+       "en": "The view from first class"
+      },
+      "location": "airplane",
+      "actors": [
+       "me"
+      ],
+      "priority": 9
+     },
+     "chain": [
+      {
+       "to": "LOTTO_BROKE",
+       "after": [
+        18,
+        60
+       ],
+       "p": 0.55
+      }
+     ],
+     "lean": {
+      "traits": {
+       "spontaneity": 0.4
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "SCRATCH_WIN",
+   "cat": "money_up",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=19"
+   ],
+   "repeatable": true,
+   "cooldown": 48,
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.4,
+     "JUPITER@H2": 0.35,
+     "JUPITER@H8": 0.3,
+     "CHEONEUL_GWIIN": 0.25,
+     "favorable": 0.2,
+     "JUPITER>SUN:harmonious": 0.2
+    }
+   },
+   "location": "street",
+   "activity": "shop",
+   "who": "me",
+   "line": {
+    "ko": "(편의점에서 거스름돈 대신 산 즉석복권. 동전으로 긁는데 — 같은 그림이 세 개.)",
+    "en": "(A scratch ticket you bought with your change at the convenience store. You scratch it with a coin — three matching pictures.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "그 자리에서 바꾼다",
+      "en": "Cash it in on the spot"
+     },
+     "w": {
+      "CASH": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "그 돈으로 복권을 더 산다",
+      "en": "Spend it on more tickets"
+     },
+     "w": {
+      "MORE": 0.3,
+      "NOTHING": 0.7
+     }
+    }
+   ],
+   "outcomes": {
+    "CASH": {
+     "r": {
+      "ko": "오만 원. 오늘 저녁은 삼겹살이다.",
+      "en": "Fifty thousand won. Pork belly for dinner tonight."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 0.05
+      }
+     ]
+    },
+    "MORE": {
+     "r": {
+      "ko": "또 당첨! 이번엔 오십만 원. 편의점 사장님이 박수를 쳤다.",
+      "en": "Another win! Five hundred thousand this time. The shop owner applauded."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 0.5
+      }
+     ]
+    },
+    "NOTHING": {
+     "r": {
+      "ko": "전부 꽝. 그래도 긁는 순간은 즐거웠다.",
+      "en": "All blanks. Still, the scratching was fun."
+     }
+    }
+   }
+  },
+  {
+   "id": "UNKNOWN_RELATIVE_INHERITANCE",
+   "cat": "money_up",
+   "rarity": "rare",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "모르는 사람의 유산",
+    "en": "An inheritance from a stranger"
+   },
+   "requires": [
+    "age>=22"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.8,
+     "JUPITER@H2": 0.7,
+     "JUPITER@H8": 0.6,
+     "CHEONEUL_GWIIN": 0.5,
+     "favorable": 0.4,
+     "JUPITER>SUN:harmonious": 0.4
+    },
+    "mods": {
+     "family": 0.2,
+     "overseas": 0.2
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "lawyer",
+   "line": {
+    "ko": "(모르는 번호) 고인의 유일한 상속인으로 확인되셨습니다. 혹시 미국에 사셨던 할머니의 동생분을 아시나요?",
+    "en": "(Unknown number) You've been identified as the sole heir. Did you know your grandmother's younger sibling who lived in the U.S.?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…처음 듣는 분인데요",
+      "en": "…I've never heard of them"
+     },
+     "w": {
+      "ACCEPT": 0.7,
+      "DEBT": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "보이스피싱 아니에요?",
+      "en": "Isn't this a scam call?"
+     },
+     "w": {
+      "CHECK": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "ACCEPT": {
+     "r": {
+      "ko": "평생 혼자 사셨다고 했다. 유품 상자에 어린 할머니와 찍은 사진이 있었다.",
+      "en": "They'd lived alone all their life. In the box of belongings was a photo with your grandmother as a child."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 60
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "처음 보는 친척의 사진",
+       "en": "A photo of a relative I never knew"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    },
+    "DEBT": {
+     "r": {
+      "ko": "상속받은 건… 빚이었다. 한정승인을 신청하느라 한 달을 보냈다.",
+      "en": "What you inherited was… debt. You spent a month filing to limit it."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -2
+      }
+     ]
+    },
+    "CHECK": {
+     "r": {
+      "ko": "대사관에 확인해보니 진짜였다. 세상에.",
+      "en": "You checked with the embassy. It was real. Good heavens."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 60
+      }
+     ],
+     "card": "WINDFALL"
+    }
+   }
+  },
+  {
+   "id": "HOUSING_LOTTERY",
+   "cat": "money_up",
+   "rarity": "rare",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "청약 당첨",
+    "en": "Apartment lottery"
+   },
+   "requires": [
+    "!homeOwner",
+    "age>=25"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.8,
+     "JUPITER@H2": 0.7,
+     "JUPITER@H8": 0.6,
+     "CHEONEUL_GWIIN": 0.5,
+     "favorable": 0.4,
+     "JUPITER>SUN:harmonious": 0.4
+    },
+    "mods": {
+     "stability": 0.4,
+     "wealth": 0.3
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[청약홈] 축하합니다. 신청하신 단지에 당첨되셨습니다. 계약 기간: 이번 주.",
+    "en": "[Housing subscription] Congratulations — you've won the apartment lottery. Contract deadline: this week."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "계약한다 (대출 영끌)",
+      "en": "Sign — borrow every last won"
+     },
+     "w": {
+      "OWN": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "포기한다",
+      "en": "Pass"
+     },
+     "w": {
+      "PASS": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "OWN": {
+     "r": {
+      "ko": "계약서에 도장을 찍었다. 이제 내 집이 생긴다 — 30년 대출과 함께.",
+      "en": "You stamped the contract. A home of your own — along with a thirty-year loan."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -25
+      },
+      {
+       "kind": "setFlag",
+       "name": "homeOwner",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "내 집 마련",
+       "en": "A home of my own"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     }
+    },
+    "PASS": {
+     "r": {
+      "ko": "당첨을 포기했다. 몇 년 뒤 그 단지 시세를 보고 한참 말이 없었다.",
+      "en": "You let it go. Years later you saw what those apartments were worth, and went very quiet."
+     }
+    }
+   }
+  },
+  {
+   "id": "HOME_VALUE_UP",
+   "cat": "money_up",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "homeOwner"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.8,
+     "JUPITER@H2": 0.7,
+     "JUPITER@H8": 0.6,
+     "CHEONEUL_GWIIN": 0.5,
+     "favorable": 0.4,
+     "JUPITER>SUN:harmonious": 0.4
+    },
+    "mods": {
+     "wealth": 0.4
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[부동산 앱] 회원님 아파트 실거래가가 2년 만에 두 배가 되었습니다.",
+    "en": "[Real estate app] Your apartment's sale price has doubled in two years."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "팔고 넓은 데로 간다",
+      "en": "Sell and move somewhere bigger"
+     },
+     "w": {
+      "SELL": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "그냥 산다. 집은 사는 곳이니까",
+      "en": "Stay. A home is for living in"
+     },
+     "w": {
+      "STAY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SELL": {
+     "r": {
+      "ko": "차익으로 대출을 갚고 방 하나를 늘렸다.",
+      "en": "The gains paid off the loan and bought you an extra room."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 80
+      },
+      {
+       "kind": "moveCity"
+      }
+     ],
+     "card": "WINDFALL"
+    },
+    "STAY": {
+     "r": {
+      "ko": "숫자만 올랐을 뿐, 생활은 그대로다. 그래도 마음은 든든하다.",
+      "en": "Only the number went up — life is the same. Still, it feels solid."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SIDE_HUSTLE_BOOM",
+   "cat": "money_up",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "employed",
+    "!selfEmployed",
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.56,
+     "JUPITER@H2": 0.49,
+     "JUPITER@H8": 0.42,
+     "CHEONEUL_GWIIN": 0.35,
+     "favorable": 0.28,
+     "JUPITER>SUN:harmonious": 0.28,
+     "group:SIK_SHIN": 0.49,
+     "group:SANG_GWAN": 0.35,
+     "JUPITER@H5": 0.28,
+     "URANUS>SUN:conjunction": 0.28
+    },
+    "mods": {
+     "business": 0.5
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[스마트스토어] 주문 폭주! 퇴근 후 취미로 만든 수제 굿즈가 하룻밤 새 품절됐다.",
+    "en": "[Online store] Orders are pouring in! The handmade goods you make after work sold out overnight."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "회사를 그만두고 올인한다",
+      "en": "Leave the company and go all in"
+     },
+     "w": {
+      "GO": 0.6,
+      "FLOP": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "부업으로만 키운다",
+      "en": "Keep it as a side gig"
+     },
+     "w": {
+      "SIDE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "GO": {
+     "r": {
+      "ko": "사표를 내고 작업실을 얻었다. 새벽까지 포장해도 즐거웠다.",
+      "en": "You resigned and rented a studio. Packing orders past midnight was still fun."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "own-business"
+      },
+      {
+       "kind": "money",
+       "amount": 20
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "나만의 작업실",
+       "en": "My own studio"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     },
+     "lean": {
+      "traits": {
+       "riskTolerance": 0.3
+      }
+     }
+    },
+    "FLOP": {
+     "r": {
+      "ko": "유행은 석 달 만에 식었다. 창고에 재고만 남았다.",
+      "en": "The trend cooled in three months. Only the unsold stock remained."
+     },
+     "effects": [
+      {
+       "kind": "quitJob"
+      },
+      {
+       "kind": "money",
+       "amount": -10
+      }
+     ]
+    },
+    "SIDE": {
+     "r": {
+      "ko": "월급 외 수입이 생겼다. 주말엔 여전히 포장 중.",
+      "en": "An income on top of the salary. Weekends are still for packing."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 15
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "STARTUP_ACQUIRED",
+   "cat": "money_up",
+   "rarity": "rare",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "인수 제안",
+    "en": "The acquisition offer"
+   },
+   "requires": [
+    "selfEmployed",
+    "age>=25"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.64,
+     "JUPITER@H2": 0.56,
+     "JUPITER@H8": 0.48,
+     "CHEONEUL_GWIIN": 0.4,
+     "favorable": 0.64,
+     "JUPITER>SUN:harmonious": 0.32,
+     "group:JEONG_GWAN": 0.48,
+     "JUPITER@H10": 0.56,
+     "JUPITER>MC:conjunction": 0.48
+    },
+    "mods": {
+     "business": 0.6
+    }
+   },
+   "location": "restaurant",
+   "activity": "eat",
+   "who": "stranger",
+   "line": {
+    "ko": "(대기업 M&A 담당자) 대표님, 인수 제안을 드리고 싶습니다. 조건은 이 봉투 안에 있습니다.",
+    "en": "(A conglomerate's M&A lead) We'd like to make you an acquisition offer. The terms are in this envelope."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "판다",
+      "en": "Sell"
+     },
+     "w": {
+      "SOLD": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "우리 길을 간다",
+      "en": "We'll go our own way"
+     },
+     "w": {
+      "GROW": 0.5,
+      "STRUGGLE": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "SOLD": {
+     "r": {
+      "ko": "계약서에 서명한 날, 창업 멤버들과 떡볶이를 먹으며 울었다.",
+      "en": "The day you signed, you ate tteokbokki with the founding team and cried."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 300
+      },
+      {
+       "kind": "setFlag",
+       "name": "exited",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "엑시트",
+       "en": "The exit"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "coworker",
+       "coworker"
+      ],
+      "priority": 9
+     }
+    },
+    "GROW": {
+     "r": {
+      "ko": "거절한 지 3년, 우리 회사는 두 배로 컸다.",
+      "en": "Three years after saying no, the company had doubled."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 60
+      }
+     ]
+    },
+    "STRUGGLE": {
+     "r": {
+      "ko": "거절한 뒤 투자가 끊겼다. 버티는 중이다.",
+      "en": "After saying no, the funding dried up. You're holding on."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -15
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "WALLET_REWARD",
+   "cat": "money_up",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=15"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.48,
+     "JUPITER@H2": 0.42,
+     "JUPITER@H8": 0.36,
+     "CHEONEUL_GWIIN": 0.3,
+     "favorable": 0.24,
+     "JUPITER>SUN:harmonious": 0.24
+    },
+    "mods": {
+     "opportunity": 0.4
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "me",
+   "line": {
+    "ko": "(길에서 두툼한 지갑을 주웠다. 현금이 가득하고, 명함에는 '회장'이라고 적혀 있다.)",
+    "en": "(You found a thick wallet on the street. Stuffed with cash — and the business card says 'Chairman'.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "적힌 번호로 연락한다",
+      "en": "Call the number on the card"
+     },
+     "w": {
+      "REWARD": 0.6,
+      "THANKS": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "경찰서에 맡긴다",
+      "en": "Hand it in to the police"
+     },
+     "w": {
+      "THANKS": 0.7,
+      "REWARD": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "REWARD": {
+     "r": {
+      "ko": "회장님은 사례금 봉투를 한사코 쥐여주셨다. 봉투가 꽤 두꺼웠다.",
+      "en": "The chairman insisted you take a thank-you envelope. It was pretty thick."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 10
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "두꺼운 사례금 봉투",
+       "en": "A thick thank-you envelope"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 5
+     }
+    },
+    "THANKS": {
+     "r": {
+      "ko": "주인은 고맙다며 밥 한 끼를 샀다. 이야기가 잘 통했다.",
+      "en": "The owner bought you a meal to say thanks. You really hit it off."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "BIG_BONUS",
+   "cat": "money_up",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "employed",
+    "!selfEmployed"
+   ],
+   "repeatable": true,
+   "cooldown": 60,
+   "trigger": {
+    "signals": {
+     "group:JEONG_GWAN": 0.42,
+     "JUPITER@H10": 0.49,
+     "JUPITER>MC:conjunction": 0.42,
+     "favorable": 0.56,
+     "group:PYEON_JAE": 0.56,
+     "JUPITER@H2": 0.49,
+     "JUPITER@H8": 0.42,
+     "CHEONEUL_GWIIN": 0.35,
+     "JUPITER>SUN:harmonious": 0.28
+    },
+    "mods": {
+     "career": 0.4,
+     "wealth": 0.3
+    }
+   },
+   "location": "office",
+   "activity": "work",
+   "who": "work",
+   "line": {
+    "ko": "[인사팀] 올해 성과급 지급 안내 — 연봉의 50%입니다. 회사 역대 최고 실적입니다.",
+    "en": "[HR] This year's bonus: 50% of your salary. The company's best year on record."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "전부 저축한다",
+      "en": "Save every won"
+     },
+     "w": {
+      "SAVE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "부모님께 용돈을 드린다",
+      "en": "Give some to your parents"
+     },
+     "w": {
+      "GIVE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(오늘은 플렉스!)",
+      "en": "(Treat yourself today!)"
+     },
+     "w": {
+      "FLEX": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SAVE": {
+     "r": {
+      "ko": "적금 통장이 든든해졌다.",
+      "en": "Your savings account got a lot sturdier."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 25
+      }
+     ]
+    },
+    "GIVE": {
+     "r": {
+      "ko": "봉투를 받은 부모님 목소리가 떨렸다. 그걸로 충분했다.",
+      "en": "Your parents' voices shook when they got the envelope. That was enough."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 18
+      },
+      {
+       "kind": "familySupport",
+       "delta": 0.1
+      }
+     ]
+    },
+    "FLEX": {
+     "r": {
+      "ko": "백화점에서 오래 봐뒀던 걸 샀다. 한 달은 기분이 좋았다.",
+      "en": "You bought the thing you'd been eyeing at the department store. It made you happy for a month."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 12
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "VIRAL_APP",
+   "cat": "money_up",
+   "rarity": "rare",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "떡상",
+    "en": "It blew up"
+   },
+   "requires": [
+    "age>=16"
+   ],
+   "trigger": {
+    "signals": {
+     "group:SIK_SHIN": 0.49,
+     "group:SANG_GWAN": 0.35,
+     "JUPITER@H5": 0.28,
+     "URANUS>SUN:conjunction": 0.28,
+     "group:PYEON_JAE": 0.56,
+     "JUPITER@H2": 0.49,
+     "JUPITER@H8": 0.42,
+     "CHEONEUL_GWIIN": 0.35,
+     "favorable": 0.28,
+     "JUPITER>SUN:harmonious": 0.28
+    },
+    "mods": {
+     "creativity": 0.5,
+     "opportunity": 0.4
+    },
+    "traits": {
+     "creativity": 0.4
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "app",
+   "line": {
+    "ko": "[앱스토어] 주말에 혼자 만든 게임이 인기 차트 1위에 올랐습니다. 다운로드 100만.",
+    "en": "[App store] The game you made alone on weekends hit #1 on the charts. One million downloads."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "투자를 받아 키운다",
+      "en": "Take investment and scale up"
+     },
+     "w": {
+      "SCALE": 0.6,
+      "BURN": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "혼자 조용히 게임을 손본다",
+      "en": "Keep polishing it quietly, alone"
+     },
+     "w": {
+      "STEADY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SCALE": {
+     "r": {
+      "ko": "사무실을 얻고 팀을 꾸렸다. 게임 속 캐릭터가 굿즈가 됐다.",
+      "en": "You got a studio and built a team. Your game's characters became merchandise."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 120
+      },
+      {
+       "kind": "setFlag",
+       "name": "famous",
+       "value": true
+      },
+      {
+       "kind": "job",
+       "field": "own-business"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "차트 1위",
+       "en": "#1 on the charts"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     }
+    },
+    "BURN": {
+     "r": {
+      "ko": "투자금은 빨리 사라졌고, 인기는 더 빨리 식었다.",
+      "en": "The investment went fast. The hype cooled even faster."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 20
+      }
+     ]
+    },
+    "STEADY": {
+     "r": {
+      "ko": "광고 수익이 매달 들어온다. 가끔 리뷰를 읽으며 웃는다.",
+      "en": "Ad revenue comes in every month. Sometimes you read the reviews and smile."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 50
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "FRIEND_INVEST",
+   "cat": "money_up",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "hasFriend",
+    "money>=20",
+    "age>=24"
+   ],
+   "trigger": {
+    "signals": {
+     "group:BI_GYEON": 0.36,
+     "SIX_HARMONY@month": 0.18,
+     "JUPITER@H11": 0.36,
+     "group:PYEON_JAE": 0.48,
+     "JUPITER@H2": 0.42,
+     "JUPITER@H8": 0.36,
+     "CHEONEUL_GWIIN": 0.3,
+     "favorable": 0.24,
+     "JUPITER>SUN:harmonious": 0.24
+    },
+    "mods": {
+     "business": 0.3,
+     "social": 0.3
+    }
+   },
+   "location": "cafe",
+   "activity": "meet_friend",
+   "who": "friend",
+   "line": {
+    "ko": "나 드디어 가게 차려. 너한테 제일 먼저 말하는 거야. …혹시 같이 투자할래?",
+    "en": "I'm finally opening my own place. You're the first I'm telling. …Want to invest?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "믿고 투자한다",
+      "en": "Invest — I believe in you"
+     },
+     "w": {
+      "IN": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "응원만 할게",
+      "en": "I'll just cheer you on"
+     },
+     "w": {
+      "CHEER": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "IN": {
+     "r": {
+      "ko": "계약서 대신 손을 맞잡았다. 개업식 날 떡을 돌렸다.",
+      "en": "Instead of a contract, you shook hands. You handed out rice cakes on opening day."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -15
+      },
+      {
+       "kind": "setFlag",
+       "name": "friendInvest",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "FRIEND_BIZ_RESULT",
+       "after": [
+        12,
+        36
+       ],
+       "p": 1.0
+      }
+     ]
+    },
+    "CHEER": {
+     "r": {
+      "ko": "개업식 날 화환을 보냈다. {friend}이(가) 사진을 찍어 보내줬다.",
+      "en": "You sent a wreath for the opening. {friend} sent you a photo of it."
+     }
+    }
+   }
+  },
+  {
+   "id": "FRIEND_BIZ_RESULT",
+   "cat": "money_up",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "hasFriend",
+    "f_friendInvest"
+   ],
+   "chainOnly": true,
+   "location": "cafe",
+   "activity": "meet_friend",
+   "who": "friend",
+   "line": {
+    "ko": "(투자한 지 몇 해. {friend}이(가) 할 얘기가 있다며 불렀다.)",
+    "en": "(Years after you invested, {friend} asked to meet — there was something to tell you.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(두근두근) 말해봐",
+      "en": "(Heart pounding) Tell me"
+     },
+     "w": {
+      "BOOM": 0.5,
+      "FLOP": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "BOOM": {
+     "r": {
+      "ko": "2호점을 낸다고 했다. 봉투에는 투자금의 네 배가 들어 있었다.",
+      "en": "They were opening a second location. The envelope held four times what you'd put in."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 60
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "{friend}의 2호점",
+       "en": "{friend}'s second location"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "friend"
+      ],
+      "priority": 6
+     },
+     "lean": {
+      "mods": {
+       "business": 0.4
+      }
+     }
+    },
+    "FLOP": {
+     "r": {
+      "ko": "가게를 접는다고 했다. '미안해.' 돈보다 그 말이 더 아팠다.",
+      "en": "They were closing. 'I'm sorry.' That hurt more than the money."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "friendInvest"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "LAWSUIT_WIN",
+   "cat": "money_up",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "승소",
+    "en": "Case won"
+   },
+   "chainOnly": true,
+   "location": "court",
+   "activity": "court_hearing",
+   "who": "judge",
+   "line": {
+    "ko": "(몇 년을 끈 소송의 선고 날.) 원고 승소. 피고는 원고에게 손해액과 지연이자를 지급하라.",
+    "en": "(Sentencing day, after years in court.) Judgment for the plaintiff. The defendant shall pay damages with interest."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(눈을 감는다)",
+      "en": "(Close your eyes)"
+     },
+     "w": {
+      "WIN": 0.7,
+      "PARTIAL": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(변호사와 악수한다)",
+      "en": "(Shake your lawyer's hand)"
+     },
+     "w": {
+      "WIN": 0.6,
+      "PARTIAL": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "WIN": {
+     "r": {
+      "ko": "법원 계단을 내려오며 처음으로 하늘을 올려다봤다. 끝났다.",
+      "en": "Walking down the courthouse steps, you looked up at the sky for the first time. It was over."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 40
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "끝난 싸움",
+       "en": "The fight is over"
+      },
+      "location": "court",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    },
+    "PARTIAL": {
+     "r": {
+      "ko": "일부만 돌려받았다. 그래도 억울함은 풀렸다.",
+      "en": "You got only part of it back. But you were vindicated."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 12
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "COLLECTIBLE_FORTUNE",
+   "cat": "money_up",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=25"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.56,
+     "JUPITER@H2": 0.49,
+     "JUPITER@H8": 0.42,
+     "CHEONEUL_GWIIN": 0.35,
+     "favorable": 0.28,
+     "JUPITER>SUN:harmonious": 0.28
+    },
+    "mods": {
+     "opportunity": 0.3
+    }
+   },
+   "location": "family_home",
+   "activity": "help_family",
+   "who": "me",
+   "line": {
+    "ko": "(본가 창고에서 어릴 적 모은 카드 앨범이 나왔다. 검색해보니 — 이 한 장이 경매에서…)",
+    "en": "(Your childhood trading-card album turned up in the storage room back home. You looked it up — this one card sells at auction for…)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "경매에 올린다",
+      "en": "Put it up for auction"
+     },
+     "w": {
+      "SOLD": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "추억이니까 간직한다",
+      "en": "Keep it — it's a memory"
+     },
+     "w": {
+      "KEEP": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SOLD": {
+     "r": {
+      "ko": "낙찰가를 보고 소리를 질렀다. 초등학생의 나에게 고마웠다.",
+      "en": "You screamed at the final bid. Thank you, grade-school you."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 25
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "초등학생 나의 선물",
+       "en": "A gift from my grade-school self"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 5
+     }
+    },
+    "KEEP": {
+     "r": {
+      "ko": "액자에 넣어 걸었다. 볼 때마다 괜히 부자가 된 기분이다.",
+      "en": "You framed it and hung it up. Every time you see it, you feel a little rich."
+     }
+    }
+   }
+  },
+  {
+   "id": "REDEVELOPMENT",
+   "cat": "money_up",
+   "rarity": "rare",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "재개발",
+    "en": "Redevelopment"
+   },
+   "requires": [
+    "homeOwner",
+    "age>=30"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.8,
+     "JUPITER@H2": 0.7,
+     "JUPITER@H8": 0.6,
+     "CHEONEUL_GWIIN": 0.5,
+     "favorable": 0.4,
+     "JUPITER>SUN:harmonious": 0.4
+    },
+    "mods": {
+     "relocation": 0.3,
+     "wealth": 0.4
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "app",
+   "line": {
+    "ko": "[재개발 조합] 조합원님, 보상 협의 안내입니다. 오래된 우리 동네가 드디어 재개발됩니다.",
+    "en": "[Redevelopment association] Notice of compensation: your old neighborhood is finally being redeveloped."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "현금 보상을 받는다",
+      "en": "Take the cash settlement"
+     },
+     "w": {
+      "CASH": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "새 아파트 입주권을 받는다",
+      "en": "Take a unit in the new building"
+     },
+     "w": {
+      "UNIT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CASH": {
+     "r": {
+      "ko": "정든 골목과 작별했다. 통장이 무거워진 만큼 마음은 조금 허전했다.",
+      "en": "You said goodbye to the old alleys. The heavier the account, the emptier your heart felt."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 150
+      },
+      {
+       "kind": "moveCity"
+      }
+     ],
+     "card": "WINDFALL"
+    },
+    "UNIT": {
+     "r": {
+      "ko": "몇 년 뒤, 같은 자리에 새 아파트가 올라갔다. 열쇠를 받던 날 옛 골목 사진을 꺼내 봤다.",
+      "en": "Years later, a new building rose where the alleys had been. The day you got the keys, you looked at old photos of the neighborhood."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 40
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -49,6 +49,8 @@ export * from "./astrology/interpretation";
 export * from "./mbti/mbti";
 // One-call destiny (SAJU + ASTROLOGY + MBTI, hidden)
 export * from "./destiny/profile";
+// Birthplaces: city → coordinates + historical time zone (DST) for both charts
+export * from "./destiny/birthplace";
 // Game runtime (the UI talks only to this)
 export * from "./game/game";
 export * from "./game/facts";

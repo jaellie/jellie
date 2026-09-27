@@ -9,10 +9,16 @@ import { backgroundEngine } from "../world/backgroundEngine";
 import { getLocation } from "../world/catalog";
 import { toPrototypeScene, type PrototypeScene } from "../integration/prototype";
 import type { Scene, SceneActor } from "../world/sceneComposer";
-import { fillNames, fixJosa, CITY_KO } from "../game/text";
+import { fillNames, fixJosa, CITY_KO, langVars } from "../game/text";
 
 type Bi = { ko: string; en: string };
 const CARDS = cardData.cards as unknown as Record<string, { location: string; activity: string | null; actors: string[]; caption: Bi }>;
+
+/** A card kind from cards.json, or an inline life-event card (caption/place/actors carried in its vars). */
+function cardDef(c: { kind: string; vars: Record<string, string> }): (typeof CARDS)[string] | undefined {
+  if (c.kind !== "EVENT") return CARDS[c.kind];
+  return { location: c.vars.loc || "street", activity: null, actors: (c.vars.actors || "me").split(","), caption: { ko: c.vars.cap_ko ?? "", en: c.vars.cap_en ?? "" } };
+}
 
 /** "inlaw2" / "guest2" in card data are just a second actor of the same role. */
 const baseRole = (role: string): string => role.replace(/\d+$/, "");
@@ -44,13 +50,13 @@ export function buildCards(state: LifeState, lang: "ko" | "en", seed: number): M
   if (!st?.cards.length) return [];
   const queued = st.cards.splice(0, st.cards.length);
   const top = queued
-    .map((c, i) => ({ c, i, p: PRIORITY[c.kind] ?? 3 }))
+    .map((c, i) => ({ c, i, p: c.kind === "EVENT" ? Number(c.vars.priority ?? 6) : PRIORITY[c.kind] ?? 3 }))
     .sort((a, b) => b.p - a.p || a.i - b.i)
     .slice(0, MAX_CARDS)
     .sort((a, b) => a.i - b.i)
     .map((x) => x.c);
-  return top.filter((c) => CARDS[c.kind]).map((c) => {
-    const def = CARDS[c.kind];
+  return top.filter((c) => cardDef(c)).map((c) => {
+    const def = cardDef(c)!;
     const loc = getLocation(def.location);
     const married = state.relationship.status === "MARRIED";
     const tod = /FUNERAL/.test(c.kind) ? "EVENING" : c.kind === "FLIGHT" ? "DAY" : "DAY";
@@ -81,7 +87,7 @@ export function buildCards(state: LifeState, lang: "ko" | "en", seed: number): M
       actors,
       props: [],
     };
-    const vars: Record<string, string> = { ...c.vars, city: lang === "ko" ? CITY_KO[c.vars.city] ?? c.vars.city : c.vars.city };
+    const vars: Record<string, string> = { ...langVars(c.vars, lang), city: lang === "ko" ? CITY_KO[c.vars.city] ?? c.vars.city : c.vars.city };
     let caption = def.caption[lang].replace(/\{(\w+)\}/g, (m, k: string) => (k in vars ? m : ""));
     caption = lang === "ko" ? fillNames(caption, vars) : caption.replace(/\{(\w+)\}/g, (_m, k: string) => vars[k] ?? "");
     if (lang === "ko") caption = fixJosa(caption);

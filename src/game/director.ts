@@ -58,10 +58,12 @@ export function guardRequirements(texts: string[]): { rule: string; requires: st
 
 /** What must be true for a given speaker to appear at all. */
 export const SPEAKER_REQUIRES: Record<string, string[]> = {
-  mom: ["momAlive"],
-  dad: ["dadAlive"],
+  // Estranged (절연) or vanished family don't call or text.
+  mom: ["momAlive", "!f_cutOffMom"],
+  dad: ["dadAlive", "!f_cutOffDad"],
   partner: ["partnered", "!partnerCritical"],
-  sibling: ["hasSibling"],
+  sibling: ["hasSibling", "!f_siblingGone"],
+  kid: ["hasKid"],
   boss: ["employed", "!selfEmployed"],
   coworker: ["employed"],
   work: ["employed"],
