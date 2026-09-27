@@ -43,5 +43,25 @@
   "coast": 0.4,
   "tokyo": 1.5,
   "paris": 3.5
+ },
+ "mortality": {
+  "_doc": "Annual death chance = (base + a·e^(b·age)) × factor for the age band. Early deaths are rare on purpose (it's a game).",
+  "base": 0.0001,
+  "a": 2.2e-05,
+  "b": 0.1,
+  "bands": [
+   {
+    "maxAge": 49,
+    "factor": 0.1
+   },
+   {
+    "maxAge": 64,
+    "factor": 0.4
+   },
+   {
+    "maxAge": 200,
+    "factor": 1.0
+   }
+  ]
  }
 }

@@ -3,6 +3,9 @@
  */
 import { addMonths } from "../core/gameDate";
 import { type LifeState, educationRank, isAbroad } from "./types";
+import directorCfg from "../../data/game/director.json";
+
+const MORTALITY = directorCfg.mortality;
 
 export const ECONOMY = {
   baseIncome: 18,
@@ -24,7 +27,9 @@ export function yearlyIncome(s: LifeState): number {
 
 /** Annual death probability (Gompertz-style, fictional but plausible). */
 export function annualMortality(age: number): number {
-  return Math.min(0.5, 0.0003 + 2.2e-5 * Math.exp(0.1 * age));
+  const m = MORTALITY;
+  const band = m.bands.find((b) => age <= b.maxAge) ?? m.bands[m.bands.length - 1];
+  return Math.min(0.5, (m.base + m.a * Math.exp(m.b * age)) * band.factor);
 }
 
 /** Advance one month. Returns notable life-script events (graduation etc.). */

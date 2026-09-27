@@ -35,7 +35,20 @@ export interface PrototypeScene {
   /** CSS backgrounds to stack as absolutely-positioned divs (z 90+), like world() does for night/rain. */
   overlays: Array<{ condition: string; background: string }>;
   /** Characters to draw with spr(): prototype role names for known roles, npc ids otherwise. */
-  actors: Array<{ who: string; spot: [number, number]; z: number; name?: string; seed: number; familiar?: boolean }>;
+  actors: Array<{
+    who: string;
+    spot: [number, number];
+    z: number;
+    name?: string;
+    seed: number;
+    familiar?: boolean;
+    /** "M" | "F" for choosing a sprite body. */
+    gender?: "M" | "F";
+    age?: number;
+    /** me | partner | fated | npc | passerby */
+    role: string;
+    npcType?: string;
+  }>;
 }
 
 export function toPrototypeScene(scene: Scene): PrototypeScene {
@@ -58,6 +71,17 @@ export function toPrototypeScene(scene: Scene): PrototypeScene {
     assetPath: scene.background.assetPath,
     baseColor: FALLBACK_BG[loc.type] ?? "#ead8bb",
     overlays,
-    actors: scene.actors.map((a) => ({ who: a.kind === "player" ? "me" : a.kind === "partner" ? "partner" : a.id, spot: a.spot, z: a.z, name: a.name, seed: a.spriteSeed, familiar: a.familiar })),
+    actors: scene.actors.map((a) => ({
+      who: a.kind === "player" ? "me" : a.kind === "partner" ? "partner" : a.id,
+      spot: a.spot,
+      z: a.z,
+      name: a.name,
+      seed: a.spriteSeed,
+      familiar: a.familiar,
+      gender: a.sex === "MALE" ? "M" : a.sex === "FEMALE" ? "F" : undefined,
+      age: a.age,
+      role: a.kind === "player" ? "me" : a.kind === "partner" ? "partner" : a.fated ? "fated" : a.kind,
+      npcType: a.npcType,
+    })),
   };
 }

@@ -87,6 +87,9 @@ export interface Popup {
   who: string;
   name?: string;
   npcId?: string;
+  /** For npc/fated portraits: sprite gender + seed. */
+  gender?: "M" | "F";
+  seed?: number;
   title?: string;
   line: string;
   ch: Array<{ t: string }>;
@@ -374,7 +377,7 @@ export class Game {
         if (this.director.hasBudget("major")) {
           this.director.record("major", { id: `world:${e.kind}:${e.npcId ?? ""}`, texts: [e.text.ko] });
           const npc = e.npcId ? st.world.npcs[e.npcId] : undefined;
-          const popup: Popup = { id: `w${s.dayIndex}-${s.minute}`, source: "world", who: e.npcId ? "npc" : "me", name: npc?.name, npcId: e.npcId, line: this.L(e.text), ch: e.choices.map((c) => ({ t: this.L(c.label) })) };
+          const popup: Popup = { id: `w${s.dayIndex}-${s.minute}`, source: "world", who: e.npcId ? (npc?.fated ? "fated" : "npc") : "me", name: npc?.name, npcId: e.npcId, gender: npc ? (npc.sex === "MALE" ? "M" : "F") : undefined, seed: npc?.spriteSeed, line: this.L(e.text), ch: e.choices.map((c) => ({ t: this.L(c.label) })) };
           s.pending = { popup, worldEvent: e };
           beats.push({ kind: "popup", popup });
           return beats;
@@ -730,7 +733,15 @@ export class Game {
 // Creation / loading
 // ---------------------------------------------------------------------------
 
-export function createGame(setup: GameSetup): Game {
+/** UIs often send null for "unknown" — treat null like "not given". */
+function stripNulls<T>(v: T): T {
+  if (Array.isArray(v)) return v.map(stripNulls) as T;
+  if (v && typeof v === "object") return Object.fromEntries(Object.entries(v).filter(([, x]) => x !== null && x !== undefined).map(([k, x]) => [k, stripNulls(x)])) as T;
+  return v;
+}
+
+export function createGame(input: GameSetup): Game {
+  const setup = stripNulls(input);
   const seed = setup.seed ?? hash(setup.name, setup.birth.year, setup.birth.month, setup.birth.day, setup.mbti ?? "", Date.now());
   const save: GameSave = {
     v: 1,

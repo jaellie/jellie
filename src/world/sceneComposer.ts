@@ -23,6 +23,7 @@ export interface SceneActor {
   z: number;
   /** Familiar faces get a subtle marker in the UI. */
   familiar?: boolean;
+  fated?: boolean;
 }
 
 export interface Scene {
@@ -47,12 +48,17 @@ export function composeScene(visit: VisitResult, world: WorldState, state: LifeS
   };
   if (!loc.online) {
     place({ id: "player", kind: "player", sex: state.birth.sex, age: Math.floor(state.age), spriteSeed: 0 });
-    if (opts.withPartner && state.relationship.partnerId) place({ id: state.relationship.partnerId, kind: "partner", spriteSeed: 1 });
+    if (opts.withPartner && state.relationship.partnerId) {
+      const pid = state.relationship.partnerId;
+      const pn = world.npcs[pid] ?? state.npcs.find((n) => n.id === pid);
+      const sex = pn && "sex" in pn ? (pn as { sex: "MALE" | "FEMALE" }).sex : pn && "birth" in pn ? (pn as { birth: { sex: "MALE" | "FEMALE" } }).birth.sex : undefined;
+      place({ id: pid, kind: "partner", name: pn?.name, sex, spriteSeed: (world.npcs[pid]?.spriteSeed ?? 1), fated: world.npcs[pid]?.fated });
+    }
     for (const id of visit.present) {
       const n = world.npcs[id];
-      if (n) place({ id, kind: "npc", name: n.name, npcType: n.type, sex: n.sex, age: npcAge(n, visit.time.date), spriteSeed: n.spriteSeed, familiar: !!world.relationships[id] || (world.encounters[`${id}@${loc.id}`]?.encounterCount ?? 0) >= 2 });
+      if (n) place({ id, kind: "npc", name: n.name, npcType: n.type, sex: n.sex, age: npcAge(n, visit.time.date), spriteSeed: n.spriteSeed, fated: n.fated, familiar: !!world.relationships[id] || (world.encounters[`${id}@${loc.id}`]?.encounterCount ?? 0) >= 2 });
     }
-    for (const n of visit.passersBy) place({ id: n.id, kind: "passerby", npcType: n.type, sex: n.sex, spriteSeed: n.spriteSeed });
+    for (const n of visit.passersBy) place({ id: n.id, kind: "passerby", npcType: n.type, sex: n.sex, age: npcAge(n, visit.time.date), spriteSeed: n.spriteSeed });
   }
   // Variants (evening/rain…) reuse the base background's props & layers unless they define their own.
   const baseBg = backgroundsFor(loc.id).find((b) => !b.timeOfDay && !b.weather && !b.season && !b.activities);

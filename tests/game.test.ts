@@ -178,3 +178,23 @@ describe("Save / load / determinism", () => {
     expect(Object.values(g.state.world!.npcs).some((n) => n.fated && n.name === "Ren")).toBe(true);
   });
 });
+
+describe("Lifespan & scene data for the UI", () => {
+  it("early deaths are rare; most lives reach old age", async () => {
+    const { annualMortality } = await import("../src/sim/lifeTick");
+    let alive = 1;
+    for (let age = 25; age < 55; age++) alive *= 1 - annualMortality(age);
+    expect(1 - alive).toBeLessThan(0.05); // <5% die before 55
+    let a2 = 1;
+    for (let age = 25; age < 80; age++) a2 *= 1 - annualMortality(age);
+    expect(a2).toBeGreaterThan(0.4); // a good share reach 80
+  });
+
+  it("null 'unknown' fields from the UI are accepted, and scene actors carry gender/role", () => {
+    const g = createGame({ ...SETUP, seed: 61, birth: { year: 1997, month: 9, day: 28, hour: null as never, minute: null as never }, fated: { name: null as never, from: null as never, mbti: null as never } });
+    g.advance(1200);
+    const actors = g.scene()!.actors;
+    expect(actors[0]).toMatchObject({ who: "me", role: "me" });
+    for (const a of actors.slice(1)) expect(["M", "F"]).toContain(a.gender);
+  });
+});
