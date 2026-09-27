@@ -2,6 +2,7 @@
  * Developer/debug views (plain text). Explains *why* the simulation leaned the
  * way it did — essential for balancing. No calculation logic lives here.
  */
+import { ASTRO_LAYERS } from "../astrology/interpretation";
 import { formatGameDate } from "../core/gameDate";
 import { LIFE_MODIFIER_KEYS, type LifeModifiers, type Modifier, toMultiplier } from "../core/lifeModifiers";
 import type { SajuChart } from "../saju/chart";
@@ -73,8 +74,15 @@ export function formatAstrologyDebug(chart: import("../astrology/chart").Astrolo
   const out: string[] = [];
   out.push(`ASTROLOGY  Sun ${chart.sunSign} · Moon ${chart.moonSign} · Rising ${chart.risingSign ?? "?"} (${chart.houseSystem})`);
   out.push("TRANSITS (slow)");
-  for (const h of r.transits.slow.hits) out.push(`  ${h.planet.padEnd(8)} ${h.sign.padEnd(11)} H${String(h.house).padEnd(3)}${h.isReturn ? " RETURN" : ""}${h.aspects.map((a) => ` ${a.type}>${a.natalPoint}`).join("")}`);
-  for (const layer of ["natal", "annual", "monthly"] as const) {
+  for (const h of r.transits.slow.hits) out.push(`  ${h.planet.padEnd(8)} ${h.sign.padEnd(11)} H${String(h.house).padEnd(3)}${h.isReturn ? " RETURN" : ""}${h.aspects.map((a) => ` ${a.type}>${a.natalPoint}${a.applying ? "(a)" : "(s)"} ${a.orb.toFixed(1)}°`).join("")}`);
+  const p = r.progressions;
+  out.push(`PROGRESSED  Sun ${p.positions.SUN?.sign} · Moon ${p.positions.MOON?.sign} (natal H${p.positions.MOON?.natalHouse})${p.ingresses.map((i) => ` · ${i.point}→${i.sign}`).join("")}`);
+  for (const a of p.aspects) out.push(`  p.${a.progressed} ${a.type} ${a.natalPoint} ${a.orb.toFixed(2)}° ${a.applying ? "applying" : "separating"}`);
+  for (const rc of [r.solarReturn, r.lunarReturn]) {
+    const when = new Date((rc.jdUT - 2440587.5) * 86_400_000).toISOString().slice(0, 10);
+    out.push(`${rc.kind} RETURN ${when}${rc.anglesReliable ? ` · ASC ${rc.ascSign} (natal H${rc.ascInNatalHouse}) · Sun H${rc.houses.SUN} · Moon H${rc.houses.MOON}` : " · (birth time unknown: angles skipped)"}${rc.angular.length ? ` · angular ${rc.angular.join("/")}` : ""}`);
+  }
+  for (const layer of ASTRO_LAYERS) {
     out.push(layer.toUpperCase());
     for (const [k, v] of topKeys(r.layerTotals[layer])) out.push(`  ${k.padEnd(16)} ${sign(v)}`);
   }

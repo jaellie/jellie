@@ -1,15 +1,21 @@
 {
- "_doc": "Fated turning points. The situation is certain; outcome = 70% chart (destinyScript chartWeights) + 30% the chosen strategy (choice weights). The first variant whose 'requires' holds is used. 'card' shows in the 시간이 흐른다 screen; 'scene' moves the player for the rest of the day.",
+ "_doc": "Fated turning points. The situation is certain; outcome = 70% chart (destinyScript chartWeights) + 30% the chosen strategy (choice weights). Among variants whose 'requires' hold (and whose speaker can speak), the highest 'priority' wins; ties are picked at random per event. 'compat' lets 궁합 with the destined person bend outcomes (+1 grows, −1 shrinks) when they are involved; 'withFated' puts them in the scene; 'title' heads the big popup. 'card' shows in the 시간이 흐른다 screen; 'scene' moves the player for the rest of the day.",
  "themes": {
   "LOVE_MEETING": {
    "hint": {
     "ko": "(요즘 이상하게 누군가를 만날 것 같은 예감이 든다.)",
     "en": "(Lately you have a strange feeling you're about to meet someone.)"
    },
+   "title": {
+    "ko": "운명적인 만남",
+    "en": "A fateful meeting"
+   },
    "variants": [
     {
      "requires": [
-      "!partnered"
+      "!partnered",
+      "!fatedKnown",
+      "fatedSingle"
      ],
      "location": "cafe",
      "who": "fated",
@@ -92,11 +98,18 @@
         }
        ]
       }
+     },
+     "priority": 1,
+     "compat": {
+      "START_DATING": 1,
+      "MISSED": -1
      }
     },
     {
      "requires": [
-      "partnered"
+      "partnered",
+      "!fatedPartner",
+      "fatedSingle"
      ],
      "location": "cafe",
      "who": "fated",
@@ -174,6 +187,353 @@
        },
        "effects": []
       }
+     },
+     "compat": {
+      "START_DATING": 1,
+      "MISSED": -1
+     }
+    },
+    {
+     "requires": [
+      "!partnered",
+      "fatedAvailable"
+     ],
+     "priority": 1,
+     "location": "cafe",
+     "who": "me",
+     "withFated": true,
+     "title": {
+      "ko": "고백",
+      "en": "A confession"
+     },
+     "line": {
+      "ko": "(오늘따라 {fated}에게서 눈을 뗄 수가 없다. 이 마음, 전해볼까?)",
+      "en": "(Today you can't take your eyes off {fated}. Should you tell them how you feel?)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "용기 내서 고백한다",
+        "en": "Gather courage and confess"
+       },
+       "weights": {
+        "START_DATING": 0.7,
+        "SLOW_BURN": 0.2,
+        "MISSED": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "조금 더 가까워진다",
+        "en": "Get a little closer first"
+       },
+       "weights": {
+        "START_DATING": 0.2,
+        "SLOW_BURN": 0.7,
+        "MISSED": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "마음을 접는다",
+        "en": "Let the feeling go"
+       },
+       "weights": {
+        "START_DATING": 0.05,
+        "SLOW_BURN": 0.25,
+        "MISSED": 0.7
+       }
+      }
+     ],
+     "compat": {
+      "START_DATING": 1,
+      "MISSED": -1
+     },
+     "outcomes": {
+      "START_DATING": {
+       "r": {
+        "ko": "{fated}도 같은 마음이었다. 그날부터 우리는 연인이 되었다.",
+        "en": "{fated} felt the same. From that day on, you were together."
+       },
+       "effects": [
+        {
+         "kind": "startDatingFated"
+        }
+       ],
+       "card": "START_DATING",
+       "scene": [
+        "park"
+       ]
+      },
+      "SLOW_BURN": {
+       "r": {
+        "ko": "조금씩 가까워지고 있다. 아직은, 친구지만.",
+        "en": "You're growing closer, little by little. Friends, for now."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.35
+        }
+       ]
+      },
+      "MISSED": {
+       "r": {
+        "ko": "…{fated}에게는 이미 마음에 둔 사람이 있었다.",
+        "en": "…{fated} already had someone in their heart."
+       },
+       "effects": [
+        {
+         "kind": "fatedTaken"
+        },
+        {
+         "kind": "memory",
+         "text": "A love that stayed one-sided.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "!partnered",
+      "!fatedAvailable"
+     ],
+     "location": "restaurant",
+     "activity": "eat",
+     "who": "stranger",
+     "title": {
+      "ko": "새로운 인연",
+      "en": "Someone new"
+     },
+     "line": {
+      "ko": "(친구가 소개해 준 사람과 저녁을 먹었다. 이야기가 끝없이 이어졌다.)",
+      "en": "(Dinner with someone a friend introduced. The conversation just kept going.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "다음에 또 보자고 한다",
+        "en": "Ask to meet again"
+       },
+       "weights": {
+        "START_DATING": 0.7,
+        "SLOW_BURN": 0.25,
+        "MISSED": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "천천히 알아간다",
+        "en": "Take it slow"
+       },
+       "weights": {
+        "START_DATING": 0.2,
+        "SLOW_BURN": 0.7,
+        "MISSED": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "인연이 아닌 것 같다",
+        "en": "It's not meant to be"
+       },
+       "weights": {
+        "START_DATING": 0.05,
+        "SLOW_BURN": 0.15,
+        "MISSED": 0.8
+       }
+      }
+     ],
+     "outcomes": {
+      "START_DATING": {
+       "r": {
+        "ko": "그날 밤, 한참을 이야기했다. 오래 알던 사람 같았다.",
+        "en": "You talked late into the night. It felt like you'd known each other for years."
+       },
+       "effects": [
+        {
+         "kind": "startDatingNew"
+        }
+       ],
+       "card": "START_DATING"
+      },
+      "SLOW_BURN": {
+       "r": {
+        "ko": "가끔 연락을 주고받는 사이가 되었다.",
+        "en": "You started texting now and then."
+       },
+       "effects": []
+      },
+      "MISSED": {
+       "r": {
+        "ko": "좋은 사람이었지만, 인연은 아니었다.",
+        "en": "A good person, but not the one."
+       },
+       "effects": []
+      }
+     }
+    },
+    {
+     "requires": [
+      "fatedPartner"
+     ],
+     "location": "park",
+     "activity": "walk",
+     "who": "partner",
+     "title": {
+      "ko": "운명",
+      "en": "Fate"
+     },
+     "line": {
+      "ko": "(…{partner}와(과) 함께 걷는 길. 이상하게, 처음부터 알던 사람 같다.)",
+      "en": "(…Walking with {partner}. Strangely, it feels like you've always known each other.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(손을 꼭 잡는다)",
+        "en": "(Hold their hand tight)"
+       },
+       "weights": {
+        "START_DATING": 0.7,
+        "SLOW_BURN": 0.25,
+        "MISSED": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "(조용히 웃는다)",
+        "en": "(Smile quietly)"
+       },
+       "weights": {
+        "START_DATING": 0.4,
+        "SLOW_BURN": 0.5,
+        "MISSED": 0.1
+       }
+      }
+     ],
+     "compat": {
+      "START_DATING": 1,
+      "MISSED": -1
+     },
+     "outcomes": {
+      "START_DATING": {
+       "r": {
+        "ko": "그날 확신했다. 이 사람이구나.",
+        "en": "That day you were sure: it's this person."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "The day I knew.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      },
+      "SLOW_BURN": {
+       "r": {
+        "ko": "아직은 잘 모르겠다. 그래도, 좋다.",
+        "en": "You're not sure yet. But it's good."
+       },
+       "effects": []
+      },
+      "MISSED": {
+       "r": {
+        "ko": "…요즘 우리, 조금 멀어진 것 같다.",
+        "en": "…Lately you feel a little distant."
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "distance",
+         "value": true
+        }
+       ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "partnered",
+      "!fatedPartner",
+      "!fatedSingle"
+     ],
+     "location": "cafe",
+     "who": "partner",
+     "title": {
+      "ko": "우리 사이",
+      "en": "Us"
+     },
+     "line": {
+      "ko": "(요즘 {partner}와(과) 보내는 시간이 부쩍 늘었다.)",
+      "en": "(You've been spending more and more time with {partner}.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(이대로가 좋다)",
+        "en": "(This is nice)"
+       },
+       "weights": {
+        "START_DATING": 0.6,
+        "SLOW_BURN": 0.3,
+        "MISSED": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "(가끔은 혼자 있고 싶다)",
+        "en": "(Sometimes you want time alone)"
+       },
+       "weights": {
+        "START_DATING": 0.2,
+        "SLOW_BURN": 0.5,
+        "MISSED": 0.3
+       }
+      }
+     ],
+     "outcomes": {
+      "START_DATING": {
+       "r": {
+        "ko": "우리는 더 가까워졌다.",
+        "en": "You grew closer."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "We grew closer.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      },
+      "SLOW_BURN": {
+       "r": {
+        "ko": "평범하고 조용한 날들이 이어졌다.",
+        "en": "Quiet, ordinary days went on."
+       },
+       "effects": []
+      },
+      "MISSED": {
+       "r": {
+        "ko": "…조금 권태로운 요즘이다.",
+        "en": "…Things feel a little stale lately."
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "distance",
+         "value": true
+        }
+       ]
+      }
      }
     }
    ]
@@ -182,6 +542,10 @@
    "hint": {
     "ko": "(요즘 따라 미래에 대한 생각이 많아진다.)",
     "en": "(You've been thinking a lot about the future lately.)"
+   },
+   "title": {
+    "ko": "결혼 이야기",
+    "en": "Talk of marriage"
    },
    "variants": [
     {
@@ -274,11 +638,16 @@
         "street"
        ]
       }
+     },
+     "compat": {
+      "ENGAGED": 1,
+      "BREAKUP": -1
      }
     },
     {
      "requires": [
-      "!partnered"
+      "!partnered",
+      "fatedAvailable"
      ],
      "location": "cafe",
      "who": "fated",
@@ -353,6 +722,14 @@
        },
        "effects": []
       }
+     },
+     "compat": {
+      "ENGAGED": 1,
+      "BREAKUP": -1
+     },
+     "title": {
+      "ko": "재회",
+      "en": "A reunion"
      }
     },
     {
@@ -424,6 +801,94 @@
         }
        ]
       }
+     },
+     "compat": {
+      "ENGAGED": 1,
+      "BREAKUP": -1
+     },
+     "title": {
+      "ko": "결혼기념일",
+      "en": "Our anniversary"
+     }
+    },
+    {
+     "requires": [
+      "!partnered",
+      "!fatedAvailable"
+     ],
+     "location": "restaurant",
+     "activity": "eat",
+     "who": "stranger",
+     "title": {
+      "ko": "소개팅",
+      "en": "A blind date"
+     },
+     "line": {
+      "ko": "(소개팅 자리. 마주 앉은 사람이 먼저 웃었다.)",
+      "en": "(A blind date. The person across the table smiled first.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "적극적으로 다가간다",
+        "en": "Make a move"
+       },
+       "weights": {
+        "ENGAGED": 0.6,
+        "NOT_YET": 0.3,
+        "BREAKUP": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "천천히 알아간다",
+        "en": "Take it slow"
+       },
+       "weights": {
+        "ENGAGED": 0.2,
+        "NOT_YET": 0.7,
+        "BREAKUP": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "정중히 거절한다",
+        "en": "Politely decline"
+       },
+       "weights": {
+        "ENGAGED": 0.05,
+        "NOT_YET": 0.15,
+        "BREAKUP": 0.8
+       }
+      }
+     ],
+     "outcomes": {
+      "ENGAGED": {
+       "r": {
+        "ko": "연락이 이어졌다. 어느새 매일 밤 통화를 하고 있었다.",
+        "en": "The texts kept coming. Soon you were calling every night."
+       },
+       "effects": [
+        {
+         "kind": "startDatingNew"
+        }
+       ],
+       "card": "START_DATING"
+      },
+      "NOT_YET": {
+       "r": {
+        "ko": "몇 번 더 만나보기로 했다.",
+        "en": "You agreed to meet a few more times."
+       },
+       "effects": []
+      },
+      "BREAKUP": {
+       "r": {
+        "ko": "좋은 사람이었지만, 인연은 아니었다.",
+        "en": "A good person, but not the one."
+       },
+       "effects": []
+      }
      }
     }
    ]
@@ -432,6 +897,10 @@
    "hint": {
     "ko": "(요즘 따라 사소한 일로 자주 부딪힌다.)",
     "en": "(Lately you clash over little things.)"
+   },
+   "title": {
+    "ko": "위기",
+    "en": "A crisis"
    },
    "variants": [
     {
@@ -523,6 +992,10 @@
         }
        ]
       }
+     },
+     "compat": {
+      "RECONCILE": 1,
+      "SEPARATE": -1
      }
     },
     {
@@ -587,6 +1060,105 @@
        "effects": []
       }
      }
+    },
+    {
+     "requires": [
+      "partnered"
+     ],
+     "location": "street",
+     "who": "me",
+     "title": {
+      "ko": "배신",
+      "en": "Betrayal"
+     },
+     "line": {
+      "ko": "({partner}의 휴대폰에 낯선 이름의 메시지가 떴다. …그리고 오늘, 둘이 함께 있는 걸 봤다.)",
+      "en": "(A message from an unfamiliar name lit up {partner}'s phone. …And today, you saw them together.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "그 자리에서 따진다",
+        "en": "Confront them on the spot"
+       },
+       "weights": {
+        "RECONCILE": 0.15,
+        "SEPARATE": 0.6,
+        "DISTANCE": 0.25
+       }
+      },
+      {
+       "t": {
+        "ko": "모른 척한다",
+        "en": "Pretend you didn't see"
+       },
+       "weights": {
+        "RECONCILE": 0.15,
+        "SEPARATE": 0.15,
+        "DISTANCE": 0.7
+       }
+      },
+      {
+       "t": {
+        "ko": "대화로 풀어본다",
+        "en": "Try to talk it through"
+       },
+       "weights": {
+        "RECONCILE": 0.55,
+        "SEPARATE": 0.25,
+        "DISTANCE": 0.2
+       }
+      }
+     ],
+     "compat": {
+      "RECONCILE": 1,
+      "SEPARATE": -1
+     },
+     "outcomes": {
+      "RECONCILE": {
+       "r": {
+        "ko": "{partner}이(가) 무릎을 꿇었다. …딱 한 번만, 믿어보기로 했다.",
+        "en": "{partner} fell to their knees. …You decided to trust them, just once more."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "I forgave, once.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      },
+      "SEPARATE": {
+       "r": {
+        "ko": "…더는 함께할 수 없었다.",
+        "en": "…You couldn't stay together anymore."
+       },
+       "effects": [
+        {
+         "kind": "separate"
+        }
+       ],
+       "card": "AFFAIR",
+       "scene": [
+        "street"
+       ]
+      },
+      "DISTANCE": {
+       "r": {
+        "ko": "아무 말도 하지 못했다. 그날 이후, 우리 사이엔 금이 갔다.",
+        "en": "You couldn't say a word. Since that day, something between you cracked."
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "distance",
+         "value": true
+        }
+       ]
+      }
+     }
     }
    ]
   },
@@ -594,6 +1166,10 @@
    "hint": {
     "ko": "(요즘 회사 분위기가 심상치 않다.)",
     "en": "(Something feels off at work lately.)"
+   },
+   "title": {
+    "ko": "인생의 갈림길",
+    "en": "A crossroads"
    },
    "variants": [
     {
@@ -797,6 +1373,10 @@
     "ko": "(요즘 이상하게 어디론가 떠나고 싶다…)",
     "en": "(Lately you strangely want to go somewhere far…)"
    },
+   "title": {
+    "ko": "새로운 곳으로",
+    "en": "Somewhere new"
+   },
    "variants": [
     {
      "requires": [],
@@ -898,6 +1478,10 @@
    "hint": {
     "ko": "(엄마 목소리가 요즘 좀 힘이 없다.)",
     "en": "(Mom's voice has sounded weak lately.)"
+   },
+   "title": {
+    "ko": "병원에서 온 전화",
+    "en": "A call from the hospital"
    },
    "variants": [
     {
@@ -1043,10 +1627,10 @@
       "!dadAlive"
      ],
      "location": "funeral_hall",
-     "who": "relative",
+     "who": "me",
      "line": {
-      "ko": "이모가 돌아가셨대…",
-      "en": "Your aunt passed away…"
+      "ko": "({relative}께서 돌아가셨다는 연락을 받았다.)",
+      "en": "(You got word that {relative} passed away.)"
      },
      "choices": [
       {
@@ -1058,24 +1642,30 @@
         "PASSING": 1,
         "RECOVERY": 0
        }
+      },
+      {
+       "t": {
+        "ko": "(한참을 멍하니 있었다)",
+        "en": "(You sit there, numb, for a long time)"
+       },
+       "weights": {
+        "PASSING": 1,
+        "RECOVERY": 0
+       }
       }
      ],
      "outcomes": {
       "PASSING": {
        "r": {
-        "ko": "오랜만에 모인 가족들과 옛날 이야기를 했다.",
-        "en": "You shared old stories with family you hadn't seen in years."
+        "ko": "오랜만에 모인 친척들과 옛날 이야기를 했다.",
+        "en": "You shared old stories with relatives you hadn't seen in years."
        },
        "effects": [
         {
-         "kind": "memory",
-         "text": "Said goodbye to my aunt.",
-         "tags": [
-          "fate"
-         ]
+         "kind": "relativeDies"
         }
        ],
-       "card": "FAMILY_FUNERAL",
+       "card": "RELATIVE_FUNERAL",
        "scene": [
         "funeral_hall"
        ]
@@ -1087,6 +1677,10 @@
        },
        "effects": []
       }
+     },
+     "title": {
+      "ko": "부고",
+      "en": "Sad news"
      }
     },
     {
@@ -1166,6 +1760,10 @@
    "hint": {
     "ko": "(요즘 돈 이야기가 자꾸 귀에 들어온다.)",
     "en": "(Money keeps coming up lately.)"
+   },
+   "title": {
+    "ko": "큰 기회",
+    "en": "A big chance"
    },
    "variants": [
     {
@@ -1333,6 +1931,10 @@
     "ko": "(요즘 아기들이 눈에 자꾸 들어온다.)",
     "en": "(Babies keep catching your eye lately.)"
    },
+   "title": {
+    "ko": "새 생명",
+    "en": "New life"
+   },
    "variants": [
     {
      "requires": [
@@ -1458,6 +2060,10 @@
     "ko": "(퇴근길에 자꾸 유기동물 보호소 앞을 지나게 된다.)",
     "en": "(You keep passing the animal shelter on your way home.)"
    },
+   "title": {
+    "ko": "새 가족",
+    "en": "A new family member"
+   },
    "variants": [
     {
      "requires": [],
@@ -1557,6 +2163,10 @@
    "hint": {
     "ko": "(회사에서 명예퇴직 이야기가 돌기 시작했다.)",
     "en": "(Talk of early-retirement packages is going around at work.)"
+   },
+   "title": {
+    "ko": "명예퇴직",
+    "en": "Early retirement"
    },
    "variants": [
     {
@@ -1807,6 +2417,10 @@
         }
        ]
       }
+     },
+     "title": {
+      "ko": "가게의 미래",
+      "en": "The shop's future"
      }
     }
    ]
@@ -1815,6 +2429,10 @@
    "hint": {
     "ko": "(요즘 따라 가족들 건강이 자꾸 신경 쓰인다.)",
     "en": "(Lately you keep worrying about everyone's health.)"
+   },
+   "title": {
+    "ko": "진단",
+    "en": "The diagnosis"
    },
    "variants": [
     {

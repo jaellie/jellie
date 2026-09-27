@@ -6,6 +6,8 @@ import { calculateAstrologyChart } from "../src/astrology/chart";
 import { SeededRandom } from "../src/core/rng";
 import { OpportunityEngine } from "../src/sim/opportunityEngine";
 import type { MemoryCard } from "../src/story/cards";
+import { compatibility } from "../src/destiny/compatibility";
+import { startArc } from "../src/story/storyEngine";
 
 const SETUP = { name: "민아", gender: "F" as const, likes: "M" as const, birth: { year: 1997, month: 9, day: 28, hour: 9, minute: 30 }, mbti: "ENFP", fated: { name: "Ren", from: "same" as const } };
 
@@ -19,7 +21,7 @@ function playWhole(seed: number, pick: (n: number, rng: SeededRandom) => number 
     const momBefore = g.state.family!.mom.alive;
     for (let i = 0; i < 400; i++) {
       const beats = g.advance(g.s.minute + 30);
-      for (const b of beats) if (b.kind === "popup") (popups.push(b.popup.line), g.choose(pick(b.popup.ch.length, rng)));
+      for (const b of beats) if (b.kind === "popup") (popups.push(`${b.popup.name ?? ""}|${b.popup.line}`), g.choose(pick(b.popup.ch.length, rng)));
       if (beats.some((b) => b.kind === "dayEnd")) break;
     }
     const kind = g.s.dayKind;
@@ -102,8 +104,9 @@ describe("A life with a storyline", () => {
       let dadGone = false, momGone = false;
       for (const d of days) {
         for (const line of d.popups) {
-          if (dadGone) expect(line.startsWith("[아빠]")).toBe(false);
-          if (momGone) expect(line.startsWith("[엄마]")).toBe(false);
+          if (dadGone) expect(line.startsWith("아빠|")).toBe(false);
+          if (momGone) expect(line.startsWith("엄마|")).toBe(false);
+          expect(line).not.toMatch(/\|\[(아빠|엄마)\]/); // the speaker tag became the name
         }
         if (d.cards.includes("DAD_FUNERAL")) dadGone = true;
         if (d.cards.includes("MOM_FUNERAL")) momGone = true;
@@ -155,7 +158,7 @@ describe("A life with a storyline", () => {
   it("no names before introductions: the fated stranger is \"낯선 사람\" until you've met", () => {
     let checked = 0;
     for (const seed of [7, 8, 9]) {
-      const g = createGame({ ...SETUP, seed });
+      const g = createGame({ ...SETUP, fated: { ...SETUP.fated, status: "stranger" as const }, seed });
       const fated = Object.values(g.state.world!.npcs).find((n) => n.fated)!;
       for (let d = 0; d < 40 && !g.isOver() && !checked; d++) {
         for (let i = 0; i < 400; i++) {
@@ -246,5 +249,156 @@ describe("Scenes follow choices; the world moves", () => {
     const { backgroundEngine } = await import("../src/world/backgroundEngine");
     expect(backgroundEngine.getBackground({ location: "home", timeOfDay: "DAY", facts: { married: true } }).background.id).toBe("home_newlywed");
     expect(backgroundEngine.getBackground({ location: "home", timeOfDay: "DAY", facts: { married: false } }).background.id).not.toBe("home_newlywed");
+  });
+});
+
+/** Play until `stop(g)` is true or the life ends; `pick` answers every popup. */
+function playUntil(g: Game, stop: (g: Game) => boolean, pick: (p: { source: string; line: string; ch: Array<{ t: string }> }) => number = () => 0, maxDays = 60) {
+  const popups: Array<{ source: string; who: string; name?: string; line: string; title?: string; big?: boolean; day: number }> = [];
+  const toasts: Array<{ from: string; text: string; day: number }> = [];
+  const cards: MemoryCard[] = [];
+  for (let d = 0; d < maxDays && !g.isOver() && !stop(g); d++) {
+    for (let i = 0; i < 400; i++) {
+      const beats = g.advance(g.s.minute + 30);
+      for (const b of beats) {
+        if (b.kind === "toast") toasts.push({ from: b.from, text: b.text, day: g.s.dayIndex });
+        if (b.kind === "popup") {
+          popups.push({ source: b.popup.source, who: b.popup.who, name: b.popup.name, line: b.popup.line, title: b.popup.title, big: b.popup.big, day: g.s.dayIndex });
+          g.choose(pick(b.popup));
+        }
+      }
+      if (beats.some((b) => b.kind === "dayEnd") || stop(g)) break;
+    }
+    if (!g.isOver()) cards.push(...g.endDay().cards);
+  }
+  return { popups, toasts, cards };
+}
+
+describe("The destined person: a crush, not an automatic couple", () => {
+  it("named in setup → someone you already know (name known), but NOT your partner at the start", () => {
+    for (const seed of [1, 2, 3]) {
+      const g = createGame({ ...SETUP, seed });
+      const fated = Object.values(g.state.world!.npcs).find((n) => n.fated)!;
+      expect(g.state.relationship.status).toBe("SINGLE");
+      expect(g.facts().fatedKnown).toBe(true);
+      expect(g.facts().fatedAvailable).toBe(true);
+      expect(g.facts().fatedName).toBe("Ren");
+      expect(fated.name).toBe("Ren");
+    }
+  });
+
+  it("status 'dating' → already a couple at the start, and the arc skips the first date", () => {
+    const g = createGame({ ...SETUP, fated: { ...SETUP.fated, status: "dating" as const }, seed: 4 });
+    expect(g.state.relationship.status).toBe("DATING");
+    expect(g.facts().fatedPartner).toBe(true);
+    const { popups } = playUntil(g, (x) => x.state.relationship.status !== "DATING" || !!x.state.story!.arcs.find((a) => a.type === "DATING" && a.step > 0), () => 0, 12);
+    expect(popups.some((p) => p.title === "첫 데이트")).toBe(false);
+  });
+
+  it("the confession scene names the crush, and 궁합 decides how often it works", () => {
+    // Find a very compatible and a very incompatible birth date for the crush.
+    const me = { birth: { ...SETUP.birth, sex: "FEMALE" as const }, mbti: SETUP.mbti };
+    const rng = new SeededRandom(3);
+    const cands = Array.from({ length: 160 }, () => ({ year: rng.int(1994, 2000), month: rng.int(1, 12), day: rng.int(1, 28) }));
+    const scored = cands.map((b) => ({ b, c: compatibility(me, { birth: { ...b, sex: "MALE" }, mbti: "INFJ" }).score })).sort((x, y) => y.c - x.c);
+    const hi = scored[0], lo = scored[scored.length - 1];
+    expect(hi.c - lo.c).toBeGreaterThan(0.3);
+    const yes = { hi: 0, lo: 0 };
+    let named = 0;
+    for (const [key, who] of [["hi", hi], ["lo", lo]] as const) {
+      for (let seed = 1; seed <= 16; seed++) {
+        const g = createGame({ ...SETUP, fated: { ...SETUP.fated, gender: "M" as const, mbti: "INFJ", birth: who.b }, seed });
+        const love = g.state.story!.script.find((e) => e.theme === "LOVE_MEETING")!;
+        const { popups } = playUntil(g, (x) => !!love.done, () => 0, 30);
+        const confess = popups.find((p) => p.line.includes("이 마음, 전해볼까"));
+        if (!confess) continue;
+        if (confess.line.includes("Ren")) named++;
+        if (g.state.relationship.status === "DATING" && g.facts().fatedPartner) yes[key]++;
+      }
+    }
+    expect(named).toBeGreaterThan(10);
+    expect(yes.hi).toBeGreaterThan(yes.lo);
+  });
+});
+
+describe("Family from setup", () => {
+  const FAMILY = { mom: { alive: false }, siblings: [{ rel: "오빠", name: "민수" }, { rel: "여동생" }], grandparents: 2 };
+
+  it("a mom who passed before the game never texts or calls; siblings do, by the right title", () => {
+    const g = createGame({ ...SETUP, family: FAMILY, seed: 5 });
+    expect(g.facts().momAlive).toBe(false);
+    expect(g.state.family!.siblings!.map((x) => x.rel)).toEqual(["OLDER_BROTHER", "YOUNGER_SISTER"]);
+    expect(g.state.family!.grandparents!.length).toBe(2);
+    const { popups, toasts } = playUntil(g, () => false, () => 0, 40);
+    expect(toasts.some((t) => t.from === "엄마")).toBe(false);
+    expect(popups.some((p) => p.who === "mom")).toBe(false);
+    expect(popups.every((p) => p.name !== "엄마")).toBe(true);
+    // An older brother texts as "오빠".
+    expect(toasts.filter((t) => t.from === "오빠" || t.from === "민수").every((t) => t.from === "오빠")).toBe(true);
+  });
+
+  it("funeral captions: 친구 {name}의 장례식, and relatives by their relation (never '가족의 장례식')", () => {
+    const all: MemoryCard[] = [];
+    for (const seed of [5, 6, 7, 8]) all.push(...playUntil(createGame({ ...SETUP, family: FAMILY, seed }), () => false, (p) => p.ch.length - 1, 60).cards);
+    for (const c of all.filter((c) => c.kind === "FRIEND_FUNERAL")) expect(c.caption).toMatch(/^친구 .+의 장례식$/);
+    for (const c of all.filter((c) => c.kind === "RELATIVE_FUNERAL" || c.kind === "FAMILY_FUNERAL")) {
+      expect(c.caption).not.toBe("가족의 장례식");
+      expect(c.caption).toMatch(/^(외할머니|외할아버지|할머니|할아버지|이모|이모부|외삼촌|고모|고모부|큰아버지|작은아버지|오빠 민수|여동생 .+)의 장례식$/);
+    }
+    expect(all.some((c) => c.kind === "RELATIVE_FUNERAL")).toBe(true);
+  });
+});
+
+describe("Hard moments are days of their own", () => {
+  it("losing a partner: the call → the funeral; they never text in between; widowed after", () => {
+    const g = createGame({ ...SETUP, fated: { ...SETUP.fated, status: "dating" as const }, seed: 9 });
+    startArc(g.state, "PARTNER_PASSING", new SeededRandom(1), { partnerId: g.state.relationship.partnerId!, cause: "accident" });
+    const { popups, toasts, cards } = playUntil(g, (x) => !x.state.story!.arcs.some((a) => a.type === "PARTNER_PASSING"), () => 0, 6);
+    const call = popups.findIndex((p) => p.title === "병원에서 온 전화");
+    const bye = popups.findIndex((p) => p.title === "이별");
+    expect(call).toBeGreaterThanOrEqual(0);
+    expect(bye).toBeGreaterThan(call);
+    expect(popups[call].line).toContain("사고");
+    expect(popups[call].big).toBe(true);
+    expect(toasts.filter((t) => t.day >= popups[call].day && t.day <= popups[bye].day).some((t) => t.from === "Ren")).toBe(false);
+    expect(g.state.relationship.status).toBe("SINGLE");
+    expect(g.state.flags.widowed).toBe(true);
+    const after = playUntil(g, () => false, () => 0, 6);
+    expect(after.toasts.some((t) => t.from === "Ren")).toBe(false);
+    expect([...cards, ...after.cards].some((c) => c.kind === "PARTNER_FUNERAL" && c.caption.includes("Ren"))).toBe(true);
+  });
+
+  it("pregnancy: a checkup day comes before the birth; a loss ends it gently with its own card", () => {
+    let losses = 0, births = 0;
+    for (let seed = 1; seed <= 24; seed++) {
+      const g = createGame({ ...SETUP, fated: { ...SETUP.fated, status: "dating" as const }, seed });
+      startArc(g.state, "PREGNANCY", new SeededRandom(seed));
+      const { popups, cards } = playUntil(g, (x) => !x.state.story!.arcs.some((a) => a.type === "PREGNANCY"), () => 0, 8);
+      const check = popups.findIndex((p) => p.title === "정기 검진");
+      expect(check).toBeGreaterThanOrEqual(0);
+      if (cards.some((c) => c.kind === "PREGNANCY_LOSS")) {
+        losses++;
+        expect(popups.some((p) => p.title === "출산")).toBe(false);
+      }
+      if (popups.some((p) => p.title === "출산")) births++;
+    }
+    expect(births).toBeGreaterThan(losses);
+  });
+});
+
+describe("Two lighter moments in one season share a day", () => {
+  it("a retirement farewell due near a fated turning point → both happen on the same day", () => {
+    const g = createGame({ ...SETUP, seed: 3 });
+    const st = g.state;
+    st.career = { ...st.career, employed: true, field: "office", level: 3 };
+    const ev = st.story!.script.find((e) => e.theme === "CAREER_TURN" || e.theme === "MOVE" || e.theme === "WEALTH")!;
+    ev.monthIndex = st.monthIndex + 2;
+    const arc = startArc(st, "RETIREMENT", new SeededRandom(1))!;
+    arc.steps[0].dueMonth = st.monthIndex + 1;
+    for (const e of st.story!.script) if (e !== ev && e.monthIndex < st.monthIndex + 12) e.monthIndex += 24;
+    const { popups } = playUntil(g, (x) => !x.state.story!.arcs.includes(arc) && !!ev.done, () => 0, 3);
+    const story = popups.filter((p) => p.big);
+    expect(story.length).toBeGreaterThanOrEqual(2);
+    expect(story[0].day).toBe(story[1].day);
   });
 });

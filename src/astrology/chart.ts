@@ -81,6 +81,16 @@ export function findAspect(lonA: number, lonB: number, orbKind: "natalOrb" | "tr
   return undefined;
 }
 
+/** Like findAspect, but with one fixed orb for every aspect (progressions use 1°, returns 2°). */
+export function findAspectWithin(lonA: number, lonB: number, maxOrb: number): { type: AspectType; nature: Aspect["nature"]; orb: number } | undefined {
+  const d = angularDistance(lonA, lonB);
+  for (const asp of ASPECTS) {
+    const orb = Math.abs(d - asp.angle);
+    if (orb <= maxOrb) return { type: asp.id, nature: asp.nature, orb };
+  }
+  return undefined;
+}
+
 /** Point weights for element/modality balance. */
 const BALANCE_WEIGHTS: Partial<Record<ChartPoint, number>> = { SUN: 3, MOON: 3, ASC: 2, MERCURY: 1, VENUS: 1.5, MARS: 1.5, JUPITER: 1, SATURN: 1 };
 
@@ -165,7 +175,8 @@ export interface TransitHit {
   /** Natal house the transiting planet is moving through. */
   house: number;
   retrograde: boolean;
-  aspects: Array<{ natalPoint: ChartPoint; type: AspectType; nature: Aspect["nature"]; orb: number }>;
+  /** `applying`: the orb is still shrinking (building, ahead) vs separating (peaked, fading). */
+  aspects: Array<{ natalPoint: ChartPoint; type: AspectType; nature: Aspect["nature"]; orb: number; applying: boolean }>;
   /** Transit planet conjunct its own natal position (e.g. Saturn return). */
   isReturn: boolean;
 }
@@ -183,10 +194,13 @@ export function calculateTransits(chart: AstrologyChart, jdUT: number, planets: 
     jdUT,
     hits: planets.map((p) => {
       const lon = planetLongitude(p, jdUT);
+      const later = planetLongitude(p, jdUT + 10);
       const aspects = TRANSIT_TARGETS.flatMap((t) => {
         const natal = chart.positions[t];
         const f = natal ? findAspect(lon, natal.longitude, "transitOrb") : undefined;
-        return f ? [{ natalPoint: t, ...f }] : [];
+        if (!f) return [];
+        const next = findAspect(later, natal!.longitude, "transitOrb");
+        return [{ natalPoint: t, ...f, applying: !!next && next.type === f.type && next.orb < f.orb }];
       });
       const natalSelf = chart.positions[p];
       return {

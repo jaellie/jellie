@@ -56,6 +56,21 @@ export interface Npc extends Character {
   metAt: GameDate;
 }
 
+export type SiblingRel = "OLDER_SISTER" | "OLDER_BROTHER" | "YOUNGER_SISTER" | "YOUNGER_BROTHER";
+export type GrandparentRel = "MAT_GRANDMA" | "MAT_GRANDPA" | "PAT_GRANDMA" | "PAT_GRANDPA";
+
+export interface Sibling {
+  id: string;
+  rel: SiblingRel;
+  name: string;
+  sex: "MALE" | "FEMALE";
+  birthYear: number;
+  alive: boolean;
+  married?: boolean;
+  kids?: number;
+  spriteSeed: number;
+}
+
 export interface LifeState extends Character {
   date: GameDate;
   /** Months since birth (the simulation's monotonic clock). */
@@ -76,8 +91,13 @@ export interface LifeState extends Character {
   enrollment?: Enrollment;
   /** cid increments whenever the job changes/ends — facts like 'promoted' are tied to one cid. */
   career: { employed: boolean; field?: string; level: number; abroad: boolean; cid?: number };
-  /** Parents (for messages/events that need them alive). */
-  family?: { mom: { alive: boolean; birthYear: number }; dad: { alive: boolean; birthYear: number } };
+  /** Family (for messages/events that need them alive). Siblings and grandparents come from the game setup. */
+  family?: {
+    mom: { alive: boolean; birthYear: number; name?: string };
+    dad: { alive: boolean; birthYear: number; name?: string };
+    siblings?: Sibling[];
+    grandparents?: Array<{ id: string; rel: GrandparentRel; birthYear: number; alive: boolean }>;
+  };
   /** Month index at death, if dead. */
   diedAtMonth?: number;
   /** Children (born in-game). */

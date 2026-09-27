@@ -1,6 +1,6 @@
 {
   "_doc": "Astrology Layer C balancing data (log-scale LifeModifiers deltas, 0 = neutral). FICTIONAL game tendencies. Houses carry life areas; planets say how a house is activated; aspects/returns add timing.",
-  "layerScales": { "natal": 1.0, "annual": 0.5, "monthly": 0.12 },
+  "layerScales": { "natal": 1.0, "annual": 0.5, "monthly": 0.12, "progressed": 0.35, "solarReturn": 0.3, "lunarReturn": 0.08 },
 
   "houses": {
     "1":  { "change": 0.5, "social": 0.2, "opportunity": 0.2 },
@@ -90,5 +90,28 @@
   "returns": {
     "SATURN":  { "change": 0.15, "stability": 0.1, "career": 0.08, "marriage": 0.05 },
     "JUPITER": { "opportunity": 0.15, "travel": 0.05, "education": 0.05 }
+  },
+
+  "_timeTechniquesDoc": "Secondary progressions, Solar Return, Lunar Return (src/astrology/techniques.ts). pointDomains = the life areas a natal/progressed point speaks for; nature: harmonious/conjunction push that area up, hard pulls it down and adds hardExtras. Each block's weights are multiplied by layerScales.<layer>.",
+  "timeTechniques": {
+    "pointDomains": {
+      "SUN":     { "career": 0.3, "opportunity": 0.2 },
+      "MOON":    { "family": 0.3, "introspection": 0.2 },
+      "MERCURY": { "communication": 0.3, "education": 0.2 },
+      "VENUS":   { "romance": 0.4, "marriage": 0.2, "social": 0.2 },
+      "MARS":    { "risk": 0.2, "business": 0.2, "change": 0.1 },
+      "JUPITER": { "opportunity": 0.3, "wealth": 0.2 },
+      "SATURN":  { "stability": 0.3, "career": 0.1 },
+      "ASC":     { "change": 0.2, "mobility": 0.2 },
+      "MC":      { "career": 0.4, "opportunity": 0.1 }
+    },
+    "nature": { "harmonious": 1, "conjunction": 0.8, "hard": -0.5 },
+    "hardExtras": { "volatility": 0.2, "change": 0.15 },
+    "progressed": {
+      "aspect": 1, "progressedPointShare": 0.5, "moonHouse": 0.5,
+      "ingress": { "SUN": { "change": 0.3, "opportunity": 0.1 }, "MOON": { "introspection": 0.2, "change": 0.1 } }
+    },
+    "solarReturn": { "sunHouse": 0.4, "moonHouse": 0.25, "ascNatalHouse": 0.35, "angularPlanet": 0.5, "contact": 0.3 },
+    "lunarReturn": { "moonHouse": 0.3, "ascNatalHouse": 0.3, "angularPlanet": 0.3, "contact": 0.3 }
   }
 }

@@ -25,29 +25,31 @@ page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
 page.on("pageerror", (e) => errors.push(String(e)));
 await page.goto(`http://localhost:${port}/qa/index.html?speed=${args.speed ?? 120}&seed=${args.seed ?? 7}`);
 
-// Popups can open between checks (the clock keeps ticking) — never let one wedge the run.
-const tryClick = async (loc) => {
-  if (await page.getByTestId("popup").isVisible()) return false;
-  try { await loc.click({ timeout: 1500 }); return true; } catch (e) { if (process.env.QA_DEBUG) console.error("tryClick", String(e).split("\n").filter((l) => /intercept|not stable|detached/.test(l)).slice(0, 2).join(" / ")); return false; }
-};
-
 const shots = [];
 const snap = async (name) => {
   const f = path.join(outDir, `${String(shots.length + 1).padStart(2, "0")}-${name}.png`);
   await page.locator("#frame").screenshot({ path: f });
   shots.push(path.relative(root, f));
 };
+const issues = [];
+const issue = (msg) => { if (!issues.includes(msg)) issues.push(msg); };
 
 await snap("setup");
+if ((await page.locator("#fName").inputValue()) !== "제이") issue("default name is not 제이");
+if ((await page.locator("#fY").inputValue()) !== "1997" || (await page.locator("#fM").inputValue()) !== "9" || (await page.locator("#fD").inputValue()) !== "28") issue("default birth date is not 1997-09-28");
+if (args.family) {
+  await page.locator("#fMom").selectOption("0");
+  await page.locator("#fSib").fill("오빠 민수, 여동생");
+  await page.locator("#fGp").selectOption("2");
+}
 await page.getByTestId("start").click();
 await page.waitForTimeout(600);
 await snap("first-day");
 
-const stats = { days: 1, popups: {}, cards: {}, choicesClicked: 0, activitiesClicked: 0, destinationsUsed: 0 };
-const wantCards = new Set(["START_DATING", "FIRST_DATE", "PROPOSAL", "MEET_PARENTS", "WEDDING", "NEW_HOME", "BIRTH", "PET_ADOPT", "FLIGHT", "LAYOFF", "PROMOTION", "RETIREMENT", "MOM_FUNERAL", "DAD_FUNERAL", "FRIEND_FUNERAL", "HOSPITAL", "DIVORCE", "CALL_OFF", "FRIEND_WEDDING"]);
-const seenCardShot = new Set();
+const stats = { days: 1, popups: {}, bigTitles: {}, cards: {}, choicesClicked: 0, walkChecks: 0, walkMoved: 0, offscreenSeen: 0, notes: 0 };
+const seenCardShot = new Set(), seenTitleShot = new Set();
 const deadline = Date.now() + Number(args.maxMinutes ?? 5) * 60_000;
-let triedButtons = false, storyShots = 0;
+let lastWalkCheck = 0;
 
 while (Date.now() < deadline) {
   const screen = await page.evaluate(() => window.__qa.screen);
@@ -56,7 +58,9 @@ while (Date.now() < deadline) {
     const kind = await page.getByTestId("card").getAttribute("data-kind");
     if (kind && kind !== "none") {
       stats.cards[kind] = (stats.cards[kind] ?? 0) + 1;
-      if (wantCards.has(kind) && !seenCardShot.has(kind)) {
+      const cap = await page.getByTestId("caption").textContent();
+      if (/[{}]|\((과|와|이|가|은|는|을|를)\)/.test(cap)) issue(`card caption has a raw placeholder: ${cap}`);
+      if (!seenCardShot.has(kind)) {
         seenCardShot.add(kind);
         await snap(`card-${kind}`);
       }
@@ -68,25 +72,54 @@ while (Date.now() < deadline) {
   }
   if (await page.getByTestId("popup").isVisible()) {
     const src = await page.getByTestId("popup").getAttribute("data-source");
+    const big = (await page.getByTestId("popup").getAttribute("data-big")) === "1";
     stats.popups[src] = (stats.popups[src] ?? 0) + 1;
-    const isStoryMoment = src === "story" && (await page.evaluate(() => window.__qa.game.s.dayKind)) !== "calm";
-    const shoot = isStoryMoment && storyShots < 12;
-    if (shoot) await snap(`story-${++storyShots}`);
+    // Popups sit in the middle of the play screen.
+    const fb = await page.locator("#frame").boundingBox(), pb = await page.locator("#popup").boundingBox();
+    if (Math.abs(pb.y + pb.height / 2 - (fb.y + fb.height / 2)) > 24 || Math.abs(pb.x + pb.width / 2 - (fb.x + fb.width / 2)) > 8) issue("popup is not centered");
+    if ((await page.locator("#pWho").textContent()).trim() === "") issue(`popup without a speaker name (${src})`);
+    let shoot = false;
+    if (big) {
+      const title = (await page.getByTestId("popup-title").textContent()).trim();
+      if (!title) issue("big popup without a title");
+      if (!(await page.locator("#pPic .actor").count())) issue(`big popup picture has nobody in it (${title})`);
+      stats.bigTitles[title] = (stats.bigTitles[title] ?? 0) + 1;
+      if (!seenTitleShot.has(title)) { seenTitleShot.add(title); shoot = true; await snap(`big-${title}`); }
+    }
     const n = await page.locator('[data-testid^="choice-"]').count();
     await page.getByTestId(`choice-${Math.floor(Math.random() * n)}`).click();
     stats.choicesClicked++;
-    if (shoot) await snap(`story-${storyShots}-result`);
+    if (shoot) await snap(`big-${[...seenTitleShot].at(-1)}-result`);
     await page.getByTestId("continue").click();
     continue;
   }
-  // Exercise the interactive elements once: activities, LEAVE → destination.
-  if (!triedButtons && screen === "play" && stats.days >= 2) {
-    const acts = page.locator('[data-testid^="action-"]:not([data-testid="action-LEAVE"])');
-    if (!stats.activitiesClicked && (await acts.count()) && (await tryClick(acts.first()))) { stats.activitiesClicked++; await snap("after-activity"); }
-    if ((await page.getByTestId("dest").isVisible()) || (await tryClick(page.getByTestId("action-LEAVE")))) {
-      const d = page.locator('[data-testid^="dest-"]');
-      if ((await d.count()) && (await tryClick(d.nth(Math.min(2, (await d.count()) - 1))))) { stats.destinationsUsed++; triedButtons = true; await page.waitForTimeout(300); await snap("after-goto"); }
+  // Name tags are gone; people walk (sample positions ~1.5 s apart every few seconds).
+  if (await page.locator(".actor .tag").count()) issue("name tags are drawn under/over characters");
+  const nNotes = await page.locator(".note").count();
+  if (nNotes) {
+    stats.notes++;
+    const lb = await page.locator("#log").boundingBox();
+    // Measure a note that has finished sliding in (they slide out from behind the log bar, then fade).
+    const settled = page.locator(".note:not(.out)").last();
+    const nb = (await settled.evaluate((el) => el.getAnimations().length === 0).catch(() => false)) ? await settled.boundingBox({ timeout: 300 }).catch(() => null) : null;
+    if (nb && lb && nb.y < lb.y + lb.height - 1) issue("text notifications overlap the log line");
+  }
+  if (screen === "play" && Date.now() - lastWalkCheck > 6000) {
+    lastWalkCheck = Date.now();
+    // Freeze the clock so the scene stays put, then watch people for 2 s (they should be walking).
+    await page.evaluate(() => (window.__qa.hold = true));
+    const pos = () => page.evaluate(() => Object.fromEntries([...document.querySelectorAll("#scene .actor")].map((d) => [d.dataset.who, d.style.left + "," + d.style.top + (d.classList.contains("off") ? ",off" : "")])));
+    const a = await pos();
+    await page.waitForTimeout(2000);
+    const b = await pos();
+    await page.evaluate(() => (window.__qa.hold = false));
+    const common = Object.keys(a).filter((k) => k in b);
+    if (common.length >= 2) {
+      stats.walkChecks++;
+      if (common.filter((k) => a[k] !== b[k]).length >= Math.ceil(common.length / 3)) stats.walkMoved++;
     }
+    stats.offscreenSeen += Object.values(b).filter((v) => v.endsWith(",off")).length;
+    if (stats.walkChecks === 2 && !shots.some((x) => x.includes("walking"))) await snap("walking");
   }
   await page.waitForTimeout(80);
 }
@@ -98,10 +131,11 @@ if (over) {
   await page.waitForTimeout(4500);
   await snap("memorial");
 }
-const final = await page.evaluate(() => ({ age: window.__qa.game.hud().age, blocked: window.__qa.game.debugBlocked().length, script: window.__qa.game.state.story.script.map((e) => `${e.age}:${e.theme}:${e.outcome ?? "-"}`) }));
+if (stats.walkChecks && stats.walkMoved / stats.walkChecks < 0.6) issue(`people rarely walk (${stats.walkMoved}/${stats.walkChecks} checks)`);
+const final = await page.evaluate(() => ({ age: window.__qa.game.hud().age, script: window.__qa.game.state.story.script.map((e) => `${e.age}:${e.theme}:${e.outcome ?? "-"}`) }));
 await browser.close();
 server.close();
-const report = { seed: args.seed ?? 7, over, ...stats, final, consoleErrors: errors, screenshots: shots };
+const report = { seed: args.seed ?? 7, over, ...stats, final, issues, consoleErrors: errors, screenshots: shots };
 fs.writeFileSync(path.join(outDir, "report.json"), JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report, null, 2));
-if (errors.length) process.exitCode = 1;
+if (errors.length || issues.length) process.exitCode = 1;

@@ -795,6 +795,80 @@
     "ko": "[알림] 카드 결제 알림",
     "en": "[App] Card payment notification"
    }
+  },
+  {
+   "id": "sib_0",
+   "from": "sibling",
+   "requires": [
+    "hasSibling"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "이번 명절에 내려가?",
+    "en": "Going home for the holidays?"
+   }
+  },
+  {
+   "id": "sib_1",
+   "from": "sibling",
+   "requires": [
+    "hasSibling",
+    "momAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "엄마 생신 선물 반반 하자.",
+    "en": "Let's split Mom's birthday present."
+   }
+  },
+  {
+   "id": "sib_2",
+   "from": "sibling",
+   "requires": [
+    "hasSibling",
+    "dadAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "아빠한테 전화 좀 드려. 너 기다리시더라.",
+    "en": "Call Dad. He's been waiting to hear from you."
+   }
+  },
+  {
+   "id": "sib_3",
+   "from": "sibling",
+   "requires": [
+    "hasSibling"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[사진] 어릴 때 우리 사진 찾았다 ㅋㅋ",
+    "en": "[photo] Found an old picture of us as kids lol"
+   }
+  },
+  {
+   "id": "sib_4",
+   "from": "sibling",
+   "requires": [
+    "hasSibling"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "밥은 잘 챙겨 먹고 다녀?",
+    "en": "Are you eating properly?"
+   }
+  },
+  {
+   "id": "sib_5",
+   "from": "sibling",
+   "requires": [
+    "hasSibling"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "요즘 바빠? 얼굴 좀 보자.",
+    "en": "Busy lately? Let's see each other."
+   }
   }
  ]
 }

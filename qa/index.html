@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Love Sim QA Harness</title>
 <style>
-  :root { --ink:#2b2233; --pink:#ff6f91; --cream:#fff6e3; --paper:#e8d3b0; --night:#1a1420; }
+  :root { --ink:#2b2233; --pink:#ff6f91; --cream:#fff6e3; --paper:#e8d3b0; --night:#1a1420; --blue:#3a8fd6; --blue-d:#1e5f9e; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--night); display: flex; justify-content: center; font-family: Galmuri9, "DungGeunMo", monospace; color: var(--ink); image-rendering: pixelated; }
   #frame { width: 360px; height: 740px; position: relative; overflow: hidden; background: #2b2233; border-radius: 18px; }
@@ -15,45 +15,58 @@
   .btn { border: 3px solid var(--ink); background: var(--cream); box-shadow: inset 0 -3px 0 var(--paper), 2px 2px 0 var(--ink); padding: 8px 10px; font-size: 13px; }
   .btn.pink { background: var(--pink); color: #fff; box-shadow: inset 0 -3px 0 #d94f74, 2px 2px 0 var(--ink); }
   /* setup */
-  #setup { background: #ffe3ea; padding: 40px 24px; }
-  #setup h1 { font-size: 28px; text-shadow: 2px 2px 0 #ff9fb4; margin-bottom: 20px; }
-  #setup label { display: block; font-size: 13px; margin: 10px 0 4px; }
-  #setup input, #setup select { width: 100%; font-family: inherit; font-size: 15px; padding: 8px; border: 3px solid var(--ink); background: #fff; }
-  #setup .row { display: flex; gap: 8px; } #setup .row > * { flex: 1; }
-  /* play */
-  #hud { position: absolute; top: 0; left: 0; right: 0; background: var(--ink); color: var(--cream); padding: 12px 14px 8px; z-index: 5; border-bottom: 3px solid #1a1420; }
+  #setup { background: #ffe3ea; padding: 22px 22px; overflow-y: auto; }
+  #setup h1 { font-size: 24px; text-shadow: 2px 2px 0 #ff9fb4; margin-bottom: 10px; }
+  #setup h2 { font-size: 13px; margin: 14px 0 2px; color: #c2385f; }
+  #setup label { display: block; font-size: 12px; margin: 7px 0 3px; }
+  #setup input, #setup select { width: 100%; font-family: inherit; font-size: 14px; padding: 6px; border: 3px solid var(--ink); background: #fff; }
+  #setup .row { display: flex; gap: 6px; } #setup .row > * { flex: 1; }
+  /* play: HUD → log line → notifications (slide down) → scene → place/time */
+  #hud { position: absolute; top: 0; left: 0; right: 0; height: 64px; background: var(--ink); color: var(--cream); padding: 12px 14px 8px; z-index: 5; border-bottom: 3px solid #1a1420; }
   #hud .top { display: flex; justify-content: space-between; font-size: 16px; }
   #hud .sub { font-size: 11px; color: #b9a9c9; margin-top: 4px; display: flex; justify-content: space-between; }
-  #scene { position: absolute; z-index: 1; isolation: isolate; top: 64px; left: 0; width: 360px; height: 340px; overflow: hidden; border-bottom: 3px solid var(--ink); }
-  #scene .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: repeating-conic-gradient(rgba(255,255,255,.18) 0 25%, rgba(0,0,0,.05) 0 50%) 0 0/24px 24px; border-top: 3px solid var(--ink); }
-  #scene .roomlabel { position: absolute; left: 10px; top: 8px; padding: 3px 8px; background: #1e2a5a; color: #fff; font-size: 12px; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--ink); z-index: 3; }
-  #scene .bgid { position: absolute; right: 8px; top: 10px; font-size: 9px; color: rgba(43,34,51,.55); z-index: 3; }
+  #log { position: absolute; top: 64px; left: 0; right: 0; height: 34px; z-index: 40; background: #fff6e3; border-bottom: 3px solid var(--ink); padding: 7px 12px; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #log .t { color: #c2385f; margin-right: 6px; }
+  #notes { position: absolute; top: 102px; left: 10px; right: 10px; z-index: 30; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
+  .note { background: #fff; border: 3px solid var(--ink); box-shadow: 3px 3px 0 rgba(0,0,0,.35); padding: 6px 10px; font-size: 12px; animation: slideDown .35s ease-out; transition: opacity .4s, transform .4s; }
+  .note b { color: #c2385f; margin-right: 4px; }
+  .note.out { opacity: 0; transform: translateY(-12px); }
+  @keyframes slideDown { from { transform: translateY(-24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  #scene { position: absolute; z-index: 1; isolation: isolate; top: 98px; left: 0; width: 360px; height: 340px; overflow: hidden; border-bottom: 3px solid var(--ink); }
+  .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: repeating-conic-gradient(rgba(255,255,255,.18) 0 25%, rgba(0,0,0,.05) 0 50%) 0 0/24px 24px; border-top: 3px solid var(--ink); }
+  .roomlabel { position: absolute; left: 10px; bottom: 8px; padding: 2px 6px; background: rgba(30,42,90,.8); color: #fff; font-size: 10px; z-index: 3; }
   .overlay { position: absolute; inset: 0; pointer-events: none; z-index: 90; }
-  .actor { position: absolute; width: 24px; height: 40px; transition: left 2.2s linear, top 2.2s linear; }
+  .actor { position: absolute; width: 24px; height: 40px; transition: left .48s linear, top .48s linear, opacity .3s; }
   .actor .head { position: absolute; left: 4px; top: 0; width: 16px; height: 16px; background: #ffd9bd; border: 2px solid var(--ink); }
   .actor .hair { position: absolute; left: 3px; top: -2px; width: 18px; height: 8px; border: 2px solid var(--ink); border-bottom: 0; }
+  .actor .face { position: absolute; left: 12px; top: 6px; width: 3px; height: 3px; background: var(--ink); }
+  .actor.left .face { left: 7px; }
   .actor .body { position: absolute; left: 2px; top: 16px; width: 20px; height: 18px; border: 2px solid var(--ink); }
   .actor .legs { position: absolute; left: 6px; top: 34px; width: 12px; height: 6px; background: var(--ink); }
-  .actor .tag { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 9px; white-space: nowrap; background: rgba(255,255,255,.8); padding: 0 3px; border: 1px solid var(--ink); }
-  .actor.kid { transform: scale(.7); transform-origin: bottom center; }
-  .actor.pet .head, .actor.pet .hair, .actor.pet .legs { display: none; }
+  .actor.walk .legs { animation: step .25s steps(2) infinite; }
+  @keyframes step { 50% { transform: translateY(-2px); } }
+  .actor.kid { transform: scale(.65); transform-origin: bottom center; }
+  .actor.baby { transform: scale(.5); transform-origin: bottom center; }
+  .actor.pet .head, .actor.pet .hair, .actor.pet .legs, .actor.pet .face { display: none; }
   .actor.pet .body { top: 24px; height: 12px; width: 22px; border-radius: 4px; }
-  #panel { position: absolute; top: 407px; left: 0; right: 0; bottom: 0; background: #fff6e3; padding: 10px 12px; }
-  #place { font-size: 12px; color: #8a7a92; margin-bottom: 6px; }
-  #actions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-  #log { border: 3px solid var(--ink); padding: 8px 10px; font-size: 13px; line-height: 1.6; min-height: 60px; background: #fff; box-shadow: inset 0 -3px 0 var(--paper); }
-  #toast { position: absolute; left: 12px; top: 74px; max-width: 320px; z-index: 30; background: #fff6e3; border: 3px solid var(--pink); box-shadow: 3px 3px 0 var(--ink); padding: 6px 10px; font-size: 12px; color: #c2385f; display: none; }
-  #dest { display: none; position: absolute; left: 20px; right: 20px; top: 180px; z-index: 40; background: #fff6e3; border: 3px solid var(--ink); padding: 8px; max-height: 360px; overflow: auto; }
-  #dest button { display: block; width: 100%; margin-bottom: 4px; text-align: left; }
-  /* popup */
+  .actor.off { opacity: 0; }
+  #place { position: absolute; top: 444px; left: 12px; right: 12px; font-size: 12px; color: #b9a9c9; }
+  #diary { position: absolute; top: 468px; left: 12px; right: 12px; bottom: 12px; font-size: 12px; line-height: 1.7; color: #d9cfe4; overflow: hidden; }
+  /* popups: always centered on the play screen */
   #popupWrap { display: none; position: absolute; inset: 0; z-index: 50; background: rgba(26,20,32,.55); }
-  #popup { position: absolute; left: 20px; right: 20px; top: 150px; background: #fff6e3; border: 3px solid var(--ink); box-shadow: 4px 4px 0 #1a1420; padding: 4px; }
+  #popup { position: absolute; left: 18px; right: 18px; top: 50%; transform: translateY(-50%); background: #fff6e3; border: 3px solid var(--ink); box-shadow: 4px 4px 0 #1a1420; padding: 4px; }
   #popup .in { border: 2px solid #e8c9a0; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
   #popup .who { font-size: 12px; color: #c2385f; }
   #popup .line { font-size: 14px; line-height: 1.6; }
   #popup .ch { display: flex; flex-direction: column; gap: 6px; }
   #popup .ch button { text-align: left; }
   #popup .res { font-size: 14px; line-height: 1.6; color: #c2385f; }
+  /* big popup (life-changing moment): banner title + the scene as a picture, Kairosoft style */
+  #popup .banner { display: none; background: linear-gradient(#5fb0f0, var(--blue)); color: #fff; text-align: center; font-size: 17px; padding: 8px 6px; border: 3px solid var(--blue-d); text-shadow: 2px 2px 0 var(--blue-d); letter-spacing: 1px; }
+  #popup .pic { display: none; position: relative; height: 170px; overflow: hidden; border: 3px solid var(--ink); background: #1e2a5a; }
+  #popup.big { border-color: var(--blue-d); box-shadow: 0 0 0 3px #fff, 5px 5px 0 #1a1420; }
+  #popup.big .banner, #popup.big .pic { display: block; }
+  #popup.big .in { border-color: #9fd0f5; }
   /* skip */
   #skip { background: #2b2233; color: #fff6e3; text-align: center; }
   #skip .t { margin-top: 70px; font-size: 13px; color: #b9a9c9; }
@@ -74,26 +87,38 @@
 <div id="frame">
   <div id="setup" class="screen on" data-testid="setup">
     <h1>두근두근,<br>내 운명의 사람</h1>
-    <label>이름</label><input id="fName" value="민아">
+    <label>이름</label><input id="fName" value="제이">
     <label>생년월일 (양력)</label>
     <div class="row"><input id="fY" value="1997"><input id="fM" value="9"><input id="fD" value="28"></div>
-    <label>태어난 시간 (선택)</label>
-    <div class="row"><input id="fH" value="9"><input id="fMin" value="30"></div>
+    <label>태어난 시간 (모르면 비워두기)</label>
+    <div class="row"><input id="fH" value="" placeholder="시"><input id="fMin" value="" placeholder="분"></div>
     <div class="row"><div><label>나는</label><select id="fG"><option value="F">여자</option><option value="M">남자</option></select></div>
       <div><label>좋아하는 사람</label><select id="fL"><option value="M">남자</option><option value="F">여자</option><option value="A">상관없음</option></select></div></div>
     <label>MBTI</label><input id="fMbti" value="ENFP">
-    <label>운명의 상대 이름 (비워두면 운명에 맡기기)</label><input id="fFated" value="Ren">
-    <div style="margin-top:18px"><button class="btn pink" id="start" data-testid="start" style="width:100%;font-size:18px">▶ 새 게임</button></div>
+    <h2>나의 가족</h2>
+    <div class="row"><div><label>엄마</label><select id="fMom"><option value="1">계심</option><option value="0">돌아가심</option></select></div>
+      <div><label>아빠</label><select id="fDad"><option value="1">계심</option><option value="0">돌아가심</option></select></div></div>
+    <label>형제 (예: 오빠 민수, 여동생)</label><input id="fSib" value="">
+    <label>살아 계신 조부모님 수</label><select id="fGp"><option value="">모름</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+    <h2>운명의 상대</h2>
+    <label>이름 (비워두면 운명에 맡기기)</label><input id="fFated" value="Ren">
+    <label>그 사람과 나는</label><select id="fFs"><option value="crush">내가 좋아하는 사람 (아직 연인 아님)</option><option value="dating">이미 연인</option><option value="stranger">아직 모르는 사람</option></select>
+    <label>그 사람 생일 (선택, 궁합에 쓰임)</label>
+    <div class="row"><input id="fFY" placeholder="년"><input id="fFM" placeholder="월"><input id="fFD" placeholder="일"></div>
+    <div style="margin-top:14px"><button class="btn pink" id="start" data-testid="start" style="width:100%;font-size:18px">▶ 새 게임</button></div>
   </div>
 
   <div id="play" class="screen" data-testid="play">
     <div id="hud"><div class="top"><span id="hDate"></span><span id="hAge" style="color:#ffd36b"></span></div>
       <div class="sub"><span id="hJob"></span><span id="hRel"></span><span id="hMoney"></span></div></div>
+    <div id="log" data-testid="log">…</div>
+    <div id="notes" data-testid="notes"></div>
     <div id="scene" data-testid="scene"></div>
-    <div id="toast" data-testid="toast"></div>
-    <div id="panel"><div id="place" data-testid="place"></div><div id="actions" data-testid="actions"></div><div id="log" data-testid="log">…</div></div>
-    <div id="dest" data-testid="dest"></div>
+    <div id="place" data-testid="place"></div>
+    <div id="diary" data-testid="diary"></div>
     <div id="popupWrap" data-testid="popup"><div id="popup"><div class="in">
+      <div class="banner" id="pBanner" data-testid="popup-title"></div>
+      <div class="pic" id="pPic" data-testid="popup-pic"></div>
       <div class="who" id="pWho"></div><div class="line" id="pLine"></div><div class="ch" id="pCh"></div><div class="res" id="pRes"></div>
     </div></div></div>
   </div>
@@ -121,58 +146,74 @@
   const $ = (id) => document.getElementById(id);
   let game = null, screen = "setup", popupOpen = false, resultShown = false, skipData = null, skipIdx = 0;
   const show = (id) => { for (const el of document.querySelectorAll(".screen")) el.classList.toggle("on", el.id === id); screen = id; };
-  const ROLE_COLOR = { me: "#ff6f91", partner: "#6c7bd9", fated: "#9b6cd9", npc: "#6fbf5a", passerby: "#c9c4bb", kid: "#ffd36b", pet: "#a3774a", inlaw: "#8fb8a8", guest: "#e8a0c0", guest2: "#bfe6fa", relative: "#555", coworker: "#8fb8a8", coworker2: "#bfe6fa", baby: "#ffd36b", patient: "#ddd", friend: "#6fbf5a" };
+  const ROLE_COLOR = { me: "#ff6f91", partner: "#6c7bd9", fated: "#9b6cd9", npc: "#6fbf5a", passerby: "#c9c4bb", kid: "#ffd36b", pet: "#a3774a", inlaw: "#8fb8a8", guest: "#e8a0c0", relative: "#555", coworker: "#8fb8a8", baby: "#ffd36b", patient: "#ddd", friend: "#6fbf5a" };
+  const ROOM_COLOR = { home: "#dcb080", office: "#b9c3d9", street: "#b3b8c4", park: "#9fd67c", cafe: "#ead8bb", beach: "#f3dfae", cinema: "#7a2232", restaurant: "#7a2232", tokyo: "#c9c4bb", diner: "#c9d6c0", amuse: "#f3d7e3" };
   const X = (i, j) => 180 + (i - j) * 28, Y = (i, j) => 60 + (i + j) * 18;
+  const hhmm = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(Math.floor(m % 60)).padStart(2, "0");
 
-  function drawScene(el, sc, big) {
-    el.innerHTML = "";
-    if (!sc) return;
-    el.style.background = sc.roomKey ? ({ home: "#dcb080", office: "#b9c3d9", street: "#b3b8c4", park: "#9fd67c", cafe: "#ead8bb", beach: "#f3dfae", cinema: "#7a2232", restaurant: "#7a2232", tokyo: "#c9c4bb", diner: "#c9d6c0", amuse: "#f3d7e3" }[sc.roomKey] || sc.baseColor) : sc.baseColor;
-    const f = document.createElement("div"); f.className = "floor"; el.appendChild(f);
-    if (big !== false) {
-      const lab = document.createElement("div"); lab.className = "roomlabel"; lab.textContent = sc.roomKey ? "ROOMS." + sc.roomKey : sc.assetPath.split("/").slice(-1)[0]; el.appendChild(lab);
+  /** Draw a scene; actor elements persist (keyed by who) so walking animates smoothly. No name tags. */
+  function drawScene(el, sc) {
+    if (!sc) { el.innerHTML = ""; return; }
+    const key = sc.sceneKey + "|" + sc.bgId;
+    if (el.dataset.key !== key) {
+      el.innerHTML = ""; el.dataset.key = key;
+      el.style.background = ROOM_COLOR[sc.roomKey] || sc.baseColor;
+      const f = document.createElement("div"); f.className = "floor"; el.appendChild(f);
+      const lab = document.createElement("div"); lab.className = "roomlabel"; lab.textContent = (sc.standIn ? sc.sceneKey + " (→ROOMS." + sc.roomKey + ")" : "ROOMS." + sc.roomKey); el.appendChild(lab);
+      for (const o of sc.overlays) { const ov = document.createElement("div"); ov.className = "overlay"; ov.style.background = o.background; ov.dataset.cond = o.condition; el.appendChild(ov); }
     }
+    const seen = new Set();
     for (const a of sc.actors) {
-      const d = document.createElement("div");
-      d.className = "actor " + (a.role === "kid" || a.role === "baby" ? "kid " : "") + (a.role === "pet" ? "pet" : "");
-      d.dataset.role = a.role;
-      const c = ROLE_COLOR[a.role] || "#6fbf5a";
-      const hair = a.gender === "M" ? "#3b2530" : "#6b4a33";
-      d.innerHTML = `<div class="hair" style="background:${hair}"></div><div class="head"></div><div class="body" style="background:${c}"></div><div class="legs"></div>` + (a.name && big !== false ? `<div class="tag">${a.name}</div>` : "");
+      seen.add(a.who);
+      let d = el.querySelector(`.actor[data-who="${CSS.escape(a.who)}"]`);
+      if (!d) {
+        d = document.createElement("div"); d.dataset.who = a.who; d.dataset.role = a.role;
+        const c = ROLE_COLOR[a.role] || "#6fbf5a", hair = a.gender === "M" ? "#3b2530" : "#6b4a33";
+        d.innerHTML = `<div class="hair" style="background:${hair}"></div><div class="head"></div><div class="face"></div><div class="body" style="background:${c}"></div><div class="legs"></div>`;
+        el.appendChild(d);
+      }
+      d.className = "actor" + (a.role === "kid" ? " kid" : a.role === "baby" ? " baby" : a.role === "pet" ? " pet" : "") + (a.walking ? " walk" : "") + (a.facing === "SW" || a.facing === "NW" ? " left" : "") + (a.offscreen ? " off" : "");
       d.style.left = (X(a.spot[0], a.spot[1]) - 12) + "px"; d.style.top = (Y(a.spot[0], a.spot[1]) + 40) + "px"; d.style.zIndex = a.z;
-      el.appendChild(d);
     }
-    for (const o of sc.overlays) { const ov = document.createElement("div"); ov.className = "overlay"; ov.style.background = o.background; ov.dataset.cond = o.condition; el.appendChild(ov); }
+    for (const d of [...el.querySelectorAll(".actor")]) if (!seen.has(d.dataset.who)) d.remove();
+  }
+  /** Static picture of a scene (memory card / big popup), scaled into a box. */
+  function picture(box, sc, w, h) {
+    box.innerHTML = "";
+    if (!sc) return;
+    const inner = document.createElement("div");
+    const k = Math.min(w / 360, h / 340);
+    inner.style.cssText = `position:absolute;left:${(w - 360 * k) / 2}px;top:${(h - 340 * k) / 2}px;width:360px;height:340px;transform-origin:0 0;transform:scale(${k});`;
+    box.appendChild(inner); drawScene(inner, sc);
+    box.style.background = inner.style.background;
   }
 
   function hud() {
     const h = game.hud();
     $("hDate").textContent = h.date; $("hAge").textContent = h.age; $("hJob").textContent = h.job; $("hRel").textContent = h.relationship; $("hMoney").textContent = h.money;
-    $("place").textContent = "📍 " + h.location + " · " + h.city + " · " + String(Math.floor(h.minute / 60)).padStart(2, "0") + ":" + String(Math.floor(h.minute % 60)).padStart(2, "0");
+    $("place").textContent = "📍 " + h.location + " · " + h.city + " · " + hhmm(h.minute);
   }
-  function actions() {
-    const box = $("actions"); box.innerHTML = "";
-    for (const a of game.actions()) {
-      const b = document.createElement("button"); b.className = "btn"; b.textContent = a.label; b.dataset.testid = "action-" + a.id;
-      b.onclick = () => { if (a.id === "LEAVE") return openDest(); handle(game.doActivity(a.id)); };
-      box.appendChild(b);
-    }
+  function logLine(text) {
+    const t = hhmm(game.s.minute);
+    $("log").innerHTML = `<span class="t">${t}</span>${text}`;
+    const d = document.createElement("div"); d.textContent = `${t} ${text}`; $("diary").prepend(d);
+    while ($("diary").children.length > 12) $("diary").lastChild.remove();
   }
-  function openDest() {
-    const d = $("dest"); d.innerHTML = ""; d.style.display = "block";
-    for (const x of game.destinations().filter((x) => x.open).slice(0, 8)) {
-      const b = document.createElement("button"); b.className = "btn"; b.textContent = x.label; b.dataset.testid = "dest-" + x.id;
-      b.onclick = () => { d.style.display = "none"; handle(game.goTo(x.id)); }; d.appendChild(b);
-    }
-    const stay = document.createElement("button"); stay.className = "btn"; stay.textContent = "그대로 있기"; stay.onclick = () => (d.style.display = "none"); d.appendChild(stay);
+  function note(from, text) {
+    const n = document.createElement("div"); n.className = "note"; n.dataset.testid = "note";
+    n.innerHTML = `<b>${from}</b>${text}`;
+    $("notes").prepend(n);
+    while ($("notes").children.length > 3) $("notes").lastChild.remove();
+    setTimeout(() => n.classList.add("out"), 3800); setTimeout(() => n.remove(), 4300);
   }
-  function toast(t) { const el = $("toast"); el.textContent = t; el.style.display = "block"; clearTimeout(toast.h); toast.h = setTimeout(() => (el.style.display = "none"), 3500); }
 
   function openPopup(p) {
     popupOpen = true; resultShown = false;
-    $("dest").style.display = "none"; // an interruption closes the destination list
-    $("popupWrap").style.display = "block"; $("popupWrap").dataset.source = p.source; $("popupWrap").dataset.who = p.who;
-    $("pWho").textContent = (p.name || p.who) + (p.title ? " · " + p.title : ""); $("pLine").textContent = p.line; $("pRes").textContent = "";
+    $("popupWrap").style.display = "block"; $("popupWrap").dataset.source = p.source; $("popupWrap").dataset.who = p.who; $("popupWrap").dataset.big = p.big ? "1" : "";
+    $("popup").classList.toggle("big", !!p.big);
+    $("pBanner").textContent = p.big ? (p.title || "") : "";
+    if (p.big) picture($("pPic"), p.scene, 312, 164); else $("pPic").innerHTML = "";
+    $("pWho").textContent = p.name || ""; $("pLine").textContent = p.line; $("pRes").textContent = "";
     const ch = $("pCh"); ch.innerHTML = "";
     p.ch.forEach((c, i) => {
       const b = document.createElement("button"); b.className = "btn"; b.textContent = c.t; b.dataset.testid = "choice-" + i;
@@ -180,9 +221,10 @@
         if (resultShown) return;
         const r = game.choose(i);
         resultShown = true; ch.innerHTML = "";
+        $("pWho").textContent = (r && r.name) || "";
         $("pRes").textContent = (r && r.line) || "…";
         const k = document.createElement("button"); k.className = "btn pink"; k.textContent = "▼"; k.dataset.testid = "continue";
-        k.onclick = () => { $("popupWrap").style.display = "none"; popupOpen = false; drawScene($("scene"), game.scene()); hud(); actions(); if (game.isOver()) endDay(); };
+        k.onclick = () => { $("popupWrap").style.display = "none"; popupOpen = false; drawScene($("scene"), game.scene()); hud(); if (r && r.log) logLine(r.log); if (game.isOver()) endDay(); };
         ch.appendChild(k);
       };
       ch.appendChild(b);
@@ -191,9 +233,9 @@
 
   function handle(beats) {
     for (const b of beats) {
-      if (b.kind === "enter") { drawScene($("scene"), game.scene()); actions(); $("log").textContent = b.name; }
-      else if (b.kind === "log") $("log").textContent = b.text;
-      else if (b.kind === "toast") toast(b.from + ': "' + b.text + '"');
+      if (b.kind === "enter") { drawScene($("scene"), game.scene()); logLine(b.name); }
+      else if (b.kind === "log") logLine(b.text);
+      else if (b.kind === "toast") note(b.from, b.text);
       else if (b.kind === "popup") { drawScene($("scene"), game.scene()); openPopup(b.popup); }
       else if (b.kind === "dayEnd") return endDay();
     }
@@ -214,20 +256,14 @@
     $("sBar").innerHTML = Array.from({ length: n }, (_, i) => `<i class="${i <= skipIdx ? "f" : ""}"></i>`).join("");
     const card = cards[skipIdx];
     $("sCard").dataset.kind = card ? card.kind : "none";
-    // Card = the same 360×340 scene, scaled down into the frame (so actors keep their spots).
-    const box = $("sCard"); box.innerHTML = ""; box.style.background = "#1e2a5a";
-    if (card) {
-      const inner = document.createElement("div");
-      inner.style.cssText = "position:absolute;left:0;top:0;width:360px;height:340px;transform-origin:0 0;transform:scale(" + (300 / 360) + ");";
-      box.appendChild(inner); drawScene(inner, card.scene, false);
-      box.style.background = inner.style.background;
-    }
+    const box = $("sCard"); box.style.background = "#1e2a5a";
+    if (card) picture(box, card.scene, 294, 277); else box.innerHTML = "";
     $("sCap").textContent = card ? card.caption : r.lines.join(" · ");
   }
   $("skipNext").onclick = () => {
     skipIdx++;
     if (skipIdx < skipData.cards.length) return renderSkip();
-    show("play"); hud(); actions(); $("log").textContent = game.s.day.label.ko;
+    show("play"); hud(); $("diary").innerHTML = ""; logLine(game.s.day.label.ko);
   };
 
   function memorial() {
@@ -243,23 +279,29 @@
 
   $("start").onclick = () => {
     const v = (id) => $(id).value.trim();
+    const num = (id) => (v(id) === "" ? undefined : +v(id));
+    const siblings = v("fSib").split(",").map((x) => x.trim()).filter(Boolean).map((x) => { const [rel, name] = x.split(/\s+/); return { rel, name }; });
+    const fb = num("fFY") && num("fFM") && num("fFD") ? { year: num("fFY"), month: num("fFM"), day: num("fFD") } : undefined;
     game = LoveSim.createGame({
       name: v("fName"), gender: v("fG"), likes: v("fL"),
-      birth: { year: +v("fY"), month: +v("fM"), day: +v("fD"), hour: v("fH") === "" ? null : +v("fH"), minute: v("fMin") === "" ? null : +v("fMin") },
+      birth: { year: +v("fY"), month: +v("fM"), day: +v("fD"), hour: num("fH"), minute: num("fMin") },
       mbti: v("fMbti"), lang: "ko", seed: P.get("seed") ? +P.get("seed") : undefined,
-      fated: { name: v("fFated") || null, from: "same" },
+      family: { mom: { alive: v("fMom") === "1" }, dad: { alive: v("fDad") === "1" }, siblings, grandparents: num("fGp") },
+      fated: { name: v("fFated") || undefined, from: "same", status: v("fFs"), birth: fb },
     });
     window.__qa.game = game;
-    show("play"); hud(); actions();
+    show("play"); hud(); logLine(game.s.day.label.ko);
   };
 
   setInterval(() => {
-    if (screen !== "play" || !game || popupOpen || game.isOver()) return;
+    if (screen !== "play" || !game || popupOpen || game.isOver() || window.__qa.hold) return;
     handle(game.advance(game.s.minute + 0.32 * SPEED));
   }, 100);
-  setInterval(() => { if (screen === "play" && game && !popupOpen) drawScene($("scene"), game.wander()); }, 2800);
+  // Kairosoft-style walking: one step every 500 ms, animated over 480 ms.
+  setInterval(() => { if (screen === "play" && game && !popupOpen) drawScene($("scene"), game.wander()); }, 500);
 
-  window.__qa = { get screen() { return screen; }, get popupOpen() { return popupOpen; }, game: null };
+  // hold: freeze the clock (QA measures walking without the scene changing underneath).
+  window.__qa = { get screen() { return screen; }, get popupOpen() { return popupOpen; }, game: null, hold: false };
 })();
 </script>
 </body>

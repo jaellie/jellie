@@ -68,5 +68,407 @@
   "minCloseness": 0.5,
   "cooldownMonths": 12
  },
- "habitLapsePerMonth": 0.015
+ "habitLapsePerMonth": 0.015,
+ "crowds": {
+  "_doc": "Who you see at each kind of place. ageMix = [minAge, maxAge, weight] bands — never tied to the player's age (ONLINE keeps peers near your age). Strangers you never bonded with move on after tenureYears (per person) or when they outgrow the place; new people arrive. People you know stay and age with you.",
+  "ageMix": {
+   "CAFE": [
+    [
+     18,
+     29,
+     4
+    ],
+    [
+     30,
+     44,
+     3
+    ],
+    [
+     45,
+     64,
+     2
+    ],
+    [
+     65,
+     80,
+     1
+    ]
+   ],
+   "RESTAURANT": [
+    [
+     20,
+     34,
+     3
+    ],
+    [
+     35,
+     54,
+     3
+    ],
+    [
+     55,
+     79,
+     2
+    ]
+   ],
+   "PARK": [
+    [
+     6,
+     15,
+     2
+    ],
+    [
+     16,
+     34,
+     2
+    ],
+    [
+     35,
+     59,
+     2
+    ],
+    [
+     60,
+     85,
+     3
+    ]
+   ],
+   "CITY": [
+    [
+     10,
+     19,
+     1
+    ],
+    [
+     20,
+     39,
+     4
+    ],
+    [
+     40,
+     64,
+     3
+    ],
+    [
+     65,
+     85,
+     2
+    ]
+   ],
+   "WORKPLACE": [
+    [
+     23,
+     34,
+     4
+    ],
+    [
+     35,
+     49,
+     3
+    ],
+    [
+     50,
+     62,
+     2
+    ]
+   ],
+   "UNIVERSITY": [
+    [
+     19,
+     26,
+     8
+    ],
+    [
+     27,
+     35,
+     1
+    ]
+   ],
+   "CLASS": [
+    [
+     22,
+     39,
+     3
+    ],
+    [
+     40,
+     64,
+     3
+    ],
+    [
+     65,
+     75,
+     1
+    ]
+   ],
+   "GYM": [
+    [
+     18,
+     34,
+     4
+    ],
+    [
+     35,
+     54,
+     3
+    ],
+    [
+     55,
+     70,
+     1
+    ]
+   ],
+   "LIBRARY": [
+    [
+     14,
+     24,
+     3
+    ],
+    [
+     25,
+     54,
+     3
+    ],
+    [
+     55,
+     80,
+     2
+    ]
+   ],
+   "HOBBY": [
+    [
+     18,
+     40,
+     4
+    ],
+    [
+     41,
+     60,
+     2
+    ]
+   ],
+   "HOSPITAL": [
+    [
+     1,
+     20,
+     1
+    ],
+    [
+     21,
+     59,
+     2
+    ],
+    [
+     60,
+     90,
+     3
+    ]
+   ],
+   "ENTERTAINMENT": [
+    [
+     10,
+     19,
+     2
+    ],
+    [
+     20,
+     39,
+     4
+    ],
+    [
+     40,
+     60,
+     2
+    ]
+   ],
+   "BEACH": [
+    [
+     5,
+     17,
+     2
+    ],
+    [
+     18,
+     45,
+     4
+    ],
+    [
+     46,
+     75,
+     2
+    ]
+   ],
+   "TOURIST_SITE": [
+    [
+     15,
+     30,
+     3
+    ],
+    [
+     31,
+     60,
+     3
+    ],
+    [
+     61,
+     80,
+     2
+    ]
+   ],
+   "AIRPORT": [
+    [
+     5,
+     20,
+     1
+    ],
+    [
+     21,
+     60,
+     4
+    ],
+    [
+     61,
+     80,
+     1
+    ]
+   ],
+   "HOTEL": [
+    [
+     22,
+     60,
+     4
+    ],
+    [
+     61,
+     80,
+     1
+    ]
+   ],
+   "WEDDING_VENUE": [
+    [
+     20,
+     39,
+     3
+    ],
+    [
+     40,
+     70,
+     3
+    ]
+   ],
+   "default": [
+    [
+     18,
+     34,
+     3
+    ],
+    [
+     35,
+     59,
+     3
+    ],
+    [
+     60,
+     80,
+     2
+    ]
+   ]
+  },
+  "tenureYears": [
+   3,
+   9
+  ],
+  "staffAge": [
+   20,
+   58
+  ],
+  "minAgeToBefriend": 16,
+  "ambient": {
+   "_doc": "Extra passers-by drawn in the scene (visual only, never NPCs you can meet): [min, max] per location type, Kairosoft-style busy screens. None at home.",
+   "CITY": [
+    2,
+    4
+   ],
+   "CAFE": [
+    1,
+    3
+   ],
+   "PARK": [
+    2,
+    4
+   ],
+   "WORKPLACE": [
+    2,
+    3
+   ],
+   "RESTAURANT": [
+    1,
+    3
+   ],
+   "UNIVERSITY": [
+    2,
+    4
+   ],
+   "ENTERTAINMENT": [
+    2,
+    4
+   ],
+   "BEACH": [
+    2,
+    4
+   ],
+   "TOURIST_SITE": [
+    3,
+    5
+   ],
+   "AIRPORT": [
+    3,
+    5
+   ],
+   "HOSPITAL": [
+    1,
+    3
+   ],
+   "LIBRARY": [
+    1,
+    2
+   ],
+   "GYM": [
+    1,
+    3
+   ],
+   "CLASS": [
+    1,
+    2
+   ],
+   "WEDDING_VENUE": [
+    3,
+    4
+   ],
+   "HOBBY": [
+    1,
+    3
+   ],
+   "HOME": [
+    0,
+    0
+   ],
+   "FAMILY_HOME": [
+    0,
+    0
+   ],
+   "HOTEL": [
+    0,
+    1
+   ],
+   "ONLINE": [
+    0,
+    0
+   ],
+   "default": [
+    0,
+    2
+   ]
+  }
+ }
 }

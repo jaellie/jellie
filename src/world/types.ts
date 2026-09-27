@@ -174,6 +174,10 @@ export interface WorldNpc {
   fated?: boolean;
   /** Passed away — never appears again. */
   deceased?: boolean;
+  /** Year they started showing up here (strangers move on after a while). */
+  since?: number;
+  /** Moved on (a stranger who left the neighborhood) — never appears again. */
+  moved?: boolean;
   /** Appearance/profile passthrough from the UI (look, job, mbti…). */
   profile?: Record<string, unknown>;
 }

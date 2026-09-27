@@ -1,5 +1,5 @@
 {
- "_doc": "Memory cards for the 시간이 흐른다 screen: [location, activity, actors, caption]. Captions fill {partner} {friend} {kid} {pet} {patient} {city}.",
+ "_doc": "Memory cards for the 시간이 흐른다 screen: [location, activity, actors, caption]. Captions fill {partner} {friend} {kid} {pet} {patient} {relative} {city}.",
  "cards": {
   "START_DATING": {
    "location": "cafe",
@@ -331,8 +331,8 @@
     "relative"
    ],
    "caption": {
-    "ko": "가족의 장례식",
-    "en": "A family funeral"
+    "ko": "{relative}의 장례식",
+    "en": "{relative}'s funeral"
    }
   },
   "FRIEND_WEDDING": {
@@ -356,8 +356,8 @@
     "relative"
    ],
    "caption": {
-    "ko": "{friend}의 장례식",
-    "en": "{friend}'s funeral"
+    "ko": "친구 {friend}의 장례식",
+    "en": "Friend {friend}'s funeral"
    }
   },
   "PARTNER_FUNERAL": {
@@ -406,6 +406,68 @@
    "caption": {
     "ko": "가게 문을 닫던 날",
     "en": "The day I closed the shop"
+   }
+  },
+  "RELATIVE_FUNERAL": {
+   "location": "funeral_hall",
+   "activity": "mourn",
+   "actors": [
+    "me",
+    "relative",
+    "relative2"
+   ],
+   "caption": {
+    "ko": "{relative}의 장례식",
+    "en": "{relative}'s funeral"
+   }
+  },
+  "SIBLING_WEDDING": {
+   "location": "wedding_venue",
+   "activity": "wedding",
+   "actors": [
+    "me",
+    "relative",
+    "guest"
+   ],
+   "caption": {
+    "ko": "{relative}의 결혼식",
+    "en": "{relative}'s wedding"
+   }
+  },
+  "NEPHEW_BIRTH": {
+   "location": "hospital",
+   "activity": null,
+   "actors": [
+    "me",
+    "relative",
+    "baby"
+   ],
+   "caption": {
+    "ko": "{relative}네 아기가 태어났다",
+    "en": "{relative} had a baby"
+   }
+  },
+  "PREGNANCY_LOSS": {
+   "location": "hospital",
+   "activity": null,
+   "actors": [
+    "me",
+    "partner"
+   ],
+   "caption": {
+    "ko": "지켜주지 못한 작은 생명",
+    "en": "The little life we couldn't keep"
+   }
+  },
+  "AFFAIR": {
+   "location": "street",
+   "activity": null,
+   "actors": [
+    "me"
+   ],
+   "caption": {
+    "ko": "믿었던 사람의 뒷모습",
+    "en": "The back of someone I trusted"
    }
   }
  }

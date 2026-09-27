@@ -4,6 +4,7 @@ import { lintContent } from "../src/game/lint";
 import { Director, guardRequirements, newDirectorMemory } from "../src/game/director";
 import { computeFacts, meets } from "../src/game/facts";
 import { fillNames, fixJosa } from "../src/game/text";
+import { splitSpeakerTag } from "../src/game/game";
 import { SeededRandom } from "../src/core/rng";
 import messageData from "../data/game/messages.json";
 
@@ -60,6 +61,13 @@ describe("Content quality (automatic)", () => {
     expect(fixJosa("민재이(가) 인사했다")).toBe("민재가 인사했다");
     expect(fixJosa("서울(으)로 이사했다")).toBe("서울로 이사했다");
     expect(fixJosa("부산(으)로 이사했다")).toBe("부산으로 이사했다");
+  });
+
+  it("a leading [이름] tag becomes the speaker (never shown twice); [사진] stays as content", () => {
+    expect(splitSpeakerTag("[아빠] [사진] 낚시 갔다")).toEqual({ tag: "아빠", text: "[사진] 낚시 갔다" });
+    expect(splitSpeakerTag("[응급실] 보호자분 되시죠?")).toEqual({ tag: "응급실", text: "보호자분 되시죠?" });
+    expect(splitSpeakerTag("[사진] 오늘 만든 반찬")).toEqual({ text: "[사진] 오늘 만든 반찬" });
+    expect(splitSpeakerTag("밥은 먹었니?")).toEqual({ text: "밥은 먹었니?" });
   });
 
   it("fillNames fixes the particle after a name — and never touches the rest of the sentence", () => {

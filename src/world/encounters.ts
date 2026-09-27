@@ -102,6 +102,8 @@ export function processSighting(ctx: EncounterContext, npc: WorldNpc): WorldEven
   if (!rng.chance(pTalk)) return out;
 
   if (!rel) {
+    // Kids and young teens say hello, but don't become an adult's friends.
+    if (npcAge(npc, ctx.date) < R.crowds.minAgeToBefriend) return out;
     if (!persistent || (ctx.inTrip && npc.persistence === "TEMPORARY" && !npc.anchoredTo)) {
       // A passer-by: they only become someone you know if you swap contacts.
       if (!rng.chance(ctx.inTrip ? 0.5 : R.strangerKeepContactChance)) {

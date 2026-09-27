@@ -40,13 +40,28 @@ export interface NpcSpawn {
   persistence: WorldNpc["persistence"];
   anchoredTo?: string;
   schedule?: NPCSchedule;
+  /** Age bands of the place ([min, max, weight]); without it the NPC is a peer of `aroundAge`. */
+  ageMix?: Array<[number, number, number]>;
 }
 
-function ageFor(t: NpcTypeDef, around: number, rng: SeededRandom): number {
+type AgeBand = [number, number, number];
+const CROWDS = ENCOUNTER_RULES.crowds as unknown as { ageMix: Record<string, AgeBand[]>; tenureYears: [number, number]; staffAge: [number, number]; minAgeToBefriend: number };
+
+/** The age mix of a kind of place (online communities keep peers near your age). */
+export function ageMixFor(location: Location): AgeBand[] | undefined {
+  if (location.online) return undefined;
+  return CROWDS.ageMix[location.type] ?? CROWDS.ageMix.default;
+}
+
+function ageFor(t: NpcTypeDef, spawn: NpcSpawn, rng: SeededRandom): number {
   if (/student|classmate/.test(t.id)) return rng.int(19, 27);
   if (/professor|manager|doctor/.test(t.id)) return rng.int(38, 60);
-  if (t.kind === "STAFF") return rng.int(22, 50);
-  return Math.max(18, Math.min(80, Math.round(around + rng.range(-8, 8))));
+  if (t.kind === "STAFF") return rng.int(CROWDS.staffAge[0], CROWDS.staffAge[1]);
+  if (spawn.ageMix?.length) {
+    const [lo, hi] = rng.weighted(spawn.ageMix.map((b) => ({ item: b, weight: b[2] })));
+    return rng.int(lo, hi);
+  }
+  return Math.max(18, Math.min(80, Math.round(spawn.aroundAge + rng.range(-8, 8))));
 }
 
 export function generateNpc(world: WorldState, rng: SeededRandom, spawn: NpcSpawn): WorldNpc {
@@ -57,7 +72,7 @@ export function generateNpc(world: WorldState, rng: SeededRandom, spawn: NpcSpaw
   const known = new Set([...Object.keys(world.relationships).map((id) => world.npcs[id]?.name), ...Object.values(world.npcs).filter((n) => n.fated || n.deceased).map((n) => n.name)]);
   const all = foreign ? FOREIGN_NAMES[sex] : LOCAL_NAMES[sex];
   const names = all.filter((n) => !known.has(n)).length ? all.filter((n) => !known.has(n)) : all;
-  const age = ageFor(t, spawn.aroundAge, rng);
+  const age = ageFor(t, spawn, rng);
   const npc: WorldNpc = {
     id: `w${world.nextNpcId++}`,
     name: names[rng.int(0, names.length - 1)],
@@ -74,6 +89,7 @@ export function generateNpc(world: WorldState, rng: SeededRandom, spawn: NpcSpaw
     warmth: rng.range(0.2, 1),
     spriteSeed: rng.int(0, 1_000_000),
     foreign,
+    since: spawn.date.year,
   };
   world.npcs[npc.id] = npc;
   return npc;
@@ -142,7 +158,7 @@ function withDailyLife(core: { weekday: ScheduleBlock[]; weekend: ScheduleBlock[
 }
 
 export function isPresent(npc: WorldNpc, locationId: string, t: WorldTime, rng: SeededRandom): boolean {
-  if (npc.deceased) return false;
+  if (npc.deceased || npc.moved) return false;
   if (npc.anchoredTo === locationId) {
     const loc = getLocation(locationId);
     const works = t.hour >= loc.availableHours.start && t.hour < loc.availableHours.end;
@@ -162,16 +178,74 @@ export function isPresent(npc: WorldNpc, locationId: string, t: WorldTime, rng: 
 }
 
 /** Generate a location's staff + regulars once. */
-export function populateLocation(world: WorldState, locationId: string, rng: SeededRandom, date: GameDate, aroundAge: number, persistence: WorldNpc["persistence"] = "PERSISTENT"): string[] {
-  if (world.populated[locationId]) return world.populated[locationId];
+/** Someone the player actually knows (or the destined person) — they stay, and age with the player. */
+function bonded(world: WorldState, npc: WorldNpc): boolean {
+  const stage = world.relationships[npc.id]?.stage;
+  return !!npc.fated || (!!stage && stage !== "STRANGER" && stage !== "FAMILIAR_FACE");
+}
+
+/**
+ * Strangers don't grow old alongside the player: after a few years (per person) or once they
+ * outgrow the place, they move on and someone new — of the place's usual ages — takes their spot.
+ */
+function refreshCrowd(world: WorldState, locationId: string, rng: SeededRandom, date: GameDate, aroundAge: number): string[] {
   const loc = getLocation(locationId);
+  const mix = ageMixFor(loc);
+  const maxAge = mix ? Math.max(...mix.map((b) => b[1])) : 200;
+  const [tMin, tMax] = CROWDS.tenureYears;
+  const ids = world.populated[locationId];
+  const out: string[] = [];
+  for (const id of ids) {
+    const npc = world.npcs[id];
+    const staff = npc ? getNpcType(npc.type).kind === "STAFF" : false;
+    if (npc && !npc.deceased && !npc.moved && bonded(world, npc)) {
+      // People you know stay and age with you — until they retire (staff) or outgrow the place.
+      const tooOld = npcAge(npc, date) > (staff ? CROWDS.staffAge[1] + 4 : maxAge + 8);
+      if (!tooOld) {
+        out.push(id);
+        continue;
+      }
+      if (staff) npc.anchoredTo = undefined; // retired: still someone you know, just not behind the counter
+    }
+    if (npc) npc.since ??= date.year;
+    const tenure = npc ? tMin + (npc.spriteSeed % (tMax - tMin + 1)) : 0;
+    const ageCap = staff ? CROWDS.staffAge[1] + 4 : maxAge + 3;
+    const stays = npc && !bonded(world, npc) && !npc.deceased && !npc.moved && date.year - (npc.since ?? date.year) <= tenure && npcAge(npc, date) <= ageCap;
+    if (stays) {
+      out.push(id);
+      continue;
+    }
+    if (npc && !bonded(world, npc)) npc.moved = true;
+    const type = npc?.type ?? npcPoolFor(locationId).npcTypes[0]?.type;
+    if (!type) continue;
+    const t = getNpcType(type);
+    const fresh = generateNpc(world, rng, {
+      type,
+      region: loc.region,
+      date,
+      aroundAge,
+      persistence: npc?.persistence ?? "PERSISTENT",
+      anchoredTo: t.kind === "STAFF" ? loc.id : undefined,
+      schedule: t.kind === "STAFF" ? undefined : withDailyLife(regularBlock(loc, rng)),
+      ageMix: mix,
+    });
+    out.push(fresh.id);
+  }
+  world.populated[locationId] = out;
+  return out;
+}
+
+export function populateLocation(world: WorldState, locationId: string, rng: SeededRandom, date: GameDate, aroundAge: number, persistence: WorldNpc["persistence"] = "PERSISTENT"): string[] {
+  if (world.populated[locationId]) return refreshCrowd(world, locationId, rng, date, aroundAge);
+  const loc = getLocation(locationId);
+  const ageMix = ageMixFor(loc);
   const pool = npcPoolFor(locationId).npcTypes;
   const ids: string[] = [];
   for (const entry of pool) {
     const t = getNpcType(entry.type);
     if (t.kind === "STAFF") {
       const n = entry.weight >= 10 && rng.chance(0.5) ? 2 : 1;
-      for (let i = 0; i < n; i++) ids.push(generateNpc(world, rng, { type: t.id, region: loc.region, date, aroundAge, persistence, anchoredTo: loc.id }).id);
+      for (let i = 0; i < n; i++) ids.push(generateNpc(world, rng, { type: t.id, region: loc.region, date, aroundAge, persistence, anchoredTo: loc.id, ageMix }).id);
     }
   }
   const regularTypes = pool.filter((e) => getNpcType(e.type).kind === "REGULAR");
@@ -179,7 +253,7 @@ export function populateLocation(world: WorldState, locationId: string, rng: See
   const n = regularTypes.length ? counts[loc.type] ?? counts.default : 0;
   for (let i = 0; i < n; i++) {
     const type = rng.weighted(regularTypes.map((e) => ({ item: e.type, weight: e.weight })));
-    ids.push(generateNpc(world, rng, { type, region: loc.region, date, aroundAge, persistence, schedule: withDailyLife(regularBlock(loc, rng)) }).id);
+    ids.push(generateNpc(world, rng, { type, region: loc.region, date, aroundAge, persistence, schedule: withDailyLife(regularBlock(loc, rng)), ageMix }).id);
   }
   world.populated[locationId] = ids;
   return ids;
@@ -193,7 +267,7 @@ export function drawTransients(world: WorldState, locationId: string, rng: Seede
   const out: WorldNpc[] = [];
   for (let i = 0; i < count; i++) {
     const type = rng.weighted(pool.map((e) => ({ item: e.type, weight: e.weight })));
-    const npc = generateNpc(world, rng, { type, region: loc.region, date, aroundAge, persistence: "TEMPORARY" });
+    const npc = generateNpc(world, rng, { type, region: loc.region, date, aroundAge, persistence: "TEMPORARY", ageMix: ageMixFor(loc) });
     delete world.npcs[npc.id]; // ephemeral until something happens
     out.push(npc);
   }

@@ -6,25 +6,47 @@
  *  사주: annual 역마/도화/화개/천을귀인 activation, clashes/harmonies/combinations
  *        with the day pillar (spouse palace), year pillar (roots/family) and
  *        hour pillar (children), 대운 transitions, favorable/unfavorable years.
- *  점성술: Jupiter/Saturn house ingresses (2/4/5/6/7/8/9/10), Saturn return,
- *        hard/soft transits of Saturn/Uranus/Jupiter to Sun/Moon/Venus/MC/ASC.
+ *  점성술 (each age = birthday → next birthday):
+ *   - Transits: Jupiter/Saturn/Uranus house ingresses, returns, and aspects to
+ *     Sun/Moon/Venus/Mars/MC/ASC, weighted by orb tier and applying/separating.
+ *   - Secondary progressions (sampled quarterly): exact progressed→natal
+ *     aspects, the progressed Moon's house, progressed Sun/Moon sign changes.
+ *   - Solar Return: SR Sun/Moon houses, SR ASC in the natal chart, angular
+ *     planets, SR contacts to natal lights/angles = the year's theme.
+ *  The headline rule: when transits AND progressions point at the same life
+ *  area (houses/points of a theme) in the same year, that year wins.
  */
 import { SeededRandom } from "../core/rng";
 import type { SajuChart } from "../saju/chart";
 import { getAnnualFortune } from "../saju/chart";
-import { type AstrologyChart, calculateTransits, jdForMonth } from "../astrology/chart";
+import { type AstrologyChart, type ChartPoint, calculateTransits } from "../astrology/chart";
+import { calculateProgressions, calculateSolarReturn, orbWeight, phaseWeight } from "../astrology/techniques";
 import type { FatedEvent, FatedTheme } from "./types";
+
+type Nature = "harmonious" | "hard" | "conjunction";
 
 interface YearSignals {
   age: number;
   s: Record<string, number>;
   tags: string[];
+  /** Transit (T), progression (P) and Solar Return (SR) contacts: `a` (moving/return point) → natal point `b`. */
+  contacts: Array<{ src: "T" | "P" | "SR"; a: string; b: string; nature: Nature; w: number }>;
+  /** Houses lit up this year: progressed Moon, SR Sun, SR Moon, SR ASC (in the natal chart). */
+  houses: Array<{ src: "P:MOON" | "SR:SUN" | "SR:MOON" | "SR:ASC"; house: number; w: number }>;
+  /** Planets on a Solar Return angle. */
+  angular: string[];
 }
+
+/** Conjunctions with Saturn/Pluto weigh like hard aspects. */
+const effNature = (a: string, b: string, n: Nature): Nature => (n === "conjunction" && (a === "SATURN" || a === "PLUTO" || b === "SATURN" || b === "PLUTO") ? "hard" : n);
 
 function yearSignals(saju: SajuChart, astro: AstrologyChart, birthYear: number, age: number): YearSignals {
   const year = birthYear + age;
   const s: Record<string, number> = {};
   const tags: string[] = [];
+  const contacts: YearSignals["contacts"] = [];
+  const houses: YearSignals["houses"] = [];
+  const angular: string[] = [];
   const add = (k: string, v = 1, tag?: string) => {
     s[k] = (s[k] ?? 0) + v;
     if (tag) tags.push(tag);
@@ -42,13 +64,122 @@ function yearSignals(saju: SajuChart, astro: AstrologyChart, birthYear: number, 
   const daeunStart = saju.daeun.periods.some((p) => Math.abs(p.startAge - age) < 1);
   if (daeunStart) add("daeunShift", 1, "사주:대운전환");
 
-  const tr = calculateTransits(astro, jdForMonth(year, 6), ["JUPITER", "SATURN", "URANUS"]);
+  // This age runs from the Solar Return (birthday) to the next one.
+  const sr = calculateSolarReturn(astro, year);
+  const tr = calculateTransits(astro, sr.jdUT + 182.6, ["JUPITER", "SATURN", "URANUS"]);
   for (const h of tr.hits) {
     add(`${h.planet}@H${h.house}`, 1, `점성:${h.planet}@${h.house}H`);
     if (h.isReturn) add(`${h.planet}_RETURN`, 1, `점성:${h.planet} return`);
-    for (const a of h.aspects) add(`${h.planet}>${a.natalPoint}:${a.nature}`, 1 - a.orb / 4, `점성:${h.planet} ${a.type} ${a.natalPoint}`);
+    for (const a of h.aspects) {
+      const w = orbWeight(a.orb) * phaseWeight(a.applying);
+      add(`${h.planet}>${a.natalPoint}:${a.nature}`, w, `점성:${h.planet} ${a.type} ${a.natalPoint}`);
+      contacts.push({ src: "T", a: h.planet, b: a.natalPoint, nature: effNature(h.planet, a.natalPoint, a.nature), w });
+    }
   }
-  return { age, s, tags };
+  // Secondary progressions, sampled quarterly (the progressed Moon moves ~1° a month).
+  const best = new Map<string, (typeof contacts)[number]>();
+  for (let q = 0; q < 4; q++) {
+    const pr = calculateProgressions(astro, sr.jdUT + 45 + q * 91.3);
+    for (const a of pr.aspects) {
+      const nature = effNature(a.progressed, a.natalPoint, a.nature);
+      const c = { src: "P" as const, a: a.progressed, b: a.natalPoint, nature, w: orbWeight(a.orb) * phaseWeight(a.applying) };
+      const k = `${c.a}>${c.b}`;
+      if (!best.has(k) || best.get(k)!.w < c.w) best.set(k, c);
+    }
+    if (q === 1 && pr.positions.MOON) houses.push({ src: "P:MOON", house: pr.positions.MOON.natalHouse, w: 0.5 });
+    for (const i of pr.ingresses) if (q === 3) add(`P:${i.point}_INGRESS`, 1, `점성:진행${i.point}→${i.sign}`);
+  }
+  for (const c of best.values()) {
+    contacts.push(c);
+    tags.push(`점성:진행 ${c.a}>${c.b}:${c.nature}`);
+  }
+  // Solar Return: the year's theme.
+  if (sr.anglesReliable) {
+    if (sr.houses.SUN) houses.push({ src: "SR:SUN", house: sr.houses.SUN, w: 1 });
+    if (sr.houses.MOON) houses.push({ src: "SR:MOON", house: sr.houses.MOON, w: 0.7 });
+    if (sr.ascInNatalHouse) houses.push({ src: "SR:ASC", house: sr.ascInNatalHouse, w: 1 });
+    angular.push(...sr.angular);
+    if (sr.angular.length) tags.push(`점성:SR angular ${sr.angular.join("/")}`);
+  }
+  for (const c of sr.contacts) contacts.push({ src: "SR", a: c.planet, b: c.natalPoint, nature: effNature(c.planet, c.natalPoint, c.nature), w: 0.8 * orbWeight(c.orb) });
+  return { age, s, tags, contacts, houses, angular };
+}
+
+/**
+ * Each theme's astrological signature: the houses it lives in, and which contacts count —
+ * one side from `a`, the other from `b` ("any" = anything), of the given nature.
+ * E.g. illness = hard contacts between the lights/ASC and Saturn/Mars/Neptune/Pluto.
+ */
+interface Domain {
+  houses: number[];
+  a: string[];
+  b: string[] | "any";
+  nature: "hard" | "soft" | "any";
+  good?: string;
+  bad?: string;
+}
+const MALEFICS = ["SATURN", "MARS", "NEPTUNE", "PLUTO"];
+const DOMAIN: Record<FatedTheme, Domain> = {
+  LOVE_MEETING: { houses: [5, 7], a: ["VENUS", "MARS"], b: "any", nature: "soft", good: "START_DATING", bad: "MISSED" },
+  MARRIAGE: { houses: [7], a: ["VENUS"], b: ["SUN", "MOON", "JUPITER", "SATURN", "ASC", "MC"], nature: "any", good: "ENGAGED", bad: "BREAKUP" },
+  RELATIONSHIP_CRISIS: { houses: [7, 8], a: ["VENUS", "MOON"], b: ["SATURN", "MARS", "URANUS", "PLUTO"], nature: "hard", good: "RECONCILE", bad: "SEPARATE" },
+  CAREER_TURN: { houses: [10, 6], a: ["SUN", "MC"], b: ["SATURN", "JUPITER", "URANUS", "MARS"], nature: "any", good: "PROMOTION", bad: "LAYOFF" },
+  MOVE: { houses: [4, 9], a: ["ASC", "MOON"], b: ["URANUS", "JUPITER", "MARS"], nature: "any" },
+  FAMILY_LOSS: { houses: [4, 8], a: ["MOON"], b: ["SATURN", "PLUTO"], nature: "hard", good: "RECOVERY", bad: "PASSING" },
+  WEALTH: { houses: [2, 8], a: ["VENUS", "JUPITER"], b: ["SUN", "MOON", "VENUS", "JUPITER", "URANUS", "MC"], nature: "any", good: "WINDFALL", bad: "LOSS" },
+  CHILD: { houses: [5], a: ["MOON", "JUPITER", "VENUS"], b: ["MOON", "JUPITER", "VENUS", "SUN"], nature: "soft", good: "PREGNANT", bad: "NOT_NOW" },
+  PET: { houses: [6], a: ["MOON", "VENUS"], b: ["MOON", "VENUS", "JUPITER"], nature: "soft" },
+  ILLNESS: { houses: [6, 12], a: ["SUN", "MOON", "ASC"], b: MALEFICS, nature: "hard", good: "RECOVERY", bad: "PASSING" },
+  EARLY_RETIREMENT: { houses: [10, 12], a: ["SUN", "MC"], b: ["SATURN", "URANUS"], nature: "any" },
+};
+
+function matches(d: Domain, x: string, y: string, nature: Nature): boolean {
+  if (d.nature === "hard" && nature !== "hard") return false;
+  if (d.nature === "soft" && nature === "hard") return false;
+  const side = (p: string, q: string) => d.a.includes(p) && (d.b === "any" || d.b.includes(q));
+  return side(x, y) || side(y, x);
+}
+
+/** How strongly transits (T), progressions (P) and the Solar Return (SR) point at a theme's life area this year. */
+function techniqueScores(theme: FatedTheme, y: YearSignals): { T: number; P: number; SR: number; soft: number; hard: number } {
+  const d = DOMAIN[theme];
+  let T = 0, P = 0, SR = 0, soft = 0, hard = 0;
+  for (const c of y.contacts) {
+    if (!matches(d, c.a, c.b, c.nature)) continue;
+    if (c.src === "T") T += c.w;
+    else if (c.src === "P") P += c.w;
+    else SR += c.w;
+    if (c.src !== "T") c.nature === "hard" ? (hard += c.w) : (soft += c.w);
+  }
+  // Slow planets moving through the theme's houses (only planets that belong to its signature).
+  for (const planet of ["JUPITER", "SATURN", "URANUS"]) {
+    if (d.b !== "any" && !d.b.includes(planet)) continue;
+    for (const h of d.houses) T += (planet === "URANUS" ? 0.7 : 1) * g(y, `${planet}@H${h}`);
+  }
+  for (const h of y.houses) if (d.houses.includes(h.house)) (h.src === "P:MOON" ? (P += h.w) : (SR += h.w));
+  for (const p of y.angular) if (d.a.includes(p) || (d.b !== "any" && d.b.includes(p))) SR += 0.8;
+  return { T, P: Math.min(P, 2), SR: Math.min(SR, 2), soft, hard };
+}
+
+/** Technique scores for one theme at one age (debug/tests). */
+export function techniqueScoresAt(saju: SajuChart, astro: AstrologyChart, birthYear: number, age: number, theme: FatedTheme) {
+  return techniqueScores(theme, yearSignals(saju, astro, birthYear, age));
+}
+
+/** Transits + progressions agreeing is the headline; the Solar Return sets the year's theme. */
+function techniqueBonus(theme: FatedTheme, y: YearSignals): number {
+  const t = techniqueScores(theme, y);
+  return 0.4 * t.P + 0.4 * t.SR + 1.0 * Math.min(t.T, t.P);
+}
+
+/** Soft progressions/SR contacts favour the theme's good outcome, hard ones its bad outcome. */
+function techniqueWeights(theme: FatedTheme, y: YearSignals, w: Record<string, number>): Record<string, number> {
+  const d = DOMAIN[theme];
+  const t = techniqueScores(theme, y);
+  const out = { ...w };
+  if (d.good && out[d.good] !== undefined) out[d.good] += 0.4 * t.soft;
+  if (d.bad && out[d.bad] !== undefined) out[d.bad] += 0.4 * t.hard;
+  return out;
 }
 
 const g = (y: YearSignals, k: string) => y.s[k] ?? 0;
@@ -144,7 +275,13 @@ export function buildDestinyScript(saju: SajuChart, astro: AstrologyChart, opts:
   const ranked = (theme: FatedTheme) => {
     const d = THEMES[theme];
     const out: Array<{ age: number; score: number }> = [];
-    for (let a = Math.max(start + 1, d.window[0]); a <= d.window[1]; a++) out.push({ age: a, score: d.score(years.get(a)!) + rng.range(0, 0.4) });
+    // The technique bonus counts relative to this theme's own baseline for this person: a year stands
+    // out only when it is unusually strong for the theme (broad themes don't win just by being broad).
+    const ages: number[] = [];
+    for (let a = Math.max(start + 1, d.window[0]); a <= d.window[1]; a++) ages.push(a);
+    const bonus = ages.map((a) => techniqueBonus(theme, years.get(a)!));
+    const mean = bonus.reduce((x, y) => x + y, 0) / Math.max(1, bonus.length);
+    ages.forEach((a, i) => out.push({ age: a, score: d.score(years.get(a)!) + (bonus[i] - mean) + rng.range(0, 0.4) }));
     return out.sort((x, y) => y.score - x.score);
   };
   const chosen: FatedEvent[] = [];
@@ -158,8 +295,8 @@ export function buildDestinyScript(saju: SajuChart, astro: AstrologyChart, opts:
         theme,
         age: cand.age,
         monthIndex: cand.age * 12 + rng.int(1, 10),
-        chartWeights: normalize(THEMES[theme].weights(y)),
-        signals: y.tags.slice(0, 8),
+        chartWeights: normalize(techniqueWeights(theme, y, THEMES[theme].weights(y))),
+        signals: y.tags.slice(0, 12),
       });
       return cand.score;
     }

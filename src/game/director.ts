@@ -60,7 +60,8 @@ export function guardRequirements(texts: string[]): { rule: string; requires: st
 export const SPEAKER_REQUIRES: Record<string, string[]> = {
   mom: ["momAlive"],
   dad: ["dadAlive"],
-  partner: ["partnered"],
+  partner: ["partnered", "!partnerCritical"],
+  sibling: ["hasSibling"],
   boss: ["employed", "!selfEmployed"],
   coworker: ["employed"],
   work: ["employed"],

@@ -8,7 +8,9 @@ import type { BackgroundLayer } from "./types";
 import type { VisitResult } from "./worldEngine";
 import type { WorldState } from "./types";
 import type { LifeState } from "../sim/types";
-import { knowsName, npcAge } from "./npcs";
+import { ageMixFor, knowsName, npcAge } from "./npcs";
+import { ENCOUNTER_RULES } from "./catalog";
+import { FLOOR } from "./walkers";
 
 export interface SceneActor {
   id: string;
@@ -36,14 +38,36 @@ export interface Scene {
   props: BackgroundLayer[];
 }
 
+const AMBIENT = (ENCOUNTER_RULES.crowds as unknown as { ambient: Record<string, [number, number]> }).ambient;
+
 export function composeScene(visit: VisitResult, world: WorldState, state: LifeState, opts: { withPartner?: boolean; household?: boolean } = {}): Scene {
   const loc = getLocation(visit.locationId);
   const spots = loc.spots ?? [[4.5, 4.5]];
   const bg = visit.background.background;
   const actors: SceneActor[] = [];
+  // The player starts at the room's first spot; everyone else is spread over the floor (not lined up),
+  // stable per person so a scene looks the same when redrawn.
+  const lattice: Array<[number, number]> = [];
+  for (let a = FLOOR.min; a <= FLOOR.max + 1e-9; a += FLOOR.step) for (let b = FLOOR.min; b <= FLOOR.max + 1e-9; b += FLOOR.step) lattice.push([a, b]);
+  const used = new Set<string>();
   let i = 0;
   const place = (a: Omit<SceneActor, "spot" | "z">) => {
-    const spot = spots[i++ % spots.length];
+    let spot = spots[0];
+    if (i++ > 0) {
+      // FNV-1a + avalanche, so similar ids ("amb0", "amb1") land far apart instead of in a row.
+      let h = 2166136261;
+      for (const c of `${a.id}@${loc.id}`) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0;
+      h = Math.imul(h ^ (h >>> 16), 2246822507) >>> 0;
+      h = Math.imul(h ^ (h >>> 13), 3266489909) >>> 0;
+      for (let k = 0; k < lattice.length; k++) {
+        const p = lattice[(h + k * 37) % lattice.length];
+        if (!used.has(p.join(","))) {
+          spot = p;
+          break;
+        }
+      }
+    }
+    used.add(spot.join(","));
     actors.push({ ...a, spot, z: Math.round((spot[0] + spot[1]) * 10) });
   };
   if (!loc.online) {
@@ -63,6 +87,17 @@ export function composeScene(visit: VisitResult, world: WorldState, state: LifeS
       for (const p of (state.pets ?? []).filter((x) => x.alive)) place({ id: p.id, kind: "npc", name: p.name, npcType: p.species === "DOG" ? "pet_dog" : "pet_cat", spriteSeed: p.spriteSeed });
     }
     for (const n of visit.passersBy) place({ id: n.id, kind: "passerby", npcType: n.type, sex: n.sex, age: npcAge(n, visit.time.date), spriteSeed: n.spriteSeed });
+    // Ambient crowd (visual only): a busy street, a few more customers — of the place's usual ages.
+    const [lo, hi] = (AMBIENT[loc.type] ?? AMBIENT.default) as [number, number];
+    const mix = ageMixFor(loc);
+    let h = 0;
+    for (const c of `${loc.id}|${visit.time.date.year}-${visit.time.date.month}-${visit.time.date.day}|${visit.time.hour}`) h = (Math.imul(h, 31) + c.charCodeAt(0)) >>> 0;
+    const rnd = () => ((h = (Math.imul(h ^ (h >>> 15), 2246822507) + 0x9e3779b9) >>> 0) / 4294967296);
+    const count = lo + Math.floor(rnd() * (hi - lo + 1));
+    for (let k = 0; k < count; k++) {
+      const band = mix ? mix[Math.floor(rnd() * mix.length)] : [20, 60];
+      place({ id: `amb${k}`, kind: "passerby", npcType: "extra", sex: rnd() < 0.5 ? "MALE" : "FEMALE", age: band[0] + Math.floor(rnd() * (band[1] - band[0] + 1)), spriteSeed: Math.floor(rnd() * 1_000_000) });
+    }
   }
   // Variants (evening/rain…) reuse the base background's props & layers unless they define their own.
   const baseBg = backgroundsFor(loc.id).find((b) => !b.timeOfDay && !b.weather && !b.season && !b.activities);

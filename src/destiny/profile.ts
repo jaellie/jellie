@@ -15,7 +15,7 @@ import type { BirthData } from "../saju/calendar/fourPillars";
 import { type SajuChart, calculateNatalChart } from "../saju/chart";
 import { SajuModifierEngine } from "../saju/interpretation/sajuModifierEngine";
 import { type AstrologyChart, type BirthPlace, DEFAULT_BIRTHPLACE, calculateAstrologyChart } from "../astrology/chart";
-import { AstrologyModifierEngine } from "../astrology/interpretation";
+import { type AstrologyModifierResult, AstrologyModifierEngine } from "../astrology/interpretation";
 import { type MbtiType, type Persona, mbtiModifierSource, parseMbti, personaFromMbti, traitsFromPersona } from "../mbti/mbti";
 import type { Traits } from "../sim/types";
 
@@ -40,6 +40,8 @@ export interface DestinyProfile {
   sourcesAt(date: GameDate): DestinyModifierSource[];
   /** Merged hidden modifiers at a date. */
   modifiersAt(date: GameDate): LifeModifiers;
+  /** The hidden astrology state at a date: transits, progressions, Solar & Lunar Return. */
+  astrologyAt(date: GameDate): AstrologyModifierResult;
 }
 
 const sajuEngine = new SajuModifierEngine();
@@ -69,5 +71,5 @@ export function createDestinyProfile(input: DestinyInput): DestinyProfile {
     }
     return s;
   };
-  return { saju, astrology, mbti, persona, traits, sourcesAt, modifiersAt: (d) => mergeModifierSources(sourcesAt(d)) };
+  return { saju, astrology, mbti, persona, traits, sourcesAt, modifiersAt: (d) => mergeModifierSources(sourcesAt(d)), astrologyAt: (d) => astroEngine.calculateDetailed(astrology, d) };
 }

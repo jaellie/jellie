@@ -314,7 +314,101 @@ describe("Claude Design prototype adapter", () => {
     expect(p.overlays.map((o) => o.condition)).toContain("NIGHT");
     expect(p.actors[0].who).toBe("me");
     const gym = toPrototypeScene(composeScene(engine.visit({ state, world, modifiers: emptyModifiers(), rng, seed: 8 }, { locationId: "gym", date: { year: 2024, month: 5, day: 6 }, hour: 19 }), world, state));
-    expect(gym.roomKey).toBeUndefined(); // not painted yet → use assetPath / baseColor
+    // Not painted yet → the closest existing painter stands in (never a blank background).
+    expect(gym.roomKey).toBe("office");
+    expect(gym.standIn).toBe(true);
+    expect(gym.sceneKey).toBe("gym");
+    expect(gym.bgId).toBe("gym_evening");
     expect(gym.assetPath).toBe("assets/bg/gym/gym_evening.png");
+  });
+});
+
+describe("Every place has a background the prototype can draw", () => {
+  it("each background variant maps to an existing painter (its own, or the closest stand-in)", async () => {
+    const { toPrototypeScene } = await import("../src/integration/prototype");
+    const bgData = (await import("../data/world/backgrounds.json")).default as { backgrounds: Array<{ id: string; locationId: string; assetPath: string; renderer?: string; status?: string }> };
+    const PAINTERS = ["amuse", "beach", "cafe", "cinema", "diner", "home", "office", "park", "restaurant", "street", "tokyo"];
+    for (const loc of LOCATIONS.filter((l) => !l.online)) {
+      for (const bg of bgData.backgrounds.filter((b) => b.locationId === loc.id)) {
+        const ps = toPrototypeScene({ size: [360, 340], locationId: loc.id, background: { ...bg, layers: [] }, overlays: [], actors: [], props: [] });
+        expect(PAINTERS, `${loc.id}/${bg.id}`).toContain(ps.roomKey);
+        expect(ps.sceneKey).toBe(loc.id);
+        expect(ps.bgId).toBe(bg.id);
+        expect(ps.standIn).toBe(!loc.prototypeId && !(bg.renderer ?? "").startsWith("ROOMS."));
+      }
+    }
+  });
+});
+
+describe("Crowds don't grow old with the player", () => {
+  it("at 70, the café still has young regulars; people you know stay (and age with you); kids never become friends", () => {
+    const { state, world, rng, engine } = setup(21);
+    const visitAt = (year: number, loc = "cafe") => engine.visit({ state, world, modifiers: emptyModifiers(), rng, seed: 21 }, { locationId: loc, activityId: loc === "cafe" ? "drink_coffee" : undefined, date: { year, month: 5, day: 4 }, hour: 15 });
+    visitAt(2024);
+    const first = [...world.populated.cafe];
+    // Befriend one regular.
+    const friendId = first[first.length - 1];
+    world.relationships[friendId] = { npcId: friendId, stage: "FRIEND", closeness: 0.6, spark: 0, conversations: 8, origin: { type: "CAFE", locationId: "cafe", firstEncounterDate: { year: 2024, month: 5, day: 4 } }, lastContact: { year: 2024, month: 5, day: 4 }, channel: "IN_PERSON", metOffline: true };
+    for (let y = 2025; y <= 2070; y += 3) visitAt(y);
+    const now = world.populated.cafe.map((id) => world.npcs[id]);
+    const ages = now.map((n) => 2070 - n.birthYear);
+    expect(world.populated.cafe).toContain(friendId); // the friend is still around…
+    expect(2070 - world.npcs[friendId].birthYear).toBeGreaterThan(55); // …and has aged with you
+    expect(Math.min(...ages)).toBeLessThan(45); // but the crowd is mixed, not all elderly
+    const known = (id: string) => !["STRANGER", "FAMILIAR_FACE", undefined].includes(world.relationships[id]?.stage);
+    expect(first.filter((id) => !known(id)).every((id) => !world.populated.cafe.includes(id))).toBe(true); // strangers moved on
+    // Nobody works behind the counter past retirement age, even someone you know.
+    for (const n of now) if (n.anchoredTo === "cafe") expect(2070 - n.birthYear).toBeLessThanOrEqual(62);
+    // The park has children; none of them becomes an adult's friend.
+    for (let y = 2030; y <= 2060; y += 2) visitAt(y, "park");
+    const kids = Object.values(world.npcs).filter((n) => 2060 - n.birthYear < 16 && world.populated.park?.includes(n.id));
+    for (const k of kids) expect(world.relationships[k.id]?.stage ?? "STRANGER").toMatch(/STRANGER|FAMILIAR_FACE/);
+  });
+});
+
+describe("Kairosoft-style walking", () => {
+  it("everyone walks tile by tile; NPCs sometimes step off-screen and come back; the player never leaves; staff stay by their post", async () => {
+    const { stepCrowd, FLOOR, EXITS } = await import("../src/world/walkers");
+    type CrowdActor = import("../src/world/walkers").CrowdActor;
+    const actors = [
+      { who: "me", spot: [4.5, 4.5] as [number, number], z: 90, role: "me" },
+      { who: "w1", spot: [3, 5.5] as [number, number], z: 85, role: "npc", npcType: "regular_customer" },
+      { who: "w2", spot: [5.8, 3.2] as [number, number], z: 90, role: "npc", npcType: "student" },
+      { who: "w3", spot: [5.8, 5.8] as [number, number], z: 116, role: "npc", npcType: "barista" },
+      { who: "p1", spot: [3.2, 3.2] as [number, number], z: 64, role: "pet", npcType: "pet_dog" },
+    ];
+    let state;
+    let cur: CrowdActor[] = actors;
+    const moved = new Set<string>();
+    const wentOut = new Set<string>();
+    const cameBack = new Set<string>();
+    const rng = new SeededRandom(5);
+    const onFloor = (p: [number, number]) => p[0] >= FLOOR.min && p[0] <= FLOOR.max && p[1] >= FLOOR.min && p[1] <= FLOOR.max;
+    const onExitPath = (p: [number, number]) => EXITS.some((e) => p[0] === e[0] || p[1] === e[1]) || onFloor(p);
+    const home = new Map<string, [number, number]>();
+    for (let t = 0; t < 400; t++) {
+      const r = stepCrowd(state, "cafe", cur, rng);
+      state = r.state;
+      for (const a of r.actors) {
+        const prev = cur.find((x) => x.who === a.who)!;
+        const di = Math.abs(a.spot[0] - prev.spot[0]), dj = Math.abs(a.spot[1] - prev.spot[1]);
+        if (t > 0 && !(a.offscreen || prev.offscreen)) expect(di + dj === 0 || (di + dj === 0.5 && (di === 0 || dj === 0)), `${a.who} step`).toBe(true);
+        if (t > 0 && (di || dj)) moved.add(a.who);
+        if (a.offscreen) wentOut.add(a.who);
+        if (wentOut.has(a.who) && !a.offscreen && onFloor(a.spot)) cameBack.add(a.who);
+        expect(onExitPath(a.spot), `${a.who} at ${a.spot}`).toBe(true);
+        if (a.who === "w3") {
+          if (!home.has("w3")) home.set("w3", a.spot);
+          const h = home.get("w3")!;
+          expect(Math.abs(a.spot[0] - h[0]) + Math.abs(a.spot[1] - h[1])).toBeLessThanOrEqual(1.5);
+        }
+      }
+      cur = r.actors;
+    }
+    for (const w of ["me", "w1", "w2", "p1"]) expect(moved.has(w), `${w} moved`).toBe(true);
+    expect(wentOut.has("me")).toBe(false);
+    expect(wentOut.has("p1")).toBe(false);
+    expect([...wentOut].some((w) => w === "w1" || w === "w2")).toBe(true);
+    expect([...cameBack].some((w) => w === "w1" || w === "w2")).toBe(true);
   });
 });

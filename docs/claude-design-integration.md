@@ -28,13 +28,19 @@
 | `{kind:"log", text}` | Set the bottom log line |
 | `{kind:"dayEnd"}` | Call `game.endDay()` |
 
+**Big popups.** `popup.big === true` marks a life-changing moment (고백, 상견례, 결혼식, 부고, 병원에서 온 전화, 이별, 배신, 출산…). Show it Kairosoft-style: `popup.title` in a banner, `popup.scene` as the picture in the middle (draw it like `game.scene()`, scaled), then the line and choices.
+
 `popup.who` is one of `me`, `mom`, `dad`, `boss`, `coworker`, `partner`, `friend`, `npc`, `fated`, `stranger`, `recruiter`, `professor`, `mentor`, `barista`, `instructor`, `inlaw`, `judge`, `nurse`, `doctor` or `relative`. **Always show `popup.name`** (it is always set; never print `who`). Someone you haven't met yet is named `낯선 사람`. For `npc`, `fated` and `partner`, seed the sprite from `popup.npcId` / `popup.seed` and `popup.gender`. `popup.source` is `story` for the life-changing scenes, `opportunity`, `world` or `plan` otherwise.
 
 The result of `game.choose(i)` is `{ who, name, line }`, and `name` is always set.
 
 ## Scene
 
-`game.scene()` changes by itself: a story day moves you (wedding hall, court, funeral hall, airport → hotel → branch office on a business trip). After marriage, home uses the newlywed background. Call `game.wander()` about every 2.8 s and redraw: **every** actor moves, not only the player.
+`game.scene()` changes by itself: a story day moves you (wedding hall, court, funeral hall, airport → hotel → branch office on a business trip). After marriage, home uses the newlywed background.
+
+Backgrounds: draw `ROOMS[scene.bgId] ?? ROOMS[scene.sceneKey] ?? ROOMS[scene.roomKey]`. `roomKey` always names an existing painter; when `standIn` is true it is only the closest stand-in, so paint `ROOMS[sceneKey]` for that place (wedding_venue, funeral_hall, hospital, court, airport, airplane, family_home, …).
+
+**Walking (Kairosoft style).** Call `game.wander()` every **500 ms** and move each actor from its previous `spot` to the new one over ~480 ms (linear). Everyone walks tile by tile; `walking` → play walk frames, `facing` (`NE`/`NW`/`SE`/`SW`) → flip the sprite, `offscreen` → they walked out (hide); they come back later. Keep actor elements between frames (keyed by `who`) so the motion animates.
 
 Actor `role` values: `me`, `partner`, `fated`, `npc`, `kid`, `pet` (`npcType` `pet_dog` / `pet_cat`), `inlaw`, `guest`, `relative`, `coworker`, `baby`, `patient`, `friend`. `actor.name` is empty for people you haven't met, so don't draw a name tag.
 
@@ -52,21 +58,41 @@ Kinds: `START_DATING`, `FIRST_DATE`, `PROPOSAL`, `MEET_PARENTS` (상견례), `CA
 
 ## Story (hidden from the player)
 
+The destined person is a crush by default: known by name, never an automatic couple. Hidden 궁합 (사주 day pillars/띠/elements + synastry + MBTI) bends whether a confession, a reunion or a marriage talk works — as part of the chart's 70%.
+
+Astrology uses transits, secondary progressions, the Solar Return (the year's theme) and the Lunar Return (the month's mood, e.g. which weekend plans appeal). When transits and progressions point at the same life area in the same year, that year becomes the fated turning point.
+
+
 At birth, 사주 + 점성술 pick **5–7 fated turning points** (love, marriage, crisis, career turn at e.g. 43, move, loss, money, child, pet, illness, early retirement). Each one's situation is fixed; the outcome is **70% chart, 30% the player's choice**. When the chart overrides the choice, the result line says so. The day before, a hint line appears. Big things run as multi-day arcs: dating → proposal → 상견례 (파혼 possible) → wedding → new home; divorce → court; illness → treatment → result; retirement at 60 (or 명예퇴직), unless you run your own place. A life takes about 20–25 played days.
 
-## Buttons
+## Screen layout (Kairosoft style)
 
-- **Actions:** `game.actions()` returns up to 3 activities plus `LEAVE`. Clicking one calls `game.doActivity(id)`, which returns beats. Activities take real time, so there is no farming.
-- **LEAVE:** show `game.destinations()` (`{id, label, open}`), then `game.goTo(id)` for about 2 hours. After that the schedule resumes.
+- No activity or 나가기 buttons: the day plays by itself; the player answers popups (and picks weekend plans).
+- Top, under the HUD: **one log line** — `{kind:"log"}` / `{kind:"enter"}` text with the time (`10:02 시우와 처음으로 제대로 이야기했다.`).
+- Under the log line: **text notifications** (`{kind:"toast"}`) slide down from behind it, stack (max 3) and fade after ~4 s. `from` is the sender (a leading `[이름]` in a text is already turned into `from`).
+- **Popups are centered** on the play screen.
+- **No name tags** on characters.
+- `game.actions()`, `doActivity()`, `destinations()`, `goTo()` still exist (optional).
 
 ## Setup (from the existing form)
+
+Defaults: name `제이`, birth `1997-09-28` (solar).
 
 ```js
 LoveSim.createGame({
   name, gender: "F" | "M", likes: "M" | "F" | "A",
   birth: { year, month, day, hour?, minute? },   // SOLAR (convert lunar first)
   mbti: "ENFP", lang: "ko",
-  fated: { name, gender, mbti, birth: { year, month, day }, from: "same" | "city" | "abroad", job, profile: { look } },
+  family: {
+    mom: { alive: true | false }, dad: { alive: true | false },
+    siblings: [{ rel: "언니" | "오빠" | "누나" | "형" | "남동생" | "여동생", name? }],
+    grandparents: 0-4,            // how many are still alive
+  },
+  fated: {
+    name, gender, mbti, birth: { year, month, day },   // birth + mbti → hidden 궁합
+    status: "crush" | "dating" | "stranger",           // crush (default when named) = someone you like, NOT a couple yet
+    from: "same" | "city" | "abroad", job, profile: { look },
+  },
 })
 ```
 

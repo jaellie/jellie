@@ -31,6 +31,11 @@ import { yearlyIncome } from "../sim/lifeTick";
 import { LOCATIONS, getActivity, getDestination, getLocation, findLocation } from "../world/catalog";
 import { weekdayOf, seasonOf } from "../world/clock";
 import { generateNpc, habitSlot, knowsName } from "../world/npcs";
+import { aliveSiblings, siblingSender } from "../story/family";
+import { type CrowdState, stepCrowd } from "../world/walkers";
+import { compatibility } from "../destiny/compatibility";
+import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
+import type { RelationshipOriginType } from "../world/types";
 import { resolveWorldEvent } from "../world/decisions";
 import type { WorldEvent } from "../world/events";
 import { endTrip, startTrip } from "../world/travel";
@@ -62,15 +67,31 @@ export interface GameSetup {
   lang?: Lang;
   seed?: number;
   startAge?: number;
-  /** The "destined person" from setup. They exist in the world; meeting and romance are not guaranteed. */
+  /**
+   * The "destined person" from setup. They exist in the world; romance is never guaranteed —
+   * hidden 궁합 (사주 + synastry + MBTI) and the player's choices decide.
+   *  status "crush" (default when named): someone you already know and like — not your partner.
+   *  status "dating": you're already together at the start.
+   *  status "stranger" (default when unnamed): fate introduces you later.
+   */
   fated?: {
     name?: string;
     gender?: "F" | "M";
     mbti?: string;
-    birth?: { year: number; month: number; day: number };
+    birth?: { year: number; month: number; day: number; hour?: number; minute?: number };
     from?: "same" | "city" | "abroad";
+    status?: "crush" | "dating" | "stranger";
     job?: string;
     profile?: Record<string, unknown>;
+  };
+  /** The player's family at the start. Everything is optional; missing parts are filled in plausibly. */
+  family?: {
+    mom?: { alive?: boolean; name?: string; birthYear?: number };
+    dad?: { alive?: boolean; name?: string; birthYear?: number };
+    /** rel: 언니/오빠/누나/형/남동생/여동생 (or OLDER_SISTER…); birthYear, or gap = years older (+) / younger (−). */
+    siblings?: Array<{ rel: string; name?: string; birthYear?: number; gap?: number; gender?: "F" | "M" }>;
+    /** How many grandparents are alive at the start (0–4). */
+    grandparents?: number;
   };
 }
 
@@ -99,6 +120,12 @@ export interface Popup {
   title?: string;
   line: string;
   ch: Array<{ t: string }>;
+  /**
+   * A life-changing moment (proposal, wedding, funeral, birth, betrayal…): show the big popup —
+   * `title` in a banner and `scene` as the picture in the middle (draw it like game.scene()).
+   */
+  big?: boolean;
+  scene?: PrototypeScene;
 }
 
 export type Beat =
@@ -124,6 +151,7 @@ interface Pending {
   plan?: PlanOption[];
   storyRef?: string;
   patient?: string;
+  vars?: Record<string, string>;
 }
 
 export interface PlanOption {
@@ -138,7 +166,7 @@ export interface PlanOption {
 
 interface AgendaItem {
   t: number;
-  k: "major" | "small" | "message" | "plan" | "story" | "hint";
+  k: "major" | "small" | "message" | "plan" | "story" | "story2" | "hint";
 }
 
 export interface GameSave {
@@ -158,12 +186,15 @@ export interface GameSave {
     trip?: string;
     override?: { locationId: string; until: number; activityId?: string; from?: number };
     /** Scene changes caused by a choice (e.g. business trip: airport → hotel → branch office). */
-    sequence?: Array<{ locationId: string; from: number; until: number; activityId?: string }>;
+    sequence?: Array<{ locationId: string; from: number; until: number; activityId?: string; keep?: boolean }>;
     fatedPresent?: boolean;
   };
   /** Why today is played: calm / fated / foreshadow / arc (story engine). */
   dayKind?: "calm" | "fated" | "foreshadow" | "arc";
   dayRef?: string;
+  /** A second, lighter story moment sharing today (afternoon). */
+  dayKind2?: "fated" | "arc";
+  dayRef2?: string;
   /** Fated event foreshadowed today. */
   hintRef?: string;
   pending?: Pending;
@@ -219,6 +250,7 @@ export class Game {
   private events = new EventEngine(1);
   private runnerCache?: { key: string; runner: LifeRunner };
   private wanderTick = 0;
+  private crowd?: CrowdState;
 
   constructor(save: GameSave) {
     this.s = save;
@@ -267,7 +299,7 @@ export class Game {
   }
   private fill(text: string): string {
     const f = this.facts();
-    const t = fillNames(text, { partner: f.partnerName, friend: f.friendName, me: this.s.setup.name });
+    const t = fillNames(text, { partner: f.partnerName, friend: f.friendName, fated: f.fatedName, sibling: this.siblingSender(), me: this.s.setup.name });
     return this.s.lang === "ko" ? fixJosa(t) : t;
   }
   /** Stable portrait identity for a popup speaker. */
@@ -284,6 +316,10 @@ export class Game {
     if (npcId) return fromNpc(npcId) ?? {};
     if (role === "me" || role === "mom" || role === "dad") return {};
     if (role === "partner") return fromNpc(st.relationship.partnerId) ?? {};
+    if (role === "sibling") {
+      const sib = aliveSiblings(st)[0];
+      if (sib) return { gender: sib.sex === "MALE" ? "M" : "F", seed: sib.spriteSeed };
+    }
     if (role === "friend" && w) {
       const best = Object.values(w.relationships).filter((r) => r.stage === "FRIEND" || r.stage === "CLOSE_FRIEND").sort((a, b) => b.closeness - a.closeness)[0];
       if (best) return fromNpc(best.npcId) ?? {};
@@ -302,7 +338,13 @@ export class Game {
     const f = this.facts();
     if (role === "partner") return f.partnerName ?? this.L(bi("연인", "Partner"));
     if (role === "friend") return f.friendName ?? this.L(bi("친구", "Friend"));
+    if (role === "sibling") return this.siblingSender() ?? this.L(bi("형제", "Sibling"));
     return this.L(SPEAKER_NAME[role] ?? bi(role, role));
+  }
+  /** The living sibling who texts you: an older one by title (오빠), a younger one by name. */
+  private siblingSender(): string | undefined {
+    const sib = aliveSiblings(this.state)[0];
+    return sib ? this.L(siblingSender(this.state, sib)) : undefined;
   }
 
   // ---- day structure --------------------------------------------------------
@@ -311,6 +353,10 @@ export class Game {
     const st = this.state;
     const rng = this.rng("day");
     const date = { year: st.date.year, month: st.date.month, day: rng.int(1, 28) };
+    // Quiet days are often weekends — that's when you choose how to spend your time.
+    if ((s.dayKind ?? "calm") === "calm" && rng.chance(0.5)) {
+      while (![0, 6].includes(weekdayOf(date.year, date.month, date.day))) date.day = date.day >= 28 ? 1 : date.day + 1;
+    }
     st.date = { ...date };
     const weekday = weekdayOf(date.year, date.month, date.day);
     const weekend = weekday === 0 || weekday === 6;
@@ -343,12 +389,28 @@ export class Game {
       agenda.push({ t: 660, k: "story" });
       b.major = 0; // no random big offers competing with a destined moment
       b.small = Math.min(b.small, 1);
+      // A second moment shares the day: morning at the first place, afternoon at the second.
+      const def2 = s.dayKind2 && s.dayRef2 ? storyPopup(st, s.dayKind2, s.dayRef2, this.facts(), this.rng("storydef2"), { peek: true }) : undefined;
+      if (def2) {
+        s.dayPlan.override = undefined;
+        s.dayPlan.sequence = [
+          { locationId: storyDef.location, activityId: storyDef.activity, from: 600, until: 840 },
+          { locationId: def2.location, activityId: def2.activity, from: 840, until: 1080, keep: true },
+        ];
+        s.dayPlan.fatedPresent = !!storyDef.needsFated || !!def2.needsFated;
+        agenda.push({ t: 900, k: "story2" });
+        b.small = 0;
+        b.messages = Math.min(b.messages, 1);
+      } else {
+        s.dayKind2 = undefined;
+        s.dayRef2 = undefined;
+      }
     } else {
       agenda.push({ t: rng.int(620, 1020), k: "major" });
       if (weekend) agenda.push({ t: 600, k: "plan" });
     }
     const soon = upcomingHint(st);
-    if (soon && soon.id !== s.dayRef) {
+    if (soon && soon.id !== s.dayRef && soon.id !== s.dayRef2) {
       s.hintRef = soon.id;
       agenda.push({ t: 450, k: "hint" });
     }
@@ -417,6 +479,28 @@ export class Game {
    * 0.3 min per frame). Returns what happened; stops at a popup until choose().
    */
   advance(toMinute: number): Beat[] {
+    return this.tidy(this.step(toMinute));
+  }
+
+  /**
+   * A leading "[이름]" in a text is who's talking ("[아빠] 차 조심해라", "[응급실] …"): show it as the
+   * sender/speaker name and drop it from the text, so a name never appears twice. Content tags like
+   * "[사진]" stay in the text.
+   */
+  private tidy(beats: Beat[]): Beat[] {
+    for (const b of beats) {
+      if (b.kind === "toast") {
+        const t = splitSpeakerTag(b.text);
+        if (t.tag) (b.from = t.tag), (b.text = t.text);
+      } else if (b.kind === "popup") {
+        const t = splitSpeakerTag(b.popup.line);
+        if (t.tag) (b.popup.name = t.tag), (b.popup.line = t.text);
+      }
+    }
+    return beats;
+  }
+
+  private step(toMinute: number): Beat[] {
     const s = this.s;
     const beats: Beat[] = [];
     if (s.over || s.pending || !s.day) return beats;
@@ -500,6 +584,7 @@ export class Game {
 
   private fire(item: AgendaItem): Beat | undefined {
     if (item.k === "story") return this.fireStory();
+    if (item.k === "story2") return this.fireStory(2);
     if (item.k === "hint") {
       const h = this.s.hintRef ? hintFor(this.state, this.s.hintRef) : undefined;
       return h ? { kind: "log", text: this.L(h) } : undefined;
@@ -510,28 +595,37 @@ export class Game {
     return this.firePlan();
   }
 
-  private fireStory(): Beat | undefined {
+  private fireStory(slot: 1 | 2 = 1): Beat | undefined {
     const s = this.s;
     const st = this.state;
     const f = this.facts();
-    const def = storyPopup(st, s.dayKind as "fated" | "arc", s.dayRef!, f, this.rng("storydef"));
+    const kind = slot === 2 ? s.dayKind2 : s.dayKind;
+    const ref = slot === 2 ? s.dayRef2 : s.dayRef;
+    if ((kind !== "fated" && kind !== "arc") || !ref) return;
+    // Evaluated now (after the morning's moment resolved), so it can never contradict it.
+    const def = storyPopup(st, kind, ref, f, this.rng(slot === 2 ? "storydef2" : "storydef"));
     if (!def) return;
-    const ev = s.dayKind === "fated" ? fatedEvent(st, s.dayRef!) : undefined;
-    const patientKey = (ev?.data?.patient as string | undefined) ?? (st.story?.arcs.find((a) => a.id === s.dayRef)?.data?.patient as string | undefined);
+    const ev = kind === "fated" ? fatedEvent(st, ref) : undefined;
+    const patientKey = (ev?.data?.patient as string | undefined) ?? (st.story?.arcs.find((a) => a.id === ref)?.data?.patient as string | undefined);
     const patient = patientKey ? this.L(patientLabel(st, patientKey, f)) : "";
     const fatedNpc = Object.values(st.world?.npcs ?? {}).find((n) => n.fated);
     const who = def.who === "fated" ? "fated" : def.who;
     const portrait = def.who === "fated" && fatedNpc ? this.portrait("npc", fatedNpc.id) : this.portrait(def.who === "inlaw" || def.who === "judge" || def.who === "nurse" || def.who === "doctor" ? def.who : def.who);
+    const vars = { patient, ...def.vars };
     const popup: Popup = {
-      id: `story${s.dayIndex}`,
+      id: `story${s.dayIndex}${slot === 2 ? "b" : ""}`,
       source: "story",
       who,
       name: def.who === "fated" ? (fatedNpc ? this.npcLabel(fatedNpc.id) : this.L(bi("낯선 사람", "Stranger"))) : this.speaker(def.who),
       ...portrait,
-      line: this.fill(fillStory(this.L(def.line), st, f, { patient })),
-      ch: def.choices.map((c) => ({ t: this.fill(this.L(c)) })),
+      title: def.title ? this.L(def.title) : undefined,
+      line: this.fill(fillStory(this.L(def.line), st, f, vars)),
+      ch: def.choices.map((c) => ({ t: this.fill(fillStory(this.L(c), st, f, vars)) })),
+      // Life-changing moments get the big popup with the scene as its picture.
+      big: true,
+      scene: this.s.lastScene ? (JSON.parse(JSON.stringify(this.s.lastScene)) as PrototypeScene) : undefined, // a snapshot (wander() keeps moving the live scene)
     };
-    s.pending = { popup, storyRef: def.ref, patient };
+    s.pending = { popup, storyRef: def.ref, patient, vars };
     return { kind: "popup", popup };
   }
 
@@ -602,6 +696,16 @@ export class Game {
     return { kind: "toast", from: this.speaker(msg.from), text: this.fill(this.L(msg.text)), role: msg.from, ...this.portrait(msg.from) };
   }
 
+  /**
+   * The house the current Lunar Return lights up = this month's emotional focus.
+   * With a birth time: the LR Moon's house. Without one the LR angles are unreliable
+   * (and the LR Moon always sits on the natal Moon), so the LR Sun's natal house is used.
+   */
+  lunarFocusHouse(): number {
+    const lr = this.runner().destiny.astrologyAt(this.state.date).lunarReturn;
+    return (lr.anglesReliable ? lr.houses.MOON : lr.natalHouses.SUN) ?? 1;
+  }
+
   // ---- weekend menu ---------------------------------------------------------
   weekendMenu(): PlanOption[] {
     const st = this.state;
@@ -638,6 +742,13 @@ export class Game {
       pool.push({ item: { id: `trip:${dest}`, kind: "trip", destination: dest, label: bi(`${DEST_KO[dest]} 여행 떠나기`, `Trip to ${getDestination(dest).name.en}`) }, weight: w });
     }
     pool.push({ item: { id: "home", kind: "home", locationId: "home", activityId: "watch_tv", label: bi("집에서 뒹굴기", "Lounge at home") }, weight: 0.7 });
+
+    // This month's mood (Lunar Return, hidden): the house its Moon lights up tilts what you feel like doing.
+    const focus = LUNAR_FOCUS[this.lunarFocusHouse()] ?? [];
+    for (const p of pool) {
+      const tag = p.item.kind === "place" ? (Object.keys(st.world?.habits ?? {}).includes(p.item.locationId ?? "") ? "habit" : p.item.locationId) : p.item.kind;
+      if (tag && focus.includes(tag)) p.weight *= 1.8;
+    }
 
     const last = new Set(this.director.mem.lastMenu);
     for (let attempt = 0; attempt < 8; attempt++) {
@@ -717,7 +828,7 @@ export class Game {
       if (!res) return;
       if (res.scene?.length) this.setSequence(res.scene);
       if (!st.alive) s.minute = CFG.dayEndMinute;
-      return { who: "me", line: this.fill(fillStory(this.L(res.r), st, this.facts(), { patient: p.patient ?? "" })), log: label };
+      return { who: "me", line: this.fill(fillStory(this.L(res.r), st, this.facts(), { patient: p.patient ?? "", ...p.vars })), log: label };
     }
     if (p.storyId) {
       const story = STORIES.find((x) => x.id === p.storyId)!;
@@ -741,36 +852,34 @@ export class Game {
   /** A choice moves the player: each place for ~2 hours, starting now. */
   private setSequence(locations: string[]): void {
     const s = this.s;
+    // Reserved segments (the afternoon's second story moment) stay; the new scenes fit before them.
+    const kept = (s.dayPlan.sequence ?? []).filter((q) => q.keep && q.from >= s.minute);
+    const limit = Math.min(CFG.dayEndMinute, ...kept.map((q) => q.from));
     let t = s.minute;
-    s.dayPlan.sequence = locations.map((locationId) => {
-      const q = { locationId, from: t, until: Math.min(CFG.dayEndMinute, t + 120) };
-      t += 120;
-      return q;
-    });
+    const fresh = locations
+      .map((locationId) => {
+        const q = { locationId, from: t, until: Math.min(limit, t + 120) };
+        t += 120;
+        return q;
+      })
+      .filter((q) => q.until > q.from);
+    s.dayPlan.sequence = [...fresh, ...kept];
     s.dayPlan.override = undefined;
   }
 
-  /** Move everyone in the scene a little (call every few seconds; NPCs, partner, kids and pets wander too). */
+  /**
+   * Kairosoft-style crowd movement: call about every 500 ms and animate each actor from its
+   * previous spot to the new one over ~480 ms (linear). Everyone walks tile by tile; NPCs
+   * sometimes walk off the edge of the screen (`offscreen`) and come back later.
+   * `facing` flips the sprite; `walking` plays the walk frames. Visual only.
+   */
   wander(): PrototypeScene | undefined {
     const sc = this.s.lastScene;
     if (!sc) return;
-    const loc = getLocation(this.s.loc ?? "home");
-    const spots = loc.spots ?? [];
-    if (spots.length < 2) return sc;
     this.wanderTick = (this.wanderTick + 1) % 1_000_000;
-    const rng = this.rng("wander", this.wanderTick);
-    const taken = new Set<string>();
-    sc.actors = sc.actors.map((a) => {
-      if (!rng.chance(0.5)) {
-        taken.add(a.spot.join(","));
-        return a;
-      }
-      const free = spots.filter((p) => !taken.has(p.join(",")));
-      const spot = (free.length ? free : spots)[rng.int(0, (free.length ? free : spots).length - 1)] as [number, number];
-      const jitter: [number, number] = [spot[0] + rng.range(-0.4, 0.4), spot[1] + rng.range(-0.4, 0.4)];
-      taken.add(spot.join(","));
-      return { ...a, spot: jitter, z: Math.round((jitter[0] + jitter[1]) * 10) };
-    });
+    const r = stepCrowd(this.crowd, `${this.s.dayIndex}:${this.s.loc}:${sc.bgId}`, sc.actors, this.rng("wander", this.wanderTick));
+    this.crowd = r.state;
+    sc.actors = r.actors as PrototypeScene["actors"];
     return sc;
   }
 
@@ -790,7 +899,7 @@ export class Game {
     const act = getActivity(activityId);
     const beats = this.visit(s.loc ?? "home", activityId);
     s.minute = Math.min(CFG.dayEndMinute, s.minute + Math.max(30, Math.round(act.durationHours * 60)));
-    return beats.concat(s.pending ? [] : this.advance(s.minute));
+    return this.tidy(beats.concat(s.pending ? [] : this.advance(s.minute)));
   }
 
   /** Places reachable now (home region + online, or the trip's places). */
@@ -852,6 +961,8 @@ export class Game {
       }
       s.dayKind = st.story.nextDay!.kind;
       s.dayRef = st.story.nextDay!.ref;
+      s.dayKind2 = st.story.nextDay!.second?.kind;
+      s.dayRef2 = st.story.nextDay!.second?.ref;
     } else if (st.alive) {
       const runner = new LifeRunner(this.runnerOptions(hash(s.seed, "between", s.dayIndex)), st);
       for (let i = 0; i < 12 && st.alive; i++) runner.stepMonth();
@@ -949,7 +1060,7 @@ export class Game {
       income: krw(yearlyIncome(st), UNIT),
       job: this.L(job),
       relationship: this.L(rel),
-      location: this.s.loc ? this.L(getLocation(this.s.loc).name) : "",
+      location: this.L(getLocation(this.s.loc ?? this.locationAt(this.s.minute)).name),
       city: this.s.lang === "ko" ? `${COUNTRY_KO[st.location.country] ?? st.location.country} · ${CITY_KO[st.location.city] ?? st.location.city}` : `${st.location.country} · ${st.location.city}`,
       minute: this.s.minute,
     };
@@ -1024,7 +1135,7 @@ export function createGame(input: GameSetup): Game {
   while (runner.state.monthIndex < startAge * 12) runner.stepMonth();
   const st = save.life;
   st.alive = true;
-  // The game begins single (the destined-person premise); earlier loves become exes.
+  // The game begins single (unless setup says you're already with the destined person); earlier loves become exes.
   if (st.relationship.status !== "SINGLE") {
     const ex = st.npcs.find((n) => n.id === st.relationship.partnerId);
     if (ex) ex.role = "EX";
@@ -1032,8 +1143,18 @@ export function createGame(input: GameSetup): Game {
     st.relationship = { status: "SINGLE" };
   }
   st.money = Math.max(st.money, 1.85);
+  st.flags.likes = setup.likes ?? (setup.gender === "F" ? "M" : "F");
+  applyFamilySetup(st, setup, new SeededRandom(hash(seed, "family")));
   addFatedPerson(st, setup, new SeededRandom(hash(seed, "fated")));
   initStory(st, birthOf(setup), setup.place, seed);
+  // Hidden 궁합 with the destined person (never shown; it bends love outcomes as part of the chart's 70%).
+  const fx = setup.fated;
+  if (fx && (fx.birth || fx.mbti)) {
+    const fatedNpc = Object.values(st.world?.npcs ?? {}).find((n) => n.fated);
+    const sex = fatedNpc?.sex ?? (fx.gender === "M" ? "MALE" : "FEMALE");
+    const c = compatibility({ birth: birthOf(setup), mbti: setup.mbti }, { birth: fx.birth ? { ...fx.birth, sex } : undefined, mbti: fx.mbti });
+    st.story!.compat = { score: c.score, chemistry: c.chemistry, stability: c.stability, friction: c.friction };
+  }
   save.dayKind = "calm";
   save.milestones.push({ age: startAge, ko: "이야기가 시작된다.", en: "The story begins." });
   g.startDay();
@@ -1082,7 +1203,81 @@ function addFatedPerson(st: LifeState, setup: GameSetup, rng: SeededRandom): voi
   npc.fated = true;
   npc.foreign = from === "abroad";
   npc.profile = { mbti: fx.mbti, job: fx.job, from, ...fx.profile };
+  // Someone you already know and like (a crush) — or already your partner. Never automatically a couple.
+  const status = fx.status ?? (fx.name ? "crush" : "stranger");
+  if (status === "stranger") return;
+  const origin = { type: (from === "abroad" ? "LANGUAGE_EXCHANGE_APP" : "FRIEND_OF_FRIEND") as RelationshipOriginType, locationId: home.id, firstEncounterDate: { ...st.date } };
+  w.relationships[npc.id] = { npcId: npc.id, stage: status === "dating" ? "PARTNER" : "ACQUAINTANCE", closeness: status === "dating" ? 0.6 : 0.4, spark: status === "dating" ? 0.7 : 0.35, conversations: 8, origin, lastContact: { ...st.date }, channel: from === "abroad" ? "ONLINE" : "IN_PERSON", metOffline: from !== "abroad" };
+  if (status === "dating") {
+    npc.single = false;
+    const birth = { year: npc.birthYear, month: npc.birthMonth, day: npc.birthDay, sex: npc.sex };
+    st.npcs.push({ id: npc.id, name: npc.name, birth, chart: calculateNatalChart(birth), role: "PARTNER", metAt: { ...st.date } });
+    st.relationship = { status: "DATING", partnerId: npc.id, sinceMonth: st.monthIndex };
+    st.flags.lastPartnerName = npc.name;
+    st.flags.skipFirstDate = true; // already a couple: no "first date" day
+  }
 }
+
+const SIBLING_REL: Record<string, SiblingRel> = {
+  언니: "OLDER_SISTER", 누나: "OLDER_SISTER", 오빠: "OLDER_BROTHER", 형: "OLDER_BROTHER", 남동생: "YOUNGER_BROTHER", 여동생: "YOUNGER_SISTER",
+  OLDER_SISTER: "OLDER_SISTER", OLDER_BROTHER: "OLDER_BROTHER", YOUNGER_SISTER: "YOUNGER_SISTER", YOUNGER_BROTHER: "YOUNGER_BROTHER",
+};
+const FAMILY_NAMES = { MALE: ["민수", "지훈", "현우", "성민", "준호", "동현", "태윤"], FEMALE: ["지은", "수진", "민지", "서연", "하은", "유진", "혜린"] };
+
+/** Parents (alive or not), siblings and grandparents from setup; anything missing is filled in plausibly. */
+function applyFamilySetup(st: LifeState, setup: GameSetup, rng: SeededRandom): void {
+  const fx = setup.family ?? {};
+  const fam = (st.family ??= { mom: { alive: true, birthYear: setup.birth.year - 29 }, dad: { alive: true, birthYear: setup.birth.year - 31 } });
+  for (const who of ["mom", "dad"] as const) {
+    const p = fx[who];
+    if (!p) continue;
+    if (p.alive === false) fam[who].alive = false;
+    if (p.name) fam[who].name = p.name;
+    if (p.birthYear) fam[who].birthYear = p.birthYear;
+  }
+  fam.siblings = (fx.siblings ?? []).flatMap((x, i) => {
+    const rel = SIBLING_REL[x.rel?.trim()] ?? SIBLING_REL[x.rel?.trim().toUpperCase()];
+    if (!rel) return [];
+    const older = rel.startsWith("OLDER");
+    const sex = x.gender ? (x.gender === "M" ? "MALE" : "FEMALE") : rel.endsWith("BROTHER") ? "MALE" : "FEMALE";
+    const gap = x.gap ?? (older ? rng.int(1, 5) : -rng.int(1, 5));
+    const pool = FAMILY_NAMES[sex];
+    return [{ id: `sib${i + 1}`, rel, name: x.name ?? pool[rng.int(0, pool.length - 1)], sex, birthYear: x.birthYear ?? setup.birth.year - gap, alive: true, spriteSeed: rng.int(0, 999_999) } as Sibling];
+  });
+  // Grandparents: however many are still alive at the start (default: 0–2).
+  const n = Math.max(0, Math.min(4, fx.grandparents ?? rng.weighted([{ item: 0, weight: 3 }, { item: 1, weight: 4 }, { item: 2, weight: 3 }])));
+  const rels: GrandparentRel[] = ["MAT_GRANDMA", "PAT_GRANDMA", "MAT_GRANDPA", "PAT_GRANDPA"];
+  for (let i = rels.length - 1; i > 0; i--) {
+    const j = rng.int(0, i);
+    [rels[i], rels[j]] = [rels[j], rels[i]];
+  }
+  fam.grandparents = rels.slice(0, n).map((rel, i) => ({ id: `gp${i + 1}`, rel, birthYear: (rel.startsWith("MAT") ? fam.mom.birthYear : fam.dad.birthYear) - rng.int(24, 32), alive: true }));
+}
+
+const CONTENT_TAG = /^(사진|영상|동영상|링크|이모티콘|스티커|음성|photo|video|link|sticker|voice)$/i;
+
+/** "[아빠] 차 조심해라" → { tag: "아빠", text: "차 조심해라" }; "[사진] …" is content, not a speaker. */
+export function splitSpeakerTag(text: string): { tag?: string; text: string } {
+  const m = /^\[([^\][]{1,8})\]\s*/.exec(text);
+  if (!m || CONTENT_TAG.test(m[1])) return { text };
+  return { tag: m[1], text: text.slice(m[0].length) };
+}
+
+/** Lunar Return house → weekend options that month's mood leans toward. */
+const LUNAR_FOCUS: Record<number, string[]> = {
+  1: ["street", "habit", "gym"],
+  2: ["restaurant", "diner", "street"],
+  3: ["street", "library", "cafe", "diner"],
+  4: ["home", "family_home"],
+  5: ["cinema", "amusement_park", "date"],
+  6: ["park", "habit"],
+  7: ["date", "friend"],
+  8: ["home", "library"],
+  9: ["trip", "library"],
+  10: ["library", "cafe"],
+  11: ["friend", "amusement_park", "street"],
+  12: ["home", "park", "cafe"],
+};
 
 // ---------------------------------------------------------------------------
 // Skip-screen summary: what changed while time passed (bilingual, fact-based)

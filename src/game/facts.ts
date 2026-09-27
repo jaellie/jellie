@@ -32,6 +32,16 @@ export interface LifeFacts {
   partnerName?: string;
   momAlive: boolean;
   dadAlive: boolean;
+  /** At least one living sibling (from setup). */
+  hasSibling: boolean;
+  /** The destined person from setup: already known (met, name known), single, your partner, free to fall for. */
+  fatedKnown: boolean;
+  fatedSingle: boolean;
+  fatedPartner: boolean;
+  fatedAvailable: boolean;
+  fatedName?: string;
+  /** The partner is in a critical state (accident/collapse) — they can't text you. */
+  partnerCritical: boolean;
   hasFriend: boolean;
   friendName?: string;
   abroad: boolean;
@@ -56,6 +66,11 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
   const partnered = s.relationship.status === "DATING" || s.relationship.status === "MARRIED";
   const partner = s.relationship.partnerId ? s.npcs.find((n) => n.id === s.relationship.partnerId) ?? (w?.npcs[s.relationship.partnerId] as { name: string } | undefined) : undefined;
   const habits = w ? Object.keys(w.habits) : [];
+  const fated = w ? Object.values(w.npcs).find((n) => n.fated) : undefined;
+  const fatedRel = fated ? w!.relationships[fated.id] : undefined;
+  const fatedKnown = !!fatedRel && fatedRel.stage !== "STRANGER" && fatedRel.stage !== "FAMILIAR_FACE";
+  const fatedPartner = partnered && !!fated && s.relationship.partnerId === fated.id;
+  const fatedSingle = !!fated && fated.single && !fated.deceased;
   return {
     age: Math.floor(s.age),
     alive: s.alive,
@@ -77,6 +92,13 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
     partnerName: partnered ? partner?.name : undefined,
     momAlive: s.family?.mom.alive ?? true,
     dadAlive: s.family?.dad.alive ?? true,
+    hasSibling: (s.family?.siblings ?? []).some((x) => x.alive),
+    fatedKnown,
+    fatedSingle,
+    fatedPartner,
+    fatedAvailable: fatedKnown && fatedSingle && !fatedPartner && fatedRel?.stage !== "DECEASED",
+    fatedName: fatedKnown ? fated!.name : undefined,
+    partnerCritical: partnered && !!s.flags.partnerCritical,
     hasFriend: friends.length > 0,
     friendName: friends[0] ? w!.npcs[friends[0].npcId]?.name : undefined,
     abroad: isAbroad(s),

@@ -36,7 +36,21 @@ export interface FatedEvent {
   data?: Record<string, string | number | boolean>;
 }
 
-export type ArcType = "DATING" | "ENGAGEMENT" | "DIVORCE" | "PREGNANCY" | "RETIREMENT" | "PARENT_PASSING" | "PET_FAREWELL" | "ILLNESS";
+export type ArcType =
+  | "DATING"
+  | "ENGAGEMENT"
+  | "DIVORCE"
+  | "PREGNANCY"
+  | "RETIREMENT"
+  | "PARENT_PASSING"
+  | "PET_FAREWELL"
+  | "ILLNESS"
+  /** The partner's sudden accident / collapse / old age: the call → the funeral. */
+  | "PARTNER_PASSING"
+  /** Finding out the partner is cheating. */
+  | "AFFAIR"
+  /** A grandparent, aunt/uncle or sibling passes away. */
+  | "FAMILY_PASSING";
 
 export interface ArcStep {
   key: string;
@@ -56,9 +70,11 @@ export interface StoryState {
   script: FatedEvent[];
   arcs: ActiveArc[];
   /** Month index of the next scheduled played day and why. */
-  nextDay?: { month: number; kind: "calm" | "fated" | "foreshadow" | "arc"; ref?: string };
+  nextDay?: { month: number; kind: "calm" | "fated" | "foreshadow" | "arc"; ref?: string; second?: { kind: "fated" | "arc"; ref: string } };
   log: Array<{ age: number; ko: string; en: string }>;
   nextArcId: number;
   /** Memory cards waiting for the next 시간이 흐른다 screen. */
   cards: Array<{ kind: string; age: number; vars: Record<string, string> }>;
+  /** Hidden 궁합 with the destined person from setup (0..1 score + flavour). */
+  compat?: { score: number; chemistry: number; stability: number; friction: number };
 }

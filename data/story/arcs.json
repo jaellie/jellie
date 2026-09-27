@@ -1,9 +1,13 @@
 {
- "_doc": "Multi-day life arcs. Each step happens on its own played day 'after' [min,max] months after the previous step, at 'location'. Choices map to outcomes; outcome effects + a memory card for the 시간이 흐른다 screen.",
+ "_doc": "Multi-day life arcs. Each step happens on its own played day 'after' [min,max] months after the previous step, at 'location'. Choices map to outcomes; outcome effects + a memory card for the 시간이 흐른다 screen. A choice may 'roll' among outcomes (bent by 궁합 via 'compat' when the partner is the destined person). 'alt' + 'altBy' pick another speaker/line by cause or by who can still speak. 'title' heads the big popup.",
  "arcs": {
   "DATING": {
    "steps": {
     "FIRST_DATE": {
+     "title": {
+      "ko": "첫 데이트",
+      "en": "First date"
+     },
      "after": [
       1,
       2
@@ -50,6 +54,10 @@
      }
     },
     "PROPOSAL": {
+     "title": {
+      "ko": "프러포즈",
+      "en": "The proposal"
+     },
      "after": [
       24,
       36
@@ -130,6 +138,10 @@
      }
     },
     "LAST_CHANCE": {
+     "title": {
+      "ko": "결정의 시간",
+      "en": "Time to decide"
+     },
      "after": [
       10,
       14
@@ -212,6 +224,10 @@
   "ENGAGEMENT": {
    "steps": {
     "MEET_PARENTS": {
+     "title": {
+      "ko": "상견례",
+      "en": "Meeting the parents"
+     },
      "after": [
       2,
       4
@@ -276,6 +292,10 @@
      }
     },
     "WEDDING": {
+     "title": {
+      "ko": "결혼식",
+      "en": "The wedding"
+     },
      "after": [
       5,
       9
@@ -345,6 +365,10 @@
   "DIVORCE": {
    "steps": {
     "COURT": {
+     "title": {
+      "ko": "법원",
+      "en": "The court"
+     },
      "after": [
       2,
       4
@@ -405,10 +429,77 @@
   },
   "PREGNANCY": {
    "steps": {
-    "BIRTH": {
+    "CHECKUP": {
+     "title": {
+      "ko": "정기 검진",
+      "en": "The checkup"
+     },
      "after": [
-      7,
-      9
+      2,
+      3
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "doctor",
+     "line": {
+      "ko": "[의사] 초음파 보실게요. 편하게 누우세요.",
+      "en": "[Doctor] Let's do the ultrasound. Lie back and relax."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(두 손을 꼭 모은다)",
+        "en": "(Clasp your hands tight)"
+       },
+       "roll": {
+        "HEALTHY": 0.88,
+        "LOSS": 0.12
+       }
+      },
+      {
+       "t": {
+        "ko": "(화면을 뚫어지게 본다)",
+        "en": "(Stare at the screen)"
+       },
+       "roll": {
+        "HEALTHY": 0.88,
+        "LOSS": 0.12
+       }
+      }
+     ],
+     "outcomes": {
+      "HEALTHY": {
+       "r": {
+        "ko": "작은 심장 소리가 들렸다. 눈물이 났다.",
+        "en": "You heard a tiny heartbeat. Tears came."
+       },
+       "effects": []
+      },
+      "LOSS": {
+       "r": {
+        "ko": "…작은 심장 소리가 들리지 않았다. 우리는 한참을 말없이 앉아 있었다.",
+        "en": "…There was no heartbeat. You sat there in silence for a long time."
+       },
+       "effects": [
+        {
+         "kind": "endArc"
+        }
+       ],
+       "card": "PREGNANCY_LOSS",
+       "scene": [
+        "hospital"
+       ]
+      }
+     }
+    },
+    "BIRTH": {
+     "title": {
+      "ko": "출산",
+      "en": "The birth"
+     },
+     "after": [
+      5,
+      7
      ],
      "location": "hospital",
      "activity": "visit_patient",
@@ -460,6 +551,10 @@
   "RETIREMENT": {
    "steps": {
     "FAREWELL": {
+     "title": {
+      "ko": "정년퇴직",
+      "en": "Retirement"
+     },
      "after": [
       0,
       0
@@ -507,6 +602,10 @@
   "PARENT_PASSING": {
    "steps": {
     "GOODBYE": {
+     "title": {
+      "ko": "마지막 인사",
+      "en": "The last goodbye"
+     },
      "after": [
       0,
       1
@@ -556,6 +655,10 @@
   "PET_FAREWELL": {
    "steps": {
     "GOODBYE": {
+     "title": {
+      "ko": "무지개다리",
+      "en": "Over the rainbow bridge"
+     },
      "after": [
       0,
       1
@@ -602,6 +705,10 @@
   "ILLNESS": {
    "steps": {
     "TREATMENT": {
+     "title": {
+      "ko": "투병",
+      "en": "The fight"
+     },
      "after": [
       4,
       7
@@ -641,6 +748,10 @@
      }
     },
     "RESULT": {
+     "title": {
+      "ko": "검사 결과",
+      "en": "The results"
+     },
      "after": [
       5,
       10
@@ -671,6 +782,326 @@
         {
          "kind": "illnessResult"
         }
+       ]
+      }
+     }
+    }
+   }
+  },
+  "PARTNER_PASSING": {
+   "steps": {
+    "CALL": {
+     "title": {
+      "ko": "병원에서 온 전화",
+      "en": "A call from the hospital"
+     },
+     "after": [
+      0,
+      0
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "doctor",
+     "line": {
+      "ko": "[병원] {partner} 님이 갑자기 쓰러지셨어요. 서둘러 와 주셔야 할 것 같습니다.",
+      "en": "[Hospital] {partner} suddenly collapsed. Please come quickly."
+     },
+     "altBy": "cause",
+     "alt": {
+      "accident": {
+       "who": "doctor",
+       "line": {
+        "ko": "[응급실] {partner} 님 보호자분 되시죠? 사고가 있었습니다. 지금 바로 와 주세요.",
+        "en": "[ER] Are you {partner}'s family? There's been an accident. Please come right away."
+       }
+      },
+      "sudden": {
+       "who": "doctor",
+       "line": {
+        "ko": "[병원] {partner} 님이 갑자기 쓰러지셨어요. 서둘러 와 주셔야 할 것 같습니다.",
+        "en": "[Hospital] {partner} suddenly collapsed. Please come quickly."
+       }
+      },
+      "old": {
+       "who": "me",
+       "line": {
+        "ko": "({partner}의 숨이 점점 약해지고 있다. 의사가 가족을 부르라고 했다.)",
+        "en": "({partner}'s breathing grows weaker. The doctor says to call the family.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "정신없이 달려간다",
+        "en": "Run there"
+       },
+       "outcome": "VIGIL"
+      },
+      {
+       "t": {
+        "ko": "(손이 떨려 아무것도 할 수 없다)",
+        "en": "(Your hands shake too much to do anything)"
+       },
+       "outcome": "VIGIL"
+      }
+     ],
+     "outcomes": {
+      "VIGIL": {
+       "r": {
+        "ko": "밤새 {partner}의 손을 놓지 않았다.",
+        "en": "You held {partner}'s hand all night."
+       },
+       "effects": [
+        {
+         "kind": "partnerCritical"
+        }
+       ]
+      }
+     }
+    },
+    "FAREWELL": {
+     "title": {
+      "ko": "이별",
+      "en": "Goodbye"
+     },
+     "after": [
+      0,
+      1
+     ],
+     "location": "funeral_hall",
+     "activity": "mourn",
+     "who": "me",
+     "line": {
+      "ko": "(영정 사진 속 {partner}이(가) 웃고 있다.)",
+      "en": "({partner} smiles out of the memorial photo.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "마지막으로 이름을 불러본다",
+        "en": "Say their name one last time"
+       },
+       "outcome": "GOODBYE"
+      },
+      {
+       "t": {
+        "ko": "고마웠어. 정말로.",
+        "en": "Thank you. Truly."
+       },
+       "outcome": "GOODBYE"
+      }
+     ],
+     "outcomes": {
+      "GOODBYE": {
+       "r": {
+        "ko": "…{partner}은(는) 이제 없다. 그래도 함께한 날들은 여기 남아 있다.",
+        "en": "…{partner} is gone. But the days you shared are still here."
+       },
+       "effects": [
+        {
+         "kind": "partnerDies"
+        }
+       ],
+       "card": "PARTNER_FUNERAL",
+       "scene": [
+        "funeral_hall"
+       ]
+      }
+     }
+    }
+   }
+  },
+  "AFFAIR": {
+   "steps": {
+    "DISCOVER": {
+     "title": {
+      "ko": "배신",
+      "en": "Betrayal"
+     },
+     "after": [
+      0,
+      0
+     ],
+     "location": "street",
+     "who": "me",
+     "line": {
+      "ko": "({partner}의 휴대폰에 낯선 이름의 메시지가 떴다. …그리고 오늘, 둘이 함께 있는 걸 봤다.)",
+      "en": "(A message from an unfamiliar name lit up {partner}'s phone. …And today, you saw them together.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "그 자리에서 따진다",
+        "en": "Confront them on the spot"
+       },
+       "roll": {
+        "SEPARATE": 0.65,
+        "RECONCILE": 0.2,
+        "DISTANCE": 0.15
+       },
+       "compat": {
+        "RECONCILE": 1,
+        "SEPARATE": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "모른 척한다",
+        "en": "Pretend you didn't see"
+       },
+       "roll": {
+        "DISTANCE": 0.75,
+        "SEPARATE": 0.1,
+        "RECONCILE": 0.15
+       },
+       "compat": {
+        "RECONCILE": 1,
+        "SEPARATE": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "대화로 풀어본다",
+        "en": "Try to talk it through"
+       },
+       "roll": {
+        "RECONCILE": 0.55,
+        "SEPARATE": 0.3,
+        "DISTANCE": 0.15
+       },
+       "compat": {
+        "RECONCILE": 1,
+        "SEPARATE": -1
+       }
+      }
+     ],
+     "outcomes": {
+      "RECONCILE": {
+       "r": {
+        "ko": "{partner}이(가) 무릎을 꿇었다. …딱 한 번만, 믿어보기로 했다.",
+        "en": "{partner} fell to their knees. …You decided to trust them, just once more."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "I forgave, once.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      },
+      "SEPARATE": {
+       "r": {
+        "ko": "…더는 함께할 수 없었다.",
+        "en": "…You couldn't stay together anymore."
+       },
+       "effects": [
+        {
+         "kind": "separate"
+        }
+       ],
+       "card": "AFFAIR",
+       "scene": [
+        "street"
+       ]
+      },
+      "DISTANCE": {
+       "r": {
+        "ko": "아무 말도 하지 못했다. 그날 이후, 우리 사이엔 금이 갔다.",
+        "en": "You couldn't say a word. Since that day, something between you cracked."
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "distance",
+         "value": true
+        }
+       ]
+      }
+     }
+    }
+   }
+  },
+  "FAMILY_PASSING": {
+   "steps": {
+    "GOODBYE": {
+     "title": {
+      "ko": "부고",
+      "en": "Sad news"
+     },
+     "after": [
+      0,
+      0
+     ],
+     "location": "funeral_hall",
+     "activity": "mourn",
+     "who": "me",
+     "line": {
+      "ko": "({relative}께서 돌아가셨다는 연락을 받았다.)",
+      "en": "(You got word that {relative} passed away.)"
+     },
+     "altBy": "speaker",
+     "alt": {
+      "sibling": {
+       "who": "me",
+       "line": {
+        "ko": "({relative}의 부고를 받았다. 믿을 수가 없다.)",
+        "en": "(The news about {relative} came. You can't believe it.)"
+       }
+      },
+      "mom": {
+       "who": "mom",
+       "line": {
+        "ko": "[엄마] {relative}께서 돌아가셨대. …같이 가자.",
+        "en": "[Mom] {relative} passed away. …Let's go together."
+       }
+      },
+      "dad": {
+       "who": "dad",
+       "line": {
+        "ko": "[아빠] {relative}께서 돌아가셨다. 내려올 수 있겠니?",
+        "en": "[Dad] {relative} passed away. Can you come down?"
+       }
+      },
+      "me": {
+       "who": "me",
+       "line": {
+        "ko": "({relative}께서 돌아가셨다는 연락을 받았다.)",
+        "en": "(You got word that {relative} passed away.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "바로 내려간다",
+        "en": "Go right away"
+       },
+       "outcome": "GOODBYE"
+      },
+      {
+       "t": {
+        "ko": "(한참을 멍하니 있었다)",
+        "en": "(You sit there, numb, for a long time)"
+       },
+       "outcome": "GOODBYE"
+      }
+     ],
+     "outcomes": {
+      "GOODBYE": {
+       "r": {
+        "ko": "향을 피우고, 오래 절을 했다.",
+        "en": "You lit incense and bowed for a long time."
+       },
+       "effects": [
+        {
+         "kind": "relativeDies"
+        }
+       ],
+       "scene": [
+        "funeral_hall"
        ]
       }
      }

@@ -26,9 +26,27 @@ const FALLBACK_BG: Record<string, string> = {
   CITY: "#b3b8c4",
 };
 
+/**
+ * Until the UI has a painter for a place, the closest existing one stands in, so a
+ * background is never blank. The UI should prefer ROOMS[bgId] → ROOMS[sceneKey] → ROOMS[roomKey].
+ */
+const STAND_IN: Record<string, string> = {
+  family_home: "home", tokyo_hotel: "home", paris_hotel: "home", business_hotel: "home",
+  gym: "office", airport: "office", airplane: "office", hospital: "office", court: "office", branch_office: "office", funeral_hall: "office",
+  cooking_class: "diner", library: "cafe", beach_cafe: "cafe", paris_cafe: "cafe", wedding_venue: "restaurant",
+  university: "street", paris_eiffel_tower: "street", paris_louvre: "street", paris_street: "street",
+  surf_school: "beach", boardwalk: "beach", paris_seine: "park",
+};
+
 export interface PrototypeScene {
-  /** Key into the prototype's ROOMS / SPOTS / WBG, when it has a painter for this place. */
+  /** Key into the prototype's ROOMS / SPOTS / WBG: the place's own painter, or the closest stand-in (never empty). */
   roomKey?: string;
+  /** The place itself (location id) — paint ROOMS[sceneKey] to replace a stand-in (e.g. "funeral_hall"). */
+  sceneKey: string;
+  /** The exact background variant (e.g. "home_newlywed", "wedding_ceremony", "gym_night"). */
+  bgId: string;
+  /** True when roomKey is only a stand-in for a place that has no painter yet. */
+  standIn: boolean;
   /** Bitmap to show when there is no procedural painter yet. */
   assetPath: string;
   baseColor: string;
@@ -51,13 +69,18 @@ export interface PrototypeScene {
     fated?: boolean;
     /** e.g. pet_dog / pet_cat / kid / trainer … */
     npcType?: string;
+    /** Set by game.wander(): moved this tick (walk frames), which way they face, and whether they've stepped out. */
+    walking?: boolean;
+    facing?: "NE" | "NW" | "SE" | "SW";
+    offscreen?: boolean;
   }>;
 }
 
 export function toPrototypeScene(scene: Scene): PrototypeScene {
   const loc = getLocation(scene.locationId);
   const hasPainter = scene.background.renderer?.startsWith("ROOMS.");
-  const roomKey = hasPainter ? scene.background.renderer!.slice(6) : loc.prototypeId;
+  const own = hasPainter ? scene.background.renderer!.slice(6) : loc.prototypeId;
+  const roomKey = own ?? STAND_IN[loc.id];
   const overlays = scene.overlays.map((o) => ({ condition: o.condition, background: o.kind === "tint" ? o.color! : o.css ?? "" }));
   // Until the variant bitmap exists, the base painter stands in — so draw the variant's own conditions as overlays too.
   if (!hasPainter && roomKey && scene.background.status !== "ready") {
@@ -71,6 +94,9 @@ export function toPrototypeScene(scene: Scene): PrototypeScene {
   }
   return {
     roomKey,
+    sceneKey: loc.id,
+    bgId: scene.background.id,
+    standIn: !own,
     assetPath: scene.background.assetPath,
     baseColor: FALLBACK_BG[loc.type] ?? "#ead8bb",
     overlays,
