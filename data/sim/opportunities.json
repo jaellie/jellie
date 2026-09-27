@@ -1439,6 +1439,10 @@
           ],
           "consequences": [
             {
+              "kind": "trip",
+              "scope": "DOMESTIC"
+            },
+            {
               "kind": "money",
               "amount": -3
             },
@@ -1617,6 +1621,12 @@
           "id": "JOIN",
           "label": "Join",
           "consequences": [
+            {
+              "kind": "startHabit",
+              "locationId": "language_exchange_app",
+              "activityId": "chat",
+              "perMonth": 6
+            },
             {
               "kind": "social",
               "delta": 2
@@ -2186,6 +2196,368 @@
             "base": 0.2,
             "traits": {
               "riskTolerance": 0.2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "JOIN_GYM",
+      "type": "SOCIAL",
+      "title": "Join a Gym",
+      "emoji": "🏋️",
+      "baseProbability": 0.02,
+      "affinity": {
+        "stability": 0.4,
+        "social": 0.3,
+        "change": 0.2
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 16,
+          "max": 70
+        }
+      ],
+      "cooldownMonths": 24,
+      "expiresInMonths": 1,
+      "maxTimesTaken": 1,
+      "choices": [
+        {
+          "id": "JOIN",
+          "label": "Sign up",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 0.5
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -0.5
+            },
+            {
+              "kind": "startHabit",
+              "locationId": "gym",
+              "activityId": "workout",
+              "perMonth": 8
+            },
+            {
+              "kind": "memory",
+              "text": "Joined a gym.",
+              "tags": [
+                "routine",
+                "gym"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.4,
+              "sociability": 0.2
+            }
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Not for me",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": -0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "COOKING_CLASS_SIGNUP",
+      "type": "SOCIAL",
+      "title": "Cooking Class",
+      "emoji": "🍳",
+      "baseProbability": 0.012,
+      "affinity": {
+        "creativity": 0.6,
+        "social": 0.5,
+        "family": 0.2
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 18,
+          "max": 75
+        }
+      ],
+      "cooldownMonths": 24,
+      "expiresInMonths": 1,
+      "maxTimesTaken": 1,
+      "choices": [
+        {
+          "id": "JOIN",
+          "label": "Sign up",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 1
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -1
+            },
+            {
+              "kind": "startHabit",
+              "locationId": "cooking_class",
+              "activityId": "learn_recipe",
+              "perMonth": 4
+            },
+            {
+              "kind": "memory",
+              "text": "Signed up for a cooking class.",
+              "tags": [
+                "routine",
+                "cooking_class"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.4,
+              "sociability": 0.2
+            }
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Not for me",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": -0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SURF_LESSONS",
+      "type": "SOCIAL",
+      "title": "Surf Lessons",
+      "emoji": "🏄",
+      "baseProbability": 0.006,
+      "affinity": {
+        "travel": 0.5,
+        "mobility": 0.4,
+        "change": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 16,
+          "max": 55
+        }
+      ],
+      "cooldownMonths": 24,
+      "expiresInMonths": 1,
+      "maxTimesTaken": 1,
+      "choices": [
+        {
+          "id": "JOIN",
+          "label": "Sign up",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 1.5
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -1.5
+            },
+            {
+              "kind": "startHabit",
+              "locationId": "surf_school",
+              "activityId": "surf_lesson",
+              "perMonth": 4
+            },
+            {
+              "kind": "memory",
+              "text": "Started surf lessons at the coast.",
+              "tags": [
+                "routine",
+                "surf_school"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.4,
+              "sociability": 0.2
+            }
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Not for me",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": -0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "DATING_APP",
+      "type": "SOCIAL",
+      "title": "Try a Dating App",
+      "emoji": "📱",
+      "baseProbability": 0.012,
+      "affinity": {
+        "romance": 1.0,
+        "social": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 19,
+          "max": 60
+        },
+        {
+          "kind": "relationship",
+          "in": [
+            "SINGLE",
+            "DIVORCED"
+          ]
+        }
+      ],
+      "cooldownMonths": 24,
+      "expiresInMonths": 1,
+      "maxTimesTaken": 1,
+      "choices": [
+        {
+          "id": "JOIN",
+          "label": "Sign up",
+          "requirements": [],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": 0
+            },
+            {
+              "kind": "startHabit",
+              "locationId": "dating_app",
+              "activityId": "swipe",
+              "perMonth": 4
+            },
+            {
+              "kind": "memory",
+              "text": "Downloaded a dating app.",
+              "tags": [
+                "routine",
+                "dating_app"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.4,
+              "sociability": 0.2
+            }
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Not for me",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": -0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRIP_ABROAD",
+      "type": "MOBILITY",
+      "title": "Trip Abroad",
+      "emoji": "🗼",
+      "baseProbability": 0.015,
+      "affinity": {
+        "travel": 1.0,
+        "overseas": 0.8,
+        "mobility": 0.5
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 19,
+          "max": 80
+        },
+        {
+          "kind": "enrolled",
+          "value": false
+        }
+      ],
+      "circumstances": {
+        "cost": 5,
+        "familyObligationPenalty": 0.4
+      },
+      "cooldownMonths": 18,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "GO",
+          "label": "Book the trip",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 5
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "trip",
+              "scope": "INTERNATIONAL"
+            },
+            {
+              "kind": "memory",
+              "text": "Booked a trip abroad.",
+              "tags": [
+                "travel"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.6
+            },
+            "familyObligation": -0.4
+          }
+        },
+        {
+          "id": "SAVE",
+          "label": "Save the money",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45,
+            "poverty": 0.6,
+            "traits": {
+              "riskTolerance": -0.2
             }
           }
         }

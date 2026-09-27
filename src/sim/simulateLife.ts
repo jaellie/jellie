@@ -22,6 +22,12 @@ import { OpportunityEngine } from "./opportunityEngine";
 import type { OpportunityScore } from "./opportunity";
 import { traitsToModifierSource } from "./personality";
 import type { LifeState, Traits } from "./types";
+import { createWorldState } from "../world/npcs";
+import { runMonth } from "../world/routine";
+import { AutoWorldPolicy, type WorldDecisionPolicy } from "../world/decisions";
+import { worldModifierSource } from "../world/worldModifiers";
+import type { Attraction } from "../world/encounters";
+import { getLocation } from "../world/catalog";
 
 export interface LifeProfile {
   name?: string;
@@ -36,7 +42,10 @@ export interface LifeProfile {
 export interface TimelineEntry {
   date: GameDate;
   age: number;
-  kind: "OPPORTUNITY" | "LIFE";
+  kind: "OPPORTUNITY" | "LIFE" | "WORLD";
+  /** WORLD entries: where it happened and what kind of world event it was. */
+  locationId?: string;
+  worldEvent?: string;
   title: string;
   emoji?: string;
   templateId?: string;
@@ -62,6 +71,16 @@ export interface SimulateLifeOptions {
   sajuWeight?: number;
   opportunityEngine?: OpportunityEngine;
   onTick?: (s: LifeState, saju: SajuModifierResult) => void;
+  /** Enable the living world (locations, NPCs, encounters, travel). */
+  world?: boolean | WorldOptions;
+}
+
+export interface WorldOptions {
+  attraction?: Attraction;
+  policy?: WorldDecisionPolicy;
+  maxHabitVisits?: number;
+  /** Also log SMALL world events (default: MAJOR only). */
+  logSmall?: boolean;
 }
 
 export interface SimulationResult {
@@ -113,6 +132,10 @@ export function simulateLife(opts: SimulateLifeOptions): SimulationResult {
   const decider = opts.decisionMaker ?? new AutoDecisionPolicy();
 
   const state = createLifeState(opts.birthData, opts.profile);
+  const worldOpts: WorldOptions | undefined = opts.world ? (opts.world === true ? {} : opts.world) : undefined;
+  const worldRngMonthly = rng.fork("living-world");
+  const worldPolicy = worldOpts?.policy ?? new AutoWorldPolicy();
+  if (worldOpts) state.world = createWorldState();
   const timeline: TimelineEntry[] = [];
   const totalMonths = Math.round(opts.duration * 12);
 
@@ -124,6 +147,7 @@ export function simulateLife(opts: SimulateLifeOptions): SimulationResult {
     const sources: DestinyModifierSource[] = [
       saju.toModifierSource(sajuResult, opts.sajuWeight ?? 1),
       traitsToModifierSource(state.traits),
+      ...(state.world ? [worldModifierSource(state.world)] : []),
       ...(opts.extraSources ?? []).map((f) => f(state)),
     ];
     opts.onTick?.(state, sajuResult);
@@ -149,6 +173,43 @@ export function simulateLife(opts: SimulateLifeOptions): SimulationResult {
         score: opp.score,
       });
     }
+    if (state.world && worldOpts && state.age >= 14) {
+      const month = runMonth(
+        { state, world: state.world, modifiers: combined, rng: worldRngMonthly, seed: opts.seed, policy: worldPolicy, attraction: worldOpts.attraction, maxHabitVisits: worldOpts.maxHabitVisits },
+        state.date,
+      );
+      const decided = new Map(month.decisions.map((d) => [d.event, d.resolution]));
+      const allVisits = [...month.visits, ...month.trips.flatMap((t) => t.visits)];
+      for (const v of allVisits) {
+        for (const e of v.events) {
+          if (e.scale === "NONE" || (e.scale === "SMALL" && !worldOpts.logSmall)) continue;
+          const r = decided.get(e);
+          const npc = e.npcId ? state.world.npcs[e.npcId] : undefined;
+          timeline.push({
+            date: { year: e.date.year, month: e.date.month, day: e.date.day },
+            age: state.age,
+            kind: "WORLD",
+            title: `${getLocation(e.locationId).name.en}: ${e.text.en}`,
+            locationId: e.locationId,
+            worldEvent: e.kind,
+            choice: r?.choiceId,
+            success: r?.success,
+            changes: r?.changes,
+            templateId: npc?.type,
+          });
+        }
+      }
+      for (const t of month.trips) {
+        timeline.push({
+          date: { ...t.trip.arrivalDate },
+          age: state.age,
+          kind: "WORLD",
+          title: `✈️ Trip to ${t.trip.destinationId}: visited ${t.trip.visitedLocations.length} places, mementos: ${t.trip.mementos.join(", ") || "none"}`,
+          worldEvent: "TRIP",
+          changes: t.keptContacts.map((id) => `kept in touch with ${state.world!.npcs[id]?.name}`),
+        });
+      }
+    }
   }
   return { seed: opts.seed, timeline, finalState: state };
 }
@@ -164,6 +225,10 @@ export function formatTimeline(result: SimulationResult, opts: { onlyOpportuniti
     }
     const outcome = e.success === undefined ? "" : e.success ? " ✔" : " ✘";
     const changes = e.changes?.length ? `  [${e.changes.join("; ")}]` : "";
+    if (e.kind === "WORLD") {
+      lines.push(`${age} ${formatGameDate(e.date)}  · ${e.title}${e.choice ? ` → ${e.choice}${outcome}` : ""}${changes}`);
+      continue;
+    }
     lines.push(`${age} ${formatGameDate(e.date)}  ${e.emoji} ${e.title} → ${e.choice}${outcome}${changes}`);
   }
   return lines.join("\n");

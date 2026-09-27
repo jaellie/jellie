@@ -8,10 +8,13 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "simulate": "tsx scripts/simulateLife.ts",
-    "destiny": "tsx scripts/destiny.ts"
+    "destiny": "tsx scripts/destiny.ts",
+    "world": "tsx scripts/world.ts",
+    "build:browser": "esbuild src/browser.ts --bundle --format=iife --global-name=LoveSim --target=es2019 --minify --outfile=dist/lovesim-engine.js"
   },
   "devDependencies": {
     "@types/node": "^26.6.3",
+    "esbuild": "^0.28.2",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "vitest": "^5.0.2"

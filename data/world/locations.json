@@ -1,0 +1,2524 @@
+{
+ "_doc": "Location catalog. A location = background variants + activities + NPC pool + hours + events. 'prototypeId' maps to the Claude Design prototype's ROOMS/WBG/SPOTS keys. 'eventiness' is the base chance that a visit produces any location event; everything else is 'nothing happened'.",
+ "locations": [
+  {
+   "id": "home",
+   "name": {
+    "ko": "집",
+    "en": "Home"
+   },
+   "type": "HOME",
+   "backgrounds": [
+    "home_living_room",
+    "home_bedroom",
+    "home_morning",
+    "home_evening",
+    "home_night",
+    "home_rain",
+    "home_winter"
+   ],
+   "activities": [
+    "sleep",
+    "cook",
+    "eat",
+    "watch_tv",
+    "study",
+    "use_phone",
+    "invite_friend",
+    "invite_partner"
+   ],
+   "npcPool": [],
+   "encounterTypes": [],
+   "tags": [
+    "private",
+    "rest"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "home_city",
+   "eventiness": 0.15,
+   "events": [
+    {
+     "id": "quiet_evening",
+     "weight": 3,
+     "text": {
+      "ko": "조용한 저녁을 보냈다.",
+      "en": "A quiet evening at home."
+     },
+     "tags": [
+      "home"
+     ]
+    },
+    {
+     "id": "cooked_well",
+     "weight": 2,
+     "text": {
+      "ko": "요리가 꽤 잘 됐다.",
+      "en": "The cooking turned out great."
+     },
+     "affinity": {
+      "creativity": 0.5
+     },
+     "tags": [
+      "cooking"
+     ]
+    }
+   ],
+   "prototypeId": "home",
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "family_home",
+   "name": {
+    "ko": "본가",
+    "en": "Family Home"
+   },
+   "type": "FAMILY_HOME",
+   "backgrounds": [
+    "family_home",
+    "family_restaurant"
+   ],
+   "activities": [
+    "eat",
+    "talk_family",
+    "help_family",
+    "sleep"
+   ],
+   "npcPool": [
+    "family_friend",
+    "relative"
+   ],
+   "encounterTypes": [
+    "FRIEND_OF_FRIEND"
+   ],
+   "tags": [
+    "family"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "home_city",
+   "eventiness": 0.3,
+   "events": [
+    {
+     "id": "family_dinner",
+     "weight": 3,
+     "text": {
+      "ko": "가족과 밥을 먹었다.",
+      "en": "Dinner with family."
+     },
+     "affinity": {
+      "family": 0.6
+     },
+     "tags": [
+      "family"
+     ]
+    },
+    {
+     "id": "old_photos",
+     "weight": 1,
+     "text": {
+      "ko": "오래된 앨범을 넘겨봤다.",
+      "en": "Flipped through old photo albums."
+     },
+     "affinity": {
+      "introspection": 0.5
+     },
+     "tags": [
+      "family",
+      "nostalgia"
+     ]
+    }
+   ],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "street",
+   "name": {
+    "ko": "거리",
+    "en": "Street"
+   },
+   "type": "CITY",
+   "backgrounds": [
+    "street_day",
+    "street_evening",
+    "street_night",
+    "street_rain",
+    "street_snow"
+   ],
+   "activities": [
+    "walk",
+    "shop",
+    "commute",
+    "people_watch"
+   ],
+   "npcPool": [
+    "commuter",
+    "local",
+    "neighbor",
+    "tourist"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "RECURRING"
+   ],
+   "tags": [
+    "city",
+    "commute"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "home_city",
+   "eventiness": 0.2,
+   "events": [
+    {
+     "id": "street_music",
+     "weight": 2,
+     "text": {
+      "ko": "거리 공연을 잠깐 구경했다.",
+      "en": "Stopped for a street performance."
+     },
+     "affinity": {
+      "creativity": 0.3
+     },
+     "tags": [
+      "city"
+     ]
+    },
+    {
+     "id": "sudden_rain",
+     "weight": 1,
+     "text": {
+      "ko": "갑자기 비가 와서 처마 밑에 섰다.",
+      "en": "Sudden rain; waited under an awning."
+     },
+     "tags": [
+      "weather"
+     ]
+    }
+   ],
+   "prototypeId": "street",
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "cafe",
+   "name": {
+    "ko": "단골 카페",
+    "en": "Café"
+   },
+   "type": "CAFE",
+   "backgrounds": [
+    "cafe_day",
+    "cafe_evening",
+    "cafe_rain",
+    "cafe_snow",
+    "cafe_window",
+    "cafe_outdoor"
+   ],
+   "activities": [
+    "drink_coffee",
+    "study",
+    "read",
+    "work",
+    "meet_friend",
+    "sit_alone"
+   ],
+   "npcPool": [
+    "barista",
+    "regular_customer",
+    "student",
+    "freelancer",
+    "stranger"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "RECURRING",
+    "STAFF",
+    "FRIEND_OF_FRIEND",
+    "ROMANTIC",
+    "PROFESSIONAL"
+   ],
+   "tags": [
+    "cozy",
+    "social"
+   ],
+   "availableHours": {
+    "start": 8,
+    "end": 22
+   },
+   "region": "home_city",
+   "eventiness": 0.3,
+   "events": [
+    {
+     "id": "new_menu",
+     "weight": 2,
+     "text": {
+      "ko": "새 메뉴를 시켜봤다.",
+      "en": "Tried the new menu item."
+     },
+     "tags": [
+      "cafe"
+     ]
+    },
+    {
+     "id": "good_book",
+     "weight": 2,
+     "text": {
+      "ko": "책에 푹 빠져 시간 가는 줄 몰랐다.",
+      "en": "Lost track of time in a good book."
+     },
+     "affinity": {
+      "introspection": 0.5
+     },
+     "tags": [
+      "reading"
+     ]
+    }
+   ],
+   "prototypeId": "cafe",
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "gym",
+   "name": {
+    "ko": "헬스장",
+    "en": "Gym"
+   },
+   "type": "GYM",
+   "backgrounds": [
+    "gym_day",
+    "gym_evening",
+    "gym_night"
+   ],
+   "activities": [
+    "workout",
+    "personal_training",
+    "group_class",
+    "stretching",
+    "buy_membership"
+   ],
+   "npcPool": [
+    "trainer",
+    "personal_trainer",
+    "regular_member",
+    "new_member",
+    "class_member",
+    "visitor"
+   ],
+   "encounterTypes": [
+    "RECURRING",
+    "STAFF",
+    "STRANGER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "fitness",
+    "routine"
+   ],
+   "availableHours": {
+    "start": 6,
+    "end": 23
+   },
+   "region": "home_city",
+   "eventiness": 0.25,
+   "events": [
+    {
+     "id": "new_pr",
+     "weight": 2,
+     "text": {
+      "ko": "개인 기록을 갱신했다!",
+      "en": "Hit a new personal record!"
+     },
+     "tags": [
+      "fitness"
+     ]
+    },
+    {
+     "id": "sore",
+     "weight": 2,
+     "text": {
+      "ko": "다음 날 근육통이 심했다.",
+      "en": "Very sore the next day."
+     },
+     "tags": [
+      "fitness"
+     ]
+    }
+   ],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "cooking_class",
+   "name": {
+    "ko": "요리 교실",
+    "en": "Cooking Class"
+   },
+   "type": "CLASS",
+   "backgrounds": [
+    "kitchen_classroom"
+   ],
+   "activities": [
+    "learn_recipe",
+    "cook",
+    "talk_to_classmate",
+    "help_someone",
+    "join_group"
+   ],
+   "npcPool": [
+    "instructor",
+    "classmate",
+    "regular_student",
+    "new_student"
+   ],
+   "encounterTypes": [
+    "RECURRING",
+    "STAFF",
+    "ROMANTIC",
+    "PROFESSIONAL"
+   ],
+   "tags": [
+    "class",
+    "cooking",
+    "social"
+   ],
+   "availableHours": {
+    "start": 10,
+    "end": 21
+   },
+   "region": "home_city",
+   "eventiness": 0.35,
+   "events": [
+    {
+     "id": "dish_success",
+     "weight": 2,
+     "text": {
+      "ko": "오늘 만든 요리가 칭찬받았다.",
+      "en": "Your dish got praised today."
+     },
+     "affinity": {
+      "creativity": 0.5
+     },
+     "tags": [
+      "cooking"
+     ]
+    },
+    {
+     "id": "kitchen_mishap",
+     "weight": 1,
+     "text": {
+      "ko": "냄비를 태웠다… 다들 웃었다.",
+      "en": "Burned the pot… everyone laughed."
+     },
+     "affinity": {
+      "social": 0.3
+     },
+     "tags": [
+      "cooking"
+     ]
+    }
+   ],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "park",
+   "name": {
+    "ko": "공원",
+    "en": "Park"
+   },
+   "type": "PARK",
+   "backgrounds": [
+    "park_day",
+    "park_evening",
+    "park_spring",
+    "park_autumn",
+    "park_snow"
+   ],
+   "activities": [
+    "walk",
+    "picnic",
+    "jog",
+    "walk_dog",
+    "volunteer",
+    "date"
+   ],
+   "npcPool": [
+    "jogger",
+    "dog_owner",
+    "local",
+    "volunteer",
+    "couple",
+    "friend"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "RECURRING",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "outdoor",
+    "nature"
+   ],
+   "availableHours": {
+    "start": 5,
+    "end": 23
+   },
+   "region": "home_city",
+   "eventiness": 0.25,
+   "events": [
+    {
+     "id": "puppy",
+     "weight": 2,
+     "text": {
+      "ko": "산책 나온 강아지가 다가왔다.",
+      "en": "A dog on a walk came over to say hi."
+     },
+     "affinity": {
+      "social": 0.3
+     },
+     "tags": [
+      "park"
+     ]
+    },
+    {
+     "id": "cherry_blossom",
+     "weight": 1,
+     "text": {
+      "ko": "벚꽃이 흩날렸다.",
+      "en": "Cherry blossoms drifting down."
+     },
+     "tags": [
+      "season"
+     ]
+    }
+   ],
+   "prototypeId": "park",
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "library",
+   "name": {
+    "ko": "도서관",
+    "en": "Library"
+   },
+   "type": "LIBRARY",
+   "backgrounds": [
+    "library"
+   ],
+   "activities": [
+    "study",
+    "read",
+    "research",
+    "borrow_book"
+   ],
+   "npcPool": [
+    "student",
+    "researcher",
+    "librarian",
+    "regular_reader"
+   ],
+   "encounterTypes": [
+    "RECURRING",
+    "STAFF",
+    "STRANGER"
+   ],
+   "tags": [
+    "quiet",
+    "study"
+   ],
+   "availableHours": {
+    "start": 9,
+    "end": 22
+   },
+   "region": "home_city",
+   "eventiness": 0.2,
+   "events": [
+    {
+     "id": "found_book",
+     "weight": 2,
+     "text": {
+      "ko": "찾던 책을 우연히 발견했다.",
+      "en": "Stumbled on the book you'd been looking for."
+     },
+     "affinity": {
+      "education": 0.5
+     },
+     "tags": [
+      "study"
+     ]
+    }
+   ],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "university",
+   "name": {
+    "ko": "캠퍼스",
+    "en": "Campus"
+   },
+   "type": "UNIVERSITY",
+   "backgrounds": [
+    "campus",
+    "classroom",
+    "campus_evening"
+   ],
+   "activities": [
+    "attend_lecture",
+    "study",
+    "club_activity",
+    "eat",
+    "research"
+   ],
+   "npcPool": [
+    "student",
+    "professor",
+    "researcher",
+    "staff",
+    "visitor",
+    "friend"
+   ],
+   "encounterTypes": [
+    "RECURRING",
+    "STRANGER",
+    "FRIEND_OF_FRIEND",
+    "PROFESSIONAL",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "education",
+    "youth"
+   ],
+   "availableHours": {
+    "start": 7,
+    "end": 23
+   },
+   "region": "home_city",
+   "eventiness": 0.35,
+   "events": [
+    {
+     "id": "festival",
+     "weight": 1,
+     "text": {
+      "ko": "축제 부스를 돌아다녔다.",
+      "en": "Wandered the festival booths."
+     },
+     "affinity": {
+      "social": 0.5
+     },
+     "tags": [
+      "campus"
+     ]
+    },
+    {
+     "id": "exchange_poster",
+     "weight": 1,
+     "text": {
+      "ko": "교환학생 모집 포스터를 봤다.",
+      "en": "Saw a poster for exchange programs."
+     },
+     "affinity": {
+      "overseas": 0.8,
+      "education": 0.4
+     },
+     "tags": [
+      "overseas"
+     ],
+     "important": true
+    }
+   ],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "office",
+   "name": {
+    "ko": "회사",
+    "en": "Office"
+   },
+   "type": "WORKPLACE",
+   "backgrounds": [
+    "office",
+    "meeting_room",
+    "office_night"
+   ],
+   "activities": [
+    "work",
+    "meeting",
+    "lunch_with_coworkers",
+    "overtime"
+   ],
+   "npcPool": [
+    "coworker",
+    "manager",
+    "new_hire",
+    "client"
+   ],
+   "encounterTypes": [
+    "RECURRING",
+    "PROFESSIONAL",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "work"
+   ],
+   "availableHours": {
+    "start": 7,
+    "end": 23
+   },
+   "region": "home_city",
+   "eventiness": 0.3,
+   "events": [
+    {
+     "id": "praised",
+     "weight": 2,
+     "text": {
+      "ko": "보고서가 칭찬받았다.",
+      "en": "Your report got praised."
+     },
+     "affinity": {
+      "career": 0.5
+     },
+     "tags": [
+      "career"
+     ]
+    },
+    {
+     "id": "overseas_project",
+     "weight": 1,
+     "text": {
+      "ko": "해외 프로젝트 이야기가 나왔다.",
+      "en": "Someone mentioned an overseas project."
+     },
+     "affinity": {
+      "overseas": 0.8,
+      "career": 0.4
+     },
+     "tags": [
+      "overseas",
+      "career"
+     ],
+     "important": true
+    }
+   ],
+   "prototypeId": "office",
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "restaurant",
+   "name": {
+    "ko": "레스토랑",
+    "en": "Restaurant"
+   },
+   "type": "RESTAURANT",
+   "backgrounds": [
+    "restaurant"
+   ],
+   "activities": [
+    "eat",
+    "date",
+    "celebrate",
+    "meet_friend"
+   ],
+   "npcPool": [
+    "server",
+    "couple",
+    "group_diner",
+    "friend"
+   ],
+   "encounterTypes": [
+    "STAFF",
+    "FRIEND_OF_FRIEND",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "food",
+    "date"
+   ],
+   "availableHours": {
+    "start": 11,
+    "end": 23
+   },
+   "region": "home_city",
+   "eventiness": 0.25,
+   "events": [],
+   "prototypeId": "restaurant",
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "diner",
+   "name": {
+    "ko": "분식집",
+    "en": "Snack Bar"
+   },
+   "type": "RESTAURANT",
+   "backgrounds": [
+    "diner"
+   ],
+   "activities": [
+    "eat",
+    "meet_friend"
+   ],
+   "npcPool": [
+    "owner",
+    "neighbor",
+    "student"
+   ],
+   "encounterTypes": [
+    "STAFF",
+    "RECURRING",
+    "STRANGER"
+   ],
+   "tags": [
+    "food",
+    "neighborhood"
+   ],
+   "availableHours": {
+    "start": 9,
+    "end": 22
+   },
+   "region": "home_city",
+   "eventiness": 0.2,
+   "events": [],
+   "prototypeId": "diner",
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "cinema",
+   "name": {
+    "ko": "영화관",
+    "en": "Cinema"
+   },
+   "type": "ENTERTAINMENT",
+   "backgrounds": [
+    "cinema"
+   ],
+   "activities": [
+    "watch_movie",
+    "date"
+   ],
+   "npcPool": [
+    "moviegoer",
+    "couple",
+    "friend"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "entertainment",
+    "date"
+   ],
+   "availableHours": {
+    "start": 9,
+    "end": 24
+   },
+   "region": "home_city",
+   "eventiness": 0.2,
+   "events": [],
+   "prototypeId": "cinema",
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "amusement_park",
+   "name": {
+    "ko": "놀이공원",
+    "en": "Amusement Park"
+   },
+   "type": "ENTERTAINMENT",
+   "backgrounds": [
+    "amusement_park",
+    "amusement_park_night"
+   ],
+   "activities": [
+    "ride",
+    "date",
+    "photograph"
+   ],
+   "npcPool": [
+    "visitor",
+    "couple",
+    "family",
+    "staff"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "entertainment",
+    "date"
+   ],
+   "availableHours": {
+    "start": 10,
+    "end": 22
+   },
+   "region": "home_city",
+   "eventiness": 0.3,
+   "events": [
+    {
+     "id": "ferris_wheel",
+     "weight": 2,
+     "text": {
+      "ko": "관람차 꼭대기에서 도시를 내려다봤다.",
+      "en": "Looked out over the city from the top of the Ferris wheel."
+     },
+     "tags": [
+      "date"
+     ],
+     "requires": "partner"
+    }
+   ],
+   "prototypeId": "amuse",
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "beach",
+   "name": {
+    "ko": "바다",
+    "en": "Beach"
+   },
+   "type": "BEACH",
+   "backgrounds": [
+    "beach_day",
+    "beach_sunset",
+    "beach_night",
+    "beach_cloudy",
+    "beach_winter"
+   ],
+   "activities": [
+    "swim",
+    "sunbathe",
+    "walk",
+    "photograph",
+    "meet_people"
+   ],
+   "npcPool": [
+    "surfer",
+    "tourist",
+    "local",
+    "friend",
+    "temporary_traveler"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "TRAVELER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "sea",
+    "summer",
+    "travel"
+   ],
+   "availableHours": {
+    "start": 6,
+    "end": 21
+   },
+   "region": "coast",
+   "eventiness": 0.35,
+   "events": [
+    {
+     "id": "sunset",
+     "weight": 3,
+     "text": {
+      "ko": "노을이 너무 예뻤다.",
+      "en": "The sunset was unreal."
+     },
+     "affinity": {
+      "romance": 0.3
+     },
+     "tags": [
+      "sea"
+     ]
+    },
+    {
+     "id": "shell",
+     "weight": 1,
+     "text": {
+      "ko": "예쁜 조개껍데기를 주웠다.",
+      "en": "Picked up a pretty shell."
+     },
+     "tags": [
+      "memento"
+     ]
+    },
+    {
+     "id": "travel_talk",
+     "weight": 1,
+     "text": {
+      "ko": "옆 사람이 다음 여행지를 추천해줬다.",
+      "en": "Someone nearby recommended their next destination."
+     },
+     "affinity": {
+      "travel": 0.8
+     },
+     "tags": [
+      "travel"
+     ],
+     "important": true
+    }
+   ],
+   "prototypeId": "beach",
+   "travelCost": 1,
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "surf_school",
+   "name": {
+    "ko": "서핑 스쿨",
+    "en": "Surf School"
+   },
+   "type": "HOBBY",
+   "backgrounds": [
+    "surf_school"
+   ],
+   "activities": [
+    "surf",
+    "surf_lesson",
+    "rest"
+   ],
+   "npcPool": [
+    "surf_instructor",
+    "surfer",
+    "student_surfer",
+    "temporary_traveler"
+   ],
+   "encounterTypes": [
+    "RECURRING",
+    "STAFF",
+    "TRAVELER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "sea",
+    "sport",
+    "travel"
+   ],
+   "availableHours": {
+    "start": 7,
+    "end": 19
+   },
+   "region": "coast",
+   "eventiness": 0.35,
+   "events": [
+    {
+     "id": "first_wave",
+     "weight": 2,
+     "text": {
+      "ko": "처음으로 파도 위에 섰다!",
+      "en": "Stood up on a wave for the first time!"
+     },
+     "tags": [
+      "surf"
+     ],
+     "important": true
+    },
+    {
+     "id": "wipeout",
+     "weight": 2,
+     "text": {
+      "ko": "크게 넘어졌다. 바닷물을 잔뜩 먹었다.",
+      "en": "Huge wipeout. Swallowed half the ocean."
+     },
+     "tags": [
+      "surf"
+     ]
+    }
+   ],
+   "seasonalAvailability": [
+    "SPRING",
+    "SUMMER",
+    "AUTUMN"
+   ],
+   "travelCost": 2,
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "boardwalk",
+   "name": {
+    "ko": "해변 산책로",
+    "en": "Boardwalk"
+   },
+   "type": "CITY",
+   "backgrounds": [
+    "boardwalk",
+    "boardwalk_night"
+   ],
+   "activities": [
+    "walk",
+    "eat",
+    "photograph",
+    "people_watch"
+   ],
+   "npcPool": [
+    "local",
+    "tourist",
+    "couple",
+    "street_vendor"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "TRAVELER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "sea",
+    "walk"
+   ],
+   "availableHours": {
+    "start": 6,
+    "end": 24
+   },
+   "region": "coast",
+   "eventiness": 0.25,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "beach_cafe",
+   "name": {
+    "ko": "바닷가 카페",
+    "en": "Beach Café"
+   },
+   "type": "CAFE",
+   "backgrounds": [
+    "beach_cafe"
+   ],
+   "activities": [
+    "drink_coffee",
+    "read",
+    "sit_alone",
+    "meet_people"
+   ],
+   "npcPool": [
+    "barista",
+    "surfer",
+    "tourist",
+    "local"
+   ],
+   "encounterTypes": [
+    "STAFF",
+    "STRANGER",
+    "TRAVELER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "sea",
+    "cozy"
+   ],
+   "availableHours": {
+    "start": 9,
+    "end": 21
+   },
+   "region": "coast",
+   "eventiness": 0.3,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "airport",
+   "name": {
+    "ko": "공항",
+    "en": "Airport"
+   },
+   "type": "AIRPORT",
+   "backgrounds": [
+    "airport_departure",
+    "airport_arrival"
+   ],
+   "activities": [
+    "check_in",
+    "wait",
+    "shop",
+    "people_watch",
+    "arrive"
+   ],
+   "npcPool": [
+    "traveler",
+    "business_traveler",
+    "staff",
+    "tourist"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "TRAVELER"
+   ],
+   "tags": [
+    "travel",
+    "transit"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "transit",
+   "eventiness": 0.2,
+   "events": [
+    {
+     "id": "delayed",
+     "weight": 2,
+     "text": {
+      "ko": "비행기가 지연됐다.",
+      "en": "The flight was delayed."
+     },
+     "tags": [
+      "travel"
+     ]
+    },
+    {
+     "id": "upgrade",
+     "weight": 1,
+     "text": {
+      "ko": "좌석이 업그레이드됐다!",
+      "en": "Got a seat upgrade!"
+     },
+     "affinity": {
+      "opportunity": 0.5
+     },
+     "tags": [
+      "travel",
+      "luck"
+     ]
+    }
+   ],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "paris_hotel",
+   "name": {
+    "ko": "파리 호텔",
+    "en": "Paris Hotel"
+   },
+   "type": "HOTEL",
+   "backgrounds": [
+    "paris_hotel"
+   ],
+   "activities": [
+    "rest",
+    "breakfast",
+    "chat_front_desk"
+   ],
+   "npcPool": [
+    "hotel_staff",
+    "traveler",
+    "business_traveler"
+   ],
+   "encounterTypes": [
+    "STAFF",
+    "TRAVELER"
+   ],
+   "tags": [
+    "travel",
+    "paris"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "paris",
+   "eventiness": 0.2,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "paris_eiffel_tower",
+   "name": {
+    "ko": "에펠탑",
+    "en": "Eiffel Tower"
+   },
+   "type": "TOURIST_SITE",
+   "backgrounds": [
+    "eiffel_day",
+    "eiffel_evening",
+    "eiffel_night"
+   ],
+   "activities": [
+    "sightseeing",
+    "photography",
+    "walk",
+    "meet_people",
+    "date"
+   ],
+   "npcPool": [
+    "tourist",
+    "local",
+    "photographer",
+    "traveler",
+    "tour_guide"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "TRAVELER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "tourism",
+    "romance",
+    "travel",
+    "photography"
+   ],
+   "availableHours": {
+    "start": 9,
+    "end": 24
+   },
+   "region": "paris",
+   "eventiness": 0.4,
+   "events": [
+    {
+     "id": "take_photo",
+     "weight": 4,
+     "text": {
+      "ko": "에펠탑 앞에서 사진을 찍었다.",
+      "en": "Took a photo in front of the Eiffel Tower."
+     },
+     "tags": [
+      "photo",
+      "memento"
+     ]
+    },
+    {
+     "id": "lose_something",
+     "weight": 1,
+     "text": {
+      "ko": "사진 찍다가 모자를 잃어버렸다.",
+      "en": "Lost your hat while taking photos."
+     },
+     "affinity": {
+      "volatility": 0.5
+     },
+     "tags": [
+      "travel"
+     ]
+    },
+    {
+     "id": "sparkle",
+     "weight": 2,
+     "text": {
+      "ko": "정각에 탑이 반짝였다.",
+      "en": "The tower sparkled on the hour."
+     },
+     "affinity": {
+      "romance": 0.4
+     },
+     "tags": [
+      "romance"
+     ],
+     "important": true
+    },
+    {
+     "id": "missed_connection",
+     "weight": 1,
+     "text": {
+      "ko": "눈이 마주친 사람이 인파 속으로 사라졌다.",
+      "en": "Locked eyes with someone who vanished into the crowd."
+     },
+     "affinity": {
+      "romance": 0.6
+     },
+     "tags": [
+      "romance",
+      "missed"
+     ],
+     "important": true
+    }
+   ],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "paris_louvre",
+   "name": {
+    "ko": "루브르",
+    "en": "The Louvre"
+   },
+   "type": "TOURIST_SITE",
+   "backgrounds": [
+    "louvre"
+   ],
+   "activities": [
+    "sightseeing",
+    "museum",
+    "photography",
+    "sketch"
+   ],
+   "npcPool": [
+    "tourist",
+    "art_student",
+    "guide",
+    "local"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "TRAVELER",
+    "PROFESSIONAL"
+   ],
+   "tags": [
+    "tourism",
+    "art",
+    "travel"
+   ],
+   "availableHours": {
+    "start": 9,
+    "end": 21
+   },
+   "region": "paris",
+   "eventiness": 0.3,
+   "events": [
+    {
+     "id": "art_moment",
+     "weight": 3,
+     "text": {
+      "ko": "그림 한 점 앞에서 한참 서 있었다.",
+      "en": "Stood in front of one painting for a long time."
+     },
+     "affinity": {
+      "creativity": 0.6,
+      "introspection": 0.4
+     },
+     "tags": [
+      "art"
+     ]
+    }
+   ],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "paris_cafe",
+   "name": {
+    "ko": "파리 카페",
+    "en": "Paris Café"
+   },
+   "type": "CAFE",
+   "backgrounds": [
+    "paris_cafe"
+   ],
+   "activities": [
+    "drink_coffee",
+    "people_watch",
+    "read",
+    "meet_people"
+   ],
+   "npcPool": [
+    "waiter",
+    "local",
+    "traveler",
+    "student"
+   ],
+   "encounterTypes": [
+    "STAFF",
+    "STRANGER",
+    "TRAVELER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "travel",
+    "paris",
+    "cozy"
+   ],
+   "availableHours": {
+    "start": 7,
+    "end": 24
+   },
+   "region": "paris",
+   "eventiness": 0.3,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "paris_seine",
+   "name": {
+    "ko": "센 강변",
+    "en": "Seine Riverside"
+   },
+   "type": "TOURIST_SITE",
+   "backgrounds": [
+    "seine_day",
+    "seine_evening"
+   ],
+   "activities": [
+    "walk",
+    "photography",
+    "picnic",
+    "date"
+   ],
+   "npcPool": [
+    "local",
+    "couple",
+    "bouquiniste",
+    "traveler"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "TRAVELER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "travel",
+    "paris",
+    "romance"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "paris",
+   "eventiness": 0.3,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "paris_street",
+   "name": {
+    "ko": "파리 골목",
+    "en": "Paris Neighborhood"
+   },
+   "type": "CITY",
+   "backgrounds": [
+    "paris_street",
+    "paris_street_rain"
+   ],
+   "activities": [
+    "walk",
+    "shop",
+    "eat",
+    "people_watch"
+   ],
+   "npcPool": [
+    "local",
+    "tourist",
+    "shop_owner"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "TRAVELER"
+   ],
+   "tags": [
+    "travel",
+    "paris"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "paris",
+   "eventiness": 0.25,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "tokyo_street",
+   "name": {
+    "ko": "도쿄 거리",
+    "en": "Tokyo Street"
+   },
+   "type": "CITY",
+   "backgrounds": [
+    "tokyo_street",
+    "tokyo_street_night"
+   ],
+   "activities": [
+    "walk",
+    "shop",
+    "eat",
+    "photograph"
+   ],
+   "npcPool": [
+    "local",
+    "tourist",
+    "traveler",
+    "shop_owner"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "TRAVELER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "travel",
+    "tokyo"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "tokyo",
+   "eventiness": 0.3,
+   "events": [],
+   "prototypeId": "tokyo",
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "tokyo_hotel",
+   "name": {
+    "ko": "도쿄 호텔",
+    "en": "Tokyo Hotel"
+   },
+   "type": "HOTEL",
+   "backgrounds": [
+    "tokyo_hotel"
+   ],
+   "activities": [
+    "rest",
+    "breakfast"
+   ],
+   "npcPool": [
+    "hotel_staff",
+    "traveler"
+   ],
+   "encounterTypes": [
+    "STAFF",
+    "TRAVELER"
+   ],
+   "tags": [
+    "travel",
+    "tokyo"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "tokyo",
+   "eventiness": 0.15,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "language_exchange_app",
+   "name": {
+    "ko": "언어교환 앱",
+    "en": "Language Exchange App"
+   },
+   "type": "ONLINE",
+   "backgrounds": [
+    "language_exchange_app_screen"
+   ],
+   "activities": [
+    "chat",
+    "video_call",
+    "plan_meetup"
+   ],
+   "npcPool": [
+    "language_partner",
+    "foreign_student",
+    "expat"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "TRAVELER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "online",
+    "language",
+    "international"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "online",
+   "eventiness": 0.3,
+   "events": [],
+   "online": true,
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "instagram",
+   "name": {
+    "ko": "인스타그램",
+    "en": "Instagram"
+   },
+   "type": "ONLINE",
+   "backgrounds": [
+    "instagram_screen"
+   ],
+   "activities": [
+    "post",
+    "browse",
+    "dm"
+   ],
+   "npcPool": [
+    "old_friend",
+    "friend_of_friend",
+    "creator",
+    "stranger"
+   ],
+   "encounterTypes": [
+    "FRIEND_OF_FRIEND",
+    "STRANGER",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "online",
+    "social_media"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "online",
+   "eventiness": 0.25,
+   "events": [],
+   "online": true,
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "dating_app",
+   "name": {
+    "ko": "소개팅 앱",
+    "en": "Dating App"
+   },
+   "type": "ONLINE",
+   "backgrounds": [
+    "dating_app_screen"
+   ],
+   "activities": [
+    "swipe",
+    "chat",
+    "plan_date"
+   ],
+   "npcPool": [
+    "match"
+   ],
+   "encounterTypes": [
+    "ROMANTIC"
+   ],
+   "tags": [
+    "online",
+    "dating"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "online",
+   "eventiness": 0.35,
+   "events": [],
+   "online": true,
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "online_community",
+   "name": {
+    "ko": "온라인 커뮤니티",
+    "en": "Online Community"
+   },
+   "type": "ONLINE",
+   "backgrounds": [
+    "online_community_screen"
+   ],
+   "activities": [
+    "post",
+    "chat",
+    "play_game"
+   ],
+   "npcPool": [
+    "community_member",
+    "gamer"
+   ],
+   "encounterTypes": [
+    "STRANGER",
+    "RECURRING"
+   ],
+   "tags": [
+    "online",
+    "hobby"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "online",
+   "eventiness": 0.25,
+   "events": [],
+   "online": true,
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "wedding_venue",
+   "name": {
+    "ko": "웨딩홀",
+    "en": "Wedding Venue"
+   },
+   "type": "WEDDING_VENUE",
+   "backgrounds": [
+    "wedding_ceremony",
+    "wedding_reception"
+   ],
+   "activities": [
+    "attend_wedding",
+    "ceremony",
+    "reception"
+   ],
+   "npcPool": [
+    "guest",
+    "friend_of_friend",
+    "relative"
+   ],
+   "encounterTypes": [
+    "FRIEND_OF_FRIEND",
+    "ROMANTIC"
+   ],
+   "tags": [
+    "wedding",
+    "family",
+    "celebration"
+   ],
+   "availableHours": {
+    "start": 10,
+    "end": 20
+   },
+   "region": "home_city",
+   "eventiness": 0.35,
+   "events": [
+    {
+     "id": "bouquet",
+     "weight": 1,
+     "text": {
+      "ko": "부케를 받았다!",
+      "en": "Caught the bouquet!"
+     },
+     "affinity": {
+      "marriage": 0.6
+     },
+     "tags": [
+      "wedding"
+     ],
+     "important": true
+    }
+   ],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "hospital",
+   "name": {
+    "ko": "병원",
+    "en": "Hospital"
+   },
+   "type": "HOSPITAL",
+   "backgrounds": [
+    "hospital"
+   ],
+   "activities": [
+    "checkup",
+    "visit_patient"
+   ],
+   "npcPool": [
+    "doctor",
+    "nurse",
+    "patient",
+    "visitor"
+   ],
+   "encounterTypes": [
+    "STAFF",
+    "STRANGER"
+   ],
+   "tags": [
+    "health"
+   ],
+   "availableHours": {
+    "start": 8,
+    "end": 20
+   },
+   "region": "home_city",
+   "eventiness": 0.2,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  }
+ ]
+}

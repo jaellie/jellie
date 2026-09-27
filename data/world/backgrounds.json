@@ -1,0 +1,663 @@
+{
+ "_doc": "Background asset manifest. Backgrounds are assets selected at runtime by BackgroundEngine from (location, activity, timeOfDay, weather, season). A field left out means 'any'. status: procedural = drawn by the prototype's ROOMS painter today; planned = bitmap still to produce; ready = bitmap exists. Characters/props are separate sprites composed on top.",
+ "artDirection": {
+  "frame": [
+   360,
+   740
+  ],
+  "sceneHeight": 340,
+  "palette": {
+   "outline": "#2b2233",
+   "pink": "#ff6f91",
+   "cream": "#fff6e3",
+   "yellow": "#ffd36b",
+   "night": "#1e1a46"
+  },
+  "font": "Galmuri",
+  "characterScale": "16x24 base, 2.5-head-tall, drawn at 2x",
+  "avoid": [
+   "3D",
+   "photorealism",
+   "glassmorphism",
+   "heavy gradients"
+  ]
+ },
+ "overlays": {
+  "NIGHT": {
+   "kind": "tint",
+   "color": "rgba(30,26,70,0.42)"
+  },
+  "EVENING": {
+   "kind": "tint",
+   "color": "rgba(255,140,110,0.14)"
+  },
+  "MORNING": {
+   "kind": "tint",
+   "color": "rgba(255,236,190,0.10)"
+  },
+  "RAIN": {
+   "kind": "pattern",
+   "css": "repeating-linear-gradient(105deg,transparent 0 13px,rgba(255,255,255,.3) 13px 14px)"
+  },
+  "SNOW": {
+   "kind": "particles",
+   "sprite": "assets/fx/snow.png",
+   "css": "radial-gradient(#fff 1px,transparent 1.5px) 0 0/18px 18px"
+  },
+  "CLOUDY": {
+   "kind": "tint",
+   "color": "rgba(120,120,140,0.16)"
+  }
+ },
+ "backgrounds": [
+  {
+   "id": "home_living_room",
+   "locationId": "home",
+   "assetPath": "assets/bg/home/home_living_room.png",
+   "renderer": "ROOMS.home",
+   "status": "procedural"
+  },
+  {
+   "id": "home_bedroom",
+   "locationId": "home",
+   "activities": [
+    "sleep"
+   ],
+   "assetPath": "assets/bg/home/home_bedroom.png",
+   "status": "planned"
+  },
+  {
+   "id": "home_morning",
+   "locationId": "home",
+   "timeOfDay": "MORNING",
+   "assetPath": "assets/bg/home/home_morning.png",
+   "status": "planned"
+  },
+  {
+   "id": "home_evening",
+   "locationId": "home",
+   "timeOfDay": "EVENING",
+   "assetPath": "assets/bg/home/home_evening.png",
+   "status": "planned"
+  },
+  {
+   "id": "home_night",
+   "locationId": "home",
+   "timeOfDay": "NIGHT",
+   "assetPath": "assets/bg/home/home_night.png",
+   "status": "planned"
+  },
+  {
+   "id": "home_rain",
+   "locationId": "home",
+   "weather": "RAIN",
+   "assetPath": "assets/bg/home/home_rain.png",
+   "status": "planned"
+  },
+  {
+   "id": "home_winter",
+   "locationId": "home",
+   "season": "WINTER",
+   "assetPath": "assets/bg/home/home_winter.png",
+   "status": "planned"
+  },
+  {
+   "id": "family_home",
+   "locationId": "family_home",
+   "assetPath": "assets/bg/family_home/family_home.png",
+   "status": "planned"
+  },
+  {
+   "id": "family_restaurant",
+   "locationId": "family_home",
+   "activities": [
+    "eat"
+   ],
+   "assetPath": "assets/bg/family_home/family_restaurant.png",
+   "status": "planned"
+  },
+  {
+   "id": "street_day",
+   "locationId": "street",
+   "assetPath": "assets/bg/street/street_day.png",
+   "renderer": "ROOMS.street",
+   "status": "procedural",
+   "layers": [
+    {
+     "id": "street_sky",
+     "kind": "sky",
+     "z": 0
+    },
+    {
+     "id": "street_arch",
+     "kind": "architecture",
+     "z": 1
+    },
+    {
+     "id": "street_fg",
+     "kind": "foreground",
+     "z": 80
+    }
+   ]
+  },
+  {
+   "id": "street_evening",
+   "locationId": "street",
+   "timeOfDay": "EVENING",
+   "assetPath": "assets/bg/street/street_evening.png",
+   "status": "planned"
+  },
+  {
+   "id": "street_night",
+   "locationId": "street",
+   "timeOfDay": "NIGHT",
+   "assetPath": "assets/bg/street/street_night.png",
+   "status": "planned"
+  },
+  {
+   "id": "street_rain",
+   "locationId": "street",
+   "weather": "RAIN",
+   "assetPath": "assets/bg/street/street_rain.png",
+   "status": "planned"
+  },
+  {
+   "id": "street_snow",
+   "locationId": "street",
+   "weather": "SNOW",
+   "assetPath": "assets/bg/street/street_snow.png",
+   "status": "planned"
+  },
+  {
+   "id": "cafe_day",
+   "locationId": "cafe",
+   "assetPath": "assets/bg/cafe/cafe_day.png",
+   "renderer": "ROOMS.cafe",
+   "status": "procedural"
+  },
+  {
+   "id": "cafe_evening",
+   "locationId": "cafe",
+   "timeOfDay": "EVENING",
+   "assetPath": "assets/bg/cafe/cafe_evening.png",
+   "status": "planned"
+  },
+  {
+   "id": "cafe_rain",
+   "locationId": "cafe",
+   "weather": "RAIN",
+   "assetPath": "assets/bg/cafe/cafe_rain.png",
+   "status": "planned"
+  },
+  {
+   "id": "cafe_snow",
+   "locationId": "cafe",
+   "weather": "SNOW",
+   "assetPath": "assets/bg/cafe/cafe_snow.png",
+   "status": "planned"
+  },
+  {
+   "id": "cafe_window",
+   "locationId": "cafe",
+   "activities": [
+    "sit_alone",
+    "read"
+   ],
+   "assetPath": "assets/bg/cafe/cafe_window.png",
+   "status": "planned"
+  },
+  {
+   "id": "cafe_outdoor",
+   "locationId": "cafe",
+   "weather": "CLEAR",
+   "season": "SUMMER",
+   "assetPath": "assets/bg/cafe/cafe_outdoor.png",
+   "status": "planned"
+  },
+  {
+   "id": "gym_day",
+   "locationId": "gym",
+   "assetPath": "assets/bg/gym/gym_day.png",
+   "status": "planned",
+   "layers": [
+    {
+     "id": "gym_room",
+     "kind": "architecture",
+     "z": 0
+    },
+    {
+     "id": "gym_treadmills",
+     "kind": "interactive",
+     "z": 20
+    },
+    {
+     "id": "gym_mirror_fg",
+     "kind": "foreground",
+     "z": 80
+    }
+   ]
+  },
+  {
+   "id": "gym_evening",
+   "locationId": "gym",
+   "timeOfDay": "EVENING",
+   "assetPath": "assets/bg/gym/gym_evening.png",
+   "status": "planned"
+  },
+  {
+   "id": "gym_night",
+   "locationId": "gym",
+   "timeOfDay": "NIGHT",
+   "assetPath": "assets/bg/gym/gym_night.png",
+   "status": "planned"
+  },
+  {
+   "id": "kitchen_classroom",
+   "locationId": "cooking_class",
+   "assetPath": "assets/bg/cooking_class/kitchen_classroom.png",
+   "status": "planned",
+   "layers": [
+    {
+     "id": "kitchen_room",
+     "kind": "architecture",
+     "z": 0
+    },
+    {
+     "id": "kitchen_counters",
+     "kind": "interactive",
+     "z": 20
+    }
+   ]
+  },
+  {
+   "id": "park_day",
+   "locationId": "park",
+   "assetPath": "assets/bg/park/park_day.png",
+   "renderer": "ROOMS.park",
+   "status": "procedural"
+  },
+  {
+   "id": "park_evening",
+   "locationId": "park",
+   "timeOfDay": "EVENING",
+   "assetPath": "assets/bg/park/park_evening.png",
+   "status": "planned"
+  },
+  {
+   "id": "park_spring",
+   "locationId": "park",
+   "season": "SPRING",
+   "assetPath": "assets/bg/park/park_spring.png",
+   "status": "planned"
+  },
+  {
+   "id": "park_autumn",
+   "locationId": "park",
+   "season": "AUTUMN",
+   "assetPath": "assets/bg/park/park_autumn.png",
+   "status": "planned"
+  },
+  {
+   "id": "park_snow",
+   "locationId": "park",
+   "weather": "SNOW",
+   "assetPath": "assets/bg/park/park_snow.png",
+   "status": "planned"
+  },
+  {
+   "id": "library",
+   "locationId": "library",
+   "assetPath": "assets/bg/library/library.png",
+   "status": "planned"
+  },
+  {
+   "id": "campus",
+   "locationId": "university",
+   "assetPath": "assets/bg/university/campus.png",
+   "status": "planned"
+  },
+  {
+   "id": "classroom",
+   "locationId": "university",
+   "activities": [
+    "attend_lecture"
+   ],
+   "assetPath": "assets/bg/university/classroom.png",
+   "status": "planned"
+  },
+  {
+   "id": "campus_evening",
+   "locationId": "university",
+   "timeOfDay": "EVENING",
+   "assetPath": "assets/bg/university/campus_evening.png",
+   "status": "planned"
+  },
+  {
+   "id": "office",
+   "locationId": "office",
+   "assetPath": "assets/bg/office/office.png",
+   "renderer": "ROOMS.office",
+   "status": "procedural"
+  },
+  {
+   "id": "meeting_room",
+   "locationId": "office",
+   "activities": [
+    "meeting"
+   ],
+   "assetPath": "assets/bg/office/meeting_room.png",
+   "status": "planned"
+  },
+  {
+   "id": "office_night",
+   "locationId": "office",
+   "timeOfDay": "NIGHT",
+   "assetPath": "assets/bg/office/office_night.png",
+   "status": "planned"
+  },
+  {
+   "id": "restaurant",
+   "locationId": "restaurant",
+   "assetPath": "assets/bg/restaurant/restaurant.png",
+   "renderer": "ROOMS.restaurant",
+   "status": "procedural"
+  },
+  {
+   "id": "diner",
+   "locationId": "diner",
+   "assetPath": "assets/bg/diner/diner.png",
+   "renderer": "ROOMS.diner",
+   "status": "procedural"
+  },
+  {
+   "id": "cinema",
+   "locationId": "cinema",
+   "assetPath": "assets/bg/cinema/cinema.png",
+   "renderer": "ROOMS.cinema",
+   "status": "procedural"
+  },
+  {
+   "id": "amusement_park",
+   "locationId": "amusement_park",
+   "assetPath": "assets/bg/amusement_park/amusement_park.png",
+   "renderer": "ROOMS.amuse",
+   "status": "procedural"
+  },
+  {
+   "id": "amusement_park_night",
+   "locationId": "amusement_park",
+   "timeOfDay": "NIGHT",
+   "assetPath": "assets/bg/amusement_park/amusement_park_night.png",
+   "status": "planned"
+  },
+  {
+   "id": "beach_day",
+   "locationId": "beach",
+   "assetPath": "assets/bg/beach/beach_day.png",
+   "renderer": "ROOMS.beach",
+   "status": "procedural"
+  },
+  {
+   "id": "beach_sunset",
+   "locationId": "beach",
+   "timeOfDay": "EVENING",
+   "assetPath": "assets/bg/beach/beach_sunset.png",
+   "status": "planned"
+  },
+  {
+   "id": "beach_night",
+   "locationId": "beach",
+   "timeOfDay": "NIGHT",
+   "assetPath": "assets/bg/beach/beach_night.png",
+   "status": "planned"
+  },
+  {
+   "id": "beach_cloudy",
+   "locationId": "beach",
+   "weather": "CLOUDY",
+   "assetPath": "assets/bg/beach/beach_cloudy.png",
+   "status": "planned"
+  },
+  {
+   "id": "beach_winter",
+   "locationId": "beach",
+   "season": "WINTER",
+   "assetPath": "assets/bg/beach/beach_winter.png",
+   "status": "planned"
+  },
+  {
+   "id": "surf_school",
+   "locationId": "surf_school",
+   "assetPath": "assets/bg/surf_school/surf_school.png",
+   "status": "planned"
+  },
+  {
+   "id": "boardwalk",
+   "locationId": "boardwalk",
+   "assetPath": "assets/bg/boardwalk/boardwalk.png",
+   "status": "planned"
+  },
+  {
+   "id": "boardwalk_night",
+   "locationId": "boardwalk",
+   "timeOfDay": "NIGHT",
+   "assetPath": "assets/bg/boardwalk/boardwalk_night.png",
+   "status": "planned"
+  },
+  {
+   "id": "beach_cafe",
+   "locationId": "beach_cafe",
+   "assetPath": "assets/bg/beach_cafe/beach_cafe.png",
+   "status": "planned"
+  },
+  {
+   "id": "airport_departure",
+   "locationId": "airport",
+   "assetPath": "assets/bg/airport/airport_departure.png",
+   "status": "planned"
+  },
+  {
+   "id": "airport_arrival",
+   "locationId": "airport",
+   "activities": [
+    "arrive"
+   ],
+   "assetPath": "assets/bg/airport/airport_arrival.png",
+   "status": "planned"
+  },
+  {
+   "id": "paris_hotel",
+   "locationId": "paris_hotel",
+   "assetPath": "assets/bg/travel/hotel_room.png",
+   "status": "planned"
+  },
+  {
+   "id": "tokyo_hotel",
+   "locationId": "tokyo_hotel",
+   "assetPath": "assets/bg/travel/hotel_room.png",
+   "status": "planned"
+  },
+  {
+   "id": "eiffel_day",
+   "locationId": "paris_eiffel_tower",
+   "assetPath": "assets/bg/paris_eiffel_tower/eiffel_day.png",
+   "status": "planned",
+   "layers": [
+    {
+     "id": "paris_sky",
+     "kind": "sky",
+     "z": 0
+    },
+    {
+     "id": "eiffel_tower",
+     "kind": "architecture",
+     "z": 1
+    },
+    {
+     "id": "champ_de_mars",
+     "kind": "foreground",
+     "z": 80
+    }
+   ]
+  },
+  {
+   "id": "eiffel_evening",
+   "locationId": "paris_eiffel_tower",
+   "timeOfDay": "EVENING",
+   "assetPath": "assets/bg/paris_eiffel_tower/eiffel_evening.png",
+   "status": "planned"
+  },
+  {
+   "id": "eiffel_night",
+   "locationId": "paris_eiffel_tower",
+   "timeOfDay": "NIGHT",
+   "assetPath": "assets/bg/paris_eiffel_tower/eiffel_night.png",
+   "status": "planned"
+  },
+  {
+   "id": "louvre",
+   "locationId": "paris_louvre",
+   "assetPath": "assets/bg/paris_louvre/louvre.png",
+   "status": "planned"
+  },
+  {
+   "id": "paris_cafe",
+   "locationId": "paris_cafe",
+   "assetPath": "assets/bg/paris_cafe/paris_cafe.png",
+   "status": "planned"
+  },
+  {
+   "id": "seine_day",
+   "locationId": "paris_seine",
+   "assetPath": "assets/bg/paris_seine/seine_day.png",
+   "status": "planned"
+  },
+  {
+   "id": "seine_evening",
+   "locationId": "paris_seine",
+   "timeOfDay": "EVENING",
+   "assetPath": "assets/bg/paris_seine/seine_evening.png",
+   "status": "planned"
+  },
+  {
+   "id": "paris_street",
+   "locationId": "paris_street",
+   "assetPath": "assets/bg/paris_street/paris_street.png",
+   "status": "planned"
+  },
+  {
+   "id": "paris_street_rain",
+   "locationId": "paris_street",
+   "weather": "RAIN",
+   "assetPath": "assets/bg/paris_street/paris_street_rain.png",
+   "status": "planned"
+  },
+  {
+   "id": "tokyo_street",
+   "locationId": "tokyo_street",
+   "assetPath": "assets/bg/tokyo_street/tokyo_street.png",
+   "renderer": "ROOMS.tokyo",
+   "status": "procedural"
+  },
+  {
+   "id": "tokyo_street_night",
+   "locationId": "tokyo_street",
+   "timeOfDay": "NIGHT",
+   "assetPath": "assets/bg/tokyo_street/tokyo_street_night.png",
+   "status": "planned"
+  },
+  {
+   "id": "language_exchange_app_screen",
+   "locationId": "language_exchange_app",
+   "assetPath": "assets/bg/online/phone_screen.png",
+   "status": "planned",
+   "layers": [
+    {
+     "id": "phone_frame",
+     "kind": "architecture",
+     "z": 0
+    },
+    {
+     "id": "language_exchange_app_ui",
+     "kind": "interactive",
+     "z": 10
+    }
+   ]
+  },
+  {
+   "id": "instagram_screen",
+   "locationId": "instagram",
+   "assetPath": "assets/bg/online/phone_screen.png",
+   "status": "planned",
+   "layers": [
+    {
+     "id": "phone_frame",
+     "kind": "architecture",
+     "z": 0
+    },
+    {
+     "id": "instagram_ui",
+     "kind": "interactive",
+     "z": 10
+    }
+   ]
+  },
+  {
+   "id": "dating_app_screen",
+   "locationId": "dating_app",
+   "assetPath": "assets/bg/online/phone_screen.png",
+   "status": "planned",
+   "layers": [
+    {
+     "id": "phone_frame",
+     "kind": "architecture",
+     "z": 0
+    },
+    {
+     "id": "dating_app_ui",
+     "kind": "interactive",
+     "z": 10
+    }
+   ]
+  },
+  {
+   "id": "online_community_screen",
+   "locationId": "online_community",
+   "assetPath": "assets/bg/online/phone_screen.png",
+   "status": "planned",
+   "layers": [
+    {
+     "id": "phone_frame",
+     "kind": "architecture",
+     "z": 0
+    },
+    {
+     "id": "online_community_ui",
+     "kind": "interactive",
+     "z": 10
+    }
+   ]
+  },
+  {
+   "id": "wedding_ceremony",
+   "locationId": "wedding_venue",
+   "assetPath": "assets/bg/wedding_venue/wedding_ceremony.png",
+   "status": "planned"
+  },
+  {
+   "id": "wedding_reception",
+   "locationId": "wedding_venue",
+   "activities": [
+    "reception"
+   ],
+   "assetPath": "assets/bg/wedding_venue/wedding_reception.png",
+   "status": "planned"
+  },
+  {
+   "id": "hospital",
+   "locationId": "hospital",
+   "assetPath": "assets/bg/hospital/hospital.png",
+   "status": "planned"
+  }
+ ]
+}

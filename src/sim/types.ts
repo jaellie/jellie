@@ -6,6 +6,7 @@
 import type { GameDate } from "../core/gameDate";
 import type { BirthData } from "../saju/calendar/fourPillars";
 import type { SajuChart } from "../saju/chart";
+import type { WorldState } from "../world/types";
 
 export const EDUCATION_LEVELS = ["NONE", "HIGH_SCHOOL", "BACHELOR", "MASTER", "PHD"] as const;
 export type EducationLevel = (typeof EDUCATION_LEVELS)[number];
@@ -21,7 +22,7 @@ export interface Traits {
   ambition: number;
 }
 
-export interface Location {
+export interface Residence {
   country: string;
   city: string;
 }
@@ -74,7 +75,7 @@ export interface LifeState extends Character {
   career: { employed: boolean; field?: string; level: number; abroad: boolean };
 
   homeCountry: string;
-  location: Location;
+  location: Residence;
 
   relationship: { status: RelationshipStatus; partnerId?: string; sinceMonth?: number; longDistance?: boolean };
   socialCircle: number;
@@ -84,6 +85,8 @@ export interface LifeState extends Character {
   /** Opportunity history: template id → month indexes it was offered / taken. */
   history: Record<string, { offered: number[]; taken: number[] }>;
   flags: Record<string, number | boolean | string>;
+  /** Living world (locations, NPCs, encounters, memories). Present when the world layer is enabled. */
+  world?: WorldState;
 }
 
 export function isAbroad(s: LifeState): boolean {

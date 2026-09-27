@@ -48,7 +48,11 @@ export type Consequence =
   | { kind: "familySupport"; delta: number }
   | { kind: "setFlag"; name: string; value: number | boolean | string }
   | { kind: "gamble"; stake: number; volatilityKey?: LifeModifierKey }
-  | { kind: "memory"; text: string; tags?: string[] };
+  | { kind: "memory"; text: string; tags?: string[] }
+  /** Makes a location part of the weekly routine (world layer). */
+  | { kind: "startHabit"; locationId: string; activityId: string; perMonth?: number }
+  /** Queue a trip; destination id or a scope to pick from. */
+  | { kind: "trip"; destination?: string; scope?: "DOMESTIC" | "INTERNATIONAL" };
 
 export interface ChoiceAppeal {
   base: number;

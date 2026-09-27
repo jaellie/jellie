@@ -1,0 +1,1006 @@
+{
+ "_doc": "Activities. socialness scales encounter chances; experience tags accumulate and change future opportunity pools; startsHabit turns the location into a recurring routine (membership/enrollment); affinity = which destiny/world modifier keys make encounters during this activity likelier.",
+ "activities": [
+  {
+   "id": "attend_lecture",
+   "name": {
+    "en": "Attend Lecture",
+    "ko": "강의"
+   },
+   "durationHours": 2,
+   "cost": 0,
+   "socialness": 0.4,
+   "experience": [
+    "study"
+   ],
+   "affinity": {
+    "education": 0.5
+   }
+  },
+  {
+   "id": "attend_wedding",
+   "name": {
+    "en": "Attend Wedding",
+    "ko": "결혼식 참석"
+   },
+   "durationHours": 4,
+   "cost": 0.1,
+   "socialness": 1.0,
+   "affinity": {
+    "social": 0.5,
+    "romance": 0.3,
+    "marriage": 0.3
+   },
+   "favors": [
+    "FRIEND_OF_FRIEND"
+   ]
+  },
+  {
+   "id": "borrow_book",
+   "name": {
+    "en": "Borrow Book",
+    "ko": "책 빌리기"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "breakfast",
+   "name": {
+    "en": "Breakfast",
+    "ko": "조식"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "browse",
+   "name": {
+    "en": "Browse",
+    "ko": "둘러보기"
+   },
+   "durationHours": 0.5,
+   "cost": 0,
+   "socialness": 0.3,
+   "affinity": {
+    "social": 0.2
+   }
+  },
+  {
+   "id": "buy_membership",
+   "name": {
+    "en": "Buy Membership",
+    "ko": "회원권 등록"
+   },
+   "durationHours": 0.5,
+   "cost": 0.5,
+   "socialness": 0.3,
+   "startsHabit": true
+  },
+  {
+   "id": "celebrate",
+   "name": {
+    "en": "Celebrate",
+    "ko": "축하"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "ceremony",
+   "name": {
+    "en": "Ceremony",
+    "ko": "예식"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.5
+  },
+  {
+   "id": "chat",
+   "name": {
+    "en": "Chat",
+    "ko": "채팅"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.9,
+   "experience": [
+    "language"
+   ],
+   "affinity": {
+    "communication": 0.6,
+    "overseas": 0.4
+   },
+   "favors": [
+    "TRAVELER",
+    "STRANGER"
+   ],
+   "startsHabit": true
+  },
+  {
+   "id": "chat_front_desk",
+   "name": {
+    "en": "Chat Front Desk",
+    "ko": "프런트와 대화"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "check_in",
+   "name": {
+    "en": "Check In",
+    "ko": "체크인"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "checkup",
+   "name": {
+    "en": "Checkup",
+    "ko": "검진"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "club_activity",
+   "name": {
+    "en": "Club Activity",
+    "ko": "동아리"
+   },
+   "durationHours": 2,
+   "cost": 0,
+   "socialness": 0.9,
+   "affinity": {
+    "social": 0.6
+   },
+   "favors": [
+    "RECURRING"
+   ],
+   "startsHabit": true
+  },
+  {
+   "id": "commute",
+   "name": {
+    "en": "Commute",
+    "ko": "출퇴근"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "cook",
+   "name": {
+    "en": "Cook",
+    "ko": "요리"
+   },
+   "durationHours": 1.5,
+   "cost": 0.02,
+   "socialness": 0.3,
+   "experience": [
+    "cooking"
+   ],
+   "affinity": {
+    "creativity": 0.3
+   }
+  },
+  {
+   "id": "date",
+   "name": {
+    "en": "Date",
+    "ko": "데이트"
+   },
+   "durationHours": 3,
+   "cost": 0.05,
+   "socialness": 0.2,
+   "affinity": {
+    "romance": 0.5
+   }
+  },
+  {
+   "id": "dm",
+   "name": {
+    "en": "Dm",
+    "ko": "DM"
+   },
+   "durationHours": 0.3,
+   "cost": 0,
+   "socialness": 0.9,
+   "affinity": {
+    "social": 0.4,
+    "romance": 0.3
+   },
+   "favors": [
+    "FRIEND_OF_FRIEND"
+   ]
+  },
+  {
+   "id": "drink_coffee",
+   "name": {
+    "en": "Drink Coffee",
+    "ko": "커피"
+   },
+   "durationHours": 1,
+   "cost": 0.005,
+   "socialness": 0.35,
+   "affinity": {
+    "social": 0.2
+   }
+  },
+  {
+   "id": "eat",
+   "name": {
+    "en": "Eat",
+    "ko": "식사"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "group_class",
+   "name": {
+    "en": "Group Class",
+    "ko": "그룹 수업"
+   },
+   "durationHours": 1,
+   "cost": 0.02,
+   "socialness": 0.8,
+   "experience": [
+    "fitness"
+   ],
+   "affinity": {
+    "social": 0.6
+   },
+   "favors": [
+    "RECURRING"
+   ]
+  },
+  {
+   "id": "help_family",
+   "name": {
+    "en": "Help Family",
+    "ko": "집안일 돕기"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "help_someone",
+   "name": {
+    "en": "Help Someone",
+    "ko": "도와주기"
+   },
+   "durationHours": 0.5,
+   "cost": 0,
+   "socialness": 0.9,
+   "affinity": {
+    "social": 0.5
+   },
+   "favors": [
+    "RECURRING"
+   ]
+  },
+  {
+   "id": "invite_friend",
+   "name": {
+    "en": "Invite Friend",
+    "ko": "친구 초대"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "invite_partner",
+   "name": {
+    "en": "Invite Partner",
+    "ko": "애인 초대"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "jog",
+   "name": {
+    "en": "Jog",
+    "ko": "조깅"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.2,
+   "experience": [
+    "fitness"
+   ],
+   "favors": [
+    "RECURRING"
+   ],
+   "startsHabit": true
+  },
+  {
+   "id": "join_group",
+   "name": {
+    "en": "Join Group",
+    "ko": "모임 참여"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 1.0,
+   "affinity": {
+    "social": 0.8
+   },
+   "startsHabit": true
+  },
+  {
+   "id": "learn_recipe",
+   "name": {
+    "en": "Learn Recipe",
+    "ko": "레시피 배우기"
+   },
+   "durationHours": 2,
+   "cost": 0.05,
+   "socialness": 0.6,
+   "experience": [
+    "cooking"
+   ],
+   "affinity": {
+    "creativity": 0.4
+   },
+   "startsHabit": true
+  },
+  {
+   "id": "lunch_with_coworkers",
+   "name": {
+    "en": "Lunch With Coworkers",
+    "ko": "동료와 점심"
+   },
+   "durationHours": 1,
+   "cost": 0.01,
+   "socialness": 0.9,
+   "affinity": {
+    "social": 0.4
+   },
+   "favors": [
+    "RECURRING"
+   ]
+  },
+  {
+   "id": "meet_friend",
+   "name": {
+    "en": "Meet Friend",
+    "ko": "친구 만나기"
+   },
+   "durationHours": 2,
+   "cost": 0.02,
+   "socialness": 0.9,
+   "affinity": {
+    "social": 0.6
+   },
+   "favors": [
+    "FRIEND_OF_FRIEND"
+   ]
+  },
+  {
+   "id": "meet_people",
+   "name": {
+    "en": "Meet People",
+    "ko": "사람 만나기"
+   },
+   "durationHours": 2,
+   "cost": 0,
+   "socialness": 1.0,
+   "affinity": {
+    "social": 0.7,
+    "romance": 0.3
+   },
+   "favors": [
+    "STRANGER",
+    "TRAVELER"
+   ]
+  },
+  {
+   "id": "meeting",
+   "name": {
+    "en": "Meeting",
+    "ko": "회의"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.7,
+   "affinity": {
+    "career": 0.5
+   },
+   "favors": [
+    "PROFESSIONAL"
+   ]
+  },
+  {
+   "id": "museum",
+   "name": {
+    "en": "Museum",
+    "ko": "미술관"
+   },
+   "durationHours": 2,
+   "cost": 0.02,
+   "socialness": 0.3,
+   "experience": [
+    "art"
+   ],
+   "affinity": {
+    "creativity": 0.4
+   }
+  },
+  {
+   "id": "overtime",
+   "name": {
+    "en": "Overtime",
+    "ko": "야근"
+   },
+   "durationHours": 3,
+   "cost": 0,
+   "socialness": 0.3,
+   "affinity": {
+    "career": 0.4
+   }
+  },
+  {
+   "id": "people_watch",
+   "name": {
+    "en": "People Watch",
+    "ko": "사람 구경"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "personal_training",
+   "name": {
+    "en": "Personal Training",
+    "ko": "PT"
+   },
+   "durationHours": 1,
+   "cost": 0.06,
+   "socialness": 0.8,
+   "experience": [
+    "fitness"
+   ],
+   "affinity": {
+    "social": 0.3
+   },
+   "favors": [
+    "STAFF"
+   ]
+  },
+  {
+   "id": "photograph",
+   "name": {
+    "en": "Photograph",
+    "ko": "사진"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3,
+   "experience": [
+    "photography"
+   ],
+   "affinity": {
+    "creativity": 0.3
+   }
+  },
+  {
+   "id": "photography",
+   "name": {
+    "en": "Photography",
+    "ko": "사진"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.35,
+   "experience": [
+    "photography"
+   ],
+   "affinity": {
+    "creativity": 0.3
+   }
+  },
+  {
+   "id": "picnic",
+   "name": {
+    "en": "Picnic",
+    "ko": "피크닉"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "plan_date",
+   "name": {
+    "en": "Plan Date",
+    "ko": "데이트 약속"
+   },
+   "durationHours": 0.3,
+   "cost": 0,
+   "socialness": 1.0,
+   "affinity": {
+    "romance": 0.7
+   }
+  },
+  {
+   "id": "plan_meetup",
+   "name": {
+    "en": "Plan Meetup",
+    "ko": "만남 약속"
+   },
+   "durationHours": 0.3,
+   "cost": 0,
+   "socialness": 1.0,
+   "affinity": {
+    "social": 0.5
+   }
+  },
+  {
+   "id": "play_game",
+   "name": {
+    "en": "Play Game",
+    "ko": "게임"
+   },
+   "durationHours": 2,
+   "cost": 0,
+   "socialness": 0.6,
+   "favors": [
+    "RECURRING"
+   ],
+   "startsHabit": true
+  },
+  {
+   "id": "post",
+   "name": {
+    "en": "Post",
+    "ko": "게시물"
+   },
+   "durationHours": 0.3,
+   "cost": 0,
+   "socialness": 0.5,
+   "affinity": {
+    "communication": 0.5,
+    "social": 0.3
+   }
+  },
+  {
+   "id": "read",
+   "name": {
+    "en": "Read",
+    "ko": "독서"
+   },
+   "durationHours": 1.5,
+   "cost": 0,
+   "socialness": 0.15,
+   "experience": [
+    "reading"
+   ],
+   "affinity": {
+    "introspection": 0.3
+   }
+  },
+  {
+   "id": "reception",
+   "name": {
+    "en": "Reception",
+    "ko": "피로연"
+   },
+   "durationHours": 2,
+   "cost": 0,
+   "socialness": 1.0,
+   "affinity": {
+    "social": 0.6,
+    "romance": 0.3
+   },
+   "favors": [
+    "FRIEND_OF_FRIEND"
+   ]
+  },
+  {
+   "id": "research",
+   "name": {
+    "en": "Research",
+    "ko": "연구"
+   },
+   "durationHours": 3,
+   "cost": 0,
+   "socialness": 0.2,
+   "experience": [
+    "research"
+   ],
+   "affinity": {
+    "education": 0.6,
+    "introspection": 0.3
+   }
+  },
+  {
+   "id": "rest",
+   "name": {
+    "en": "Rest",
+    "ko": "휴식"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "ride",
+   "name": {
+    "en": "Ride",
+    "ko": "놀이기구"
+   },
+   "durationHours": 3,
+   "cost": 0.05,
+   "socialness": 0.4
+  },
+  {
+   "id": "shop",
+   "name": {
+    "en": "Shop",
+    "ko": "쇼핑"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "sightseeing",
+   "name": {
+    "en": "Sightseeing",
+    "ko": "관광"
+   },
+   "durationHours": 2,
+   "cost": 0.02,
+   "socialness": 0.4,
+   "experience": [
+    "travel"
+   ],
+   "affinity": {
+    "travel": 0.5
+   },
+   "favors": [
+    "TRAVELER"
+   ]
+  },
+  {
+   "id": "sit_alone",
+   "name": {
+    "en": "Sit Alone",
+    "ko": "혼자 앉기"
+   },
+   "durationHours": 1,
+   "cost": 0.005,
+   "socialness": 0.2,
+   "affinity": {
+    "introspection": 0.3
+   }
+  },
+  {
+   "id": "sketch",
+   "name": {
+    "en": "Sketch",
+    "ko": "스케치"
+   },
+   "durationHours": 1.5,
+   "cost": 0,
+   "socialness": 0.3,
+   "experience": [
+    "art"
+   ],
+   "affinity": {
+    "creativity": 0.5
+   }
+  },
+  {
+   "id": "sleep",
+   "name": {
+    "en": "Sleep",
+    "ko": "잠자기"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "stretching",
+   "name": {
+    "en": "Stretching",
+    "ko": "스트레칭"
+   },
+   "durationHours": 0.5,
+   "cost": 0,
+   "socialness": 0.2,
+   "experience": [
+    "fitness"
+   ]
+  },
+  {
+   "id": "study",
+   "name": {
+    "en": "Study",
+    "ko": "공부"
+   },
+   "durationHours": 2,
+   "cost": 0,
+   "socialness": 0.15,
+   "experience": [
+    "study"
+   ],
+   "affinity": {
+    "education": 0.4
+   }
+  },
+  {
+   "id": "sunbathe",
+   "name": {
+    "en": "Sunbathe",
+    "ko": "일광욕"
+   },
+   "durationHours": 2,
+   "cost": 0,
+   "socialness": 0.2
+  },
+  {
+   "id": "surf",
+   "name": {
+    "en": "Surf",
+    "ko": "서핑"
+   },
+   "durationHours": 2,
+   "cost": 0.02,
+   "socialness": 0.5,
+   "experience": [
+    "surf"
+   ],
+   "favors": [
+    "RECURRING",
+    "TRAVELER"
+   ]
+  },
+  {
+   "id": "surf_lesson",
+   "name": {
+    "en": "Surf Lesson",
+    "ko": "서핑 강습"
+   },
+   "durationHours": 2,
+   "cost": 0.06,
+   "socialness": 0.8,
+   "experience": [
+    "surf"
+   ],
+   "favors": [
+    "STAFF",
+    "RECURRING"
+   ],
+   "startsHabit": true
+  },
+  {
+   "id": "swim",
+   "name": {
+    "en": "Swim",
+    "ko": "수영"
+   },
+   "durationHours": 1.5,
+   "cost": 0,
+   "socialness": 0.3,
+   "experience": [
+    "swim"
+   ]
+  },
+  {
+   "id": "swipe",
+   "name": {
+    "en": "Swipe",
+    "ko": "스와이프"
+   },
+   "durationHours": 0.5,
+   "cost": 0,
+   "socialness": 0.7,
+   "affinity": {
+    "romance": 0.9
+   },
+   "startsHabit": true
+  },
+  {
+   "id": "talk_family",
+   "name": {
+    "en": "Talk Family",
+    "ko": "가족과 대화"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "talk_to_classmate",
+   "name": {
+    "en": "Talk To Classmate",
+    "ko": "수강생과 대화"
+   },
+   "durationHours": 0.5,
+   "cost": 0,
+   "socialness": 1.0,
+   "affinity": {
+    "social": 0.6,
+    "romance": 0.3
+   },
+   "favors": [
+    "RECURRING"
+   ]
+  },
+  {
+   "id": "use_phone",
+   "name": {
+    "en": "Use Phone",
+    "ko": "휴대폰"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "video_call",
+   "name": {
+    "en": "Video Call",
+    "ko": "영상통화"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 1.0,
+   "experience": [
+    "language"
+   ],
+   "affinity": {
+    "communication": 0.6,
+    "overseas": 0.4
+   }
+  },
+  {
+   "id": "visit_patient",
+   "name": {
+    "en": "Visit Patient",
+    "ko": "병문안"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "volunteer",
+   "name": {
+    "en": "Volunteer",
+    "ko": "봉사"
+   },
+   "durationHours": 2,
+   "cost": 0,
+   "socialness": 0.8,
+   "affinity": {
+    "social": 0.5,
+    "family": 0.2
+   },
+   "favors": [
+    "RECURRING"
+   ],
+   "startsHabit": true
+  },
+  {
+   "id": "wait",
+   "name": {
+    "en": "Wait",
+    "ko": "기다리기"
+   },
+   "durationHours": 1.5,
+   "cost": 0,
+   "socialness": 0.4,
+   "favors": [
+    "TRAVELER"
+   ]
+  },
+  {
+   "id": "walk",
+   "name": {
+    "en": "Walk",
+    "ko": "산책"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.25
+  },
+  {
+   "id": "walk_dog",
+   "name": {
+    "en": "Walk Dog",
+    "ko": "강아지 산책"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.5,
+   "favors": [
+    "RECURRING"
+   ]
+  },
+  {
+   "id": "watch_movie",
+   "name": {
+    "en": "Watch Movie",
+    "ko": "영화"
+   },
+   "durationHours": 2.5,
+   "cost": 0.02,
+   "socialness": 0.2
+  },
+  {
+   "id": "watch_tv",
+   "name": {
+    "en": "Watch Tv",
+    "ko": "TV 보기"
+   },
+   "durationHours": 1,
+   "cost": 0,
+   "socialness": 0.3
+  },
+  {
+   "id": "work",
+   "name": {
+    "en": "Work",
+    "ko": "일하기"
+   },
+   "durationHours": 8,
+   "cost": 0,
+   "socialness": 0.5,
+   "experience": [
+    "work"
+   ],
+   "affinity": {
+    "career": 0.4
+   },
+   "favors": [
+    "PROFESSIONAL"
+   ]
+  },
+  {
+   "id": "workout",
+   "name": {
+    "en": "Workout",
+    "ko": "운동"
+   },
+   "durationHours": 1.5,
+   "cost": 0,
+   "socialness": 0.35,
+   "experience": [
+    "fitness"
+   ],
+   "affinity": {
+    "social": 0.3
+   }
+  },
+  {
+   "id": "arrive",
+   "name": {
+    "en": "Arrive",
+    "ko": "도착"
+   },
+   "durationHours": 0.5,
+   "cost": 0,
+   "socialness": 0.2
+  }
+ ]
+}

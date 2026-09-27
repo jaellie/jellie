@@ -1,0 +1,72 @@
+{
+ "_doc": "Encounter + relationship progression tuning. Recurrence builds familiarity; talking needs familiarity; friendship needs repeated conversations; romance needs friendship/acquaintance AND eligibility AND a (rare) spark. Nothing here is guaranteed.",
+ "familiarityPerSighting": 0.09,
+ "familiarityDecayPerMonthAbsent": 0.03,
+ "stages": {
+  "FAMILIAR_FACE": {
+   "minCount": 2
+  },
+  "RECOGNIZES": {
+   "minCount": 3,
+   "minFamiliarity": 0.25
+  },
+  "ACQUAINTANCE": {
+   "minConversations": 1
+  },
+  "FRIEND": {
+   "minConversations": 6,
+   "minCloseness": 0.45
+  },
+  "CLOSE_FRIEND": {
+   "minConversations": 16,
+   "minCloseness": 0.75
+  }
+ },
+ "conversationChance": {
+  "base": 0.06,
+  "perFamiliarity": 0.22,
+  "socialnessWeight": 0.5,
+  "max": 0.6
+ },
+ "closenessPerConversation": 0.03,
+ "friendshipChance": 0.15,
+ "sparkPerConversation": 0.05,
+ "romanceChance": {
+  "base": 0.04,
+  "sparkWeight": 0.4
+ },
+ "transientPresence": {
+  "min": 0,
+  "max": 3
+ },
+ "regularAttendance": 0.75,
+ "regularsPerLocation": {
+  "GYM": 6,
+  "CLASS": 5,
+  "CAFE": 4,
+  "UNIVERSITY": 8,
+  "WORKPLACE": 6,
+  "LIBRARY": 3,
+  "HOBBY": 4,
+  "ONLINE": 5,
+  "PARK": 3,
+  "CITY": 3,
+  "default": 2
+ },
+ "reunion": {
+  "minMonthsAway": 12,
+  "chance": 0.25
+ },
+ "onlineToOfflineChance": 0.25,
+ "travelContactKeepChance": 0.5,
+ "maxNoticedPerVisit": 3,
+ "strangerTalkFactor": 0.3,
+ "strangerKeepContactChance": 0.2,
+ "knownTalkFactor": 1.0,
+ "invitation": {
+  "chance": 0.02,
+  "minCloseness": 0.5,
+  "cooldownMonths": 12
+ },
+ "habitLapsePerMonth": 0.015
+}

@@ -131,6 +131,19 @@ export function applyConsequence(s: LifeState, c: Consequence, ctx: ConsequenceC
     case "memory":
       remember(s, c.text, c.tags);
       break;
+    case "startHabit":
+      if (s.world && !s.world.habits[c.locationId]) {
+        s.world.habits[c.locationId] = { activityId: c.activityId, since: { ...s.date }, perMonth: c.perMonth ?? 4 };
+        log.push(`new routine: ${c.locationId}`);
+      }
+      break;
+    case "trip": {
+      if (!s.world) break;
+      const dest = c.destination ?? (c.scope === "INTERNATIONAL" ? (rng.chance(0.5) ? "paris" : "tokyo") : "coast");
+      s.world.pendingTrips = [...(s.world.pendingTrips ?? []), dest];
+      log.push(`trip planned: ${dest}`);
+      break;
+    }
   }
 }
 

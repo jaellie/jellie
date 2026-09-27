@@ -1,0 +1,102 @@
+{
+ "_doc": "Travel destinations = temporary world instances. 'locations' become reachable during the trip; 'hub' is where you stay. cost in thousands per trip.",
+ "destinations": [
+  {
+   "id": "paris",
+   "name": {
+    "ko": "파리",
+    "en": "Paris"
+   },
+   "country": "France",
+   "international": true,
+   "hub": "paris_hotel",
+   "locations": [
+    "paris_eiffel_tower",
+    "paris_louvre",
+    "paris_cafe",
+    "paris_seine",
+    "paris_street"
+   ],
+   "cost": 4,
+   "days": [
+    4,
+    7
+   ],
+   "tags": [
+    "romance",
+    "art",
+    "europe"
+   ],
+   "mementos": [
+    {
+     "ko": "에펠탑 키링",
+     "en": "Eiffel Tower keychain"
+    },
+    {
+     "ko": "파리 사진",
+     "en": "Photo from Paris"
+    }
+   ]
+  },
+  {
+   "id": "tokyo",
+   "name": {
+    "ko": "도쿄",
+    "en": "Tokyo"
+   },
+   "country": "Japan",
+   "international": true,
+   "hub": "tokyo_hotel",
+   "locations": [
+    "tokyo_street"
+   ],
+   "cost": 2,
+   "days": [
+    3,
+    5
+   ],
+   "tags": [
+    "city",
+    "food",
+    "asia"
+   ],
+   "mementos": [
+    {
+     "ko": "도쿄 스티커",
+     "en": "Tokyo sticker"
+    }
+   ]
+  },
+  {
+   "id": "coast",
+   "name": {
+    "ko": "바닷가 마을",
+    "en": "Seaside Town"
+   },
+   "country": "HOME",
+   "international": false,
+   "hub": "beach",
+   "locations": [
+    "beach",
+    "surf_school",
+    "boardwalk",
+    "beach_cafe"
+   ],
+   "cost": 0.8,
+   "days": [
+    2,
+    3
+   ],
+   "tags": [
+    "sea",
+    "summer"
+   ],
+   "mementos": [
+    {
+     "ko": "조개껍데기",
+     "en": "A seashell"
+    }
+   ]
+  }
+ ]
+}
