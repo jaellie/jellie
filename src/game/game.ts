@@ -44,7 +44,7 @@ import { toPrototypeScene, type PrototypeScene } from "../integration/prototype"
 import { WorldEngine } from "../world/worldEngine";
 import type { NPCSchedule } from "../world/types";
 import { type LifeFacts, computeFacts, meets } from "./facts";
-import { STORY_ONLY_TEMPLATES, upcomingHint, ensureArcs, fillStory, hintFor, initStory, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
+import { STORY_ONLY_TEMPLATES, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
 import { buildCards, type MemoryCard } from "../story/cards";
 import memorialData from "../../data/story/memorial.json";
 import { AutoWorldPolicy } from "../world/decisions";
@@ -389,6 +389,11 @@ export class Game {
       agenda.push({ t: 660, k: "story" });
       b.major = 0; // no random big offers competing with a destined moment
       b.small = Math.min(b.small, 1);
+      // A grave day (funeral, the hospital call, betrayal…) is quiet: no chores, no casual texts.
+      if (isGrave(st, s.dayKind!, s.dayRef!)) {
+        b.small = 0;
+        b.messages = 0;
+      }
       // A second moment shares the day: morning at the first place, afternoon at the second.
       const def2 = s.dayKind2 && s.dayRef2 ? storyPopup(st, s.dayKind2, s.dayRef2, this.facts(), this.rng("storydef2"), { peek: true }) : undefined;
       if (def2) {
@@ -419,6 +424,12 @@ export class Game {
     for (let i = 0; i < b.messages; i++) agenda.push({ t: rng.int(450, 1350), k: "message" });
     s.agenda = agenda.sort((a, c) => a.t - c.t);
     return s.day;
+  }
+
+  /** During a story day's destined hours, the place itself stays quiet (the story is the event). */
+  private storyMoment(): boolean {
+    const s = this.s;
+    return (s.dayKind === "fated" || s.dayKind === "arc") && s.minute >= 600 && s.minute < 1080;
   }
 
   /** Where the player is at a given minute (schedule + today's plan + manual moves). */
@@ -533,7 +544,7 @@ export class Game {
     if (!st.world) return [];
     const withPartner = !!s.dayPlan.withPartner && !!s.day?.weekend && s.minute >= 660 && s.minute < 1080;
     const r = this.world.visit(
-      { state: st, world: st.world, modifiers: this.runner().modifiers(), rng: this.rng("visit", locationId, activityId ?? ""), seed: s.seed, withPartner, attraction: this.attraction(), trip: st.world.travel, facts: this.facts() },
+      { state: st, world: st.world, modifiers: this.runner().modifiers(), rng: this.rng("visit", locationId, activityId ?? ""), seed: s.seed, withPartner, attraction: this.attraction(), trip: st.world.travel, facts: this.facts(), quiet: this.storyMoment() },
       {
         locationId,
         activityId:

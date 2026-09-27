@@ -33,6 +33,12 @@ export interface VisitContext {
   trip?: TravelState;
   /** Life facts for fact-dependent backgrounds (married home…). */
   facts?: Record<string, unknown>;
+  /**
+   * A story moment is happening here (your own wedding, a funeral, the hospital): people are around,
+   * but nothing else happens — no encounters, reunions or place events (no "caught the bouquet" at
+   * your own wedding).
+   */
+  quiet?: boolean;
 }
 
 export interface VisitRequest {
@@ -89,7 +95,7 @@ export class WorldEngine {
     // ---- Memory & callbacks ----
     const mem = (world.locationMemory[loc.id] ??= EMPTY_MEMORY(loc.id));
     const events: WorldEvent[] = [];
-    if (mem.lastVisit && monthsBetween(mem.lastVisit, req.date) >= R.reunion.minMonthsAway && mem.importantEvents.length) {
+    if (!ctx.quiet && mem.lastVisit && monthsBetween(mem.lastVisit, req.date) >= R.reunion.minMonthsAway && mem.importantEvents.length) {
       events.push({ kind: "MEMORY_CALLBACK", scale: "SMALL", date: time.date, locationId: loc.id, text: t(`여기… ${mem.importantEvents.at(-1)}`, `This place… ${mem.importantEvents.at(-1)}`) });
     }
     mem.visitCount += 1;
@@ -118,12 +124,12 @@ export class WorldEngine {
       inTrip: !!ctx.trip,
     };
     // Your partner's presence makes strangers less likely to approach.
-    const talkers = ctx.withPartner ? noticed.filter(() => rng.chance(0.3)) : noticed;
+    const talkers = ctx.quiet ? [] : ctx.withPartner ? noticed.filter(() => rng.chance(0.3)) : noticed;
     for (const npc of talkers) events.push(...processSighting(ectx, npc));
     for (const e of events) if (e.npcId && ctx.trip && world.npcs[e.npcId]?.persistence === "TEMPORARY" && !ctx.trip.temporaryNPCs.includes(e.npcId)) ctx.trip.temporaryNPCs.push(e.npcId);
 
     // ---- Reunion with someone first met here ----
-    if (lastVisit && monthsBetween(lastVisit, req.date) >= R.reunion.minMonthsAway) {
+    if (!ctx.quiet && lastVisit && monthsBetween(lastVisit, req.date) >= R.reunion.minMonthsAway) {
       const old = Object.values(world.relationships).find((r) => !world.npcs[r.npcId]?.deceased && r.origin.locationId === loc.id && ["LOST_CONTACT", "ACQUAINTANCE", "FRIEND"].includes(r.stage) && monthsBetween(r.lastContact, req.date) >= R.reunion.minMonthsAway);
       if (old && rng.chance(R.reunion.chance * Math.exp(ctx.modifiers.social ?? 0))) {
         const npc = world.npcs[old.npcId];
@@ -135,7 +141,7 @@ export class WorldEngine {
     }
 
     // ---- Online relationships can move offline ----
-    if (loc.online) {
+    if (loc.online && !ctx.quiet) {
       for (const rel of Object.values(world.relationships)) {
         if (rel.channel !== "ONLINE" || rel.metOffline || rel.origin.locationId !== loc.id) continue;
         if (rel.lastInvite && monthsBetween(rel.lastInvite, req.date) < 6) continue;
@@ -160,7 +166,7 @@ export class WorldEngine {
     }
 
     // ---- Location's own events (often none) ----
-    const le = this.rollLocationEvent(ctx, loc.id, activityId, time);
+    const le = ctx.quiet ? undefined : this.rollLocationEvent(ctx, loc.id, activityId, time);
     if (le) events.push(le);
 
     // ---- Remember ----

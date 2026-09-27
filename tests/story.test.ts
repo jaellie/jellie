@@ -256,12 +256,14 @@ describe("Scenes follow choices; the world moves", () => {
 function playUntil(g: Game, stop: (g: Game) => boolean, pick: (p: { source: string; line: string; ch: Array<{ t: string }> }) => number = () => 0, maxDays = 60) {
   const popups: Array<{ source: string; who: string; name?: string; line: string; title?: string; big?: boolean; day: number }> = [];
   const toasts: Array<{ from: string; text: string; day: number }> = [];
+  const logs: Array<{ text: string; day: number; minute: number }> = [];
   const cards: MemoryCard[] = [];
   for (let d = 0; d < maxDays && !g.isOver() && !stop(g); d++) {
     for (let i = 0; i < 400; i++) {
       const beats = g.advance(g.s.minute + 30);
       for (const b of beats) {
         if (b.kind === "toast") toasts.push({ from: b.from, text: b.text, day: g.s.dayIndex });
+        if (b.kind === "log") logs.push({ text: b.text, day: g.s.dayIndex, minute: g.s.minute });
         if (b.kind === "popup") {
           popups.push({ source: b.popup.source, who: b.popup.who, name: b.popup.name, line: b.popup.line, title: b.popup.title, big: b.popup.big, day: g.s.dayIndex });
           g.choose(pick(b.popup));
@@ -271,7 +273,7 @@ function playUntil(g: Game, stop: (g: Game) => boolean, pick: (p: { source: stri
     }
     if (!g.isOver()) cards.push(...g.endDay().cards);
   }
-  return { popups, toasts, cards };
+  return { popups, toasts, logs, cards };
 }
 
 describe("The destined person: a crush, not an automatic couple", () => {
@@ -361,6 +363,8 @@ describe("Hard moments are days of their own", () => {
     expect(popups[call].line).toContain("사고");
     expect(popups[call].big).toBe(true);
     expect(toasts.filter((t) => t.day >= popups[call].day && t.day <= popups[bye].day).some((t) => t.from === "Ren")).toBe(false);
+    // Grave days are quiet: no casual texts at all on the call day or the funeral day.
+    expect(toasts.filter((t) => t.day === popups[call].day || t.day === popups[bye].day)).toEqual([]);
     expect(g.state.relationship.status).toBe("SINGLE");
     expect(g.state.flags.widowed).toBe(true);
     const after = playUntil(g, () => false, () => 0, 6);
@@ -400,5 +404,22 @@ describe("Two lighter moments in one season share a day", () => {
     const story = popups.filter((p) => p.big);
     expect(story.length).toBeGreaterThanOrEqual(2);
     expect(story[0].day).toBe(story[1].day);
+  });
+});
+
+describe("A story moment is the day's event", () => {
+  it("at your own wedding nobody 'catches the bouquet' and no stranger strikes up a chat", () => {
+    for (const seed of [1, 2, 3, 4, 5, 6]) {
+      const g = createGame({ ...SETUP, fated: { ...SETUP.fated, status: "dating" as const }, seed });
+      g.state.engaged = true;
+      const arc = startArc(g.state, "ENGAGEMENT", new SeededRandom(seed))!;
+      arc.step = 1; // the wedding
+      arc.steps[1].dueMonth = g.state.monthIndex + 1;
+      const { popups, logs } = playUntil(g, (x) => !x.state.story!.arcs.includes(arc), () => 0, 4);
+      const wed = popups.find((p) => p.title === "결혼식");
+      expect(wed).toBeDefined();
+      const sameDay = logs.filter((l) => l.day === wed!.day && l.minute >= 600 && l.minute < 1080).map((l) => l.text);
+      expect(sameDay.join(" ")).not.toMatch(/부케|처음으로 제대로 이야기|다시 만나다니/);
+    }
   });
 });

@@ -173,7 +173,8 @@ const SHARED_DAY_MONTHS = 8;
 const GRAVE_THEMES: FatedTheme[] = ["FAMILY_LOSS", "ILLNESS", "RELATIONSHIP_CRISIS"];
 const GRAVE_ARCS: ArcType[] = ["PARTNER_PASSING", "PARENT_PASSING", "FAMILY_PASSING", "PET_FAREWELL", "ILLNESS", "AFFAIR", "DIVORCE", "PREGNANCY"];
 
-function isGrave(state: LifeState, kind: string, ref: string): boolean {
+/** Funerals, illness, betrayal, divorce… — never shares a day, and the day stays quiet around it. */
+export function isGrave(state: LifeState, kind: string, ref: string): boolean {
   if (kind === "fated") return GRAVE_THEMES.includes(fatedEvent(state, ref)?.theme as FatedTheme);
   const arc = state.story?.arcs.find((a) => a.id === ref);
   return !arc || GRAVE_ARCS.includes(arc.type);
