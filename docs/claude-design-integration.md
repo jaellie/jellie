@@ -12,7 +12,7 @@
 | `choose(i)` → `SIM.choose` | `const r = game.choose(i)` → `u.res = { who: r.who, line: r.line }`. The first click only selects, as now; call `game.choose` on confirm |
 | `endDay()` → `SIM.years` | `const r = game.endDay()`. If `r.over`, show the memorial (below); otherwise show the "시간이 흐른다…" screen with `r.fromAge`, `r.toAge`, **`r.notes`** (what happened meanwhile) and **`r.cards`** (memory cards, below) |
 | `toEnd()` → `SIM.ending` | `game.memorial()` (also in `game.ending().memorial`). It happens only when the player dies, never at a fixed age |
-| `presence()`, `posOf`, `room(L)` | `const p = game.scene()`: draw `ROOMS[p.roomKey]()` (or `p.baseColor`), overlays `p.overlays`, characters `p.actors` at `X(i,j)/Y(i,j)` with `zIndex = actor.z` |
+| `presence()`, `posOf`, `room(L)` | `const p = game.scene()`: draw `ROOMS[p.roomKey]()` (or `p.baseColor`) over the **whole play area** (see *Stage* below), overlays `p.overlays`, characters `p.actors` at `actor.x/actor.y` (fractions of the stage box) with `zIndex = actor.z`. Delete the old `X(i,j)/Y(i,j)` grid math |
 | HUD (date, money, status) | `game.hud()` → `{ date, age, money, job, relationship, location, city }` (`job` is the real title: 회사원 L3, 사장님, 공무원 9급, 크리에이터, 무속인…) |
 | Settings → 인생 / 사람들 / 나 | `game.lifeLog()` / `game.people()` / `game.hud()` |
 | `save()` / `cont()` | `localStorage.setItem(KEY, game.save())` / `this.game = LoveSim.loadGame(localStorage.getItem(KEY))` |
@@ -42,7 +42,20 @@ The result of `game.choose(i)` is `{ who, name, line }`, and `name` is always se
 
 Backgrounds: draw `ROOMS[scene.bgId] ?? ROOMS[scene.sceneKey] ?? ROOMS[scene.roomKey]`. `roomKey` always names an existing painter; when `standIn` is true it is only the closest stand-in, so paint `ROOMS[sceneKey]` for that place (wedding_venue, funeral_hall, hospital, court, airport, airplane, family_home, …).
 
-**Walking (Kairosoft style).** Call `game.wander()` every **500 ms** and move each actor from its previous `spot` to the new one over ~480 ms (linear). Everyone walks tile by tile; `walking` → play walk frames, `facing` (`NE`/`NW`/`SE`/`SW`) → flip the sprite, `offscreen` → they walked out (hide); they come back later. Keep actor elements between frames (keyed by `who`) so the motion animates.
+**Online places** (`online_community`, `instagram`, `dating_app`, `language_exchange_app`): `scene.online === true`. You're at home on your phone — the room is home (`roomKey: "home"`), your household is around (partner in the evening/weekend, kids, pets), and the people you talk to online are *not* in the room. Draw the player (`role: "me"`) holding a phone (a small phone sprite in hand, or a 📱 bubble), optionally with a faint phone-screen glow. The same goes for the big-popup picture of an online event (e.g. 표절 의혹 on a community site).
+
+### Stage: the scene fills the screen
+
+The scene is a **portrait room that fills the whole play area** — everything under the HUD and the log line, down to the bottom edge of the phone. It is not a small picture in the middle, and there is no diary/log box under it any more.
+
+- **Reference box** `scene.stage.ref` = **360 × 642**. Everything in the scene is given as fractions of this box (0..1). Scale it **uniformly to cover** the real play area (`k = max(W/360, H/642)`, centered; the little that overflows is cut). The walkable floor keeps a margin, so nobody is ever cut off.
+- **Walls and floor** (Kairosoft layout): the two back walls rise from a "V" — `stage.corner` (the far corner, top middle, y ≈ 0.17) down to `stage.leftBase` / `stage.rightBase` (where the wall bottoms meet the left/right screen edges, y ≈ 0.31) — up to the top edge. The floor fills everything below the V, all the way down. Floor tiles are diamonds `stage.tile.w × stage.tile.h` (72 × 36 in the reference box) with a tile corner at `stage.corner`.
+- **Characters**: feet at `(actor.x · 360·k, actor.y · 642·k)` (after the cover offset). Sprite height ≈ `stage.spriteHeight` of the box (≈ 64 px of 642; kids ≈ 0.65×, babies ≈ 0.5×). `zIndex = actor.z` (front people draw over back people). Values outside 0..1 mean they are stepping off the screen edge.
+- **Grid (if you need it)**: `x = (180 + (i − j)·36) / 360`, `y = (110 + (i + j)·18) / 642` for grid point `spot = [i, j]` — the engine already did this for you in `actor.x/actor.y`.
+- **Small pictures** (the big-popup picture, memory cards): draw the same stage, scaled to **fit the width** of the picture box, then crop vertically around `scene.focus` (`{ top, bottom }` = where the people are, fractions of the box): `offset = clamp(center(focus)·fullHeight − boxHeight/2, 0, fullHeight − boxHeight)`.
+- Background art: portrait **360 × 642** (or 180 × 321 drawn ×2), following the same V and floor lines — see `docs/background-assets.md`.
+
+**Walking (Kairosoft style).** Call `game.wander()` every **500 ms** and move each actor from its previous position (`actor.x/actor.y`) to the new one over ~480 ms (linear). Everyone walks tile by tile over the whole floor — across the room, and off the left, right or bottom edge now and then; `walking` → play walk frames, `facing` (`NE`/`NW`/`SE`/`SW`) → flip the sprite, `offscreen` → they walked out (hide); they come back later. Keep actor elements between frames (keyed by `who`) so the motion animates.
 
 Actor `role` values: `me`, `partner`, `fated`, `npc`, `kid`, `pet` (`npcType` `pet_dog` / `pet_cat`), `inlaw`, `guest`, `relative`, `coworker`, `baby`, `patient`, `friend`. `actor.name` is empty for people you haven't met, so don't draw a name tag.
 
@@ -50,7 +63,7 @@ Actor `role` values: `me`, `partner`, `fated`, `npc`, `kid`, `pet` (`npcType` `p
 
 ## "시간이 흐른다…" memory cards
 
-`endDay().cards` is 0–6 `{ kind, age, caption, scene }` in chronological order. Show one card per ▶ and use the progress bar = `cards.length`. Draw `card.scene` exactly like `game.scene()` (same background and actors), scaled into the frame, with `caption` under it. With no cards, show `r.lines` as before.
+`endDay().cards` is 0–6 `{ kind, age, caption, scene }` in chronological order. Show one card per ▶ and use the progress bar = `cards.length`. Draw `card.scene` exactly like `game.scene()` (same background and actors) as a *small picture* (fit the width, crop to `card.scene.focus`), with `caption` under it. With no cards, show `r.lines` as before.
 
 `endDay().notes` are life events that happened between days, off-screen (`사채 — 불법 이자는 무효라고 했다. 원금만 갚기로 했다.`). Show them as small lines above the card (they are also at the top of `r.lines`).
 
@@ -75,7 +88,8 @@ At birth, 사주 + 점성술 pick **5–7 fated turning points** (love, marriage
 
 - No activity or 나가기 buttons: the day plays by itself; the player answers popups (and picks weekend plans).
 - Top, under the HUD: **one log line** — `{kind:"log"}` / `{kind:"enter"}` text with the time (`10:02 시우와 처음으로 제대로 이야기했다.`).
-- Under the log line: **text notifications** (`{kind:"toast"}`) slide down from behind it, stack (max 3) and fade after ~4 s. `from` is the sender (a leading `[이름]` in a text is already turned into `from`).
+- Under the log line: **text notifications** (`{kind:"toast"}`) slide down from behind it, stack (max 3) and fade after ~4 s. `from` is the sender (a leading `[이름]` in a text is already turned into `from`). **Clear them when the day ends** (`endDay()`) **and when a big popup opens** — otherwise a chatty text from yesterday can still be on screen over a funeral.
+- The scene (stage) fills everything under the log line to the bottom of the screen; the place label (`📍 장소 · 도시 · 시간`) sits over the scene, top-left. No diary box.
 - **Popups are centered** on the play screen.
 - **No name tags** on characters.
 - `game.actions()`, `doActivity()`, `destinations()`, `goTo()` still exist (optional).

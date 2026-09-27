@@ -384,70 +384,70 @@
   ],
   "minAgeToBefriend": 16,
   "ambient": {
-   "_doc": "Extra passers-by drawn in the scene (visual only, never NPCs you can meet): [min, max] per location type, Kairosoft-style busy screens. None at home.",
+   "_doc": "Extra passers-by drawn in the scene (visual only, never NPCs you can meet): [min, max] per location type. The stage fills the whole screen, so a place looks busy like a Kairosoft map. None at home.",
    "CITY": [
-    2,
-    4
+    4,
+    7
    ],
    "CAFE": [
-    1,
-    3
+    2,
+    5
    ],
    "PARK": [
-    2,
-    4
+    3,
+    6
    ],
    "WORKPLACE": [
-    2,
-    3
+    3,
+    5
    ],
    "RESTAURANT": [
-    1,
-    3
+    2,
+    5
    ],
    "UNIVERSITY": [
-    2,
-    4
+    3,
+    6
    ],
    "ENTERTAINMENT": [
-    2,
-    4
+    3,
+    6
    ],
    "BEACH": [
+    3,
+    6
+   ],
+   "TOURIST_SITE": [
+    5,
+    8
+   ],
+   "AIRPORT": [
+    5,
+    8
+   ],
+   "HOSPITAL": [
     2,
     4
    ],
-   "TOURIST_SITE": [
-    3,
-    5
-   ],
-   "AIRPORT": [
-    3,
-    5
-   ],
-   "HOSPITAL": [
-    1,
-    3
-   ],
    "LIBRARY": [
-    1,
-    2
+    2,
+    3
    ],
    "GYM": [
-    1,
-    3
+    2,
+    4
    ],
    "CLASS": [
     1,
-    2
+    3
    ],
    "WEDDING_VENUE": [
-    3,
-    4
+    4,
+    6
    ],
    "HOBBY": [
-    1,
-    3
+    2,
+    4
    ],
    "HOME": [
     0,
@@ -458,16 +458,16 @@
     0
    ],
    "HOTEL": [
-    0,
-    1
+    1,
+    2
    ],
    "ONLINE": [
     0,
     0
    ],
    "default": [
-    0,
-    2
+    1,
+    3
    ]
   }
  }

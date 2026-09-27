@@ -7,9 +7,11 @@ Generated from `data/world/backgrounds.json`. This is the art to-do list.
 
 ## Art direction
 
-- 360×740 frame, and a 340px-tall scene.
+- 360×740 frame. The scene is a **full-screen portrait stage, 360×642** (everything under the HUD and the log line), or 180×321 drawn at 2×. It is scaled to *cover* taller/wider phones, so keep important details away from the outermost ~20 px.
+- Kairosoft layout (the engine's `scene.stage`): the far corner of the room is at the top middle (x 180, y 110); the two back walls rise from the "V" running from there down to the left and right edges at y 200, up to the top edge. The floor fills everything below the V down to the bottom edge, as iso diamond tiles 72×36 with a tile corner at the far corner. Windows, shelves and posters go on the walls; counters, tables and plants stand on the floor lines.
+- Keep the floor open — people walk everywhere on it (the lower ~⅔ of the screen), so props go along the walls and edges, not in the middle.
 - Pixel art: pastel colors, the `#2b2233` outline color, Galmuri bitmap type, chunky decorative borders.
-- Characters are separate 16×24 sprites drawn at 2×, about 2.5 heads tall. Never bake characters into backgrounds.
+- Characters are separate sprites, about 2.5 heads tall and about 1/10 of the stage height (≈ 64 px of 642: e.g. 16×32 at 2×, or the 16×24 sprites at ~2.5×). Never bake characters into backgrounds.
 - Avoid 3D, photorealism, glassmorphism and heavy gradients.
 - Variants (morning/evening/night, rain/snow, seasons) should reuse the base composition, with the palette and lighting changed and small details added or removed.
 - Props that characters interact with (treadmills, counters) belong in `interactive` layers, so one prop sheet serves every time variant.

@@ -77,12 +77,41 @@
      ],
      "chain": [
       {
-       "to": "CULT_ESCAPE",
+       "oneOf": [
+        {
+         "to": "CULT_ESCAPE",
+         "w": 0.55,
+         "lean": {
+          "traits": {
+           "independence": 0.5
+          },
+          "mods": {
+           "family": 0.4
+          },
+          "facts": {
+           "hasFriend": 0.4
+          }
+         }
+        },
+        {
+         "to": "CULT_DEEPER",
+         "w": 0.45,
+         "lean": {
+          "mods": {
+           "social": -0.5,
+           "stability": -0.5
+          },
+          "facts": {
+           "single": 0.3
+          }
+         }
+        }
+       ],
        "after": [
         6,
         30
        ],
-       "p": 0.85
+       "p": 0.95
       }
      ],
      "lean": {
@@ -440,7 +469,10 @@
        "kind": "clearFlag",
        "name": "distance"
       }
-     ]
+     ],
+     "lean": {
+      "compat": 0.8
+     }
     },
     "GONE": {
      "r": {
@@ -659,12 +691,52 @@
      ],
      "chain": [
       {
-       "to": "ALCOHOL_BOTTOM",
+       "oneOf": [
+        {
+         "to": "ALCOHOL_BOTTOM",
+         "w": 0.5,
+         "lean": {
+          "traits": {
+           "planning": -0.5
+          },
+          "mods": {
+           "stability": -0.5
+          },
+          "signals": {
+           "SATURN>MOON:hard": 0.5,
+           "SAMJAE": 0.3
+          }
+         }
+        },
+        {
+         "to": "ALCOHOL_PARTNER_INTERVENES",
+         "w": 0.3,
+         "lean": {
+          "facts": {
+           "married": 0.4
+          },
+          "compat": 0.5
+         }
+        },
+        {
+         "to": "ALCOHOL_RECOVERY",
+         "w": 0.2,
+         "lean": {
+          "traits": {
+           "planning": 0.6
+          },
+          "signals": {
+           "favorable": 0.4,
+           "CHEONEUL_GWIIN": 0.5
+          }
+         }
+        }
+       ],
        "after": [
         6,
         24
        ],
-       "p": 0.6
+       "p": 0.8
       }
      ],
      "lean": {
@@ -2029,6 +2101,206 @@
       {
        "kind": "clearFlag",
        "name": "hikikomori"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CULT_DEEPER",
+   "cat": "dark",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "f_cult"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(교단 합숙소로 들어온 지 석 달. 가족의 전화를 한 번도 받지 않았다. 휴대폰에 음성메시지가 쌓여 있다.)",
+    "en": "(Three months since you moved into the group's house. You haven't answered your family once. Voicemails are piling up.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(음성메시지를 하나 틀어본다)",
+      "en": "(Play one voicemail)"
+     },
+     "w": {
+      "CALL_HOME": 0.7,
+      "STAY": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(휴대폰을 교단에 반납한다)",
+      "en": "(Hand your phone over to the group)"
+     },
+     "w": {
+      "STAY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CALL_HOME": {
+     "r": {
+      "ko": "…'밥은 먹고 다니니.' 그 한마디에 한참을 울었다.",
+      "en": "…'Are you eating properly?' At those words, you cried a long time."
+     },
+     "chain": [
+      {
+       "to": "CULT_ESCAPE",
+       "after": [
+        1,
+        6
+       ],
+       "p": 0.9
+      }
+     ],
+     "lean": {
+      "mods": {
+       "family": 0.5
+      }
+     }
+    },
+    "STAY": {
+     "r": {
+      "ko": "세상과의 마지막 끈을 내려놓았다. 통장도 교단의 것이 됐다.",
+      "en": "You let go of your last line to the world. Your savings became the group's too."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.3,
+       "min": 5
+      }
+     ],
+     "chain": [
+      {
+       "to": "CULT_ESCAPE",
+       "after": [
+        12,
+        36
+       ],
+       "p": 0.6,
+       "lean": {
+        "traits": {
+         "independence": 0.5
+        }
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ALCOHOL_PARTNER_INTERVENES",
+   "cat": "dark",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "걱정",
+    "en": "Worried"
+   },
+   "requires": [
+    "partnered",
+    "f_alcohol"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "activity": "invite_partner",
+   "who": "partner",
+   "line": {
+    "ko": "오늘은 내 얘기 좀 들어줘. 네가 술 마시는 게… 이제 무서워.",
+    "en": "Please listen to me tonight. Your drinking… it scares me now."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…알았어. 같이 병원 가자",
+      "en": "…Okay. Let's go to the clinic together"
+     },
+     "w": {
+      "HELP": 0.8,
+      "ANGRY": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "내가 알아서 할게",
+      "en": "I'll handle it myself"
+     },
+     "w": {
+      "ANGRY": 0.6,
+      "HELP": 0.2,
+      "LEAVE": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "HELP": {
+     "r": {
+      "ko": "{partner}이(가) 진료실 밖에서 기다려줬다. 나오자마자 손을 잡았다.",
+      "en": "{partner} waited outside the doctor's office. The moment you came out, they took your hand."
+     },
+     "chain": [
+      {
+       "to": "ALCOHOL_RECOVERY",
+       "after": [
+        10,
+        14
+       ],
+       "p": 0.85
+      }
+     ],
+     "lean": {
+      "compat": 0.6
+     }
+    },
+    "ANGRY": {
+     "r": {
+      "ko": "문을 쾅 닫고 나갔다. 그날 밤도 편의점에 갔다.",
+      "en": "You slammed the door and left. That night, the convenience store again."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "ALCOHOL_BOTTOM",
+       "after": [
+        6,
+        18
+       ],
+       "p": 0.6
+      }
+     ]
+    },
+    "LEAVE": {
+     "r": {
+      "ko": "'나도 지쳤어.' {partner}은(는) 그날 짐을 쌌다.",
+      "en": "'I'm exhausted too.' {partner} packed that day."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ],
+     "chain": [
+      {
+       "to": "ALCOHOL_BOTTOM",
+       "after": [
+        4,
+        12
+       ],
+       "p": 0.7
       }
      ]
     }

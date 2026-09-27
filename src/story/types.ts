@@ -77,6 +77,10 @@ export interface StoryState {
   cards: Array<{ kind: string; age: number; vars: Record<string, string> }>;
   /** Hidden 궁합 with the destined person from setup (0..1 score + flavour). */
   compat?: { score: number; chemistry: number; stability: number; friction: number };
+  /** The player's birthplace (for 궁합 synastry with partners met along the way). */
+  place?: { lat: number; lon: number; name?: string; tz?: string };
+  /** 궁합 with the current partner when they aren't the destined person (computed once per partner). */
+  partnerCompat?: { id: string; score: number };
   /** Life events (library): queue, history, rate limit. */
   events?: import("./lifeEvents").LifeEventState;
 }

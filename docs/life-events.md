@@ -1,6 +1,6 @@
 # Life events — the 245 ideas, mapped
 
-All **245** ideas are in the game: **297 events** across 15 files under `data/story/events/` (engine: `src/story/lifeEvents.ts`, runtime: `src/story/lifeEventRuntime.ts`). A few live in systems that already existed (promotion, retirement, divorce, losing a parent or a pet).
+All **245** ideas are in the game: **303 events** across 15 files under `data/story/events/` (engine: `src/story/lifeEvents.ts`, runtime: `src/story/lifeEventRuntime.ts`). A few live in systems that already existed (promotion, retirement, divorce, losing a parent or a pet).
 
 ## How an event happens (사주-driven, not scripted)
 
@@ -10,6 +10,7 @@ All **245** ideas are in the game: **297 events** across 15 files under `data/st
 - **Who it can happen to**: `requires` is re-checked when it shows (no texts from the dead, no work drama without a job). A keyword guard lints every popup against its requirements.
 - **Reaction choices**: the player picks; the outcome still leans with temperament and the chart (an impulsive person who tries gambling 'just once' gets hooked more often).
 - **Chains**: outcomes queue follow-ups months later, so one bad year snowballs (도박 → 사채 → 이혼 위기 → 재기 or 파산). Urgent ones (the loan shark at the door) bring a played day.
+- **Every life is different (사람마다)**: the same event rarely leads to the same place. A chain can branch (`oneOf`): which branch happens leans on *that* person — temperament, the month's hidden modifiers, life facts (married? broke? parents alive?), this year's 사주/점성술 signals and 궁합 with the partner. Outcomes of a choice lean the same way, and when an event resolves off-screen it follows that person's instinct. E.g. after getting hooked on gambling (1,000 lives each): married + impulsive + broke in a 겁재·흉년 year → 사채 63%, 배우자에게 들킴 17%; a married planner in a 천을귀인 year → 스스로 멈춤 35%, 배우자에게 들킴 30%, 사채 13%; single with a close family → 가족에게 들킴 39%; single, parents gone, reckless and broke → 사채 84%.
 - **Hooks**: some events follow life moments (a parent's death → a letter found among the belongings, a feud over the will, a secret at the 기일…).
 - **Revelations** (coming out, adoption, secrets): not misfortunes. Each family member (and your partner) reacts by hidden openness — supportive / needs time / shocked — and those who needed time may come around later (`COMING_AROUND`).
 - **Off-screen**: an event not seen within 30 months resolves by instinct and shows as a line on the 시간이 흐른다 screen, with a memory card.
@@ -18,8 +19,10 @@ All **245** ideas are in the game: **297 events** across 15 files under `data/st
 
 | Chain | Events |
 |---|---|
-| 107 → 121 → 43 도박 → 사채 → 이혼 위기 → 재기/파산 | GAMBLING → LOAN_SHARK (urgent) → DEBT_MARRIAGE_CRISIS → GAMBLING_RECOVERY / BANKRUPTCY → COMEBACK |
-| 89/91 → 117 대박 → 탕진 | STOCK_BOOM / CRYPTO_MOON / LOTTO_WIN → LOTTO_BROKE (→ BANKRUPTCY) |
+| 107 → 121 → 43 도박 → 사채 → 이혼 위기 → 재기/파산 | GAMBLING → (사람마다) LOAN_SHARK (urgent) / GAMBLING_CAUGHT_BY_PARTNER / GAMBLING_CAUGHT_BY_FAMILY / GAMBLING_SELF_STOP → DEBT_MARRIAGE_CRISIS → GAMBLING_RECOVERY / BANKRUPTCY → COMEBACK |
+| 89/91 → 117 대박 → 탕진 or 지킴 | STOCK_BOOM / CRYPTO_MOON / LOTTO_WIN → (사람마다) LOTTO_BROKE (→ BANKRUPTCY) / LOTTO_WISE |
+| 123 사이비 → 더 깊이 or 탈출 | CULT_JOIN → (사람마다) CULT_DEEPER / CULT_ESCAPE |
+| 127 술 → 개입 or 바닥 → 회복 | ALCOHOL → (사람마다) ALCOHOL_PARTNER_INTERVENES / ALCOHOL_BOTTOM → ALCOHOL_RECOVERY |
 | 91 → 118 로또 → 가족의 손 | LOTTO_WIN (가족에게 알림) → FAMILY_DRAINS_MONEY |
 | 29/36/76/110 → 102 사기·분쟁 → 승소 | MARRIAGE_FRAUD, PARTNER_VANISHES, INHERITANCE_FEUD, JEONSE_FRAUD, DOXXED, … → LAWSUIT_WIN |
 | 58 → 가족의 반응 → 화해 | SIBLING_COMES_OUT → (familyReact) → COMING_AROUND |
@@ -146,7 +149,7 @@ All **245** ideas are in the game: **297 events** across 15 files under `data/st
 |---|---|---|---|---|---|
 | 89 | 주식 대박 | `STOCK_BOOM` | uncommon | 편재, ♃ 2하우스, ♃ 8하우스, wealth↑, volatility↑ | LOTTO_BROKE, STOCK_CRASH |
 | 90 | 코인 떡상 | `CRYPTO_MOON` | uncommon | 편재, ♃ 2하우스, ♃ 8하우스, volatility↑, risk↑ | LOTTO_BROKE, CRYPTO_RUGPULL |
-| 91 | 로또 1등 | `LOTTO_WIN` | legendary | 편재, ♃ 2하우스, ♃ 8하우스, wealth↑, opportunity↑ | LOTTO_BROKE, FAMILY_DRAINS_MONEY |
+| 91 | 로또 1등 | `LOTTO_WIN`, `LOTTO_WISE` | legendary | 편재, ♃ 2하우스, ♃ 8하우스, wealth↑, opportunity↑ | LOTTO_BROKE, FAMILY_DRAINS_MONEY · branches 사람마다 |
 | 92 | Small scratch-ticket win | `SCRATCH_WIN` | common | 편재, ♃ 2하우스, ♃ 8하우스 |  |
 | 93 | Inheritance from a relative you never knew | `UNKNOWN_RELATIVE_INHERITANCE` | rare | 편재, ♃ 2하우스, ♃ 8하우스, family↑, overseas↑ |  |
 | 94 | 청약 당첨 | `HOUSING_LOTTERY` | rare | 편재, ♃ 2하우스, ♃ 8하우스, stability↑, wealth↑ |  |
@@ -167,7 +170,7 @@ All **245** ideas are in the game: **297 events** across 15 files under `data/st
 |---|---|---|---|---|---|
 | 105 | Stock crash, 상폐 | `STOCK_CRASH` | uncommon | 겁재, ♅ 2하우스, 삼재, volatility↑, wealth↓ |  |
 | 106 | Crypto rug pull | `CRYPTO_RUGPULL` | uncommon | 겁재, ♅ 2하우스, 삼재, volatility↑, risk↑ | LAWSUIT_WIN |
-| 107 | 도박 중독 | `GAMBLING`, `GAMBLING_RECOVERY` | rare | 편재, 흉한 해, ♅ 2하우스, risk↑, wealth↓ | LOAN_SHARK |
+| 107 | 도박 중독 | `GAMBLING`, `GAMBLING_CAUGHT_BY_PARTNER`, `GAMBLING_CAUGHT_BY_FAMILY`, `GAMBLING_SELF_STOP`, `GAMBLING_RECOVERY` | rare | 편재, 흉한 해, ♅ 2하우스, risk↑, wealth↓ | LOAN_SHARK · branches 사람마다 |
 | 108 | Illegal 토토 betting | `ILLEGAL_TOTO` | uncommon | 편재, 흉한 해, risk↑, wealth↓, riskTolerance↑ | LOAN_SHARK |
 | 109 | 빚보증 collapses on you | `LOAN_GUARANTEE`, `GUARANTEE_COLLAPSE` | uncommon | 겁재, 월지 충, 년지 충, family↑, conflictAvoidance↑ | BANKRUPTCY |
 | 110 | 전세사기 | `JEONSE_FRAUD` | rare | 겁재, ♅ 2하우스, 삼재, stability↓, wealth↓ | LAWSUIT_WIN |
@@ -181,18 +184,18 @@ All **245** ideas are in the game: **297 events** across 15 files under `data/st
 | 118 | Family keeps draining your money | `FAMILY_DRAINS_MONEY` | uncommon | 겁재, 월지 충, 년지 충, family↑, wealth↓ |  |
 | 119 | Car accident repair bills | `CAR_ACCIDENT_BILL` | common | ♅☌ASC, 삼재, 년지 충 |  |
 | 120 | House flood or fire | `HOUSE_FLOOD`, `HOUSE_FIRE` | uncommon | 삼재, 겁재, ♅☌ASC |  |
-| 121 | 사채 (loan shark) | `LOAN_SHARK`, `BANKRUPTCY` | uncommon | 삼재, 흉한 해, 겁재, wealth↓ | GAMBLING_RECOVERY, DEBT_MARRIAGE_CRISIS, COMEBACK |
+| 121 | 사채 (loan shark) | `LOAN_SHARK`, `BANKRUPTCY` | uncommon | 삼재, 흉한 해, 겁재, wealth↓ | GAMBLING_RECOVERY, DEBT_MARRIAGE_CRISIS, COMEBACK · branches 사람마다 |
 | 122 | Identity theft | `IDENTITY_THEFT` | uncommon | 겁재, ♅ 2하우스, 삼재 |  |
 
 ## 🌀 Cults, addiction & dark turns (123–138)
 
 | # | Idea | Event(s) | Rarity | 사주/점성술 trigger | Leads to |
 |---|---|---|---|---|---|
-| 123 | 사이비 입단 | `CULT_JOIN` | rare | 대운 전환, 흉한 해, 화개, stability↓, social↓ | CULT_ESCAPE |
+| 123 | 사이비 입단 | `CULT_JOIN`, `CULT_DEEPER` | rare | 대운 전환, 흉한 해, 화개, stability↓, social↓ | CULT_ESCAPE · branches 사람마다 |
 | 124 | Partner gets pulled into a cult | `PARTNER_JOINS_CULT`, `PARTNER_CULT_END` | rare | 대운 전환, 흉한 해, 화개, stability↓, romance↓ |  |
 | 125 | Escaping a cult | `CULT_ESCAPE` | chain |  |  |
 | 126 | Family member tries to recruit you | `FAMILY_RECRUITS_CULT` | rare | 대운 전환, 흉한 해, 화개, family↑, stability↓ | FAMILY_DRAINS_MONEY |
-| 127 | Alcohol addiction | `ALCOHOL`, `ALCOHOL_BOTTOM`, `ALCOHOL_RECOVERY` | uncommon | ♄□☽, 흉한 해, 삼재, stability↓, social↓ |  |
+| 127 | Alcohol addiction | `ALCOHOL`, `ALCOHOL_PARTNER_INTERVENES`, `ALCOHOL_BOTTOM`, `ALCOHOL_RECOVERY` | uncommon | ♄□☽, 흉한 해, 삼재, stability↓, social↓ | branches 사람마다 |
 | 128 | Game addiction | `GAME_ADDICTION` | uncommon | 흉한 해, ♄ 12하우스, 식신, social↓, noveltySeeking↑ |  |
 | 129 | Shopping addiction | `SHOPPING_ADDICTION` | uncommon | 흉한 해, 겁재, ♄□☽, wealth↓, stability↓ | CREDIT_CARD_DEBT |
 | 130 | Stalker | `STALKER`, `STALKER_CAUGHT` | rare | 흉한 해, 삼재, ♄□☉, stability↓ |  |

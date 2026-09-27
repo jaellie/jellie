@@ -281,13 +281,75 @@
      ],
      "chain": [
       {
-       "to": "LOAN_SHARK",
+       "oneOf": [
+        {
+         "to": "LOAN_SHARK",
+         "w": 0.5,
+         "lean": {
+          "traits": {
+           "riskTolerance": 0.5,
+           "planning": -0.5
+          },
+          "facts": {
+           "broke": 1.0,
+           "inDebt": 0.8,
+           "rich": -1.5
+          },
+          "signals": {
+           "group:GYEOB_JAE": 0.4,
+           "unfavorable": 0.3
+          }
+         },
+         "urgent": true
+        },
+        {
+         "to": "GAMBLING_CAUGHT_BY_PARTNER",
+         "w": 0.35,
+         "lean": {
+          "mods": {
+           "romance": 0.3
+          },
+          "facts": {
+           "married": 0.5
+          },
+          "compat": 0.5
+         }
+        },
+        {
+         "to": "GAMBLING_CAUGHT_BY_FAMILY",
+         "w": 0.25,
+         "lean": {
+          "mods": {
+           "family": 0.6
+          },
+          "facts": {
+           "parentsTogether": 0.3
+          }
+         }
+        },
+        {
+         "to": "GAMBLING_SELF_STOP",
+         "w": 0.2,
+         "lean": {
+          "traits": {
+           "planning": 0.8,
+           "independence": 0.3
+          },
+          "mods": {
+           "introspection": 0.5
+          },
+          "signals": {
+           "CHEONEUL_GWIIN": 0.6,
+           "favorable": 0.3
+          }
+         }
+        }
+       ],
        "after": [
         3,
         12
        ],
-       "p": 0.65,
-       "urgent": true
+       "p": 0.9
       }
      ],
      "lean": {
@@ -413,7 +475,16 @@
         6,
         24
        ],
-       "p": 0.5
+       "p": 0.5,
+       "lean": {
+        "traits": {
+         "planning": 0.4
+        },
+        "mods": {
+         "family": 0.4,
+         "stability": 0.3
+        }
+       }
       }
      ]
     },
@@ -430,21 +501,49 @@
      ],
      "chain": [
       {
-       "to": "DEBT_MARRIAGE_CRISIS",
+       "oneOf": [
+        {
+         "to": "DEBT_MARRIAGE_CRISIS",
+         "w": 0.55,
+         "lean": {
+          "facts": {
+           "married": 0.6
+          }
+         },
+         "urgent": true
+        },
+        {
+         "to": "BANKRUPTCY",
+         "w": 0.3,
+         "lean": {
+          "traits": {
+           "planning": -0.3
+          },
+          "signals": {
+           "unfavorable": 0.5,
+           "SAMJAE": 0.5
+          }
+         }
+        },
+        {
+         "to": "GAMBLING_RECOVERY",
+         "w": 0.15,
+         "lean": {
+          "traits": {
+           "planning": 0.4
+          },
+          "signals": {
+           "CHEONEUL_GWIIN": 0.8,
+           "favorable": 0.4
+          }
+         }
+        }
+       ],
        "after": [
         2,
-        10
+        12
        ],
-       "p": 0.8,
-       "urgent": true
-      },
-      {
-       "to": "BANKRUPTCY",
-       "after": [
-        12,
-        30
-       ],
-       "p": 0.5
+       "p": 0.95
       }
      ]
     },
@@ -477,7 +576,16 @@
         6,
         24
        ],
-       "p": 0.5
+       "p": 0.5,
+       "lean": {
+        "traits": {
+         "planning": 0.4
+        },
+        "mods": {
+         "family": 0.4,
+         "stability": 0.3
+        }
+       }
       }
      ]
     }
@@ -548,7 +656,13 @@
        ],
        "p": 0.9
       }
-     ]
+     ],
+     "lean": {
+      "traits": {
+       "emotionalExpression": 0.3
+      },
+      "compat": 0.8
+     }
     },
     "LEAVE": {
      "r": {
@@ -579,7 +693,12 @@
         6,
         24
        ],
-       "p": 0.5
+       "p": 0.5,
+       "lean": {
+        "signals": {
+         "unfavorable": 0.4
+        }
+       }
       }
      ]
     }
@@ -731,7 +850,18 @@
         24,
         60
        ],
-       "p": 0.5
+       "p": 0.5,
+       "lean": {
+        "traits": {
+         "ambition": 0.5,
+         "careerDrive": 0.4
+        },
+        "signals": {
+         "favorable": 0.4,
+         "CHEONEUL_GWIIN": 0.5,
+         "daeunShift": 0.3
+        }
+       }
       }
      ]
     }
@@ -814,7 +944,16 @@
         14
        ],
        "p": 0.35,
-       "urgent": true
+       "urgent": true,
+       "lean": {
+        "traits": {
+         "riskTolerance": 0.4
+        },
+        "facts": {
+         "broke": 1.0,
+         "rich": -1.5
+        }
+       }
       }
      ],
      "lean": {
@@ -1231,7 +1370,18 @@
         24,
         60
        ],
-       "p": 0.5
+       "p": 0.5,
+       "lean": {
+        "traits": {
+         "ambition": 0.5,
+         "careerDrive": 0.4
+        },
+        "signals": {
+         "favorable": 0.4,
+         "CHEONEUL_GWIIN": 0.5,
+         "daeunShift": 0.3
+        }
+       }
       }
      ]
     },
@@ -1791,7 +1941,15 @@
         6,
         18
        ],
-       "p": 0.15
+       "p": 0.15,
+       "lean": {
+        "traits": {
+         "planning": -0.5
+        },
+        "facts": {
+         "broke": 1.2
+        }
+       }
       }
      ]
     },
@@ -1987,7 +2145,15 @@
         12,
         30
        ],
-       "p": 0.4
+       "p": 0.4,
+       "lean": {
+        "traits": {
+         "planning": -0.3
+        },
+        "signals": {
+         "unfavorable": 0.5
+        }
+       }
       }
      ]
     }
@@ -2466,6 +2632,310 @@
       }
      ],
      "card": "LOSS"
+    }
+   }
+  },
+  {
+   "id": "GAMBLING_CAUGHT_BY_PARTNER",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "들켰다",
+    "en": "Found out"
+   },
+   "requires": [
+    "partnered",
+    "f_gambling"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "activity": "invite_partner",
+   "who": "partner",
+   "line": {
+    "ko": "(새벽, {partner}이(가) 내 휴대폰 화면을 보고 있었다. 도박 사이트였다.) …이거 뭐야? 솔직하게 말해줘.",
+    "en": "(Before dawn, {partner} was looking at your phone. A gambling site.) …What is this? Tell me the truth."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…다 말할게. 도와줘",
+      "en": "…I'll tell you everything. Help me"
+     },
+     "w": {
+      "STOP": 0.7,
+      "SLIP": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "잠깐 재미로 한 거야",
+      "en": "It was just for fun, for a bit"
+     },
+     "w": {
+      "SLIP": 0.6,
+      "STOP": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "STOP": {
+     "r": {
+      "ko": "{partner}은(는) 밤새 같이 계정을 지우고, 은행에 도박 사이트 차단을 신청해줬다. 무서웠지만, 혼자가 아니었다.",
+      "en": "{partner} spent the night deleting accounts with you and had the bank block gambling sites. It was scary — but you weren't alone."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "gambling"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "같이 지운 계정들",
+       "en": "The accounts we deleted together"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 7
+     },
+     "lean": {
+      "compat": 0.8
+     }
+    },
+    "SLIP": {
+     "r": {
+      "ko": "그날은 그렇게 넘어갔다. 하지만 {partner}의 눈빛이 달라졌다.",
+      "en": "That night it blew over. But the look in {partner}'s eyes had changed."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "LOAN_SHARK",
+       "after": [
+        3,
+        12
+       ],
+       "p": 0.6,
+       "urgent": true,
+       "lean": {
+        "facts": {
+         "broke": 1.0,
+         "rich": -1.5
+        }
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "GAMBLING_CAUGHT_BY_FAMILY",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "엄마의 질문",
+    "en": "Mom's question"
+   },
+   "requires": [
+    "momAlive",
+    "f_gambling"
+   ],
+   "chainOnly": true,
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "mom",
+   "line": {
+    "ko": "너 요즘 무슨 돈을 그렇게 쓰니? 엄마가 다 들었어. …엄마한테는 말해도 돼.",
+    "en": "What have you been spending all that money on? I heard everything. …You can tell me."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "엄마, 나 좀 도와줘",
+      "en": "Mom, please help me"
+     },
+     "w": {
+      "STOP": 0.75,
+      "SLIP": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "아무것도 아니에요",
+      "en": "It's nothing"
+     },
+     "w": {
+      "SLIP": 0.7,
+      "STOP": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "STOP": {
+     "r": {
+      "ko": "엄마는 혼내지 않았다. 대신 매주 목요일, 같이 상담센터에 갔다.",
+      "en": "Mom didn't scold you. Instead, every Thursday, she went to the counseling center with you."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "gambling"
+      },
+      {
+       "kind": "familySupport",
+       "delta": 0.2
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "엄마와 가는 목요일",
+       "en": "Thursdays with Mom"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "relative"
+      ],
+      "priority": 7
+     }
+    },
+    "SLIP": {
+     "r": {
+      "ko": "엄마 얼굴을 볼 수가 없어서, 본가에 발길을 끊었다.",
+      "en": "You couldn't face her, so you stopped going home."
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": -0.1
+      }
+     ],
+     "chain": [
+      {
+       "to": "LOAN_SHARK",
+       "after": [
+        3,
+        12
+       ],
+       "p": 0.5,
+       "urgent": true,
+       "lean": {
+        "facts": {
+         "broke": 1.0,
+         "rich": -1.5
+        }
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "GAMBLING_SELF_STOP",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "revelation",
+   "big": true,
+   "title": {
+    "ko": "멈춤",
+    "en": "Stopping"
+   },
+   "requires": [
+    "f_gambling"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(통장 잔고 앞에서 한참을 앉아 있었다. 오늘, 스스로 멈추기로 했다.)",
+    "en": "(You sat in front of your bank balance for a long time. Today you decided to stop — on your own.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "도박 사이트 차단과 상담을 신청한다",
+      "en": "Sign up for site blocking and counseling"
+     },
+     "w": {
+      "CLEAN": 0.8,
+      "SLIP": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "(마지막으로 딱 한 판만…)",
+      "en": "(Just one last round…)"
+     },
+     "w": {
+      "SLIP": 0.7,
+      "CLEAN": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "CLEAN": {
+     "r": {
+      "ko": "휴대폰에 차단 앱을 깔고, 단도박 모임에 처음 나갔다. 아무도 나를 탓하지 않았다.",
+      "en": "You installed a blocking app and went to your first recovery meeting. No one blamed you."
+     },
+     "card": {
+      "caption": {
+       "ko": "스스로 멈춘 날",
+       "en": "The day I stopped myself"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     },
+     "chain": [
+      {
+       "to": "GAMBLING_RECOVERY",
+       "after": [
+        10,
+        14
+       ],
+       "p": 0.9
+      }
+     ]
+    },
+    "SLIP": {
+     "r": {
+      "ko": "마지막 한 판은 마지막이 아니었다.",
+      "en": "The last round wasn't the last."
+     },
+     "chain": [
+      {
+       "to": "LOAN_SHARK",
+       "after": [
+        3,
+        12
+       ],
+       "p": 0.6,
+       "urgent": true,
+       "lean": {
+        "facts": {
+         "broke": 1.0,
+         "rich": -1.5
+        }
+       }
+      }
+     ]
     }
    }
   }

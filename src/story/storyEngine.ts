@@ -104,6 +104,8 @@ export interface StoryCtx {
   rng: SeededRandom;
   mods: LifeModifiers;
   facts: LifeFacts;
+  /** This year's 사주/점성술 signals (도화, 편재, 삼재, SR contacts…) — life events lean on them. */
+  signals?: Record<string, number>;
 }
 
 export interface StoryPopupDef {
@@ -128,7 +130,7 @@ export function initStory(state: LifeState, birth: BirthData, place: BirthPlace 
   const saju = state.chart ?? calculateNatalChart(birth);
   const astro = calculateAstrologyChart(birth, place ?? DEFAULT_BIRTHPLACE);
   const script = buildDestinyScript(saju, astro, { birthYear: birth.year, seed, startAge: Math.floor(state.age) });
-  state.story = { script, arcs: [], log: [], nextArcId: 1, cards: [] };
+  state.story = { script, arcs: [], log: [], nextArcId: 1, cards: [], place: place ?? DEFAULT_BIRTHPLACE };
   return state.story;
 }
 

@@ -33,9 +33,47 @@ export interface LifeEventOutcome {
   /** Memory card: a card kind from cards.json, or an inline card for the 시간이 흐른다 screen. */
   card?: string | { caption: Bi; location: string; actors?: string[]; priority?: number };
   /** Temperament / chart lean: this outcome is likelier for these traits (+) or less likely (−). */
-  lean?: { traits?: Record<string, number>; mods?: Partial<Record<LifeModifierKey, number>> };
-  /** Follow-ups: another event `after` [min,max] months, with probability p (extra `vars` go along). */
-  chain?: Array<{ to: string; after: [number, number]; p?: number; urgent?: boolean; vars?: Record<string, string> }>;
+  lean?: Lean;
+  /** Follow-ups months later — whether they come, and which, depends on the person (see ChainDef). */
+  chain?: ChainDef[];
+}
+
+/**
+ * How strongly something leans with the person (log scale): temperament (MBTI/core traits, centered),
+ * this month's hidden modifiers (the chart), life facts, this year's 사주/점성술 signals, and 궁합 with
+ * the current partner (centered: +1 good match, −1 poor).
+ */
+export interface Lean {
+  traits?: Record<string, number>;
+  mods?: Partial<Record<LifeModifierKey, number>>;
+  facts?: Record<string, number>;
+  signals?: Record<string, number>;
+  compat?: number;
+}
+
+/**
+ * A follow-up. Not everyone's life goes the same way: `p` bends with `lean`, and `oneOf` lists
+ * alternative next steps (caught early by family / quits alone / the loan shark), weighted by
+ * `w` × lean — only those that fit this life (their `requires`) are ever picked.
+ */
+export interface ChainDef {
+  to?: string;
+  oneOf?: Array<{ to: string; w: number; lean?: Lean; urgent?: boolean }>;
+  after: [number, number];
+  p?: number;
+  urgent?: boolean;
+  vars?: Record<string, string>;
+  lean?: Lean;
+}
+
+/** Everything about the person an outcome or a chain can lean on. */
+export interface PersonCtx {
+  traits: Record<string, number>;
+  mods: LifeModifiers;
+  facts?: LifeFacts;
+  signals?: Record<string, number>;
+  /** 궁합 with the current partner, 0..1 (undefined without a partner). */
+  compat?: number;
 }
 
 /** Life moments an event can follow (a letter found after a parent's funeral, a feud over the will…). */
@@ -245,28 +283,126 @@ export function nextDueEvent(state: LifeState, facts: LifeFacts): { pending: Pen
   return;
 }
 
-/** Outcome weights for a choice, leaning with temperament and the chart. */
-export function outcomeWeights(def: LifeEventDef, choiceIndex: number, traits: Record<string, number>, mods: LifeModifiers): Record<string, number> {
+/** Lean score (log scale, clamped) of a Lean for this person. */
+export function leanScore(lean: Lean | undefined, person: PersonCtx): number {
+  if (!lean) return 0;
+  let s = 0;
+  for (const [t, x] of Object.entries(lean.traits ?? {})) s += x * centered(person.traits[t]);
+  for (const [m, x] of Object.entries(lean.mods ?? {})) s += (x ?? 0) * (person.mods[m as LifeModifierKey] ?? 0);
+  for (const [f, x] of Object.entries(lean.facts ?? {})) s += person.facts?.[f] ? x : 0;
+  for (const [k, x] of Object.entries(lean.signals ?? {})) s += x * Math.min(2, person.signals?.[k] ?? 0);
+  if (lean.compat && person.compat !== undefined) s += lean.compat * (2 * person.compat - 1) * 1.5;
+  return Math.max(-1.5, Math.min(1.5, s));
+}
+
+/**
+ * The chart's say in every outcome, from what the outcome does: money won leans with this year's
+ * 재물운 (the wealth modifier), money lost against it; a split leans against a good 궁합; a new
+ * love with the romance modifier; work changes with career; family and friends with theirs.
+ * Authored leans add to this.
+ */
+const AUTO = new WeakMap<LifeEventOutcome, Lean>();
+export function autoLean(o: LifeEventOutcome): Lean {
+  const hit = AUTO.get(o);
+  if (hit) return hit;
+  const mods: Partial<Record<LifeModifierKey, number>> = {};
+  let compat = 0;
+  const add = (k: LifeModifierKey, x: number) => (mods[k] = (mods[k] ?? 0) + x);
+  for (const e of o.effects ?? []) {
+    const amt = Number(e.amount ?? 0);
+    switch (e.kind) {
+      case "money":
+        if (amt > 0) (add("wealth", 0.4), add("opportunity", 0.15));
+        else if (amt < 0) add("wealth", -0.3);
+        break;
+      case "debt":
+      case "loseMoneyTo":
+        (add("wealth", -0.4), add("volatility", 0.2));
+        break;
+      case "separate":
+      case "breakUp":
+        (add("romance", -0.3), add("stability", -0.3), (compat -= 0.6));
+        break;
+      case "startDatingNew":
+      case "startDatingEx":
+      case "startDatingFriend":
+      case "startDatingFated":
+      case "engage":
+      case "marry":
+        add("romance", 0.4);
+        break;
+      case "job":
+        add("career", 0.3);
+        break;
+      case "quitJob":
+        add("career", -0.4);
+        break;
+      case "careerLevel":
+        add("career", Number(e.delta ?? 0) > 0 ? 0.5 : -0.5);
+        break;
+      case "familySupport":
+        add("family", Number(e.delta ?? 0) > 0 ? 0.3 : -0.3);
+        break;
+      case "newFriend":
+        add("social", 0.3);
+        break;
+      case "loseFriend":
+        add("social", -0.3);
+        break;
+      case "clearFlag":
+        if (["gambling", "alcohol", "cult", "hikikomori", "depressed", "distance"].includes(String(e.name))) (add("stability", 0.3), (compat += String(e.name) === "distance" ? 0.4 : 0));
+        break;
+      case "setFlag":
+        if (["gambling", "alcohol", "cult", "hikikomori", "depressed"].includes(String(e.name))) add("stability", -0.4);
+        if (String(e.name) === "distance") (add("stability", -0.2), (compat -= 0.4));
+        break;
+    }
+  }
+  const lean: Lean = { mods, compat: compat || undefined };
+  AUTO.set(o, lean);
+  return lean;
+}
+
+/** Outcome weights for a choice, leaning with this person: temperament, the chart, life facts, 궁합. */
+export function outcomeWeights(def: LifeEventDef, choiceIndex: number, person: PersonCtx): Record<string, number> {
   const ch = def.choices[Math.max(0, Math.min(def.choices.length - 1, choiceIndex))];
   const out: Record<string, number> = {};
   for (const [k, w] of Object.entries(ch.w)) {
-    const lean = def.outcomes[k]?.lean;
-    let s = 0;
-    for (const [t, x] of Object.entries(lean?.traits ?? {})) s += x * centered(traits[t]);
-    for (const [m, x] of Object.entries(lean?.mods ?? {})) s += (x ?? 0) * (mods[m as LifeModifierKey] ?? 0);
+    const o = def.outcomes[k];
+    const s = o ? leanScore(o.lean, person) + leanScore(autoLean(o), person) : 0;
     out[k] = w * Math.exp(Math.max(-1.5, Math.min(1.5, s)));
   }
   return out;
 }
 
 /** Pick the choice this person would most likely make (used when an event resolves off-screen). */
-export function instinctiveChoice(def: LifeEventDef, traits: Record<string, number>, mods: LifeModifiers, rng: SeededRandom): number {
+export function instinctiveChoice(def: LifeEventDef, person: PersonCtx, rng: SeededRandom): number {
   const scores = def.choices.map((_, i) => {
-    const w = outcomeWeights(def, i, traits, mods);
+    const w = outcomeWeights(def, i, person);
     const t = Object.values(w).reduce((a, b) => a + b, 0) || 1;
     return { item: i, weight: 0.2 + t };
   });
   return rng.weighted(scores);
+}
+
+/**
+ * Which follow-up (if any) this person gets: p bends with the chain's lean; among `oneOf`
+ * alternatives, only those that fit this life can be picked, weighted by w × lean.
+ */
+export function pickChain(state: LifeState, c: ChainDef, person: PersonCtx, rng: SeededRandom): { to: string; urgent?: boolean } | undefined {
+  const p = Math.min(0.98, (c.p ?? 1) * Math.exp(leanScore(c.lean, person)));
+  if (!rng.chance(p)) return;
+  if (!c.oneOf?.length) return c.to ? { to: c.to, urgent: c.urgent } : undefined;
+  const facts = person.facts ? { ...person.facts, weekend: false } : undefined;
+  const opts = c.oneOf
+    .filter((o) => {
+      const def = LIBRARY.get(o.to);
+      return !!def && (!facts || meets(def.requires, facts));
+    })
+    .map((o) => ({ item: o, weight: o.w * Math.exp(leanScore(o.lean, person)) }));
+  if (!opts.length) return;
+  const pick = rng.weighted(opts);
+  return { to: pick.to, urgent: pick.urgent ?? c.urgent };
 }
 
 export interface FamilyMember {

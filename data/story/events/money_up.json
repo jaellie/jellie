@@ -97,7 +97,16 @@
         24,
         72
        ],
-       "p": 0.3
+       "p": 0.3,
+       "lean": {
+        "traits": {
+         "riskTolerance": 0.6,
+         "planning": -0.4
+        },
+        "signals": {
+         "group:GYEOB_JAE": 0.4
+        }
+       }
       }
      ],
      "lean": {
@@ -240,7 +249,16 @@
         18,
         60
        ],
-       "p": 0.4
+       "p": 0.4,
+       "lean": {
+        "traits": {
+         "riskTolerance": 0.6,
+         "planning": -0.4
+        },
+        "signals": {
+         "group:GYEOB_JAE": 0.4
+        }
+       }
       }
      ],
      "lean": {
@@ -380,12 +398,39 @@
      },
      "chain": [
       {
-       "to": "LOTTO_BROKE",
+       "oneOf": [
+        {
+         "to": "LOTTO_BROKE",
+         "w": 0.35,
+         "lean": {
+          "traits": {
+           "spontaneity": 0.5,
+           "planning": -0.5
+          },
+          "signals": {
+           "group:GYEOB_JAE": 0.5,
+           "group:PYEON_JAE": 0.3
+          }
+         }
+        },
+        {
+         "to": "LOTTO_WISE",
+         "w": 0.65,
+         "lean": {
+          "traits": {
+           "planning": 0.6
+          },
+          "signals": {
+           "group:JEONG_JAE": 0.5
+          }
+         }
+        }
+       ],
        "after": [
         36,
-        120
+        96
        ],
-       "p": 0.1
+       "p": 0.6
       }
      ]
     },
@@ -429,7 +474,16 @@
         6,
         30
        ],
-       "p": 0.5
+       "p": 0.5,
+       "lean": {
+        "traits": {
+         "conflictAvoidance": 0.5,
+         "independence": -0.4
+        },
+        "mods": {
+         "family": 0.3
+        }
+       }
       }
      ]
     },
@@ -466,12 +520,35 @@
      },
      "chain": [
       {
-       "to": "LOTTO_BROKE",
+       "oneOf": [
+        {
+         "to": "LOTTO_BROKE",
+         "w": 0.75,
+         "lean": {
+          "traits": {
+           "spontaneity": 0.4,
+           "planning": -0.4
+          }
+         }
+        },
+        {
+         "to": "LOTTO_WISE",
+         "w": 0.25,
+         "lean": {
+          "traits": {
+           "planning": 0.6
+          },
+          "signals": {
+           "group:JEONG_JAE": 0.4
+          }
+         }
+        }
+       ],
        "after": [
         18,
         60
        ],
-       "p": 0.55
+       "p": 0.85
       }
      ],
      "lean": {
@@ -1790,6 +1867,85 @@
       {
        "kind": "money",
        "amount": 40
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "LOTTO_WISE",
+   "cat": "money_up",
+   "rarity": "common",
+   "tone": "joy",
+   "chainOnly": true,
+   "location": "cafe",
+   "activity": "drink_coffee",
+   "who": "me",
+   "line": {
+    "ko": "(큰돈이 들어온 지 몇 해. 재무설계사와 매달 커피를 마신다. 통장 잔고는 그대로다.)",
+    "en": "(A few years after the windfall. You have coffee with a financial planner every month. The balance hasn't moved.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(조용히, 지금처럼 산다)",
+      "en": "(Quietly, keep living like this)"
+     },
+     "w": {
+      "STEADY": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "받은 만큼 나눈다",
+      "en": "Give back as much as you got"
+     },
+     "w": {
+      "GIVE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "STEADY": {
+     "r": {
+      "ko": "이자로 사는 삶이 생각보다 평범했다. 그 평범함이 좋았다.",
+      "en": "Living on interest was more ordinary than you'd imagined. You liked the ordinary."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 20
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "평범한 부자",
+       "en": "Quietly well-off"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 6
+     }
+    },
+    "GIVE": {
+     "r": {
+      "ko": "장학재단에 이름 없이 기부했다. 받은 편지 한 통을 오래 간직했다.",
+      "en": "You donated anonymously to a scholarship fund. You kept the one thank-you letter for a long time."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -30
+      },
+      {
+       "kind": "memory",
+       "text": "Gave back after the windfall",
+       "tags": [
+        "event"
+       ]
       }
      ]
     }

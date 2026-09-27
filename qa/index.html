@@ -32,11 +32,14 @@
   .note b { color: #c2385f; margin-right: 4px; }
   .note.out { opacity: 0; transform: translateY(-12px); }
   @keyframes slideDown { from { transform: translateY(-24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-  #scene { position: absolute; z-index: 1; isolation: isolate; top: 98px; left: 0; width: 360px; height: 340px; overflow: hidden; border-bottom: 3px solid var(--ink); }
-  .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: repeating-conic-gradient(rgba(255,255,255,.18) 0 25%, rgba(0,0,0,.05) 0 50%) 0 0/24px 24px; border-top: 3px solid var(--ink); }
-  .roomlabel { position: absolute; left: 10px; bottom: 8px; padding: 2px 6px; background: rgba(30,42,90,.8); color: #fff; font-size: 10px; z-index: 3; }
+  /* The scene fills the whole play area under the log line (portrait stage, see src/world/stage.ts). */
+  #scene { position: absolute; z-index: 1; isolation: isolate; top: 98px; left: 0; width: 360px; height: 642px; overflow: hidden; }
+  .floor { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='36'%3E%3Cpath d='M36 0L72 18L36 36L0 18Z' fill='none' stroke='rgba(0,0,0,.10)' stroke-width='2'/%3E%3C/svg%3E"); background-size: var(--tw) var(--th); background-position: var(--tx) var(--ty); }
+  .wall { position: absolute; inset: 0; }
+  .wallline { position: absolute; inset: 0; pointer-events: none; }
+  .roomlabel { position: absolute; right: 8px; top: 8px; padding: 2px 6px; background: rgba(30,42,90,.8); color: #fff; font-size: 10px; z-index: 3; }
   .overlay { position: absolute; inset: 0; pointer-events: none; z-index: 90; }
-  .actor { position: absolute; width: 24px; height: 40px; transition: left .48s linear, top .48s linear, opacity .3s; }
+  .actor { position: absolute; width: 24px; height: 40px; transform: scale(1.6); transform-origin: 50% 100%; transition: left .48s linear, top .48s linear, opacity .3s; }
   .actor .head { position: absolute; left: 4px; top: 0; width: 16px; height: 16px; background: #ffd9bd; border: 2px solid var(--ink); }
   .actor .hair { position: absolute; left: 3px; top: -2px; width: 18px; height: 8px; border: 2px solid var(--ink); border-bottom: 0; }
   .actor .face { position: absolute; left: 12px; top: 6px; width: 3px; height: 3px; background: var(--ink); }
@@ -45,13 +48,14 @@
   .actor .legs { position: absolute; left: 6px; top: 34px; width: 12px; height: 6px; background: var(--ink); }
   .actor.walk .legs { animation: step .25s steps(2) infinite; }
   @keyframes step { 50% { transform: translateY(-2px); } }
-  .actor.kid { transform: scale(.65); transform-origin: bottom center; }
-  .actor.baby { transform: scale(.5); transform-origin: bottom center; }
+  .actor.kid { transform: scale(1.04); }
+  .actor.baby { transform: scale(.8); }
   .actor.pet .head, .actor.pet .hair, .actor.pet .legs, .actor.pet .face { display: none; }
   .actor.pet .body { top: 24px; height: 12px; width: 22px; border-radius: 4px; }
   .actor.off { opacity: 0; }
-  #place { position: absolute; top: 444px; left: 12px; right: 12px; font-size: 12px; color: #b9a9c9; }
-  #diary { position: absolute; top: 468px; left: 12px; right: 12px; bottom: 12px; font-size: 12px; line-height: 1.7; color: #d9cfe4; overflow: hidden; }
+  .actor.phone::after { content: ""; position: absolute; left: 15px; top: 19px; width: 7px; height: 11px; background: #2b2233; border: 1px solid #fff6e3; box-shadow: inset 0 0 0 1px #7fd3ff; }
+  #place { position: absolute; bottom: 10px; left: 10px; z-index: 3; font-size: 11px; color: #fff6e3; background: rgba(43,34,51,.72); padding: 3px 8px; border: 2px solid var(--ink); }
+  #diary { display: none; }
   /* popups: always centered on the play screen */
   #popupWrap { display: none; position: absolute; inset: 0; z-index: 50; background: rgba(26,20,32,.55); }
   #popup { position: absolute; left: 18px; right: 18px; top: 50%; transform: translateY(-50%); background: #fff6e3; border: 3px solid var(--ink); box-shadow: 4px 4px 0 #1a1420; padding: 4px; }
@@ -156,7 +160,8 @@
   const show = (id) => { for (const el of document.querySelectorAll(".screen")) el.classList.toggle("on", el.id === id); screen = id; };
   const ROLE_COLOR = { me: "#ff6f91", partner: "#6c7bd9", fated: "#9b6cd9", npc: "#6fbf5a", passerby: "#c9c4bb", kid: "#ffd36b", pet: "#a3774a", inlaw: "#8fb8a8", guest: "#e8a0c0", relative: "#555", coworker: "#8fb8a8", baby: "#ffd36b", patient: "#ddd", friend: "#6fbf5a" };
   const ROOM_COLOR = { home: "#dcb080", office: "#b9c3d9", street: "#b3b8c4", park: "#9fd67c", cafe: "#ead8bb", beach: "#f3dfae", cinema: "#7a2232", restaurant: "#7a2232", tokyo: "#c9c4bb", diner: "#c9d6c0", amuse: "#f3d7e3" };
-  const X = (i, j) => 180 + (i - j) * 28, Y = (i, j) => 60 + (i + j) * 18;
+  // The engine gives every actor x/y (fractions of the stage's reference box) — no grid math here.
+  const REF_W = 360, REF_H = 642;
   const hhmm = (m) => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(Math.floor(m % 60)).padStart(2, "0");
 
   /** Draw a scene; actor elements persist (keyed by who) so walking animates smoothly. No name tags. */
@@ -165,8 +170,23 @@
     const key = sc.sceneKey + "|" + sc.bgId;
     if (el.dataset.key !== key) {
       el.innerHTML = ""; el.dataset.key = key;
-      el.style.background = ROOM_COLOR[sc.roomKey] || sc.baseColor;
-      const f = document.createElement("div"); f.className = "floor"; el.appendChild(f);
+      const base = ROOM_COLOR[sc.roomKey] || sc.baseColor, st = sc.stage;
+      el.style.background = base;
+      // Floor everywhere, then the two back walls rising from the "V" (stage geometry from the engine).
+      const f = document.createElement("div"); f.className = "floor";
+      f.style.setProperty("--tw", st.tile.w * REF_W + "px"); f.style.setProperty("--th", st.tile.h * REF_H + "px");
+      f.style.setProperty("--tx", st.corner.x * REF_W - st.tile.w * REF_W / 2 + "px"); f.style.setProperty("--ty", st.corner.y * REF_H + "px");
+      el.appendChild(f);
+      const pct = (v) => (v * 100).toFixed(2) + "%";
+      const lw = document.createElement("div"); lw.className = "wall";
+      lw.style.background = "linear-gradient(rgba(0,0,0,.20), rgba(0,0,0,.12))"; lw.style.backgroundColor = base;
+      lw.style.clipPath = `polygon(0 0, 50% 0, 50% ${pct(st.corner.y)}, 0 ${pct(st.leftBase.y)})`; el.appendChild(lw);
+      const rw = document.createElement("div"); rw.className = "wall";
+      rw.style.background = "linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.03))"; rw.style.backgroundColor = base;
+      rw.style.clipPath = `polygon(50% 0, 100% 0, 100% ${pct(st.rightBase.y)}, 50% ${pct(st.corner.y)})`; el.appendChild(rw);
+      const ln = document.createElementNS("http://www.w3.org/2000/svg", "svg"); ln.setAttribute("class", "wallline"); ln.setAttribute("viewBox", `0 0 ${REF_W} ${REF_H}`); ln.setAttribute("preserveAspectRatio", "none");
+      ln.innerHTML = `<polyline points="0,${st.leftBase.y * REF_H} ${REF_W / 2},${st.corner.y * REF_H} ${REF_W},${st.rightBase.y * REF_H}" fill="none" stroke="#2b2233" stroke-width="3"/><line x1="${REF_W / 2}" y1="0" x2="${REF_W / 2}" y2="${st.corner.y * REF_H}" stroke="rgba(43,34,51,.35)" stroke-width="2"/>`;
+      el.appendChild(ln);
       const lab = document.createElement("div"); lab.className = "roomlabel"; lab.textContent = (sc.standIn ? sc.sceneKey + " (→ROOMS." + sc.roomKey + ")" : "ROOMS." + sc.roomKey); el.appendChild(lab);
       for (const o of sc.overlays) { const ov = document.createElement("div"); ov.className = "overlay"; ov.style.background = o.background; ov.dataset.cond = o.condition; el.appendChild(ov); }
     }
@@ -180,18 +200,20 @@
         d.innerHTML = `<div class="hair" style="background:${hair}"></div><div class="head"></div><div class="face"></div><div class="body" style="background:${c}"></div><div class="legs"></div>`;
         el.appendChild(d);
       }
-      d.className = "actor" + (a.role === "kid" ? " kid" : a.role === "baby" ? " baby" : a.role === "pet" ? " pet" : "") + (a.walking ? " walk" : "") + (a.facing === "SW" || a.facing === "NW" ? " left" : "") + (a.offscreen ? " off" : "");
-      d.style.left = (X(a.spot[0], a.spot[1]) - 12) + "px"; d.style.top = (Y(a.spot[0], a.spot[1]) + 40) + "px"; d.style.zIndex = a.z;
+      d.className = "actor" + (a.role === "kid" ? " kid" : a.role === "baby" ? " baby" : a.role === "pet" ? " pet" : "") + (a.walking ? " walk" : "") + (a.facing === "SW" || a.facing === "NW" ? " left" : "") + (a.offscreen ? " off" : "") + (sc.online && a.role === "me" ? " phone" : "");
+      d.style.left = (a.x * REF_W - 12) + "px"; d.style.top = (a.y * REF_H - 40) + "px"; d.style.zIndex = a.z;
     }
     for (const d of [...el.querySelectorAll(".actor")]) if (!seen.has(d.dataset.who)) d.remove();
   }
-  /** Static picture of a scene (memory card / big popup), scaled into a box. */
+  /** Static picture of a scene (memory card / big popup): fit the width, crop to where the people are. */
   function picture(box, sc, w, h) {
     box.innerHTML = "";
     if (!sc) return;
     const inner = document.createElement("div");
-    const k = Math.min(w / 360, h / 340);
-    inner.style.cssText = `position:absolute;left:${(w - 360 * k) / 2}px;top:${(h - 340 * k) / 2}px;width:360px;height:340px;transform-origin:0 0;transform:scale(${k});`;
+    const k = w / REF_W, full = REF_H * k;
+    const mid = ((sc.focus.top + sc.focus.bottom) / 2) * full;
+    const off = Math.max(0, Math.min(full - h, mid - h / 2));
+    inner.style.cssText = `position:absolute;left:0;top:${-off}px;width:${REF_W}px;height:${REF_H}px;transform-origin:0 0;transform:scale(${k});`;
     box.appendChild(inner); drawScene(inner, sc);
     box.style.background = inner.style.background;
   }
@@ -207,6 +229,9 @@
     const d = document.createElement("div"); d.textContent = `${t} ${text}`; $("diary").prepend(d);
     while ($("diary").children.length > 12) $("diary").lastChild.remove();
   }
+  // Toasts belong to their day: a new day (or a big moment) starts with a clean screen.
+  const clearNotes = () => { $("notes").innerHTML = ""; };
+
   function note(from, text) {
     const n = document.createElement("div"); n.className = "note"; n.dataset.testid = "note";
     n.innerHTML = `<b>${from}</b>${text}`;
@@ -219,6 +244,7 @@
     popupOpen = true; resultShown = false;
     $("popupWrap").style.display = "block"; $("popupWrap").dataset.source = p.source; $("popupWrap").dataset.who = p.who; $("popupWrap").dataset.big = p.big ? "1" : "";
     $("popup").classList.toggle("big", !!p.big);
+    if (p.big) clearNotes();
     $("pBanner").textContent = p.big ? (p.title || "") : "";
     if (p.big) picture($("pPic"), p.scene, 312, 164); else $("pPic").innerHTML = "";
     $("pWho").textContent = p.name || ""; $("pLine").textContent = p.line; $("pRes").textContent = "";
@@ -251,6 +277,7 @@
   }
 
   function endDay() {
+    clearNotes();
     const r = game.endDay();
     skipData = r; skipIdx = 0;
     if (r.over) return memorial();

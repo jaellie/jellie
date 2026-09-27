@@ -51,7 +51,7 @@ const reqFact = (r: string) => {
 describe("Life-event library: every event is well-formed", () => {
   const events = allLifeEvents();
   const chainTargets = new Set<string>([
-    ...events.flatMap((e) => Object.values(e.outcomes).flatMap((o) => (o.chain ?? []).map((c) => c.to))),
+    ...events.flatMap((e) => Object.values(e.outcomes).flatMap((o) => (o.chain ?? []).flatMap((c) => [c.to, ...(c.oneOf ?? []).map((x) => x.to)]).filter((x): x is string => !!x))),
     ...JSON.stringify(arcData).match(/"to":\\s*"[A-Z_]+"/g)?.map((x) => x.split('"')[3]) ?? [],
     "COMING_AROUND",
   ]);
@@ -94,7 +94,19 @@ describe("Life-event library: every event is well-formed", () => {
         expect(reachable.has(k), `outcome ${k} is reachable`).toBe(true);
         expect(o.r.ko && o.r.en).toBeTruthy();
         for (const fx of o.effects ?? []) expect(EFFECTS.has(fx.kind), `effect ${fx.kind}`).toBe(true);
-        for (const c of o.chain ?? []) expect(lifeEvent(c.to), `chain → ${c.to}`).toBeDefined();
+        for (const c of o.chain ?? []) {
+          expect(!!c.to !== !!c.oneOf?.length, "a chain has either `to` or `oneOf`").toBe(true);
+          for (const t of [c.to, ...(c.oneOf ?? []).map((x) => x.to)].filter((x): x is string => !!x)) expect(lifeEvent(t), `chain → ${t}`).toBeDefined();
+          for (const l of [c.lean, ...(c.oneOf ?? []).map((x) => x.lean)]) {
+            for (const t of Object.keys(l?.traits ?? {})) expect(TRAITS.has(t), `chain lean trait ${t}`).toBe(true);
+            for (const k of Object.keys(l?.mods ?? {})) expect(LIFE_MODIFIER_KEYS as readonly string[], `chain lean mod ${k}`).toContain(k);
+            for (const k of Object.keys(l?.facts ?? {})) expect(FACTS.has(k) || k.startsWith("f_"), `chain lean fact ${k}`).toBe(true);
+            for (const k of Object.keys(l?.signals ?? {})) expect(SIGNALS.some((re) => re.test(k)), `chain lean signal ${k}`).toBe(true);
+          }
+        }
+        for (const k of Object.keys(o.lean?.mods ?? {})) expect(LIFE_MODIFIER_KEYS as readonly string[], `lean mod ${k}`).toContain(k);
+        for (const k of Object.keys(o.lean?.facts ?? {})) expect(FACTS.has(k) || k.startsWith("f_"), `lean fact ${k}`).toBe(true);
+        for (const k of Object.keys(o.lean?.signals ?? {})) expect(SIGNALS.some((re) => re.test(k)), `lean signal ${k}`).toBe(true);
         for (const t of Object.keys(o.lean?.traits ?? {})) expect(TRAITS.has(t), `lean trait ${t}`).toBe(true);
         if (typeof o.card === "string") expect((cardData.cards as Record<string, unknown>)[o.card], `card ${o.card}`).toBeDefined();
         else if (o.card) {

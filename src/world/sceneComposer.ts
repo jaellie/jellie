@@ -3,14 +3,14 @@
  *   background (+ overlays) + character sprites on location spots + props + UI.
  * No per-combination background art is ever needed.
  */
-import { ART_DIRECTION, backgroundsFor, getLocation } from "./catalog";
+import { backgroundsFor, getLocation } from "./catalog";
 import type { BackgroundLayer } from "./types";
 import type { VisitResult } from "./worldEngine";
 import type { WorldState } from "./types";
 import type { LifeState } from "../sim/types";
 import { ageMixFor, knowsName, npcAge } from "./npcs";
 import { ENCOUNTER_RULES } from "./catalog";
-import { FLOOR } from "./walkers";
+import { STAGE, stageLattice } from "./stage";
 
 export interface SceneActor {
   id: string;
@@ -36,23 +36,23 @@ export interface Scene {
   overlays: VisitResult["background"]["overlays"];
   actors: SceneActor[];
   props: BackgroundLayer[];
+  /** An online place: the player is at home on their phone. */
+  online?: boolean;
 }
 
 const AMBIENT = (ENCOUNTER_RULES.crowds as unknown as { ambient: Record<string, [number, number]> }).ambient;
 
 export function composeScene(visit: VisitResult, world: WorldState, state: LifeState, opts: { withPartner?: boolean; household?: boolean } = {}): Scene {
   const loc = getLocation(visit.locationId);
-  const spots = loc.spots ?? [[4.5, 4.5]];
   const bg = visit.background.background;
   const actors: SceneActor[] = [];
-  // The player starts at the room's first spot; everyone else is spread over the floor (not lined up),
-  // stable per person so a scene looks the same when redrawn.
-  const lattice: Array<[number, number]> = [];
-  for (let a = FLOOR.min; a <= FLOOR.max + 1e-9; a += FLOOR.step) for (let b = FLOOR.min; b <= FLOOR.max + 1e-9; b += FLOOR.step) lattice.push([a, b]);
+  // The player starts in the lower middle of the stage; everyone else is spread over the whole floor
+  // (not lined up), stable per person so a scene looks the same when redrawn.
+  const lattice = stageLattice();
   const used = new Set<string>();
   let i = 0;
   const place = (a: Omit<SceneActor, "spot" | "z">) => {
-    let spot = spots[0];
+    let spot: [number, number] = [STAGE.home[0], STAGE.home[1]];
     if (i++ > 0) {
       // FNV-1a + avalanche, so similar ids ("amb0", "amb1") land far apart instead of in a row.
       let h = 2166136261;
@@ -70,22 +70,25 @@ export function composeScene(visit: VisitResult, world: WorldState, state: LifeS
     used.add(spot.join(","));
     actors.push({ ...a, spot, z: Math.round((spot[0] + spot[1]) * 10) });
   };
-  if (!loc.online) {
-    place({ id: "player", kind: "player", sex: state.birth.sex, age: Math.floor(state.age), spriteSeed: 0 });
-    if (opts.withPartner && state.relationship.partnerId) {
-      const pid = state.relationship.partnerId;
-      const pn = world.npcs[pid] ?? state.npcs.find((n) => n.id === pid);
-      const sex = pn && "sex" in pn ? (pn as { sex: "MALE" | "FEMALE" }).sex : pn && "birth" in pn ? (pn as { birth: { sex: "MALE" | "FEMALE" } }).birth.sex : undefined;
-      place({ id: pid, kind: "partner", name: pn?.name, sex, spriteSeed: (world.npcs[pid]?.spriteSeed ?? 1), fated: world.npcs[pid]?.fated });
-    }
-    for (const id of visit.present) {
-      const n = world.npcs[id];
-      if (n) place({ id, kind: "npc", name: knowsName(world, id) ? n.name : undefined, npcType: n.type, sex: n.sex, age: npcAge(n, visit.time.date), spriteSeed: n.spriteSeed, fated: n.fated, familiar: !!world.relationships[id] || (world.encounters[`${id}@${loc.id}`]?.encounterCount ?? 0) >= 2 });
-    }
-    if (opts.household) {
-      for (const k of state.kids ?? []) place({ id: k.id, kind: "npc", name: k.name, npcType: "kid", sex: k.sex, age: visit.time.date.year - k.bornYear, spriteSeed: k.spriteSeed });
-      for (const p of (state.pets ?? []).filter((x) => x.alive)) place({ id: p.id, kind: "npc", name: p.name, npcType: p.species === "DOG" ? "pet_dog" : "pet_cat", spriteSeed: p.spriteSeed });
-    }
+  // An online place (community, SNS, apps) is you at home on your phone: the people you talk to
+  // aren't in the room — your household is.
+  const online = !!loc.online;
+  place({ id: "player", kind: "player", sex: state.birth.sex, age: Math.floor(state.age), spriteSeed: 0 });
+  if (opts.withPartner && state.relationship.partnerId) {
+    const pid = state.relationship.partnerId;
+    const pn = world.npcs[pid] ?? state.npcs.find((n) => n.id === pid);
+    const sex = pn && "sex" in pn ? (pn as { sex: "MALE" | "FEMALE" }).sex : pn && "birth" in pn ? (pn as { birth: { sex: "MALE" | "FEMALE" } }).birth.sex : undefined;
+    place({ id: pid, kind: "partner", name: pn?.name, sex, spriteSeed: (world.npcs[pid]?.spriteSeed ?? 1), fated: world.npcs[pid]?.fated });
+  }
+  for (const id of online ? [] : visit.present) {
+    const n = world.npcs[id];
+    if (n) place({ id, kind: "npc", name: knowsName(world, id) ? n.name : undefined, npcType: n.type, sex: n.sex, age: npcAge(n, visit.time.date), spriteSeed: n.spriteSeed, fated: n.fated, familiar: !!world.relationships[id] || (world.encounters[`${id}@${loc.id}`]?.encounterCount ?? 0) >= 2 });
+  }
+  if (opts.household || online) {
+    for (const k of state.kids ?? []) place({ id: k.id, kind: "npc", name: k.name, npcType: "kid", sex: k.sex, age: visit.time.date.year - k.bornYear, spriteSeed: k.spriteSeed });
+    for (const p of (state.pets ?? []).filter((x) => x.alive)) place({ id: p.id, kind: "npc", name: p.name, npcType: p.species === "DOG" ? "pet_dog" : "pet_cat", spriteSeed: p.spriteSeed });
+  }
+  if (!online) {
     for (const n of visit.passersBy) place({ id: n.id, kind: "passerby", npcType: n.type, sex: n.sex, age: npcAge(n, visit.time.date), spriteSeed: n.spriteSeed });
     // Ambient crowd (visual only): a busy street, a few more customers — of the place's usual ages.
     const [lo, hi] = (AMBIENT[loc.type] ?? AMBIENT.default) as [number, number];
@@ -103,12 +106,13 @@ export function composeScene(visit: VisitResult, world: WorldState, state: LifeS
   const baseBg = backgroundsFor(loc.id).find((b) => !b.timeOfDay && !b.weather && !b.season && !b.activities);
   const layers = bg.layers ?? baseBg?.layers ?? [];
   return {
-    size: [ART_DIRECTION.frame[0], ART_DIRECTION.sceneHeight],
+    size: [STAGE.ref[0], STAGE.ref[1]],
     locationId: loc.id,
     prototypeId: loc.prototypeId,
     background: { id: bg.id, assetPath: bg.assetPath, renderer: bg.renderer, status: bg.status, layers: layers.filter((l) => l.kind !== "interactive") },
     overlays: visit.background.overlays,
     actors,
     props: layers.filter((l) => l.kind === "interactive"),
+    ...(online ? { online: true } : {}),
   };
 }

@@ -6,6 +6,7 @@
  */
 import { OVERLAYS, getBackground, getLocation } from "../world/catalog";
 import type { Scene } from "../world/sceneComposer";
+import { project, stageInfo } from "../world/stage";
 
 /** Fallback base colors for locations the prototype hasn't painted yet (mirrors its WBG palette). */
 const FALLBACK_BG: Record<string, string> = {
@@ -36,9 +37,23 @@ const STAND_IN: Record<string, string> = {
   cooking_class: "diner", library: "cafe", beach_cafe: "cafe", paris_cafe: "cafe", wedding_venue: "restaurant",
   university: "street", paris_eiffel_tower: "street", paris_louvre: "street", paris_street: "street",
   surf_school: "beach", boardwalk: "beach", paris_seine: "park",
+  // Online places: you're at home on your phone (the scene is flagged `online`).
+  language_exchange_app: "home", instagram: "home", dating_app: "home", online_community: "home",
 };
 
+/** The stage geometry for the painter (fractions of the reference box) — see world/stage.ts. */
+export type StageInfo = ReturnType<typeof stageInfo>;
+
 export interface PrototypeScene {
+  /**
+   * Full-screen portrait stage: draw the scene over the whole play area (under the HUD and the log
+   * line). The reference box is stage.ref (360 × 642): scale it uniformly to cover the area.
+   */
+  stage: StageInfo;
+  /** Where the people are, top to bottom (fractions) — crop small pictures (big popup, memory card) to this band. */
+  focus: { top: number; bottom: number };
+  /** An online place (community, SNS, dating/language apps): you're at home on your phone — draw the phone in hand. */
+  online?: boolean;
   /** Key into the prototype's ROOMS / SPOTS / WBG: the place's own painter, or the closest stand-in (never empty). */
   roomKey?: string;
   /** The place itself (location id) — paint ROOMS[sceneKey] to replace a stand-in (e.g. "funeral_hall"). */
@@ -69,6 +84,9 @@ export interface PrototypeScene {
     fated?: boolean;
     /** e.g. pet_dog / pet_cat / kid / trainer … */
     npcType?: string;
+    /** Where to draw them: feet position as fractions of the reference box (0..1; beyond = off-screen). */
+    x: number;
+    y: number;
     /** Set by game.wander(): moved this tick (walk frames), which way they face, and whether they've stepped out. */
     walking?: boolean;
     facing?: "NE" | "NW" | "SE" | "SW";
@@ -92,26 +110,44 @@ export function toPrototypeScene(scene: Scene): PrototypeScene {
       }
     }
   }
+  const actors = scene.actors.map((a) => ({
+    who: a.kind === "player" ? "me" : a.kind === "partner" ? "partner" : a.id,
+    spot: a.spot,
+    ...project(a.spot),
+    z: a.z,
+    name: a.name,
+    seed: a.spriteSeed,
+    familiar: a.familiar,
+    gender: a.sex === "MALE" ? ("M" as const) : a.sex === "FEMALE" ? ("F" as const) : undefined,
+    age: a.age,
+    role: a.kind === "player" ? "me" : a.kind === "partner" ? "partner" : a.fated ? "fated" : a.npcType === "kid" ? "kid" : a.npcType?.startsWith("pet_") ? "pet" : a.kind,
+    fated: !!a.fated,
+    npcType: a.npcType,
+  }));
   return {
+    stage: stageInfo(),
+    focus: focusOf(actors),
+    ...(scene.online ? { online: true } : {}),
     roomKey,
     sceneKey: loc.id,
     bgId: scene.background.id,
     standIn: !own,
     assetPath: scene.background.assetPath,
-    baseColor: FALLBACK_BG[loc.type] ?? "#ead8bb",
+    baseColor: (scene.online ? undefined : FALLBACK_BG[loc.type]) ?? "#ead8bb",
     overlays,
-    actors: scene.actors.map((a) => ({
-      who: a.kind === "player" ? "me" : a.kind === "partner" ? "partner" : a.id,
-      spot: a.spot,
-      z: a.z,
-      name: a.name,
-      seed: a.spriteSeed,
-      familiar: a.familiar,
-      gender: a.sex === "MALE" ? "M" : a.sex === "FEMALE" ? "F" : undefined,
-      age: a.age,
-      role: a.kind === "player" ? "me" : a.kind === "partner" ? "partner" : a.fated ? "fated" : a.npcType === "kid" ? "kid" : a.npcType?.startsWith("pet_") ? "pet" : a.kind,
-      fated: !!a.fated,
-      npcType: a.npcType,
-    })),
+    actors,
   };
+}
+
+/** The band (top..bottom, fractions) holding the people on screen, padded for their height — for cropping pictures. */
+export function focusOf(actors: Array<{ y: number; offscreen?: boolean }>): { top: number; bottom: number } {
+  const ys = actors.filter((a) => !a.offscreen && a.y >= 0 && a.y <= 1).map((a) => a.y);
+  const info = stageInfo();
+  if (!ys.length) return { top: info.corner.y, bottom: 1 };
+  return { top: Math.max(0, Math.min(...ys) - info.spriteHeight * 1.6), bottom: Math.min(1, Math.max(...ys) + info.spriteHeight * 0.4) };
+}
+
+/** Re-project actors after they moved (game.wander()). */
+export function withPositions<A extends { spot: [number, number] }>(actors: A[]): Array<A & { x: number; y: number }> {
+  return actors.map((a) => ({ ...a, ...project(a.spot) }));
 }

@@ -10,6 +10,7 @@ import { getLocation } from "../world/catalog";
 import { toPrototypeScene, type PrototypeScene } from "../integration/prototype";
 import type { Scene, SceneActor } from "../world/sceneComposer";
 import { fillNames, fixJosa, CITY_KO, langVars } from "../game/text";
+import { STAGE } from "../world/stage";
 
 type Bi = { ko: string; en: string };
 const CARDS = cardData.cards as unknown as Record<string, { location: string; activity: string | null; actors: string[]; caption: Bi }>;
@@ -62,7 +63,8 @@ export function buildCards(state: LifeState, lang: "ko" | "en", seed: number): M
     const tod = /FUNERAL/.test(c.kind) ? "EVENING" : c.kind === "FLIGHT" ? "DAY" : "DAY";
     const weather = /FUNERAL|BREAKUP|CALL_OFF|LAYOFF/.test(c.kind) ? "RAIN" : "CLEAR";
     const bg = backgroundEngine.getBackground({ location: loc.id, activityId: def.activity ?? undefined, timeOfDay: tod, weather, facts: { married } });
-    const spots = loc.spots ?? [[4.5, 4.5]];
+    // Everyone poses together in the middle of the stage (a photo).
+    const spots = STAGE.photo;
     // A "friend" extra only appears if the player actually has a friend to show.
     const roles = def.actors.filter((r) => baseRole(r) !== "friend" || !!c.vars.friend);
     const actors: SceneActor[] = roles.map((role, i) => {

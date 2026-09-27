@@ -7,7 +7,8 @@ import type { SeededRandom } from "../core/rng";
 import type { LifeModifiers } from "../core/lifeModifiers";
 import type { LifeState } from "../sim/types";
 import { aliveSiblings, siblingLabel } from "./family";
-import { EVENT_PATIENCE, type FamilyMember, pendingApplies, type LifeEventOutcome, type StoryEffect, eventState, familyReactions, instinctiveChoice, lifeEvent, outcomeWeights, queueChain, temperament } from "./lifeEvents";
+import { EVENT_PATIENCE, type FamilyMember, type PersonCtx, pendingApplies, pickChain, type LifeEventOutcome, type StoryEffect, eventState, familyReactions, instinctiveChoice, lifeEvent, outcomeWeights, queueChain, temperament } from "./lifeEvents";
+import { compatibility } from "../destiny/compatibility";
 import { type StoryCtx, applyStoryEffects, queueCard } from "./storyEngine";
 
 type Bi = { ko: string; en: string };
@@ -83,6 +84,28 @@ function familyReact(state: LifeState, eff: StoryEffect, rng: SeededRandom, supp
   return lines;
 }
 
+/**
+ * 궁합 with the current partner, 0..1: the destined person's from setup, anyone else's computed once
+ * from both births (사주 + synastry). Undefined without a partner.
+ */
+export function partnerCompat(state: LifeState): number | undefined {
+  const pid = state.relationship.partnerId;
+  const st = state.story;
+  if (!pid || !st || (state.relationship.status !== "DATING" && state.relationship.status !== "MARRIED")) return;
+  if (state.world?.npcs[pid]?.fated && st.compat) return st.compat.score;
+  if (st.partnerCompat?.id === pid) return st.partnerCompat.score;
+  const n = state.npcs.find((x) => x.id === pid);
+  if (!n?.birth) return;
+  const score = compatibility({ birth: state.birth, place: st.place }, { birth: n.birth }).score;
+  st.partnerCompat = { id: pid, score };
+  return score;
+}
+
+/** Everything about the person that outcomes and follow-ups lean on. */
+export function personOf(ctx: StoryCtx): PersonCtx {
+  return { traits: temperament(ctx.state), mods: ctx.mods as LifeModifiers, facts: ctx.facts, signals: ctx.signals, compat: partnerCompat(ctx.state) };
+}
+
 /** Resolve one life event with the chosen reaction. */
 export function resolveLifeEvent(uid: string, choiceIndex: number, ctx: StoryCtx): EventResolution | undefined {
   const { state, rng, mods } = ctx;
@@ -92,7 +115,8 @@ export function resolveLifeEvent(uid: string, choiceIndex: number, ctx: StoryCtx
   const def = lifeEvent(p.id);
   es.pending = es.pending.filter((x) => x !== p);
   if (!def) return;
-  const weights = outcomeWeights(def, choiceIndex, temperament(state), mods);
+  const person = personOf(ctx);
+  const weights = outcomeWeights(def, choiceIndex, person);
   const outcome = rng.weighted(Object.entries(weights).map(([item, weight]) => ({ item, weight })));
   const o: LifeEventOutcome = def.outcomes[outcome];
   const effects = o.effects ?? [];
@@ -106,7 +130,11 @@ export function resolveLifeEvent(uid: string, choiceIndex: number, ctx: StoryCtx
       vars: { ...vars, cap_ko: o.card.caption.ko, cap_en: o.card.caption.en, loc: o.card.location, actors: (o.card.actors ?? ["me"]).join(","), priority: String(o.card.priority ?? 6) },
     });
   }
-  for (const c of o.chain ?? []) if (rng.chance(c.p ?? 1)) queueChain(state, c.to, c.after, rng, { urgent: c.urgent, vars: { ...vars, ...(c.vars ?? {}) } });
+  // Follow-ups depend on the person: whether they come, and which of the alternatives.
+  for (const c of o.chain ?? []) {
+    const next = pickChain(state, c, { ...person, facts: ctx.facts }, rng);
+    if (next) queueChain(state, next.to, c.after, rng, { urgent: next.urgent, vars: { ...vars, ...(c.vars ?? {}) } });
+  }
   return { r: o.r, outcome, extra, vars };
 }
 
@@ -122,7 +150,7 @@ export function resolveStaleEvents(ctx: StoryCtx): void {
       es.pending = es.pending.filter((x) => x !== p);
       continue;
     }
-    const res = resolveLifeEvent(p.uid, instinctiveChoice(def, temperament(state), ctx.mods as LifeModifiers, rng), ctx);
+    const res = resolveLifeEvent(p.uid, instinctiveChoice(def, personOf(ctx), rng), ctx);
     // "커밍아웃 — …": the title gives the line its context on the skip screen.
     const t = def.title;
     if (res) es.notes.push({ ko: t ? `${t.ko} — ${res.r.ko}` : res.r.ko, en: t ? `${t.en} — ${res.r.en}` : res.r.en, vars: res.vars });

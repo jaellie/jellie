@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { createGame, type Game } from "../src/game/game";
 import { SeededRandom } from "../src/core/rng";
 import { LIFE_MODIFIER_KEYS, type LifeModifiers } from "../src/core/lifeModifiers";
-import { eventState, fireHooks, lifeEvent, queueChain } from "../src/story/lifeEvents";
-import { resolveLifeEvent, resolveStaleEvents } from "../src/story/lifeEventRuntime";
+import { eventState, fireHooks, lifeEvent, outcomeWeights, pickChain, queueChain } from "../src/story/lifeEvents";
+import { partnerCompat, resolveLifeEvent, resolveStaleEvents } from "../src/story/lifeEventRuntime";
 import { scheduleNext } from "../src/story/storyEngine";
 
 const SETUP = {
@@ -157,5 +157,64 @@ describe("Chains, reactions, hooks", () => {
     const p = queueChain(st, "LOTTO_WIN", [0, 0], new SeededRandom(2))!;
     const next = scheduleNext(st, new SeededRandom(3));
     expect(next.month).toBeLessThanOrEqual(p.due + 18);
+  });
+});
+
+describe("Not every life goes the same way (사람마다)", () => {
+  const person = (over: { traits?: Record<string, number>; mods?: Partial<LifeModifiers>; facts?: Record<string, unknown>; signals?: Record<string, number>; compat?: number } = {}) => ({
+    traits: { planning: 0.5, riskTolerance: 0.5, independence: 0.5, emotionalExpression: 0.5, spontaneity: 0.5, ...over.traits },
+    mods: { ...ZERO, ...over.mods } as LifeModifiers,
+    facts: { age: 35, f_gambling: true, ...over.facts } as never,
+    signals: over.signals ?? {},
+    compat: over.compat,
+  });
+  const hookedChain = () => lifeEvent("GAMBLING")!.outcomes.HOOKED.chain![0];
+  const paths = (p: ReturnType<typeof person>, n = 400) => {
+    const g = createGame({ ...SETUP, seed: 2 });
+    const count: Record<string, number> = {};
+    const rng = new SeededRandom(7);
+    for (let i = 0; i < n; i++) {
+      const next = pickChain(g.state, hookedChain(), p, rng);
+      const k = next?.to ?? "none";
+      count[k] = (count[k] ?? 0) + 1;
+    }
+    return count;
+  };
+
+  it("hooked gamblers take different roads: the loan shark, caught early, or quitting alone", () => {
+    const married = paths(person({ facts: { partnered: true, married: true, momAlive: true, parentsTogether: true } }));
+    expect(Object.keys(married).filter((k) => k !== "none").length).toBeGreaterThanOrEqual(3);
+    // Only branches that fit the life: nobody without a partner is caught by one.
+    const single = paths(person({ facts: { partnered: false, momAlive: false } }));
+    expect(single.GAMBLING_CAUGHT_BY_PARTNER ?? 0).toBe(0);
+    expect(single.GAMBLING_CAUGHT_BY_FAMILY ?? 0).toBe(0);
+  });
+
+  it("temperament and the chart bend the road: planners in a 귀인 year quit alone more; the broke and reckless meet the loan shark", () => {
+    const planner = paths(person({ traits: { planning: 0.95, riskTolerance: 0.2 }, signals: { CHEONEUL_GWIIN: 1 } }));
+    const reckless = paths(person({ traits: { planning: 0.05, riskTolerance: 0.95 }, facts: { broke: true, inDebt: true }, signals: { "group:GYEOB_JAE": 1, unfavorable: 1 } }));
+    expect((planner.GAMBLING_SELF_STOP ?? 0) / 400).toBeGreaterThan((reckless.GAMBLING_SELF_STOP ?? 0) / 400 + 0.15);
+    expect((reckless.LOAN_SHARK ?? 0) / 400).toBeGreaterThan((planner.LOAN_SHARK ?? 0) / 400 + 0.3);
+  });
+
+  it("the chart tilts every outcome: a good 재물운 year makes the moonshot likelier than the rug pull", () => {
+    const def = lifeEvent("CRYPTO_MOON")!;
+    const good = outcomeWeights(def, 1, person({ mods: { wealth: 1 } }));
+    const bad = outcomeWeights(def, 1, person({ mods: { wealth: -1 } }));
+    expect(good.RICH / good.RUG).toBeGreaterThan(2 * (bad.RICH / bad.RUG));
+  });
+
+  it("궁합 decides who stays: after the debt comes out, a good match stays more often", () => {
+    const def = lifeEvent("DEBT_MARRIAGE_CRISIS")!;
+    const good = outcomeWeights(def, 1, person({ compat: 0.9 }));
+    const poor = outcomeWeights(def, 1, person({ compat: 0.1 }));
+    expect(good.RECOVER / good.LEAVE).toBeGreaterThan(3 * (poor.RECOVER / poor.LEAVE));
+  });
+
+  it("any partner's 궁합 is known (not only the destined person's), computed once", () => {
+    const g = createGame({ ...SETUP, fated: { ...SETUP.fated, status: "dating" as const, birth: { year: 1996, month: 5, day: 5 } }, seed: 4 });
+    const c = partnerCompat(g.state);
+    expect(c).toBeGreaterThan(0);
+    expect(c).toBeLessThan(1);
   });
 });

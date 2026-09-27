@@ -46,7 +46,7 @@ import { resolveWorldEvent } from "../world/decisions";
 import type { WorldEvent } from "../world/events";
 import { endTrip, startTrip } from "../world/travel";
 import { composeScene } from "../world/sceneComposer";
-import { toPrototypeScene, type PrototypeScene } from "../integration/prototype";
+import { focusOf, toPrototypeScene, withPositions, type PrototypeScene } from "../integration/prototype";
 import { WorldEngine } from "../world/worldEngine";
 import type { NPCSchedule } from "../world/types";
 import { type LifeFacts, computeFacts, meets } from "./facts";
@@ -613,8 +613,10 @@ export class Game {
     );
     const fated = s.dayPlan.fatedPresent ? Object.values(st.world.npcs).find((n) => n.fated) : undefined;
     if (fated && !r.present.includes(fated.id)) r.present.push(fated.id);
-    const partnerHere = withPartner || (locationId === "home" && (st.relationship.status === "MARRIED" || !!st.flags.longterm) && (s.minute >= 1140 || !!s.day?.weekend));
-    s.lastScene = toPrototypeScene(composeScene(r, st.world, st, { withPartner: partnerHere, household: locationId === "home" }));
+    // Online places are home too (you're on your phone), so the household is around.
+    const atHome = locationId === "home" || !!getLocation(locationId).online;
+    const partnerHere = withPartner || (atHome && (st.relationship.status === "MARRIED" || !!st.flags.longterm) && (s.minute >= 1140 || !!s.day?.weekend));
+    s.lastScene = toPrototypeScene(composeScene(r, st.world, st, { withPartner: partnerHere, household: atHome }));
     const beats: Beat[] = [];
     for (const e of r.events) {
       if (e.choices?.length) {
@@ -821,7 +823,7 @@ export class Game {
     const mods = runner.modifiers();
     const facts = computeFacts(st);
     rollLifeEvents(st, rng, { signals: this.yearSignals(), mods, facts });
-    resolveStaleEvents({ state: st, seed: this.s.seed, rng, mods, facts });
+    resolveStaleEvents({ state: st, seed: this.s.seed, rng, mods, facts, signals: this.yearSignals() });
   }
 
   // ---- weekend menu ---------------------------------------------------------
@@ -944,7 +946,7 @@ export class Game {
     }
     if (p.eventUid) {
       const label = p.popup.ch[index]?.t;
-      const res = resolveLifeEvent(p.eventUid, index, { state: st, seed: s.seed, rng, mods, facts: this.facts() });
+      const res = resolveLifeEvent(p.eventUid, index, { state: st, seed: s.seed, rng, mods, facts: this.facts(), signals: this.yearSignals() });
       if (!res) return;
       const text = [this.L(res.r), ...res.extra.map((x) => this.L(x))].join(" ");
       return { who: "me", line: this.fill(fillStory(text, st, this.facts(), p.vars ?? {})), log: label };
@@ -1007,7 +1009,8 @@ export class Game {
     this.wanderTick = (this.wanderTick + 1) % 1_000_000;
     const r = stepCrowd(this.crowd, `${this.s.dayIndex}:${this.s.loc}:${sc.bgId}`, sc.actors, this.rng("wander", this.wanderTick));
     this.crowd = r.state;
-    sc.actors = r.actors as PrototypeScene["actors"];
+    sc.actors = withPositions(r.actors as PrototypeScene["actors"]);
+    sc.focus = focusOf(sc.actors);
     return sc;
   }
 

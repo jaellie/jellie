@@ -328,15 +328,40 @@ describe("Every place has a background the prototype can draw", () => {
     const { toPrototypeScene } = await import("../src/integration/prototype");
     const bgData = (await import("../data/world/backgrounds.json")).default as { backgrounds: Array<{ id: string; locationId: string; assetPath: string; renderer?: string; status?: string }> };
     const PAINTERS = ["amuse", "beach", "cafe", "cinema", "diner", "home", "office", "park", "restaurant", "street", "tokyo"];
-    for (const loc of LOCATIONS.filter((l) => !l.online)) {
+    for (const loc of LOCATIONS) {
       for (const bg of bgData.backgrounds.filter((b) => b.locationId === loc.id)) {
-        const ps = toPrototypeScene({ size: [360, 340], locationId: loc.id, background: { ...bg, layers: [] }, overlays: [], actors: [], props: [] });
+        const ps = toPrototypeScene({ size: [360, 642], locationId: loc.id, background: { ...bg, layers: [] }, overlays: [], actors: [], props: [], ...(loc.online ? { online: true } : {}) });
         expect(PAINTERS, `${loc.id}/${bg.id}`).toContain(ps.roomKey);
         expect(ps.sceneKey).toBe(loc.id);
         expect(ps.bgId).toBe(bg.id);
         expect(ps.standIn).toBe(!loc.prototypeId && !(bg.renderer ?? "").startsWith("ROOMS."));
       }
     }
+  });
+});
+
+describe("Online places", () => {
+  it("are you at home on your phone: the player (and household) in the home room, nobody from the internet in it", async () => {
+    const { toPrototypeScene } = await import("../src/integration/prototype");
+    const { state, world, rng, engine } = setup(5);
+    state.pets = [{ id: "pet1", name: "콩이", species: "CAT", alive: true, spriteSeed: 3 } as never];
+    for (const loc of LOCATIONS.filter((l) => l.online)) {
+      for (let h = 9; h <= 21; h += 4) {
+        const v = engine.visit({ state, world, modifiers: emptyModifiers(), rng, seed: 5 }, { locationId: loc.id, date: { year: 2024, month: 6, day: 8 }, hour: h });
+        const ps = toPrototypeScene(composeScene(v, world, state));
+        expect(ps.online, loc.id).toBe(true);
+        expect(ps.roomKey, loc.id).toBe("home");
+        expect(ps.sceneKey).toBe(loc.id);
+        const roles = ps.actors.map((a) => a.role);
+        expect(roles, loc.id).toContain("me");
+        expect(roles, loc.id).toContain("pet");
+        expect(roles.filter((r) => r === "npc" || r === "passerby" || r === "fated"), loc.id).toEqual([]);
+        expect(ps.focus.bottom).toBeGreaterThan(ps.focus.top);
+      }
+    }
+    // A real place is not online.
+    const cafe = toPrototypeScene(composeScene(engine.visit({ state, world, modifiers: emptyModifiers(), rng, seed: 5 }, { locationId: "cafe", date: { year: 2024, month: 6, day: 8 }, hour: 15 }), world, state));
+    expect(cafe.online).toBeUndefined();
   });
 });
 
@@ -368,7 +393,8 @@ describe("Crowds don't grow old with the player", () => {
 
 describe("Kairosoft-style walking", () => {
   it("everyone walks tile by tile; NPCs sometimes step off-screen and come back; the player never leaves; staff stay by their post", async () => {
-    const { stepCrowd, FLOOR, EXITS } = await import("../src/world/walkers");
+    const { stepCrowd } = await import("../src/world/walkers");
+    const { inStage, STAGE } = await import("../src/world/stage");
     type CrowdActor = import("../src/world/walkers").CrowdActor;
     const actors = [
       { who: "me", spot: [4.5, 4.5] as [number, number], z: 90, role: "me" },
@@ -383,8 +409,9 @@ describe("Kairosoft-style walking", () => {
     const wentOut = new Set<string>();
     const cameBack = new Set<string>();
     const rng = new SeededRandom(5);
-    const onFloor = (p: [number, number]) => p[0] >= FLOOR.min && p[0] <= FLOOR.max && p[1] >= FLOOR.min && p[1] <= FLOOR.max;
-    const onExitPath = (p: [number, number]) => EXITS.some((e) => p[0] === e[0] || p[1] === e[1]) || onFloor(p);
+    const onFloor = (p: [number, number]) => inStage(p);
+    // Off the floor only on the way out or back in: just past the side or bottom edges.
+    const onExitPath = (p: [number, number]) => onFloor(p) || (Math.abs(p[0] - p[1]) <= STAGE.halfWidth + 3.5 + 1e-9 && p[0] + p[1] <= STAGE.sMax + 3.5 && p[0] >= STAGE.min - 3.5 && p[1] >= STAGE.min - 3.5);
     const home = new Map<string, [number, number]>();
     for (let t = 0; t < 400; t++) {
       const r = stepCrowd(state, "cafe", cur, rng);

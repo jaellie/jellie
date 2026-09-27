@@ -5,7 +5,7 @@
    360,
    740
   ],
-  "sceneHeight": 340,
+  "sceneHeight": 642,
   "palette": {
    "outline": "#2b2233",
    "pink": "#ff6f91",
@@ -20,7 +20,8 @@
    "photorealism",
    "glassmorphism",
    "heavy gradients"
-  ]
+  ],
+  "stage": "Portrait stage that fills the play area (360×642 under the HUD and log line): back walls across the top meeting at a 'V' (corner at the top middle, y≈110; the walls reach the side edges at y≈200), floor down to the bottom edge. Iso grid: x = 180 + (i−j)·36, y = 110 + (i+j)·18. Background art for a place: 360×642 (or 180×321 drawn at 2×) following those lines — see src/world/stage.ts."
  },
  "overlays": {
   "NIGHT": {
