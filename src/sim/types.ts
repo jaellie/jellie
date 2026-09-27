@@ -74,7 +74,12 @@ export interface LifeState extends Character {
 
   education: EducationLevel;
   enrollment?: Enrollment;
-  career: { employed: boolean; field?: string; level: number; abroad: boolean };
+  /** cid increments whenever the job changes/ends — facts like 'promoted' are tied to one cid. */
+  career: { employed: boolean; field?: string; level: number; abroad: boolean; cid?: number };
+  /** Parents (for messages/events that need them alive). */
+  family?: { mom: { alive: boolean; birthYear: number }; dad: { alive: boolean; birthYear: number } };
+  /** Month index at death, if dead. */
+  diedAtMonth?: number;
 
   homeCountry: string;
   location: Residence;

@@ -133,17 +133,19 @@ describe("Destiny is probabilistic, never forced", () => {
 
   it("same destiny, different circumstances → different lives (Player A vs Player B)", () => {
     const run = (profile: Parameters<typeof simulateLife>[0]["profile"]) => {
-      let abroad = 0;
+      let abroad = 0, stillAbroad = 0;
       for (let seed = 1; seed <= 40; seed++) {
         const r = simulateLife({ seed, birthData: STRONG_YEOKMA, duration: 45, profile });
         if (movedAbroad(r)) abroad++;
+        if (r.finalState.location.country !== "Korea") stillAbroad++;
       }
-      return abroad;
+      return { abroad, stillAbroad };
     };
-    const playerA = run({ money: 40, familySupport: 0.9, familyObligation: 0, traits: { novelty: 0.9, riskTolerance: 0.8, ambition: 0.8 } });
-    const playerB = run({ money: 0, familySupport: 0, familyObligation: 0.9, traits: { novelty: 0.15, riskTolerance: 0.1, ambition: 0.5 } });
+    const A = run({ money: 40, familySupport: 0.9, familyObligation: 0, traits: { novelty: 0.9, riskTolerance: 0.8, ambition: 0.8 } });
+    const B = run({ money: 0, familySupport: 0, familyObligation: 0.9, traits: { novelty: 0.15, riskTolerance: 0.1, ambition: 0.5 } });
+    const playerA = A.abroad, playerB = B.abroad;
     expect(playerA).toBeGreaterThan(playerB);
-    expect(playerA).toBeLessThan(40); // not guaranteed even for A
+    expect(A.stillAbroad).toBeLessThan(40); // not guaranteed even for A: many come back or never settle abroad
     expect(playerB).toBeLessThan(playerA / 3);
   });
 });

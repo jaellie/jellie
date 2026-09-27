@@ -22,8 +22,13 @@ export function yearlyIncome(s: LifeState): number {
   return base * (s.career.abroad ? ECONOMY.abroadIncomeBonus : 1);
 }
 
+/** Annual death probability (Gompertz-style, fictional but plausible). */
+export function annualMortality(age: number): number {
+  return Math.min(0.5, 0.0003 + 2.2e-5 * Math.exp(0.1 * age));
+}
+
 /** Advance one month. Returns notable life-script events (graduation etc.). */
-export function lifeTick(s: LifeState): string[] {
+export function lifeTick(s: LifeState, rng?: { chance(p: number): boolean }): string[] {
   const notes: string[] = [];
   s.monthIndex += 1;
   s.date = addMonths(s.date, 1);
@@ -52,7 +57,23 @@ export function lifeTick(s: LifeState): string[] {
   }
   if (s.age >= 65 && s.career.employed) {
     s.career.employed = false;
+    s.career.cid = (s.career.cid ?? 0) + 1;
     notes.push("Retired.");
+  }
+  if (rng) {
+    // Parents age and pass away eventually; the player too — the game ends only then.
+    for (const who of ["mom", "dad"] as const) {
+      const p = s.family?.[who];
+      if (p?.alive && rng.chance(annualMortality(s.date.year - p.birthYear) / 12)) {
+        p.alive = false;
+        notes.push(who === "mom" ? "Mom passed away." : "Dad passed away.");
+      }
+    }
+    if (s.alive && rng.chance(annualMortality(s.age) / 12)) {
+      s.alive = false;
+      s.diedAtMonth = s.monthIndex;
+      notes.push(`Passed away at ${Math.floor(s.age)}.`);
+    }
   }
   for (const n of notes) s.memories.push({ date: { ...s.date }, age: Math.floor(s.age), text: n, tags: ["life"] });
   return notes;

@@ -49,3 +49,9 @@ export * from "./astrology/interpretation";
 export * from "./mbti/mbti";
 // One-call destiny (SAJU + ASTROLOGY + MBTI, hidden)
 export * from "./destiny/profile";
+// Game runtime (the UI talks only to this)
+export * from "./game/game";
+export * from "./game/facts";
+export * from "./game/director";
+export * from "./game/lint";
+export { fixJosa } from "./game/text";

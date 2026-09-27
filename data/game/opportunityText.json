@@ -1,0 +1,700 @@
+{
+ "_doc": "Korean/English presentation for opportunities shown as in-game popups: speaker, one-line prompt, choice labels.",
+ "opportunities": {
+  "UNIVERSITY_ADMISSION": {
+   "who": "me",
+   "title": {
+    "ko": "대학 합격",
+    "en": "University Admission"
+   },
+   "line": {
+    "ko": "(대학 합격 통지서가 왔다. 어디로 갈까?)",
+    "en": "(Your university acceptance letters arrived. Where to?)"
+   },
+   "choices": {
+    "LOCAL": {
+     "ko": "집 근처 대학에 간다",
+     "en": "Enroll at a local university"
+    },
+    "FAR": {
+     "ko": "다른 도시의 대학에 간다",
+     "en": "Enroll at a university in another city"
+    },
+    "WORK": {
+     "ko": "바로 일을 시작한다",
+     "en": "Start working instead"
+    }
+   }
+  },
+  "EXCHANGE_SEMESTER": {
+   "who": "me",
+   "title": {
+    "ko": "해외 교환학생",
+    "en": "Exchange Semester Abroad"
+   },
+   "line": {
+    "ko": "(교환학생 모집 공고가 떴다.)",
+    "en": "(Exchange-semester applications just opened.)"
+   },
+   "choices": {
+    "GO": {
+     "ko": "교환학생 간다",
+     "en": "Go on exchange"
+    },
+    "FAMILY_HELP": {
+     "ko": "가족 도움을 받아 간다",
+     "en": "Go with family support"
+    },
+    "STAY": {
+     "ko": "그대로 있는다",
+     "en": "Stay where I am"
+    }
+   }
+  },
+  "STUDY_ABROAD_GRAD": {
+   "who": "me",
+   "title": {
+    "ko": "해외 대학원",
+    "en": "Graduate School Abroad"
+   },
+   "line": {
+    "ko": "(해외 대학원 모집 공고를 봤다.)",
+    "en": "(You saw an application call for grad school abroad.)"
+   },
+   "choices": {
+    "APPLY": {
+     "ko": "지원한다",
+     "en": "Apply"
+    },
+    "FAMILY_HELP": {
+     "ko": "가족에게 도움을 청한다",
+     "en": "Ask family for help"
+    },
+    "LOAN": {
+     "ko": "대출을 받는다",
+     "en": "Take a loan"
+    },
+    "LOCAL_INSTEAD": {
+     "ko": "국내 대학원으로 간다",
+     "en": "Go to a local graduate school instead"
+    },
+    "WAIT": {
+     "ko": "1년 더 일하며 모은다",
+     "en": "Work for another year and save"
+    },
+    "IGNORE": {
+     "ko": "넘긴다",
+     "en": "Ignore the opportunity"
+    }
+   }
+  },
+  "LOCAL_GRAD_SCHOOL": {
+   "who": "me",
+   "title": {
+    "ko": "대학원 제안",
+    "en": "Graduate School Offer"
+   },
+   "line": {
+    "ko": "(교수님이 대학원 진학을 권했다.)",
+    "en": "(A professor suggested grad school.)"
+   },
+   "choices": {
+    "ENROLL": {
+     "ko": "진학한다",
+     "en": "Enroll"
+    },
+    "DECLINE": {
+     "ko": "지금은 아니다",
+     "en": "Not now"
+    }
+   }
+  },
+  "RESEARCH_POSITION": {
+   "who": "professor",
+   "title": {
+    "ko": "연구직 제안",
+    "en": "Research / PhD Position"
+   },
+   "line": {
+    "ko": "우리 연구실에서 박사 과정 해볼 생각 있어요?",
+    "en": "Would you consider a PhD in our lab?"
+   },
+   "choices": {
+    "ACCEPT": {
+     "ko": "하겠습니다",
+     "en": "Accept the position"
+    },
+    "DECLINE": {
+     "ko": "사양할게요",
+     "en": "Decline"
+    }
+   }
+  },
+  "CERTIFICATION": {
+   "who": "me",
+   "title": {
+    "ko": "자격증",
+    "en": "Professional Certification"
+   },
+   "line": {
+    "ko": "(업무에 도움 될 자격증 시험이 다가온다.)",
+    "en": "(A useful certification exam is coming up.)"
+   },
+   "choices": {
+    "STUDY": {
+     "ko": "공부한다",
+     "en": "Study for it"
+    },
+    "SKIP": {
+     "ko": "건너뛴다",
+     "en": "Skip it"
+    }
+   }
+  },
+  "FIRST_JOB": {
+   "who": "recruiter",
+   "title": {
+    "ko": "취업 제안",
+    "en": "Job Offer"
+   },
+   "line": {
+    "ko": "저희 회사와 함께 일해보시겠어요?",
+    "en": "Would you like to join our company?"
+   },
+   "choices": {
+    "ACCEPT": {
+     "ko": "입사한다",
+     "en": "Accept"
+    },
+    "DECLINE": {
+     "ko": "더 찾아본다",
+     "en": "Keep looking"
+    }
+   }
+  },
+  "PROMOTION": {
+   "who": "boss",
+   "title": {
+    "ko": "승진 기회",
+    "en": "Promotion Opportunity"
+   },
+   "line": {
+    "ko": "이번에 팀장 자리 생각 있어요?",
+    "en": "Interested in the team lead position?"
+   },
+   "choices": {
+    "GO_FOR_IT": {
+     "ko": "도전합니다",
+     "en": "Go for it"
+    },
+    "PASS": {
+     "ko": "워라밸이 더 중요해요",
+     "en": "Pass (keep balance)"
+    }
+   }
+  },
+  "INTERNATIONAL_JOB": {
+   "who": "recruiter",
+   "title": {
+    "ko": "해외 취업 제안",
+    "en": "International Job Offer"
+   },
+   "line": {
+    "ko": "해외 지사 포지션이 있는데 관심 있으세요?",
+    "en": "There's a role at our overseas office. Interested?"
+   },
+   "choices": {
+    "MOVE": {
+     "ko": "해외로 간다",
+     "en": "Take it and move abroad"
+    },
+    "REMOTE": {
+     "ko": "출장 많은 역할로 조율한다",
+     "en": "Negotiate frequent business trips instead"
+    },
+    "DECLINE": {
+     "ko": "여기 남는다",
+     "en": "Stay where I am"
+    }
+   }
+  },
+  "DOMESTIC_RELOCATION": {
+   "who": "boss",
+   "title": {
+    "ko": "지방 발령",
+    "en": "Job Relocation (Domestic)"
+   },
+   "line": {
+    "ko": "다른 지점으로 발령이 날 수도 있는데… 어때요?",
+    "en": "There may be a transfer to another branch… thoughts?"
+   },
+   "choices": {
+    "MOVE": {
+     "ko": "이사한다",
+     "en": "Relocate"
+    },
+    "STAY": {
+     "ko": "남는다",
+     "en": "Stay"
+    }
+   }
+  },
+  "CAREER_CHANGE": {
+   "who": "me",
+   "title": {
+    "ko": "커리어 전환",
+    "en": "Career Change Opportunity"
+   },
+   "line": {
+    "ko": "(완전히 다른 일을 해볼 기회가 생겼다.)",
+    "en": "(A chance to do something completely different.)"
+   },
+   "choices": {
+    "SWITCH": {
+     "ko": "도전한다",
+     "en": "Make the switch"
+    },
+    "STAY": {
+     "ko": "하던 일을 계속한다",
+     "en": "Stay on my path"
+    }
+   }
+  },
+  "BUSINESS_OPPORTUNITY": {
+   "who": "friend",
+   "title": {
+    "ko": "사업 기회",
+    "en": "Business Opportunity"
+   },
+   "line": {
+    "ko": "(같이 가게를 해보자는 제안을 받았다.)",
+    "en": "(Someone proposes opening a business together.)"
+   },
+   "choices": {
+    "START": {
+     "ko": "사업을 시작한다",
+     "en": "Start the business"
+    },
+    "PASS": {
+     "ko": "사양한다",
+     "en": "Pass"
+    }
+   }
+  },
+  "INVESTMENT": {
+   "who": "me",
+   "title": {
+    "ko": "투자 기회",
+    "en": "Investment Opportunity"
+   },
+   "line": {
+    "ko": "(괜찮아 보이는 투자처를 들었다.)",
+    "en": "(You heard about a promising investment.)"
+   },
+   "choices": {
+    "INVEST": {
+     "ko": "투자한다",
+     "en": "Invest"
+    },
+    "PASS": {
+     "ko": "저축을 지킨다",
+     "en": "Keep savings safe"
+    }
+   }
+  },
+  "BUSINESS_TRIP": {
+   "who": "boss",
+   "title": {
+    "ko": "출장",
+    "en": "Business Trip"
+   },
+   "line": {
+    "ko": "다음 주 출장 가능해요?",
+    "en": "Can you go on a business trip next week?"
+   },
+   "choices": {
+    "GO": {
+     "ko": "갑니다",
+     "en": "Go"
+    },
+    "SEND_SOMEONE": {
+     "ko": "다른 분이 가시면 좋겠어요",
+     "en": "Send a colleague"
+    }
+   }
+  },
+  "TRAVEL": {
+   "who": "me",
+   "title": {
+    "ko": "여행 기회",
+    "en": "Travel Chance"
+   },
+   "line": {
+    "ko": "(짧게 여행 다녀올 수 있을 것 같다.)",
+    "en": "(Looks like you could take a short trip.)"
+   },
+   "choices": {
+    "GO": {
+     "ko": "떠난다",
+     "en": "Take the trip"
+    },
+    "SKIP": {
+     "ko": "다음에",
+     "en": "Maybe next time"
+    }
+   }
+  },
+  "RETURN_HOME": {
+   "who": "me",
+   "title": {
+    "ko": "귀국 기회",
+    "en": "Chance to Move Back Home"
+   },
+   "line": {
+    "ko": "(한국으로 돌아갈 기회가 생겼다.)",
+    "en": "(A chance to move back home.)"
+   },
+   "choices": {
+    "RETURN": {
+     "ko": "돌아간다",
+     "en": "Move back home"
+    },
+    "STAY": {
+     "ko": "여기 남는다",
+     "en": "Stay abroad"
+    }
+   }
+  },
+  "NEW_SOCIAL_GROUP": {
+   "who": "friend",
+   "title": {
+    "ko": "새 모임",
+    "en": "New Social Group"
+   },
+   "line": {
+    "ko": "이번에 새로 모임 만드는데 올래?",
+    "en": "We're starting a new group—want to come?"
+   },
+   "choices": {
+    "JOIN": {
+     "ko": "간다",
+     "en": "Join in"
+    },
+    "PASS": {
+     "ko": "혼자가 좋아",
+     "en": "Keep to myself"
+    }
+   }
+  },
+  "LANGUAGE_EXCHANGE": {
+   "who": "me",
+   "title": {
+    "ko": "언어교환",
+    "en": "Language Exchange Group"
+   },
+   "line": {
+    "ko": "(언어교환 모임 공고를 봤다.)",
+    "en": "(You saw a language-exchange meetup notice.)"
+   },
+   "choices": {
+    "JOIN": {
+     "ko": "참여한다",
+     "en": "Join"
+    },
+    "PASS": {
+     "ko": "넘긴다",
+     "en": "Pass"
+    }
+   }
+  },
+  "ROMANTIC_ENCOUNTER": {
+   "who": "stranger",
+   "title": {
+    "ko": "설레는 만남",
+    "en": "Romantic Encounter"
+   },
+   "line": {
+    "ko": "(눈이 자꾸 마주치는 사람이 있다.)",
+    "en": "(There's someone whose eyes keep meeting yours.)"
+   },
+   "choices": {
+    "ASK_OUT": {
+     "ko": "먼저 말을 건다",
+     "en": "Ask them out"
+    },
+    "FRIENDS": {
+     "ko": "친구로 지낸다",
+     "en": "Stay friends"
+    },
+    "IGNORE": {
+     "ko": "그냥 지나친다",
+     "en": "Let it pass"
+    }
+   }
+  },
+  "PROPOSAL": {
+   "who": "partner",
+   "title": {
+    "ko": "결혼 이야기",
+    "en": "Talk of Marriage"
+   },
+   "line": {
+    "ko": "우리… 결혼 생각해 본 적 있어?",
+    "en": "Have you ever thought about… us getting married?"
+   },
+   "choices": {
+    "MARRY": {
+     "ko": "결혼하자",
+     "en": "Get married"
+    },
+    "NOT_YET": {
+     "ko": "아직은",
+     "en": "Not yet"
+    },
+    "BREAK_UP": {
+     "ko": "헤어지자",
+     "en": "Break up"
+    }
+   }
+  },
+  "RELATIONSHIP_STRAIN": {
+   "who": "partner",
+   "title": {
+    "ko": "관계의 위기",
+    "en": "Relationship Under Strain"
+   },
+   "line": {
+    "ko": "우리 요즘… 좀 멀어진 것 같지 않아?",
+    "en": "Don't you feel like we've drifted lately?"
+   },
+   "choices": {
+    "WORK_ON_IT": {
+     "ko": "같이 노력하자",
+     "en": "Work on it together"
+    },
+    "SEPARATE": {
+     "ko": "그만하자",
+     "en": "Separate"
+    }
+   }
+  },
+  "CREATIVE_PROJECT": {
+   "who": "me",
+   "title": {
+    "ko": "창작 프로젝트",
+    "en": "Creative Project"
+   },
+   "line": {
+    "ko": "(만들어 보고 싶은 게 생겼다.)",
+    "en": "(There's something you want to create.)"
+   },
+   "choices": {
+    "START": {
+     "ko": "시작한다",
+     "en": "Start it"
+    },
+    "SKIP": {
+     "ko": "시간이 없다",
+     "en": "No time"
+    }
+   }
+  },
+  "SOLO_RETREAT": {
+   "who": "me",
+   "title": {
+    "ko": "혼자만의 시간",
+    "en": "Retreat / Solitude"
+   },
+   "line": {
+    "ko": "(잠깐 혼자 있고 싶다.)",
+    "en": "(You want some time alone.)"
+   },
+   "choices": {
+    "GO": {
+     "ko": "혼자 떠난다",
+     "en": "Take time alone"
+    },
+    "SKIP": {
+     "ko": "바쁘게 지낸다",
+     "en": "Stay busy"
+    }
+   }
+  },
+  "MENTOR": {
+   "who": "mentor",
+   "title": {
+    "ko": "멘토",
+    "en": "A Mentor Appears"
+   },
+   "line": {
+    "ko": "도움이 필요하면 언제든 물어봐요.",
+    "en": "Ask me anything, anytime."
+   },
+   "choices": {
+    "LEARN": {
+     "ko": "배워본다",
+     "en": "Learn from them"
+    },
+    "PASS": {
+     "ko": "내 방식대로",
+     "en": "Go my own way"
+    }
+   }
+  },
+  "FAMILY_NEED": {
+   "who": "mom",
+   "title": {
+    "ko": "가족의 부탁",
+    "en": "Family Needs Help"
+   },
+   "line": {
+    "ko": "요즘 집에 좀 도움이 필요해서…",
+    "en": "We could use some help at home lately…"
+   },
+   "choices": {
+    "SUPPORT": {
+     "ko": "돕는다",
+     "en": "Support them"
+    },
+    "MOVE_HOME": {
+     "ko": "가까이 이사 간다",
+     "en": "Move back to be near them"
+    },
+    "DISTANCE": {
+     "ko": "거리를 둔다",
+     "en": "Keep my distance"
+    }
+   }
+  },
+  "JOIN_GYM": {
+   "who": "me",
+   "title": {
+    "ko": "헬스장 등록",
+    "en": "Join a Gym"
+   },
+   "line": {
+    "ko": "(헬스장 할인 이벤트 중이다.)",
+    "en": "(The gym is running a sign-up sale.)"
+   },
+   "choices": {
+    "JOIN": {
+     "ko": "등록한다",
+     "en": "Sign up"
+    },
+    "PASS": {
+     "ko": "안 한다",
+     "en": "Not for me"
+    }
+   }
+  },
+  "COOKING_CLASS_SIGNUP": {
+   "who": "me",
+   "title": {
+    "ko": "요리 교실",
+    "en": "Cooking Class"
+   },
+   "line": {
+    "ko": "(동네 요리 교실이 수강생을 모집한다.)",
+    "en": "(A local cooking class is taking students.)"
+   },
+   "choices": {
+    "JOIN": {
+     "ko": "등록한다",
+     "en": "Sign up"
+    },
+    "PASS": {
+     "ko": "안 한다",
+     "en": "Not for me"
+    }
+   }
+  },
+  "SURF_LESSONS": {
+   "who": "me",
+   "title": {
+    "ko": "서핑 강습",
+    "en": "Surf Lessons"
+   },
+   "line": {
+    "ko": "(바닷가 서핑 스쿨 광고를 봤다.)",
+    "en": "(Saw an ad for a surf school on the coast.)"
+   },
+   "choices": {
+    "JOIN": {
+     "ko": "등록한다",
+     "en": "Sign up"
+    },
+    "PASS": {
+     "ko": "안 한다",
+     "en": "Not for me"
+    }
+   }
+  },
+  "DATING_APP": {
+   "who": "friend",
+   "title": {
+    "ko": "소개팅 앱",
+    "en": "Try a Dating App"
+   },
+   "line": {
+    "ko": "요즘 다들 앱으로 만나더라. 너도 해봐!",
+    "en": "Everyone meets on apps now. Try it!"
+   },
+   "choices": {
+    "JOIN": {
+     "ko": "깔아본다",
+     "en": "Sign up"
+    },
+    "PASS": {
+     "ko": "별로야",
+     "en": "Not for me"
+    }
+   }
+  },
+  "TRIP_ABROAD": {
+   "who": "me",
+   "title": {
+    "ko": "해외여행",
+    "en": "Trip Abroad"
+   },
+   "line": {
+    "ko": "(해외여행 특가가 떴다.)",
+    "en": "(A flash sale on flights abroad.)"
+   },
+   "choices": {
+    "GO": {
+     "ko": "예약한다",
+     "en": "Book the trip"
+    },
+    "SAVE": {
+     "ko": "돈을 모은다",
+     "en": "Save the money"
+    }
+   }
+  },
+  "LAYOFF": {
+   "who": "boss",
+   "title": {
+    "ko": "구조조정",
+    "en": "Restructuring"
+   },
+   "line": {
+    "ko": "…이번 구조조정 명단에 올랐어요. 미안해요.",
+    "en": "…You're on the restructuring list. I'm sorry."
+   },
+   "choices": {
+    "ACCEPT": {
+     "ko": "…알겠습니다",
+     "en": "Accept it"
+    },
+    "ARGUE": {
+     "ko": "부당하다고 따진다",
+     "en": "Argue it's unfair"
+    },
+    "FRESH_START": {
+     "ko": "차라리 잘됐다",
+     "en": "Honestly, a fresh start"
+    }
+   }
+  }
+ }
+}

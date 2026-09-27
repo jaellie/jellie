@@ -1,0 +1,800 @@
+{
+ "_doc": "Text messages (toasts). 'requires' uses life facts (see src/game/facts.ts). {partner}/{friend} are filled from the real world state. The Director caps how many show per day and never repeats a line soon.",
+ "messages": [
+  {
+   "id": "mom_0",
+   "from": "mom",
+   "requires": [
+    "momAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "밥은 먹었니?",
+    "en": "Have you eaten?"
+   }
+  },
+  {
+   "id": "mom_1",
+   "from": "mom",
+   "requires": [
+    "momAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[사진] 오늘 만든 반찬",
+    "en": "[photo] Side dishes I made today"
+   }
+  },
+  {
+   "id": "mom_2",
+   "from": "mom",
+   "requires": [
+    "momAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "날씨 추워졌다. 따뜻하게 입어.",
+    "en": "It got cold. Dress warmly."
+   }
+  },
+  {
+   "id": "mom_3",
+   "from": "mom",
+   "requires": [
+    "momAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "이모가 너 안부 묻더라.",
+    "en": "Your aunt asked about you."
+   }
+  },
+  {
+   "id": "mom_4",
+   "from": "mom",
+   "requires": [
+    "momAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "엄마 오늘 요가 다녀왔다~",
+    "en": "Mom went to yoga today~"
+   }
+  },
+  {
+   "id": "mom_5",
+   "from": "mom",
+   "requires": [
+    "momAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "주말에 시간 되면 들러.",
+    "en": "Drop by this weekend if you can."
+   }
+  },
+  {
+   "id": "mom_6",
+   "from": "mom",
+   "requires": [
+    "momAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "비타민 챙겨 먹고 있지?",
+    "en": "Taking your vitamins?"
+   }
+  },
+  {
+   "id": "mom_7",
+   "from": "mom",
+   "requires": [
+    "momAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[사진] 베란다 화분에 꽃 폈다",
+    "en": "[photo] The balcony plant bloomed"
+   }
+  },
+  {
+   "id": "mom_8",
+   "from": "mom",
+   "requires": [
+    "momAlive",
+    "recentlyPromoted"
+   ],
+   "weight": 3,
+   "text": {
+    "ko": "승진했다며! 엄마 동네방네 자랑했다.",
+    "en": "Heard you got promoted! I told the whole neighborhood."
+   }
+  },
+  {
+   "id": "mom_9",
+   "from": "mom",
+   "requires": [
+    "momAlive",
+    "recentlyLostJob"
+   ],
+   "weight": 3,
+   "text": {
+    "ko": "돈 걱정은 하지 마. 밥은 꼭 챙겨 먹고.",
+    "en": "Don't worry about money. Just eat properly."
+   }
+  },
+  {
+   "id": "mom_10",
+   "from": "mom",
+   "requires": [
+    "momAlive",
+    "jobless"
+   ],
+   "weight": 2,
+   "text": {
+    "ko": "요즘 일은 구했니? 급하게 하지 말고.",
+    "en": "Found work yet? Don't rush it."
+   }
+  },
+  {
+   "id": "mom_11",
+   "from": "mom",
+   "requires": [
+    "momAlive",
+    "dating"
+   ],
+   "weight": 2,
+   "text": {
+    "ko": "{partner}랑은 잘 지내지? 언제 같이 밥 먹자.",
+    "en": "Things good with {partner}? Let's all have dinner."
+   }
+  },
+  {
+   "id": "mom_12",
+   "from": "mom",
+   "requires": [
+    "momAlive",
+    "married"
+   ],
+   "weight": 2,
+   "text": {
+    "ko": "사위/며느리 잘 챙겨라~",
+    "en": "Take good care of your spouse~"
+   }
+  },
+  {
+   "id": "mom_13",
+   "from": "mom",
+   "requires": [
+    "momAlive",
+    "recentlyBrokeUp"
+   ],
+   "weight": 3,
+   "text": {
+    "ko": "…괜찮니? 주말에 집에 와. 맛있는 거 해줄게.",
+    "en": "…You okay? Come home this weekend. I'll cook."
+   }
+  },
+  {
+   "id": "mom_14",
+   "from": "mom",
+   "requires": [
+    "momAlive",
+    "single",
+    "age>=29",
+    "!recentlyBrokeUp"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "만나는 사람은 없니? 그냥 궁금해서.",
+    "en": "Seeing anyone? Just curious."
+   }
+  },
+  {
+   "id": "mom_15",
+   "from": "mom",
+   "requires": [
+    "momAlive",
+    "abroad"
+   ],
+   "weight": 2,
+   "text": {
+    "ko": "거기 날씨는 어떠니? 한국은 벌써 덥다.",
+    "en": "How's the weather there? It's already hot here."
+   }
+  },
+  {
+   "id": "mom_16",
+   "from": "mom",
+   "requires": [
+    "momAlive",
+    "traveling"
+   ],
+   "weight": 3,
+   "text": {
+    "ko": "여행 잘 하고 있지? 사진 많이 보내.",
+    "en": "Enjoying the trip? Send lots of photos."
+   }
+  },
+  {
+   "id": "dad_17",
+   "from": "dad",
+   "requires": [
+    "dadAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[아빠] 차 조심해라.",
+    "en": "[Dad] Be careful driving."
+   }
+  },
+  {
+   "id": "dad_18",
+   "from": "dad",
+   "requires": [
+    "dadAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[아빠] ㅇㅇ 잘 지내지",
+    "en": "[Dad] doing ok?"
+   }
+  },
+  {
+   "id": "dad_19",
+   "from": "dad",
+   "requires": [
+    "dadAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[아빠] 이번 주 야구 봤냐",
+    "en": "[Dad] Watch the game this week?"
+   }
+  },
+  {
+   "id": "dad_20",
+   "from": "dad",
+   "requires": [
+    "dadAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[아빠] 엄마가 전화 좀 하래",
+    "en": "[Dad] Mom says call her"
+   }
+  },
+  {
+   "id": "dad_21",
+   "from": "dad",
+   "requires": [
+    "dadAlive"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[아빠] [사진] 낚시 갔다",
+    "en": "[Dad] [photo] Went fishing"
+   }
+  },
+  {
+   "id": "dad_22",
+   "from": "dad",
+   "requires": [
+    "dadAlive",
+    "employed"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[아빠] 회사 일은 할 만하냐",
+    "en": "[Dad] Work going okay?"
+   }
+  },
+  {
+   "id": "dad_23",
+   "from": "dad",
+   "requires": [
+    "dadAlive",
+    "recentlyLostJob"
+   ],
+   "weight": 2,
+   "text": {
+    "ko": "[아빠] 쉬는 김에 푹 쉬어라. 조급해하지 말고.",
+    "en": "[Dad] Rest while you can. Don't rush."
+   }
+  },
+  {
+   "id": "dad_24",
+   "from": "dad",
+   "requires": [
+    "dadAlive",
+    "recentlyPromoted"
+   ],
+   "weight": 2,
+   "text": {
+    "ko": "[아빠] 승진 축하한다. 아빠가 한턱 낼게.",
+    "en": "[Dad] Congrats on the promotion. Dinner's on me."
+   }
+  },
+  {
+   "id": "friend_25",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "주말에 뭐 해?",
+    "en": "Plans this weekend?"
+   }
+  },
+  {
+   "id": "friend_26",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[사진] 나 머리 잘랐다",
+    "en": "[photo] Got a haircut"
+   }
+  },
+  {
+   "id": "friend_27",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "ㅋㅋㅋㅋ 이거 너 같아",
+    "en": "lol this is so you"
+   }
+  },
+  {
+   "id": "friend_28",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "요즘 뭐 보는 드라마 있어?",
+    "en": "Watching any shows lately?"
+   }
+  },
+  {
+   "id": "friend_29",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "우리 언제 봄? 진짜 오래됐다",
+    "en": "When are we meeting? It's been forever"
+   }
+  },
+  {
+   "id": "friend_30",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[링크] 이 카페 가보자",
+    "en": "[link] Let's try this café"
+   }
+  },
+  {
+   "id": "friend_31",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "나 오늘 운동 갔다 ㅋㅋ 칭찬해줘",
+    "en": "Went to the gym today lol praise me"
+   }
+  },
+  {
+   "id": "friend_32",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "비 온다… 우산 챙겼어?",
+    "en": "It's raining… got an umbrella?"
+   }
+  },
+  {
+   "id": "friend_33",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[사진] 오늘 점심",
+    "en": "[photo] Today's lunch"
+   }
+  },
+  {
+   "id": "friend_34",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "생일 선물 뭐 갖고 싶어? 미리 말해",
+    "en": "What do you want for your birthday? Tell me early"
+   }
+  },
+  {
+   "id": "friend_35",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "노래 추천해줘",
+    "en": "Recommend me a song"
+   }
+  },
+  {
+   "id": "friend_36",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "나 이사할까 고민 중",
+    "en": "Thinking about moving"
+   }
+  },
+  {
+   "id": "friend_37",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "오늘 너무 피곤하다…",
+    "en": "So tired today…"
+   }
+  },
+  {
+   "id": "friend_38",
+   "from": "friend",
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[사진] 길고양이 발견!",
+    "en": "[photo] Found a street cat!"
+   }
+  },
+  {
+   "id": "friend_39",
+   "from": "friend",
+   "requires": [
+    "hasFriend",
+    "recentlyLostJob"
+   ],
+   "weight": 2,
+   "text": {
+    "ko": "회사 때려치운 거 잘했어. 너 더 잘될 거야.",
+    "en": "Leaving that job was the right call. Better things ahead."
+   }
+  },
+  {
+   "id": "friend_40",
+   "from": "friend",
+   "requires": [
+    "hasFriend",
+    "recentlyPromoted"
+   ],
+   "weight": 2,
+   "text": {
+    "ko": "승진 턱 언제 쏘냐 ㅋㅋ",
+    "en": "When's the promotion dinner on you lol"
+   }
+  },
+  {
+   "id": "friend_41",
+   "from": "friend",
+   "requires": [
+    "hasFriend",
+    "dating"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "{partner}랑은 잘 돼가? ㅋㅋ",
+    "en": "How's it going with {partner}? lol"
+   }
+  },
+  {
+   "id": "friend_42",
+   "from": "friend",
+   "requires": [
+    "hasFriend",
+    "recentlyBrokeUp"
+   ],
+   "weight": 3,
+   "text": {
+    "ko": "괜찮아? 오늘 술 한잔 할래?",
+    "en": "You okay? Want a drink tonight?"
+   }
+  },
+  {
+   "id": "partner_43",
+   "from": "partner",
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "점심 뭐 먹었어?",
+    "en": "What did you have for lunch?"
+   }
+  },
+  {
+   "id": "partner_44",
+   "from": "partner",
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "보고 싶다",
+    "en": "Miss you"
+   }
+  },
+  {
+   "id": "partner_45",
+   "from": "partner",
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "ㅋㅋㅋ 이거 봐 [사진]",
+    "en": "lol look at this [photo]"
+   }
+  },
+  {
+   "id": "partner_46",
+   "from": "partner",
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "몇 시에 끝나?",
+    "en": "What time are you done?"
+   }
+  },
+  {
+   "id": "partner_47",
+   "from": "partner",
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "오늘 저녁 뭐 먹을까?",
+    "en": "What should we eat tonight?"
+   }
+  },
+  {
+   "id": "partner_48",
+   "from": "partner",
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "집에 가는 길~",
+    "en": "On my way home~"
+   }
+  },
+  {
+   "id": "partner_49",
+   "from": "partner",
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "주말에 어디 갈까?",
+    "en": "Where should we go this weekend?"
+   }
+  },
+  {
+   "id": "partner_50",
+   "from": "partner",
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "오늘 진짜 힘들다…",
+    "en": "Rough day…"
+   }
+  },
+  {
+   "id": "partner_51",
+   "from": "partner",
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[사진] 너 좋아하는 빵 샀어",
+    "en": "[photo] Got that bread you like"
+   }
+  },
+  {
+   "id": "partner_52",
+   "from": "partner",
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "사랑해",
+    "en": "Love you"
+   }
+  },
+  {
+   "id": "work_53",
+   "from": "work",
+   "requires": [
+    "employed"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[팀장] 내일 회의 10시로 당겨졌어요.",
+    "en": "[Manager] Tomorrow's meeting moved up to 10."
+   }
+  },
+  {
+   "id": "work_54",
+   "from": "work",
+   "requires": [
+    "employed"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[팀장] 보고서 잘 봤어요. 수고했어요.",
+    "en": "[Manager] Read your report. Good work."
+   }
+  },
+  {
+   "id": "work_55",
+   "from": "work",
+   "requires": [
+    "employed"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[팀장] 이번 분기 목표 공유합니다.",
+    "en": "[Manager] Sharing this quarter's goals."
+   }
+  },
+  {
+   "id": "work_56",
+   "from": "work",
+   "requires": [
+    "employed"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[동료] 오늘 점심 같이 해요?",
+    "en": "[Coworker] Lunch together today?"
+   }
+  },
+  {
+   "id": "work_57",
+   "from": "work",
+   "requires": [
+    "employed"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[동료] 커피 사러 가는데 뭐 드실래요?",
+    "en": "[Coworker] Getting coffee—want anything?"
+   }
+  },
+  {
+   "id": "work_58",
+   "from": "work",
+   "requires": [
+    "employed"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[동료] 팀장님 오늘 기분 좋으심 ㅋㅋ",
+    "en": "[Coworker] The manager's in a good mood today lol"
+   }
+  },
+  {
+   "id": "work_59",
+   "from": "work",
+   "requires": [
+    "employed"
+   ],
+   "weight": 1,
+   "text": {
+    "ko": "[동료] 금요일에 회식이래요…",
+    "en": "[Coworker] Team dinner on Friday, apparently…"
+   }
+  },
+  {
+   "id": "work_60",
+   "from": "work",
+   "requires": [
+    "employed",
+    "recentlyPromoted"
+   ],
+   "weight": 2,
+   "text": {
+    "ko": "[팀장] 다음 달부터 팀 잘 부탁해요. 축하해요.",
+    "en": "[Manager] Looking forward to you leading the team next month. Congrats."
+   }
+  },
+  {
+   "id": "ex_61",
+   "from": "ex",
+   "requires": [
+    "hasEx",
+    "single",
+    "!recentlyBrokeUp"
+   ],
+   "weight": 0.3,
+   "text": {
+    "ko": "[전 연인] …잘 지내?",
+    "en": "[Ex] …how have you been?"
+   }
+  },
+  {
+   "id": "app_62",
+   "from": "app",
+   "requires": [],
+   "weight": 0.3,
+   "text": {
+    "ko": "[알림] 오늘의 운세: 새로운 인연이 가까이에 있어요",
+    "en": "[App] Today's fortune: a new connection is close by"
+   }
+  },
+  {
+   "id": "app_63",
+   "from": "app",
+   "requires": [],
+   "weight": 0.6,
+   "text": {
+    "ko": "[알림] 택배가 도착했어요",
+    "en": "[App] Your package has arrived"
+   }
+  },
+  {
+   "id": "app_64",
+   "from": "app",
+   "requires": [],
+   "weight": 0.4,
+   "text": {
+    "ko": "[알림] 카드 결제 알림",
+    "en": "[App] Card payment notification"
+   }
+  }
+ ]
+}

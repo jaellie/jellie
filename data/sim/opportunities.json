@@ -2590,6 +2590,116 @@
           }
         }
       ]
+    },
+    {
+      "id": "LAYOFF",
+      "type": "CAREER",
+      "title": "Restructuring",
+      "emoji": "📦",
+      "baseProbability": 0.0025,
+      "affinity": {
+        "volatility": 0.8,
+        "stability": -0.8,
+        "career": -0.3
+      },
+      "requirements": [
+        {
+          "kind": "employed",
+          "value": true
+        },
+        {
+          "kind": "age",
+          "min": 26,
+          "max": 64
+        }
+      ],
+      "cooldownMonths": 36,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "ACCEPT",
+          "label": "Accept it",
+          "consequences": [
+            {
+              "kind": "quitJob"
+            },
+            {
+              "kind": "money",
+              "amount": 6
+            },
+            {
+              "kind": "memory",
+              "text": "Laid off in a restructuring.",
+              "tags": [
+                "career",
+                "loss"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "conflictAvoidance": 0.3
+            }
+          }
+        },
+        {
+          "id": "ARGUE",
+          "label": "Argue it's unfair",
+          "consequences": [
+            {
+              "kind": "quitJob"
+            },
+            {
+              "kind": "money",
+              "amount": 9
+            },
+            {
+              "kind": "memory",
+              "text": "Fought a layoff; still let go, with a better package.",
+              "tags": [
+                "career",
+                "loss"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.35,
+            "traits": {
+              "independence": 0.3,
+              "conflictAvoidance": -0.4
+            }
+          }
+        },
+        {
+          "id": "FRESH_START",
+          "label": "Honestly, a fresh start",
+          "consequences": [
+            {
+              "kind": "quitJob"
+            },
+            {
+              "kind": "money",
+              "amount": 6
+            },
+            {
+              "kind": "memory",
+              "text": "Left the company after a restructuring — a fresh start.",
+              "tags": [
+                "career",
+                "change"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.3,
+            "traits": {
+              "novelty": 0.4,
+              "spontaneity": 0.3
+            }
+          }
+        }
+      ]
     }
   ]
 }

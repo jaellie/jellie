@@ -1,0 +1,182 @@
+{
+ "_doc": "Keyword guard: a backstop so content that forgot a 'requires' still can't contradict the player's life. If a text matches 'keywords' (and none of 'unless'), all 'requires' must hold. Checked at the moment of showing.",
+ "rules": [
+  {
+   "id": "work",
+   "keywords": [
+    "팀장",
+    "회사",
+    "출근",
+    "야근",
+    "회의",
+    "동료",
+    "부장",
+    "과장",
+    "보고서",
+    "회식",
+    "분기",
+    "연봉",
+    "월급",
+    "[Manager]",
+    "[Coworker]",
+    "manager",
+    "coworker",
+    "office",
+    "salary",
+    "team meeting",
+    "the meeting",
+    "your report",
+    "quarter's"
+   ],
+   "unless": [
+    "구조조정",
+    "퇴사",
+    "해고",
+    "실직",
+    "구직",
+    "면접",
+    "이직",
+    "때려치",
+    "laid off",
+    "layoff",
+    "quit",
+    "job hunt",
+    "interview",
+    "resign",
+    "restructur",
+    "fired",
+    "leaving that job",
+    "found work",
+    "출근 안",
+    "no commute",
+    "retire",
+    "은퇴"
+   ],
+   "requires": [
+    "employed"
+   ]
+  },
+  {
+   "id": "promotion",
+   "keywords": [
+    "승진",
+    "팀을 맡",
+    "팀 잘 부탁",
+    "promot",
+    "leading the team",
+    "lead the team"
+   ],
+   "unless": [
+    "사양",
+    "turned down"
+   ],
+   "requires": [
+    "recentlyPromoted"
+   ]
+  },
+  {
+   "id": "joblost",
+   "keywords": [
+    "구조조정",
+    "실직",
+    "퇴사",
+    "때려치",
+    "laid off",
+    "layoff",
+    "leaving that job",
+    "Found work yet"
+   ],
+   "requires": [
+    "!employed"
+   ]
+  },
+  {
+   "id": "partner",
+   "keywords": [
+    "{partner}",
+    "애인",
+    "남자친구",
+    "여자친구",
+    "자기야",
+    "데이트",
+    "boyfriend",
+    "girlfriend",
+    "our anniversary",
+    "기념일"
+   ],
+   "requires": [
+    "partnered"
+   ]
+  },
+  {
+   "id": "married",
+   "keywords": [
+    "남편",
+    "아내",
+    "여보",
+    "신혼",
+    "사위",
+    "며느리",
+    "husband",
+    "your wife",
+    "spouse",
+    "newlywed"
+   ],
+   "unless": [
+    "결혼하자",
+    "propos"
+   ],
+   "requires": [
+    "married"
+   ]
+  },
+  {
+   "id": "mom",
+   "keywords": [
+    "엄마",
+    "Mom"
+   ],
+   "unless": [
+    "엄마 친구",
+    "엄마가 전화",
+    "Mom says"
+   ],
+   "requires": [
+    "momAlive"
+   ]
+  },
+  {
+   "id": "dad",
+   "keywords": [
+    "[아빠]",
+    "[Dad]",
+    "아빠가",
+    "Dad's"
+   ],
+   "requires": [
+    "dadAlive"
+   ]
+  },
+  {
+   "id": "friend",
+   "keywords": [
+    "{friend}"
+   ],
+   "requires": [
+    "hasFriend"
+   ]
+  },
+  {
+   "id": "abroad",
+   "keywords": [
+    "거기 날씨",
+    "한인마트",
+    "Korean market",
+    "weather there"
+   ],
+   "requires": [
+    "abroad"
+   ]
+  }
+ ]
+}

@@ -81,6 +81,8 @@ export interface SimulateLifeOptions {
   onTick?: (s: LifeState, sources: DestinyModifierSource[]) => void;
   /** Enable the living world (locations, NPCs, encounters, travel). */
   world?: boolean | WorldOptions;
+  /** Parents and the player can die (the game uses this; off by default for fixed-length runs). */
+  mortality?: boolean;
 }
 
 export interface WorldOptions {
@@ -118,7 +120,8 @@ export function createLifeState(birth: BirthData, profile: LifeProfile = {}): Li
     familySupport: profile.familySupport ?? 0.4,
     familyObligation: profile.familyObligation ?? 0.2,
     education: "NONE",
-    career: { employed: false, level: 0, abroad: false },
+    career: { employed: false, level: 0, abroad: false, cid: 0 },
+    family: { mom: { alive: true, birthYear: birth.year - 29 }, dad: { alive: true, birthYear: birth.year - 31 } },
     homeCountry: home,
     location: { country: home, city: profile.city ?? "Seoul" },
     relationship: { status: "SINGLE" },
@@ -138,48 +141,77 @@ function hashName(s: string): number {
   return h;
 }
 
-export function simulateLife(opts: SimulateLifeOptions): SimulationResult {
-  const rng = new SeededRandom(opts.seed);
-  const oppRng = rng.fork("opportunity");
-  const eventRng = rng.fork("event");
-  const worldRng = rng.fork("world");
-  const oppEngine = opts.opportunityEngine ?? new OpportunityEngine();
-  const eventEngine = new EventEngine();
-  const decider = opts.decisionMaker ?? new AutoDecisionPolicy();
+/**
+ * Steps one life month by month. Shared by simulateLife (whole lives) and the
+ * game runtime (the months between played days).
+ */
+export class LifeRunner {
+  readonly state: LifeState;
+  readonly destiny: DestinyProfile;
+  private readonly oppRng: SeededRandom;
+  private readonly eventRng: SeededRandom;
+  private readonly worldRng: SeededRandom;
+  private readonly worldRngMonthly: SeededRandom;
+  private readonly mortalityRng: SeededRandom;
+  private readonly oppEngine: OpportunityEngine;
+  private readonly eventEngine = new EventEngine();
+  private readonly decider: DecisionMaker;
+  private readonly worldOpts?: WorldOptions;
+  private readonly worldPolicy: WorldDecisionPolicy;
 
-  const state = createLifeState(opts.birthData, opts.profile);
-  const destiny: DestinyProfile = createDestinyProfile({
-    birth: opts.birthData,
-    place: opts.profile?.birthPlace,
-    mbti: opts.profile?.mbti,
-    seed: hashName(opts.profile?.name ?? "Player"),
-    weights: { SAJU: opts.sajuWeight ?? 1, ASTROLOGY: opts.astrologyWeight ?? 1, MBTI: opts.mbtiWeight ?? 1 },
-  });
-  const worldOpts: WorldOptions | undefined = opts.world ? (opts.world === true ? {} : opts.world) : undefined;
-  const worldRngMonthly = rng.fork("living-world");
-  const worldPolicy = worldOpts?.policy ?? new AutoWorldPolicy();
-  if (worldOpts) state.world = createWorldState();
-  const timeline: TimelineEntry[] = [];
-  const totalMonths = Math.round(opts.duration * 12);
+  constructor(private readonly opts: SimulateLifeOptions, state?: LifeState) {
+    const rng = new SeededRandom(opts.seed);
+    this.oppRng = rng.fork("opportunity");
+    this.eventRng = rng.fork("event");
+    this.worldRng = rng.fork("world");
+    this.worldRngMonthly = rng.fork("living-world");
+    this.mortalityRng = rng.fork("mortality");
+    this.oppEngine = opts.opportunityEngine ?? new OpportunityEngine();
+    this.decider = opts.decisionMaker ?? new AutoDecisionPolicy();
+    this.state = state ?? createLifeState(opts.birthData, opts.profile);
+    this.destiny = createDestinyProfile({
+      birth: opts.birthData,
+      place: opts.profile?.birthPlace,
+      mbti: opts.profile?.mbti,
+      seed: hashName(opts.profile?.name ?? "Player"),
+      weights: { SAJU: opts.sajuWeight ?? 1, ASTROLOGY: opts.astrologyWeight ?? 1, MBTI: opts.mbtiWeight ?? 1 },
+    });
+    this.worldOpts = opts.world ? (opts.world === true ? {} : opts.world) : undefined;
+    this.worldPolicy = this.worldOpts?.policy ?? new AutoWorldPolicy();
+    if (this.worldOpts && !this.state.world) this.state.world = createWorldState();
+  }
 
-  while (state.monthIndex < totalMonths) {
-    for (const note of lifeTick(state)) timeline.push({ date: { ...state.date }, age: state.age, kind: "LIFE", title: note });
-    if (state.age < OPPORTUNITY_START_AGE) continue;
-
-    const sources: DestinyModifierSource[] = [
-      ...destiny.sourcesAt(state.date),
+  /** All destiny/world sources for the current month. */
+  sources(): DestinyModifierSource[] {
+    const state = this.state;
+    return [
+      ...this.destiny.sourcesAt(state.date),
       // Without MBTI, fall back to the generic trait source.
-      ...(destiny.mbti ? [] : [traitsToModifierSource(state.traits)]),
+      ...(this.destiny.mbti ? [] : [traitsToModifierSource(state.traits)]),
       ...(state.world ? [worldModifierSource(state.world)] : []),
-      ...(opts.extraSources ?? []).map((f) => f(state)),
+      ...(this.opts.extraSources ?? []).map((f) => f(state)),
     ];
+  }
+
+  modifiers() {
+    return mergeModifierSources(this.sources());
+  }
+
+  /** Advance one month; returns what happened. */
+  stepMonth(): TimelineEntry[] {
+    const { state, opts } = this;
+    const timeline: TimelineEntry[] = [];
+    for (const note of lifeTick(state, opts.mortality ? this.mortalityRng : undefined)) timeline.push({ date: { ...state.date }, age: state.age, kind: "LIFE", title: note });
+    if (state.age < OPPORTUNITY_START_AGE || !state.alive) return timeline;
+
+    const sources = this.sources();
     opts.onTick?.(state, sources);
     const combined = mergeModifierSources(sources);
 
-    const candidates = oppEngine.evaluate(state, sources, oppRng);
-    for (const opp of eventEngine.surface(candidates, eventRng)) {
-      eventEngine.markOffered(state, opp);
-      const r: Resolution = eventEngine.resolve(state, opp, decider, combined, worldRng);
+    const candidates = this.oppEngine.evaluate(state, sources, this.oppRng);
+    for (const opp of this.eventEngine.surface(candidates, this.eventRng)) {
+      this.eventEngine.markOffered(state, opp);
+      const r: Resolution = this.eventEngine.resolve(state, opp, this.decider, combined, this.worldRng);
       timeline.push({
         date: { ...state.date },
         age: state.age,
@@ -196,9 +228,10 @@ export function simulateLife(opts: SimulateLifeOptions): SimulationResult {
         score: opp.score,
       });
     }
+    const worldOpts = this.worldOpts;
     if (state.world && worldOpts && state.age >= 14) {
       const month = runMonth(
-        { state, world: state.world, modifiers: combined, rng: worldRngMonthly, seed: opts.seed, policy: worldPolicy, attraction: worldOpts.attraction, maxHabitVisits: worldOpts.maxHabitVisits },
+        { state, world: state.world, modifiers: combined, rng: this.worldRngMonthly, seed: opts.seed, policy: this.worldPolicy, attraction: worldOpts.attraction, maxHabitVisits: worldOpts.maxHabitVisits },
         state.date,
       );
       const decided = new Map(month.decisions.map((d) => [d.event, d.resolution]));
@@ -233,8 +266,16 @@ export function simulateLife(opts: SimulateLifeOptions): SimulationResult {
         });
       }
     }
+    return timeline;
   }
-  return { seed: opts.seed, timeline, finalState: state };
+}
+
+export function simulateLife(opts: SimulateLifeOptions): SimulationResult {
+  const runner = new LifeRunner(opts);
+  const timeline: TimelineEntry[] = [];
+  const totalMonths = Math.round(opts.duration * 12);
+  while (runner.state.monthIndex < totalMonths && runner.state.alive) timeline.push(...runner.stepMonth());
+  return { seed: opts.seed, timeline, finalState: runner.state };
 }
 
 export function formatTimeline(result: SimulationResult, opts: { onlyOpportunities?: boolean } = {}): string {

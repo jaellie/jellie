@@ -13,7 +13,7 @@ import type { WorldEvent } from "./events";
 import { npcAge } from "./npcs";
 import type { Activity, EncounterHistory, RelationshipOriginType, WorldNpc, WorldRelationship, WorldState } from "./types";
 
-export type Attraction = "ANY" | "OPPOSITE" | "SAME";
+export type Attraction = "ANY" | "OPPOSITE" | "SAME" | "MALE" | "FEMALE";
 
 export interface EncounterContext {
   state: LifeState;
@@ -42,6 +42,7 @@ export function isRomanceEligible(ctx: EncounterContext, npc: WorldNpc): boolean
   if (Math.abs(npcAge(npc, ctx.date) - s.age) > 12 || npcAge(npc, ctx.date) < 18 || s.age < 18) return false;
   if (ctx.attraction === "OPPOSITE") return npc.sex !== s.birth.sex;
   if (ctx.attraction === "SAME") return npc.sex === s.birth.sex;
+  if (ctx.attraction === "MALE" || ctx.attraction === "FEMALE") return npc.sex === ctx.attraction;
   return true;
 }
 
@@ -93,6 +94,7 @@ export function processSighting(ctx: EncounterContext, npc: WorldNpc): WorldEven
     { name: "DESTINY_SOCIAL", value: mult(m, "social") * activityAffinity(ctx) },
   ];
   if (npc.foreign) factors.push({ name: "DESTINY_OVERSEAS", value: mult(m, "overseas", 0.5) });
+  if (npc.fated) factors.push({ name: "FATED", value: 1.4 });
   if (rel) factors.push({ name: "ALREADY_KNOWN", value: R.knownTalkFactor });
   else if (npc.persistence === "TEMPORARY" && (h?.encounterCount ?? 0) <= 1) factors.push({ name: "STRANGER", value: R.strangerTalkFactor * (ctx.activity.favors?.some((f) => f === "STRANGER" || f === "TRAVELER") ? 2 : 1) });
   const pTalk = clamp(factors.reduce((p, f) => p * f.value, 1), 0, c.max);
@@ -139,7 +141,7 @@ export function progressRelationship(ctx: EncounterContext, npc: WorldNpc, rel: 
   rel.closeness = clamp(rel.closeness + R.closenessPerConversation * (0.5 + npc.warmth) * mult(m, "social", 0.5), 0, 1);
   if (rel.stage === "LOST_CONTACT") rel.stage = rel.closeness > 0.45 ? "FRIEND" : "ACQUAINTANCE";
   const eligible = isRomanceEligible(ctx, npc);
-  if (eligible) rel.spark = clamp(rel.spark + R.sparkPerConversation * rng.range(0, 2) * mult(m, "romance"), 0, 1);
+  if (eligible) rel.spark = clamp(rel.spark + R.sparkPerConversation * rng.range(0, 2) * mult(m, "romance") * (npc.fated ? 2 : 1), 0, 1);
 
   const F = R.stages.FRIEND;
   const CF = R.stages.CLOSE_FRIEND;

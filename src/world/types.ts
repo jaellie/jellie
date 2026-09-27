@@ -168,6 +168,10 @@ export interface WorldNpc {
   warmth: number;
   spriteSeed: number;
   foreign: boolean;
+  /** The player's 'destined person' from setup — likelier sparks, never guaranteed. */
+  fated?: boolean;
+  /** Appearance/profile passthrough from the UI (look, job, mbti…). */
+  profile?: Record<string, unknown>;
 }
 
 export type RelationshipStage =

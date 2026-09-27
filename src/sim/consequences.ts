@@ -9,6 +9,8 @@ import type { Consequence } from "./opportunity";
 import { type LifeState, type Npc, isAbroad } from "./types";
 import { NPC_NAMES, pickCity, pickForeignCountry } from "./world";
 
+export const MAX_CAREER_LEVEL = 8;
+
 export interface ConsequenceContext {
   rng: SeededRandom;
   modifiers: LifeModifiers;
@@ -81,14 +83,23 @@ export function applyConsequence(s: LifeState, c: Consequence, ctx: ConsequenceC
       log.push(`moved to ${s.location.city}`);
       break;
     case "job":
-      s.career = { employed: true, field: c.field ?? s.career.field ?? "general", level: Math.max(1, s.career.level), abroad: !!c.abroad || isAbroad(s) };
+      if (!s.career.employed || (c.field && c.field !== s.career.field)) s.career.cid = (s.career.cid ?? 0) + 1;
+      s.career = {
+        cid: s.career.cid ?? 0, employed: true, field: c.field ?? s.career.field ?? "general", level: Math.max(1, s.career.level), abroad: !!c.abroad || isAbroad(s) };
       log.push(`employed (${s.career.field}, L${s.career.level})`);
       break;
     case "careerLevel":
-      s.career.level = Math.max(0, s.career.level + c.delta);
+      s.career.level = Math.max(0, Math.min(MAX_CAREER_LEVEL, s.career.level + c.delta));
+      if (c.delta > 0 && s.career.employed) {
+        s.flags.promotionCid = s.career.cid ?? 0;
+        s.flags.promotionMonth = s.monthIndex;
+      }
       break;
     case "quitJob":
+      if (s.career.employed) s.career.cid = (s.career.cid ?? 0) + 1;
       s.career.employed = false;
+      s.flags.jobLostMonth = s.monthIndex;
+      log.push("left the job");
       break;
     case "startDating": {
       const npc = createNpc(s, rng);
@@ -106,6 +117,7 @@ export function applyConsequence(s: LifeState, c: Consequence, ctx: ConsequenceC
       const partner = s.npcs.find((n) => n.id === s.relationship.partnerId);
       if (partner) partner.role = "EX";
       s.relationship = { status: c.divorce && s.relationship.status === "MARRIED" ? "DIVORCED" : "SINGLE" };
+      s.flags.breakupMonth = s.monthIndex;
       log.push(s.relationship.status === "DIVORCED" ? "divorced" : "broke up");
       break;
     }

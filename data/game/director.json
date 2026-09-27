@@ -1,0 +1,47 @@
+{
+ "_doc": "Pacing. One played day = one 'run'. Numbers are inclusive ranges picked per day (seeded).",
+ "smallEventsPerDay": [
+  1,
+  3
+ ],
+ "messagesPerDay": [
+  0,
+  2
+ ],
+ "majorPerDay": 2,
+ "lineCooldownDays": 4,
+ "messageSenderMaxPerDay": 1,
+ "menuRepeatCooldownDays": 2,
+ "dayGapYears": [
+  {
+   "maxAge": 39,
+   "gap": [
+    1,
+    2
+   ]
+  },
+  {
+   "maxAge": 64,
+   "gap": [
+    2,
+    3
+   ]
+  },
+  {
+   "maxAge": 200,
+   "gap": [
+    3,
+    4
+   ]
+  }
+ ],
+ "startAge": 25,
+ "dayStartMinute": 420,
+ "dayEndMinute": 1380,
+ "moneyUnitWon": 1000000,
+ "tripCostUnits": {
+  "coast": 0.4,
+  "tokyo": 1.5,
+  "paris": 3.5
+ }
+}
