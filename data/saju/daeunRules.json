@@ -1,0 +1,8 @@
+{
+  "_doc": "Daeun (大運) rules. Direction: yang year stem + male, or yin year stem + female → FORWARD; otherwise BACKWARD. Start age = (days from birth to the next (forward) / previous (backward) 節 solar term) / daysPerYear. The traditional ratio is 3 days = 1 year (1 day = 4 months, 1 two-hour 時 = 10 days).",
+  "daysPerYear": 3,
+  "periodLengthYears": 10,
+  "periodCount": 10,
+  "roundingMode": "EXACT",
+  "_roundingModes": "EXACT keeps fractional ages (e.g. 7.42); ROUND uses the conventional integer 대운수 (rounded, minimum 1)."
+}

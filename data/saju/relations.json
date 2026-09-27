@@ -1,0 +1,38 @@
+{
+  "_doc": "Traditional stem/branch interactions (合沖刑害). Pure reference data. 'element' on a combination is the transformed element it tends toward.",
+  "stemCombinations": [
+    { "pair": ["JIA", "JI"],   "element": "EARTH" },
+    { "pair": ["YI", "GENG"],  "element": "METAL" },
+    { "pair": ["BING", "XIN"], "element": "WATER" },
+    { "pair": ["DING", "REN"], "element": "WOOD" },
+    { "pair": ["WU", "GUI"],   "element": "FIRE" }
+  ],
+  "stemClashes": [
+    ["JIA", "GENG"], ["YI", "XIN"], ["BING", "REN"], ["DING", "GUI"]
+  ],
+  "branchSixHarmonies": [
+    { "pair": ["ZI", "CHOU"],  "element": "EARTH" },
+    { "pair": ["YIN", "HAI"],  "element": "WOOD" },
+    { "pair": ["MAO", "XU"],   "element": "FIRE" },
+    { "pair": ["CHEN", "YOU"], "element": "METAL" },
+    { "pair": ["SI", "SHEN"],  "element": "WATER" },
+    { "pair": ["WU", "WEI"],   "element": "FIRE" }
+  ],
+  "branchThreeHarmonies": [
+    { "branches": ["SHEN", "ZI", "CHEN"], "element": "WATER" },
+    { "branches": ["HAI", "MAO", "WEI"],  "element": "WOOD" },
+    { "branches": ["YIN", "WU", "XU"],    "element": "FIRE" },
+    { "branches": ["SI", "YOU", "CHOU"],  "element": "METAL" }
+  ],
+  "branchClashes": [
+    ["ZI", "WU"], ["CHOU", "WEI"], ["YIN", "SHEN"], ["MAO", "YOU"], ["CHEN", "XU"], ["SI", "HAI"]
+  ],
+  "branchHarms": [
+    ["ZI", "WEI"], ["CHOU", "WU"], ["YIN", "SI"], ["MAO", "CHEN"], ["SHEN", "HAI"], ["YOU", "XU"]
+  ],
+  "branchPunishments": {
+    "groups": [["YIN", "SI", "SHEN"], ["CHOU", "XU", "WEI"]],
+    "pairs": [["ZI", "MAO"]],
+    "self": ["CHEN", "WU", "YOU", "HAI"]
+  }
+}

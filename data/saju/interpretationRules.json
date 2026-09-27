@@ -1,0 +1,36 @@
+{
+  "_doc": "Synergy rules: independent Saju signals that together open a *pool* of related opportunities (never a single fixed outcome). Conditions use the EFFECTIVE profile at the current date: natal Ten God group shares blended with the active Daeun/annual pillars, and shinsal strength = max(natal, transit activation). All listed conditions must hold; effect scales with how far the weakest condition is exceeded (0.5–1.5×).",
+  "transitGroupBlend": { "natal": 0.6, "daeun": 0.25, "annual": 0.15 },
+  "rules": [
+    {
+      "id": "OFFICER_RESOURCE_YEOKMA",
+      "label": "官印 + 驛馬 — institutional learning / work far from home",
+      "when": { "groupsAtLeast": { "OFFICER": 18, "RESOURCE": 18 }, "shinsalAtLeast": { "YEOKMA": 0.4 } },
+      "effects": { "overseas": 0.15, "education": 0.10, "career": 0.08, "relocation": 0.05 }
+    },
+    {
+      "id": "WEALTH_YEOKMA",
+      "label": "財 + 驛馬 — trade, business travel, deals on the move",
+      "when": { "groupsAtLeast": { "WEALTH": 25 }, "shinsalAtLeast": { "YEOKMA": 0.4 } },
+      "effects": { "business": 0.10, "travel": 0.08, "wealth": 0.05 }
+    },
+    {
+      "id": "OUTPUT_DOHWA",
+      "label": "食傷 + 桃花 — performance, content, being seen",
+      "when": { "groupsAtLeast": { "OUTPUT": 20 }, "shinsalAtLeast": { "DOHWA": 0.4 } },
+      "effects": { "creativity": 0.10, "communication": 0.10, "social": 0.08 }
+    },
+    {
+      "id": "RESOURCE_HWAGAE",
+      "label": "印 + 華蓋 — scholarship, research, solitary study",
+      "when": { "groupsAtLeast": { "RESOURCE": 25 }, "shinsalAtLeast": { "HWAGAE": 0.4 } },
+      "effects": { "education": 0.10, "introspection": 0.10 }
+    },
+    {
+      "id": "OFFICER_DOHWA",
+      "label": "官 + 桃花 — socially visible partnership",
+      "when": { "groupsAtLeast": { "OFFICER": 20 }, "shinsalAtLeast": { "DOHWA": 0.4 } },
+      "effects": { "marriage": 0.10, "romance": 0.05 }
+    }
+  ]
+}

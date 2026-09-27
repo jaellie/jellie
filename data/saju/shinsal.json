@@ -1,0 +1,33 @@
+{
+  "_doc": "Selected Shinsal (神煞). Each entry names a rule 'type' implemented by a small evaluator in src/saju/analysis/shinsal.ts. New shinsal of an existing type are added here with zero code changes. 'reference' = which natal pillar(s) the lookup starts from. Strength = sum of positional weights of every pillar that holds a target, clamped to 1.",
+  "positionWeights": { "year": 0.7, "month": 1.0, "day": 1.0, "hour": 0.8 },
+  "referenceWeights": { "year": 0.8, "day": 1.0 },
+  "rules": [
+    {
+      "id": "YEOKMA", "nameKo": "역마", "nameEn": "Traveling Horse", "hanja": "驛馬",
+      "type": "SAMHAP_GROUP_TARGET", "reference": ["year", "day"],
+      "targets": { "WATER": "YIN", "FIRE": "SHEN", "METAL": "HAI", "WOOD": "SI" }
+    },
+    {
+      "id": "DOHWA", "nameKo": "도화", "nameEn": "Peach Blossom", "hanja": "桃花",
+      "type": "SAMHAP_GROUP_TARGET", "reference": ["year", "day"],
+      "targets": { "WATER": "YOU", "FIRE": "MAO", "METAL": "WU", "WOOD": "ZI" }
+    },
+    {
+      "id": "HWAGAE", "nameKo": "화개", "nameEn": "Canopy", "hanja": "華蓋",
+      "type": "SAMHAP_GROUP_TARGET", "reference": ["year", "day"],
+      "targets": { "WATER": "CHEN", "FIRE": "XU", "METAL": "CHOU", "WOOD": "WEI" }
+    },
+    {
+      "id": "CHEONEUL_GWIIN", "nameKo": "천을귀인", "nameEn": "Heavenly Noble", "hanja": "天乙貴人",
+      "type": "STEM_TO_BRANCHES", "reference": ["day", "year"],
+      "targets": {
+        "JIA": ["CHOU", "WEI"], "WU": ["CHOU", "WEI"], "GENG": ["CHOU", "WEI"],
+        "YI": ["ZI", "SHEN"], "JI": ["ZI", "SHEN"],
+        "BING": ["HAI", "YOU"], "DING": ["HAI", "YOU"],
+        "XIN": ["YIN", "WU"],
+        "REN": ["SI", "MAO"], "GUI": ["SI", "MAO"]
+      }
+    }
+  ]
+}
