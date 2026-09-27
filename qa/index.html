@@ -200,8 +200,12 @@
         d.innerHTML = `<div class="hair" style="background:${hair}"></div><div class="head"></div><div class="face"></div><div class="body" style="background:${c}"></div><div class="legs"></div>`;
         el.appendChild(d);
       }
+      // Coming back in (or new): they re-enter from a different edge — jump there, don't glide across the screen.
+      const jump = d.classList.contains("off") && !a.offscreen;
+      if (jump) d.style.transition = "none";
       d.className = "actor" + (a.role === "kid" ? " kid" : a.role === "baby" ? " baby" : a.role === "pet" ? " pet" : "") + (a.walking ? " walk" : "") + (a.facing === "SW" || a.facing === "NW" ? " left" : "") + (a.offscreen ? " off" : "") + (sc.online && a.role === "me" ? " phone" : "");
       d.style.left = (a.x * REF_W - 12) + "px"; d.style.top = (a.y * REF_H - 40) + "px"; d.style.zIndex = a.z;
+      if (jump) { void d.offsetWidth; d.style.transition = ""; }
     }
     for (const d of [...el.querySelectorAll(".actor")]) if (!seen.has(d.dataset.who)) d.remove();
   }
