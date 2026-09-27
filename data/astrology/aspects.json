@@ -1,0 +1,10 @@
+{
+  "_doc": "Major Ptolemaic aspects. natalOrb applies to birth-chart aspects, transitOrb to transits (tighter). nature: harmonious / hard / conjunction.",
+  "aspects": [
+    { "id": "CONJUNCTION", "angle": 0,   "natalOrb": 8, "transitOrb": 3, "nature": "conjunction" },
+    { "id": "SEXTILE",     "angle": 60,  "natalOrb": 4, "transitOrb": 2, "nature": "harmonious" },
+    { "id": "SQUARE",      "angle": 90,  "natalOrb": 6, "transitOrb": 3, "nature": "hard" },
+    { "id": "TRINE",       "angle": 120, "natalOrb": 6, "transitOrb": 3, "nature": "harmonious" },
+    { "id": "OPPOSITION",  "angle": 180, "natalOrb": 8, "transitOrb": 3, "nature": "hard" }
+  ]
+}

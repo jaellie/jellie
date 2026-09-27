@@ -17,10 +17,18 @@ export interface DecisionMaker {
   choose(state: LifeState, opportunity: Opportunity, options: ChoiceOption[], rng: SeededRandom): string;
 }
 
+/** Core trait, else MBTI persona dimension, else neutral 0.5. */
+export function traitValue(s: LifeState, key: string): number {
+  const core = (s.traits as unknown as Record<string, unknown>)[key];
+  if (typeof core === "number") return core;
+  const p = s.traits.persona as unknown as Record<string, number> | undefined;
+  return p?.[key] ?? 0.5;
+}
+
 export function choiceUtility(s: LifeState, choice: Choice): number {
   const a = choice.appeal;
   let u = a.base;
-  for (const [trait, w] of Object.entries(a.traits ?? {})) u += (w as number) * (s.traits[trait as keyof typeof s.traits] - 0.5) * 2;
+  for (const [trait, w] of Object.entries(a.traits ?? {})) u += (w as number) * (traitValue(s, trait) - 0.5) * 2;
   if (a.familyObligation) u += a.familyObligation * s.familyObligation;
   if (a.partnered && s.relationship.status !== "SINGLE" && s.relationship.status !== "DIVORCED") u += a.partnered;
   if (a.abroad && isAbroad(s)) u += a.abroad;

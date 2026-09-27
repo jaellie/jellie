@@ -57,7 +57,8 @@ export type Consequence =
 export interface ChoiceAppeal {
   base: number;
   /** Trait weights; applied as w × (trait − 0.5) × 2. */
-  traits?: Partial<Record<"riskTolerance" | "novelty" | "sociability" | "ambition", number>>;
+  /** Core traits, or any MBTI persona dimension (planning, emotionalExpression, independence…). */
+  traits?: Partial<Record<string, number>>;
   /** Circumstance weights. */
   familyObligation?: number;
   partnered?: number;

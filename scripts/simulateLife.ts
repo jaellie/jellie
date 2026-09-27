@@ -8,7 +8,8 @@ const result = simulateLife({
   seed: Number(a.seed ?? 12345),
   birthData: birthFromArgs(a),
   duration: Number(a.years ?? 80),
-  profile: { traits: { novelty: Number(a.novelty ?? 0.6), riskTolerance: Number(a.risk ?? 0.5) }, money: Number(a.money ?? 8), familySupport: Number(a.familySupport ?? 0.4) },
+  profile: { mbti: a.mbti, traits: a.mbti ? undefined : { novelty: Number(a.novelty ?? 0.6), riskTolerance: Number(a.risk ?? 0.5) }, money: Number(a.money ?? 8), familySupport: Number(a.familySupport ?? 0.4) },
+  world: a.world === "true",
 });
 console.log(formatTimeline(result));
 const s = result.finalState;

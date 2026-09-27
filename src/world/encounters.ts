@@ -89,7 +89,7 @@ export function processSighting(ctx: EncounterContext, npc: WorldNpc): WorldEven
     { name: "FAMILIARITY", value: c.base + c.perFamiliarity * familiarity },
     { name: "ACTIVITY", value: 0.5 + c.socialnessWeight * ctx.activity.socialness * 2 },
     { name: "NPC_WARMTH", value: 0.5 + npc.warmth },
-    { name: "PERSONALITY", value: 0.6 + ctx.state.traits.sociability * 0.8 },
+    { name: "PERSONALITY", value: 0.6 + (ctx.state.traits.persona?.socialInitiation ?? ctx.state.traits.sociability) * 0.8 },
     { name: "DESTINY_SOCIAL", value: mult(m, "social") * activityAffinity(ctx) },
   ];
   if (npc.foreign) factors.push({ name: "DESTINY_OVERSEAS", value: mult(m, "overseas", 0.5) });

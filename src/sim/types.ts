@@ -20,6 +20,8 @@ export interface Traits {
   novelty: number;
   sociability: number;
   ambition: number;
+  /** Full MBTI-derived persona (planning, emotionalExpression, …) when MBTI is known. */
+  persona?: import("../mbti/mbti").Persona;
 }
 
 export interface Residence {

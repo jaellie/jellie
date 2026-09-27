@@ -67,3 +67,16 @@ export function summarizeModifierTrace(trace: Modifier[], n = 10): string {
     .map((m) => `${sign(m.value)} ${m.key.padEnd(14)} ${m.source}`)
     .join("\n");
 }
+
+/** Developer view of the hidden astrology layer (never shown to players). */
+export function formatAstrologyDebug(chart: import("../astrology/chart").AstrologyChart, r: import("../astrology/interpretation").AstrologyModifierResult): string {
+  const out: string[] = [];
+  out.push(`ASTROLOGY  Sun ${chart.sunSign} · Moon ${chart.moonSign} · Rising ${chart.risingSign ?? "?"} (${chart.houseSystem})`);
+  out.push("TRANSITS (slow)");
+  for (const h of r.transits.slow.hits) out.push(`  ${h.planet.padEnd(8)} ${h.sign.padEnd(11)} H${String(h.house).padEnd(3)}${h.isReturn ? " RETURN" : ""}${h.aspects.map((a) => ` ${a.type}>${a.natalPoint}`).join("")}`);
+  for (const layer of ["natal", "annual", "monthly"] as const) {
+    out.push(layer.toUpperCase());
+    for (const [k, v] of topKeys(r.layerTotals[layer])) out.push(`  ${k.padEnd(16)} ${sign(v)}`);
+  }
+  return out.join("\n");
+}

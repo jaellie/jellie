@@ -18,16 +18,19 @@ export interface WorldDecisionPolicy {
 export class AutoWorldPolicy implements WorldDecisionPolicy {
   choose(e: WorldEvent, s: LifeState, _w: WorldState, rng: SeededRandom): string {
     const t = s.traits;
+    const p = t.persona;
+    const initiation = p?.socialInitiation ?? t.sociability;
+    const pacing = p?.relationshipPacing ?? 0.5; // high = takes it slow
     const noise = rng.range(-0.2, 0.2);
     switch (e.kind) {
       case "ROMANCE_OPPORTUNITY":
-        return 0.35 + t.sociability * 0.3 + t.riskTolerance * 0.2 + noise > 0.55 ? "ASK_OUT" : "STAY_FRIENDS";
+        return 0.4 + initiation * 0.35 + t.riskTolerance * 0.15 - pacing * 0.15 + noise > 0.55 ? "ASK_OUT" : "STAY_FRIENDS";
       case "INVITATION":
         return 0.3 + t.sociability * 0.6 + noise > 0.5 ? "ACCEPT" : "DECLINE";
       case "ONLINE_MEETUP":
-        return 0.25 + t.sociability * 0.3 + t.riskTolerance * 0.3 + noise > 0.5 ? "MEET" : "NOT_YET";
+        return 0.25 + initiation * 0.3 + t.riskTolerance * 0.3 + noise > 0.5 ? "MEET" : "NOT_YET";
       case "TRAVEL_OPPORTUNITY":
-        return s.money > 8 && 0.2 + t.novelty * 0.6 + noise > 0.5 ? "GO" : "LATER";
+        return s.money > 8 && 0.2 + t.novelty * 0.45 + (p?.spontaneity ?? 0.5) * 0.15 + noise > 0.5 ? "GO" : "LATER";
       default:
         return e.choices?.at(-1)?.id ?? "";
     }

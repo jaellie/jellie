@@ -95,10 +95,11 @@
             }
           ],
           "appeal": {
-            "base": 0.5,
+            "base": 0.55,
             "traits": {
-              "novelty": 0.5,
-              "ambition": 0.3
+              "novelty": 0.7,
+              "ambition": 0.3,
+              "independence": 0.3
             },
             "familyObligation": -0.6
           }
@@ -241,7 +242,7 @@
           "label": "Stay where I am",
           "consequences": [],
           "appeal": {
-            "base": 0.45,
+            "base": 0.38,
             "traits": {
               "novelty": -0.4
             },
@@ -455,11 +456,12 @@
             }
           ],
           "appeal": {
-            "base": 0.25,
+            "base": 0.3,
             "traits": {
               "riskTolerance": 0.7,
               "novelty": 0.4,
-              "ambition": 0.3
+              "ambition": 0.3,
+              "spontaneity": 0.2
             },
             "familyObligation": -0.8
           }
@@ -515,7 +517,8 @@
             "base": 0.3,
             "poverty": 0.5,
             "traits": {
-              "riskTolerance": -0.3
+              "riskTolerance": -0.3,
+              "planning": 0.4
             }
           }
         },
@@ -524,7 +527,7 @@
           "label": "Ignore the opportunity",
           "consequences": [],
           "appeal": {
-            "base": 0.3,
+            "base": 0.2,
             "traits": {
               "novelty": -0.5,
               "ambition": -0.3
@@ -988,7 +991,7 @@
             }
           ],
           "appeal": {
-            "base": 0.4,
+            "base": 0.45,
             "traits": {
               "novelty": 0.6,
               "ambition": 0.5,
@@ -1036,7 +1039,7 @@
           "label": "Stay where I am",
           "consequences": [],
           "appeal": {
-            "base": 0.4,
+            "base": 0.35,
             "traits": {
               "novelty": -0.5,
               "riskTolerance": -0.4
@@ -1101,13 +1104,14 @@
             }
           ],
           "appeal": {
-            "base": 0.4,
+            "base": 0.5,
             "traits": {
-              "novelty": 0.4,
-              "ambition": 0.4
+              "novelty": 0.6,
+              "ambition": 0.4,
+              "spontaneity": 0.2
             },
             "familyObligation": -0.5,
-            "partnered": -0.2
+            "partnered": -0.08
           }
         },
         {
@@ -1115,8 +1119,12 @@
           "label": "Stay",
           "consequences": [],
           "appeal": {
-            "base": 0.5,
-            "familyObligation": 0.4
+            "base": 0.42,
+            "familyObligation": 0.4,
+            "traits": {
+              "novelty": -0.4,
+              "planning": 0.2
+            }
           }
         }
       ]
@@ -1172,7 +1180,9 @@
             "base": 0.35,
             "traits": {
               "novelty": 0.5,
-              "riskTolerance": 0.5
+              "riskTolerance": 0.5,
+              "spontaneity": 0.3,
+              "independence": 0.2
             },
             "familyObligation": -0.4
           }
@@ -1268,7 +1278,8 @@
             "base": 0.3,
             "traits": {
               "riskTolerance": 0.7,
-              "ambition": 0.4
+              "ambition": 0.4,
+              "independence": 0.4
             },
             "familyObligation": -0.4
           }
@@ -1331,7 +1342,8 @@
           "appeal": {
             "base": 0.4,
             "traits": {
-              "riskTolerance": 0.6
+              "riskTolerance": 0.6,
+              "planning": -0.2
             }
           }
         },
@@ -1576,7 +1588,8 @@
           "appeal": {
             "base": 0.5,
             "traits": {
-              "sociability": 0.7
+              "sociability": 0.7,
+              "socialInitiation": 0.3
             }
           }
         },
@@ -1728,7 +1741,8 @@
             "base": 0.5,
             "traits": {
               "sociability": 0.4,
-              "riskTolerance": 0.3
+              "riskTolerance": 0.3,
+              "socialInitiation": 0.4
             }
           }
         },
@@ -1816,7 +1830,9 @@
           "appeal": {
             "base": 0.55,
             "traits": {
-              "riskTolerance": 0.1
+              "riskTolerance": 0.1,
+              "planning": 0.2,
+              "relationshipPacing": -0.3
             }
           }
         },
@@ -1827,7 +1843,9 @@
           "appeal": {
             "base": 0.4,
             "traits": {
-              "novelty": 0.3
+              "novelty": 0.3,
+              "relationshipPacing": 0.4,
+              "independence": 0.2
             }
           }
         },
@@ -1912,7 +1930,11 @@
             }
           ],
           "appeal": {
-            "base": 0.65
+            "base": 0.65,
+            "traits": {
+              "emotionalExpression": 0.4,
+              "conflictAvoidance": 0.2
+            }
           }
         },
         {
@@ -1935,7 +1957,8 @@
           "appeal": {
             "base": 0.25,
             "traits": {
-              "novelty": 0.3
+              "novelty": 0.3,
+              "independence": 0.4
             }
           }
         }
@@ -1982,7 +2005,8 @@
           "appeal": {
             "base": 0.5,
             "traits": {
-              "novelty": 0.3
+              "novelty": 0.3,
+              "creativity": 0.5
             }
           }
         },
@@ -2149,7 +2173,10 @@
           ],
           "appeal": {
             "base": 0.65,
-            "familyObligation": 0.3
+            "familyObligation": 0.3,
+            "traits": {
+              "emotionalExpression": 0.3
+            }
           }
         },
         {
@@ -2544,7 +2571,8 @@
           "appeal": {
             "base": 0.45,
             "traits": {
-              "novelty": 0.6
+              "novelty": 0.6,
+              "spontaneity": 0.3
             },
             "familyObligation": -0.4
           }

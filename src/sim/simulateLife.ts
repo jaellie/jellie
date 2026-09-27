@@ -14,7 +14,6 @@ import { SeededRandom } from "../core/rng";
 import { formatGameDate, type GameDate } from "../core/gameDate";
 import type { BirthData } from "../saju/calendar/fourPillars";
 import { calculateNatalChart } from "../saju/chart";
-import { SajuModifierEngine, type SajuModifierResult } from "../saju/interpretation/sajuModifierEngine";
 import { AutoDecisionPolicy, type DecisionMaker } from "./decisionPolicy";
 import { EventEngine, type Resolution } from "./eventEngine";
 import { lifeTick } from "./lifeTick";
@@ -27,10 +26,17 @@ import { runMonth } from "../world/routine";
 import { AutoWorldPolicy, type WorldDecisionPolicy } from "../world/decisions";
 import { worldModifierSource } from "../world/worldModifiers";
 import type { Attraction } from "../world/encounters";
+import { createDestinyProfile, type DestinyProfile } from "../destiny/profile";
+import type { BirthPlace } from "../astrology/chart";
+import { parseMbti, personaFromMbti, traitsFromPersona } from "../mbti/mbti";
 import { getLocation } from "../world/catalog";
 
 export interface LifeProfile {
   name?: string;
+  /** e.g. "ENFP" or "INTJ-T". Drives personality (decisions) and an MBTI modifier source. */
+  mbti?: string;
+  /** Birthplace for the astrology chart's houses (default Seoul). */
+  birthPlace?: BirthPlace;
   traits?: Partial<Traits>;
   money?: number;
   familySupport?: number;
@@ -67,10 +73,12 @@ export interface SimulateLifeOptions {
   decisionMaker?: DecisionMaker;
   /** Extra destiny sources (Astrology, MBTI) as functions of state. */
   extraSources?: Array<(s: LifeState) => DestinyModifierSource>;
-  /** Scale Saju influence (0 disables it; handy for A/B balancing). */
+  /** Scale each destiny system (0 disables it; handy for A/B balancing). */
   sajuWeight?: number;
+  astrologyWeight?: number;
+  mbtiWeight?: number;
   opportunityEngine?: OpportunityEngine;
-  onTick?: (s: LifeState, saju: SajuModifierResult) => void;
+  onTick?: (s: LifeState, sources: DestinyModifierSource[]) => void;
   /** Enable the living world (locations, NPCs, encounters, travel). */
   world?: boolean | WorldOptions;
 }
@@ -101,7 +109,10 @@ export function createLifeState(birth: BirthData, profile: LifeProfile = {}): Li
     monthIndex: 0,
     age: 0,
     alive: true,
-    traits: { riskTolerance: 0.5, novelty: 0.5, sociability: 0.5, ambition: 0.5, ...profile.traits },
+    traits: {
+      ...(profile.mbti ? traitsFromPersona(personaFromMbti(parseMbti(profile.mbti), hashName(profile.name ?? "Player"))) : { riskTolerance: 0.5, novelty: 0.5, sociability: 0.5, ambition: 0.5 }),
+      ...profile.traits,
+    },
     money: profile.money ?? 5,
     debt: 0,
     familySupport: profile.familySupport ?? 0.4,
@@ -121,17 +132,29 @@ export function createLifeState(birth: BirthData, profile: LifeProfile = {}): Li
 
 const OPPORTUNITY_START_AGE = 12;
 
+function hashName(s: string): number {
+  let h = 2166136261;
+  for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0;
+  return h;
+}
+
 export function simulateLife(opts: SimulateLifeOptions): SimulationResult {
   const rng = new SeededRandom(opts.seed);
   const oppRng = rng.fork("opportunity");
   const eventRng = rng.fork("event");
   const worldRng = rng.fork("world");
-  const saju = new SajuModifierEngine();
   const oppEngine = opts.opportunityEngine ?? new OpportunityEngine();
   const eventEngine = new EventEngine();
   const decider = opts.decisionMaker ?? new AutoDecisionPolicy();
 
   const state = createLifeState(opts.birthData, opts.profile);
+  const destiny: DestinyProfile = createDestinyProfile({
+    birth: opts.birthData,
+    place: opts.profile?.birthPlace,
+    mbti: opts.profile?.mbti,
+    seed: hashName(opts.profile?.name ?? "Player"),
+    weights: { SAJU: opts.sajuWeight ?? 1, ASTROLOGY: opts.astrologyWeight ?? 1, MBTI: opts.mbtiWeight ?? 1 },
+  });
   const worldOpts: WorldOptions | undefined = opts.world ? (opts.world === true ? {} : opts.world) : undefined;
   const worldRngMonthly = rng.fork("living-world");
   const worldPolicy = worldOpts?.policy ?? new AutoWorldPolicy();
@@ -143,14 +166,14 @@ export function simulateLife(opts: SimulateLifeOptions): SimulationResult {
     for (const note of lifeTick(state)) timeline.push({ date: { ...state.date }, age: state.age, kind: "LIFE", title: note });
     if (state.age < OPPORTUNITY_START_AGE) continue;
 
-    const sajuResult = saju.calculateDetailed(state.chart, state.date);
     const sources: DestinyModifierSource[] = [
-      saju.toModifierSource(sajuResult, opts.sajuWeight ?? 1),
-      traitsToModifierSource(state.traits),
+      ...destiny.sourcesAt(state.date),
+      // Without MBTI, fall back to the generic trait source.
+      ...(destiny.mbti ? [] : [traitsToModifierSource(state.traits)]),
       ...(state.world ? [worldModifierSource(state.world)] : []),
       ...(opts.extraSources ?? []).map((f) => f(state)),
     ];
-    opts.onTick?.(state, sajuResult);
+    opts.onTick?.(state, sources);
     const combined = mergeModifierSources(sources);
 
     const candidates = oppEngine.evaluate(state, sources, oppRng);
