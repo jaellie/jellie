@@ -1088,6 +1088,77 @@
        "effects": []
       }
      }
+    },
+    {
+     "requires": [
+      "momAlive",
+      "!dadAlive"
+     ],
+     "location": "hospital",
+     "who": "relative",
+     "line": {
+      "ko": "[이모] 엄마가 입원하셨어. 올 수 있겠니?",
+      "en": "[Aunt] Your mom's in the hospital. Can you come?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "당장 간다",
+        "en": "Go right away"
+       },
+       "weights": {
+        "PASSING": 0.45,
+        "RECOVERY": 0.55
+       }
+      },
+      {
+       "t": {
+        "ko": "주말에 갈게요",
+        "en": "I'll come on the weekend"
+       },
+       "weights": {
+        "PASSING": 0.6,
+        "RECOVERY": 0.4
+       }
+      }
+     ],
+     "outcomes": {
+      "PASSING": {
+       "r": {
+        "ko": "…엄마는 마지막까지 내 손을 잡고 있었다.",
+        "en": "…Mom held your hand until the end."
+       },
+       "effects": [
+        {
+         "kind": "parentDies",
+         "who": "mom"
+        }
+       ],
+       "card": "MOM_FUNERAL",
+       "scene": [
+        "funeral_hall"
+       ]
+      },
+      "RECOVERY": {
+       "r": {
+        "ko": "엄마가 회복했다. 퇴원하던 날 같이 웃었다.",
+        "en": "Mom recovered. You laughed together the day she left the hospital."
+       },
+       "effects": [
+        {
+         "kind": "familyObligation",
+         "delta": 0.2
+        },
+        {
+         "kind": "memory",
+         "text": "Mom recovered.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      }
+     }
     }
    ]
   },
@@ -1104,6 +1175,85 @@
      "line": {
       "ko": "이번에 큰 기회가 있는데, 같이 해볼래?",
       "en": "There's a big opportunity—want in?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "크게 건다",
+        "en": "Bet big"
+       },
+       "weights": {
+        "WINDFALL": 0.5,
+        "LOSS": 0.45,
+        "STEADY": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "조금만 넣는다",
+        "en": "Put in a little"
+       },
+       "weights": {
+        "WINDFALL": 0.3,
+        "LOSS": 0.2,
+        "STEADY": 0.5
+       }
+      },
+      {
+       "t": {
+        "ko": "안 한다",
+        "en": "Pass"
+       },
+       "weights": {
+        "WINDFALL": 0.05,
+        "LOSS": 0.05,
+        "STEADY": 0.9
+       }
+      }
+     ],
+     "outcomes": {
+      "WINDFALL": {
+       "r": {
+        "ko": "대박이 났다! 통장 잔고를 몇 번이나 확인했다.",
+        "en": "It paid off big! You checked your balance again and again."
+       },
+       "effects": [
+        {
+         "kind": "money",
+         "amount": 60
+        }
+       ],
+       "card": "WINDFALL"
+      },
+      "LOSS": {
+       "r": {
+        "ko": "…다 잃었다. 한동안 잠이 오지 않았다.",
+        "en": "…You lost it all. You couldn't sleep for a while."
+       },
+       "effects": [
+        {
+         "kind": "money",
+         "amount": -25
+        }
+       ],
+       "card": "LOSS"
+      },
+      "STEADY": {
+       "r": {
+        "ko": "별일 없이 지나갔다. 그게 다행이었다.",
+        "en": "Nothing much happened. That was a relief."
+       },
+       "effects": []
+      }
+     }
+    },
+    {
+     "requires": [],
+     "location": "home",
+     "who": "me",
+     "line": {
+      "ko": "(오래 지켜본 투자처가 있다. 지금이 기회일지도 모른다.)",
+      "en": "(There's an investment you've been watching for ages. Maybe now's the time.)"
      },
      "choices": [
       {
@@ -1568,6 +1718,176 @@
          "perMonth": 4
         }
        ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "selfEmployed"
+     ],
+     "location": "cafe",
+     "who": "me",
+     "line": {
+      "ko": "(가게를 계속할까, 이제 내려놓을까. 셔터를 내리며 생각한다.)",
+      "en": "(Keep the shop going, or let it go? You wonder as you pull down the shutter.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "가게를 정리한다",
+        "en": "Close the shop"
+       },
+       "weights": {
+        "ACCEPT": 0.85,
+        "STAY": 0.1,
+        "SECOND_CAREER": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "힘닿는 데까지 한다",
+        "en": "Keep going while I can"
+       },
+       "weights": {
+        "ACCEPT": 0.05,
+        "STAY": 0.9,
+        "SECOND_CAREER": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "완전히 새로운 걸 해 본다",
+        "en": "Try something completely new"
+       },
+       "weights": {
+        "ACCEPT": 0.15,
+        "STAY": 0.1,
+        "SECOND_CAREER": 0.75
+       }
+      }
+     ],
+     "outcomes": {
+      "ACCEPT": {
+       "r": {
+        "ko": "마지막 손님을 배웅하고 가게 문을 닫았다. 단골들이 꽃을 두고 갔다.",
+        "en": "You saw off the last customer and closed the shop. Regulars left flowers."
+       },
+       "effects": [
+        {
+         "kind": "retire"
+        },
+        {
+         "kind": "money",
+         "amount": 25
+        }
+       ],
+       "card": "SHOP_CLOSE",
+       "scene": [
+        "cafe"
+       ]
+      },
+      "STAY": {
+       "r": {
+        "ko": "내일도 셔터를 올리기로 했다.",
+        "en": "You decided to open the shutter again tomorrow."
+       },
+       "effects": []
+      },
+      "SECOND_CAREER": {
+       "r": {
+        "ko": "가게를 넘기고, 전혀 다른 일을 배우기 시작했다.",
+        "en": "You handed over the shop and started learning something totally different."
+       },
+       "effects": [
+        {
+         "kind": "startHabit",
+         "locationId": "cooking_class",
+         "activityId": "learn_recipe",
+         "perMonth": 4
+        }
+       ]
+      }
+     }
+    }
+   ]
+  },
+  "ILLNESS": {
+   "hint": {
+    "ko": "(요즘 따라 가족들 건강이 자꾸 신경 쓰인다.)",
+    "en": "(Lately you keep worrying about everyone's health.)"
+   },
+   "variants": [
+    {
+     "requires": [],
+     "location": "hospital",
+     "who": "doctor",
+     "line": {
+      "ko": "{patient}의 검사 결과… 암이 발견됐습니다.",
+      "en": "{patient}'s results… we found cancer."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "당장 치료를 시작한다",
+        "en": "Start treatment right away"
+       },
+       "weights": {
+        "RECOVERY": 0.6,
+        "LONG_FIGHT": 0.3,
+        "PASSING": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "다른 병원에서도 확인한다",
+        "en": "Get a second opinion"
+       },
+       "weights": {
+        "RECOVERY": 0.45,
+        "LONG_FIGHT": 0.4,
+        "PASSING": 0.15
+       }
+      }
+     ],
+     "outcomes": {
+      "RECOVERY": {
+       "r": {
+        "ko": "힘든 싸움이 시작됐다. 그래도 희망이 있다.",
+        "en": "A hard fight begins. But there is hope."
+       },
+       "effects": [
+        {
+         "kind": "arc",
+         "type": "ILLNESS"
+        }
+       ],
+       "card": "HOSPITAL"
+      },
+      "LONG_FIGHT": {
+       "r": {
+        "ko": "긴 치료가 될 거라고 했다.",
+        "en": "They said it would be a long treatment."
+       },
+       "effects": [
+        {
+         "kind": "arc",
+         "type": "ILLNESS"
+        }
+       ],
+       "card": "HOSPITAL"
+      },
+      "PASSING": {
+       "r": {
+        "ko": "…생각보다 많이 진행되어 있었다.",
+        "en": "…It was further along than anyone thought."
+       },
+       "effects": [
+        {
+         "kind": "arc",
+         "type": "ILLNESS"
+        }
+       ],
+       "card": "HOSPITAL"
       }
      }
     }

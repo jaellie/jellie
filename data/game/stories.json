@@ -8,8 +8,8 @@
     "CITY"
    ],
    "requires": [],
-   "weight": 1,
-   "cooldownDays": 3,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "(갑자기 비가 쏟아진다.)",
     "en": "(It suddenly starts pouring.)"
@@ -42,7 +42,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "street_cat",
@@ -90,8 +91,8 @@
     "CITY"
    ],
    "requires": [],
-   "weight": 1,
-   "cooldownDays": 6,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "(못 보던 빵집이 생겼다.)",
     "en": "(A new bakery has opened.)"
@@ -124,7 +125,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "cafe_seat",
@@ -133,8 +135,8 @@
     "CAFE"
    ],
    "requires": [],
-   "weight": 1,
-   "cooldownDays": 3,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "(창가 자리가 비어 있다.)",
     "en": "(The window seat is free.)"
@@ -162,7 +164,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "cafe_new_menu",
@@ -171,8 +174,8 @@
     "CAFE"
    ],
    "requires": [],
-   "weight": 1,
-   "cooldownDays": 6,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "시즌 한정 메뉴 나왔어요. 드셔 보실래요?",
     "en": "Seasonal menu just came out. Want to try it?"
@@ -205,7 +208,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "office_printer",
@@ -216,8 +220,8 @@
    "requires": [
     "employed"
    ],
-   "weight": 1,
-   "cooldownDays": 3,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "프린터가 또 고장났어요…",
     "en": "The printer's broken again…"
@@ -250,7 +254,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "office_snack",
@@ -261,8 +266,8 @@
    "requires": [
     "employed"
    ],
-   "weight": 1,
-   "cooldownDays": 3,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "출장 다녀온 팀원이 간식을 돌린다.",
     "en": "A teammate back from a trip is sharing snacks."
@@ -295,7 +300,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "overtime_call",
@@ -397,8 +403,8 @@
     "GYM"
    ],
    "requires": [],
-   "weight": 1,
-   "cooldownDays": 3,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "저기… 이 기구 다 쓰셨어요?",
     "en": "Um… are you done with this machine?"
@@ -426,7 +432,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "home_cleaning",
@@ -435,8 +442,8 @@
     "HOME"
    ],
    "requires": [],
-   "weight": 1,
-   "cooldownDays": 5,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "(방이 좀 어질러져 있다.)",
     "en": "(The room's a bit of a mess.)"
@@ -464,7 +471,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "home_delivery",
@@ -473,8 +481,8 @@
     "HOME"
    ],
    "requires": [],
-   "weight": 1,
-   "cooldownDays": 4,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "(배달 앱을 켰다. 뭘 먹지?)",
     "en": "(Opened the delivery app. What to eat?)"
@@ -507,7 +515,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "home_online_shop",
@@ -518,8 +527,8 @@
    "requires": [
     "!broke"
    ],
-   "weight": 1,
-   "cooldownDays": 6,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "(장바구니에 넣어둔 게 할인 중이다.)",
     "en": "(Something in your cart is on sale.)"
@@ -552,7 +561,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "treat_self",
@@ -564,8 +574,8 @@
    "requires": [
     "!broke"
    ],
-   "weight": 0.5,
-   "cooldownDays": 8,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "(요즘 고생했으니 나에게 작은 선물을 할까?)",
     "en": "(You've worked hard lately. A small treat for yourself?)"
@@ -598,7 +608,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "park_bench",
@@ -1041,8 +1052,8 @@
     "PARK"
    ],
    "requires": [],
-   "weight": 0.4,
-   "cooldownDays": 12,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "(주머니에서 잊고 있던 만 원이 나왔다.)",
     "en": "(Found a forgotten ₩10,000 in your pocket.)"
@@ -1059,7 +1070,8 @@
      },
      "effects": []
     }
-   ]
+   ],
+   "maxPerLife": 1
   },
   {
    "id": "lost_item",
@@ -1070,8 +1082,8 @@
     "HOME"
    ],
    "requires": [],
-   "weight": 0.3,
-   "cooldownDays": 15,
+   "weight": 0.15,
+   "cooldownDays": 20,
    "line": {
     "ko": "(어? 이어폰 한쪽이 없어졌다!)",
     "en": "(Huh? One of your earbuds is missing!)"
@@ -1105,7 +1117,7 @@
      ]
     }
    ],
-   "maxPerLife": 2
+   "maxPerLife": 1
   },
   {
    "id": "volunteer_flyer",

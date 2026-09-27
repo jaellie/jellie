@@ -33,7 +33,7 @@ export function annualMortality(age: number): number {
 }
 
 /** Advance one month. Returns notable life-script events (graduation etc.). */
-export function lifeTick(s: LifeState, rng?: { chance(p: number): boolean }): string[] {
+export function lifeTick(s: LifeState, rng?: { chance(p: number): boolean }, opts: { parents?: boolean; autoRetire?: boolean } = {}): string[] {
   const notes: string[] = [];
   s.monthIndex += 1;
   s.date = addMonths(s.date, 1);
@@ -60,14 +60,14 @@ export function lifeTick(s: LifeState, rng?: { chance(p: number): boolean }): st
       s.money -= pay;
     }
   }
-  if (s.age >= 65 && s.career.employed) {
+  if (opts.autoRetire !== false && s.age >= 65 && s.career.employed) {
     s.career.employed = false;
     s.career.cid = (s.career.cid ?? 0) + 1;
     notes.push("Retired.");
   }
   if (rng) {
     // Parents age and pass away eventually; the player too — the game ends only then.
-    for (const who of ["mom", "dad"] as const) {
+    for (const who of opts.parents === false ? [] : (["mom", "dad"] as const)) {
       const p = s.family?.[who];
       if (p?.alive && rng.chance(annualMortality(s.date.year - p.birthYear) / 12)) {
         p.alive = false;

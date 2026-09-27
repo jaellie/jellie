@@ -2750,6 +2750,53 @@
      3.2
     ]
    ]
+  },
+  {
+   "id": "airplane",
+   "name": {
+    "ko": "비행기 안",
+    "en": "On the plane"
+   },
+   "type": "AIRPORT",
+   "backgrounds": [
+    "airplane_cabin"
+   ],
+   "activities": [
+    "wait",
+    "rest"
+   ],
+   "npcPool": [
+    "traveler",
+    "staff"
+   ],
+   "encounterTypes": [
+    "TRAVELER"
+   ],
+   "tags": [
+    "travel",
+    "flight"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "transit",
+   "eventiness": 0,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ]
+   ]
   }
  ]
 }

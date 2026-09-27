@@ -22,7 +22,7 @@ import type { BirthData } from "../saju/calendar/fourPillars";
 import type { BirthPlace } from "../astrology/chart";
 import { LifeRunner, type SimulateLifeOptions } from "../sim/simulateLife";
 import { EventEngine } from "../sim/eventEngine";
-import { OpportunityEngine } from "../sim/opportunityEngine";
+import { DEFAULT_TEMPLATES, OpportunityEngine } from "../sim/opportunityEngine";
 import type { Consequence, Opportunity } from "../sim/opportunity";
 import { applyConsequences } from "../sim/consequences";
 import { checkRequirements } from "../sim/requirements";
@@ -30,7 +30,7 @@ import type { LifeState } from "../sim/types";
 import { yearlyIncome } from "../sim/lifeTick";
 import { LOCATIONS, getActivity, getDestination, getLocation, findLocation } from "../world/catalog";
 import { weekdayOf, seasonOf } from "../world/clock";
-import { generateNpc, habitSlot } from "../world/npcs";
+import { generateNpc, habitSlot, knowsName } from "../world/npcs";
 import { resolveWorldEvent } from "../world/decisions";
 import type { WorldEvent } from "../world/events";
 import { endTrip, startTrip } from "../world/travel";
@@ -39,8 +39,12 @@ import { toPrototypeScene, type PrototypeScene } from "../integration/prototype"
 import { WorldEngine } from "../world/worldEngine";
 import type { NPCSchedule } from "../world/types";
 import { type LifeFacts, computeFacts, meets } from "./facts";
+import { STORY_ONLY_TEMPLATES, upcomingHint, ensureArcs, fillStory, hintFor, initStory, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
+import { buildCards, type MemoryCard } from "../story/cards";
+import memorialData from "../../data/story/memorial.json";
+import { AutoWorldPolicy } from "../world/decisions";
 import { DIRECTOR_CONFIG as CFG, Director, type DirectorMemory, newDirectorMemory, SPEAKER_FALLBACK, SPEAKER_REQUIRES } from "./director";
-import { type Bi, type Lang, CITY_KO, COUNTRY_KO, DEST_KO, EDU_KO, SPEAKER_NAME, bi, fixJosa, krw } from "./text";
+import { type Bi, type Lang, CITY_KO, COUNTRY_KO, DEST_KO, EDU_KO, SPEAKER_NAME, bi, fillNames, fixJosa, krw } from "./text";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -118,6 +122,8 @@ interface Pending {
   worldEvent?: WorldEvent;
   storyId?: string;
   plan?: PlanOption[];
+  storyRef?: string;
+  patient?: string;
 }
 
 export interface PlanOption {
@@ -132,7 +138,7 @@ export interface PlanOption {
 
 interface AgendaItem {
   t: number;
-  k: "major" | "small" | "message" | "plan";
+  k: "major" | "small" | "message" | "plan" | "story" | "hint";
 }
 
 export interface GameSave {
@@ -145,7 +151,21 @@ export interface GameSave {
   minute: number;
   loc?: string;
   agenda: AgendaItem[];
-  dayPlan: { locationId?: string; activityId?: string; withPartner?: boolean; trip?: string; override?: { locationId: string; until: number; activityId?: string } };
+  dayPlan: {
+    locationId?: string;
+    activityId?: string;
+    withPartner?: boolean;
+    trip?: string;
+    override?: { locationId: string; until: number; activityId?: string; from?: number };
+    /** Scene changes caused by a choice (e.g. business trip: airport → hotel → branch office). */
+    sequence?: Array<{ locationId: string; from: number; until: number; activityId?: string }>;
+    fatedPresent?: boolean;
+  };
+  /** Why today is played: calm / fated / foreshadow / arc (story engine). */
+  dayKind?: "calm" | "fated" | "foreshadow" | "arc";
+  dayRef?: string;
+  /** Fated event foreshadowed today. */
+  hintRef?: string;
   pending?: Pending;
   life: LifeState;
   director: DirectorMemory;
@@ -179,6 +199,14 @@ function hash(...parts: Array<string | number>): number {
   return h;
 }
 
+/** Between played days: friendships and travel continue, but romance only starts on screen. */
+class OffscreenPolicy extends AutoWorldPolicy {
+  choose(e: WorldEvent, s: LifeState, w: import("../world/types").WorldState, rng: SeededRandom): string {
+    if (e.kind === "ROMANCE_OPPORTUNITY") return "STAY_FRIENDS";
+    return super.choose(e, s, w, rng);
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Game
 // ---------------------------------------------------------------------------
@@ -187,9 +215,10 @@ export class Game {
   readonly s: GameSave;
   private director: Director;
   private world = new WorldEngine();
-  private opps = new OpportunityEngine();
+  private opps = new OpportunityEngine(DEFAULT_TEMPLATES.filter((t) => !STORY_ONLY_TEMPLATES.includes(t.id)));
   private events = new EventEngine(1);
   private runnerCache?: { key: string; runner: LifeRunner };
+  private wanderTick = 0;
 
   constructor(save: GameSave) {
     this.s = save;
@@ -221,8 +250,11 @@ export class Game {
       birthData: this.birthData(),
       duration: 0,
       profile: { name: st.name, mbti: st.mbti, birthPlace: st.place },
-      world: { attraction: this.attraction(), maxHabitVisits: 4 },
+      world: { attraction: this.attraction(), maxHabitVisits: 4, policy: new OffscreenPolicy() },
       mortality: true,
+      excludeTemplates: STORY_ONLY_TEMPLATES,
+      parentMortality: false,
+      autoRetire: false,
     };
   }
   private runner(): LifeRunner {
@@ -235,8 +267,8 @@ export class Game {
   }
   private fill(text: string): string {
     const f = this.facts();
-    const t = text.replace(/\{partner\}/g, f.partnerName ?? "").replace(/\{friend\}/g, f.friendName ?? "").replace(/\{me\}/g, this.s.setup.name);
-    return this.s.lang === "ko" ? fixJosa(t.replace(/([가-힣A-Za-z0-9]+)(와|과|이|가|은|는|을|를)(?=[\s,.!?…~]|$)/g, (m, w, j) => (["와", "과"].includes(j) ? `${w}와(과)` : ["이", "가"].includes(j) ? `${w}이(가)` : ["은", "는"].includes(j) ? `${w}은(는)` : `${w}을(를)`))) : t;
+    const t = fillNames(text, { partner: f.partnerName, friend: f.friendName, me: this.s.setup.name });
+    return this.s.lang === "ko" ? fixJosa(t) : t;
   }
   /** Stable portrait identity for a popup speaker. */
   private portrait(role: string, npcId?: string): { gender?: "M" | "F"; seed?: number; fated?: boolean; npcId?: string } {
@@ -261,6 +293,11 @@ export class Game {
     return { gender: h % 2 ? "M" : "F", seed: h % 1_000_000 };
   }
 
+  /** An NPC's name, or "낯선 사람" if you haven't actually met them yet (no names before introductions). */
+  private npcLabel(npcId: string): string {
+    const npc = this.state.world?.npcs[npcId];
+    return npc && knowsName(this.state.world, npcId) ? npc.name : this.L(bi("낯선 사람", "Stranger"));
+  }
   private speaker(role: string): string {
     const f = this.facts();
     if (role === "partner") return f.partnerName ?? this.L(bi("연인", "Partner"));
@@ -295,8 +332,27 @@ export class Game {
     s.pending = undefined;
     this.director.startDay(s.dayIndex, rng);
     const b = this.director.mem.budget;
-    const agenda: AgendaItem[] = [{ t: rng.int(620, 1020), k: "major" }];
-    if (weekend) agenda.push({ t: 600, k: "plan" });
+    if (st.story) ensureArcs(st, rng);
+    // Story days: the fated turning point or the arc step (상견례, 결혼식, 법원…) is the day's centerpiece.
+    let storyDef = s.dayKind === "fated" || s.dayKind === "arc" ? storyPopup(st, s.dayKind, s.dayRef!, this.facts(), this.rng("storydef")) : undefined;
+    if (!storyDef && (s.dayKind === "fated" || s.dayKind === "arc")) s.dayKind = "calm";
+    const agenda: AgendaItem[] = [];
+    if (storyDef) {
+      s.dayPlan.override = { locationId: storyDef.location, activityId: storyDef.activity, from: 600, until: 1080 };
+      s.dayPlan.fatedPresent = !!storyDef.needsFated;
+      agenda.push({ t: 660, k: "story" });
+      b.major = 0; // no random big offers competing with a destined moment
+      b.small = Math.min(b.small, 1);
+    } else {
+      agenda.push({ t: rng.int(620, 1020), k: "major" });
+      if (weekend) agenda.push({ t: 600, k: "plan" });
+    }
+    const soon = upcomingHint(st);
+    if (soon && soon.id !== s.dayRef) {
+      s.hintRef = soon.id;
+      agenda.push({ t: 450, k: "hint" });
+    }
+    storyDef = undefined;
     for (let i = 0; i < b.small; i++) agenda.push({ t: rng.int(480, 1320), k: "small" });
     for (let i = 0; i < b.messages; i++) agenda.push({ t: rng.int(450, 1350), k: "message" });
     s.agenda = agenda.sort((a, c) => a.t - c.t);
@@ -307,8 +363,9 @@ export class Game {
   locationAt(minute: number): string {
     const s = this.s;
     const st = this.state;
+    for (const q of s.dayPlan.sequence ?? []) if (minute >= q.from && minute < q.until) return q.locationId;
     const o = s.dayPlan.override;
-    if (o && minute < o.until) return o.locationId;
+    if (o && minute < o.until && minute >= (o.from ?? 0)) return o.locationId;
     const f = this.facts();
     if (s.day?.weekend) {
       if (s.dayPlan.trip) {
@@ -392,24 +449,37 @@ export class Game {
     if (!st.world) return [];
     const withPartner = !!s.dayPlan.withPartner && !!s.day?.weekend && s.minute >= 660 && s.minute < 1080;
     const r = this.world.visit(
-      { state: st, world: st.world, modifiers: this.runner().modifiers(), rng: this.rng("visit", locationId, activityId ?? ""), seed: s.seed, withPartner, attraction: this.attraction(), trip: st.world.travel },
-      { locationId, activityId: activityId ?? (s.dayPlan.override?.locationId === locationId ? s.dayPlan.override.activityId : s.dayPlan.locationId === locationId ? s.dayPlan.activityId : undefined), date: st.date, hour: Math.floor(s.minute / 60) },
+      { state: st, world: st.world, modifiers: this.runner().modifiers(), rng: this.rng("visit", locationId, activityId ?? ""), seed: s.seed, withPartner, attraction: this.attraction(), trip: st.world.travel, facts: this.facts() },
+      {
+        locationId,
+        activityId:
+          activityId ??
+          (s.dayPlan.sequence?.find((q) => q.locationId === locationId)?.activityId ??
+            (s.dayPlan.override?.locationId === locationId ? s.dayPlan.override.activityId : s.dayPlan.locationId === locationId ? s.dayPlan.activityId : undefined)),
+        date: st.date,
+        hour: Math.floor(s.minute / 60),
+      },
     );
-    s.lastScene = toPrototypeScene(composeScene(r, st.world, st, { withPartner }));
+    const fated = s.dayPlan.fatedPresent ? Object.values(st.world.npcs).find((n) => n.fated) : undefined;
+    if (fated && !r.present.includes(fated.id)) r.present.push(fated.id);
+    const partnerHere = withPartner || (locationId === "home" && (st.relationship.status === "MARRIED" || !!st.flags.longterm) && (s.minute >= 1140 || !!s.day?.weekend));
+    s.lastScene = toPrototypeScene(composeScene(r, st.world, st, { withPartner: partnerHere, household: locationId === "home" }));
     const beats: Beat[] = [];
     for (const e of r.events) {
       if (e.choices?.length) {
         if (this.director.hasBudget("major")) {
           this.director.record("major", { id: `world:${e.kind}:${e.npcId ?? ""}`, texts: [e.text.ko] });
           const npc = e.npcId ? st.world.npcs[e.npcId] : undefined;
-          const popup: Popup = { id: `w${s.dayIndex}-${s.minute}`, source: "world", who: e.npcId ? (npc?.fated ? "fated" : "npc") : "me", name: npc?.name, ...this.portrait("npc", e.npcId), line: this.L(e.text), ch: e.choices.map((c) => ({ t: this.L(c.label) })) };
+          const popup: Popup = { id: `w${s.dayIndex}-${s.minute}`, source: "world", who: e.npcId ? (npc?.fated ? "fated" : "npc") : "me", name: e.npcId ? this.npcLabel(e.npcId) : this.speaker("me"), ...this.portrait("npc", e.npcId), line: this.L(e.text), ch: e.choices.map((c) => ({ t: this.L(c.label) })) };
           s.pending = { popup, worldEvent: e };
           beats.push({ kind: "popup", popup });
           return beats;
         }
         continue;
       }
-      if (e.scale !== "NONE" && e.kind !== "CLOSED") {
+      // Only moments that matter reach the log (people & important things), not everyday filler.
+      const notable = e.scale === "MAJOR" || ["NEW_ACQUAINTANCE", "FRIENDSHIP", "REUNION", "MEMORY_CALLBACK"].includes(e.kind);
+      if (notable && e.kind !== "CLOSED") {
         const key = `t:log:${e.text.en}`;
         const last = this.director.mem.lastShown[key];
         if (last !== undefined && s.dayIndex - last < 2) continue; // no same log line twice in a row
@@ -429,10 +499,40 @@ export class Game {
   }
 
   private fire(item: AgendaItem): Beat | undefined {
+    if (item.k === "story") return this.fireStory();
+    if (item.k === "hint") {
+      const h = this.s.hintRef ? hintFor(this.state, this.s.hintRef) : undefined;
+      return h ? { kind: "log", text: this.L(h) } : undefined;
+    }
     if (item.k === "major") return this.fireMajor();
     if (item.k === "small") return this.fireSmall();
     if (item.k === "message") return this.fireMessage();
     return this.firePlan();
+  }
+
+  private fireStory(): Beat | undefined {
+    const s = this.s;
+    const st = this.state;
+    const f = this.facts();
+    const def = storyPopup(st, s.dayKind as "fated" | "arc", s.dayRef!, f, this.rng("storydef"));
+    if (!def) return;
+    const ev = s.dayKind === "fated" ? fatedEvent(st, s.dayRef!) : undefined;
+    const patientKey = (ev?.data?.patient as string | undefined) ?? (st.story?.arcs.find((a) => a.id === s.dayRef)?.data?.patient as string | undefined);
+    const patient = patientKey ? this.L(patientLabel(st, patientKey, f)) : "";
+    const fatedNpc = Object.values(st.world?.npcs ?? {}).find((n) => n.fated);
+    const who = def.who === "fated" ? "fated" : def.who;
+    const portrait = def.who === "fated" && fatedNpc ? this.portrait("npc", fatedNpc.id) : this.portrait(def.who === "inlaw" || def.who === "judge" || def.who === "nurse" || def.who === "doctor" ? def.who : def.who);
+    const popup: Popup = {
+      id: `story${s.dayIndex}`,
+      source: "story",
+      who,
+      name: def.who === "fated" ? (fatedNpc ? this.npcLabel(fatedNpc.id) : this.L(bi("낯선 사람", "Stranger"))) : this.speaker(def.who),
+      ...portrait,
+      line: this.fill(fillStory(this.L(def.line), st, f, { patient })),
+      ch: def.choices.map((c) => ({ t: this.fill(this.L(c)) })),
+    };
+    s.pending = { popup, storyRef: def.ref, patient };
+    return { kind: "popup", popup };
   }
 
   private fireMajor(): Beat | undefined {
@@ -567,6 +667,7 @@ export class Game {
       id: `plan${this.s.dayIndex}`,
       source: "plan",
       who: "me",
+      name: this.speaker("me"),
       line: this.L(f.partnered ? bi(`(오늘 ${f.partnerName}와(과) 뭐 할까?)`, `(What should ${f.partnerName} and I do today?)`) : bi("(주말이다. 뭐 하지?)", "(The weekend. What now?)")),
       ch: opts.map((o) => ({ t: this.L(o.label) })),
     };
@@ -576,9 +677,20 @@ export class Game {
 
   // ---- choices --------------------------------------------------------------
   choose(index: number): ChoiceResult | undefined {
+    const r = this.resolveChoice(index);
+    if (!r) return r;
+    // Every result names its speaker (fated/npc names re-checked: you may have just been introduced).
+    const pid = r.who === "fated" ? Object.values(this.state.world?.npcs ?? {}).find((n) => n.fated)?.id : undefined;
+    if (pid) r.name = this.npcLabel(pid);
+    else if (!r.name) r.name = r.who === "me" ? this.speaker("me") : this.speaker(r.who);
+    return r;
+  }
+
+  private resolveChoice(index: number): ChoiceResult | undefined {
     const s = this.s;
     const p = s.pending;
     if (!p) return;
+    index = Math.max(0, Math.min(p.popup.ch.length - 1, Math.floor(Number(index) || 0)));
     const st = this.state;
     s.pending = undefined;
     const mods = this.runner().modifiers();
@@ -586,6 +698,8 @@ export class Game {
     if (p.opp && p.choiceIds) {
       const choiceId = p.choiceIds[index];
       const r = this.events.resolve(st, p.opp, { choose: () => choiceId }, mods, rng);
+      const sceneDef = p.opp.choices.find((c) => c.id === choiceId)?.scene;
+      if (sceneDef?.length && r.success !== false) this.setSequence(sceneDef);
       const line = r.success === undefined ? bi("(결정했다.)", "(Decided.)") : r.success ? bi("(잘 됐다!)", "(It worked out!)") : bi("(…이번엔 잘 안 됐다.)", "(…It didn't work out this time.)");
       return { who: "me", line: this.L(line), log: p.popup.ch[index]?.t };
     }
@@ -593,8 +707,17 @@ export class Game {
       const e = p.worldEvent;
       const choiceId = e.choices![index].id;
       const r = resolveWorldEvent(e, choiceId, { state: st, world: st.world!, modifiers: mods, rng });
+      if (st.story) ensureArcs(st, rng);
       const line = r.success === undefined ? bi("(그렇게 하기로 했다.)", "(So be it.)") : r.success ? bi("(좋다고 했다!)", "(They said yes!)") : bi("(…어색하게 웃었다.)", "(…an awkward smile.)");
       return { who: r.success === false ? p.popup.who : "me", name: p.popup.name, line: this.L(line) };
+    }
+    if (p.storyRef) {
+      const label = p.popup.ch[index]?.t;
+      const res = resolveStory(p.storyRef, index, { state: st, seed: s.seed, rng, mods, facts: this.facts() }, label);
+      if (!res) return;
+      if (res.scene?.length) this.setSequence(res.scene);
+      if (!st.alive) s.minute = CFG.dayEndMinute;
+      return { who: "me", line: this.fill(fillStory(this.L(res.r), st, this.facts(), { patient: p.patient ?? "" })), log: label };
     }
     if (p.storyId) {
       const story = STORIES.find((x) => x.id === p.storyId)!;
@@ -613,6 +736,42 @@ export class Game {
       return { who: "me", line: this.L(o.kind === "home" ? bi("(이불 밖은 위험해.)", "(Outside the blanket is dangerous.)") : bi("(좋아, 가보자!)", "(Okay, let's go!)")), log: this.L(o.label) };
     }
     return;
+  }
+
+  /** A choice moves the player: each place for ~2 hours, starting now. */
+  private setSequence(locations: string[]): void {
+    const s = this.s;
+    let t = s.minute;
+    s.dayPlan.sequence = locations.map((locationId) => {
+      const q = { locationId, from: t, until: Math.min(CFG.dayEndMinute, t + 120) };
+      t += 120;
+      return q;
+    });
+    s.dayPlan.override = undefined;
+  }
+
+  /** Move everyone in the scene a little (call every few seconds; NPCs, partner, kids and pets wander too). */
+  wander(): PrototypeScene | undefined {
+    const sc = this.s.lastScene;
+    if (!sc) return;
+    const loc = getLocation(this.s.loc ?? "home");
+    const spots = loc.spots ?? [];
+    if (spots.length < 2) return sc;
+    this.wanderTick = (this.wanderTick + 1) % 1_000_000;
+    const rng = this.rng("wander", this.wanderTick);
+    const taken = new Set<string>();
+    sc.actors = sc.actors.map((a) => {
+      if (!rng.chance(0.5)) {
+        taken.add(a.spot.join(","));
+        return a;
+      }
+      const free = spots.filter((p) => !taken.has(p.join(",")));
+      const spot = (free.length ? free : spots)[rng.int(0, (free.length ? free : spots).length - 1)] as [number, number];
+      const jitter: [number, number] = [spot[0] + rng.range(-0.4, 0.4), spot[1] + rng.range(-0.4, 0.4)];
+      taken.add(spot.join(","));
+      return { ...a, spot: jitter, z: Math.round((jitter[0] + jitter[1]) * 10) };
+    });
+    return sc;
   }
 
   // ---- player-driven actions -----------------------------------------------
@@ -658,22 +817,51 @@ export class Game {
   }
 
   // ---- between days ---------------------------------------------------------
-  endDay(): { over: boolean; fromAge: number; toAge: number; lines: string[] } {
+  /**
+   * Time passes until the next played day (a fated turning point, an arc step
+   * like 상견례/결혼식/법원, or a calm day). Returns the 시간이 흐른다 data:
+   * memory cards (framed scenes) for big moments, plus short summary lines.
+   */
+  endDay(): { over: boolean; fromAge: number; toAge: number; lines: string[]; cards: MemoryCard[] } {
     const s = this.s;
     const st = this.state;
     if (st.world?.travel) endTrip(st.world, this.rng("endtrip"));
     s.dayPlan = {};
     const before = snapshot(st);
     const fromAge = Math.floor(st.age);
-    const gap = (CFG.dayGapYears as Array<{ maxAge: number; gap: [number, number] }>).find((g) => st.age <= g.maxAge)!.gap;
     const rng = this.rng("gap");
-    const months = rng.int(gap[0] * 12, gap[1] * 12);
-    const runner = new LifeRunner(this.runnerOptions(hash(s.seed, "between", s.dayIndex)), st);
-    for (let i = 0; i < months && st.alive; i++) runner.stepMonth();
+    if (st.alive && st.story) {
+      const next = scheduleNext(st, rng);
+      const runner = new LifeRunner(this.runnerOptions(hash(s.seed, "between", s.dayIndex)), st);
+      while (st.alive && st.monthIndex < next.month) {
+        runner.stepMonth();
+        monthlyStoryTick(st, rng);
+        // A newly started arc step (e.g. a parent's last days) can pull the next day earlier.
+        const dueArc = st.story.arcs.find((x) => x.steps[x.step] && x.steps[x.step].dueMonth <= st.monthIndex + 1);
+        if (dueArc && next.kind !== "arc") {
+          st.story.nextDay = { month: st.monthIndex + 1, kind: "arc", ref: dueArc.id };
+          break;
+        }
+      }
+      if (st.alive && st.monthIndex < st.story.nextDay!.month) {
+        // Step the remaining month(s) once more so the day lands in its month.
+        while (st.alive && st.monthIndex < st.story.nextDay!.month) {
+          runner.stepMonth();
+          monthlyStoryTick(st, rng);
+        }
+      }
+      s.dayKind = st.story.nextDay!.kind;
+      s.dayRef = st.story.nextDay!.ref;
+    } else if (st.alive) {
+      const runner = new LifeRunner(this.runnerOptions(hash(s.seed, "between", s.dayIndex)), st);
+      for (let i = 0; i < 12 && st.alive; i++) runner.stepMonth();
+    }
     pruneWorld(st);
-    const lines = summarize(before, snapshot(st), s.lang);
-    for (const l of lines.bi) s.milestones.push({ age: Math.floor(st.age), ko: l.ko, en: l.en });
-    const out = { over: !st.alive, fromAge, toAge: Math.floor(st.age), lines: lines.bi.map((l) => l[s.lang]) };
+    const cards = buildCards(st, s.lang, s.seed);
+    const lines = cards.length ? cards.map((c) => c.caption) : summarize(before, snapshot(st), s.lang).bi.map((l) => l[s.lang]);
+    for (const c of cards) s.milestones.push({ age: c.age, ko: s.lang === "ko" ? c.caption : c.caption, en: c.caption });
+    if (!cards.length) for (const l of summarize(before, snapshot(st), s.lang).bi) s.milestones.push({ age: Math.floor(st.age), ko: l.ko, en: l.en });
+    const out = { over: !st.alive, fromAge, toAge: Math.floor(st.age), lines, cards };
     if (!st.alive) {
       s.over = true;
       return out;
@@ -684,11 +872,46 @@ export class Game {
     return out;
   }
 
+  /**
+   * Death: fade out gently and remember the life. Lines are original, chosen
+   * from how the player lived (love, family, travel, friends, courage…).
+   */
+  memorial(): { fadeMs: number; lineMs: number; epitaph: string; lines: string[]; cards: MemoryCard[] } {
+    const st = this.state;
+    const s = this.s;
+    const lang = s.lang;
+    const w = st.world;
+    const friends = Object.values(w?.relationships ?? {}).filter((r) => r.stage === "FRIEND" || r.stage === "CLOSE_FRIEND" || r.stage === "LOST_CONTACT").length;
+    const tags = new Set<string>(["any"]);
+    if (st.relationship.status === "MARRIED" || st.flags.widowed || st.npcs.some((n) => n.role === "EX" || n.role === "PARTNER")) tags.add("love");
+    if ((st.kids ?? []).length) (tags.add("kids"), tags.add("family"));
+    if (st.relationship.status === "MARRIED") tags.add("family");
+    if ((w?.pastTrips.length ?? 0) >= 3 || st.flags.livedAbroad) tags.add("travel");
+    if (friends >= 4) tags.add("friends");
+    if (st.career.level >= 4) tags.add("work");
+    if ((st.pets ?? []).length) tags.add("pet");
+    if (st.flags.jobLostMonth !== undefined || st.flags.widowed || st.relationship.status === "DIVORCED") tags.add("courage");
+    if (tags.size <= 2) tags.add("quiet");
+    const pool = (memorialData.lines as Array<{ tag: string; text: { ko: string; en: string } }>).filter((l) => tags.has(l.tag));
+    const rng = new SeededRandom(hash(s.seed, "memorial"));
+    const specific = pool.filter((l) => l.tag !== "any");
+    const picked = [...rng.weightedSample(specific.map((l) => ({ item: l, weight: 1 })), 2), ...rng.weightedSample(pool.filter((l) => l.tag === "any").map((l) => ({ item: l, weight: 1 })), 1)];
+    const deathYear = st.date.year;
+    const name = s.setup.name;
+    return {
+      fadeMs: 4000,
+      lineMs: 3500,
+      epitaph: lang === "ko" ? `${name} · ${st.birth.year} – ${deathYear}` : `${name} · ${st.birth.year} – ${deathYear}`,
+      lines: picked.map((l) => l.text[lang]),
+      cards: [],
+    };
+  }
+
   isOver(): boolean {
     return this.s.over;
   }
 
-  ending(): { title: string; summary: string; lines: string[]; age: number } {
+  ending(): { title: string; summary: string; lines: string[]; age: number; memorial: ReturnType<Game["memorial"]> } {
     const st = this.state;
     const s = this.s;
     const partners = st.npcs.filter((n) => n.role === "PARTNER" || n.role === "EX").length;
@@ -709,6 +932,7 @@ export class Game {
       summary: this.L(bi(`연애 ${partners} · 친구 ${friends} · 여행 ${trips} · ${Math.floor(st.age)}세`, `Relationships ${partners} · Friends ${friends} · Trips ${trips} · Age ${Math.floor(st.age)}`)),
       lines: s.milestones.slice(-6).map((m) => `${m.age}${s.lang === "ko" ? "세" : ""} · ${m[s.lang]}`),
       age: Math.floor(st.age),
+      memorial: this.memorial(),
     };
   }
 
@@ -794,7 +1018,7 @@ export function createGame(input: GameSetup): Game {
   };
   const g = new Game(save);
   // Backstory: birth → start age, lived in the background.
-  const runner = new LifeRunner({ ...g.runnerOptions(hash(seed, "backstory")), mortality: false });
+  const runner = new LifeRunner({ ...g.runnerOptions(hash(seed, "backstory")), mortality: false, excludeTemplates: ["PROPOSAL", "RELATIONSHIP_STRAIN", "LAYOFF", "FAMILY_NEED"] });
   save.life = runner.state;
   const startAge = setup.startAge ?? CFG.startAge;
   while (runner.state.monthIndex < startAge * 12) runner.stepMonth();
@@ -809,6 +1033,8 @@ export function createGame(input: GameSetup): Game {
   }
   st.money = Math.max(st.money, 1.85);
   addFatedPerson(st, setup, new SeededRandom(hash(seed, "fated")));
+  initStory(st, birthOf(setup), setup.place, seed);
+  save.dayKind = "calm";
   save.milestones.push({ age: startAge, ko: "이야기가 시작된다.", en: "The story begins." });
   g.startDay();
   return g;
@@ -844,7 +1070,13 @@ function addFatedPerson(st: LifeState, setup: GameSetup, rng: SeededRandom): voi
         : { weekday: [block("language_exchange_app", 21, [1, 2, 3, 4, 5])], weekend: [block("language_exchange_app", 20, [0, 6])] };
   const npc = generateNpc(w, rng, { type: from === "abroad" ? "language_partner" : "regular_customer", region: from === "abroad" ? "online" : home.region, date: st.date, aroundAge: st.age, persistence: "PERSISTENT", schedule });
   npc.sex = gender === "M" ? "MALE" : "FEMALE";
-  if (fx.name) npc.name = fx.name;
+  if (fx.name) {
+    npc.name = fx.name;
+    // Nobody else in this world may share the destined person's name.
+    const pool = ["서준", "도윤", "하준", "지호", "민재", "현우", "지우", "서아", "하린", "유나", "소희", "민지"];
+    for (const other of Object.values(w.npcs)) if (other !== npc && other.name === fx.name) other.name = pool[rng.int(0, pool.length - 1)];
+    for (const n of st.npcs) if (n.name === fx.name) n.name = pool[rng.int(0, pool.length - 1)];
+  }
   if (fx.birth) Object.assign(npc, { birthYear: fx.birth.year, birthMonth: fx.birth.month, birthDay: fx.birth.day });
   npc.single = true;
   npc.fated = true;

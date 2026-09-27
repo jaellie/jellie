@@ -718,6 +718,12 @@
    "activities": [
     "propose"
    ]
+  },
+  {
+   "id": "airplane_cabin",
+   "locationId": "airplane",
+   "assetPath": "assets/bg/airplane/airplane_cabin.png",
+   "status": "planned"
   }
  ]
 }

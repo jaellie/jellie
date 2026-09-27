@@ -49,6 +49,7 @@ export interface PrototypeScene {
     role: string;
     /** True for the destined person from setup — also when they are the partner. */
     fated?: boolean;
+    /** e.g. pet_dog / pet_cat / kid / trainer … */
     npcType?: string;
   }>;
 }
@@ -82,7 +83,7 @@ export function toPrototypeScene(scene: Scene): PrototypeScene {
       familiar: a.familiar,
       gender: a.sex === "MALE" ? "M" : a.sex === "FEMALE" ? "F" : undefined,
       age: a.age,
-      role: a.kind === "player" ? "me" : a.kind === "partner" ? "partner" : a.fated ? "fated" : a.kind,
+      role: a.kind === "player" ? "me" : a.kind === "partner" ? "partner" : a.fated ? "fated" : a.npcType === "kid" ? "kid" : a.npcType?.startsWith("pet_") ? "pet" : a.kind,
       fated: !!a.fated,
       npcType: a.npcType,
     })),

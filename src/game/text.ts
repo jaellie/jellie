@@ -30,6 +30,11 @@ export const SPEAKER_NAME: Record<string, Bi> = {
   app: bi("알림", "Notification"),
   ex: bi("???", "???"),
   relative: bi("친척", "Relative"),
+  inlaw: bi("상대 부모님", "Their parents"),
+  judge: bi("판사님", "Judge"),
+  nurse: bi("간호사", "Nurse"),
+  doctor: bi("의사 선생님", "Doctor"),
+  fated: bi("그 사람", "That person"),
 };
 
 export function krw(units: number, unitWon: number): string {
@@ -53,6 +58,30 @@ export function fixJosa(text: string): string {
     if (p === "(으)로" && last >= 0xac00 && last <= 0xd7a3 && (last - 0xac00) % 28 === 8) return w + "로"; // ㄹ받침
     if (p === "(으)로" && /l$/i.test(w)) return w + "로";
     return w + (hasBatchim(w) ? withB : without);
+  });
+}
+
+const JOSA_PAIRS: Record<string, [string, string]> = {
+  와: ["과", "와"], 과: ["과", "와"], 이: ["이", "가"], 가: ["이", "가"], 은: ["은", "는"], 는: ["은", "는"],
+  을: ["을", "를"], 를: ["을", "를"], 으로: ["으로", "로"], 로: ["으로", "로"], 이랑: ["이랑", "랑"], 랑: ["이랑", "랑"],
+};
+
+/**
+ * Put names into "{partner}", "{friend}"… placeholders and fix ONLY the particle written right after each one
+ * ("{partner}는" → "Ren은"/"하나는"). Everything else in the sentence is left exactly as written — never run a
+ * josa rewrite over free text (it turns "있는" into "있은" and "아이" into "아가").
+ */
+export function fillNames(text: string, vars: Record<string, string | undefined>): string {
+  // An author may also write the marker form ("{partner}와(과)") — swallow the "(과)" part too.
+  return text.replace(/\{(\w+)\}(이랑|으로|과|와|이|가|은|는|을|를|로|랑)?(?:\((?:과|와|이|가|은|는|을|를)\))?/g, (m, key: string, josa?: string) => {
+    if (!(key in vars)) return m;
+    const name = vars[key] ?? "";
+    if (!josa || !name) return name + (josa ?? "");
+    const [withB, without] = JOSA_PAIRS[josa];
+    const last = name.charCodeAt(name.length - 1);
+    const rieul = (last >= 0xac00 && last <= 0xd7a3 && (last - 0xac00) % 28 === 8) || /l$/i.test(name);
+    if (withB === "으로" && rieul) return name + "로";
+    return name + (hasBatchim(name) ? withB : without);
   });
 }
 

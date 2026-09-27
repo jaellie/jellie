@@ -83,6 +83,7 @@ export function applyConsequence(s: LifeState, c: Consequence, ctx: ConsequenceC
       log.push(`moved to ${s.location.city}`);
       break;
     case "job":
+      s.flags.retired = false;
       if (!s.career.employed || (c.field && c.field !== s.career.field)) s.career.cid = (s.career.cid ?? 0) + 1;
       s.career = {
         cid: s.career.cid ?? 0, employed: true, field: c.field ?? s.career.field ?? "general", level: Math.max(1, s.career.level), abroad: !!c.abroad || isAbroad(s) };

@@ -1,0 +1,124 @@
+{
+ "_doc": "Original memorial lines (not quotations). Tags are matched to how the player lived.",
+ "lines": [
+  {
+   "tag": "love",
+   "text": {
+    "ko": "사랑했던 날들은 사라지지 않는다. 다른 사람의 마음속에서 계속 살아간다.",
+    "en": "Days of love don't vanish. They go on living in someone else's heart."
+   }
+  },
+  {
+   "tag": "love",
+   "text": {
+    "ko": "당신이 건넨 다정함은, 누군가의 평생이 되었다.",
+    "en": "The kindness you gave became someone's whole life."
+   }
+  },
+  {
+   "tag": "family",
+   "text": {
+    "ko": "당신이 지은 식탁에는 아직도 따뜻한 온기가 남아 있다.",
+    "en": "The table you set still holds its warmth."
+   }
+  },
+  {
+   "tag": "family",
+   "text": {
+    "ko": "당신의 이름을 부르면, 누군가는 여전히 웃는다.",
+    "en": "When someone says your name, someone still smiles."
+   }
+  },
+  {
+   "tag": "travel",
+   "text": {
+    "ko": "멀리 떠났던 길들이, 이제 당신을 집으로 데려다준다.",
+    "en": "All the roads you traveled now lead you home."
+   }
+  },
+  {
+   "tag": "travel",
+   "text": {
+    "ko": "당신이 본 하늘은 오늘도 누군가의 창밖에 있다.",
+    "en": "The skies you saw are outside someone's window today."
+   }
+  },
+  {
+   "tag": "friends",
+   "text": {
+    "ko": "함께 웃던 밤들은 별이 되어 오래도록 빛난다.",
+    "en": "The nights you laughed together became stars that shine a long time."
+   }
+  },
+  {
+   "tag": "friends",
+   "text": {
+    "ko": "좋은 사람들 곁에서 살았다는 것, 그것으로 충분했다.",
+    "en": "You lived among good people. That was enough."
+   }
+  },
+  {
+   "tag": "work",
+   "text": {
+    "ko": "당신이 쌓아 올린 하루들은 누군가의 내일이 되었다.",
+    "en": "The days you built became someone's tomorrow."
+   }
+  },
+  {
+   "tag": "courage",
+   "text": {
+    "ko": "넘어졌던 날보다 다시 일어난 날이 더 많았다.",
+    "en": "There were more days you got back up than days you fell."
+   }
+  },
+  {
+   "tag": "courage",
+   "text": {
+    "ko": "정해진 운명 앞에서도, 당신은 끝까지 당신의 선택을 했다.",
+    "en": "Even before fate, you made your own choices to the end."
+   }
+  },
+  {
+   "tag": "quiet",
+   "text": {
+    "ko": "조용한 삶에도, 반짝이는 순간들은 충분히 많았다.",
+    "en": "Even a quiet life held plenty of shining moments."
+   }
+  },
+  {
+   "tag": "quiet",
+   "text": {
+    "ko": "평범한 하루하루가 모여, 단 하나뿐인 인생이 되었다.",
+    "en": "Ordinary days added up to a life like no other."
+   }
+  },
+  {
+   "tag": "pet",
+   "text": {
+    "ko": "작은 발자국이 당신 곁을 끝까지 따라다녔다.",
+    "en": "Small pawprints followed you to the end."
+   }
+  },
+  {
+   "tag": "kids",
+   "text": {
+    "ko": "당신을 닮은 웃음이, 이 세상에 남아 있다.",
+    "en": "A smile like yours remains in this world."
+   }
+  },
+  {
+   "tag": "any",
+   "text": {
+    "ko": "잘 살았다. 정말로, 잘 살았다.",
+    "en": "You lived well. Truly, you lived well."
+   }
+  },
+  {
+   "tag": "any",
+   "text": {
+    "ko": "안녕. 이번 생도 고마웠어.",
+    "en": "Goodbye. Thank you for this life, too."
+   }
+  }
+ ]
+}

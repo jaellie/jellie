@@ -124,7 +124,7 @@ export class WorldEngine {
 
     // ---- Reunion with someone first met here ----
     if (lastVisit && monthsBetween(lastVisit, req.date) >= R.reunion.minMonthsAway) {
-      const old = Object.values(world.relationships).find((r) => r.origin.locationId === loc.id && ["LOST_CONTACT", "ACQUAINTANCE", "FRIEND"].includes(r.stage) && monthsBetween(r.lastContact, req.date) >= R.reunion.minMonthsAway);
+      const old = Object.values(world.relationships).find((r) => !world.npcs[r.npcId]?.deceased && r.origin.locationId === loc.id && ["LOST_CONTACT", "ACQUAINTANCE", "FRIEND"].includes(r.stage) && monthsBetween(r.lastContact, req.date) >= R.reunion.minMonthsAway);
       if (old && rng.chance(R.reunion.chance * Math.exp(ctx.modifiers.social ?? 0))) {
         const npc = world.npcs[old.npcId];
         old.lastContact = { ...req.date };

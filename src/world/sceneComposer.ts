@@ -8,7 +8,7 @@ import type { BackgroundLayer } from "./types";
 import type { VisitResult } from "./worldEngine";
 import type { WorldState } from "./types";
 import type { LifeState } from "../sim/types";
-import { npcAge } from "./npcs";
+import { knowsName, npcAge } from "./npcs";
 
 export interface SceneActor {
   id: string;
@@ -36,7 +36,7 @@ export interface Scene {
   props: BackgroundLayer[];
 }
 
-export function composeScene(visit: VisitResult, world: WorldState, state: LifeState, opts: { withPartner?: boolean } = {}): Scene {
+export function composeScene(visit: VisitResult, world: WorldState, state: LifeState, opts: { withPartner?: boolean; household?: boolean } = {}): Scene {
   const loc = getLocation(visit.locationId);
   const spots = loc.spots ?? [[4.5, 4.5]];
   const bg = visit.background.background;
@@ -56,7 +56,11 @@ export function composeScene(visit: VisitResult, world: WorldState, state: LifeS
     }
     for (const id of visit.present) {
       const n = world.npcs[id];
-      if (n) place({ id, kind: "npc", name: n.name, npcType: n.type, sex: n.sex, age: npcAge(n, visit.time.date), spriteSeed: n.spriteSeed, fated: n.fated, familiar: !!world.relationships[id] || (world.encounters[`${id}@${loc.id}`]?.encounterCount ?? 0) >= 2 });
+      if (n) place({ id, kind: "npc", name: knowsName(world, id) ? n.name : undefined, npcType: n.type, sex: n.sex, age: npcAge(n, visit.time.date), spriteSeed: n.spriteSeed, fated: n.fated, familiar: !!world.relationships[id] || (world.encounters[`${id}@${loc.id}`]?.encounterCount ?? 0) >= 2 });
+    }
+    if (opts.household) {
+      for (const k of state.kids ?? []) place({ id: k.id, kind: "npc", name: k.name, npcType: "kid", sex: k.sex, age: visit.time.date.year - k.bornYear, spriteSeed: k.spriteSeed });
+      for (const p of (state.pets ?? []).filter((x) => x.alive)) place({ id: p.id, kind: "npc", name: p.name, npcType: p.species === "DOG" ? "pet_dog" : "pet_cat", spriteSeed: p.spriteSeed });
     }
     for (const n of visit.passersBy) place({ id: n.id, kind: "passerby", npcType: n.type, sex: n.sex, age: npcAge(n, visit.time.date), spriteSeed: n.spriteSeed });
   }

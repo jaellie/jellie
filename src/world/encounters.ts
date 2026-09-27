@@ -63,6 +63,7 @@ function ev(ctx: EncounterContext, e: Omit<WorldEvent, "date" | "locationId">): 
 
 /** Log one sighting and return any events it produced (often none). */
 export function processSighting(ctx: EncounterContext, npc: WorldNpc): WorldEvent[] {
+  if (npc.deceased) return [];
   const { world, rng, modifiers: m } = ctx;
   const out: WorldEvent[] = [];
   const key = `${npc.id}@${ctx.locationId}`;
@@ -222,6 +223,7 @@ export function progressRelationship(ctx: EncounterContext, npc: WorldNpc, rel: 
 /** Relationships fade when you stop seeing each other. */
 export function decayRelationships(world: WorldState, date: GameDate): void {
   for (const rel of Object.values(world.relationships)) {
+    if (rel.stage === "DECEASED") continue;
     const months = (date.year - rel.lastContact.year) * 12 + (date.month - rel.lastContact.month);
     if (months >= 18 && ["ACQUAINTANCE", "FRIEND"].includes(rel.stage)) rel.stage = "LOST_CONTACT";
   }

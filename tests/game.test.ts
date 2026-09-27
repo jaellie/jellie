@@ -3,7 +3,7 @@ import { createGame, loadGame, type Beat, type Game } from "../src/game/game";
 import { lintContent } from "../src/game/lint";
 import { Director, guardRequirements, newDirectorMemory } from "../src/game/director";
 import { computeFacts, meets } from "../src/game/facts";
-import { fixJosa } from "../src/game/text";
+import { fillNames, fixJosa } from "../src/game/text";
 import { SeededRandom } from "../src/core/rng";
 import messageData from "../data/game/messages.json";
 
@@ -61,6 +61,19 @@ describe("Content quality (automatic)", () => {
     expect(fixJosa("서울(으)로 이사했다")).toBe("서울로 이사했다");
     expect(fixJosa("부산(으)로 이사했다")).toBe("부산으로 이사했다");
   });
+
+  it("fillNames fixes the particle after a name — and never touches the rest of the sentence", () => {
+    expect(fillNames("{partner}는 웃었다", { partner: "Ren" })).toBe("Ren은 웃었다");
+    expect(fillNames("{partner}는 웃었다", { partner: "하나" })).toBe("하나는 웃었다");
+    expect(fillNames("{pet}가 짖었다, {kid}랑 놀았다", { pet: "콩이", kid: "도윤" })).toBe("콩이가 짖었다, 도윤이랑 놀았다");
+    expect(fillNames("{partner}와 서울로", { partner: "Ren" })).toBe("Ren과 서울로");
+    expect(fillNames("{partner}와(과)의 첫 데이트", { partner: "승민" })).toBe("승민과의 첫 데이트");
+    expect(fillNames("{partner}와(과)의 첫 데이트", { partner: "하나" })).toBe("하나와의 첫 데이트");
+    // Words that merely end like a particle stay exactly as written.
+    const free = "떠날 수 있는 기회. 아이 나이 사이, 하지 않는 일.";
+    expect(fillNames(free, { partner: "Ren" })).toBe(free);
+    expect(fixJosa(free)).toBe(free);
+  });
 });
 
 describe("Director: consistency", () => {
@@ -110,7 +123,8 @@ describe("Director: pacing & variety", () => {
   it("the same line never repeats within 4 days", () => {
     for (const r of runs) {
       const last = new Map<string, number>();
-      for (const x of r.shown.filter((s) => s.kind === "message" || s.kind === "story")) {
+      // Everyday content only (fated/arc story moments like two parents' goodbyes may legitimately echo).
+      for (const x of r.shown.filter((s) => s.kind === "message" || (s.kind === "story" && !s.id.startsWith("story")))) {
         const key = x.texts[0];
         const prev = last.get(key);
         if (prev !== undefined) expect(x.day - prev).toBeGreaterThanOrEqual(4);

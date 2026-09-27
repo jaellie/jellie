@@ -54,7 +54,7 @@ export function generateNpc(world: WorldState, rng: SeededRandom, spawn: NpcSpaw
   const sex = rng.chance(0.5) ? "MALE" : "FEMALE";
   const foreign = spawn.region !== world.homeRegion && spawn.region !== "coast" ? rng.chance(0.85) : rng.chance(t.foreignChance);
   // Avoid giving a new NPC the same name as someone the player already knows.
-  const known = new Set(Object.keys(world.relationships).map((id) => world.npcs[id]?.name));
+  const known = new Set([...Object.keys(world.relationships).map((id) => world.npcs[id]?.name), ...Object.values(world.npcs).filter((n) => n.fated || n.deceased).map((n) => n.name)]);
   const all = foreign ? FOREIGN_NAMES[sex] : LOCAL_NAMES[sex];
   const names = all.filter((n) => !known.has(n)).length ? all.filter((n) => !known.has(n)) : all;
   const age = ageFor(t, spawn.aroundAge, rng);
@@ -142,6 +142,7 @@ function withDailyLife(core: { weekday: ScheduleBlock[]; weekend: ScheduleBlock[
 }
 
 export function isPresent(npc: WorldNpc, locationId: string, t: WorldTime, rng: SeededRandom): boolean {
+  if (npc.deceased) return false;
   if (npc.anchoredTo === locationId) {
     const loc = getLocation(locationId);
     const works = t.hour >= loc.availableHours.start && t.hour < loc.availableHours.end;
@@ -197,6 +198,12 @@ export function drawTransients(world: WorldState, locationId: string, rng: Seede
     out.push(npc);
   }
   return out;
+}
+
+/** You only know someone's name once you've actually met them (not a stranger / familiar face). */
+export function knowsName(world: WorldState | undefined, npcId: string): boolean {
+  const stage = world?.relationships[npcId]?.stage;
+  return !!stage && stage !== "STRANGER" && stage !== "FAMILIAR_FACE";
 }
 
 export function npcAge(npc: WorldNpc, date: GameDate): number {

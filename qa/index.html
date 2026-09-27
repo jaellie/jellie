@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ko">
+<head><link rel="icon" href="data:,">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Love Sim QA Harness</title>
+<style>
+  :root { --ink:#2b2233; --pink:#ff6f91; --cream:#fff6e3; --paper:#e8d3b0; --night:#1a1420; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--night); display: flex; justify-content: center; font-family: Galmuri9, "DungGeunMo", monospace; color: var(--ink); image-rendering: pixelated; }
+  #frame { width: 360px; height: 740px; position: relative; overflow: hidden; background: #2b2233; border-radius: 18px; }
+  .screen { position: absolute; inset: 0; display: none; }
+  .screen.on { display: block; }
+  button { font-family: inherit; cursor: pointer; }
+  .btn { border: 3px solid var(--ink); background: var(--cream); box-shadow: inset 0 -3px 0 var(--paper), 2px 2px 0 var(--ink); padding: 8px 10px; font-size: 13px; }
+  .btn.pink { background: var(--pink); color: #fff; box-shadow: inset 0 -3px 0 #d94f74, 2px 2px 0 var(--ink); }
+  /* setup */
+  #setup { background: #ffe3ea; padding: 40px 24px; }
+  #setup h1 { font-size: 28px; text-shadow: 2px 2px 0 #ff9fb4; margin-bottom: 20px; }
+  #setup label { display: block; font-size: 13px; margin: 10px 0 4px; }
+  #setup input, #setup select { width: 100%; font-family: inherit; font-size: 15px; padding: 8px; border: 3px solid var(--ink); background: #fff; }
+  #setup .row { display: flex; gap: 8px; } #setup .row > * { flex: 1; }
+  /* play */
+  #hud { position: absolute; top: 0; left: 0; right: 0; background: var(--ink); color: var(--cream); padding: 12px 14px 8px; z-index: 5; border-bottom: 3px solid #1a1420; }
+  #hud .top { display: flex; justify-content: space-between; font-size: 16px; }
+  #hud .sub { font-size: 11px; color: #b9a9c9; margin-top: 4px; display: flex; justify-content: space-between; }
+  #scene { position: absolute; z-index: 1; isolation: isolate; top: 64px; left: 0; width: 360px; height: 340px; overflow: hidden; border-bottom: 3px solid var(--ink); }
+  #scene .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: repeating-conic-gradient(rgba(255,255,255,.18) 0 25%, rgba(0,0,0,.05) 0 50%) 0 0/24px 24px; border-top: 3px solid var(--ink); }
+  #scene .roomlabel { position: absolute; left: 10px; top: 8px; padding: 3px 8px; background: #1e2a5a; color: #fff; font-size: 12px; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--ink); z-index: 3; }
+  #scene .bgid { position: absolute; right: 8px; top: 10px; font-size: 9px; color: rgba(43,34,51,.55); z-index: 3; }
+  .overlay { position: absolute; inset: 0; pointer-events: none; z-index: 90; }
+  .actor { position: absolute; width: 24px; height: 40px; transition: left 2.2s linear, top 2.2s linear; }
+  .actor .head { position: absolute; left: 4px; top: 0; width: 16px; height: 16px; background: #ffd9bd; border: 2px solid var(--ink); }
+  .actor .hair { position: absolute; left: 3px; top: -2px; width: 18px; height: 8px; border: 2px solid var(--ink); border-bottom: 0; }
+  .actor .body { position: absolute; left: 2px; top: 16px; width: 20px; height: 18px; border: 2px solid var(--ink); }
+  .actor .legs { position: absolute; left: 6px; top: 34px; width: 12px; height: 6px; background: var(--ink); }
+  .actor .tag { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 9px; white-space: nowrap; background: rgba(255,255,255,.8); padding: 0 3px; border: 1px solid var(--ink); }
+  .actor.kid { transform: scale(.7); transform-origin: bottom center; }
+  .actor.pet .head, .actor.pet .hair, .actor.pet .legs { display: none; }
+  .actor.pet .body { top: 24px; height: 12px; width: 22px; border-radius: 4px; }
+  #panel { position: absolute; top: 407px; left: 0; right: 0; bottom: 0; background: #fff6e3; padding: 10px 12px; }
+  #place { font-size: 12px; color: #8a7a92; margin-bottom: 6px; }
+  #actions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  #log { border: 3px solid var(--ink); padding: 8px 10px; font-size: 13px; line-height: 1.6; min-height: 60px; background: #fff; box-shadow: inset 0 -3px 0 var(--paper); }
+  #toast { position: absolute; left: 12px; top: 74px; max-width: 320px; z-index: 30; background: #fff6e3; border: 3px solid var(--pink); box-shadow: 3px 3px 0 var(--ink); padding: 6px 10px; font-size: 12px; color: #c2385f; display: none; }
+  #dest { display: none; position: absolute; left: 20px; right: 20px; top: 180px; z-index: 40; background: #fff6e3; border: 3px solid var(--ink); padding: 8px; max-height: 360px; overflow: auto; }
+  #dest button { display: block; width: 100%; margin-bottom: 4px; text-align: left; }
+  /* popup */
+  #popupWrap { display: none; position: absolute; inset: 0; z-index: 50; background: rgba(26,20,32,.55); }
+  #popup { position: absolute; left: 20px; right: 20px; top: 150px; background: #fff6e3; border: 3px solid var(--ink); box-shadow: 4px 4px 0 #1a1420; padding: 4px; }
+  #popup .in { border: 2px solid #e8c9a0; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+  #popup .who { font-size: 12px; color: #c2385f; }
+  #popup .line { font-size: 14px; line-height: 1.6; }
+  #popup .ch { display: flex; flex-direction: column; gap: 6px; }
+  #popup .ch button { text-align: left; }
+  #popup .res { font-size: 14px; line-height: 1.6; color: #c2385f; }
+  /* skip */
+  #skip { background: #2b2233; color: #fff6e3; text-align: center; }
+  #skip .t { margin-top: 70px; font-size: 13px; color: #b9a9c9; }
+  #skip .ages { margin-top: 24px; font-size: 20px; color: #8a7a92; } #skip .ages b { font-size: 44px; color: #fff; text-shadow: 3px 3px 0 #ff6f91; }
+  #skip .card { margin: 24px auto 0; width: 300px; height: 283px; border: 3px solid #fff6e3; box-shadow: 4px 4px 0 #1a1420; position: relative; overflow: hidden; }
+  #skip .caption { margin: 18px 30px 0; text-align: left; font-size: 14px; min-height: 40px; }
+  #skip .bar { position: absolute; bottom: 36px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; }
+  #skip .bar i { display: block; width: 28px; height: 8px; border: 2px solid #ff6f91; } #skip .bar i.f { background: #ff6f91; }
+  #skipNext { position: absolute; bottom: 70px; left: 50%; transform: translateX(-50%); }
+  /* end */
+  #end { background: #000; color: #fff6e3; text-align: center; }
+  #end .fade { position: absolute; inset: 0; background: #000; opacity: 0; transition: opacity 4s ease; }
+  #end .ep { position: relative; margin-top: 220px; font-size: 16px; opacity: 0; transition: opacity 2s; }
+  #end .ql { position: relative; margin: 24px 36px 0; font-size: 13px; line-height: 1.8; opacity: 0; transition: opacity 2s; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <div id="setup" class="screen on" data-testid="setup">
+    <h1>두근두근,<br>내 운명의 사람</h1>
+    <label>이름</label><input id="fName" value="민아">
+    <label>생년월일 (양력)</label>
+    <div class="row"><input id="fY" value="1997"><input id="fM" value="9"><input id="fD" value="28"></div>
+    <label>태어난 시간 (선택)</label>
+    <div class="row"><input id="fH" value="9"><input id="fMin" value="30"></div>
+    <div class="row"><div><label>나는</label><select id="fG"><option value="F">여자</option><option value="M">남자</option></select></div>
+      <div><label>좋아하는 사람</label><select id="fL"><option value="M">남자</option><option value="F">여자</option><option value="A">상관없음</option></select></div></div>
+    <label>MBTI</label><input id="fMbti" value="ENFP">
+    <label>운명의 상대 이름 (비워두면 운명에 맡기기)</label><input id="fFated" value="Ren">
+    <div style="margin-top:18px"><button class="btn pink" id="start" data-testid="start" style="width:100%;font-size:18px">▶ 새 게임</button></div>
+  </div>
+
+  <div id="play" class="screen" data-testid="play">
+    <div id="hud"><div class="top"><span id="hDate"></span><span id="hAge" style="color:#ffd36b"></span></div>
+      <div class="sub"><span id="hJob"></span><span id="hRel"></span><span id="hMoney"></span></div></div>
+    <div id="scene" data-testid="scene"></div>
+    <div id="toast" data-testid="toast"></div>
+    <div id="panel"><div id="place" data-testid="place"></div><div id="actions" data-testid="actions"></div><div id="log" data-testid="log">…</div></div>
+    <div id="dest" data-testid="dest"></div>
+    <div id="popupWrap" data-testid="popup"><div id="popup"><div class="in">
+      <div class="who" id="pWho"></div><div class="line" id="pLine"></div><div class="ch" id="pCh"></div><div class="res" id="pRes"></div>
+    </div></div></div>
+  </div>
+
+  <div id="skip" class="screen" data-testid="skip">
+    <div class="t">시간이 흐른다…</div>
+    <div class="ages"><span id="sFrom"></span> → <b id="sTo"></b></div>
+    <div class="card" id="sCard" data-testid="card"></div>
+    <div class="caption" id="sCap" data-testid="caption"></div>
+    <button class="btn" id="skipNext" data-testid="skip-next">▶</button>
+    <div class="bar" id="sBar"></div>
+  </div>
+
+  <div id="end" class="screen" data-testid="memorial">
+    <div class="fade" id="eFade"></div>
+    <div class="ep" id="eEp"></div>
+    <div id="eLines"></div>
+  </div>
+</div>
+<script src="../dist/lovesim-engine.js"></script>
+<script>
+(() => {
+  const P = new URLSearchParams(location.search);
+  const SPEED = Number(P.get("speed") || 30);
+  const $ = (id) => document.getElementById(id);
+  let game = null, screen = "setup", popupOpen = false, resultShown = false, skipData = null, skipIdx = 0;
+  const show = (id) => { for (const el of document.querySelectorAll(".screen")) el.classList.toggle("on", el.id === id); screen = id; };
+  const ROLE_COLOR = { me: "#ff6f91", partner: "#6c7bd9", fated: "#9b6cd9", npc: "#6fbf5a", passerby: "#c9c4bb", kid: "#ffd36b", pet: "#a3774a", inlaw: "#8fb8a8", guest: "#e8a0c0", guest2: "#bfe6fa", relative: "#555", coworker: "#8fb8a8", coworker2: "#bfe6fa", baby: "#ffd36b", patient: "#ddd", friend: "#6fbf5a" };
+  const X = (i, j) => 180 + (i - j) * 28, Y = (i, j) => 60 + (i + j) * 18;
+
+  function drawScene(el, sc, big) {
+    el.innerHTML = "";
+    if (!sc) return;
+    el.style.background = sc.roomKey ? ({ home: "#dcb080", office: "#b9c3d9", street: "#b3b8c4", park: "#9fd67c", cafe: "#ead8bb", beach: "#f3dfae", cinema: "#7a2232", restaurant: "#7a2232", tokyo: "#c9c4bb", diner: "#c9d6c0", amuse: "#f3d7e3" }[sc.roomKey] || sc.baseColor) : sc.baseColor;
+    const f = document.createElement("div"); f.className = "floor"; el.appendChild(f);
+    if (big !== false) {
+      const lab = document.createElement("div"); lab.className = "roomlabel"; lab.textContent = sc.roomKey ? "ROOMS." + sc.roomKey : sc.assetPath.split("/").slice(-1)[0]; el.appendChild(lab);
+    }
+    for (const a of sc.actors) {
+      const d = document.createElement("div");
+      d.className = "actor " + (a.role === "kid" || a.role === "baby" ? "kid " : "") + (a.role === "pet" ? "pet" : "");
+      d.dataset.role = a.role;
+      const c = ROLE_COLOR[a.role] || "#6fbf5a";
+      const hair = a.gender === "M" ? "#3b2530" : "#6b4a33";
+      d.innerHTML = `<div class="hair" style="background:${hair}"></div><div class="head"></div><div class="body" style="background:${c}"></div><div class="legs"></div>` + (a.name && big !== false ? `<div class="tag">${a.name}</div>` : "");
+      d.style.left = (X(a.spot[0], a.spot[1]) - 12) + "px"; d.style.top = (Y(a.spot[0], a.spot[1]) + 40) + "px"; d.style.zIndex = a.z;
+      el.appendChild(d);
+    }
+    for (const o of sc.overlays) { const ov = document.createElement("div"); ov.className = "overlay"; ov.style.background = o.background; ov.dataset.cond = o.condition; el.appendChild(ov); }
+  }
+
+  function hud() {
+    const h = game.hud();
+    $("hDate").textContent = h.date; $("hAge").textContent = h.age; $("hJob").textContent = h.job; $("hRel").textContent = h.relationship; $("hMoney").textContent = h.money;
+    $("place").textContent = "📍 " + h.location + " · " + h.city + " · " + String(Math.floor(h.minute / 60)).padStart(2, "0") + ":" + String(Math.floor(h.minute % 60)).padStart(2, "0");
+  }
+  function actions() {
+    const box = $("actions"); box.innerHTML = "";
+    for (const a of game.actions()) {
+      const b = document.createElement("button"); b.className = "btn"; b.textContent = a.label; b.dataset.testid = "action-" + a.id;
+      b.onclick = () => { if (a.id === "LEAVE") return openDest(); handle(game.doActivity(a.id)); };
+      box.appendChild(b);
+    }
+  }
+  function openDest() {
+    const d = $("dest"); d.innerHTML = ""; d.style.display = "block";
+    for (const x of game.destinations().filter((x) => x.open).slice(0, 8)) {
+      const b = document.createElement("button"); b.className = "btn"; b.textContent = x.label; b.dataset.testid = "dest-" + x.id;
+      b.onclick = () => { d.style.display = "none"; handle(game.goTo(x.id)); }; d.appendChild(b);
+    }
+    const stay = document.createElement("button"); stay.className = "btn"; stay.textContent = "그대로 있기"; stay.onclick = () => (d.style.display = "none"); d.appendChild(stay);
+  }
+  function toast(t) { const el = $("toast"); el.textContent = t; el.style.display = "block"; clearTimeout(toast.h); toast.h = setTimeout(() => (el.style.display = "none"), 3500); }
+
+  function openPopup(p) {
+    popupOpen = true; resultShown = false;
+    $("dest").style.display = "none"; // an interruption closes the destination list
+    $("popupWrap").style.display = "block"; $("popupWrap").dataset.source = p.source; $("popupWrap").dataset.who = p.who;
+    $("pWho").textContent = (p.name || p.who) + (p.title ? " · " + p.title : ""); $("pLine").textContent = p.line; $("pRes").textContent = "";
+    const ch = $("pCh"); ch.innerHTML = "";
+    p.ch.forEach((c, i) => {
+      const b = document.createElement("button"); b.className = "btn"; b.textContent = c.t; b.dataset.testid = "choice-" + i;
+      b.onclick = () => {
+        if (resultShown) return;
+        const r = game.choose(i);
+        resultShown = true; ch.innerHTML = "";
+        $("pRes").textContent = (r && r.line) || "…";
+        const k = document.createElement("button"); k.className = "btn pink"; k.textContent = "▼"; k.dataset.testid = "continue";
+        k.onclick = () => { $("popupWrap").style.display = "none"; popupOpen = false; drawScene($("scene"), game.scene()); hud(); actions(); if (game.isOver()) endDay(); };
+        ch.appendChild(k);
+      };
+      ch.appendChild(b);
+    });
+  }
+
+  function handle(beats) {
+    for (const b of beats) {
+      if (b.kind === "enter") { drawScene($("scene"), game.scene()); actions(); $("log").textContent = b.name; }
+      else if (b.kind === "log") $("log").textContent = b.text;
+      else if (b.kind === "toast") toast(b.from + ': "' + b.text + '"');
+      else if (b.kind === "popup") { drawScene($("scene"), game.scene()); openPopup(b.popup); }
+      else if (b.kind === "dayEnd") return endDay();
+    }
+    hud();
+  }
+
+  function endDay() {
+    const r = game.endDay();
+    skipData = r; skipIdx = 0;
+    if (r.over) return memorial();
+    show("skip");
+    $("sFrom").textContent = r.fromAge; $("sTo").textContent = r.toAge + "세";
+    renderSkip();
+  }
+  function renderSkip() {
+    const r = skipData, cards = r.cards;
+    const n = Math.max(1, cards.length);
+    $("sBar").innerHTML = Array.from({ length: n }, (_, i) => `<i class="${i <= skipIdx ? "f" : ""}"></i>`).join("");
+    const card = cards[skipIdx];
+    $("sCard").dataset.kind = card ? card.kind : "none";
+    // Card = the same 360×340 scene, scaled down into the frame (so actors keep their spots).
+    const box = $("sCard"); box.innerHTML = ""; box.style.background = "#1e2a5a";
+    if (card) {
+      const inner = document.createElement("div");
+      inner.style.cssText = "position:absolute;left:0;top:0;width:360px;height:340px;transform-origin:0 0;transform:scale(" + (300 / 360) + ");";
+      box.appendChild(inner); drawScene(inner, card.scene, false);
+      box.style.background = inner.style.background;
+    }
+    $("sCap").textContent = card ? card.caption : r.lines.join(" · ");
+  }
+  $("skipNext").onclick = () => {
+    skipIdx++;
+    if (skipIdx < skipData.cards.length) return renderSkip();
+    show("play"); hud(); actions(); $("log").textContent = game.s.day.label.ko;
+  };
+
+  function memorial() {
+    show("end");
+    const m = game.memorial();
+    $("eEp").textContent = m.epitaph;
+    $("eLines").innerHTML = m.lines.map((l) => `<div class="ql">${l}</div>`).join("");
+    requestAnimationFrame(() => { $("eFade").style.opacity = 1; });
+    setTimeout(() => { $("eEp").style.opacity = 1; }, 1000);
+    [...document.querySelectorAll(".ql")].forEach((el, i) => setTimeout(() => (el.style.opacity = 1), 1800 + i * 800));
+    document.body.dataset.over = "1";
+  }
+
+  $("start").onclick = () => {
+    const v = (id) => $(id).value.trim();
+    game = LoveSim.createGame({
+      name: v("fName"), gender: v("fG"), likes: v("fL"),
+      birth: { year: +v("fY"), month: +v("fM"), day: +v("fD"), hour: v("fH") === "" ? null : +v("fH"), minute: v("fMin") === "" ? null : +v("fMin") },
+      mbti: v("fMbti"), lang: "ko", seed: P.get("seed") ? +P.get("seed") : undefined,
+      fated: { name: v("fFated") || null, from: "same" },
+    });
+    window.__qa.game = game;
+    show("play"); hud(); actions();
+  };
+
+  setInterval(() => {
+    if (screen !== "play" || !game || popupOpen || game.isOver()) return;
+    handle(game.advance(game.s.minute + 0.32 * SPEED));
+  }, 100);
+  setInterval(() => { if (screen === "play" && game && !popupOpen) drawScene($("scene"), game.wander()); }, 2800);
+
+  window.__qa = { get screen() { return screen; }, get popupOpen() { return popupOpen; }, game: null };
+})();
+</script>
+</body>
+</html>

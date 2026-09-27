@@ -1,0 +1,412 @@
+{
+ "_doc": "Memory cards for the 시간이 흐른다 screen: [location, activity, actors, caption]. Captions fill {partner} {friend} {kid} {pet} {patient} {city}.",
+ "cards": {
+  "START_DATING": {
+   "location": "cafe",
+   "activity": null,
+   "actors": [
+    "me",
+    "partner"
+   ],
+   "caption": {
+    "ko": "{partner}와(과) 사귀기 시작했다",
+    "en": "Started dating {partner}"
+   }
+  },
+  "FIRST_DATE": {
+   "location": "restaurant",
+   "activity": "date",
+   "actors": [
+    "me",
+    "partner"
+   ],
+   "caption": {
+    "ko": "{partner}와(과)의 첫 데이트",
+    "en": "First date with {partner}"
+   }
+  },
+  "PROPOSAL": {
+   "location": "park",
+   "activity": "propose",
+   "actors": [
+    "me",
+    "partner"
+   ],
+   "caption": {
+    "ko": "{partner}의 프러포즈",
+    "en": "{partner}'s proposal"
+   }
+  },
+  "MEET_PARENTS": {
+   "location": "restaurant",
+   "activity": "meet_parents",
+   "actors": [
+    "me",
+    "partner",
+    "inlaw",
+    "inlaw2"
+   ],
+   "caption": {
+    "ko": "상견례",
+    "en": "Meeting the families"
+   }
+  },
+  "CALL_OFF": {
+   "location": "street",
+   "activity": null,
+   "actors": [
+    "me"
+   ],
+   "caption": {
+    "ko": "파혼했다",
+    "en": "The engagement was called off"
+   }
+  },
+  "WEDDING": {
+   "location": "wedding_venue",
+   "activity": "wedding",
+   "actors": [
+    "me",
+    "partner",
+    "guest",
+    "guest2"
+   ],
+   "caption": {
+    "ko": "{partner}와(과) 결혼했다",
+    "en": "Married {partner}"
+   }
+  },
+  "NEW_HOME": {
+   "location": "home",
+   "activity": null,
+   "actors": [
+    "me",
+    "partner"
+   ],
+   "caption": {
+    "ko": "우리의 첫 집",
+    "en": "Our first home"
+   }
+  },
+  "BREAKUP": {
+   "location": "street",
+   "activity": null,
+   "actors": [
+    "me"
+   ],
+   "caption": {
+    "ko": "{partner}와(과) 헤어졌다",
+    "en": "Broke up with {partner}"
+   }
+  },
+  "DIVORCE": {
+   "location": "court",
+   "activity": "court_hearing",
+   "actors": [
+    "me",
+    "partner"
+   ],
+   "caption": {
+    "ko": "이혼했다",
+    "en": "Got divorced"
+   }
+  },
+  "BIRTH": {
+   "location": "hospital",
+   "activity": null,
+   "actors": [
+    "me",
+    "partner",
+    "baby"
+   ],
+   "caption": {
+    "ko": "{kid}가 태어났다",
+    "en": "{kid} was born"
+   }
+  },
+  "PET_ADOPT": {
+   "location": "home",
+   "activity": null,
+   "actors": [
+    "me",
+    "pet"
+   ],
+   "caption": {
+    "ko": "{pet}와(과) 가족이 되었다",
+    "en": "{pet} joined the family"
+   }
+  },
+  "PET_FAREWELL": {
+   "location": "park",
+   "activity": null,
+   "actors": [
+    "me"
+   ],
+   "caption": {
+    "ko": "{pet}와(과) 작별했다",
+    "en": "Said goodbye to {pet}"
+   }
+  },
+  "JOB_START": {
+   "location": "office",
+   "activity": null,
+   "actors": [
+    "me",
+    "coworker"
+   ],
+   "caption": {
+    "ko": "취업했다",
+    "en": "Got a job"
+   }
+  },
+  "JOB_CHANGE": {
+   "location": "office",
+   "activity": null,
+   "actors": [
+    "me",
+    "coworker"
+   ],
+   "caption": {
+    "ko": "이직에 성공했다",
+    "en": "Changed jobs"
+   }
+  },
+  "PROMOTION": {
+   "location": "office",
+   "activity": null,
+   "actors": [
+    "me",
+    "coworker",
+    "coworker2"
+   ],
+   "caption": {
+    "ko": "팀장으로 승진했다",
+    "en": "Promoted to team lead"
+   }
+  },
+  "LAYOFF": {
+   "location": "street",
+   "activity": null,
+   "actors": [
+    "me"
+   ],
+   "caption": {
+    "ko": "구조조정으로 회사를 떠났다",
+    "en": "Laid off in a restructuring"
+   }
+  },
+  "INDEPENDENCE": {
+   "location": "cafe",
+   "activity": null,
+   "actors": [
+    "me"
+   ],
+   "caption": {
+    "ko": "내 가게를 열었다",
+    "en": "Opened my own place"
+   }
+  },
+  "RETIREMENT": {
+   "location": "office",
+   "activity": "farewell",
+   "actors": [
+    "me",
+    "coworker",
+    "coworker2"
+   ],
+   "caption": {
+    "ko": "회사를 떠났다",
+    "en": "Left the company"
+   }
+  },
+  "FLIGHT": {
+   "location": "airplane",
+   "activity": null,
+   "actors": [
+    "me"
+   ],
+   "caption": {
+    "ko": "{city}(으)로 향하는 비행기 안",
+    "en": "On the plane to {city}"
+   }
+  },
+  "MOVE_CITY": {
+   "location": "home",
+   "activity": null,
+   "actors": [
+    "me"
+   ],
+   "caption": {
+    "ko": "{city}(으)로 이사했다",
+    "en": "Moved to {city}"
+   }
+  },
+  "WINDFALL": {
+   "location": "home",
+   "activity": null,
+   "actors": [
+    "me"
+   ],
+   "caption": {
+    "ko": "큰돈이 들어왔다",
+    "en": "A big windfall"
+   }
+  },
+  "LOSS": {
+   "location": "home",
+   "activity": null,
+   "actors": [
+    "me"
+   ],
+   "caption": {
+    "ko": "큰돈을 잃었다",
+    "en": "Lost a lot of money"
+   }
+  },
+  "HOSPITAL": {
+   "location": "hospital",
+   "activity": null,
+   "actors": [
+    "me",
+    "patient"
+   ],
+   "caption": {
+    "ko": "{patient}의 투병",
+    "en": "{patient}'s illness"
+   }
+  },
+  "RECOVERED": {
+   "location": "park",
+   "activity": null,
+   "actors": [
+    "me",
+    "patient"
+   ],
+   "caption": {
+    "ko": "{patient}이(가) 완치되었다",
+    "en": "{patient} recovered"
+   }
+  },
+  "MOM_FUNERAL": {
+   "location": "funeral_hall",
+   "activity": "mourn",
+   "actors": [
+    "me",
+    "relative"
+   ],
+   "caption": {
+    "ko": "엄마의 장례식",
+    "en": "Mom's funeral"
+   }
+  },
+  "DAD_FUNERAL": {
+   "location": "funeral_hall",
+   "activity": "mourn",
+   "actors": [
+    "me",
+    "relative"
+   ],
+   "caption": {
+    "ko": "아빠의 장례식",
+    "en": "Dad's funeral"
+   }
+  },
+  "PARENT_FUNERAL": {
+   "location": "funeral_hall",
+   "activity": "mourn",
+   "actors": [
+    "me",
+    "relative"
+   ],
+   "caption": {
+    "ko": "{patient}의 장례식",
+    "en": "{patient}'s funeral"
+   }
+  },
+  "FAMILY_FUNERAL": {
+   "location": "funeral_hall",
+   "activity": "mourn",
+   "actors": [
+    "me",
+    "relative"
+   ],
+   "caption": {
+    "ko": "가족의 장례식",
+    "en": "A family funeral"
+   }
+  },
+  "FRIEND_WEDDING": {
+   "location": "wedding_venue",
+   "activity": "wedding",
+   "actors": [
+    "me",
+    "friend",
+    "guest"
+   ],
+   "caption": {
+    "ko": "{friend}의 결혼식",
+    "en": "{friend}'s wedding"
+   }
+  },
+  "FRIEND_FUNERAL": {
+   "location": "funeral_hall",
+   "activity": "mourn",
+   "actors": [
+    "me",
+    "relative"
+   ],
+   "caption": {
+    "ko": "{friend}의 장례식",
+    "en": "{friend}'s funeral"
+   }
+  },
+  "PARTNER_FUNERAL": {
+   "location": "funeral_hall",
+   "activity": "mourn",
+   "actors": [
+    "me",
+    "relative"
+   ],
+   "caption": {
+    "ko": "{partner}을(를) 떠나보냈다",
+    "en": "Said goodbye to {partner}"
+   }
+  },
+  "GRADUATION": {
+   "location": "university",
+   "activity": null,
+   "actors": [
+    "me",
+    "friend"
+   ],
+   "caption": {
+    "ko": "졸업했다",
+    "en": "Graduated"
+   }
+  },
+  "KID_SCHOOL": {
+   "location": "university",
+   "activity": null,
+   "actors": [
+    "me",
+    "kid"
+   ],
+   "caption": {
+    "ko": "{kid}의 입학식",
+    "en": "{kid}'s first day of school"
+   }
+  },
+  "SHOP_CLOSE": {
+   "location": "cafe",
+   "activity": null,
+   "actors": [
+    "me",
+    "friend"
+   ],
+   "caption": {
+    "ko": "가게 문을 닫던 날",
+    "en": "The day I closed the shop"
+   }
+  }
+ }
+}

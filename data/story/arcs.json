@@ -1,0 +1,681 @@
+{
+ "_doc": "Multi-day life arcs. Each step happens on its own played day 'after' [min,max] months after the previous step, at 'location'. Choices map to outcomes; outcome effects + a memory card for the 시간이 흐른다 screen.",
+ "arcs": {
+  "DATING": {
+   "steps": {
+    "FIRST_DATE": {
+     "after": [
+      1,
+      2
+     ],
+     "location": "restaurant",
+     "activity": "date",
+     "who": "partner",
+     "line": {
+      "ko": "(첫 데이트. 괜히 옷을 세 번이나 갈아입었다.)",
+      "en": "(First date. You changed outfits three times.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "솔직하게 설렌다고 말한다",
+        "en": "Admit you're nervous"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "장난스럽게 분위기를 띄운다",
+        "en": "Keep it playful"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "조용히 이야기를 듣는다",
+        "en": "Just listen"
+       },
+       "outcome": "GOOD"
+      }
+     ],
+     "outcomes": {
+      "GOOD": {
+       "r": {
+        "ko": "헤어질 때, 둘 다 한참을 뒤돌아봤다.",
+        "en": "When you parted, you both kept looking back."
+       },
+       "effects": [],
+       "card": "FIRST_DATE"
+      }
+     }
+    },
+    "PROPOSAL": {
+     "after": [
+      24,
+      36
+     ],
+     "location": "park",
+     "activity": "propose",
+     "who": "partner",
+     "line": {
+      "ko": "…우리 만난 지 꽤 됐잖아. 우리, 결혼할까?",
+      "en": "…We've been together a while. Should we get married?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "응, 결혼하자",
+        "en": "Yes, let's get married"
+       },
+       "outcome": "ENGAGED"
+      },
+      {
+       "t": {
+        "ko": "조금만 더 생각해볼래",
+        "en": "Let me think a little more"
+       },
+       "outcome": "NOT_YET"
+      },
+      {
+       "t": {
+        "ko": "…우린 여기까지인 것 같아",
+        "en": "…I think this is where we end"
+       },
+       "outcome": "BREAKUP"
+      }
+     ],
+     "outcomes": {
+      "ENGAGED": {
+       "r": {
+        "ko": "반지를 받았다. 손이 떨렸다.",
+        "en": "You got the ring. Your hands were shaking."
+       },
+       "effects": [
+        {
+         "kind": "engage"
+        }
+       ],
+       "card": "PROPOSAL"
+      },
+      "NOT_YET": {
+       "r": {
+        "ko": "…그래. 그런데 난 오래 기다리진 못할 것 같아.",
+        "en": "…Okay. But I can't wait forever."
+       },
+       "effects": [
+        {
+         "kind": "arcStepAgain",
+         "after": [
+          10,
+          14
+         ]
+        }
+       ]
+      },
+      "BREAKUP": {
+       "r": {
+        "ko": "그날, 우리는 헤어졌다.",
+        "en": "That day, we broke up."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        }
+       ],
+       "card": "BREAKUP",
+       "scene": [
+        "street"
+       ]
+      }
+     }
+    },
+    "LAST_CHANCE": {
+     "after": [
+      10,
+      14
+     ],
+     "location": "home",
+     "who": "partner",
+     "line": {
+      "ko": "이제는 정해야 할 것 같아. 결혼하든지, 헤어지든지.",
+      "en": "We need to decide now. Marry, or break up."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "결혼하자",
+        "en": "Let's get married"
+       },
+       "outcome": "ENGAGED"
+      },
+      {
+       "t": {
+        "ko": "헤어지자",
+        "en": "Let's break up"
+       },
+       "outcome": "BREAKUP"
+      },
+      {
+       "t": {
+        "ko": "결혼 없이 함께 살자",
+        "en": "Let's live together without marrying"
+       },
+       "outcome": "LONGTERM"
+      }
+     ],
+     "outcomes": {
+      "ENGAGED": {
+       "r": {
+        "ko": "결국 우리는 약속했다.",
+        "en": "In the end, we promised each other."
+       },
+       "effects": [
+        {
+         "kind": "engage"
+        }
+       ],
+       "card": "PROPOSAL"
+      },
+      "BREAKUP": {
+       "r": {
+        "ko": "…서로의 행복을 빌어주기로 했다.",
+        "en": "…You wished each other happiness."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        }
+       ],
+       "card": "BREAKUP",
+       "scene": [
+        "street"
+       ]
+      },
+      "LONGTERM": {
+       "r": {
+        "ko": "결혼식은 없지만, 우리는 한 집에 산다.",
+        "en": "No wedding, but you share one home."
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "longterm",
+         "value": true
+        }
+       ],
+       "card": "NEW_HOME"
+      }
+     }
+    }
+   }
+  },
+  "ENGAGEMENT": {
+   "steps": {
+    "MEET_PARENTS": {
+     "after": [
+      2,
+      4
+     ],
+     "location": "restaurant",
+     "activity": "meet_parents",
+     "who": "inlaw",
+     "line": {
+      "ko": "우리 애를 잘 부탁해요. …그런데 결혼 후에 어디서 살 생각이에요?",
+      "en": "Please take good care of our child. …Where do you plan to live after the wedding?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "정중하게 계획을 말씀드린다",
+        "en": "Politely explain your plans"
+       },
+       "outcome": "PROCEED"
+      },
+      {
+       "t": {
+        "ko": "솔직하게 속마음을 말한다",
+        "en": "Say honestly what you think"
+       },
+       "outcome": "PROCEED"
+      },
+      {
+       "t": {
+        "ko": "(…이 결혼은 아닌 것 같다) 파혼한다",
+        "en": "(…This isn't right) Call off the engagement"
+       },
+       "outcome": "CALL_OFF"
+      }
+     ],
+     "outcomes": {
+      "PROCEED": {
+       "r": {
+        "ko": "어색했지만, 마지막엔 모두 웃었다.",
+        "en": "It was awkward, but everyone laughed in the end."
+       },
+       "effects": [],
+       "card": "MEET_PARENTS"
+      },
+      "CALL_OFF": {
+       "r": {
+        "ko": "…상견례 자리에서 파혼했다. 반지를 돌려주었다.",
+        "en": "…You broke off the engagement at the family meeting. You returned the ring."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        },
+        {
+         "kind": "endArc"
+        }
+       ],
+       "card": "CALL_OFF",
+       "scene": [
+        "street"
+       ]
+      }
+     }
+    },
+    "WEDDING": {
+     "after": [
+      5,
+      9
+     ],
+     "location": "wedding_venue",
+     "activity": "wedding",
+     "who": "partner",
+     "line": {
+      "ko": "(드디어 결혼식 날. 문이 열리고, 저기 그 사람이 서 있다.)",
+      "en": "(The wedding day. The doors open, and there they are.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "서약한다",
+        "en": "Say your vows"
+       },
+       "outcome": "MARRY"
+      },
+      {
+       "t": {
+        "ko": "눈물이 멈추지 않는다",
+        "en": "You can't stop crying"
+       },
+       "outcome": "MARRY"
+      },
+      {
+       "t": {
+        "ko": "(…도망친다)",
+        "en": "(…Run away)"
+       },
+       "outcome": "CALL_OFF"
+      }
+     ],
+     "outcomes": {
+      "MARRY": {
+       "r": {
+        "ko": "부부가 되었습니다! 꽃잎이 흩날렸다.",
+        "en": "You're married! Petals filled the air."
+       },
+       "effects": [
+        {
+         "kind": "marry"
+        }
+       ],
+       "card": "WEDDING"
+      },
+      "CALL_OFF": {
+       "r": {
+        "ko": "…식장을 뛰쳐나왔다. 모두가 수군거렸다.",
+        "en": "…You ran out of the hall. Everyone whispered."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        }
+       ],
+       "card": "CALL_OFF",
+       "scene": [
+        "street"
+       ]
+      }
+     }
+    }
+   }
+  },
+  "DIVORCE": {
+   "steps": {
+    "COURT": {
+     "after": [
+      2,
+      4
+     ],
+     "location": "court",
+     "activity": "court_hearing",
+     "who": "judge",
+     "line": {
+      "ko": "협의 이혼 의사를 확인하겠습니다. 두 분, 이혼에 동의하십니까?",
+      "en": "We'll confirm the intent to divorce. Do you both agree?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "동의합니다",
+        "en": "I agree"
+       },
+       "outcome": "DIVORCED"
+      },
+      {
+       "t": {
+        "ko": "…한 번만 더 기회를 주세요",
+        "en": "…Please give us one more chance"
+       },
+       "outcome": "RECONCILE"
+      }
+     ],
+     "outcomes": {
+      "DIVORCED": {
+       "r": {
+        "ko": "서류에 도장을 찍었다. 법원 계단이 유난히 길었다.",
+        "en": "You stamped the papers. The courthouse stairs felt endless."
+       },
+       "effects": [
+        {
+         "kind": "breakUp",
+         "divorce": true
+        }
+       ],
+       "card": "DIVORCE"
+      },
+      "RECONCILE": {
+       "r": {
+        "ko": "숙려 기간 동안, 다시 이야기를 나눴다.",
+        "en": "During the waiting period, you talked again."
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "reconciled",
+         "value": true
+        }
+       ]
+      }
+     }
+    }
+   }
+  },
+  "PREGNANCY": {
+   "steps": {
+    "BIRTH": {
+     "after": [
+      7,
+      9
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "nurse",
+     "line": {
+      "ko": "축하합니다! 건강한 아기예요. 이름은 정하셨어요?",
+      "en": "Congratulations! A healthy baby. Have you chosen a name?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "하늘",
+        "en": "Haneul"
+       },
+       "outcome": "BORN"
+      },
+      {
+       "t": {
+        "ko": "서윤",
+        "en": "Seoyun"
+       },
+       "outcome": "BORN"
+      },
+      {
+       "t": {
+        "ko": "도윤",
+        "en": "Doyun"
+       },
+       "outcome": "BORN"
+      }
+     ],
+     "outcomes": {
+      "BORN": {
+       "r": {
+        "ko": "작은 손이 내 손가락을 꼭 잡았다.",
+        "en": "A tiny hand held your finger tight."
+       },
+       "effects": [
+        {
+         "kind": "addKid"
+        }
+       ],
+       "card": "BIRTH"
+      }
+     }
+    }
+   }
+  },
+  "RETIREMENT": {
+   "steps": {
+    "FAREWELL": {
+     "after": [
+      0,
+      0
+     ],
+     "location": "office",
+     "activity": "farewell",
+     "who": "coworker",
+     "line": {
+      "ko": "그동안 정말 수고 많으셨습니다! 저희 잊지 마세요.",
+      "en": "Thank you for everything! Don't forget us."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "고마웠다고 인사한다",
+        "en": "Say thank you"
+       },
+       "outcome": "RETIRED"
+      },
+      {
+       "t": {
+        "ko": "말없이 웃는다",
+        "en": "Smile without a word"
+       },
+       "outcome": "RETIRED"
+      }
+     ],
+     "outcomes": {
+      "RETIRED": {
+       "r": {
+        "ko": "정년퇴직했다. 사원증을 반납하며 사진을 한 장 찍었다.",
+        "en": "You retired. You took one last photo while returning your ID badge."
+       },
+       "effects": [
+        {
+         "kind": "retire"
+        }
+       ],
+       "card": "RETIREMENT"
+      }
+     }
+    }
+   }
+  },
+  "PARENT_PASSING": {
+   "steps": {
+    "GOODBYE": {
+     "after": [
+      0,
+      1
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "relative",
+     "line": {
+      "ko": "…마지막 인사를 드려야 할 것 같아.",
+      "en": "…I think it's time to say goodbye."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "손을 잡는다",
+        "en": "Hold their hand"
+       },
+       "outcome": "PASSED"
+      },
+      {
+       "t": {
+        "ko": "고맙다고 말한다",
+        "en": "Say thank you"
+       },
+       "outcome": "PASSED"
+      }
+     ],
+     "outcomes": {
+      "PASSED": {
+       "r": {
+        "ko": "조용한 새벽이었다.",
+        "en": "It was a quiet dawn."
+       },
+       "effects": [
+        {
+         "kind": "parentDies"
+        }
+       ],
+       "scene": [
+        "funeral_hall"
+       ]
+      }
+     }
+    }
+   }
+  },
+  "PET_FAREWELL": {
+   "steps": {
+    "GOODBYE": {
+     "after": [
+      0,
+      1
+     ],
+     "location": "home",
+     "who": "me",
+     "line": {
+      "ko": "({pet}가 요즘 잘 먹지 않는다. 오래 함께했다.)",
+      "en": "({pet} hasn't been eating. You've been together a long time.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "품에 안아준다",
+        "en": "Hold them close"
+       },
+       "outcome": "PASSED"
+      },
+      {
+       "t": {
+        "ko": "좋아하던 공원에 데려간다",
+        "en": "Take them to their favorite park"
+       },
+       "outcome": "PASSED"
+      }
+     ],
+     "outcomes": {
+      "PASSED": {
+       "r": {
+        "ko": "{pet}는 햇살 아래서 편안하게 잠들었다.",
+        "en": "{pet} fell asleep peacefully in the sun."
+       },
+       "effects": [
+        {
+         "kind": "petDies"
+        }
+       ],
+       "card": "PET_FAREWELL"
+      }
+     }
+    }
+   }
+  },
+  "ILLNESS": {
+   "steps": {
+    "TREATMENT": {
+     "after": [
+      4,
+      7
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "doctor",
+     "line": {
+      "ko": "치료가 길어질 수 있어요. 가족분들의 도움이 필요합니다.",
+      "en": "Treatment may take a while. The family's support will matter."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "곁을 지킨다",
+        "en": "Stay by their side"
+       },
+       "outcome": "KEEP"
+      },
+      {
+       "t": {
+        "ko": "최선의 병원을 찾는다",
+        "en": "Find the best hospital"
+       },
+       "outcome": "KEEP"
+      }
+     ],
+     "outcomes": {
+      "KEEP": {
+       "r": {
+        "ko": "긴 겨울 같은 몇 달이었다.",
+        "en": "Months like a long winter."
+       },
+       "effects": [],
+       "card": "HOSPITAL"
+      }
+     }
+    },
+    "RESULT": {
+     "after": [
+      5,
+      10
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "doctor",
+     "line": {
+      "ko": "검사 결과가 나왔습니다.",
+      "en": "The test results are in."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(떨리는 손으로 결과를 듣는다)",
+        "en": "(Listen with trembling hands)"
+       },
+       "outcome": "RESOLVE"
+      }
+     ],
+     "outcomes": {
+      "RESOLVE": {
+       "r": {
+        "ko": "",
+        "en": ""
+       },
+       "effects": [
+        {
+         "kind": "illnessResult"
+        }
+       ]
+      }
+     }
+    }
+   }
+  }
+ }
+}

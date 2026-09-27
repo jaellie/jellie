@@ -113,6 +113,11 @@ export const THEMES: Record<FatedTheme, ThemeDef> = {
     score: (y) => 1.5 * g(y, "JUPITER@H6") + g(y, "HWAGAE") + 0.5 * g(y, "JUPITER@H4"),
     weights: () => ({ ADOPT_DOG: 1, ADOPT_CAT: 1, NO_PET: 0.3 }),
   },
+  ILLNESS: {
+    window: [40, 75],
+    score: (y) => 1.5 * any(y, HARD("SATURN", ["SUN", "MOON"])) + any(y, ["SATURN@H6", "SATURN@H12"]) + g(y, "BRANCH_CLASH@year") + 0.5 * g(y, "HWAGAE") + 0.02 * (y.age - 40),
+    weights: (y) => ({ RECOVERY: 0.8 + any(y, SOFT("JUPITER", ["SUN", "MOON"])) + Math.max(0, g(y, "favorable")) * 0.3, LONG_FIGHT: 0.5, PASSING: 0.2 + 0.5 * any(y, HARD("SATURN", ["MOON"])) + 0.01 * (y.age - 40) }),
+  },
   EARLY_RETIREMENT: {
     window: [52, 59],
     score: (y) => 1.5 * any(y, HARD("SATURN", ["SUN", "MC"])) + g(y, "daeunShift") + any(y, ["BRANCH_CLASH@month", "BRANCH_CLASH@day"]) + 0.2,
@@ -122,7 +127,7 @@ export const THEMES: Record<FatedTheme, ThemeDef> = {
 
 /** Themes every life script contains, then the strongest others up to 7. */
 const CORE: FatedTheme[] = ["LOVE_MEETING", "CAREER_TURN", "MARRIAGE", "EARLY_RETIREMENT"];
-const OPTIONAL: FatedTheme[] = ["MOVE", "FAMILY_LOSS", "CHILD", "RELATIONSHIP_CRISIS", "WEALTH", "PET"];
+const OPTIONAL: FatedTheme[] = ["MOVE", "FAMILY_LOSS", "CHILD", "RELATIONSHIP_CRISIS", "ILLNESS", "WEALTH", "PET"];
 const MIN_GAP_YEARS = 2;
 
 function normalize(w: Record<string, number>): Record<string, number> {

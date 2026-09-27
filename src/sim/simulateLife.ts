@@ -17,7 +17,7 @@ import { calculateNatalChart } from "../saju/chart";
 import { AutoDecisionPolicy, type DecisionMaker } from "./decisionPolicy";
 import { EventEngine, type Resolution } from "./eventEngine";
 import { lifeTick } from "./lifeTick";
-import { OpportunityEngine } from "./opportunityEngine";
+import { DEFAULT_TEMPLATES, OpportunityEngine } from "./opportunityEngine";
 import type { OpportunityScore } from "./opportunity";
 import { traitsToModifierSource } from "./personality";
 import type { LifeState, Traits } from "./types";
@@ -83,6 +83,10 @@ export interface SimulateLifeOptions {
   world?: boolean | WorldOptions;
   /** Parents and the player can die (the game uses this; off by default for fixed-length runs). */
   mortality?: boolean;
+  /** Game mode: big life events are story-driven, so the background sim must not do them silently. */
+  excludeTemplates?: string[];
+  parentMortality?: boolean;
+  autoRetire?: boolean;
 }
 
 export interface WorldOptions {
@@ -166,7 +170,7 @@ export class LifeRunner {
     this.worldRng = rng.fork("world");
     this.worldRngMonthly = rng.fork("living-world");
     this.mortalityRng = rng.fork("mortality");
-    this.oppEngine = opts.opportunityEngine ?? new OpportunityEngine();
+    this.oppEngine = opts.opportunityEngine ?? new OpportunityEngine(opts.excludeTemplates ? DEFAULT_TEMPLATES.filter((t) => !opts.excludeTemplates!.includes(t.id)) : undefined);
     this.decider = opts.decisionMaker ?? new AutoDecisionPolicy();
     this.state = state ?? createLifeState(opts.birthData, opts.profile);
     this.destiny = createDestinyProfile({
@@ -201,7 +205,7 @@ export class LifeRunner {
   stepMonth(): TimelineEntry[] {
     const { state, opts } = this;
     const timeline: TimelineEntry[] = [];
-    for (const note of lifeTick(state, opts.mortality ? this.mortalityRng : undefined)) timeline.push({ date: { ...state.date }, age: state.age, kind: "LIFE", title: note });
+    for (const note of lifeTick(state, opts.mortality ? this.mortalityRng : undefined, { parents: opts.parentMortality ?? true, autoRetire: opts.autoRetire ?? true })) timeline.push({ date: { ...state.date }, age: state.age, kind: "LIFE", title: note });
     if (state.age < OPPORTUNITY_START_AGE || !state.alive) return timeline;
 
     const sources = this.sources();

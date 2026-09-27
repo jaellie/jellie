@@ -61,7 +61,7 @@ export const SPEAKER_REQUIRES: Record<string, string[]> = {
   mom: ["momAlive"],
   dad: ["dadAlive"],
   partner: ["partnered"],
-  boss: ["employed"],
+  boss: ["employed", "!selfEmployed"],
   coworker: ["employed"],
   work: ["employed"],
   friend: ["hasFriend"],
@@ -111,6 +111,9 @@ export class Director {
     }
     if (c.maxPerLife !== undefined && (this.mem.counts[c.id] ?? 0) >= c.maxPerLife) return "max-per-life";
     if (c.sender && this.mem.used.senders.filter((s) => s === c.sender).length >= cfg.messageSenderMaxPerDay) return "sender";
+    const sc = c.sender ? (cfg.senderCooldownDays as Record<string, number> | undefined)?.[c.sender] : undefined;
+    const lastSender = c.sender ? this.mem.lastShown[`sender:${c.sender}`] : undefined;
+    if (kind === "message" && sc !== undefined && lastSender !== undefined && day - lastSender < sc) return "sender-cooldown";
     return undefined;
   }
 
@@ -122,7 +125,10 @@ export class Director {
     if (kind === "small") this.mem.used.small++;
     else if (kind === "message") this.mem.used.messages++;
     else this.mem.used.major++;
-    if (c.sender) this.mem.used.senders.push(c.sender);
+    if (c.sender) {
+      this.mem.used.senders.push(c.sender);
+      if (kind === "message") this.mem.lastShown[`sender:${c.sender}`] = day;
+    }
   }
 
   noteBlocked(id: string, reason: string): void {

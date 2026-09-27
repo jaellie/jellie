@@ -16,7 +16,8 @@ export type FatedTheme =
   | "WEALTH"
   | "CHILD"
   | "PET"
-  | "EARLY_RETIREMENT";
+  | "EARLY_RETIREMENT"
+  | "ILLNESS";
 
 export interface FatedEvent {
   id: string;
@@ -31,9 +32,11 @@ export interface FatedEvent {
   done?: boolean;
   hinted?: boolean;
   outcome?: string;
+  /** Runtime data (e.g. who is ill). */
+  data?: Record<string, string | number | boolean>;
 }
 
-export type ArcType = "DATING" | "ENGAGEMENT" | "DIVORCE" | "PREGNANCY" | "RETIREMENT" | "PARENT_PASSING" | "PET_FAREWELL";
+export type ArcType = "DATING" | "ENGAGEMENT" | "DIVORCE" | "PREGNANCY" | "RETIREMENT" | "PARENT_PASSING" | "PET_FAREWELL" | "ILLNESS";
 
 export interface ArcStep {
   key: string;
@@ -56,4 +59,6 @@ export interface StoryState {
   nextDay?: { month: number; kind: "calm" | "fated" | "foreshadow" | "arc"; ref?: string };
   log: Array<{ age: number; ko: string; en: string }>;
   nextArcId: number;
+  /** Memory cards waiting for the next 시간이 흐른다 screen. */
+  cards: Array<{ kind: string; age: number; vars: Record<string, string> }>;
 }

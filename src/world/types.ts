@@ -172,6 +172,8 @@ export interface WorldNpc {
   foreign: boolean;
   /** The player's 'destined person' from setup — likelier sparks, never guaranteed. */
   fated?: boolean;
+  /** Passed away — never appears again. */
+  deceased?: boolean;
   /** Appearance/profile passthrough from the UI (look, job, mbti…). */
   profile?: Record<string, unknown>;
 }
@@ -185,7 +187,8 @@ export type RelationshipStage =
   | "ROMANTIC_INTEREST"
   | "PARTNER"
   | "EX"
-  | "LOST_CONTACT";
+  | "LOST_CONTACT"
+  | "DECEASED";
 
 export type RelationshipOriginType =
   | "FRIEND"

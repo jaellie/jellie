@@ -74,6 +74,8 @@ export interface Choice {
   success?: { base: number; affinity?: Partial<Record<LifeModifierKey, number>> };
   consequences: Consequence[];
   onFailure?: Consequence[];
+  /** Where this choice takes the player right away (game scene), e.g. ["airport","business_hotel"]. */
+  scene?: string[];
   appeal: ChoiceAppeal;
 }
 

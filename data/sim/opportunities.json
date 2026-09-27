@@ -823,7 +823,10 @@
           "appeal": {
             "base": 0.8,
             "poverty": 0.5
-          }
+          },
+          "scene": [
+            "office"
+          ]
         },
         {
           "id": "DECLINE",
@@ -1402,7 +1405,12 @@
           ],
           "appeal": {
             "base": 0.7
-          }
+          },
+          "scene": [
+            "airport",
+            "business_hotel",
+            "branch_office"
+          ]
         },
         {
           "id": "SEND_SOMEONE",
@@ -1471,7 +1479,11 @@
             "traits": {
               "novelty": 0.5
             }
-          }
+          },
+          "scene": [
+            "street",
+            "beach"
+          ]
         },
         {
           "id": "SKIP",
@@ -2285,7 +2297,10 @@
               "novelty": 0.4,
               "sociability": 0.2
             }
-          }
+          },
+          "scene": [
+            "gym"
+          ]
         },
         {
           "id": "PASS",
@@ -2357,7 +2372,10 @@
               "novelty": 0.4,
               "sociability": 0.2
             }
-          }
+          },
+          "scene": [
+            "cooking_class"
+          ]
         },
         {
           "id": "PASS",
@@ -2575,7 +2593,11 @@
               "spontaneity": 0.3
             },
             "familyObligation": -0.4
-          }
+          },
+          "scene": [
+            "airport",
+            "airplane"
+          ]
         },
         {
           "id": "SAVE",

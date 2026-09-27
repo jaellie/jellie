@@ -12,6 +12,8 @@ export interface LifeFacts {
   [key: string]: boolean | number | string | undefined;
   age: number;
   employed: boolean;
+  /** Runs their own place (no boss, no 명예퇴직 offers). */
+  selfEmployed: boolean;
   student: boolean;
   jobless: boolean;
   retired: boolean;
@@ -58,9 +60,10 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
     age: Math.floor(s.age),
     alive: s.alive,
     employed: s.career.employed,
+    selfEmployed: s.career.employed && ["own-business", "second-career"].includes(s.career.field ?? ""),
     student: !!s.enrollment,
-    jobless: !s.career.employed && !s.enrollment && s.age < 65,
-    retired: !s.career.employed && s.age >= 65,
+    jobless: !s.career.employed && !s.enrollment && s.age < 65 && !s.flags.retired,
+    retired: !s.career.employed && (s.age >= 65 || !!s.flags.retired),
     careerCid: cid,
     recentlyPromoted: s.career.employed && s.flags.promotionCid === cid && promoMonth !== undefined && s.monthIndex - promoMonth <= 18,
     recentlyLostJob: !s.career.employed && lostMonth !== undefined && s.monthIndex - lostMonth <= 12,
