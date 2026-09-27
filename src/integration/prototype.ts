@@ -47,6 +47,8 @@ export interface PrototypeScene {
     age?: number;
     /** me | partner | fated | npc | passerby */
     role: string;
+    /** True for the destined person from setup — also when they are the partner. */
+    fated?: boolean;
     npcType?: string;
   }>;
 }
@@ -81,6 +83,7 @@ export function toPrototypeScene(scene: Scene): PrototypeScene {
       gender: a.sex === "MALE" ? "M" : a.sex === "FEMALE" ? "F" : undefined,
       age: a.age,
       role: a.kind === "player" ? "me" : a.kind === "partner" ? "partner" : a.fated ? "fated" : a.kind,
+      fated: !!a.fated,
       npcType: a.npcType,
     })),
   };

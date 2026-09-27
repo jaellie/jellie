@@ -87,9 +87,11 @@ export interface Popup {
   who: string;
   name?: string;
   npcId?: string;
-  /** For npc/fated portraits: sprite gender + seed. */
+  /** Portrait identity: sprite gender + seed (stable per person). Absent only for me/mom/dad. */
   gender?: "M" | "F";
   seed?: number;
+  /** True when the speaker is the destined person from setup (even as partner). */
+  fated?: boolean;
   title?: string;
   line: string;
   ch: Array<{ t: string }>;
@@ -98,7 +100,7 @@ export interface Popup {
 export type Beat =
   | { kind: "enter"; locationId: string; room?: string; name: string; log?: string }
   | { kind: "popup"; popup: Popup }
-  | { kind: "toast"; from: string; text: string }
+  | { kind: "toast"; from: string; text: string; role?: string; gender?: "M" | "F"; seed?: number; fated?: boolean }
   | { kind: "log"; text: string }
   | { kind: "dayEnd" };
 
@@ -236,6 +238,29 @@ export class Game {
     const t = text.replace(/\{partner\}/g, f.partnerName ?? "").replace(/\{friend\}/g, f.friendName ?? "").replace(/\{me\}/g, this.s.setup.name);
     return this.s.lang === "ko" ? fixJosa(t.replace(/([가-힣A-Za-z0-9]+)(와|과|이|가|은|는|을|를)(?=[\s,.!?…~]|$)/g, (m, w, j) => (["와", "과"].includes(j) ? `${w}와(과)` : ["이", "가"].includes(j) ? `${w}이(가)` : ["은", "는"].includes(j) ? `${w}은(는)` : `${w}을(를)`))) : t;
   }
+  /** Stable portrait identity for a popup speaker. */
+  private portrait(role: string, npcId?: string): { gender?: "M" | "F"; seed?: number; fated?: boolean; npcId?: string } {
+    const st = this.state;
+    const w = st.world;
+    const fromNpc = (id?: string) => {
+      if (!id) return undefined;
+      const wn = w?.npcs[id];
+      if (wn) return { gender: wn.sex === "MALE" ? ("M" as const) : ("F" as const), seed: wn.spriteSeed, fated: !!wn.fated, npcId: id };
+      const n = st.npcs.find((x) => x.id === id);
+      return n ? { gender: n.birth.sex === "MALE" ? ("M" as const) : ("F" as const), seed: hash(this.s.seed, n.id), fated: false, npcId: id } : undefined;
+    };
+    if (npcId) return fromNpc(npcId) ?? {};
+    if (role === "me" || role === "mom" || role === "dad") return {};
+    if (role === "partner") return fromNpc(st.relationship.partnerId) ?? {};
+    if (role === "friend" && w) {
+      const best = Object.values(w.relationships).filter((r) => r.stage === "FRIEND" || r.stage === "CLOSE_FRIEND").sort((a, b) => b.closeness - a.closeness)[0];
+      if (best) return fromNpc(best.npcId) ?? {};
+    }
+    // Generic roles (boss, coworker, recruiter…): one stable look per life, per job.
+    const h = hash(this.s.seed, role, this.state.career.cid ?? 0);
+    return { gender: h % 2 ? "M" : "F", seed: h % 1_000_000 };
+  }
+
   private speaker(role: string): string {
     const f = this.facts();
     if (role === "partner") return f.partnerName ?? this.L(bi("연인", "Partner"));
@@ -377,7 +402,7 @@ export class Game {
         if (this.director.hasBudget("major")) {
           this.director.record("major", { id: `world:${e.kind}:${e.npcId ?? ""}`, texts: [e.text.ko] });
           const npc = e.npcId ? st.world.npcs[e.npcId] : undefined;
-          const popup: Popup = { id: `w${s.dayIndex}-${s.minute}`, source: "world", who: e.npcId ? (npc?.fated ? "fated" : "npc") : "me", name: npc?.name, npcId: e.npcId, gender: npc ? (npc.sex === "MALE" ? "M" : "F") : undefined, seed: npc?.spriteSeed, line: this.L(e.text), ch: e.choices.map((c) => ({ t: this.L(c.label) })) };
+          const popup: Popup = { id: `w${s.dayIndex}-${s.minute}`, source: "world", who: e.npcId ? (npc?.fated ? "fated" : "npc") : "me", name: npc?.name, ...this.portrait("npc", e.npcId), line: this.L(e.text), ch: e.choices.map((c) => ({ t: this.L(c.label) })) };
           s.pending = { popup, worldEvent: e };
           beats.push({ kind: "popup", popup });
           return beats;
@@ -429,6 +454,7 @@ export class Game {
       source: "opportunity",
       who: text.who,
       name: this.speaker(text.who),
+      ...this.portrait(text.who),
       title: this.L(text.title),
       line: this.fill(this.L(text.line)),
       ch: available.map((o) => ({ t: this.L(text.choices[o.choice.id] ?? bi(o.choice.label, o.choice.label)) })),
@@ -449,7 +475,7 @@ export class Game {
       this.rng("small"),
     );
     if (!story) return;
-    const popup: Popup = { id: story.id, source: "story", who: story.who, name: this.speaker(story.who), line: this.fill(this.L(story.line)), ch: story.choices.map((c) => ({ t: this.fill(this.L(c.t)) })) };
+    const popup: Popup = { id: story.id, source: "story", who: story.who, name: this.speaker(story.who), ...this.portrait(story.who), line: this.fill(this.L(story.line)), ch: story.choices.map((c) => ({ t: this.fill(this.L(c.t)) })) };
     this.s.pending = { popup, storyId: story.id };
     return { kind: "popup", popup };
   }
@@ -465,7 +491,7 @@ export class Game {
       this.rng("message"),
     );
     if (!msg) return;
-    return { kind: "toast", from: this.speaker(msg.from), text: this.fill(this.L(msg.text)) };
+    return { kind: "toast", from: this.speaker(msg.from), text: this.fill(this.L(msg.text)), role: msg.from, ...this.portrait(msg.from) };
   }
 
   // ---- weekend menu ---------------------------------------------------------

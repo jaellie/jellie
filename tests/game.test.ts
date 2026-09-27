@@ -198,3 +198,49 @@ describe("Lifespan & scene data for the UI", () => {
     for (const a of actors.slice(1)) expect(["M", "F"]).toContain(a.gender);
   });
 });
+
+describe("Portrait identity for the UI", () => {
+  it("every popup with a person has gender+seed (except me/mom/dad), stable per person", () => {
+    const seen = new Map<string, number>();
+    for (const seed of [71, 72]) {
+      const g = createGame({ ...SETUP, seed });
+      for (let d = 0; d < 12 && !g.isOver(); d++) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) {
+            if (b.kind !== "popup") continue;
+            const p = b.popup;
+            if (!["me", "mom", "dad"].includes(p.who)) {
+              expect(["M", "F"]).toContain(p.gender);
+              expect(typeof p.seed).toBe("number");
+              const key = `${seed}:${p.npcId ?? p.name}`;
+              if (p.npcId || p.who === "partner") {
+                if (seen.has(key)) expect(seen.get(key)).toBe(p.seed);
+                seen.set(key, p.seed!);
+              }
+            }
+            g.choose(0);
+          }
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        g.endDay();
+      }
+    }
+  });
+
+  it("the fated person keeps the fated flag after becoming the partner", async () => {
+    const { toPrototypeScene } = await import("../src/integration/prototype");
+    const { composeScene } = await import("../src/world/sceneComposer");
+    const g = createGame({ ...SETUP, seed: 81, fated: { from: "same" } }); // no name given
+    const st = g.state;
+    const fated = Object.values(st.world!.npcs).find((n) => n.fated)!;
+    st.relationship = { status: "DATING", partnerId: fated.id, sinceMonth: st.monthIndex };
+    const v = new (await import("../src/world/worldEngine")).WorldEngine().visit(
+      { state: st, world: st.world!, modifiers: (await import("../src/core/lifeModifiers")).emptyModifiers(), rng: new SeededRandom(1), seed: 1, withPartner: true },
+      { locationId: "park", date: { year: st.date.year, month: 5, day: 4 }, hour: 12 },
+    );
+    const partner = toPrototypeScene(composeScene(v, st.world!, st, { withPartner: true })).actors.find((a) => a.role === "partner")!;
+    expect(partner.fated).toBe(true);
+    expect(partner.gender).toBeDefined();
+  });
+});
