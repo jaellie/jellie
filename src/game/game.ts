@@ -39,7 +39,7 @@ import { toPrototypeScene, type PrototypeScene } from "../integration/prototype"
 import { WorldEngine } from "../world/worldEngine";
 import type { NPCSchedule } from "../world/types";
 import { type LifeFacts, computeFacts, meets } from "./facts";
-import { DIRECTOR_CONFIG as CFG, Director, type DirectorMemory, newDirectorMemory } from "./director";
+import { DIRECTOR_CONFIG as CFG, Director, type DirectorMemory, newDirectorMemory, SPEAKER_FALLBACK, SPEAKER_REQUIRES } from "./director";
 import { type Bi, type Lang, CITY_KO, COUNTRY_KO, DEST_KO, EDU_KO, SPEAKER_NAME, bi, fixJosa, krw } from "./text";
 
 // ---------------------------------------------------------------------------
@@ -442,9 +442,17 @@ export class Game {
     const cands = this.opps.evaluate(st, this.runner().sources(), rng).filter((c) => OPP_TEXT[c.template.id]);
     const total = cands.reduce((a, c) => a + c.opportunity.score.probability, 0);
     if (!cands.length || !rng.chance(Math.min(0.75, total * 4))) return;
-    const pickC = rng.weighted(cands.map((c) => ({ item: c, weight: c.opportunity.score.probability })));
+    const facts = this.facts();
+    // Only offers whose speaker can actually be in the player's life right now.
+    const speakerFor = (who: string): string | undefined => {
+      if (!SPEAKER_REQUIRES[who] || meets(SPEAKER_REQUIRES[who], facts)) return who;
+      return (SPEAKER_FALLBACK[who] ?? []).find((w) => !SPEAKER_REQUIRES[w] || meets(SPEAKER_REQUIRES[w], facts));
+    };
+    const usable = cands.filter((c) => speakerFor(OPP_TEXT[c.template.id].who));
+    if (!usable.length) return;
+    const pickC = rng.weighted(usable.map((c) => ({ item: c, weight: c.opportunity.score.probability })));
     const opp = pickC.explain();
-    const text = OPP_TEXT[opp.templateId];
+    const text = { ...OPP_TEXT[opp.templateId], who: speakerFor(OPP_TEXT[opp.templateId].who)! };
     const available = this.events.options(st, opp).filter((o) => o.available);
     if (!available.length) return;
     this.director.record("major", { id: `opp:${opp.templateId}`, texts: [text.line.ko] });
@@ -470,7 +478,7 @@ export class Game {
     const story = this.director.pick(
       "small",
       cands,
-      (x) => ({ texts: [x.line.ko, x.line.en, ...x.choices.map((c) => c.t.ko)], requires: x.requires, cooldownDays: x.cooldownDays, maxPerLife: x.maxPerLife }),
+      (x) => ({ texts: [x.line.ko, x.line.en, ...x.choices.map((c) => c.t.ko)], requires: x.requires, cooldownDays: x.cooldownDays, maxPerLife: x.maxPerLife, sender: x.who }),
       f,
       this.rng("small"),
     );

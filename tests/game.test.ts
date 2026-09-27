@@ -244,3 +244,30 @@ describe("Portrait identity for the UI", () => {
     expect(partner.gender).toBeDefined();
   });
 });
+
+describe("Regression: dead parents never speak", () => {
+  it("after Mom and Dad pass away, no popup or text comes from them", () => {
+    for (const seed of [91, 92, 93, 94]) {
+      const g = createGame({ ...SETUP, seed });
+      g.state.family!.mom.alive = false;
+      g.state.family!.dad.alive = false;
+      for (let d = 0; d < 15 && !g.isOver(); d++) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) {
+            if (b.kind === "toast") expect(["mom", "dad"]).not.toContain(b.role);
+            if (b.kind === "popup") {
+              expect(["mom", "dad"]).not.toContain(b.popup.who);
+              expect(b.popup.line).not.toMatch(/\[아빠\]|엄마가|\[Dad\]/);
+              g.choose(0);
+            }
+          }
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        g.endDay();
+        g.state.family!.mom.alive = false;
+        g.state.family!.dad.alive = false;
+      }
+    }
+  });
+});

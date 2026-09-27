@@ -15,7 +15,8 @@
     "home_evening",
     "home_night",
     "home_rain",
-    "home_winter"
+    "home_winter",
+    "home_newlywed"
    ],
    "activities": [
     "sleep",
@@ -562,7 +563,8 @@
     "park_evening",
     "park_spring",
     "park_autumn",
-    "park_snow"
+    "park_snow",
+    "park_proposal"
    ],
    "activities": [
     "walk",
@@ -570,7 +572,8 @@
     "jog",
     "walk_dog",
     "volunteer",
-    "date"
+    "date",
+    "propose"
    ],
    "npcPool": [
     "jogger",
@@ -831,13 +834,15 @@
    "backgrounds": [
     "office",
     "meeting_room",
-    "office_night"
+    "office_night",
+    "office_farewell"
    ],
    "activities": [
     "work",
     "meeting",
     "lunch_with_coworkers",
-    "overtime"
+    "overtime",
+    "farewell"
    ],
    "npcPool": [
     "coworker",
@@ -924,13 +929,16 @@
    },
    "type": "RESTAURANT",
    "backgrounds": [
-    "restaurant"
+    "restaurant",
+    "restaurant_formal"
    ],
    "activities": [
     "eat",
     "date",
     "celebrate",
-    "meet_friend"
+    "meet_friend",
+    "meet_parents",
+    "propose"
    ],
    "npcPool": [
     "server",
@@ -2401,7 +2409,8 @@
    "activities": [
     "attend_wedding",
     "ceremony",
-    "reception"
+    "reception",
+    "wedding"
    ],
    "npcPool": [
     "guest",
@@ -2496,6 +2505,228 @@
    },
    "region": "home_city",
    "eventiness": 0.2,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "court",
+   "name": {
+    "ko": "가정법원",
+    "en": "Family Court"
+   },
+   "type": "CITY",
+   "backgrounds": [
+    "court_hall"
+   ],
+   "activities": [
+    "court_hearing",
+    "wait"
+   ],
+   "npcPool": [
+    "staff"
+   ],
+   "encounterTypes": [
+    "STAFF"
+   ],
+   "tags": [
+    "court",
+    "divorce"
+   ],
+   "availableHours": {
+    "start": 9,
+    "end": 18
+   },
+   "region": "home_city",
+   "eventiness": 0,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "business_hotel",
+   "name": {
+    "ko": "출장 호텔",
+    "en": "Business Hotel"
+   },
+   "type": "HOTEL",
+   "backgrounds": [
+    "business_hotel_room"
+   ],
+   "activities": [
+    "rest",
+    "breakfast",
+    "work"
+   ],
+   "npcPool": [
+    "hotel_staff",
+    "business_traveler"
+   ],
+   "encounterTypes": [
+    "STAFF"
+   ],
+   "tags": [
+    "travel",
+    "business"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "business_city",
+   "eventiness": 0.1,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "branch_office",
+   "name": {
+    "ko": "지사 사무실",
+    "en": "Branch Office"
+   },
+   "type": "WORKPLACE",
+   "backgrounds": [
+    "branch_office"
+   ],
+   "activities": [
+    "work",
+    "meeting",
+    "lunch_with_coworkers"
+   ],
+   "npcPool": [
+    "coworker",
+    "manager",
+    "client"
+   ],
+   "encounterTypes": [
+    "STAFF"
+   ],
+   "tags": [
+    "work",
+    "business"
+   ],
+   "availableHours": {
+    "start": 8,
+    "end": 22
+   },
+   "region": "business_city",
+   "eventiness": 0.1,
+   "events": [],
+   "spots": [
+    [
+     4.5,
+     4.5
+    ],
+    [
+     3,
+     5.5
+    ],
+    [
+     5.8,
+     3.2
+    ],
+    [
+     5.8,
+     5.8
+    ],
+    [
+     3.2,
+     3.2
+    ]
+   ]
+  },
+  {
+   "id": "funeral_hall",
+   "name": {
+    "ko": "장례식장",
+    "en": "Funeral Hall"
+   },
+   "type": "HOSPITAL",
+   "backgrounds": [
+    "funeral_hall"
+   ],
+   "activities": [
+    "mourn",
+    "wait"
+   ],
+   "npcPool": [
+    "relative",
+    "family_friend"
+   ],
+   "encounterTypes": [
+    "STAFF"
+   ],
+   "tags": [
+    "family",
+    "loss"
+   ],
+   "availableHours": {
+    "start": 0,
+    "end": 24
+   },
+   "region": "home_city",
+   "eventiness": 0,
    "events": [],
    "spots": [
     [

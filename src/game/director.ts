@@ -56,6 +56,24 @@ export function guardRequirements(texts: string[]): { rule: string; requires: st
   return out;
 }
 
+/** What must be true for a given speaker to appear at all. */
+export const SPEAKER_REQUIRES: Record<string, string[]> = {
+  mom: ["momAlive"],
+  dad: ["dadAlive"],
+  partner: ["partnered"],
+  boss: ["employed"],
+  coworker: ["employed"],
+  work: ["employed"],
+  friend: ["hasFriend"],
+  ex: ["hasEx"],
+};
+
+/** Fallback speakers when the original can't appear (e.g. Mom has passed → Dad → a relative). */
+export const SPEAKER_FALLBACK: Record<string, string[]> = {
+  mom: ["dad", "relative"],
+  dad: ["mom", "relative"],
+};
+
 export class Director {
   constructor(public mem: DirectorMemory) {}
 
@@ -81,6 +99,7 @@ export class Director {
   ): string | undefined {
     if (!this.hasBudget(kind)) return "budget";
     if (!meets(c.requires, facts)) return "requires";
+    if (c.sender && SPEAKER_REQUIRES[c.sender] && !meets(SPEAKER_REQUIRES[c.sender], facts)) return "speaker";
     for (const g of guardRequirements(c.texts)) if (!meets(g.requires, facts)) return `guard:${g.rule}`;
     const day = this.mem.day;
     const cd = c.cooldownDays ?? cfg.lineCooldownDays;

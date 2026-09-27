@@ -29,6 +29,7 @@ export const SPEAKER_NAME: Record<string, Bi> = {
   instructor: bi("강사님", "Instructor"),
   app: bi("알림", "Notification"),
   ex: bi("???", "???"),
+  relative: bi("친척", "Relative"),
 };
 
 export function krw(units: number, unitWon: number): string {

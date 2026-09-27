@@ -658,6 +658,66 @@
    "locationId": "hospital",
    "assetPath": "assets/bg/hospital/hospital.png",
    "status": "planned"
+  },
+  {
+   "id": "court_hall",
+   "locationId": "court",
+   "assetPath": "assets/bg/court/court_hall.png",
+   "status": "planned"
+  },
+  {
+   "id": "business_hotel_room",
+   "locationId": "business_hotel",
+   "assetPath": "assets/bg/business_hotel/business_hotel_room.png",
+   "status": "planned"
+  },
+  {
+   "id": "branch_office",
+   "locationId": "branch_office",
+   "assetPath": "assets/bg/branch_office/branch_office.png",
+   "status": "planned"
+  },
+  {
+   "id": "funeral_hall",
+   "locationId": "funeral_hall",
+   "assetPath": "assets/bg/funeral_hall/funeral_hall.png",
+   "status": "planned"
+  },
+  {
+   "id": "home_newlywed",
+   "locationId": "home",
+   "assetPath": "assets/bg/home/home_newlywed.png",
+   "status": "planned",
+   "requires": [
+    "married"
+   ]
+  },
+  {
+   "id": "restaurant_formal",
+   "locationId": "restaurant",
+   "assetPath": "assets/bg/restaurant/restaurant_formal.png",
+   "status": "planned",
+   "activities": [
+    "meet_parents"
+   ]
+  },
+  {
+   "id": "office_farewell",
+   "locationId": "office",
+   "assetPath": "assets/bg/office/office_farewell.png",
+   "status": "planned",
+   "activities": [
+    "farewell"
+   ]
+  },
+  {
+   "id": "park_proposal",
+   "locationId": "park",
+   "assetPath": "assets/bg/park/park_proposal.png",
+   "status": "planned",
+   "activities": [
+    "propose"
+   ]
   }
  ]
 }

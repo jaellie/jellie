@@ -58,6 +58,8 @@ export interface LocationBackground {
   timeOfDay?: TimeOfDay;
   weather?: Weather;
   season?: Season;
+  /** Life facts required, e.g. ["married"] for the newlywed home. */
+  requires?: string[];
   /** Activity-specific framing (e.g. cafe_window for sit_alone). */
   activities?: ActivityId[];
   assetPath: string;

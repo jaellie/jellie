@@ -1,0 +1,1577 @@
+{
+ "_doc": "Fated turning points. The situation is certain; outcome = 70% chart (destinyScript chartWeights) + 30% the chosen strategy (choice weights). The first variant whose 'requires' holds is used. 'card' shows in the 시간이 흐른다 screen; 'scene' moves the player for the rest of the day.",
+ "themes": {
+  "LOVE_MEETING": {
+   "hint": {
+    "ko": "(요즘 이상하게 누군가를 만날 것 같은 예감이 든다.)",
+    "en": "(Lately you have a strange feeling you're about to meet someone.)"
+   },
+   "variants": [
+    {
+     "requires": [
+      "!partnered"
+     ],
+     "location": "cafe",
+     "who": "fated",
+     "line": {
+      "ko": "(자꾸 눈이 마주치던 그 사람이 먼저 다가왔다.)",
+      "en": "(The person whose eyes kept meeting yours walks over.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "먼저 이름을 묻는다",
+        "en": "Ask their name first"
+       },
+       "weights": {
+        "START_DATING": 0.7,
+        "SLOW_BURN": 0.25,
+        "MISSED": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "연락처만 교환한다",
+        "en": "Just swap numbers"
+       },
+       "weights": {
+        "START_DATING": 0.3,
+        "SLOW_BURN": 0.6,
+        "MISSED": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "웃고 지나친다",
+        "en": "Smile and walk past"
+       },
+       "weights": {
+        "START_DATING": 0.05,
+        "SLOW_BURN": 0.25,
+        "MISSED": 0.7
+       }
+      }
+     ],
+     "outcomes": {
+      "START_DATING": {
+       "r": {
+        "ko": "그날 밤, 한참을 이야기했다. 이상하게 오래 알던 사람 같았다.",
+        "en": "You talked for hours that night. It felt like you'd known them forever."
+       },
+       "effects": [
+        {
+         "kind": "startDatingFated"
+        }
+       ],
+       "card": "START_DATING"
+      },
+      "SLOW_BURN": {
+       "r": {
+        "ko": "가끔 연락을 주고받는 사이가 되었다.",
+        "en": "You started texting now and then."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.35
+        }
+       ]
+      },
+      "MISSED": {
+       "r": {
+        "ko": "…그 사람은 인파 속으로 사라졌다. 계속 생각이 난다.",
+        "en": "…They disappeared into the crowd. You keep thinking about them."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "A missed connection I still remember.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "partnered"
+     ],
+     "location": "cafe",
+     "who": "fated",
+     "line": {
+      "ko": "(연인이 있는데도, 이상하게 마음이 흔들리는 사람을 만났다.)",
+      "en": "(Even though you're with someone, you meet a person who shakes you.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "선을 긋는다",
+        "en": "Draw a line"
+       },
+       "weights": {
+        "START_DATING": 0.05,
+        "SLOW_BURN": 0.25,
+        "MISSED": 0.7
+       }
+      },
+      {
+       "t": {
+        "ko": "친구로 지낸다",
+        "en": "Stay friends"
+       },
+       "weights": {
+        "START_DATING": 0.15,
+        "SLOW_BURN": 0.7,
+        "MISSED": 0.15
+       }
+      },
+      {
+       "t": {
+        "ko": "마음을 따른다",
+        "en": "Follow your heart"
+       },
+       "weights": {
+        "START_DATING": 0.8,
+        "SLOW_BURN": 0.15,
+        "MISSED": 0.05
+       }
+      }
+     ],
+     "outcomes": {
+      "START_DATING": {
+       "r": {
+        "ko": "…결국 지금의 연인과 헤어지고, 그 사람을 선택했다.",
+        "en": "…In the end you broke up and chose them."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        },
+        {
+         "kind": "startDatingFated"
+        }
+       ],
+       "card": "START_DATING"
+      },
+      "SLOW_BURN": {
+       "r": {
+        "ko": "좋은 친구로 남았다. 가끔 생각이 난다.",
+        "en": "You stayed good friends. Sometimes you wonder."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.2
+        }
+       ]
+      },
+      "MISSED": {
+       "r": {
+        "ko": "다시는 연락하지 않았다.",
+        "en": "You never contacted them again."
+       },
+       "effects": []
+      }
+     }
+    }
+   ]
+  },
+  "MARRIAGE": {
+   "hint": {
+    "ko": "(요즘 따라 미래에 대한 생각이 많아진다.)",
+    "en": "(You've been thinking a lot about the future lately.)"
+   },
+   "variants": [
+    {
+     "requires": [
+      "dating"
+     ],
+     "location": "park",
+     "activity": "propose",
+     "who": "partner",
+     "line": {
+      "ko": "…있잖아. 우리, 결혼할까?",
+      "en": "…Hey. Should we get married?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "응, 결혼하자",
+        "en": "Yes, let's get married"
+       },
+       "weights": {
+        "ENGAGED": 0.9,
+        "NOT_YET": 0.08,
+        "BREAKUP": 0.02
+       }
+      },
+      {
+       "t": {
+        "ko": "조금만 더 생각해볼래",
+        "en": "Let me think a little more"
+       },
+       "weights": {
+        "ENGAGED": 0.25,
+        "NOT_YET": 0.6,
+        "BREAKUP": 0.15
+       }
+      },
+      {
+       "t": {
+        "ko": "…우린 여기까지인 것 같아",
+        "en": "…I think this is where we end"
+       },
+       "weights": {
+        "ENGAGED": 0.02,
+        "NOT_YET": 0.18,
+        "BREAKUP": 0.8
+       }
+      }
+     ],
+     "outcomes": {
+      "ENGAGED": {
+       "r": {
+        "ko": "반지를 받았다. 손이 떨렸다.",
+        "en": "You got the ring. Your hands were shaking."
+       },
+       "effects": [
+        {
+         "kind": "engage"
+        }
+       ],
+       "card": "PROPOSAL",
+       "scene": [
+        "park"
+       ]
+      },
+      "NOT_YET": {
+       "r": {
+        "ko": "…그래, 기다릴게. 그런데 언제까지?",
+        "en": "…Okay, I'll wait. But how long?"
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "proposalDelayed",
+         "value": true
+        }
+       ]
+      },
+      "BREAKUP": {
+       "r": {
+        "ko": "그날, 우리는 헤어졌다.",
+        "en": "That day, we broke up."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        }
+       ],
+       "card": "BREAKUP",
+       "scene": [
+        "street"
+       ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "!partnered"
+     ],
+     "location": "cafe",
+     "who": "fated",
+     "line": {
+      "ko": "(예전에 알던 그 사람을 다시 만났다. 둘 다 혼자였다.)",
+      "en": "(You run into someone from before. You're both single.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "이번엔 놓치지 않는다",
+        "en": "Don't let them go this time"
+       },
+       "weights": {
+        "ENGAGED": 0.6,
+        "NOT_YET": 0.3,
+        "BREAKUP": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "천천히 알아간다",
+        "en": "Take it slow"
+       },
+       "weights": {
+        "ENGAGED": 0.2,
+        "NOT_YET": 0.7,
+        "BREAKUP": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "추억으로 남긴다",
+        "en": "Leave it as a memory"
+       },
+       "weights": {
+        "ENGAGED": 0.05,
+        "NOT_YET": 0.15,
+        "BREAKUP": 0.8
+       }
+      }
+     ],
+     "outcomes": {
+      "ENGAGED": {
+       "r": {
+        "ko": "다시 시작했다. 이번엔 다를 것 같다.",
+        "en": "You started again. It feels different this time."
+       },
+       "effects": [
+        {
+         "kind": "startDatingFated"
+        }
+       ],
+       "card": "START_DATING"
+      },
+      "NOT_YET": {
+       "r": {
+        "ko": "가끔 만나 커피를 마신다.",
+        "en": "You meet for coffee now and then."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.3
+        }
+       ]
+      },
+      "BREAKUP": {
+       "r": {
+        "ko": "좋은 추억으로 남겨두기로 했다.",
+        "en": "You decided to keep it a good memory."
+       },
+       "effects": []
+      }
+     }
+    },
+    {
+     "requires": [
+      "married"
+     ],
+     "location": "restaurant",
+     "who": "partner",
+     "line": {
+      "ko": "우리 결혼기념일인데… 앞으로도 잘 부탁해.",
+      "en": "It's our anniversary… let's keep taking care of each other."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "사랑해",
+        "en": "I love you"
+       },
+       "weights": {
+        "ENGAGED": 0.8,
+        "NOT_YET": 0.15,
+        "BREAKUP": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "요즘 좀 지쳤어",
+        "en": "I've been tired lately"
+       },
+       "weights": {
+        "ENGAGED": 0.3,
+        "NOT_YET": 0.5,
+        "BREAKUP": 0.2
+       }
+      }
+     ],
+     "outcomes": {
+      "ENGAGED": {
+       "r": {
+        "ko": "오랜만에 손을 잡고 걸었다.",
+        "en": "You walked hand in hand for the first time in a while."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "A warm anniversary.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      },
+      "NOT_YET": {
+       "r": {
+        "ko": "조용한 저녁이었다.",
+        "en": "A quiet evening."
+       },
+       "effects": []
+      },
+      "BREAKUP": {
+       "r": {
+        "ko": "…대화가 자꾸 어긋났다.",
+        "en": "…The conversation kept missing."
+       },
+       "effects": [
+        {
+         "kind": "arc",
+         "type": "DIVORCE"
+        }
+       ]
+      }
+     }
+    }
+   ]
+  },
+  "RELATIONSHIP_CRISIS": {
+   "hint": {
+    "ko": "(요즘 따라 사소한 일로 자주 부딪힌다.)",
+    "en": "(Lately you clash over little things.)"
+   },
+   "variants": [
+    {
+     "requires": [
+      "partnered"
+     ],
+     "location": "home",
+     "who": "partner",
+     "line": {
+      "ko": "우리… 이대로 괜찮은 걸까?",
+      "en": "Are we… really okay like this?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "밤새 이야기해보자",
+        "en": "Let's talk it through tonight"
+       },
+       "weights": {
+        "RECONCILE": 0.7,
+        "SEPARATE": 0.1,
+        "DISTANCE": 0.2
+       }
+      },
+      {
+       "t": {
+        "ko": "잠시 시간을 갖자",
+        "en": "Let's take some time"
+       },
+       "weights": {
+        "RECONCILE": 0.3,
+        "SEPARATE": 0.3,
+        "DISTANCE": 0.4
+       }
+      },
+      {
+       "t": {
+        "ko": "끝내자",
+        "en": "Let's end it"
+       },
+       "weights": {
+        "RECONCILE": 0.05,
+        "SEPARATE": 0.85,
+        "DISTANCE": 0.1
+       }
+      }
+     ],
+     "outcomes": {
+      "RECONCILE": {
+       "r": {
+        "ko": "울고 웃다가, 결국 서로를 안았다.",
+        "en": "After tears and laughter, you held each other."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "We got through a hard night together.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      },
+      "SEPARATE": {
+       "r": {
+        "ko": "…끝이었다.",
+        "en": "…It was over."
+       },
+       "effects": [
+        {
+         "kind": "separate"
+        }
+       ],
+       "card": "BREAKUP",
+       "scene": [
+        "street"
+       ]
+      },
+      "DISTANCE": {
+       "r": {
+        "ko": "한동안 서로 거리를 두기로 했다.",
+        "en": "You agreed to keep some distance for a while."
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "distance",
+         "value": true
+        }
+       ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "!partnered"
+     ],
+     "location": "street",
+     "who": "me",
+     "line": {
+      "ko": "(헤어진 사람에게서 연락이 왔다. \"잘 지내?\")",
+      "en": "(A message from an ex: \"How have you been?\")"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "다시 만나본다",
+        "en": "Meet again"
+       },
+       "weights": {
+        "RECONCILE": 0.7,
+        "SEPARATE": 0.2,
+        "DISTANCE": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "답장하지 않는다",
+        "en": "Don't reply"
+       },
+       "weights": {
+        "RECONCILE": 0.05,
+        "SEPARATE": 0.8,
+        "DISTANCE": 0.15
+       }
+      }
+     ],
+     "outcomes": {
+      "RECONCILE": {
+       "r": {
+        "ko": "오랜만에 만났다. 많이 변해 있었다.",
+        "en": "You met after a long time. They had changed."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.2
+        }
+       ]
+      },
+      "SEPARATE": {
+       "r": {
+        "ko": "과거는 과거로 두었다.",
+        "en": "You left the past in the past."
+       },
+       "effects": []
+      },
+      "DISTANCE": {
+       "r": {
+        "ko": "짧게 안부만 전했다.",
+        "en": "You just said hi."
+       },
+       "effects": []
+      }
+     }
+    }
+   ]
+  },
+  "CAREER_TURN": {
+   "hint": {
+    "ko": "(요즘 회사 분위기가 심상치 않다.)",
+    "en": "(Something feels off at work lately.)"
+   },
+   "variants": [
+    {
+     "requires": [
+      "employed"
+     ],
+     "location": "office",
+     "who": "boss",
+     "line": {
+      "ko": "잠깐 얘기 좀 할까요? 회사에 큰 변화가 있을 거예요.",
+      "en": "Got a minute? Big changes are coming to the company."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "끝까지 성과로 증명하겠습니다",
+        "en": "I'll prove myself with results"
+       },
+       "weights": {
+        "PROMOTION": 0.65,
+        "LAYOFF": 0.25,
+        "INDEPENDENCE": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "(조용히 독립을 준비한다)",
+        "en": "(Quietly prepare to go independent)"
+       },
+       "weights": {
+        "PROMOTION": 0.15,
+        "LAYOFF": 0.2,
+        "INDEPENDENCE": 0.65
+       }
+      },
+      {
+       "t": {
+        "ko": "흐름에 맡긴다",
+        "en": "Go with the flow"
+       },
+       "weights": {
+        "PROMOTION": 0.34,
+        "LAYOFF": 0.33,
+        "INDEPENDENCE": 0.33
+       }
+      }
+     ],
+     "outcomes": {
+      "PROMOTION": {
+       "r": {
+        "ko": "팀장으로 승진했다! 팀원들이 박수를 쳤다.",
+        "en": "Promoted to team lead! The team applauded."
+       },
+       "effects": [
+        {
+         "kind": "careerLevel",
+         "delta": 2
+        },
+        {
+         "kind": "money",
+         "amount": 10
+        }
+       ],
+       "card": "PROMOTION"
+      },
+      "LAYOFF": {
+       "r": {
+        "ko": "…구조조정 명단에 이름이 있었다. 상자에 짐을 쌌다.",
+        "en": "…Your name was on the restructuring list. You packed a box."
+       },
+       "effects": [
+        {
+         "kind": "quitJob"
+        },
+        {
+         "kind": "money",
+         "amount": 15
+        }
+       ],
+       "card": "LAYOFF",
+       "scene": [
+        "street"
+       ]
+      },
+      "INDEPENDENCE": {
+       "r": {
+        "ko": "사표를 내고 내 일을 시작했다.",
+        "en": "You resigned and started your own thing."
+       },
+       "effects": [
+        {
+         "kind": "quitJob"
+        },
+        {
+         "kind": "job",
+         "field": "own-business"
+        },
+        {
+         "kind": "money",
+         "amount": -10
+        }
+       ],
+       "card": "INDEPENDENCE",
+       "scene": [
+        "cafe"
+       ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "!employed"
+     ],
+     "location": "cafe",
+     "who": "recruiter",
+     "line": {
+      "ko": "면접 결과를 알려드리려고 연락드렸어요.",
+      "en": "We're calling about your interview."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(두근두근) 네, 말씀하세요",
+        "en": "(Heart pounding) Yes, go ahead"
+       },
+       "weights": {
+        "PROMOTION": 0.6,
+        "LAYOFF": 0.25,
+        "INDEPENDENCE": 0.15
+       }
+      },
+      {
+       "t": {
+        "ko": "사실 제 일을 해보려고요",
+        "en": "Actually, I want to do my own thing"
+       },
+       "weights": {
+        "PROMOTION": 0.15,
+        "LAYOFF": 0.2,
+        "INDEPENDENCE": 0.65
+       }
+      }
+     ],
+     "outcomes": {
+      "PROMOTION": {
+       "r": {
+        "ko": "합격이에요! 다음 주부터 출근하세요.",
+        "en": "You're hired! Start next week."
+       },
+       "effects": [
+        {
+         "kind": "job"
+        }
+       ],
+       "card": "JOB_START",
+       "scene": [
+        "office"
+       ]
+      },
+      "LAYOFF": {
+       "r": {
+        "ko": "…아쉽게도 이번엔 함께하지 못하게 됐어요.",
+        "en": "…Unfortunately, it won't work out this time."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Another rejection. It stung.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      },
+      "INDEPENDENCE": {
+       "r": {
+        "ko": "작은 가게를 열었다.",
+        "en": "You opened a small shop."
+       },
+       "effects": [
+        {
+         "kind": "job",
+         "field": "own-business"
+        },
+        {
+         "kind": "money",
+         "amount": -10
+        }
+       ],
+       "card": "INDEPENDENCE",
+       "scene": [
+        "cafe"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  "MOVE": {
+   "hint": {
+    "ko": "(요즘 이상하게 어디론가 떠나고 싶다…)",
+    "en": "(Lately you strangely want to go somewhere far…)"
+   },
+   "variants": [
+    {
+     "requires": [],
+     "location": "home",
+     "who": "me",
+     "line": {
+      "ko": "(멀리 떠날 수 있는 기회가 생겼다. 해외 근무, 유학, 새 도시…)",
+      "en": "(A chance to go far: work abroad, study, a new city…)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "해외로 떠난다",
+        "en": "Go abroad"
+       },
+       "weights": {
+        "ABROAD": 0.8,
+        "NEW_CITY": 0.1,
+        "STAY": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "국내 다른 도시로",
+        "en": "Another city at home"
+       },
+       "weights": {
+        "ABROAD": 0.1,
+        "NEW_CITY": 0.8,
+        "STAY": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "여기 남는다",
+        "en": "Stay here"
+       },
+       "weights": {
+        "ABROAD": 0.05,
+        "NEW_CITY": 0.1,
+        "STAY": 0.85
+       }
+      }
+     ],
+     "outcomes": {
+      "ABROAD": {
+       "r": {
+        "ko": "비행기 창밖으로 구름이 보였다. 새로운 시작이다.",
+        "en": "Clouds outside the plane window. A new beginning."
+       },
+       "effects": [
+        {
+         "kind": "moveAbroad"
+        },
+        {
+         "kind": "job",
+         "abroad": true
+        }
+       ],
+       "card": "FLIGHT",
+       "scene": [
+        "airport",
+        "airplane"
+       ]
+      },
+      "NEW_CITY": {
+       "r": {
+        "ko": "이삿짐 트럭에 짐을 실었다.",
+        "en": "You loaded the moving truck."
+       },
+       "effects": [
+        {
+         "kind": "moveCity"
+        }
+       ],
+       "card": "MOVE_CITY",
+       "scene": [
+        "street"
+       ]
+      },
+      "STAY": {
+       "r": {
+        "ko": "익숙한 동네에 남기로 했다. 대신 여행을 떠났다.",
+        "en": "You stayed in the familiar neighborhood, but took a trip instead."
+       },
+       "effects": [
+        {
+         "kind": "trip",
+         "scope": "INTERNATIONAL"
+        }
+       ],
+       "card": "FLIGHT"
+      }
+     }
+    }
+   ]
+  },
+  "FAMILY_LOSS": {
+   "hint": {
+    "ko": "(엄마 목소리가 요즘 좀 힘이 없다.)",
+    "en": "(Mom's voice has sounded weak lately.)"
+   },
+   "variants": [
+    {
+     "requires": [
+      "momAlive"
+     ],
+     "location": "hospital",
+     "who": "dad",
+     "line": {
+      "ko": "[아빠] 엄마가 입원했다. 올 수 있니?",
+      "en": "[Dad] Mom's in the hospital. Can you come?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "당장 간다",
+        "en": "Go right away"
+       },
+       "weights": {
+        "PASSING": 0.45,
+        "RECOVERY": 0.55
+       }
+      },
+      {
+       "t": {
+        "ko": "주말에 갈게요",
+        "en": "I'll come on the weekend"
+       },
+       "weights": {
+        "PASSING": 0.6,
+        "RECOVERY": 0.4
+       }
+      }
+     ],
+     "outcomes": {
+      "PASSING": {
+       "r": {
+        "ko": "…엄마는 마지막까지 내 손을 잡고 있었다.",
+        "en": "…Mom held your hand until the end."
+       },
+       "effects": [
+        {
+         "kind": "parentDies",
+         "who": "mom"
+        }
+       ],
+       "card": "MOM_FUNERAL",
+       "scene": [
+        "funeral_hall"
+       ]
+      },
+      "RECOVERY": {
+       "r": {
+        "ko": "엄마가 회복했다. 퇴원하던 날 같이 웃었다.",
+        "en": "Mom recovered. You laughed together the day she left the hospital."
+       },
+       "effects": [
+        {
+         "kind": "familyObligation",
+         "delta": 0.2
+        },
+        {
+         "kind": "memory",
+         "text": "Mom recovered.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "!momAlive",
+      "dadAlive"
+     ],
+     "location": "hospital",
+     "who": "relative",
+     "line": {
+      "ko": "아빠가 쓰러지셨어. 빨리 와.",
+      "en": "Dad collapsed. Come quickly."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "당장 간다",
+        "en": "Go right away"
+       },
+       "weights": {
+        "PASSING": 0.45,
+        "RECOVERY": 0.55
+       }
+      },
+      {
+       "t": {
+        "ko": "…무섭다",
+        "en": "…I'm scared"
+       },
+       "weights": {
+        "PASSING": 0.55,
+        "RECOVERY": 0.45
+       }
+      }
+     ],
+     "outcomes": {
+      "PASSING": {
+       "r": {
+        "ko": "…아빠는 조용히 눈을 감았다.",
+        "en": "…Dad quietly closed his eyes."
+       },
+       "effects": [
+        {
+         "kind": "parentDies",
+         "who": "dad"
+        }
+       ],
+       "card": "DAD_FUNERAL",
+       "scene": [
+        "funeral_hall"
+       ]
+      },
+      "RECOVERY": {
+       "r": {
+        "ko": "아빠가 다시 일어나셨다.",
+        "en": "Dad got back on his feet."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Dad recovered.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "!momAlive",
+      "!dadAlive"
+     ],
+     "location": "funeral_hall",
+     "who": "relative",
+     "line": {
+      "ko": "이모가 돌아가셨대…",
+      "en": "Your aunt passed away…"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "장례식에 간다",
+        "en": "Go to the funeral"
+       },
+       "weights": {
+        "PASSING": 1,
+        "RECOVERY": 0
+       }
+      }
+     ],
+     "outcomes": {
+      "PASSING": {
+       "r": {
+        "ko": "오랜만에 모인 가족들과 옛날 이야기를 했다.",
+        "en": "You shared old stories with family you hadn't seen in years."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Said goodbye to my aunt.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ],
+       "card": "FAMILY_FUNERAL",
+       "scene": [
+        "funeral_hall"
+       ]
+      },
+      "RECOVERY": {
+       "r": {
+        "ko": "",
+        "en": ""
+       },
+       "effects": []
+      }
+     }
+    }
+   ]
+  },
+  "WEALTH": {
+   "hint": {
+    "ko": "(요즘 돈 이야기가 자꾸 귀에 들어온다.)",
+    "en": "(Money keeps coming up lately.)"
+   },
+   "variants": [
+    {
+     "requires": [],
+     "location": "home",
+     "who": "friend",
+     "line": {
+      "ko": "이번에 큰 기회가 있는데, 같이 해볼래?",
+      "en": "There's a big opportunity—want in?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "크게 건다",
+        "en": "Bet big"
+       },
+       "weights": {
+        "WINDFALL": 0.5,
+        "LOSS": 0.45,
+        "STEADY": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "조금만 넣는다",
+        "en": "Put in a little"
+       },
+       "weights": {
+        "WINDFALL": 0.3,
+        "LOSS": 0.2,
+        "STEADY": 0.5
+       }
+      },
+      {
+       "t": {
+        "ko": "안 한다",
+        "en": "Pass"
+       },
+       "weights": {
+        "WINDFALL": 0.05,
+        "LOSS": 0.05,
+        "STEADY": 0.9
+       }
+      }
+     ],
+     "outcomes": {
+      "WINDFALL": {
+       "r": {
+        "ko": "대박이 났다! 통장 잔고를 몇 번이나 확인했다.",
+        "en": "It paid off big! You checked your balance again and again."
+       },
+       "effects": [
+        {
+         "kind": "money",
+         "amount": 60
+        }
+       ],
+       "card": "WINDFALL"
+      },
+      "LOSS": {
+       "r": {
+        "ko": "…다 잃었다. 한동안 잠이 오지 않았다.",
+        "en": "…You lost it all. You couldn't sleep for a while."
+       },
+       "effects": [
+        {
+         "kind": "money",
+         "amount": -25
+        }
+       ],
+       "card": "LOSS"
+      },
+      "STEADY": {
+       "r": {
+        "ko": "별일 없이 지나갔다. 그게 다행이었다.",
+        "en": "Nothing much happened. That was a relief."
+       },
+       "effects": []
+      }
+     }
+    }
+   ]
+  },
+  "CHILD": {
+   "hint": {
+    "ko": "(요즘 아기들이 눈에 자꾸 들어온다.)",
+    "en": "(Babies keep catching your eye lately.)"
+   },
+   "variants": [
+    {
+     "requires": [
+      "married"
+     ],
+     "location": "home",
+     "who": "partner",
+     "line": {
+      "ko": "…나 할 말이 있어. 우리, 아기가 생겼어.",
+      "en": "…I have something to tell you. We're having a baby."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(눈물이 난다) 정말?!",
+        "en": "(Tears) Really?!"
+       },
+       "weights": {
+        "PREGNANT": 0.95,
+        "NOT_NOW": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "…아직 준비가 안 됐는데",
+        "en": "…I'm not ready yet"
+       },
+       "weights": {
+        "PREGNANT": 0.75,
+        "NOT_NOW": 0.25
+       }
+      }
+     ],
+     "outcomes": {
+      "PREGNANT": {
+       "r": {
+        "ko": "둘이 한참을 끌어안고 있었다.",
+        "en": "You held each other for a long time."
+       },
+       "effects": [
+        {
+         "kind": "arc",
+         "type": "PREGNANCY"
+        }
+       ]
+      },
+      "NOT_NOW": {
+       "r": {
+        "ko": "…이번엔 아니었다. 둘 다 조용했다.",
+        "en": "…Not this time. You were both quiet."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "A hard, quiet time.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "dating"
+     ],
+     "location": "home",
+     "who": "partner",
+     "line": {
+      "ko": "우리 나중에 아이 낳으면 어떨까?",
+      "en": "What would it be like if we had kids someday?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "둘은 좋겠다",
+        "en": "Two would be nice"
+       },
+       "weights": {
+        "PREGNANT": 0.5,
+        "NOT_NOW": 0.5
+       }
+      },
+      {
+       "t": {
+        "ko": "잘 모르겠어",
+        "en": "I'm not sure"
+       },
+       "weights": {
+        "PREGNANT": 0.1,
+        "NOT_NOW": 0.9
+       }
+      }
+     ],
+     "outcomes": {
+      "PREGNANT": {
+       "r": {
+        "ko": "결혼 이야기가 조금 더 가까워졌다.",
+        "en": "Marriage feels a little closer."
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "wantsKids",
+         "value": true
+        }
+       ]
+      },
+      "NOT_NOW": {
+       "r": {
+        "ko": "아직은 둘이 좋다.",
+        "en": "For now, the two of you is enough."
+       },
+       "effects": []
+      }
+     }
+    }
+   ]
+  },
+  "PET": {
+   "hint": {
+    "ko": "(퇴근길에 자꾸 유기동물 보호소 앞을 지나게 된다.)",
+    "en": "(You keep passing the animal shelter on your way home.)"
+   },
+   "variants": [
+    {
+     "requires": [],
+     "location": "park",
+     "who": "stranger",
+     "line": {
+      "ko": "보호소에서 입양 행사 중이에요. 한번 보고 가실래요?",
+      "en": "There's an adoption event at the shelter. Want to take a look?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "강아지를 데려온다",
+        "en": "Adopt a dog"
+       },
+       "weights": {
+        "ADOPT_DOG": 0.9,
+        "ADOPT_CAT": 0.05,
+        "NO_PET": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "고양이를 데려온다",
+        "en": "Adopt a cat"
+       },
+       "weights": {
+        "ADOPT_DOG": 0.05,
+        "ADOPT_CAT": 0.9,
+        "NO_PET": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "아직은 책임질 자신이 없다",
+        "en": "I can't take responsibility yet"
+       },
+       "weights": {
+        "ADOPT_DOG": 0.05,
+        "ADOPT_CAT": 0.05,
+        "NO_PET": 0.9
+       }
+      }
+     ],
+     "outcomes": {
+      "ADOPT_DOG": {
+       "r": {
+        "ko": "집에 온 첫날, 강아지가 내 발 위에서 잠들었다.",
+        "en": "The first night home, the puppy fell asleep on your feet."
+       },
+       "effects": [
+        {
+         "kind": "adoptPet",
+         "species": "DOG"
+        }
+       ],
+       "card": "PET_ADOPT",
+       "scene": [
+        "home"
+       ]
+      },
+      "ADOPT_CAT": {
+       "r": {
+        "ko": "고양이가 소파 밑에서 나오지 않는다. 그래도 좋다.",
+        "en": "The cat won't come out from under the sofa. Still, it's nice."
+       },
+       "effects": [
+        {
+         "kind": "adoptPet",
+         "species": "CAT"
+        }
+       ],
+       "card": "PET_ADOPT",
+       "scene": [
+        "home"
+       ]
+      },
+      "NO_PET": {
+       "r": {
+        "ko": "대신 봉사활동을 신청했다.",
+        "en": "You signed up to volunteer instead."
+       },
+       "effects": [
+        {
+         "kind": "startHabit",
+         "locationId": "park",
+         "activityId": "volunteer",
+         "perMonth": 2
+        }
+       ]
+      }
+     }
+    }
+   ]
+  },
+  "EARLY_RETIREMENT": {
+   "hint": {
+    "ko": "(회사에서 명예퇴직 이야기가 돌기 시작했다.)",
+    "en": "(Talk of early-retirement packages is going around at work.)"
+   },
+   "variants": [
+    {
+     "requires": [
+      "employed"
+     ],
+     "location": "office",
+     "who": "boss",
+     "line": {
+      "ko": "이번에 명예퇴직 신청을 받는데… 한번 생각해 보시겠어요?",
+      "en": "We're taking early-retirement applications… would you consider it?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "명예퇴직 하겠습니다",
+        "en": "I'll take early retirement"
+       },
+       "weights": {
+        "ACCEPT": 0.85,
+        "STAY": 0.05,
+        "SECOND_CAREER": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "정년까지 다니겠습니다",
+        "en": "I'll stay until retirement age"
+       },
+       "weights": {
+        "ACCEPT": 0.05,
+        "STAY": 0.9,
+        "SECOND_CAREER": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "제2의 인생을 준비하겠습니다",
+        "en": "I'll prepare a second career"
+       },
+       "weights": {
+        "ACCEPT": 0.2,
+        "STAY": 0.1,
+        "SECOND_CAREER": 0.7
+       }
+      }
+     ],
+     "outcomes": {
+      "ACCEPT": {
+       "r": {
+        "ko": "명예퇴직금을 받고 회사를 떠났다. 마지막 날, 꽃다발을 받았다.",
+        "en": "You left with an early-retirement package. On the last day, they gave you flowers."
+       },
+       "effects": [
+        {
+         "kind": "retire"
+        },
+        {
+         "kind": "money",
+         "amount": 40
+        }
+       ],
+       "card": "RETIREMENT",
+       "scene": [
+        "office"
+       ]
+      },
+      "STAY": {
+       "r": {
+        "ko": "정년까지 버티기로 했다.",
+        "en": "You decided to stay until retirement age."
+       },
+       "effects": []
+      },
+      "SECOND_CAREER": {
+       "r": {
+        "ko": "퇴직 후 새로운 일을 시작했다.",
+        "en": "After leaving, you started something new."
+       },
+       "effects": [
+        {
+         "kind": "retire"
+        },
+        {
+         "kind": "money",
+         "amount": 30
+        },
+        {
+         "kind": "job",
+         "field": "second-career"
+        }
+       ],
+       "card": "INDEPENDENCE",
+       "scene": [
+        "cafe"
+       ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "!employed"
+     ],
+     "location": "home",
+     "who": "me",
+     "line": {
+      "ko": "(앞으로 남은 인생을 어떻게 보낼지 생각해 본다.)",
+      "en": "(You think about how to spend the rest of your life.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "배움을 시작한다",
+        "en": "Start learning something"
+       },
+       "weights": {
+        "ACCEPT": 0.2,
+        "STAY": 0.2,
+        "SECOND_CAREER": 0.6
+       }
+      },
+      {
+       "t": {
+        "ko": "여유를 즐긴다",
+        "en": "Enjoy the free time"
+       },
+       "weights": {
+        "ACCEPT": 0.7,
+        "STAY": 0.2,
+        "SECOND_CAREER": 0.1
+       }
+      }
+     ],
+     "outcomes": {
+      "ACCEPT": {
+       "r": {
+        "ko": "여유로운 나날이 시작됐다.",
+        "en": "Easygoing days began."
+       },
+       "effects": []
+      },
+      "STAY": {
+       "r": {
+        "ko": "조용히 하루하루를 보냈다.",
+        "en": "Days passed quietly."
+       },
+       "effects": []
+      },
+      "SECOND_CAREER": {
+       "r": {
+        "ko": "새로운 걸 배우기 시작했다.",
+        "en": "You started learning something new."
+       },
+       "effects": [
+        {
+         "kind": "startHabit",
+         "locationId": "cooking_class",
+         "activityId": "learn_recipe",
+         "perMonth": 4
+        }
+       ]
+      }
+     }
+    }
+   ]
+  }
+ }
+}

@@ -16,6 +16,8 @@ export interface BackgroundQuery {
   timeOfDay: TimeOfDay;
   weather?: Weather;
   season?: Season;
+  /** Life facts (e.g. { married: true }) for backgrounds like the newlywed home. */
+  facts?: Record<string, unknown>;
 }
 
 export interface BackgroundSelection {
@@ -31,7 +33,8 @@ export class BackgroundEngine {
   private cache = new Map<string, BackgroundSelection>();
 
   getBackground(q: BackgroundQuery): BackgroundSelection {
-    const key = `${q.location}|${q.activityId ?? ""}|${q.timeOfDay}|${q.weather ?? ""}|${q.season ?? ""}`;
+    const factKey = q.facts ? Object.keys(q.facts).filter((k) => q.facts![k]).sort().join(",") : "";
+    const key = `${q.location}|${q.activityId ?? ""}|${q.timeOfDay}|${q.weather ?? ""}|${q.season ?? ""}|${factKey}`;
     const hit = this.cache.get(key);
     if (hit) return hit;
 
@@ -42,6 +45,11 @@ export class BackgroundEngine {
     for (const b of backgroundsFor(location.id)) {
       const matched: string[] = [];
       let score = 0;
+      if (b.requires) {
+        if (!b.requires.every((r) => (r.startsWith("!") ? !q.facts?.[r.slice(1)] : !!q.facts?.[r]))) continue;
+        score += 16;
+        matched.push("facts");
+      }
       if (b.activities) {
         if (!q.activityId || !b.activities.includes(q.activityId)) continue;
         score += SCORE.activity;

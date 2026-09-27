@@ -81,6 +81,28 @@
    "WINTER": {
     "CLEAR": 1
    }
+  },
+  "business_city": {
+   "SPRING": {
+    "CLEAR": 0.55,
+    "CLOUDY": 0.25,
+    "RAIN": 0.2
+   },
+   "SUMMER": {
+    "CLEAR": 0.45,
+    "CLOUDY": 0.2,
+    "RAIN": 0.35
+   },
+   "AUTUMN": {
+    "CLEAR": 0.6,
+    "CLOUDY": 0.25,
+    "RAIN": 0.15
+   },
+   "WINTER": {
+    "CLEAR": 0.5,
+    "CLOUDY": 0.3,
+    "SNOW": 0.2
+   }
   }
  }
 }

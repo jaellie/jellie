@@ -97,6 +97,34 @@
      "en": "A seashell"
     }
    ]
+  },
+  {
+   "id": "business_city",
+   "name": {
+    "ko": "출장지",
+    "en": "Business trip city"
+   },
+   "country": "HOME",
+   "international": false,
+   "hub": "business_hotel",
+   "locations": [
+    "branch_office",
+    "street"
+   ],
+   "cost": 0,
+   "days": [
+    2,
+    3
+   ],
+   "tags": [
+    "business"
+   ],
+   "mementos": [
+    {
+     "ko": "출장지 기념 열쇠고리",
+     "en": "A keychain from the business trip"
+    }
+   ]
   }
  ]
 }

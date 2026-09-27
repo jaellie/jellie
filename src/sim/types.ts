@@ -80,6 +80,14 @@ export interface LifeState extends Character {
   family?: { mom: { alive: boolean; birthYear: number }; dad: { alive: boolean; birthYear: number } };
   /** Month index at death, if dead. */
   diedAtMonth?: number;
+  /** Children (born in-game). */
+  kids?: Array<{ id: string; name: string; sex: "MALE" | "FEMALE"; bornYear: number; bornMonth: number; spriteSeed: number }>;
+  /** Pets. */
+  pets?: Array<{ id: string; name: string; species: "DOG" | "CAT"; adoptedYear: number; ageAtAdoption: number; alive: boolean; spriteSeed: number }>;
+  /** Engagement in progress (between proposal and wedding). */
+  engaged?: boolean;
+  /** Story/destiny state (game mode). */
+  story?: import("../story/types").StoryState;
 
   homeCountry: string;
   location: Residence;

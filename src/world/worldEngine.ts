@@ -31,6 +31,8 @@ export interface VisitContext {
   attraction?: Attraction;
   withPartner?: boolean;
   trip?: TravelState;
+  /** Life facts for fact-dependent backgrounds (married home…). */
+  facts?: Record<string, unknown>;
 }
 
 export interface VisitRequest {
@@ -64,7 +66,7 @@ export class WorldEngine {
     const activityId = req.activityId && loc.activities.includes(req.activityId) ? req.activityId : loc.activities[0];
     const activity = getActivity(activityId);
     const time = worldTime(ctx.seed, req.date, req.hour, loc.region);
-    const background = backgroundEngine.getBackground({ location: loc.id, activityId, timeOfDay: time.timeOfDay, weather: time.weather, season: time.season });
+    const background = backgroundEngine.getBackground({ location: loc.id, activityId, timeOfDay: time.timeOfDay, weather: time.weather, season: time.season, facts: ctx.facts });
     const base: VisitResult = { time, locationId: loc.id, activityId, background, present: [], passersBy: [], events: [], nothingHappened: true };
 
     // ---- Is it even possible to be here now? ----
