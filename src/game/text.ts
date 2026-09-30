@@ -130,3 +130,58 @@ export const CITY_KO: Record<string, string> = {
   "New York": "뉴욕", "San Francisco": "샌프란시스코", Seattle: "시애틀", Boston: "보스턴", London: "런던", Edinburgh: "에든버러",
   Singapore: "싱가포르", Paris: "파리", Lyon: "리옹",
 };
+
+// ---- English: family words & romanized names ------------------------------------------------------
+
+const FAMILY_EN: Record<string, string> = {
+  외할머니: "Grandma (Mom's side)", 친할머니: "Grandma (Dad's side)", 할머니: "Grandma",
+  외할아버지: "Grandpa (Mom's side)", 친할아버지: "Grandpa (Dad's side)", 할아버지: "Grandpa",
+  고모부: "my uncle", 이모부: "my uncle", 삼촌: "my uncle", 외삼촌: "my uncle", 작은아버지: "my uncle", 큰아버지: "my uncle",
+  고모: "my aunt", 이모: "my aunt", 숙모: "my aunt", 외숙모: "my aunt", 큰어머니: "my aunt", 작은어머니: "my aunt",
+  오빠: "my older brother", 형: "my older brother", 누나: "my older sister", 언니: "my older sister",
+  남동생: "my younger brother", 여동생: "my younger sister", 동생: "my younger sibling",
+  엄마: "Mom", 아빠: "Dad", 조카: "my niece/nephew", 사촌: "my cousin",
+  // Pet names that are words (a cat called 치즈 is Cheese).
+  치즈: "Cheese", 초코: "Choco", 두부: "Tofu", 레오: "Leo", 모모: "Momo", 나비: "Nabi", 콩이: "Kongi", 까미: "Kkami",
+};
+
+const INI = ["g", "kk", "n", "d", "tt", "r", "m", "b", "pp", "s", "ss", "", "j", "jj", "ch", "k", "t", "p", "h"];
+const MED = ["a", "ae", "ya", "yae", "eo", "e", "yeo", "ye", "o", "wa", "wae", "oe", "yo", "u", "wo", "we", "wi", "yu", "eu", "ui", "i"];
+const FIN = ["", "k", "k", "k", "n", "n", "n", "t", "l", "k", "m", "l", "l", "l", "p", "l", "m", "p", "p", "t", "t", "ng", "t", "t", "k", "t", "p", "t"];
+/** A final consonant carried onto a following vowel (선우 → Seonu, not Seon-u). */
+const FIN_LINK = ["", "g", "kk", "ks", "n", "nj", "nh", "d", "r", "lg", "lm", "lb", "ls", "lt", "lp", "lh", "m", "b", "ps", "s", "ss", "ng", "j", "ch", "k", "t", "p", "h"];
+
+/** Revised Romanization of a Korean name ("재윤" → "Jaeyun", "보리" → "Bori"). */
+export function romanize(hangul: string): string {
+  const syl = [...hangul].map((ch) => {
+    const c = ch.charCodeAt(0) - 0xac00;
+    if (c < 0 || c > 11171) return undefined;
+    return { i: Math.floor(c / 588), m: Math.floor((c % 588) / 28), f: c % 28 };
+  });
+  let out = "";
+  syl.forEach((s, k) => {
+    if (!s) return;
+    out += INI[s.i] + MED[s.m];
+    const next = syl[k + 1];
+    out += s.f === 0 ? "" : next && next.i === 11 ? FIN_LINK[s.f] : FIN[s.f];
+  });
+  return out.charAt(0).toUpperCase() + out.slice(1);
+}
+
+/** English text with no Korean left: family words translated, names romanized. */
+export function englishOnly(text: string): string {
+  if (!/[가-힣]/.test(text)) return text;
+  return text.replace(/[가-힣]+/g, (w) => FAMILY_EN[w] ?? romanize(w));
+}
+
+/** Deep copy of a UI payload with every string made English-only. */
+export function englishPayload<T>(value: T): T {
+  if (typeof value === "string") return englishOnly(value) as unknown as T;
+  if (Array.isArray(value)) return value.map((v) => englishPayload(v)) as unknown as T;
+  if (value && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) out[k] = englishPayload(v);
+    return out as T;
+  }
+  return value;
+}

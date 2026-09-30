@@ -691,6 +691,10 @@ export function queueCard(state: LifeState, kind: string, ctx: StoryCtx, data?: 
   // You in the hospital yourself: a card of your own (never "'s illness" with a blank name).
   if (kind === "HOSPITAL" && who === "self") kind = "HOSPITAL_SELF";
   const patient = pl.ko;
+  // Remember who the partner on this card is (a divorce card is made after they've left).
+  const pname = f.partnerName ?? (state.flags.lastPartnerName as string | undefined);
+  const pnpc = state.relationship.partnerId ? { id: state.relationship.partnerId } : pname ? { id: state.npcs.find((n) => n.name === pname)?.id ?? Object.values(state.world?.npcs ?? {}).find((n) => n.name === pname)?.id } : undefined;
+  const psex = pnpc?.id ? state.world?.npcs[pnpc.id]?.sex ?? state.npcs.find((n) => n.id === pnpc.id)?.birth.sex : undefined;
   state.story!.cards.push({
     kind,
     age: Math.floor(state.age),
@@ -701,6 +705,8 @@ export function queueCard(state: LifeState, kind: string, ctx: StoryCtx, data?: 
       kid: lastKid?.name ?? "",
       pet: (data?.petName as string) ?? lastPet?.name ?? "",
       patient,
+      partnerId: pnpc?.id ?? "",
+      partnerSex: psex ?? "",
       patient_ko: pl.ko,
       patient_en: pl.en,
       city: state.location.city,

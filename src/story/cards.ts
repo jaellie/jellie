@@ -72,9 +72,13 @@ export function buildCards(state: LifeState, lang: "ko" | "en", seed: number): M
       const base = { id: `${c.kind}:${role}`, spot, z: Math.round((spot[0] + spot[1]) * 10) };
       if (role === "me") return { ...base, kind: "player", sex: state.birth.sex, age: c.age, spriteSeed: 0 };
       if (role === "partner") {
-        const pid = state.relationship.partnerId;
+        // The partner *on the card* (remembered when it was made — after a divorce there's no current partner).
+        const pid = c.vars.partnerId || state.relationship.partnerId;
         const npc = pid ? state.world?.npcs[pid] : undefined;
-        return { ...base, kind: "partner", name: c.vars.partner, sex: npc?.sex, spriteSeed: npc?.spriteSeed ?? h(seed, c.vars.partner), fated: npc?.fated };
+        const likes = String(state.flags.likes ?? "");
+        const guess = likes === "M" ? "MALE" : likes === "F" ? "FEMALE" : state.birth.sex === "MALE" ? "FEMALE" : "MALE";
+        const sex = (c.vars.partnerSex as "MALE" | "FEMALE" | undefined) || npc?.sex || state.npcs.find((n) => n.id === pid)?.birth.sex || guess;
+        return { ...base, kind: "partner", name: c.vars.partner, sex, spriteSeed: npc?.spriteSeed ?? h(seed, c.vars.partner), fated: npc?.fated };
       }
       const r = baseRole(role);
       const name = r === "friend" ? c.vars.friend : r === "patient" ? c.vars.patient : undefined;

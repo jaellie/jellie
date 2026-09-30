@@ -531,7 +531,8 @@
    "tone": "romance",
    "requires": [
     "!partnered",
-    "employed"
+    "employed",
+    "!selfEmployed"
    ],
    "trigger": {
     "signals": {
@@ -651,7 +652,8 @@
    "requires": [
     "dating",
     "employed",
-    "f_officeRomance"
+    "f_officeRomance",
+    "!selfEmployed"
    ],
    "chainOnly": true,
    "location": "office",

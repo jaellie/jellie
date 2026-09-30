@@ -65,8 +65,9 @@ export const SPEAKER_REQUIRES: Record<string, string[]> = {
   sibling: ["hasSibling", "!f_siblingGone"],
   kid: ["hasKid"],
   boss: ["employed", "!selfEmployed"],
-  coworker: ["employed"],
-  work: ["employed"],
+  // Coworkers and "work" exist only while you're someone's employee (not after quitting to run your own place).
+  coworker: ["employed", "!selfEmployed"],
+  work: ["employed", "!selfEmployed"],
   friend: ["hasFriend"],
   crush: ["hasCrushFriend"],
   ex: ["hasEx"],

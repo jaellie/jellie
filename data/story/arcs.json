@@ -750,7 +750,7 @@
       "MAKEUP": {
        "r": {
         "ko": "다 싸우고 나니 배가 고팠다. 같이 떡볶이를 먹었다. 조금 더 가까워진 기분이었다.",
-        "en": "After the fight you were both hungry. You shared 떡볶이 and felt a little closer."
+        "en": "After the fight you were both hungry. You shared tteokbokki and felt a little closer."
        },
        "effects": []
       },
@@ -2751,7 +2751,7 @@
       "START": {
        "r": {
         "ko": "'…나도.' 그날부터 우리는 썸이 아니라 연인이 됐다.",
-        "en": "\"…Me too.\" From that day on, it wasn't 썸 anymore. You were together."
+        "en": "\"…Me too.\" From that day on, it wasn't the talking stage anymore. You were together."
        },
        "effects": [
         {

@@ -184,6 +184,8 @@ export function weekdayOnly(def: LifeEventDef): boolean {
 
 export function eventApplies(def: LifeEventDef, facts: LifeFacts): boolean {
   if (facts.weekend && weekdayOnly(def)) return false;
+  // Living apart: your partner can't be there in person (only moments written for distance can happen).
+  if (facts.apart && def.who === "partner" && !(def.requires ?? []).some((r) => /^(fatedAbroad|fatedFar|apart)$/.test(r))) return false;
   return meets(def.requires, facts) && meets(SPEAKER_REQUIRES[def.who] ?? [], facts);
 }
 

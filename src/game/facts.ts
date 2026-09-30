@@ -94,6 +94,8 @@ export interface LifeFacts {
   fatedJobRich: boolean;
   /** The destined person lives in another city / country (and you haven't moved together yet). */
   fatedFar: boolean;
+  /** Together but living apart (long distance): no in-person dates or dinners until someone moves. */
+  apart: boolean;
   fatedAbroad: boolean;
   /** The closest friend of the sex you're drawn to (friends-to-lovers moments). */
   hasCrushFriend: boolean;
@@ -226,6 +228,7 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
     fatedJobCare: fatedPartner && !!job?.care,
     fatedJobRich: fatedPartner && (job?.income ?? 0) >= 0.8,
     fatedFar: !!life && life.from !== "same",
+    apart: partnered && !!s.relationship.longDistance,
     fatedAbroad: !!life && life.from === "abroad",
     hasCrushFriend: !!crush,
     crushName: crush ? w!.npcs[crush.npcId]?.name : undefined,

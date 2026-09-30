@@ -135,7 +135,7 @@ describe("The Korean version stays Korean", () => {
         if (!t) return;
         let s = t;
         for (const n of names()) s = s.split(n).join("");
-        const m = s.replace(/AED|SNS|KTX|PT|OK/g, "").match(/[A-Za-z]{3,}/);
+        const m = s.replace(/AED|SNS|KTX|CCTV|PT|OK|MBTI/g, "").match(/[A-Za-z]{3,}/);
         if (m) hits.push(t);
       };
       for (let d = 0; d < 30 && !g.isOver(); d++) {
@@ -257,5 +257,83 @@ describe("The life road (play screen)", () => {
     const fam = near.road().walkers;
     expect(fam.map((w) => w.role)).toEqual(["partner", "me", "kid", "baby", "pet"]);
     expect(fam.find((w) => w.role === "baby")?.carriedBy).toBe("partner");
+  });
+});
+
+describe("Round fixes: status-aware moods, long distance, partner looks, skylines", () => {
+  it("moods never contradict your status; living apart means no in-person partner moments or dates", async () => {
+    const { allMoodLines } = await import("../src/story/mood");
+    const { meets } = await import("../src/game/facts");
+    const conditional = allMoodLines().filter((l) => l.when?.length);
+    const bad: string[] = [];
+    for (const seed of [2, 4, 8]) {
+      const g = createGame({ ...JAE, seed, lang: "ko", fated: { ...JUNG, from: seed === 8 ? "same" : "abroad", status: "dating" } });
+      const rng = new SeededRandom(seed);
+      for (let d = 0; d < 30 && !g.isOver(); d++) {
+        const f = g.facts();
+        const mood = g.mood() ?? "";
+        for (const l of conditional) if (mood === l.ko && !meets(l.when!, f)) bad.push(`${mood} while ${f.married ? "married" : f.partnered ? "partnered" : "single"}`);
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) if (b.kind === "popup") {
+            const now = g.facts();
+            if (now.apart && b.popup.source === "plan" && b.popup.ch.some((c) => /(공원|레스토랑|영화|놀이공원) 데이트/.test(c.t))) bad.push(`date while apart: ${b.popup.ch.map((c) => c.t).join("/")}`);
+            if (now.apart && b.popup.source === "story" && b.popup.who === "partner" && !b.popup.big) bad.push(`in-person partner moment while apart: ${b.popup.line}`);
+            g.choose(rng.int(0, b.popup.ch.length - 1));
+          }
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        const r = g.endDay();
+        for (const c of r.cards) for (const a of c.scene?.actors ?? []) if (a.role === "partner" && a.gender !== "M") bad.push(`card ${c.kind}: partner gender ${a.gender}`);
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+
+  it("the road's skyline follows your city (top-50 list, generic otherwise)", async () => {
+    const { skylineFor } = await import("../src/world/road");
+    expect(skylineFor("Seoul", "Korea", "ko").landmarks).toContain("N서울타워");
+    expect(skylineFor("Paris", "France", "ko").landmarks).toContain("에펠탑");
+    expect(skylineFor("New York", "USA", "en").street).toContain("Yellow cabs");
+    expect(skylineFor("Chuncheon", "Korea", "ko").id).toBe("korea");
+    expect(skylineFor("Hamburg", "Germany", "ko").id).toBe("world");
+    const g = createGame({ ...JAE, seed: 3 });
+    expect(g.road().backdrop.skyline.landmarks.length).toBeGreaterThan(0);
+  });
+});
+
+describe("The English version stays English; the story starts in 2026", () => {
+  it("no Korean anywhere shown in whole English lives (names romanized, family words translated)", () => {
+    const hits: string[] = [];
+    for (const seed of [1, 3]) {
+      const g = createGame({ name: "Jae", gender: "F", likes: "M", birth: { year: 1997, month: 9, day: 28 }, mbti: "ENFP", seed, lang: "en", birthplace: "Seoul", family: { grandparents: 2, siblings: [{ rel: "OLDER_BROTHER" }] }, fated: { name: "Jung", from: seed === 3 ? "abroad" : "same", status: seed === 1 ? "talking" : "stranger" } });
+      const rng = new SeededRandom(seed);
+      const check = (t: unknown) => {
+        const s = JSON.stringify(t ?? "");
+        if (/[가-힣]/.test(s)) hits.push(s.slice(0, 120));
+      };
+      for (let d = 0; d < 30 && !g.isOver(); d++) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          check(beats);
+          for (const b of beats) if (b.kind === "popup") check(g.choose(rng.int(0, b.popup.ch.length - 1)));
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        check(g.hud());
+        check(g.road());
+        check(g.people());
+        const r = g.endDay();
+        check({ lines: r.lines, notes: r.notes, captions: r.cards.map((c) => c.caption) });
+      }
+    }
+    expect(hits).toEqual([]);
+  });
+
+  it("starts in 2026 at your real age (never younger than 18)", () => {
+    const g = createGame({ ...JAE, seed: 1 });
+    expect(g.state.date.year).toBe(2026);
+    expect(Math.floor(g.state.age)).toBe(29);
+    const young = createGame({ ...JAE, birth: { year: 2012, month: 3, day: 1 }, seed: 1 });
+    expect(Math.floor(young.state.age)).toBe(18);
   });
 });

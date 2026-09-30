@@ -1465,7 +1465,96 @@
    },
    "variants": [
     {
-     "requires": [],
+     "requires": [
+      "abroad"
+     ],
+     "priority": 2,
+     "location": "home",
+     "who": "me",
+     "line": {
+      "ko": "(역마가 또 들썩인다. 여기서 산 지도 꽤 됐다. 문득 한국 생각이 난다.)",
+      "en": "(The travelling star stirs again. You've lived here a while now. Korea crosses your mind.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "한국으로 돌아간다",
+        "en": "Move back to Korea"
+       },
+       "weights": {
+        "ABROAD": 0.75,
+        "NEW_CITY": 0.1,
+        "STAY": 0.15
+       }
+      },
+      {
+       "t": {
+        "ko": "이 나라의 다른 도시로 옮긴다",
+        "en": "Move to another city here"
+       },
+       "weights": {
+        "ABROAD": 0.1,
+        "NEW_CITY": 0.75,
+        "STAY": 0.15
+       }
+      },
+      {
+       "t": {
+        "ko": "여기 남는다",
+        "en": "Stay"
+       },
+       "weights": {
+        "ABROAD": 0.1,
+        "NEW_CITY": 0.15,
+        "STAY": 0.75
+       }
+      }
+     ],
+     "outcomes": {
+      "ABROAD": {
+       "r": {
+        "ko": "몇 년 만의 인천공항. 공기 냄새부터 달랐다. 돌아왔다.",
+        "en": "Incheon Airport after all these years. Even the air smelled different. You were home."
+       },
+       "effects": [
+        {
+         "kind": "moveHome"
+        }
+       ],
+       "card": "FLIGHT",
+       "scene": [
+        "airport"
+       ]
+      },
+      "NEW_CITY": {
+       "r": {
+        "ko": "같은 나라, 새 도시. 짐 싸는 건 이제 익숙하다.",
+        "en": "Same country, new city. You're used to packing by now."
+       },
+       "effects": [
+        {
+         "kind": "moveCity"
+        }
+       ],
+       "card": "MOVE_CITY",
+       "scene": [
+        "street"
+       ]
+      },
+      "STAY": {
+       "r": {
+        "ko": "여기가 이제 내 동네다. 단골 가게 사장님이 이름을 불러줬다.",
+        "en": "This is your neighborhood now. The owner of your usual place called you by name."
+       },
+       "effects": [],
+       "card": "NEW_HOME"
+      }
+     }
+    },
+    {
+     "requires": [
+      "!abroad"
+     ],
      "location": "home",
      "who": "me",
      "line": {

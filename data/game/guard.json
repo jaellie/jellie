@@ -53,7 +53,8 @@
     "은퇴"
    ],
    "requires": [
-    "employed"
+    "employed",
+    "!selfEmployed"
    ]
   },
   {

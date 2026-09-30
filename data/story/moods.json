@@ -4,25 +4,49 @@
   "LOVE_MEETING": [
    {
     "ko": "(요즘 이상하게 누군가를 만날 것 같은 예감이 든다.)",
-    "en": "(Lately you have a strange feeling you're about to meet someone.)"
+    "en": "(Lately you have a strange feeling you're about to meet someone.)",
+    "when": [
+     "!partnered"
+    ]
    },
    {
     "ko": "(요즘 괜히 옷에 신경이 쓰인다.)",
-    "en": "(Lately you care about what you wear, for no reason.)"
+    "en": "(Lately you care about what you wear, for no reason.)",
+    "when": [
+     "!partnered"
+    ]
    },
    {
     "ko": "(올해는 뭔가 다를 것 같다. 사람 운이 들어온다고 했던가.)",
-    "en": "(This year feels different. Wasn't this supposed to be a year for meeting people?)"
+    "en": "(This year feels different. Wasn't this supposed to be a year for meeting people?)",
+    "when": [
+     "!partnered"
+    ]
    }
   ],
   "MARRIAGE": [
    {
     "ko": "(주변에서 하나둘 결혼 소식이 들려온다. 나는 어떻게 될까.)",
-    "en": "(One by one, friends are getting married. What about you?)"
+    "en": "(One by one, friends are getting married. What about you?)",
+    "when": [
+     "!engaged",
+     "!married"
+    ]
    },
    {
     "ko": "(요즘 부쩍 '평생'이라는 말이 마음에 걸린다.)",
-    "en": "(Lately the word \"forever\" keeps catching on something.)"
+    "en": "(Lately the word \"forever\" keeps catching on something.)",
+    "when": [
+     "!engaged",
+     "!married"
+    ]
+   },
+   {
+    "ko": "(결혼기념일이 다가온다. 올해는 뭘 해줄까.)",
+    "en": "(Your anniversary is coming. What should you do this year?)",
+    "when": [
+     "married"
+    ]
    }
   ],
   "RELATIONSHIP_CRISIS": [
@@ -82,7 +106,10 @@
   "CHILD": [
    {
     "ko": "(요즘 길에서 아기들만 눈에 들어온다.)",
-    "en": "(Lately, all you notice on the street are babies.)"
+    "en": "(Lately, all you notice on the street are babies.)",
+    "when": [
+     "partnered"
+    ]
    }
   ],
   "PET": [
@@ -172,7 +199,7 @@
    },
    {
     "ko": "(이게 썸이 아니면 뭘까.)",
-    "en": "(If this isn't 썸, what is it?)"
+    "en": "(If this isn't a talking stage, what is it?)"
    }
   ],
   "DATING": [
@@ -232,7 +259,10 @@
   "romance": [
    {
     "ko": "(요즘 거울을 자주 본다.)",
-    "en": "(You check the mirror a lot lately.)"
+    "en": "(You check the mirror a lot lately.)",
+    "when": [
+     "!partnered"
+    ]
    }
   ],
   "family": [
@@ -364,11 +394,24 @@
   "DOHWA": [
    {
     "ko": "(요즘 이상하게 사람들이 나를 자꾸 쳐다본다.)",
-    "en": "(People keep looking at you lately, somehow.)"
+    "en": "(People keep looking at you lately, somehow.)",
+    "when": [
+     "!partnered"
+    ]
    },
    {
     "ko": "(설레고 싶다. 누구라도.)",
-    "en": "(You want to feel butterflies. With anyone.)"
+    "en": "(You want to feel butterflies. With anyone.)",
+    "when": [
+     "!partnered"
+    ]
+   },
+   {
+    "ko": "({spouse}이(가) 요즘 부쩍 예뻐 보인다. …아니, 원래 예뻤나.)",
+    "en": "({spouse} looks especially lovely lately. …Or were they always?)",
+    "when": [
+     "partnered"
+    ]
    }
   ],
   "YEOKMA": [
@@ -390,7 +433,7 @@
   "SAMJAE": [
    {
     "ko": "(요즘 되는 일이 없다. 삼재라 그런가.)",
-    "en": "(Nothing's going right lately. Is it the 삼재?)"
+    "en": "(Nothing's going right lately. Is it a bad-luck year (samjae)?)"
    },
    {
     "ko": "(올해는 조심해야 한다고 엄마가 그랬다.)",
@@ -490,13 +533,26 @@
   "JUPITER@H5": [
    {
     "ko": "(올해는 연애 운이 좋다던데.)",
-    "en": "(They said this year is good for love.)"
+    "en": "(They said this year is good for love.)",
+    "when": [
+     "!partnered"
+    ]
    }
   ],
   "JUPITER@H7": [
    {
     "ko": "(좋은 사람이 들어올 해라고 했다.)",
-    "en": "(They said a good person would come into your life this year.)"
+    "en": "(They said a good person would come into your life this year.)",
+    "when": [
+     "!partnered"
+    ]
+   },
+   {
+    "ko": "(요즘 {spouse}과(와) 함께라서 든든하다.)",
+    "en": "(Having {spouse} by your side feels steady lately.)",
+    "when": [
+     "partnered"
+    ]
    }
   ],
   "JUPITER@H10": [

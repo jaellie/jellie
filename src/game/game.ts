@@ -59,7 +59,7 @@ import { buildCards, type MemoryCard } from "../story/cards";
 import memorialData from "../../data/story/memorial.json";
 import { AutoWorldPolicy } from "../world/decisions";
 import { DIRECTOR_CONFIG as CFG, Director, type DirectorMemory, newDirectorMemory, SPEAKER_FALLBACK, SPEAKER_REQUIRES } from "./director";
-import { type Bi, type Lang, CITY_KO, cityKo, COUNTRY_KO, DEST_KO, EDU_KO, SPEAKER_NAME, bi, fillNames, fixJosa, krw, langVars } from "./text";
+import { type Bi, type Lang, CITY_KO, cityKo, englishPayload, COUNTRY_KO, DEST_KO, EDU_KO, SPEAKER_NAME, bi, fillNames, fixJosa, krw, langVars } from "./text";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -304,6 +304,16 @@ export class Game {
   constructor(save: GameSave) {
     this.s = save;
     this.director = new Director(save.director);
+    // English game: everything handed to the UI is English-only — family words translated, Korean
+    // names romanized (재윤 → Jaeyun). The engine keeps its own data as is.
+    for (const m of ["advance", "choose", "endDay", "memorial", "ending", "hud", "scene", "road", "people", "lifeLog", "mood", "doActivity", "goTo", "leave"] as const) {
+      const fn = (this as unknown as Record<string, (...a: unknown[]) => unknown>)[m];
+      if (typeof fn !== "function") continue;
+      (this as unknown as Record<string, unknown>)[m] = (...a: unknown[]) => {
+        const r = fn.apply(this, a);
+        return this.s.lang === "en" ? englishPayload(r) : r;
+      };
+    }
   }
 
   // ---- helpers --------------------------------------------------------------
@@ -814,7 +824,8 @@ export class Game {
   private fireSmall(): Beat | undefined {
     const here = getLocation(this.s.loc ?? "home");
     const f = this.facts();
-    const cands = STORIES.filter((x) => x.where.includes(here.type) || x.where.includes(here.id));
+    // Living apart, your partner isn't there to cook dinner or ask "what day is it today?" in person.
+    const cands = STORIES.filter((x) => (x.where.includes(here.type) || x.where.includes(here.id)) && !(f.apart && x.who === "partner"));
     const story = this.director.pick(
       "small",
       cands,
@@ -901,7 +912,11 @@ export class Game {
       if (!loc.online && loc.region === st.world!.homeRegion) place(id, h.activityId, bi(`${loc.name.ko} 가기`, `Go to ${loc.name.en}`), 2.5);
     }
     if (f.hasFriend) pool.push({ item: { id: "friend", kind: "friend", locationId: "cafe", activityId: "meet_friend", label: bi(`${f.friendName} 만나기`, `Meet ${f.friendName}`) }, weight: 1.5 + st.traits.sociability });
-    if (f.partnered) {
+    if (f.partnered && f.apart) {
+      // Long distance: no dinner dates — a video-call date, or something sent across the distance.
+      pool.push({ item: { id: "call:partner", kind: "home", locationId: "home", activityId: "watch_tv", label: bi(`${f.partnerName}와(과) 영상통화 데이트`, `A video-call date with ${f.partnerName}`) }, weight: 1.6 });
+      pool.push({ item: { id: "parcel:partner", kind: "place", locationId: "street", activityId: "shop", label: bi(`${f.partnerName}에게 보낼 택배 싸기`, `Pack a parcel for ${f.partnerName}`) }, weight: 0.8 });
+    } else if (f.partnered) {
       for (const [id, ko, en] of [["park", "공원 데이트", "Park date"], ["restaurant", "레스토랑 데이트", "Dinner date"], ["cinema", "영화 데이트", "Movie date"], ["amusement_park", "놀이공원 데이트", "Amusement-park date"]] as const)
         pool.push({ item: { id: `date:${id}`, kind: "date", locationId: id, activityId: "date", withPartner: true, label: bi(`${f.partnerName}와(과) ${ko}`, `${en} with ${f.partnerName}`) }, weight: 1.2 });
     }
@@ -952,7 +967,7 @@ export class Game {
       source: "plan",
       who: "me",
       name: this.speaker("me"),
-      line: this.L(f.partnered ? bi(`(오늘 ${f.partnerName}와(과) 뭐 할까?)`, `(What should ${f.partnerName} and I do today?)`) : bi("(주말이다. 뭐 하지?)", "(The weekend. What now?)")),
+      line: this.L(f.partnered && !f.apart ? bi(`(오늘 ${f.partnerName}와(과) 뭐 할까?)`, `(What should ${f.partnerName} and I do today?)`) : f.apart ? bi(`(주말이다. ${f.partnerName}은(는) 멀리 있다. 뭐 하지?)`, `(The weekend. ${f.partnerName} is far away. What now?)`) : bi("(주말이다. 뭐 하지?)", "(The weekend. What now?)")),
       ch: opts.map((o) => ({ t: this.L(o.label) })),
     };
     this.s.pending = { popup, plan: opts };
@@ -1347,7 +1362,8 @@ export function createGame(input: GameSetup): Game {
   // Backstory: birth → start age, lived in the background.
   const runner = new LifeRunner({ ...g.runnerOptions(hash(seed, "backstory")), mortality: false, excludeTemplates: ["PROPOSAL", "RELATIONSHIP_STRAIN", "LAYOFF", "FAMILY_NEED"] });
   save.life = runner.state;
-  const startAge = setup.startAge ?? CFG.startAge;
+  // The story starts now — in 2026, on your birthday (never younger than 18).
+  const startAge = setup.startAge ?? Math.max(18, Number((CFG as { startYear?: number }).startYear ?? 2026) - setup.birth.year);
   while (runner.state.monthIndex < startAge * 12) runner.stepMonth();
   const st = save.life;
   st.alive = true;

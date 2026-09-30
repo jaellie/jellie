@@ -6,10 +6,10 @@
 type Bi = { ko: string; en: string };
 
 const SAJU: Record<string, Bi> = {
-  DOHWA: { ko: "도화", en: "Peach Blossom (도화)" },
-  YEOKMA: { ko: "역마", en: "Traveling Horse (역마)" },
-  HWAGAE: { ko: "화개", en: "Canopy (화개)" },
-  CHEONEUL_GWIIN: { ko: "천을귀인", en: "Noble helper (천을귀인)" },
+  DOHWA: { ko: "도화", en: "Peach Blossom" },
+  YEOKMA: { ko: "역마", en: "Traveling Horse" },
+  HWAGAE: { ko: "화개", en: "Canopy" },
+  CHEONEUL_GWIIN: { ko: "천을귀인", en: "Noble helper" },
   대운전환: { ko: "대운 전환", en: "a new 10-year luck cycle" },
   STEM_COMBINATION: { ko: "천간합", en: "stem combination" },
   STEM_CLASH: { ko: "천간충", en: "stem clash" },

@@ -281,7 +281,8 @@
    "from": "dad",
    "requires": [
     "dadAlive",
-    "employed"
+    "employed",
+    "!selfEmployed"
    ],
    "weight": 1,
    "text": {
@@ -699,7 +700,8 @@
    "id": "work_56",
    "from": "work",
    "requires": [
-    "employed"
+    "employed",
+    "!selfEmployed"
    ],
    "weight": 1,
    "text": {
@@ -711,7 +713,8 @@
    "id": "work_57",
    "from": "work",
    "requires": [
-    "employed"
+    "employed",
+    "!selfEmployed"
    ],
    "weight": 1,
    "text": {
@@ -736,7 +739,8 @@
    "id": "work_59",
    "from": "work",
    "requires": [
-    "employed"
+    "employed",
+    "!selfEmployed"
    ],
    "weight": 1,
    "text": {

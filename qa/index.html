@@ -69,6 +69,10 @@
   #road.walking .dash { animation: dash .5s linear infinite; }
   @keyframes dash { to { background-position: 0 44px; } }
   #road .far { position: absolute; left: 0; right: 0; top: calc(34% - 60px); height: 60px; }
+  #road .far { display: flex; align-items: flex-end; justify-content: space-around; padding: 0 8px; }
+  #road .lm { position: relative; width: 38px; background: var(--bldg); border: 2px solid var(--ink); border-bottom: 0; opacity: .85; }
+  #road .lm span { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font-size: 8px; white-space: nowrap; color: var(--ink); background: rgba(255,246,227,.8); padding: 0 2px; }
+  #road .prop { background: var(--accent); border: 2px solid var(--ink); border-radius: 3px; }
   #road .obj { position: absolute; transform-origin: 50% 100%; image-rendering: pixelated; }
   #road .tree .crown { position: absolute; left: 0; right: 0; top: 0; height: 70%; border: 3px solid var(--ink); border-radius: 40% 40% 30% 30%; background: var(--leaf, #58b04a); }
   #road .tree .trunk { position: absolute; left: 42%; width: 16%; top: 66%; bottom: 0; background: #7a4e2d; border: 2px solid var(--ink); }
@@ -285,7 +289,16 @@
     el.classList.toggle("walking", rv.walking);
     el.dataset.theme = b.theme; el.dataset.walkers = rv.walkers.map((w) => w.role).join(",");
     el.style.setProperty("--sky", SKY[b.timeOfDay]); el.style.setProperty("--ground", b.theme === "seaside" ? "#7ec8e3" : GROUND[b.season]);
-    el.style.setProperty("--way", th.way || "#cdb89a"); el.style.setProperty("--leaf", LEAF[b.season]); el.style.setProperty("--bldg", th.bldg || "#d9c7b0");
+    el.style.setProperty("--way", th.way || "#cdb89a"); el.style.setProperty("--leaf", LEAF[b.season]);
+    const sk = b.skyline;
+    el.style.setProperty("--bldg", sk.palette.buildings); el.style.setProperty("--accent", sk.palette.accent);
+    if (b.timeOfDay === "DAY" || b.timeOfDay === "MORNING") el.style.setProperty("--sky", sk.palette.sky);
+    // The city's skyline on the horizon (a new city → new landmarks).
+    const far = el.querySelector(".far");
+    if (far.dataset.city !== sk.id) {
+      far.dataset.city = sk.id; el.dataset.skyline = sk.id;
+      far.innerHTML = sk.landmarks.map((n, i) => `<div class="lm" data-testid="landmark-sky" style="height:${26 + ((i * 17) % 30)}px"><span>${n}</span></div>`).join("");
+    }
     el.style.setProperty("--shade", b.timeOfDay === "NIGHT" ? "rgba(10,10,40,.35)" : b.timeOfDay === "EVENING" ? "rgba(255,120,60,.12)" : "transparent");
     el.querySelector(".weather").className = "weather " + (b.weather === "RAIN" || b.weather === "STORM" ? "RAIN" : b.weather === "SNOW" ? "SNOW" : "");
     // A new place today: it comes up the road as a landmark with a sign.
@@ -314,8 +327,13 @@
   }
   function spawn(z, landmark, name, side) {
     const t = roadView?.backdrop.theme || "town", kind = landmark ? "bldg" : (THEME[t] || THEME.town).obj === "mix" ? (Math.random() < 0.5 ? "bldg" : "tree") : (THEME[t] || THEME.town).obj;
-    const d = document.createElement("div"); d.className = "obj " + (kind === "tree" ? "tree" : "bldg"); d.dataset.testid = landmark ? "landmark" : "roadside";
-    if (kind === "tree") d.innerHTML = `<div class="crown"></div><div class="trunk"></div>`;
+    // Now and then a city street prop instead (편의점, 자판기, 노란 택시…).
+    const street = roadView?.backdrop.skyline.street ?? [];
+    const prop = !landmark && street.length && Math.random() < 0.3 ? street[Math.floor(Math.random() * street.length)] : null;
+    const d = document.createElement("div"); d.className = "obj " + (prop ? "prop" : kind === "tree" ? "tree" : "bldg"); d.dataset.testid = landmark ? "landmark" : prop ? "street-prop" : "roadside";
+    if (kind === "tree" && !prop) d.innerHTML = `<div class="crown"></div><div class="trunk"></div>`;
+    if (prop) { name = prop; }
+    if (prop) { const s = document.createElement("div"); s.className = "sign"; s.textContent = prop; d.appendChild(s); }
     if (landmark) { const s = document.createElement("div"); s.className = "sign"; s.textContent = name; d.appendChild(s); }
     $("road").querySelector(".objs").appendChild(d);
     objs.push({ el: d, z, side: side || (Math.random() < 0.5 ? -1 : 1), kind, landmark });

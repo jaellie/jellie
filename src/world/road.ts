@@ -11,6 +11,33 @@
 import type { LifeState } from "../sim/types";
 import { getLocation } from "./catalog";
 import { seasonOf, weatherFor } from "./clock";
+import skylineData from "../../data/world/skylines.json";
+import { findPlace } from "../destiny/birthplace";
+
+type SkylineDef = { id: string; ko: string; en: string; landmarks: Bi[]; street: Bi[]; palette: { sky: string; buildings: string; accent: string } };
+const SKYLINES = new Map((skylineData.cities as SkylineDef[]).map((c) => [c.id, c]));
+const GENERIC = skylineData.generic as Record<"korea" | "world", SkylineDef>;
+/** Trip destinations → their city. */
+const TRIP_CITY: Record<string, string> = { paris: "paris", tokyo: "tokyo", coast: "busan" };
+
+/** The skyline and street vibe for a city (top-50 list), else a generic Korean or foreign city. */
+export function skylineFor(city: string, country: string, lang: "ko" | "en"): Skyline {
+  const place = findPlace(city);
+  const def = (place && SKYLINES.get(place.id)) ?? (country === "Korea" || place?.country === "KR" ? GENERIC.korea : GENERIC.world);
+  return { id: def.id, name: def[lang], landmarks: def.landmarks.map((x) => x[lang]), street: def.street.map((x) => x[lang]), palette: def.palette, generic: def.id === "korea" || def.id === "world" };
+}
+
+export interface Skyline {
+  /** City id (e.g. "seoul", "tokyo", "paris"), or "korea" / "world" for a generic city. */
+  id: string;
+  name: string;
+  /** Landmarks on the horizon (N서울타워, 에펠탑, 자유의 여신상…). */
+  landmarks: string[];
+  /** Street props that line the road — the city's own street feel (편의점, 자판기, 노란 택시…). */
+  street: string[];
+  palette: { sky: string; buildings: string; accent: string };
+  generic: boolean;
+}
 
 type Bi = { ko: string; en: string };
 
@@ -44,6 +71,8 @@ export interface RoadView {
     season: "SPRING" | "SUMMER" | "AUTUMN" | "WINTER";
     timeOfDay: "MORNING" | "DAY" | "EVENING" | "NIGHT";
     weather: string;
+    /** The city's skyline and street vibe (top-50 cities; generic otherwise). */
+    skyline: Skyline;
     /** Where the road is (for a foreign city skyline / signs): Korean or English per language. */
     city: string;
     country: string;
@@ -115,6 +144,7 @@ export function buildRoad(
       season: seasonOf(date.month),
       timeOfDay: timeOfDay(opts.minute),
       weather: weatherFor(opts.seed, date, loc?.region ?? "home_city"),
+      skyline: trip ? skylineFor(TRIP_CITY[trip.destinationId] ?? state.location.city, "", opts.lang) : skylineFor(state.location.city, state.location.country, opts.lang),
       city: opts.lang === "ko" ? opts.cityName(state.location.city) : state.location.city,
       country: opts.countryName(state.location.country),
     },
