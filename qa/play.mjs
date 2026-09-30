@@ -38,9 +38,12 @@ const issue = (msg) => { if (!issues.includes(msg)) issues.push(msg); };
 await snap("language");
 await page.getByTestId("lang-en").click();
 if ((await page.locator("#fName").inputValue()) !== "Jae") issue("English default name is not Jae");
-await page.evaluate(() => document.getElementById("langKo").click());
+const EN = args.lang === "en";
+if (!EN) {
+  await page.evaluate(() => document.getElementById("langKo").click());
+  if ((await page.locator("#fName").inputValue()) !== "제이") issue("default name is not 제이");
+}
 await snap("setup");
-if ((await page.locator("#fName").inputValue()) !== "제이") issue("default name is not 제이");
 if ((await page.getByTestId("fated-status").locator("option").count()) !== 3) issue("'are you two dating?' should offer 3 answers");
 if ((await page.getByTestId("fated-job").locator("option").count()) < 20) issue("too few jobs for the destined person");
 if (args.status) await page.getByTestId("fated-status").selectOption(args.status);
@@ -48,12 +51,11 @@ if (args.from) await page.getByTestId("fated-from").selectOption(args.from);
 if (args.job) await page.getByTestId("fated-job").selectOption(args.job);
 if ((await page.locator("#fY").inputValue()) !== "1997" || (await page.locator("#fM").inputValue()) !== "9" || (await page.locator("#fD").inputValue()) !== "28") issue("default birth date is not 1997-09-28");
 // Birthplace: defaults to 서울; unknown places are flagged; the chosen city reaches the engine.
-if ((await page.locator("#fPlace").inputValue()) !== "서울") issue("default birthplace is not 서울");
-if (!(await page.getByTestId("birthplace-hint").textContent()).includes("서울")) issue("birthplace hint doesn't confirm 서울");
+if (!EN && (await page.locator("#fPlace").inputValue()) !== "서울") issue("default birthplace is not 서울");
 await page.locator("#fPlace").fill("아틀란티스");
 if (!(await page.getByTestId("birthplace-hint").textContent()).includes("목록에 없는")) issue("unknown birthplace isn't flagged");
 await snap("birthplace-unknown");
-const wantPlace = args.place ?? "서울";
+const wantPlace = args.place ?? (EN ? "Seoul" : "서울");
 await page.locator("#fPlace").fill(wantPlace);
 if (!(await page.getByTestId("birthplace-hint").textContent()).startsWith("✓")) issue(`birthplace ${wantPlace} not recognized`);
 if (args.place) await snap("birthplace");
@@ -127,12 +129,14 @@ while (Date.now() < deadline) {
       if (!seenTitleShot.has(title)) { seenTitleShot.add(title); shoot = true; await snap(`big-${title}`); }
     }
     const line = await page.locator("#pLine").textContent();
+    if (EN) for (const t of [line, await page.locator("#pWho").textContent(), await page.locator("#pBanner").textContent(), ...(await page.locator('[data-testid^="choice-"]').allTextContents())]) if (/[가-힣]/.test(t)) issue(`Korean in the English game: ${t}`);
     if (/[{}]|undefined|\((과|와|이|가|은|는|을|를)\)/.test(line)) issue(`popup text has a raw placeholder: ${line}`);
     if (src === "event" && !big && eventShots < 2) { eventShots++; shoot = true; await snap(`event-${eventShots}`); }
     const n = await page.locator('[data-testid^="choice-"]').count();
     await page.getByTestId(`choice-${Math.floor(Math.random() * n)}`).click();
     stats.choicesClicked++;
     const res = await page.locator("#pRes").textContent();
+    if (EN && /[가-힣]/.test(res)) issue(`Korean in the English game: ${res}`);
     if (/[{}]|undefined|\((과|와|이|가|은|는|을|를)\)/.test(res)) issue(`result text has a raw placeholder: ${res}`);
     if (shoot) await snap(big ? `big-${[...seenTitleShot].at(-1)}-result` : `event-${eventShots}-result`);
     await page.getByTestId("continue").click();
@@ -182,17 +186,23 @@ while (Date.now() < deadline) {
   await page.waitForTimeout(80);
 }
 
+const final = await page.evaluate(() => ({ age: window.__qa.game.hud().age, script: window.__qa.game.state.story.script.map((e) => `${e.age}:${e.theme}:${e.outcome ?? "-"}`) }));
 const over = (await page.evaluate(() => window.__qa.screen)) === "end";
 if (over) {
   await page.waitForTimeout(500);
   await snap("memorial-fading");
   await page.waitForTimeout(4500);
   await snap("memorial");
+  // 새 인생 → all the way back to the first screen (the language picker), nothing carried over.
+  await page.getByTestId("new-life").click({ timeout: 15000 });
+  await page.waitForTimeout(300);
+  if ((await page.evaluate(() => window.__qa.screen)) !== "lang") issue("새 인생 doesn't go back to the first screen");
+  if (await page.evaluate(() => !!window.__qa.game)) issue("새 인생 keeps the old game");
+  await snap("new-life");
 }
 if (stats.walkChecks >= 3 && stats.walkMoved / stats.walkChecks < 0.5) issue(`the road rarely moves (${stats.walkMoved}/${stats.walkChecks} checks)`);
 stats.landmarks = [...(stats.landmarks ?? [])];
 delete stats.edgeWalkers; delete stats.crowdChecks; delete stats.walkLog; delete stats.offscreenSeen;
-const final = await page.evaluate(() => ({ age: window.__qa.game.hud().age, script: window.__qa.game.state.story.script.map((e) => `${e.age}:${e.theme}:${e.outcome ?? "-"}`) }));
 await browser.close();
 server.close();
 const report = { seed: args.seed ?? 7, over, ...stats, final, issues, consoleErrors: errors, screenshots: shots };

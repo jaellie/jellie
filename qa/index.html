@@ -201,6 +201,7 @@
     <div class="fade" id="eFade"></div>
     <div class="ep" id="eEp"></div>
     <div id="eLines"></div>
+    <button class="btn pink" id="newLife" data-testid="new-life" style="position:absolute;bottom:60px;left:50%;transform:translateX(-50%);opacity:0;transition:opacity 2s">새 인생</button>
   </div>
 </div>
 <script src="../dist/lovesim-engine.js"></script>
@@ -446,8 +447,18 @@
     requestAnimationFrame(() => { $("eFade").style.opacity = 1; });
     setTimeout(() => { $("eEp").style.opacity = 1; }, 1000);
     [...document.querySelectorAll(".ql")].forEach((el, i) => setTimeout(() => (el.style.opacity = 1), 1800 + i * 800));
+    $("newLife").textContent = LANG === "en" ? "New life" : "새 인생";
+    setTimeout(() => { $("newLife").style.opacity = 1; }, 1800 + m.lines.length * 800);
     document.body.dataset.over = "1";
   }
+  // A new life starts from the very first screen: language, then a fresh form. Nothing carries over.
+  $("newLife").onclick = () => {
+    game = null; window.__qa.game = null; roadView = null; objs.forEach((o) => o.el.remove()); objs = []; landmarkShown = null;
+    $("road").querySelector(".walkers").innerHTML = ""; $("road").querySelector(".far").dataset.city = "";
+    ["eFade", "eEp", "newLife"].forEach((id) => ($(id).style.opacity = 0)); $("eLines").innerHTML = ""; clearNotes();
+    delete document.body.dataset.over;
+    show("lang");
+  };
 
   // Language first, then the form opens with that language's defaults (제이 / Jae, 1997.9.28).
   function openSetup(lang) {

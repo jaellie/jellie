@@ -190,10 +190,11 @@ describe("Save / load / determinism", () => {
     expect(copy.hud()).toEqual(g.hud());
   });
 
-  it("starts single at 25 with a visible HUD and scene", () => {
+  it("starts single in 2026 (at your real age) with a visible HUD and scene", () => {
     const g = createGame({ ...SETUP, seed: 51 });
     expect(g.facts().single).toBe(true);
-    expect(g.s.day!.age).toBe(25);
+    expect(g.s.day!.date.year).toBe(2026);
+    expect(g.s.day!.age).toBe(2026 - SETUP.birth.year);
     g.advance(500);
     expect(g.hud().date).toMatch(/^\d{4}\.\d{2}\.\d{2}/);
     expect(g.scene()).toBeDefined();

@@ -152,8 +152,8 @@
         },
         {
          "t": {
-          "ko": "(내일 출근인데…)",
-          "en": "(Work tomorrow, though…)"
+          "ko": "(내일 일찍 일어나야 하는데…)",
+          "en": "(Early start tomorrow, though…)"
          },
          "roll": {
           "GOOD": 0.6,
