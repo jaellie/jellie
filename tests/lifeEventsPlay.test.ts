@@ -52,7 +52,7 @@ describe("Life events in a played life", () => {
       expect(g.isOver()).toBe(true);
       expect(shown.length).toBeGreaterThanOrEqual(4);
       expect(days).toBeGreaterThanOrEqual(12);
-      expect(days).toBeLessThanOrEqual(40);
+      expect(days).toBeLessThanOrEqual(50);
       const hist = g.state.story!.events!.history;
       expect(Object.values(hist).reduce((a, h) => a + h.length, 0)).toBeGreaterThan(shown.length);
     }

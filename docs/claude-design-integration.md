@@ -22,10 +22,10 @@
 
 | Beat | What to do |
 |---|---|
-| `{kind:"enter", locationId, room, name}` | The location changed. Refresh the scene with `game.scene()` and set the log to `name` |
+| `{kind:"enter", locationId, room, name}` | Today's place changed: nothing to redraw — the road shows it as a passing landmark (`game.road().landmark`). Don't write it anywhere |
 | `{kind:"popup", popup}` | `openPop({ who: popup.who, line: popup.line, ch: popup.ch })`. Stop advancing until `game.choose(i)`. **Close the destination list if it is open** (a popup interrupts) |
 | `{kind:"toast", from, text}` | Show the existing toast as `from: "text"` |
-| `{kind:"log", text}` | Set the bottom log line |
+| `{kind:"mood", text}` | Set the top line (the day's mood, no time). Once per day |
 | `{kind:"dayEnd"}` | Call `game.endDay()` |
 
 **Big popups.** `popup.big === true` marks a life-changing moment (고백, 상견례, 결혼식, 부고, 병원에서 온 전화, 이별, 배신, 출산, 커밍아웃, 로또 1등, 사채, 해고…). Show it Kairosoft-style: `popup.title` in a banner, `popup.scene` as the picture in the middle (draw it like `game.scene()`, scaled), then the line and choices. This is the same for every `source` — story moments and life events alike.
@@ -36,7 +36,30 @@
 
 The result of `game.choose(i)` is `{ who, name, line }`, and `name` is always set.
 
-## Scene
+## Play screen: the life road
+
+The play screen is **one long road seen from behind, 2D pixel art** — not a room. You walk through your whole life on it; the road never cuts. `game.road()` (read it a few times a second):
+
+```js
+{
+  walkers: [{ who, role: "me" | "partner" | "kid" | "baby" | "pet", name, gender, seed, age, npcType, slot, pace, holds?, carriedBy? }],
+  backdrop: { theme: "city" | "town" | "seaside" | "countryside" | "abroad" | "travel", season, timeOfDay, weather, city, country },
+  landmark?: { id, type, name },   // today's place, passing at the roadside (a café, the office, the hospital…)
+  walking: boolean,                // false while a popup is open → stop scrolling, everyone stands still
+}
+```
+
+- Draw everyone **from behind** (back of the head, body, legs), side by side at the bottom of the screen in `slot` order (left → right). You are always among them. `holds` → draw joined hands; `carriedBy` → a baby in someone's arms (or a stroller); `pace` → step speed (the old walk slower, pets trot). Kids are smaller.
+- Your partner walks beside you once you're together — **not while you live apart** (long distance). Kids walk along until they grow up; pets trot at the edge. After a death, that person is simply no longer on the road.
+- The road: a perspective road into the distance (horizon ≈ 1/3 down), a dashed center line and roadside things (trees, buildings, lamp posts) scrolling toward you while `walking`. `theme` picks what lines the road (city blocks, a small town, the sea, fields in old age, a foreign city skyline, a trip); `season` colors the trees (spring blossoms, summer green, autumn orange, winter white); `timeOfDay` colors the sky; `weather` adds rain/snow. These change slowly — never a cut.
+- `landmark`: when today's place changes, let a building with a small sign (`landmark.name`) come up the road and pass by. That is how "you went to the office / the hospital / the wedding hall" shows — no scene change.
+- Fade to black only at day boundaries (the "시간이 흐른다…" screen).
+
+Popups (big and small) appear over the road exactly as before: title banner, **photo** (`popup.scene`, drawn as below), line and choices. A destined turning point's popup also has **`popup.reading`** — the 사주/점성술 signals behind it in words ("사주: 도화 · 천간합  /  점성술: 목성 5하우스  /  상대: 역마"); show it small under the title.
+
+## Scene (the photos)
+
+`game.scene()` / `popup.scene` / `card.scene` are now only the **photos** in popups and memory cards — the room seen from above. Draw them as small pictures (below).
 
 `game.scene()` changes by itself: a story day moves you (wedding hall, court, funeral hall, airport → hotel → branch office on a business trip). After marriage, home uses the newlywed background.
 
@@ -87,16 +110,23 @@ At birth, 사주 + 점성술 pick **5–7 fated turning points** (love, marriage
 ## Screen layout (Kairosoft style)
 
 - No activity or 나가기 buttons: the day plays by itself; the player answers popups (and picks weekend plans).
-- Top, under the HUD: **one log line** — `{kind:"log"}` / `{kind:"enter"}` text with the time (`10:02 시우와 처음으로 제대로 이야기했다.`).
+- Top, under the HUD: **one mood line** — `{kind:"mood", text}` once at the start of each day (also `game.mood()`): a feeling that foreshadows, from your chart and what's coming — "(요즘 자꾸 해외로 나가고 싶다.)", "(남편이 요즘 휴대폰을 엎어 둔다.)". **No time, no log of events** (`{kind:"log"}` is never sent any more; `{kind:"enter"}` only means today's place changed → the roadside landmark).
 - Under the log line: **text notifications** (`{kind:"toast"}`) slide down from behind it, stack (max 3) and fade after ~4 s. `from` is the sender (a leading `[이름]` in a text is already turned into `from`). **Clear them when the day ends** (`endDay()`) **and when a big popup opens** — otherwise a chatty text from yesterday can still be on screen over a funeral.
-- The scene (stage) fills everything under the log line to the bottom of the screen; the place label (`📍 장소 · 도시 · 시간`) sits over the scene, top-left. No diary box.
+- The road fills everything under the mood line to the bottom of the screen; the place label (`📍 장소 · 도시`, no time) sits small in a corner. No diary box, **no buttons at the bottom** (no 나가기 / 집안일 — the day plays by itself), **no name plates** on characters.
 - **Popups are centered** on the play screen.
 - **No name tags** on characters.
 - `game.actions()`, `doActivity()`, `destinations()`, `goTo()` still exist (optional).
 
 ## Setup (from the existing form)
 
-Defaults: name `제이`, birth `1997-09-28` (solar).
+**Language first.** The very first screen is a language picker (한국어 / English). Then open the form with `LoveSim.setupDefaults(lang)` → `{ name: "제이" | "Jae", birth: { year: 1997, month: 9, day: 28 }, mbti, birthplace, gender, likes, fated: { status: "stranger", from: "same" } }` and pass `lang` to `createGame`.
+
+**The destined person** — `LoveSim.fatedOptions(lang)` gives the choices:
+- `statusQuestion` ("지금 두 사람, 사귀고 있나요?") + `statuses`: `dating` (start as a couple), `talking` (썸: the game plays the late-night texts, the not-quite-date, the jealousy, up to the confession), `stranger` (you don't know each other yet: the game starts from the first meeting).
+- `lives` — "상대는 어디서 살까요?": `same` (same neighborhood: you may keep running into them where they work), `city` (another city: a work trip or a trip there, then weekend love on the train), `abroad` (another country: a language-app match across time zones or a flight, then long distance — video calls at their local time, a visit, and deciding who moves). Optional `fated.city` ("도쿄", "Vancouver") — default: their birthplace if foreign, else a pick.
+- `jobs` — "상대의 직업은?" (28 jobs; free text also works). The job decides where you meet (the barista at your café, the doctor in the ER, the trainer at the gym…), their schedule, their income (it adds to the household once you live together), and job moments while you're together (night shifts, flights, a zero-income month, the 3 a.m. call, a breakthrough).
+
+The meeting year is the best year for *both* charts, within the first years. Missing the meeting isn't the end: fate brings them around again (at most twice).
 
 ```js
 LoveSim.createGame({
@@ -112,8 +142,10 @@ LoveSim.createGame({
   fated: {
     name, gender, mbti, birth: { year, month, day, hour? },   // birth + mbti → hidden 궁합
     birthplace: "도쿄",                                // optional; default = the player's birthplace
-    status: "crush" | "dating" | "stranger",           // crush (default when named) = someone you like, NOT a couple yet
-    from: "same" | "city" | "abroad", job, profile: { look },
+    status: "dating" | "talking" | "stranger",         // talking = 썸 (default when named); "crush" = talking
+    from: "same" | "city" | "abroad", city?: "도쿄",   // where they live (see fatedOptions)
+    job: "doctor" | "대학병원 의사" | …,                  // an id from fatedOptions().jobs, or free text
+    profile: { look },
   },
 })
 ```

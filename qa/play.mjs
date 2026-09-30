@@ -34,8 +34,18 @@ const snap = async (name) => {
 const issues = [];
 const issue = (msg) => { if (!issues.includes(msg)) issues.push(msg); };
 
+// Language first; the form then opens with that language's defaults.
+await snap("language");
+await page.getByTestId("lang-en").click();
+if ((await page.locator("#fName").inputValue()) !== "Jae") issue("English default name is not Jae");
+await page.evaluate(() => document.getElementById("langKo").click());
 await snap("setup");
 if ((await page.locator("#fName").inputValue()) !== "제이") issue("default name is not 제이");
+if ((await page.getByTestId("fated-status").locator("option").count()) !== 3) issue("'are you two dating?' should offer 3 answers");
+if ((await page.getByTestId("fated-job").locator("option").count()) < 20) issue("too few jobs for the destined person");
+if (args.status) await page.getByTestId("fated-status").selectOption(args.status);
+if (args.from) await page.getByTestId("fated-from").selectOption(args.from);
+if (args.job) await page.getByTestId("fated-job").selectOption(args.job);
 if ((await page.locator("#fY").inputValue()) !== "1997" || (await page.locator("#fM").inputValue()) !== "9" || (await page.locator("#fD").inputValue()) !== "28") issue("default birth date is not 1997-09-28");
 // Birthplace: defaults to 서울; unknown places are flagged; the chosen city reaches the engine.
 if ((await page.locator("#fPlace").inputValue()) !== "서울") issue("default birthplace is not 서울");
@@ -58,8 +68,8 @@ await snap("first-day");
 const bi = await page.evaluate(() => window.__qa.game.birthInfo());
 // The scene fills the play area: from under the log line to the bottom of the screen.
 {
-  const fb = await page.locator("#frame").boundingBox(), sb = await page.locator("#scene").boundingBox(), lb = await page.locator("#log").boundingBox();
-  if (Math.abs(sb.y + sb.height - (fb.y + fb.height)) > 4 || sb.y > lb.y + lb.height + 4 || sb.width < fb.width - 4) issue(`scene doesn't fill the play area (${Math.round(sb.width)}×${Math.round(sb.height)})`);
+  const fb = await page.locator("#frame").boundingBox(), sb = await page.locator("#road").boundingBox(), lb = await page.locator("#log").boundingBox();
+  if (Math.abs(sb.y + sb.height - (fb.y + fb.height)) > 4 || sb.y > lb.y + lb.height + 4 || sb.width < fb.width - 4) issue(`the road doesn't fill the play area (${Math.round(sb.width)}×${Math.round(sb.height)})`);
 }
 const spread = { min: Infinity, max: -Infinity };
 if (!bi.known) issue(`engine didn't recognize birthplace ${wantPlace}`);
@@ -143,36 +153,31 @@ while (Date.now() < deadline) {
     const nb = (await settled.evaluate((el) => el.getAnimations().length === 0).catch(() => false)) ? await settled.boundingBox({ timeout: 300 }).catch(() => null) : null;
     if (nb && lb && nb.y < lb.y + lb.height - 1) issue("text notifications overlap the log line");
   }
-  if (screen === "play" && Date.now() - lastWalkCheck > 10000) {
+  if (screen === "play" && Date.now() - lastWalkCheck > 8000) {
     lastWalkCheck = Date.now();
-    // Freeze the clock so the scene stays put, then watch people for 4 s at real pace (a step every
-    // 500 ms): they should be walking, all over the floor, and now and then out through an edge.
+    // The life road: freeze the clock, watch 2 s — roadside things should scroll while you walk.
     await page.evaluate(() => (window.__qa.hold = true));
-    const pos = () => page.evaluate(() => Object.fromEntries([...document.querySelectorAll("#scene .actor")].map((d) => [d.dataset.who, d.style.left + "," + d.style.top + (d.classList.contains("off") ? ",off" : "")])));
-    const edge = () => page.evaluate(() => (window.__qa.game.scene()?.actors ?? []).filter((x) => x.offscreen || x.x < 0 || x.x > 1 || x.y > 1).map((x) => x.who));
-    const a = await pos();
-    // Only a crowd (strangers, customers, coworkers) comes and goes; you, your partner, kids and pets stay.
-    const crowd = await page.evaluate(() => (window.__qa.game.scene()?.actors ?? []).filter((x) => x.role === "npc" || x.role === "passerby").length);
-    if (crowd >= 3) stats.crowdChecks++;
-    let b = a;
-    for (let k = 0; k < 8; k++) {
-      await page.waitForTimeout(500);
-      b = await pos();
-      for (const who of await edge()) stats.edgeWalkers.add(who);
-      stats.offscreenSeen += Object.values(b).filter((v) => v.endsWith(",off")).length;
-    }
-    stats.walkLog.push(await page.evaluate(() => { const g = window.__qa.game; const sc = g.scene(); return `${g.s.loc}@${g.s.minute} ${(sc?.actors ?? []).map((x) => x.role[0] + (x.offscreen ? "*" : "")).join("")}`; }));
+    const tops = () => page.evaluate(() => [...document.querySelectorAll("#road .obj")].map((o) => parseFloat(o.style.top)).reduce((a, b) => a + b, 0));
+    const a = await tops();
+    await page.waitForTimeout(2000);
+    const b = await tops();
+    await page.waitForTimeout(300); // one road refresh
+    const r = await page.evaluate(() => { const g = window.__qa.game; const f = g.facts(); const rv = g.road(); return { rv, partnered: f.partnered, ld: !!g.state.relationship.longDistance, dom: [...document.querySelectorAll("#road .walker")].sort((x, y) => parseFloat(x.style.left) - parseFloat(y.style.left)).map((w) => w.dataset.role), mood: document.getElementById("log").textContent }; });
     await page.evaluate(() => (window.__qa.hold = false));
-    const common = Object.keys(a).filter((k) => k in b);
-    for (const v of Object.values(b)) {
-      const top = parseFloat(v.split(",")[1]);
-      if (!v.endsWith(",off") && Number.isFinite(top)) (spread.min = Math.min(spread.min, top)), (spread.max = Math.max(spread.max, top));
-    }
-    if (common.length >= 2) {
-      stats.walkChecks++;
-      if (common.filter((k) => a[k] !== b[k]).length >= Math.ceil(common.length / 3)) stats.walkMoved++;
-    }
-    if (stats.walkChecks === 2 && !shots.some((x) => x.includes("walking"))) await snap("walking");
+    stats.walkChecks++;
+    if (r.rv.walking && Math.abs(b - a) > 5) stats.walkMoved++;
+    const roles = r.rv.walkers.map((w) => w.role);
+    if (!roles.includes("me")) issue("you aren't on your own road");
+    if (r.partnered && !r.ld && !roles.includes("partner")) issue("your partner isn't walking beside you");
+    if ((!r.partnered || r.ld) && roles.includes("partner")) issue("a partner walks beside you while single or apart");
+    const still = await page.evaluate(() => window.__qa.screen === "play");
+    if (still && r.dom.join() !== roles.join()) issue(`road draws ${r.dom.join()} but the engine says ${roles.join()}`);
+    if (/[0-9]{1,2}:[0-9]{2}/.test(r.mood)) issue(`the top line shows a time: ${r.mood}`);
+    if (roles.includes("partner")) stats.partnerWalks = (stats.partnerWalks ?? 0) + 1;
+    if (r.rv.landmark) (stats.landmarks ??= new Set()).add(r.rv.landmark.name);
+    stats.themes = [...new Set([...(stats.themes ?? []), r.rv.backdrop.theme])];
+    if (still && stats.walkChecks === 2 && !shots.some((x) => x.includes("road"))) await snap("road");
+    if (still && roles.includes("partner") && !shots.some((x) => x.includes("road-together"))) await snap("road-together");
   }
   await page.waitForTimeout(80);
 }
@@ -184,11 +189,9 @@ if (over) {
   await page.waitForTimeout(4500);
   await snap("memorial");
 }
-if (stats.walkChecks && stats.walkMoved / stats.walkChecks < 0.6) issue(`people rarely walk (${stats.walkMoved}/${stats.walkChecks} checks)`);
-stats.floorSpread = Number.isFinite(spread.min) ? Math.round(spread.max - spread.min) : 0;
-stats.edgeWalkers = stats.edgeWalkers.size;
-if (stats.crowdChecks >= 4 && !stats.edgeWalkers) issue(`nobody in a crowd ever walks out through the screen edges (${stats.crowdChecks} crowded checks)`);
-if (stats.walkChecks >= 3 && stats.floorSpread < 0.4 * 642) issue(`people stay in a small part of the screen (vertical spread ${stats.floorSpread}px)`);
+if (stats.walkChecks >= 3 && stats.walkMoved / stats.walkChecks < 0.5) issue(`the road rarely moves (${stats.walkMoved}/${stats.walkChecks} checks)`);
+stats.landmarks = [...(stats.landmarks ?? [])];
+delete stats.edgeWalkers; delete stats.crowdChecks; delete stats.walkLog; delete stats.offscreenSeen;
 const final = await page.evaluate(() => ({ age: window.__qa.game.hud().age, script: window.__qa.game.state.story.script.map((e) => `${e.age}:${e.theme}:${e.outcome ?? "-"}`) }));
 await browser.close();
 server.close();

@@ -213,3 +213,49 @@ describe("The mood line (top of the screen)", () => {
     expect(reading).toMatch(/사주:|점성술:/);
   });
 });
+
+describe("Others' big moments are popups", () => {
+  it("a friend's wedding comes as an invitation on your next played day (with their name), then a memory card", async () => {
+    const { queueChain } = await import("../src/story/lifeEvents");
+    const g = createGame({ ...JAE, seed: 7 });
+    queueChain(g.state, "INVITE_FRIEND_WEDDING", [0, 0], new SeededRandom(1), { vars: { buddy: "하윤" } });
+    g.endDay();
+    let seen: { title?: string; line: string; result?: string } | undefined;
+    for (let d = 0; d < 3 && !seen; d++) {
+      for (let i = 0; i < 400; i++) {
+        const beats = g.advance(g.s.minute + 30);
+        for (const b of beats) if (b.kind === "popup") {
+          const r = g.choose(0);
+          if (b.popup.title === "청첩장") seen = { title: b.popup.title, line: b.popup.line, result: r?.line };
+        }
+        if (beats.some((b) => b.kind === "dayEnd")) break;
+      }
+      const r = g.endDay();
+      if (seen) expect(r.cards.some((c) => c.caption.includes("하윤의 결혼식"))).toBe(true);
+    }
+    expect(seen?.line).toContain("하윤");
+    expect(seen?.line).toContain("청첩장");
+    expect(seen?.result).not.toMatch(/[{}]/);
+  });
+});
+
+describe("The life road (play screen)", () => {
+  it("you walk alone; together your partner walks beside you holding hands — not while you live apart", () => {
+    const single = createGame({ ...JAE, seed: 8, fated: { ...JUNG, status: "stranger" } });
+    expect(single.road().walkers.map((w) => w.role)).toEqual(["me"]);
+    const near = createGame({ ...JAE, seed: 8, fated: { ...JUNG, from: "same", status: "dating" } });
+    const r = near.road();
+    expect(r.walkers.map((w) => w.role)).toEqual(["partner", "me"]);
+    expect(r.walkers[0].holds).toBe("me");
+    expect(["city", "town", "seaside"]).toContain(r.backdrop.theme);
+    expect(r.walking).toBe(true);
+    const far = createGame({ ...JAE, seed: 8, fated: { ...JUNG, from: "abroad", status: "dating" } });
+    expect(far.road().walkers.map((w) => w.role)).toEqual(["me"]);
+    // Kids walk along; a baby is carried; pets trot at the edge.
+    near.state.kids = [{ id: "kid1", name: "하람", sex: "FEMALE", bornYear: near.state.date.year - 5, bornMonth: 3, spriteSeed: 1 } as never, { id: "kid2", name: "도담", sex: "MALE", bornYear: near.state.date.year, bornMonth: 1, spriteSeed: 2 } as never];
+    near.state.pets = [{ id: "pet1", name: "콩이", species: "DOG", adoptedYear: 2020, ageAtAdoption: 1, alive: true, spriteSeed: 3 }];
+    const fam = near.road().walkers;
+    expect(fam.map((w) => w.role)).toEqual(["partner", "me", "kid", "baby", "pet"]);
+    expect(fam.find((w) => w.role === "baby")?.carriedBy).toBe("partner");
+  });
+});

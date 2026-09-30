@@ -551,7 +551,8 @@
    "variants": [
     {
      "requires": [
-      "dating"
+      "dating",
+      "!engaged"
      ],
      "location": "park",
      "activity": "propose",
@@ -644,6 +645,89 @@
      "compat": {
       "ENGAGED": 1,
       "BREAKUP": -1
+     }
+    },
+    {
+     "requires": [
+      "engaged"
+     ],
+     "priority": 2,
+     "location": "cafe",
+     "who": "partner",
+     "title": {
+      "ko": "결혼 준비",
+      "en": "Wedding prep"
+     },
+     "line": {
+      "ko": "(결혼 준비로 정신이 없다. {partner}이(가) 청첩장 시안 두 개를 내밀었다.) 이거랑 이거, 뭐가 나아?",
+      "en": "(Wedding prep is chaos. {partner} holds out two invitation drafts.) This one or this one?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "둘 다 좋아. 네가 골라",
+        "en": "Both are great — you pick"
+       },
+       "weights": {
+        "ENGAGED": 0.8,
+        "NOT_YET": 0.15,
+        "BREAKUP": 0.05
+       }
+      },
+      {
+       "t": {
+        "ko": "솔직히 둘 다 별로야",
+        "en": "Honestly? Neither"
+       },
+       "weights": {
+        "ENGAGED": 0.45,
+        "NOT_YET": 0.45,
+        "BREAKUP": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "(…우리 정말 결혼하는 거 맞지?)",
+        "en": "(…We're really doing this, right?)"
+       },
+       "weights": {
+        "ENGAGED": 0.4,
+        "NOT_YET": 0.35,
+        "BREAKUP": 0.25
+       }
+      }
+     ],
+     "compat": {
+      "ENGAGED": 1,
+      "BREAKUP": -1
+     },
+     "outcomes": {
+      "ENGAGED": {
+       "r": {
+        "ko": "우리 이름이 나란히 적힌 청첩장. 그제야 실감이 났다.",
+        "en": "Your two names side by side on the invitation. Only then did it feel real."
+       },
+       "effects": []
+      },
+      "NOT_YET": {
+       "r": {
+        "ko": "결혼 준비로 처음 크게 다퉜다. 그래도 식은 예정대로 하기로 했다.",
+        "en": "Your first big fight — over the wedding. The date stays, though."
+       },
+       "effects": []
+      },
+      "BREAKUP": {
+       "r": {
+        "ko": "…청첩장은 인쇄되지 않았다.",
+        "en": "…The invitations were never printed."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        }
+       ],
+       "card": "CALL_OFF"
+      }
      }
     },
     {

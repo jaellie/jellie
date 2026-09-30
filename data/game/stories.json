@@ -1012,8 +1012,8 @@
    "weight": 1,
    "cooldownDays": 4,
    "line": {
-    "ko": "{friend}: 야, 지금 통화 돼?",
-    "en": "{friend}: Hey, can you talk now?"
+    "ko": "야, 지금 통화 돼?",
+    "en": "Hey, can you talk now?"
    },
    "choices": [
     {

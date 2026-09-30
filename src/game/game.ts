@@ -41,6 +41,7 @@ import { type AstrologyChart, calculateAstrologyChart } from "../astrology/chart
 import { compatibility } from "../destiny/compatibility";
 import { type BirthplaceInput, resolveBirth } from "../destiny/birthplace";
 import { pickMood } from "../story/mood";
+import { type RoadView, buildRoad } from "../world/road";
 import { readingOf } from "../story/reading";
 import { type FatedFrom, type FatedLife, fatedVars, resolveFatedLife } from "../story/fatedProfile";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
@@ -1265,6 +1266,24 @@ export class Game {
 
   scene(): PrototypeScene | undefined {
     return this.s.lastScene;
+  }
+
+  /**
+   * The play screen: your life's road, seen from behind (see world/road.ts). Who walks beside you,
+   * the drifting backdrop, and today's place passing at the roadside. Popups keep their photo
+   * (popup.scene) and choices.
+   */
+  road(): RoadView {
+    const s = this.s;
+    return buildRoad(this.state, {
+      minute: s.minute,
+      locationId: s.loc,
+      walking: !s.pending && !s.over && s.minute < CFG.dayEndMinute,
+      lang: s.lang ?? "ko",
+      seed: s.seed,
+      cityName: cityKo,
+      countryName: (c) => (s.lang === "en" ? c : COUNTRY_KO[c] ?? c),
+    });
   }
 
   people() {

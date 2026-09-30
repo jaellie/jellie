@@ -41,7 +41,7 @@ const SIGNALS = [
   new RegExp(`^SR:angular:${P}$`),
   /^P:(SUN|MOON)_INGRESS$/,
 ];
-const PLACEHOLDERS = new Set(["partner", "friend", "fated", "pet", "relative", "kid", "sibling", "sister", "brother", "ex", "who", "subject", "me", "patient", "city"]);
+const PLACEHOLDERS = new Set(["partner", "friend", "crush", "buddy", "fated", "fatedName", "fatedJob", "fatedJob_en", "fatedCity", "fatedCity_en", "fatedTime", "tzdiff", "pet", "relative", "kid", "sibling", "sister", "brother", "ex", "who", "subject", "me", "patient", "city"]);
 const ROLES = new Set(["me", "partner", "friend", "relative", "guest", "coworker", "baby", "kid", "pet", "patient", "inlaw", "stranger", "npc"]);
 const reqFact = (r: string) => {
   const m = /^!?([a-zA-Z_]+)/.exec(r)!;
@@ -115,8 +115,9 @@ describe("Life-event library: every event is well-formed", () => {
         }
       }
       const texts = [e.line, ...e.choices.map((c) => c.t), ...Object.values(e.outcomes).map((o) => o.r)].flatMap((b) => [b.ko, b.en]);
-      for (const t of texts) for (const m of t.matchAll(/\\{(\\w+)\\}/g)) expect(PLACEHOLDERS.has(m[1]), `placeholder {${m[1]}}`).toBe(true);
-      if (e.chainOnly) expect(chainTargets.has(e.id) || !!e.hooks?.length, "chain-only events must be reachable from a chain or a hook").toBe(true);
+      for (const t of texts) for (const m of t.matchAll(/\{(\w+)\}/g)) expect(PLACEHOLDERS.has(m[1]), `placeholder {${m[1]}}`).toBe(true);
+      // Chain-only: reached from a chain, a hook, or queued by the engine itself (a friend's wedding invitation).
+      if (e.chainOnly) expect(chainTargets.has(e.id) || !!e.hooks?.length || (e as { queuedBy?: string }).queuedBy === "engine", "chain-only events must be reachable from a chain or a hook").toBe(true);
       for (const h of e.hooks ?? []) expect(["parentDies", "grandparentDies", "siblingDies", "partnerDies"]).toContain(h.on);
     });
   }

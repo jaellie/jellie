@@ -50,8 +50,289 @@
        },
        "effects": [],
        "card": "FIRST_DATE"
+      },
+      "AWKWARD": {
+       "r": {
+        "ko": "조금 어색했다. 그래도 헤어질 때 다음 약속을 잡았다.",
+        "en": "A little awkward. But you made plans to meet again before saying goodbye."
+       },
+       "effects": []
       }
-     }
+     },
+     "byMbti": [
+      {
+       "me": "E",
+       "them": "I",
+       "line": {
+        "ko": "(첫 데이트. {partner}은(는) 말수가 적다. 내가 떠들고, {partner}은(는) 웃기만 한다.)",
+        "en": "(First date. {partner} doesn't say much. You talk; {partner} just smiles.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "질문을 던져 {partner}이(가) 이야기하게 한다",
+          "en": "Ask questions so {partner} can talk"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "조용한 전시회로 장소를 옮긴다",
+          "en": "Move somewhere quiet — a gallery"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(계속 혼자 떠든다)",
+          "en": "(Keep talking anyway)"
+         },
+         "roll": {
+          "GOOD": 0.4,
+          "AWKWARD": 0.6
+         }
+        }
+       ]
+      },
+      {
+       "me": "I",
+       "them": "E",
+       "line": {
+        "ko": "(첫 데이트. {partner}이(가) 쉬지 않고 이야기한다. 듣는 건 좋은데, 조금 벅차다.)",
+        "en": "(First date. {partner} talks nonstop. You like listening — it's just a lot.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "맞장구치며 듣는다",
+          "en": "Listen and nod along"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "용기 내서 내 얘기도 꺼낸다",
+          "en": "Work up the nerve to share something too"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(지쳐서 일찍 들어간다)",
+          "en": "(Worn out — head home early)"
+         },
+         "roll": {
+          "GOOD": 0.3,
+          "AWKWARD": 0.7
+         }
+        }
+       ]
+      },
+      {
+       "me": "E",
+       "them": "E",
+       "line": {
+        "ko": "(첫 데이트. 둘 다 말이 많아서 식당이 문 닫을 때까지 앉아 있었다.)",
+        "en": "(First date. You both talk so much you stay until the restaurant closes.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "2차 가자!",
+          "en": "Round two!"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "노래방 가자!",
+          "en": "Karaoke!"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(내일 출근인데…)",
+          "en": "(Work tomorrow, though…)"
+         },
+         "roll": {
+          "GOOD": 0.6,
+          "AWKWARD": 0.4
+         }
+        }
+       ]
+      },
+      {
+       "me": "I",
+       "them": "I",
+       "line": {
+        "ko": "(첫 데이트. 침묵이 길었는데, 이상하게 불편하지 않았다.)",
+        "en": "(First date. Long silences — strangely, not uncomfortable.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "걷자고 한다",
+          "en": "Suggest a walk"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "이어폰 한쪽을 건네 좋아하는 노래를 들려준다",
+          "en": "Share one earbud and play your favorite song"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(그냥 조용히 밥만 먹는다)",
+          "en": "(Just eat quietly)"
+         },
+         "roll": {
+          "GOOD": 0.5,
+          "AWKWARD": 0.5
+         }
+        }
+       ]
+      },
+      {
+       "me": "J",
+       "them": "P",
+       "line": {
+        "ko": "(첫 데이트 코스를 분 단위로 짜 왔다. {partner}은(는) 30분 늦었다.)",
+        "en": "(You planned the date down to the minute. {partner} is thirty minutes late.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "괜찮아, 계획은 바꾸면 되지",
+          "en": "It's fine — plans can change"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(속으로 한숨을 쉰다)",
+          "en": "(Sigh inwardly)"
+         },
+         "roll": {
+          "GOOD": 0.4,
+          "AWKWARD": 0.6
+         }
+        },
+        {
+         "t": {
+          "ko": "늦은 이유부터 묻는다",
+          "en": "Ask why they're late first"
+         },
+         "roll": {
+          "GOOD": 0.5,
+          "AWKWARD": 0.5
+         }
+        }
+       ]
+      },
+      {
+       "me": "P",
+       "them": "J",
+       "line": {
+        "ko": "({partner}이(가) 데이트 코스를 표로 정리해 왔다. 나는 아무 생각 없이 나왔다.)",
+        "en": "({partner} made a spreadsheet of the date plan. You showed up with no plan at all.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "완벽하다! 그대로 따라간다",
+          "en": "Perfect! Follow the plan"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "끌리는 골목으로 슬쩍 샌다",
+          "en": "Wander off down an interesting alley"
+         },
+         "roll": {
+          "GOOD": 0.6,
+          "AWKWARD": 0.4
+         }
+        },
+        {
+         "t": {
+          "ko": "다음엔 내가 짤게",
+          "en": "Next time I'll plan it"
+         },
+         "outcome": "GOOD"
+        }
+       ]
+      },
+      {
+       "me": "T",
+       "them": "F",
+       "line": {
+        "ko": "(영화를 보고 나오는데 {partner}의 눈이 빨갛다. 뭐라고 해야 하지?)",
+        "en": "(Walking out of the movie, {partner}'s eyes are red. What do you say?)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "그 장면, 나도 좋았어",
+          "en": "I loved that scene too"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "근데 그건 설정 오류 아니야?",
+          "en": "Wasn't that a plot hole, though?"
+         },
+         "roll": {
+          "GOOD": 0.3,
+          "AWKWARD": 0.7
+         }
+        },
+        {
+         "t": {
+          "ko": "(말없이 휴지를 건넨다)",
+          "en": "(Silently hand them a tissue)"
+         },
+         "outcome": "GOOD"
+        }
+       ]
+      },
+      {
+       "me": "F",
+       "them": "F",
+       "line": {
+        "ko": "(영화를 보다가 둘 다 울었다. 휴지 한 통을 나눠 썼다.)",
+        "en": "(You both cried during the movie and shared one pack of tissues.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(웃으면서 같이 운다)",
+          "en": "(Laugh and cry together)"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "영화 얘기로 새벽까지 떠든다",
+          "en": "Talk about the movie until dawn"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "다음엔 코미디 보자",
+          "en": "Comedy next time"
+         },
+         "outcome": "GOOD"
+        }
+       ]
+      }
+     ]
     },
     "PROPOSAL": {
      "title": {
@@ -59,8 +340,8 @@
       "en": "The proposal"
      },
      "after": [
-      24,
-      36
+      14,
+      24
      ],
      "location": "park",
      "activity": "propose",
@@ -135,8 +416,178 @@
        "scene": [
         "street"
        ]
+      },
+      "WAIT_ME": {
+       "r": {
+        "ko": "(반지는 주머니 속에서 다음을 기다리기로 했다.)",
+        "en": "(The ring stays in your pocket, waiting for another day.)"
+       },
+       "effects": [
+        {
+         "kind": "arcStepAgain",
+         "after": [
+          6,
+          10
+         ]
+        }
+       ]
       }
-     }
+     },
+     "byMbti": [
+      {
+       "me": "J",
+       "them": "P",
+       "who": "me",
+       "line": {
+        "ko": "(반지를 산 지 석 달. 계획은 완벽하다. 오늘이 그날이다.)",
+        "en": "(Three months since you bought the ring. The plan is perfect. Today's the day.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "무릎을 꿇는다",
+          "en": "Get down on one knee"
+         },
+         "roll": {
+          "ENGAGED": 0.8,
+          "NOT_YET": 0.2
+         },
+         "compat": {
+          "ENGAGED": 1,
+          "NOT_YET": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "준비한 편지를 읽는다",
+          "en": "Read the letter you wrote"
+         },
+         "roll": {
+          "ENGAGED": 0.75,
+          "NOT_YET": 0.25
+         },
+         "compat": {
+          "ENGAGED": 1,
+          "NOT_YET": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(반지를 다시 주머니에 넣는다)",
+          "en": "(Put the ring back in your pocket)"
+         },
+         "outcome": "WAIT_ME"
+        }
+       ],
+       "outcomes": {
+        "NOT_YET": {
+         "r": {
+          "ko": "{partner}은(는) 한참 반지를 보다가 말했다. '…조금만, 기다려 줄래?'",
+          "en": "{partner} looked at the ring for a long time. \"…Could you wait, just a little?\""
+         }
+        },
+        "ENGAGED": {
+         "r": {
+          "ko": "{partner}이(가) 반지를 끼고 울다가 웃었다. 계획대로였다. 거의.",
+          "en": "{partner} put on the ring, cried, then laughed. It went to plan. Almost."
+         }
+        }
+       }
+      },
+      {
+       "them": "JF",
+       "line": {
+        "ko": "({partner}이(가) 한 달 동안 준비한 게 티가 났다. 벽에는 우리 사진, 바닥엔 초. 떨리는 목소리.) …나랑 결혼해 줄래?",
+        "en": "({partner} clearly spent a month preparing — your photos on the wall, candles on the floor, a shaking voice.) …Will you marry me?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(울면서 고개를 끄덕인다)",
+          "en": "(Nod, crying)"
+         },
+         "outcome": "ENGAGED"
+        },
+        {
+         "t": {
+          "ko": "…조금만 시간을 줘",
+          "en": "…Give me a little time"
+         },
+         "outcome": "NOT_YET"
+        },
+        {
+         "t": {
+          "ko": "…미안해",
+          "en": "…I'm sorry"
+         },
+         "outcome": "BREAKUP"
+        }
+       ]
+      },
+      {
+       "them": "JT",
+       "line": {
+        "ko": "({partner}이(가) 노트북을 열었다. 집, 돈, 5년 계획이 정리돼 있다.) 다 계산해 봤어. 우리, 결혼하자.",
+        "en": "({partner} opens a laptop: housing, money, a five-year plan.) I ran the numbers. Let's get married."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(웃음이 터진다) 응, 하자",
+          "en": "(Burst out laughing) Yes, let's"
+         },
+         "outcome": "ENGAGED"
+        },
+        {
+         "t": {
+          "ko": "계획표 말고 마음을 듣고 싶어",
+          "en": "I want to hear your heart, not a spreadsheet"
+         },
+         "outcome": "NOT_YET"
+        },
+        {
+         "t": {
+          "ko": "…우린 여기까지인 것 같아",
+          "en": "…I think this is where we end"
+         },
+         "outcome": "BREAKUP"
+        }
+       ]
+      },
+      {
+       "them": "P",
+       "line": {
+        "ko": "(라면을 먹다가 {partner}이(가) 갑자기 말했다.) …우리 그냥, 결혼할까?",
+        "en": "(Halfway through a bowl of ramyeon, {partner} suddenly says:) …Should we just get married?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "…지금 라면 먹다가?! 응!",
+          "en": "…Over ramyeon?! Yes!"
+         },
+         "outcome": "ENGAGED"
+        },
+        {
+         "t": {
+          "ko": "진심이야? 다시 제대로 물어봐",
+          "en": "Are you serious? Ask me properly"
+         },
+         "outcome": "NOT_YET"
+        },
+        {
+         "t": {
+          "ko": "…장난이지?",
+          "en": "…You're joking, right?"
+         },
+         "roll": {
+          "NOT_YET": 0.6,
+          "BREAKUP": 0.4
+         }
+        }
+       ]
+      }
+     ]
     },
     "LAST_CHANCE": {
      "title": {
@@ -218,7 +669,573 @@
        ],
        "card": "NEW_HOME"
       }
-     }
+     },
+     "byMbti": [
+      {
+       "them": "J",
+       "line": {
+        "ko": "({partner}이(가) 달력을 내밀었다.) 올해 안에 정하자. 결혼하든지, 각자의 길을 가든지.",
+        "en": "({partner} slides a calendar across the table.) Let's decide this year. Marry, or go our separate ways."
+       }
+      },
+      {
+       "them": "P",
+       "line": {
+        "ko": "우린 지금도 좋잖아. 결혼… 꼭 해야 해? …근데 네가 원하면, 생각해 볼게.",
+        "en": "We're good as we are, right? Do we have to get married? …But if you want to, I'll think about it."
+       }
+      }
+     ]
+    },
+    "FIRST_FIGHT": {
+     "title": {
+      "ko": "첫 싸움",
+      "en": "Our first fight"
+     },
+     "after": [
+      4,
+      8
+     ],
+     "location": "home",
+     "who": "partner",
+     "line": {
+      "ko": "(약속을 잊은 {partner}. 처음으로 목소리가 높아졌다.)",
+      "en": "({partner} forgot your plans. For the first time, voices rise.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "솔직하게 서운했다고 말한다",
+        "en": "Say honestly that it hurt"
+       },
+       "roll": {
+        "MAKEUP": 0.75,
+        "COLD": 0.25
+       },
+       "compat": {
+        "MAKEUP": 1,
+        "COLD": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "(괜찮은 척한다)",
+        "en": "(Pretend it's fine)"
+       },
+       "roll": {
+        "MAKEUP": 0.4,
+        "COLD": 0.6
+       },
+       "compat": {
+        "MAKEUP": 1,
+        "COLD": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "먼저 안아준다",
+        "en": "Hug them first"
+       },
+       "roll": {
+        "MAKEUP": 0.8,
+        "COLD": 0.2
+       },
+       "compat": {
+        "MAKEUP": 1,
+        "COLD": -1
+       }
+      }
+     ],
+     "outcomes": {
+      "MAKEUP": {
+       "r": {
+        "ko": "다 싸우고 나니 배가 고팠다. 같이 떡볶이를 먹었다. 조금 더 가까워진 기분이었다.",
+        "en": "After the fight you were both hungry. You shared 떡볶이 and felt a little closer."
+       },
+       "effects": []
+      },
+      "COLD": {
+       "r": {
+        "ko": "그날은 각자 집에 갔다. 사과는 이틀 뒤에야 왔다.",
+        "en": "You went home separately. The apology came two days later."
+       },
+       "effects": []
+      }
+     },
+     "byMbti": [
+      {
+       "me": "T",
+       "them": "F",
+       "line": {
+        "ko": "({partner}이(가) 서운하다고 했다. 나는 해결책부터 말했다. 그게 더 서운했단다.)",
+        "en": "({partner} said they were hurt. You jumped straight to solutions. That hurt more, apparently.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "해결 말고, 그냥 들을게",
+          "en": "No fixing — I'll just listen"
+         },
+         "roll": {
+          "MAKEUP": 0.8,
+          "COLD": 0.2
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(논리적으로 차근차근 설명한다)",
+          "en": "(Explain it logically, step by step)"
+         },
+         "roll": {
+          "MAKEUP": 0.3,
+          "COLD": 0.7
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "말없이 안아준다",
+          "en": "Hold them, no words"
+         },
+         "roll": {
+          "MAKEUP": 0.75,
+          "COLD": 0.25
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      },
+      {
+       "me": "F",
+       "them": "T",
+       "line": {
+        "ko": "(속상하다고 했더니 {partner}이(가) 해결 방법 다섯 가지를 말해줬다.)",
+        "en": "(You said you were upset. {partner} gave you five ways to fix it.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "해결 말고 공감이 필요해",
+          "en": "I need you to feel it with me, not fix it"
+         },
+         "roll": {
+          "MAKEUP": 0.7,
+          "COLD": 0.3
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(그래, 네 말이 맞지…)",
+          "en": "(Fine, you're right…)"
+         },
+         "roll": {
+          "MAKEUP": 0.35,
+          "COLD": 0.65
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(결국 울음이 터진다)",
+          "en": "(End up crying)"
+         },
+         "roll": {
+          "MAKEUP": 0.6,
+          "COLD": 0.4
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      },
+      {
+       "me": "T",
+       "them": "T",
+       "line": {
+        "ko": "(여행 일정을 두고 토론이 붙었다. 둘 다 근거를 가져왔다. 둘 다 지지 않는다.)",
+        "en": "(A debate over the trip itinerary. You both came with evidence. Neither backs down.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "가위바위보로 정하자",
+          "en": "Settle it with rock-paper-scissors"
+         },
+         "roll": {
+          "MAKEUP": 0.8,
+          "COLD": 0.2
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(끝까지 논리로 이긴다)",
+          "en": "(Win it with logic, to the end)"
+         },
+         "roll": {
+          "MAKEUP": 0.35,
+          "COLD": 0.65
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "네 계획대로 하자",
+          "en": "Let's do it your way"
+         },
+         "roll": {
+          "MAKEUP": 0.7,
+          "COLD": 0.3
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      },
+      {
+       "me": "F",
+       "them": "F",
+       "line": {
+        "ko": "(서로 눈치만 보다가, 말하지 못한 서운함이 사흘째 쌓였다.)",
+        "en": "(Both tiptoeing — three days of unspoken hurt piling up.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "편지를 써서 건넨다",
+          "en": "Write them a letter"
+         },
+         "roll": {
+          "MAKEUP": 0.8,
+          "COLD": 0.2
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(먼저 말해주길 기다린다)",
+          "en": "(Wait for them to bring it up)"
+         },
+         "roll": {
+          "MAKEUP": 0.35,
+          "COLD": 0.65
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "우리 얘기 좀 해",
+          "en": "We need to talk"
+         },
+         "roll": {
+          "MAKEUP": 0.7,
+          "COLD": 0.3
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      },
+      {
+       "me": "J",
+       "them": "P",
+       "line": {
+        "ko": "({partner}이(가) 약속 시간에 또 늦었다. 이번이 네 번째다.)",
+        "en": "({partner} is late again. Fourth time.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "다음부터는 미리 연락만 해줘",
+          "en": "Just text me ahead next time"
+         },
+         "roll": {
+          "MAKEUP": 0.75,
+          "COLD": 0.25
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(시계를 보며 한숨 쉰다)",
+          "en": "(Look at your watch and sigh)"
+         },
+         "roll": {
+          "MAKEUP": 0.35,
+          "COLD": 0.65
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "그냥 웃어넘긴다",
+          "en": "Laugh it off"
+         },
+         "roll": {
+          "MAKEUP": 0.6,
+          "COLD": 0.4
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      },
+      {
+       "me": "P",
+       "them": "J",
+       "line": {
+        "ko": "({partner}: 주말 계획, 아직도 안 정했어? …나 이런 거 진짜 힘들어.)",
+        "en": "({partner}: You still haven't decided on the weekend plan? …This is really hard for me.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "지금 바로 같이 정하자",
+          "en": "Let's decide it together, right now"
+         },
+         "roll": {
+          "MAKEUP": 0.8,
+          "COLD": 0.2
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "그때 가서 정하면 안 돼?",
+          "en": "Can't we just decide when we get there?"
+         },
+         "roll": {
+          "MAKEUP": 0.3,
+          "COLD": 0.7
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "이번엔 네가 다 정해",
+          "en": "You plan it all this time"
+         },
+         "roll": {
+          "MAKEUP": 0.65,
+          "COLD": 0.35
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      }
+     ]
+    },
+    "MEET_FRIENDS": {
+     "title": {
+      "ko": "친구들에게 소개",
+      "en": "Meeting the friends"
+     },
+     "after": [
+      3,
+      6
+     ],
+     "location": "restaurant",
+     "who": "partner",
+     "line": {
+      "ko": "(처음으로 {partner}을(를) 친구들에게 소개하는 날.)",
+      "en": "(The first time you introduce {partner} to your friends.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "자랑스럽게 소개한다",
+        "en": "Introduce them proudly"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "옆에서 계속 챙긴다",
+        "en": "Stay by their side all night"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "(친구들이 알아서 하겠지)",
+        "en": "(Your friends will handle it)"
+       },
+       "roll": {
+        "GOOD": 0.6,
+        "AWKWARD": 0.4
+       }
+      }
+     ],
+     "outcomes": {
+      "GOOD": {
+       "r": {
+        "ko": "집에 가는 길, {partner}이(가) 말했다. '네 친구들 좋다. 너 같아.'",
+        "en": "On the way home {partner} said, \"I like your friends. They're like you.\""
+       },
+       "effects": []
+      },
+      "AWKWARD": {
+       "r": {
+        "ko": "{partner}은(는) 끝까지 웃고 있었지만, 조금 지쳐 보였다.",
+        "en": "{partner} kept smiling to the end, but looked a little worn out."
+       },
+       "effects": []
+      }
+     },
+     "byMbti": [
+      {
+       "them": "I",
+       "line": {
+        "ko": "(내 친구들 모임에 {partner}을(를) 데려갔다. {partner}은(는) 구석에서 조용히 웃고만 있다.)",
+        "en": "(You bring {partner} to your friends' get-together. {partner} just smiles quietly in the corner.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "옆에 앉아 대화에 끌어들인다",
+          "en": "Sit beside them and draw them in"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "일찍 둘만 빠져나온다",
+          "en": "Slip out early, just the two of you"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(친구들과 신나게 논다)",
+          "en": "(Have a blast with your friends)"
+         },
+         "roll": {
+          "GOOD": 0.3,
+          "AWKWARD": 0.7
+         }
+        }
+       ]
+      },
+      {
+       "them": "E",
+       "line": {
+        "ko": "(한 시간 만에 {partner}이(가) 내 친구들이랑 형, 언니 하면서 친해졌다. 나보다 더 친해 보인다.)",
+        "en": "(Within an hour, {partner} is on first-name terms with all your friends. Closer than you, it seems.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(뿌듯하게 지켜본다)",
+          "en": "(Watch, proud)"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "야, 내 친구거든?",
+          "en": "Hey, those are MY friends"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(살짝 질투가 난다)",
+          "en": "(Feel a little jealous)"
+         },
+         "roll": {
+          "GOOD": 0.6,
+          "AWKWARD": 0.4
+         }
+        }
+       ]
+      },
+      {
+       "me": "I",
+       "them": "E",
+       "line": {
+        "ko": "({partner}이(가) 자기 친구 열 명을 불렀다. 나는 이름 외우느라 정신이 없다.)",
+        "en": "({partner} invited ten friends. You're frantically memorizing names.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "이름표를 만들어 달라고 농담한다",
+          "en": "Joke that you need name tags"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "한 명과 깊게 이야기한다",
+          "en": "Have one real conversation with one person"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(화장실에서 숨을 고른다)",
+          "en": "(Catch your breath in the bathroom)"
+         },
+         "roll": {
+          "GOOD": 0.4,
+          "AWKWARD": 0.6
+         }
+        }
+       ]
+      }
+     ]
     }
    }
   },

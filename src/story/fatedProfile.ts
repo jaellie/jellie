@@ -63,8 +63,20 @@ export function findFatedJob(input: string | undefined): FatedJob | undefined {
 }
 
 /** Setup choices for the UI. */
-export function fatedOptions(lang: "ko" | "en" = "ko"): { lives: Array<{ id: FatedFrom; name: string; hint: string }>; jobs: Array<{ id: string; name: string }> } {
+export function fatedOptions(lang: "ko" | "en" = "ko"): {
+  statusQuestion: string;
+  statuses: Array<{ id: "dating" | "talking" | "stranger"; name: string; hint: string }>;
+  lives: Array<{ id: FatedFrom; name: string; hint: string }>;
+  jobs: Array<{ id: string; name: string }>;
+} {
+  const ko = lang === "ko";
   return {
+    statusQuestion: ko ? "지금 두 사람, 사귀고 있나요?" : "Are you two dating right now?",
+    statuses: [
+      { id: "dating", name: ko ? "응, 사귀는 중이야" : "Yes, we're together", hint: ko ? "연인인 상태로 시작해요" : "Start as a couple" },
+      { id: "talking", name: ko ? "아니, 썸 타는 중" : "No, but we're talking", hint: ko ? "썸에서 첫 고백까지" : "From 썸 to the first confession" },
+      { id: "stranger", name: ko ? "아니, 아직 서로 몰라" : "No, we haven't met", hint: ko ? "첫 만남부터 시작해요" : "Start from the first meeting" },
+    ],
     lives: data.lives.map((l) => ({ id: l.id as FatedFrom, name: l[lang], hint: l.hint[lang] })),
     jobs: FATED_JOBS.map((j) => ({ id: j.id, name: j[lang] })),
   };

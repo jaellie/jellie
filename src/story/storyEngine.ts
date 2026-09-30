@@ -71,6 +71,12 @@ interface ArcStepDef {
   alt?: Record<string, { who: string; line: Bi; location?: string }>;
   /** The destined person is in the scene though you speak (the confession). */
   withFated?: boolean;
+  /**
+   * The same step shaped by both personalities: `me` / `them` = MBTI letters that must all match
+   * (e.g. me "E", them "I"; them "JF"). The best match (most letters) wins. A variant may bring its
+   * own speaker, line, choices and result lines (outcomes: { KEY: { r } }).
+   */
+  byMbti?: Array<{ me?: string; them?: string; who?: string; line: Bi; location?: string; choices?: ArcStepDef["choices"]; outcomes?: Record<string, { r: Bi; who?: string }> }>;
   /** "distance": by where the destined partner lives (city / abroad). */
   altBy?: "cause" | "speaker" | "distance";
   /** A fixed outcome, or a roll (bent by 궁합 when the partner is the destined person). */
@@ -81,7 +87,7 @@ interface ArcStepDef {
 const THEMES = fatedData.themes as unknown as Record<FatedTheme, { hint: Bi; title?: Bi; variants: FatedVariant[] }>;
 const ARCS = arcData.arcs as unknown as Record<ArcType, { steps: Record<string, ArcStepDef> }>;
 const ARC_ORDER: Record<ArcType, string[]> = {
-  DATING: ["FIRST_DATE", "PROPOSAL", "LAST_CHANCE"],
+  DATING: ["FIRST_DATE", "FIRST_FIGHT", "MEET_FRIENDS", "PROPOSAL", "LAST_CHANCE"],
   ENGAGEMENT: ["MEET_PARENTS", "WEDDING"],
   DIVORCE: ["COURT"],
   PREGNANCY: ["CHECKUP", "BIRTH"],
@@ -95,6 +101,7 @@ const ARC_ORDER: Record<ArcType, string[]> = {
   LONG_DISTANCE: ["CALL", "VISIT", "DECIDE"],
   TALKING: ["TEXTS", "NOT_A_DATE", "JEALOUS", "CONFESS"],
 };
+const IN_PERSON = ["FIRST_DATE", "FIRST_FIGHT", "MEET_FRIENDS"];
 const COUNTRY_NAME: Record<string, string> = { JP: "Japan", US: "USA", CA: "Canada", DE: "Germany", AU: "Australia", GB: "UK", SG: "Singapore", FR: "France" };
 const PET_NAMES = { DOG: ["콩이", "보리", "몽이", "초코", "두부"], CAT: ["나비", "치즈", "모모", "레오", "까미"] };
 export const RETIRE_AGE = 60;
@@ -258,6 +265,12 @@ export function ensureArcs(state: LifeState, rng: SeededRandom): void {
     startArc(state, "LONG_DISTANCE", rng);
   }
   if (!fatedPartner || (rel !== "DATING" && rel !== "MARRIED")) endArc(state, "LONG_DISTANCE");
+  // While you live apart, the in-person steps (meeting your friends, a first date) wait until you're together.
+  if (state.relationship.longDistance) {
+    const dating = st.arcs.find((a) => a.type === "DATING");
+    const step = dating?.steps[dating.step];
+    if (step && (step.key === "FIRST_DATE" || step.key === "MEET_FRIENDS") && step.dueMonth <= state.monthIndex + 1) step.dueMonth = state.monthIndex + 2;
+  }
   if (rel !== "DATING" || !state.engaged) endArc(state, "ENGAGEMENT");
   if (rel !== "MARRIED") endArc(state, "DIVORCE");
   if (rel === "SINGLE" || rel === "DIVORCED") endArc(state, "PREGNANCY");
@@ -314,10 +327,12 @@ export function monthlyStoryTick(state: LifeState, rng: SeededRandom): void {
     const label = siblingLabel(state, sib).ko;
     if (!sib.married && sAge >= 27 && sAge <= 42 && rng.chance(0.004)) {
       sib.married = true;
-      st.cards.push({ kind: "SIBLING_WEDDING", age, vars: { relative: label } });
+      const en = siblingLabel(state, sib).en;
+      queueChain(state, "INVITE_SIBLING_WEDDING", [0, 2], rng, { vars: { relative: label, relative_ko: label, relative_en: en } });
     } else if (sib.married && (sib.kids ?? 0) < 2 && sAge <= 42 && rng.chance(0.004)) {
       sib.kids = (sib.kids ?? 0) + 1;
-      st.cards.push({ kind: "NEPHEW_BIRTH", age, vars: { relative: label } });
+      const en = siblingLabel(state, sib).en;
+      queueChain(state, "NEPHEW_BORN", [0, 2], rng, { vars: { relative: label, relative_ko: label, relative_en: en } });
     } else if (sAge >= 55 && rng.chance((annualMortality(sAge) * 0.8) / 12) && !st.arcs.some((a) => a.type === "FAMILY_PASSING")) {
       startArc(state, "FAMILY_PASSING", rng, { relativeId: sib.id, relative: label, kind: "sibling", card: "FAMILY_FUNERAL" });
     }
@@ -367,7 +382,8 @@ export function monthlyStoryTick(state: LifeState, rng: SeededRandom): void {
       if (npc.single && a >= 27 && a <= 45 && rng.chance(0.002)) {
         npc.single = false;
         if (close && cardOk("FRIEND_WEDDING")) {
-          st.cards.push({ kind: "FRIEND_WEDDING", age, vars: { friend: npc.name } });
+          // An invitation on your next played day ("친구 ○○의 청첩장 모임에 초대받았습니다").
+          queueChain(state, "INVITE_FRIEND_WEDDING", [0, 2], rng, { vars: { buddy: npc.name } });
           markCard("FRIEND_WEDDING");
         }
       } else if (a >= 50 && rng.chance((annualMortality(a) / 12) * 0.35)) {
@@ -375,7 +391,7 @@ export function monthlyStoryTick(state: LifeState, rng: SeededRandom): void {
         npc.deceased = true;
         for (const k of Object.keys(w.populated)) w.populated[k] = w.populated[k].filter((id) => id !== npc.id);
         if (close && cardOk("FRIEND_FUNERAL")) {
-          st.cards.push({ kind: "FRIEND_FUNERAL", age, vars: { friend: npc.name } });
+          queueChain(state, "FRIEND_PASSING_NEWS", [0, 1], rng, { urgent: true, vars: { buddy: npc.name } });
           markCard("FRIEND_FUNERAL");
         }
       }
@@ -457,13 +473,54 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
   const arc = state.story!.arcs.find((a) => a.id === ref);
   if (!arc) return;
   const step = arc.steps[arc.step];
+  // While you live apart, the in-person dating steps wait until you're in the same place.
+  if (arc.type === "DATING" && state.relationship.longDistance && IN_PERSON.includes(step.key)) {
+    if (!opts.peek) step.dueMonth = state.monthIndex + 2;
+    return;
+  }
   const def = ARCS[arc.type].steps[step.key];
-  const { who, line, location } = arcSpeaker(def, arc, facts, state);
+  const mv = mbtiVariant(state, arc, step.key, def);
+  const base = arcSpeaker(def, arc, facts, state);
+  const who = mv?.who ?? base.who;
+  const line = mv?.line ?? base.line;
+  const location = mv?.location ?? base.location;
+  const stepChoices = mv?.choices ?? def.choices;
   const vars: Record<string, string> = {};
   if (arc.data?.relative) vars.relative = String(arc.data.relative);
   const loc = location ?? def.location;
   const online = loc === "instagram" || loc === "language_exchange_app" || loc === "dating_app" || loc === "online_community";
-  return { ref: `arc:${arc.id}`, who, line, choices: def.choices.map((c) => c.t), location: loc, activity: def.activity, vars, title: def.title, needsFated: !online && (who === "fated" || !!def.withFated), needsPartner: who === "partner" && loc !== "home" };
+  return { ref: `arc:${arc.id}`, who, line, choices: stepChoices.map((c) => c.t), location: loc, activity: def.activity, vars, title: def.title, needsFated: !online && (who === "fated" || !!def.withFated), needsPartner: (who === "partner" || arc.type === "DATING") && loc !== "home" };
+}
+
+/** A person's MBTI: the setup's for you and the destined person; a stable one of their own for anyone else. */
+export function mbtiOf(state: LifeState, npcId?: string): string {
+  if (!npcId) return String(state.flags.mbti ?? "");
+  const n = state.world?.npcs[npcId];
+  const set = n?.profile?.mbti as string | undefined;
+  if (set) return set.toUpperCase();
+  let h = 2166136261;
+  for (const c of npcId) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0;
+  return ["EI", "NS", "TF", "JP"].map((p, i) => p[(h >>> i) & 1]).join("");
+}
+
+/** The step variant that fits the two of you best (most MBTI letters matched), remembered per step. */
+function mbtiVariant(state: LifeState, arc: ActiveArc, key: string, def: ArcStepDef) {
+  if (!def.byMbti?.length) return;
+  const mine = mbtiOf(state);
+  const pid = state.relationship.partnerId ?? Object.values(state.world?.npcs ?? {}).find((n) => n.fated)?.id;
+  const theirs = mbtiOf(state, pid);
+  const has = (m: string, letters?: string) => !letters || [...letters].every((l) => m.includes(l));
+  let best = -1;
+  let bestScore = 0;
+  def.byMbti.forEach((v, i) => {
+    if (!has(mine, v.me) || !has(theirs, v.them)) return;
+    // Equally good fits: a stable pick per couple and step (so different couples see different sides).
+    let h = 0;
+    for (const c of `${arc.id}:${key}:${i}:${pid}`) h = (Math.imul(h, 31) + c.charCodeAt(0)) >>> 0;
+    const score = (v.me?.length ?? 0) + (v.them?.length ?? 0) + (v.me && v.them ? 0.5 : 0) + (h % 100) / 1000;
+    if (score > bestScore) (best = i), (bestScore = score);
+  });
+  return best >= 0 ? def.byMbti[best] : undefined;
 }
 
 /** Pick the arc step's speaker/line: by cause, or the first speaker who can still speak. */
@@ -559,7 +616,9 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
   if (!arc) return;
   const step = arc.steps[arc.step];
   const def = ARCS[arc.type].steps[step.key];
-  const ch = def.choices[Math.max(0, Math.min(def.choices.length - 1, choiceIndex))];
+  const mv = mbtiVariant(state, arc, step.key, def);
+  const choices = mv?.choices ?? def.choices;
+  const ch = choices[Math.max(0, Math.min(choices.length - 1, choiceIndex))];
   let outcome = ch.outcome ?? Object.keys(def.outcomes)[0];
   if (ch.roll) {
     const fatedHere = ctx.facts.fatedPartner || arc.type === "TALKING";
@@ -569,7 +628,7 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
     const bend = (k: string) => (st.compat && fatedHere ? compatFactor(st.compat.score, ch.compat?.[k] ?? 0) : 1) * (fatedNpc && k === "START" ? 0.3 + 1.4 * spark : 1);
     outcome = rng.weighted(Object.entries(ch.roll).map(([k, w]) => ({ item: k, weight: w * bend(k) })));
   }
-  const o = def.outcomes[outcome];
+  const o = { ...def.outcomes[outcome], ...(mv?.outcomes?.[outcome] ?? {}) };
   arc.step += 1;
   applyEffects(o.effects, ctx, { arc, choiceLabel });
   ctx.facts = { ...ctx.facts, ...liveNames(state) };
@@ -710,7 +769,13 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
           npc = generateNpc(w, rng, { type: "regular_customer", region: w.homeRegion, date: state.date, aroundAge: state.age, persistence: "PERSISTENT" });
           npc.fated = true;
         }
-        if (npc) beginDating(state, npc, rng);
+        if (npc) {
+          // Someone who lives in another city or country: long distance from day one (the video call is the first date).
+          const far = !!state.story?.fatedLife && state.story.fatedLife.from !== "same";
+          if (far) state.flags.skipFirstDate = true;
+          beginDating(state, npc, rng);
+          if (far) state.relationship.longDistance = true;
+        }
         break;
       }
       case "startDatingNew": {

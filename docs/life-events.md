@@ -1,6 +1,6 @@
 # Life events — the 245 ideas, mapped
 
-All **245** ideas are in the game: **303 events** across 15 files under `data/story/events/` (engine: `src/story/lifeEvents.ts`, runtime: `src/story/lifeEventRuntime.ts`). A few live in systems that already existed (promotion, retirement, divorce, losing a parent or a pet).
+All **245** ideas are in the game: **315 events** across 15 files under `data/story/events/` (engine: `src/story/lifeEvents.ts`, runtime: `src/story/lifeEventRuntime.ts`). A few live in systems that already existed (promotion, retirement, divorce, losing a parent or a pet).
 
 ## How an event happens (사주-driven, not scripted)
 
@@ -349,4 +349,26 @@ All **245** ideas are in the game: **303 events** across 15 files under `data/st
 | 243 | Losing a pet | — | — | — | 기존 PET_FAREWELL 아크 (+ PET_RUNS_AWAY). |
 | 244 | Secrets come out at a funeral | `FUNERAL_SECRET` | chain |  | HALF_SIBLING_APPEARS, ⟵ parentDies 10%, ⟵ grandparentDies 5% |
 | 245 | Writing a will | `WRITING_WILL` | uncommon | ♄ 리턴, 화개, introspection↑ |  |
+
+## Your partner's job (the destined person's job from setup)
+
+| Event | Title | Requires | Rarity |
+|---|---|---|---|
+| `PJ_AWAY_AGAIN` | 또 떠나는 사람 | fatedPartner, fatedJobAway | common |
+| `PJ_BAD_NIGHT` | 새벽 세 시의 전화 | fatedPartner, fatedJobCare | uncommon |
+| `PJ_BREAKTHROUGH` | 드디어 | fatedPartner, fatedJobUnstable | uncommon |
+| `PJ_NIGHT_SHIFT` | 엇갈리는 시간 | fatedPartner, fatedJobNight | common |
+| `PJ_RAISE` | {partner}의 좋은 소식 | fatedPartner, fatedJobRich | common |
+| `PJ_TIMEZONE_FIGHT` | 시차 | fatedPartner, fatedAbroad, dating | common |
+| `PJ_WORK_VISIT` | 몰래 찾아가기 | fatedPartner, !fatedFar | common |
+| `PJ_ZERO_MONTH` | 수입 0원 | fatedPartner, fatedJobUnstable | uncommon |
+
+## Others' big moments — invitations & news
+
+| Event | Title | Requires | Rarity |
+|---|---|---|---|
+| `FRIEND_PASSING_NEWS` | 부고 | — | queued by the engine |
+| `INVITE_FRIEND_WEDDING` | 청첩장 | — | queued by the engine |
+| `INVITE_SIBLING_WEDDING` | 가족의 결혼식 | — | queued by the engine |
+| `NEPHEW_BORN` | 조카 | — | queued by the engine |
 
