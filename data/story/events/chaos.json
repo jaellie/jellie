@@ -1184,7 +1184,7 @@
    "rarity": "uncommon",
    "tone": "romance",
    "requires": [
-    "hasFriend",
+    "hasCrushFriend",
     "single",
     "age>=18"
    ],
@@ -1202,10 +1202,10 @@
      "JUPITER@H11": 0.36
     }
    },
-   "who": "friend",
+   "who": "crush",
    "line": {
-    "ko": "(노래방. {friend}이(가) 부른 노래 가사가 전부 나한테 하는 말 같다. 노래가 끝나고 마이크를 내려놓았다.) …들었어?",
-    "en": "(Karaoke. Every lyric {friend} sang felt aimed at you. The song ended; they set the mic down.) …Did you hear it?"
+    "ko": "(노래방. {crush}이(가) 부른 노래 가사가 전부 나한테 하는 말 같다. 노래가 끝나고 마이크를 내려놓았다.) …들었어?",
+    "en": "(Karaoke. Every lyric {crush} sang felt aimed at you. The song ended; they set the mic down.) …Did you hear it?"
    },
    "choices": [
     {
@@ -1268,8 +1268,8 @@
     },
     "ZONE": {
      "r": {
-      "ko": "{friend}은(는) 웃었다. 조금 늦게.",
-      "en": "{friend} laughed. A beat too late."
+      "ko": "{crush}은(는) 웃었다. 조금 늦게.",
+      "en": "{crush} laughed. A beat too late."
      }
     }
    }

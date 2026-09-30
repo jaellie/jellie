@@ -86,6 +86,19 @@ export interface LifeFacts {
   mbtiP: boolean;
   hasFriend: boolean;
   friendName?: string;
+  /** Your partner is the destined person, and what their job is like (fatedProfile.ts). */
+  fatedJobNight: boolean;
+  fatedJobAway: boolean;
+  fatedJobUnstable: boolean;
+  fatedJobCare: boolean;
+  fatedJobRich: boolean;
+  /** The destined person lives in another city / country (and you haven't moved together yet). */
+  fatedFar: boolean;
+  fatedAbroad: boolean;
+  /** The closest friend of the sex you're drawn to (friends-to-lovers moments). */
+  hasCrushFriend: boolean;
+  crushName?: string;
+  crushId?: string;
   abroad: boolean;
   traveling: boolean;
   weekend: boolean;
@@ -94,6 +107,19 @@ export interface LifeFacts {
   hasHabit: boolean;
   habitPlace?: string;
   alive: boolean;
+}
+
+/** The most recent ex's name: the last partner, else any ex from before the story began. */
+function exNameOf(s: LifeState): string | undefined {
+  const last = s.flags.lastPartnerName as string | undefined;
+  if (last && s.relationship.partnerId && s.npcs.find((n) => n.id === s.relationship.partnerId)?.name === last) {
+    // lastPartnerName is the current partner, not an ex.
+  } else if (last) return last;
+  const npcEx = [...s.npcs].reverse().find((n) => n.role === "EX" && n.name);
+  if (npcEx) return npcEx.name;
+  const w = s.world;
+  const rel = w ? Object.values(w.relationships).reverse().find((r) => r.stage === "EX" && w.npcs[r.npcId]?.name) : undefined;
+  return rel ? w!.npcs[rel.npcId].name : undefined;
 }
 
 export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): LifeFacts {
@@ -121,6 +147,13 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
   const own = s.birth.sex === "MALE" ? "M" : "F";
   const partnerSex = pid ? (s.npcs.find((n) => n.id === pid)?.birth.sex ?? w?.npcs[pid]?.sex) : undefined;
   const partnerBirthYear = pid ? (s.npcs.find((n) => n.id === pid)?.birth.year ?? w?.npcs[pid]?.birthYear) : undefined;
+  const life = s.story?.fatedLife;
+  const job = life?.job;
+  const crush = friends.find((r) => {
+    const n = w!.npcs[r.npcId];
+    if (!n || n.deceased || !n.name) return false;
+    return likes === "A" || (likes === "M" ? n.sex === "MALE" : likes === "F" ? n.sex === "FEMALE" : n.sex !== s.birth.sex);
+  });
   // Any flag set by an event can be required directly as "f_<name>" (e.g. "f_gambling", "!f_cult").
   const flagFacts: Record<string, boolean> = {};
   for (const [k, v] of Object.entries(s.flags)) if (v) flagFacts[`f_${k}`] = true;
@@ -142,7 +175,8 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
     single: !partnered,
     divorced: s.relationship.status === "DIVORCED",
     recentlyBrokeUp: !partnered && brokeUpMonth !== undefined && s.monthIndex - brokeUpMonth <= 12,
-    hasEx: exes > 0,
+    // An ex you can name (an unnamed ex would leave "{ex}와" blank in a line).
+    hasEx: exes > 0 && !!exNameOf(s),
     partnerName: partnered ? partner?.name : undefined,
     momAlive: s.family?.mom.alive ?? true,
     dadAlive: s.family?.dad.alive ?? true,
@@ -156,7 +190,7 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
     male: s.birth.sex === "MALE",
     female: s.birth.sex === "FEMALE",
     partnerYears: partnered ? Math.floor((s.monthIndex - (s.relationship.sinceMonth ?? s.monthIndex)) / 12) : 0,
-    exName: exes > 0 ? ((s.flags.lastPartnerName as string) || undefined) : undefined,
+    exName: exes > 0 ? exNameOf(s) : undefined,
     hasKid: (s.kids ?? []).length > 0,
     kidAge: (s.kids ?? []).length ? Math.max(...s.kids!.map((k) => s.date.year - k.bornYear)) : 0,
     kidName: s.kids?.[0]?.name,
@@ -186,6 +220,16 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
     mbtiP: mbti[3] === "P",
     hasFriend: friends.length > 0,
     friendName: friends[0] ? w!.npcs[friends[0].npcId]?.name : undefined,
+    fatedJobNight: fatedPartner && (job?.shift === "night" || job?.shift === "irregular"),
+    fatedJobAway: fatedPartner && !!job?.away,
+    fatedJobUnstable: fatedPartner && !!job?.unstable,
+    fatedJobCare: fatedPartner && !!job?.care,
+    fatedJobRich: fatedPartner && (job?.income ?? 0) >= 0.8,
+    fatedFar: !!life && life.from !== "same",
+    fatedAbroad: !!life && life.from === "abroad",
+    hasCrushFriend: !!crush,
+    crushName: crush ? w!.npcs[crush.npcId]?.name : undefined,
+    crushId: crush?.npcId,
     abroad: isAbroad(s),
     traveling: !!w?.travel,
     weekend: !!opts.weekend,

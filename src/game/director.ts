@@ -68,6 +68,7 @@ export const SPEAKER_REQUIRES: Record<string, string[]> = {
   coworker: ["employed"],
   work: ["employed"],
   friend: ["hasFriend"],
+  crush: ["hasCrushFriend"],
   ex: ["hasEx"],
 };
 

@@ -1,0 +1,489 @@
+{
+ "_doc": "The destined person's life from setup: where they live (how you meet, long distance) and their job (where you might run into them, their schedule, income, and job moments while you're together). place = a location id where they work; shift day|night|irregular|remote; away = often away (flights, deployments); unstable = irregular income; care = a demanding/dangerous care or safety job. meet = the first-meeting line when you meet them at their work (same neighborhood).",
+ "lives": [
+  {
+   "id": "same",
+   "ko": "같은 동네",
+   "en": "Same neighborhood",
+   "hint": {
+    "ko": "우연히 마주칠 수 있는 곳에 살아요",
+    "en": "You might run into them any day"
+   }
+  },
+  {
+   "id": "city",
+   "ko": "다른 도시",
+   "en": "Another city",
+   "hint": {
+    "ko": "주말 연애, KTX 데이트",
+    "en": "Weekend love, train dates"
+   }
+  },
+  {
+   "id": "abroad",
+   "ko": "다른 나라",
+   "en": "Another country",
+   "hint": {
+    "ko": "시차, 영상통화, 누가 옮길까?",
+    "en": "Time zones, video calls — who moves?"
+   }
+  }
+ ],
+ "jobs": [
+  {
+   "id": "office",
+   "ko": "회사원",
+   "en": "Office worker",
+   "place": "cafe",
+   "shift": "day",
+   "income": 0.55,
+   "meet": {
+    "ko": "(점심시간마다 같은 카페에서 마주치던 그 사람이, 오늘은 내 옆자리에 앉았다.)",
+    "en": "(The person you see at the same café every lunch break sits next to you today.)"
+   }
+  },
+  {
+   "id": "developer",
+   "ko": "개발자",
+   "en": "Software developer",
+   "place": "cafe",
+   "shift": "remote",
+   "income": 0.7,
+   "meet": {
+    "ko": "(카페 콘센트 자리를 두고 노트북을 든 그 사람과 눈이 마주쳤다.) …같이 쓰실래요?",
+    "en": "(You and the person with the laptop both reach for the last outlet.) …Want to share?"
+   }
+  },
+  {
+   "id": "designer",
+   "ko": "디자이너",
+   "en": "Designer",
+   "place": "cafe",
+   "shift": "irregular",
+   "income": 0.5,
+   "unstable": true,
+   "meet": {
+    "ko": "(옆 테이블 사람이 냅킨에 내 얼굴을 그리고 있었다. 들켰다는 걸 알고 얼굴이 빨개졌다.)",
+    "en": "(The person at the next table is sketching you on a napkin. They blush when they notice you've seen.)"
+   }
+  },
+  {
+   "id": "barista",
+   "ko": "바리스타",
+   "en": "Barista",
+   "place": "cafe",
+   "shift": "day",
+   "income": 0.3,
+   "meet": {
+    "ko": "(단골 카페 바리스타가 오늘은 컵에 작은 그림을 그려줬다.) 늘 같은 거 드시길래요.",
+    "en": "(The barista at your usual café drew something small on your cup today.) You always order the same thing."
+   }
+  },
+  {
+   "id": "chef",
+   "ko": "셰프",
+   "en": "Chef",
+   "place": "restaurant",
+   "shift": "night",
+   "income": 0.5,
+   "meet": {
+    "ko": "(주방에서 나온 셰프가 직접 접시를 내려놓았다.) 오늘 처음 만든 메뉴예요. 솔직하게 말해주세요.",
+    "en": "(The chef brings the plate out personally.) It's a new dish. Be honest."
+   }
+  },
+  {
+   "id": "doctor",
+   "ko": "의사",
+   "en": "Doctor",
+   "place": "hospital",
+   "shift": "irregular",
+   "income": 0.9,
+   "care": true,
+   "meet": {
+    "ko": "(응급실 대기실. 지친 얼굴의 의사가 자판기 앞에서 동전을 찾고 있었다.)",
+    "en": "(The ER waiting room. A tired-looking doctor is digging for coins at the vending machine.)"
+   }
+  },
+  {
+   "id": "nurse",
+   "ko": "간호사",
+   "en": "Nurse",
+   "place": "hospital",
+   "shift": "night",
+   "income": 0.5,
+   "care": true,
+   "meet": {
+    "ko": "(병문안 간 병원에서, 간호사가 길 잃은 나를 병동까지 데려다줬다.)",
+    "en": "(Visiting someone at the hospital, you get lost — a nurse walks you all the way to the ward.)"
+   }
+  },
+  {
+   "id": "teacher",
+   "ko": "교사",
+   "en": "Teacher",
+   "place": "park",
+   "shift": "day",
+   "income": 0.5,
+   "meet": {
+    "ko": "(공원에서 아이들 소풍을 인솔하던 선생님이 굴러온 공을 주워달라고 했다.)",
+    "en": "(A teacher leading a class picnic in the park asks you to throw back a stray ball.)"
+   }
+  },
+  {
+   "id": "researcher",
+   "ko": "연구원",
+   "en": "Researcher",
+   "place": "university",
+   "shift": "irregular",
+   "income": 0.6,
+   "meet": {
+    "ko": "(대학 캠퍼스 벤치. 논문 더미에 파묻힌 사람이 내 커피를 쏟을 뻔했다.)",
+    "en": "(A campus bench. Someone buried in papers almost knocks over your coffee.)"
+   }
+  },
+  {
+   "id": "grad_student",
+   "ko": "대학원생",
+   "en": "Grad student",
+   "place": "library",
+   "shift": "irregular",
+   "income": 0.2,
+   "unstable": true,
+   "meet": {
+    "ko": "(도서관 마감 시간. 마지막까지 남은 두 사람이 동시에 같은 책을 집었다.)",
+    "en": "(Library closing time. The last two people there reach for the same book.)"
+   }
+  },
+  {
+   "id": "civil_servant",
+   "ko": "공무원",
+   "en": "Civil servant",
+   "place": "street",
+   "shift": "day",
+   "income": 0.5,
+   "meet": {
+    "ko": "(구청 민원실. 서류를 잘못 떼 온 나에게 그 사람이 조용히 웃으며 다시 알려줬다.)",
+    "en": "(The district office. You brought the wrong form; they smile and quietly walk you through it again.)"
+   }
+  },
+  {
+   "id": "police",
+   "ko": "경찰관",
+   "en": "Police officer",
+   "place": "street",
+   "shift": "night",
+   "care": true,
+   "income": 0.5,
+   "meet": {
+    "ko": "(잃어버린 지갑을 찾아준 경찰관이 지구대 앞까지 나와 있었다.)",
+    "en": "(The officer who found your lost wallet is waiting outside the police box.)"
+   }
+  },
+  {
+   "id": "firefighter",
+   "ko": "소방관",
+   "en": "Firefighter",
+   "place": "street",
+   "shift": "irregular",
+   "care": true,
+   "income": 0.5,
+   "meet": {
+    "ko": "(동네 화재 대피 훈련. 방화복을 입은 사람이 나에게 소화기 쓰는 법을 알려줬다.)",
+    "en": "(A neighborhood fire drill. Someone in turnout gear shows you how to use the extinguisher.)"
+   }
+  },
+  {
+   "id": "lawyer",
+   "ko": "변호사",
+   "en": "Lawyer",
+   "place": "cafe",
+   "shift": "day",
+   "income": 0.85,
+   "meet": {
+    "ko": "(카페에서 서류를 펼쳐 놓고 한숨 쉬던 사람이, 내 계약서를 보더니 한마디 했다.) 그 조항, 사인하지 마세요.",
+    "en": "(The person sighing over files at the café glances at your contract.) Don't sign that clause."
+   }
+  },
+  {
+   "id": "trainer",
+   "ko": "헬스 트레이너",
+   "en": "Personal trainer",
+   "place": "gym",
+   "shift": "irregular",
+   "income": 0.4,
+   "meet": {
+    "ko": "(헬스장. 트레이너가 다가와 자세를 고쳐줬다.) 그렇게 하면 허리 나가요.",
+    "en": "(The gym. A trainer comes over and fixes your form.) You'll hurt your back like that."
+   }
+  },
+  {
+   "id": "librarian",
+   "ko": "사서",
+   "en": "Librarian",
+   "place": "library",
+   "shift": "day",
+   "income": 0.4,
+   "meet": {
+    "ko": "(연체된 책을 반납하러 갔다. 사서가 연체료 대신 추천 도서 목록을 건넸다.)",
+    "en": "(You return an overdue book. Instead of a fine, the librarian hands you a reading list.)"
+   }
+  },
+  {
+   "id": "writer",
+   "ko": "작가",
+   "en": "Writer",
+   "place": "library",
+   "shift": "remote",
+   "income": 0.3,
+   "unstable": true,
+   "meet": {
+    "ko": "(도서관 창가 자리. 옆 사람이 원고를 읽다가 물었다.) 이 문장, 이상한가요?",
+    "en": "(A library window seat. The person next to you looks up from a manuscript.) Does this sentence sound strange?"
+   }
+  },
+  {
+   "id": "musician",
+   "ko": "음악가",
+   "en": "Musician",
+   "place": "cafe",
+   "shift": "night",
+   "income": 0.25,
+   "unstable": true,
+   "meet": {
+    "ko": "(카페 작은 공연. 노래가 끝나고, 그 사람이 정확히 나를 보며 인사했다.)",
+    "en": "(A small café gig. When the song ends, they bow — looking straight at you.)"
+   }
+  },
+  {
+   "id": "actor",
+   "ko": "배우",
+   "en": "Actor",
+   "place": "cinema",
+   "shift": "irregular",
+   "income": 0.3,
+   "unstable": true,
+   "meet": {
+    "ko": "(독립영화 상영회. 엔딩 크레딧이 끝나자 주연 배우가 내 옆자리에서 일어났다.)",
+    "en": "(An indie screening. As the credits end, the lead actor stands up — from the seat next to yours.)"
+   }
+  },
+  {
+   "id": "photographer",
+   "ko": "사진작가",
+   "en": "Photographer",
+   "place": "park",
+   "shift": "irregular",
+   "income": 0.35,
+   "unstable": true,
+   "meet": {
+    "ko": "(공원에서 셔터 소리가 났다.) 죄송해요, 빛이 너무 좋아서… 사진 보내드릴까요?",
+    "en": "(A shutter clicks in the park.) Sorry — the light was perfect. Want me to send you the photo?"
+   }
+  },
+  {
+   "id": "creator",
+   "ko": "유튜버",
+   "en": "YouTuber",
+   "place": "street",
+   "shift": "irregular",
+   "income": 0.4,
+   "unstable": true,
+   "meet": {
+    "ko": "(길거리 인터뷰 카메라가 나를 향했다.) 잠깐 인터뷰 괜찮으세요? …아, 목소리 너무 좋으시다.",
+    "en": "(A street-interview camera turns to you.) Got a minute? …Wow, you have a great voice."
+   }
+  },
+  {
+   "id": "pilot",
+   "ko": "파일럿",
+   "en": "Pilot",
+   "place": "airport",
+   "shift": "irregular",
+   "away": true,
+   "income": 0.9,
+   "meet": {
+    "ko": "(공항 라운지. 제복 차림의 사람이 연착 안내를 보며 나보다 더 크게 한숨을 쉬었다.)",
+    "en": "(An airport lounge. Someone in uniform sighs at the delay board even louder than you.)"
+   }
+  },
+  {
+   "id": "flight_attendant",
+   "ko": "승무원",
+   "en": "Flight attendant",
+   "place": "airport",
+   "shift": "irregular",
+   "away": true,
+   "income": 0.5,
+   "meet": {
+    "ko": "(비행기 안. 승무원이 쪽지와 함께 물을 한 잔 더 가져다줬다.) 아까부터 긴장하신 것 같아서요.",
+    "en": "(On the plane. A flight attendant brings an extra water with a little note.) You looked nervous earlier."
+   }
+  },
+  {
+   "id": "soldier",
+   "ko": "직업군인",
+   "en": "Soldier",
+   "place": "street",
+   "shift": "day",
+   "away": true,
+   "income": 0.5,
+   "meet": {
+    "ko": "(휴가 나온 군인이 길을 물었다. 서울 지리를 하나도 모른다고 했다.)",
+    "en": "(A soldier on leave asks you for directions. They don't know the city at all.)"
+   }
+  },
+  {
+   "id": "cooking_teacher",
+   "ko": "요리강사",
+   "en": "Cooking instructor",
+   "place": "cooking_class",
+   "shift": "day",
+   "income": 0.35,
+   "meet": {
+    "ko": "(요리교실 첫날. 강사님이 내 손을 잡고 칼 쥐는 법을 고쳐줬다.)",
+    "en": "(First day of cooking class. The instructor takes your hand to fix your knife grip.)"
+   }
+  },
+  {
+   "id": "shop_owner",
+   "ko": "가게 사장님",
+   "en": "Shop owner",
+   "place": "diner",
+   "shift": "night",
+   "income": 0.45,
+   "unstable": true,
+   "meet": {
+    "ko": "(동네 분식집 사장님이 오늘따라 떡볶이를 한 국자 더 얹어줬다.) 요즘 힘들어 보여서요.",
+    "en": "(The owner of the neighborhood snack bar adds an extra scoop today.) You've looked tired lately."
+   }
+  },
+  {
+   "id": "translator",
+   "ko": "번역가",
+   "en": "Translator",
+   "place": "language_exchange_app",
+   "shift": "remote",
+   "income": 0.35,
+   "unstable": true,
+   "meet": {
+    "ko": "(언어교환 앱에서 내 문장을 고쳐주던 사람이 처음으로 음성 메시지를 보냈다.)",
+    "en": "(The person who's been correcting your sentences on the language app sends a voice message for the first time.)"
+   }
+  },
+  {
+   "id": "startup",
+   "ko": "스타트업 대표",
+   "en": "Startup founder",
+   "place": "cafe",
+   "shift": "irregular",
+   "income": 0.6,
+   "unstable": true,
+   "meet": {
+    "ko": "(카페에서 투자 발표를 연습하던 사람이, 나에게 들어봐 줄 수 있냐고 물었다.)",
+    "en": "(Someone rehearsing an investor pitch at the café asks if you'd listen for a minute.)"
+   }
+  }
+ ],
+ "meetCity": {
+  "ko": "({fatedCity} 출장 마지막 날. 호텔 앞 편의점에서 우산 하나를 두고 그 사람과 마주쳤다. {fatedCity}에 산다고 했다.)",
+  "en": "(The last day of a work trip to {fatedCity}. You and a stranger reach for the last umbrella at a convenience store. They live in {fatedCity}.)"
+ },
+ "meetCityTrip": {
+  "ko": "({fatedCity} 여행 중, 게스트하우스 옥상에서 그 사람이 먼저 말을 걸었다. {fatedCity} 토박이라고 했다.)",
+  "en": "(On a trip to {fatedCity}, someone on the guesthouse rooftop starts talking to you. A {fatedCity} local.)"
+ },
+ "meetAbroad": {
+  "ko": "(언어교환 앱에서 {fatedCity}에 사는 사람과 매칭됐다. 첫 메시지가 왔다. 거기는 지금 {fatedTime}라고 했다.)",
+  "en": "(The language-exchange app matches you with someone in {fatedCity}. Their first message: it's {fatedTime} there.)"
+ },
+ "meetAbroadFlight": {
+  "ko": "({fatedCity}행 비행기. 흔들리는 기내에서 제복 차림의 그 사람이 괜찮냐고 물었다.)",
+  "en": "(A flight to {fatedCity}. Turbulence — and someone in uniform asks if you're okay.)"
+ },
+ "meetAgain": {
+  "ko": "(몇 년 만이었다. 그때 그 사람이, 거짓말처럼 다시 눈앞에 있었다.)",
+  "en": "(It had been years. That person — impossibly — was right in front of you again.)"
+ },
+ "intro": {
+  "ko": "이름은 {fatedName}. {fatedJobCop}라고 했다.",
+  "en": "Their name: {fatedName}. A {fatedJob_en}, they said."
+ },
+ "introAway": {
+  "ko": "이름은 {fatedName}. {fatedCity}에 사는 {fatedJobCop}라고 했다.",
+  "en": "Their name: {fatedName}. A {fatedJob_en} living in {fatedCity_en}, they said."
+ },
+ "meetKinds": {
+  "app": {
+   "choices": [
+    {
+     "ko": "먼저 영상통화를 걸어본다",
+     "en": "Be the first to start a video call"
+    },
+    {
+     "ko": "천천히 메시지를 주고받는다",
+     "en": "Keep messaging, slowly"
+    },
+    {
+     "ko": "(답장을 며칠 미룬다)",
+     "en": "(Put off replying for a few days)"
+    }
+   ],
+   "MISSED": {
+    "ko": "…답장을 미루는 사이, 그 사람의 프로필이 사라졌다. 가끔 그 첫 메시지가 생각난다.",
+    "en": "…While you put off replying, their profile disappeared. Sometimes you think about that first message."
+   },
+   "SLOW_BURN": {
+    "ko": "하루에 몇 줄씩. 시차를 건너 메시지가 오갔다.",
+    "en": "A few lines a day, back and forth across the time zones."
+   }
+  },
+  "flight": {
+   "choices": [
+    {
+     "ko": "이름을 묻는다",
+     "en": "Ask their name"
+    },
+    {
+     "ko": "내릴 때 연락처를 적어 건넨다",
+     "en": "Hand them your number as you get off"
+    },
+    {
+     "ko": "(고맙다고만 한다)",
+     "en": "(Just say thank you)"
+    }
+   ],
+   "MISSED": {
+    "ko": "…착륙하고 나니, 그 사람은 승무원 통로 너머로 사라졌다.",
+    "en": "…After landing, they vanished behind the crew door."
+   },
+   "SLOW_BURN": {
+    "ko": "며칠 뒤, 모르는 번호로 메시지가 왔다. '비행기에서 긴장하던 분 맞죠?'",
+    "en": "A few days later, a message from an unknown number: \"You're the nervous passenger, right?\""
+   }
+  },
+  "trip": {
+   "choices": [
+    {
+     "ko": "이름을 묻는다",
+     "en": "Ask their name"
+    },
+    {
+     "ko": "연락처를 교환한다",
+     "en": "Swap numbers"
+    },
+    {
+     "ko": "(우산을 양보하고 돌아선다)",
+     "en": "(Let them have the umbrella and walk away)"
+    }
+   ],
+   "MISSED": {
+    "ko": "…그 사람은 빗속으로 사라졌다. 우산 하나가 계속 생각났다.",
+    "en": "…They disappeared into the rain. You kept thinking about that umbrella."
+   },
+   "SLOW_BURN": {
+    "ko": "서울로 돌아온 뒤에도 가끔 연락을 주고받았다. {fatedCity}의 날씨를 묻는 게 습관이 됐다.",
+    "en": "Back home, you still texted now and then. Asking about the weather in {fatedCity} became a habit."
+   }
+  }
+ }
+}

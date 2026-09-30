@@ -9,7 +9,7 @@ import { backgroundEngine } from "../world/backgroundEngine";
 import { getLocation } from "../world/catalog";
 import { toPrototypeScene, type PrototypeScene } from "../integration/prototype";
 import type { Scene, SceneActor } from "../world/sceneComposer";
-import { fillNames, fixJosa, CITY_KO, langVars } from "../game/text";
+import { fillNames, fixJosa, CITY_KO, cityKo, langVars } from "../game/text";
 import { STAGE } from "../world/stage";
 
 type Bi = { ko: string; en: string };
@@ -89,7 +89,7 @@ export function buildCards(state: LifeState, lang: "ko" | "en", seed: number): M
       actors,
       props: [],
     };
-    const vars: Record<string, string> = { ...langVars(c.vars, lang), city: lang === "ko" ? CITY_KO[c.vars.city] ?? c.vars.city : c.vars.city };
+    const vars: Record<string, string> = { ...langVars(c.vars, lang), city: lang === "ko" ? cityKo(c.vars.city) : c.vars.city };
     let caption = def.caption[lang].replace(/\{(\w+)\}/g, (m, k: string) => (k in vars ? m : ""));
     caption = lang === "ko" ? fillNames(caption, vars) : caption.replace(/\{(\w+)\}/g, (_m, k: string) => vars[k] ?? "");
     if (lang === "ko") caption = fixJosa(caption);

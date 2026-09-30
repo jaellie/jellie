@@ -250,7 +250,11 @@ export function queueChain(state: LifeState, to: string, after: [number, number]
  */
 export function fireHooks(state: LifeState, on: LifeHook, rng: SeededRandom, opts: { who?: string; vars?: Record<string, string> } = {}): PendingEvent | undefined {
   const cands: Array<{ item: { def: LifeEventDef; after: [number, number] }; weight: number }> = [];
+  const es = eventState(state);
   for (const def of LIBRARY.values()) {
+    // A once-in-a-life event doesn't come back with the next funeral (유산 분쟁 after Mom, then again after Dad).
+    const seen = es.history[def.id];
+    if ((seen?.length && (!def.repeatable || state.monthIndex - seen[seen.length - 1] < (def.cooldown ?? 60))) || es.pending.some((p) => p.id === def.id)) continue;
     for (const h of def.hooks ?? []) {
       if (h.on !== on || (h.who && h.who !== opts.who)) continue;
       if (rng.chance(h.p)) cands.push({ item: { def, after: h.after ?? [1, 6] }, weight: h.p });

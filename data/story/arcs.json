@@ -118,7 +118,8 @@
           14
          ]
         }
-       ]
+       ],
+       "who": "partner"
       },
       "BREAKUP": {
        "r": {
@@ -1102,6 +1103,677 @@
        ],
        "scene": [
         "funeral_hall"
+       ]
+      }
+     }
+    }
+   }
+  },
+  "LONG_DISTANCE": {
+   "steps": {
+    "CALL": {
+     "title": {
+      "ko": "장거리 연애",
+      "en": "Long distance"
+     },
+     "after": [
+      1,
+      2
+     ],
+     "location": "home",
+     "who": "partner",
+     "line": {
+      "ko": "(밤 10시. 영상통화 너머 {partner} 쪽은 {fatedTime}. 시차 {tzdiff}시간.) …화면 말고, 진짜로 보고 싶다.",
+      "en": "(10 p.m. On the video call it's {fatedTime} where {partner} is — a {tzdiff}-hour gap.) …I want to see you for real, not on a screen."
+     },
+     "altBy": "distance",
+     "alt": {
+      "city": {
+       "who": "partner",
+       "line": {
+        "ko": "(금요일 밤 KTX. {partner}이(가) 사는 {fatedCity}까지 두 시간 반.) 역에 도착하면 전화해. 마중 나갈게.",
+        "en": "(Friday night train. Two and a half hours to {fatedCity}, where {partner} lives.) Call me when you get in. I'll meet you at the station."
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "매일 같은 시간에 통화하자",
+        "en": "Let's call at the same time every day"
+       },
+       "roll": {
+        "CLOSE": 0.75,
+        "STRAIN": 0.25
+       },
+       "compat": {
+        "CLOSE": 1,
+        "STRAIN": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "보고 싶다고 솔직하게 말한다",
+        "en": "Say you miss them, honestly"
+       },
+       "roll": {
+        "CLOSE": 0.65,
+        "STRAIN": 0.35
+       },
+       "compat": {
+        "CLOSE": 1,
+        "STRAIN": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "(괜찮은 척한다)",
+        "en": "(Pretend you're fine)"
+       },
+       "roll": {
+        "CLOSE": 0.35,
+        "STRAIN": 0.65
+       },
+       "compat": {
+        "CLOSE": 1,
+        "STRAIN": -1
+       }
+      }
+     ],
+     "outcomes": {
+      "CLOSE": {
+       "r": {
+        "ko": "화면 너머로도 온기가 전해졌다. 거리는 멀어도, 마음은 가까웠다.",
+        "en": "Even through a screen you could feel the warmth. Far apart, close at heart."
+       },
+       "effects": []
+      },
+      "STRAIN": {
+       "r": {
+        "ko": "통화가 끝나고 한참을 멍하니 앉아 있었다. 거리가 처음으로 무겁게 느껴졌다.",
+        "en": "After the call you sat staring for a long time. For the first time, the distance felt heavy."
+       },
+       "effects": []
+      }
+     }
+    },
+    "VISIT": {
+     "title": {
+      "ko": "만나러 가는 길",
+      "en": "On the way to you"
+     },
+     "after": [
+      3,
+      6
+     ],
+     "location": "airport",
+     "who": "partner",
+     "line": {
+      "ko": "({fatedCity} 공항 입국장. 사람들 사이로 {partner}이(가) 손을 흔든다.)",
+      "en": "({fatedCity} airport arrivals. Through the crowd, {partner} is waving.)"
+     },
+     "altBy": "distance",
+     "alt": {
+      "city": {
+       "who": "partner",
+       "location": "street",
+       "line": {
+        "ko": "({fatedCity}역 대합실. {partner}이(가) 꽃 한 송이를 들고 서 있다.)",
+        "en": "({fatedCity} station. {partner} is standing there with a single flower.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "달려가서 안긴다",
+        "en": "Run into their arms"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "어색하게 손을 흔든다",
+        "en": "Wave, a little awkward"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "(울컥해서 아무 말도 못 한다)",
+        "en": "(Too choked up to say anything)"
+       },
+       "outcome": "GOOD"
+      }
+     ],
+     "outcomes": {
+      "GOOD": {
+       "r": {
+        "ko": "화면 속 얼굴이 아니라 진짜였다. 사흘은 너무 짧았다.",
+        "en": "Not a face on a screen — really them. Three days was far too short."
+       },
+       "effects": [],
+       "card": "FLIGHT"
+      }
+     }
+    },
+    "DECIDE": {
+     "title": {
+      "ko": "누가 옮길까",
+      "en": "Who moves?"
+     },
+     "after": [
+      6,
+      10
+     ],
+     "location": "home",
+     "who": "partner",
+     "line": {
+      "ko": "우리 계속 이렇게 지낼 수는 없잖아. …둘 중 하나는 옮겨야 할 것 같아.",
+      "en": "We can't keep living like this. …One of us has to move."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "내가 {fatedCity}으로 갈게",
+        "en": "I'll come to {fatedCity}"
+       },
+       "roll": {
+        "I_MOVE": 0.75,
+        "STRAIN": 0.25
+       },
+       "compat": {
+        "I_MOVE": 1,
+        "STRAIN": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "네가 이쪽으로 와줄 수 있어?",
+        "en": "Could you move here?"
+       },
+       "roll": {
+        "THEY_MOVE": 0.6,
+        "STRAIN": 0.25,
+        "BREAKUP": 0.15
+       },
+       "compat": {
+        "THEY_MOVE": 1,
+        "BREAKUP": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "조금만 더 이대로 지내자",
+        "en": "Let's stay like this a bit longer"
+       },
+       "roll": {
+        "STAY": 0.6,
+        "BREAKUP": 0.4
+       },
+       "compat": {
+        "STAY": 1,
+        "BREAKUP": -1
+       }
+      }
+     ],
+     "outcomes": {
+      "I_MOVE": {
+       "r": {
+        "ko": "짐 두 개를 싸서 {fatedCity}으로 떠났다. 새 도시, 같은 사람.",
+        "en": "You packed two bags and left for {fatedCity}. A new city, the same person."
+       },
+       "effects": [
+        {
+         "kind": "moveToFated"
+        }
+       ],
+       "card": "MOVE_CITY"
+      },
+      "THEY_MOVE": {
+       "r": {
+        "ko": "{partner}이(가) 짐을 싸서 이쪽으로 왔다. 이제 시차를 계산하지 않아도 된다.",
+        "en": "{partner} packed up and moved here. No more counting time zones."
+       },
+       "effects": [
+        {
+         "kind": "fatedMovesHere"
+        }
+       ],
+       "card": "NEW_HOME"
+      },
+      "STAY": {
+       "r": {
+        "ko": "달력에 날짜를 지워가며 조금 더 버티기로 했다.",
+        "en": "You decided to hold on a little longer, crossing days off the calendar."
+       },
+       "effects": [
+        {
+         "kind": "arcRepeat",
+         "after": [
+          10,
+          14
+         ]
+        }
+       ]
+      },
+      "STRAIN": {
+       "r": {
+        "ko": "그날 통화는 싸움으로 끝났다. 서로 지쳐 있었다.",
+        "en": "That call ended in a fight. You were both worn out."
+       },
+       "effects": [
+        {
+         "kind": "arcRepeat",
+         "after": [
+          6,
+          10
+         ]
+        }
+       ]
+      },
+      "BREAKUP": {
+       "r": {
+        "ko": "…서로의 도시에서, 각자의 삶을 살기로 했다.",
+        "en": "…You decided to live your own lives, each in your own city."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        }
+       ],
+       "card": "BREAKUP"
+      }
+     }
+    }
+   }
+  },
+  "TALKING": {
+   "steps": {
+    "TEXTS": {
+     "title": {
+      "ko": "새벽 카톡",
+      "en": "2 a.m. texts"
+     },
+     "after": [
+      0,
+      1
+     ],
+     "location": "home",
+     "who": "fated",
+     "line": {
+      "ko": "(새벽 두 시. {fated}에게서 온 카톡.) 자? …아니 그냥, 뭐 하나 궁금해서.",
+      "en": "(2 a.m. A text from {fated}.) You up? …No reason. Just wondering what you're doing."
+     },
+     "altBy": "distance",
+     "alt": {
+      "abroad": {
+       "who": "fated",
+       "line": {
+        "ko": "(밤 열한 시. {fatedCity}은 지금 {fatedTime}. {fated}에게서 온 메시지.) 거기 몇 시야? …자기 전에 목소리 듣고 싶어서.",
+        "en": "(11 p.m. It's {fatedTime} in {fatedCity}. A message from {fated}.) What time is it there? …Wanted to hear your voice before you sleep."
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "바로 전화를 건다",
+        "en": "Call right away"
+       },
+       "roll": {
+        "CLOSER": 0.8,
+        "FLAT": 0.2
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "'안 자 ㅎㅎ' 하고 밤새 카톡한다",
+        "en": "\"Not asleep lol\" — text all night"
+       },
+       "roll": {
+        "CLOSER": 0.7,
+        "FLAT": 0.3
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "(읽고 아침에 답한다)",
+        "en": "(Read it, answer in the morning)"
+       },
+       "roll": {
+        "CLOSER": 0.25,
+        "FLAT": 0.75
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      }
+     ],
+     "outcomes": {
+      "CLOSER": {
+       "r": {
+        "ko": "정신 차려 보니 해가 뜨고 있었다. 무슨 얘기를 그렇게 했는지 기억도 안 난다.",
+        "en": "Suddenly the sun was coming up. You can't even remember what you talked about."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.15
+        }
+       ]
+      },
+      "FLAT": {
+       "r": {
+        "ko": "'ㅇㅇ 잘 자' — 짧은 답장이 왔다. 괜히 신경이 쓰였다.",
+        "en": "\"ok night\" — a short reply. It bothered you more than it should."
+       },
+       "effects": []
+      }
+     }
+    },
+    "NOT_A_DATE": {
+     "title": {
+      "ko": "이거 데이트야?",
+      "en": "Is this a date?"
+     },
+     "after": [
+      1,
+      3
+     ],
+     "location": "cinema",
+     "who": "fated",
+     "line": {
+      "ko": "(둘이서만 영화를 봤다. 팝콘 통에서 손이 두 번 닿았다.) …우리 이거, 데이트야?",
+      "en": "(A movie, just the two of you. Your hands touched twice in the popcorn.) …Is this, like, a date?"
+     },
+     "altBy": "distance",
+     "alt": {
+      "abroad": {
+       "who": "fated",
+       "location": "home",
+       "line": {
+        "ko": "(시차를 맞춰 화면 두 개로 같은 영화를 틀었다. {fated}이(가) 먼저 웃음이 터졌다.) …이거 데이트 맞지?",
+        "en": "(Two screens, one movie, synced across the time zones. {fated} laughs first.) …This counts as a date, right?"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "응. 데이트야",
+        "en": "Yes. It's a date"
+       },
+       "roll": {
+        "CLOSER": 0.8,
+        "FLAT": 0.2
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "글쎄~ 너는 어떻게 생각하는데?",
+        "en": "Hmm~ what do you think?"
+       },
+       "roll": {
+        "CLOSER": 0.6,
+        "FLAT": 0.4
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "에이, 친구끼리 무슨",
+        "en": "Come on, we're just friends"
+       },
+       "roll": {
+        "CLOSER": 0.15,
+        "FLAT": 0.85
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      }
+     ],
+     "outcomes": {
+      "CLOSER": {
+       "r": {
+        "ko": "{fated}이(가) 고개를 숙이고 웃었다. 귀가 빨갰다.",
+        "en": "{fated} looked down and smiled. Their ears had gone red."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.15
+        }
+       ]
+      },
+      "FLAT": {
+       "r": {
+        "ko": "'그치, 친구끼리.' 대답이 조금 늦게 왔다.",
+        "en": "\"Right. Friends.\" The answer came a beat too late."
+       },
+       "effects": []
+      }
+     }
+    },
+    "JEALOUS": {
+     "title": {
+      "ko": "질투",
+      "en": "Jealous"
+     },
+     "after": [
+      1,
+      3
+     ],
+     "location": "cafe",
+     "who": "me",
+     "line": {
+      "ko": "({fated}에게 누군가 번호를 물어보는 걸 봤다. {fated}이(가) 곤란한 얼굴로 나를 쳐다봤다.)",
+      "en": "(You see someone asking {fated} for their number. {fated} glances at you, looking cornered.)"
+     },
+     "altBy": "distance",
+     "alt": {
+      "abroad": {
+       "who": "me",
+       "location": "instagram",
+       "line": {
+        "ko": "({fated}의 스토리에 낯선 사람과 찍은 사진이 올라왔다. 하트가 세 개.)",
+        "en": "({fated}'s story: a photo with someone you don't know. Three hearts.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "다가가서 '가자' 하고 손을 잡는다",
+        "en": "Walk over, take their hand: \"Let's go\""
+       },
+       "roll": {
+        "CLOSER": 0.8,
+        "FLAT": 0.2
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "(모른 척하고 휴대폰만 본다)",
+        "en": "(Pretend not to notice)"
+       },
+       "roll": {
+        "CLOSER": 0.3,
+        "FLAT": 0.7
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "나중에 장난스럽게 묻는다",
+        "en": "Tease them about it later"
+       },
+       "roll": {
+        "CLOSER": 0.6,
+        "FLAT": 0.4
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      }
+     ],
+     "outcomes": {
+      "CLOSER": {
+       "r": {
+        "ko": "'…질투했어?' {fated}이(가) 웃었다. 부정하지 않았다.",
+        "en": "\"…Were you jealous?\" {fated} laughed. You didn't deny it."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.15
+        }
+       ]
+      },
+      "FLAT": {
+       "r": {
+        "ko": "그날 밤, 이상하게 잠이 오지 않았다.",
+        "en": "That night, somehow, you couldn't sleep."
+       },
+       "effects": []
+      }
+     }
+    },
+    "CONFESS": {
+     "title": {
+      "ko": "고백",
+      "en": "The confession"
+     },
+     "after": [
+      1,
+      3
+     ],
+     "location": "park",
+     "who": "me",
+     "withFated": true,
+     "line": {
+      "ko": "(집에 가는 길. {fated}이(가) 걸음을 멈췄다. 이제는 말해야 할 것 같다.)",
+      "en": "(Walking home, {fated} stops. It feels like someone has to say it now.)"
+     },
+     "altBy": "distance",
+     "alt": {
+      "abroad": {
+       "who": "me",
+       "location": "airport",
+       "line": {
+        "ko": "({fatedCity}에서 온 {fated}과(와) 공항에서 헤어지기 직전. 탑승 안내 방송이 나온다.)",
+        "en": "(Saying goodbye to {fated} at the airport before their flight back to {fatedCity}. Boarding is being called.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "좋아해. 사귀자",
+        "en": "I like you. Be with me"
+       },
+       "roll": {
+        "START": 0.75,
+        "WAIT": 0.2,
+        "MISS": 0.05
+       },
+       "compat": {
+        "START": 1,
+        "MISS": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "{fated}이(가) 먼저 말하길 기다린다",
+        "en": "Wait for {fated} to say it first"
+       },
+       "roll": {
+        "START": 0.45,
+        "WAIT": 0.4,
+        "MISS": 0.15
+       },
+       "compat": {
+        "START": 1,
+        "MISS": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "(오늘은 아닌 것 같다)",
+        "en": "(Not today)"
+       },
+       "roll": {
+        "START": 0.1,
+        "WAIT": 0.6,
+        "MISS": 0.3
+       },
+       "compat": {
+        "START": 1,
+        "MISS": -1
+       }
+      }
+     ],
+     "outcomes": {
+      "START": {
+       "r": {
+        "ko": "'…나도.' 그날부터 우리는 썸이 아니라 연인이 됐다.",
+        "en": "\"…Me too.\" From that day on, it wasn't 썸 anymore. You were together."
+       },
+       "effects": [
+        {
+         "kind": "startDatingFated"
+        }
+       ],
+       "card": "START_DATING"
+      },
+      "WAIT": {
+       "r": {
+        "ko": "둘 다 끝내 말하지 못했다. 그래도 헤어지면서 한참을 손을 흔들었다.",
+        "en": "Neither of you said it. But you both kept waving for a long time."
+       },
+       "effects": [
+        {
+         "kind": "arcRepeat",
+         "after": [
+          2,
+          5
+         ]
+        }
+       ]
+      },
+      "MISS": {
+       "r": {
+        "ko": "…{fated}에게서 연락이 뜸해졌다. 타이밍을 놓친 걸까.",
+        "en": "…{fated} started texting less. Did you miss your moment?"
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "The one I never told.",
+         "tags": [
+          "fate"
+         ]
+        },
+        {
+         "kind": "fatedSecondChance"
+        }
        ]
       }
      }

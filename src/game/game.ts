@@ -40,6 +40,9 @@ import { yearSignalMap } from "../story/destinyScript";
 import { type AstrologyChart, calculateAstrologyChart } from "../astrology/chart";
 import { compatibility } from "../destiny/compatibility";
 import { type BirthplaceInput, resolveBirth } from "../destiny/birthplace";
+import { pickMood } from "../story/mood";
+import { readingOf } from "../story/reading";
+import { type FatedFrom, type FatedLife, fatedVars, resolveFatedLife } from "../story/fatedProfile";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
 import type { RelationshipOriginType } from "../world/types";
 import { resolveWorldEvent } from "../world/decisions";
@@ -50,12 +53,12 @@ import { focusOf, toPrototypeScene, withPositions, type PrototypeScene } from ".
 import { WorldEngine } from "../world/worldEngine";
 import type { NPCSchedule } from "../world/types";
 import { type LifeFacts, computeFacts, meets } from "./facts";
-import { STORY_ONLY_TEMPLATES, eventDayWanted, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
+import { STORY_ONLY_TEMPLATES, startArc, eventDayWanted, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
 import { buildCards, type MemoryCard } from "../story/cards";
 import memorialData from "../../data/story/memorial.json";
 import { AutoWorldPolicy } from "../world/decisions";
 import { DIRECTOR_CONFIG as CFG, Director, type DirectorMemory, newDirectorMemory, SPEAKER_FALLBACK, SPEAKER_REQUIRES } from "./director";
-import { type Bi, type Lang, CITY_KO, COUNTRY_KO, DEST_KO, EDU_KO, SPEAKER_NAME, bi, fillNames, fixJosa, krw, langVars } from "./text";
+import { type Bi, type Lang, CITY_KO, cityKo, COUNTRY_KO, DEST_KO, EDU_KO, SPEAKER_NAME, bi, fillNames, fixJosa, krw, langVars } from "./text";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -94,8 +97,17 @@ export interface GameSetup {
     birth?: { year: number; month: number; day: number; hour?: number; minute?: number };
     /** Where they were born (city name or coordinates). Default: the player's birthplace. */
     birthplace?: BirthplaceInput;
-    from?: "same" | "city" | "abroad";
-    status?: "crush" | "dating" | "stranger";
+    /** Where they live: the same neighborhood, another city, another country (see fatedOptions()). */
+    from?: FatedFrom;
+    /** Their city when they live elsewhere ("부산", "Tokyo"). Default: their birthplace abroad, or a pick. */
+    city?: string;
+    /**
+     * Are you two dating? "dating": yes — start as a couple. "talking": 썸 — you know each other and it's
+     * in the air; the game plays the texts, the not-a-date, the jealousy, up to the confession
+     * ("crush" means the same). "stranger": you don't know each other yet — start from the first meeting.
+     */
+    status?: "dating" | "talking" | "crush" | "stranger";
+    /** Their job: an id from fatedOptions().jobs, or free text ("대학병원 의사"). */
     job?: string;
     profile?: Record<string, unknown>;
   };
@@ -141,13 +153,24 @@ export interface Popup {
    */
   big?: boolean;
   scene?: PrototypeScene;
+  /**
+   * A destined turning point: the chart signals behind it, in words ("사주: 도화 · 천간합  /  점성술: 목성
+   * 5하우스  /  상대: 역마"). Show it small under the title — the hand of fate, made visible.
+   */
+  reading?: string;
 }
 
 export type Beat =
   | { kind: "enter"; locationId: string; room?: string; name: string; log?: string }
   | { kind: "popup"; popup: Popup }
   | { kind: "toast"; from: string; text: string; role?: string; gender?: "M" | "F"; seed?: number; fated?: boolean }
+  /** @deprecated never emitted any more — the top line is the day's mood (below). */
   | { kind: "log"; text: string }
+  /**
+   * The mood line at the top of the play screen, once at the start of each played day: a feeling that
+   * foreshadows (from your chart and what's coming) — "(요즘 자꾸 해외로 나가고 싶다.)". No time.
+   */
+  | { kind: "mood"; text: string }
   | { kind: "dayEnd" };
 
 export interface ChoiceResult {
@@ -205,6 +228,8 @@ export interface GameSave {
     /** Scene changes caused by a choice (e.g. business trip: airport → hotel → branch office). */
     sequence?: Array<{ locationId: string; from: number; until: number; activityId?: string; keep?: boolean }>;
     fatedPresent?: boolean;
+    /** The partner is part of today's story moment (a date, the proposal). */
+    partnerPresent?: boolean;
   };
   /** Why today is played: calm / fated / foreshadow / arc (story engine). */
   dayKind?: "calm" | "fated" | "foreshadow" | "arc";
@@ -216,6 +241,10 @@ export interface GameSave {
   eventUid?: string;
   /** Fated event foreshadowed today. */
   hintRef?: string;
+  /** Today's mood line (shown at the top) and whether the beat went out; the last few, to avoid repeats. */
+  mood?: string;
+  moodShown?: boolean;
+  recentMoods?: string[];
   pending?: Pending;
   life: LifeState;
   director: DirectorMemory;
@@ -321,9 +350,24 @@ export class Game {
   }
   private fill(text: string): string {
     const f = this.facts();
-    const t = fillNames(text, { partner: f.partnerName, friend: f.friendName, fated: f.fatedName, sibling: this.siblingSender(), me: this.s.setup.name });
+    const t = fillNames(text, { ...langVars(fatedVars(this.state), this.s.lang ?? "ko"), partner: f.partnerName, friend: f.friendName, crush: f.crushName, fated: f.fatedName, sibling: this.siblingSender(), me: this.s.setup.name, spouse: this.spouseWord() });
     return this.s.lang === "ko" ? fixJosa(t) : t;
   }
+  /** 남편 / 아내 when married, else 애인 (mood lines: "(남편이 요즘 휴대폰을 엎어 둔다.)"). */
+  private spouseWord(): string {
+    const st = this.state;
+    const pid = st.relationship.partnerId;
+    const sex = pid ? st.npcs.find((n) => n.id === pid)?.birth.sex ?? st.world?.npcs[pid]?.sex : undefined;
+    const married = st.relationship.status === "MARRIED";
+    if (this.s.lang === "en") return married ? (sex === "MALE" ? "your husband" : sex === "FEMALE" ? "your wife" : "your spouse") : "your partner";
+    return married ? (sex === "MALE" ? "남편" : sex === "FEMALE" ? "아내" : "배우자") : "애인";
+  }
+
+  /** Today's mood line (also sent once as a {kind:"mood"} beat at the start of the day). */
+  mood(): string | undefined {
+    return this.s.mood;
+  }
+
   /** Stable portrait identity for a popup speaker. */
   private portrait(role: string, npcId?: string): { gender?: "M" | "F"; seed?: number; fated?: boolean; npcId?: string } {
     const st = this.state;
@@ -338,6 +382,7 @@ export class Game {
     if (npcId) return fromNpc(npcId) ?? {};
     if (role === "me" || role === "mom" || role === "dad") return {};
     if (role === "partner") return fromNpc(st.relationship.partnerId) ?? {};
+    if (role === "crush") return fromNpc(this.facts().crushId) ?? {};
     if (role === "sibling") {
       const sib = aliveSiblings(st)[0];
       if (sib) return { gender: sib.sex === "MALE" ? "M" : "F", seed: sib.spriteSeed };
@@ -369,6 +414,7 @@ export class Game {
     const f = this.facts();
     if (role === "partner") return f.partnerName ?? this.L(bi("연인", "Partner"));
     if (role === "friend") return f.friendName ?? this.L(bi("친구", "Friend"));
+    if (role === "crush") return f.crushName ?? this.L(bi("친구", "Friend"));
     if (role === "sibling") return this.siblingSender() ?? this.L(bi("형제", "Sibling"));
     if (role === "kid") return f.kidName ?? this.L(bi("아이", "My kid"));
     if (role === "ex") return f.exName ?? this.L(bi("전 애인", "My ex"));
@@ -425,6 +471,7 @@ export class Game {
     if (storyDef) {
       s.dayPlan.override = { locationId: storyDef.location, activityId: storyDef.activity, from: 600, until: 1080 };
       s.dayPlan.fatedPresent = !!storyDef.needsFated;
+      s.dayPlan.partnerPresent = !!storyDef.needsPartner;
       agenda.push({ t: 660, k: "story" });
       b.major = 0; // no random big offers competing with a destined moment
       b.small = Math.min(b.small, 1);
@@ -442,6 +489,7 @@ export class Game {
           { locationId: def2.location, activityId: def2.activity, from: 840, until: 1080, keep: true },
         ];
         s.dayPlan.fatedPresent = !!storyDef.needsFated || !!def2.needsFated;
+        s.dayPlan.partnerPresent = !!storyDef.needsPartner || !!def2.needsPartner;
         agenda.push({ t: 900, k: "story2" });
         b.small = 0;
         b.messages = Math.min(b.messages, 1);
@@ -470,11 +518,15 @@ export class Game {
         } else s.dayPlan.sequence = [seg];
       }
     }
-    const soon = upcomingHint(st);
-    if (soon && soon.id !== s.dayRef && soon.id !== s.dayRef2) {
-      s.hintRef = soon.id;
-      agenda.push({ t: 450, k: "hint" });
+    // The day's mood: a feeling that foreshadows (the chart, what's coming) — not a log of what happened.
+    const mood = pickMood(st, this.facts(), this.yearSignals(), this.rng("mood"), s.recentMoods ?? []);
+    s.recentMoods = [...(s.recentMoods ?? []), mood.ko].slice(-5);
+    if (mood.source.startsWith("fated:")) {
+      const soon = upcomingHint(st);
+      if (soon) soon.hinted = true;
     }
+    s.mood = this.fill(fillStory(this.L(mood), st, this.facts()));
+    s.moodShown = false;
     storyDef = undefined;
     for (let i = 0; i < b.small; i++) agenda.push({ t: rng.int(480, 1320), k: "small" });
     for (let i = 0; i < b.messages; i++) agenda.push({ t: rng.int(450, 1350), k: "message" });
@@ -571,6 +623,10 @@ export class Game {
     const s = this.s;
     const beats: Beat[] = [];
     if (s.over || s.pending || !s.day) return beats;
+    if (!s.moodShown && s.mood) {
+      s.moodShown = true;
+      beats.push({ kind: "mood", text: s.mood });
+    }
     const target = Math.min(toMinute, CFG.dayEndMinute);
     for (let guard = 0; guard < 400; guard++) {
       const loc = this.locationAt(s.minute);
@@ -615,7 +671,7 @@ export class Game {
     if (fated && !r.present.includes(fated.id)) r.present.push(fated.id);
     // Online places are home too (you're on your phone), so the household is around.
     const atHome = locationId === "home" || !!getLocation(locationId).online;
-    const partnerHere = withPartner || (atHome && (st.relationship.status === "MARRIED" || !!st.flags.longterm) && (s.minute >= 1140 || !!s.day?.weekend));
+    const partnerHere = withPartner || (!!s.dayPlan.partnerPresent && this.storyMoment()) || (atHome && (st.relationship.status === "MARRIED" || !!st.flags.longterm) && (s.minute >= 1140 || !!s.day?.weekend));
     s.lastScene = toPrototypeScene(composeScene(r, st.world, st, { withPartner: partnerHere, household: atHome }));
     const beats: Beat[] = [];
     for (const e of r.events) {
@@ -630,15 +686,8 @@ export class Game {
         }
         continue;
       }
-      // Only moments that matter reach the log (people & important things), not everyday filler.
-      const notable = e.scale === "MAJOR" || ["NEW_ACQUAINTANCE", "FRIENDSHIP", "REUNION", "MEMORY_CALLBACK"].includes(e.kind);
-      if (notable && e.kind !== "CLOSED") {
-        const key = `t:log:${e.text.en}`;
-        const last = this.director.mem.lastShown[key];
-        if (last !== undefined && s.dayIndex - last < 2) continue; // no same log line twice in a row
-        this.director.mem.lastShown[key] = s.dayIndex;
-        beats.push({ kind: "log", text: this.L(e.text) });
-      }
+      // Everyday world moments ("하윤과 처음으로 제대로 대화했다") stay in the world's memory — the top
+      // line belongs to the day's mood, not to a log.
     }
     return beats;
   }
@@ -655,10 +704,7 @@ export class Game {
     if (item.k === "story") return this.fireStory();
     if (item.k === "story2") return this.fireStory(2);
     if (item.k === "event") return this.fireEvent();
-    if (item.k === "hint") {
-      const h = this.s.hintRef ? hintFor(this.state, this.s.hintRef) : undefined;
-      return h ? { kind: "log", text: this.L(h) } : undefined;
-    }
+    if (item.k === "hint") return; // old saves: hints now live in the mood line
     if (item.k === "major") return this.fireMajor();
     if (item.k === "small") return this.fireSmall();
     if (item.k === "message") return this.fireMessage();
@@ -714,6 +760,10 @@ export class Game {
       name: def.who === "fated" ? (fatedNpc ? this.npcLabel(fatedNpc.id) : this.L(bi("낯선 사람", "Stranger"))) : this.speaker(def.who),
       ...portrait,
       title: def.title ? this.L(def.title) : undefined,
+      reading: ev ? (() => {
+        const r = readingOf(ev.signals);
+        return r ? this.L(r) : undefined;
+      })() : undefined,
       line: this.fill(fillStory(this.L(def.line), st, f, vars)),
       ch: def.choices.map((c) => ({ t: this.fill(fillStory(this.L(c), st, f, vars)) })),
       // Life-changing moments get the big popup with the scene as its picture.
@@ -957,7 +1007,9 @@ export class Game {
       if (!res) return;
       if (res.scene?.length) this.setSequence(res.scene);
       if (!st.alive) s.minute = CFG.dayEndMinute;
-      return { who: "me", line: this.fill(fillStory(this.L(res.r), st, this.facts(), { patient: p.patient ?? "", ...p.vars })), log: label };
+      // A reply (your partner answering "not yet") is theirs, not yours.
+      const who = res.who && meets(SPEAKER_REQUIRES[res.who] ?? [], this.facts()) ? res.who : "me";
+      return { who, line: this.fill(fillStory(this.L(res.r), st, this.facts(), { patient: p.patient ?? "", ...p.vars })), log: label };
     }
     if (p.storyId) {
       const story = STORIES.find((x) => x.id === p.storyId)!;
@@ -1206,7 +1258,7 @@ export class Game {
       job: this.L(job),
       relationship: this.L(rel),
       location: this.L(getLocation(this.s.loc ?? this.locationAt(this.s.minute)).name),
-      city: this.s.lang === "ko" ? `${COUNTRY_KO[st.location.country] ?? st.location.country} · ${CITY_KO[st.location.city] ?? st.location.city}` : `${st.location.country} · ${st.location.city}`,
+      city: this.s.lang === "ko" ? `${COUNTRY_KO[st.location.country] ?? st.location.country} · ${cityKo(st.location.city)}` : `${st.location.country} · ${st.location.city}`,
       minute: this.s.minute,
     };
   }
@@ -1293,8 +1345,21 @@ export function createGame(input: GameSetup): Game {
   // Most Korean men have served by 25; the rest may get the letter.
   if (setup.gender === "M") st.flags.militaryDone = new SeededRandom(hash(seed, "military")).chance(0.85);
   applyFamilySetup(st, setup, new SeededRandom(hash(seed, "family")));
-  addFatedPerson(st, setup, new SeededRandom(hash(seed, "fated")));
-  initStory(st, birthOf(setup), placeOf(setup), seed);
+  const fatedLife = resolveFatedLife({ from: setup.fated?.from, job: setup.fated?.job, city: setup.fated?.city, birthplace: setup.fated?.birthplace }, { city: st.location.city }, new SeededRandom(hash(seed, "fatedLife")));
+  addFatedPerson(st, setup, fatedLife, new SeededRandom(hash(seed, "fated")));
+  // Their chart too: the year you meet is one that's good for *both* of you.
+  const fxb = setup.fated?.birth;
+  const fatedSex = setup.fated?.gender === "M" ? "MALE" : setup.fated?.gender === "F" ? "FEMALE" : (Object.values(st.world?.npcs ?? {}).find((n) => n.fated)?.sex ?? "MALE");
+  const theirBirth = fxb ? resolveBirth({ ...fxb, sex: fatedSex }, setup.fated?.birthplace, placeOf(setup)) : undefined;
+  initStory(st, birthOf(setup), placeOf(setup), seed, theirBirth ? { birth: theirBirth.birth, place: theirBirth.place } : undefined);
+  st.story!.fatedLife = fatedLife;
+  // Already dating, or already in 썸: the story starts there — no "first meeting" to wait for.
+  const status = setup.fated?.status === "crush" ? "talking" : setup.fated?.status ?? (setup.fated?.name ? "talking" : "stranger");
+  if (status !== "stranger") {
+    const first = st.story!.script.findIndex((e) => e.theme === "LOVE_MEETING");
+    if (first >= 0) st.story!.script.splice(first, 1);
+  }
+  if (status === "talking") startArc(st, "TALKING", new SeededRandom(hash(seed, "talking")));
   // Hidden 궁합 with the destined person (never shown; it bends love outcomes as part of the chart's 70%).
   const fx = setup.fated;
   if (fx && (fx.birth || fx.mbti)) {
@@ -1344,21 +1409,24 @@ function placeOf(setup: GameSetup): BirthPlace {
 }
 
 /** Place the destined person in the world according to setup ("same" neighborhood, another city, abroad). */
-function addFatedPerson(st: LifeState, setup: GameSetup, rng: SeededRandom): void {
+function addFatedPerson(st: LifeState, setup: GameSetup, life: FatedLife, rng: SeededRandom): void {
   const w = st.world;
   if (!w) return;
   const fx = setup.fated ?? {};
   const gender = fx.gender ?? (setup.likes === "M" ? "M" : setup.likes === "F" ? "F" : rng.chance(0.5) ? "M" : "F");
-  const from = fx.from ?? (rng.chance(0.7) ? "same" : rng.chance(0.67) ? "city" : "abroad");
-  const where = from === "same" ? ["cafe", "park"] : from === "city" ? ["cooking_class", "gym", "library"] : ["language_exchange_app", "paris_cafe"];
-  const home = findLocation(where[0])!;
+  const from = life.from;
+  // In the same neighborhood you may keep running into them where they work (a familiar face long
+  // before you know their name). From another city or country, only fate brings you together.
+  const work = findLocation(life.job.place);
+  const home = work && !work.online ? work : findLocation(from === "abroad" ? "language_exchange_app" : "cafe")!;
   const block = (locationId: string, start: number, days: number[]) => ({ locationId, startHour: start, endHour: start + 2, days, attendance: 0.8 });
+  const workHour = life.job.shift === "night" ? 20 : life.job.shift === "day" ? 12 : 15;
   const schedule: NPCSchedule =
     from === "same"
-      ? { weekday: [block("cafe", 19, [2, 4])], weekend: [block("cafe", 14, [6]), block("park", 11, [0])] }
-      : from === "city"
-        ? { weekday: [block(where[rng.int(0, 2)], 19, [1, 3, 5])], weekend: [block("library", 13, [6])] }
-        : { weekday: [block("language_exchange_app", 21, [1, 2, 3, 4, 5])], weekend: [block("language_exchange_app", 20, [0, 6])] };
+      ? { weekday: [block(home.id, workHour, [1, 2, 3, 4, 5])], weekend: [block("park", 11, [0]), block("cafe", 14, [6])] }
+      : from === "abroad" && life.job.place === "language_exchange_app"
+        ? { weekday: [block("language_exchange_app", 21, [1, 3, 5])], weekend: [] }
+        : { weekday: [], weekend: [] };
   const npc = generateNpc(w, rng, { type: from === "abroad" ? "language_partner" : "regular_customer", region: from === "abroad" ? "online" : home.region, date: st.date, aroundAge: st.age, persistence: "PERSISTENT", schedule });
   npc.sex = gender === "M" ? "MALE" : "FEMALE";
   if (fx.name) {
@@ -1372,9 +1440,9 @@ function addFatedPerson(st: LifeState, setup: GameSetup, rng: SeededRandom): voi
   npc.single = true;
   npc.fated = true;
   npc.foreign = from === "abroad";
-  npc.profile = { mbti: fx.mbti, job: fx.job, from, ...fx.profile };
+  npc.profile = { mbti: fx.mbti, job: life.job.id, jobName: life.job.ko, from, city: life.city.ko, ...fx.profile };
   // Someone you already know and like (a crush) — or already your partner. Never automatically a couple.
-  const status = fx.status ?? (fx.name ? "crush" : "stranger");
+  const status = fx.status === "crush" ? "talking" : fx.status ?? (fx.name ? "talking" : "stranger");
   if (status === "stranger") return;
   const origin = { type: (from === "abroad" ? "LANGUAGE_EXCHANGE_APP" : "FRIEND_OF_FRIEND") as RelationshipOriginType, locationId: home.id, firstEncounterDate: { ...st.date } };
   w.relationships[npc.id] = { npcId: npc.id, stage: status === "dating" ? "PARTNER" : "ACQUAINTANCE", closeness: status === "dating" ? 0.6 : 0.4, spark: status === "dating" ? 0.7 : 0.35, conversations: 8, origin, lastContact: { ...st.date }, channel: from === "abroad" ? "ONLINE" : "IN_PERSON", metOffline: from !== "abroad" };
@@ -1505,7 +1573,7 @@ function summarize(a: Snap, b: Snap, _lang: Lang): { bi: Bi[] } {
   if (a.status === "MARRIED" && b.status === "DIVORCED") add(8, "이혼했다.", "Got divorced.");
   else if ((a.status === "DATING" || a.status === "MARRIED") && b.status === "SINGLE") add(7, fixJosa(`${a.partner ?? ""}와(과) 헤어졌다.`), `Broke up with ${a.partner ?? ""}.`);
   if (a.country !== b.country) add(7, b.country === "Korea" ? "한국으로 돌아왔다." : fixJosa(`${COUNTRY_KO[b.country] ?? b.country}(으)로 떠났다.`), b.country === "Korea" ? "Moved back to Korea." : `Moved to ${b.country}.`);
-  else if (a.city !== b.city) add(5, fixJosa(`${CITY_KO[b.city] ?? b.city}(으)로 이사했다.`), `Moved to ${b.city}.`);
+  else if (a.city !== b.city) add(5, fixJosa(`${cityKo(b.city)}(으)로 이사했다.`), `Moved to ${b.city}.`);
   if (!a.retired && b.retired) add(6, "은퇴했다.", "Retired.");
   else if (a.employed && !b.employed) add(6, "회사를 떠났다.", "Left the job.");
   else if (!a.employed && b.employed) add(6, "새 일을 시작했다.", "Started a new job.");

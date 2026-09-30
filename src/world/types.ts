@@ -257,7 +257,8 @@ export interface LocationMemory {
   visitCount: number;
   firstVisit?: GameDate;
   lastVisit?: GameDate;
-  importantEvents: string[];
+  /** Both languages (older saves hold English-only strings). */
+  importantEvents: Array<string | { ko: string; en: string }>;
   recurringNPCs: string[];
   memories: string[];
 }

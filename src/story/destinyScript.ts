@@ -301,7 +301,31 @@ function normalize(w: Record<string, number>): Record<string, number> {
   return Object.fromEntries(Object.entries(w).map(([k, v]) => [k, Math.max(0.05, v) / t]));
 }
 
-export function buildDestinyScript(saju: SajuChart, astro: AstrologyChart, opts: { birthYear: number; seed: number; startAge?: number; min?: number; max?: number }): FatedEvent[] {
+/** The destined person's chart: love years count for both of you. */
+export interface PartnerChart {
+  saju: SajuChart;
+  astro: AstrologyChart;
+  birthYear: number;
+}
+
+/**
+ * The years good for the two of you to meet, best first: your LOVE_MEETING score plus theirs in the
+ * same calendar year (their 도화, their Jupiter over Venus…). Tags carry both charts ("상대:" = theirs).
+ */
+export function loveYears(saju: SajuChart, astro: AstrologyChart, birthYear: number, partner: PartnerChart, from: number, to: number): Array<{ age: number; score: number; tags: string[] }> {
+  const d = THEMES.LOVE_MEETING;
+  const out: Array<{ age: number; score: number; tags: string[] }> = [];
+  for (let age = from; age <= to; age++) {
+    const mine = yearSignals(saju, astro, birthYear, age);
+    const theirAge = age + birthYear - partner.birthYear;
+    if (theirAge < 16) continue;
+    const theirs = yearSignals(partner.saju, partner.astro, partner.birthYear, theirAge);
+    out.push({ age, score: d.score(mine) + techniqueBonus("LOVE_MEETING", mine) + d.score(theirs) + techniqueBonus("LOVE_MEETING", theirs), tags: [...mine.tags.slice(0, 6), ...theirs.tags.slice(0, 4).map((t) => `상대:${t}`)] });
+  }
+  return out.sort((a, b) => b.score - a.score);
+}
+
+export function buildDestinyScript(saju: SajuChart, astro: AstrologyChart, opts: { birthYear: number; seed: number; startAge?: number; min?: number; max?: number; partner?: PartnerChart }): FatedEvent[] {
   const rng = new SeededRandom(opts.seed);
   const start = opts.startAge ?? 25;
   const years = new Map<number, YearSignals>();
@@ -338,6 +362,15 @@ export function buildDestinyScript(saju: SajuChart, astro: AstrologyChart, opts:
     return -1;
   };
   const love = (() => {
+    // With a destined person from setup, the story is theirs: you meet in the best year for both
+    // charts within the first years of the game (not a decade in).
+    const both = opts.partner ? loveYears(saju, astro, opts.birthYear, opts.partner, start + 1, start + 7) : [];
+    if (both.length) {
+      const best = both[0];
+      const y = years.get(best.age)!;
+      chosen.push({ id: `LOVE_MEETING@${best.age}`, theme: "LOVE_MEETING", age: best.age, monthIndex: best.age * 12 + rng.int(1, 10), chartWeights: normalize(techniqueWeights("LOVE_MEETING", y, THEMES.LOVE_MEETING.weights(y))), signals: best.tags });
+      return best.age;
+    }
     place("LOVE_MEETING");
     return chosen.find((e) => e.theme === "LOVE_MEETING")?.age ?? 28;
   })();

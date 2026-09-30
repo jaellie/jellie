@@ -1,10 +1,16 @@
 /** Small bilingual helpers for the game runtime. */
+import { findPlace } from "../destiny/birthplace";
 export type Lang = "ko" | "en";
 export type Bi = { ko: string; en: string };
 export const bi = (ko: string, en: string): Bi => ({ ko, en });
 
 export const COUNTRY_KO: Record<string, string> = {
   Korea: "한국", Canada: "캐나다", Japan: "일본", Germany: "독일", Australia: "호주", USA: "미국", UK: "영국", Singapore: "싱가포르", France: "프랑스",
+  // ISO codes (a move to where the destined person lives, from the birthplace gazetteer).
+  CN: "중국", TW: "대만", HK: "홍콩", MO: "마카오", MN: "몽골", VN: "베트남", TH: "태국", PH: "필리핀", ID: "인도네시아", MY: "말레이시아", IN: "인도",
+  AE: "아랍에미리트", TR: "튀르키예", UZ: "우즈베키스탄", KZ: "카자흐스탄", RU: "러시아", NZ: "뉴질랜드", MX: "멕시코", BR: "브라질", AR: "아르헨티나", PE: "페루",
+  CL: "칠레", CO: "콜롬비아", IE: "아일랜드", NL: "네덜란드", BE: "벨기에", PT: "포르투갈", AT: "오스트리아", ES: "스페인", IT: "이탈리아", CH: "스위스",
+  SE: "스웨덴", NO: "노르웨이", DK: "덴마크", FI: "핀란드", PL: "폴란드", CZ: "체코", HU: "헝가리", GR: "그리스", EG: "이집트", ZA: "남아프리카공화국", KE: "케냐", NG: "나이지리아", KP: "북한",
 };
 export const DEST_KO: Record<string, string> = { paris: "파리", tokyo: "도쿄", coast: "바닷가 마을" };
 export const EDU_KO: Record<string, Bi> = {
@@ -110,6 +116,11 @@ export function langVars(vars: Record<string, string>, lang: "ko" | "en"): Recor
     if (m && m[2] === lang) out[m[1]] = v;
   }
   return out;
+}
+
+/** A city's Korean name: the table below, else the birthplace gazetteer (Los Angeles → 로스앤젤레스). */
+export function cityKo(city: string): string {
+  return CITY_KO[city] ?? findPlace(city)?.ko ?? city;
 }
 
 export const CITY_KO: Record<string, string> = {

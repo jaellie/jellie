@@ -50,7 +50,11 @@ export type ArcType =
   /** Finding out the partner is cheating. */
   | "AFFAIR"
   /** A grandparent, aunt/uncle or sibling passes away. */
-  | "FAMILY_PASSING";
+  | "FAMILY_PASSING"
+  /** Dating the destined person who lives in another city or country: calls, a visit, who moves. */
+  | "LONG_DISTANCE"
+  /** 썸: already talking with the destined person — the texts, the not-a-date, the confession. */
+  | "TALKING";
 
 export interface ArcStep {
   key: string;
@@ -75,6 +79,10 @@ export interface StoryState {
   nextArcId: number;
   /** Memory cards waiting for the next 시간이 흐른다 screen. */
   cards: Array<{ kind: string; age: number; vars: Record<string, string> }>;
+  /** The destined person's life from setup: where they live, their job (see fatedProfile.ts). */
+  fatedLife?: import("./fatedProfile").FatedLife;
+  /** The best years for the two of you to meet (both charts), best first — for second chances. */
+  loveYears?: Array<{ age: number; score: number; tags: string[] }>;
   /** Hidden 궁합 with the destined person from setup (0..1 score + flavour). */
   compat?: { score: number; chemistry: number; stability: number; friction: number };
   /** The player's birthplace (for 궁합 synastry with partners met along the way). */

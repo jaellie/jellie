@@ -96,7 +96,10 @@ export class WorldEngine {
     const mem = (world.locationMemory[loc.id] ??= EMPTY_MEMORY(loc.id));
     const events: WorldEvent[] = [];
     if (!ctx.quiet && mem.lastVisit && monthsBetween(mem.lastVisit, req.date) >= R.reunion.minMonthsAway && mem.importantEvents.length) {
-      events.push({ kind: "MEMORY_CALLBACK", scale: "SMALL", date: time.date, locationId: loc.id, text: t(`여기… ${mem.importantEvents.at(-1)}`, `This place… ${mem.importantEvents.at(-1)}`) });
+      const last = mem.importantEvents.at(-1)!;
+      const m = typeof last === "string" ? { ko: last, en: last } : last;
+      // An English-only memory from an old save can't be quoted in Korean.
+      if (typeof last !== "string") events.push({ kind: "MEMORY_CALLBACK", scale: "SMALL", date: time.date, locationId: loc.id, text: t(`여기… ${m.ko}`, `This place… ${m.en}`) });
     }
     mem.visitCount += 1;
     mem.firstVisit ??= { ...req.date };
@@ -171,10 +174,10 @@ export class WorldEngine {
 
     // ---- Remember ----
     for (const e of events) {
-      if (e.kind === "LOCATION_EVENT" && e.payload?.important) mem.importantEvents.push(e.text.en);
+      if (e.kind === "LOCATION_EVENT" && e.payload?.important) mem.importantEvents.push({ ko: e.text.ko, en: e.text.en });
       if (["FRIENDSHIP", "ROMANCE_OPPORTUNITY", "REUNION", "NEW_ACQUAINTANCE"].includes(e.kind) && e.npcId) {
         if (!mem.recurringNPCs.includes(e.npcId)) mem.recurringNPCs.push(e.npcId);
-        if (e.kind !== "NEW_ACQUAINTANCE") mem.importantEvents.push(e.text.en);
+        if (e.kind !== "NEW_ACQUAINTANCE") mem.importantEvents.push({ ko: e.text.ko, en: e.text.en });
       }
       if (e.scale !== "NONE") mem.memories.push(e.text.en);
       if (e.scale === "MAJOR" || e.kind === "NEW_ACQUAINTANCE") {
@@ -205,7 +208,7 @@ export class WorldEngine {
     const p = clamp(factors.reduce((a, f) => a * f.value, 1), 0, 0.8);
     if (!ctx.rng.chance(p)) return undefined;
     // Something important that already happened here feels smaller (and rarer) the second time.
-    const seen = ctx.world.locationMemory[locationId]?.importantEvents ?? [];
+    const seen = (ctx.world.locationMemory[locationId]?.importantEvents ?? []).map((x) => (typeof x === "string" ? x : x.en));
     const pick = ctx.rng.weighted(candidates.map((item, i) => ({ item, weight: weights[i] * (item.important && seen.includes(item.text.en) ? 0.2 : 1) })));
     const important = !!pick.important && !seen.includes(pick.text.en);
     return {

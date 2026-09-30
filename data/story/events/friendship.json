@@ -861,7 +861,7 @@
    "rarity": "uncommon",
    "tone": "romance",
    "requires": [
-    "hasFriend",
+    "hasCrushFriend",
     "single",
     "age>=24"
    ],
@@ -881,7 +881,7 @@
    },
    "location": "family_home",
    "activity": "eat",
-   "who": "friend",
+   "who": "crush",
    "line": {
     "ko": "부탁 하나만. 이번 명절에 우리 집에 연인인 척 좀 같이 가줘! 결혼 잔소리 때문에 죽겠어.",
     "en": "One favor. Come home with me for the holidays and pretend we're together! The marriage nagging is killing me."
@@ -910,14 +910,14 @@
    "outcomes": {
     "COMEDY": {
      "r": {
-      "ko": "{friend}의 할머니가 내 손을 잡고 '언제 국수 먹여줄 거냐'고 하셨다. 둘이 돌아오는 길 내내 웃었다.",
-      "en": "{friend}'s grandmother held your hand and asked when the wedding was. You both laughed the whole way home."
+      "ko": "{crush}의 할머니가 내 손을 잡고 '언제 국수 먹여줄 거냐'고 하셨다. 둘이 돌아오는 길 내내 웃었다.",
+      "en": "{crush}'s grandmother held your hand and asked when the wedding was. You both laughed the whole way home."
      }
     },
     "REAL": {
      "r": {
-      "ko": "연기하다가 진짜가 됐다. 돌아오는 기차에서 {friend}이(가) 먼저 손을 잡았다.",
-      "en": "The act turned real. On the train home, {friend} took your hand first."
+      "ko": "연기하다가 진짜가 됐다. 돌아오는 기차에서 {crush}이(가) 먼저 손을 잡았다.",
+      "en": "The act turned real. On the train home, {crush} took your hand first."
      },
      "effects": [
       {
@@ -939,8 +939,8 @@
     },
     "NO": {
      "r": {
-      "ko": "{friend}은(는) 결국 혼자 가서 잔소리를 들었다. 치킨으로 위로해줬다.",
-      "en": "{friend} went alone and got nagged. You consoled them with fried chicken."
+      "ko": "{crush}은(는) 결국 혼자 가서 잔소리를 들었다. 치킨으로 위로해줬다.",
+      "en": "{crush} went alone and got nagged. You consoled them with fried chicken."
      }
     }
    }

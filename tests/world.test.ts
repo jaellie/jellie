@@ -241,11 +241,16 @@ describe("Travel: temporary but persistent worlds", () => {
     const { state, world, rng, engine } = setup(3);
     const ctx = { state, world, modifiers: emptyModifiers(), rng, seed: 3 };
     engine.visit(ctx, { locationId: "paris_eiffel_tower", date: { year: 2026, month: 6, day: 5 }, hour: 12 });
-    world.locationMemory.paris_eiffel_tower.importantEvents.push("Met Alex during a solo trip.");
+    world.locationMemory.paris_eiffel_tower.importantEvents.push({ ko: "혼자 여행하다 Alex를 만났다.", en: "Met Alex during a solo trip." });
     const later = engine.visit(ctx, { locationId: "paris_eiffel_tower", date: { year: 2035, month: 6, day: 5 }, hour: 12 });
     const cb = later.events.find((e) => e.kind === "MEMORY_CALLBACK");
     expect(cb?.text.en).toContain("Met Alex during a solo trip.");
+    expect(cb?.text.ko).toContain("혼자 여행하다 Alex를 만났다.");
     expect(world.locationMemory.paris_eiffel_tower.visitCount).toBe(2);
+    // An English-only memory (old save) is never quoted — it would show English in the Korean game.
+    world.locationMemory.paris_eiffel_tower.importantEvents.push("Someone mentioned an overseas project.");
+    const again = engine.visit(ctx, { locationId: "paris_eiffel_tower", date: { year: 2045, month: 6, day: 5 }, hour: 12 });
+    expect(again.events.find((e) => e.kind === "MEMORY_CALLBACK")).toBeUndefined();
   });
 });
 

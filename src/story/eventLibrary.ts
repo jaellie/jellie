@@ -17,8 +17,9 @@ import health from "../../data/story/events/health.json";
 import fate from "../../data/story/events/fate.json";
 import chaos from "../../data/story/events/chaos.json";
 import life from "../../data/story/events/life.json";
+import partnerJob from "../../data/story/events/partner_job.json";
 import { type LifeEventDef, registerLifeEvents } from "./lifeEvents";
 
-export const EVENT_FILES = { romance, betrayal, marriage, secrets, family, money_up: moneyUp, money_down: moneyDown, dark, friendship, career, school, health, fate, chaos, life } as unknown as Record<string, { events: LifeEventDef[] }>;
+export const EVENT_FILES = { romance, betrayal, marriage, secrets, family, money_up: moneyUp, money_down: moneyDown, dark, friendship, career, school, health, fate, chaos, life, partner_job: partnerJob } as unknown as Record<string, { events: LifeEventDef[] }>;
 
 registerLifeEvents(Object.values(EVENT_FILES).flatMap((f) => f.events));

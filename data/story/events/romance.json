@@ -328,7 +328,7 @@
    },
    "requires": [
     "!partnered",
-    "hasFriend"
+    "hasCrushFriend"
    ],
    "trigger": {
     "signals": {
@@ -348,10 +348,10 @@
     }
    },
    "location": "street",
-   "who": "friend",
+   "who": "crush",
    "line": {
-    "ko": "(술자리가 끝나고, {friend}이(가) 조용히 말했다.) …사실 나 너 좋아해. 오래전부터.",
-    "en": "(After drinks, {friend} said quietly) …I like you. I have for a long time."
+    "ko": "(술자리가 끝나고, {crush}이(가) 조용히 말했다.) …사실 나 너 좋아해. 오래전부터.",
+    "en": "(After drinks, {crush} said quietly) …I like you. I have for a long time."
    },
    "choices": [
     {
@@ -418,8 +418,8 @@
     },
     "AWKWARD": {
      "r": {
-      "ko": "…그 뒤로 {friend}에게서 연락이 뜸해졌다.",
-      "en": "…After that, {friend} texted less and less."
+      "ko": "…그 뒤로 {crush}에게서 연락이 뜸해졌다.",
+      "en": "…After that, {crush} texted less and less."
      },
      "effects": [
       {
@@ -2077,7 +2077,7 @@
    },
    "requires": [
     "!partnered",
-    "hasFriend"
+    "hasCrushFriend"
    ],
    "trigger": {
     "signals": {
@@ -2106,8 +2106,8 @@
    "choices": [
     {
      "t": {
-      "ko": "{friend}을(를) 선택한다",
-      "en": "Choose {friend}"
+      "ko": "{crush}을(를) 선택한다",
+      "en": "Choose {crush}"
      },
      "w": {
       "PICK": 0.7,

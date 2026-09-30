@@ -29,8 +29,9 @@ import { fillNames } from "../game/text";
 import { compatFactor } from "../destiny/compatibility";
 import { AUNTS_UNCLES, GRANDPARENT_WORD, aliveSiblings, siblingLabel } from "./family";
 import { fireHooks, lifeEvent, pendingApplies, queueChain } from "./lifeEvents";
-import { buildDestinyScript, resolveOutcome } from "./destinyScript";
+import { buildDestinyScript, loveYears, resolveOutcome } from "./destinyScript";
 import type { ActiveArc, ArcType, FatedEvent, FatedTheme, StoryState } from "./types";
+import { meetPlan } from "./fatedProfile";
 
 type Bi = { ko: string; en: string };
 type StoryEffect = Consequence | { kind: string; [k: string]: unknown };
@@ -46,11 +47,13 @@ interface FatedVariant {
   withFated?: boolean;
   /** Overrides the theme's big-popup title. */
   title?: Bi;
+  /** The first meeting with the destined person: where and how comes from their life (fatedProfile.ts). */
+  meet?: boolean;
   line: Bi;
   choices: Array<{ t: Bi; weights: Record<string, number> }>;
   /** 궁합 bends these outcomes when the destined person is involved: +1 grows with good 궁합, −1 shrinks. */
   compat?: Record<string, number>;
-  outcomes: Record<string, { r: Bi; effects: StoryEffect[]; card?: string; scene?: string[] }>;
+  outcomes: Record<string, { r: Bi; effects: StoryEffect[]; card?: string; scene?: string[]; who?: string }>;
 }
 interface ArcStepDef {
   /** Big-popup title (결혼식, 상견례…). */
@@ -65,11 +68,14 @@ interface ArcStepDef {
    * altBy "speaker": the first entry whose speaker can still speak (mom → dad → me); arc.data.kind
    * ("sibling") selects its own entry first.
    */
-  alt?: Record<string, { who: string; line: Bi }>;
-  altBy?: "cause" | "speaker";
+  alt?: Record<string, { who: string; line: Bi; location?: string }>;
+  /** The destined person is in the scene though you speak (the confession). */
+  withFated?: boolean;
+  /** "distance": by where the destined partner lives (city / abroad). */
+  altBy?: "cause" | "speaker" | "distance";
   /** A fixed outcome, or a roll (bent by 궁합 when the partner is the destined person). */
   choices: Array<{ t: Bi; outcome?: string; roll?: Record<string, number>; compat?: Record<string, number> }>;
-  outcomes: Record<string, { r: Bi; effects: StoryEffect[]; card?: string; scene?: string[] }>;
+  outcomes: Record<string, { r: Bi; effects: StoryEffect[]; card?: string; scene?: string[]; who?: string }>;
 }
 
 const THEMES = fatedData.themes as unknown as Record<FatedTheme, { hint: Bi; title?: Bi; variants: FatedVariant[] }>;
@@ -86,7 +92,10 @@ const ARC_ORDER: Record<ArcType, string[]> = {
   PARTNER_PASSING: ["CALL", "FAREWELL"],
   AFFAIR: ["DISCOVER"],
   FAMILY_PASSING: ["GOODBYE"],
+  LONG_DISTANCE: ["CALL", "VISIT", "DECIDE"],
+  TALKING: ["TEXTS", "NOT_A_DATE", "JEALOUS", "CONFESS"],
 };
+const COUNTRY_NAME: Record<string, string> = { JP: "Japan", US: "USA", CA: "Canada", DE: "Germany", AU: "Australia", GB: "UK", SG: "Singapore", FR: "France" };
 const PET_NAMES = { DOG: ["콩이", "보리", "몽이", "초코", "두부"], CAT: ["나비", "치즈", "모모", "레오", "까미"] };
 export const RETIRE_AGE = 60;
 const FRIEND_CARD_CAP = 2;
@@ -116,6 +125,8 @@ export interface StoryPopupDef {
   location: string;
   activity?: string;
   needsFated?: boolean;
+  /** The partner is in the scene (a date, the proposal). */
+  needsPartner?: boolean;
   /** Extra placeholders for the text ({relative}, {patient}…). */
   vars?: Record<string, string>;
   /** Short title for the big popup (결혼식, 장례식, 프러포즈…). */
@@ -126,17 +137,21 @@ export interface StoryPopupDef {
 // Setup & scheduling
 // ---------------------------------------------------------------------------
 
-export function initStory(state: LifeState, birth: BirthData, place: BirthPlace | undefined, seed: number): StoryState {
+export function initStory(state: LifeState, birth: BirthData, place: BirthPlace | undefined, seed: number, fated?: { birth: BirthData; place: BirthPlace }): StoryState {
   const saju = state.chart ?? calculateNatalChart(birth);
   const astro = calculateAstrologyChart(birth, place ?? DEFAULT_BIRTHPLACE);
-  const script = buildDestinyScript(saju, astro, { birthYear: birth.year, seed, startAge: Math.floor(state.age) });
+  const partner = fated ? { saju: calculateNatalChart(fated.birth), astro: calculateAstrologyChart(fated.birth, fated.place), birthYear: fated.birth.year } : undefined;
+  const start = Math.floor(state.age);
+  const script = buildDestinyScript(saju, astro, { birthYear: birth.year, seed, startAge: start, partner });
   state.story = { script, arcs: [], log: [], nextArcId: 1, cards: [], place: place ?? DEFAULT_BIRTHPLACE };
+  if (partner) state.story.loveYears = loveYears(saju, astro, birth.year, partner, start + 1, start + 25).slice(0, 12);
   return state.story;
 }
 
 /** Calm days only when nothing big happens for a long while (keeps a life ≈ 18–22 played days). */
 function maxGapMonths(age: number): number {
-  return age < 40 ? 66 : age < 60 ? 90 : 132;
+  // Young years are where the love story happens: never years without a played day.
+  return age < 32 ? 30 : age < 40 ? 44 : age < 60 ? 84 : 124;
 }
 
 /** Fated events coming soon that deserve a hint today (shown on whatever day comes before them). */
@@ -234,6 +249,15 @@ export function ensureArcs(state: LifeState, rng: SeededRandom): void {
   const rel = state.relationship.status;
   if (rel === "DATING" && !state.engaged && !state.flags.longterm && !st.arcs.some((a) => a.type === "DATING" || a.type === "ENGAGEMENT")) startArc(state, "DATING", rng);
   if (rel !== "DATING") endArc(state, "DATING");
+  if (rel === "DATING" || rel === "MARRIED") endArc(state, "TALKING");
+  // Dating the destined person who lives in another city or country: long distance until someone moves.
+  const life = st.fatedLife;
+  const fatedPartner = !!state.relationship.partnerId && !!state.world?.npcs[state.relationship.partnerId]?.fated;
+  if (rel === "DATING" && fatedPartner && life && life.from !== "same" && !state.flags.ldrDone && !st.arcs.some((a) => a.type === "LONG_DISTANCE")) {
+    state.relationship.longDistance = true;
+    startArc(state, "LONG_DISTANCE", rng);
+  }
+  if (!fatedPartner || (rel !== "DATING" && rel !== "MARRIED")) endArc(state, "LONG_DISTANCE");
   if (rel !== "DATING" || !state.engaged) endArc(state, "ENGAGEMENT");
   if (rel !== "MARRIED") endArc(state, "DIVORCE");
   if (rel === "SINGLE" || rel === "DIVORCED") endArc(state, "PREGNANCY");
@@ -255,6 +279,10 @@ export function monthlyStoryTick(state: LifeState, rng: SeededRandom): void {
   const w = state.world;
   const age = Math.floor(state.age);
   ensureArcs(state, rng);
+  // Living together with the destined person: their pay adds to the household (a doctor more than a barista).
+  const fatedPid = state.relationship.partnerId;
+  const job = st.fatedLife?.job;
+  if (job && fatedPid && w?.npcs[fatedPid]?.fated && (state.relationship.status === "MARRIED" || state.flags.longterm)) state.money += job.income * 0.4 * (job.unstable ? rng.range(0, 2) : 1);
   // Retirement at 60 — on screen, with a farewell.
   const selfEmployed = ["own-business", "second-career"].includes(state.career.field ?? ""); // same rule as facts.selfEmployed
   if (state.career.employed && !selfEmployed && state.age >= RETIRE_AGE && !st.arcs.some((a) => a.type === "RETIREMENT")) startArc(state, "RETIREMENT", rng);
@@ -422,20 +450,28 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
     const v = THEMES[e.theme].variants[vi];
     const vars: Record<string, string> = {};
     if (e.data?.relative) vars.relative = String(e.data.relative);
-    return { ref: `fated:${e.id}#${vi}`, who: v.who, line: v.line, choices: v.choices.map((c) => c.t), location: v.location, activity: v.activity, needsFated: v.who === "fated" || !!v.withFated, vars, title: v.title ?? THEMES[e.theme].title };
+    // Meeting the destined person: where depends on where they live and what they do.
+    const plan = v.meet ? meetPlan(state, !!e.data?.again) : undefined;
+    return { ref: `fated:${e.id}#${vi}`, who: v.who, line: plan?.line ?? v.line, choices: plan?.kind && plan.kind.choices.length === v.choices.length ? plan.kind.choices : v.choices.map((c) => c.t), location: plan?.location ?? v.location, activity: plan ? plan.activity : v.activity, needsFated: v.who === "fated" || !!v.withFated, vars, title: e.data?.again && v.meet ? { ko: "다시, 그 사람", en: "Them, again" } : v.title ?? THEMES[e.theme].title };
   }
   const arc = state.story!.arcs.find((a) => a.id === ref);
   if (!arc) return;
   const step = arc.steps[arc.step];
   const def = ARCS[arc.type].steps[step.key];
-  const { who, line } = arcSpeaker(def, arc, facts);
+  const { who, line, location } = arcSpeaker(def, arc, facts, state);
   const vars: Record<string, string> = {};
   if (arc.data?.relative) vars.relative = String(arc.data.relative);
-  return { ref: `arc:${arc.id}`, who, line, choices: def.choices.map((c) => c.t), location: def.location, activity: def.activity, vars, title: def.title };
+  const loc = location ?? def.location;
+  const online = loc === "instagram" || loc === "language_exchange_app" || loc === "dating_app" || loc === "online_community";
+  return { ref: `arc:${arc.id}`, who, line, choices: def.choices.map((c) => c.t), location: loc, activity: def.activity, vars, title: def.title, needsFated: !online && (who === "fated" || !!def.withFated), needsPartner: who === "partner" && loc !== "home" };
 }
 
 /** Pick the arc step's speaker/line: by cause, or the first speaker who can still speak. */
-function arcSpeaker(def: ArcStepDef, arc: ActiveArc, facts: LifeFacts): { who: string; line: Bi } {
+function arcSpeaker(def: ArcStepDef, arc: ActiveArc, facts: LifeFacts, state?: LifeState): { who: string; line: Bi; location?: string } {
+  if (def.alt && def.altBy === "distance") {
+    const a = def.alt[state?.story?.fatedLife?.from ?? ""];
+    if (a) return a;
+  }
   if (def.alt && def.altBy === "cause") {
     const a = def.alt[String(arc.data?.cause ?? "")];
     if (a) return a;
@@ -465,6 +501,8 @@ function pickRelative(state: LifeState, rng: SeededRandom): { relative: string; 
 
 export interface StoryResult {
   r: Bi;
+  /** Who says the result line when it's someone's reply (default: narration, you). */
+  who?: string;
   scene?: string[];
   outcome: string;
 }
@@ -505,8 +543,17 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
     if (o.card) queueCard(state, o.card, ctx, e.data);
     flushFollowUpCards(state, ctx);
     // The chart (70%) overrode what the player asked for → say so, so the result never reads as a non sequitur.
-    const r = (choice.weights[outcome] ?? 0) < 0.25 ? withBridge(o.r, rng) : o.r;
-    return { r, scene: o.scene, outcome };
+    let r = (choice.weights[outcome] ?? 0) < 0.25 ? withBridge(o.r, rng) : o.r;
+    if (e.theme === "LOVE_MEETING" && st.fatedLife) {
+      // You got their name (and their city, their job) — or fate will bring them back around.
+      const plan = v.meet ? meetPlan(state, !!e.data?.again) : undefined;
+      // Results fit how you met (an app match doesn't "vanish into the crowd").
+      const own = plan?.kind?.[outcome as "MISSED" | "SLOW_BURN"];
+      if (own) r = r === o.r ? own : withBridge(own, rng);
+      if (plan && outcome !== "MISSED") r = { ko: `${r.ko} ${plan.intro.ko}`, en: `${r.en} ${plan.intro.en}` };
+      if (outcome !== "START_DATING") secondChance(state, e, rng);
+    }
+    return { r, who: r === o.r ? o.who : undefined, scene: o.scene, outcome };
   }
   const arc = st.arcs.find((a) => a.id === ref.slice(4));
   if (!arc) return;
@@ -515,7 +562,11 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
   const ch = def.choices[Math.max(0, Math.min(def.choices.length - 1, choiceIndex))];
   let outcome = ch.outcome ?? Object.keys(def.outcomes)[0];
   if (ch.roll) {
-    const bend = (k: string) => (st.compat && ctx.facts.fatedPartner ? compatFactor(st.compat.score, ch.compat?.[k] ?? 0) : 1);
+    const fatedHere = ctx.facts.fatedPartner || arc.type === "TALKING";
+    // In 썸, how the texts / the not-a-date / the jealousy went (spark) matters as much as 궁합.
+    const fatedNpc = arc.type === "TALKING" ? Object.values(state.world?.npcs ?? {}).find((n) => n.fated) : undefined;
+    const spark = fatedNpc ? state.world?.relationships[fatedNpc.id]?.spark ?? 0.3 : 0;
+    const bend = (k: string) => (st.compat && fatedHere ? compatFactor(st.compat.score, ch.compat?.[k] ?? 0) : 1) * (fatedNpc && k === "START" ? 0.3 + 1.4 * spark : 1);
     outcome = rng.weighted(Object.entries(ch.roll).map(([k, w]) => ({ item: k, weight: w * bend(k) })));
   }
   const o = def.outcomes[outcome];
@@ -526,7 +577,28 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
   flushFollowUpCards(state, ctx);
   if (arc.step >= arc.steps.length) st.arcs = st.arcs.filter((a) => a !== arc);
   if (arc.type === "ILLNESS" && step.key === "RESULT") return { r: illnessResultText(arc), scene: arc.data?.passed ? ["funeral_hall"] : undefined, outcome };
-  return { r: o.r, scene: o.scene, outcome };
+  // An unlikely roll for what you chose ("not today" → you're together anyway): say that fate stepped in.
+  const unlikely = !!ch.roll && (ch.roll[outcome] ?? 0) < 0.25;
+  return { r: unlikely ? withBridge(o.r, rng) : o.r, who: unlikely ? undefined : o.who, scene: o.scene, outcome };
+}
+
+/**
+ * A missed meeting (or a slow burn) with the destined person isn't the end: fate brings them around
+ * again in the next year that's good for *both* charts (at most twice).
+ */
+function secondChance(state: LifeState, e: FatedEvent, rng: SeededRandom): void {
+  const st = state.story!;
+  const life = st.fatedLife;
+  const fated = Object.values(state.world?.npcs ?? {}).find((n) => n.fated);
+  if (!life || life.retries <= 0 || !fated || fated.deceased || !fated.single || state.relationship.partnerId === fated.id) return;
+  life.retries -= 1;
+  const now = Math.floor(state.age);
+  const years = (st.loveYears ?? []).filter((y) => y.age >= now + 2 && y.age <= now + 7);
+  const pick = years[0] ?? { age: now + rng.int(2, 5), score: 0, tags: [] };
+  const id = `LOVE_MEETING@${pick.age}r${life.retries}`;
+  if (st.script.some((x) => x.id === id)) return;
+  st.script.push({ id, theme: "LOVE_MEETING", age: pick.age, monthIndex: pick.age * 12 + rng.int(1, 10), chartWeights: e.chartWeights, signals: pick.tags.length ? pick.tags : e.signals, data: { again: true } });
+  st.script.sort((a, b) => a.monthIndex - b.monthIndex);
 }
 
 /** Partner/friend names as they are *after* an outcome (e.g. the person you just started dating). */
@@ -555,7 +627,11 @@ export function queueCard(state: LifeState, kind: string, ctx: StoryCtx, data?: 
   const f = ctx.facts;
   const lastPet = (state.pets ?? []).at(-1);
   const lastKid = (state.kids ?? []).at(-1);
-  const patient = data?.patient ? patientLabel(state, String(data.patient), f).ko : "";
+  const who = data?.patient ? String(data.patient) : "self";
+  const pl = patientLabel(state, who, f);
+  // You in the hospital yourself: a card of your own (never "'s illness" with a blank name).
+  if (kind === "HOSPITAL" && who === "self") kind = "HOSPITAL_SELF";
+  const patient = pl.ko;
   state.story!.cards.push({
     kind,
     age: Math.floor(state.age),
@@ -566,6 +642,8 @@ export function queueCard(state: LifeState, kind: string, ctx: StoryCtx, data?: 
       kid: lastKid?.name ?? "",
       pet: (data?.petName as string) ?? lastPet?.name ?? "",
       patient,
+      patient_ko: pl.ko,
+      patient_en: pl.en,
       city: state.location.city,
       sibling: f.siblingName ?? "",
       ex: f.exName ?? "",
@@ -716,9 +794,8 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
         state.enrollment = undefined;
         break;
       case "startDatingFriend": {
-        // Friends to lovers: the closest friend becomes the partner.
-        const best = w ? Object.values(w.relationships).filter((r) => (r.stage === "FRIEND" || r.stage === "CLOSE_FRIEND") && !w.npcs[r.npcId]?.deceased).sort((a, b) => b.closeness - a.closeness)[0] : undefined;
-        const npc = best && w ? w.npcs[best.npcId] : undefined;
+        // Friends to lovers: the closest friend of the sex you're drawn to becomes the partner.
+        const npc = ctx.facts.crushId && w ? w.npcs[ctx.facts.crushId] : undefined;
         if (npc) beginDating(state, npc, rng);
         break;
       }
@@ -827,6 +904,39 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
       case "endArc":
         if (src.arc) state.story!.arcs = state.story!.arcs.filter((a) => a !== src.arc);
         break;
+      case "arcRepeat":
+        // The same step again after a while (still apart: "let's hold on a little longer") — once.
+        if (src.arc && src.arc.step > 0 && src.arc.steps.filter((x) => x.key === src.arc!.steps[src.arc!.step - 1].key).length < 2) {
+          const [a, b] = eff.after as [number, number];
+          src.arc.steps.splice(src.arc.step, 0, { key: src.arc.steps[src.arc.step - 1].key, dueMonth: state.monthIndex + rng.int(a, b) });
+        }
+        break;
+      case "fatedSecondChance": {
+        const fake = { id: "TALKING", theme: "LOVE_MEETING", age: Math.floor(state.age), monthIndex: state.monthIndex, chartWeights: { START_DATING: 0.5, SLOW_BURN: 0.3, MISSED: 0.2 }, signals: [] } as FatedEvent;
+        secondChance(state, fake, rng);
+        break;
+      }
+      case "moveToFated": {
+        // You move to where they live.
+        const life = state.story?.fatedLife;
+        if (!life) break;
+        const abroad = life.city.country !== "KR";
+        state.location = { country: abroad ? COUNTRY_NAME[life.city.country] ?? life.city.country : state.location.country, city: life.city.en };
+        if (abroad) (state.flags.livedAbroad = true), state.career.employed && (state.career.abroad = true);
+        life.from = "same";
+        state.relationship.longDistance = false;
+        state.flags.ldrDone = true;
+        endArc(state, "LONG_DISTANCE");
+        break;
+      }
+      case "fatedMovesHere": {
+        const life = state.story?.fatedLife;
+        if (life) life.from = "same";
+        state.relationship.longDistance = false;
+        state.flags.ldrDone = true;
+        endArc(state, "LONG_DISTANCE");
+        break;
+      }
       case "arcStepAgain":
         // "Not yet": the next step (e.g. the last-chance talk) comes after a while.
         if (src.arc && src.arc.steps[src.arc.step]) {
@@ -911,5 +1021,5 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
 
 export function fillStory(text: string, state: LifeState, facts: LifeFacts, extra: Record<string, string> = {}): string {
   const pet = (state.pets ?? []).filter((p) => p.alive).at(-1)?.name ?? (state.pets ?? []).at(-1)?.name ?? "";
-  return fillNames(text, { ...extra, partner: facts.partnerName ?? "", friend: facts.friendName ?? "", fated: facts.fatedName ?? "", pet, patient: extra.patient ?? "", relative: extra.relative ?? "", kid: (state.kids ?? []).at(-1)?.name ?? "" });
+  return fillNames(text, { ...extra, partner: facts.partnerName ?? "", friend: facts.friendName ?? "", crush: facts.crushName ?? "", fated: facts.fatedName ?? "", pet, patient: extra.patient ?? "", relative: extra.relative ?? "", kid: (state.kids ?? []).at(-1)?.name ?? "" });
 }

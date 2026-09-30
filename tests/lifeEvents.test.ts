@@ -19,13 +19,13 @@ const EFFECTS = new Set([
   // runtime
   "familyReact",
 ]);
-const DYNAMIC_SPEAKERS = new Set(["me", "mom", "dad", "partner", "friend", "sibling", "kid", "ex", "fated", "boss", "coworker", "stranger", "doctor", "nurse", "relative", "inlaw", "judge", "recruiter", "app", "professor", "mentor", "barista", "instructor", "work"]);
+const DYNAMIC_SPEAKERS = new Set(["me", "mom", "dad", "partner", "friend", "crush", "sibling", "kid", "ex", "fated", "boss", "coworker", "stranger", "doctor", "nurse", "relative", "inlaw", "judge", "recruiter", "app", "professor", "mentor", "barista", "instructor", "work"]);
 const FACTS = new Set([
   "age", "employed", "selfEmployed", "student", "jobless", "retired", "careerCid", "recentlyPromoted", "recentlyLostJob", "partnered", "dating", "married", "single", "divorced",
   "recentlyBrokeUp", "hasEx", "momAlive", "dadAlive", "hasSibling", "fatedKnown", "fatedSingle", "fatedPartner", "fatedAvailable", "partnerCritical", "hasFriend", "abroad",
   "traveling", "weekend", "broke", "comfortable", "hasHabit", "alive", "male", "female", "partnerYears", "hasKid", "kidAge", "hasSister", "hasBrother", "parentsTogether",
   "hasPet", "homeOwner", "famous", "money", "debt", "inDebt", "rich", "engaged", "pregnant", "partnerAgeGap", "mbtiE", "mbtiN", "mbtiF", "mbtiP",
-  "likesSameSex", "likesBoth", "partnerSameSex", "siblingMarried",
+  "likesSameSex", "likesBoth", "partnerSameSex", "siblingMarried", "hasCrushFriend", "fatedJobNight", "fatedJobAway", "fatedJobUnstable", "fatedJobCare", "fatedJobRich", "fatedFar", "fatedAbroad",
 ]);
 const TRAITS = new Set(["riskTolerance", "novelty", "sociability", "ambition", "socialEnergy", "socialInitiation", "noveltySeeking", "emotionalExpression", "conflictAvoidance", "planning", "independence", "relationshipPacing", "creativity", "careerDrive", "spontaneity"]);
 const P = "(SUN|MOON|MERCURY|VENUS|MARS|JUPITER|SATURN|URANUS|NEPTUNE|PLUTO|ASC|MC)";

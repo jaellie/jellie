@@ -106,6 +106,13 @@
    ],
    "requires": [
     "partnered"
+   ],
+   "unless": [
+    "이거 데이트",
+    "데이트야?",
+    "데이트 맞지",
+    "Is this, like, a date",
+    "counts as a date"
    ]
   },
   {
