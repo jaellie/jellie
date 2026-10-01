@@ -14,6 +14,7 @@ import { bondPhase, pendingMeetings } from "./bond";
 import { cultureOf, nameKo, petName, pickName } from "../world/names";
 import fatedData from "../../data/story/fatedEvents.json";
 import arcData from "../../data/story/arcs.json";
+import seqData from "../../data/story/sequences.json";
 import { SeededRandom } from "../core/rng";
 import type { LifeModifiers } from "../core/lifeModifiers";
 import { calculateNatalChart } from "../saju/chart";
@@ -89,7 +90,7 @@ interface ArcStepDef {
 const THEMES = fatedData.themes as unknown as Record<FatedTheme, { hint: Bi; title?: Bi; variants: FatedVariant[] }>;
 const ARCS = arcData.arcs as unknown as Record<ArcType, { steps: Record<string, ArcStepDef> }>;
 const ARC_ORDER: Record<ArcType, string[]> = {
-  DATING: ["FIRST_DATE", "FIRST_FIGHT", "MEET_FRIENDS", "PROPOSAL", "LAST_CHANCE"],
+  DATING: ["FIRST_DATE", "FIRST_KISS", "FIRST_FIGHT", "MEET_FRIENDS", "PROPOSAL", "LAST_CHANCE"],
   ENGAGEMENT: ["MEET_PARENTS", "WEDDING"],
   DIVORCE: ["COURT"],
   PREGNANCY: ["CHECKUP", "BIRTH"],
@@ -103,7 +104,7 @@ const ARC_ORDER: Record<ArcType, string[]> = {
   LONG_DISTANCE: ["CALL", "VISIT", "DECIDE"],
   TALKING: ["TEXTS", "NOT_A_DATE", "JEALOUS", "CONFESS"],
 };
-const IN_PERSON = ["FIRST_DATE", "FIRST_FIGHT", "MEET_FRIENDS"];
+const IN_PERSON = ["FIRST_DATE", "FIRST_KISS", "FIRST_FIGHT", "MEET_FRIENDS"];
 const COUNTRY_NAME: Record<string, string> = { JP: "Japan", US: "USA", CA: "Canada", DE: "Germany", AU: "Australia", GB: "UK", SG: "Singapore", FR: "France" };
 /** The sex the player is drawn to (for someone new to date). */
 function likedSex(state: LifeState, rng: SeededRandom): "MALE" | "FEMALE" {
@@ -205,9 +206,14 @@ export function scheduleNext(state: LifeState, rng: SeededRandom): NonNullable<S
   const next: NonNullable<StoryState["nextDay"]> = { month: Math.max(now + 1, cands[0].month), kind: cands[0].kind, ref: cands[0].ref };
   // Two lighter moments due in the same season share one day (morning + afternoon) — keeps a life ≈ 20 days.
   // Grave moments (funerals, illness, betrayal, divorce…) always get a day of their own.
-  if ((next.kind === "fated" || next.kind === "arc") && !isGrave(state, next.kind, next.ref!)) {
+  // A big moment in four parts (confession, first kiss, proposal) gets its day to itself, too.
+  const bigMoment = (kind: string, ref: string) => kind === "arc" && (() => {
+    const a = st.arcs.find((x) => x.id === ref);
+    return !!a && !!SEQS[a.steps[a.step]?.key ?? ""];
+  })();
+  if ((next.kind === "fated" || next.kind === "arc") && !isGrave(state, next.kind, next.ref!) && !bigMoment(next.kind, next.ref!)) {
     const firstArc = next.kind === "arc" ? next.ref : undefined;
-    const pair = cands.slice(1).find((c) => (c.kind === "fated" || c.kind === "arc") && c.ref !== next.ref && c.ref !== firstArc && c.month <= next.month + SHARED_DAY_MONTHS && !isGrave(state, c.kind, c.ref!));
+    const pair = cands.slice(1).find((c) => (c.kind === "fated" || c.kind === "arc") && c.ref !== next.ref && c.ref !== firstArc && c.month <= next.month + SHARED_DAY_MONTHS && !isGrave(state, c.kind, c.ref!) && !bigMoment(c.kind, c.ref!));
     if (pair) next.second = { kind: pair.kind as "fated" | "arc", ref: pair.ref! };
   }
   st.nextDay = next;
@@ -500,6 +506,12 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
     return;
   }
   const def = ARCS[arc.type].steps[step.key];
+  // A big moment's lead-up: parts 1–3 of 4, the same place and day as the climax.
+  const sp = seqPart(state, arc, step.key);
+  if (sp) {
+    const title = def.title ? { ko: `${def.title.ko} (${sp.n + 1}/4)`, en: `${def.title.en} (${sp.n + 1}/4)` } : undefined;
+    return { ref: `arc:${arc.id}`, who: sp.who, line: themText(sp.line, arc), choices: sp.choices.map((c) => themText(c.t, arc)), location: def.location, activity: def.activity, vars: {}, title, needsFated: arc.type === "TALKING", needsPartner: arc.type === "DATING" && def.location !== "home" };
+  }
   const mv = mbtiVariant(state, arc, step.key, def);
   const base = arcSpeaker(def, arc, facts, state);
   const who = mv?.who ?? base.who;
@@ -515,7 +527,16 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
   }
   const loc = location ?? def.location;
   const online = loc === "instagram" || loc === "language_exchange_app" || loc === "dating_app" || loc === "online_community";
-  return { ref: `arc:${arc.id}`, who, line, choices: stepChoices.map((c) => c.t), location: loc, activity: def.activity, vars, title: def.title, needsFated: !online && (who === "fated" || !!def.withFated), needsPartner: (who === "partner" || arc.type === "DATING") && loc !== "home" };
+  const seqCur = SEQS[step.key] ? seqState(arc) : undefined;
+  let climaxLine = line;
+  let title = def.title;
+  if (seqCur?.key === step.key) {
+    title = def.title ? { ko: `${def.title.ko} (4/4)`, en: `${def.title.en} (4/4)` } : undefined;
+    // How the lead-up went colors the moment.
+    const mood = seqCur.spark >= 0.25 ? themText({ ko: "(오늘따라 {them}의 눈빛이 유난히 따뜻하다.)", en: "(Tonight, {them}'s eyes are especially warm.)" }, arc) : seqCur.spark <= -0.15 ? { ko: "(어딘가 자꾸 엇갈린 하루였다. 그래도…)", en: "(Somehow the day kept missing its beat. Still…)" } : undefined;
+    if (mood) climaxLine = { ko: `${mood.ko} ${line.ko}`, en: `${mood.en} ${line.en}` };
+  }
+  return { ref: `arc:${arc.id}`, who, line: climaxLine, choices: stepChoices.map((c) => c.t), location: loc, activity: def.activity, vars, title, needsFated: !online && (who === "fated" || !!def.withFated), needsPartner: (who === "partner" || arc.type === "DATING") && loc !== "home" };
 }
 
 /** A person's MBTI: the setup's for you and the destined person; a stable one of their own for anyone else. */
@@ -530,6 +551,63 @@ export function mbtiOf(state: LifeState, npcId?: string): string {
 }
 
 /** The step variant that fits the two of you best (most MBTI letters matched), remembered per step. */
+// ---------------------------------------------------------------------------
+// Big moments as 4-part sequences (data/story/sequences.json): their move (their temperament) →
+// your inner moment (your temperament, choices by your own letters) → the moment right before (both
+// J/P) → the climax. Choices that fit the partner's MBTI add spark, which bends the climax.
+// ---------------------------------------------------------------------------
+
+type SeqChoice = { t: Bi; fits?: string; r?: Bi; rMiss?: Bi; me?: string };
+type SeqPartDef = { line: Bi; choices: SeqChoice[] };
+type SeqDef = { good: string; them: Record<string, SeqPartDef>; me: Record<string, Bi>; mePool: SeqChoice[]; pair: Record<"plan" | "free" | "mixed", SeqPartDef> };
+const SEQS = seqData as unknown as Record<string, SeqDef>;
+
+/** NF idealist, NT rational, SJ guardian, SP artisan. */
+function temperament(m: string): "NF" | "NT" | "SJ" | "SP" {
+  if (m.includes("N")) return m.includes("T") ? "NT" : "NF";
+  return m.includes("J") ? "SJ" : "SP";
+}
+
+type SeqState = { key: string; n: number; spark: number };
+/** Saved on the arc as plain strings (arc data is flat). */
+function seqState(arc: ActiveArc): SeqState | undefined {
+  const raw = arc.data?.seq;
+  return typeof raw === "string" && raw ? (JSON.parse(raw) as SeqState) : undefined;
+}
+function seqDone(arc: ActiveArc): string[] {
+  return String(arc.data?.seqDone ?? "").split(",").filter(Boolean);
+}
+
+/** The current lead-up part of a big moment (0–2), or undefined once it's time for the climax. */
+function seqPart(state: LifeState, arc: ActiveArc, key: string): { n: number; who: string; line: Bi; choices: SeqChoice[]; theirs: string; seq: SeqDef; cur?: SeqState } | undefined {
+  const seq = SEQS[key];
+  if (!seq || seqDone(arc).includes(key)) return;
+  const cur = seqState(arc);
+  const n = cur?.key === key ? cur.n : 0;
+  if (n >= 3) return;
+  const pid = state.relationship.partnerId ?? Object.values(state.world?.npcs ?? {}).find((x) => x.fated)?.id;
+  const mine = mbtiOf(state);
+  const theirs = mbtiOf(state, pid);
+  const them = arc.type === "TALKING" ? "fated" : "partner";
+  if (n === 0) {
+    const p = seq.them[temperament(theirs)];
+    return { n, who: them, line: p.line, choices: p.choices, theirs, seq, cur };
+  }
+  if (n === 1) {
+    const own = seq.mePool.filter((c) => !c.me || mine.includes(c.me));
+    return { n, who: "me", line: seq.me[temperament(mine)], choices: (own.length >= 2 ? own : seq.mePool).slice(0, 3), theirs, seq, cur };
+  }
+  const js = [mine, theirs].filter((m) => m.includes("J")).length;
+  const p = seq.pair[js === 2 ? "plan" : js === 0 ? "free" : "mixed"];
+  return { n, who: "me", line: p.line, choices: p.choices, theirs, seq, cur };
+}
+
+/** {them} → the partner or the destined person (in 썸). */
+function themText(b: Bi, arc: ActiveArc): Bi {
+  const k = arc.type === "TALKING" ? "{fated}" : "{partner}";
+  return { ko: b.ko.replaceAll("{them}", k), en: b.en.replaceAll("{them}", k) };
+}
+
 function mbtiVariant(state: LifeState, arc: ActiveArc, key: string, def: ArcStepDef) {
   if (!def.byMbti?.length) return;
   const mine = mbtiOf(state);
@@ -592,6 +670,8 @@ export interface StoryResult {
   who?: string;
   scene?: string[];
   outcome: string;
+  /** A big moment's lead-up part: the next part (then the climax) follows right away, same day. */
+  more?: boolean;
 }
 
 const FATE_BRIDGES: Bi[] = [
@@ -646,6 +726,23 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
   if (!arc) return;
   const step = arc.steps[arc.step];
   const def = ARCS[arc.type].steps[step.key];
+  // A lead-up part: the partner reacts to how well your choice fits who they are; spark adds up.
+  const sp = seqPart(state, arc, step.key);
+  if (sp) {
+    const c = sp.choices[Math.max(0, Math.min(sp.choices.length - 1, choiceIndex))];
+    let fit = 0;
+    for (const l of c.fits ?? "") fit += sp.theirs.includes(l) ? 0.15 : -0.1;
+    arc.data = { ...arc.data, seq: JSON.stringify({ key: step.key, n: sp.n + 1, spark: (sp.cur?.key === step.key ? sp.cur.spark : 0) + fit }) };
+    const r = fit < 0 && c.rMiss ? c.rMiss : c.r ?? { ko: "…", en: "…" };
+    return { r: themText(r, arc), outcome: "SEQ", more: true };
+  }
+  const seqCur = SEQS[step.key] && seqState(arc)?.key === step.key ? seqState(arc) : undefined;
+  if (SEQS[step.key]) {
+    // The lead-up plays once; if this moment comes again later ("not yet"), it's just the moment.
+    const done = seqDone(arc);
+    arc.data = { ...arc.data, seq: "", seqDone: (done.includes(step.key) ? done : [...done, step.key]).join(",") };
+  }
+  const sparkBend = (k: string) => (seqCur && k === SEQS[step.key].good ? Math.max(0.4, Math.min(2, 1 + seqCur.spark * 1.5)) : 1);
   const mv = mbtiVariant(state, arc, step.key, def);
   const choices = mv?.choices ?? def.choices;
   const ch = choices[Math.max(0, Math.min(choices.length - 1, choiceIndex))];
@@ -656,7 +753,7 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
     const fatedNpc = arc.type === "TALKING" ? Object.values(state.world?.npcs ?? {}).find((n) => n.fated) : undefined;
     const spark = fatedNpc ? state.world?.relationships[fatedNpc.id]?.spark ?? 0.3 : 0;
     const bend = (k: string) => (st.compat && fatedHere ? compatFactor(st.compat.score, ch.compat?.[k] ?? 0) : 1) * (fatedNpc && k === "START" ? 0.3 + 1.4 * spark : 1);
-    outcome = rng.weighted(Object.entries(ch.roll).map(([k, w]) => ({ item: k, weight: w * bend(k) })));
+    outcome = rng.weighted(Object.entries(ch.roll).map(([k, w]) => ({ item: k, weight: w * bend(k) * sparkBend(k) })));
   }
   const o = { ...def.outcomes[outcome], ...(mv?.outcomes?.[outcome] ?? {}) };
   arc.step += 1;

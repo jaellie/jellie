@@ -1039,6 +1039,8 @@ export class Game {
       if (!res) return;
       if (res.scene?.length) this.setSequence(res.scene);
       if (!st.alive) s.minute = CFG.dayEndMinute;
+      // A big moment in four parts: the next part opens right after this one.
+      if (res.more) s.agenda.unshift({ t: s.minute, k: p.storyRef === `arc:${s.dayRef}` || p.storyRef.startsWith(`fated:${s.dayRef}`) ? "story" : "story2" });
       // A reply (your partner answering "not yet") is theirs, not yours.
       const who = res.who && meets(SPEAKER_REQUIRES[res.who] ?? [], this.facts()) ? res.who : "me";
       return { who, line: this.fill(fillStory(this.L(res.r), st, this.facts(), { patient: p.patient ?? "", ...p.vars })), log: label };

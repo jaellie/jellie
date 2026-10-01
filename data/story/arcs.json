@@ -1236,6 +1236,79 @@
        ]
       }
      ]
+    },
+    "FIRST_KISS": {
+     "title": {
+      "ko": "첫 키스",
+      "en": "First kiss"
+     },
+     "after": [
+      1,
+      2
+     ],
+     "location": "park",
+     "activity": "date",
+     "who": "partner",
+     "line": {
+      "ko": "(데려다주는 길, 집 앞. 둘 다 '잘 가'라는 말을 세 번째 하고 있다.)",
+      "en": "(Walking home. At the door, you've both said 'good night' three times now.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(눈을 감는다)",
+        "en": "(Close your eyes)"
+       },
+       "roll": {
+        "KISS": 0.75,
+        "SHY": 0.25
+       }
+      },
+      {
+       "t": {
+        "ko": "(먼저 다가간다)",
+        "en": "(Lean in first)"
+       },
+       "roll": {
+        "KISS": 0.7,
+        "SHY": 0.3
+       }
+      },
+      {
+       "t": {
+        "ko": "…오늘은 여기까지. 잘 자",
+        "en": "…That's it for tonight. Sleep well."
+       },
+       "roll": {
+        "KISS": 0.25,
+        "SHY": 0.75
+       }
+      }
+     ],
+     "outcomes": {
+      "KISS": {
+       "r": {
+        "ko": "시간이 멈췄다. 정말로, 멈췄다.",
+        "en": "Time stopped. It really did."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Our first kiss.",
+         "tags": [
+          "love"
+         ]
+        }
+       ]
+      },
+      "SHY": {
+       "r": {
+        "ko": "코끝만 살짝 닿았다. 둘 다 웃음이 터져서, 그게 오늘의 전부였다. 그래도 좋았다.",
+        "en": "Just the tips of your noses. You both burst out laughing — and that was all for tonight. Still, it was perfect."
+       },
+       "effects": []
+      }
+     }
     }
    }
   },

@@ -80,7 +80,7 @@ describe("The destined person's life (where they live, their job)", () => {
     const seen = play(t, (x) => !x.state.story!.arcs.some((a) => a.type === "TALKING"), () => 0, 12);
     const titles = seen.map((s) => s.title);
     expect(titles).toContain("새벽 카톡");
-    expect(titles).toContain("고백");
+    expect(titles).toContain("고백 (4/4)");
     const d = createGame({ ...JAE, seed: 3, fated: { ...JUNG, from: "same", status: "dating" } });
     expect(d.state.relationship.status).toBe("DATING");
     expect(d.facts().fatedPartner).toBe(true);
@@ -113,8 +113,8 @@ describe("Who says the result line", () => {
     let checked = 0;
     for (let seed = 1; seed <= 6 && !checked; seed++) {
       const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "same", status: "dating" } });
-      const seen = play(g, (x) => x.state.engaged || x.state.relationship.status !== "DATING", (p) => (p.ch.length === 3 ? 1 : 0), 14);
-      const reply = seen.find((s) => s.title === "프러포즈" && s.result?.includes("오래 기다리진 못할"));
+      const seen = play(g, (x) => x.state.engaged || x.state.relationship.status !== "DATING", (p) => (p.ch.length === 3 ? 1 : 0), 20);
+      const reply = seen.find((s) => s.title?.startsWith("프러포즈") && s.result?.includes("오래 기다리진 못할"));
       if (reply) {
         expect(reply.resultWho).toBe("partner");
         checked++;
@@ -389,5 +389,28 @@ describe("My job (setup.job)", () => {
     const writer = make("writer");
     expect(writer.facts().selfEmployed).toBe(true);
     expect(make("police").hud().job).toBe("경찰관");
+  });
+});
+
+describe("Big moments in four parts, shaped by both MBTIs", () => {
+  it("the confession is 4 popups on one day: their move → your inner moment → the moment before → the climax", () => {
+    const g = createGame({ ...JAE, mbti: "ENFP", seed: 7, fated: { ...JUNG, mbti: "INFJ", from: "same", status: "talking" } });
+    const seen = play(g, (x) => !x.state.story!.arcs.some((a) => a.type === "TALKING"), () => 0, 14);
+    const titles = seen.map((s) => s.title).filter((t) => t?.startsWith("고백"));
+    expect(titles).toEqual(["고백 (1/4)", "고백 (2/4)", "고백 (3/4)", "고백 (4/4)"]);
+  });
+
+  it("their temperament sets the scene; your own letters decide your options", () => {
+    const first = (me: string, them: string) => {
+      const g = createGame({ ...JAE, mbti: me, seed: 7, fated: { ...JUNG, mbti: them, from: "same", status: "talking" } });
+      const seen = play(g, (x) => !x.state.story!.arcs.some((a) => a.type === "TALKING"), () => 0, 14);
+      return seen.filter((s) => s.title?.startsWith("고백 ("));
+    };
+    const nf = first("ENFP", "INFJ");
+    const sp = first("ISTJ", "ESTP");
+    expect(nf[0].line).toContain("별");
+    expect(sp[0].line).toContain("불꽃놀이");
+    // Part 2: an E sees "call a friend"; an I sees "music alone".
+    expect(nf[1].line).not.toBe(sp[1].line);
   });
 });

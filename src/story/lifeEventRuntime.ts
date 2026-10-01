@@ -139,6 +139,8 @@ export function resolveLifeEvent(uid: string, choiceIndex: number, ctx: StoryCtx
 }
 
 /** Events that waited too long happen off-screen: the instinctive reaction, a card, a line on the skip screen. */
+const BOND_ENDING = /"kind":"(breakUp|separate)"|"type":"(DIVORCE|AFFAIR)"/;
+
 export function resolveStaleEvents(ctx: StoryCtx): void {
   const { state, rng } = ctx;
   const es = state.story?.events;
@@ -148,6 +150,13 @@ export function resolveStaleEvents(ctx: StoryCtx): void {
     // Gone, or no longer fits this life (the partner it was about has left): it quietly doesn't happen.
     if (!def || !pendingApplies(state, p, def, { ...ctx.facts, weekend: false })) {
       es.pending = es.pending.filter((x) => x !== p);
+      continue;
+    }
+    // Whatever could end the relationship (a breakup, a divorce, an affair) is never decided off-screen:
+    // the game *is* that relationship, so it waits for a played day instead.
+    if (state.relationship.status !== "SINGLE" && BOND_ENDING.test(JSON.stringify(def.outcomes ?? def))) {
+      p.urgent = true;
+      p.due = state.monthIndex;
       continue;
     }
     const res = resolveLifeEvent(p.uid, instinctiveChoice(def, personOf(ctx), rng), ctx);
