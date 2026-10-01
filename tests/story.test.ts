@@ -58,13 +58,12 @@ describe("Destiny script (사주 + 점성술 → 5–7 turning points)", () => {
 describe("A life with a storyline", () => {
   const lives = [7, 8, 9].map((s) => playWhole(s));
 
-  it("plays about 15–40 days and ends only in death, with a memorial", () => {
+  it("plays at most ~45 days and ends with the bond (or death), with a closing memorial", () => {
     for (const { g, days } of lives) {
       expect(g.isOver()).toBe(true);
-      expect(days.length).toBeGreaterThanOrEqual(12);
       expect(days.length).toBeLessThanOrEqual(45);
       const m = g.memorial();
-      expect(m.lines.length).toBe(3);
+      expect(m.lines.length).toBeGreaterThanOrEqual(2);
       expect(m.epitaph).toContain("민아");
       expect(m.fadeMs).toBeGreaterThan(1000);
     }

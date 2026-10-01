@@ -120,5 +120,64 @@
     "en": "Goodbye. Thank you for this life, too."
    }
   }
- ]
+ ],
+ "bond": {
+  "_doc": "Closing lines when the game ends with you still alive: the bond with the destined person is over.",
+  "missed": [
+   {
+    "ko": "어떤 인연은 스쳐 지나가는 것으로 완성된다.",
+    "en": "Some bonds are complete in just passing by."
+   },
+   {
+    "ko": "그 사람을 기다린 시간도, 결국 나를 만든 시간이었다.",
+    "en": "The time spent waiting for them made you, too."
+   },
+   {
+    "ko": "운명은 문을 두드렸고, 우리는 서로 다른 방에 있었다.",
+    "en": "Fate knocked, and we were in different rooms."
+   }
+  ],
+  "breakup": [
+   {
+    "ko": "사랑은 끝났지만, 사랑했던 나는 남았다.",
+    "en": "The love ended; the person who loved remains."
+   },
+   {
+    "ko": "함께 걷던 길이 여기서 두 갈래로 나뉜다.",
+    "en": "The road we walked together splits in two here."
+   },
+   {
+    "ko": "고마웠어. 진심이었어. 그래서 아팠어.",
+    "en": "Thank you. It was real. That's why it hurt."
+   }
+  ],
+  "divorce": [
+   {
+    "ko": "서로를 놓아주는 것도 사랑의 한 모양이었다.",
+    "en": "Letting each other go was a kind of love, too."
+   },
+   {
+    "ko": "한 지붕 아래의 계절들은 지워지지 않는다.",
+    "en": "The seasons under one roof don't fade away."
+   },
+   {
+    "ko": "이제 각자의 길 위에서, 각자의 행복을.",
+    "en": "Now, on separate roads, separate happiness."
+   }
+  ],
+  "theyDied": [
+   {
+    "ko": "당신이 없는 아침에도 해는 뜬다. 그게 가장 아프다.",
+    "en": "The sun still rises on mornings without you. That hurts most."
+   },
+   {
+    "ko": "먼저 간 당신의 자리를, 나는 오래오래 비워 둘게.",
+    "en": "I'll keep your place empty for a long, long time."
+   },
+   {
+    "ko": "함께한 날들이 남은 날들을 버티게 해 줄 거야.",
+    "en": "The days we shared will carry me through the rest."
+   }
+  ]
+ }
 }

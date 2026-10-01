@@ -33,6 +33,7 @@ import { weekdayOf, seasonOf } from "../world/clock";
 import { generateNpc, habitSlot, knowsName } from "../world/npcs";
 import { aliveSiblings, siblingSender } from "../story/family";
 import { type CrowdState, stepCrowd } from "../world/walkers";
+import { bondPhase, hasBond, pendingMeetings, updateBond, type BondEnd } from "../story/bond";
 import { lifeEvent, nextDueEvent, pendingApplies, rollLifeEvents, weekdayOnly } from "../story/lifeEvents";
 import { resolveLifeEvent, resolveStaleEvents } from "../story/lifeEventRuntime";
 import "../story/eventLibrary";
@@ -131,6 +132,8 @@ export interface DayInfo {
   age: number;
   season: string;
   label: Bi;
+  /** First day only, when years were skipped to the meeting: "그 사람을 만나기까지, 12년이 흘렀다." Show it on a fade before the road. */
+  prologue?: string;
 }
 
 export interface Popup {
@@ -251,6 +254,8 @@ export interface GameSave {
   director: DirectorMemory;
   over: boolean;
   milestones: Array<{ age: number; ko: string; en: string }>;
+  /** Shown before the first day when the years before the meeting were skipped. */
+  prologue?: Bi;
   lastScene?: PrototypeScene;
   log: string;
 }
@@ -467,6 +472,7 @@ export class Game {
       age: Math.floor(st.age),
       season,
       label: bi(`${date.year}.${String(date.month).padStart(2, "0")}.${String(date.day).padStart(2, "0")} (${WD[weekday]})`, `${date.year}.${String(date.month).padStart(2, "0")}.${String(date.day).padStart(2, "0")} (${WE[weekday]})`),
+      ...(s.dayIndex === 0 && s.prologue ? { prologue: this.L(s.prologue) } : {}),
     };
     s.minute = CFG.dayStartMinute;
     s.loc = undefined;
@@ -686,6 +692,8 @@ export class Game {
     s.lastScene = toPrototypeScene(composeScene(r, st.world, st, { withPartner: partnerHere, household: atHome }));
     const beats: Beat[] = [];
     for (const e of r.events) {
+      // The game is about the destined person: no sparks with someone new on the side.
+      if (e.kind === "ROMANCE_OPPORTUNITY" && hasBond(st) && !(e.npcId && st.world.npcs[e.npcId]?.fated)) continue;
       if (e.choices?.length) {
         if (this.director.hasBudget("major")) {
           this.director.record("major", { id: `world:${e.kind}:${e.npcId ?? ""}`, texts: [e.text.ko] });
@@ -1138,13 +1146,19 @@ export class Game {
     const before = snapshot(st);
     const fromAge = Math.floor(st.age);
     const rng = this.rng("gap");
-    if (st.alive && st.story) {
+    // The day the bond with the destined person ends (or a meeting that will never come) is the last day.
+    updateBond(st);
+    if (st.alive && st.story && !st.story.bond?.over) {
       const next = scheduleNext(st, rng);
+      const waiting = bondPhase(st) === "waiting";
       const runner = new LifeRunner(this.runnerOptions(hash(s.seed, "between", s.dayIndex)), st);
       while (st.alive && st.monthIndex < next.month) {
         runner.stepMonth();
         monthlyStoryTick(st, rng);
         this.eventTick(runner, rng);
+        if (updateBond(st)) break;
+        // Waiting to meet them: nothing else gets a day of its own — the meeting is the next day.
+        if (waiting) continue;
         // A newly started arc step (e.g. a parent's last days) can pull the next day earlier.
         const dueArc = st.story.arcs.find((x) => x.steps[x.step] && x.steps[x.step].dueMonth <= st.monthIndex + 1);
         if (dueArc && next.kind !== "arc") {
@@ -1158,12 +1172,13 @@ export class Game {
           break;
         }
       }
-      if (st.alive && st.monthIndex < st.story.nextDay!.month) {
+      if (st.alive && !st.story.bond?.over && st.monthIndex < st.story.nextDay!.month) {
         // Step the remaining month(s) once more so the day lands in its month.
         while (st.alive && st.monthIndex < st.story.nextDay!.month) {
           runner.stepMonth();
           monthlyStoryTick(st, rng);
           this.eventTick(runner, rng);
+          if (updateBond(st)) break;
         }
       }
       s.dayKind = st.story.nextDay!.kind;
@@ -1185,8 +1200,10 @@ export class Game {
     for (const c of cards) s.milestones.push({ age: c.age, ko: s.lang === "ko" ? c.caption : c.caption, en: c.caption });
     if (!cards.length) for (const l of summarize(before, snapshot(st), s.lang).bi) s.milestones.push({ age: Math.floor(st.age), ko: l.ko, en: l.en });
     // notes: what happened meanwhile, off-screen ("사채 — 불법 이자는 무효라고 했다…"), also at the top of `lines`.
-    const out = { over: !st.alive, fromAge, toAge: Math.floor(st.age), lines, cards, notes };
-    if (!st.alive) {
+    updateBond(st);
+    const ended = !st.alive || !!st.story?.bond?.over;
+    const out = { over: ended, fromAge, toAge: Math.floor(st.age), lines, cards, notes };
+    if (ended) {
       s.over = true;
       return out;
     }
@@ -1194,6 +1211,33 @@ export class Game {
     this.runnerCache = undefined;
     this.startDay();
     return out;
+  }
+
+  /**
+   * Strangers or acquaintances: the years before the destined meeting pass off-screen, and the first
+   * played day is the day you meet. Returns how many years went by.
+   */
+  skipToMeeting(): number {
+    const st = this.state;
+    const meeting = bondPhase(st) === "waiting" ? pendingMeetings(st)[0] : undefined;
+    if (!meeting) return 0;
+    const s = this.s;
+    const from = st.date.year;
+    const rng = this.rng("prelude");
+    const runner = new LifeRunner({ ...this.runnerOptions(hash(s.seed, "prelude")), mortality: false }, st);
+    while (st.monthIndex < meeting.monthIndex) {
+      runner.stepMonth();
+      monthlyStoryTick(st, rng);
+      this.eventTick(runner, rng);
+    }
+    // What happened meanwhile is old news; the first day is about them.
+    if (st.story) st.story.cards = [];
+    st.story?.events?.notes.splice(0);
+    s.dayKind = "fated";
+    s.dayRef = meeting.id;
+    s.dayKind2 = s.dayRef2 = undefined;
+    this.runnerCache = undefined;
+    return st.date.year - from;
   }
 
   /**
@@ -1219,13 +1263,21 @@ export class Game {
     const pool = (memorialData.lines as Array<{ tag: string; text: { ko: string; en: string } }>).filter((l) => tags.has(l.tag));
     const rng = new SeededRandom(hash(s.seed, "memorial"));
     const specific = pool.filter((l) => l.tag !== "any");
-    const picked = [...rng.weightedSample(specific.map((l) => ({ item: l, weight: 1 })), 2), ...rng.weightedSample(pool.filter((l) => l.tag === "any").map((l) => ({ item: l, weight: 1 })), 1)];
+    const endedAlive = st.alive ? st.story?.bond?.over?.reason : undefined;
+    const bondLines = endedAlive ? ((memorialData.bond as unknown as Record<string, Array<{ ko: string; en: string }>>)[endedAlive] ?? []) : [];
+    const picked = bondLines.length ? rng.weightedSample(bondLines.map((l) => ({ item: { tag: endedAlive!, text: l }, weight: 1 })), 2) : [...rng.weightedSample(specific.map((l) => ({ item: l, weight: 1 })), 2), ...rng.weightedSample(pool.filter((l) => l.tag === "any").map((l) => ({ item: l, weight: 1 })), 1)];
     const deathYear = st.date.year;
     const name = s.setup.name;
+    // Still alive (the bond ended — a breakup, a divorce, their death, a meeting that never came): the two names and your years together.
+    const bond = st.story?.bond;
+    const fated = Object.values(w?.npcs ?? {}).find((n) => n.fated);
+    const epitaph = st.alive && bond?.over && fated
+      ? bond.since ? `${name} ♥ ${fated.name} · ${bond.since.year} – ${deathYear}` : `${name} · ${fated.name}`
+      : `${name} · ${st.birth.year} – ${deathYear}`;
     return {
       fadeMs: 4000,
       lineMs: 3500,
-      epitaph: lang === "ko" ? `${name} · ${st.birth.year} – ${deathYear}` : `${name} · ${st.birth.year} – ${deathYear}`,
+      epitaph,
       lines: picked.map((l) => l.text[lang]),
       cards: [],
     };
@@ -1235,14 +1287,49 @@ export class Game {
     return this.s.over;
   }
 
-  ending(): { title: string; summary: string; lines: string[]; age: number; memorial: ReturnType<Game["memorial"]> } {
+  /**
+   * The ending. `reason`: how the bond with the destined person ended — missed (never came together),
+   * breakup, divorce, theyDied, or iDied (your own death; together to the end if married).
+   * Only iDied is a death: show the memorial fade. The others end on the last day, alive.
+   */
+  ending(): {
+    reason?: BondEnd;
+    title: string;
+    story?: string;
+    together?: { from: number; to: number; years: number; married: boolean };
+    summary: string;
+    lines: string[];
+    age: number;
+    memorial: ReturnType<Game["memorial"]>;
+  } {
     const st = this.state;
     const s = this.s;
     const partners = st.npcs.filter((n) => n.role === "PARTNER" || n.role === "EX").length;
     const trips = st.world?.pastTrips.length ?? 0;
     const friends = Object.values(st.world?.relationships ?? {}).filter((r) => r.stage === "FRIEND" || r.stage === "CLOSE_FRIEND").length;
     const married = st.relationship.status === "MARRIED";
-    const t = married
+    const bond = st.story?.bond;
+    const fatedName = Object.values(st.world?.npcs ?? {}).find((n) => n.fated)?.name ?? "";
+    const reason: BondEnd | undefined = bond?.over?.reason ?? (hasBond(st) && !st.alive ? "iDied" : undefined);
+    const sinceY = bond?.since?.year;
+    const years = sinceY !== undefined ? st.date.year - sinceY : 0;
+    const byBond: Record<BondEnd, Bi> = {
+      missed: bi("끝내 엇갈린 인연", "The One That Got Away"),
+      breakup: bi("우리의 계절은 여기까지", "Our Season Ends Here"),
+      divorce: bi("각자의 길로", "Separate Roads"),
+      theyDied: bi("먼저 떠난 당신", "You Left First"),
+      iDied: bond?.married ? bi("함께 늙어간 인생", "We Grew Old Together") : bond?.together ? bi("끝까지 연인으로", "Lovers to the End") : bi("만나지 못한 운명", "A Destiny Never Met"),
+    };
+    const story: Record<BondEnd, Bi> = {
+      missed: bi(`${fatedName}와(과)의 운명은 끝내 이어지지 않았다. 그래도 그 사람을 기다린 시간도 내 인생이었다.`, `Fate never tied you and ${fatedName} together. Still, the waiting was part of your life too.`),
+      breakup: bi(`${fatedName}와(과) 함께한 ${Math.max(1, years)}년. 우리는 여기서 헤어졌다.`, `${Math.max(1, years)} year${years > 1 ? "s" : ""} with ${fatedName}. This is where you parted.`),
+      divorce: bi(`${fatedName}와(과)의 결혼은 여기서 끝났다. ${Math.max(1, years)}년의 시간은 지워지지 않는다.`, `Your marriage to ${fatedName} ended here. The ${Math.max(1, years)} years don't disappear.`),
+      theyDied: bi(`${fatedName}이(가) 먼저 떠났다. 함께한 ${Math.max(1, years)}년이 고스란히 남았다.`, `${fatedName} left first. The ${Math.max(1, years)} years you shared remain.`),
+      iDied: bond?.together ? bi(`${fatedName}와(과) 함께 ${Math.max(1, years)}년. 마지막 날까지 곁에 있었다.`, `${Math.max(1, years)} years with ${fatedName}, side by side until the last day.`) : bi("그 사람을 만나지 못한 채 인생이 끝났다.", "Life ended before you ever met."),
+    };
+    const t = reason
+      ? byBond[reason]
+      : married
       ? bi("우리가 함께 고른 인생", "The Life We Chose Together")
       : st.flags.livedAbroad
         ? bi("멀리까지 걸어온 인생", "A Life That Went Far")
@@ -1252,7 +1339,10 @@ export class Game {
             ? bi("운명의 사람은 한 명이 아니었다", "There Was More Than One Person of Destiny")
             : bi("조용하고 평범한 행복", "A Quiet, Ordinary Happiness");
     return {
+      reason,
       title: this.L(t),
+      story: reason ? this.fill(this.L(story[reason])) : undefined,
+      together: sinceY !== undefined ? { from: sinceY, to: st.date.year, years, married: !!bond?.married } : undefined,
       summary: this.L(bi(`연애 ${partners} · 친구 ${friends} · 여행 ${trips} · ${Math.floor(st.age)}세`, `Relationships ${partners} · Friends ${friends} · Trips ${trips} · Age ${Math.floor(st.age)}`)),
       lines: s.milestones.slice(-6).map((m) => `${m.age}${s.lang === "ko" ? "세" : ""} · ${m[s.lang]}`),
       age: Math.floor(st.age),
@@ -1406,7 +1496,10 @@ export function createGame(input: GameSetup): Game {
     st.story!.compat = { score: c.score, chemistry: c.chemistry, stability: c.stability, friction: c.friction };
   }
   save.dayKind = "calm";
-  save.milestones.push({ age: startAge, ko: "이야기가 시작된다.", en: "The story begins." });
+  // Not met yet: skip straight to the day you meet.
+  const years = g.skipToMeeting();
+  if (years > 0) save.prologue = bi(`그 사람을 만나기까지, ${years}년이 흘렀다.`, `${years} year${years > 1 ? "s" : ""} went by before you met.`);
+  save.milestones.push({ age: Math.floor(st.age), ko: "이야기가 시작된다.", en: "The story begins." });
   g.startDay();
   return g;
 }

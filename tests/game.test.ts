@@ -114,7 +114,7 @@ describe("Director: consistency", () => {
 });
 
 describe("Director: pacing & variety", () => {
-  const runs = [11, 12, 13].map((s) => playLife(s));
+  const runs = [11, 12, 13, 14, 15, 16].map((s) => playLife(s));
 
   it("small events 0–3 per day, messages ≤2, majors ≤2", () => {
     for (const r of runs) {
@@ -142,7 +142,8 @@ describe("Director: pacing & variety", () => {
   });
 
   it("weekend menus vary and include more than the old three options", () => {
-    const menus = runs.flatMap((r) => r.menus);
+    // Lives are shorter now (they span the bond), so look at a few more of them.
+    const menus = [...runs, ...[17, 18, 19, 20, 24, 25].map((s) => playLife(s, 25))].flatMap((r) => r.menus);
     expect(menus.length).toBeGreaterThan(3);
     const distinct = new Set(menus.flat());
     expect(distinct.size).toBeGreaterThan(8);
@@ -150,17 +151,33 @@ describe("Director: pacing & variety", () => {
   });
 });
 
-describe("Life never ends early", () => {
-  it("days continue until the player dies (well past 45)", () => {
-    const ages: number[] = [];
+describe("The game is the bond with the destined person", () => {
+  it("it ends the day the bond ends (alive), or with your death while together", () => {
     for (const seed of [21, 22, 23]) {
       const { g } = playLife(seed, 200);
       expect(g.isOver()).toBe(true);
-      expect(g.state.alive).toBe(false);
-      ages.push(g.ending().age);
+      const e = g.ending();
+      expect(e.reason).toBeDefined();
+      if (g.state.alive) expect(["missed", "breakup", "divorce", "theyDied"]).toContain(e.reason);
+      else expect(e.reason).toBe("iDied");
+      expect(e.title.length).toBeGreaterThan(0);
     }
-    expect(Math.max(...ages)).toBeGreaterThan(60);
-    expect(ages.every((a) => a > 45)).toBe(true);
+  });
+
+  it("a couple who stays together plays on to old age (the ending is your death or theirs)", () => {
+    const g = createGame({ ...SETUP, seed: 3, fated: { ...SETUP.fated, status: "dating" as const } });
+    for (let d = 0; d < 200 && !g.isOver(); d++) {
+      for (let i = 0; i < 400; i++) {
+        const beats = g.advance(g.s.minute + 30);
+        for (const b of beats) if (b.kind === "popup") g.choose(0);
+        if (beats.some((b) => b.kind === "dayEnd")) break;
+      }
+      g.endDay();
+    }
+    const e = g.ending();
+    expect(["iDied", "theyDied"]).toContain(e.reason);
+    expect(e.age).toBeGreaterThan(60);
+    expect(e.together?.married).toBe(true);
   });
 });
 

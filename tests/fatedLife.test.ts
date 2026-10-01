@@ -329,12 +329,23 @@ describe("The English version stays English; the story starts in 2026", () => {
     expect(hits).toEqual([]);
   });
 
-  it("starts in 2026 at your real age (never younger than 18)", () => {
-    const g = createGame({ ...JAE, seed: 1 });
+  it("starts in 2026 at your real age (never younger than 18) when you're already together / in 썸", () => {
+    const g = createGame({ ...JAE, seed: 1, fated: { ...JUNG, status: "dating" } });
     expect(g.state.date.year).toBe(2026);
     expect(Math.floor(g.state.age)).toBe(29);
-    const young = createGame({ ...JAE, birth: { year: 2012, month: 3, day: 1 }, seed: 1 });
+    expect(g.s.day?.prologue).toBeUndefined();
+    const young = createGame({ ...JAE, birth: { year: 2012, month: 3, day: 1 }, seed: 1, fated: { ...JUNG, status: "talking" } });
     expect(Math.floor(young.state.age)).toBe(18);
+  });
+
+  it("strangers: the years before the meeting pass off-screen — the first day IS the meeting", () => {
+    for (const status of ["stranger", "acquaintance"] as const) {
+      const g = createGame({ ...JAE, seed: 1, fated: { ...JUNG, from: "same", status } });
+      expect(g.s.dayKind).toBe("fated");
+      expect(g.state.story!.script.find((e) => e.id === g.s.dayRef)?.theme).toBe("LOVE_MEETING");
+      expect(g.state.date.year).toBeGreaterThanOrEqual(2026);
+      if (g.state.date.year > 2026) expect(g.s.day?.prologue).toMatch(/그 사람을 만나기까지, \d+년이 흘렀다/);
+    }
   });
 });
 

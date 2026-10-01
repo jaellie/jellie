@@ -10,6 +10,7 @@
  *    Only small background life (friends' weddings/funerals, kids growing,
  *    pets aging) happens off-screen — and even those leave a memory card.
  */
+import { bondPhase, pendingMeetings } from "./bond";
 import fatedData from "../../data/story/fatedEvents.json";
 import arcData from "../../data/story/arcs.json";
 import { SeededRandom } from "../core/rng";
@@ -171,12 +172,20 @@ export function scheduleNext(state: LifeState, rng: SeededRandom): NonNullable<S
   const st = state.story!;
   const now = state.monthIndex;
   const cands: Array<{ month: number; kind: "calm" | "fated" | "foreshadow" | "arc"; ref?: string; prio: number }> = [];
+  // Before you meet the destined person, the years pass off-screen: the next played day is the meeting.
+  const meeting = bondPhase(state) === "waiting" ? pendingMeetings(state)[0] : undefined;
+  if (meeting) {
+    st.nextDay = { month: Math.max(now + 1, meeting.monthIndex), kind: "fated", ref: meeting.id };
+    return st.nextDay;
+  }
   for (const e of st.script) {
     if (e.done) continue;
     cands.push({ month: Math.max(now + 1, e.monthIndex), kind: "fated", ref: e.id, prio: 3 });
   }
   for (const a of st.arcs) {
     const step = a.steps[a.step];
+    // An in-person step waits while you live apart — it doesn't bring a day of its own.
+    if (step && a.type === "DATING" && state.relationship.longDistance && IN_PERSON.includes(step.key)) continue;
     if (step) cands.push({ month: Math.max(now + 1, step.dueMonth), kind: "arc", ref: a.id, prio: 2 });
   }
   cands.push({ month: now + Math.max(2, Math.round(maxGapMonths(state.age) * rng.range(0.75, 1))), kind: "calm", prio: 0 });
@@ -260,7 +269,9 @@ export function ensureArcs(state: LifeState, rng: SeededRandom): void {
   // Dating the destined person who lives in another city or country: long distance until someone moves.
   const life = st.fatedLife;
   const fatedPartner = !!state.relationship.partnerId && !!state.world?.npcs[state.relationship.partnerId]?.fated;
-  if (rel === "DATING" && fatedPartner && life && life.from !== "same" && !state.flags.ldrDone && !st.arcs.some((a) => a.type === "LONG_DISTANCE")) {
+  // (Or you're the one who moved away — abroad for school or work — while dating them.)
+  const far = !!life && ((life.from !== "same" && !state.flags.ldrDone) || !!state.relationship.longDistance);
+  if (rel === "DATING" && fatedPartner && far && !st.arcs.some((a) => a.type === "LONG_DISTANCE")) {
     state.relationship.longDistance = true;
     startArc(state, "LONG_DISTANCE", rng);
   }
@@ -269,7 +280,7 @@ export function ensureArcs(state: LifeState, rng: SeededRandom): void {
   if (state.relationship.longDistance) {
     const dating = st.arcs.find((a) => a.type === "DATING");
     const step = dating?.steps[dating.step];
-    if (step && (step.key === "FIRST_DATE" || step.key === "MEET_FRIENDS") && step.dueMonth <= state.monthIndex + 1) step.dueMonth = state.monthIndex + 2;
+    if (step && IN_PERSON.includes(step.key) && step.dueMonth <= state.monthIndex + 1) step.dueMonth = state.monthIndex + 2;
   }
   if (rel !== "DATING" || !state.engaged) endArc(state, "ENGAGEMENT");
   if (rel !== "MARRIED") endArc(state, "DIVORCE");
@@ -980,6 +991,9 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
         if (src.arc && src.arc.step > 0 && src.arc.steps.filter((x) => x.key === src.arc!.steps[src.arc!.step - 1].key).length < 2) {
           const [a, b] = eff.after as [number, number];
           src.arc.steps.splice(src.arc.step, 0, { key: src.arc.steps[src.arc.step - 1].key, dueMonth: state.monthIndex + rng.int(a, b) });
+        } else if (src.arc?.type === "TALKING" && src.arc.step >= src.arc.steps.length) {
+          // Still couldn't say it — the 썸 fades, but fate brings them around again.
+          applyEffects([{ kind: "fatedSecondChance" }], ctx, src);
         }
         break;
       case "fatedSecondChance": {

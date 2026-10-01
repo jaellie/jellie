@@ -91,4 +91,6 @@ export interface StoryState {
   partnerCompat?: { id: string; score: number };
   /** Life events (library): queue, history, rate limit. */
   events?: import("./lifeEvents").LifeEventState;
+  /** The bond with the destined person: when it began, how it ended (frames the whole game). */
+  bond?: import("./bond").Bond;
 }
