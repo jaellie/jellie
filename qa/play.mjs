@@ -93,6 +93,18 @@ if (prologue) {
 if (args.live) await page.evaluate((c) => { window.__qa.game.state.location.city = c; document.querySelectorAll("#road .obj").forEach((o) => o.remove()); window.__qa.reseed(); }, args.live);
 if (args.myjob) { const job = await page.locator("#hJob").textContent(); if (/L\d/.test(job)) issue(`job label has a level: ${job}`); }
 await snap("first-day");
+// The sky through a day: dawn → morning → afternoon → sunset → dusk → night.
+if (args.sky) {
+  await page.evaluate(() => (window.__qa.hold = true));
+  const start = await page.evaluate(() => window.__qa.game.s.minute);
+  for (const m of [350, 540, 840, 1110, 1215, 1380]) {
+    await page.evaluate((x) => { window.__qa.game.s.minute = x; }, m);
+    await page.waitForTimeout(2200);
+    const ph = await page.evaluate(() => document.getElementById("road").dataset.sky);
+    await snap(`sky-${m}-${ph}`);
+  }
+  await page.evaluate((x) => { window.__qa.game.s.minute = x; window.__qa.hold = false; }, start);
+}
 const bi = await page.evaluate(() => window.__qa.game.birthInfo());
 // The scene fills the play area: from under the log line to the bottom of the screen.
 {

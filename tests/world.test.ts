@@ -466,3 +466,25 @@ describe("Set dressing (scene.decor)", () => {
     expect(decorFor("instagram_screen", "instagram", true).items.length).toBeGreaterThan(0);
   });
 });
+
+describe("The sky over the road", () => {
+  it("changes through the day with rich gradients, sun/moon, stars and things flying by", async () => {
+    const { skyAt } = await import("../src/world/sky");
+    const at = (h: number) => skyAt(h * 60);
+    expect(at(5.8).phase).toBe("dawn");
+    expect(at(9).phase).toBe("morning");
+    expect(at(14).phase).toBe("afternoon");
+    expect(at(18.5).phase).toBe("sunset");
+    expect(at(23).phase).toBe("night");
+    for (const h of [6, 9, 14, 18.5, 20, 23]) expect(at(h).gradient).toHaveLength(4);
+    expect(at(9).flyers.birds).toBeGreaterThan(0);
+    expect(at(14).flyers.plane).toBeGreaterThan(0);
+    expect(at(23).flyers.shootingStar).toBeGreaterThan(0);
+    expect(at(23).stars).toBe(1);
+    expect(at(23).moon).toBeDefined();
+    expect(at(12).sun!.y).toBeLessThan(0.3);
+    // Rain dulls it and grounds the birds.
+    expect(skyAt(540, "RAIN").flyers.birds).toBe(0);
+    expect(skyAt(540, "RAIN").gradient[0]).not.toBe(at(9).gradient[0]);
+  });
+});

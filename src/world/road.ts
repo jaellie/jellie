@@ -8,6 +8,7 @@
  * The engine decides *who* walks and *where*; the UI draws the road, scrolls it while `walking`, and
  * animates everyone's backs (slower steps for the old, little trots for pets).
  */
+import { type Sky, skyAt } from "./sky";
 import type { LifeState } from "../sim/types";
 import { getLocation } from "./catalog";
 import { seasonOf, weatherFor } from "./clock";
@@ -77,6 +78,8 @@ export interface RoadView {
     trees: { look: "blossom" | "green" | "autumn" | "bare"; leaf: string; snow: boolean; ground: string };
     timeOfDay: "MORNING" | "DAY" | "EVENING" | "NIGHT";
     weather: string;
+    /** The sky right now: a rich gradient (dawn → morning → afternoon → sunset → dusk → night), sun/moon, stars, and what may fly by (see sky.ts). */
+    sky: Sky;
     /** The city's skyline and street vibe (top-50 cities; generic otherwise). */
     skyline: Skyline;
     /** Where the road is (for a foreign city skyline / signs): Korean or English per language. */
@@ -167,6 +170,7 @@ export function buildRoad(
   const north = seasonOf(date.month) as RoadView["backdrop"]["season"];
   const season = SOUTH.has(state.location.country) ? FLIP[north] : north;
   const loc = opts.locationId ? getLocation(opts.locationId) : undefined;
+  const weather = weatherFor(opts.seed, date, loc?.region ?? "home_city");
   const seaside = theme === "seaside";
   const big = !!loc && BIG_TYPES.has(loc.type);
   // By the sea, everything big stands on the land side (left); otherwise big buildings alternate sides by place.
@@ -179,7 +183,8 @@ export function buildRoad(
       season,
       trees: TREES[season],
       timeOfDay: timeOfDay(opts.minute),
-      weather: weatherFor(opts.seed, date, loc?.region ?? "home_city"),
+      weather,
+      sky: skyAt(opts.minute, weather),
       skyline: trip ? skylineFor(TRIP_CITY[trip.destinationId] ?? state.location.city, "", opts.lang) : skylineFor(state.location.city, state.location.country, opts.lang),
       city: opts.lang === "ko" ? opts.cityName(state.location.city) : state.location.city,
       country: opts.countryName(state.location.country),

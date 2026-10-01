@@ -82,6 +82,21 @@
   #end .story { position: relative; margin: 14px 34px 0; font-size: 13px; line-height: 1.7; opacity: 0; transition: opacity 2s; }
   /* The life road (play screen): 2D, seen from behind — see src/world/road.ts. */
   #road { position: absolute; top: 104px; left: 0; width: 360px; height: 636px; overflow: hidden; z-index: 1; isolation: isolate; background: var(--sky, #9fd6ff); }
+  /* The sky: the engine's 4-color gradient (top → horizon), sun/moon, twinkling stars, things flying by. */
+  #road .skybox { position: absolute; left: 0; right: 0; top: 0; height: 34%; background: var(--sky-grad, #9fd6ff); transition: background 1.5s linear; overflow: hidden; }
+  #road .sun { position: absolute; width: 34px; height: 34px; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 30px 14px var(--sun-glow, transparent); }
+  #road .moon { position: absolute; width: 22px; height: 22px; border-radius: 50%; transform: translate(-50%, -50%); background: #fff8d6; box-shadow: 0 0 14px 4px rgba(255,248,214,.35); }
+  #road .moon::after { content: ""; position: absolute; left: 7px; top: -3px; width: 22px; height: 22px; border-radius: 50%; background: var(--moon-bite, #121a45); }
+  #road .stars { position: absolute; inset: 0; transition: opacity 2s; }
+  #road .stars i { position: absolute; width: 2px; height: 2px; background: #fff; animation: twinkle 2.4s ease-in-out infinite; }
+  @keyframes twinkle { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+  #road .flyers > * { position: absolute; pointer-events: none; }
+  #road .bird { font-size: 9px; color: #2b2233; letter-spacing: 3px; animation: flyR 9s linear forwards; }
+  #road .plane { width: 14px; height: 4px; background: #f4f6fa; border: 1px solid #55607a; border-radius: 3px; animation: flyL 14s linear forwards; }
+  #road .plane::after { content: ""; position: absolute; left: 14px; top: 1px; width: 70px; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,.9), transparent); }
+  #road .shoot { width: 60px; height: 2px; background: linear-gradient(90deg, #fff, transparent); transform: rotate(-24deg); animation: shoot 1.1s ease-out forwards; }
+  @keyframes flyR { from { left: -40px; } to { left: 400px; } } @keyframes flyL { from { left: 380px; } to { left: -100px; } }
+  @keyframes shoot { from { opacity: 1; transform: translate(0, 0) rotate(-24deg); } to { opacity: 0; transform: translate(-120px, 54px) rotate(-24deg); } }
   #road .ground { position: absolute; left: 0; right: 0; top: 34%; bottom: 0; background: var(--ground, #8fce6a); }
   #road .way { position: absolute; left: 0; right: 0; top: 34%; bottom: 0; background: var(--way, #cdb89a); clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%); }
   #road .dash { position: absolute; left: 49.4%; width: 1.2%; top: 34%; bottom: 0; background: repeating-linear-gradient(transparent 0 26px, rgba(255,255,255,.85) 26px 44px); clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%); }
@@ -211,7 +226,7 @@
     <div id="log" data-testid="log">…</div>
     <div id="notes" data-testid="notes"></div>
     <div id="scene" data-testid="scene"></div>
-    <div id="road" data-testid="road"><div class="far"></div><div class="ground"></div><div class="way"></div><div class="dash"></div><div class="objs"></div><div class="walkers"></div><div class="weather"></div><div class="shade"></div></div>
+    <div id="road" data-testid="road"><div class="skybox" data-testid="sky"><div class="stars"></div><div class="sun"></div><div class="moon"></div><div class="flyers"></div></div><div class="far"></div><div class="ground"></div><div class="way"></div><div class="dash"></div><div class="objs"></div><div class="walkers"></div><div class="weather"></div><div class="shade"></div></div>
     <div id="place" data-testid="place"></div>
     <div id="diary" data-testid="diary"></div>
     <div id="prologue" data-testid="prologue"></div>
@@ -325,7 +340,6 @@
   }
 
   // ---- the life road ----------------------------------------------------------------------------------
-  const SKY = { MORNING: "#bfe6ff", DAY: "#8fd0ff", EVENING: "#f7b08a", NIGHT: "#2a2a5a" };
   const THEME = { city: { obj: "bldg", bldg: "#c9c3d6" }, town: { obj: "mix", bldg: "#e6cfa8" }, seaside: { obj: "tree", way: "#e9d9a6" }, countryside: { obj: "tree", way: "#c2a57a" }, abroad: { obj: "bldg", bldg: "#e8b8a0" }, travel: { obj: "mix", bldg: "#f0d0e0" } };
   let roadView = null, objs = [], lastT = 0, landmarkShown = null;
   const HORIZON = 0.34 * 642;
@@ -334,18 +348,30 @@
     const el = $("road"), b = rv.backdrop, th = THEME[b.theme] || THEME.town;
     el.classList.toggle("walking", rv.walking);
     el.dataset.theme = b.theme; el.dataset.sea = b.sea || ""; el.dataset.walkers = rv.walkers.map((w) => w.role).join(",");
-    el.style.setProperty("--sky", SKY[b.timeOfDay]); el.style.setProperty("--ground", b.trees.ground);
+    // The sky: gradient, sun, moon, stars (all from the engine).
+    const sky = b.sky, sb = el.querySelector(".skybox");
+    el.dataset.sky = sky.phase;
+    el.style.setProperty("--sky-grad", `linear-gradient(${sky.gradient.join(",")})`);
+    el.style.setProperty("--moon-bite", sky.gradient[0]);
+    const sun = sb.querySelector(".sun"), moon = sb.querySelector(".moon");
+    sun.style.display = sky.sun ? "block" : "none";
+    if (sky.sun) { sun.style.left = sky.sun.x * 100 + "%"; sun.style.top = sky.sun.y * 100 + "%"; sun.style.background = sky.sun.color; el.style.setProperty("--sun-glow", sky.sun.glow); }
+    moon.style.display = sky.moon ? "block" : "none";
+    if (sky.moon) { moon.style.left = sky.moon.x * 100 + "%"; moon.style.top = sky.moon.y * 100 + "%"; }
+    const stars = sb.querySelector(".stars");
+    if (!stars.children.length) stars.innerHTML = Array.from({ length: 46 }, (_, k) => `<i style="left:${(k * 37) % 100}%;top:${(k * 53) % 92}%;animation-delay:${(k % 7) * 0.35}s"></i>`).join("");
+    stars.style.opacity = sky.stars; el.style.setProperty("--ground", b.trees.ground);
     el.style.setProperty("--way", th.way || "#cdb89a"); el.style.setProperty("--leaf", b.trees.leaf); el.dataset.trees = b.trees.look;
     const sk = b.skyline;
     el.style.setProperty("--bldg", sk.palette.buildings); el.style.setProperty("--accent", sk.palette.accent);
-    if (b.timeOfDay === "DAY" || b.timeOfDay === "MORNING") el.style.setProperty("--sky", sk.palette.sky);
+
     // The city's skyline on the horizon (a new city → new landmarks).
     const far = el.querySelector(".far");
     if (far.dataset.city !== sk.id) {
       far.dataset.city = sk.id; el.dataset.skyline = sk.id;
       far.innerHTML = sk.landmarks.map((n, i) => `<div class="lm" data-testid="landmark-sky" style="height:${26 + ((i * 17) % 30)}px"><span>${n}</span></div>`).join("");
     }
-    el.style.setProperty("--shade", b.timeOfDay === "NIGHT" ? "rgba(10,10,40,.35)" : b.timeOfDay === "EVENING" ? "rgba(255,120,60,.12)" : "transparent");
+    el.style.setProperty("--shade", sky.phase === "night" ? "rgba(10,10,40,.35)" : sky.phase === "dusk" ? "rgba(60,30,90,.2)" : sky.phase === "sunset" ? "rgba(255,120,60,.14)" : sky.phase === "dawn" ? "rgba(255,170,150,.1)" : "transparent");
     el.querySelector(".weather").className = "weather " + (b.weather === "RAIN" || b.weather === "STORM" ? "RAIN" : b.weather === "SNOW" ? "SNOW" : "");
     // A new place today: it comes up the road as a landmark with a sign.
     if (rv.landmark && rv.landmark.id !== landmarkShown) { landmarkShown = rv.landmark.id; spawn(0.02, true, rv.landmark.name, rv.landmark.side === "right" ? 1 : -1, rv.landmark.size); }
@@ -392,6 +418,14 @@
   function stepRoad(t) {
     const dt = Math.min(0.05, (t - lastT) / 1000); lastT = t;
     if (screen !== "play" || !roadView) return;
+    // Now and then something crosses the sky: birds in the morning, a plane in the afternoon, a shooting star at night.
+    const fl = roadView.backdrop.sky.flyers, box = $("road").querySelector(".flyers");
+    const launch = (cls, html, top) => { const f = document.createElement("div"); f.className = cls; f.dataset.testid = "flyer-" + cls; f.innerHTML = html; f.style.top = top + "%"; if (cls === "shoot") f.style.left = 40 + Math.random() * 55 + "%"; f.onanimationend = () => f.remove(); box.appendChild(f); };
+    if (box.children.length < 2) {
+      if (Math.random() < fl.birds * dt) launch("bird", "v v<br>&nbsp;v", 15 + Math.random() * 35);
+      if (Math.random() < fl.plane * dt) launch("plane", "", 10 + Math.random() * 25);
+      if (Math.random() < fl.shootingStar * dt) launch("shoot", "", 8 + Math.random() * 30);
+    }
     const speed = roadView.walking ? 0.16 : 0;
     if (roadView.walking && objs.filter((o) => !o.landmark).length < 10 && Math.random() < dt * 3) spawn(0.02, false);
     for (const o of objs) {
