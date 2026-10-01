@@ -1618,11 +1618,12 @@
    }
   },
   "PARENT_PASSING": {
+   "_doc": "A parent's passing is its own story, never a one-line notice: the last night at the hospital (their last words), the funeral, the empty days after. altBy 'parent' = arc.data.who (mom/dad); vars {parent} (엄마/아빠), {child} (딸/아들).",
    "steps": {
-    "GOODBYE": {
+    "LAST_WORDS": {
      "title": {
-      "ko": "마지막 인사",
-      "en": "The last goodbye"
+      "ko": "마지막 밤",
+      "en": "The Last Night"
      },
      "after": [
       0,
@@ -1630,40 +1631,242 @@
      ],
      "location": "hospital",
      "activity": "visit_patient",
-     "who": "relative",
+     "who": "mom",
      "line": {
-      "ko": "…마지막 인사를 드려야 할 것 같아.",
-      "en": "…I think it's time to say goodbye."
+      "ko": "…왔어? 우리 {child}. 밥은… 먹고 왔고?",
+      "en": "…You came, my {child}. Did you… eat something?"
+     },
+     "altBy": "parent",
+     "alt": {
+      "mom": {
+       "who": "mom",
+       "line": {
+        "ko": "…왔어? 우리 {child}. 밥은… 먹고 왔고? (새벽에 걸려 온 병원 전화. 중환자실의 엄마가 힘겹게 웃었다.)",
+        "en": "…You came, my {child}. Did you… eat? (The hospital called before dawn. In the ICU, Mom forced a smile.)"
+       }
+      },
+      "dad": {
+       "who": "dad",
+       "line": {
+        "ko": "…바쁜데 뭐 하러 왔어. …그래도, 보고 싶었다. (새벽에 걸려 온 병원 전화. 아빠가 처음으로 먼저 손을 내밀었다.)",
+        "en": "…You're busy, why'd you come. …Still, I missed you. (The hospital called before dawn. For the first time, Dad reached for your hand first.)"
+       }
+      }
      },
      "choices": [
       {
        "t": {
-        "ko": "손을 잡는다",
-        "en": "Hold their hand"
+        "ko": "{parent} {child}로 태어나서, 정말 행복했어",
+        "en": "I was so lucky to be your {child}."
        },
-       "outcome": "PASSED"
+       "outcome": "THANKS"
       },
       {
        "t": {
-        "ko": "고맙다고 말한다",
-        "en": "Say thank you"
+        "ko": "(아무 말도 못 하고 손만 꼭 잡는다)",
+        "en": "(You can't say a word. You just hold on to their hand.)"
        },
-       "outcome": "PASSED"
+       "outcome": "SILENT"
+      },
+      {
+       "t": {
+        "ko": "가지 마. 나 아직 해 준 것도 없잖아",
+        "en": "Don't go. I haven't done anything for you yet."
+       },
+       "outcome": "NOT_YET"
       }
      ],
      "outcomes": {
-      "PASSED": {
+      "THANKS": {
        "r": {
-        "ko": "조용한 새벽이었다.",
-        "en": "It was a quiet dawn."
+        "ko": "{parent}가 아주 작게 웃었다. 그게 마지막 웃음이었다. 새벽 4시 12분, 모니터의 선이 평평해졌다.",
+        "en": "{parent} smiled, just barely. It was the last smile. At 4:12 a.m., the line on the monitor went flat."
        },
        "effects": [
         {
          "kind": "parentDies"
         }
+       ]
+      },
+      "SILENT": {
+       "r": {
+        "ko": "따뜻하던 손이 천천히 식어 갔다. 끝내 그 말을 하지 못했다. …사랑한다는 말.",
+        "en": "The warm hand slowly went cold. You never said it. …That you loved them."
+       },
+       "effects": [
+        {
+         "kind": "parentDies"
+        }
+       ]
+      },
+      "NOT_YET": {
+       "r": {
+        "ko": "'…다 해 줬어. 너 하나면 충분했어.' {parent}의 마지막 말이었다.",
+        "en": "'…You gave me everything. You were enough.' Those were {parent}'s last words."
+       },
+       "effects": [
+        {
+         "kind": "parentDies"
+        }
+       ]
+      }
+     }
+    },
+    "FUNERAL": {
+     "title": {
+      "ko": "부고",
+      "en": "In Memoriam"
+     },
+     "after": [
+      0,
+      0
+     ],
+     "location": "funeral_hall",
+     "activity": "mourn",
+     "who": "me",
+     "line": {
+      "ko": "(영정 사진 속 {parent}가 웃고 있다. 조문객들이 오고, 또 갔다.)",
+      "en": "({parent} smiles in the funeral portrait. Mourners come, and go.)"
+     },
+     "altBy": "parent",
+     "alt": {
+      "mom": {
+       "who": "me",
+       "line": {
+        "ko": "(영정 사진 속 엄마가 웃고 있다. 작년 생일에 내가 찍어 드린 사진이다. 조문객들이 오고, 또 갔다.)",
+        "en": "(Mom smiles in the funeral portrait — the photo you took on her last birthday. Mourners come, and go.)"
+       }
+      },
+      "dad": {
+       "who": "me",
+       "line": {
+        "ko": "(영정 사진 속 아빠는 어색하게 웃고 있다. 사진만 찍으면 늘 그러셨다. 조문객들이 오고, 또 갔다.)",
+        "en": "(Dad smiles awkwardly in the portrait — the way he always did for photos. Mourners come, and go.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "끝까지 자리를 지킨다",
+        "en": "Stay by the altar to the end"
+       },
+       "outcome": "STAY"
+      },
+      {
+       "t": {
+        "ko": "(아무도 없는 비상계단에서 혼자 운다)",
+        "en": "(Cry alone in the empty stairwell)"
+       },
+       "outcome": "CRY"
+      }
+     ],
+     "outcomes": {
+      "STAY": {
+       "r": {
+        "ko": "사흘 밤을 꼬박 새웠다. 발인 날 아침, 하늘이 이상하리만치 맑았다.",
+        "en": "You stayed up three nights. On the morning of the procession, the sky was strangely clear."
+       },
+       "effects": [
+        {
+         "kind": "familyObligation",
+         "delta": 0.1
+        }
        ],
        "scene": [
         "funeral_hall"
+       ]
+      },
+      "CRY": {
+       "r": {
+        "ko": "한참을 울고 나니, {parent} 목소리가 들리는 것 같았다. '울지 마, 우리 {child}.'",
+        "en": "After crying for a long time, you could almost hear {parent}'s voice. 'Don't cry, my {child}.'"
+       },
+       "effects": [],
+       "scene": [
+        "funeral_hall"
+       ]
+      }
+     }
+    },
+    "AFTER": {
+     "title": {
+      "ko": "빈자리",
+      "en": "The Empty Seat"
+     },
+     "after": [
+      2,
+      4
+     ],
+     "location": "home",
+     "activity": "rest",
+     "who": "me",
+     "line": {
+      "ko": "({parent}가 없는 첫 명절이 다가온다.)",
+      "en": "(The first holiday without {parent} is coming.)"
+     },
+     "altBy": "parent",
+     "alt": {
+      "mom": {
+       "who": "me",
+       "line": {
+        "ko": "(엄마 번호로 문자를 보냈다. '엄마, 보고 싶어.' …1이 사라지지 않는다.)",
+        "en": "(You texted Mom's number. 'Mom, I miss you.' …It stays unread.)"
+       }
+      },
+      "dad": {
+       "who": "me",
+       "line": {
+        "ko": "(아빠 휴대폰을 정리하다 봤다. 내 번호는 '우리 {child} ♥'로 저장되어 있었다.)",
+        "en": "(Going through Dad's phone, you saw it: your number was saved as 'My {child} ♥'.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "{parent}가 해 주던 음식을 만들어 본다",
+        "en": "Try cooking what {parent} used to make"
+       },
+       "outcome": "COOK"
+      },
+      {
+       "t": {
+        "ko": "(휴대폰을 꼭 쥔 채 잠든다)",
+        "en": "(Fall asleep holding the phone)"
+       },
+       "outcome": "SLEEP"
+      }
+     ],
+     "outcomes": {
+      "COOK": {
+       "r": {
+        "ko": "그 맛이 아니었다. 그래도 끝까지 다 먹었다. 살아야 하니까.",
+        "en": "It didn't taste the same. You finished it anyway. You have to keep living."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Cooked what my parent used to make.",
+         "tags": [
+          "family"
+         ]
+        }
+       ]
+      },
+      "SLEEP": {
+       "r": {
+        "ko": "꿈에 {parent}가 나왔다. 아무 말 없이, 그냥 웃고 있었다.",
+        "en": "{parent} came to you in a dream. Not saying anything. Just smiling."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "A dream of my parent.",
+         "tags": [
+          "family"
+         ]
+        }
        ]
       }
      }

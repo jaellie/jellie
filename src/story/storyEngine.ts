@@ -80,7 +80,7 @@ interface ArcStepDef {
    */
   byMbti?: Array<{ me?: string; them?: string; who?: string; line: Bi; location?: string; choices?: ArcStepDef["choices"]; outcomes?: Record<string, { r: Bi; who?: string }> }>;
   /** "distance": by where the destined partner lives (city / abroad). */
-  altBy?: "cause" | "speaker" | "distance";
+  altBy?: "cause" | "speaker" | "distance" | "parent";
   /** A fixed outcome, or a roll (bent by 궁합 when the partner is the destined person). */
   choices: Array<{ t: Bi; outcome?: string; roll?: Record<string, number>; compat?: Record<string, number> }>;
   outcomes: Record<string, { r: Bi; effects: StoryEffect[]; card?: string; scene?: string[]; who?: string }>;
@@ -94,7 +94,7 @@ const ARC_ORDER: Record<ArcType, string[]> = {
   DIVORCE: ["COURT"],
   PREGNANCY: ["CHECKUP", "BIRTH"],
   RETIREMENT: ["FAREWELL"],
-  PARENT_PASSING: ["GOODBYE"],
+  PARENT_PASSING: ["LAST_WORDS", "FUNERAL", "AFTER"],
   PET_FAREWELL: ["GOODBYE"],
   ILLNESS: ["TREATMENT", "RESULT"],
   PARTNER_PASSING: ["CALL", "FAREWELL"],
@@ -508,6 +508,11 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
   const stepChoices = mv?.choices ?? def.choices;
   const vars: Record<string, string> = {};
   if (arc.data?.relative) vars.relative = String(arc.data.relative);
+  if (arc.type === "PARENT_PASSING") {
+    // 엄마/아빠 and 딸/아들 (the English UI turns them into Mom/Dad, daughter/son).
+    vars.parent = arc.data?.who === "dad" ? "아빠" : "엄마";
+    vars.child = state.birth.sex === "MALE" ? "아들" : "딸";
+  }
   const loc = location ?? def.location;
   const online = loc === "instagram" || loc === "language_exchange_app" || loc === "dating_app" || loc === "online_community";
   return { ref: `arc:${arc.id}`, who, line, choices: stepChoices.map((c) => c.t), location: loc, activity: def.activity, vars, title: def.title, needsFated: !online && (who === "fated" || !!def.withFated), needsPartner: (who === "partner" || arc.type === "DATING") && loc !== "home" };
@@ -548,6 +553,10 @@ function mbtiVariant(state: LifeState, arc: ActiveArc, key: string, def: ArcStep
 function arcSpeaker(def: ArcStepDef, arc: ActiveArc, facts: LifeFacts, state?: LifeState): { who: string; line: Bi; location?: string } {
   if (def.alt && def.altBy === "distance") {
     const a = def.alt[state?.story?.fatedLife?.from ?? ""];
+    if (a) return a;
+  }
+  if (def.alt && def.altBy === "parent") {
+    const a = def.alt[String(arc.data?.who ?? "")];
     if (a) return a;
   }
   if (def.alt && def.altBy === "cause") {
@@ -698,6 +707,8 @@ function flushFollowUpCards(state: LifeState, ctx: StoryCtx): void {
 
 function illnessResultText(arc: ActiveArc): Bi {
   const who = arc.data?.patientName as string;
+  if (arc.data?.passed && (arc.data.patient === "mom" || arc.data.patient === "dad"))
+    return { ko: `…더 이상 할 수 있는 치료가 없다고 했다. ${who} 곁에 있어 드리라고 했다.`, en: `…There was nothing more they could do. They told you to stay with ${who}.` };
   return arc.data?.passed
     ? { ko: `…${who}은(는) 끝내 이겨내지 못했다.`, en: `…${who} couldn't overcome it in the end.` }
     : { ko: `완치 판정을 받았다! ${who}와(과) 함께 울었다.`, en: `Declared cancer-free! You cried together with ${who}.` };
@@ -1036,6 +1047,14 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
           src.arc.steps[src.arc.step].dueMonth = state.monthIndex + rng.int(a, b);
         }
         break;
+      case "parentCritical": {
+        // The hospital calls: the last night comes as its own day (last words → funeral → the empty days).
+        const who = (eff.who as "mom" | "dad" | undefined) ?? "mom";
+        if (!state.family?.[who]?.alive || state.story!.arcs.some((a) => a.type === "PARENT_PASSING")) break;
+        const arc = startArc(state, "PARENT_PASSING", rng, { who });
+        if (arc) arc.steps[0].dueMonth = state.monthIndex + 1;
+        break;
+      }
       case "parentDies": {
         const who = (eff.who as "mom" | "dad" | undefined) ?? (src.arc?.data?.who as "mom" | "dad" | undefined) ?? "mom";
         if (state.family?.[who]) state.family[who].alive = false;
@@ -1086,9 +1105,8 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
         }
         arc.data = { ...arc.data, passed: true };
         if (who === "mom" || who === "dad") {
-          if (state.family?.[who]) state.family[who].alive = false;
-          parentHooks(state, who, rng);
-          queueCard(state, who === "mom" ? "MOM_FUNERAL" : "DAD_FUNERAL", ctx);
+          // Not a one-line notice: the last night at the hospital comes as its own day.
+          applyEffects([{ kind: "parentCritical", who }], ctx, src);
         } else if (who === "partner") {
           state.flags.lastPartnerName = String(arc.data.patientName ?? "");
           queueCard(state, "PARTNER_FUNERAL", ctx);

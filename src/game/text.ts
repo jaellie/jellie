@@ -141,7 +141,7 @@ const FAMILY_EN: Record<string, string> = {
   고모: "my aunt", 이모: "my aunt", 숙모: "my aunt", 외숙모: "my aunt", 큰어머니: "my aunt", 작은어머니: "my aunt",
   오빠: "my older brother", 형: "my older brother", 누나: "my older sister", 언니: "my older sister",
   남동생: "my younger brother", 여동생: "my younger sister", 동생: "my younger sibling",
-  엄마: "Mom", 아빠: "Dad", 조카: "my niece/nephew", 사촌: "my cousin",
+  엄마: "Mom", 아빠: "Dad", 딸: "daughter", 아들: "son", 조카: "my niece/nephew", 사촌: "my cousin",
 };
 
 const INI = ["g", "kk", "n", "d", "tt", "r", "m", "b", "pp", "s", "ss", "", "j", "jj", "ch", "k", "t", "p", "h"];

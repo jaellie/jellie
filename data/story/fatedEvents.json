@@ -1694,19 +1694,16 @@
      "outcomes": {
       "PASSING": {
        "r": {
-        "ko": "…엄마는 마지막까지 내 손을 잡고 있었다.",
-        "en": "…Mom held your hand until the end."
+        "ko": "…의사가 가족들을 불렀다. 오늘 밤을 넘기기 어렵다고 했다.",
+        "en": "…The doctor called the family in. Tonight may be the last."
        },
        "effects": [
         {
-         "kind": "parentDies",
+         "kind": "parentCritical",
          "who": "mom"
         }
        ],
-       "card": "MOM_FUNERAL",
-       "scene": [
-        "funeral_hall"
-       ]
+       "card": "MOM_FUNERAL"
       },
       "RECOVERY": {
        "r": {
@@ -1765,19 +1762,16 @@
      "outcomes": {
       "PASSING": {
        "r": {
-        "ko": "…아빠는 조용히 눈을 감았다.",
-        "en": "…Dad quietly closed his eyes."
+        "ko": "…의사가 고개를 저었다. 아빠 곁에 있어 드리라고 했다.",
+        "en": "…The doctor shook his head. 'Stay with your dad.'"
        },
        "effects": [
         {
-         "kind": "parentDies",
+         "kind": "parentCritical",
          "who": "dad"
         }
        ],
-       "card": "DAD_FUNERAL",
-       "scene": [
-        "funeral_hall"
-       ]
+       "card": "DAD_FUNERAL"
       },
       "RECOVERY": {
        "r": {
@@ -1894,19 +1888,16 @@
      "outcomes": {
       "PASSING": {
        "r": {
-        "ko": "…엄마는 마지막까지 내 손을 잡고 있었다.",
-        "en": "…Mom held your hand until the end."
+        "ko": "…의사가 가족들을 불렀다. 오늘 밤을 넘기기 어렵다고 했다.",
+        "en": "…The doctor called the family in. Tonight may be the last."
        },
        "effects": [
         {
-         "kind": "parentDies",
+         "kind": "parentCritical",
          "who": "mom"
         }
        ],
-       "card": "MOM_FUNERAL",
-       "scene": [
-        "funeral_hall"
-       ]
+       "card": "MOM_FUNERAL"
       },
       "RECOVERY": {
        "r": {
