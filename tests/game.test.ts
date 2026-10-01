@@ -390,3 +390,54 @@ describe("Nationality", () => {
     expect(o.some((x) => x.id === "JP" && x.name === "일본")).toBe(true);
   });
 });
+
+describe("Painted moments", () => {
+  it("the first kiss darkens: dusk for the lead-up, moonlight for 달빛 아래; only you two on the painting", () => {
+    let night: { photo?: string; cast?: string[] } | undefined, dusk: string | undefined;
+    for (let seed = 1; seed <= 8 && !night; seed++) {
+      const g = createGame({ name: "J", gender: "F", likes: "M", birth: { year: 1997, month: 9, day: 28 }, mbti: "ENFP", seed, fated: { name: "Ren", status: "dating", since: { year: 2024, month: 1, day: 1 } } } as never);
+      for (let d = 0; d < 12 && !g.isOver() && !night; d++) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) if (b.kind === "popup") {
+            const sc = b.popup.scene as { photo?: string; photoCast?: string[] } | undefined;
+            if (b.popup.title === "달빛 아래") night = { photo: sc?.photo, cast: sc?.photoCast };
+            if (b.popup.title === "멈춘 숨") dusk = sc?.photo;
+            g.choose(0);
+          }
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        g.endDay();
+      }
+    }
+    expect(dusk).toBe("bg/park_evening.png");
+    expect(night?.photo).toBe("bg/park_night.png");
+    expect(night?.cast?.length).toBe(2);
+  }, 120000);
+});
+
+describe("Painted moments", () => {
+  it("every big popup has a painting; the first kiss goes dusk → moonlight with only you two in it", () => {
+    let night: { photo?: string; cast?: string[] } | undefined, dusk: string | undefined;
+    for (let seed = 1; seed <= 8 && !night; seed++) {
+      const g = createGame({ name: "J", gender: "F", likes: "M", birth: { year: 1997, month: 9, day: 28 }, mbti: "ENFP", seed, fated: { name: "Ren", status: "dating", since: { year: 2024, month: 1, day: 1 } } } as never);
+      for (let d = 0; d < 12 && !g.isOver() && !night; d++) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) if (b.kind === "popup") {
+            const sc = b.popup.scene as { photo?: string; photoCast?: string[] } | undefined;
+            if (b.popup.big && sc) expect(sc.photo).toMatch(/^bg\/\w+\.png$/);
+            if (b.popup.title === "달빛 아래") night = { photo: sc?.photo, cast: sc?.photoCast };
+            if (b.popup.title === "멈춘 숨") dusk = sc?.photo;
+            g.choose(0);
+          }
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        expect(g.endDay().photo).toMatch(/^bg\/\w+\.png$/);
+      }
+    }
+    expect(dusk).toBe("bg/park_evening.png");
+    expect(night?.photo).toBe("bg/park_night.png");
+    expect(night?.cast?.length).toBe(2);
+  }, 120000);
+});

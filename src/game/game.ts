@@ -829,10 +829,13 @@ export class Game {
    * is about them, your partner / the one you're falling for — stand in it (photoCast), even if the
    * live scene hadn't placed them yet.
    */
-  private photoScene(withWho?: "partner" | "fated"): PrototypeScene | undefined {
+  private photoScene(withWho?: "partner" | "fated", paint?: string): PrototypeScene | undefined {
     const st = this.state;
     if (!this.s.lastScene) return undefined;
     const sc = JSON.parse(JSON.stringify(this.s.lastScene)) as PrototypeScene;
+    // A moment with its own light (the first kiss: dusk, then moonlight).
+    const own = paint ? photoFor(paint) : undefined;
+    if (own === `bg/${paint}.png`) sc.photo = own;
     if (!sc.photo) return sc;
     const me = sc.actors.find((a) => a.role === "me");
     const cast = me ? [me.who] : [];
@@ -927,6 +930,11 @@ export class Game {
         const couple = arcType === "DATING" || arcType === "ENGAGEMENT" || arcType === "PARTING" || arcType === "PREGNANCY";
         if ((def.needsPartner || def.who === "partner" || couple) && !st.relationship.longDistance) return "partner";
         return undefined;
+      })(), (() => {
+        // The first kiss gets darker as it nears: dusk for the lead-up, moonlight for "달빛 아래".
+        const arc = kind === "arc" ? st.story?.arcs.find((a) => a.id === ref) : undefined;
+        if (arc?.type !== "DATING" || arc.steps[arc.step]?.key !== "FIRST_KISS") return undefined;
+        return def.title?.ko === "달빛 아래" ? "park_night" : "park_evening";
       })()), // a snapshot (wander() keeps moving the live scene)
     };
     s.pending = { popup, storyRef: def.ref, patient, vars };

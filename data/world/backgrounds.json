@@ -285,6 +285,13 @@
    "status": "planned"
   },
   {
+   "id": "park_night",
+   "locationId": "park",
+   "timeOfDay": "NIGHT",
+   "assetPath": "assets/bg/park/park_night.png",
+   "status": "planned"
+  },
+  {
    "id": "park_spring",
    "locationId": "park",
    "season": "SPRING",

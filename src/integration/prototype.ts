@@ -114,7 +114,8 @@ const HAVE = new Set(PHOTOS.have);
 /** The painted background for a place ("bg/park_proposal.png"): its own, else the nearest one we have. */
 export function photoFor(bgId: string, locationId?: string): string | undefined {
   for (const id of [bgId, PHOTOS.fallback[bgId], locationId, locationId ? PHOTOS.fallback[locationId] : undefined]) if (id && HAVE.has(id)) return `bg/${id}.png`;
-  return undefined;
+  // Every scene gets a painting — never the old drawn room.
+  return HAVE.has("street_day") ? "bg/street_day.png" : undefined;
 }
 
 export function toPrototypeScene(scene: Scene): PrototypeScene {
