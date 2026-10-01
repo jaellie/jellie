@@ -36,7 +36,8 @@
   "street_night",
   "street_rain",
   "wedding_ceremony",
-  "wedding_reception"
+  "wedding_reception",
+  "wedding_spring"
  ],
  "fallback": {
   "home_morning": "home_living_room",

@@ -514,3 +514,11 @@ describe("Painted popup backgrounds", () => {
     for (const id of (await import("../data/world/photos.json")).default.have) expect(fs.existsSync(`assets/bg/${id}.png`)).toBe(true);
   });
 });
+
+describe("Spring wedding", () => {
+  it("a wedding in spring uses the cherry-blossom chapel; otherwise the usual ceremony", async () => {
+    const { backgroundEngine } = await import("../src/world/backgroundEngine");
+    expect(backgroundEngine.getBackground({ location: "wedding_venue", timeOfDay: "AFTERNOON", season: "SPRING" } as never).background.id).toBe("wedding_spring");
+    expect(backgroundEngine.getBackground({ location: "wedding_venue", timeOfDay: "AFTERNOON", season: "AUTUMN" } as never).background.id).toBe("wedding_ceremony");
+  });
+});

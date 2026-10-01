@@ -827,7 +827,9 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
     for (const l of c.fits ?? "") fit += sp.theirs.includes(l) ? 0.15 : -0.1;
     arc.data = { ...arc.data, seq: JSON.stringify({ key: step.key, n: sp.n + 1, spark: (sp.cur?.key === step.key ? sp.cur.spark : 0) + fit }) };
     const r = fit < 0 && c.rMiss ? c.rMiss : c.r ?? { ko: "…", en: "…" };
-    return { r: themText(r, arc), outcome: "SEQ", more: true };
+    // Before the climax, the scene moves to where the charts set it (the letter → the library).
+    const climaxLoc = sp.n === 2 ? (mbtiVariant(state, arc, step.key, def) ?? fateVariant(state, def))?.location : undefined;
+    return { r: themText(r, arc), outcome: "SEQ", more: true, ...(climaxLoc && climaxLoc !== def.location ? { scene: [climaxLoc] } : {}) };
   }
   const seqCur = SEQS[step.key] && seqState(arc)?.key === step.key ? seqState(arc) : undefined;
   if (SEQS[step.key]) {

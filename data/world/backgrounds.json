@@ -646,6 +646,13 @@
    "status": "planned"
   },
   {
+   "id": "wedding_spring",
+   "locationId": "wedding_venue",
+   "season": "SPRING",
+   "assetPath": "assets/bg/wedding_venue/wedding_spring.png",
+   "status": "planned"
+  },
+  {
    "id": "wedding_reception",
    "locationId": "wedding_venue",
    "activities": [

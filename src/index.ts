@@ -60,3 +60,6 @@ export * from "./game/facts";
 export * from "./game/director";
 export * from "./game/lint";
 export { fixJosa } from "./game/text";
+
+/** Which engine build this is — show it small somewhere (Letter from Creator) to check the UI really swapped engines. */
+export const ENGINE_VERSION = "2026-10-01.m";
