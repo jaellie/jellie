@@ -1,0 +1,882 @@
+{
+ "_doc": "Free-spirited weekend picks ('오늘 {p}와(과) 뭐 할까?'), just for fun — they only decide where the day goes, with their own little reply. By where you live: KR (인생네컷, 치맥…), JP (불꽃놀이, 이자카야…), FR (센 강 피크닉, 불랑제리…), ANGLO (drive-in, farmers' market…) — other countries use ANGLO. apart = long distance (anywhere). {p} = partner; season = only then.",
+ "KR": {
+  "couple": [
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "{p}와(과) 강변에서 치맥",
+     "en": "Fried chicken & beer by the river with {p}"
+    },
+    "r": {
+     "ko": "(바람이 좋았다. 닭다리는 {p}이(가) 양보했다.)",
+     "en": "(Perfect breeze. {p} gave you the drumstick.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "인생네컷 찍으러 가기",
+     "en": "Go take a four-cut photo booth strip"
+    },
+    "r": {
+     "ko": "(머리띠를 다섯 개나 써 봤다. 결국 토끼 귀로.)",
+     "en": "(You tried on five headbands. Bunny ears won.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "공방에서 커플링 만들기",
+     "en": "Make couple rings at a workshop"
+    },
+    "r": {
+     "ko": "(반지 안쪽에 날짜를 새겼다. 손이 좀 떨렸다.)",
+     "en": "(You engraved today's date inside. Your hands shook a little.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "코인노래방에서 듀엣",
+     "en": "Duet at a coin karaoke booth"
+    },
+    "r": {
+     "ko": "(고음에서 둘 다 삑사리. 그래서 더 웃겼다.)",
+     "en": "(You both cracked on the high note. Even funnier.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "방탈출 카페 도전",
+     "en": "Try an escape room"
+    },
+    "r": {
+     "ko": "(탈출 실패. 힌트를 네 번 썼다. 그래도 팀워크는 최고.)",
+     "en": "(Didn't escape. Four hints. Teamwork: still elite.)"
+    }
+   },
+   {
+    "loc": "cafe",
+    "act": "date",
+    "label": {
+     "ko": "보드게임 카페에서 승부",
+     "en": "Board-game café showdown"
+    },
+    "r": {
+     "ko": "(지는 사람이 설거지. {p}이(가) 졌다. 아마도 일부러.)",
+     "en": "(Loser does the dishes. {p} lost. Probably on purpose.)"
+    }
+   },
+   {
+    "loc": "home",
+    "act": "date",
+    "label": {
+     "ko": "똑같은 잠옷 입고 드라마 정주행",
+     "en": "Matching pajamas and a drama marathon"
+    },
+    "r": {
+     "ko": "(밤새 12화까지 봤다. 둘 다 같은 장면에서 울었다.)",
+     "en": "(Twelve episodes overnight. You both cried at the same scene.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "새벽 편의점 라면 데이트",
+     "en": "A 2 a.m. convenience-store ramyeon date"
+    },
+    "r": {
+     "ko": "(삼각김밥까지 나눠 먹었다. 별거 아닌데 제일 좋았다.)",
+     "en": "(You split a rice triangle too. Nothing special — the best part.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "캠핑 의자 들고 노을 보기",
+     "en": "Camping chairs and a sunset"
+    },
+    "r": {
+     "ko": "(해가 다 질 때까지 아무 말도 안 했다. 그래도 좋았다.)",
+     "en": "(Neither of you spoke until the sun was gone. It was perfect.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "즉흥 드라이브",
+     "en": "A spontaneous drive"
+    },
+    "r": {
+     "ko": "(목적지 없이 달리다 처음 보는 바다에 도착했다.)",
+     "en": "(No destination — you ended up at a sea you'd never seen.)"
+    }
+   },
+   {
+    "loc": "diner",
+    "act": "date",
+    "label": {
+     "ko": "동네 맛집 도장 깨기",
+     "en": "Conquer the neighborhood food map"
+    },
+    "r": {
+     "ko": "(오늘의 도장: 3개. 배는 터질 것 같다.)",
+     "en": "(Stamps today: three. Stomachs: about to burst.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "길고양이 밥 주러 가기",
+     "en": "Go feed the neighborhood cats"
+    },
+    "r": {
+     "ko": "(치즈냥이가 {p} 무릎에 올라갔다. 질투가 났다.)",
+     "en": "(The orange cat climbed into {p}'s lap. You were jealous.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "놀이터 그네 타며 수다",
+     "en": "Swing-set talks at the playground"
+    },
+    "r": {
+     "ko": "(어릴 때 얘기를 하다가, 미래 얘기까지 했다.)",
+     "en": "(Childhood stories turned into future plans.)"
+    }
+   },
+   {
+    "loc": "cooking_class",
+    "act": "date",
+    "label": {
+     "ko": "둘이 처음 해 보는 요리",
+     "en": "Cook something neither of you has tried"
+    },
+    "r": {
+     "ko": "(반쯤 탔다. {p}은(는) 맛있다며 다 먹었다.)",
+     "en": "(Half burnt. {p} ate it all and called it delicious.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "벚꽃 아래 피크닉",
+     "en": "A picnic under the cherry blossoms"
+    },
+    "r": {
+     "ko": "(꽃잎이 {p} 머리에 내려앉았다. 떼 주지 않았다.)",
+     "en": "(A petal landed in {p}'s hair. You left it there.)"
+    },
+    "season": "SPRING"
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "팥빙수 먹으러 가기",
+     "en": "Go get bingsu"
+    },
+    "r": {
+     "ko": "(숟가락이 자꾸 부딪혔다. 일부러였다.)",
+     "en": "(Your spoons kept clinking. On purpose.)"
+    },
+    "season": "SUMMER"
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "단풍길 걷기",
+     "en": "Walk the autumn-leaf path"
+    },
+    "r": {
+     "ko": "(낙엽 밟는 소리가 좋다고 {p}이(가) 같은 길을 세 번 걸었다.)",
+     "en": "({p} liked the crunch so much you walked it three times.)"
+    },
+    "season": "AUTUMN"
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "붕어빵 사서 손난로 삼기",
+     "en": "Warm your hands with fish-shaped pastries"
+    },
+    "r": {
+     "ko": "(팥이냐 슈크림이냐로 10분 토론했다.)",
+     "en": "(Ten-minute debate: red bean or custard.)"
+    },
+    "season": "WINTER"
+   }
+  ],
+  "solo": [
+   {
+    "loc": "street",
+    "act": "shop",
+    "label": {
+     "ko": "혼자 인생네컷 찍기",
+     "en": "A solo photo-booth strip"
+    },
+    "r": {
+     "ko": "(혼자여도 포즈는 네 개 다 했다.)",
+     "en": "(Solo, but you hit all four poses.)"
+    }
+   },
+   {
+    "loc": "cafe",
+    "act": "read",
+    "label": {
+     "ko": "창가 자리에서 멍 때리기",
+     "en": "Zone out by a café window"
+    },
+    "r": {
+     "ko": "(한 시간 동안 구름만 봤다. 완벽한 하루.)",
+     "en": "(An hour of watching clouds. A perfect day.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "shop",
+    "label": {
+     "ko": "즉흥으로 버스 종점까지",
+     "en": "Ride a bus to the last stop"
+    },
+    "r": {
+     "ko": "(처음 보는 동네에서 맛있는 국밥집을 찾았다.)",
+     "en": "(A new neighborhood, and a great soup place.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "walk",
+    "label": {
+     "ko": "강변 따릉이 라이딩",
+     "en": "Bike along the river"
+    },
+    "r": {
+     "ko": "(바람이 머리를 다 헝클어 놨다. 기분은 정리됐다.)",
+     "en": "(The wind messed up your hair and tidied your head.)"
+    }
+   },
+   {
+    "loc": "home",
+    "act": "watch_tv",
+    "label": {
+     "ko": "배달 음식 + 예능 몰아보기",
+     "en": "Takeout and a variety-show binge"
+    },
+    "r": {
+     "ko": "(이불 밖은 위험해.)",
+     "en": "(Outside the blanket is dangerous.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "shop",
+    "label": {
+     "ko": "코인노래방 혼코노",
+     "en": "Solo coin karaoke"
+    },
+    "r": {
+     "ko": "(18번 곡을 다섯 번 불렀다. 목이 쉬었다.)",
+     "en": "(Your signature song, five times. Voice: gone.)"
+    }
+   }
+  ]
+ },
+ "JP": {
+  "couple": [
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "{p}와(과) 유카타 입고 불꽃놀이 축제",
+     "en": "Yukata and a summer fireworks festival with {p}"
+    },
+    "r": {
+     "ko": "(불꽃이 터질 때마다 {p}의 옆얼굴을 봤다.)",
+     "en": "(Every burst, you looked at {p}'s profile instead.)"
+    },
+    "season": "SUMMER"
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "하나미 — 벚꽃 아래 도시락",
+     "en": "Hanami — a bento under the cherry blossoms"
+    },
+    "r": {
+     "ko": "(돗자리 자리 잡느라 아침 6시에 나왔다. 그럴 가치가 있었다.)",
+     "en": "(You claimed a spot at 6 a.m. Worth it.)"
+    },
+    "season": "SPRING"
+   },
+   {
+    "loc": "diner",
+    "act": "date",
+    "label": {
+     "ko": "이자카야에서 하이볼 건배",
+     "en": "Highballs at an izakaya"
+    },
+    "r": {
+     "ko": "(꼬치 열 개를 시켰다. 다 먹었다.)",
+     "en": "(Ordered ten skewers. Finished all ten.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "프리쿠라 찍기",
+     "en": "Snap purikura photos"
+    },
+    "r": {
+     "ko": "(눈이 두 배로 커졌다. 둘 다 못 알아볼 지경.)",
+     "en": "(Eyes twice their size. You can barely recognize yourselves.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "편의점 디저트 털기",
+     "en": "Raid the konbini dessert shelf"
+    },
+    "r": {
+     "ko": "(신상 푸딩 세 개. 둘이 반씩 나눴다.)",
+     "en": "(Three new puddings, split down the middle.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "가챠폰 대결",
+     "en": "A gachapon battle"
+    },
+    "r": {
+     "ko": "(나온 건 둘 다 같은 고양이. 운명인가.)",
+     "en": "(You both got the same cat. Fate?)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "온천 마을 당일치기",
+     "en": "A day trip to an onsen town"
+    },
+    "r": {
+     "ko": "(족욕을 하며 손을 잡았다. 발도 손도 따뜻했다.)",
+     "en": "(Holding hands in the foot bath. Warm feet, warm hands.)"
+    }
+   },
+   {
+    "loc": "restaurant",
+    "act": "date",
+    "label": {
+     "ko": "회전초밥 접시 탑 쌓기",
+     "en": "Build a plate tower at conveyor-belt sushi"
+    },
+    "r": {
+     "ko": "(접시 23개. 직원이 박수를 쳐 줬다.)",
+     "en": "(Twenty-three plates. The staff applauded.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "노래방 '카라오케'에서 J-POP 듀엣",
+     "en": "A J-pop duet at karaoke"
+    },
+    "r": {
+     "ko": "(가사는 몰랐지만 감정은 만점.)",
+     "en": "(Didn't know the lyrics. Nailed the feelings.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "단풍 명소에서 모미지가리",
+     "en": "Momiji-gari under the red maples"
+    },
+    "r": {
+     "ko": "(빨간 잎을 하나 주워 {p} 수첩에 끼워 줬다.)",
+     "en": "(You tucked a red leaf into {p}'s notebook.)"
+    },
+    "season": "AUTUMN"
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "코타츠에서 귤 까먹기",
+     "en": "Mandarins under the kotatsu"
+    },
+    "r": {
+     "ko": "(나갈 수가 없다. 코타츠의 저주.)",
+     "en": "(You can't leave. The kotatsu curse.)"
+    },
+    "season": "WINTER"
+   }
+  ],
+  "solo": [
+   {
+    "loc": "cafe",
+    "act": "read",
+    "label": {
+     "ko": "킷사텐에서 커피와 독서",
+     "en": "Coffee and a book at a kissaten"
+    },
+    "r": {
+     "ko": "(마스터가 말없이 물을 채워 줬다.)",
+     "en": "(The master refilled your water without a word.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "shop",
+    "label": {
+     "ko": "100엔샵 구경",
+     "en": "Browse the 100-yen shop"
+    },
+    "r": {
+     "ko": "(필요 없는 걸 열두 개 샀다.)",
+     "en": "(Bought twelve things you don't need.)"
+    }
+   },
+   {
+    "loc": "diner",
+    "act": "eat",
+    "label": {
+     "ko": "혼자 라멘 카운터석",
+     "en": "Solo ramen at the counter"
+    },
+    "r": {
+     "ko": "(국물까지 다 마셨다. 오늘 하루 끝.)",
+     "en": "(Drank every drop of broth. Day complete.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "walk",
+    "label": {
+     "ko": "신사 산책하며 오미쿠지",
+     "en": "A shrine walk and an omikuji"
+    },
+    "r": {
+     "ko": "(대길! 연애운: 가까운 곳에.)",
+     "en": "(Great blessing! Love: closer than you think.)"
+    }
+   }
+  ]
+ },
+ "FR": {
+  "couple": [
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "{p}와(과) 센 강변 피크닉",
+     "en": "A Seine-side picnic with {p}"
+    },
+    "r": {
+     "ko": "(바게트, 치즈, 와인 한 병. 해가 질 때까지.)",
+     "en": "(Baguette, cheese, a bottle of wine — until sunset.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "불랑제리에서 갓 구운 크루아상",
+     "en": "Warm croissants from the boulangerie"
+    },
+    "r": {
+     "ko": "(부스러기를 서로 털어 줬다.)",
+     "en": "(You brushed the crumbs off each other.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "벼룩시장 보물찾기",
+     "en": "Treasure hunting at the flea market"
+    },
+    "r": {
+     "ko": "(낡은 엽서 한 장을 샀다. 100년 전 누군가의 연애편지.)",
+     "en": "(You bought an old postcard — someone's love letter from a century ago.)"
+    }
+   },
+   {
+    "loc": "cafe",
+    "act": "date",
+    "label": {
+     "ko": "테라스 카페에서 사람 구경",
+     "en": "People-watching on a café terrace"
+    },
+    "r": {
+     "ko": "(지나가는 사람들의 사연을 지어내며 웃었다.)",
+     "en": "(You made up stories about passers-by and laughed.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "미술관 무료 입장일",
+     "en": "Free museum Sunday"
+    },
+    "r": {
+     "ko": "(그림보다 그림 보는 {p}을(를) 더 오래 봤다.)",
+     "en": "(You watched {p} looking at paintings longer than the paintings.)"
+    }
+   },
+   {
+    "loc": "restaurant",
+    "act": "date",
+    "label": {
+     "ko": "작은 비스트로에서 와인 디너",
+     "en": "Wine and dinner at a tiny bistro"
+    },
+    "r": {
+     "ko": "(셰프가 디저트를 서비스로 줬다. 커플이라서래.)",
+     "en": "(The chef sent dessert on the house. 'For the lovers.')"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "공원에서 페탕크 한 판",
+     "en": "A game of pétanque in the park"
+    },
+    "r": {
+     "ko": "(동네 할아버지들이 훈수를 뒀다.)",
+     "en": "(The local grandpas coached you both.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "자전거로 골목 누비기",
+     "en": "Cycle through the backstreets"
+    },
+    "r": {
+     "ko": "(길을 잃었다. 덕분에 더 예쁜 골목을 찾았다.)",
+     "en": "(You got lost — and found a prettier street.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "뤽상부르 공원 초록 의자",
+     "en": "The green chairs at the Luxembourg Gardens"
+    },
+    "r": {
+     "ko": "(의자 두 개를 붙여 놓고 햇볕을 쬐었다.)",
+     "en": "(Two chairs pushed together, soaking up the sun.)"
+    },
+    "season": "SPRING"
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "크리스마스 마켓 뱅쇼",
+     "en": "Vin chaud at the Christmas market"
+    },
+    "r": {
+     "ko": "(손난로 대신 컵을 꼭 쥐었다.)",
+     "en": "(You held the cup tight instead of a hand warmer.)"
+    },
+    "season": "WINTER"
+   }
+  ],
+  "solo": [
+   {
+    "loc": "cafe",
+    "act": "read",
+    "label": {
+     "ko": "혼자 카페 크렘과 시집",
+     "en": "A café crème and a poetry book"
+    },
+    "r": {
+     "ko": "(웨이터가 '봉 주르네'하고 웃었다.)",
+     "en": "(The waiter smiled: 'Bonne journée.')"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "shop",
+    "label": {
+     "ko": "헌책방 구경",
+     "en": "Browse a secondhand bookshop"
+    },
+    "r": {
+     "ko": "(먼지 냄새가 좋았다.)",
+     "en": "(You loved the smell of old paper.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "walk",
+    "label": {
+     "ko": "강변 산책",
+     "en": "A riverside walk"
+    },
+    "r": {
+     "ko": "(다리 위 자물쇠를 세다가 포기했다.)",
+     "en": "(You tried counting the love locks. Gave up.)"
+    }
+   }
+  ]
+ },
+ "ANGLO": {
+  "couple": [
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "{p}와(과) 드라이브인 영화관",
+     "en": "A drive-in movie with {p}"
+    },
+    "r": {
+     "ko": "(영화보다 팝콘 쟁탈전이 더 치열했다.)",
+     "en": "(The popcorn war was fiercer than the movie.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "파머스 마켓 브런치",
+     "en": "Brunch at the farmers' market"
+    },
+    "r": {
+     "ko": "(복숭아를 한 박스 샀다. 둘이 다 못 먹는다.)",
+     "en": "(You bought a whole box of peaches. Way too many.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "공원 바비큐",
+     "en": "A park barbecue"
+    },
+    "r": {
+     "ko": "(소시지가 탔다. 그래도 최고의 점심.)",
+     "en": "(Burnt sausages. Still the best lunch.)"
+    }
+   },
+   {
+    "loc": "diner",
+    "act": "date",
+    "label": {
+     "ko": "다이너에서 밀크셰이크 하나에 빨대 두 개",
+     "en": "One milkshake, two straws at a diner"
+    },
+    "r": {
+     "ko": "(마지막 한 모금을 서로 양보했다.)",
+     "en": "(You each saved the last sip for the other.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "볼링장 내기",
+     "en": "A bowling bet"
+    },
+    "r": {
+     "ko": "(거터볼 다섯 번. 그래도 하이파이브.)",
+     "en": "(Five gutter balls. High-fives anyway.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "하이킹 후 전망대",
+     "en": "A hike to the lookout"
+    },
+    "r": {
+     "ko": "(정상에서 같이 소리를 질렀다.)",
+     "en": "(You both yelled from the top.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "중고 레코드 가게 디깅",
+     "en": "Crate-digging at a record store"
+    },
+    "r": {
+     "ko": "(같은 앨범을 동시에 집었다.)",
+     "en": "(You both reached for the same album.)"
+    }
+   },
+   {
+    "loc": "restaurant",
+    "act": "date",
+    "label": {
+     "ko": "루프탑 바에서 노을",
+     "en": "Sunset at a rooftop bar"
+    },
+    "r": {
+     "ko": "(도시 불빛이 하나씩 켜지는 걸 봤다.)",
+     "en": "(You watched the city lights come on one by one.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "date",
+    "label": {
+     "ko": "핼러윈 커플 코스튬",
+     "en": "Couples' Halloween costumes"
+    },
+    "r": {
+     "ko": "(둘이 합쳐 땅콩버터와 잼이 됐다.)",
+     "en": "(Together, you were peanut butter and jelly.)"
+    },
+    "season": "AUTUMN"
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "아이스링크에서 스케이트",
+     "en": "Ice skating at the rink"
+    },
+    "r": {
+     "ko": "(넘어질 때마다 서로를 붙잡았다. 둘 다 넘어졌다.)",
+     "en": "(You caught each other every fall. You both fell.)"
+    },
+    "season": "WINTER"
+   },
+   {
+    "loc": "park",
+    "act": "date",
+    "label": {
+     "ko": "해변에서 모닥불",
+     "en": "A bonfire on the beach"
+    },
+    "r": {
+     "ko": "(마시멜로가 불에 탔다. 그게 더 맛있었다.)",
+     "en": "(The marshmallow caught fire. Tasted better that way.)"
+    },
+    "season": "SUMMER"
+   }
+  ],
+  "solo": [
+   {
+    "loc": "cafe",
+    "act": "read",
+    "label": {
+     "ko": "커피숍 창가에서 일기 쓰기",
+     "en": "Journaling by a coffee-shop window"
+    },
+    "r": {
+     "ko": "(오늘의 한 줄: 괜찮아.)",
+     "en": "(Today's line: I'm okay.)"
+    }
+   },
+   {
+    "loc": "park",
+    "act": "walk",
+    "label": {
+     "ko": "강아지 공원 구경",
+     "en": "Watch dogs at the dog park"
+    },
+    "r": {
+     "ko": "(골든 리트리버가 공을 갖다줬다.)",
+     "en": "(A golden retriever brought you its ball.)"
+    }
+   },
+   {
+    "loc": "street",
+    "act": "shop",
+    "label": {
+     "ko": "스릴러 영화 혼영",
+     "en": "A solo thriller at the cinema"
+    },
+    "r": {
+     "ko": "(팝콘을 다 쏟았다.)",
+     "en": "(Spilled all the popcorn.)"
+    }
+   }
+  ]
+ },
+ "apart": [
+  {
+   "loc": "home",
+   "act": "watch_tv",
+   "label": {
+    "ko": "{p}와(과) 같은 영화 동시에 틀기",
+    "en": "Press play on the same movie as {p}"
+   },
+   "r": {
+    "ko": "(3, 2, 1… 재생. 같은 장면에서 동시에 '헐'.)",
+    "en": "(3, 2, 1… play. Same 'whoa' at the same scene.)"
+   }
+  },
+  {
+   "loc": "home",
+   "act": "watch_tv",
+   "label": {
+    "ko": "화면 켜 두고 같이 공부하기",
+    "en": "Study together on a video call"
+   },
+   "r": {
+    "ko": "(아무 말 안 해도 화면 너머 숨소리가 좋았다.)",
+    "en": "(No talking needed. Hearing them breathe was enough.)"
+   }
+  },
+  {
+   "loc": "street",
+   "act": "shop",
+   "label": {
+    "ko": "{p}에게 손편지 쓰기",
+    "en": "Write {p} a handwritten letter"
+   },
+   "r": {
+    "ko": "(세 장을 썼다. 마지막 줄은 '보고 싶어'.)",
+    "en": "(Three pages. The last line: 'I miss you.')"
+   }
+  },
+  {
+   "loc": "home",
+   "act": "watch_tv",
+   "label": {
+    "ko": "시차 맞춰 모닝콜 해 주기",
+    "en": "A morning call across the time difference"
+   },
+   "r": {
+    "ko": "(내 밤이 {p}의 아침이 됐다.)",
+    "en": "(Your night became {p}'s morning.)"
+   }
+  }
+ ]
+}

@@ -23,8 +23,8 @@
   #setup .row { display: flex; gap: 6px; } #setup .row > * { flex: 1; }
   /* play: HUD → log line → notifications (slide down) → scene → place/time */
   #hud { position: absolute; top: 0; left: 0; right: 0; height: 70px; background: var(--ink); color: var(--cream); padding: 12px 14px 8px; z-index: 5; border-bottom: 3px solid #1a1420; }
-  #hud .top { display: flex; justify-content: space-between; font-size: 19px; }
-  #hud .sub { font-size: 13px; color: #b9a9c9; margin-top: 4px; display: flex; justify-content: space-between; }
+  #hud .top { display: flex; justify-content: center; align-items: baseline; gap: 14px; font-size: 19px; text-align: center; }
+  #hud .sub { font-size: 13px; color: #b9a9c9; margin-top: 4px; display: flex; justify-content: center; gap: 12px; text-align: center; }
   #log { position: absolute; top: 70px; left: 0; right: 0; height: 34px; z-index: 40; background: #fff6e3; border-bottom: 3px solid var(--ink); padding: 7px 12px; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   #log .t { color: #c2385f; margin-right: 6px; }
   #notes { position: absolute; top: 120px; left: 10px; right: 10px; z-index: 30; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
@@ -384,6 +384,7 @@
       let d = box.querySelector(`.walker[data-who="${CSS.escape(w.who)}"]`);
       if (!d) { d = document.createElement("div"); d.dataset.who = w.who; d.innerHTML = `<div class="hair"></div><div class="body"></div><div class="legL"></div><div class="legR"></div>`; box.appendChild(d); }
       d.className = "walker " + w.role; d.dataset.role = w.role; d.dataset.testid = "walker";
+      d.style.opacity = w.apart ? 0.55 : 1;
       const sc = w.role === "kid" ? 0.72 : 1;
       const x = 180 + (i - (n - 1) / 2) * gap - 15;
       d.style.left = x + "px"; d.style.setProperty("--sc", sc); d.style.transform = `scale(${sc})`;

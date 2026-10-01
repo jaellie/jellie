@@ -14,6 +14,7 @@
  */
 import oppText from "../../data/game/opportunityText.json";
 import messageData from "../../data/game/messages.json";
+import funData from "../../data/game/weekendFun.json";
 import storyData from "../../data/game/stories.json";
 import type { GameDate } from "../core/gameDate";
 import { SeededRandom } from "../core/rng";
@@ -33,7 +34,7 @@ import { weekdayOf, seasonOf } from "../world/clock";
 import { generateNpc, habitSlot, knowsName } from "../world/npcs";
 import { aliveSiblings, siblingSender } from "../story/family";
 import { type CrowdState, stepCrowd } from "../world/walkers";
-import { nameEn, pickName } from "../world/names";
+import { cultureOf, nameEn, pickName } from "../world/names";
 import { marriageFate } from "../story/marriageFate";
 import { bondPhase, hasBond, pendingMeetings, updateBond, type BondEnd } from "../story/bond";
 import { lifeEvent, nextDueEvent, pendingApplies, rollLifeEvents, weekdayOnly } from "../story/lifeEvents";
@@ -215,6 +216,8 @@ export interface PlanOption {
   destination?: string;
   withPartner?: boolean;
   label: Bi;
+  /** A fun pick's own little reply ("(인생네컷: 머리띠를 다섯 개나 써 봤다.)") instead of "(좋아, 가보자!)". */
+  reply?: Bi;
 }
 
 interface AgendaItem {
@@ -950,6 +953,18 @@ export class Game {
       pool.push({ item: { id: `trip:${dest}`, kind: "trip", destination: dest, label: bi(`${DEST_KO[dest]} 여행 떠나기`, `Trip to ${getDestination(dest).name.en}`) }, weight: w });
     }
     pool.push({ item: { id: "home", kind: "home", locationId: "home", activityId: "watch_tv", label: bi("집에서 뒹굴기", "Lounge at home") }, weight: 0.7 });
+    // Free-spirited picks, just for fun (they only decide where the day goes): 치맥, 인생네컷, 커플링 공방, 새벽 라면…
+    const season = seasonOf(st.date.month);
+    const local = funFor(st.location.country);
+    const funSet = f.partnered ? (f.apart ? FUN.apart : local.couple) : local.solo;
+    const pName = f.partnerName ?? "";
+    const withP = (b: Bi): Bi => ({ ko: b.ko.replaceAll("{p}", pName), en: b.en.replaceAll("{p}", pName) });
+    for (const [k, x] of funSet.entries()) {
+      if (x.season && x.season !== season) continue;
+      if (x.loc !== "home" && getLocation(x.loc).region !== st.world?.homeRegion && !getLocation(x.loc).online) continue;
+      const together = f.partnered && !f.apart;
+      pool.push({ item: { id: `fun:${f.partnered ? (f.apart ? "a" : "c") : "s"}${k}`, kind: together ? "date" : x.loc === "home" ? "home" : "place", locationId: x.loc, activityId: x.act, withPartner: together || undefined, label: withP(x.label), reply: withP(x.r) }, weight: x.season ? 1.6 : 1.1 });
+    }
 
     // This month's mood (Lunar Return, hidden): the house its Moon lights up tilts what you feel like doing.
     const focus = LUNAR_FOCUS[this.lunarFocusHouse()] ?? [];
@@ -997,7 +1012,17 @@ export class Game {
   }
 
   // ---- choices --------------------------------------------------------------
+  /** The picked choice's result — a "[엄마] …" reply shows "엄마" as the speaker, never the tag in the text. */
   choose(index: number): ChoiceResult | undefined {
+    const r = this.chooseRaw(index);
+    if (r) {
+      const t = splitSpeakerTag(r.line);
+      if (t.tag) (r.name = t.tag), (r.line = t.text);
+    }
+    return r;
+  }
+
+  private chooseRaw(index: number): ChoiceResult | undefined {
     const r = this.resolveChoice(index);
     if (!r) return r;
     // Every result names its speaker (fated/npc names re-checked: you may have just been introduced).
@@ -1066,7 +1091,7 @@ export class Game {
       }
       // Today's life event keeps its own time and place (the court, 본가…); the weekend plan fills the rest.
       s.dayPlan = { locationId: o.locationId, activityId: o.activityId, withPartner: o.withPartner, sequence: (s.dayPlan.sequence ?? []).filter((q) => q.keep) };
-      return { who: "me", line: this.L(o.kind === "home" ? bi("(이불 밖은 위험해.)", "(Outside the blanket is dangerous.)") : bi("(좋아, 가보자!)", "(Okay, let's go!)")), log: this.L(o.label) };
+      return { who: "me", line: this.fill(this.L(o.reply ?? (o.kind === "home" ? bi("(이불 밖은 위험해.)", "(Outside the blanket is dangerous.)") : bi("(좋아, 가보자!)", "(Okay, let's go!)")))), log: this.L(o.label) };
     }
     return;
   }
@@ -1397,7 +1422,9 @@ export class Game {
     const rel = f.married ? bi(`${f.partnerName}와(과) 결혼`, `Married to ${f.partnerName}`) : f.dating ? bi(`${f.partnerName}와(과) 연애 중`, `Dating ${f.partnerName}`) : bi("싱글", "Single");
     return {
       date: this.s.day ? this.L(this.s.day.label) : "",
-      age: this.s.lang === "ko" ? `${Math.floor(st.age)}세` : `AGE ${Math.floor(st.age)}`,
+      age: this.s.lang === "ko" ? `${Math.floor(st.age)}세` : `${Math.floor(st.age)} yrs`,
+      /** The age as a number (style it yourself: a big number with a small "세" / "yrs"). */
+      ageNum: Math.floor(st.age),
       money: krw(st.money, UNIT),
       income: krw(yearlyIncome(st), UNIT),
       job: this.L(job),
@@ -1721,10 +1748,18 @@ const CONTENT_TAG = /^(사진|영상|동영상|링크|이모티콘|스티커|음
 
 /** "[아빠] 차 조심해라" → { tag: "아빠", text: "차 조심해라" }; "[사진] …" is content, not a speaker. */
 export function splitSpeakerTag(text: string): { tag?: string; text: string } {
-  const m = /^\[([^\][]{1,8})\]\s*/.exec(text);
-  if (!m || CONTENT_TAG.test(m[1])) return { text };
-  return { tag: m[1], text: text.slice(m[0].length) };
+  // At the start, or right after an opening narration: "(전화가 왔다.) [아빠] 밥은 먹었니?"
+  const m = /^(\([^)]*\)\s*)?\[([^\][]{1,12})\]\s*/.exec(text.trimStart());
+  if (!m || CONTENT_TAG.test(m[2])) return { text };
+  const t = text.trimStart();
+  return { tag: m[2], text: (m[1] ?? "") + t.slice(m[0].length) };
 }
+
+type FunPick = { loc: string; act: string; label: Bi; r: Bi; season?: string };
+type FunSet = { couple: FunPick[]; solo: FunPick[] };
+const FUN = funData as unknown as Record<string, FunSet> & { apart: FunPick[] };
+/** The dates people actually go on where you live (Korea: 인생네컷; Tokyo: 불꽃놀이; Paris: a Seine picnic). */
+const funFor = (country: string): FunSet => FUN[cultureOf(country)] ?? FUN.ANGLO;
 
 /** Lunar Return house → weekend options that month's mood leans toward. */
 const LUNAR_FOCUS: Record<number, string[]> = {

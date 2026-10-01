@@ -60,6 +60,8 @@ export interface RoadWalker {
   holds?: string;
   /** Carried in someone's arms / a stroller pushed by `who`. */
   carriedBy?: string;
+  /** Long distance: they walk with you in your heart — draw them a little faded (about 55% opacity). */
+  apart?: boolean;
 }
 
 export type RoadTheme = "city" | "town" | "seaside" | "countryside" | "abroad" | "travel";
@@ -138,15 +140,17 @@ export function buildRoad(
   const me: RoadWalker = { who: "me", role: "me", gender: state.birth.sex === "MALE" ? "M" : "F", seed: 0, age, slot: 0, pace: age >= 75 ? 0.6 : age >= 65 ? 0.8 : 1 };
   const left: RoadWalker[] = [];
   const right: RoadWalker[] = [];
-  // Your partner walks beside you (holding your hand) — unless you still live in different places.
+  // Your partner walks beside you from the moment you're together (the HUD says "연애 중") — even long
+  // distance, when they walk with you in your heart (`apart`: draw them a little faded).
   const pid = state.relationship.partnerId;
-  const together = (state.relationship.status === "DATING" || state.relationship.status === "MARRIED") && !!pid && !state.relationship.longDistance;
+  const together = (state.relationship.status === "DATING" || state.relationship.status === "MARRIED") && !!pid;
+  const apart = together && !!state.relationship.longDistance;
   if (together && pid) {
     const n = w?.npcs[pid];
     const pn = state.npcs.find((x) => x.id === pid);
     const pAge = n ? year - n.birthYear : pn ? year - pn.birth.year : age;
     const sex = n?.sex ?? pn?.birth.sex;
-    left.push({ who: "partner", role: "partner", name: n?.name ?? pn?.name, gender: sex === "MALE" ? "M" : sex === "FEMALE" ? "F" : undefined, seed: n?.spriteSeed ?? hash(pid) % 1_000_000, age: pAge, slot: 0, pace: pAge >= 75 ? 0.6 : pAge >= 65 ? 0.8 : 1, holds: "me" });
+    left.push({ who: "partner", role: "partner", name: n?.name ?? pn?.name, gender: sex === "MALE" ? "M" : sex === "FEMALE" ? "F" : undefined, seed: n?.spriteSeed ?? hash(pid) % 1_000_000, age: pAge, slot: 0, pace: pAge >= 75 ? 0.6 : pAge >= 65 ? 0.8 : 1, holds: "me", ...(apart ? { apart: true } : {}) });
     me.holds = "partner";
   }
   // Kids walk with you until they grow up and leave home; a baby is carried.

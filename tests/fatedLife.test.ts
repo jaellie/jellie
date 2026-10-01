@@ -240,7 +240,7 @@ describe("Others' big moments are popups", () => {
 });
 
 describe("The life road (play screen)", () => {
-  it("you walk alone; together your partner walks beside you holding hands — not while you live apart", () => {
+  it("you walk alone; together your partner walks beside you holding hands — long distance too (drawn faded)", () => {
     const single = createGame({ ...JAE, seed: 8, fated: { ...JUNG, status: "stranger" } });
     expect(single.road().walkers.map((w) => w.role)).toEqual(["me"]);
     const near = createGame({ ...JAE, seed: 8, fated: { ...JUNG, from: "same", status: "dating" } });
@@ -250,7 +250,10 @@ describe("The life road (play screen)", () => {
     expect(["city", "town", "seaside"]).toContain(r.backdrop.theme);
     expect(r.walking).toBe(true);
     const far = createGame({ ...JAE, seed: 8, fated: { ...JUNG, from: "abroad", status: "dating" } });
-    expect(far.road().walkers.map((w) => w.role)).toEqual(["me"]);
+    const farWalkers = far.road().walkers;
+    expect(farWalkers.map((w) => w.role)).toEqual(["partner", "me"]);
+    expect(farWalkers[0].apart).toBe(true);
+    expect(r.walkers[0].apart).toBeUndefined();
     // Kids walk along; a baby is carried; pets trot at the edge.
     near.state.kids = [{ id: "kid1", name: "하람", sex: "FEMALE", bornYear: near.state.date.year - 5, bornMonth: 3, spriteSeed: 1 } as never, { id: "kid2", name: "도담", sex: "MALE", bornYear: near.state.date.year, bornMonth: 1, spriteSeed: 2 } as never];
     near.state.pets = [{ id: "pet1", name: "콩이", species: "DOG", adoptedYear: 2020, ageAtAdoption: 1, alive: true, spriteSeed: 3 }];
@@ -448,5 +451,31 @@ describe("Left entirely to fate (운명에 맡기기)", () => {
     const e = g.ending();
     expect(["마지막 사랑", "운명을 이긴 사랑"]).toContain(e.title);
     if (e.title === "마지막 사랑") expect(e.story).toMatch(/평생 혼자/);
+  });
+});
+
+describe("Weekend picks just for fun, by country", () => {
+  const menuLabels = (country: string, city: string, status: "dating" | "stranger") => {
+    const labels = new Set<string>();
+    for (let seed = 1; seed <= 12; seed++) {
+      const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "same", status } });
+      g.state.location = { country, city };
+      for (let k = 0; k < 4; k++) { g.s.dayIndex = k; for (const o of g.weekendMenu()) labels.add(o.label.ko); }
+    }
+    return [...labels];
+  };
+  it("Korea gets 인생네컷 and 치맥; Tokyo gets izakaya and fireworks; Paris gets the Seine — never another country's", () => {
+    const kr = menuLabels("Korea", "Seoul", "dating").join(" | ");
+    const jp = menuLabels("Japan", "Tokyo", "dating").join(" | ");
+    const fr = menuLabels("France", "Paris", "dating").join(" | ");
+    expect(kr).toMatch(/인생네컷|치맥|커플링|방탈출|코인노래방|편의점 라면|보드게임/);
+    expect(jp).toMatch(/이자카야|프리쿠라|가챠폰|회전초밥|편의점 디저트|온천|카라오케|코타츠|불꽃놀이|하나미|모미지/);
+    expect(jp).not.toMatch(/인생네컷|치맥/);
+    expect(fr).toMatch(/센 강변|불랑제리|벼룩시장|테라스|비스트로|페탕크|미술관|자전거|뤽상부르|뱅쇼/);
+  });
+  it("a fun pick answers with its own little line", () => {
+    const g = createGame({ ...JAE, seed: 2, fated: { ...JUNG, from: "same", status: "dating" } });
+    const fun = g.weekendMenu().find((o) => o.id.startsWith("fun:"));
+    if (fun) expect(fun.reply?.ko).toMatch(/^\(/);
   });
 });

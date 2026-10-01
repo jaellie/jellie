@@ -213,8 +213,9 @@ while (Date.now() < deadline) {
     if (r.rv.walking && Math.abs(b - a) > 5) stats.walkMoved++;
     const roles = r.rv.walkers.map((w) => w.role);
     if (!roles.includes("me")) issue("you aren't on your own road");
-    if (r.partnered && !r.ld && !roles.includes("partner")) issue("your partner isn't walking beside you");
-    if ((!r.partnered || r.ld) && roles.includes("partner")) issue("a partner walks beside you while single or apart");
+    // From the moment the HUD says "연애 중", your partner walks with you (long distance: faded).
+    if (r.partnered && !roles.includes("partner")) issue("the HUD says you're together but you walk alone");
+    if (!r.partnered && roles.includes("partner")) issue("a partner walks beside you while single");
     const still = await page.evaluate(() => window.__qa.screen === "play");
     if (still && r.dom.join() !== roles.join()) issue(`road draws ${r.dom.join()} but the engine says ${roles.join()}`);
     if (/[0-9]{1,2}:[0-9]{2}/.test(r.mood)) issue(`the top line shows a time: ${r.mood}`);

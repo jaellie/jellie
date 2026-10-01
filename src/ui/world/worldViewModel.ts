@@ -2,7 +2,7 @@
  * Main world screen view model (Kairosoft-style):
  *
  *   ┌──────────────────────────┐
- *   │ 2031.04.17      AGE 33   │
+ *   │ 2031.04.17      33 yrs   │
  *   │      [WORLD SCENE]       │   ← Scene: background + overlays + sprites + props
  *   │   GYM / CAFE / HOME      │
  *   ├──────────────────────────┤
@@ -53,7 +53,7 @@ export function buildWorldViewModel(args: { state: LifeState; world: WorldState;
   return {
     header: {
       date: formatWorldDate(visit.time),
-      age: lang === "ko" ? `${Math.floor(state.age)}세` : `AGE ${Math.floor(state.age)}`,
+      age: lang === "ko" ? `${Math.floor(state.age)}세` : `${Math.floor(state.age)} yrs`,
       weather: WEATHER_ICON[visit.time.weather],
       season: visit.time.season,
       timeOfDay: visit.time.timeOfDay,
