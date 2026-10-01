@@ -4,6 +4,7 @@
  *   ROOMS[key]() painters, WBG[key] base colors, world() overlays, SPOTS, spr().
  * The prototype stays in charge of drawing; the engine decides *what* to draw.
  */
+import { decorFor } from "../world/decor";
 import { OVERLAYS, getBackground, getLocation } from "../world/catalog";
 import type { Scene } from "../world/sceneComposer";
 import { project, stageInfo } from "../world/stage";
@@ -67,6 +68,15 @@ export interface PrototypeScene {
   baseColor: string;
   /** CSS backgrounds to stack as absolutely-positioned divs (z 90+), like world() does for night/rain. */
   overlays: Array<{ condition: string; background: string }>;
+  /**
+   * Set dressing that makes the place look like itself (an airplane cabin: rows of seats, windows,
+   * overhead bins, the drink cart). Draw each as a pixel sprite by `prop` id: floor props stand at
+   * (x, y) = bottom-center, wall props are centered on the back walls. Draw floor props and
+   * actors together sorted by y (lower on screen = in front), so people stand in front of / behind them.
+   */
+  decor: import("../world/decor").DecorItem[];
+  /** The place's colors: floor, wall, accent. */
+  palette?: Record<string, string>;
   /** Characters to draw with spr(): prototype role names for known roles, npc ids otherwise. */
   actors: Array<{
     who: string;
@@ -136,6 +146,10 @@ export function toPrototypeScene(scene: Scene): PrototypeScene {
     baseColor: (scene.online ? undefined : FALLBACK_BG[loc.type]) ?? "#ead8bb",
     overlays,
     actors,
+    ...(() => {
+      const d = decorFor(scene.background.id, loc.id, !!scene.online);
+      return { decor: d.items, ...(d.palette ? { palette: d.palette } : {}) };
+    })(),
   };
 }
 

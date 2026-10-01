@@ -42,6 +42,8 @@
   .roomlabel { position: absolute; right: 8px; top: 8px; padding: 2px 6px; background: rgba(30,42,90,.8); color: #fff; font-size: 10px; z-index: 3; }
   .overlay { position: absolute; inset: 0; pointer-events: none; z-index: 90; }
   .actor { position: absolute; width: 24px; height: 40px; transform: scale(1.6); transform-origin: 50% 100%; transition: left .48s linear, top .48s linear, opacity .3s; }
+  .prop { position: absolute; border: 2px solid var(--ink); font-size: 6px; line-height: 1; color: #fff; overflow: hidden; text-align: center; opacity: .92; border-radius: 2px; }
+  .prop.wallL, .prop.wallR { opacity: .75; }
   .actor .head { position: absolute; left: 4px; top: 0; width: 16px; height: 16px; background: #ffd9bd; border: 2px solid var(--ink); }
   .actor .hair { position: absolute; left: 3px; top: -2px; width: 18px; height: 8px; border: 2px solid var(--ink); border-bottom: 0; }
   .actor .face { position: absolute; left: 12px; top: 6px; width: 3px; height: 3px; background: var(--ink); }
@@ -69,7 +71,9 @@
   #lang .mini .walker { left: 165px; bottom: 60px; animation: bob .5s steps(2) infinite; }
   #lang .mini .walker .legL { animation: legA .5s steps(2) infinite; } #lang .mini .walker .legR { animation: legB .5s steps(2) infinite; }
   #lang .front { position: relative; z-index: 2; }
-  .logo { display: block; width: 320px; margin: 90px auto 10px; image-rendering: pixelated; animation: dropIn .9s cubic-bezier(.3,1.6,.5,1) both; }
+  /* the logo drops in slowly, then beats like a heart (두근두근) — and switches 한국어 ⇄ English on every other beat */
+  .logo { display: block; width: 320px; margin: 90px auto 10px; image-rendering: pixelated; animation: dropIn 1.8s cubic-bezier(.3,1.4,.5,1) both, heartbeat 1.4s ease-in-out 1.9s infinite; }
+  @keyframes heartbeat { 0%, 40%, 100% { transform: scale(1); } 12% { transform: scale(1.08); } 24% { transform: scale(.98); } 32% { transform: scale(1.05); } }
   #lang .btn { display: block; width: 220px; margin: 18px auto 0; font-size: 18px; }
   #langPop { display: none; position: absolute; inset: 0; z-index: 5; background: rgba(26,20,32,.55); }
   #langPop .box { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #fff6e3; border: 3px solid var(--ink); box-shadow: 4px 4px 0 #1a1420; padding: 10px 24px 26px; animation: dropIn .45s cubic-bezier(.3,1.6,.5,1); }
@@ -259,7 +263,7 @@
     const key = sc.sceneKey + "|" + sc.bgId;
     if (el.dataset.key !== key) {
       el.innerHTML = ""; el.dataset.key = key;
-      const base = ROOM_COLOR[sc.roomKey] || sc.baseColor, st = sc.stage;
+      const base = (sc.palette && sc.palette.floor) || ROOM_COLOR[sc.roomKey] || sc.baseColor, st = sc.stage;
       el.style.background = base;
       // Floor everywhere, then the two back walls rising from the "V" (stage geometry from the engine).
       const f = document.createElement("div"); f.className = "floor";
@@ -277,6 +281,15 @@
       ln.innerHTML = `<polyline points="0,${st.leftBase.y * REF_H} ${REF_W / 2},${st.corner.y * REF_H} ${REF_W},${st.rightBase.y * REF_H}" fill="none" stroke="#2b2233" stroke-width="3"/><line x1="${REF_W / 2}" y1="0" x2="${REF_W / 2}" y2="${st.corner.y * REF_H}" stroke="rgba(43,34,51,.35)" stroke-width="2"/>`;
       el.appendChild(ln);
       const lab = document.createElement("div"); lab.className = "roomlabel"; lab.textContent = (sc.standIn ? sc.sceneKey + " (→ROOMS." + sc.roomKey + ")" : "ROOMS." + sc.roomKey); el.appendChild(lab);
+      // Set dressing (engine: scene.decor) — QA stand-in sprites: a block per prop, sized and placed by the engine.
+      const tw = st.tile.w * REF_W;
+      for (const d of sc.decor || []) {
+        const p = document.createElement("div"); p.className = "prop " + d.on; p.dataset.prop = d.prop; p.dataset.testid = "decor";
+        const wpx = tw * (d.on === "floor" ? d.size : 0.7) * 0.8, hpx = wpx * (d.on === "floor" ? 0.9 : 0.8);
+        p.style.cssText = `left:${d.x * REF_W - wpx / 2}px;top:${d.y * REF_H - (d.on === "floor" ? hpx : hpx / 2)}px;width:${wpx}px;height:${hpx}px;z-index:${d.on === "floor" ? Math.round(d.y * 100) : 1};background:${(sc.palette && sc.palette.accent) || "#c9a"};`;
+        p.title = d.prop; p.textContent = d.prop.replace(/_/g, " ").slice(0, 10);
+        el.appendChild(p);
+      }
       for (const o of sc.overlays) { const ov = document.createElement("div"); ov.className = "overlay"; ov.style.background = o.background; ov.dataset.cond = o.condition; el.appendChild(ov); }
     }
     const seen = new Set();
@@ -293,7 +306,7 @@
       const jump = d.classList.contains("off") && !a.offscreen;
       if (jump) d.style.transition = "none";
       d.className = "actor" + (a.role === "kid" ? " kid" : a.role === "baby" ? " baby" : a.role === "pet" ? " pet" : "") + (a.walking ? " walk" : "") + (a.facing === "SW" || a.facing === "NW" ? " left" : "") + (a.offscreen ? " off" : "") + (sc.online && a.role === "me" ? " phone" : "");
-      d.style.left = (a.x * REF_W - 12) + "px"; d.style.top = (a.y * REF_H - 40) + "px"; d.style.zIndex = a.z;
+      d.style.left = (a.x * REF_W - 12) + "px"; d.style.top = (a.y * REF_H - 40) + "px"; d.style.zIndex = Math.round(a.y * 100) + 1;
       if (jump) { void d.offsetWidth; d.style.transition = ""; }
     }
     for (const d of [...el.querySelectorAll(".actor")]) if (!seen.has(d.dataset.who)) d.remove();
@@ -523,6 +536,9 @@
   const logoSrc = (lang) => `../assets/logo/logo-${lang}.png`;
   const phoneLang = (navigator.language || "ko").toLowerCase().startsWith("ko") ? "ko" : "en";
   $("langLogo").src = logoSrc(phoneLang); $("langLogo").alt = phoneLang === "ko" ? "두근두근, 내 운명의 사람" : "Doki Doki Destiny Lover";
+  // After the drop: the logo keeps beating and alternates languages (one swap every 2 beats).
+  let logoLang = phoneLang;
+  setTimeout(() => setInterval(() => { if (screen !== "lang" || $("langPop").style.display === "block") return; logoLang = logoLang === "ko" ? "en" : "ko"; $("langLogo").src = logoSrc(logoLang); }, 2800), 1900);
   $("startBtn").onclick = () => { $("langPop").style.display = "block"; };
   for (const [id, lang] of [["langKo", "ko"], ["langEn", "en"]]) {
     $(id).onmouseenter = () => { $("langLogo").src = logoSrc(lang); };

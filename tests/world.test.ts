@@ -444,3 +444,25 @@ describe("Kairosoft-style walking", () => {
     expect([...cameBack].some((w) => w === "w1" || w === "w2")).toBe(true);
   });
 });
+
+describe("Set dressing (scene.decor)", () => {
+  it("every place is densely dressed, on screen, and the variant wins over the place", async () => {
+    const { decorFor } = await import("../src/world/decor");
+    const { LOCATIONS } = await import("../src/world/catalog");
+    for (const l of LOCATIONS.filter((x) => !x.online)) {
+      const d = decorFor(l.id, l.id);
+      expect(d.items.length, l.id).toBeGreaterThanOrEqual(9);
+      for (const it of d.items) {
+        expect(it.x).toBeGreaterThanOrEqual(-0.05);
+        expect(it.x).toBeLessThanOrEqual(1.05);
+        expect(it.y).toBeGreaterThanOrEqual(0);
+        expect(it.y).toBeLessThanOrEqual(1);
+      }
+    }
+    const cabin = decorFor("airplane_cabin", "airplane").items;
+    expect(cabin.filter((i) => i.prop === "plane_seat").length).toBeGreaterThanOrEqual(20);
+    expect(cabin.some((i) => i.prop === "overhead_bin" && i.on !== "floor")).toBe(true);
+    expect(decorFor("home_newlywed", "home").items.some((i) => i.prop === "wedding_photo")).toBe(true);
+    expect(decorFor("instagram_screen", "instagram", true).items.length).toBeGreaterThan(0);
+  });
+});
