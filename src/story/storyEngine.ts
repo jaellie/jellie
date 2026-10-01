@@ -824,8 +824,21 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
     outcome = "NOT_YET";
     fateTurned = true;
   }
+  // Saying no to a ring isn't saying no to them: a good match (or a chart that marries) stays together,
+  // and the question comes again some months later. Only the third "no" ends it.
+  const refusals = Number(arc.data?.refused ?? 0);
+  const keepUs = (st.compat?.score ?? 0) >= 0.55 && st.fateMode !== "solitary";
+  const stay = arc.type === "DATING" && step.key === "PROPOSAL" && outcome === "BREAKUP" && keepUs && refusals < 2 && !!def.outcomes.REFUSED_STAY;
+  if (stay) {
+    outcome = "REFUSED_STAY";
+    arc.data = { ...arc.data, refused: refusals + 1 };
+  }
   const o = { ...def.outcomes[outcome], ...(mv?.outcomes?.[outcome] ?? {}) };
   arc.step += 1;
+  if (stay) {
+    arc.step -= 1;
+    step.dueMonth = state.monthIndex + rng.int(8, 14);
+  }
   applyEffects(o.effects, ctx, { arc, choiceLabel });
   ctx.facts = { ...ctx.facts, ...liveNames(state) };
   if (o.card) queueCard(state, o.card, ctx, arc.data);
@@ -833,7 +846,7 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
   if (arc.step >= arc.steps.length) st.arcs = st.arcs.filter((a) => a !== arc);
   if (arc.type === "ILLNESS" && step.key === "RESULT") return { r: illnessResultText(arc), scene: arc.data?.passed ? ["funeral_hall"] : undefined, outcome };
   // An unlikely roll for what you chose ("not today" → you're together anyway): say that fate stepped in.
-  const unlikely = fateTurned || (!!ch.roll && (ch.roll[outcome] ?? 0) < 0.25);
+  const unlikely = !stay && (fateTurned || (!!ch.roll && (ch.roll[outcome] ?? 0) < 0.25));
   // One story told in a row (a parent's last night → the funeral → the empty days): the next step follows the same day.
   const chained = !!(def as { chain?: boolean }).chain && st.arcs.includes(arc) && !!arc.steps[arc.step];
   if (chained) arc.steps[arc.step].dueMonth = state.monthIndex;

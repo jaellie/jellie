@@ -558,3 +558,24 @@ describe("Where they live is measured from where you live", () => {
     expect(g.state.location.city).toBe("New York");
   });
 });
+
+describe("Saying no to a proposal", () => {
+  it("a good match stays together after a refused ring; the question comes again later", () => {
+    let checked = 0;
+    for (const seed of [1, 2, 3, 4, 5, 6, 7, 8]) {
+      const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "same", status: "dating" } });
+      g.state.story!.compat = { score: 0.9, chemistry: 0.8, stability: 0.9, friction: 0.1 };
+      const refused = () => !!g.state.story!.arcs.find((a) => a.type === "DATING")?.data?.refused;
+      const seen = play(g, refused, (p) => p.ch.length - 1, 120);
+      if (!refused()) continue;
+      checked++;
+      const stay = seen.find((s) => s.result?.includes("반지를 다시 주머니에"));
+      expect(stay?.result).not.toMatch(/^\(/); // no "fate stepped in" bridge: you chose this
+      expect(g.state.relationship.status).toBe("DATING");
+      expect(g.state.story!.bond?.parting).toBeUndefined();
+      const dating = g.state.story!.arcs.find((a) => a.type === "DATING")!;
+      expect(dating.steps[dating.step].key).toBe("PROPOSAL");
+    }
+    expect(checked).toBeGreaterThan(0);
+  });
+});
