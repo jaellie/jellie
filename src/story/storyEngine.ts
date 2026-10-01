@@ -10,7 +10,7 @@
  *    Only small background life (friends' weddings/funerals, kids growing,
  *    pets aging) happens off-screen — and even those leave a memory card.
  */
-import { bondPhase, pendingMeetings } from "./bond";
+import { bondPhase, onParting, pendingMeetings } from "./bond";
 import { cultureOf, nameKo, petName, pickName } from "../world/names";
 import fatedData from "../../data/story/fatedEvents.json";
 import arcData from "../../data/story/arcs.json";
@@ -99,6 +99,7 @@ const ARC_ORDER: Record<ArcType, string[]> = {
   PET_FAREWELL: ["GOODBYE"],
   ILLNESS: ["TREATMENT", "RESULT"],
   PARTNER_PASSING: ["CALL", "FAREWELL"],
+  PARTING: ["LAST_GOODBYE"],
   AFFAIR: ["DISCOVER"],
   FAMILY_PASSING: ["GOODBYE"],
   LONG_DISTANCE: ["CALL", "VISIT", "DECIDE"],
@@ -106,6 +107,13 @@ const ARC_ORDER: Record<ArcType, string[]> = {
 };
 const IN_PERSON = ["FIRST_DATE", "FIRST_KISS", "FIRST_FIGHT", "MEET_FRIENDS"];
 const COUNTRY_NAME: Record<string, string> = { JP: "Japan", US: "USA", CA: "Canada", DE: "Germany", AU: "Australia", GB: "UK", SG: "Singapore", FR: "France" };
+// A breakup or divorce with the destined person: the 4-part goodbye, next month (see bond.ts).
+onParting((state) => {
+  if (state.story!.arcs.some((a) => a.type === "PARTING")) return;
+  const arc = startArc(state, "PARTING", new SeededRandom(state.monthIndex * 7919 + 13));
+  if (arc) arc.steps[0].dueMonth = state.monthIndex + 1;
+});
+
 /** The sex the player is drawn to (for someone new to date). */
 function likedSex(state: LifeState, rng: SeededRandom): "MALE" | "FEMALE" {
   const likes = String(state.flags.likes ?? (state.birth.sex === "FEMALE" ? "M" : "F"));
@@ -242,9 +250,18 @@ const SHARED_DAY_MONTHS = 8;
 /** A big life event waits at most this long (months) for a played day before it brings its own. */
 const BIG_EVENT_WAIT = 18;
 const GRAVE_THEMES: FatedTheme[] = ["FAMILY_LOSS", "ILLNESS", "RELATIONSHIP_CRISIS"];
-const GRAVE_ARCS: ArcType[] = ["PARTNER_PASSING", "PARENT_PASSING", "FAMILY_PASSING", "PET_FAREWELL", "ILLNESS", "AFFAIR", "DIVORCE", "PREGNANCY"];
+const GRAVE_ARCS: ArcType[] = ["PARTING", "PARTNER_PASSING", "PARENT_PASSING", "FAMILY_PASSING", "PET_FAREWELL", "ILLNESS", "AFFAIR", "DIVORCE", "PREGNANCY"];
 
 /** Funerals, illness, betrayal, divorce… — never shares a day, and the day stays quiet around it. */
+/** A day that is one big moment told in several popups (a 4-part sequence or a chained story): keep it quiet around it. */
+export function isBigMoment(state: LifeState, kind: string | undefined, ref: string | undefined): boolean {
+  if (kind !== "arc" || !ref) return false;
+  const arc = state.story?.arcs.find((a) => a.id === ref);
+  const step = arc?.steps[arc.step];
+  if (!arc || !step) return false;
+  return !!SEQS[step.key] || !!(ARCS[arc.type].steps[step.key] as { chain?: boolean }).chain;
+}
+
 export function isGrave(state: LifeState, kind: string, ref: string): boolean {
   if (kind === "fated") return GRAVE_THEMES.includes(fatedEvent(state, ref)?.theme as FatedTheme);
   const arc = state.story?.arcs.find((a) => a.id === ref);
@@ -510,7 +527,7 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
   const sp = seqPart(state, arc, step.key);
   if (sp) {
     const title = { ko: sp.seq.titles.ko[sp.n], en: sp.seq.titles.en[sp.n] };
-    return { ref: `arc:${arc.id}`, who: sp.who, line: themText(sp.line, arc), choices: sp.choices.map((c) => themText(c.t, arc)), location: def.location, activity: def.activity, vars: {}, title, needsFated: arc.type === "TALKING", needsPartner: arc.type === "DATING" && def.location !== "home" };
+    return { ref: `arc:${arc.id}`, who: sp.who, line: themText(sp.line, arc), choices: sp.choices.map((c) => themText(c.t, arc)), location: def.location, activity: def.activity, vars: {}, title, needsFated: arc.type === "TALKING" || arc.type === "PARTING", needsPartner: arc.type === "DATING" && def.location !== "home" };
   }
   const mv = mbtiVariant(state, arc, step.key, def);
   const base = arcSpeaker(def, arc, facts, state);
@@ -588,7 +605,7 @@ function seqPart(state: LifeState, arc: ActiveArc, key: string): { n: number; wh
   const pid = state.relationship.partnerId ?? Object.values(state.world?.npcs ?? {}).find((x) => x.fated)?.id;
   const mine = mbtiOf(state);
   const theirs = mbtiOf(state, pid);
-  const them = arc.type === "TALKING" ? "fated" : "partner";
+  const them = arc.type === "TALKING" || arc.type === "PARTING" ? "fated" : "partner";
   if (n === 0) {
     const p = seq.them[temperament(theirs)];
     return { n, who: them, line: p.line, choices: p.choices, theirs, seq, cur };
@@ -604,7 +621,7 @@ function seqPart(state: LifeState, arc: ActiveArc, key: string): { n: number; wh
 
 /** {them} → the partner or the destined person (in 썸). */
 function themText(b: Bi, arc: ActiveArc): Bi {
-  const k = arc.type === "TALKING" ? "{fated}" : "{partner}";
+  const k = arc.type === "TALKING" || arc.type === "PARTING" ? "{fated}" : "{partner}";
   return { ko: b.ko.replaceAll("{them}", k), en: b.en.replaceAll("{them}", k) };
 }
 
@@ -771,7 +788,13 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
   if (arc.type === "ILLNESS" && step.key === "RESULT") return { r: illnessResultText(arc), scene: arc.data?.passed ? ["funeral_hall"] : undefined, outcome };
   // An unlikely roll for what you chose ("not today" → you're together anyway): say that fate stepped in.
   const unlikely = fateTurned || (!!ch.roll && (ch.roll[outcome] ?? 0) < 0.25);
-  return { r: unlikely ? withBridge(o.r, rng) : o.r, who: unlikely ? undefined : o.who, scene: o.scene, outcome };
+  // One story told in a row (a parent's last night → the funeral → the empty days): the next step follows the same day.
+  const chained = !!(def as { chain?: boolean }).chain && st.arcs.includes(arc) && !!arc.steps[arc.step];
+  if (chained) arc.steps[arc.step].dueMonth = state.monthIndex;
+  // …and the scene moves to where the next part happens (the funeral hall).
+  const nextLoc = chained ? ARCS[arc.type].steps[arc.steps[arc.step].key].location : undefined;
+  return {
+    ...(chained ? { more: true } : {}), r: unlikely ? withBridge(o.r, rng) : o.r, who: unlikely ? undefined : o.who, scene: nextLoc ? [nextLoc] : o.scene, outcome };
 }
 
 /**

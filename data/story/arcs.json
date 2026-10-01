@@ -1,5 +1,5 @@
 {
- "_doc": "Multi-day life arcs. Each step happens on its own played day 'after' [min,max] months after the previous step, at 'location'. Choices map to outcomes; outcome effects + a memory card for the 시간이 흐른다 screen. A choice may 'roll' among outcomes (bent by 궁합 via 'compat' when the partner is the destined person). 'alt' + 'altBy' pick another speaker/line by cause or by who can still speak. 'title' heads the big popup.",
+ "_doc": "Multi-day life arcs. Each step happens on its own played day 'after' [min,max] months after the previous step, at 'location'. Choices map to outcomes; outcome effects + a memory card for the 시간이 흐른다 screen. A choice may 'roll' among outcomes (bent by 궁합 via 'compat' when the partner is the destined person). 'alt' + 'altBy' pick another speaker/line by cause or by who can still speak. 'title' heads the big popup. A step with chain: true is followed by the next step right away, the same day (a parent's last night → funeral → the empty days), as one sequence.",
  "arcs": {
   "DATING": {
    "steps": {
@@ -1783,7 +1783,8 @@
         }
        ]
       }
-     }
+     },
+     "chain": true
     },
     "FUNERAL": {
      "title": {
@@ -1798,23 +1799,23 @@
      "activity": "mourn",
      "who": "me",
      "line": {
-      "ko": "(영정 사진 속 {parent}가 웃고 있다. 조문객들이 오고, 또 갔다.)",
-      "en": "({parent} smiles in the funeral portrait. Mourners come, and go.)"
+      "ko": "(사흘 뒤, 장례식장.) (영정 사진 속 {parent}가 웃고 있다. 조문객들이 오고, 또 갔다.)",
+      "en": "(Three days later, the funeral hall.) ({parent} smiles in the funeral portrait. Mourners come, and go.)"
      },
      "altBy": "parent",
      "alt": {
       "mom": {
        "who": "me",
        "line": {
-        "ko": "(영정 사진 속 엄마가 웃고 있다. 작년 생일에 내가 찍어 드린 사진이다. 조문객들이 오고, 또 갔다.)",
-        "en": "(Mom smiles in the funeral portrait — the photo you took on her last birthday. Mourners come, and go.)"
+        "ko": "(사흘 뒤, 장례식장.) (영정 사진 속 엄마가 웃고 있다. 작년 생일에 내가 찍어 드린 사진이다. 조문객들이 오고, 또 갔다.)",
+        "en": "(Three days later, the funeral hall.) (Mom smiles in the funeral portrait — the photo you took on her last birthday. Mourners come, and go.)"
        }
       },
       "dad": {
        "who": "me",
        "line": {
-        "ko": "(영정 사진 속 아빠는 어색하게 웃고 있다. 사진만 찍으면 늘 그러셨다. 조문객들이 오고, 또 갔다.)",
-        "en": "(Dad smiles awkwardly in the portrait — the way he always did for photos. Mourners come, and go.)"
+        "ko": "(사흘 뒤, 장례식장.) (영정 사진 속 아빠는 어색하게 웃고 있다. 사진만 찍으면 늘 그러셨다. 조문객들이 오고, 또 갔다.)",
+        "en": "(Three days later, the funeral hall.) (Dad smiles awkwardly in the portrait — the way he always did for photos. Mourners come, and go.)"
        }
       }
      },
@@ -1860,7 +1861,8 @@
         "funeral_hall"
        ]
       }
-     }
+     },
+     "chain": true
     },
     "AFTER": {
      "title": {
@@ -1875,23 +1877,23 @@
      "activity": "rest",
      "who": "me",
      "line": {
-      "ko": "({parent}가 없는 첫 명절이 다가온다.)",
-      "en": "(The first holiday without {parent} is coming.)"
+      "ko": "(몇 달 뒤.) ({parent}가 없는 첫 명절이 다가온다.)",
+      "en": "(Months later.) (The first holiday without {parent} is coming.)"
      },
      "altBy": "parent",
      "alt": {
       "mom": {
        "who": "me",
        "line": {
-        "ko": "(엄마 번호로 문자를 보냈다. '엄마, 보고 싶어.' …1이 사라지지 않는다.)",
-        "en": "(You texted Mom's number. 'Mom, I miss you.' …It stays unread.)"
+        "ko": "(몇 달 뒤.) (엄마 번호로 문자를 보냈다. '엄마, 보고 싶어.' …1이 사라지지 않는다.)",
+        "en": "(Months later.) (You texted Mom's number. 'Mom, I miss you.' …It stays unread.)"
        }
       },
       "dad": {
        "who": "me",
        "line": {
-        "ko": "(아빠 휴대폰을 정리하다 봤다. 내 번호는 '우리 {child} ♥'로 저장되어 있었다.)",
-        "en": "(Going through Dad's phone, you saw it: your number was saved as 'My {child} ♥'.)"
+        "ko": "(몇 달 뒤.) (아빠 휴대폰을 정리하다 봤다. 내 번호는 '우리 {child} ♥'로 저장되어 있었다.)",
+        "en": "(Months later.) (Going through Dad's phone, you saw it: your number was saved as 'My {child} ♥'.)"
        }
       }
      },
@@ -2152,7 +2154,8 @@
         }
        ]
       }
-     }
+     },
+     "chain": true
     },
     "FAREWELL": {
      "title": {
@@ -3066,6 +3069,97 @@
         },
         {
          "kind": "fatedSecondChance"
+        }
+       ]
+      }
+     }
+    }
+   }
+  },
+  "PARTING": {
+   "steps": {
+    "LAST_GOODBYE": {
+     "title": {
+      "ko": "안녕",
+      "en": "Goodbye"
+     },
+     "after": [
+      0,
+      1
+     ],
+     "location": "street",
+     "activity": "walk",
+     "who": "fated",
+     "line": {
+      "ko": "(헤어지는 길. {fated}이(가) 마지막으로 뒤돌아봤다.) …잘 지내.",
+      "en": "(The walk apart. {fated} turned back one last time.) …Take care."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "너도. 꼭 행복해야 돼",
+        "en": "You too. Promise me you'll be happy."
+       },
+       "outcome": "GOODBYE_WARM"
+      },
+      {
+       "t": {
+        "ko": "(끝내 뒤돌아보지 않는다)",
+        "en": "(Don't look back)"
+       },
+       "outcome": "GOODBYE_COLD"
+      },
+      {
+       "t": {
+        "ko": "…고마웠어. 진심으로",
+        "en": "…Thank you. I mean it."
+       },
+       "outcome": "GOODBYE_THANKS"
+      }
+     ],
+     "outcomes": {
+      "GOODBYE_WARM": {
+       "r": {
+        "ko": "멀어지는 뒷모습을 끝까지 봤다. 그게 우리의 마지막이었다.",
+        "en": "You watched them go until they were gone. That was the last of us."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Our goodbye.",
+         "tags": [
+          "love"
+         ]
+        }
+       ]
+      },
+      "GOODBYE_COLD": {
+       "r": {
+        "ko": "모퉁이를 돌고 나서야 주저앉아 울었다.",
+        "en": "Only after turning the corner did you sink down and cry."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Our goodbye.",
+         "tags": [
+          "love"
+         ]
+        }
+       ]
+      },
+      "GOODBYE_THANKS": {
+       "r": {
+        "ko": "'나도.' 짧은 대답이 오래오래 남았다.",
+        "en": "'Me too.' Two words that stayed with you for a long, long time."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Our goodbye.",
+         "tags": [
+          "love"
+         ]
         }
        ]
       }

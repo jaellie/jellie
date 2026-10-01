@@ -43,7 +43,7 @@ import "../story/eventLibrary";
 import { yearSignalMap } from "../story/destinyScript";
 import { type AstrologyChart, calculateAstrologyChart } from "../astrology/chart";
 import { compatibility } from "../destiny/compatibility";
-import { type BirthplaceInput, resolveBirth } from "../destiny/birthplace";
+import { type BirthplaceInput, findPlace, resolveBirth } from "../destiny/birthplace";
 import { pickMood } from "../story/mood";
 import { type RoadView, buildRoad } from "../world/road";
 import { readingOf } from "../story/reading";
@@ -58,7 +58,7 @@ import { focusOf, toPrototypeScene, withPositions, type PrototypeScene } from ".
 import { WorldEngine } from "../world/worldEngine";
 import type { NPCSchedule } from "../world/types";
 import { type LifeFacts, computeFacts, meets } from "./facts";
-import { STORY_ONLY_TEMPLATES, startArc, eventDayWanted, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
+import { STORY_ONLY_TEMPLATES, isBigMoment, startArc, eventDayWanted, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
 import { buildCards, type MemoryCard } from "../story/cards";
 import memorialData from "../../data/story/memorial.json";
 import { AutoWorldPolicy } from "../world/decisions";
@@ -85,6 +85,11 @@ export interface GameSetup {
    * daylight time) for the birth time. Default: Seoul.
    */
   birthplace?: BirthplaceInput;
+  /**
+   * Where the player lives now ("부산", "Tokyo"): the story's home — the city on the road, who's local, the
+   * destined person's "same neighborhood". Not used for the charts (those use `birthplace`). Default: the birthplace city.
+   */
+  home?: string;
   /** @deprecated coordinates only — use `birthplace`. */
   place?: BirthPlace;
   lang?: Lang;
@@ -323,7 +328,7 @@ export class Game {
     this.director = new Director(save.director);
     // English game: everything handed to the UI is English-only — family words translated, Korean
     // names romanized (재윤 → Jaeyun). The engine keeps its own data as is.
-    for (const m of ["advance", "choose", "endDay", "memorial", "ending", "hud", "scene", "road", "people", "lifeLog", "mood", "doActivity", "goTo", "leave"] as const) {
+    for (const m of ["advance", "choose", "endDay", "memorial", "ending", "hud", "scene", "road", "people", "lifeLog", "mood", "doActivity", "goTo", "leave", "fated"] as const) {
       const fn = (this as unknown as Record<string, (...a: unknown[]) => unknown>)[m];
       if (typeof fn !== "function") continue;
       (this as unknown as Record<string, unknown>)[m] = (...a: unknown[]) => {
@@ -506,8 +511,9 @@ export class Game {
       agenda.push({ t: 660, k: "story" });
       b.major = 0; // no random big offers competing with a destined moment
       b.small = Math.min(b.small, 1);
-      // A grave day (funeral, the hospital call, betrayal…) is quiet: no chores, no casual texts.
-      if (isGrave(st, s.dayKind!, s.dayRef!)) {
+      // A grave day (funeral, the hospital call, betrayal…) or a big moment told in several popups is quiet:
+      // no chores, no casual texts — never a pile of popups in a row.
+      if (isGrave(st, s.dayKind!, s.dayRef!) || isBigMoment(st, s.dayKind, s.dayRef)) {
         b.small = 0;
         b.messages = 0;
       }
@@ -534,7 +540,7 @@ export class Game {
     }
     // A life event (the library) surfaces on any day that isn't grave — at most one, never beside a second story moment.
     s.eventUid = undefined;
-    const graveDay = !!storyDef && isGrave(st, s.dayKind!, s.dayRef!);
+    const graveDay = !!storyDef && (isGrave(st, s.dayKind!, s.dayRef!) || isBigMoment(st, s.dayKind, s.dayRef));
     const ev = !graveDay && !s.dayRef2 ? nextDueEvent(st, this.facts()) : undefined;
     if (ev) {
       s.eventUid = ev.pending.uid;
@@ -1414,6 +1420,17 @@ export class Game {
   }
 
   // ---- read models for the UI ---------------------------------------------
+  /**
+   * The destined person as the engine made them — draw their sprite from this (also when they were left
+   * to fate): gender "M" | "F", a stable sprite seed, their name once you know it.
+   */
+  fated(): { gender: "M" | "F"; seed: number; name?: string; known: boolean } | undefined {
+    const n = Object.values(this.state.world?.npcs ?? {}).find((x) => x.fated);
+    if (!n) return undefined;
+    const known = this.facts().fatedKnown;
+    return { gender: n.sex === "MALE" ? "M" : "F", seed: n.spriteSeed, known, ...(known ? { name: n.name } : {}) };
+  }
+
   hud() {
     const st = this.state;
     const f = this.facts();
@@ -1430,7 +1447,12 @@ export class Game {
       job: this.L(job),
       relationship: this.L(rel),
       location: this.L(getLocation(this.s.loc ?? this.locationAt(this.s.minute)).name),
-      city: this.s.lang === "ko" ? `${COUNTRY_KO[st.location.country] ?? st.location.country} · ${cityKo(st.location.city)}` : `${st.location.country} · ${st.location.city}`,
+      // On a trip, where you are now (Tokyo), not where you live.
+      city: (() => {
+        const trip = st.world?.travel ? getDestination(st.world.travel.destinationId) : undefined;
+        if (trip && trip.country !== "HOME") return this.s.lang === "ko" ? `${COUNTRY_KO[trip.country] ?? trip.country} · ${trip.name.ko}` : `${trip.country} · ${trip.name.en}`;
+        return this.s.lang === "ko" ? `${COUNTRY_KO[st.location.country] ?? st.location.country} · ${cityKo(st.location.city)}` : `${st.location.country} · ${st.location.city}`;
+      })(),
       minute: this.s.minute,
     };
   }
@@ -1537,6 +1559,8 @@ export function createGame(input: GameSetup): Game {
   if (setup.gender === "M") st.flags.militaryDone = new SeededRandom(hash(seed, "military")).chance(0.85);
   applyFamilySetup(st, setup, new SeededRandom(hash(seed, "family")));
   applyMyJob(st, setup.job);
+  // Where you live now; without it, where you were born (never a random city).
+  applyHome(st, setup.home ?? (typeof setup.birthplace === "string" ? setup.birthplace : undefined) ?? setup.place?.name);
   const fatedLife = resolveFatedLife({ from: setup.fated?.from, job: setup.fated?.job, city: setup.fated?.city, birthplace: setup.fated?.birthplace }, { city: st.location.city }, new SeededRandom(hash(seed, "fatedLife")));
   addFatedPerson(st, setup, fatedLife, new SeededRandom(hash(seed, "fated")));
   // Their chart too: the year you meet is one that's good for *both* of you.
@@ -1612,6 +1636,17 @@ function sealFate(st: LifeState, setup: GameSetup, rng: SeededRandom): void {
   if (story.fatedLife) story.fatedLife.retries = 1;
 }
 
+const ISO_COUNTRY: Record<string, string> = { KR: "Korea", JP: "Japan", US: "USA", CA: "Canada", DE: "Germany", AU: "Australia", GB: "UK", SG: "Singapore", FR: "France" };
+
+/** Setup: where you live now (the plot's home, not the charts). Living abroad counts as abroad. */
+function applyHome(st: LifeState, home: string | undefined): void {
+  const place = home ? findPlace(home) : undefined;
+  if (!place) return;
+  st.location = { country: ISO_COUNTRY[place.country] ?? place.country, city: place.en };
+  if (place.country !== "KR") st.flags.livedAbroad = true;
+  if (st.world) st.world.country = st.location.country;
+}
+
 /** The job chosen in setup, while the player still has it (a new job or quitting changes career.cid). */
 function myJob(st: LifeState) {
   const id = st.flags.myJob as string | undefined;
@@ -1666,7 +1701,9 @@ function addFatedPerson(st: LifeState, setup: GameSetup, life: FatedLife, rng: S
   const w = st.world;
   if (!w) return;
   const fx = setup.fated ?? {};
-  const gender = fx.gender ?? (setup.likes === "M" ? "M" : setup.likes === "F" ? "F" : rng.chance(0.5) ? "M" : "F");
+  // Who you like decides it (a woman liking men → a man) — and without "likes", the default is the other sex, never a coin flip.
+  const likes = setup.likes ?? (setup.gender === "F" ? "M" : "F");
+  const gender = fx.gender ?? (likes === "M" ? "M" : likes === "F" ? "F" : rng.chance(0.5) ? "M" : "F");
   const from = life.from;
   // In the same neighborhood you may keep running into them where they work (a familiar face long
   // before you know their name). From another city or country, only fate brings you together.
@@ -1843,7 +1880,6 @@ function summarize(a: Snap, b: Snap, _lang: Lang): { bi: Bi[] } {
   if (!a.enrolled && b.enrolled) add(4, "다시 공부를 시작했다.", "Went back to school.");
   const newTrips = b.trips.slice(a.trips.length);
   for (const d of newTrips.slice(0, 1)) add(3, `${DEST_KO[d] ?? d}에 다녀왔다.`, `Took a trip to ${d}.`);
-  if (b.friends > a.friends) add(2, `새로운 친구가 ${b.friends - a.friends}명 생겼다.`, `Made ${b.friends - a.friends} new friend(s).`);
   for (const h of b.habits.filter((x) => !a.habits.includes(x)).slice(0, 1)) add(2, `${getLocation(h).name.ko}에 다니기 시작했다.`, `Started going to ${getLocation(h).name.en}.`);
   if (b.money - a.money > 30) add(1, "돈을 꽤 모았다.", "Saved up a good amount.");
   if (a.money - b.money > 20) add(1, "돈이 많이 나갔다.", "Money got tight.");

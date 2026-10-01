@@ -68,15 +68,29 @@
   #lang .mini .g { position: absolute; left: 0; right: 0; top: 46%; bottom: 0; background: #9ad67a; }
   #lang .mini .w { position: absolute; left: 0; right: 0; top: 46%; bottom: 0; background: #cdb89a; clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%); }
   #lang .mini .d { position: absolute; left: 49.4%; width: 1.2%; top: 46%; bottom: 0; background: repeating-linear-gradient(transparent 0 26px, rgba(255,255,255,.85) 26px 44px); animation: dash .5s linear infinite; }
-  #lang .mini .walker { left: 165px; bottom: 60px; animation: bob .5s steps(2) infinite; }
+  #lang .mini .walker { left: 165px; bottom: 300px; animation: bob .5s steps(2) infinite; }
   #lang .mini .walker .legL { animation: legA .5s steps(2) infinite; } #lang .mini .walker .legR { animation: legB .5s steps(2) infinite; }
   #lang .front { position: relative; z-index: 2; }
   /* the logo drops in slowly, then beats like a heart (두근두근) — and switches 한국어 ⇄ English on every other beat */
-  .logo { display: block; width: 320px; margin: 90px auto 10px; image-rendering: pixelated; animation: dropIn 1.8s cubic-bezier(.3,1.4,.5,1) both, heartbeat 1.4s ease-in-out 1.9s infinite; }
-  @keyframes heartbeat { 0%, 40%, 100% { transform: scale(1); } 12% { transform: scale(1.08); } 24% { transform: scale(.98); } 32% { transform: scale(1.05); } }
+  /* a slow, gentle heartbeat: 두……근……  (3.2s per beat) */
+  .logo { display: block; width: 320px; margin: 70px auto 4px; image-rendering: pixelated; animation: dropIn 1.8s cubic-bezier(.3,1.4,.5,1) both, heartbeat 3.2s ease-in-out 1.9s infinite; }
+  @keyframes heartbeat { 0%, 100% { transform: scale(1); } 18% { transform: scale(1.04); } 32% { transform: scale(1); } 46% { transform: scale(1.025); } 62% { transform: scale(1); } }
+  .studio { color: #fff; font-size: 11px; text-shadow: 1px 1px 0 var(--ink); letter-spacing: 1px; }
+  .landing-btns { position: absolute; left: 0; right: 0; bottom: 40px; z-index: 2; text-align: center; }
+  #lang .landing-btns .btn.big { width: 290px; margin: 0 auto; font-size: 22px; padding: 12px; letter-spacing: 3px; }
+  .sec-row { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+  #lang .sec-row .btn { display: inline-block; width: 140px; margin: 0; font-size: 11px; }
+  .btn.sec { background: #fff6e3; color: var(--ink); box-shadow: inset 0 -3px 0 var(--paper), 2px 2px 0 var(--ink); }
+  .btn.sec:disabled { opacity: .55; cursor: default; }
+  #creator { display: none; position: absolute; inset: 0; z-index: 6; background: rgba(26,20,32,.6); }
+  #creator .box { position: absolute; left: 30px; right: 30px; top: 50%; transform: translate(0, -50%); background: #fff6e3; border: 3px solid var(--ink); box-shadow: 4px 4px 0 #1a1420; padding: 18px; text-align: center; animation: zoomIn .35s ease-out; }
+  #creator .ct { font-size: 18px; color: #c2385f; } #creator .cs { font-size: 11px; margin: 4px 0 12px; }
+  #creator p { font-size: 12px; line-height: 1.6; margin: 8px 0; } #creator .small { font-size: 10px; color: #6b5d52; }
+  @keyframes zoomIn { from { transform: translate(0, -50%) scale(.6); opacity: 0; } to { transform: translate(0, -50%) scale(1); opacity: 1; } }
   #lang .btn { display: block; width: 220px; margin: 18px auto 0; font-size: 18px; }
   #langPop { display: none; position: absolute; inset: 0; z-index: 5; background: rgba(26,20,32,.55); }
-  #langPop .box { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #fff6e3; border: 3px solid var(--ink); box-shadow: 4px 4px 0 #1a1420; padding: 10px 24px 26px; animation: dropIn .45s cubic-bezier(.3,1.6,.5,1); }
+  #langPop .box { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #fff6e3; border: 3px solid var(--ink); box-shadow: 4px 4px 0 #1a1420; padding: 10px 24px 26px; animation: zoomCenter .35s ease-out; }
+  @keyframes zoomCenter { from { transform: translate(-50%, -50%) scale(.6); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
   #prologue { position: absolute; inset: 0; z-index: 60; background: #1a1420; color: #fff6e3; display: none; align-items: center; justify-content: center; font-size: 16px; padding: 30px; text-align: center; transition: opacity 1.2s; }
   #end .title { position: relative; margin-top: 150px; font-size: 22px; color: #ffd36b; opacity: 0; transition: opacity 2s; }
   #end .story { position: relative; margin: 14px 34px 0; font-size: 13px; line-height: 1.7; opacity: 0; transition: opacity 2s; }
@@ -90,6 +104,13 @@
   #road .stars { position: absolute; inset: 0; transition: opacity 2s; }
   #road .stars i { position: absolute; width: 2px; height: 2px; background: #fff; animation: twinkle 2.4s ease-in-out infinite; }
   @keyframes twinkle { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+  #road .clouds { position: absolute; inset: 0; }
+  #road .cloud { position: absolute; height: 14px; border-radius: 10px; background: var(--cloud, #fff); opacity: .9; transition: background 2s, opacity 2s; }
+  #road .cloud::before, #road .cloud::after { content: ""; position: absolute; border-radius: 50%; background: inherit; }
+  #road .cloud::before { width: 55%; height: 200%; left: 15%; top: -90%; } #road .cloud::after { width: 35%; height: 150%; left: 50%; top: -55%; }
+  #road[data-clouds="streaks"] .cloud { height: 4px; opacity: .8; } #road[data-clouds="streaks"] .cloud::before, #road[data-clouds="streaks"] .cloud::after { display: none; }
+  #road[data-clouds="wisps"] .cloud { height: 6px; opacity: .35; } #road[data-clouds="wisps"] .cloud::before { height: 120%; top: -30%; } #road[data-clouds="wisps"] .cloud::after { display: none; }
+  #road[data-clouds="overcast"] .cloud { height: 22px; opacity: .95; }
   #road .flyers > * { position: absolute; pointer-events: none; }
   #road .bird { font-size: 9px; color: #2b2233; letter-spacing: 3px; animation: flyR 9s linear forwards; }
   #road .plane { width: 14px; height: 4px; background: #f4f6fa; border: 1px solid #55607a; border-radius: 3px; animation: flyL 14s linear forwards; }
@@ -181,12 +202,29 @@
       <div class="walker me" data-testid="lang-walker"><div class="hair" style="background:#6b4a33"></div><div class="body"></div><div class="legL"></div><div class="legR"></div></div></div>
     <div class="front">
       <img id="langLogo" class="logo" data-testid="logo" alt="두근두근, 내 운명의 사람" src="../assets/logo/logo-ko.png">
-      <button class="btn pink" id="startBtn" data-testid="start-game">START</button>
+      <div class="studio" data-testid="studio">ⓒ Jellie Studio</div>
     </div>
-    <!-- Start → choose the language in a popup, then the form opens in that language. -->
+    <!-- The buttons sit low; the walker stays visible in the middle of the road. -->
+    <div class="landing-btns">
+      <button class="btn pink big" id="startBtn" data-testid="start-game">START</button>
+      <div class="sec-row">
+        <button class="btn sec" id="continueBtn" data-testid="continue-game" disabled>이어하기 Continue</button>
+        <button class="btn sec" id="creatorBtn" data-testid="to-creator">만든 사람에게 To Creator</button>
+      </div>
+    </div>
+    <!-- Start → choose the language in a popup (zooms in from the middle), then the form opens in that language. -->
     <div id="langPop" data-testid="lang-popup"><div class="box">
-      <button class="btn pink" id="langKo" data-testid="lang-ko">한국어</button>
-      <button class="btn" id="langEn" data-testid="lang-en">English</button>
+      <button class="btn sec" id="langEn" data-testid="lang-en">English</button>
+      <button class="btn sec" id="langKo" data-testid="lang-ko">한국어</button>
+    </div></div>
+    <!-- To Creator: a small page about who made the game. -->
+    <div id="creator" data-testid="creator"><div class="box">
+      <div class="ct">To Creator</div>
+      <div class="cs">ⓒ Jellie Studio</div>
+      <p>두근두근, 내 운명의 사람<br>Doki Doki Destiny Lover</p>
+      <p class="note">사주·점성술·MBTI가 그리는 단 하나의 인연 이야기.<br>플레이해 주셔서 고마워요 ♥</p>
+      <p class="small">Design & story · Jellie Studio<br>Engine · 사주 / 점성술 / MBTI life-sim</p>
+      <button class="btn sec" id="creatorClose" data-testid="creator-close">닫기 Close</button>
     </div></div>
   </div>
   <div id="setup" class="screen" data-testid="setup">
@@ -197,6 +235,8 @@
     <div class="row"><input id="fH" value="" placeholder="시"><input id="fMin" value="" placeholder="분"></div>
     <label>태어난 곳</label><input id="fPlace" value="서울" list="places" data-testid="birthplace" autocomplete="off">
     <div id="fPlaceHint" class="hint" data-testid="birthplace-hint"></div>
+    <label id="fHomeQ">현재 어디 살고 있나요?</label><input id="fHome" value="서울" list="places" data-testid="home" autocomplete="off">
+    <div id="fHomeHint" class="hint" data-testid="home-hint"></div>
     <datalist id="places"></datalist>
     <div class="row"><div><label>나는</label><select id="fG"><option value="F">여자</option><option value="M">남자</option></select></div>
       <div><label>좋아하는 사람</label><select id="fL"><option value="M">남자</option><option value="F">여자</option><option value="A">상관없음</option></select></div></div>
@@ -226,7 +266,7 @@
     <div id="log" data-testid="log">…</div>
     <div id="notes" data-testid="notes"></div>
     <div id="scene" data-testid="scene"></div>
-    <div id="road" data-testid="road"><div class="skybox" data-testid="sky"><div class="stars"></div><div class="sun"></div><div class="moon"></div><div class="flyers"></div></div><div class="far"></div><div class="ground"></div><div class="way"></div><div class="dash"></div><div class="objs"></div><div class="walkers"></div><div class="weather"></div><div class="shade"></div></div>
+    <div id="road" data-testid="road"><div class="skybox" data-testid="sky"><div class="stars"></div><div class="clouds"></div><div class="sun"></div><div class="moon"></div><div class="flyers"></div></div><div class="far"></div><div class="ground"></div><div class="way"></div><div class="dash"></div><div class="objs"></div><div class="walkers"></div><div class="weather"></div><div class="shade"></div></div>
     <div id="place" data-testid="place"></div>
     <div id="diary" data-testid="diary"></div>
     <div id="prologue" data-testid="prologue"></div>
@@ -346,7 +386,8 @@
   function drawRoad(rv) {
     roadView = rv;
     const el = $("road"), b = rv.backdrop, th = THEME[b.theme] || THEME.town;
-    el.classList.toggle("walking", rv.walking);
+    const walking = rv.walking || !!window.__qa.ending; // the day's last stretch still walks
+    el.classList.toggle("walking", walking);
     el.dataset.theme = b.theme; el.dataset.sea = b.sea || ""; el.dataset.walkers = rv.walkers.map((w) => w.role).join(",");
     // The sky: gradient, sun, moon, stars (all from the engine).
     const sky = b.sky, sb = el.querySelector(".skybox");
@@ -360,7 +401,9 @@
     if (sky.moon) { moon.style.left = sky.moon.x * 100 + "%"; moon.style.top = sky.moon.y * 100 + "%"; }
     const stars = sb.querySelector(".stars");
     if (!stars.children.length) stars.innerHTML = Array.from({ length: 46 }, (_, k) => `<i style="left:${(k * 37) % 100}%;top:${(k * 53) % 92}%;animation-delay:${(k % 7) * 0.35}s"></i>`).join("");
-    stars.style.opacity = sky.stars; el.style.setProperty("--ground", b.trees.ground);
+    stars.style.opacity = sky.stars;
+    // Clouds: color + shape from the engine; how many and how fast drift in the frame loop.
+    el.style.setProperty("--cloud", sky.clouds); el.dataset.clouds = sky.cloudMotion.shape; el.style.setProperty("--ground", b.trees.ground);
     el.style.setProperty("--way", th.way || "#cdb89a"); el.style.setProperty("--leaf", b.trees.leaf); el.dataset.trees = b.trees.look;
     const sk = b.skyline;
     el.style.setProperty("--bldg", sk.palette.buildings); el.style.setProperty("--accent", sk.palette.accent);
@@ -377,7 +420,7 @@
     if (rv.landmark && rv.landmark.id !== landmarkShown) { landmarkShown = rv.landmark.id; spawn(0.02, true, rv.landmark.name, rv.landmark.side === "right" ? 1 : -1, rv.landmark.size); }
     if (!rv.landmark) landmarkShown = null;
     // Walkers from behind, side by side (you in the middle of your people).
-    const box = el.querySelector(".walkers"); const n = rv.walkers.length; const gap = 34;
+    const box = el.querySelector(".walkers"); const n = rv.walkers.length; const gap = 40;
     const seen = new Set();
     rv.walkers.forEach((w, i) => {
       seen.add(w.who);
@@ -427,8 +470,18 @@
       if (Math.random() < fl.plane * dt) launch("plane", "", 10 + Math.random() * 25);
       if (Math.random() < fl.shootingStar * dt) launch("shoot", "", 8 + Math.random() * 30);
     }
-    const speed = roadView.walking ? 0.16 : 0;
-    if (roadView.walking && objs.filter((o) => !o.landmark).length < 10 && Math.random() < dt * 3) spawn(0.02, false);
+    // Clouds drift left → right; their number follows the cover.
+    const cm = roadView.backdrop.sky.cloudMotion, cbox = $("road").querySelector(".clouds");
+    const want = Math.round(2 + cm.cover * 7);
+    while (cbox.children.length < want) { const c = document.createElement("div"); c.className = "cloud"; c.dataset.testid = "cloud"; c.dataset.x = String(Math.random() * 400 - 60); c.style.top = 6 + Math.random() * 60 + "%"; c.style.width = 30 + Math.random() * 50 + "px"; cbox.appendChild(c); }
+    while (cbox.children.length > want) cbox.lastChild.remove();
+    for (const c of cbox.children) {
+      let x = parseFloat(c.dataset.x) + cm.speed * 360 / 60 * dt * (0.7 + (parseFloat(c.style.width) % 7) / 10);
+      if (x > 380) x = -90;
+      c.dataset.x = String(x); c.style.left = x + "px";
+    }
+    const speed = roadView.walking || window.__qa.ending ? 0.16 : 0;
+    if ((roadView.walking || window.__qa.ending) && objs.filter((o) => !o.landmark).length < 10 && Math.random() < dt * 3) spawn(0.02, false);
     for (const o of objs) {
       o.z += speed * dt * (0.4 + o.z * 2.2);
       const p = o.z; // 0 at the horizon, 1 at the bottom edge
@@ -480,7 +533,8 @@
         $("pWho").textContent = (r && r.name) || "";
         $("pRes").textContent = (r && r.line) || "…";
         const k = document.createElement("button"); k.className = "btn pink"; k.textContent = "▼"; k.dataset.testid = "continue";
-        k.onclick = () => { $("popupWrap").style.display = "none"; popupOpen = false; hud(); if (game.isOver()) endDay(); };
+        // After every popup: walk at least 3 s before anything else can pop up (the clock waits, the road keeps scrolling).
+        k.onclick = () => { $("popupWrap").style.display = "none"; popupOpen = false; window.__qa.cooldownUntil = Date.now() + 3000; window.__qa.lastClosed = Date.now(); hud(); if (game.isOver()) endDay(); };
         ch.appendChild(k);
       };
       ch.appendChild(b);
@@ -493,7 +547,8 @@
       else if (b.kind === "mood") logLine(b.text);
       else if (b.kind === "toast") note(b.from, b.text);
       else if (b.kind === "popup") openPopup(b.popup);
-      else if (b.kind === "dayEnd") return endDay();
+      // The day's last stretch: keep walking ~3 s before "시간이 흐른다…" (no cut right after a popup).
+      else if (b.kind === "dayEnd") { if (!window.__qa.ending) { window.__qa.ending = true; setTimeout(() => { window.__qa.ending = false; endDay(); }, 3000); } return; }
     }
     hud();
   }
@@ -553,6 +608,7 @@
     const d = LoveSim.setupDefaults(lang), o = LoveSim.fatedOptions(lang);
     $("fName").value = d.name; $("fY").value = d.birth.year; $("fM").value = d.birth.month; $("fD").value = d.birth.day;
     $("fMbti").value = d.mbti; $("fPlace").value = d.birthplace; placeHint();
+    $("fHomeQ").textContent = d.homeQuestion; $("fHome").value = d.home; $("fHomeHint").textContent = d.homeHint;
     $("fFsQ").textContent = o.statusQuestion;
     $("fFs").innerHTML = o.statuses.map((x) => `<option value="${x.id}">${x.name}</option>`).join("");
     $("fFs").value = d.fated.status;
@@ -573,8 +629,10 @@
   $("langLogo").src = logoSrc(phoneLang); $("langLogo").alt = phoneLang === "ko" ? "두근두근, 내 운명의 사람" : "Doki Doki Destiny Lover";
   // After the drop: the logo keeps beating and alternates languages (one swap every 2 beats).
   let logoLang = phoneLang;
-  setTimeout(() => setInterval(() => { if (screen !== "lang" || $("langPop").style.display === "block") return; logoLang = logoLang === "ko" ? "en" : "ko"; $("langLogo").src = logoSrc(logoLang); }, 2800), 1900);
+  setTimeout(() => setInterval(() => { if (screen !== "lang" || $("langPop").style.display === "block") return; logoLang = logoLang === "ko" ? "en" : "ko"; $("langLogo").src = logoSrc(logoLang); }, 6400), 1900);
   $("startBtn").onclick = () => { $("langPop").style.display = "block"; };
+  $("creatorBtn").onclick = () => { $("creator").style.display = "block"; };
+  $("creatorClose").onclick = () => { $("creator").style.display = "none"; };
   for (const [id, lang] of [["langKo", "ko"], ["langEn", "en"]]) {
     $(id).onmouseenter = () => { $("langLogo").src = logoSrc(lang); };
     $(id).onclick = () => { $("langPop").style.display = "none"; openSetup(lang); };
@@ -602,6 +660,7 @@
       mbti: v("fMbti"), job: v("fJob") || undefined, lang: LANG, seed: P.get("seed") ? +P.get("seed") : undefined,
       family: { mom: { alive: v("fMom") === "1" }, dad: { alive: v("fDad") === "1" }, siblings, grandparents: num("fGp") },
       birthplace: v("fPlace") || undefined,
+      home: v("fHome") || undefined,
       fated: { name: v("fFated") || undefined, from: v("fFrom"), status: v("fFs"), job: v("fFJob") || undefined, city: v("fFCity") || undefined, birth: fb, birthplace: v("fFPlace") || undefined },
     });
     window.__qa.game = game;
@@ -617,7 +676,7 @@
   };
 
   setInterval(() => {
-    if (screen !== "play" || !game || popupOpen || game.isOver() || window.__qa.hold) return;
+    if (screen !== "play" || !game || popupOpen || game.isOver() || window.__qa.hold || window.__qa.ending || Date.now() < (window.__qa.cooldownUntil || 0)) return;
     handle(game.advance(game.s.minute + 0.32 * SPEED));
   }, 100);
   // Kairosoft-style walking: one step every 500 ms, animated over 480 ms.

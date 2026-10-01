@@ -766,6 +766,127 @@
     "ko": "서울로 돌아온 뒤에도 가끔 연락을 주고받았다. {fatedCity}의 날씨를 묻는 게 습관이 됐다.",
     "en": "Back home, you still texted now and then. Asking about the weather in {fatedCity} became a habit."
    }
+  },
+  "dating_app": {
+   "choices": [
+    {
+     "ko": "먼저 '안녕하세요' 보내기",
+     "en": "Send the first 'hi'"
+    },
+    {
+     "ko": "프로필 사진만 한참 본다",
+     "en": "Just stare at the profile for a while"
+    },
+    {
+     "ko": "(일단 넘긴다)",
+     "en": "(Swipe past for now)"
+    }
+   ],
+   "MISSED": {
+    "ko": "…며칠 망설이는 사이, 매칭이 사라졌다. 그 사람의 웃는 사진이 가끔 생각난다.",
+    "en": "…While you hesitated, the match disappeared. You still think about that smiling photo."
+   },
+   "SLOW_BURN": {
+    "ko": "하루 한 줄씩 메시지가 오갔다. 답장이 오면 괜히 휴대폰을 엎어 뒀다.",
+    "en": "A line or two a day. When a reply came, you'd flip your phone over, flustered."
+   }
+  },
+  "instagram": {
+   "choices": [
+    {
+     "ko": "답글을 단다",
+     "en": "Reply to the comment"
+    },
+    {
+     "ko": "그 사람 피드를 끝까지 구경한다",
+     "en": "Scroll through their whole feed"
+    },
+    {
+     "ko": "(좋아요만 누른다)",
+     "en": "(Just tap like)"
+    }
+   ],
+   "MISSED": {
+    "ko": "…좋아요 하나로 끝났다. 가끔 그 계정이 생각나 검색해 본다.",
+    "en": "…It ended with one like. Sometimes you look the account up again."
+   },
+   "SLOW_BURN": {
+    "ko": "서로의 스토리에 답장을 다는 게 일상이 됐다.",
+    "en": "Replying to each other's stories became part of your days."
+   }
+  },
+  "online_community": {
+   "choices": [
+    {
+     "ko": "쪽지에 바로 답한다",
+     "en": "Answer the DM right away"
+    },
+    {
+     "ko": "같이 덕질하자고 한다",
+     "en": "Suggest fangirling/fanboying together"
+    },
+    {
+     "ko": "(읽고 답을 미룬다)",
+     "en": "(Read it and reply later)"
+    }
+   ],
+   "MISSED": {
+    "ko": "…답을 미루다 그 사람이 커뮤니티를 떠났다. 마지막 글에 아직 하트가 하나 남아 있다.",
+    "en": "…You put off replying and they left the forum. Their last post still has your heart on it."
+   },
+   "SLOW_BURN": {
+    "ko": "새벽마다 같은 노래를 들으며 쪽지를 주고받았다.",
+    "en": "Every dawn, the same songs, and messages back and forth."
+   }
   }
+ },
+ "meetOnline": {
+  "_doc": "How you first meet when it happens online — picked per person, so not everyone meets on the same app. abroad: across time zones; near: someone in your own city.",
+  "abroad": [
+   {
+    "location": "language_exchange_app",
+    "line": {
+     "ko": "(언어교환 앱에서 {fatedCity}에 사는 사람과 매칭됐다. 첫 메시지가 왔다. 거기는 지금 {fatedTime}라고 했다.)",
+     "en": "(The language-exchange app matches you with someone in {fatedCity}. Their first message: it's {fatedTime} there.)"
+    }
+   },
+   {
+    "location": "dating_app",
+    "line": {
+     "ko": "(여행 모드로 켜 둔 소개팅 앱. {fatedCity}에 사는 사람과 매칭됐다.) 시차가 꽤 나네요… 그래도, 대화할래요?",
+     "en": "(The dating app, left in travel mode. A match from {fatedCity}.) Quite the time difference… still want to talk?"
+    }
+   },
+   {
+    "location": "instagram",
+    "line": {
+     "ko": "(내가 올린 노을 사진에 낯선 댓글이 달렸다.) {fatedCity}에서도 지금 똑같은 하늘이에요. 신기하죠?",
+     "en": "(A stranger commented on your sunset photo.) The sky looks exactly like this in {fatedCity} right now. Funny, huh?"
+    }
+   },
+   {
+    "location": "online_community",
+    "line": {
+     "ko": "(좋아하는 밴드의 팬 커뮤니티. 새벽마다 같은 글에 댓글을 다는 {fatedCity}의 누군가가 쪽지를 보냈다.) 우리 취향 너무 똑같지 않아요?",
+     "en": "(Your favorite band's fan forum. Someone in {fatedCity} who's always commenting on the same posts at dawn sends a DM.) Don't we have the exact same taste?"
+    }
+   }
+  ],
+  "near": [
+   {
+    "location": "dating_app",
+    "line": {
+     "ko": "(소개팅 앱에서 매칭된 사람. 프로필을 보니, 어디서 본 얼굴이다.) …혹시 우리, 같은 동네 살아요?",
+     "en": "(A dating-app match. The profile photo looks oddly familiar.) …Wait, do we live in the same neighborhood?"
+    }
+   },
+   {
+    "location": "instagram",
+    "line": {
+     "ko": "(동네 맛집 사진에 '저도 거기 단골이에요!' 댓글. 그 사람이 DM을 보냈다.) 다음엔 같이 가요, 진짜로.",
+     "en": "(A comment on your neighborhood food photo: 'I'm a regular there too!' Then a DM.) Next time let's actually go together."
+    }
+   }
+  ]
  }
 }

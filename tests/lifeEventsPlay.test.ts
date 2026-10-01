@@ -112,7 +112,7 @@ describe("Chains, reactions, hooks", () => {
       const later = g.state.story!.events!.pending.filter((x) => x.id === "COMING_AROUND");
       for (const l of later) {
         expect(l.vars?.who_ko).toBeTruthy();
-        expect(l.vars?.subject_ko).toContain("오빠 민수");
+        expect(l.vars?.subject_ko).toBe("오빠");
         comingAround++;
       }
     }

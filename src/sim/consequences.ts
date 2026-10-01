@@ -7,7 +7,7 @@ import type { SeededRandom } from "../core/rng";
 import { calculateNatalChart } from "../saju/chart";
 import type { Consequence } from "./opportunity";
 import { type LifeState, type Npc, isAbroad } from "./types";
-import { pickCity, pickForeignCountry } from "./world";
+import { countryNameOf, pickCity, pickForeignCountry } from "./world";
 import { cultureOf, pickName } from "../world/names";
 
 export const MAX_CAREER_LEVEL = 8;
@@ -64,13 +64,25 @@ export function applyConsequence(s: LifeState, c: Consequence, ctx: ConsequenceC
       break;
     case "moveAbroad": {
       const from = `${s.location.city}, ${s.location.country}`;
-      const country = pickForeignCountry(rng, s.homeCountry);
-      s.location = { country, city: pickCity(rng, country) };
+      // Abroad means somewhere that makes sense for this life: where the destined partner lives (no
+      // surprise Singapore in a Seoul–New York long-distance love); otherwise a foreign country — not
+      // the one you already live in.
+      const life = s.story?.fatedLife;
+      const pid = s.relationship.partnerId;
+      const withFated = !!pid && !!s.world?.npcs[pid]?.fated;
+      if (life && withFated && life.city.country !== "KR") {
+        s.location = { country: countryNameOf(life.city.country), city: life.city.en };
+        s.relationship.longDistance = false;
+      } else {
+        let country = pickForeignCountry(rng, s.homeCountry);
+        if (country === s.location.country) country = pickForeignCountry(rng, country);
+        s.location = { country, city: pickCity(rng, country) };
+      }
       s.flags.livedAbroad = true;
       if (s.career.employed && !s.career.abroad) s.career.employed = false;
       if (s.relationship.status === "MARRIED") log.push("partner moved too");
-      else if (s.relationship.status === "DATING") s.relationship.longDistance = true;
-      log.push(`moved ${from} → ${s.location.city}, ${country}`);
+      else if (s.relationship.status === "DATING" && !(life && withFated && life.city.country !== "KR")) s.relationship.longDistance = true;
+      log.push(`moved ${from} → ${s.location.city}, ${s.location.country}`);
       break;
     }
     case "moveHome":

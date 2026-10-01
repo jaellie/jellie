@@ -1451,5 +1451,489 @@
     "A Vow of Love"
    ]
   }
+ },
+ "LAST_GOODBYE": {
+  "good": "GOODBYE_WARM",
+  "titles": {
+   "ko": [
+    "멀어지는 마음",
+    "마지막 저녁",
+    "돌아서는 길",
+    "안녕"
+   ],
+   "en": [
+    "Drifting Apart",
+    "The Last Evening",
+    "The Walk Away",
+    "Goodbye"
+   ]
+  },
+  "them": {
+   "NF": {
+    "line": {
+     "ko": "(마지막으로 만나자는 {them}의 문자. 처음 만났던 카페였다.) …우리, 좋았던 것만 기억하자.",
+     "en": "({them} texted to meet one last time — at the café where you first met.) …Let's only remember the good parts."
+    },
+    "choices": [
+     {
+      "t": {
+       "ko": "응. 좋았던 것만",
+       "en": "Okay. Only the good parts."
+      },
+      "fits": "F",
+      "r": {
+       "ko": "{them}의 눈가가 젖어 있었다. 둘 다 모른 척했다.",
+       "en": "{them}'s eyes were wet. You both pretended not to see."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     },
+     {
+      "t": {
+       "ko": "왜 우리가 이렇게 됐을까",
+       "en": "How did we end up like this?"
+      },
+      "fits": "N",
+      "r": {
+       "ko": "'…그러게.' 그 한마디에 다 들어 있었다.",
+       "en": "'…I wonder too.' Everything was in those words."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 고개를 저었다. '이제 와서 그게 중요할까.'",
+       "en": "{them} shook their head. 'Does it matter now?'"
+      }
+     },
+     {
+      "t": {
+       "ko": "(아무 말 없이 고개만 끄덕인다)",
+       "en": "(Just nod, without a word)"
+      },
+      "fits": "I",
+      "r": {
+       "ko": "침묵이 오래 이어졌다. 이상하게 편안한 침묵이었다.",
+       "en": "A long silence. Strangely peaceful."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     }
+    ]
+   },
+   "NT": {
+    "line": {
+     "ko": "({them}이(가) 담담하게 말했다.) 서로 잘못한 건 없어. 그냥… 방향이 달랐던 거야.",
+     "en": "({them} says it calmly.) Neither of us did anything wrong. We were just… headed different ways."
+    },
+    "choices": [
+     {
+      "t": {
+       "ko": "인정해. 우린 다른 길이야",
+       "en": "You're right. We're on different roads."
+      },
+      "fits": "T",
+      "r": {
+       "ko": "'고마워, 이해해 줘서.' {them}의 목소리가 처음으로 떨렸다.",
+       "en": "'Thanks for understanding.' For the first time, {them}'s voice shook."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 의외라는 듯 나를 봤다. 붙잡아 주길 바랐던 걸까.",
+       "en": "{them} looked surprised. Had they wanted you to hold on?"
+      }
+     },
+     {
+      "t": {
+       "ko": "그럼 우리가 같이 걸은 건 뭐였는데?",
+       "en": "Then what was all the walking together for?"
+      },
+      "fits": "F",
+      "r": {
+       "ko": "{them}이(가) 대답하지 못했다. 그게 대답이었다.",
+       "en": "{them} couldn't answer. That was the answer."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     },
+     {
+      "t": {
+       "ko": "방향이 달라도, 좋았어",
+       "en": "Different ways or not, it was good."
+      },
+      "fits": "N",
+      "r": {
+       "ko": "{them}이(가) 처음으로 웃었다. '응. 좋았어.'",
+       "en": "{them} smiled for the first time. 'Yeah. It was good.'"
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     }
+    ]
+   },
+   "SJ": {
+    "line": {
+     "ko": "({them}이(가) 내 물건을 상자에 정리해 왔다. 칫솔까지 하나하나.) …이거, 네 거.",
+     "en": "({them} packed your things in a box — down to the toothbrush.) …These are yours."
+    },
+    "choices": [
+     {
+      "t": {
+       "ko": "끝까지 다정하네, 너는",
+       "en": "Kind to the very end, aren't you."
+      },
+      "fits": "F",
+      "r": {
+       "ko": "'…원래 그렇잖아.' {them}이(가) 애써 웃었다.",
+       "en": "'…You know me.' {them} forced a smile."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     },
+     {
+      "t": {
+       "ko": "(상자를 받아 든다)",
+       "en": "(Take the box)"
+      },
+      "fits": "S",
+      "r": {
+       "ko": "생각보다 가벼웠다. 그게 더 슬펐다.",
+       "en": "Lighter than you expected. That made it sadder."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     },
+     {
+      "t": {
+       "ko": "(상자 맨 위에 그날 사진이 있는 걸 본다)",
+       "en": "(See the photo from that day on top)"
+      },
+      "fits": "N",
+      "r": {
+       "ko": "{them}이(가) 일부러 넣은 걸까. 묻지 않았다.",
+       "en": "Did {them} put it there on purpose? You didn't ask."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     }
+    ]
+   },
+   "SP": {
+    "line": {
+     "ko": "({them}이(가) 갑자기 말했다.) 마지막으로 우리 처음 갔던 데 가 볼래? 지금.",
+     "en": "({them} says suddenly:) One last time — want to go where we first went? Right now."
+    },
+    "choices": [
+     {
+      "t": {
+       "ko": "(따라나선다)",
+       "en": "(Go with them)"
+      },
+      "fits": "P",
+      "r": {
+       "ko": "그곳은 그대로였다. 우리만 달라졌다.",
+       "en": "The place hadn't changed. Only we had."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     },
+     {
+      "t": {
+       "ko": "그런다고 달라지는 건 없잖아",
+       "en": "It won't change anything."
+      },
+      "fits": "J",
+      "r": {
+       "ko": "'알아. 그냥… 한 번만.' {them}의 손이 떨렸다.",
+       "en": "'I know. Just… once.' {them}'s hand trembled."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 고개를 끄덕였다. 마지막 즉흥이 끝났다.",
+       "en": "{them} nodded. The last spontaneous plan, over."
+      }
+     },
+     {
+      "t": {
+       "ko": "(웃다가 눈물이 난다)",
+       "en": "(Laugh — then cry)"
+      },
+      "fits": "F",
+      "r": {
+       "ko": "{them}도 같이 웃다가, 같이 울었다.",
+       "en": "{them} laughed with you, then cried with you."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     }
+    ]
+   }
+  },
+  "me": {
+   "NF": {
+    "ko": "(이 사람 없는 내일을 상상해 봤다. 상상이 잘 안 됐다.)",
+    "en": "(You tried to imagine tomorrow without them. You couldn't.)"
+   },
+   "NT": {
+    "ko": "(머리로는 이해가 된다. 마음이 따라오지 않을 뿐.)",
+    "en": "(Your head understands. Your heart just won't follow.)"
+   },
+   "SJ": {
+    "ko": "(같이 정했던 주말 계획들이 달력에 그대로 남아 있다.)",
+    "en": "(The weekend plans you made together are still on the calendar.)"
+   },
+   "SP": {
+    "ko": "(괜찮은 척 웃어 봤다. 거울 속 얼굴이 낯설었다.)",
+    "en": "(You tried smiling like you're fine. The face in the mirror looked like a stranger.)"
+   }
+  },
+  "mePool": [
+   {
+    "t": {
+     "ko": "친구한테 전화해서 펑펑 운다",
+     "en": "Call a friend and cry your eyes out"
+    },
+    "fits": "E",
+    "r": {
+     "ko": "친구가 아무 말 없이 끝까지 들어 줬다.",
+     "en": "Your friend listened to the end, saying nothing."
+    },
+    "me": "E"
+   },
+   {
+    "t": {
+     "ko": "(이불 속에서 혼자 운다)",
+     "en": "(Cry alone under the blanket)"
+    },
+    "fits": "I",
+    "r": {
+     "ko": "울다 지쳐 잠들었다.",
+     "en": "You cried yourself to sleep."
+    },
+    "me": "I"
+   },
+   {
+    "t": {
+     "ko": "부치지 못할 마지막 편지를 쓴다",
+     "en": "Write a last letter you'll never send"
+    },
+    "fits": "F",
+    "r": {
+     "ko": "마지막 줄에 '고마웠어'라고 썼다.",
+     "en": "The last line: 'Thank you.'"
+    },
+    "me": "F"
+   },
+   {
+    "t": {
+     "ko": "헤어지는 이유를 하나씩 정리해 본다",
+     "en": "List the reasons you're breaking up"
+    },
+    "fits": "T",
+    "r": {
+     "ko": "다 맞는 말이었다. 그래서 더 아팠다.",
+     "en": "All true. That's why it hurt more."
+    },
+    "me": "T"
+   },
+   {
+    "t": {
+     "ko": "같이 찍은 사진을 폴더 하나에 모은다",
+     "en": "Gather your photos together into one folder"
+    },
+    "fits": "J",
+    "r": {
+     "ko": "폴더 이름은 끝내 정하지 못했다.",
+     "en": "You never could name the folder."
+    },
+    "me": "J"
+   },
+   {
+    "t": {
+     "ko": "(일단 밖으로 나가 걷는다)",
+     "en": "(Just go out and walk)"
+    },
+    "fits": "P",
+    "r": {
+     "ko": "걷다 보니 우리가 자주 가던 길이었다.",
+     "en": "Somehow you ended up on the street you always walked together."
+    },
+    "me": "P"
+   }
+  ],
+  "pair": {
+   "plan": {
+    "line": {
+     "ko": "(마지막 약속. 둘 다 10분 일찍 와 있었다. 끝까지 우리답다.)",
+     "en": "(The last meeting. You both showed up ten minutes early. Like you, to the end.)"
+    },
+    "choices": [
+     {
+      "t": {
+       "ko": "우리 마지막까지 시간 잘 지켰네",
+       "en": "Punctual to the very last, huh."
+      },
+      "fits": "J",
+      "r": {
+       "ko": "{them}이(가) 웃었다. 그 웃음이 제일 아팠다.",
+       "en": "{them} laughed. That laugh hurt most."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     },
+     {
+      "t": {
+       "ko": "(아무렇지 않은 척 커피를 시킨다)",
+       "en": "(Order coffee like nothing's wrong)"
+      },
+      "fits": "S",
+      "r": {
+       "ko": "{them}이(가) 늘 마시던 걸 시켰다. 나도 모르게.",
+       "en": "You ordered {them}'s usual. Without thinking."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     },
+     {
+      "t": {
+       "ko": "(먼저 손을 내민다)",
+       "en": "(Reach out your hand first)"
+      },
+      "fits": "F",
+      "r": {
+       "ko": "마지막 악수. 손을 놓기까지 한참 걸렸다.",
+       "en": "A last handshake. It took a long time to let go."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     }
+    ]
+   },
+   "free": {
+    "line": {
+     "ko": "(정한 것 없이 걷다 보니 처음 만난 곳이었다.)",
+     "en": "(Walking with no plan, you ended up where you first met.)"
+    },
+    "choices": [
+     {
+      "t": {
+       "ko": "기억나? 여기",
+       "en": "Remember this place?"
+      },
+      "fits": "N",
+      "r": {
+       "ko": "'어떻게 잊어.' {them}이(가) 작게 말했다.",
+       "en": "'How could I forget.' {them} said quietly."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     },
+     {
+      "t": {
+       "ko": "(벤치에 나란히 앉는다)",
+       "en": "(Sit side by side on a bench)"
+      },
+      "fits": "I",
+      "r": {
+       "ko": "어깨가 닿을 듯 말 듯했다. 끝내 닿지 않았다.",
+       "en": "Shoulders almost touching. They never did."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     },
+     {
+      "t": {
+       "ko": "(마지막으로 사진 한 장 찍자고 한다)",
+       "en": "(Ask for one last photo)"
+      },
+      "fits": "P",
+      "r": {
+       "ko": "둘 다 웃고 있었다. 사진 속에서만은.",
+       "en": "You were both smiling. In the photo, at least."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     }
+    ]
+   },
+   "mixed": {
+    "line": {
+     "ko": "(마지막 날까지 하나는 계획대로, 하나는 마음대로였다. 그게 우리였다.)",
+     "en": "(Even on the last day, one of you planned and one of you winged it. That was you two.)"
+    },
+    "choices": [
+     {
+      "t": {
+       "ko": "그래서 좋았는데",
+       "en": "That's what I loved about us."
+      },
+      "fits": "F",
+      "r": {
+       "ko": "{them}이(가) 고개를 숙였다. '…나도.'",
+       "en": "{them} lowered their head. '…Me too.'"
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     },
+     {
+      "t": {
+       "ko": "그래서 힘들었지",
+       "en": "That's what made it hard."
+      },
+      "fits": "T",
+      "r": {
+       "ko": "'응. 그랬지.' 둘 다 웃음이 났다.",
+       "en": "'Yeah. It did.' You both had to laugh."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     },
+     {
+      "t": {
+       "ko": "(웃음이 난다)",
+       "en": "(You can't help smiling)"
+      },
+      "fits": "P",
+      "r": {
+       "ko": "마지막까지 웃을 수 있어서 다행이었다.",
+       "en": "Glad you could still laugh at the end."
+      },
+      "rMiss": {
+       "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
+       "en": "{them} looked out the window instead of answering."
+      }
+     }
+    ]
+   }
+  }
  }
 }

@@ -10,7 +10,7 @@
  */
 import { type Sky, skyAt } from "./sky";
 import type { LifeState } from "../sim/types";
-import { getLocation } from "./catalog";
+import { getDestination, getLocation } from "./catalog";
 import { seasonOf, weatherFor } from "./clock";
 import skylineData from "../../data/world/skylines.json";
 import { findPlace } from "../destiny/birthplace";
@@ -168,6 +168,7 @@ export function buildRoad(
 
   // The backdrop drifts slowly: where you live, the season, the hour, the weather — and old age's quiet fields.
   const trip = w?.travel;
+  const tripDest = trip ? getDestination(trip.destinationId) : undefined;
   const abroad = state.location.country !== (state.homeCountry || "Korea");
   const theme: RoadTheme = trip ? "travel" : abroad ? "abroad" : age >= 65 ? "countryside" : SEASIDE.includes(state.location.city) ? "seaside" : state.location.city === "Seoul" ? "city" : "town";
   const date = { year, month: state.date.month, day: state.date.day ?? 15 };
@@ -190,8 +191,9 @@ export function buildRoad(
       weather,
       sky: skyAt(opts.minute, weather),
       skyline: trip ? skylineFor(TRIP_CITY[trip.destinationId] ?? state.location.city, "", opts.lang) : skylineFor(state.location.city, state.location.country, opts.lang),
-      city: opts.lang === "ko" ? opts.cityName(state.location.city) : state.location.city,
-      country: opts.countryName(state.location.country),
+      // On a trip abroad, the road is in that city (Tokyo), not at home.
+      city: tripDest && tripDest.country !== "HOME" ? tripDest.name[opts.lang] : opts.lang === "ko" ? opts.cityName(state.location.city) : state.location.city,
+      country: opts.countryName(tripDest && tripDest.country !== "HOME" ? tripDest.country : state.location.country),
       ...(seaside ? { sea: "right" as const } : {}),
       // By the sea: big buildings on the left; small houses on the right, with the sea behind them.
       sides: seaside ? { left: "buildings", right: "houses" } : { left: "buildings", right: "buildings" },

@@ -422,3 +422,25 @@ describe("A story moment is the day's event", () => {
     }
   });
 });
+
+describe("A parent's passing plays as one sequence (no time skip in between)", () => {
+  it("the last night → the funeral → the empty days, the same played day", () => {
+    const g = createGame({ ...SETUP, seed: 4, fated: { ...SETUP.fated, status: "dating" as const } });
+    const st = g.state;
+    st.story!.arcs = st.story!.arcs.filter((a) => a.type !== "DATING");
+    const arc = startArc(st, "PARENT_PASSING", new SeededRandom(1), { who: "dad" })!;
+    arc.steps[0].dueMonth = st.monthIndex + 1;
+    const titles: Array<[number, string]> = [];
+    for (let d = 0; d < 4 && titles.length < 3; d++) {
+      g.endDay();
+      for (let i = 0; i < 400; i++) {
+        const bs = g.advance(g.s.minute + 30);
+        for (const b of bs) if (b.kind === "popup") { if (["마지막 밤", "부고", "빈자리"].includes(b.popup.title ?? "")) titles.push([g.s.dayIndex, b.popup.title!]); g.choose(0); }
+        if (bs.some((b) => b.kind === "dayEnd")) break;
+      }
+    }
+    expect(titles.map((t) => t[1])).toEqual(["마지막 밤", "부고", "빈자리"]);
+    expect(new Set(titles.map((t) => t[0])).size).toBe(1);
+    expect(st.family!.dad.alive).toBe(false);
+  });
+});

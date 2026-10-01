@@ -97,9 +97,11 @@ const JOSA_PAIRS: Record<string, [string, string]> = {
  */
 export function fillNames(text: string, vars: Record<string, string | undefined>): string {
   // An author may also write the marker form ("{partner}와(과)") — swallow the "(과)" part too.
-  return text.replace(/\{(\w+)\}(이랑|으로|과|와|이|가|은|는|을|를|로|랑)?(?:\((?:과|와|이|가|은|는|을|를)\))?/g, (m, key: string, josa?: string) => {
+  return text.replace(/\{(\w+)\}(이랑|으로|과|와|이|가|은|는|을|를|로|랑)?(?:\((?:과|와|이|가|은|는|을|를)\))?/g, (m, key: string, josa: string | undefined, at: number) => {
     if (!(key in vars)) return m;
-    const name = vars[key] ?? "";
+    let name = vars[key] ?? "";
+    // "your older brother" at the start of a sentence → "Your older brother".
+    if (/^[a-z]/.test(name) && /(^|[.!?]\s+|[("'“]\s*)$/.test(text.slice(0, at))) name = name[0].toUpperCase() + name.slice(1);
     if (!josa || !name) return name + (josa ?? "");
     const [withB, without] = JOSA_PAIRS[josa];
     const last = name.charCodeAt(name.length - 1);

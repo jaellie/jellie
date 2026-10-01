@@ -18,6 +18,8 @@ export interface Bond {
   married?: boolean;
   since?: { year: number; month: number; age: number };
   over?: { reason: BondEnd; year: number; month: number; age: number };
+  /** A breakup or divorce happened: the farewell (a 4-part goodbye) plays before the game ends. */
+  parting?: "breakup" | "divorce";
 }
 
 function fatedNpc(state: LifeState) {
@@ -39,7 +41,7 @@ export function bondPhase(state: LifeState): "none" | "waiting" | "active" | "ov
   if (!hasBond(state)) return "none";
   const b = state.story!.bond;
   if (b?.over) return "over";
-  if (withFated(state) || state.story!.arcs.some((a) => a.type === "TALKING")) return "active";
+  if (withFated(state) || b?.parting || state.story!.arcs.some((a) => a.type === "TALKING")) return "active";
   return "waiting";
 }
 
@@ -49,6 +51,12 @@ export function pendingMeetings(state: LifeState) {
 }
 
 /** Bring the bond up to date with the life; returns how it ended, the moment it ends. */
+/** Set by the story engine (avoids an import cycle): starts the PARTING arc. */
+let startParting: ((state: LifeState) => void) | undefined;
+export function onParting(fn: (state: LifeState) => void): void {
+  startParting = fn;
+}
+
 export function updateBond(state: LifeState): Bond["over"] | undefined {
   if (!hasBond(state)) return;
   const st = state.story!;
@@ -69,7 +77,16 @@ export function updateBond(state: LifeState): Bond["over"] | undefined {
   }
   let reason: BondEnd | undefined;
   if (!state.alive) reason = "iDied";
-  else if (b.together) reason = f.deceased ? "theyDied" : b.married ? "divorce" : "breakup";
+  else if (b.parting) {
+    // The goodbye has played (or they're gone): now it's over.
+    if (st.arcs.some((a) => a.type === "PARTING") && !f.deceased) return;
+    reason = b.parting;
+  } else if (b.together && !f.deceased) {
+    // A breakup or a divorce is never just a line: the last goodbye comes first, as its own day.
+    b.parting = b.married ? "divorce" : "breakup";
+    if (startParting) startParting(state);
+    return;
+  } else if (b.together) reason = "theyDied";
   else if (st.arcs.some((a) => a.type === "TALKING")) reason = undefined;
   else if (f.deceased || !pendingMeetings(state).length) reason = "missed";
   if (reason) b.over = { reason, ...now };

@@ -47,6 +47,7 @@ export type ArcType =
   | "ILLNESS"
   /** The partner's sudden accident / collapse / old age: the call → the funeral. */
   | "PARTNER_PASSING"
+  | "PARTING"
   /** Finding out the partner is cheating. */
   | "AFFAIR"
   /** A grandparent, aunt/uncle or sibling passes away. */

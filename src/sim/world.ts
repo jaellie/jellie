@@ -15,6 +15,11 @@ export const COUNTRIES: Record<string, string[]> = {
 
 export const NPC_NAMES = ["Minji", "Jiwoo", "Haru", "Alex", "Sam", "Yuna", "Leo", "Noa", "Sora", "Kai", "Mina", "Theo", "Rin", "Jun", "Ella", "Dan"];
 
+/** ISO code → the country name the sim uses ("US" → "USA"); unknown codes stay as they are. */
+export function countryNameOf(iso: string): string {
+  return ({ KR: "Korea", JP: "Japan", US: "USA", CA: "Canada", DE: "Germany", AU: "Australia", GB: "UK", SG: "Singapore", FR: "France" } as Record<string, string>)[iso] ?? iso;
+}
+
 export function pickCity(rng: SeededRandom, country: string, except?: string): string {
   const cities = (COUNTRIES[country] ?? [country]).filter((c) => c !== except);
   return cities.length ? cities[rng.int(0, cities.length - 1)] : except ?? country;

@@ -488,3 +488,14 @@ describe("The sky over the road", () => {
     expect(skyAt(540, "RAIN").gradient[0]).not.toBe(at(9).gradient[0]);
   });
 });
+
+describe("Clouds that move with the hour", () => {
+  it("puffy and drifting by day, streaks at sunset, faint wisps at night, a grey ceiling in the rain", async () => {
+    const { skyAt } = await import("../src/world/sky");
+    expect(skyAt(14 * 60).cloudMotion.shape).toBe("puffy");
+    expect(skyAt(18.5 * 60).cloudMotion.shape).toBe("streaks");
+    expect(skyAt(23 * 60).cloudMotion.shape).toBe("wisps");
+    expect(skyAt(14 * 60, "RAIN").cloudMotion).toEqual({ cover: 1, speed: 0.25, shape: "overcast" });
+    expect(skyAt(14 * 60).cloudMotion.speed).toBeGreaterThan(skyAt(23 * 60).cloudMotion.speed);
+  });
+});

@@ -178,9 +178,11 @@ export function fatedVars(state: LifeState): Record<string, string> {
 type MeetKind = { choices: Bi[]; MISSED: Bi; SLOW_BURN: Bi };
 const MEET_KINDS = (data as unknown as { meetKinds: Record<string, MeetKind> }).meetKinds;
 
+const ONLINE = (data as unknown as { meetOnline: { abroad: Array<{ location: string; line: Bi }>; near: Array<{ location: string; line: Bi }> } }).meetOnline;
+
 export function meetPlan(state: LifeState, again: boolean): { location: string; activity?: string; line: Bi; intro: Bi; kind?: MeetKind } {
   const p = meetPlanBase(state, again);
-  const kind = again ? undefined : p.location === "language_exchange_app" ? MEET_KINDS.app : p.location === "airplane" ? MEET_KINDS.flight : p.location === "business_hotel" || (state.story?.fatedLife?.from === "city" && p.location === "street") ? MEET_KINDS.trip : undefined;
+  const kind = again ? undefined : p.location === "language_exchange_app" ? MEET_KINDS.app : MEET_KINDS[p.location] ? MEET_KINDS[p.location] : p.location === "airplane" ? MEET_KINDS.flight : p.location === "business_hotel" || (state.story?.fatedLife?.from === "city" && p.location === "street") ? MEET_KINDS.trip : undefined;
   return { ...p, kind };
 }
 
@@ -189,8 +191,13 @@ function meetPlanBase(state: LifeState, again: boolean): { location: string; act
   const intro = TEXT[life && life.from !== "same" ? "introAway" : "intro"];
   if (!life) return { location: "cafe", line: { ko: "(자꾸 눈이 마주치던 그 사람이 먼저 다가왔다.)", en: "(The person whose eyes kept meeting yours walks over.)" }, intro };
   if (again) return { location: life.from === "abroad" ? "airport" : life.job.place === "language_exchange_app" ? "cafe" : life.job.place, line: TEXT.meetAgain, intro };
-  if (life.from === "same") return { location: life.job.place, line: life.job.meet ?? TEXT.meetCity, intro };
-  if (life.from === "city") return state.career.employed ? { location: "business_hotel", line: TEXT.meetCity, intro } : { location: "street", line: TEXT.meetCityTrip, intro };
-  if (life.job.away) return { location: "airplane", line: TEXT.meetAbroadFlight, intro };
-  return { location: "language_exchange_app", line: TEXT.meetAbroad, intro };
+  // Not everyone meets the same way: a stable pick per person (their sprite seed), online or not.
+  const fated = Object.values(state.world?.npcs ?? {}).find((n) => n.fated);
+  const pick = (fated?.spriteSeed ?? 7) >>> 0;
+  const near = ONLINE.near;
+  if (life.from === "same") return pick % 4 === 0 ? { location: near[pick % near.length].location, line: near[pick % near.length].line, intro } : { location: life.job.place, line: life.job.meet ?? TEXT.meetCity, intro };
+  if (life.from === "city") return pick % 4 === 1 ? { location: near[pick % near.length].location, line: near[pick % near.length].line, intro } : state.career.employed ? { location: "business_hotel", line: TEXT.meetCity, intro } : { location: "street", line: TEXT.meetCityTrip, intro };
+  if (life.job.away && pick % 2 === 0) return { location: "airplane", line: TEXT.meetAbroadFlight, intro };
+  const o = ONLINE.abroad[pick % ONLINE.abroad.length];
+  return { location: o.location, line: o.line, intro };
 }

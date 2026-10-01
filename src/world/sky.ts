@@ -21,6 +21,13 @@ export interface Sky {
   /** Cloud color for this hour. */
   clouds: string;
   /**
+   * The clouds' movement: how many (cover 0..1 → about 2–9 clouds on screen), how fast they drift
+   * left→right (speed: fraction of the screen width per minute of real time, ~0.1 = a calm 10 minutes
+   * to cross), and their shape — puffy (morning/afternoon cumulus), streaks (thin sunset bands), wisps
+   * (faint night clouds), or overcast (a grey ceiling on rainy days).
+   */
+  cloudMotion: { cover: number; speed: number; shape: "puffy" | "streaks" | "wisps" | "overcast" };
+  /**
    * What may cross the sky — chance per second for the UI to start one:
    * birds (a small V of birds, mornings), plane (a tiny plane with a contrail, afternoons),
    * shootingStar (a quick streak, clear nights).
@@ -73,6 +80,13 @@ export function skyAt(minute: number, weather = "CLEAR"): Sky {
     ...(moon ? { moon } : {}),
     stars: Math.round(stars * 100) / 100,
     clouds: dull(mix(a.clouds, b.clouds, t), wet),
+    cloudMotion: wet >= 0.4
+      ? { cover: 1, speed: 0.25, shape: "overcast" }
+      : phase === "sunset" || phase === "dusk"
+        ? { cover: 0.45 + wet, speed: 0.08, shape: "streaks" }
+        : phase === "night" || phase === "dawn"
+          ? { cover: 0.25 + wet, speed: 0.05, shape: "wisps" }
+          : { cover: (phase === "afternoon" ? 0.55 : 0.35) + wet, speed: phase === "afternoon" ? 0.14 : 0.1, shape: "puffy" },
     flyers: {
       birds: !wet && m >= 360 && m < 660 ? 0.08 : 0,
       plane: !wet && m >= 720 && m < 1050 ? 0.05 : 0,

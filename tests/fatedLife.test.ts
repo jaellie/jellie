@@ -479,3 +479,46 @@ describe("Weekend picks just for fun, by country", () => {
     if (fun) expect(fun.reply?.ko).toMatch(/^\(/);
   });
 });
+
+describe("The destined person's gender always follows who you like", () => {
+  it("left to fate, with or without 'likes': a man for a woman who likes men (and the reverse)", () => {
+    for (let seed = 1; seed <= 8; seed++) {
+      expect(createGame({ name: "제이", gender: "F", likes: "M", birth: { year: 1997, month: 9, day: 28 }, seed, fated: { sealed: true } }).fated()!.gender).toBe("M");
+      expect(createGame({ name: "제이", gender: "F", birth: { year: 1997, month: 9, day: 28 }, seed, fated: { sealed: true } }).fated()!.gender).toBe("M");
+      expect(createGame({ name: "민준", gender: "M", birth: { year: 1994, month: 3, day: 3 }, seed }).fated()!.gender).toBe("F");
+      expect(createGame({ name: "제이", gender: "F", likes: "F", birth: { year: 1997, month: 9, day: 28 }, seed, fated: { sealed: true } }).fated()!.gender).toBe("F");
+    }
+  });
+});
+
+describe("Meeting online isn't always the same app", () => {
+  it("abroad: language exchange, dating app, Instagram, a fan community — varied by person", () => {
+    const places = new Set<string>();
+    for (let seed = 1; seed <= 24; seed++) {
+      const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "abroad", city: "Tokyo", status: "stranger" } });
+      places.add(meetPlan(g.state, false).location);
+    }
+    expect(places.size).toBeGreaterThanOrEqual(3);
+    expect([...places]).toEqual(expect.arrayContaining(["dating_app"]));
+  });
+});
+
+describe("Where you live now (setup.home)", () => {
+  it("sets the story's city (and abroad), not the charts", () => {
+    const busan = createGame({ ...JAE, seed: 2, home: "부산", fated: { ...JUNG, status: "dating" } });
+    expect(busan.state.location).toEqual({ country: "Korea", city: "Busan" });
+    expect(busan.road().backdrop.theme).toBe("seaside");
+    const tokyo = createGame({ ...JAE, seed: 2, home: "Tokyo", fated: { ...JUNG, status: "dating" } });
+    expect(tokyo.state.location.country).toBe("Japan");
+    expect(tokyo.state.flags.livedAbroad).toBe(true);
+    // The chart is the same either way (it follows the birthplace).
+    expect(JSON.stringify(busan.state.chart?.fourPillars)).toBe(JSON.stringify(tokyo.state.chart?.fourPillars));
+  });
+});
+
+describe("Without a home city, you live where you were born", () => {
+  it("born in New York → the story starts in New York (not a random Korean city)", () => {
+    const g = createGame({ ...JAE, seed: 5, birthplace: "New York", fated: { ...JUNG, status: "dating" } });
+    expect(g.state.location).toEqual({ country: "USA", city: "New York" });
+  });
+});

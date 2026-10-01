@@ -9,7 +9,7 @@ import { SeededRandom } from "../src/core/rng";
 import messageData from "../data/game/messages.json";
 import seqData from "../data/story/sequences.json";
 
-const SEQUENCE_TITLES = new Set(["CONFESS", "FIRST_KISS", "PROPOSAL"].flatMap((k) => (seqData as unknown as Record<string, { titles: { ko: string[] } }>)[k].titles.ko));
+const SEQUENCE_TITLES = new Set(Object.values(seqData as unknown as Record<string, { titles?: { ko: string[] } }>).flatMap((x) => x.titles?.ko ?? []));
 
 const SETUP = { name: "민아", gender: "F" as const, likes: "M" as const, birth: { year: 1997, month: 9, day: 28, hour: 9, minute: 30 }, mbti: "ENFP", fated: { name: "Ren", from: "same" as const } };
 

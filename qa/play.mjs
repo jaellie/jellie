@@ -39,8 +39,14 @@ if (!(await page.getByTestId("logo").evaluate((img) => img.complete && img.natur
 if (!(await page.getByTestId("lang-walker").isVisible())) issue("the first screen doesn't show you walking on the road");
 const logoAnim = await page.getByTestId("logo").evaluate((el) => getComputedStyle(el).animationName);
 if (!/dropIn/.test(logoAnim) || !/heartbeat/.test(logoAnim)) issue(`the logo doesn't drop in and beat (animation: ${logoAnim})`);
+if (!(await page.getByTestId("studio").textContent()).includes("Jellie Studio")) issue("no ⓒ Jellie Studio under the title");
+if (!(await page.getByTestId("continue-game").isVisible()) || !(await page.getByTestId("to-creator").isVisible())) issue("Continue / To Creator buttons missing");
+{ const wb = await page.getByTestId("lang-walker").boundingBox(), bb = await page.getByTestId("start-game").boundingBox(); if (wb && bb && wb.y + wb.height > bb.y) issue("the START button covers the walker"); }
+await page.getByTestId("to-creator").click(); await page.waitForTimeout(400);
+if (!(await page.getByTestId("creator").isVisible())) issue("To Creator doesn't open a page");
+await snap("creator"); await page.getByTestId("creator-close").click();
 const logo0 = await page.getByTestId("logo").getAttribute("src");
-await page.waitForTimeout(5000);
+await page.waitForTimeout(8000);
 if ((await page.getByTestId("logo").getAttribute("src")) === logo0) issue("the logo doesn't alternate 한국어 ⇄ English");
 await snap("language");
 if (await page.getByTestId("lang-en").isVisible()) issue("language buttons should be inside the Start popup");
@@ -63,6 +69,7 @@ if ((await page.getByTestId("fated-status").locator("option").count()) !== 4) is
 if ((await page.getByTestId("fated-job").locator("option").count()) < 40) issue("too few jobs for the destined person");
 if ((await page.getByTestId("my-job").locator("option").count()) < 44) issue("too few jobs for me");
 if (args.myjob) await page.getByTestId("my-job").selectOption(args.myjob);
+if (args.home) await page.getByTestId("home").fill(args.home);
 if (args.status) await page.getByTestId("fated-status").selectOption(args.status);
 if (args.from) await page.getByTestId("fated-from").selectOption(args.from);
 if (args.job) await page.getByTestId("fated-job").selectOption(args.job);
@@ -90,6 +97,7 @@ if (prologue) {
   await snap("prologue");
   await page.waitForTimeout(3600);
 }
+if (args.home) { const hud = await page.locator("#place").textContent(); if (!hud.includes(args.home)) issue(`lives in ${args.home}, but the road says ${hud}`); }
 if (args.live) await page.evaluate((c) => { window.__qa.game.state.location.city = c; document.querySelectorAll("#road .obj").forEach((o) => o.remove()); window.__qa.reseed(); }, args.live);
 if (args.myjob) { const job = await page.locator("#hJob").textContent(); if (/L\d/.test(job)) issue(`job label has a level: ${job}`); }
 await snap("first-day");
@@ -146,6 +154,9 @@ while (Date.now() < deadline) {
     continue;
   }
   if (await page.getByTestId("popup").isVisible()) {
+    // Never popup after popup: at least ~3 s of walking since the last one closed.
+    const since = await page.evaluate(() => (window.__qa.lastClosed ? Date.now() - window.__qa.lastClosed : 1e9));
+    if (since < 2500) issue(`a popup came only ${since} ms after the last one (needs ≥ 3 s of walking)`);
     const src = await page.getByTestId("popup").getAttribute("data-source");
     const big = (await page.getByTestId("popup").getAttribute("data-big")) === "1";
     stats.popups[src] = (stats.popups[src] ?? 0) + 1;
@@ -192,11 +203,9 @@ while (Date.now() < deadline) {
     const texts = await page.locator(".note").allTextContents();
     for (const t of texts) if (/^[^"“]{1,20}["“]/.test(t) && /["”]$/.test(t)) issue(`message wrapped in quotes: ${t}`);
     if (job && !job.startsWith("회사원") && texts.some((t) => /팀장|부장님|과장님/.test(t))) issue(`boss text while "${job}": ${texts.find((t) => /팀장|부장님|과장님/.test(t))}`);
-    const lb = await page.locator("#log").boundingBox();
-    // Measure a note that has finished sliding in (they slide out from behind the log bar, then fade).
-    const settled = page.locator(".note:not(.out)").last();
-    const nb = (await settled.evaluate((el) => el.getAnimations().length === 0).catch(() => false)) ? await settled.boundingBox({ timeout: 300 }).catch(() => null) : null;
-    if (nb && lb && nb.y < lb.y + lb.height + 8) issue("text notifications sit too close to the bar above (need a gap)");
+    // Layout positions (ignoring the drop-in animation): the first toast sits at least 8px under the bar above.
+    const gap = await page.evaluate(() => { const log = document.getElementById("log"), n = document.querySelector("#notes .note"); return n ? document.getElementById("notes").offsetTop + n.offsetTop - (log.offsetTop + log.offsetHeight) : null; });
+    if (gap !== null && gap < 8) issue(`text notifications sit too close to the bar above (gap ${gap}px)`);
   }
   if (screen === "play" && Date.now() - lastWalkCheck > 8000) {
     lastWalkCheck = Date.now();

@@ -9,22 +9,23 @@ type Bi = { ko: string; en: string };
 export function siblingWord(state: LifeState, rel: SiblingRel): Bi {
   const female = state.birth.sex === "FEMALE";
   switch (rel) {
-    case "OLDER_SISTER": return { ko: female ? "언니" : "누나", en: "my older sister" };
-    case "OLDER_BROTHER": return { ko: female ? "오빠" : "형", en: "my older brother" };
-    case "YOUNGER_SISTER": return { ko: "여동생", en: "my younger sister" };
-    case "YOUNGER_BROTHER": return { ko: "남동생", en: "my younger brother" };
+    case "OLDER_SISTER": return { ko: female ? "언니" : "누나", en: "your older sister" };
+    case "OLDER_BROTHER": return { ko: female ? "오빠" : "형", en: "your older brother" };
+    case "YOUNGER_SISTER": return { ko: "여동생", en: "your younger sister" };
+    case "YOUNGER_BROTHER": return { ko: "남동생", en: "your younger brother" };
   }
 }
 
 /** "오빠 민수" / "여동생 지아" — for captions ("오빠 민수의 결혼식"). */
 export function siblingLabel(state: LifeState, sib: Sibling): Bi {
-  const w = siblingWord(state, sib.rel);
-  return { ko: `${w.ko} ${sib.name}`, en: `${sib.name} (${w.en})` };
+  // Just "형", "누나" — family by what you call them, never by a name (it breaks the spell).
+  return siblingWord(state, sib.rel);
 }
 
 /** How they show up as a text sender: an older sibling by title ("오빠"), a younger one by name. */
 export function siblingSender(state: LifeState, sib: Sibling): Bi {
-  return sib.rel.startsWith("OLDER") ? siblingWord(state, sib.rel) : { ko: sib.name, en: sib.name };
+  const w = siblingWord(state, sib.rel);
+  return { ko: w.ko, en: w.en.replace(/^your /, "").replace(/^./, (c) => c.toUpperCase()) };
 }
 
 export const GRANDPARENT_WORD: Record<GrandparentRel, Bi> = {
