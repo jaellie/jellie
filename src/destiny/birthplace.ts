@@ -87,6 +87,43 @@ export function birthplaceOptions(lang: "ko" | "en" = "ko"): Array<{ id: string;
   return [...kr, ...world].map((p) => ({ id: p.id, name: p[lang], country: p.country }));
 }
 
+const REGION = new Map<string, Intl.DisplayNames | null>();
+/** "KR" → "한국" / "Korea" (the browser's own country names). */
+export function countryName(code: string, lang: "ko" | "en" = "ko"): string {
+  if (code === "KR") return lang === "ko" ? "한국" : "Korea";
+  if (!REGION.has(lang)) {
+    try {
+      REGION.set(lang, new Intl.DisplayNames([lang], { type: "region" }));
+    } catch {
+      REGION.set(lang, null);
+    }
+  }
+  return REGION.get(lang)?.of(code) ?? code;
+}
+
+/**
+ * Autocomplete for a city field: what the typed text could mean, best first (exact name, then names
+ * that start with it, then names that contain it). The UI must make the player tap one of these —
+ * typed text that matches nothing ("여수수") is not a city, and the field stays unconfirmed.
+ */
+export function searchPlaces(query: string, lang: "ko" | "en" = "ko", limit = 8): Array<{ id: string; name: string; country: string; countryName: string }> {
+  const q = norm(query ?? "");
+  if (!q) return [];
+  const scored: Array<{ p: PlaceInfo; s: number }> = [];
+  for (const p of PLACES) {
+    const keys = [p.ko, p.en, p.id, ...(p.aliases ?? [])].map(norm);
+    const s = keys.includes(q) ? 0 : keys.some((k) => k.startsWith(q)) ? 1 : keys.some((k) => k.includes(q)) ? 2 : -1;
+    if (s >= 0) scored.push({ p, s });
+  }
+  scored.sort((a, b) => a.s - b.s || (a.p.country === "KR" ? 0 : 1) - (b.p.country === "KR" ? 0 : 1) || a.p[lang].localeCompare(b.p[lang], lang));
+  return scored.slice(0, limit).map(({ p }) => ({ id: p.id, name: p[lang], country: p.country, countryName: countryName(p.country, lang) }));
+}
+
+/** The one city this text names exactly (by id, Korean/English name or alias) — or undefined: ask again. */
+export function placeById(id: string | undefined): PlaceInfo | undefined {
+  return id ? PLACES.find((p) => p.id === id) : undefined;
+}
+
 // ---- historical UTC offsets (Intl / IANA tz) --------------------------------
 
 const FORMATTERS = new Map<string, Intl.DateTimeFormat | null>();

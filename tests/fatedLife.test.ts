@@ -579,3 +579,18 @@ describe("Saying no to a proposal", () => {
     expect(checked).toBeGreaterThan(0);
   });
 });
+
+describe("City pickers", () => {
+  it("autocomplete finds real cities; a typo matches nothing", async () => {
+    const { searchPlaces } = await import("../src/destiny/birthplace");
+    expect(searchPlaces("여수")[0]).toMatchObject({ id: "yeosu", name: "여수", countryName: "한국" });
+    expect(searchPlaces("여수수")).toEqual([]);
+    expect(searchPlaces("to", "en").map((p) => p.name)).toContain("Tokyo");
+    expect(fatedOptions("ko").homeQuestion).toContain("어디 살고");
+  });
+  it("the partner's city (by id) decides near/far, measured from my home", () => {
+    const g = createGame({ ...JAE, seed: 2, home: "New York", fated: { ...JUNG, city: "busan", status: "dating" } } as never);
+    expect(g.state.story!.fatedLife!.city.id).toBe("busan");
+    expect(g.state.story!.fatedLife!.from).toBe("abroad");
+  });
+});
