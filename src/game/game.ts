@@ -34,6 +34,7 @@ import { generateNpc, habitSlot, knowsName } from "../world/npcs";
 import { aliveSiblings, siblingSender } from "../story/family";
 import { type CrowdState, stepCrowd } from "../world/walkers";
 import { nameEn, pickName } from "../world/names";
+import { marriageFate } from "../story/marriageFate";
 import { bondPhase, hasBond, pendingMeetings, updateBond, type BondEnd } from "../story/bond";
 import { lifeEvent, nextDueEvent, pendingApplies, rollLifeEvents, weekdayOnly } from "../story/lifeEvents";
 import { resolveLifeEvent, resolveStaleEvents } from "../story/lifeEventRuntime";
@@ -112,6 +113,11 @@ export interface GameSetup {
      * ("crush" means the same). "stranger": you don't know each other yet — start from the first meeting.
      */
     status?: "dating" | "talking" | "acquaintance" | "crush" | "stranger";
+    /**
+     * Leave them entirely to fate (also when nothing about them is given): the chart decides who they are —
+     * the one you marry and grow old with, or, for a solitary chart (혼자 살 사주), your last love.
+     */
+    sealed?: boolean;
     /** Their job: an id from fatedOptions().jobs, or free text ("대학병원 의사"). */
     job?: string;
     profile?: Record<string, unknown>;
@@ -1307,6 +1313,8 @@ export class Game {
     title: string;
     story?: string;
     together?: { from: number; to: number; years: number; married: boolean };
+    /** Left entirely to fate: what the chart said (lifelong spouse / solitary) and why ("화개", "토성 7하우스"…). */
+    fate?: { mode: "lifelong" | "solitary"; signs: string[] };
     summary: string;
     lines: string[];
     age: number;
@@ -1337,6 +1345,25 @@ export class Game {
       theyDied: bi(`${fatedName}이(가) 먼저 떠났다. 함께한 ${Math.max(1, years)}년이 고스란히 남았다.`, `${fatedName} left first. The ${Math.max(1, years)} years you shared remain.`),
       iDied: bond?.together ? bi(`${fatedName}와(과) 함께 ${Math.max(1, years)}년. 마지막 날까지 곁에 있었다.`, `${Math.max(1, years)} years with ${fatedName}, side by side until the last day.`) : bi("그 사람을 만나지 못한 채 인생이 끝났다.", "Life ended before you ever met."),
     };
+    // Left to fate: the ending is told as the chart's story.
+    const mode = st.story?.fateMode;
+    if (mode === "solitary" && reason) {
+      if (bond?.married && (reason === "iDied" || reason === "theyDied")) {
+        byBond[reason] = bi("운명을 이긴 사랑", "The Love That Beat Fate");
+        story[reason] = bi(`혼자 살 사주라고 했다. 그런데 ${fatedName}와(과) 끝까지 함께였다. 운명도 가끔은 진다.`, `The chart said a life alone. Yet you and ${fatedName} stayed together to the end. Sometimes even fate loses.`);
+      } else {
+        byBond[reason] = bi("마지막 사랑", "My Last Love");
+        story[reason] = bond?.married
+          ? bi(`혼자 살 사주를 거슬러 ${fatedName}와(과) 결혼까지 했다. 그래도 끝내 운명은 우리를 갈라놓았다. 그 뒤로 나는 평생 혼자 살았다.`, `Against a chart that said a life alone, you married ${fatedName}. Still, fate pulled you apart in the end. After that, you lived alone for the rest of your life.`)
+          : bond?.together
+          ? bi(`${fatedName}은(는) 내 인생의 마지막 사랑이었다. 그 뒤로 나는 평생 혼자 살았다. 외롭지 않았다면 거짓말이지만, 그 계절만큼은 누구보다 뜨거웠다.`, `${fatedName} was the last love of my life. After that, I lived alone for the rest of my days. It'd be a lie to say I was never lonely — but that one season burned brighter than anything.`)
+          : bi(`${fatedName}에게 끝내 마음을 전하지 못했다. 그게 마지막 사랑이었다. 나는 평생 혼자 살았고, 가끔 그 이름을 떠올렸다.`, `I never told ${fatedName} how I felt. That was my last love. I lived alone all my life, and now and then, I remembered that name.`);
+      }
+    } else if (mode === "lifelong" && (reason === "divorce" || reason === "breakup")) {
+      story[reason] = bi(`운명은 ${fatedName}와(과)의 평생을 약속했다. 그 약속을 놓은 건, 우리였다.`, `Fate had promised a lifetime with ${fatedName}. It was we who let go.`);
+    } else if (mode === "lifelong" && reason === "iDied" && bond?.married) {
+      story[reason] = bi(`운명이 정해 둔 단 한 사람, ${fatedName}. ${Math.max(1, years)}년을 함께 걸었고, 마지막 날에도 손을 잡고 있었다.`, `The one fate had chosen: ${fatedName}. ${Math.max(1, years)} years walking side by side, holding hands to the very last day.`);
+    }
     const t = reason
       ? byBond[reason]
       : married
@@ -1353,6 +1380,7 @@ export class Game {
       title: this.L(t),
       story: reason ? this.fill(this.L(story[reason])) : undefined,
       together: sinceY !== undefined ? { from: sinceY, to: st.date.year, years, married: !!bond?.married } : undefined,
+      fate: mode ? { mode, signs: st.story?.fateSigns ?? [] } : undefined,
       summary: this.L(bi(`연애 ${partners} · 친구 ${friends} · 여행 ${trips} · ${Math.floor(st.age)}세`, `Relationships ${partners} · Friends ${friends} · Trips ${trips} · Age ${Math.floor(st.age)}`)),
       lines: s.milestones.slice(-6).map((m) => `${m.age}${s.lang === "ko" ? "세" : ""} · ${m[s.lang]}`),
       age: Math.floor(st.age),
@@ -1507,10 +1535,16 @@ export function createGame(input: GameSetup): Game {
     const c = compatibility({ birth: birthOf(setup), place: placeOf(setup), mbti: setup.mbti }, { birth: theirs?.birth, place: theirs?.place, mbti: fx.mbti });
     st.story!.compat = { score: c.score, chemistry: c.chemistry, stability: c.stability, friction: c.friction };
   }
+  // Left entirely to fate: the chart decides who they are.
+  const sealed = !!fx?.sealed || !fx || (!fx.name && !fx.birth && !fx.mbti && !fx.job && !fx.city && (!fx.status || fx.status === "stranger"));
+  if (sealed) sealFate(st, setup, new SeededRandom(hash(seed, "sealed")));
   save.dayKind = "calm";
   // Not met yet: skip straight to the day you meet.
   const years = g.skipToMeeting();
-  if (years > 0) save.prologue = bi(`그 사람을 만나기까지, ${years}년이 흘렀다.`, `${years} year${years > 1 ? "s" : ""} went by before you met.`);
+  const mode = st.story!.fateMode;
+  if (mode === "lifelong") save.prologue = bi(`${years > 0 ? `${years}년 뒤, ` : ""}평생을 함께할 사람을 만난다.`, `${years > 0 ? `${years} year${years > 1 ? "s" : ""} later, ` : ""}you meet the one you'll spend your life with.`);
+  else if (mode === "solitary") save.prologue = bi(`${years > 0 ? `${years}년 뒤, ` : ""}내 인생의 마지막 사랑이 찾아온다.`, `${years > 0 ? `${years} year${years > 1 ? "s" : ""} later, ` : ""}the last love of your life arrives.`);
+  else if (years > 0) save.prologue = bi(`그 사람을 만나기까지, ${years}년이 흘렀다.`, `${years} year${years > 1 ? "s" : ""} went by before you met.`);
   save.milestones.push({ age: Math.floor(st.age), ko: "이야기가 시작된다.", en: "The story begins." });
   g.startDay();
   return g;
@@ -1521,6 +1555,34 @@ export function loadGame(json: string): Game {
   s.life.chart = calculateNatalChart(birthOf(s.setup));
   s.life.npcs = s.life.npcs.map((n) => ({ ...n, chart: calculateNatalChart(n.birth) }));
   return new Game(s);
+}
+
+/**
+ * The destined person left entirely to fate. A chart that marries: the one you marry and grow old with
+ * (fate leans hard toward you two). A solitary chart: your last love — later in life, a love the chart
+ * doesn't let last (no wedding written in the stars; it can still be fought for, the choices are 30%).
+ */
+function sealFate(st: LifeState, setup: GameSetup, rng: SeededRandom): void {
+  const story = st.story!;
+  const birth = birthOf(setup);
+  const f = marriageFate(st.chart ?? calculateNatalChart(birth), calculateAstrologyChart(birth, placeOf(setup)), birth.sex);
+  story.fateMode = f.mode;
+  story.fateSigns = f.signs;
+  if (f.mode === "lifelong") {
+    story.compat = { score: 0.92, chemistry: 0.85, stability: 0.92, friction: 0.12 };
+    return;
+  }
+  // The spark is real (they do get together); it's lasting that the chart doesn't allow — see bond.ts.
+  story.compat = { score: 0.85, chemistry: 0.95, stability: 0.3, friction: 0.5 };
+  // The last love comes late.
+  const meet = story.script.find((e) => e.theme === "LOVE_MEETING" && !e.done);
+  if (meet) {
+    const age = Math.max(Math.floor(st.age) + 10, 42) + rng.int(0, 5);
+    meet.age = age;
+    meet.monthIndex = age * 12 + rng.int(1, 10);
+  }
+  story.script = story.script.filter((e) => e.theme !== "MARRIAGE" && e.theme !== "CHILD").sort((a, b) => a.monthIndex - b.monthIndex);
+  if (story.fatedLife) story.fatedLife.retries = 1;
 }
 
 /** The job chosen in setup, while the player still has it (a new job or quitting changes career.cid). */

@@ -93,4 +93,7 @@ export interface StoryState {
   events?: import("./lifeEvents").LifeEventState;
   /** The bond with the destined person: when it began, how it ended (frames the whole game). */
   bond?: import("./bond").Bond;
+  /** Destined person left entirely to fate: who the chart says they are (lifelong spouse or last love), and why. */
+  fateMode?: import("./marriageFate").FateMode;
+  fateSigns?: string[];
 }

@@ -57,7 +57,12 @@ export function updateBond(state: LifeState): Bond["over"] | undefined {
   const now = { year: state.date.year, month: state.date.month, age: Math.floor(state.age) };
   const f = fatedNpc(state)!;
   if (withFated(state)) {
-    if (!b.together) (b.together = true), (b.since = now);
+    if (!b.together) {
+      b.together = true;
+      b.since = now;
+      // A solitary chart's last love: the spark brought you together; lasting is what the chart won't give.
+      if (st.fateMode === "solitary") st.compat = { score: 0.25, chemistry: 0.95, stability: 0.15, friction: 0.65 };
+    }
     if (state.relationship.status === "MARRIED") b.married = true;
     if (!state.alive) b.over = { reason: "iDied", ...now };
     return b.over;

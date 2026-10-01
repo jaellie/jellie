@@ -755,6 +755,12 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
     const bend = (k: string) => (st.compat && fatedHere ? compatFactor(st.compat.score, ch.compat?.[k] ?? 0) : 1) * (fatedNpc && k === "START" ? 0.3 + 1.4 * spark : 1);
     outcome = rng.weighted(Object.entries(ch.roll).map(([k, w]) => ({ item: k, weight: w * bend(k) * sparkBend(k) })));
   }
+  // A solitary chart (혼자 살 사주, left to fate): the wedding the stars won't write usually slips away.
+  let fateTurned = false;
+  if (st.fateMode === "solitary" && arc.type === "DATING" && step.key === "PROPOSAL" && outcome === "ENGAGED" && def.outcomes.NOT_YET && rng.chance(0.7)) {
+    outcome = "NOT_YET";
+    fateTurned = true;
+  }
   const o = { ...def.outcomes[outcome], ...(mv?.outcomes?.[outcome] ?? {}) };
   arc.step += 1;
   applyEffects(o.effects, ctx, { arc, choiceLabel });
@@ -764,7 +770,7 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
   if (arc.step >= arc.steps.length) st.arcs = st.arcs.filter((a) => a !== arc);
   if (arc.type === "ILLNESS" && step.key === "RESULT") return { r: illnessResultText(arc), scene: arc.data?.passed ? ["funeral_hall"] : undefined, outcome };
   // An unlikely roll for what you chose ("not today" → you're together anyway): say that fate stepped in.
-  const unlikely = !!ch.roll && (ch.roll[outcome] ?? 0) < 0.25;
+  const unlikely = fateTurned || (!!ch.roll && (ch.roll[outcome] ?? 0) < 0.25);
   return { r: unlikely ? withBridge(o.r, rng) : o.r, who: unlikely ? undefined : o.who, scene: o.scene, outcome };
 }
 

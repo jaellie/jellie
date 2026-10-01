@@ -217,7 +217,7 @@ describe("The mood line (top of the screen)", () => {
 describe("Others' big moments are popups", () => {
   it("a friend's wedding comes as an invitation on your next played day (with their name), then a memory card", async () => {
     const { queueChain } = await import("../src/story/lifeEvents");
-    const g = createGame({ ...JAE, seed: 7 });
+    const g = createGame({ ...JAE, seed: 7, fated: { ...JUNG, status: "dating" } });
     queueChain(g.state, "INVITE_FRIEND_WEDDING", [0, 0], new SeededRandom(1), { vars: { buddy: "하윤" } });
     g.endDay();
     let seen: { title?: string; line: string; result?: string } | undefined;
@@ -416,5 +416,37 @@ describe("Big moments in four parts, shaped by both MBTIs", () => {
     expect(sp[0].line).toContain("불꽃놀이");
     // Part 2: an E sees "call a friend"; an I sees "music alone".
     expect(nf[1].line).not.toBe(sp[1].line);
+  });
+});
+
+describe("Left entirely to fate (운명에 맡기기)", () => {
+  it("the chart decides: the one you marry and grow old with, or a solitary chart's last love", () => {
+    const minjun = createGame({ name: "민준", gender: "M", likes: "F", birth: { year: 1994, month: 3, day: 3 }, mbti: "ISTJ", seed: 2 });
+    expect(minjun.state.story!.fateMode).toBe("lifelong");
+    expect(minjun.s.prologue?.ko).toMatch(/평생을 함께할 사람을 만난다/);
+    const jae = createGame({ ...JAE, seed: 1, fated: { sealed: true } });
+    expect(jae.state.story!.fateMode).toBe("solitary");
+    expect(jae.state.story!.fateSigns).toContain("화개");
+    expect(jae.s.prologue?.ko).toMatch(/내 인생의 마지막 사랑이 찾아온다/);
+    // The last love comes late, and no wedding is written in the stars.
+    expect(Math.floor(jae.state.age)).toBeGreaterThanOrEqual(42);
+    expect(jae.state.story!.script.some((e) => e.theme === "MARRIAGE")).toBe(false);
+    // Naming them (or anything else about them) means it isn't sealed.
+    expect(createGame({ ...JAE, seed: 1, fated: { ...JUNG, status: "dating" } }).state.story!.fateMode).toBeUndefined();
+  });
+
+  it("a solitary chart's ending is told as a story: the last love, then a life alone", () => {
+    const g = createGame({ ...JAE, seed: 3, fated: { sealed: true } });
+    for (let d = 0; d < 120 && !g.isOver(); d++) {
+      for (let i = 0; i < 400; i++) {
+        const beats = g.advance(g.s.minute + 30);
+        for (const b of beats) if (b.kind === "popup") g.choose(b.popup.ch.length - 1);
+        if (beats.some((b) => b.kind === "dayEnd")) break;
+      }
+      g.endDay();
+    }
+    const e = g.ending();
+    expect(["마지막 사랑", "운명을 이긴 사랑"]).toContain(e.title);
+    if (e.title === "마지막 사랑") expect(e.story).toMatch(/평생 혼자/);
   });
 });
