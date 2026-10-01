@@ -36,12 +36,16 @@ const issue = (msg) => { if (!issues.includes(msg)) issues.push(msg); };
 
 // Language first (with the logo); the form then opens with that language's defaults and logo.
 if (!(await page.getByTestId("logo").evaluate((img) => img.complete && img.naturalWidth > 0))) issue("the logo doesn't load on the first screen");
+if (!(await page.getByTestId("lang-walker").isVisible())) issue("the first screen doesn't show you walking on the road");
+const logoAnim = await page.getByTestId("logo").evaluate((el) => getComputedStyle(el).animationName);
+if (logoAnim !== "dropIn") issue(`the logo doesn't drop in (animation: ${logoAnim})`);
+await page.waitForTimeout(1000);
 await snap("language");
 await page.getByTestId("lang-en").hover();
 if (!(await page.getByTestId("logo").getAttribute("src")).endsWith("logo-en.png")) issue("the logo doesn't switch to English");
 await page.getByTestId("lang-en").click();
 await page.waitForTimeout(200);
-if (!(await page.getByTestId("setup-logo").getAttribute("src")).endsWith("logo-en.png")) issue("the English form doesn't show the English logo");
+if (await page.locator("#setup img").count()) issue("the setup screen still shows a logo (first screen only)");
 if ((await page.locator("#fName").inputValue()) !== "Jae") issue("English default name is not Jae");
 const EN = args.lang === "en";
 if (!EN) {
@@ -50,7 +54,9 @@ if (!EN) {
 }
 await snap("setup");
 if ((await page.getByTestId("fated-status").locator("option").count()) !== 4) issue("'are you two dating?' should offer 4 answers");
-if ((await page.getByTestId("fated-job").locator("option").count()) < 20) issue("too few jobs for the destined person");
+if ((await page.getByTestId("fated-job").locator("option").count()) < 40) issue("too few jobs for the destined person");
+if ((await page.getByTestId("my-job").locator("option").count()) < 44) issue("too few jobs for me");
+if (args.myjob) await page.getByTestId("my-job").selectOption(args.myjob);
 if (args.status) await page.getByTestId("fated-status").selectOption(args.status);
 if (args.from) await page.getByTestId("fated-from").selectOption(args.from);
 if (args.job) await page.getByTestId("fated-job").selectOption(args.job);
@@ -71,6 +77,15 @@ if (args.family) {
 }
 await page.getByTestId("start").click();
 await page.waitForTimeout(600);
+// Not met yet: the years before the meeting are skipped, and a prologue says so.
+const prologue = await page.evaluate(() => window.__qa.game.s.day?.prologue ?? "");
+if (prologue) {
+  if (!(await page.getByTestId("prologue").isVisible())) issue("the prologue isn't shown");
+  await snap("prologue");
+  await page.waitForTimeout(3600);
+}
+if (args.live) await page.evaluate((c) => { window.__qa.game.state.location.city = c; document.querySelectorAll("#road .obj").forEach((o) => o.remove()); window.__qa.reseed(); }, args.live);
+if (args.myjob) { const job = await page.locator("#hJob").textContent(); if (/L\d/.test(job)) issue(`job label has a level: ${job}`); }
 await snap("first-day");
 const bi = await page.evaluate(() => window.__qa.game.birthInfo());
 // The scene fills the play area: from under the log line to the bottom of the screen.
@@ -131,6 +146,8 @@ while (Date.now() < deadline) {
       const stale = await page.locator("#notes .note").allTextContents();
       if (stale.length) issue(`toast still showing over the big popup "${title}": ${stale.join(" / ")}`);
       stats.bigTitles[title] = (stats.bigTitles[title] ?? 0) + 1;
+      const bg = await page.getByTestId("popup-title").evaluate((el) => getComputedStyle(el).backgroundImage);
+      if (!/rgb\(52, 71, 127\)|rgb\(31, 44, 92\)/.test(bg)) issue(`the title banner isn't navy: ${bg}`);
       if (!seenTitleShot.has(title)) { seenTitleShot.add(title); shoot = true; await snap(`big-${title}`); }
     }
     const line = await page.locator("#pLine").textContent();
@@ -155,6 +172,7 @@ while (Date.now() < deadline) {
     // Nobody's boss texts the owner (or anyone without an employer).
     const job = (await page.locator("#hJob").textContent().catch(() => "")) ?? "";
     const texts = await page.locator(".note").allTextContents();
+    for (const t of texts) if (/^[^"“]{1,20}["“]/.test(t) && /["”]$/.test(t)) issue(`message wrapped in quotes: ${t}`);
     if (job && !job.startsWith("회사원") && texts.some((t) => /팀장|부장님|과장님/.test(t))) issue(`boss text while "${job}": ${texts.find((t) => /팀장|부장님|과장님/.test(t))}`);
     const lb = await page.locator("#log").boundingBox();
     // Measure a note that has finished sliding in (they slide out from behind the log bar, then fade).
@@ -184,6 +202,13 @@ while (Date.now() < deadline) {
     if (/[0-9]{1,2}:[0-9]{2}/.test(r.mood)) issue(`the top line shows a time: ${r.mood}`);
     if (roles.includes("partner")) stats.partnerWalks = (stats.partnerWalks ?? 0) + 1;
     if (r.rv.landmark) (stats.landmarks ??= new Set()).add(r.rv.landmark.name);
+    // By the sea, nothing big floats on the water: big buildings stand on the left, small houses on the right.
+    if (r.rv.backdrop.sea === "right") {
+      stats.seaside = (stats.seaside ?? 0) + 1;
+      const bad = await page.evaluate(() => [...document.querySelectorAll('#road .obj.bldg[data-side="right"]')].length);
+      if (bad) issue(`seaside: ${bad} big building(s) on the sea side`);
+      if (!shots.some((x) => x.includes("seaside"))) await snap("seaside");
+    }
     stats.themes = [...new Set([...(stats.themes ?? []), r.rv.backdrop.theme])];
     if (still && stats.walkChecks === 2 && !shots.some((x) => x.includes("road"))) await snap("road");
     if (still && roles.includes("partner") && !shots.some((x) => x.includes("road-together"))) await snap("road-together");
@@ -191,6 +216,7 @@ while (Date.now() < deadline) {
   await page.waitForTimeout(80);
 }
 
+stats.sequenceParts = Object.keys(stats.bigTitles).filter((t) => /\(\d\/4\)/.test(t)).length;
 const final = await page.evaluate(() => ({ age: window.__qa.game.hud().age, script: window.__qa.game.state.story.script.map((e) => `${e.age}:${e.theme}:${e.outcome ?? "-"}`) }));
 const over = (await page.evaluate(() => window.__qa.screen)) === "end";
 if (over) {
@@ -198,6 +224,9 @@ if (over) {
   await snap("memorial-fading");
   await page.waitForTimeout(4500);
   await snap("memorial");
+  const et = await page.getByTestId("ending-title").textContent();
+  if (!et.trim()) issue("the ending has no title");
+  stats.ending = { title: et, story: await page.getByTestId("ending-story").textContent(), reason: await page.evaluate(() => window.__qa.game.ending().reason) };
   // 새 인생 → all the way back to the first screen (the language picker), nothing carried over.
   await page.getByTestId("new-life").click({ timeout: 15000 });
   await page.waitForTimeout(300);

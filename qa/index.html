@@ -28,7 +28,9 @@
   #log { position: absolute; top: 64px; left: 0; right: 0; height: 34px; z-index: 40; background: #fff6e3; border-bottom: 3px solid var(--ink); padding: 7px 12px; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   #log .t { color: #c2385f; margin-right: 6px; }
   #notes { position: absolute; top: 102px; left: 10px; right: 10px; z-index: 30; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
-  .note { background: #fff; border: 3px solid var(--ink); box-shadow: 3px 3px 0 rgba(0,0,0,.35); padding: 6px 10px; font-size: 12px; animation: slideDown .35s ease-out; transition: opacity .4s, transform .4s; }
+  .note { background: #fff; border: 3px solid var(--ink); box-shadow: 3px 3px 0 rgba(0,0,0,.35); padding: 6px 10px; font-size: 12px; animation: dropIn .55s cubic-bezier(.3,1.6,.5,1); transition: opacity .4s, transform .4s; }
+  /* "두두둥": drops from above, overshoots, settles (logo + message notes) */
+  @keyframes dropIn { 0% { transform: translateY(-140%); opacity: 0; } 60% { transform: translateY(8%); opacity: 1; } 80% { transform: translateY(-3%); } 100% { transform: translateY(0); } }
   .note b { color: #c2385f; margin-right: 4px; }
   .note.out { opacity: 0; transform: translateY(-12px); }
   @keyframes slideDown { from { transform: translateY(-24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -54,14 +56,24 @@
   .actor.pet .body { top: 24px; height: 12px; width: 22px; border-radius: 4px; }
   .actor.off { opacity: 0; }
   .actor.phone::after { content: ""; position: absolute; left: 15px; top: 19px; width: 7px; height: 11px; background: #2b2233; border: 1px solid #fff6e3; box-shadow: inset 0 0 0 1px #7fd3ff; }
-  #place { position: absolute; bottom: 10px; left: 10px; z-index: 3; font-size: 11px; color: #fff6e3; background: rgba(43,34,51,.72); padding: 3px 8px; border: 2px solid var(--ink); }
+  #place { position: absolute; bottom: 10px; left: 10px; z-index: 3; font-size: 15px; color: #fff6e3; background: rgba(43,34,51,.72); padding: 3px 8px; border: 2px solid var(--ink); }
   #diary { display: none; }
   #scene { display: none; }
   /* language picker (first screen) */
-  #lang { background: #ffe3ea; text-align: center; }
-  .logo { display: block; width: 320px; margin: 150px auto 10px; image-rendering: pixelated; }
-  .logo.small { width: 240px; margin: 0 auto 6px; }
+  /* The first screen is the life road too: you walk toward the horizon while the logo drops in. */
+  #lang { background: #9fd6ff; text-align: center; overflow: hidden; }
+  #lang .mini { position: absolute; inset: 0; z-index: 0; }
+  #lang .mini .g { position: absolute; left: 0; right: 0; top: 46%; bottom: 0; background: #9ad67a; }
+  #lang .mini .w { position: absolute; left: 0; right: 0; top: 46%; bottom: 0; background: #cdb89a; clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%); }
+  #lang .mini .d { position: absolute; left: 49.4%; width: 1.2%; top: 46%; bottom: 0; background: repeating-linear-gradient(transparent 0 26px, rgba(255,255,255,.85) 26px 44px); animation: dash .5s linear infinite; }
+  #lang .mini .walker { left: 165px; bottom: 60px; animation: bob .5s steps(2) infinite; }
+  #lang .mini .walker .legL { animation: legA .5s steps(2) infinite; } #lang .mini .walker .legR { animation: legB .5s steps(2) infinite; }
+  #lang .front { position: relative; z-index: 2; }
+  .logo { display: block; width: 320px; margin: 90px auto 10px; image-rendering: pixelated; animation: dropIn .9s cubic-bezier(.3,1.6,.5,1) both; }
   #lang .btn { display: block; width: 220px; margin: 18px auto 0; font-size: 18px; }
+  #prologue { position: absolute; inset: 0; z-index: 60; background: #1a1420; color: #fff6e3; display: none; align-items: center; justify-content: center; font-size: 16px; padding: 30px; text-align: center; transition: opacity 1.2s; }
+  #end .title { position: relative; margin-top: 150px; font-size: 22px; color: #ffd36b; opacity: 0; transition: opacity 2s; }
+  #end .story { position: relative; margin: 14px 34px 0; font-size: 13px; line-height: 1.7; opacity: 0; transition: opacity 2s; }
   /* The life road (play screen): 2D, seen from behind — see src/world/road.ts. */
   #road { position: absolute; top: 98px; left: 0; width: 360px; height: 642px; overflow: hidden; z-index: 1; isolation: isolate; background: var(--sky, #9fd6ff); }
   #road .ground { position: absolute; left: 0; right: 0; top: 34%; bottom: 0; background: var(--ground, #8fce6a); }
@@ -78,6 +90,10 @@
   #road .tree .crown { position: absolute; left: 0; right: 0; top: 0; height: 70%; border: 3px solid var(--ink); border-radius: 40% 40% 30% 30%; background: var(--leaf, #58b04a); }
   #road .tree .trunk { position: absolute; left: 42%; width: 16%; top: 66%; bottom: 0; background: #7a4e2d; border: 2px solid var(--ink); }
   #road .bldg { border: 3px solid var(--ink); background: var(--bldg, #d9c7b0); }
+  #road .house { border: 3px solid var(--ink); background: #f3e3c3; border-radius: 4px 4px 0 0; }
+  #road .house::before { content: ""; position: absolute; left: -12%; right: -12%; top: -38%; height: 42%; background: #d9534f; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  /* seaside: the sea lies beyond the right-hand houses */
+  #road[data-sea="right"] .ground { background: linear-gradient(90deg, var(--ground) 0 52%, #e9d9a6 52% 64%, #7ec8e3 64% 100%); }
   #road .bldg::after { content: ""; position: absolute; inset: 12% 14%; background: repeating-linear-gradient(90deg, #7fb6e0 0 22%, transparent 22% 34%), repeating-linear-gradient(#7fb6e0 0 18%, transparent 18% 30%); opacity: .8; mix-blend-mode: multiply; }
   #road .sign { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, -4px); white-space: nowrap; background: var(--cream); border: 2px solid var(--ink); font-size: 10px; padding: 1px 5px; }
   #road .weather { position: absolute; inset: 0; pointer-events: none; }
@@ -108,7 +124,8 @@
   #popup .ch button { text-align: left; }
   #popup .res { font-size: 14px; line-height: 1.6; color: #c2385f; }
   /* big popup (life-changing moment): banner title + the scene as a picture, Kairosoft style */
-  #popup .banner { display: none; background: linear-gradient(#5fb0f0, var(--blue)); color: #fff; text-align: center; font-size: 17px; padding: 8px 6px; border: 3px solid var(--blue-d); text-shadow: 2px 2px 0 var(--blue-d); letter-spacing: 1px; }
+  /* category banner ([프러포즈] [부고]…): navy like the HUD, white letters */
+  #popup .banner { display: none; background: linear-gradient(#34477f, #1f2c5c); color: #fff; text-align: center; font-size: 17px; padding: 8px 6px; border: 3px solid #141c3d; text-shadow: 2px 2px 0 #141c3d; letter-spacing: 1px; }
   #popup .pic { display: none; position: relative; height: 170px; overflow: hidden; border: 3px solid var(--ink); background: #1e2a5a; }
   #popup.big { border-color: var(--blue-d); box-shadow: 0 0 0 3px #fff, 5px 5px 0 #1a1420; }
   #popup.big .banner, #popup.big .pic { display: block; }
@@ -127,7 +144,7 @@
   /* end */
   #end { background: #000; color: #fff6e3; text-align: center; }
   #end .fade { position: absolute; inset: 0; background: #000; opacity: 0; transition: opacity 4s ease; }
-  #end .ep { position: relative; margin-top: 220px; font-size: 16px; opacity: 0; transition: opacity 2s; }
+  #end .ep { position: relative; margin-top: 30px; font-size: 16px; opacity: 0; transition: opacity 2s; }
   #end .ql { position: relative; margin: 24px 36px 0; font-size: 13px; line-height: 1.8; opacity: 0; transition: opacity 2s; }
   .notes { font-size: 11px; color: #6b5d52; margin: 6px 14px; line-height: 1.5; text-align: left; }
   .hint { font-size: 11px; color: #6c8f5a; min-height: 14px; margin: 2px 0 4px; }
@@ -137,12 +154,15 @@
 <body>
 <div id="frame">
   <div id="lang" class="screen on" data-testid="lang">
-    <img id="langLogo" class="logo" data-testid="logo" alt="두근두근, 내 운명의 사람" src="../assets/logo/logo-ko.png">
-    <button class="btn pink" id="langKo" data-testid="lang-ko">한국어</button>
-    <button class="btn" id="langEn" data-testid="lang-en">English</button>
+    <div class="mini" data-testid="lang-road"><div class="g"></div><div class="w"></div><div class="d"></div>
+      <div class="walker me" data-testid="lang-walker"><div class="hair" style="background:#6b4a33"></div><div class="body"></div><div class="legL"></div><div class="legR"></div></div></div>
+    <div class="front">
+      <img id="langLogo" class="logo" data-testid="logo" alt="두근두근, 내 운명의 사람" src="../assets/logo/logo-ko.png">
+      <button class="btn pink" id="langKo" data-testid="lang-ko">한국어</button>
+      <button class="btn" id="langEn" data-testid="lang-en">English</button>
+    </div>
   </div>
   <div id="setup" class="screen" data-testid="setup">
-    <img id="setupLogo" class="logo small" data-testid="setup-logo" alt="" src="../assets/logo/logo-ko.png">
     <label>이름</label><input id="fName" value="제이">
     <label>생년월일 (양력)</label>
     <div class="row"><input id="fY" value="1997"><input id="fM" value="9"><input id="fD" value="28"></div>
@@ -154,6 +174,7 @@
     <div class="row"><div><label>나는</label><select id="fG"><option value="F">여자</option><option value="M">남자</option></select></div>
       <div><label>좋아하는 사람</label><select id="fL"><option value="M">남자</option><option value="F">여자</option><option value="A">상관없음</option></select></div></div>
     <label>MBTI</label><input id="fMbti" value="ENFP">
+    <label id="fJobQ">나의 직업은?</label><select id="fJob" data-testid="my-job"></select>
     <h2>나의 가족</h2>
     <div class="row"><div><label>엄마</label><select id="fMom"><option value="1">계심</option><option value="0">돌아가심</option></select></div>
       <div><label>아빠</label><select id="fDad"><option value="1">계심</option><option value="0">돌아가심</option></select></div></div>
@@ -181,6 +202,7 @@
     <div id="road" data-testid="road"><div class="far"></div><div class="ground"></div><div class="way"></div><div class="dash"></div><div class="objs"></div><div class="walkers"></div><div class="weather"></div><div class="shade"></div></div>
     <div id="place" data-testid="place"></div>
     <div id="diary" data-testid="diary"></div>
+    <div id="prologue" data-testid="prologue"></div>
     <div id="popupWrap" data-testid="popup"><div id="popup"><div class="in">
       <div class="banner" id="pBanner" data-testid="popup-title"></div>
       <div class="reading" id="pRead" data-testid="popup-reading"></div>
@@ -201,6 +223,8 @@
 
   <div id="end" class="screen" data-testid="memorial">
     <div class="fade" id="eFade"></div>
+    <div class="title" id="eTitle" data-testid="ending-title"></div>
+    <div class="story" id="eStory" data-testid="ending-story"></div>
     <div class="ep" id="eEp"></div>
     <div id="eLines"></div>
     <button class="btn pink" id="newLife" data-testid="new-life" style="position:absolute;bottom:60px;left:50%;transform:translateX(-50%);opacity:0;transition:opacity 2s">새 인생</button>
@@ -290,8 +314,8 @@
     roadView = rv;
     const el = $("road"), b = rv.backdrop, th = THEME[b.theme] || THEME.town;
     el.classList.toggle("walking", rv.walking);
-    el.dataset.theme = b.theme; el.dataset.walkers = rv.walkers.map((w) => w.role).join(",");
-    el.style.setProperty("--sky", SKY[b.timeOfDay]); el.style.setProperty("--ground", b.theme === "seaside" ? "#7ec8e3" : GROUND[b.season]);
+    el.dataset.theme = b.theme; el.dataset.sea = b.sea || ""; el.dataset.walkers = rv.walkers.map((w) => w.role).join(",");
+    el.style.setProperty("--sky", SKY[b.timeOfDay]); el.style.setProperty("--ground", GROUND[b.season]);
     el.style.setProperty("--way", th.way || "#cdb89a"); el.style.setProperty("--leaf", LEAF[b.season]);
     const sk = b.skyline;
     el.style.setProperty("--bldg", sk.palette.buildings); el.style.setProperty("--accent", sk.palette.accent);
@@ -305,7 +329,7 @@
     el.style.setProperty("--shade", b.timeOfDay === "NIGHT" ? "rgba(10,10,40,.35)" : b.timeOfDay === "EVENING" ? "rgba(255,120,60,.12)" : "transparent");
     el.querySelector(".weather").className = "weather " + (b.weather === "RAIN" || b.weather === "STORM" ? "RAIN" : b.weather === "SNOW" ? "SNOW" : "");
     // A new place today: it comes up the road as a landmark with a sign.
-    if (rv.landmark && rv.landmark.id !== landmarkShown) { landmarkShown = rv.landmark.id; spawn(0.02, true, rv.landmark.name, Math.random() < 0.5 ? -1 : 1); }
+    if (rv.landmark && rv.landmark.id !== landmarkShown) { landmarkShown = rv.landmark.id; spawn(0.02, true, rv.landmark.name, rv.landmark.side === "right" ? 1 : -1, rv.landmark.size); }
     if (!rv.landmark) landmarkShown = null;
     // Walkers from behind, side by side (you in the middle of your people).
     const box = el.querySelector(".walkers"); const n = rv.walkers.length; const gap = 40;
@@ -320,7 +344,9 @@
       d.style.left = x + "px"; d.style.setProperty("--sc", sc); d.style.transform = `scale(${sc})`;
       d.style.bottom = (w.role === "baby" ? 70 : 36) + "px";
       d.style.setProperty("--step", (0.5 / (w.pace || 1)).toFixed(2) + "s");
-      d.querySelector(".hair").style.background = w.age >= 65 ? "#cfcfd6" : w.gender === "M" ? "#2b1d22" : "#6b4a33";
+      // Graying hair: the original color with a soft, low-opacity gray tint (not a hard white/gray swap).
+      const base = w.gender === "M" ? "#2b1d22" : "#6b4a33", gray = w.age >= 75 ? 0.45 : w.age >= 60 ? 0.3 : w.age >= 50 ? 0.15 : 0;
+      d.querySelector(".hair").style.background = gray ? `linear-gradient(rgba(214,214,222,${gray}), rgba(214,214,222,${gray})), ${base}` : base;
       d.querySelector(".body").style.background = w.role === "me" ? "#ff6f91" : w.role === "partner" ? "#6c7bd9" : w.role === "kid" ? "#ffd36b" : d.querySelector(".body").style.background;
     });
     for (const d of [...box.querySelectorAll(".walker")]) if (!seen.has(d.dataset.who)) d.remove();
@@ -328,18 +354,23 @@
     for (const h of [...box.querySelectorAll(".hand")]) h.remove();
     rv.walkers.forEach((w, i) => { const j = rv.walkers.findIndex((x) => x.who === w.holds); if (j === i + 1) { const h = document.createElement("div"); h.className = "hand"; const x = 180 + (i - (n - 1) / 2) * gap + 12; h.style.left = x + "px"; h.style.width = gap - 24 + "px"; box.appendChild(h); } });
   }
-  function spawn(z, landmark, name, side) {
-    const t = roadView?.backdrop.theme || "town", kind = landmark ? "bldg" : (THEME[t] || THEME.town).obj === "mix" ? (Math.random() < 0.5 ? "bldg" : "tree") : (THEME[t] || THEME.town).obj;
+  function spawn(z, landmark, name, side, size) {
+    side = side || (Math.random() < 0.5 ? -1 : 1);
+    const t = roadView?.backdrop.theme || "town";
+    // By the sea: big buildings on the left; only small houses on the right (the sea behind them).
+    const seaSide = roadView?.backdrop.sea === "right" && side === 1;
+    let kind = landmark ? (size === "small" || seaSide ? "house" : "bldg") : (THEME[t] || THEME.town).obj === "mix" ? (Math.random() < 0.5 ? "bldg" : "tree") : (THEME[t] || THEME.town).obj;
+    if (seaSide && kind !== "house") kind = "house";
     // Now and then a city street prop instead (편의점, 자판기, 노란 택시…).
     const street = roadView?.backdrop.skyline.street ?? [];
     const prop = !landmark && street.length && Math.random() < 0.3 ? street[Math.floor(Math.random() * street.length)] : null;
-    const d = document.createElement("div"); d.className = "obj " + (prop ? "prop" : kind === "tree" ? "tree" : "bldg"); d.dataset.testid = landmark ? "landmark" : prop ? "street-prop" : "roadside";
+    const d = document.createElement("div"); d.className = "obj " + (prop ? "prop" : kind === "tree" ? "tree" : kind === "house" ? "house" : "bldg"); d.dataset.side = side > 0 ? "right" : "left"; d.dataset.testid = landmark ? "landmark" : prop ? "street-prop" : "roadside";
     if (kind === "tree" && !prop) d.innerHTML = `<div class="crown"></div><div class="trunk"></div>`;
     if (prop) { name = prop; }
     if (prop) { const s = document.createElement("div"); s.className = "sign"; s.textContent = prop; d.appendChild(s); }
     if (landmark) { const s = document.createElement("div"); s.className = "sign"; s.textContent = name; d.appendChild(s); }
     $("road").querySelector(".objs").appendChild(d);
-    objs.push({ el: d, z, side: side || (Math.random() < 0.5 ? -1 : 1), kind, landmark });
+    objs.push({ el: d, z, side, kind, landmark });
   }
   function stepRoad(t) {
     const dt = Math.min(0.05, (t - lastT) / 1000); lastT = t;
@@ -350,7 +381,7 @@
       o.z += speed * dt * (0.4 + o.z * 2.2);
       const p = o.z; // 0 at the horizon, 1 at the bottom edge
       const y = HORIZON + p * (642 - HORIZON);
-      const size = (o.kind === "tree" ? 90 : 120) * (0.08 + p * 1.1);
+      const size = (o.kind === "tree" ? 90 : o.kind === "house" ? 70 : 120) * (0.08 + p * 1.1);
       const x = 180 + o.side * (14 + p * 190) - size / 2;
       o.el.style.left = x + "px"; o.el.style.top = (y - size) + "px"; o.el.style.width = size + "px"; o.el.style.height = size * (o.kind === "tree" ? 1.2 : 1) + "px";
       o.el.style.zIndex = Math.round(p * 100);
@@ -443,7 +474,9 @@
 
   function memorial() {
     show("end");
-    const m = game.memorial();
+    const m = game.memorial(), e = game.ending();
+    $("eTitle").textContent = e.title; $("eStory").textContent = e.story || "";
+    setTimeout(() => { $("eTitle").style.opacity = 1; $("eStory").style.opacity = 1; }, 600);
     $("eEp").textContent = m.epitaph;
     $("eLines").innerHTML = m.lines.map((l) => `<div class="ql">${l}</div>`).join("");
     requestAnimationFrame(() => { $("eFade").style.opacity = 1; });
@@ -457,7 +490,7 @@
   $("newLife").onclick = () => {
     game = null; window.__qa.game = null; roadView = null; objs.forEach((o) => o.el.remove()); objs = []; landmarkShown = null;
     $("road").querySelector(".walkers").innerHTML = ""; $("road").querySelector(".far").dataset.city = "";
-    ["eFade", "eEp", "newLife"].forEach((id) => ($(id).style.opacity = 0)); $("eLines").innerHTML = ""; clearNotes();
+    ["eFade", "eEp", "newLife", "eTitle", "eStory"].forEach((id) => ($(id).style.opacity = 0)); $("eLines").innerHTML = ""; clearNotes();
     delete document.body.dataset.over;
     show("lang");
   };
@@ -476,6 +509,9 @@
     // The city field only matters when they live in another city or country.
     const cityBox = () => { $("fCityBox").style.display = $("fFrom").value === "same" ? "none" : "block"; };
     $("fFrom").onchange = cityBox; cityBox();
+    const mj = LoveSim.myJobOptions(lang);
+    $("fJobQ").textContent = mj.question;
+    $("fJob").innerHTML = mj.jobs.map((x) => `<option value="${x.id}">${x.name}</option>`).join("");
     $("fFJob").innerHTML = `<option value="">${lang === "ko" ? "운명에 맡기기" : "Leave it to fate"}</option>` + o.jobs.map((x) => `<option value="${x.id}">${x.name}</option>`).join("");
     show("setup");
   }
@@ -485,7 +521,7 @@
   $("langLogo").src = logoSrc(phoneLang); $("langLogo").alt = phoneLang === "ko" ? "두근두근, 내 운명의 사람" : "Doki Doki Destiny Lover";
   for (const [id, lang] of [["langKo", "ko"], ["langEn", "en"]]) {
     $(id).onmouseenter = () => { $("langLogo").src = logoSrc(lang); };
-    $(id).onclick = () => { $("setupLogo").src = logoSrc(lang); $("setupLogo").alt = lang === "ko" ? "두근두근, 내 운명의 사람" : "Doki Doki Destiny Lover"; openSetup(lang); };
+    $(id).onclick = () => openSetup(lang);
   }
 
   // Birthplace picker: the engine's city list; unknown text is flagged (it would be read as Seoul).
@@ -507,14 +543,21 @@
     game = LoveSim.createGame({
       name: v("fName"), gender: v("fG"), likes: v("fL"),
       birth: { year: +v("fY"), month: +v("fM"), day: +v("fD"), hour: num("fH"), minute: num("fMin") },
-      mbti: v("fMbti"), lang: LANG, seed: P.get("seed") ? +P.get("seed") : undefined,
+      mbti: v("fMbti"), job: v("fJob") || undefined, lang: LANG, seed: P.get("seed") ? +P.get("seed") : undefined,
       family: { mom: { alive: v("fMom") === "1" }, dad: { alive: v("fDad") === "1" }, siblings, grandparents: num("fGp") },
       birthplace: v("fPlace") || undefined,
       fated: { name: v("fFated") || undefined, from: v("fFrom"), status: v("fFs"), job: v("fFJob") || undefined, city: v("fFCity") || undefined, birth: fb, birthplace: v("fFPlace") || undefined },
     });
     window.__qa.game = game;
-    seedRoad();
-    show("play"); hud(); logLine(game.mood()); drawRoad(game.road());
+    drawRoad(game.road()); seedRoad();
+    show("play"); hud(); logLine(game.mood());
+    // Years skipped to the meeting: say so on a dark fade before the road.
+    const pro = game.s.day && game.s.day.prologue;
+    if (pro) {
+      window.__qa.hold = true; $("prologue").textContent = pro; $("prologue").style.display = "flex"; $("prologue").style.opacity = 1;
+      setTimeout(() => { $("prologue").style.opacity = 0; }, 2200);
+      setTimeout(() => { $("prologue").style.display = "none"; window.__qa.hold = false; }, 3400);
+    }
   };
 
   setInterval(() => {
@@ -527,7 +570,7 @@
   requestAnimationFrame(function tick(t) { stepRoad(t); requestAnimationFrame(tick); });
 
   // hold: freeze the clock (QA measures walking without the scene changing underneath).
-  window.__qa = { get screen() { return screen; }, get popupOpen() { return popupOpen; }, game: null, hold: false };
+  window.__qa = { get screen() { return screen; }, get popupOpen() { return popupOpen; }, game: null, hold: false, reseed: () => { objs = []; drawRoad(game.road()); seedRoad(); } };
 })();
 </script>
 </body>

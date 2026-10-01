@@ -1331,7 +1331,7 @@ export class Game {
       iDied: bond?.married ? bi("함께 늙어간 인생", "We Grew Old Together") : bond?.together ? bi("끝까지 연인으로", "Lovers to the End") : bi("만나지 못한 운명", "A Destiny Never Met"),
     };
     const story: Record<BondEnd, Bi> = {
-      missed: bi(`${fatedName}와(과)의 운명은 끝내 이어지지 않았다. 그래도 그 사람을 기다린 시간도 내 인생이었다.`, `Fate never tied you and ${fatedName} together. Still, the waiting was part of your life too.`),
+      missed: bi(`${fatedName}와(과)의 운명은 끝내 이어지지 않았다. 몇 번의 계절이 우리 곁을 스쳐 갔을 뿐.`, `Fate never tied you and ${fatedName} together. A few seasons brushed past the two of you, and that was all.`),
       breakup: bi(`${fatedName}와(과) 함께한 ${Math.max(1, years)}년. 우리는 여기서 헤어졌다.`, `${Math.max(1, years)} year${years > 1 ? "s" : ""} with ${fatedName}. This is where you parted.`),
       divorce: bi(`${fatedName}와(과)의 결혼은 여기서 끝났다. ${Math.max(1, years)}년의 시간은 지워지지 않는다.`, `Your marriage to ${fatedName} ended here. The ${Math.max(1, years)} years don't disappear.`),
       theyDied: bi(`${fatedName}이(가) 먼저 떠났다. 함께한 ${Math.max(1, years)}년이 고스란히 남았다.`, `${fatedName} left first. The ${Math.max(1, years)} years you shared remain.`),

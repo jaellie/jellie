@@ -76,14 +76,26 @@ export interface RoadView {
     /** Where the road is (for a foreign city skyline / signs): Korean or English per language. */
     city: string;
     country: string;
+    /**
+     * Which side the sea is on (seaside towns: Busan, Jeju…). Then big buildings stand on the other
+     * side and only small houses line the sea side — nothing floats on the water.
+     */
+    sea?: "right";
+    /** What lines each side of the road: big shops/buildings vs. small houses (and the sea). */
+    sides: { left: "buildings" | "houses"; right: "buildings" | "houses" };
   };
-  /** Today's place, passing by at the roadside (a café, the office, the hospital…). */
-  landmark?: { id: string; type: string; name: string };
+  /**
+   * Today's place, passing by at the roadside (a café, the office, the hospital…). `size` big = a
+   * large building (office, hospital, wedding hall…); `side` = which side of the road it stands on.
+   */
+  landmark?: { id: string; type: string; name: string; size: "big" | "small"; side: "left" | "right" };
   /** False while a popup is open or the day is over (stop scrolling, everyone stands still). */
   walking: boolean;
 }
 
 const SEASIDE = ["Busan", "Jeju", "Gangneung", "Sokcho", "Yeosu", "Pohang", "Ulsan"];
+/** Large buildings (by the sea they stand on the land side, never on the water). */
+const BIG_TYPES = new Set(["WORKPLACE", "HOSPITAL", "UNIVERSITY", "WEDDING_VENUE", "ENTERTAINMENT", "LIBRARY", "CITY", "HOTEL", "AIRPORT", "GYM"]);
 
 function hash(s: string): number {
   let h = 2166136261;
@@ -136,7 +148,11 @@ export function buildRoad(
   const theme: RoadTheme = trip ? "travel" : abroad ? "abroad" : age >= 65 ? "countryside" : SEASIDE.includes(state.location.city) ? "seaside" : state.location.city === "Seoul" ? "city" : "town";
   const date = { year, month: state.date.month, day: state.date.day ?? 15 };
   const loc = opts.locationId ? getLocation(opts.locationId) : undefined;
-  const landmark = loc && loc.id !== "home" && !loc.online ? { id: loc.id, type: loc.type, name: loc.name[opts.lang] } : undefined;
+  const seaside = theme === "seaside";
+  const big = !!loc && BIG_TYPES.has(loc.type);
+  // By the sea, everything big stands on the land side (left); otherwise big buildings alternate sides by place.
+  const side: "left" | "right" = seaside && big ? "left" : hash(loc?.id ?? "") % 2 ? "right" : "left";
+  const landmark = loc && loc.id !== "home" && !loc.online ? { id: loc.id, type: loc.type, name: loc.name[opts.lang], size: big ? ("big" as const) : ("small" as const), side } : undefined;
   return {
     walkers,
     backdrop: {
@@ -147,6 +163,9 @@ export function buildRoad(
       skyline: trip ? skylineFor(TRIP_CITY[trip.destinationId] ?? state.location.city, "", opts.lang) : skylineFor(state.location.city, state.location.country, opts.lang),
       city: opts.lang === "ko" ? opts.cityName(state.location.city) : state.location.city,
       country: opts.countryName(state.location.country),
+      ...(seaside ? { sea: "right" as const } : {}),
+      // By the sea: big buildings on the left; small houses on the right, with the sea behind them.
+      sides: seaside ? { left: "buildings", right: "houses" } : { left: "buildings", right: "buildings" },
     },
     landmark,
     walking: opts.walking,
