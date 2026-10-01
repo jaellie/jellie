@@ -6,7 +6,7 @@
 지난번 요청 두 개가 아직 반영이 안 됐어. 아래 두 가지만 정확히 고쳐줘. 다른 건 건드리지 마.
 
 ━━ 1. 첫 화면 버튼 영역 배경 (아직 크림색 판이 보임) ━━
-- 첫 화면에서 [START], [이어하기 Continue], [만든 사람에게 To Creator] 를 감싸고 있는 컨테이너(들)의 배경을 완전히 없애줘.
+- 첫 화면에서 [START], [이어하기 Continue], [Letter from Creator] 를 감싸고 있는 컨테이너(들)의 배경을 완전히 없애줘.
   · 버튼들을 감싸는 모든 부모 요소: background: none; background-color: transparent; border: none; box-shadow: none; backdrop-filter: none;
   · 크림색/베이지 판, 반투명 박스, 카드 모양 전부 X. 버튼 뒤로 인생길 배경(하늘·길·걷는 나)이 그대로 보여야 해.
 - 버튼 자체 색은 그대로: [START] = 핑크(primary), 아래 두 개 = secondary.

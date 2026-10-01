@@ -504,9 +504,12 @@ describe("Painted popup backgrounds", () => {
   it("a place uses its own painting, else the nearest one we have", async () => {
     const { photoFor } = await import("../src/integration/prototype");
     expect(photoFor("park_proposal")).toBe("bg/park_proposal.png");
-    expect(photoFor("cafe_rain", "cafe")).toBe("bg/cafe_day.png");
-    expect(photoFor("restaurant", "restaurant")).toBe("bg/restaurant_formal.png");
-    expect(photoFor("cinema", "cinema")).toBeUndefined();
+    expect(photoFor("cafe_snow", "cafe")).toBe("bg/cafe_day.png");
+    expect(photoFor("cafe_rain", "cafe")).toBe("bg/cafe_evening.png");
+    expect(photoFor("restaurant", "restaurant")).toBe("bg/restaurant.png");
+    expect(photoFor("diner", "diner")).toBe("bg/restaurant.png");
+    expect(photoFor("cinema", "cinema")).toBe("bg/cinema.png");
+    expect(photoFor("tokyo_hotel", "tokyo_hotel")).toBeUndefined();
     const fs = await import("node:fs");
     for (const id of (await import("../data/world/photos.json")).default.have) expect(fs.existsSync(`assets/bg/${id}.png`)).toBe(true);
   });
