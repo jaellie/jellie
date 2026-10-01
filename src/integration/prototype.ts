@@ -4,6 +4,7 @@
  *   ROOMS[key]() painters, WBG[key] base colors, world() overlays, SPOTS, spr().
  * The prototype stays in charge of drawing; the engine decides *what* to draw.
  */
+import photoData from "../../data/world/photos.json";
 import { decorFor } from "../world/decor";
 import { OVERLAYS, getBackground, getLocation } from "../world/catalog";
 import type { Scene } from "../world/sceneComposer";
@@ -61,6 +62,8 @@ export interface PrototypeScene {
   sceneKey: string;
   /** The exact background variant (e.g. "home_newlywed", "wedding_ceremony", "gym_night"). */
   bgId: string;
+  /** A painted background image to show instead of drawing the room (relative path, e.g. "bg/park_proposal.png"). */
+  photo?: string;
   /** True when roomKey is only a stand-in for a place that has no painter yet. */
   standIn: boolean;
   /** Bitmap to show when there is no procedural painter yet. */
@@ -104,6 +107,14 @@ export interface PrototypeScene {
   }>;
 }
 
+const PHOTOS = photoData as { have: string[]; fallback: Record<string, string> };
+const HAVE = new Set(PHOTOS.have);
+/** The painted background for a place ("bg/park_proposal.png"): its own, else the nearest one we have. */
+export function photoFor(bgId: string, locationId?: string): string | undefined {
+  for (const id of [bgId, PHOTOS.fallback[bgId], locationId, locationId ? PHOTOS.fallback[locationId] : undefined]) if (id && HAVE.has(id)) return `bg/${id}.png`;
+  return undefined;
+}
+
 export function toPrototypeScene(scene: Scene): PrototypeScene {
   const loc = getLocation(scene.locationId);
   const hasPainter = scene.background.renderer?.startsWith("ROOMS.");
@@ -141,6 +152,10 @@ export function toPrototypeScene(scene: Scene): PrototypeScene {
     roomKey,
     sceneKey: loc.id,
     bgId: scene.background.id,
+    ...(() => {
+      const photo = photoFor(scene.background.id, loc.id);
+      return photo ? { photo } : {};
+    })(),
     standIn: !own,
     assetPath: scene.background.assetPath,
     baseColor: (scene.online ? undefined : FALLBACK_BG[loc.type]) ?? "#ead8bb",

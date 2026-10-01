@@ -378,6 +378,13 @@
     inner.style.cssText = `position:absolute;left:0;top:${-off}px;width:${REF_W}px;height:${REF_H}px;transform-origin:0 0;transform:scale(${k});`;
     box.appendChild(inner); drawScene(inner, sc);
     box.style.background = inner.style.background;
+    // A painted background: show the picture, keep only the people on top.
+    if (sc.photo) {
+      for (const c of [...inner.children]) if (!c.classList.contains("actor")) c.remove();
+      inner.style.background = "transparent";
+      box.style.background = `#000 url(../assets/${sc.photo}) center bottom / cover no-repeat`;
+      box.style.imageRendering = "auto";
+    }
   }
 
   // ---- the life road ----------------------------------------------------------------------------------
