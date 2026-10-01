@@ -319,3 +319,47 @@ describe("Regression: dead parents never speak", () => {
     }
   });
 });
+
+describe("Starting broke", () => {
+  it("a student's debt comes as its own popup (학자금 대출 😢) early on, and money only then goes below zero", () => {
+    const g = createGame({ name: "민아", gender: "F", likes: "M", birth: { year: 2004, month: 5, day: 1 }, mbti: "ENFP", job: "student", seed: 3, fated: { name: "Ren", status: "dating", since: { year: 2025, month: 3, day: 1 } } } as never);
+    let loan: { title?: string; result?: string } | undefined;
+    for (let d = 0; d < 3 && !loan; d++) {
+      for (let i = 0; i < 400; i++) {
+        const beats = g.advance(g.s.minute + 30);
+        for (const b of beats) if (b.kind === "popup") {
+          const before = g.state.money;
+          const r = g.choose(0);
+          if (b.popup.title === "학자금 대출") loan = { title: b.popup.title, result: r?.line };
+          else expect(g.state.money < 0 && before >= 0).toBe(false);
+        }
+        if (beats.some((b) => b.kind === "dayEnd")) break;
+      }
+      g.endDay();
+    }
+    expect(loan?.result).toMatch(/^😢 \[학자금 대출\] 때문에 빚이 생겼다/);
+    expect(g.state.money).toBeLessThan(0);
+    expect(g.hud().money.startsWith("-₩")).toBe(true);
+  });
+});
+
+describe("Distance is always explained", () => {
+  it("living abroad, a funeral back home comes with the flight; a far partner's emergency sends you to them", () => {
+    const lines: string[] = [];
+    for (const [seed, setup] of [[7, { birth: { year: 1960, month: 9, day: 28 }, home: "New York", fated: { name: "Jung", gender: "M", birth: { year: 1998, month: 11, day: 14 }, city: "new york", status: "dating", since: { year: 2025, month: 1, day: 1 } } }], [7, { birth: { year: 1996, month: 9, day: 28 }, fated: { name: "Jung", gender: "M", birth: { year: 1998, month: 11, day: 14 }, from: "abroad", status: "dating", since: { year: 2025, month: 1, day: 1 } } }]] as const) {
+      const g = createGame({ name: "Jae", gender: "F", likes: "M", mbti: "ENFP", seed, ...setup } as never);
+      for (let d = 0; d < 30 && !g.isOver(); d++) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) if (b.kind === "popup") (lines.push(b.popup.line), g.choose(0));
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        g.endDay();
+      }
+    }
+    expect(lines.some((l) => l.includes("영정") && l.includes("급히 비행기를 탔다"))).toBe(true);
+    expect(lines.some((l) => l.includes("쓰러지셨어요") && /비행기를 탔다|기차에 올랐다/.test(l))).toBe(true);
+    // Told once a day, never twice in one line.
+    for (const l of lines) expect((l.match(/비행기를 탔다/g) ?? []).length).toBeLessThanOrEqual(1);
+  }, 120000);
+});

@@ -28,7 +28,7 @@ import { DEFAULT_TEMPLATES, OpportunityEngine } from "../sim/opportunityEngine";
 import type { Consequence, Opportunity } from "../sim/opportunity";
 import { applyConsequences } from "../sim/consequences";
 import { checkRequirements } from "../sim/requirements";
-import type { LifeState } from "../sim/types";
+import { type LifeState, isAbroad } from "../sim/types";
 import { yearlyIncome } from "../sim/lifeTick";
 import { LOCATIONS, getActivity, getDestination, getLocation, findLocation } from "../world/catalog";
 import { weekdayOf, seasonOf } from "../world/clock";
@@ -38,7 +38,7 @@ import { type CrowdState, stepCrowd } from "../world/walkers";
 import { cultureOf, nameEn, pickName } from "../world/names";
 import { marriageFate } from "../story/marriageFate";
 import { bondPhase, hasBond, pendingMeetings, updateBond, type BondEnd } from "../story/bond";
-import { lifeEvent, nextDueEvent, pendingApplies, rollLifeEvents, weekdayOnly } from "../story/lifeEvents";
+import { lifeEvent, nextDueEvent, pendingApplies, queueChain, rollLifeEvents, weekdayOnly } from "../story/lifeEvents";
 import { resolveLifeEvent, resolveStaleEvents } from "../story/lifeEventRuntime";
 import "../story/eventLibrary";
 import { yearSignalMap } from "../story/destinyScript";
@@ -238,6 +238,8 @@ interface AgendaItem {
 
 export interface GameSave {
   v: 1;
+  /** Travel lines already told today ("partner", "home"): the flight is mentioned once, not every popup. */
+  bridged?: { day: number; keys: string[] };
   setup: GameSetup;
   seed: number;
   lang: Lang;
@@ -763,6 +765,59 @@ export class Game {
   }
 
   /** A life event from the library: re-checked now (facts may have changed), big ones get the big popup. */
+  /**
+   * Distance never goes unexplained. A scene that needs someone physically there, when they live far
+   * away, opens with how they got there: "(Ren이 도쿄에서 비행기를 타고 왔다.)"; family news while you
+   * live abroad: "(갑작스러운 소식에 급히 비행기를 탔다.)". Once per day and kind.
+   */
+  private travelBridge(o: { location?: string; who?: string; partner?: boolean; fated?: boolean; family?: boolean; toPartner?: boolean }): Bi | undefined {
+    const s = this.s;
+    const st = this.state;
+    const loc = o.location ?? "";
+    if (["instagram", "language_exchange_app", "dating_app", "online_community"].includes(loc)) return;
+    const life = st.story?.fatedLife;
+    const told = s.bridged?.day === s.dayIndex ? s.bridged.keys : [];
+    const mark = (k: string, b: Bi) => {
+      if (told.includes(k)) return undefined;
+      s.bridged = { day: s.dayIndex, keys: [...told, k] };
+      return b;
+    };
+    // They're far away and something happened to them: you're the one who goes.
+    if (o.toPartner && st.relationship.longDistance && life) {
+      return mark("toPartner", life.from === "abroad"
+        ? bi("(가장 빠른 {fatedCity}행 비행기를 탔다. 가는 내내 손이 떨렸다.)", "(You took the fastest flight to {fatedCity}. Your hands shook the whole way.)")
+        : bi("(곧장 {fatedCity}행 기차에 올랐다. 가는 내내 손이 떨렸다.)", "(You got straight on a train to {fatedCity}. Your hands shook the whole way.)"));
+    }
+    // Someone you love lives in another city or country, and the scene has them here.
+    const fatedNpc = Object.values(st.world?.npcs ?? {}).find((n) => n.fated);
+    const withFated = !!fatedNpc && st.relationship.partnerId === fatedNpc.id;
+    const partnerFar = (o.partner || o.who === "partner") && !!st.relationship.longDistance && loc !== "home" && loc !== "airport";
+    const fatedFar = (o.fated || o.who === "fated") && !withFated && !!life && life.from !== "same" && loc !== "airport" && !!st.world?.relationships[fatedNpc?.id ?? ""];
+    if (partnerFar || fatedFar) {
+      const k = partnerFar ? "{partner}" : "{fated}";
+      const abroad = life?.from === "abroad";
+      return mark("partner", abroad
+        ? bi(`(${k}이(가) {fatedCity}에서 비행기를 타고 왔다.)`, `(${k} flew in from {fatedCity}.)`)
+        : bi(`(${k}이(가) {fatedCity}에서 기차를 타고 왔다.)`, `(${k} came up from {fatedCity} by train.)`));
+    }
+    // You live abroad; this happens back home.
+    if ((o.family || ["funeral_hall", "family_home", "family_restaurant"].includes(loc) || (loc === "hospital" && o.family)) && isAbroad(st)) {
+      if (loc === "funeral_hall") return mark("home", bi("(갑작스러운 소식에 급히 비행기를 탔다. 비행 내내 한숨도 못 잤다.)", "(The news came out of nowhere. You caught the first flight home and didn't sleep the whole way.)"));
+      if (loc === "hospital") return mark("home", bi("(연락을 받자마자 공항으로 갔다. 집으로 가는 가장 빠른 비행기를 탔다.)", "(The moment the call came, you went to the airport and took the fastest flight home.)"));
+      return mark("home", bi("(오랜만에 집으로 가는 비행기를 탔다.)", "(You flew home for the first time in a while.)"));
+    }
+    return undefined;
+  }
+
+  /** The line with its travel bridge in front (see travelBridge). */
+  private bridged(line: string, b: Bi | undefined, vars: Record<string, string> = {}): string {
+    if (!b) return line;
+    const t = this.fill(fillStory(this.L(b), this.state, this.facts(), vars));
+    // The news itself ("부고 문자가 왔다…"): the flight comes after it; already at the funeral: before.
+    const news = (b.ko.startsWith("(갑작스러운 소식") || b.ko.includes("손이 떨렸다")) && !/장례식장|영정|빈소|funeral|portrait/i.test(line);
+    return news ? `${line} ${t}` : `${t} ${line}`;
+  }
+
   private fireEvent(): Beat | undefined {
     const s = this.s;
     const st = this.state;
@@ -778,7 +833,7 @@ export class Game {
       name: this.speaker(def.who),
       ...this.portrait(def.who),
       title: def.title ? this.fill(fillStory(this.L(def.title), st, f, vars)) : undefined,
-      line: this.fill(fillStory(this.L(def.line), st, f, vars)),
+      line: this.bridged(this.fill(fillStory(this.L(def.line), st, f, vars)), this.travelBridge({ location: def.location, who: def.who }), vars),
       ch: def.choices.map((c) => ({ t: this.fill(fillStory(this.L(c.t), st, f, vars)) })),
       big: !!def.big,
       scene: def.big && s.lastScene ? (JSON.parse(JSON.stringify(s.lastScene)) as PrototypeScene) : undefined,
@@ -819,7 +874,12 @@ export class Game {
         const r = confessReading(st, arc, arc?.steps[arc.step]?.key);
         return r ? this.L(r) : undefined;
       })(),
-      line: this.fill(fillStory(this.L(def.line), st, f, vars)),
+      line: this.bridged(this.fill(fillStory(this.L(def.line), st, f, vars)), (() => {
+        const arc = kind === "arc" ? st.story?.arcs.find((a) => a.id === ref) : undefined;
+        const family = arc?.type === "FAMILY_PASSING" || (!!patientKey && !["self", "me", "partner", "kid", "friend"].includes(patientKey));
+        const toPartner = arc?.type === "PARTNER_PASSING" || patientKey === "partner";
+        return this.travelBridge({ location: def.location, who: def.who, partner: def.needsPartner && !toPartner, fated: def.needsFated, family, toPartner });
+      })(), vars),
       ch: def.choices.map((c) => ({ t: this.fill(fillStory(this.L(c), st, f, vars)) })),
       // Life-changing moments get the big popup with the scene as its picture.
       big: true,
@@ -1681,6 +1741,9 @@ export function createGame(input: GameSetup): Game {
   if (mode === "lifelong") save.prologue = bi(`${years > 0 ? `${years}년 뒤, ` : ""}평생을 함께할 사람을 만난다.`, `${years > 0 ? `${years} year${years > 1 ? "s" : ""} later, ` : ""}you meet the one you'll spend your life with.`);
   else if (mode === "solitary") save.prologue = bi(`${years > 0 ? `${years}년 뒤, ` : ""}내 인생의 마지막 사랑이 찾아온다.`, `${years > 0 ? `${years} year${years > 1 ? "s" : ""} later, ` : ""}the last love of your life arrives.`);
   else if (years > 0) save.prologue = bi(`그 사람을 만나기까지, ${years}년이 흘렀다.`, `${years} year${years > 1 ? "s" : ""} went by before you met.`);
+  // Starting broke (a student paying tuition, or out of work): the debt comes as its own moment, early on.
+  const broke = st.enrollment ? "STUDENT_LOAN" : !st.career.employed && st.age < 60 && st.relationship.status !== "MARRIED" ? "MINUS_ACCOUNT" : undefined;
+  if (broke) queueChain(st, broke, [0, 0], new SeededRandom(hash(seed, "broke")), { urgent: true });
   save.milestones.push({ age: Math.floor(st.age), ko: "이야기가 시작된다.", en: "The story begins." });
   g.startDay();
   return g;
