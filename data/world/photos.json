@@ -75,6 +75,10 @@
   "amusement_park_night": "amusement_park",
   "gym_evening": "gym_day",
   "gym_night": "gym_day",
-  "diner": "restaurant"
+  "diner": "restaurant",
+  "language_exchange_app_screen": "home_night",
+  "dating_app_screen": "home_night",
+  "instagram_screen": "home_night",
+  "online_community_screen": "home_night"
  }
 }
