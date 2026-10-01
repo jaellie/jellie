@@ -53,7 +53,10 @@ export function lifeTick(s: LifeState, rng?: { chance(p: number): boolean }, opt
   if (s.age >= 18) {
     const living = (isAbroad(s) ? ECONOMY.livingCostAbroad : ECONOMY.livingCostHome) / 12;
     const supportShare = s.career.employed ? 1 : s.enrollment ? 0.5 : 0.35;
-    s.money += (yearlyIncome(s) * (1 - ECONOMY.lifestyleSpendRate)) / 12 - living * supportShare;
+    const net = (yearlyIncome(s) * (1 - ECONOMY.lifestyleSpendRate)) / 12 - living * supportShare;
+    // Everyday living never puts you in the red: short months are covered by a part-time shift, parents,
+    // eating cheaper. Only real events (a loan, a scam, a hospital bill) can push money below zero.
+    s.money += net >= 0 ? net : Math.max(net, -Math.max(0, s.money));
     if (s.debt > 0 && s.money > 5) {
       const pay = Math.min(s.debt, ECONOMY.debtPaymentPerMonth);
       s.debt -= pay;

@@ -586,11 +586,48 @@ describe("City pickers", () => {
     expect(searchPlaces("여수")[0]).toMatchObject({ id: "yeosu", name: "여수", countryName: "한국" });
     expect(searchPlaces("여수수")).toEqual([]);
     expect(searchPlaces("to", "en").map((p) => p.name)).toContain("Tokyo");
-    expect(fatedOptions("ko").homeQuestion).toContain("어디 살고");
   });
   it("the partner's city (by id) decides near/far, measured from my home", () => {
     const g = createGame({ ...JAE, seed: 2, home: "New York", fated: { ...JUNG, city: "busan", status: "dating" } } as never);
     expect(g.state.story!.fatedLife!.city.id).toBe("busan");
     expect(g.state.story!.fatedLife!.from).toBe("abroad");
+  });
+});
+
+describe("The first confession", () => {
+  it("is never a one-popup jump: becoming a couple always goes through the 4-part confession", () => {
+    for (const [seed, status] of [[2, "acquaintance"], [4, "stranger"], [6, "stranger"], [9, "acquaintance"]] as const) {
+      const g = createGame({ ...JAE, seed, fated: { ...JUNG, status } });
+      const seen = play(g, (x) => !!x.facts().fatedPartner, () => 0, 60);
+      if (!g.facts().fatedPartner) continue;
+      const titles = seen.map((s) => s.title);
+      const i = titles.lastIndexOf("마음을 건네다");
+      expect(i).toBeGreaterThanOrEqual(3);
+      expect(titles.slice(i - 3, i)).toEqual(["설렘의 시작", "두근거리는 밤", "한 걸음 앞"]);
+    }
+  });
+
+  it("the charts write how it happens (different couples, different confessions) and show why", async () => {
+    const { confessFate } = await import("../src/story/confessFate");
+    const { calculateNatalChart } = await import("../src/saju/chart");
+    const { calculateAstrologyChart } = await import("../src/astrology/chart");
+    const keys = new Set<string>();
+    for (let y = 1985; y < 2003; y++) for (const m of [2, 6, 10]) {
+      const a = { year: y, month: m, day: 9, hour: 8, minute: 0, sex: "FEMALE" as const };
+      const b = { year: y + 1, month: 13 - m, day: 21, hour: 20, minute: 0, sex: "MALE" as const };
+      const f = confessFate({ saju: calculateNatalChart(a), astro: calculateAstrologyChart(a) }, { saju: calculateNatalChart(b), astro: calculateAstrologyChart(b) });
+      if (f.key) keys.add(f.key), expect(f.signs.length).toBeGreaterThan(0);
+    }
+    expect(keys.size).toBeGreaterThanOrEqual(5);
+  });
+});
+
+describe("Occasions while living apart", () => {
+  it("a long-distance anniversary is a video call / a flight, never 'where shall we go?'", () => {
+    const g = createGame({ ...JAE, seed: 5, fated: { ...JUNG, city: "paris", status: "dating", since: { year: 2025, month: 1, day: 1 } } } as never);
+    expect(g.state.relationship.longDistance).toBe(true);
+    // Day 100 comes while still apart (seed 5 moves in together before the first anniversary).
+    const day100 = play(g, (x) => !x.state.relationship.longDistance, () => 0, 30).find((s) => s.title === "100일");
+    expect(day100?.line).toMatch(/화면 너머/);
   });
 });

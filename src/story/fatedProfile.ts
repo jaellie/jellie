@@ -80,12 +80,6 @@ export function fatedOptions(lang: "ko" | "en" = "ko"): {
   /** married / dating come with a date to ask for (dateLabel): send it as fated.since — the story starts that day. */
   statuses: Array<{ id: "married" | "dating" | "talking" | "acquaintance" | "stranger"; name: string; hint: string; dateLabel?: string }>;
   lives: Array<{ id: FatedFrom; name: string; hint: string }>;
-  /**
-   * "그 사람은 지금 어디 살고 있나요?" — a city picker (searchPlaces), always shown, default = where you live.
-   * Send the picked id as fated.city: same city / another city / abroad is worked out from it.
-   */
-  homeQuestion: string;
-  homeHint: string;
   /** The city field (shown when they live in another city or country): label + guide line under it. */
   cityLabel: string;
   cityHint: string;
@@ -93,8 +87,6 @@ export function fatedOptions(lang: "ko" | "en" = "ko"): {
 } {
   const ko = lang === "ko";
   return {
-    homeQuestion: ko ? "그 사람은 지금 어디 살고 있나요?" : "Where do they live now?",
-    homeHint: ko ? "모르면 나와 같은 도시로 둬도 돼요. 멀리 살면 장거리 연애가 돼요." : "Not sure? Leave it as your city. Far away means a long-distance love.",
     cityLabel: ko ? "그 사람이 사는 도시" : "The city they live in",
     cityHint: ko ? "목록에 없다면 가장 가까운 지역을 선택하세요" : "Not on the list? Pick the nearest city",
     statusQuestion: ko ? "지금 두 사람, 어떤 사이인가요?" : "What are you two right now?",

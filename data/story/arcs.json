@@ -3080,6 +3080,575 @@
         }
        ]
       }
+     },
+     "byFate": {
+      "SPARK": {
+       "who": "me",
+       "location": "street",
+       "line": {
+        "ko": "(갑자기 소나기가 쏟아졌다. {fated}과(와) 처마 밑으로 뛰어들었다. 숨이 차서 웃다가, 눈이 마주쳤다. 웃음이 멈췄다.)",
+        "en": "(A sudden downpour. You and {fated} duck under an awning, laughing, out of breath — then your eyes meet, and the laughing stops.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(생각보다 말이 먼저 나온다) 나 너 좋아해",
+          "en": "(The words come before the thought) I like you."
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(빗소리에 묻히게 작게) …좋아해",
+          "en": "(Quietly, under the rain) …I like you."
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "비 그치면 가자 (시선을 피한다)",
+          "en": "Let's go when it stops. (look away)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "빗소리 사이로 '…나도'가 들렸다. 비가 그칠 때까지 아무도 움직이지 않았다.",
+          "en": "Through the rain: '…Me too.' Neither of you moved until it stopped."
+         }
+        }
+       }
+      },
+      "DOHWA": {
+       "who": "fated",
+       "location": "park",
+       "line": {
+        "ko": "(헤어지려는데 {fated}이(가) 소매를 잡았다.) 잠깐만. 이거 내가 먼저 말하고 싶었어. …나 너 좋아해.",
+        "en": "(As you turn to leave, {fated} catches your sleeve.) Wait. I wanted to be the one to say it. …I like you."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "…나도. 아까부터 말하고 싶었어",
+          "en": "…Me too. I've wanted to say it all night."
+         },
+         "roll": {
+          "START": 0.9,
+          "WAIT": 0.08,
+          "MISS": 0.02
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(대답 대신 손을 꼭 잡는다)",
+          "en": "(Squeeze their hand instead of answering)"
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.17,
+          "MISS": 0.03
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "…조금만 생각해 볼게",
+          "en": "…Let me think about it."
+         },
+         "roll": {
+          "START": 0.15,
+          "WAIT": 0.6,
+          "MISS": 0.25
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "{fated}이(가) 그제야 숨을 내쉬었다. '다행이다… 진짜 떨렸어.'",
+          "en": "{fated} finally breathed out. 'Thank god… I was shaking.'"
+         }
+        }
+       }
+      },
+      "YEOKMA": {
+       "who": "me",
+       "location": "street",
+       "line": {
+        "ko": "(막차가 저 멀리서 오고 있다. {fated}이(가) 버스에 오르면 오늘이 끝난다. 다음 주엔 둘 중 누군가 멀리 떠난다.)",
+        "en": "(The last bus is coming. When {fated} gets on, tonight is over — and next week one of you is leaving town.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(버스가 서기 전에) 가지 마. 좋아해",
+          "en": "(Before it stops) Don't go. I like you."
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(버스를 그냥 보낸다) 한 정거장만 같이 걷자",
+          "en": "(Let the bus go) Walk one more stop with me."
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "조심히 가 (손을 흔든다)",
+          "en": "Get home safe. (wave)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "버스는 우리를 두고 떠났다. 다음 버스까지 20분. 그 20분 동안 우리는 연인이 됐다.",
+          "en": "The bus left without you. Twenty minutes to the next one — long enough to become a couple."
+         }
+        }
+       }
+      },
+      "HWAGAE": {
+       "who": "me",
+       "location": "library",
+       "line": {
+        "ko": "(말로는 도저히 못 할 것 같아서, 밤새 편지를 썼다. {fated}이(가) 빌려 간 책 사이에 끼워 둘 생각이다.)",
+        "en": "(You could never say it out loud, so you wrote a letter all night. You plan to slip it into the book {fated} borrowed.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(편지를 끼우고, 마지막 줄에 이름을 쓴다)",
+          "en": "(Slip it in — and sign your name at the bottom)"
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(이름 없이 끼워 둔다)",
+          "en": "(Slip it in, unsigned)"
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(편지를 다시 가방에 넣는다)",
+          "en": "(Put the letter back in your bag)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "다음 날 아침, 답장이 왔다. 단 한 줄. '나도 같은 책을 읽고 있었어. 너를.'",
+          "en": "The next morning, a reply. One line: 'I've been reading the same book. You.'"
+         }
+        }
+       }
+      },
+      "GWIIN": {
+       "who": "me",
+       "location": "restaurant",
+       "line": {
+        "ko": "(친구들 모임. 갑자기 다들 약속이 생겼다며 하나둘 일어난다. 테이블엔 나와 {fated}만 남았다. 누가 봐도 작전이다.)",
+        "en": "(A group dinner. One by one, everyone suddenly 'remembers' somewhere to be. Only you and {fated} are left. Obviously a setup.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(웃음이 터진다) 우리 친구들, 연기 진짜 못한다. …근데 고마운 작전이네. 좋아해",
+          "en": "(Burst out laughing) Our friends can't act. …But I'm grateful. I like you."
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "이왕 이렇게 된 거, 2차 갈래?",
+          "en": "Since we're stuck — second round?"
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(어색하게 계산서를 집는다)",
+          "en": "(Awkwardly reach for the bill)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "그날 밤 단톡방이 터졌다. '드디어!!!' '축하해 ㅠㅠ' '내 작전이었다'",
+          "en": "The group chat exploded that night. 'FINALLY!!!' 'congrats ㅠㅠ' 'my plan btw'"
+         }
+        }
+       }
+      },
+      "MOON": {
+       "who": "me",
+       "location": "home",
+       "line": {
+        "ko": "(늦은 밤, {fated}과(와) 라면을 끓여 먹고 설거지를 하는데 이상하게 편하다. 이 사람이랑은 침묵도 대화 같다.)",
+        "en": "(Late night, washing up after ramen with {fated}. It's strangely easy. With this person, even silence feels like talking.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "우리… 그냥 사귈까? (그릇을 건네며)",
+          "en": "Should we… just be together? (handing over a bowl)"
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(어깨에 살짝 기댄다)",
+          "en": "(Lean lightly on their shoulder)"
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(이 편안함이 깨질까 봐 아무 말도 않는다)",
+          "en": "(Say nothing — afraid to break the calm)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "'…그래. 우리 이미 사귀는 줄 알았는데.' 둘 다 웃었다. 너무 자연스러워서, 오히려 떨렸다.",
+          "en": "'…Sure. I thought we already were.' You both laughed. It was so natural it made your heart race."
+         }
+        }
+       }
+      },
+      "CLASH": {
+       "who": "fated",
+       "location": "street",
+       "line": {
+        "ko": "(사소한 일로 시작한 말다툼이 점점 커졌다. {fated}이(가) 소리쳤다.) 왜 나한테만 이렇게 신경 쓰이게 하는데! …아, 진짜. 좋아한다고, 너.",
+        "en": "(A small argument kept growing. {fated} shouts:) Why do you get under my skin like this?! …Ugh. I like you, okay?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(화가 쏙 들어간다) …그걸 지금 말하면 어떡해. 나도야",
+          "en": "(The anger drains away) …You can't say that now. Me too."
+         },
+         "roll": {
+          "START": 0.9,
+          "WAIT": 0.08,
+          "MISS": 0.02
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "싸우다 말고 고백하는 게 어딨어! (웃음이 터진다)",
+          "en": "Who confesses in the middle of a fight?! (start laughing)"
+         },
+         "roll": {
+          "START": 0.7,
+          "WAIT": 0.25,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "…오늘은 그냥 각자 집에 가자",
+          "en": "…Let's just go home tonight."
+         },
+         "roll": {
+          "START": 0.08,
+          "WAIT": 0.5,
+          "MISS": 0.42
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "싸움은 거기서 끝났다. 무슨 일로 싸웠는지는 둘 다 기억이 안 난다.",
+          "en": "The fight ended right there. Neither of you remembers what it was about."
+         }
+        }
+       }
+      },
+      "DREAM": {
+       "who": "me",
+       "location": "beach",
+       "line": {
+        "ko": "(밤바다. 파도 소리, 하늘 가득한 별. 꿈인지 현실인지 모를 밤. {fated}이(가) 신발을 벗고 물가로 걸어간다.)",
+        "en": "(The sea at night. Waves, a sky full of stars — it barely feels real. {fated} kicks off their shoes and walks toward the water.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(따라 걸어가 옆에 선다) 이 순간이 안 끝났으면 좋겠어. 너랑",
+          "en": "(Walk up beside them) I don't want this to end. With you."
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(모래에 손가락으로 마음을 쓴다)",
+          "en": "(Write it in the sand with a finger)"
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(멀리서 사진만 찍는다)",
+          "en": "(Just take a picture from afar)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "{fated}이(가) 대답 대신 내 손을 잡고 파도 속으로 한 걸음 들어갔다. 차가웠는데, 하나도 춥지 않았다.",
+          "en": "{fated} answered by taking your hand and stepping into the waves. Cold, and not cold at all."
+         }
+        }
+       }
+      },
+      "SURPRISE": {
+       "who": "me",
+       "location": "amusement_park",
+       "line": {
+        "ko": "(관람차가 꼭대기에서 덜컹 멈췄다. '잠시 점검 중입니다.' 좁은 칸에 {fated}과(와) 단둘이.)",
+        "en": "(The Ferris wheel jolts to a stop at the very top. 'Brief maintenance.' Just you and {fated} in a tiny car.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "이건 운명이 말하라는 거야. 좋아해",
+          "en": "This is fate telling me to say it. I like you."
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(내려가면 말하자… 심장이 터질 것 같다)",
+          "en": "(Say it when we get down… your heart's pounding)"
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "무섭다, 그치? (화제를 돌린다)",
+          "en": "Scary, right? (change the subject)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "관람차가 다시 움직였을 때, 우리는 손을 잡고 있었다. 직원이 문을 열며 웃었다.",
+          "en": "When the wheel started again, you were holding hands. The attendant grinned opening the door."
+         }
+        }
+       }
+      }
      }
     }
    }

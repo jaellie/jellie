@@ -145,7 +145,7 @@ At birth, 사주 + 점성술 pick **5–7 fated turning points** (love, marriage
 
 **City fields** (birthplace, home, their city, their birthplace): autocomplete with `LoveSim.searchPlaces(text, lang)` → `[{ id, name, country, countryName }]`; a city counts only once the player taps a suggestion (typed text alone, e.g. "여수수", never confirms). Send the id.
 
-**The destined person** — `LoveSim.fatedOptions(lang)` gives the choices (`homeQuestion` / `homeHint`: "그 사람은 지금 어디 살고 있나요?", default = your home city):
+**The destined person** — `LoveSim.fatedOptions(lang)` gives the choices:
 - `statusQuestion` ("지금 두 사람, 사귀고 있나요?") + `statuses`: `dating` (start as a couple), `talking` (썸: the game plays the late-night texts, the not-quite-date, the jealousy, up to the confession), `stranger` (you don't know each other yet: the game starts from the first meeting).
 - `lives` — "상대는 어디서 살까요?": `same` (same neighborhood: you may keep running into them where they work), `city` (another city: a work trip or a trip there, then weekend love on the train), `abroad` (another country: a language-app match across time zones or a flight, then long distance — video calls at their local time, a visit, and deciding who moves). Optional `fated.city` ("도쿄", "Vancouver") — default: their birthplace if foreign, else a pick.
 - `jobs` — "상대의 직업은?" (45 jobs, incl. 무직, 대학생, 취업준비생; free text also works). The job decides where you meet (the barista at your café, the doctor in the ER, the trainer at the gym…), their schedule, their income (it adds to the household once you live together), and job moments while you're together (night shifts, flights, a zero-income month, the 3 a.m. call, a breakthrough).
@@ -171,7 +171,7 @@ LoveSim.createGame({
     name, gender, mbti, birth: { year, month, day, hour? },   // birth + mbti → hidden 궁합
     birthplace: "도쿄",                                // optional; default = the player's birthplace
     status: "dating" | "talking" | "stranger",         // talking = 썸 (default when named); "crush" = talking
-    city: "busan",                                     // where they live now: an id picked from searchPlaces (near/far is worked out from your home)
+    from: "same" | "city" | "abroad", city?: "busan",  // where they live (see fatedOptions); city = an id picked from searchPlaces
     job: "doctor" | "대학병원 의사" | …,                  // an id from fatedOptions().jobs, or free text
     profile: { look },
   },

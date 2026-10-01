@@ -27,7 +27,7 @@ export function marriageFate(saju: SajuChart, astro: AstrologyChart, sex: "MALE"
   if (g.PEER >= 4) (score += 1), signs.push("비겁 과다");
   const dayHit = saju.natalInteractions.filter((i) => i.between.includes("day") && /CLASH|HARM|PUNISH/.test(String(i.type)));
   if (dayHit.length) (score += 1), signs.push("일지 충");
-  if (saju.shinsal.some((s) => s.id === "HWAGAE")) (score += 1), signs.push("화개");
+  if (saju.shinsal.some((s) => s.id === "HWAGAE" && s.present)) (score += 1), signs.push("화개");
   const satHouse = Object.entries(astro.houseEmphasis).find(([, ps]) => ps.includes("SATURN" as never))?.[0];
   if (satHouse === "7") (score += 1.5), signs.push("토성 7하우스");
   for (const a of astro.aspects) {

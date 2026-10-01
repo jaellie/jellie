@@ -70,6 +70,7 @@ describe("Content quality (automatic)", () => {
   it("a leading [이름] tag becomes the speaker (never shown twice); [사진] stays as content", () => {
     expect(splitSpeakerTag("[아빠] [사진] 낚시 갔다")).toEqual({ tag: "아빠", text: "[사진] 낚시 갔다" });
     expect(splitSpeakerTag("[응급실] 보호자분 되시죠?")).toEqual({ tag: "응급실", text: "보호자분 되시죠?" });
+    expect(splitSpeakerTag("([아빠] 그래.)")).toEqual({ tag: "아빠", text: "그래." });
     expect(splitSpeakerTag("[사진] 오늘 만든 반찬")).toEqual({ text: "[사진] 오늘 만든 반찬" });
     expect(splitSpeakerTag("밥은 먹었니?")).toEqual({ text: "밥은 먹었니?" });
   });

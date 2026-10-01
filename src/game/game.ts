@@ -48,6 +48,7 @@ import { type BirthplaceInput, PLACES, type PlaceInfo, findPlace, resolveBirth }
 import { pickMood } from "../story/mood";
 import { type RoadView, buildRoad } from "../world/road";
 import { readingOf } from "../story/reading";
+import { confessFate } from "../story/confessFate";
 import { type FatedFrom, type FatedLife, fatedVars, findFatedJob, resolveFatedLife } from "../story/fatedProfile";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
 import type { RelationshipOriginType } from "../world/types";
@@ -59,7 +60,7 @@ import { focusOf, toPrototypeScene, withPositions, type PrototypeScene } from ".
 import { WorldEngine } from "../world/worldEngine";
 import type { NPCSchedule } from "../world/types";
 import { type LifeFacts, computeFacts, meets } from "./facts";
-import { STORY_ONLY_TEMPLATES, dueOccasion, isBigMoment, startArc, eventDayWanted, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
+import { STORY_ONLY_TEMPLATES, dueOccasion, isBigMoment, startArc, eventDayWanted, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent, confessReading } from "../story/storyEngine";
 import { buildCards, type MemoryCard } from "../story/cards";
 import memorialData from "../../data/story/memorial.json";
 import { AutoWorldPolicy } from "../world/decisions";
@@ -813,7 +814,11 @@ export class Game {
       reading: ev ? (() => {
         const r = readingOf(ev.signals);
         return r ? this.L(r) : undefined;
-      })() : undefined,
+      })() : (() => {
+        const arc = st.story?.arcs.find((a) => a.id === ref);
+        const r = confessReading(st, arc, arc?.steps[arc.step]?.key);
+        return r ? this.L(r) : undefined;
+      })(),
       line: this.fill(fillStory(this.L(def.line), st, f, vars)),
       ch: def.choices.map((c) => ({ t: this.fill(fillStory(this.L(c), st, f, vars)) })),
       // Life-changing moments get the big popup with the scene as its picture.
@@ -835,7 +840,9 @@ export class Game {
     if (!f.partnered && !solo) return;
     const vars = { n: String(o.n ?? 1) };
     const sub = (b: Bi) => this.fill(fillStory(this.L(b), st, f, vars));
-    const choices = solo ? def.soloChoices ?? def.choices : def.choices;
+    // Living apart (long distance, or apart for work): a video call, a parcel, a flight — never "where shall we go?".
+    const apart = !solo && !!st.relationship.longDistance && !!def.apart;
+    const choices = solo ? def.soloChoices ?? def.choices : apart ? def.apart!.choices : def.choices;
     const who = solo ? "me" : def.who;
     const popup: Popup = {
       id: `occ${this.s.dayIndex}-${o.kind}`,
@@ -844,7 +851,7 @@ export class Game {
       name: this.speaker(who),
       ...this.portrait(who === "partner" ? "partner" : who),
       title: sub(def.title),
-      line: sub(solo ? def.solo! : def.line),
+      line: sub(solo ? def.solo! : apart ? def.apart!.line : def.line),
       ch: choices.map((c) => ({ t: sub(c.t) })),
       big: true,
       scene: this.s.lastScene ? (JSON.parse(JSON.stringify(this.s.lastScene)) as PrototypeScene) : undefined,
@@ -1114,7 +1121,18 @@ export class Game {
       if (res.scene?.length) this.setSequence(res.scene);
       if (!st.alive) s.minute = CFG.dayEndMinute;
       // A big moment in four parts: the next part opens right after this one.
-      if (res.more) s.agenda.unshift({ t: s.minute, k: p.storyRef === `arc:${s.dayRef}` || p.storyRef.startsWith(`fated:${s.dayRef}`) ? "story" : "story2" });
+      if (res.more) {
+        const first = p.storyRef === `arc:${s.dayRef}` || p.storyRef.startsWith(`fated:${s.dayRef}`);
+        // A fated moment that opens a story ("tell them today" → the confession): that story plays next.
+        if (p.storyRef.startsWith("fated:")) {
+          const talk = st.story?.arcs.find((a) => a.type === "TALKING" && a.steps[a.step]?.key === "CONFESS");
+          if (talk) {
+            if (first) (s.dayKind = "arc"), (s.dayRef = talk.id);
+            else (s.dayKind2 = "arc"), (s.dayRef2 = talk.id);
+          }
+        }
+        s.agenda.unshift({ t: s.minute, k: first ? "story" : "story2" });
+      }
       // A reply (your partner answering "not yet") is theirs, not yours.
       const who = res.who && meets(SPEAKER_REQUIRES[res.who] ?? [], this.facts()) ? res.who : "me";
       return { who, line: this.fill(fillStory(this.L(res.r), st, this.facts(), { patient: p.patient ?? "", ...p.vars })), log: label };
@@ -1325,7 +1343,9 @@ export class Game {
       monthlyStoryTick(st, rng);
       this.eventTick(runner, rng);
     }
-    // What happened meanwhile is old news; the first day is about them.
+    // What happened meanwhile is old news; the first day is about them. (Loans from those years are
+    // paid off off-screen too: the story never opens in the red.)
+    st.money = Math.max(st.money, 1.85);
     if (st.story) st.story.cards = [];
     st.story?.events?.notes.splice(0);
     s.dayKind = "fated";
@@ -1643,6 +1663,13 @@ export function createGame(input: GameSetup): Game {
     const theirs = fx.birth ? resolveBirth({ ...fx.birth, sex }, fx.birthplace, placeOf(setup)) : undefined;
     const c = compatibility({ birth: birthOf(setup), place: placeOf(setup), mbti: setup.mbti }, { birth: theirs?.birth, place: theirs?.place, mbti: fx.mbti });
     st.story!.compat = { score: c.score, chemistry: c.chemistry, stability: c.stability, friction: c.friction };
+    // How the first confession goes, with both charts and the friction between them.
+    if (c.friction >= 0.62 || theirs) {
+      const birth = birthOf(setup);
+      const mine = { saju: st.chart ?? calculateNatalChart(birth), astro: calculateAstrologyChart(birth, placeOf(setup)) };
+      const them = theirs ? { saju: calculateNatalChart(theirs.birth), astro: calculateAstrologyChart(theirs.birth, theirs.place) } : undefined;
+      st.story!.confessFate = confessFate(mine, them, c.friction);
+    }
   }
   // Left entirely to fate: the chart decides who they are.
   const sealed = !!fx?.sealed || !fx || (!fx.name && !fx.birth && !fx.mbti && !fx.job && !fx.city && (!fx.status || fx.status === "stranger"));
@@ -1869,6 +1896,9 @@ const CONTENT_TAG = /^(사진|영상|동영상|링크|이모티콘|스티커|음
 /** "[아빠] 차 조심해라" → { tag: "아빠", text: "차 조심해라" }; "[사진] …" is content, not a speaker. */
 export function splitSpeakerTag(text: string): { tag?: string; text: string } {
   // At the start, or right after an opening narration: "(전화가 왔다.) [아빠] 밥은 먹었니?"
+  // A whole reply in brackets: "([아빠] 그래.)" → 아빠: "그래."
+  const w = /^\(\s*\[([^\][]{1,12})\]\s*([^()]*)\)$/.exec(text.trim());
+  if (w && !CONTENT_TAG.test(w[1])) return { tag: w[1], text: w[2].trim() };
   const m = /^(\([^)]*\)\s*)?\[([^\][]{1,12})\]\s*/.exec(text.trimStart());
   if (!m || CONTENT_TAG.test(m[2])) return { text };
   const t = text.trimStart();
@@ -1876,7 +1906,7 @@ export function splitSpeakerTag(text: string): { tag?: string; text: string } {
 }
 
 type OccasionChoice = { t: Bi; r: Bi };
-type OccasionDef = { title: Bi; who: string; location: string; line: Bi; solo?: Bi; choices: OccasionChoice[]; soloChoices?: OccasionChoice[] };
+type OccasionDef = { title: Bi; who: string; location: string; line: Bi; solo?: Bi; choices: OccasionChoice[]; soloChoices?: OccasionChoice[]; apart?: { line: Bi; choices: OccasionChoice[] } };
 const OCCASIONS = occasionData as unknown as Record<string, OccasionDef>;
 
 type FunPick = { loc: string; act: string; label: Bi; r: Bi; season?: string };

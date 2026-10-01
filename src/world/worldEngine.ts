@@ -86,7 +86,8 @@ export class WorldEngine {
     }
 
     const { world, rng, state } = ctx;
-    ctx.state.money -= activity.cost;
+    // Short on cash: the cheap version of the day (it never puts you in debt).
+    ctx.state.money -= Math.min(activity.cost, Math.max(0, ctx.state.money));
     for (const x of activity.experience ?? []) world.experience[x] = (world.experience[x] ?? 0) + activity.durationHours;
     if (activity.startsHabit && !world.habits[loc.id]) {
       world.habits[loc.id] = { activityId, since: { ...req.date }, perMonth: loc.type === "ONLINE" ? 6 : loc.type === "GYM" ? 8 : 4 };

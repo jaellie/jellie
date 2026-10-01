@@ -49,7 +49,8 @@ export function applyConsequence(s: LifeState, c: Consequence, ctx: ConsequenceC
   const { rng, log } = ctx;
   switch (c.kind) {
     case "money":
-      s.money += c.amount;
+      // Small everyday costs (a wedding gift, a dinner) come out of what you have — never into debt.
+      s.money += c.amount < 0 && c.amount >= -1 ? -Math.min(-c.amount, Math.max(0, s.money)) : c.amount;
       break;
     case "debt":
       s.debt += c.amount;

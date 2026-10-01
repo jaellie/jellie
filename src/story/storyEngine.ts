@@ -33,6 +33,7 @@ import { compatFactor } from "../destiny/compatibility";
 import { AUNTS_UNCLES, GRANDPARENT_WORD, aliveSiblings, siblingLabel } from "./family";
 import { fireHooks, lifeEvent, pendingApplies, queueChain } from "./lifeEvents";
 import { buildDestinyScript, loveYears, resolveOutcome } from "./destinyScript";
+import { confessFate } from "./confessFate";
 import type { ActiveArc, ArcType, FatedEvent, FatedTheme, StoryState } from "./types";
 import { meetPlan } from "./fatedProfile";
 
@@ -80,6 +81,8 @@ interface ArcStepDef {
    * own speaker, line, choices and result lines (outcomes: { KEY: { r } }).
    */
   byMbti?: Array<{ me?: string; them?: string; who?: string; line: Bi; location?: string; choices?: ArcStepDef["choices"]; outcomes?: Record<string, { r: Bi; who?: string }> }>;
+  /** The climax as the charts write it (confessFate.ts): key → variant. */
+  byFate?: Record<string, { who?: string; line: Bi; location?: string; choices?: ArcStepDef["choices"]; outcomes?: Record<string, { r: Bi; who?: string }> }>;
   /** "distance": by where the destined partner lives (city / abroad). */
   altBy?: "cause" | "speaker" | "distance" | "parent";
   /** A fixed outcome, or a roll (bent by 궁합 when the partner is the destined person). */
@@ -171,6 +174,7 @@ export function initStory(state: LifeState, birth: BirthData, place: BirthPlace 
   const script = buildDestinyScript(saju, astro, { birthYear: birth.year, seed, startAge: start, partner });
   state.story = { script, arcs: [], log: [], nextArcId: 1, cards: [], place: place ?? DEFAULT_BIRTHPLACE };
   if (partner) state.story.loveYears = loveYears(saju, astro, birth.year, partner, start + 1, start + 25).slice(0, 12);
+  state.story.confessFate = confessFate({ saju, astro }, partner);
   return state.story;
 }
 
@@ -575,7 +579,7 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
     const title = { ko: sp.seq.titles.ko[sp.n], en: sp.seq.titles.en[sp.n] };
     return { ref: `arc:${arc.id}`, who: sp.who, line: themText(sp.line, arc), choices: sp.choices.map((c) => themText(c.t, arc)), location: def.location, activity: def.activity, vars: {}, title, needsFated: arc.type === "TALKING" || arc.type === "PARTING", needsPartner: arc.type === "DATING" && def.location !== "home" };
   }
-  const mv = mbtiVariant(state, arc, step.key, def);
+  const mv = mbtiVariant(state, arc, step.key, def) ?? fateVariant(state, def);
   const base = arcSpeaker(def, arc, facts, state);
   const who = mv?.who ?? base.who;
   const line = mv?.line ?? base.line;
@@ -669,6 +673,29 @@ function seqPart(state: LifeState, arc: ActiveArc, key: string): { n: number; wh
 function themText(b: Bi, arc: ActiveArc): Bi {
   const k = arc.type === "TALKING" || arc.type === "PARTING" ? "{fated}" : "{partner}";
   return { ko: b.ko.replaceAll("{them}", k), en: b.en.replaceAll("{them}", k) };
+}
+
+/** The confession as the charts write it — in person only (far apart, it stays the airport goodbye). */
+function fateVariant(state: LifeState, def: ArcStepDef) {
+  const key = state.story?.confessFate?.key;
+  if (!key || !def.byFate?.[key] || (state.story?.fatedLife?.from ?? "same") === "abroad") return;
+  return def.byFate[key];
+}
+
+/** The chart signs behind the confession, shown small under each of its popups' titles. */
+export function confessReading(state: LifeState, arc: ActiveArc | undefined, key: string | undefined): Bi | undefined {
+  const signs = state.story?.confessFate?.signs ?? [];
+  if (!arc || arc.type !== "TALKING" || key !== "CONFESS" || !signs.length) return;
+  // "사주: 화개  /  점성술: 금성·화성 조화 · 해왕성·금성" (grouped like the fated readings).
+  const group = (lang: "ko" | "en") => {
+    const by = new Map<string, string[]>();
+    for (const x of signs) {
+      const [head, ...rest] = x[lang].split(": ");
+      by.set(head, [...(by.get(head) ?? []), rest.join(": ")]);
+    }
+    return [...by].map(([h, v]) => `${h}: ${v.join(" · ")}`).join("  /  ");
+  };
+  return { ko: group("ko"), en: group("en") };
 }
 
 function mbtiVariant(state: LifeState, arc: ActiveArc, key: string, def: ArcStepDef) {
@@ -783,7 +810,10 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
       if (plan && outcome !== "MISSED") r = { ko: `${r.ko} ${plan.intro.ko}`, en: `${r.en} ${plan.intro.en}` };
       if (outcome !== "START_DATING") secondChance(state, e, rng);
     }
-    return { r, who: r === o.r ? o.who : undefined, scene: o.scene, outcome };
+    // "Tell them today": the confession sequence follows right away.
+    const more = !!state.flags.storyMore;
+    delete state.flags.storyMore;
+    return { ...(more ? { more: true } : {}), r, who: r === o.r ? o.who : undefined, scene: o.scene, outcome };
   }
   const arc = st.arcs.find((a) => a.id === ref.slice(4));
   if (!arc) return;
@@ -806,7 +836,7 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
     arc.data = { ...arc.data, seq: "", seqDone: (done.includes(step.key) ? done : [...done, step.key]).join(",") };
   }
   const sparkBend = (k: string) => (seqCur && k === SEQS[step.key].good ? Math.max(0.4, Math.min(2, 1 + seqCur.spark * 1.5)) : 1);
-  const mv = mbtiVariant(state, arc, step.key, def);
+  const mv = mbtiVariant(state, arc, step.key, def) ?? fateVariant(state, def);
   const choices = mv?.choices ?? def.choices;
   const ch = choices[Math.max(0, Math.min(choices.length - 1, choiceIndex))];
   let outcome = ch.outcome ?? Object.keys(def.outcomes)[0];
@@ -936,6 +966,8 @@ export function queueCard(state: LifeState, kind: string, ctx: StoryCtx, data?: 
 }
 
 /** Start dating a world NPC (the destined person or someone new). */
+const st0 = (state: LifeState) => state.story!;
+
 function beginDating(state: LifeState, npc: WorldNpc, rng: SeededRandom): void {
   const w = state.world;
   if (!w) return;
@@ -988,6 +1020,12 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
     switch (eff.kind) {
       case "startDatingFated": {
         let npc = w ? Object.values(w.npcs).find((n) => n.fated) : undefined;
+        // Only the confession itself makes you a couple. From anywhere else, it's where the 썸 starts —
+        // and the confession (4 parts) is next.
+        if (npc && src.arc?.type !== "TALKING" && st0(state).confessFate !== undefined) {
+          applyEffects([{ kind: "beginTalkingFated", confessNow: true }], ctx, src);
+          break;
+        }
         if (w && !npc) {
           npc = generateNpc(w, rng, { type: "regular_customer", region: w.homeRegion, date: state.date, aroundAge: state.age, persistence: "PERSISTENT", sex: likedSex(state, rng) });
           npc.fated = true;
@@ -998,6 +1036,26 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
           if (far) state.flags.skipFirstDate = true;
           beginDating(state, npc, rng);
           if (far) state.relationship.longDistance = true;
+        }
+        break;
+      }
+      case "beginTalkingFated": {
+        // Not straight to "we're together": first the 썸 (texts, the not-a-date, the jealousy), then the
+        // confession — the 4-part sequence. confessNow: the confession is today (it follows right away).
+        const fated = w ? Object.values(w.npcs).find((n) => n.fated) : undefined;
+        if (!fated || state.relationship.partnerId === fated.id) break;
+        const arc = startArc(state, "TALKING", rng) ?? state.story!.arcs.find((a) => a.type === "TALKING");
+        if (!arc) break;
+        const rel = (w!.relationships[fated.id] ??= { npcId: fated.id, stage: "ACQUAINTANCE", closeness: 0.3, spark: 0.45, conversations: 3, origin: { type: "RANDOM_ENCOUNTER", locationId: "cafe", firstEncounterDate: { ...state.date } }, lastContact: { ...state.date }, channel: "IN_PERSON", metOffline: true });
+        rel.spark = Math.max(rel.spark ?? 0, 0.45);
+        if (eff.confessNow) {
+          const i = arc.steps.findIndex((x) => x.key === "CONFESS");
+          if (i >= 0) {
+            arc.step = i;
+            arc.steps[i].dueMonth = state.monthIndex;
+            // A destined moment's popup: the confession follows the same day.
+            if (src.event) state.flags.storyMore = true;
+          }
         }
         break;
       }

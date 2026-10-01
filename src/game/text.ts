@@ -62,7 +62,8 @@ export const SPEAKER_NAME: Record<string, Bi> = {
 };
 
 export function krw(units: number, unitWon: number): string {
-  return "₩" + Math.round(units * unitWon).toLocaleString("ko-KR");
+  const won = Math.round(units * unitWon);
+  return (won < 0 ? "-₩" : "₩") + Math.abs(won).toLocaleString("ko-KR");
 }
 
 /** True if the word's last syllable has a final consonant (받침). Latin names: rough heuristic. */

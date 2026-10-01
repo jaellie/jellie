@@ -82,6 +82,8 @@ export interface StoryState {
   cards: Array<{ kind: string; age: number; vars: Record<string, string> }>;
   /** The destined person's life from setup: where they live, their job (see fatedProfile.ts). */
   fatedLife?: import("./fatedProfile").FatedLife;
+  /** How the first confession is written in the charts (see confessFate.ts). */
+  confessFate?: import("./confessFate").ConfessFate;
   /** The best years for the two of you to meet (both charts), best first — for second chances. */
   loveYears?: Array<{ age: number; score: number; tags: string[] }>;
   /** Hidden 궁합 with the destined person from setup (0..1 score + flavour). */

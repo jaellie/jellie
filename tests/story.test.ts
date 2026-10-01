@@ -311,7 +311,7 @@ describe("The destined person: a crush, not an automatic couple", () => {
         const g = createGame({ ...SETUP, fated: { ...SETUP.fated, gender: "M" as const, mbti: "INFJ", birth: who.b }, seed });
         // A named crush starts in 썸: the texts, the not-a-date, the jealousy — then the confession.
         const { popups } = playUntil(g, (x) => !x.state.story!.arcs.some((a) => a.type === "TALKING"), () => 0, 30);
-        const confess = popups.find((p) => p.line.includes("말해야 할 것 같다") || p.line.includes("탑승 안내"));
+        const confess = popups.find((p) => p.title === "마음을 건네다");
         if (!confess) continue;
         if (confess.line.includes("Ren")) named++;
         if (g.state.relationship.status === "DATING" && g.facts().fatedPartner) yes[key]++;

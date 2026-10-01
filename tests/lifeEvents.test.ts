@@ -11,7 +11,7 @@ import cardData from "../data/story/cards.json";
 
 const EFFECTS = new Set([
   // story effects
-  "startDatingFated", "startDatingNew", "startDatingEx", "startDatingFriend", "sparkFated", "fatedTaken", "engage", "marry", "separate", "breakUp", "arc", "endArc",
+  "startDatingFated", "beginTalkingFated", "startDatingNew", "startDatingEx", "startDatingFriend", "sparkFated", "fatedTaken", "engage", "marry", "separate", "breakUp", "arc", "endArc",
   "parentDies", "adoptPet", "petDies", "petLost", "petFound", "retire", "addKid", "addKids", "adoptKid", "illness", "loseMoneyTo", "siblingMarries", "clearFlag",
   "loseFriend", "newFriend", "addSibling", "queueEvent", "partnerCritical", "partnerDies", "relativeDies", "dropOut",
   // consequences

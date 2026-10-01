@@ -1,5 +1,5 @@
 {
- "_doc": "Little celebrations on their own days: 100일, dating anniversaries (1st always, later ones sometimes), wedding anniversaries (1, 5, 10, 20… always; others sometimes), and — now and then, not every year — your birthday or your partner's coming up. {partner} = partner, {n} = years, {spouse} = 남편/아내.",
+ "_doc": "Little celebrations on their own days: 100일, dating anniversaries (1st always, later ones sometimes), wedding anniversaries (1, 5, 10, 20… always; others sometimes), and — now and then, not every year — your birthday or your partner's coming up. {partner} = partner, {n} = years, {spouse} = 남편/아내. 'apart': the long-distance version (you live in different cities/countries) — a video call, a parcel, a flight.",
  "anniv100": {
   "title": {
    "ko": "100일",
@@ -42,7 +42,45 @@
      "en": "'It's fine. Being here together is the gift.' …Next time, definitely prepare something."
     }
    }
-  ]
+  ],
+  "apart": {
+   "line": {
+    "ko": "(오늘이 우리 100일. 화면 너머 {partner}이(가) 작은 케이크에 초를 꽂고 있다.) 100일 축하해. …옆에 있었으면 좋았을 텐데.",
+    "en": "(Day 100. On the screen, {partner} is sticking a candle into a tiny cake.) Happy 100 days. …I wish you were here."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(미리 보낸 택배가 지금 도착하길 기도한다)",
+      "en": "(Pray the parcel you sent arrives right now)"
+     },
+     "r": {
+      "ko": "초인종이 울렸다. 화면 너머로 {partner}의 비명이 들렸다. 타이밍 완벽.",
+      "en": "The doorbell rang. A scream through the screen. Perfect timing."
+     }
+    },
+    {
+     "t": {
+      "ko": "화면 너머로 같이 초를 끄자",
+      "en": "Let's blow out the candles together, over the screen"
+     },
+     "r": {
+      "ko": "하나, 둘, 셋. 각자의 방에서 동시에 초를 껐다. 이상하게 하나도 안 멀게 느껴졌다.",
+      "en": "One, two, three — two candles, two rooms, one breath. It didn't feel far at all."
+     }
+    },
+    {
+     "t": {
+      "ko": "(몰래 비행기표를 끊는다) 문 열어 봐",
+      "en": "(Secretly booked a flight) Open your door"
+     },
+     "r": {
+      "ko": "문을 연 {partner}이(가) 한참 말을 못 했다. 그리고 그대로 안겼다.",
+      "en": "{partner} opened the door and couldn't speak. Then just fell into your arms."
+     }
+    }
+   ]
+  }
  },
  "datingAnniv": {
   "title": {
@@ -86,7 +124,45 @@
      "en": "You blew out the candle making the same wish. Neither of you said it out loud."
     }
    }
-  ]
+  ],
+  "apart": {
+   "line": {
+    "ko": "(사귄 지 {n}년. 오늘도 우리는 다른 하늘 아래 있다.) {n}주년인데… 이번엔 어떻게 보낼까?",
+    "en": "({n} years together — and still under different skies.) It's our {n}-year anniversary… how should we spend it this time?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "영상통화 켜 놓고 같은 메뉴 시켜 먹자",
+      "en": "Video call and order the same dinner"
+     },
+     "r": {
+      "ko": "같은 음식, 다른 식탁. 건배는 화면에 대고 했다. 잔이 부딪히는 소리가 들리는 것 같았다.",
+      "en": "Same food, different tables. You toasted the screen — you could almost hear the glasses clink."
+     }
+    },
+    {
+     "t": {
+      "ko": "이번엔 내가 갈게. 표 끊었어",
+      "en": "This time I'm coming. I booked the ticket"
+     },
+     "r": {
+      "ko": "공항 게이트에서 {partner}이(가) 손을 흔들고 있었다. {n}년 동안 이 장면이 제일 좋다.",
+      "en": "{partner} was waving at the arrival gate. In {n} years, this is still your favorite scene."
+     }
+    },
+    {
+     "t": {
+      "ko": "우리 언제쯤 같은 도시에 살까?",
+      "en": "When are we going to live in the same city?"
+     },
+     "r": {
+      "ko": "{partner}이(가) 잠깐 말이 없다가 말했다. '…내년엔. 진짜로.' 둘 다 그 말을 믿고 싶었다.",
+      "en": "{partner} went quiet, then said, '…Next year. For real.' You both wanted to believe it."
+     }
+    }
+   ]
+  }
  },
  "weddingAnniv": {
   "title": {
@@ -130,7 +206,45 @@
      "en": "{partner} squeezed your hand. That was answer enough."
     }
    }
-  ]
+  ],
+  "apart": {
+   "line": {
+    "ko": "(결혼 {n}주년. 일 때문에 떨어져 지내는 중이다. 휴대폰에 {partner}의 메시지.) 여보, {n}주년 축하해. 오늘따라 더 보고 싶다.",
+    "en": "({n} years married, and apart for work right now. A message from {partner}:) Happy {n} years, love. I miss you more than usual today."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "웨딩 사진을 보내며 '그날 너 진짜 예뻤어'",
+      "en": "Send a wedding photo: 'You looked amazing that day'"
+     },
+     "r": {
+      "ko": "'지금도 예쁘거든?' 바로 답장이 왔다. 웃음이 났다.",
+      "en": "'Still do, thanks.' The reply came instantly. You laughed."
+     }
+    },
+    {
+     "t": {
+      "ko": "(퇴근하자마자 기차를 탄다)",
+      "en": "(Catch a train right after work)"
+     },
+     "r": {
+      "ko": "자정이 되기 5분 전, 현관문을 열었다. 아슬아슬하게 {n}주년 안에 도착했다.",
+      "en": "You opened the door five minutes before midnight — made it inside your anniversary, just barely."
+     }
+    },
+    {
+     "t": {
+      "ko": "영상통화로 결혼식 날처럼 춤추자",
+      "en": "Dance on a video call, like the wedding day"
+     },
+     "r": {
+      "ko": "화면 두 개, 같은 노래. 서툰 스텝도 그대로였다.",
+      "en": "Two screens, one song. The clumsy steps were exactly the same."
+     }
+    }
+   ]
+  }
  },
  "myBirthday": {
   "title": {
@@ -210,7 +324,45 @@
      "en": "Mom's seaweed soup is still the best in the world."
     }
    }
-  ]
+  ],
+  "apart": {
+   "line": {
+    "ko": "(곧 내 생일이다. 화면 너머 {partner}이(가) 물었다.) 생일에 뭐 갖고 싶어? 멀리 있어도 다 해 줄게.",
+    "en": "(Your birthday's coming. On a video call, {partner} asks:) What do you want for your birthday? Far or not, anything."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "너. 그날 와 줘",
+      "en": "You. Come that day."
+     },
+     "r": {
+      "ko": "생일 아침, 초인종이 울렸다. 케이크를 든 {partner}이(가) 서 있었다.",
+      "en": "Birthday morning, the doorbell. {partner}, holding a cake."
+     }
+    },
+    {
+     "t": {
+      "ko": "자정에 제일 먼저 축하해 줘",
+      "en": "Be the first to say it at midnight"
+     },
+     "r": {
+      "ko": "12시 00분, 제일 먼저 {partner}의 전화가 왔다. 시차 때문에 거긴 대낮이었다.",
+      "en": "12:00 sharp, {partner} called first. With the time difference it was broad daylight there."
+     }
+    },
+    {
+     "t": {
+      "ko": "손편지 보내 줘. 그거면 돼",
+      "en": "Send me a handwritten letter. That's all."
+     },
+     "r": {
+      "ko": "일주일 늦게 도착한 편지. 그래서 생일이 일주일 더 길었다.",
+      "en": "The letter came a week late — so your birthday lasted a week longer."
+     }
+    }
+   ]
+  }
  },
  "partnerBirthday": {
   "title": {
@@ -254,6 +406,44 @@
      "en": "The cake leaned a little. {partner} read the letter three times."
     }
    }
-  ]
+  ],
+  "apart": {
+   "line": {
+    "ko": "(다음 주가 {partner}의 생일이다. 우리는 멀리 떨어져 있다. 뭘 할 수 있을까?)",
+    "en": "(Next week is {partner}'s birthday, and you're far apart. What can you do?)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(몰래 비행기를 타고 간다)",
+      "en": "(Secretly fly over)"
+     },
+     "r": {
+      "ko": "문을 연 {partner}이(가) 소리를 질렀다. 그리고 울었다. 최고의 생일이었대.",
+      "en": "{partner} opened the door, screamed — then cried. Best birthday ever, they said."
+     }
+    },
+    {
+     "t": {
+      "ko": "그 동네 케이크 가게에 배달을 예약한다",
+      "en": "Order a cake from a bakery in their town"
+     },
+     "r": {
+      "ko": "'이걸 어떻게 했어?!' 화면 너머 {partner}이(가) 케이크를 들고 펄쩍 뛰었다.",
+      "en": "'How did you do this?!' {partner} jumped around holding the cake on screen."
+     }
+    },
+    {
+     "t": {
+      "ko": "영상통화로 생일 노래를 불러 준다",
+      "en": "Sing happy birthday on a video call"
+     },
+     "r": {
+      "ko": "음정은 다 틀렸다. {partner}은(는) 그 영상을 일 년 내내 돌려 봤다.",
+      "en": "Every note was off. {partner} rewatched it all year."
+     }
+    }
+   ]
+  }
  }
 }
