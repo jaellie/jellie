@@ -20,7 +20,7 @@ const EFFECTS = new Set([
   "familyReact",
 ]);
 const DYNAMIC_SPEAKERS = new Set(["me", "mom", "dad", "partner", "friend", "crush", "sibling", "kid", "ex", "fated", "boss", "coworker", "stranger", "doctor", "nurse", "relative", "inlaw", "judge", "recruiter", "app", "professor", "mentor", "barista", "instructor", "work"]);
-const FACTS = new Set([
+const FACTS = new Set(["korean", "inKorea", 
   "age", "employed", "selfEmployed", "student", "jobless", "retired", "careerCid", "recentlyPromoted", "recentlyLostJob", "partnered", "dating", "married", "single", "divorced",
   "recentlyBrokeUp", "hasEx", "momAlive", "dadAlive", "hasSibling", "fatedKnown", "fatedSingle", "fatedPartner", "fatedAvailable", "partnerCritical", "hasFriend", "abroad",
   "traveling", "weekend", "broke", "comfortable", "hasHabit", "alive", "male", "female", "partnerYears", "hasKid", "kidAge", "hasSister", "hasBrother", "parentsTogether",
@@ -41,7 +41,7 @@ const SIGNALS = [
   new RegExp(`^SR:angular:${P}$`),
   /^P:(SUN|MOON)_INGRESS$/,
 ];
-const PLACEHOLDERS = new Set(["partner", "friend", "crush", "buddy", "fated", "fatedName", "fatedJob", "fatedJob_en", "fatedCity", "fatedCity_en", "fatedTime", "tzdiff", "pet", "relative", "kid", "sibling", "sister", "brother", "ex", "who", "subject", "me", "patient", "city"]);
+const PLACEHOLDERS = new Set(["homeland", "homeFood", "homeMarket", "homeLang", "partner", "friend", "crush", "buddy", "fated", "fatedName", "fatedJob", "fatedJob_en", "fatedCity", "fatedCity_en", "fatedTime", "tzdiff", "pet", "relative", "kid", "sibling", "sister", "brother", "ex", "who", "subject", "me", "patient", "city"]);
 const ROLES = new Set(["me", "partner", "friend", "relative", "guest", "coworker", "baby", "kid", "pet", "patient", "inlaw", "stranger", "npc"]);
 const reqFact = (r: string) => {
   const m = /^!?([a-zA-Z_]+)/.exec(r)!;

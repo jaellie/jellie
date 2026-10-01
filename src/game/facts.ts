@@ -102,6 +102,10 @@ export interface LifeFacts {
   crushName?: string;
   crushId?: string;
   abroad: boolean;
+  /** Korean nationality (입영, 수능, 제사…). */
+  korean: boolean;
+  /** Living in Korea right now (the 수능 is a Korean-school thing). */
+  inKorea: boolean;
   traveling: boolean;
   weekend: boolean;
   broke: boolean;
@@ -234,6 +238,8 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
     crushName: crush ? w!.npcs[crush.npcId]?.name : undefined,
     crushId: crush?.npcId,
     abroad: isAbroad(s),
+    korean: String(s.flags.nationality ?? "KR") === "KR",
+    inKorea: s.location.country === "Korea" || s.location.country === "KR",
     traveling: !!w?.travel,
     weekend: !!opts.weekend,
     broke: s.money < 2,

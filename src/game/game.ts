@@ -49,6 +49,7 @@ import { pickMood } from "../story/mood";
 import { type RoadView, buildRoad } from "../world/road";
 import { readingOf } from "../story/reading";
 import { confessFate } from "../story/confessFate";
+import { homeVars, nationCode } from "../story/nationality";
 import { type FatedFrom, type FatedLife, fatedVars, findFatedJob, resolveFatedLife } from "../story/fatedProfile";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
 import type { RelationshipOriginType } from "../world/types";
@@ -92,6 +93,8 @@ export interface GameSetup {
    * destined person's "same neighborhood". Not used for the charts (those use `birthplace`). Default: the birthplace city.
    */
   home?: string;
+  /** Nationality (country code, e.g. "KR", "US" — see nationalityOptions()). Where home and family are. Default: the birthplace's country. */
+  nationality?: string;
   /** @deprecated coordinates only — use `birthplace`. */
   place?: BirthPlace;
   lang?: Lang;
@@ -111,6 +114,8 @@ export interface GameSetup {
     birth?: { year: number; month: number; day: number; hour?: number; minute?: number };
     /** Where they were born (city name or coordinates). Default: the player's birthplace. */
     birthplace?: BirthplaceInput;
+    /** Their nationality (country code). Default: where they were born, else where they live. Decides their name too. */
+    nationality?: string;
     /** Where they live: the same neighborhood, another city, another country (see fatedOptions()). */
     from?: FatedFrom;
     /** Their city when they live elsewhere ("부산", "Tokyo"). Default: their birthplace abroad, or a pick. */
@@ -391,7 +396,7 @@ export class Game {
   }
   private fill(text: string): string {
     const f = this.facts();
-    const t = fillNames(text, { ...langVars(fatedVars(this.state), this.s.lang ?? "ko"), partner: f.partnerName, friend: f.friendName, crush: f.crushName, fated: f.fatedName, sibling: this.siblingSender(), me: this.s.setup.name, spouse: this.spouseWord() });
+    const t = fillNames(text, { ...langVars({ ...homeVars(this.state), ...fatedVars(this.state) }, this.s.lang ?? "ko"), partner: f.partnerName, friend: f.friendName, crush: f.crushName, fated: f.fatedName, sibling: this.siblingSender(), me: this.s.setup.name, spouse: this.spouseWord() });
     return this.s.lang === "ko" ? fixJosa(t) : t;
   }
   /** 남편 / 아내 when married, else 애인 (mood lines: "(남편이 요즘 휴대폰을 엎어 둔다.)"). */
@@ -878,6 +883,11 @@ export class Game {
         const arc = kind === "arc" ? st.story?.arcs.find((a) => a.id === ref) : undefined;
         const family = arc?.type === "FAMILY_PASSING" || (!!patientKey && !["self", "me", "partner", "kid", "friend"].includes(patientKey));
         const toPartner = arc?.type === "PARTNER_PASSING" || patientKey === "partner";
+        // Two families, two languages: the 상견례 with a translation app on the table.
+        const theirNat = fatedNpc?.profile?.nationality as string | undefined;
+        if (arc?.steps[arc.step]?.key === "MEET_PARENTS" && theirNat && theirNat !== String(st.flags.nationality ?? "KR")) {
+          return bi("(두 나라 말이 오가는 상견례. 테이블 위 번역 앱이 쉬지 않았다.)", "(Two families, two languages. The translation app on the table never got a break.)");
+        }
         return this.travelBridge({ location: def.location, who: def.who, partner: def.needsPartner && !toPartner, fated: def.needsFated, family, toPartner });
       })(), vars),
       ch: def.choices.map((c) => ({ t: this.fill(fillStory(this.L(c), st, f, vars)) })),
@@ -1689,10 +1699,16 @@ export function createGame(input: GameSetup): Game {
   st.flags.likes = setup.likes ?? (setup.gender === "F" ? "M" : "F");
   st.flags.mbti = (setup.mbti ?? "").toUpperCase();
   // Most Korean men have served by 25; the rest may get the letter.
-  if (setup.gender === "M") st.flags.militaryDone = new SeededRandom(hash(seed, "military")).chance(0.85);
+  // (Only Korean men get the 입영 통지서.)
+  if (setup.gender === "M") st.flags.militaryDone = nationCode(setup.nationality) && nationCode(setup.nationality) !== "KR" ? true : new SeededRandom(hash(seed, "military")).chance(0.85);
   applyFamilySetup(st, setup, new SeededRandom(hash(seed, "family")));
   applyMyJob(st, setup.job);
   // Where you live now; without it, where you were born (never a random city).
+  // Nationality: where home is (family, "flying home", what you miss abroad).
+  const nat = nationCode(setup.nationality) ?? findPlace(birthplaceCity(setup))?.country ?? "KR";
+  st.flags.nationality = nat;
+  st.homeCountry = ISO_COUNTRY[nat] ?? nat;
+  st.location = { country: st.homeCountry, city: st.location.city };
   applyHome(st, setup.home ?? birthplaceCity(setup));
   const fatedLife = resolveFatedLife({ from: setup.fated?.from, job: setup.fated?.job, city: setup.fated?.city, birthplace: setup.fated?.birthplace }, { city: st.location.city }, new SeededRandom(hash(seed, "fatedLife")));
   addFatedPerson(st, setup, fatedLife, new SeededRandom(hash(seed, "fated")));
@@ -1811,7 +1827,7 @@ function applyHome(st: LifeState, home: string | undefined): void {
   const place = home ? findPlace(home) : undefined;
   if (!place) return;
   st.location = { country: ISO_COUNTRY[place.country] ?? place.country, city: place.en };
-  if (place.country !== "KR") st.flags.livedAbroad = true;
+  if (place.country !== String(st.flags.nationality ?? "KR")) st.flags.livedAbroad = true;
   if (st.world) st.world.country = st.location.country;
 }
 
@@ -1886,7 +1902,10 @@ function addFatedPerson(st: LifeState, setup: GameSetup, life: FatedLife, rng: S
         ? { weekday: [block("language_exchange_app", 21, [1, 3, 5])], weekend: [] }
         : { weekday: [], weekend: [] };
   // Someone from where they live (a Tokyo developer gets a Japanese name unless setup named them).
-  const npc = generateNpc(w, rng, { type: from === "abroad" ? "language_partner" : "regular_customer", region: from === "abroad" ? "online" : home.region, date: st.date, aroundAge: st.age, persistence: "PERSISTENT", schedule, sex: gender === "M" ? "MALE" : "FEMALE", country: from === "abroad" ? life.city.country : "Korea" });
+  // Their nationality: setup, else where they were born, else where they live (abroad), else yours.
+  const bornIn = typeof fx.birthplace === "string" ? findPlace(fx.birthplace)?.country : undefined;
+  const theirNat = nationCode(fx.nationality) ?? bornIn ?? (from === "abroad" ? life.city.country : String(st.flags.nationality ?? "KR"));
+  const npc = generateNpc(w, rng, { type: from === "abroad" ? "language_partner" : "regular_customer", region: from === "abroad" ? "online" : home.region, date: st.date, aroundAge: st.age, persistence: "PERSISTENT", schedule, sex: gender === "M" ? "MALE" : "FEMALE", country: ISO_COUNTRY[theirNat] ?? theirNat });
   if (fx.name) {
     npc.name = fx.name;
     // Nobody else in this world may share the destined person's name.
@@ -1897,7 +1916,7 @@ function addFatedPerson(st: LifeState, setup: GameSetup, life: FatedLife, rng: S
   npc.single = true;
   npc.fated = true;
   npc.foreign = from === "abroad";
-  npc.profile = { mbti: fx.mbti, job: life.job.id, jobName: life.job.ko, from, city: life.city.ko, ...fx.profile };
+  npc.profile = { mbti: fx.mbti, job: life.job.id, jobName: life.job.ko, from, city: life.city.ko, nationality: theirNat, ...fx.profile };
   // Someone you already know and like (a crush) — or already your partner. Never automatically a couple.
   const status = fx.status === "crush" ? "talking" : fx.status ?? (fx.name ? "talking" : "stranger");
   // "Just know each other": names known, no spark yet — the destined year is when it changes.

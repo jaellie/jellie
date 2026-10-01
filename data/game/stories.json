@@ -1374,18 +1374,18 @@
    "weight": 1,
    "cooldownDays": 5,
    "line": {
-    "ko": "(한국 음식이 너무 먹고 싶다.)",
-    "en": "(You're really craving Korean food.)"
+    "ko": "({homeFood}이(가) 너무 먹고 싶다.)",
+    "en": "(You're really craving {homeFood}.)"
    },
    "choices": [
     {
      "t": {
-      "ko": "한인마트에 간다",
-      "en": "Go to the Korean market"
+      "ko": "{homeMarket}에 간다",
+      "en": "Go to {homeMarket}"
      },
      "r": {
-      "ko": "(라면 한 박스를 샀다.)",
-      "en": "(Bought a box of ramyeon.)"
+      "ko": "(고향 과자랑 라면을 한가득 샀다.)",
+      "en": "(Bought a bag full of snacks from home.)"
      },
      "effects": [
       {

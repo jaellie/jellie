@@ -93,7 +93,8 @@
    "requires": [
     "hasKid",
     "kidAge>=18",
-    "kidAge<=19"
+    "kidAge<=19",
+    "inKorea"
    ],
    "trigger": {
     "signals": {
@@ -197,7 +198,8 @@
    "rarity": "common",
    "tone": "light",
    "requires": [
-    "hasKid"
+    "hasKid",
+    "inKorea"
    ],
    "chainOnly": true,
    "location": "home",

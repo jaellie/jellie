@@ -363,3 +363,30 @@ describe("Distance is always explained", () => {
     for (const l of lines) expect((l.match(/비행기를 탔다/g) ?? []).length).toBeLessThanOrEqual(1);
   }, 120000);
 });
+
+describe("Nationality", () => {
+  const base = { name: "Jae", gender: "M" as const, likes: "F" as const, birth: { year: 1996, month: 9, day: 28 }, mbti: "ENFP", seed: 3 };
+  it("decides home: an American in Seoul is abroad; a Korean in New York misses 한인마트, a Japanese one a Japanese grocery", async () => {
+    const { homeVars } = await import("../src/story/nationality");
+    const us = createGame({ ...base, nationality: "US", birthplace: "Seoul", home: "Seoul" } as never);
+    expect(us.facts().abroad).toBe(true);
+    expect(us.state.flags.militaryDone).toBe(true); // no 입영 통지서 for a non-Korean
+    const kr = createGame({ ...base, home: "New York" } as never);
+    expect(kr.facts().abroad).toBe(true);
+    expect(homeVars(kr.state).homeMarket).toBe("한인마트");
+    const jp = createGame({ ...base, nationality: "JP", birthplace: "Osaka", home: "New York" } as never);
+    expect(homeVars(jp.state).homeMarket).toBe("일본 식료품점");
+    expect(homeVars(jp.state).homeland_en).toBe("Japan");
+  });
+  it("the destined person's nationality names them (a Japanese partner gets a Japanese name)", () => {
+    const g = createGame({ ...base, lang: "en", fated: { gender: "F", nationality: "JP", status: "dating", since: { year: 2025, month: 1, day: 1 } } } as never);
+    const npc = Object.values(g.state.world!.npcs).find((n) => n.fated)!;
+    expect(npc.profile?.nationality).toBe("JP");
+  });
+  it("lists nationalities, Korea first", async () => {
+    const { nationalityOptions } = await import("../src/story/nationality");
+    const o = nationalityOptions("ko");
+    expect(o[0]).toEqual({ id: "KR", name: "한국" });
+    expect(o.some((x) => x.id === "JP" && x.name === "일본")).toBe(true);
+  });
+});

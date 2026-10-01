@@ -199,7 +199,7 @@
    ],
    "weight": 2,
    "text": {
-    "ko": "거기 날씨는 어떠니? 한국은 벌써 덥다.",
+    "ko": "거기 날씨는 어떠니? {homeland}은(는) 벌써 덥다.",
     "en": "How's the weather there? It's already hot here."
    }
   },

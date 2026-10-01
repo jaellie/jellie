@@ -143,6 +143,8 @@ At birth, 사주 + 점성술 pick **5–7 fated turning points** (love, marriage
 
 **Language first.** The very first screen is a language picker (한국어 / English). Then open the form with `LoveSim.setupDefaults(lang)` → `{ name: "제이" | "Jae", birth: { year: 1997, month: 9, day: 28 }, mbti, birthplace, gender, likes, fated: { status: "stranger", from: "same" } }` and pass `lang` to `createGame`.
 
+**Nationality** (yours and theirs): `LoveSim.nationalityOptions(lang)` → `[{ id: "KR", name: "한국" }, …]` (Korea first). Send `nationality: "KR"` and `fated.nationality`. Default: the birthplace's country. It decides where home and family are (living abroad, flying home), what you miss abroad (한인마트 / a Japanese grocery), the 입영 통지서 (Korean men only), and the partner's name.
+
 **City fields** (birthplace, home, their city, their birthplace): autocomplete with `LoveSim.searchPlaces(text, lang)` → `[{ id, name, country, countryName }]`; a city counts only once the player taps a suggestion (typed text alone, e.g. "여수수", never confirms). Send the id.
 
 **The destined person** — `LoveSim.fatedOptions(lang)` gives the choices:

@@ -61,8 +61,8 @@
    "outcomes": {
     "GO": {
      "r": {
-      "ko": "공항 출국장에서 가족들이 손을 흔들었다. 비행기 창밖으로 한국이 작아졌다.",
-      "en": "At departures, the family waved. From the plane window, Korea grew small."
+      "ko": "공항 출국장에서 가족들이 손을 흔들었다. 비행기 창밖으로 {homeland}이(가) 작아졌다.",
+      "en": "At departures, the family waved. From the plane window, {homeland} grew small."
      },
      "effects": [
       {
@@ -101,7 +101,8 @@
    "requires": [
     "male",
     "!f_militaryDone",
-    "age<=28"
+    "age<=28",
+    "korean"
    ],
    "trigger": {
     "signals": {

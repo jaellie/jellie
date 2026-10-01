@@ -351,7 +351,7 @@
     "en": "Chance to Move Back Home"
    },
    "line": {
-    "ko": "(한국으로 돌아갈 기회가 생겼다.)",
+    "ko": "({homeland}(으)로 돌아갈 기회가 생겼다.)",
     "en": "(A chance to move back home.)"
    },
    "choices": {

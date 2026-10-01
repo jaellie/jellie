@@ -1466,14 +1466,14 @@
      "location": "home",
      "who": "me",
      "line": {
-      "ko": "(역마가 또 들썩인다. 여기서 산 지도 꽤 됐다. 문득 한국 생각이 난다.)",
-      "en": "(The travelling star stirs again. You've lived here a while now. Korea crosses your mind.)"
+      "ko": "(역마가 또 들썩인다. 여기서 산 지도 꽤 됐다. 문득 {homeland} 생각이 난다.)",
+      "en": "(The travelling star stirs again. You've lived here a while now. {homeland} crosses your mind.)"
      },
      "choices": [
       {
        "t": {
-        "ko": "한국으로 돌아간다",
-        "en": "Move back to Korea"
+        "ko": "{homeland}(으)로 돌아간다",
+        "en": "Move back to {homeland}"
        },
        "weights": {
         "ABROAD": 0.75,
