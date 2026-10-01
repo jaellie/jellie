@@ -59,7 +59,8 @@
   #scene { display: none; }
   /* language picker (first screen) */
   #lang { background: #ffe3ea; text-align: center; }
-  #lang h1 { margin-top: 180px; font-size: 26px; text-shadow: 2px 2px 0 #ff9fb4; }
+  .logo { display: block; width: 320px; margin: 150px auto 10px; image-rendering: pixelated; }
+  .logo.small { width: 240px; margin: 0 auto 6px; }
   #lang .btn { display: block; width: 220px; margin: 18px auto 0; font-size: 18px; }
   /* The life road (play screen): 2D, seen from behind — see src/world/road.ts. */
   #road { position: absolute; top: 98px; left: 0; width: 360px; height: 642px; overflow: hidden; z-index: 1; isolation: isolate; background: var(--sky, #9fd6ff); }
@@ -136,12 +137,12 @@
 <body>
 <div id="frame">
   <div id="lang" class="screen on" data-testid="lang">
-    <h1>두근두근,<br>내 운명의 사람</h1>
+    <img id="langLogo" class="logo" data-testid="logo" alt="두근두근, 내 운명의 사람" src="../assets/logo/logo-ko.png">
     <button class="btn pink" id="langKo" data-testid="lang-ko">한국어</button>
     <button class="btn" id="langEn" data-testid="lang-en">English</button>
   </div>
   <div id="setup" class="screen" data-testid="setup">
-    <h1>두근두근,<br>내 운명의 사람</h1>
+    <img id="setupLogo" class="logo small" data-testid="setup-logo" alt="" src="../assets/logo/logo-ko.png">
     <label>이름</label><input id="fName" value="제이">
     <label>생년월일 (양력)</label>
     <div class="row"><input id="fY" value="1997"><input id="fM" value="9"><input id="fD" value="28"></div>
@@ -478,8 +479,14 @@
     $("fFJob").innerHTML = `<option value="">${lang === "ko" ? "운명에 맡기기" : "Leave it to fate"}</option>` + o.jobs.map((x) => `<option value="${x.id}">${x.name}</option>`).join("");
     show("setup");
   }
-  $("langKo").onclick = () => openSetup("ko");
-  $("langEn").onclick = () => openSetup("en");
+  // The logo follows the language: the phone's language at first, then whichever button you point at.
+  const logoSrc = (lang) => `../assets/logo/logo-${lang}.png`;
+  const phoneLang = (navigator.language || "ko").toLowerCase().startsWith("ko") ? "ko" : "en";
+  $("langLogo").src = logoSrc(phoneLang); $("langLogo").alt = phoneLang === "ko" ? "두근두근, 내 운명의 사람" : "Doki Doki Destiny Lover";
+  for (const [id, lang] of [["langKo", "ko"], ["langEn", "en"]]) {
+    $(id).onmouseenter = () => { $("langLogo").src = logoSrc(lang); };
+    $(id).onclick = () => { $("setupLogo").src = logoSrc(lang); $("setupLogo").alt = lang === "ko" ? "두근두근, 내 운명의 사람" : "Doki Doki Destiny Lover"; openSetup(lang); };
+  }
 
   // Birthplace picker: the engine's city list; unknown text is flagged (it would be read as Seoul).
   $("places").innerHTML = LoveSim.birthplaceOptions("ko").map((p) => `<option value="${p.name}">`).join("");

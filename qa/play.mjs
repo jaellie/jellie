@@ -13,7 +13,7 @@ fs.mkdirSync(outDir, { recursive: true });
 const server = http.createServer((req, res) => {
   const p = path.join(root, decodeURIComponent(req.url.split("?")[0]));
   if (!p.startsWith(root) || !fs.existsSync(p) || fs.statSync(p).isDirectory()) return res.writeHead(404).end();
-  res.writeHead(200, { "content-type": p.endsWith(".html") ? "text/html; charset=utf-8" : "application/javascript" });
+  res.writeHead(200, { "content-type": p.endsWith(".html") ? "text/html; charset=utf-8" : p.endsWith(".png") ? "image/png" : "application/javascript" });
   fs.createReadStream(p).pipe(res);
 }).listen(0);
 const port = server.address().port;
@@ -34,9 +34,14 @@ const snap = async (name) => {
 const issues = [];
 const issue = (msg) => { if (!issues.includes(msg)) issues.push(msg); };
 
-// Language first; the form then opens with that language's defaults.
+// Language first (with the logo); the form then opens with that language's defaults and logo.
+if (!(await page.getByTestId("logo").evaluate((img) => img.complete && img.naturalWidth > 0))) issue("the logo doesn't load on the first screen");
 await snap("language");
+await page.getByTestId("lang-en").hover();
+if (!(await page.getByTestId("logo").getAttribute("src")).endsWith("logo-en.png")) issue("the logo doesn't switch to English");
 await page.getByTestId("lang-en").click();
+await page.waitForTimeout(200);
+if (!(await page.getByTestId("setup-logo").getAttribute("src")).endsWith("logo-en.png")) issue("the English form doesn't show the English logo");
 if ((await page.locator("#fName").inputValue()) !== "Jae") issue("English default name is not Jae");
 const EN = args.lang === "en";
 if (!EN) {
@@ -44,7 +49,7 @@ if (!EN) {
   if ((await page.locator("#fName").inputValue()) !== "제이") issue("default name is not 제이");
 }
 await snap("setup");
-if ((await page.getByTestId("fated-status").locator("option").count()) !== 3) issue("'are you two dating?' should offer 3 answers");
+if ((await page.getByTestId("fated-status").locator("option").count()) !== 4) issue("'are you two dating?' should offer 4 answers");
 if ((await page.getByTestId("fated-job").locator("option").count()) < 20) issue("too few jobs for the destined person");
 if (args.status) await page.getByTestId("fated-status").selectOption(args.status);
 if (args.from) await page.getByTestId("fated-from").selectOption(args.from);
