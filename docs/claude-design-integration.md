@@ -57,7 +57,7 @@ The play screen is **one long road seen from behind, 2D pixel art** — not a ro
 
 Popups (big and small) appear over the road exactly as before: title banner, **photo** (`popup.scene`, drawn as below), line and choices. A destined turning point's popup also has **`popup.reading`** — the 사주/점성술 signals behind it in words ("사주: 도화 · 천간합  /  점성술: 목성 5하우스  /  상대: 역마"); show it small under the title.
 
-**Seaside towns** (Busan, Jeju…): `road().backdrop.sea === "right"` — the sea is on the right. Big buildings stand on the left; only small houses line the right, with the sea behind them. `road().landmark` has `size` ("big" | "small") and `side` ("left" | "right"); `backdrop.sides` says what lines each side.
+**Seaside towns** (Busan, Jeju…): `road().backdrop.sea === "right"` — the sea is on the right. Big buildings stand on the left; only small houses line the right, with the sea behind them. `road().landmark` has `size` ("big" | "small") and `side` ("left" | "right"); `backdrop.sides` says what lines each side. `backdrop.trees` = { look: blossom | green | autumn | bare, leaf, snow, ground } — paint every tree (also ones already on screen) from it.
 
 ## Scene (the photos)
 
@@ -104,9 +104,17 @@ Play runs from the day you meet the destined person (or from now, if you're alre
 - **End.** `endDay()` returns `over: true` the day the bond ends. `game.ending()` → `{ reason, title, story, together: { from, to, years, married }, summary, lines, age, memorial }`. `reason`: `missed` (never came together), `breakup`, `divorce`, `theyDied`, `iDied`. Only `iDied` is a death; the others end alive (the memorial's epitaph then reads "제이 ♥ 정 · 2033 – 2041" and its lines fit the ending).
 - Nothing that could end the relationship (a breakup, a divorce, an affair) is decided off-screen; side romances with other NPCs don't happen.
 
+## Left entirely to fate
+
+`fated: { sealed: true }` (or nothing at all about them): the player's chart decides who the destined person is. A chart that marries → "the one you marry and grow old with" (fate leans hard toward the two of you). A solitary chart (혼자 살 사주: weak spouse star, 비겁, day-branch clash, 화개, Saturn in the 7th…, about 1 in 5) → "the last love of your life": it comes late, and the wedding usually slips away. The prologue and the ending are told as the chart's story; `ending().fate = { mode, signs }`.
+
+## Set dressing (scene.decor)
+
+Every scene comes with dense, place-specific props: `scene.decor = [{ prop, on: "floor" | "wallL" | "wallR", x, y, size }]` (59 layouts, 336 prop ids such as `plane_seat`, `overhead_bin`, `chrysanthemums`, `espresso_machine`) and `scene.palette = { floor, wall, accent }`. Floor props stand at (x, y) bottom-center, size × one tile wide; draw them with the actors sorted by y. Wall props are centered on the back walls.
+
 ## Big moments in four parts
 
-The confession (썸), the first kiss and the proposal arrive as four popups in a row, the same day, titled "고백 (1/4)" … "(4/4)": their move (their temperament: NF/NT/SJ/SP), your inner moment (your temperament; the options follow your own E/I, F/T, J/P), the moment right before (both planners / both free spirits / one of each), then the climax. Choices that fit the partner's MBTI get warmer reactions and add spark, which tints and bends the climax. Nothing special for the UI: after a result, the next `advance()` opens the next part.
+The confession (썸), the first kiss and the proposal arrive as four popups in a row, the same day, each part with its own poetic title (설렘의 시작 → 두근거리는 밤 → 한 걸음 앞 → 마음을 건네다; 사랑의 서약 for the proposal): their move (their temperament: NF/NT/SJ/SP), your inner moment (your temperament; the options follow your own E/I, F/T, J/P), the moment right before (both planners / both free spirits / one of each), then the climax. Choices that fit the partner's MBTI get warmer reactions and add spark, which tints and bends the climax. Nothing special for the UI: after a result, the next `advance()` opens the next part.
 
 ## Memorial (death)
 

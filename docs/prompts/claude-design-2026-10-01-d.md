@@ -1,0 +1,66 @@
+# Claude Design에 붙여넣을 프롬프트 (2026-10-01 · 4차)
+
+새 lovesim-engine.js를 첨부하세요. (이전 프롬프트 c를 아직 안 넣었다면 c 먼저, 그다음 이것)
+
+```
+엔진 파일을 첨부한 새 lovesim-engine.js로 통째로 교체해줘. (지난 프롬프트 내용은 그대로 유지하고, 아래만 추가/수정)
+
+━━ 1. 첫 화면 ━━
+- 버튼은 [START] 하나로 합쳐줘 (저장된 게임이 있으면 그 아래 [이어하기]만 추가).
+- START 누르면 가운데 팝업(위에서 툭 떨어지듯 등장)으로 [한국어] [English] → 고르면 그 언어로 설정 화면.
+- 첫 화면에 있는 회색 글씨 "새 게임 / Start" 같은 안내 문구는 삭제.
+- 로고 애니메이션:
+  1) 처음엔 위에서 천천히 "두-두-둥" 떨어지기 (약 1.8초, 떨어져서 살짝 튕기고 자리 잡기)
+  2) 그 뒤로 계속 심장 박동처럼 커졌다 작아졌다 반복 (두근-두근, 1.4초 주기: 1.08배 → 0.98배 → 1.05배 → 1배)
+  3) 박동 두 번마다 로고가 한국어 ⇄ 영어로 바뀌기 (logo-ko.png ⇄ logo-en.png, 약 2.8초마다). 언어 팝업이 열려 있을 땐 멈춤.
+
+━━ 2. 설정 화면 ━━
+- 상대 직업 목록 = 내 직업 목록과 완전히 똑같이 (같은 45개, 같은 순서). fatedOptions(lang).jobs 를 쓰면 이제 똑같이 나와. 맨 위에 "운명에 맡기기"만 하나 더.
+- 운명의 상대 칸 맨 위에 [✨ 전부 운명에 맡기기] 버튼/토글 추가:
+  · 켜면 상대 정보 입력칸(이름, 사귀는지, 사는 곳, 직업, 생일, MBTI)을 전부 숨기고, createGame 에 fated: { sealed: true } 만 넘기기.
+  · 그러면 내 사주·점성술이 상대를 정해: 결혼할 사주면 "평생을 함께할 사람", 혼자 살 사주면 "내 인생의 마지막 사랑".
+  · 이때도 [그 사람의 모습] 고르기는 생략 (운명이 정하니까 — 엔진이 주는 gender/seed 로 그리기).
+
+━━ 3. 상단 상태바 / 메시지 ━━
+- 맨 위 상태바(날짜, 나이, 직업, 연애 상태, 돈) 글씨를 더 크게: 윗줄 약 19px, 아랫줄 약 13px (지금보다 1.2배쯤).
+- 메시지 팝업(토스트)이 장소 표시 바에 너무 딱 붙어서 나와 → 그 바와 최소 12px 간격 두고 나오게.
+
+━━ 4. 게임 속도 ━━
+- 지금의 15배속을 새 1배속으로: 1x 일 때 시간이 지금 15x 만큼 흐르게 (2x, 5x… 도 전부 그 기준으로 15배씩).
+
+━━ 5. 인생길 ━━
+- 길가 나무가 계절을 못 따라가 (7월에 눈 쌓인 나무, 1월에 단풍) → 나무 색/모양은 반드시 game.road().backdrop.trees 로, 이미 화면에 있는 나무까지 매번 다시 칠하기:
+  · trees.look: "blossom"(봄, 분홍 벚꽃) / "green"(여름) / "autumn"(가을, 빨강·주황) / "bare"(겨울, 앙상한 가지 + 눈)
+  · trees.leaf = 잎 색, trees.snow = 눈 얹기, trees.ground = 풀/땅 색. (남반구 도시는 엔진이 계절을 뒤집어 줘)
+- 커플이 걸을 때 나와 상대 사이에 있는 황토색 줄(밧줄처럼 보이는 것) 삭제. 손잡은 건 그냥 어깨가 닿을 만큼 가까이 걷는 걸로.
+
+━━ 6. 이벤트 팝업 사진 = 진짜 그 장소처럼 ━━
+- 지금은 방바닥 + 캐릭터뿐이야. 이제 popup.scene.decor 에 그 장소의 소품이 빽빽하게 와 (장소마다 10~30개):
+  · 각 항목: { prop, on: "floor" | "wallL" | "wallR", x, y, size }
+  · floor: (x, y)가 바닥에 닿는 아래 가운데. 크기 = 타일 너비 × size. wallL/wallR: 뒤쪽 왼/오른 벽에 붙는 것 (창문, 액자, 메뉴판…), (x, y)가 가운데.
+  · 바닥 소품과 캐릭터는 y 순서로 같이 그리기 (아래쪽일수록 앞) → 사람이 의자 뒤/앞에 자연스럽게.
+  · scene.palette = { floor, wall, accent } 로 바닥·벽 색.
+- prop 이름은 그대로 그림 이름이야. 각각 픽셀아트 스프라이트로 그려줘. 예:
+  · 비행기 안(airplane_cabin): plane_seat(파란 좌석) 줄줄이, plane_window, overhead_bin(머리 위 짐칸), drink_cart, seatbelt_sign
+  · 장례식장(funeral_hall): memorial_altar, portrait_frame(영정), chrysanthemums(흰 국화), incense_burner, condolence_wreath(근조화환), low_table, floor_cushion
+  · 웨딩홀: flower_arch, aisle_carpet, guest_chair 줄, flower_stand, chandelier, wedding_cake, piano
+  · 카페: counter, espresso_machine, cake_display, menu_board, pendant_lamp, cafe_table/cafe_chair
+  · 분식집: tteokbokki_pan, fishcake_pot, menu_wall, small_table, stool, drink_fridge
+  · 병원: hospital_bed, bed_curtain, iv_pole, vital_monitor, wheelchair, nurse_cart
+  · 그 밖에 공항, 도서관, 헬스장, 요리교실, 영화관, 놀이공원, 바다, 파리/도쿄 거리, 호텔, 법원, 집(신혼집엔 wedding_photo) … 모두 와.
+  · 처음 보는 prop 이름도 단어 뜻 그대로 그리면 돼 (예: vending_machine = 자판기, paper_lantern = 등롱).
+
+━━ 7. 큰 순간의 제목 ━━
+- 이제 "(1/4)" 같은 숫자는 안 와. 엔진이 장면마다 다른 시적인 제목을 줘 — popup.title 그대로 쓰기:
+  · 고백: 설렘의 시작 → 두근거리는 밤 → 한 걸음 앞 → 마음을 건네다
+  · 첫 키스: 가까워지는 거리 → 멈춘 숨 → 그 순간 직전 → 달빛 아래
+  · 프러포즈: 어떤 예감 → 마음의 확신 → 떨리는 저녁 → 사랑의 서약
+
+━━ 8. 엔딩 (운명에 맡긴 경우) ━━
+- game.ending().fate = { mode: "lifelong" | "solitary", signs: ["화개", "토성 7하우스", …] } 가 있으면, 엔딩 제목 아래 작은 글씨로 "🔮 " + signs.join(" · ") 표시.
+- 엔딩 문구는 엔진이 각색해서 줘 (e.title / e.story 그대로):
+  · 혼자 살 사주: "마지막 사랑" — "…그 뒤로 나는 평생 혼자 살았다. 외롭지 않았다면 거짓말이지만, 그 계절만큼은 누구보다 뜨거웠다."
+  · 사주를 이기고 끝까지 함께하면: "운명을 이긴 사랑"
+  · 평생 함께할 사주: "함께 늙어간 인생" — "운명이 정해 둔 단 한 사람…"
+- 첫 날 prologue 도 달라져: "18년 뒤, 내 인생의 마지막 사랑이 찾아온다." / "2년 뒤, 평생을 함께할 사람을 만난다."
+```
