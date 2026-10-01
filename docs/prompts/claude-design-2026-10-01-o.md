@@ -1,12 +1,12 @@
-# Claude Design에 붙여넣을 프롬프트 (2026-10-01 · 15차 = 최종 합본: k + l + m + n + 공원 밤/저녁)
+# Claude Design에 붙여넣을 프롬프트 (2026-10-01 · 15차 = 최종 합본: k + l + m + n + 공원 밤/저녁 + 시트 3)
 
-첨부: 새 lovesim-engine.js + bg-pack.zip (안의 bg 폴더 PNG 39장 전부)
+첨부: 새 lovesim-engine.js + bg-pack.zip (안의 bg 폴더 PNG 57장 전부)
 
 ```
 엔진 파일을 첨부한 새 lovesim-engine.js로 통째로 교체해줘. 반드시 기존 엔진 파일을 지우고 이 파일로 바꿔야 해. 지난 프롬프트 내용은 유지하고, 아래를 전부 반영해줘. 다 끝나면 항목별로 반영했는지 하나씩 확인해줘.
 
 ━━ 0. 엔진 버전 확인 ━━
-- Letter from Creator 페이지 맨 아래에 아주 작은 회색 글씨로 "engine " + LoveSim.ENGINE_VERSION. 이번 엔진이면 "engine 2026-10-01.o".
+- Letter from Creator 페이지 맨 아래에 아주 작은 회색 글씨로 "engine " + LoveSim.ENGINE_VERSION. 이번 엔진이면 "engine 2026-10-01.p".
 - 시작할 때 console.log("LoveSim", LoveSim.ENGINE_VERSION).
 
 ━━ 1. 첫 화면 ━━
@@ -33,7 +33,7 @@
 - me 와 partner(또는 holds: "me")는 한 쌍으로 길 가운데에 나란히: 상대 왼쪽 끝 = 내 오른쪽 끝 + 캐릭터 폭의 10%. 같은 y. slot 으로 멀리 띄우지 말기. apart: true 여도 간격 같고 상대만 55% 투명.
 
 ━━ 6. 이벤트 팝업 / 추억 카드 사진 = 그려 둔 배경 그림 ━━
-- 첨부한 bg-pack.zip 의 PNG 39장을 bg/ 폴더에 (같은 이름은 덮어쓰기). (park_night = 달밤 공원, park_evening = 노을 공원 포함)
+- 첨부한 bg-pack.zip 의 PNG 57장을 bg/ 폴더에 (같은 이름은 덮어쓰기). (park_night = 달밤 공원, park_evening = 노을 공원 포함)
 - 모든 큰 팝업(4장짜리 고백·첫 키스·프러포즈 시퀀스 포함, occasion·event 포함)과 추억 카드에서: scene.photo 가 있으면 방을 코드로 그리지 말고 그 그림을 배경으로: background: url(<photo>) center bottom / cover no-repeat. 소품·바닥·벽 그리기 X.
 - 사람은 scene.photoCast 에 있는 사람만 그려 (actor.who 목록, 보통 나 + 상대 2명, 혼자면 나만). 나머지 actors 는 그리지 마 (일렬로 늘어놓지 말 것).
   · 그 1~2명을 사진 칸 가로 가운데에 나란히, 발끝 = 사진 칸 높이의 88%, 둘 사이 간격 = 캐릭터 폭의 10%, 캐릭터 크기 = 사진 칸 높이의 약 35%. 머리가 칸 밖으로 잘리지 않게.
