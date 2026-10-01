@@ -336,8 +336,8 @@
     },
     "PROPOSAL": {
      "title": {
-      "ko": "프러포즈",
-      "en": "The proposal"
+      "ko": "사랑의 서약",
+      "en": "A Vow of Love"
      },
      "after": [
       14,
@@ -1239,8 +1239,8 @@
     },
     "FIRST_KISS": {
      "title": {
-      "ko": "첫 키스",
-      "en": "First kiss"
+      "ko": "달빛 아래",
+      "en": "Under the Moon"
      },
      "after": [
       1,
@@ -2951,8 +2951,8 @@
     },
     "CONFESS": {
      "title": {
-      "ko": "고백",
-      "en": "The confession"
+      "ko": "마음을 건네다",
+      "en": "Saying It"
      },
      "after": [
       1,

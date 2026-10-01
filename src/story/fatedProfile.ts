@@ -96,7 +96,8 @@ export function fatedOptions(lang: "ko" | "en" = "ko"): {
       { id: "stranger", name: ko ? "아니, 아직 서로 몰라" : "No, we haven't met", hint: ko ? "첫 만남부터 시작해요" : "Start from the first meeting" },
     ],
     lives: data.lives.map((l) => ({ id: l.id as FatedFrom, name: l[lang], hint: l.hint[lang] })),
-    jobs: FATED_JOBS.map((j) => ({ id: j.id, name: j[lang] })),
+    // Exactly the same options, in the same order, as "나의 직업은?" (the UI adds "운명에 맡기기" on top).
+    jobs: myJobOptions(lang).jobs,
   };
 }
 

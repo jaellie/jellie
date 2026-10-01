@@ -41,6 +41,10 @@ const logoAnim = await page.getByTestId("logo").evaluate((el) => getComputedStyl
 if (logoAnim !== "dropIn") issue(`the logo doesn't drop in (animation: ${logoAnim})`);
 await page.waitForTimeout(1000);
 await snap("language");
+if (await page.getByTestId("lang-en").isVisible()) issue("language buttons should be inside the Start popup");
+await page.getByTestId("start-game").click();
+await page.waitForTimeout(500);
+await snap("language-popup");
 await page.getByTestId("lang-en").hover();
 if (!(await page.getByTestId("logo").getAttribute("src")).endsWith("logo-en.png")) issue("the logo doesn't switch to English");
 await page.getByTestId("lang-en").click();
@@ -49,7 +53,7 @@ if (await page.locator("#setup img").count()) issue("the setup screen still show
 if ((await page.locator("#fName").inputValue()) !== "Jae") issue("English default name is not Jae");
 const EN = args.lang === "en";
 if (!EN) {
-  await page.evaluate(() => document.getElementById("langKo").click());
+  await page.evaluate(() => { document.getElementById("startBtn").click(); document.getElementById("langKo").click(); });
   if ((await page.locator("#fName").inputValue()) !== "제이") issue("default name is not 제이");
 }
 await snap("setup");
@@ -178,7 +182,7 @@ while (Date.now() < deadline) {
     // Measure a note that has finished sliding in (they slide out from behind the log bar, then fade).
     const settled = page.locator(".note:not(.out)").last();
     const nb = (await settled.evaluate((el) => el.getAnimations().length === 0).catch(() => false)) ? await settled.boundingBox({ timeout: 300 }).catch(() => null) : null;
-    if (nb && lb && nb.y < lb.y + lb.height - 1) issue("text notifications overlap the log line");
+    if (nb && lb && nb.y < lb.y + lb.height + 8) issue("text notifications sit too close to the bar above (need a gap)");
   }
   if (screen === "play" && Date.now() - lastWalkCheck > 8000) {
     lastWalkCheck = Date.now();
@@ -216,7 +220,7 @@ while (Date.now() < deadline) {
   await page.waitForTimeout(80);
 }
 
-stats.sequenceParts = Object.keys(stats.bigTitles).filter((t) => /\(\d\/4\)/.test(t)).length;
+for (const t of Object.keys(stats.bigTitles)) if (/\(\d\/4\)/.test(t)) issue(`a title still shows a part counter: ${t}`);
 const final = await page.evaluate(() => ({ age: window.__qa.game.hud().age, script: window.__qa.game.state.story.script.map((e) => `${e.age}:${e.theme}:${e.outcome ?? "-"}`) }));
 const over = (await page.evaluate(() => window.__qa.screen)) === "end";
 if (over) {

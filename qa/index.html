@@ -22,12 +22,12 @@
   #setup input, #setup select { width: 100%; font-family: inherit; font-size: 14px; padding: 6px; border: 3px solid var(--ink); background: #fff; }
   #setup .row { display: flex; gap: 6px; } #setup .row > * { flex: 1; }
   /* play: HUD → log line → notifications (slide down) → scene → place/time */
-  #hud { position: absolute; top: 0; left: 0; right: 0; height: 64px; background: var(--ink); color: var(--cream); padding: 12px 14px 8px; z-index: 5; border-bottom: 3px solid #1a1420; }
-  #hud .top { display: flex; justify-content: space-between; font-size: 16px; }
-  #hud .sub { font-size: 11px; color: #b9a9c9; margin-top: 4px; display: flex; justify-content: space-between; }
-  #log { position: absolute; top: 64px; left: 0; right: 0; height: 34px; z-index: 40; background: #fff6e3; border-bottom: 3px solid var(--ink); padding: 7px 12px; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #hud { position: absolute; top: 0; left: 0; right: 0; height: 70px; background: var(--ink); color: var(--cream); padding: 12px 14px 8px; z-index: 5; border-bottom: 3px solid #1a1420; }
+  #hud .top { display: flex; justify-content: space-between; font-size: 19px; }
+  #hud .sub { font-size: 13px; color: #b9a9c9; margin-top: 4px; display: flex; justify-content: space-between; }
+  #log { position: absolute; top: 70px; left: 0; right: 0; height: 34px; z-index: 40; background: #fff6e3; border-bottom: 3px solid var(--ink); padding: 7px 12px; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   #log .t { color: #c2385f; margin-right: 6px; }
-  #notes { position: absolute; top: 102px; left: 10px; right: 10px; z-index: 30; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
+  #notes { position: absolute; top: 120px; left: 10px; right: 10px; z-index: 30; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
   .note { background: #fff; border: 3px solid var(--ink); box-shadow: 3px 3px 0 rgba(0,0,0,.35); padding: 6px 10px; font-size: 12px; animation: dropIn .55s cubic-bezier(.3,1.6,.5,1); transition: opacity .4s, transform .4s; }
   /* "두두둥": drops from above, overshoots, settles (logo + message notes) */
   @keyframes dropIn { 0% { transform: translateY(-140%); opacity: 0; } 60% { transform: translateY(8%); opacity: 1; } 80% { transform: translateY(-3%); } 100% { transform: translateY(0); } }
@@ -71,11 +71,13 @@
   #lang .front { position: relative; z-index: 2; }
   .logo { display: block; width: 320px; margin: 90px auto 10px; image-rendering: pixelated; animation: dropIn .9s cubic-bezier(.3,1.6,.5,1) both; }
   #lang .btn { display: block; width: 220px; margin: 18px auto 0; font-size: 18px; }
+  #langPop { display: none; position: absolute; inset: 0; z-index: 5; background: rgba(26,20,32,.55); }
+  #langPop .box { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #fff6e3; border: 3px solid var(--ink); box-shadow: 4px 4px 0 #1a1420; padding: 10px 24px 26px; animation: dropIn .45s cubic-bezier(.3,1.6,.5,1); }
   #prologue { position: absolute; inset: 0; z-index: 60; background: #1a1420; color: #fff6e3; display: none; align-items: center; justify-content: center; font-size: 16px; padding: 30px; text-align: center; transition: opacity 1.2s; }
   #end .title { position: relative; margin-top: 150px; font-size: 22px; color: #ffd36b; opacity: 0; transition: opacity 2s; }
   #end .story { position: relative; margin: 14px 34px 0; font-size: 13px; line-height: 1.7; opacity: 0; transition: opacity 2s; }
   /* The life road (play screen): 2D, seen from behind — see src/world/road.ts. */
-  #road { position: absolute; top: 98px; left: 0; width: 360px; height: 642px; overflow: hidden; z-index: 1; isolation: isolate; background: var(--sky, #9fd6ff); }
+  #road { position: absolute; top: 104px; left: 0; width: 360px; height: 636px; overflow: hidden; z-index: 1; isolation: isolate; background: var(--sky, #9fd6ff); }
   #road .ground { position: absolute; left: 0; right: 0; top: 34%; bottom: 0; background: var(--ground, #8fce6a); }
   #road .way { position: absolute; left: 0; right: 0; top: 34%; bottom: 0; background: var(--way, #cdb89a); clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%); }
   #road .dash { position: absolute; left: 49.4%; width: 1.2%; top: 34%; bottom: 0; background: repeating-linear-gradient(transparent 0 26px, rgba(255,255,255,.85) 26px 44px); clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%); }
@@ -88,6 +90,8 @@
   #road .prop { background: var(--accent); border: 2px solid var(--ink); border-radius: 3px; }
   #road .obj { position: absolute; transform-origin: 50% 100%; image-rendering: pixelated; }
   #road .tree .crown { position: absolute; left: 0; right: 0; top: 0; height: 70%; border: 3px solid var(--ink); border-radius: 40% 40% 30% 30%; background: var(--leaf, #58b04a); }
+  /* winter: bare branches with snow on top */
+  #road[data-trees="bare"] .tree .crown { border-radius: 30% 30% 20% 20%; background: repeating-linear-gradient(60deg, var(--leaf) 0 3px, transparent 3px 9px), repeating-linear-gradient(-60deg, var(--leaf) 0 3px, transparent 3px 9px); box-shadow: inset 0 6px 0 #fff; }
   #road .tree .trunk { position: absolute; left: 42%; width: 16%; top: 66%; bottom: 0; background: #7a4e2d; border: 2px solid var(--ink); }
   #road .bldg { border: 3px solid var(--ink); background: var(--bldg, #d9c7b0); }
   #road .house { border: 3px solid var(--ink); background: #f3e3c3; border-radius: 4px 4px 0 0; }
@@ -158,9 +162,13 @@
       <div class="walker me" data-testid="lang-walker"><div class="hair" style="background:#6b4a33"></div><div class="body"></div><div class="legL"></div><div class="legR"></div></div></div>
     <div class="front">
       <img id="langLogo" class="logo" data-testid="logo" alt="두근두근, 내 운명의 사람" src="../assets/logo/logo-ko.png">
+      <button class="btn pink" id="startBtn" data-testid="start-game">START</button>
+    </div>
+    <!-- Start → choose the language in a popup, then the form opens in that language. -->
+    <div id="langPop" data-testid="lang-popup"><div class="box">
       <button class="btn pink" id="langKo" data-testid="lang-ko">한국어</button>
       <button class="btn" id="langEn" data-testid="lang-en">English</button>
-    </div>
+    </div></div>
   </div>
   <div id="setup" class="screen" data-testid="setup">
     <label>이름</label><input id="fName" value="제이">
@@ -305,8 +313,6 @@
 
   // ---- the life road ----------------------------------------------------------------------------------
   const SKY = { MORNING: "#bfe6ff", DAY: "#8fd0ff", EVENING: "#f7b08a", NIGHT: "#2a2a5a" };
-  const GROUND = { SPRING: "#9ad67a", SUMMER: "#6fbf5a", AUTUMN: "#d9a55a", WINTER: "#e9eef2" };
-  const LEAF = { SPRING: "#ffb7c9", SUMMER: "#4fa84a", AUTUMN: "#e0782f", WINTER: "#f4f7fa" };
   const THEME = { city: { obj: "bldg", bldg: "#c9c3d6" }, town: { obj: "mix", bldg: "#e6cfa8" }, seaside: { obj: "tree", way: "#e9d9a6" }, countryside: { obj: "tree", way: "#c2a57a" }, abroad: { obj: "bldg", bldg: "#e8b8a0" }, travel: { obj: "mix", bldg: "#f0d0e0" } };
   let roadView = null, objs = [], lastT = 0, landmarkShown = null;
   const HORIZON = 0.34 * 642;
@@ -315,8 +321,8 @@
     const el = $("road"), b = rv.backdrop, th = THEME[b.theme] || THEME.town;
     el.classList.toggle("walking", rv.walking);
     el.dataset.theme = b.theme; el.dataset.sea = b.sea || ""; el.dataset.walkers = rv.walkers.map((w) => w.role).join(",");
-    el.style.setProperty("--sky", SKY[b.timeOfDay]); el.style.setProperty("--ground", GROUND[b.season]);
-    el.style.setProperty("--way", th.way || "#cdb89a"); el.style.setProperty("--leaf", LEAF[b.season]);
+    el.style.setProperty("--sky", SKY[b.timeOfDay]); el.style.setProperty("--ground", b.trees.ground);
+    el.style.setProperty("--way", th.way || "#cdb89a"); el.style.setProperty("--leaf", b.trees.leaf); el.dataset.trees = b.trees.look;
     const sk = b.skyline;
     el.style.setProperty("--bldg", sk.palette.buildings); el.style.setProperty("--accent", sk.palette.accent);
     if (b.timeOfDay === "DAY" || b.timeOfDay === "MORNING") el.style.setProperty("--sky", sk.palette.sky);
@@ -332,7 +338,7 @@
     if (rv.landmark && rv.landmark.id !== landmarkShown) { landmarkShown = rv.landmark.id; spawn(0.02, true, rv.landmark.name, rv.landmark.side === "right" ? 1 : -1, rv.landmark.size); }
     if (!rv.landmark) landmarkShown = null;
     // Walkers from behind, side by side (you in the middle of your people).
-    const box = el.querySelector(".walkers"); const n = rv.walkers.length; const gap = 40;
+    const box = el.querySelector(".walkers"); const n = rv.walkers.length; const gap = 34;
     const seen = new Set();
     rv.walkers.forEach((w, i) => {
       seen.add(w.who);
@@ -350,9 +356,7 @@
       d.querySelector(".body").style.background = w.role === "me" ? "#ff6f91" : w.role === "partner" ? "#6c7bd9" : w.role === "kid" ? "#ffd36b" : d.querySelector(".body").style.background;
     });
     for (const d of [...box.querySelectorAll(".walker")]) if (!seen.has(d.dataset.who)) d.remove();
-    // Joined hands.
-    for (const h of [...box.querySelectorAll(".hand")]) h.remove();
-    rv.walkers.forEach((w, i) => { const j = rv.walkers.findIndex((x) => x.who === w.holds); if (j === i + 1) { const h = document.createElement("div"); h.className = "hand"; const x = 180 + (i - (n - 1) / 2) * gap + 12; h.style.left = x + "px"; h.style.width = gap - 24 + "px"; box.appendChild(h); } });
+    // Holding hands: walk close together, shoulder to shoulder (no line drawn between them).
   }
   function spawn(z, landmark, name, side, size) {
     side = side || (Math.random() < 0.5 ? -1 : 1);
@@ -519,9 +523,10 @@
   const logoSrc = (lang) => `../assets/logo/logo-${lang}.png`;
   const phoneLang = (navigator.language || "ko").toLowerCase().startsWith("ko") ? "ko" : "en";
   $("langLogo").src = logoSrc(phoneLang); $("langLogo").alt = phoneLang === "ko" ? "두근두근, 내 운명의 사람" : "Doki Doki Destiny Lover";
+  $("startBtn").onclick = () => { $("langPop").style.display = "block"; };
   for (const [id, lang] of [["langKo", "ko"], ["langEn", "en"]]) {
     $(id).onmouseenter = () => { $("langLogo").src = logoSrc(lang); };
-    $(id).onclick = () => openSetup(lang);
+    $(id).onclick = () => { $("langPop").style.display = "none"; openSetup(lang); };
   }
 
   // Birthplace picker: the engine's city list; unknown text is flagged (it would be read as Seoul).

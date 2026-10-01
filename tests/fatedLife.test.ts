@@ -80,7 +80,7 @@ describe("The destined person's life (where they live, their job)", () => {
     const seen = play(t, (x) => !x.state.story!.arcs.some((a) => a.type === "TALKING"), () => 0, 12);
     const titles = seen.map((s) => s.title);
     expect(titles).toContain("새벽 카톡");
-    expect(titles).toContain("고백 (4/4)");
+    expect(titles).toContain("마음을 건네다");
     const d = createGame({ ...JAE, seed: 3, fated: { ...JUNG, from: "same", status: "dating" } });
     expect(d.state.relationship.status).toBe("DATING");
     expect(d.facts().fatedPartner).toBe(true);
@@ -114,7 +114,7 @@ describe("Who says the result line", () => {
     for (let seed = 1; seed <= 6 && !checked; seed++) {
       const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "same", status: "dating" } });
       const seen = play(g, (x) => x.state.engaged || x.state.relationship.status !== "DATING", (p) => (p.ch.length === 3 ? 1 : 0), 20);
-      const reply = seen.find((s) => s.title?.startsWith("프러포즈") && s.result?.includes("오래 기다리진 못할"));
+      const reply = seen.find((s) => s.title === "사랑의 서약" && s.result?.includes("오래 기다리진 못할"));
       if (reply) {
         expect(reply.resultWho).toBe("partner");
         checked++;
@@ -373,6 +373,8 @@ describe("My job (setup.job)", () => {
     expect(o.jobs.length).toBeGreaterThanOrEqual(44);
     for (const n of ["회사원", "무직", "대학생", "취업준비생", "프리랜서", "간호사", "파일럿"]) expect(o.jobs.map((j) => j.name)).toContain(n);
     expect(myJobOptions("en").jobs.every((j) => /^[A-Za-z]/.test(j.name))).toBe(true);
+    // The destined person's job list is exactly the same, in the same order.
+    expect(fatedOptions("ko").jobs).toEqual(o.jobs);
   });
 
   it("the job shapes the life: employed or not, student, self-employed (no coworkers), the HUD label", () => {
@@ -396,15 +398,17 @@ describe("Big moments in four parts, shaped by both MBTIs", () => {
   it("the confession is 4 popups on one day: their move → your inner moment → the moment before → the climax", () => {
     const g = createGame({ ...JAE, mbti: "ENFP", seed: 7, fated: { ...JUNG, mbti: "INFJ", from: "same", status: "talking" } });
     const seen = play(g, (x) => !x.state.story!.arcs.some((a) => a.type === "TALKING"), () => 0, 14);
-    const titles = seen.map((s) => s.title).filter((t) => t?.startsWith("고백"));
-    expect(titles).toEqual(["고백 (1/4)", "고백 (2/4)", "고백 (3/4)", "고백 (4/4)"]);
+    const parts = ["설렘의 시작", "두근거리는 밤", "한 걸음 앞", "마음을 건네다"];
+    const titles = seen.map((s) => s.title).filter((t) => parts.includes(t ?? ""));
+    expect(titles).toEqual(parts);
+    expect(seen.every((s) => !/\(\d\/4\)/.test(s.title ?? ""))).toBe(true);
   });
 
   it("their temperament sets the scene; your own letters decide your options", () => {
     const first = (me: string, them: string) => {
       const g = createGame({ ...JAE, mbti: me, seed: 7, fated: { ...JUNG, mbti: them, from: "same", status: "talking" } });
       const seen = play(g, (x) => !x.state.story!.arcs.some((a) => a.type === "TALKING"), () => 0, 14);
-      return seen.filter((s) => s.title?.startsWith("고백 ("));
+      return seen.filter((s) => ["설렘의 시작", "두근거리는 밤", "한 걸음 앞", "마음을 건네다"].includes(s.title ?? ""));
     };
     const nf = first("ENFP", "INFJ");
     const sp = first("ISTJ", "ESTP");

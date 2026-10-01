@@ -7,6 +7,9 @@ import { fillNames, fixJosa } from "../src/game/text";
 import { splitSpeakerTag } from "../src/game/game";
 import { SeededRandom } from "../src/core/rng";
 import messageData from "../data/game/messages.json";
+import seqData from "../data/story/sequences.json";
+
+const SEQUENCE_TITLES = new Set(["CONFESS", "FIRST_KISS", "PROPOSAL"].flatMap((k) => (seqData as unknown as Record<string, { titles: { ko: string[] } }>)[k].titles.ko));
 
 const SETUP = { name: "민아", gender: "F" as const, likes: "M" as const, birth: { year: 1997, month: 9, day: 28, hour: 9, minute: 30 }, mbti: "ENFP", fated: { name: "Ren", from: "same" as const } };
 
@@ -32,8 +35,8 @@ function playLife(seed: number, maxDays = 80) {
         }
         if (b.kind === "popup") {
           const p = b.popup;
-          // A big moment's 4 parts (고백 (1/4)…) are one story moment, not small events.
-          if (p.source === "story" && !/\(\d\/4\)$/.test(p.title ?? "")) counts.small++;
+          // A big moment's 4 parts (설렘의 시작 → … → 마음을 건네다) are one story moment, not small events.
+          if (p.source === "story" && !SEQUENCE_TITLES.has(p.title ?? "")) counts.small++;
           if (p.source === "opportunity" || p.source === "world") counts.major++;
           if (p.source === "plan") menus.push(p.ch.map((c) => c.t));
           const texts = [p.line, ...p.ch.map((c) => c.t)];

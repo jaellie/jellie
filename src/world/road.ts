@@ -69,6 +69,12 @@ export interface RoadView {
     /** What lines the road: city blocks, a small town, the sea, fields (old age), a foreign city, a trip. */
     theme: RoadTheme;
     season: "SPRING" | "SUMMER" | "AUTUMN" | "WINTER";
+    /**
+     * How every roadside tree looks right now — use this, never a color fixed when the tree appeared
+     * (trees already on screen must change with the season too): spring blossoms, summer green,
+     * autumn red/orange, winter bare branches with snow. `ground` is the grass/field color.
+     */
+    trees: { look: "blossom" | "green" | "autumn" | "bare"; leaf: string; snow: boolean; ground: string };
     timeOfDay: "MORNING" | "DAY" | "EVENING" | "NIGHT";
     weather: string;
     /** The city's skyline and street vibe (top-50 cities; generic otherwise). */
@@ -92,6 +98,17 @@ export interface RoadView {
   /** False while a popup is open or the day is over (stop scrolling, everyone stands still). */
   walking: boolean;
 }
+
+/** The season's trees and grass (one table for every tree on the road). */
+const TREES: Record<RoadView["backdrop"]["season"], RoadView["backdrop"]["trees"]> = {
+  SPRING: { look: "blossom", leaf: "#ffb7c9", snow: false, ground: "#9ad67a" },
+  SUMMER: { look: "green", leaf: "#4fa84a", snow: false, ground: "#6fbf5a" },
+  AUTUMN: { look: "autumn", leaf: "#e0782f", snow: false, ground: "#d9a55a" },
+  WINTER: { look: "bare", leaf: "#8a6a4f", snow: true, ground: "#e9eef2" },
+};
+/** Seasons are flipped south of the equator (July is winter in Sydney). */
+const SOUTH = new Set(["Australia", "AU", "New Zealand", "NZ", "Argentina", "AR", "Chile", "CL", "Brazil", "BR", "Peru", "PE", "South Africa", "ZA"]);
+const FLIP = { SPRING: "AUTUMN", SUMMER: "WINTER", AUTUMN: "SPRING", WINTER: "SUMMER" } as const;
 
 const SEASIDE = ["Busan", "Jeju", "Gangneung", "Sokcho", "Yeosu", "Pohang", "Ulsan"];
 /** Large buildings (by the sea they stand on the land side, never on the water). */
@@ -147,6 +164,8 @@ export function buildRoad(
   const abroad = state.location.country !== (state.homeCountry || "Korea");
   const theme: RoadTheme = trip ? "travel" : abroad ? "abroad" : age >= 65 ? "countryside" : SEASIDE.includes(state.location.city) ? "seaside" : state.location.city === "Seoul" ? "city" : "town";
   const date = { year, month: state.date.month, day: state.date.day ?? 15 };
+  const north = seasonOf(date.month) as RoadView["backdrop"]["season"];
+  const season = SOUTH.has(state.location.country) ? FLIP[north] : north;
   const loc = opts.locationId ? getLocation(opts.locationId) : undefined;
   const seaside = theme === "seaside";
   const big = !!loc && BIG_TYPES.has(loc.type);
@@ -157,7 +176,8 @@ export function buildRoad(
     walkers,
     backdrop: {
       theme,
-      season: seasonOf(date.month),
+      season,
+      trees: TREES[season],
       timeOfDay: timeOfDay(opts.minute),
       weather: weatherFor(opts.seed, date, loc?.region ?? "home_city"),
       skyline: trip ? skylineFor(TRIP_CITY[trip.destinationId] ?? state.location.city, "", opts.lang) : skylineFor(state.location.city, state.location.country, opts.lang),

@@ -509,7 +509,7 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
   // A big moment's lead-up: parts 1–3 of 4, the same place and day as the climax.
   const sp = seqPart(state, arc, step.key);
   if (sp) {
-    const title = def.title ? { ko: `${def.title.ko} (${sp.n + 1}/4)`, en: `${def.title.en} (${sp.n + 1}/4)` } : undefined;
+    const title = { ko: sp.seq.titles.ko[sp.n], en: sp.seq.titles.en[sp.n] };
     return { ref: `arc:${arc.id}`, who: sp.who, line: themText(sp.line, arc), choices: sp.choices.map((c) => themText(c.t, arc)), location: def.location, activity: def.activity, vars: {}, title, needsFated: arc.type === "TALKING", needsPartner: arc.type === "DATING" && def.location !== "home" };
   }
   const mv = mbtiVariant(state, arc, step.key, def);
@@ -531,7 +531,7 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
   let climaxLine = line;
   let title = def.title;
   if (seqCur?.key === step.key) {
-    title = def.title ? { ko: `${def.title.ko} (4/4)`, en: `${def.title.en} (4/4)` } : undefined;
+    title = { ko: SEQS[step.key].titles.ko[3], en: SEQS[step.key].titles.en[3] };
     // How the lead-up went colors the moment.
     const mood = seqCur.spark >= 0.25 ? themText({ ko: "(오늘따라 {them}의 눈빛이 유난히 따뜻하다.)", en: "(Tonight, {them}'s eyes are especially warm.)" }, arc) : seqCur.spark <= -0.15 ? { ko: "(어딘가 자꾸 엇갈린 하루였다. 그래도…)", en: "(Somehow the day kept missing its beat. Still…)" } : undefined;
     if (mood) climaxLine = { ko: `${mood.ko} ${line.ko}`, en: `${mood.en} ${line.en}` };
@@ -559,7 +559,7 @@ export function mbtiOf(state: LifeState, npcId?: string): string {
 
 type SeqChoice = { t: Bi; fits?: string; r?: Bi; rMiss?: Bi; me?: string };
 type SeqPartDef = { line: Bi; choices: SeqChoice[] };
-type SeqDef = { good: string; them: Record<string, SeqPartDef>; me: Record<string, Bi>; mePool: SeqChoice[]; pair: Record<"plan" | "free" | "mixed", SeqPartDef> };
+type SeqDef = { good: string; titles: { ko: string[]; en: string[] }; them: Record<string, SeqPartDef>; me: Record<string, Bi>; mePool: SeqChoice[]; pair: Record<"plan" | "free" | "mixed", SeqPartDef> };
 const SEQS = seqData as unknown as Record<string, SeqDef>;
 
 /** NF idealist, NT rational, SJ guardian, SP artisan. */

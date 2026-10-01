@@ -1,5 +1,5 @@
 {
- "_doc": "Big moments as 4-part sequences (one day, four popups): 1) THEIR move — by the partner's temperament (NF idealist / NT rational / SJ guardian / SP artisan); 2) YOUR inner moment — by your temperament, choices filtered by your own letters (E/I, F/T, J/P); 3) the moment right before — by both J/P (plan: both J, free: both P, mixed); 4) the climax (the arc step itself). Each choice's `fits` letters are what the partner responds to: matching their MBTI gives `r` and adds spark; clashing gives `rMiss`. Spark bends the climax toward `good`. {them} = the partner / destined person.",
+ "_doc": "Big moments as 4-part sequences (one day, four popups): 1) THEIR move — by the partner's temperament (NF idealist / NT rational / SJ guardian / SP artisan); 2) YOUR inner moment — by your temperament, choices filtered by your own letters (E/I, F/T, J/P); 3) the moment right before — by both J/P (plan: both J, free: both P, mixed); 4) the climax (the arc step itself). Each choice's `fits` letters are what the partner responds to: matching their MBTI gives `r` and adds spark; clashing gives `rMiss`. Spark bends the climax toward `good`. {them} = the partner / destined person. `titles`: one poetic title per part (no '(1/4)'); the last is the climax's.",
  "CONFESS": {
   "good": "START",
   "them": {
@@ -468,6 +468,20 @@
      }
     ]
    }
+  },
+  "titles": {
+   "ko": [
+    "설렘의 시작",
+    "두근거리는 밤",
+    "한 걸음 앞",
+    "마음을 건네다"
+   ],
+   "en": [
+    "A Spark",
+    "A Racing Heart",
+    "One Step Closer",
+    "Saying It"
+   ]
   }
  },
  "FIRST_KISS": {
@@ -938,6 +952,20 @@
      }
     ]
    }
+  },
+  "titles": {
+   "ko": [
+    "가까워지는 거리",
+    "멈춘 숨",
+    "그 순간 직전",
+    "달빛 아래"
+   ],
+   "en": [
+    "Closer",
+    "Holding Your Breath",
+    "Right Before",
+    "Under the Moon"
+   ]
   }
  },
  "PROPOSAL": {
@@ -1408,6 +1436,20 @@
      }
     ]
    }
+  },
+  "titles": {
+   "ko": [
+    "어떤 예감",
+    "마음의 확신",
+    "떨리는 저녁",
+    "사랑의 서약"
+   ],
+   "en": [
+    "A Hunch",
+    "Certainty",
+    "A Trembling Evening",
+    "A Vow of Love"
+   ]
   }
  }
 }
