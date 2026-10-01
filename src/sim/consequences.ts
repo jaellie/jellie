@@ -7,7 +7,8 @@ import type { SeededRandom } from "../core/rng";
 import { calculateNatalChart } from "../saju/chart";
 import type { Consequence } from "./opportunity";
 import { type LifeState, type Npc, isAbroad } from "./types";
-import { NPC_NAMES, pickCity, pickForeignCountry } from "./world";
+import { pickCity, pickForeignCountry } from "./world";
+import { cultureOf, pickName } from "../world/names";
 
 export const MAX_CAREER_LEVEL = 8;
 
@@ -34,7 +35,7 @@ function createNpc(s: LifeState, rng: SeededRandom): Npc {
   };
   const npc: Npc = {
     id: `npc-${s.npcs.length + 1}`,
-    name: NPC_NAMES[rng.int(0, NPC_NAMES.length - 1)],
+    name: pickName(birth.sex, cultureOf(s.location.country), rng, s.npcs.map((n) => n.name)),
     birth,
     chart: calculateNatalChart(birth),
     role: "ACQUAINTANCE",

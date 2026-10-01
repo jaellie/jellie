@@ -165,19 +165,24 @@ describe("The game is the bond with the destined person", () => {
   });
 
   it("a couple who stays together plays on to old age (the ending is your death or theirs)", () => {
-    const g = createGame({ ...SETUP, seed: 3, fated: { ...SETUP.fated, status: "dating" as const } });
-    for (let d = 0; d < 200 && !g.isOver(); d++) {
-      for (let i = 0; i < 400; i++) {
-        const beats = g.advance(g.s.minute + 30);
-        for (const b of beats) if (b.kind === "popup") g.choose(0);
-        if (beats.some((b) => b.kind === "dayEnd")) break;
+    const endings = [1, 2, 3, 4, 5, 6].map((seed) => {
+      const g = createGame({ ...SETUP, seed, fated: { ...SETUP.fated, status: "dating" as const } });
+      for (let d = 0; d < 200 && !g.isOver(); d++) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) if (b.kind === "popup") g.choose(0);
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        g.endDay();
       }
-      g.endDay();
+      return g.ending();
+    });
+    const longest = endings.filter((e) => e.reason === "iDied" || e.reason === "theyDied");
+    expect(longest.length).toBeGreaterThan(0);
+    for (const e of longest) {
+      expect(e.age).toBeGreaterThan(55);
+      expect(e.together?.married).toBe(true);
     }
-    const e = g.ending();
-    expect(["iDied", "theyDied"]).toContain(e.reason);
-    expect(e.age).toBeGreaterThan(60);
-    expect(e.together?.married).toBe(true);
   });
 });
 

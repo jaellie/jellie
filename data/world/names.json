@@ -1,0 +1,891 @@
+{
+ "_doc": "NPC names by culture. Each name is a pair: the Korean UI shows `ko` (foreign names in Hangul), the English UI shows `en`. Korean names pair with distinct English names (서준 ↔ Noah), so the English version reads all-English. Names never repeat across pools.",
+ "cultures": {
+  "KR": {
+   "MALE": [
+    {
+     "ko": "서준",
+     "en": "Noah"
+    },
+    {
+     "ko": "도윤",
+     "en": "Liam"
+    },
+    {
+     "ko": "하준",
+     "en": "Ethan"
+    },
+    {
+     "ko": "지호",
+     "en": "Owen"
+    },
+    {
+     "ko": "민재",
+     "en": "Lucas"
+    },
+    {
+     "ko": "현우",
+     "en": "Henry"
+    },
+    {
+     "ko": "태오",
+     "en": "Theo"
+    },
+    {
+     "ko": "시우",
+     "en": "Caleb"
+    },
+    {
+     "ko": "준서",
+     "en": "Nathan"
+    },
+    {
+     "ko": "건우",
+     "en": "Ryan"
+    },
+    {
+     "ko": "우진",
+     "en": "Dylan"
+    },
+    {
+     "ko": "선우",
+     "en": "Julian"
+    },
+    {
+     "ko": "유찬",
+     "en": "Aaron"
+    },
+    {
+     "ko": "은호",
+     "en": "Miles"
+    },
+    {
+     "ko": "승민",
+     "en": "Adam"
+    },
+    {
+     "ko": "재윤",
+     "en": "Isaac"
+    },
+    {
+     "ko": "지훈",
+     "en": "Jacob"
+    },
+    {
+     "ko": "민호",
+     "en": "Evan"
+    },
+    {
+     "ko": "태민",
+     "en": "Gavin"
+    },
+    {
+     "ko": "정우",
+     "en": "Logan"
+    },
+    {
+     "ko": "동현",
+     "en": "Connor"
+    },
+    {
+     "ko": "성민",
+     "en": "Tyler"
+    },
+    {
+     "ko": "준혁",
+     "en": "Blake"
+    },
+    {
+     "ko": "예준",
+     "en": "Jordan"
+    },
+    {
+     "ko": "시윤",
+     "en": "Wyatt"
+    },
+    {
+     "ko": "주원",
+     "en": "Austin"
+    },
+    {
+     "ko": "지환",
+     "en": "Cole"
+    },
+    {
+     "ko": "지성",
+     "en": "Grant"
+    },
+    {
+     "ko": "민규",
+     "en": "Reid"
+    },
+    {
+     "ko": "윤호",
+     "en": "Sean"
+    }
+   ],
+   "FEMALE": [
+    {
+     "ko": "지우",
+     "en": "Emma"
+    },
+    {
+     "ko": "서아",
+     "en": "Olivia"
+    },
+    {
+     "ko": "하린",
+     "en": "Ava"
+    },
+    {
+     "ko": "유나",
+     "en": "Sienna"
+    },
+    {
+     "ko": "소희",
+     "en": "Grace"
+    },
+    {
+     "ko": "민지",
+     "en": "Lily"
+    },
+    {
+     "ko": "채원",
+     "en": "Zoe"
+    },
+    {
+     "ko": "윤슬",
+     "en": "Stella"
+    },
+    {
+     "ko": "세라",
+     "en": "Claire"
+    },
+    {
+     "ko": "수아",
+     "en": "Mia"
+    },
+    {
+     "ko": "예린",
+     "en": "Hannah"
+    },
+    {
+     "ko": "다은",
+     "en": "Ella"
+    },
+    {
+     "ko": "가은",
+     "en": "Ruby"
+    },
+    {
+     "ko": "하윤",
+     "en": "Nora"
+    },
+    {
+     "ko": "지안",
+     "en": "Hazel"
+    },
+    {
+     "ko": "서윤",
+     "en": "Audrey"
+    },
+    {
+     "ko": "나연",
+     "en": "Ivy"
+    },
+    {
+     "ko": "보라",
+     "en": "Violet"
+    },
+    {
+     "ko": "은비",
+     "en": "Sadie"
+    },
+    {
+     "ko": "수빈",
+     "en": "Leah"
+    },
+    {
+     "ko": "지민",
+     "en": "Maya"
+    },
+    {
+     "ko": "예은",
+     "en": "Paige"
+    },
+    {
+     "ko": "민서",
+     "en": "Quinn"
+    },
+    {
+     "ko": "다인",
+     "en": "Molly"
+    },
+    {
+     "ko": "소윤",
+     "en": "Julia"
+    },
+    {
+     "ko": "채은",
+     "en": "Brooke"
+    },
+    {
+     "ko": "아린",
+     "en": "Elise"
+    },
+    {
+     "ko": "유진",
+     "en": "Jenna"
+    },
+    {
+     "ko": "혜원",
+     "en": "Rachel"
+    },
+    {
+     "ko": "서현",
+     "en": "Megan"
+    },
+    {
+     "ko": "하늘",
+     "en": "Skye"
+    }
+   ]
+  },
+  "ANGLO": {
+   "MALE": [
+    {
+     "ko": "알렉스",
+     "en": "Alex"
+    },
+    {
+     "ko": "샘",
+     "en": "Sam"
+    },
+    {
+     "ko": "대니얼",
+     "en": "Daniel"
+    },
+    {
+     "ko": "맥스",
+     "en": "Max"
+    },
+    {
+     "ko": "벤",
+     "en": "Ben"
+    },
+    {
+     "ko": "잭",
+     "en": "Jack"
+    },
+    {
+     "ko": "루크",
+     "en": "Luke"
+    },
+    {
+     "ko": "매튜",
+     "en": "Matthew"
+    },
+    {
+     "ko": "크리스",
+     "en": "Chris"
+    },
+    {
+     "ko": "제이크",
+     "en": "Jake"
+    },
+    {
+     "ko": "올리버",
+     "en": "Oliver"
+    },
+    {
+     "ko": "해리",
+     "en": "Harry"
+    },
+    {
+     "ko": "톰",
+     "en": "Tom"
+    },
+    {
+     "ko": "윌",
+     "en": "Will"
+    },
+    {
+     "ko": "조시",
+     "en": "Josh"
+    }
+   ],
+   "FEMALE": [
+    {
+     "ko": "에밀리",
+     "en": "Emily"
+    },
+    {
+     "ko": "소피",
+     "en": "Sophie"
+    },
+    {
+     "ko": "케이트",
+     "en": "Kate"
+    },
+    {
+     "ko": "루시",
+     "en": "Lucy"
+    },
+    {
+     "ko": "애나",
+     "en": "Anna"
+    },
+    {
+     "ko": "제시카",
+     "en": "Jessica"
+    },
+    {
+     "ko": "세라피나",
+     "en": "Serafina"
+    },
+    {
+     "ko": "엘리",
+     "en": "Ellie"
+    },
+    {
+     "ko": "앨리스",
+     "en": "Alice"
+    },
+    {
+     "ko": "매디",
+     "en": "Maddie"
+    },
+    {
+     "ko": "로라",
+     "en": "Laura"
+    },
+    {
+     "ko": "니나",
+     "en": "Nina"
+    },
+    {
+     "ko": "케이티",
+     "en": "Katie"
+    },
+    {
+     "ko": "에이미",
+     "en": "Amy"
+    },
+    {
+     "ko": "벨라",
+     "en": "Bella"
+    }
+   ]
+  },
+  "JP": {
+   "MALE": [
+    {
+     "ko": "하루토",
+     "en": "Haruto"
+    },
+    {
+     "ko": "렌",
+     "en": "Ren"
+    },
+    {
+     "ko": "소타",
+     "en": "Sota"
+    },
+    {
+     "ko": "유토",
+     "en": "Yuto"
+    },
+    {
+     "ko": "다이키",
+     "en": "Daiki"
+    },
+    {
+     "ko": "겐",
+     "en": "Ken"
+    },
+    {
+     "ko": "히로",
+     "en": "Hiro"
+    },
+    {
+     "ko": "다쿠미",
+     "en": "Takumi"
+    },
+    {
+     "ko": "료",
+     "en": "Ryo"
+    },
+    {
+     "ko": "가이토",
+     "en": "Kaito"
+    }
+   ],
+   "FEMALE": [
+    {
+     "ko": "유키",
+     "en": "Yuki"
+    },
+    {
+     "ko": "사쿠라",
+     "en": "Sakura"
+    },
+    {
+     "ko": "히나",
+     "en": "Hina"
+    },
+    {
+     "ko": "아오이",
+     "en": "Aoi"
+    },
+    {
+     "ko": "리코",
+     "en": "Riko"
+    },
+    {
+     "ko": "메이",
+     "en": "Mei"
+    },
+    {
+     "ko": "유이",
+     "en": "Yui"
+    },
+    {
+     "ko": "미오",
+     "en": "Mio"
+    },
+    {
+     "ko": "나나",
+     "en": "Nana"
+    },
+    {
+     "ko": "린",
+     "en": "Rin"
+    }
+   ]
+  },
+  "FR": {
+   "MALE": [
+    {
+     "ko": "위고",
+     "en": "Hugo"
+    },
+    {
+     "ko": "쥘리앵",
+     "en": "Julien"
+    },
+    {
+     "ko": "루이",
+     "en": "Louis"
+    },
+    {
+     "ko": "아르튀르",
+     "en": "Arthur"
+    },
+    {
+     "ko": "앙투안",
+     "en": "Antoine"
+    },
+    {
+     "ko": "바티스트",
+     "en": "Baptiste"
+    },
+    {
+     "ko": "마티외",
+     "en": "Mathieu"
+    },
+    {
+     "ko": "가브리엘",
+     "en": "Gabriel"
+    }
+   ],
+   "FEMALE": [
+    {
+     "ko": "카미유",
+     "en": "Camille"
+    },
+    {
+     "ko": "레아",
+     "en": "Léa"
+    },
+    {
+     "ko": "클로에",
+     "en": "Chloé"
+    },
+    {
+     "ko": "마농",
+     "en": "Manon"
+    },
+    {
+     "ko": "쥘리",
+     "en": "Julie"
+    },
+    {
+     "ko": "이네스",
+     "en": "Inès"
+    },
+    {
+     "ko": "루이즈",
+     "en": "Louise"
+    },
+    {
+     "ko": "엘로디",
+     "en": "Élodie"
+    }
+   ]
+  },
+  "DE": {
+   "MALE": [
+    {
+     "ko": "레온",
+     "en": "Leon"
+    },
+    {
+     "ko": "펠릭스",
+     "en": "Felix"
+    },
+    {
+     "ko": "요나스",
+     "en": "Jonas"
+    },
+    {
+     "ko": "파울",
+     "en": "Paul"
+    },
+    {
+     "ko": "니클라스",
+     "en": "Niklas"
+    },
+    {
+     "ko": "막시밀리안",
+     "en": "Maximilian"
+    },
+    {
+     "ko": "티모",
+     "en": "Timo"
+    },
+    {
+     "ko": "얀",
+     "en": "Jan"
+    }
+   ],
+   "FEMALE": [
+    {
+     "ko": "레나",
+     "en": "Lena"
+    },
+    {
+     "ko": "미리암",
+     "en": "Miriam"
+    },
+    {
+     "ko": "클라라",
+     "en": "Clara"
+    },
+    {
+     "ko": "리나",
+     "en": "Lina"
+    },
+    {
+     "ko": "프리다",
+     "en": "Frida"
+    },
+    {
+     "ko": "요한나",
+     "en": "Johanna"
+    },
+    {
+     "ko": "그레타",
+     "en": "Greta"
+    },
+    {
+     "ko": "안네",
+     "en": "Anne"
+    }
+   ]
+  },
+  "ES": {
+   "MALE": [
+    {
+     "ko": "마테오",
+     "en": "Mateo"
+    },
+    {
+     "ko": "디에고",
+     "en": "Diego"
+    },
+    {
+     "ko": "하비에르",
+     "en": "Javier"
+    },
+    {
+     "ko": "파블로",
+     "en": "Pablo"
+    },
+    {
+     "ko": "알레한드로",
+     "en": "Alejandro"
+    },
+    {
+     "ko": "카를로스",
+     "en": "Carlos"
+    }
+   ],
+   "FEMALE": [
+    {
+     "ko": "루시아",
+     "en": "Lucía"
+    },
+    {
+     "ko": "소피아",
+     "en": "Sofía"
+    },
+    {
+     "ko": "발렌티나",
+     "en": "Valentina"
+    },
+    {
+     "ko": "카밀라",
+     "en": "Camila"
+    },
+    {
+     "ko": "이사벨",
+     "en": "Isabel"
+    },
+    {
+     "ko": "마리아",
+     "en": "María"
+    }
+   ]
+  },
+  "IT": {
+   "MALE": [
+    {
+     "ko": "마르코",
+     "en": "Marco"
+    },
+    {
+     "ko": "로렌초",
+     "en": "Lorenzo"
+    },
+    {
+     "ko": "프란체스코",
+     "en": "Francesco"
+    },
+    {
+     "ko": "안드레아",
+     "en": "Andrea"
+    }
+   ],
+   "FEMALE": [
+    {
+     "ko": "줄리아",
+     "en": "Giulia"
+    },
+    {
+     "ko": "키아라",
+     "en": "Chiara"
+    },
+    {
+     "ko": "마르타",
+     "en": "Marta"
+    },
+    {
+     "ko": "프란체스카",
+     "en": "Francesca"
+    }
+   ]
+  },
+  "CN": {
+   "MALE": [
+    {
+     "ko": "웨이",
+     "en": "Wei"
+    },
+    {
+     "ko": "하오",
+     "en": "Hao"
+    },
+    {
+     "ko": "쥔제",
+     "en": "Junjie"
+    },
+    {
+     "ko": "쯔하오",
+     "en": "Zihao"
+    },
+    {
+     "ko": "천위",
+     "en": "Chenyu"
+    }
+   ],
+   "FEMALE": [
+    {
+     "ko": "링",
+     "en": "Ling"
+    },
+    {
+     "ko": "메이린",
+     "en": "Meilin"
+    },
+    {
+     "ko": "샤오위",
+     "en": "Xiaoyu"
+    },
+    {
+     "ko": "위퉁",
+     "en": "Yutong"
+    },
+    {
+     "ko": "슈",
+     "en": "Shu"
+    }
+   ]
+  },
+  "TH": {
+   "MALE": [
+    {
+     "ko": "아난",
+     "en": "Anan"
+    },
+    {
+     "ko": "끄릿",
+     "en": "Krit"
+    },
+    {
+     "ko": "논",
+     "en": "Non"
+    }
+   ],
+   "FEMALE": [
+    {
+     "ko": "쁘림",
+     "en": "Prim"
+    },
+    {
+     "ko": "나리",
+     "en": "Naree"
+    },
+    {
+     "ko": "빠이",
+     "en": "Pai"
+    }
+   ]
+  },
+  "VN": {
+   "MALE": [
+    {
+     "ko": "민",
+     "en": "Minh"
+    },
+    {
+     "ko": "투안",
+     "en": "Tuan"
+    },
+    {
+     "ko": "롱",
+     "en": "Long"
+    }
+   ],
+   "FEMALE": [
+    {
+     "ko": "린화",
+     "en": "Linh"
+    },
+    {
+     "ko": "마이",
+     "en": "Mai"
+    },
+    {
+     "ko": "투",
+     "en": "Thu"
+    }
+   ]
+  }
+ },
+ "pets": {
+  "DOG": [
+   {
+    "ko": "콩이",
+    "en": "Bean"
+   },
+   {
+    "ko": "보리",
+    "en": "Barley"
+   },
+   {
+    "ko": "몽이",
+    "en": "Mochi"
+   },
+   {
+    "ko": "초코",
+    "en": "Choco"
+   },
+   {
+    "ko": "두부",
+    "en": "Tofu"
+   }
+  ],
+  "CAT": [
+   {
+    "ko": "나비",
+    "en": "Luna"
+   },
+   {
+    "ko": "치즈",
+    "en": "Cheese"
+   },
+   {
+    "ko": "모모",
+    "en": "Momo"
+   },
+   {
+    "ko": "루루",
+    "en": "Lulu"
+   },
+   {
+    "ko": "까미",
+    "en": "Coco"
+   }
+  ]
+ },
+ "countries": {
+  "KR": "KR",
+  "KP": "KR",
+  "JP": "JP",
+  "CN": "CN",
+  "HK": "CN",
+  "MO": "CN",
+  "TW": "CN",
+  "SG": "CN",
+  "MY": "CN",
+  "TH": "TH",
+  "VN": "VN",
+  "FR": "FR",
+  "BE": "FR",
+  "CH": "FR",
+  "DE": "DE",
+  "AT": "DE",
+  "NL": "DE",
+  "ES": "ES",
+  "MX": "ES",
+  "AR": "ES",
+  "PE": "ES",
+  "CL": "ES",
+  "CO": "ES",
+  "PT": "ES",
+  "BR": "ES",
+  "IT": "IT",
+  "Korea": "KR",
+  "Japan": "JP",
+  "China": "CN",
+  "Singapore": "CN",
+  "France": "FR",
+  "Germany": "DE",
+  "Spain": "ES",
+  "Italy": "IT",
+  "USA": "ANGLO",
+  "UK": "ANGLO",
+  "Canada": "ANGLO",
+  "Australia": "ANGLO"
+ }
+}

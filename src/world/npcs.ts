@@ -6,16 +6,13 @@
 import type { GameDate } from "../core/gameDate";
 import type { SeededRandom } from "../core/rng";
 import { ENCOUNTER_RULES, getLocation, getNpcType, npcPoolFor, type NpcTypeDef } from "./catalog";
+import { cultureOf, pickName } from "./names";
 import type { Location, NPCSchedule, ScheduleBlock, WorldNpc, WorldState, WorldTime } from "./types";
 
-const LOCAL_NAMES = {
-  MALE: ["서준", "도윤", "하준", "지호", "민재", "현우", "태오", "시우", "준서", "Ren", "건우", "우진", "선우", "유찬", "은호", "승민", "재윤", "지훈", "민호", "태민"],
-  FEMALE: ["지우", "서아", "하린", "유나", "소희", "민지", "채원", "윤슬", "세라", "Mia", "수아", "예린", "다은", "가은", "하윤", "지안", "서윤", "나연", "보라", "은비"],
-};
-const FOREIGN_NAMES = {
-  MALE: ["Alex", "Leo", "Theo", "Lucas", "Hugo", "Kai", "Daniel", "Noah", "Sam", "Julien"],
-  FEMALE: ["Emma", "Chloé", "Nina", "Léa", "Sophie", "Maya", "Ella", "Camille", "Rin", "Ava"],
-};
+/** Where a region is (trips abroad); home regions are wherever you live now. */
+const REGION_COUNTRY: Record<string, string> = { paris: "France", tokyo: "Japan" };
+/** Foreigners you might meet: in Korea mostly English speakers; abroad, sometimes a fellow Korean. */
+const VISITOR_CULTURES = ["ANGLO", "ANGLO", "ANGLO", "JP", "FR", "DE", "ES", "CN"];
 
 export function createWorldState(homeRegion = "home_city"): WorldState {
   return {
@@ -42,6 +39,10 @@ export interface NpcSpawn {
   schedule?: NPCSchedule;
   /** Age bands of the place ([min, max, weight]); without it the NPC is a peer of `aroundAge`. */
   ageMix?: Array<[number, number, number]>;
+  /** A person of this sex (a partner who must match who you like). Random otherwise. */
+  sex?: "MALE" | "FEMALE";
+  /** Where they're from ("Korea", "JP"…); otherwise where they are. */
+  country?: string;
 }
 
 type AgeBand = [number, number, number];
@@ -66,16 +67,19 @@ function ageFor(t: NpcTypeDef, spawn: NpcSpawn, rng: SeededRandom): number {
 
 export function generateNpc(world: WorldState, rng: SeededRandom, spawn: NpcSpawn): WorldNpc {
   const t = getNpcType(spawn.type);
-  const sex = rng.chance(0.5) ? "MALE" : "FEMALE";
-  const foreign = spawn.region !== world.homeRegion && spawn.region !== "coast" ? rng.chance(0.85) : rng.chance(t.foreignChance);
+  const sex = spawn.sex ?? (rng.chance(0.5) ? "MALE" : "FEMALE");
+  // Names follow the place: locals of where this is (where you live, or the trip's city), sometimes a visitor.
+  const here = cultureOf(REGION_COUNTRY[spawn.region] ?? world.country ?? "Korea");
+  const online = spawn.region === "online";
+  const visitor = online ? rng.chance(0.5) : rng.chance(t.foreignChance >= 1 ? 1 : here === "KR" ? t.foreignChance : 0.12);
+  const culture = spawn.country ? cultureOf(spawn.country) : visitor ? (here === "KR" ? VISITOR_CULTURES[rng.int(0, VISITOR_CULTURES.length - 1)] : "KR") : here;
+  const foreign = culture !== "KR";
   // Avoid giving a new NPC the same name as someone the player already knows.
-  const known = new Set([...Object.keys(world.relationships).map((id) => world.npcs[id]?.name), ...Object.values(world.npcs).filter((n) => n.fated || n.deceased).map((n) => n.name)]);
-  const all = foreign ? FOREIGN_NAMES[sex] : LOCAL_NAMES[sex];
-  const names = all.filter((n) => !known.has(n)).length ? all.filter((n) => !known.has(n)) : all;
+  const known = [...Object.keys(world.relationships).map((id) => world.npcs[id]?.name), ...Object.values(world.npcs).filter((n) => n.fated || n.deceased).map((n) => n.name)];
   const age = ageFor(t, spawn, rng);
   const npc: WorldNpc = {
     id: `w${world.nextNpcId++}`,
-    name: names[rng.int(0, names.length - 1)],
+    name: pickName(sex, culture, rng, known),
     type: t.id,
     sex,
     birthYear: spawn.date.year - age,

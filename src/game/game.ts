@@ -33,6 +33,7 @@ import { weekdayOf, seasonOf } from "../world/clock";
 import { generateNpc, habitSlot, knowsName } from "../world/npcs";
 import { aliveSiblings, siblingSender } from "../story/family";
 import { type CrowdState, stepCrowd } from "../world/walkers";
+import { nameEn, pickName } from "../world/names";
 import { bondPhase, hasBond, pendingMeetings, updateBond, type BondEnd } from "../story/bond";
 import { lifeEvent, nextDueEvent, pendingApplies, rollLifeEvents, weekdayOnly } from "../story/lifeEvents";
 import { resolveLifeEvent, resolveStaleEvents } from "../story/lifeEventRuntime";
@@ -476,6 +477,8 @@ export class Game {
     };
     s.minute = CFG.dayStartMinute;
     s.loc = undefined;
+    // People you meet now are locals of where you live (Tokyo → Japanese names).
+    if (st.world) st.world.country = st.location.country;
     s.dayPlan = {};
     s.pending = undefined;
     this.director.startDay(s.dayIndex, rng);
@@ -1556,14 +1559,13 @@ function addFatedPerson(st: LifeState, setup: GameSetup, life: FatedLife, rng: S
       : from === "abroad" && life.job.place === "language_exchange_app"
         ? { weekday: [block("language_exchange_app", 21, [1, 3, 5])], weekend: [] }
         : { weekday: [], weekend: [] };
-  const npc = generateNpc(w, rng, { type: from === "abroad" ? "language_partner" : "regular_customer", region: from === "abroad" ? "online" : home.region, date: st.date, aroundAge: st.age, persistence: "PERSISTENT", schedule });
-  npc.sex = gender === "M" ? "MALE" : "FEMALE";
+  // Someone from where they live (a Tokyo developer gets a Japanese name unless setup named them).
+  const npc = generateNpc(w, rng, { type: from === "abroad" ? "language_partner" : "regular_customer", region: from === "abroad" ? "online" : home.region, date: st.date, aroundAge: st.age, persistence: "PERSISTENT", schedule, sex: gender === "M" ? "MALE" : "FEMALE", country: from === "abroad" ? life.city.country : "Korea" });
   if (fx.name) {
     npc.name = fx.name;
     // Nobody else in this world may share the destined person's name.
-    const pool = ["서준", "도윤", "하준", "지호", "민재", "현우", "지우", "서아", "하린", "유나", "소희", "민지"];
-    for (const other of Object.values(w.npcs)) if (other !== npc && other.name === fx.name) other.name = pool[rng.int(0, pool.length - 1)];
-    for (const n of st.npcs) if (n.name === fx.name) n.name = pool[rng.int(0, pool.length - 1)];
+    for (const other of Object.values(w.npcs)) if (other !== npc && other.name === fx.name) other.name = pickName(other.sex, "KR", rng, [fx.name]);
+    for (const n of st.npcs) if (n.name === fx.name) n.name = pickName(n.birth.sex, "KR", rng, [fx.name]);
   }
   if (fx.birth) Object.assign(npc, { birthYear: fx.birth.year, birthMonth: fx.birth.month, birthDay: fx.birth.day });
   npc.single = true;
@@ -1591,7 +1593,6 @@ const SIBLING_REL: Record<string, SiblingRel> = {
   언니: "OLDER_SISTER", 누나: "OLDER_SISTER", 오빠: "OLDER_BROTHER", 형: "OLDER_BROTHER", 남동생: "YOUNGER_BROTHER", 여동생: "YOUNGER_SISTER",
   OLDER_SISTER: "OLDER_SISTER", OLDER_BROTHER: "OLDER_BROTHER", YOUNGER_SISTER: "YOUNGER_SISTER", YOUNGER_BROTHER: "YOUNGER_BROTHER",
 };
-const FAMILY_NAMES = { MALE: ["민수", "지훈", "현우", "성민", "준호", "동현", "태윤"], FEMALE: ["지은", "수진", "민지", "서연", "하은", "유진", "혜린"] };
 
 /** Parents (alive or not), siblings and grandparents from setup; anything missing is filled in plausibly. */
 function applyFamilySetup(st: LifeState, setup: GameSetup, rng: SeededRandom): void {
@@ -1610,8 +1611,7 @@ function applyFamilySetup(st: LifeState, setup: GameSetup, rng: SeededRandom): v
     const older = rel.startsWith("OLDER");
     const sex = x.gender ? (x.gender === "M" ? "MALE" : "FEMALE") : rel.endsWith("BROTHER") ? "MALE" : "FEMALE";
     const gap = x.gap ?? (older ? rng.int(1, 5) : -rng.int(1, 5));
-    const pool = FAMILY_NAMES[sex];
-    return [{ id: `sib${i + 1}`, rel, name: x.name ?? pool[rng.int(0, pool.length - 1)], sex, birthYear: x.birthYear ?? setup.birth.year - gap, alive: true, spriteSeed: rng.int(0, 999_999) } as Sibling];
+    return [{ id: `sib${i + 1}`, rel, name: x.name?.trim() || pickName(sex, "KR", rng), sex, birthYear: x.birthYear ?? setup.birth.year - gap, alive: true, spriteSeed: rng.int(0, 999_999) } as Sibling];
   });
   // Grandparents: however many are still alive at the start (default: 0–2).
   const n = Math.max(0, Math.min(4, fx.grandparents ?? rng.weighted([{ item: 0, weight: 3 }, { item: 1, weight: 4 }, { item: 2, weight: 3 }])));

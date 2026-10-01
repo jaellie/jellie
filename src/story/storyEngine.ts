@@ -11,6 +11,7 @@
  *    pets aging) happens off-screen — and even those leave a memory card.
  */
 import { bondPhase, pendingMeetings } from "./bond";
+import { cultureOf, nameKo, petName, pickName } from "../world/names";
 import fatedData from "../../data/story/fatedEvents.json";
 import arcData from "../../data/story/arcs.json";
 import { SeededRandom } from "../core/rng";
@@ -104,7 +105,15 @@ const ARC_ORDER: Record<ArcType, string[]> = {
 };
 const IN_PERSON = ["FIRST_DATE", "FIRST_FIGHT", "MEET_FRIENDS"];
 const COUNTRY_NAME: Record<string, string> = { JP: "Japan", US: "USA", CA: "Canada", DE: "Germany", AU: "Australia", GB: "UK", SG: "Singapore", FR: "France" };
-const PET_NAMES = { DOG: ["콩이", "보리", "몽이", "초코", "두부"], CAT: ["나비", "치즈", "모모", "레오", "까미"] };
+/** The sex the player is drawn to (for someone new to date). */
+function likedSex(state: LifeState, rng: SeededRandom): "MALE" | "FEMALE" {
+  const likes = String(state.flags.likes ?? (state.birth.sex === "FEMALE" ? "M" : "F"));
+  return likes === "A" ? (rng.chance(0.5) ? "MALE" : "FEMALE") : likes === "M" ? "MALE" : "FEMALE";
+}
+/** Names that fit where you live now (kids born in Tokyo may get Japanese names). Korean at home. */
+function localCulture(state: LifeState): string {
+  return cultureOf(state.location.country);
+}
 export const RETIRE_AGE = 60;
 const FRIEND_CARD_CAP = 2;
 const FRIEND_CARD_GAP = 60;
@@ -302,6 +311,7 @@ export function monthlyStoryTick(state: LifeState, rng: SeededRandom): void {
   if (!st) return;
   const w = state.world;
   const age = Math.floor(state.age);
+  if (w) w.country = state.location.country;
   ensureArcs(state, rng);
   // Living together with the destined person: their pay adds to the household (a doctor more than a barista).
   const fatedPid = state.relationship.partnerId;
@@ -783,7 +793,7 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
       case "startDatingFated": {
         let npc = w ? Object.values(w.npcs).find((n) => n.fated) : undefined;
         if (w && !npc) {
-          npc = generateNpc(w, rng, { type: "regular_customer", region: w.homeRegion, date: state.date, aroundAge: state.age, persistence: "PERSISTENT" });
+          npc = generateNpc(w, rng, { type: "regular_customer", region: w.homeRegion, date: state.date, aroundAge: state.age, persistence: "PERSISTENT", sex: likedSex(state, rng) });
           npc.fated = true;
         }
         if (npc) {
@@ -798,26 +808,25 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
       case "startDatingNew": {
         // Someone new (a blind date, a friend's introduction) — not the destined person.
         if (!w) break;
-        const likes = String(state.flags.likes ?? (state.birth.sex === "FEMALE" ? "M" : "F"));
-        const npc = generateNpc(w, rng, { type: "regular_customer", region: w.homeRegion, date: state.date, aroundAge: state.age, persistence: "PERSISTENT" });
-        npc.sex = likes === "A" ? (rng.chance(0.5) ? "MALE" : "FEMALE") : likes === "M" ? "MALE" : "FEMALE";
+        // Born the sex you like — so the name fits too (a boyfriend is never 예린).
+        const npc = generateNpc(w, rng, { type: "regular_customer", region: w.homeRegion, date: state.date, aroundAge: state.age, persistence: "PERSISTENT", sex: likedSex(state, rng) });
         beginDating(state, npc, rng);
         break;
       }
       case "addKids": {
         // Twins (or more): names picked for them.
         const n = Number(eff.count ?? 1);
-        const names = ["하늘", "바다", "서윤", "도윤", "하린", "지호", "이안", "소이"].filter((x) => !(state.kids ?? []).some((k) => k.name === x));
         for (let i = 0; i < n; i++) {
-          const name = names.splice(rng.int(0, names.length - 1), 1)[0] ?? `아가${i + 1}`;
-          (state.kids ??= []).push({ id: `kid${(state.kids?.length ?? 0) + 1}`, name, sex: rng.chance(0.5) ? "MALE" : "FEMALE", bornYear: state.date.year, bornMonth: state.date.month, spriteSeed: rng.int(0, 999999) });
+          const sex = rng.chance(0.5) ? "MALE" : "FEMALE";
+          const name = pickName(sex, localCulture(state), rng, (state.kids ?? []).map((k) => k.name));
+          (state.kids ??= []).push({ id: `kid${(state.kids?.length ?? 0) + 1}`, name, sex, bornYear: state.date.year, bornMonth: state.date.month, spriteSeed: rng.int(0, 999999) });
         }
         break;
       }
       case "adoptKid": {
         const age = rng.int(2, 6);
-        const names = ["별", "새봄", "다온", "라온", "해온"];
-        (state.kids ??= []).push({ id: `kid${(state.kids?.length ?? 0) + 1}`, name: names[rng.int(0, names.length - 1)], sex: rng.chance(0.5) ? "MALE" : "FEMALE", bornYear: state.date.year - age, bornMonth: rng.int(1, 12), spriteSeed: rng.int(0, 999999) });
+        const sex = rng.chance(0.5) ? "MALE" : "FEMALE";
+        (state.kids ??= []).push({ id: `kid${(state.kids?.length ?? 0) + 1}`, name: pickName(sex, localCulture(state), rng, (state.kids ?? []).map((k) => k.name)), sex, bornYear: state.date.year - age, bornMonth: rng.int(1, 12), spriteSeed: rng.int(0, 999999) });
         break;
       }
       case "startDatingEx": {
@@ -826,9 +835,8 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
         const wn = ex && w ? w.npcs[ex.id] : undefined;
         if (wn && !wn.deceased) beginDating(state, wn, rng);
         else if (ex && w) {
-          const npc = generateNpc(w, rng, { type: "regular_customer", region: w.homeRegion, date: state.date, aroundAge: state.age, persistence: "PERSISTENT" });
+          const npc = generateNpc(w, rng, { type: "regular_customer", region: w.homeRegion, date: state.date, aroundAge: state.age, persistence: "PERSISTENT", sex: ex.birth.sex });
           npc.name = ex.name;
-          npc.sex = ex.birth.sex;
           beginDating(state, npc, rng);
         }
         break;
@@ -899,10 +907,9 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
         if (!fam) break;
         const twin = !!eff.twin;
         const sex = rng.chance(0.5) ? "MALE" : "FEMALE";
-        const names = sex === "MALE" ? ["준서", "태민", "시우"] : ["서희", "지안", "예린"];
         const birthYear = twin ? state.birth.year : state.birth.year + rng.int(3, 15);
         const rel = twin ? (sex === "MALE" ? "OLDER_BROTHER" : "OLDER_SISTER") : sex === "MALE" ? "YOUNGER_BROTHER" : "YOUNGER_SISTER";
-        (fam.siblings ??= []).push({ id: `sib${(fam.siblings?.length ?? 0) + 1}`, rel, name: names[rng.int(0, 2)], sex, birthYear, alive: true, spriteSeed: rng.int(0, 999999) });
+        (fam.siblings ??= []).push({ id: `sib${(fam.siblings?.length ?? 0) + 1}`, rel, name: pickName(sex, "KR", rng, (fam.siblings ?? []).map((x) => x.name)), sex, birthYear, alive: true, spriteSeed: rng.int(0, 999999) });
         break;
       }
       case "queueEvent":
@@ -1038,8 +1045,7 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
       }
       case "adoptPet": {
         const species = eff.species as "DOG" | "CAT";
-        const names = PET_NAMES[species];
-        const pet = { id: `pet${(state.pets?.length ?? 0) + 1}`, name: names[rng.int(0, names.length - 1)], species, adoptedYear: state.date.year, ageAtAdoption: rng.int(0, 3), alive: true, spriteSeed: rng.int(0, 999999) };
+        const pet = { id: `pet${(state.pets?.length ?? 0) + 1}`, name: petName(species, rng), species, adoptedYear: state.date.year, ageAtAdoption: rng.int(0, 3), alive: true, spriteSeed: rng.int(0, 999999) };
         (state.pets ??= []).push(pet);
         break;
       }
@@ -1056,8 +1062,10 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
         endArc(state, "RETIREMENT");
         break;
       case "addKid": {
-        const name = src.choiceLabel ?? "아가";
-        (state.kids ??= []).push({ id: `kid${(state.kids?.length ?? 0) + 1}`, name, sex: rng.chance(0.5) ? "MALE" : "FEMALE", bornYear: state.date.year, bornMonth: state.date.month, spriteSeed: rng.int(0, 999999) });
+        // Stored in its Korean form (the English UI shows the English pair); the name says boy or girl.
+        const known = src.choiceLabel ? nameKo(src.choiceLabel) : undefined;
+        const name = known?.ko ?? src.choiceLabel ?? "아가";
+        (state.kids ??= []).push({ id: `kid${(state.kids?.length ?? 0) + 1}`, name, sex: known && known.ko !== "하늘" ? known.sex : rng.chance(0.5) ? "MALE" : "FEMALE", bornYear: state.date.year, bornMonth: state.date.month, spriteSeed: rng.int(0, 999999) });
         if (state.flags.twins) {
           // Twins: the second one gets a name too.
           delete state.flags.twins;

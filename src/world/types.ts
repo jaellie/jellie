@@ -288,6 +288,8 @@ export interface WorldTime {
 export interface WorldState {
   /** Region the player currently lives in (home base). */
   homeRegion: string;
+  /** Country the player lives in now ("Korea", "Japan"…): local people get that country's names. */
+  country?: string;
   npcs: Record<string, WorldNpc>;
   /** "npcId@locationId" → history */
   encounters: Record<string, EncounterHistory>;

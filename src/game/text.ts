@@ -1,4 +1,5 @@
 /** Small bilingual helpers for the game runtime. */
+import { nameEn } from "../world/names";
 import { findPlace } from "../destiny/birthplace";
 export type Lang = "ko" | "en";
 export type Bi = { ko: string; en: string };
@@ -141,8 +142,6 @@ const FAMILY_EN: Record<string, string> = {
   오빠: "my older brother", 형: "my older brother", 누나: "my older sister", 언니: "my older sister",
   남동생: "my younger brother", 여동생: "my younger sister", 동생: "my younger sibling",
   엄마: "Mom", 아빠: "Dad", 조카: "my niece/nephew", 사촌: "my cousin",
-  // Pet names that are words (a cat called 치즈 is Cheese).
-  치즈: "Cheese", 초코: "Choco", 두부: "Tofu", 레오: "Leo", 모모: "Momo", 나비: "Nabi", 콩이: "Kongi", 까미: "Kkami",
 };
 
 const INI = ["g", "kk", "n", "d", "tt", "r", "m", "b", "pp", "s", "ss", "", "j", "jj", "ch", "k", "t", "p", "h"];
@@ -168,10 +167,10 @@ export function romanize(hangul: string): string {
   return out.charAt(0).toUpperCase() + out.slice(1);
 }
 
-/** English text with no Korean left: family words translated, names romanized. */
+/** English text with no Korean left: family words translated, NPC names in their English form (서준 → Noah), other names romanized. */
 export function englishOnly(text: string): string {
   if (!/[가-힣]/.test(text)) return text;
-  return text.replace(/[가-힣]+/g, (w) => FAMILY_EN[w] ?? romanize(w));
+  return text.replace(/[가-힣]+/g, (w) => FAMILY_EN[w] ?? nameEn(w) ?? romanize(w));
 }
 
 /** Deep copy of a UI payload with every string made English-only. */

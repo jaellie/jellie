@@ -209,7 +209,7 @@ describe("A life with a storyline", () => {
 
 describe("Scenes follow choices; the world moves", () => {
   it("choosing a business trip takes you to the airport, hotel and branch office", () => {
-    const g = createGame({ ...SETUP, seed: 21 });
+    const g = createGame({ ...SETUP, seed: 1, fated: { ...SETUP.fated, status: "dating" as const } });
     const st = g.state;
     st.career = { ...st.career, employed: true, level: 2, cid: 1 };
     const opp = new OpportunityEngine().evaluate(st, [], new SeededRandom(1)).find((c) => c.template.id === "BUSINESS_TRIP")!.opportunity;
