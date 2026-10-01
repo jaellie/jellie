@@ -124,6 +124,7 @@ export function applyConsequence(s: LifeState, c: Consequence, ctx: ConsequenceC
     }
     case "marry":
       s.relationship = { ...s.relationship, status: "MARRIED", longDistance: false };
+      s.flags.weddingMonth = s.monthIndex;
       s.familyObligation = Math.min(1, s.familyObligation + 0.15);
       log.push("married");
       break;

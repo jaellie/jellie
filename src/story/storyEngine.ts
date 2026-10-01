@@ -177,7 +177,7 @@ export function initStory(state: LifeState, birth: BirthData, place: BirthPlace 
 /** Calm days only when nothing big happens for a long while (keeps a life ≈ 18–22 played days). */
 function maxGapMonths(age: number): number {
   // Young years are where the love story happens: never years without a played day.
-  return age < 32 ? 30 : age < 40 ? 44 : age < 60 ? 84 : 124;
+  return age < 32 ? 30 : age < 40 ? 56 : age < 60 ? 100 : 140;
 }
 
 /** Fated events coming soon that deserve a hint today (shown on whatever day comes before them). */
@@ -207,6 +207,8 @@ export function scheduleNext(state: LifeState, rng: SeededRandom): NonNullable<S
     if (step) cands.push({ month: Math.max(now + 1, step.dueMonth), kind: "arc", ref: a.id, prio: 2 });
   }
   cands.push({ month: now + Math.max(2, Math.round(maxGapMonths(state.age) * rng.range(0.75, 1))), kind: "calm", prio: 0 });
+  // A celebration coming up (100일, an anniversary, a birthday) gets a day.
+  for (const o of st.occasions ?? []) if (o.big && o.month > now) cands.push({ month: o.month, kind: "calm", prio: 1 });
   // An urgent follow-up (the loan shark at the door) or a life-changing event (coming out, a jackpot) brings a day.
   const wanted = eventDayWanted(state);
   if (wanted !== undefined) cands.push({ month: Math.max(now + 1, wanted), kind: "calm", prio: 1 });
@@ -329,9 +331,53 @@ export function ensureArcs(state: LifeState, rng: SeededRandom): void {
 // Off-screen monthly background (small life; always leaves a card)
 // ---------------------------------------------------------------------------
 
+/**
+ * Little celebrations on their own days: 100일 and dating anniversaries, wedding anniversaries (the
+ * round ones always, others sometimes), and — now and then, never every year — your birthday or your
+ * partner's coming up. Queued a month ahead; scheduleNext gives them a day.
+ */
+function queueOccasions(state: LifeState, rng: SeededRandom): void {
+  const st = state.story!;
+  const m = state.monthIndex;
+  // Stale ones (the day never came) quietly pass.
+  const q = (st.occasions = (st.occasions ?? []).filter((o) => m - o.month <= 4));
+  const last = (st.occasionLast ??= {});
+  const add = (kind: NonNullable<StoryState["occasions"]>[number]["kind"], n?: number, big = false) => {
+    if (q.some((o) => o.kind === kind)) return;
+    q.push({ kind, month: m + 1, n, ...(big ? { big } : {}) });
+    last[kind] = m + 1;
+  };
+  const rel = state.relationship;
+  const partnered = (rel.status === "DATING" || rel.status === "MARRIED") && !!rel.partnerId;
+  if (rel.status === "DATING" && rel.sinceMonth !== undefined) {
+    const months = m + 1 - rel.sinceMonth;
+    if (months === 3) add("anniv100", undefined, true);
+    else if (months === 12) add("datingAnniv", 1, true);
+    else if (months > 12 && months % 12 === 0 && rng.chance(0.4)) add("datingAnniv", months / 12);
+  }
+  const wed = state.flags.weddingMonth as number | undefined;
+  if (rel.status === "MARRIED" && wed !== undefined) {
+    const months = m + 1 - wed;
+    const n = months / 12;
+    if (months > 0 && months % 12 === 0 && [1, 5, 10, 20, 30, 40, 50].includes(n)) add("weddingAnniv", n, true);
+    else if (months > 0 && months % 12 === 0 && rng.chance(0.15)) add("weddingAnniv", n);
+  }
+  const nextMonth = (state.date.month % 12) + 1;
+  const sometimes = (kind: string) => (last[kind] === undefined || m - last[kind] >= 30) && rng.chance(0.3);
+  if (nextMonth === state.birth.month && sometimes("myBirthday")) add("myBirthday");
+  const p = partnered ? state.world?.npcs[rel.partnerId!] : undefined;
+  if (p && nextMonth === p.birthMonth && sometimes("partnerBirthday")) add("partnerBirthday");
+}
+
+/** The celebration waiting for today, if any (taken off the queue when it plays). */
+export function dueOccasion(state: LifeState): NonNullable<StoryState["occasions"]>[number] | undefined {
+  return state.story?.occasions?.find((o) => o.month <= state.monthIndex && state.monthIndex - o.month <= 4);
+}
+
 export function monthlyStoryTick(state: LifeState, rng: SeededRandom): void {
   const st = state.story;
   if (!st) return;
+  queueOccasions(state, rng);
   const w = state.world;
   const age = Math.floor(state.age);
   if (w) w.country = state.location.country;

@@ -96,5 +96,9 @@ export interface StoryState {
   bond?: import("./bond").Bond;
   /** Destined person left entirely to fate: who the chart says they are (lifelong spouse or last love), and why. */
   fateMode?: import("./marriageFate").FateMode;
+  /** Little celebrations waiting for their day: 100일, anniversaries, birthdays (see occasions.json). */
+  occasions?: Array<{ kind: "anniv100" | "datingAnniv" | "weddingAnniv" | "myBirthday" | "partnerBirthday"; month: number; n?: number; /** Worth a day of its own (100일, the first anniversary, round wedding years); the rest ride along on a nearby day. */ big?: boolean }>;
+  /** When each kind of occasion last came (month index) — birthdays aren't every year. */
+  occasionLast?: Record<string, number>;
   fateSigns?: string[];
 }

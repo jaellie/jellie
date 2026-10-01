@@ -15,6 +15,7 @@
 import oppText from "../../data/game/opportunityText.json";
 import messageData from "../../data/game/messages.json";
 import funData from "../../data/game/weekendFun.json";
+import occasionData from "../../data/story/occasions.json";
 import storyData from "../../data/game/stories.json";
 import type { GameDate } from "../core/gameDate";
 import { SeededRandom } from "../core/rng";
@@ -43,7 +44,7 @@ import "../story/eventLibrary";
 import { yearSignalMap } from "../story/destinyScript";
 import { type AstrologyChart, calculateAstrologyChart } from "../astrology/chart";
 import { compatibility } from "../destiny/compatibility";
-import { type BirthplaceInput, findPlace, resolveBirth } from "../destiny/birthplace";
+import { type BirthplaceInput, PLACES, type PlaceInfo, findPlace, resolveBirth } from "../destiny/birthplace";
 import { pickMood } from "../story/mood";
 import { type RoadView, buildRoad } from "../world/road";
 import { readingOf } from "../story/reading";
@@ -58,7 +59,7 @@ import { focusOf, toPrototypeScene, withPositions, type PrototypeScene } from ".
 import { WorldEngine } from "../world/worldEngine";
 import type { NPCSchedule } from "../world/types";
 import { type LifeFacts, computeFacts, meets } from "./facts";
-import { STORY_ONLY_TEMPLATES, isBigMoment, startArc, eventDayWanted, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
+import { STORY_ONLY_TEMPLATES, dueOccasion, isBigMoment, startArc, eventDayWanted, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent } from "../story/storyEngine";
 import { buildCards, type MemoryCard } from "../story/cards";
 import memorialData from "../../data/story/memorial.json";
 import { AutoWorldPolicy } from "../world/decisions";
@@ -118,7 +119,9 @@ export interface GameSetup {
      * in the air; the game plays the texts, the not-a-date, the jealousy, up to the confession
      * ("crush" means the same). "stranger": you don't know each other yet — start from the first meeting.
      */
-    status?: "dating" | "talking" | "acquaintance" | "crush" | "stranger";
+    status?: "married" | "dating" | "talking" | "acquaintance" | "crush" | "stranger";
+    /** married: the wedding date; dating: the day you got together. The story starts on that day (anniversaries follow it). */
+    since?: { year: number; month: number; day?: number };
     /**
      * Leave them entirely to fate (also when nothing about them is given): the chart decides who they are —
      * the one you marry and grow old with, or, for a solitary chart (혼자 살 사주), your last love.
@@ -153,7 +156,7 @@ export interface DayInfo {
 
 export interface Popup {
   id: string;
-  source: "opportunity" | "world" | "story" | "plan" | "event";
+  source: "opportunity" | "world" | "story" | "plan" | "event" | "occasion";
   /** Portrait role: me | mom | dad | boss | partner | friend | npc | stranger … */
   who: string;
   name?: string;
@@ -211,6 +214,8 @@ interface Pending {
   vars?: Record<string, string>;
   /** A life event from the library (see story/lifeEvents). */
   eventUid?: string;
+  /** A celebration (100일, an anniversary, a birthday): its choices' replies. */
+  occasion?: Array<{ ko: string; en: string }>;
 }
 
 export interface PlanOption {
@@ -227,7 +232,7 @@ export interface PlanOption {
 
 interface AgendaItem {
   t: number;
-  k: "major" | "small" | "message" | "plan" | "story" | "story2" | "hint" | "event";
+  k: "major" | "small" | "message" | "plan" | "story" | "story2" | "hint" | "event" | "occasion";
 }
 
 export interface GameSave {
@@ -555,6 +560,8 @@ export class Game {
         } else s.dayPlan.sequence = [seg];
       }
     }
+    // A celebration due (100일, an anniversary, a birthday coming up): its own moment, never on a grave day.
+    if (dueOccasion(st) && !graveDay) agenda.push({ t: storyDef ? 1110 : 690, k: "occasion" });
     // The day's mood: a feeling that foreshadows (the chart, what's coming) — not a log of what happened.
     const mood = pickMood(st, this.facts(), this.yearSignals(), this.rng("mood"), s.recentMoods ?? []);
     s.recentMoods = [...(s.recentMoods ?? []), mood.ko].slice(-5);
@@ -746,6 +753,7 @@ export class Game {
     if (item.k === "story") return this.fireStory();
     if (item.k === "story2") return this.fireStory(2);
     if (item.k === "event") return this.fireEvent();
+    if (item.k === "occasion") return this.fireOccasion();
     if (item.k === "hint") return; // old saves: hints now live in the mood line
     if (item.k === "major") return this.fireMajor();
     if (item.k === "small") return this.fireSmall();
@@ -813,6 +821,35 @@ export class Game {
       scene: this.s.lastScene ? (JSON.parse(JSON.stringify(this.s.lastScene)) as PrototypeScene) : undefined, // a snapshot (wander() keeps moving the live scene)
     };
     s.pending = { popup, storyRef: def.ref, patient, vars };
+    return { kind: "popup", popup };
+  }
+
+  private fireOccasion(): Beat | undefined {
+    const st = this.state;
+    const o = dueOccasion(st);
+    if (!o) return;
+    st.story!.occasions = st.story!.occasions!.filter((x) => x !== o);
+    const def = (OCCASIONS as Record<string, OccasionDef>)[o.kind];
+    const f = this.facts();
+    const solo = !f.partnered && !!def.solo;
+    if (!f.partnered && !solo) return;
+    const vars = { n: String(o.n ?? 1) };
+    const sub = (b: Bi) => this.fill(fillStory(this.L(b), st, f, vars));
+    const choices = solo ? def.soloChoices ?? def.choices : def.choices;
+    const who = solo ? "me" : def.who;
+    const popup: Popup = {
+      id: `occ${this.s.dayIndex}-${o.kind}`,
+      source: "occasion",
+      who,
+      name: this.speaker(who),
+      ...this.portrait(who === "partner" ? "partner" : who),
+      title: sub(def.title),
+      line: sub(solo ? def.solo! : def.line),
+      ch: choices.map((c) => ({ t: sub(c.t) })),
+      big: true,
+      scene: this.s.lastScene ? (JSON.parse(JSON.stringify(this.s.lastScene)) as PrototypeScene) : undefined,
+    };
+    this.s.pending = { popup, occasion: choices.map((c) => ({ ko: fillStory(c.r.ko, st, f, vars), en: fillStory(c.r.en, st, f, vars) })), vars };
     return { kind: "popup", popup };
   }
 
@@ -1088,6 +1125,11 @@ export class Game {
       applyConsequences(st, c.effects ?? [], { rng, modifiers: mods, log: [] });
       return { who: story.who === "me" ? "me" : story.who, name: p.popup.name, line: this.fill(this.L(c.r)) };
     }
+    if (p.occasion) {
+      const r = p.occasion[index] ?? p.occasion[0];
+      st.flags.lastOccasionMonth = st.monthIndex;
+      return { who: "me", line: this.fill(this.L(r)), log: p.popup.ch[index]?.t };
+    }
     if (p.plan) {
       const o = p.plan[index];
       if (o.kind === "trip") {
@@ -1215,6 +1257,12 @@ export class Game {
         // So can a life event that came up meanwhile: an urgent follow-up, or a life-changing one that has waited long enough.
         const wanted = eventDayWanted(st);
         if (wanted !== undefined && wanted <= st.monthIndex + 1 && st.story.nextDay!.month > st.monthIndex + 1) {
+          st.story.nextDay = { month: st.monthIndex + 1, kind: "calm" };
+          break;
+        }
+        // …and so can a celebration (100일, an anniversary, a birthday coming up).
+        const occ = st.story.occasions?.find((o) => o.big && o.month <= st.monthIndex + 1);
+        if (occ && st.story.nextDay!.month > st.monthIndex + 1) {
           st.story.nextDay = { month: st.monthIndex + 1, kind: "calm" };
           break;
         }
@@ -1541,8 +1589,13 @@ export function createGame(input: GameSetup): Game {
   const runner = new LifeRunner({ ...g.runnerOptions(hash(seed, "backstory")), mortality: false, excludeTemplates: ["PROPOSAL", "RELATIONSHIP_STRAIN", "LAYOFF", "FAMILY_NEED"] });
   save.life = runner.state;
   // The story starts now — in 2026, on your birthday (never younger than 18).
-  const startAge = setup.startAge ?? Math.max(18, Number((CFG as { startYear?: number }).startYear ?? 2026) - setup.birth.year);
-  while (runner.state.monthIndex < startAge * 12) runner.stepMonth();
+  // The story starts in your youth (청춘, 20) — or on the day it began, when you're already together or married.
+  const since = setup.fated?.since;
+  const together = setup.fated?.status === "dating" || setup.fated?.status === "married";
+  const sinceMonths = together && since ? (since.year - setup.birth.year) * 12 + (since.month - setup.birth.month) : undefined;
+  const startMonths = setup.startAge !== undefined ? setup.startAge * 12 : sinceMonths !== undefined ? Math.max(18 * 12, sinceMonths) : YOUTH_AGE * 12;
+  const startAge = Math.floor(startMonths / 12);
+  while (runner.state.monthIndex < startMonths) runner.stepMonth();
   const st = save.life;
   st.alive = true;
   // The game begins single (unless setup says you're already with the destined person); earlier loves become exes.
@@ -1560,7 +1613,7 @@ export function createGame(input: GameSetup): Game {
   applyFamilySetup(st, setup, new SeededRandom(hash(seed, "family")));
   applyMyJob(st, setup.job);
   // Where you live now; without it, where you were born (never a random city).
-  applyHome(st, setup.home ?? (typeof setup.birthplace === "string" ? setup.birthplace : undefined) ?? setup.place?.name);
+  applyHome(st, setup.home ?? birthplaceCity(setup));
   const fatedLife = resolveFatedLife({ from: setup.fated?.from, job: setup.fated?.job, city: setup.fated?.city, birthplace: setup.fated?.birthplace }, { city: st.location.city }, new SeededRandom(hash(seed, "fatedLife")));
   addFatedPerson(st, setup, fatedLife, new SeededRandom(hash(seed, "fated")));
   // Their chart too: the year you meet is one that's good for *both* of you.
@@ -1571,10 +1624,15 @@ export function createGame(input: GameSetup): Game {
   st.story!.fatedLife = fatedLife;
   // Already dating, or already in 썸: the story starts there — no "first meeting" to wait for.
   const status = setup.fated?.status === "crush" ? "talking" : setup.fated?.status ?? (setup.fated?.name ? "talking" : "stranger");
-  // Strangers and acquaintances wait for the destined year; a couple or a 썸 starts right there.
-  if (status === "dating" || status === "talking") {
+  // Strangers and acquaintances wait for the destined year; a couple, a marriage or a 썸 starts right there.
+  if (status === "dating" || status === "talking" || status === "married") {
     const first = st.story!.script.findIndex((e) => e.theme === "LOVE_MEETING");
     if (first >= 0) st.story!.script.splice(first, 1);
+  }
+  // Already married: no proposal or wedding to wait for — the anniversaries count from the wedding day.
+  if (status === "married") {
+    st.story!.script = st.story!.script.filter((e) => e.theme !== "MARRIAGE");
+    st.story!.arcs = st.story!.arcs.filter((a) => a.type !== "DATING" && a.type !== "ENGAGEMENT");
   }
   if (status === "talking") startArc(st, "TALKING", new SeededRandom(hash(seed, "talking")));
   // Hidden 궁합 with the destined person (never shown; it bends love outcomes as part of the chart's 70%).
@@ -1639,6 +1697,26 @@ function sealFate(st: LifeState, setup: GameSetup, rng: SeededRandom): void {
 const ISO_COUNTRY: Record<string, string> = { KR: "Korea", JP: "Japan", US: "USA", CA: "Canada", DE: "Germany", AU: "Australia", GB: "UK", SG: "Singapore", FR: "France" };
 
 /** Setup: where you live now (the plot's home, not the charts). Living abroad counts as abroad. */
+/** The birthplace as a city name (a name, an object with a name, or the nearest city to its coordinates). */
+function birthplaceCity(setup: GameSetup): string | undefined {
+  const b = setup.birthplace as unknown;
+  if (typeof b === "string") return b;
+  const o = (b ?? setup.place) as { name?: string; lat?: number; lon?: number } | undefined;
+  if (o?.name && findPlace(o.name)) return o.name;
+  if (o && typeof o.lat === "number" && typeof o.lon === "number") {
+    let best: PlaceInfo | undefined, d = Infinity;
+    for (const p of PLACES) {
+      const dd = (p.lat - o.lat!) ** 2 + (p.lon - o.lon!) ** 2;
+      if (dd < d) (d = dd), (best = p);
+    }
+    return best?.en;
+  }
+  return undefined;
+}
+
+/** Where a story that hasn't begun yet starts: your youth. */
+const YOUTH_AGE = 20;
+
 function applyHome(st: LifeState, home: string | undefined): void {
   const place = home ? findPlace(home) : undefined;
   if (!place) return;
@@ -1736,14 +1814,19 @@ function addFatedPerson(st: LifeState, setup: GameSetup, life: FatedLife, rng: S
   const acquaintance = status === "acquaintance";
   if (status === "stranger") return;
   const origin = { type: (from === "abroad" ? "LANGUAGE_EXCHANGE_APP" : "FRIEND_OF_FRIEND") as RelationshipOriginType, locationId: home.id, firstEncounterDate: { ...st.date } };
-  w.relationships[npc.id] = { npcId: npc.id, stage: status === "dating" ? "PARTNER" : "ACQUAINTANCE", closeness: status === "dating" ? 0.6 : acquaintance ? 0.25 : 0.4, spark: status === "dating" ? 0.7 : acquaintance ? 0.1 : 0.35, conversations: acquaintance ? 3 : 8, origin, lastContact: { ...st.date }, channel: from === "abroad" ? "ONLINE" : "IN_PERSON", metOffline: from !== "abroad" };
-  if (status === "dating") {
+  const couple = status === "dating" || status === "married";
+  w.relationships[npc.id] = { npcId: npc.id, stage: couple ? "PARTNER" : "ACQUAINTANCE", closeness: couple ? 0.6 : acquaintance ? 0.25 : 0.4, spark: couple ? 0.7 : acquaintance ? 0.1 : 0.35, conversations: acquaintance ? 3 : 8, origin, lastContact: { ...st.date }, channel: from === "abroad" ? "ONLINE" : "IN_PERSON", metOffline: from !== "abroad" };
+  if (status === "dating" || status === "married") {
     npc.single = false;
     const birth = { year: npc.birthYear, month: npc.birthMonth, day: npc.birthDay, sex: npc.sex };
     st.npcs.push({ id: npc.id, name: npc.name, birth, chart: calculateNatalChart(birth), role: "PARTNER", metAt: { ...st.date } });
-    st.relationship = { status: "DATING", partnerId: npc.id, sinceMonth: st.monthIndex };
+    st.relationship = { status: status === "married" ? "MARRIED" : "DATING", partnerId: npc.id, sinceMonth: st.monthIndex };
     st.flags.lastPartnerName = npc.name;
     st.flags.skipFirstDate = true; // already a couple: no "first date" day
+    if (status === "married") {
+      st.flags.weddingMonth = st.monthIndex;
+      st.flags.longterm = true;
+    }
   }
 }
 
@@ -1791,6 +1874,10 @@ export function splitSpeakerTag(text: string): { tag?: string; text: string } {
   const t = text.trimStart();
   return { tag: m[2], text: (m[1] ?? "") + t.slice(m[0].length) };
 }
+
+type OccasionChoice = { t: Bi; r: Bi };
+type OccasionDef = { title: Bi; who: string; location: string; line: Bi; solo?: Bi; choices: OccasionChoice[]; soloChoices?: OccasionChoice[] };
+const OCCASIONS = occasionData as unknown as Record<string, OccasionDef>;
 
 type FunPick = { loc: string; act: string; label: Bi; r: Bi; season?: string };
 type FunSet = { couple: FunPick[]; solo: FunPick[] };

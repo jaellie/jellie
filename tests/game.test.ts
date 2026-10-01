@@ -214,11 +214,11 @@ describe("Save / load / determinism", () => {
     expect(copy.hud()).toEqual(g.hud());
   });
 
-  it("starts single in 2026 (at your real age) with a visible HUD and scene", () => {
-    const g = createGame({ ...SETUP, seed: 51 });
+  it("starts single in your youth (청춘, 20) with a visible HUD and scene", () => {
+    const g = createGame({ ...SETUP, seed: 51, fated: { ...SETUP.fated, status: "talking" as const } });
     expect(g.facts().single).toBe(true);
-    expect(g.s.day!.date.year).toBe(2026);
-    expect(g.s.day!.age).toBe(2026 - SETUP.birth.year);
+    expect(g.s.day!.age).toBe(20);
+    expect(g.s.day!.date.year).toBe(SETUP.birth.year + 20);
     g.advance(500);
     expect(g.hud().date).toMatch(/^\d{4}\.\d{2}\.\d{2}/);
     expect(g.scene()).toBeDefined();

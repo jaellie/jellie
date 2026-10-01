@@ -77,7 +77,8 @@ export function myJobOptions(lang: "ko" | "en" = "ko"): { question: string; jobs
 /** Setup choices for the UI. */
 export function fatedOptions(lang: "ko" | "en" = "ko"): {
   statusQuestion: string;
-  statuses: Array<{ id: "dating" | "talking" | "acquaintance" | "stranger"; name: string; hint: string }>;
+  /** married / dating come with a date to ask for (dateLabel): send it as fated.since — the story starts that day. */
+  statuses: Array<{ id: "married" | "dating" | "talking" | "acquaintance" | "stranger"; name: string; hint: string; dateLabel?: string }>;
   lives: Array<{ id: FatedFrom; name: string; hint: string }>;
   /** The city field (shown when they live in another city or country): label + guide line under it. */
   cityLabel: string;
@@ -88,9 +89,10 @@ export function fatedOptions(lang: "ko" | "en" = "ko"): {
   return {
     cityLabel: ko ? "그 사람이 사는 도시" : "The city they live in",
     cityHint: ko ? "목록에 없다면 가장 가까운 지역을 선택하세요" : "Not on the list? Pick the nearest city",
-    statusQuestion: ko ? "지금 두 사람, 사귀고 있나요?" : "Are you two dating right now?",
+    statusQuestion: ko ? "지금 두 사람, 어떤 사이인가요?" : "What are you two right now?",
     statuses: [
-      { id: "dating", name: ko ? "응, 사귀는 중이야" : "Yes, we're together", hint: ko ? "연인인 상태로 시작해요" : "Start as a couple" },
+      { id: "married", name: ko ? "네, 지금 결혼했어요" : "We're married", hint: ko ? "결혼한 날부터 시작해요" : "Start from your wedding day", dateLabel: ko ? "결혼한 날" : "Wedding date" },
+      { id: "dating", name: ko ? "네, 지금 사귀고 있어요" : "We're dating", hint: ko ? "사귀기 시작한 날부터 — 100일, 기념일마다 축하해요" : "From the day you got together — with 100-day and anniversary celebrations", dateLabel: ko ? "사귀기 시작한 날" : "The day you got together" },
       { id: "talking", name: ko ? "아니, 썸 타는 중" : "No, but we're talking", hint: ko ? "썸에서 첫 고백까지" : "From the talking stage to the first confession" },
       { id: "acquaintance", name: ko ? "아니, 아직 그냥 아는 사이야" : "No, we just know each other", hint: ko ? "아는 사이에서, 운명의 순간까지" : "From just knowing each other to the moment it changes" },
       { id: "stranger", name: ko ? "아니, 아직 서로 몰라" : "No, we haven't met", hint: ko ? "첫 만남부터 시작해요" : "Start from the first meeting" },
@@ -114,22 +116,26 @@ export function resolveFatedLife(
   home: { city: string },
   rng: SeededRandom,
 ): FatedLife {
-  const from: FatedFrom = fx.from ?? (rng.chance(0.6) ? "same" : rng.chance(0.6) ? "city" : "abroad");
   const known = findFatedJob(fx.job);
   const job: FatedJob = known ?? (fx.job ? { id: "custom", ko: fx.job, en: fx.job, place: "cafe", shift: "day", income: 0.5 } : FATED_JOBS[rng.int(0, FATED_JOBS.length - 1)]);
   const homePlace = findPlace(home.city) ?? PLACES.find((p) => p.id === "seoul")!;
   let place: PlaceInfo | undefined = fx.city ? findPlace(fx.city) : undefined;
+  // Their city decides it, measured from where *you* live: you in New York, them in Busan → abroad.
+  const from: FatedFrom = place ? (place.id === homePlace.id ? "same" : place.country === homePlace.country ? "city" : "abroad") : fx.from ?? (rng.chance(0.6) ? "same" : rng.chance(0.6) ? "city" : "abroad");
   if (from === "same") place = homePlace;
   else if (from === "city") {
     if (!place || place.country !== homePlace.country || place.id === homePlace.id) {
-      const opts = KOREA_OTHER.filter((id) => id !== homePlace.id);
-      place = PLACES.find((p) => p.id === opts[rng.int(0, opts.length - 1)]);
+      // Another city in your own country (Korea: the usual suspects; elsewhere: the gazetteer).
+      const opts = homePlace.country === "KR" ? KOREA_OTHER.filter((id) => id !== homePlace.id) : PLACES.filter((p) => p.country === homePlace.country && p.id !== homePlace.id).map((p) => p.id);
+      place = opts.length ? PLACES.find((p) => p.id === opts[rng.int(0, opts.length - 1)]) : undefined;
     }
   } else {
     const born = typeof fx.birthplace === "string" ? findPlace(fx.birthplace) : undefined;
     if (!place || place.country === homePlace.country) place = born && born.country !== homePlace.country ? born : undefined;
     if (!place) {
-      const id = ABROAD_DEFAULTS[rng.int(0, ABROAD_DEFAULTS.length - 1)];
+      // Abroad from where you live (living in New York, "abroad" can be Seoul).
+      const opts = ABROAD_DEFAULTS.filter((id) => PLACES.find((p) => p.id === id)?.country !== homePlace.country);
+      const id = opts[rng.int(0, opts.length - 1)];
       place = PLACES.find((p) => p.id === id);
     }
   }

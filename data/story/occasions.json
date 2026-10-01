@@ -1,0 +1,259 @@
+{
+ "_doc": "Little celebrations on their own days: 100일, dating anniversaries (1st always, later ones sometimes), wedding anniversaries (1, 5, 10, 20… always; others sometimes), and — now and then, not every year — your birthday or your partner's coming up. {partner} = partner, {n} = years, {spouse} = 남편/아내.",
+ "anniv100": {
+  "title": {
+   "ko": "100일",
+   "en": "Day 100"
+  },
+  "who": "partner",
+  "location": "restaurant",
+  "line": {
+   "ko": "(오늘이 우리 100일이다.) …100일 축하해. 벌써 100일이야, 우리.",
+   "en": "(Today is your 100th day together.) …Happy 100 days. A hundred already, us."
+  },
+  "choices": [
+   {
+    "t": {
+     "ko": "준비한 꽃다발을 내민다",
+     "en": "Hand over the bouquet you prepared"
+    },
+    "r": {
+     "ko": "{partner}이(가) 꽃에 얼굴을 묻고 한참 웃었다.",
+     "en": "{partner} buried their face in the flowers and laughed for a long time."
+    }
+   },
+   {
+    "t": {
+     "ko": "커플 사진 앨범을 선물한다",
+     "en": "Give a photo album of the two of you"
+    },
+    "r": {
+     "ko": "첫 장에 붙은 어색한 첫 사진에서 둘 다 빵 터졌다.",
+     "en": "The awkward first photo on page one cracked you both up."
+    }
+   },
+   {
+    "t": {
+     "ko": "(아무것도 준비 못 했다… 솔직하게 말한다)",
+     "en": "(You prepared nothing… confess honestly)"
+    },
+    "r": {
+     "ko": "'괜찮아. 이렇게 같이 있는 게 선물이야.' …다음엔 꼭 준비하자.",
+     "en": "'It's fine. Being here together is the gift.' …Next time, definitely prepare something."
+    }
+   }
+  ]
+ },
+ "datingAnniv": {
+  "title": {
+   "ko": "{n}주년",
+   "en": "Our {n}-year anniversary"
+  },
+  "who": "partner",
+  "location": "restaurant",
+  "line": {
+   "ko": "(사귄 지 {n}년.) 우리 {n}주년이다! 오늘은 어디 갈까?",
+   "en": "({n} years together.) It's our {n}-year anniversary! Where should we go today?"
+  },
+  "choices": [
+   {
+    "t": {
+     "ko": "처음 만난 곳으로 가자",
+     "en": "Let's go back to where we first met"
+    },
+    "r": {
+     "ko": "그곳은 그대로였다. 우리는 조금 더 가까워져 있었다.",
+     "en": "The place was the same. You two were a little closer."
+    }
+   },
+   {
+    "t": {
+     "ko": "근사한 레스토랑 예약해 뒀어",
+     "en": "I booked a nice restaurant"
+    },
+    "r": {
+     "ko": "촛불 너머 {partner}의 얼굴이 처음 만난 날처럼 설렜다.",
+     "en": "Across the candlelight, {partner} looked as thrilling as the day you met."
+    }
+   },
+   {
+    "t": {
+     "ko": "집에서 둘이 케이크 하나면 충분해",
+     "en": "Just a cake at home, the two of us"
+    },
+    "r": {
+     "ko": "촛불을 끄며 같은 소원을 빌었다. 서로에게 말하진 않았다.",
+     "en": "You blew out the candle making the same wish. Neither of you said it out loud."
+    }
+   }
+  ]
+ },
+ "weddingAnniv": {
+  "title": {
+   "ko": "결혼 {n}주년",
+   "en": "Wedding anniversary: {n} years"
+  },
+  "who": "partner",
+  "location": "restaurant",
+  "line": {
+   "ko": "(결혼 {n}주년.) …벌써 {n}년이네. 그날 기억나?",
+   "en": "({n} years married.) …{n} years already. Remember that day?"
+  },
+  "choices": [
+   {
+    "t": {
+     "ko": "웨딩 사진을 다시 꺼내 본다",
+     "en": "Take out the wedding photos again"
+    },
+    "r": {
+     "ko": "사진 속 우리는 참 어렸다. 지금의 우리가 더 좋다.",
+     "en": "How young you both looked. You like who you are now better."
+    }
+   },
+   {
+    "t": {
+     "ko": "그날처럼 다시 춤을 춘다",
+     "en": "Dance again, like that day"
+    },
+    "r": {
+     "ko": "거실에서 서툰 스텝을 밟았다. 발을 세 번 밟혔다. 행복했다.",
+     "en": "Clumsy steps in the living room. Your foot got stepped on three times. Pure happiness."
+    }
+   },
+   {
+    "t": {
+     "ko": "앞으로 {n}년도 잘 부탁해",
+     "en": "Here's to {n} more years"
+    },
+    "r": {
+     "ko": "{partner}이(가) 손을 꼭 잡았다. 대답은 그걸로 충분했다.",
+     "en": "{partner} squeezed your hand. That was answer enough."
+    }
+   }
+  ]
+ },
+ "myBirthday": {
+  "title": {
+   "ko": "내 생일",
+   "en": "My birthday"
+  },
+  "who": "partner",
+  "location": "home",
+  "line": {
+   "ko": "(곧 내 생일이다.) 생일에 뭐 하고 싶어? 다 해 줄게.",
+   "en": "(Your birthday is coming up.) What do you want to do on your birthday? Anything you want."
+  },
+  "solo": {
+   "ko": "(곧 내 생일이다. 올해는 어떻게 보낼까?)",
+   "en": "(Your birthday is coming up. How should you spend it this year?)"
+  },
+  "choices": [
+   {
+    "t": {
+     "ko": "둘이서 조용히 저녁 먹자",
+     "en": "A quiet dinner, just us"
+    },
+    "r": {
+     "ko": "케이크 위 초가 하나 모자랐다. 둘이서 한참 웃었다.",
+     "en": "The cake was one candle short. You two laughed for ages."
+    }
+   },
+   {
+    "t": {
+     "ko": "친구들 다 불러서 생일 파티!",
+     "en": "Throw a party with all my friends!"
+    },
+    "r": {
+     "ko": "노래를 세 번이나 불렀다. 목이 쉬었지만 최고의 생일.",
+     "en": "Three rounds of the birthday song. Voice gone, best birthday ever."
+    }
+   },
+   {
+    "t": {
+     "ko": "그냥 평소처럼 보내고 싶어",
+     "en": "I just want an ordinary day"
+    },
+    "r": {
+     "ko": "평범한 하루였다. 그래서 더 좋았다.",
+     "en": "An ordinary day. That's what made it good."
+    }
+   }
+  ],
+  "soloChoices": [
+   {
+    "t": {
+     "ko": "친구들이랑 생일 파티",
+     "en": "A birthday party with friends"
+    },
+    "r": {
+     "ko": "단톡방에 축하가 쏟아졌다. 괜히 울컥했다.",
+     "en": "The group chat flooded with wishes. You got a little choked up."
+    }
+   },
+   {
+    "t": {
+     "ko": "혼자 케이크 사서 조촐하게",
+     "en": "A small cake, just for you"
+    },
+    "r": {
+     "ko": "촛불을 끄고 소원을 빌었다. 내년엔 누군가와 함께이길.",
+     "en": "You blew out the candle and wished: next year, with someone."
+    }
+   },
+   {
+    "t": {
+     "ko": "본가에 가서 미역국 먹기",
+     "en": "Go home for birthday seaweed soup"
+    },
+    "r": {
+     "ko": "엄마의 미역국은 여전히 세상에서 제일 맛있었다.",
+     "en": "Mom's seaweed soup is still the best in the world."
+    }
+   }
+  ]
+ },
+ "partnerBirthday": {
+  "title": {
+   "ko": "{partner}의 생일",
+   "en": "{partner}'s birthday"
+  },
+  "who": "me",
+  "location": "home",
+  "line": {
+   "ko": "(다음 주가 {partner}의 생일이다. 뭘 준비할까?)",
+   "en": "(Next week is {partner}'s birthday. What should you prepare?)"
+  },
+  "choices": [
+   {
+    "t": {
+     "ko": "깜짝 파티를 준비한다",
+     "en": "Plan a surprise party"
+    },
+    "r": {
+     "ko": "문이 열리는 순간 {partner}이(가) 소리를 질렀다. 그리고 울었다.",
+     "en": "When the door opened, {partner} screamed — then cried."
+    }
+   },
+   {
+    "t": {
+     "ko": "갖고 싶다던 걸 몰래 산다",
+     "en": "Secretly buy the thing they wanted"
+    },
+    "r": {
+     "ko": "'이거 어떻게 알았어?!' 몇 달 전 지나가듯 한 말이었다.",
+     "en": "'How did you know?!' Something they'd mentioned months ago, in passing."
+    }
+   },
+   {
+    "t": {
+     "ko": "손편지와 직접 만든 케이크",
+     "en": "A handwritten letter and a homemade cake"
+    },
+    "r": {
+     "ko": "케이크는 조금 기울었다. {partner}은(는) 편지를 세 번 읽었다.",
+     "en": "The cake leaned a little. {partner} read the letter three times."
+    }
+   }
+  ]
+ }
+}

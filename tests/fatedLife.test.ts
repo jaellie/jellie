@@ -51,14 +51,17 @@ describe("The destined person's life (where they live, their job)", () => {
     expect(love.signals.some((t) => t.startsWith("상대:"))).toBe(true);
   });
 
-  it("same neighborhood: you meet where they work (the barista at your café, the doctor in the ER)", () => {
+  it("same neighborhood: you meet where they work (the barista at your café, the doctor in the ER) — or now and then on an app", () => {
+    let atWork = 0;
     for (const [job, place] of [["barista", "cafe"], ["doctor", "hospital"], ["trainer", "gym"]] as const) {
-      const g = createGame({ ...JAE, seed: 2, fated: { ...JUNG, from: "same", job, status: "stranger" } });
-      expect(meetPlan(g.state, false).location).toBe(place);
-      const e = g.state.story!.script.find((x) => x.theme === "LOVE_MEETING")!;
-      const def = storyPopup(g.state, "fated", e.id, g.facts(), new SeededRandom(1), { peek: true })!;
-      expect(def.location).toBe(place);
+      for (const seed of [2, 3, 4]) {
+        const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "same", job, status: "stranger" } });
+        const loc = meetPlan(g.state, false).location;
+        expect([place, "dating_app", "instagram"]).toContain(loc);
+        if (loc === place) atWork++;
+      }
     }
+    expect(atWork).toBeGreaterThan(4);
   });
 
   it("a missed meeting isn't the end: fate brings them around again (at most twice)", () => {
@@ -332,13 +335,31 @@ describe("The English version stays English; the story starts in 2026", () => {
     expect(hits).toEqual([]);
   });
 
-  it("starts in 2026 at your real age (never younger than 18) when you're already together / in 썸", () => {
-    const g = createGame({ ...JAE, seed: 1, fated: { ...JUNG, status: "dating" } });
-    expect(g.state.date.year).toBe(2026);
-    expect(Math.floor(g.state.age)).toBe(29);
+  it("starts on the day you got together / got married — or in your youth (20)", () => {
+    const g = createGame({ ...JAE, seed: 1, fated: { ...JUNG, status: "dating", since: { year: 2024, month: 5, day: 3 } } });
+    expect(g.state.date.year).toBe(2024);
+    expect(g.state.relationship.status).toBe("DATING");
     expect(g.s.day?.prologue).toBeUndefined();
-    const young = createGame({ ...JAE, birth: { year: 2012, month: 3, day: 1 }, seed: 1, fated: { ...JUNG, status: "talking" } });
-    expect(Math.floor(young.state.age)).toBe(18);
+    const wed = createGame({ ...JAE, seed: 1, fated: { ...JUNG, status: "married", since: { year: 2022, month: 10, day: 9 } } });
+    expect(wed.state.date.year).toBe(2022);
+    expect(wed.state.relationship.status).toBe("MARRIED");
+    expect(wed.state.story!.script.some((e) => e.theme === "MARRIAGE" || e.theme === "LOVE_MEETING")).toBe(false);
+    const talking = createGame({ ...JAE, seed: 1, fated: { ...JUNG, status: "talking" } });
+    expect(Math.floor(talking.state.age)).toBe(20);
+  });
+
+  it("celebrations: 100일 and anniversaries, sometimes a birthday coming up", () => {
+    const g = createGame({ ...JAE, seed: 3, fated: { ...JUNG, from: "same", status: "dating", since: { year: 2020, month: 1, day: 1 } } });
+    const titles: string[] = [];
+    for (let d = 0; d < 14 && !g.isOver(); d++) {
+      for (let i = 0; i < 400; i++) {
+        const bs = g.advance(g.s.minute + 30);
+        for (const b of bs) if (b.kind === "popup") { if (b.popup.source === "occasion") titles.push(b.popup.title ?? ""); g.choose(0); }
+        if (bs.some((b) => b.kind === "dayEnd")) break;
+      }
+      g.endDay();
+    }
+    expect(titles).toContain("100일");
   });
 
   it("strangers: the years before the meeting pass off-screen — the first day IS the meeting", () => {
@@ -346,15 +367,15 @@ describe("The English version stays English; the story starts in 2026", () => {
       const g = createGame({ ...JAE, seed: 1, fated: { ...JUNG, from: "same", status } });
       expect(g.s.dayKind).toBe("fated");
       expect(g.state.story!.script.find((e) => e.id === g.s.dayRef)?.theme).toBe("LOVE_MEETING");
-      expect(g.state.date.year).toBeGreaterThanOrEqual(2026);
-      if (g.state.date.year > 2026) expect(g.s.day?.prologue).toMatch(/그 사람을 만나기까지, \d+년이 흘렀다/);
+      expect(g.state.date.year).toBeGreaterThanOrEqual(JAE.birth.year + 20);
+      if (g.state.date.year > JAE.birth.year + 20) expect(g.s.day?.prologue).toMatch(/그 사람을 만나기까지, \d+년이 흘렀다/);
     }
   });
 });
 
 describe("'아니, 아직 그냥 아는 사이야' (acquaintance)", () => {
   it("you know each other's names but there's no 썸; the destined year brings the confession", () => {
-    expect(fatedOptions("ko").statuses.map((s) => s.id)).toEqual(["dating", "talking", "acquaintance", "stranger"]);
+    expect(fatedOptions("ko").statuses.map((s) => s.id)).toEqual(["married", "dating", "talking", "acquaintance", "stranger"]);
     const g = createGame({ ...JAE, seed: 4, fated: { ...JUNG, from: "same", status: "acquaintance" } });
     const f = g.facts();
     expect(f.fatedKnown).toBe(true);
@@ -520,5 +541,20 @@ describe("Without a home city, you live where you were born", () => {
   it("born in New York → the story starts in New York (not a random Korean city)", () => {
     const g = createGame({ ...JAE, seed: 5, birthplace: "New York", fated: { ...JUNG, status: "dating" } });
     expect(g.state.location).toEqual({ country: "USA", city: "New York" });
+  });
+});
+
+describe("Where they live is measured from where you live", () => {
+  it("you in New York, them in Busan → abroad, and they really are in Busan (never a random Tokyo)", () => {
+    for (const from of ["abroad", "city", "same"] as const) {
+      const g = createGame({ ...JAE, seed: 3, home: "New York", fated: { ...JUNG, from, city: "부산", status: "stranger" } });
+      expect(g.state.location.city).toBe("New York");
+      expect(g.state.story!.fatedLife!.city.id).toBe("busan");
+      expect(g.state.story!.fatedLife!.from).toBe("abroad");
+    }
+  });
+  it("without a home city, a birthplace given as coordinates still sets where you live", () => {
+    const g = createGame({ ...JAE, seed: 3, birthplace: { lat: 40.71, lon: -74.0 } as never, fated: { ...JUNG, status: "dating" } });
+    expect(g.state.location.city).toBe("New York");
   });
 });

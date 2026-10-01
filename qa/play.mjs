@@ -65,12 +65,13 @@ if (!EN) {
   if ((await page.locator("#fName").inputValue()) !== "제이") issue("default name is not 제이");
 }
 await snap("setup");
-if ((await page.getByTestId("fated-status").locator("option").count()) !== 4) issue("'are you two dating?' should offer 4 answers");
+if ((await page.getByTestId("fated-status").locator("option").count()) !== 5) issue("'what are you two?' should offer 5 answers (married … stranger)");
 if ((await page.getByTestId("fated-job").locator("option").count()) < 40) issue("too few jobs for the destined person");
 if ((await page.getByTestId("my-job").locator("option").count()) < 44) issue("too few jobs for me");
 if (args.myjob) await page.getByTestId("my-job").selectOption(args.myjob);
 if (args.home) await page.getByTestId("home").fill(args.home);
 if (args.status) await page.getByTestId("fated-status").selectOption(args.status);
+if (args.since) { const [y, m, d] = args.since.split("-"); await page.getByTestId("since-year").fill(y); await page.locator("#fSM").fill(m); await page.locator("#fSD").fill(d ?? "1"); }
 if (args.from) await page.getByTestId("fated-from").selectOption(args.from);
 if (args.job) await page.getByTestId("fated-job").selectOption(args.job);
 if ((await page.locator("#fY").inputValue()) !== "1997" || (await page.locator("#fM").inputValue()) !== "9" || (await page.locator("#fD").inputValue()) !== "28") issue("default birth date is not 1997-09-28");

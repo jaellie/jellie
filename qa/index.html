@@ -250,6 +250,7 @@
     <h2>운명의 상대</h2>
     <label>이름 (비워두면 운명에 맡기기)</label><input id="fFated" value="Ren">
     <label id="fFsQ">지금 두 사람, 사귀고 있나요?</label><select id="fFs" data-testid="fated-status"></select>
+    <div id="fSinceBox"><label id="fSinceL">사귀기 시작한 날</label><div class="row"><input id="fSY" placeholder="년" data-testid="since-year"><input id="fSM" placeholder="월"><input id="fSD" placeholder="일"></div></div>
     <label>상대는 어디서 살까요?</label><select id="fFrom" data-testid="fated-from"></select>
     <div id="fCityBox"><label id="fFCityL">그 사람이 사는 도시</label><input id="fFCity" value="" list="places" autocomplete="off" data-testid="fated-city">
     <div class="hint" id="fFCityHint" data-testid="fated-city-hint"></div></div>
@@ -612,6 +613,9 @@
     $("fFsQ").textContent = o.statusQuestion;
     $("fFs").innerHTML = o.statuses.map((x) => `<option value="${x.id}">${x.name}</option>`).join("");
     $("fFs").value = d.fated.status;
+    // 결혼했어요 / 사귀고 있어요 → ask for the day it began (the story starts there; anniversaries follow it).
+    const sinceBox = () => { const st = o.statuses.find((x) => x.id === $("fFs").value); $("fSinceBox").style.display = st && st.dateLabel ? "block" : "none"; if (st && st.dateLabel) $("fSinceL").textContent = st.dateLabel; };
+    $("fFs").onchange = sinceBox; sinceBox();
     $("fFrom").innerHTML = o.lives.map((x) => `<option value="${x.id}">${x.name} — ${x.hint}</option>`).join("");
     $("fFCityL").textContent = o.cityLabel; $("fFCityHint").textContent = o.cityHint;
     // The city field only matters when they live in another city or country.
@@ -661,7 +665,7 @@
       family: { mom: { alive: v("fMom") === "1" }, dad: { alive: v("fDad") === "1" }, siblings, grandparents: num("fGp") },
       birthplace: v("fPlace") || undefined,
       home: v("fHome") || undefined,
-      fated: { name: v("fFated") || undefined, from: v("fFrom"), status: v("fFs"), job: v("fFJob") || undefined, city: v("fFCity") || undefined, birth: fb, birthplace: v("fFPlace") || undefined },
+      fated: { name: v("fFated") || undefined, since: num("fSY") && num("fSM") ? { year: num("fSY"), month: num("fSM"), day: num("fSD") } : undefined, from: v("fFrom"), status: v("fFs"), job: v("fFJob") || undefined, city: v("fFCity") || undefined, birth: fb, birthplace: v("fFPlace") || undefined },
     });
     window.__qa.game = game;
     drawRoad(game.road()); seedRoad();
