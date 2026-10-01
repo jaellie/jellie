@@ -49,6 +49,7 @@ import { pickMood } from "../story/mood";
 import { type RoadView, buildRoad } from "../world/road";
 import { readingOf } from "../story/reading";
 import { confessFate } from "../story/confessFate";
+import { photoFor } from "../integration/prototype";
 import { homeVars, nationCode } from "../story/nationality";
 import { type FatedFrom, type FatedLife, fatedVars, findFatedJob, resolveFatedLife } from "../story/fatedProfile";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
@@ -823,6 +824,33 @@ export class Game {
     return news ? `${line} ${t}` : `${t} ${line}`;
   }
 
+  /**
+   * The popup picture: a snapshot of the scene. On a painted background only you — and, when the moment
+   * is about them, your partner / the one you're falling for — stand in it (photoCast), even if the
+   * live scene hadn't placed them yet.
+   */
+  private photoScene(withWho?: "partner" | "fated"): PrototypeScene | undefined {
+    const st = this.state;
+    if (!this.s.lastScene) return undefined;
+    const sc = JSON.parse(JSON.stringify(this.s.lastScene)) as PrototypeScene;
+    if (!sc.photo) return sc;
+    const me = sc.actors.find((a) => a.role === "me");
+    const cast = me ? [me.who] : [];
+    const fatedNpc = Object.values(st.world?.npcs ?? {}).find((n) => n.fated);
+    const id = withWho === "partner" ? st.relationship.partnerId : withWho === "fated" ? fatedNpc?.id : undefined;
+    const npc = id ? st.world?.npcs[id] : undefined;
+    if (id && npc && !npc.deceased) {
+      let a = sc.actors.find((x) => x.role === withWho || x.who === id);
+      if (!a && me) {
+        a = { ...me, who: id, role: withWho!, name: npc.name, seed: npc.spriteSeed, gender: npc.sex === "MALE" ? "M" : "F", fated: !!npc.fated, familiar: true } as typeof me;
+        sc.actors.push(a);
+      }
+      if (a) cast.push(a.who);
+    }
+    sc.photoCast = cast;
+    return sc;
+  }
+
   private fireEvent(): Beat | undefined {
     const s = this.s;
     const st = this.state;
@@ -841,7 +869,7 @@ export class Game {
       line: this.bridged(this.fill(fillStory(this.L(def.line), st, f, vars)), this.travelBridge({ location: def.location, who: def.who }), vars),
       ch: def.choices.map((c) => ({ t: this.fill(fillStory(this.L(c.t), st, f, vars)) })),
       big: !!def.big,
-      scene: def.big && s.lastScene ? (JSON.parse(JSON.stringify(s.lastScene)) as PrototypeScene) : undefined,
+      scene: def.big ? this.photoScene(def.who === "partner" ? "partner" : def.who === "fated" ? "fated" : undefined) : undefined,
     };
     s.pending = { popup, eventUid: p.uid, vars };
     return { kind: "popup", popup };
@@ -893,7 +921,13 @@ export class Game {
       ch: def.choices.map((c) => ({ t: this.fill(fillStory(this.L(c), st, f, vars)) })),
       // Life-changing moments get the big popup with the scene as its picture.
       big: true,
-      scene: this.s.lastScene ? (JSON.parse(JSON.stringify(this.s.lastScene)) as PrototypeScene) : undefined, // a snapshot (wander() keeps moving the live scene)
+      scene: this.photoScene(((): "partner" | "fated" | undefined => {
+        const arcType = kind === "arc" ? st.story?.arcs.find((a) => a.id === ref)?.type : undefined;
+        if (def.needsFated || def.who === "fated" || arcType === "TALKING") return "fated";
+        const couple = arcType === "DATING" || arcType === "ENGAGEMENT" || arcType === "PARTING" || arcType === "PREGNANCY";
+        if ((def.needsPartner || def.who === "partner" || couple) && !st.relationship.longDistance) return "partner";
+        return undefined;
+      })()), // a snapshot (wander() keeps moving the live scene)
     };
     s.pending = { popup, storyRef: def.ref, patient, vars };
     return { kind: "popup", popup };
@@ -924,7 +958,7 @@ export class Game {
       line: sub(solo ? def.solo! : apart ? def.apart!.line : def.line),
       ch: choices.map((c) => ({ t: sub(c.t) })),
       big: true,
-      scene: this.s.lastScene ? (JSON.parse(JSON.stringify(this.s.lastScene)) as PrototypeScene) : undefined,
+      scene: this.photoScene(solo || apart ? undefined : "partner"),
     };
     this.s.pending = { popup, occasion: choices.map((c) => ({ ko: fillStory(c.r.ko, st, f, vars), en: fillStory(c.r.en, st, f, vars) })), vars };
     return { kind: "popup", popup };
@@ -1315,7 +1349,7 @@ export class Game {
    * like 상견례/결혼식/법원, or a calm day). Returns the 시간이 흐른다 data:
    * memory cards (framed scenes) for big moments, plus short summary lines.
    */
-  endDay(): { over: boolean; fromAge: number; toAge: number; lines: string[]; cards: MemoryCard[]; notes: string[] } {
+  endDay(): { over: boolean; fromAge: number; toAge: number; lines: string[]; cards: MemoryCard[]; notes: string[]; photo?: string } {
     const s = this.s;
     const st = this.state;
     if (st.world?.travel) endTrip(st.world, this.rng("endtrip"));
@@ -1385,7 +1419,7 @@ export class Game {
     // notes: what happened meanwhile, off-screen ("사채 — 불법 이자는 무효라고 했다…"), also at the top of `lines`.
     updateBond(st);
     const ended = !st.alive || !!st.story?.bond?.over;
-    const out = { over: ended, fromAge, toAge: Math.floor(st.age), lines, cards, notes };
+    const out = { over: ended, fromAge, toAge: Math.floor(st.age), lines, cards, notes, photo: gapPhoto(st, before, snapshot(st), lines, rng) };
     if (ended) {
       s.over = true;
       return out;
@@ -2032,6 +2066,7 @@ interface Snap {
   dad: boolean;
   friends: number;
   trips: string[];
+  home: string;
   habits: string[];
   money: number;
 }
@@ -2054,9 +2089,38 @@ function snapshot(st: LifeState): Snap {
     dad: st.family?.dad.alive ?? true,
     friends: Object.values(w?.relationships ?? {}).filter((r) => r.stage === "FRIEND" || r.stage === "CLOSE_FRIEND").length,
     trips: (w?.pastTrips ?? []).map((t) => t.destinationId),
+    home: st.homeCountry,
     habits: Object.keys(w?.habits ?? {}),
     money: st.money,
   };
+}
+
+
+const TRIP_PHOTO: Record<string, string[]> = { paris: ["eiffel_day", "paris_street"], tokyo: ["tokyo_street"], coast: ["beach_day"], business_city: ["business_hotel_room", "meeting_room"] };
+const CITY_PHOTO: Record<string, string[]> = { paris: ["eiffel_day", "paris_street"], tokyo: ["tokyo_street"], osaka: ["tokyo_street"], kyoto: ["tokyo_street"] };
+
+/**
+ * The picture behind "시간이 흐른다…": a trip in the summary always shows that place (Paris → the
+ * Eiffel Tower; anywhere without its own painting → an arrival hall); a move → the airport; otherwise a
+ * calm picture for the season, at random.
+ */
+function gapPhoto(st: LifeState, a: Snap, b: Snap, lines: string[], rng: SeededRandom): string | undefined {
+  // Only a painting of that very place counts (Paris never stands in as "a street").
+  const first = (ids: string[]) => ids.map((id) => photoFor(id)).find((ph, i) => ph === `bg/${ids[i]}.png`);
+  const trip = b.trips.slice(a.trips.length)[0];
+  if (trip) return first(TRIP_PHOTO[trip] ?? []) ?? photoFor("airport_arrival");
+  // A city named in what happened ("싱가포르에 다녀왔다", "도쿄로 떠났다") other than home.
+  const text = lines.join(" ");
+  const home = findPlace(st.location.city)?.id;
+  const named = PLACES.find((p) => p.id !== home && (text.includes(p.ko) || text.includes(p.en)) && /다녀왔|여행|떠났|이사|비행기|trip|travel|moved|flight/i.test(text));
+  if (named && first(CITY_PHOTO[named.id] ?? [])) return first(CITY_PHOTO[named.id]!);
+  if (/비행기|flight|plane/i.test(text)) return photoFor("airplane_cabin");
+  if (named) return photoFor(/이사|moved/i.test(text) ? "airport_departure" : "airport_arrival");
+  if (a.country !== b.country) return photoFor("airport_departure");
+  const m = st.date.month;
+  const season = m >= 3 && m <= 5 ? ["park_spring", "park_day", "cafe_day"] : m >= 6 && m <= 8 ? ["beach_day", "beach_sunset", "park_day"] : m >= 9 && m <= 11 ? ["park_autumn", "cafe_evening", "street_day"] : ["park_snow", "cafe_evening", "home_living_room"];
+  const pool = season.map((id) => photoFor(id)).filter((x): x is string => !!x);
+  return pool.length ? pool[rng.int(0, pool.length - 1)] : undefined;
 }
 
 function summarize(a: Snap, b: Snap, _lang: Lang): { bi: Bi[] } {
@@ -2068,7 +2132,7 @@ function summarize(a: Snap, b: Snap, _lang: Lang): { bi: Bi[] } {
   else if ((a.status === "SINGLE" || a.status === "DIVORCED") && b.status === "DATING") add(8, fixJosa(`${b.partner ?? ""}와(과) 연애를 시작했다.`), `Started dating ${b.partner ?? ""}.`);
   if (a.status === "MARRIED" && b.status === "DIVORCED") add(8, "이혼했다.", "Got divorced.");
   else if ((a.status === "DATING" || a.status === "MARRIED") && b.status === "SINGLE") add(7, fixJosa(`${a.partner ?? ""}와(과) 헤어졌다.`), `Broke up with ${a.partner ?? ""}.`);
-  if (a.country !== b.country) add(7, b.country === "Korea" ? "한국으로 돌아왔다." : fixJosa(`${COUNTRY_KO[b.country] ?? b.country}(으)로 떠났다.`), b.country === "Korea" ? "Moved back to Korea." : `Moved to ${b.country}.`);
+  if (a.country !== b.country) add(7, b.country === b.home ? "고향으로 돌아왔다." : fixJosa(`${COUNTRY_KO[b.country] ?? b.country}(으)로 떠났다.`), b.country === b.home ? "Moved back home." : `Moved to ${b.country}.`);
   else if (a.city !== b.city) add(5, fixJosa(`${cityKo(b.city)}(으)로 이사했다.`), `Moved to ${b.city}.`);
   if (!a.retired && b.retired) add(6, "은퇴했다.", "Retired.");
   else if (a.employed && !b.employed) add(6, "회사를 떠났다.", "Left the job.");

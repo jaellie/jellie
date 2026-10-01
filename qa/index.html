@@ -380,7 +380,14 @@
     box.style.background = inner.style.background;
     // A painted background: show the picture, keep only the people on top.
     if (sc.photo) {
-      for (const c of [...inner.children]) if (!c.classList.contains("actor")) c.remove();
+      const cast = sc.photoCast || [];
+      for (const c of [...inner.children]) if (!c.classList.contains("actor") || !cast.includes(c.dataset.who)) c.remove();
+      // The pair stands side by side on the floor, centered (88% down the visible picture).
+      const floorY = (off + h * 0.88) / k;
+      [...inner.querySelectorAll(".actor")].forEach((d, i, all) => {
+        const step = 27, start = REF_W / 2 - (all.length * step) / 2;
+        d.style.left = start + i * step + "px"; d.style.top = floorY - 40 + "px"; d.style.zIndex = 50;
+      });
       inner.style.background = "transparent";
       box.style.background = `#000 url(../assets/${sc.photo}) center bottom / cover no-repeat`;
       box.style.imageRendering = "auto";
