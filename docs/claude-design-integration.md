@@ -57,6 +57,8 @@ The play screen is **one long road seen from behind, 2D pixel art** — not a ro
 
 Popups (big and small) appear over the road exactly as before: title banner, **photo** (`popup.scene`, drawn as below), line and choices. A destined turning point's popup also has **`popup.reading`** — the 사주/점성술 signals behind it in words ("사주: 도화 · 천간합  /  점성술: 목성 5하우스  /  상대: 역마"); show it small under the title.
 
+**Seaside towns** (Busan, Jeju…): `road().backdrop.sea === "right"` — the sea is on the right. Big buildings stand on the left; only small houses line the right, with the sea behind them. `road().landmark` has `size` ("big" | "small") and `side` ("left" | "right"); `backdrop.sides` says what lines each side.
+
 ## Scene (the photos)
 
 `game.scene()` / `popup.scene` / `card.scene` are now only the **photos** in popups and memory cards — the room seen from above. Draw them as small pictures (below).
@@ -94,6 +96,18 @@ Card kind `EVENT` is a life event's own card: its `caption` and `scene` come rea
 
 Kinds: `START_DATING`, `FIRST_DATE`, `PROPOSAL`, `MEET_PARENTS` (상견례), `CALL_OFF` (파혼), `WEDDING`, `NEW_HOME`, `BIRTH`, `KID_SCHOOL`, `PET_ADOPT`, `PET_FAREWELL`, `FLIGHT` (비행기 안), `MOVE_CITY`, `GRADUATION`, `JOB_START`, `JOB_CHANGE`, `PROMOTION`, `LAYOFF`, `INDEPENDENCE`, `SHOP_CLOSE`, `RETIREMENT`, `WINDFALL`, `LOSS`, `HOSPITAL`, `RECOVERED`, `DIVORCE`, `BREAKUP`, `FRIEND_WEDDING`, `MOM_FUNERAL`, `DAD_FUNERAL`, `PARENT_FUNERAL`, `PARTNER_FUNERAL`, `FRIEND_FUNERAL`, `FAMILY_FUNERAL`.
 
+## The game spans the bond with the destined person
+
+Play runs from the day you meet the destined person (or from now, if you're already dating / in 썸) to the day the relationship ends. Married to the end, the ending is your own death.
+
+- **Start.** Strangers and acquaintances: the years before the meeting pass off-screen and the first played day *is* the meeting. `game.s.day.prologue` ("그 사람을 만나기까지, 7년이 흘렀다.") is set on that first day only — show it on a dark fade before the road.
+- **End.** `endDay()` returns `over: true` the day the bond ends. `game.ending()` → `{ reason, title, story, together: { from, to, years, married }, summary, lines, age, memorial }`. `reason`: `missed` (never came together), `breakup`, `divorce`, `theyDied`, `iDied`. Only `iDied` is a death; the others end alive (the memorial's epitaph then reads "제이 ♥ 정 · 2033 – 2041" and its lines fit the ending).
+- Nothing that could end the relationship (a breakup, a divorce, an affair) is decided off-screen; side romances with other NPCs don't happen.
+
+## Big moments in four parts
+
+The confession (썸), the first kiss and the proposal arrive as four popups in a row, the same day, titled "고백 (1/4)" … "(4/4)": their move (their temperament: NF/NT/SJ/SP), your inner moment (your temperament; the options follow your own E/I, F/T, J/P), the moment right before (both planners / both free spirits / one of each), then the climax. Choices that fit the partner's MBTI get warmer reactions and add spark, which tints and bends the climax. Nothing special for the UI: after a result, the next `advance()` opens the next part.
+
 ## Memorial (death)
 
 `game.memorial()` → `{ fadeMs: 4000, lineMs: 3500, epitaph: "민아 · 1997 – 2079", lines: [3 strings], cards }`. Fade the screen to black over `fadeMs`, show `epitaph`, then each line `lineMs` apart. Optionally replay `cards` afterward.
@@ -124,7 +138,11 @@ At birth, 사주 + 점성술 pick **5–7 fated turning points** (love, marriage
 **The destined person** — `LoveSim.fatedOptions(lang)` gives the choices:
 - `statusQuestion` ("지금 두 사람, 사귀고 있나요?") + `statuses`: `dating` (start as a couple), `talking` (썸: the game plays the late-night texts, the not-quite-date, the jealousy, up to the confession), `stranger` (you don't know each other yet: the game starts from the first meeting).
 - `lives` — "상대는 어디서 살까요?": `same` (same neighborhood: you may keep running into them where they work), `city` (another city: a work trip or a trip there, then weekend love on the train), `abroad` (another country: a language-app match across time zones or a flight, then long distance — video calls at their local time, a visit, and deciding who moves). Optional `fated.city` ("도쿄", "Vancouver") — default: their birthplace if foreign, else a pick.
-- `jobs` — "상대의 직업은?" (28 jobs; free text also works). The job decides where you meet (the barista at your café, the doctor in the ER, the trainer at the gym…), their schedule, their income (it adds to the household once you live together), and job moments while you're together (night shifts, flights, a zero-income month, the 3 a.m. call, a breakthrough).
+- `jobs` — "상대의 직업은?" (45 jobs, incl. 무직, 대학생, 취업준비생; free text also works). The job decides where you meet (the barista at your café, the doctor in the ER, the trainer at the gym…), their schedule, their income (it adds to the household once you live together), and job moments while you're together (night shifts, flights, a zero-income month, the 3 a.m. call, a breakthrough).
+
+**Your own job** — `LoveSim.myJobOptions(lang)` → `{ question: "나의 직업은?", jobs }` (the same 45 jobs). Pass the id as `setup.job`. It decides whether you work, study or are between jobs, self-employment (no coworkers), your workplace on the road (a nurse goes to the hospital, a barista to the café, a writer stays home) and the HUD label ("간호사", plain "회사원").
+
+**Names.** NPC names follow the language and the place: Korean names in Korea (foreign names in Hangul when you live or travel abroad: 하루토, 카미유); in English, every name is its English pair (서준 → Noah). A partner's name always matches their sex. Show names exactly as the engine gives them.
 
 The meeting year is the best year for *both* charts, within the first years. Missing the meeting isn't the end: fate brings them around again (at most twice).
 
