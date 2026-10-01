@@ -337,3 +337,19 @@ describe("The English version stays English; the story starts in 2026", () => {
     expect(Math.floor(young.state.age)).toBe(18);
   });
 });
+
+describe("'아니, 아직 그냥 아는 사이야' (acquaintance)", () => {
+  it("you know each other's names but there's no 썸; the destined year brings the confession", () => {
+    expect(fatedOptions("ko").statuses.map((s) => s.id)).toEqual(["dating", "talking", "acquaintance", "stranger"]);
+    const g = createGame({ ...JAE, seed: 4, fated: { ...JUNG, from: "same", status: "acquaintance" } });
+    const f = g.facts();
+    expect(f.fatedKnown).toBe(true);
+    expect(f.partnered).toBe(false);
+    expect(g.state.story!.arcs.some((a) => a.type === "TALKING")).toBe(false);
+    const love = g.state.story!.script.find((e) => e.theme === "LOVE_MEETING");
+    expect(love).toBeDefined();
+    // When it comes, it's the "suddenly I can't take my eyes off them" confession, with their name.
+    const def = storyPopup(g.state, "fated", love!.id, g.facts(), new SeededRandom(1), { peek: true })!;
+    expect(def.title?.ko).toBe("고백");
+  });
+});

@@ -65,16 +65,22 @@ export function findFatedJob(input: string | undefined): FatedJob | undefined {
 /** Setup choices for the UI. */
 export function fatedOptions(lang: "ko" | "en" = "ko"): {
   statusQuestion: string;
-  statuses: Array<{ id: "dating" | "talking" | "stranger"; name: string; hint: string }>;
+  statuses: Array<{ id: "dating" | "talking" | "acquaintance" | "stranger"; name: string; hint: string }>;
   lives: Array<{ id: FatedFrom; name: string; hint: string }>;
+  /** The city field (shown when they live in another city or country): label + guide line under it. */
+  cityLabel: string;
+  cityHint: string;
   jobs: Array<{ id: string; name: string }>;
 } {
   const ko = lang === "ko";
   return {
+    cityLabel: ko ? "그 사람이 사는 도시" : "The city they live in",
+    cityHint: ko ? "목록에 없다면 가장 가까운 지역을 선택하세요" : "Not on the list? Pick the nearest city",
     statusQuestion: ko ? "지금 두 사람, 사귀고 있나요?" : "Are you two dating right now?",
     statuses: [
       { id: "dating", name: ko ? "응, 사귀는 중이야" : "Yes, we're together", hint: ko ? "연인인 상태로 시작해요" : "Start as a couple" },
       { id: "talking", name: ko ? "아니, 썸 타는 중" : "No, but we're talking", hint: ko ? "썸에서 첫 고백까지" : "From the talking stage to the first confession" },
+      { id: "acquaintance", name: ko ? "아니, 아직 그냥 아는 사이야" : "No, we just know each other", hint: ko ? "아는 사이에서, 운명의 순간까지" : "From just knowing each other to the moment it changes" },
       { id: "stranger", name: ko ? "아니, 아직 서로 몰라" : "No, we haven't met", hint: ko ? "첫 만남부터 시작해요" : "Start from the first meeting" },
     ],
     lives: data.lives.map((l) => ({ id: l.id as FatedFrom, name: l[lang], hint: l.hint[lang] })),

@@ -162,7 +162,8 @@
     <label>이름 (비워두면 운명에 맡기기)</label><input id="fFated" value="Ren">
     <label id="fFsQ">지금 두 사람, 사귀고 있나요?</label><select id="fFs" data-testid="fated-status"></select>
     <label>상대는 어디서 살까요?</label><select id="fFrom" data-testid="fated-from"></select>
-    <label>그 사람이 사는 도시 (다른 도시/다른 나라일 때)</label><input id="fFCity" value="" list="places" autocomplete="off" data-testid="fated-city">
+    <div id="fCityBox"><label id="fFCityL">그 사람이 사는 도시</label><input id="fFCity" value="" list="places" autocomplete="off" data-testid="fated-city">
+    <div class="hint" id="fFCityHint" data-testid="fated-city-hint"></div></div>
     <label>상대의 직업은?</label><select id="fFJob" data-testid="fated-job"></select>
     <label>그 사람 생일 (선택, 궁합에 쓰임)</label>
     <div class="row"><input id="fFY" placeholder="년"><input id="fFM" placeholder="월"><input id="fFD" placeholder="일"></div>
@@ -470,6 +471,10 @@
     $("fFs").innerHTML = o.statuses.map((x) => `<option value="${x.id}">${x.name}</option>`).join("");
     $("fFs").value = d.fated.status;
     $("fFrom").innerHTML = o.lives.map((x) => `<option value="${x.id}">${x.name} — ${x.hint}</option>`).join("");
+    $("fFCityL").textContent = o.cityLabel; $("fFCityHint").textContent = o.cityHint;
+    // The city field only matters when they live in another city or country.
+    const cityBox = () => { $("fCityBox").style.display = $("fFrom").value === "same" ? "none" : "block"; };
+    $("fFrom").onchange = cityBox; cityBox();
     $("fFJob").innerHTML = `<option value="">${lang === "ko" ? "운명에 맡기기" : "Leave it to fate"}</option>` + o.jobs.map((x) => `<option value="${x.id}">${x.name}</option>`).join("");
     show("setup");
   }

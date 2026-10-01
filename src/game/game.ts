@@ -107,7 +107,7 @@ export interface GameSetup {
      * in the air; the game plays the texts, the not-a-date, the jealousy, up to the confession
      * ("crush" means the same). "stranger": you don't know each other yet — start from the first meeting.
      */
-    status?: "dating" | "talking" | "crush" | "stranger";
+    status?: "dating" | "talking" | "acquaintance" | "crush" | "stranger";
     /** Their job: an id from fatedOptions().jobs, or free text ("대학병원 의사"). */
     job?: string;
     profile?: Record<string, unknown>;
@@ -1390,7 +1390,8 @@ export function createGame(input: GameSetup): Game {
   st.story!.fatedLife = fatedLife;
   // Already dating, or already in 썸: the story starts there — no "first meeting" to wait for.
   const status = setup.fated?.status === "crush" ? "talking" : setup.fated?.status ?? (setup.fated?.name ? "talking" : "stranger");
-  if (status !== "stranger") {
+  // Strangers and acquaintances wait for the destined year; a couple or a 썸 starts right there.
+  if (status === "dating" || status === "talking") {
     const first = st.story!.script.findIndex((e) => e.theme === "LOVE_MEETING");
     if (first >= 0) st.story!.script.splice(first, 1);
   }
@@ -1478,9 +1479,11 @@ function addFatedPerson(st: LifeState, setup: GameSetup, life: FatedLife, rng: S
   npc.profile = { mbti: fx.mbti, job: life.job.id, jobName: life.job.ko, from, city: life.city.ko, ...fx.profile };
   // Someone you already know and like (a crush) — or already your partner. Never automatically a couple.
   const status = fx.status === "crush" ? "talking" : fx.status ?? (fx.name ? "talking" : "stranger");
+  // "Just know each other": names known, no spark yet — the destined year is when it changes.
+  const acquaintance = status === "acquaintance";
   if (status === "stranger") return;
   const origin = { type: (from === "abroad" ? "LANGUAGE_EXCHANGE_APP" : "FRIEND_OF_FRIEND") as RelationshipOriginType, locationId: home.id, firstEncounterDate: { ...st.date } };
-  w.relationships[npc.id] = { npcId: npc.id, stage: status === "dating" ? "PARTNER" : "ACQUAINTANCE", closeness: status === "dating" ? 0.6 : 0.4, spark: status === "dating" ? 0.7 : 0.35, conversations: 8, origin, lastContact: { ...st.date }, channel: from === "abroad" ? "ONLINE" : "IN_PERSON", metOffline: from !== "abroad" };
+  w.relationships[npc.id] = { npcId: npc.id, stage: status === "dating" ? "PARTNER" : "ACQUAINTANCE", closeness: status === "dating" ? 0.6 : acquaintance ? 0.25 : 0.4, spark: status === "dating" ? 0.7 : acquaintance ? 0.1 : 0.35, conversations: acquaintance ? 3 : 8, origin, lastContact: { ...st.date }, channel: from === "abroad" ? "ONLINE" : "IN_PERSON", metOffline: from !== "abroad" };
   if (status === "dating") {
     npc.single = false;
     const birth = { year: npc.birthYear, month: npc.birthMonth, day: npc.birthDay, sex: npc.sex };
