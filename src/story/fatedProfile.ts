@@ -34,6 +34,10 @@ export interface FatedJob {
   /** A demanding care/safety job (the late call from the hospital, the dangerous night). */
   care?: boolean;
   meet?: Bi;
+  /** Where the player spends a workday in this job (default office; "home" = works from home; "none" = no work). */
+  work?: string;
+  /** employee | self (own business / freelance: no coworkers) | civil (grades) | student | none (no job). */
+  kind?: "employee" | "self" | "civil" | "student" | "none";
 }
 
 export type FatedFrom = "same" | "city" | "abroad";
@@ -60,6 +64,14 @@ export function findFatedJob(input: string | undefined): FatedJob | undefined {
   const exact = FATED_JOBS.find((j) => j.id === input || norm(j.ko) === q || norm(j.en) === q);
   if (exact) return exact;
   return FATED_JOBS.find((j) => q.includes(norm(j.ko)) || q.includes(norm(j.en)));
+}
+
+/** The player's own job (setup.job): the same list as the partner's, from 무직 and 학생 to 파일럿. */
+export function myJobOptions(lang: "ko" | "en" = "ko"): { question: string; jobs: Array<{ id: string; name: string }> } {
+  const ko = lang === "ko";
+  const first = ["office", "student", "unemployed", "job_seeker", "freelancer"];
+  const jobs = [...first.map((id) => FATED_JOBS.find((j) => j.id === id)!), ...FATED_JOBS.filter((j) => !first.includes(j.id))];
+  return { question: ko ? "나의 직업은?" : "What do you do?", jobs: jobs.map((j) => ({ id: j.id, name: ko ? j.ko : j.en })) };
 }
 
 /** Setup choices for the UI. */

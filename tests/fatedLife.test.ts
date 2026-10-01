@@ -364,3 +364,30 @@ describe("'아니, 아직 그냥 아는 사이야' (acquaintance)", () => {
     expect(def.title?.ko).toBe("고백");
   });
 });
+
+describe("My job (setup.job)", () => {
+  it("offers ~45 jobs including 무직, 대학생, 취업준비생 — the same list as the partner's", async () => {
+    const { myJobOptions } = await import("../src/story/fatedProfile");
+    const o = myJobOptions("ko");
+    expect(o.question).toBe("나의 직업은?");
+    expect(o.jobs.length).toBeGreaterThanOrEqual(44);
+    for (const n of ["회사원", "무직", "대학생", "취업준비생", "프리랜서", "간호사", "파일럿"]) expect(o.jobs.map((j) => j.name)).toContain(n);
+    expect(myJobOptions("en").jobs.every((j) => /^[A-Za-z]/.test(j.name))).toBe(true);
+  });
+
+  it("the job shapes the life: employed or not, student, self-employed (no coworkers), the HUD label", () => {
+    const make = (job: string) => createGame({ ...JAE, job, seed: 3, fated: { ...JUNG, status: "dating" } });
+    const nurse = make("nurse");
+    expect(nurse.hud().job).toBe("간호사");
+    expect(nurse.facts().employed).toBe(true);
+    const none = make("무직");
+    expect(none.facts().employed).toBe(false);
+    expect(none.hud().job).toBe("무직");
+    const student = make("student");
+    expect(student.facts().student).toBe(true);
+    expect(student.hud().job).toBe("대학생");
+    const writer = make("writer");
+    expect(writer.facts().selfEmployed).toBe(true);
+    expect(make("police").hud().job).toBe("경찰관");
+  });
+});

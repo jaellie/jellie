@@ -51,7 +51,7 @@ export * from "./mbti/mbti";
 export * from "./destiny/profile";
 // Birthplaces: city → coordinates + historical time zone (DST) for both charts
 export * from "./destiny/birthplace";
-export { fatedOptions, findFatedJob, FATED_JOBS } from "./story/fatedProfile";
+export { fatedOptions, myJobOptions, findFatedJob, FATED_JOBS } from "./story/fatedProfile";
 export { setupDefaults } from "./game/setupDefaults";
 // Game runtime (the UI talks only to this)
 export * from "./game/game";

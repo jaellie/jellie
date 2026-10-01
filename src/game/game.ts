@@ -45,7 +45,7 @@ import { type BirthplaceInput, resolveBirth } from "../destiny/birthplace";
 import { pickMood } from "../story/mood";
 import { type RoadView, buildRoad } from "../world/road";
 import { readingOf } from "../story/reading";
-import { type FatedFrom, type FatedLife, fatedVars, resolveFatedLife } from "../story/fatedProfile";
+import { type FatedFrom, type FatedLife, fatedVars, findFatedJob, resolveFatedLife } from "../story/fatedProfile";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
 import type { RelationshipOriginType } from "../world/types";
 import { resolveWorldEvent } from "../world/decisions";
@@ -75,6 +75,8 @@ export interface GameSetup {
   /** Solar birth date (convert lunar in the UI first). Time optional. */
   birth: { year: number; month: number; day: number; hour?: number; minute?: number };
   mbti?: string;
+  /** The player's job: an id from LoveSim.myJobOptions(lang) (or its name / free text). Default: office worker. */
+  job?: string;
   /**
    * Where the player was born: a city name ("부산", "New York", "LA") or coordinates
    * ({ lat, lon, tz? }). Sets the Ascendant/MC/houses and the clock (historical UTC offset,
@@ -596,9 +598,12 @@ export class Game {
       return "home";
     };
     if (f.employed) {
+      // Your workplace: the hospital for a nurse, your own café for a barista, home for a writer.
+      const work = myJob(st)?.work ?? "office";
+      if (work === "home") return minute >= 600 && minute < 1020 ? "home" : evening(minute);
       if (minute < 510) return "home";
       if (minute < 540) return "street";
-      if (minute < 1080) return "office";
+      if (minute < 1080) return work === "none" ? "office" : work;
       if (minute < 1110) return "street";
       return evening(minute);
     }
@@ -1357,7 +1362,8 @@ export class Game {
   hud() {
     const st = this.state;
     const f = this.facts();
-    const job = f.employed ? jobLabel(st) : f.student ? bi("학생", "Student") : f.retired ? bi("은퇴", "Retired") : bi("구직 중", "Job hunting");
+    const mine = myJob(st);
+    const job = f.employed ? jobLabel(st) : f.student ? (mine?.kind === "student" ? bi(mine.ko, mine.en) : bi("학생", "Student")) : f.retired ? bi("은퇴", "Retired") : mine?.kind === "none" ? bi(mine.ko, mine.en) : bi("구직 중", "Job hunting");
     const rel = f.married ? bi(`${f.partnerName}와(과) 결혼`, `Married to ${f.partnerName}`) : f.dating ? bi(`${f.partnerName}와(과) 연애 중`, `Dating ${f.partnerName}`) : bi("싱글", "Single");
     return {
       date: this.s.day ? this.L(this.s.day.label) : "",
@@ -1473,6 +1479,7 @@ export function createGame(input: GameSetup): Game {
   // Most Korean men have served by 25; the rest may get the letter.
   if (setup.gender === "M") st.flags.militaryDone = new SeededRandom(hash(seed, "military")).chance(0.85);
   applyFamilySetup(st, setup, new SeededRandom(hash(seed, "family")));
+  applyMyJob(st, setup.job);
   const fatedLife = resolveFatedLife({ from: setup.fated?.from, job: setup.fated?.job, city: setup.fated?.city, birthplace: setup.fated?.birthplace }, { city: st.location.city }, new SeededRandom(hash(seed, "fatedLife")));
   addFatedPerson(st, setup, fatedLife, new SeededRandom(hash(seed, "fated")));
   // Their chart too: the year you meet is one that's good for *both* of you.
@@ -1514,8 +1521,31 @@ export function loadGame(json: string): Game {
   return new Game(s);
 }
 
+/** The job chosen in setup, while the player still has it (a new job or quitting changes career.cid). */
+function myJob(st: LifeState) {
+  const id = st.flags.myJob as string | undefined;
+  if (!id || (st.career.cid ?? 0) !== st.flags.myJobCid) return undefined;
+  return findFatedJob(id);
+}
+
+/** Setup: the player's job decides employment, school, and self-employment (no coworkers). */
+function applyMyJob(st: LifeState, input: string | undefined): void {
+  const job = findFatedJob(input ?? "office") ?? findFatedJob("office")!;
+  const kind = job.kind ?? "employee";
+  st.career = { ...st.career, cid: (st.career.cid ?? 0) + 1, employed: kind === "employee" || kind === "self" || kind === "civil", abroad: false };
+  st.career.field = kind === "self" ? "own-business" : kind === "civil" ? "civil-service" : st.career.field === "own-business" || st.career.field === "civil-service" ? "general" : st.career.field ?? "general";
+  if (kind === "student") st.enrollment = { program: job.id === "grad_student" ? "MASTER" : "BACHELOR", untilMonth: st.monthIndex + 24, abroad: false };
+  else st.enrollment = undefined;
+  if (kind === "none") st.flags.jobLostMonth = st.monthIndex;
+  if (job.id === "creator") st.flags.influencer = true;
+  st.flags.myJob = job.id;
+  st.flags.myJobCid = st.career.cid ?? 0;
+}
+
 /** What the HUD calls the player's work (the career field, plus what life events made of it). */
 function jobLabel(st: LifeState): Bi {
+  const mine = myJob(st);
+  if (mine && mine.id !== "office" && mine.id !== "civil_servant") return bi(mine.ko, mine.en);
   const lv = st.career.level;
   if (st.flags.shaman) return bi("무속인", "Shaman");
   if (st.career.field === "civil-service") {
@@ -1524,7 +1554,7 @@ function jobLabel(st: LifeState): Bi {
   }
   if (st.career.field === "own-business") return st.flags.influencer ? bi("크리에이터", "Creator") : bi("사장님", "Owner");
   if (st.career.field === "second-career") return bi("새로운 일", "Second career");
-  return bi(`회사원 L${lv}`, `Employee L${lv}`);
+  return bi("회사원", "Office worker");
 }
 
 /** The player's birth for the charts: local standard time at the birthplace + its UTC offset (see destiny/birthplace.ts). */
