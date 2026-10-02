@@ -52,6 +52,7 @@ import { confessFate } from "../story/confessFate";
 import { photoFor, setPhotoCulture } from "../integration/prototype";
 import { homeVars, nationCode, nationalityOf } from "../story/nationality";
 import { currencyFor, formatMoney, localizeMoneyText } from "./currency";
+import { pickReflection, reflectionCategory } from "../story/reflections";
 import { type FatedFrom, type FatedLife, fatedVars, findFatedJob, resolveFatedLife } from "../story/fatedProfile";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
 import type { RelationshipOriginType } from "../world/types";
@@ -208,6 +209,8 @@ export interface ChoiceResult {
   name?: string;
   line: string;
   log?: string;
+  /** A drama-style line that stays with you after a big moment (shown under the result). */
+  quote?: string;
 }
 
 interface Pending {
@@ -462,6 +465,15 @@ export class Game {
   private npcLabel(npcId: string): string {
     const npc = this.state.world?.npcs[npcId];
     return npc && knowsName(this.state.world, npcId) ? npc.name : this.L(bi("낯선 사람", "Stranger"));
+  }
+  /** The line for the moment just resolved: by the memory card it made (or the life event's category). */
+  private reflect(cardsBefore: number, eventCat: string | undefined, chance: number): string | undefined {
+    const st = this.state;
+    const kinds = (st.story?.cards ?? []).slice(cardsBefore).map((c) => c.kind);
+    const cat = reflectionCategory(kinds, eventCat);
+    if (!cat || !this.rng(`quote${this.s.dayIndex}:${st.story?.cards.length ?? 0}`).chance(chance)) return;
+    const line = pickReflection(st, cat, this.rng(`quotePick${this.s.dayIndex}:${cat}`));
+    return line ? this.L(line) : undefined;
   }
   private speaker(role: string): string {
     const f = this.facts();
@@ -1240,15 +1252,20 @@ export class Game {
     }
     if (p.eventUid) {
       const label = p.popup.ch[index]?.t;
+      const evId = st.story?.events?.pending.find((x) => x.uid === p.eventUid)?.id;
+      const n0 = st.story?.cards.length ?? 0;
       const res = resolveLifeEvent(p.eventUid, index, { state: st, seed: s.seed, rng, mods, facts: this.facts(), signals: this.yearSignals() });
       if (!res) return;
       const text = [this.L(res.r), ...res.extra.map((x) => this.L(x))].join(" ");
-      return { who: "me", line: this.fill(fillStory(text, st, this.facts(), p.vars ?? {})), log: label };
+      const quote = this.reflect(n0, evId ? lifeEvent(evId)?.cat : undefined, 0.5);
+      return { who: "me", line: this.fill(fillStory(text, st, this.facts(), p.vars ?? {})), log: label, ...(quote ? { quote } : {}) };
     }
     if (p.storyRef) {
       const label = p.popup.ch[index]?.t;
+      const n0 = st.story?.cards.length ?? 0;
       const res = resolveStory(p.storyRef, index, { state: st, seed: s.seed, rng, mods, facts: this.facts() }, label);
       if (!res) return;
+      const quote = res.more ? undefined : this.reflect(n0, undefined, 0.8);
       if (res.scene?.length) this.setSequence(res.scene);
       if (!st.alive) s.minute = CFG.dayEndMinute;
       // A big moment in four parts: the next part opens right after this one.
@@ -1266,13 +1283,15 @@ export class Game {
       }
       // A reply (your partner answering "not yet") is theirs, not yours.
       const who = res.who && meets(SPEAKER_REQUIRES[res.who] ?? [], this.facts()) ? res.who : "me";
-      return { who, line: this.fill(fillStory(this.L(res.r), st, this.facts(), { patient: p.patient ?? "", ...p.vars })), log: label };
+      return { who, line: this.fill(fillStory(this.L(res.r), st, this.facts(), { patient: p.patient ?? "", ...p.vars })), log: label, ...(quote ? { quote } : {}) };
     }
     if (p.storyId) {
       const story = STORIES.find((x) => x.id === p.storyId)!;
       const c = story.choices[index];
       applyConsequences(st, c.effects ?? [], { rng, modifiers: mods, log: [] });
-      return { who: story.who === "me" ? "me" : story.who, name: p.popup.name, line: this.fill(this.L(c.r)) };
+      // Now and then an ordinary moment gets its line too.
+      const daily = rng.chance(0.15) ? pickReflection(st, story.who === "partner" ? "TOGETHER" : story.who === "friend" ? "FRIENDS" : "DAILY", rng) : undefined;
+      return { who: story.who === "me" ? "me" : story.who, name: p.popup.name, line: this.fill(this.L(c.r)), ...(daily ? { quote: this.L(daily) } : {}) };
     }
     if (p.occasion) {
       const r = p.occasion[index] ?? p.occasion[0];

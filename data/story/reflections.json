@@ -1,0 +1,628 @@
+{
+ "_doc": "Drama-style lines shown under the result of a big moment (and sometimes a small one). Picked by category; on the same device, lines already seen come back last. card → category, event category → category.",
+ "lines": {
+  "PARENT_DEATH": [
+   {
+    "ko": "사람은 두 번 죽는대. 한 번은 숨이 멎을 때, 한 번은 아무도 기억하지 않을 때. 그러니까 나는 오래오래 기억할 거야.",
+    "en": "They say people die twice: once when they stop breathing, and once when no one remembers them. So I'll remember. For a long, long time."
+   },
+   {
+    "ko": "이제야 알았다. 그 잔소리들이 전부 '사랑해'를 길게 말한 거였다는 걸.",
+    "en": "Only now do I get it. All that nagging was just 'I love you,' said the long way."
+   },
+   {
+    "ko": "어른이 된다는 건, 더 이상 '엄마' '아빠' 하고 불러도 대답이 없는 날을 견디는 일인가 보다.",
+    "en": "Maybe growing up means surviving the day you call for Mom or Dad and no one answers."
+   },
+   {
+    "ko": "받기만 했던 사랑은, 갚을 데가 없어지고 나서야 무게를 안다.",
+    "en": "You only feel the weight of the love you were given once there's no one left to give it back to."
+   },
+   {
+    "ko": "괜찮아. 울어도 돼. 오늘은 어른 안 해도 되는 날이야.",
+    "en": "It's okay to cry. Today you don't have to be a grown-up."
+   },
+   {
+    "ko": "그 사람이 남긴 건 집도 돈도 아니었다. 나라는 사람이었다.",
+    "en": "What they left behind wasn't a house or money. It was me."
+   },
+   {
+    "ko": "'다음에'는 생각보다 빨리 끝난다. 그래서 오늘 전화해야 한다.",
+    "en": "'Next time' runs out sooner than you think. That's why you call today."
+   },
+   {
+    "ko": "떠난 사람의 시간은 멈추지만, 그 사람이 키운 마음은 계속 자란다.",
+    "en": "Their clock stops. But the heart they raised keeps growing."
+   }
+  ],
+  "PARTNER_DEATH": [
+   {
+    "ko": "같이 늙어 가자고 했잖아. 왜 혼자만 먼저 젊은 채로 가.",
+    "en": "You said we'd grow old together. Why do you get to stay young and leave first?"
+   },
+   {
+    "ko": "사랑했던 시간이 끝난 게 아니야. 사랑할 사람이 잠깐 먼저 간 거야.",
+    "en": "The love didn't end. The one I love just went on ahead for a while."
+   },
+   {
+    "ko": "반쪽이 사라지면 반만 남는 줄 알았다. 아니었다. 전부가 비어 버렸다.",
+    "en": "I thought losing half of me would leave half. It didn't. It emptied everything."
+   },
+   {
+    "ko": "그 사람이 웃던 자리에 오늘도 햇빛이 든다. 세상은 잔인할 만큼 그대로다.",
+    "en": "The sun still falls on the spot where they used to laugh. The world is cruelly unchanged."
+   },
+   {
+    "ko": "나를 사랑해 줘서 고마워. 이 말을 매일 했어야 했는데.",
+    "en": "Thank you for loving me. I should have said it every day."
+   },
+   {
+    "ko": "살아야 한다. 그 사람이 사랑한 나를, 그 사람 몫까지.",
+    "en": "I have to keep living. For the me they loved, and for them too."
+   },
+   {
+    "ko": "이별은 한 번이지만 그리움은 매일 온다.",
+    "en": "The goodbye happens once. The missing comes every day."
+   }
+  ],
+  "GOODBYE": [
+   {
+    "ko": "인생은 결국 '안녕'을 몇 번이나 말할 수 있느냐의 연습인지도 모른다.",
+    "en": "Maybe life is just practice at how many times you can say goodbye."
+   },
+   {
+    "ko": "떠난 사람은 별이 된다는 말, 어릴 땐 거짓말인 줄 알았다. 지금은 믿고 싶다.",
+    "en": "As a kid I thought 'they become stars' was a lie. Now I want to believe it."
+   },
+   {
+    "ko": "소중한 건 늘 잃고 나서야 이름이 붙는다.",
+    "en": "Precious things only get their names after we lose them."
+   },
+   {
+    "ko": "슬픔은 사랑의 다른 이름이다. 그만큼 사랑했다는 증거니까.",
+    "en": "Grief is just love with nowhere to go. Proof of how much you loved."
+   },
+   {
+    "ko": "함께한 시간은 사라지지 않는다. 내 안에 이사 와서 살 뿐이다.",
+    "en": "The time we shared doesn't disappear. It just moves in with me."
+   },
+   {
+    "ko": "오늘은 울고, 내일은 조금 덜 울고. 그렇게 살아가는 거래.",
+    "en": "Cry today, a little less tomorrow. That's how you keep going, they say."
+   },
+   {
+    "ko": "마지막 인사를 제대로 못 했다. 그래서 앞으로 매일 조금씩 할 거다.",
+    "en": "I never got to say a proper goodbye. So I'll say it a little every day."
+   }
+  ],
+  "LOVE_BEGINS": [
+   {
+    "ko": "운명 같은 건 안 믿었다. 그런데 오늘, 믿고 싶어졌다.",
+    "en": "I never believed in fate. Today, I wanted to."
+   },
+   {
+    "ko": "세상에 수십억 명이 있는데, 하필 너였다. 그 '하필'이 기적이다.",
+    "en": "Out of billions of people, it had to be you. That 'had to be' is the miracle."
+   },
+   {
+    "ko": "심장이 시끄러운 날이었다. 이 소리가 오래 안 멈췄으면 좋겠다.",
+    "en": "My heart was loud today. I hope it never quiets down."
+   },
+   {
+    "ko": "사랑은 거창한 게 아니었다. 그 사람 생각에 혼자 웃게 되는 것, 그게 다였다.",
+    "en": "Love wasn't some grand thing. It was smiling alone at the thought of them. That's all."
+   },
+   {
+    "ko": "겁이 났다. 그래도 한 발 내디뎠다. 청춘이니까.",
+    "en": "I was scared. I took the step anyway. That's what being young is for."
+   },
+   {
+    "ko": "처음은 늘 서툴다. 서툴러서 오래 기억에 남는다.",
+    "en": "Firsts are always clumsy. That's why you remember them forever."
+   },
+   {
+    "ko": "이번엔 도망치지 않기로 했다. 행복해지는 것도 용기가 필요하니까.",
+    "en": "This time I'm not running. Being happy takes courage too."
+   }
+  ],
+  "VOWS": [
+   {
+    "ko": "평생이라는 말이 무섭지 않았다. 너랑이라면.",
+    "en": "'Forever' didn't scare me. Not with you."
+   },
+   {
+    "ko": "완벽한 사람을 만난 게 아니다. 불완전한 채로 같이 걸어갈 사람을 만난 거다.",
+    "en": "I didn't find a perfect person. I found someone to walk with, imperfect and all."
+   },
+   {
+    "ko": "오늘부터 내 편이 하나 생겼다. 세상이 등을 돌려도 남아 줄 단 한 사람.",
+    "en": "As of today, I have someone on my side. The one person who stays when the world turns away."
+   },
+   {
+    "ko": "결혼은 끝이 아니라 '우리'라는 이야기의 1화였다.",
+    "en": "A wedding isn't the ending. It's episode one of a story called 'us.'"
+   },
+   {
+    "ko": "사랑해서 결혼하는 게 아니라, 결혼하고도 계속 사랑하기로 약속하는 거래.",
+    "en": "They say you don't marry because you love. You promise to keep loving after you marry."
+   },
+   {
+    "ko": "둘이 하나가 되는 게 아니라, 둘이 둘인 채로 같은 방향을 보는 것.",
+    "en": "Not two becoming one. Two staying two, looking the same way."
+   },
+   {
+    "ko": "떨리는 손을 잡아 준 그 손을, 평생 놓지 않기로 했다.",
+    "en": "I decided never to let go of the hand that held my shaking one."
+   }
+  ],
+  "BREAKUP": [
+   {
+    "ko": "끝났다고 해서 없던 일이 되는 건 아니다. 분명히 행복했으니까.",
+    "en": "Ending doesn't erase it. We really were happy."
+   },
+   {
+    "ko": "사랑이 부족해서 헤어지는 게 아니더라. 타이밍이 늘 한 박자 늦을 뿐.",
+    "en": "We didn't break up for lack of love. The timing was just always one beat off."
+   },
+   {
+    "ko": "아픈 만큼 성숙해진다는 말, 오늘만큼은 듣고 싶지 않다.",
+    "en": "'Pain makes you grow.' Not today. Today I don't want to hear it."
+   },
+   {
+    "ko": "너를 만나서 다행이었고, 보내 줄 수 있어서 다행이다.",
+    "en": "I'm glad I met you. And I'm glad I can let you go."
+   },
+   {
+    "ko": "이별 노래 가사가 전부 내 얘기 같은 밤. 세상에서 제일 흔한 아픔이 제일 아프다.",
+    "en": "Every breakup song sounds like me tonight. The most common pain hurts the most."
+   },
+   {
+    "ko": "잘 지내라는 말은 진심이었다. 나 없이도, 나보다 행복하게.",
+    "en": "I meant it when I said 'take care.' Be happy without me. Happier, even."
+   },
+   {
+    "ko": "다시 혼자가 됐다. 그런데 처음보다는 덜 무섭다. 사랑해 봤으니까.",
+    "en": "I'm alone again. Less scared than before, though. I know what love is now."
+   }
+  ],
+  "DIVORCE": [
+   {
+    "ko": "실패한 게 아니다. 서로를 놓아주는 법을 배운 거다.",
+    "en": "It wasn't a failure. We learned how to let each other go."
+   },
+   {
+    "ko": "영원을 약속했던 그 날의 우리도 거짓말은 아니었다. 그냥 사람이 변하는 거지.",
+    "en": "The us who promised forever wasn't lying. People just change."
+   },
+   {
+    "ko": "가장 가까웠던 사람이 가장 먼 사람이 되는 데, 서류 한 장이면 충분했다.",
+    "en": "It took one sheet of paper to turn the closest person into the farthest."
+   },
+   {
+    "ko": "이제 내 인생의 주인공을 다시 나로 돌려놓을 시간.",
+    "en": "Time to make myself the main character of my own life again."
+   },
+   {
+    "ko": "상처는 흉터가 되고, 흉터는 언젠가 이야기가 된다.",
+    "en": "Wounds become scars. Scars become stories, someday."
+   },
+   {
+    "ko": "혼자 사는 집이 이렇게 조용한 줄 몰랐다. 이 조용함에도 익숙해지겠지.",
+    "en": "I didn't know a home for one could be this quiet. I'll get used to it."
+   },
+   {
+    "ko": "미워하는 데 쓰기엔 남은 인생이 너무 아깝다.",
+    "en": "The rest of my life is too precious to spend hating."
+   }
+  ],
+  "NEW_LIFE": [
+   {
+    "ko": "세상에서 제일 작은 손이 내 손가락을 꽉 잡았다. 나는 오늘 처음으로 무언가를 지키고 싶어졌다.",
+    "en": "The tiniest hand in the world grabbed my finger. For the first time, I wanted to protect something."
+   },
+   {
+    "ko": "부모님도 이런 마음이었겠구나. 그 생각에 갑자기 전화하고 싶어졌다.",
+    "en": "So this is how my parents felt. Suddenly I wanted to call them."
+   },
+   {
+    "ko": "작은 생명 하나가 집 안의 공기를 통째로 바꿔 놓았다.",
+    "en": "One small life changed the whole air in the house."
+   },
+   {
+    "ko": "너를 만나려고 지금까지의 모든 길을 걸어온 것 같아.",
+    "en": "I think every road I walked led here, to meeting you."
+   },
+   {
+    "ko": "완벽한 부모는 못 되겠지만, 매일 사랑한다고 말하는 사람은 될게.",
+    "en": "I won't be a perfect parent. But I'll be one who says 'I love you' every day."
+   },
+   {
+    "ko": "시작은 늘 작다. 그리고 작은 것들이 세상을 바꾼다.",
+    "en": "Beginnings are always small. Small things are what change the world."
+   }
+  ],
+  "WORK_UP": [
+   {
+    "ko": "노력은 배신하지 않는다는 말, 오늘만큼은 믿어 보기로 했다.",
+    "en": "'Hard work never betrays you.' Just for today, I'll believe it."
+   },
+   {
+    "ko": "버틴 날들이 쌓여서 오늘이 됐다. 그 날들의 나에게 고맙다.",
+    "en": "All the days I held on added up to today. Thank you, past me."
+   },
+   {
+    "ko": "올라갈수록 바람이 세다. 그래도 경치는 좋다.",
+    "en": "The higher you go, the stronger the wind. The view's better, though."
+   },
+   {
+    "ko": "꿈은 도망가지 않는다. 도망가는 건 늘 나였다. 이번엔 안 도망갔다.",
+    "en": "Dreams don't run away. I was always the one running. Not this time."
+   },
+   {
+    "ko": "누군가 '수고했어' 한마디만 해 줘도, 사람은 또 한 해를 버틴다.",
+    "en": "One 'good job' from someone, and a person can make it through another year."
+   },
+   {
+    "ko": "새로운 시작은 늘 무섭고, 그래서 늘 설렌다.",
+    "en": "New starts are always scary. That's what makes them exciting."
+   }
+  ],
+  "WORK_DOWN": [
+   {
+    "ko": "넘어진 김에 쉬어 가자. 인생은 생각보다 길다.",
+    "en": "Since I fell anyway, I'll rest a while. Life is longer than it feels."
+   },
+   {
+    "ko": "회사는 나를 잊어도, 나는 나를 잊지 말자.",
+    "en": "The company can forget me. I won't forget myself."
+   },
+   {
+    "ko": "끝난 게 아니라 다음 장으로 넘어간 것뿐이다. 조금 거칠게 넘겼을 뿐.",
+    "en": "It's not the end. Just a page turned a little roughly."
+   },
+   {
+    "ko": "가장 낮은 곳에서 보이는 하늘이 제일 넓다.",
+    "en": "The sky looks widest from the lowest place."
+   },
+   {
+    "ko": "괜찮은 척하는 것도 지쳤다. 오늘은 그냥 안 괜찮을래.",
+    "en": "I'm tired of pretending I'm fine. Today I'll just not be fine."
+   },
+   {
+    "ko": "인생에 정답은 없지만 오답도 없다. 다 경로일 뿐.",
+    "en": "There's no right answer in life. No wrong ones either. Just routes."
+   }
+  ],
+  "RETIREMENT": [
+   {
+    "ko": "평생 달렸으니 이제는 걸어도 된다. 풍경이 이렇게 예쁜 줄 몰랐다.",
+    "en": "I ran my whole life. Now I can walk. I never knew the view was this pretty."
+   },
+   {
+    "ko": "명함이 없어도 나는 나다. 그걸 확인하는 데 몇십 년이 걸렸다.",
+    "en": "Without a business card, I'm still me. It took decades to find that out."
+   },
+   {
+    "ko": "인생의 2막이 시작됐다. 이번엔 대본 없이 간다.",
+    "en": "Act two begins. No script this time."
+   },
+   {
+    "ko": "열심히 산 사람에게만 주어지는 심심함. 이것도 선물이다.",
+    "en": "The kind of boredom only hard workers earn. It's a gift too."
+   },
+   {
+    "ko": "시간이 많아지니까 소중한 사람들이 보였다.",
+    "en": "With more time on my hands, I finally saw the people who matter."
+   }
+  ],
+  "MOVING": [
+   {
+    "ko": "떠나는 사람만이 돌아올 곳의 소중함을 안다.",
+    "en": "Only those who leave know how precious home is."
+   },
+   {
+    "ko": "새 동네, 새 창문, 새 아침. 인생은 이렇게 몇 번이고 새로 시작할 수 있다.",
+    "en": "New neighborhood, new window, new morning. Life lets you start over again and again."
+   },
+   {
+    "ko": "짐은 박스 몇 개로 줄어드는데, 추억은 도무지 줄어들지 않는다.",
+    "en": "Your things fit into a few boxes. The memories never do."
+   },
+   {
+    "ko": "어디에 사느냐보다 누구와 사느냐가 집을 만든다.",
+    "en": "It's who you live with, not where, that makes a home."
+   },
+   {
+    "ko": "비행기 창밖으로 작아지는 도시를 보며 생각했다. 이 정도면 꽤 멀리 왔다.",
+    "en": "Watching the city shrink outside the plane window, I thought: I've come pretty far."
+   }
+  ],
+  "MONEY_UP": [
+   {
+    "ko": "돈이 생기니까 알겠다. 행복은 통장이 아니라 같이 밥 먹을 사람한테 있다는 걸.",
+    "en": "Now that I have money, I get it. Happiness isn't in the bank. It's in who you eat dinner with."
+   },
+   {
+    "ko": "운이 좋았던 거다. 그러니까 겸손하자. 운은 늘 이사를 다닌다.",
+    "en": "I got lucky. So stay humble. Luck moves house all the time."
+   },
+   {
+    "ko": "돈으로 시간은 못 사지만, 시간을 아껴 줄 수는 있더라.",
+    "en": "Money can't buy time. It can save some, though."
+   },
+   {
+    "ko": "부자가 된 기분이다. 진짜 부자는 이 기분을 나눌 사람이 있는 사람이겠지.",
+    "en": "I feel rich. Then again, the truly rich are the ones with someone to share it with."
+   }
+  ],
+  "MONEY_DOWN": [
+   {
+    "ko": "잃은 건 돈이지 내가 아니다. 그거면 됐다.",
+    "en": "I lost money. Not myself. That's enough."
+   },
+   {
+    "ko": "바닥을 쳤으니 이제 올라갈 일만 남았다. 적어도 이론상으로는.",
+    "en": "I hit rock bottom, so it's up from here. In theory, anyway."
+   },
+   {
+    "ko": "인생 수업료치고는 비쌌다. 그래도 배운 건 있다.",
+    "en": "Expensive tuition for a life lesson. I did learn something."
+   },
+   {
+    "ko": "돈은 다시 벌면 된다. 사람과 시간은 다시 못 번다.",
+    "en": "You can earn money back. Not people. Not time."
+   },
+   {
+    "ko": "통장은 비었는데 이상하게 사람들이 보였다. 곁에 남은 사람들이.",
+    "en": "My account was empty, but suddenly I could see the people. The ones who stayed."
+   }
+  ],
+  "HEALTH": [
+   {
+    "ko": "건강할 땐 몰랐다. 아무렇지 않은 하루가 얼마나 대단한 건지.",
+    "en": "When I was healthy I never knew how amazing an ordinary day is."
+   },
+   {
+    "ko": "병원 창문으로 보는 하늘이 제일 파랗다. 나가면 꼭 오래 보기로 했다.",
+    "en": "The sky looks bluest from a hospital window. When I get out, I'll look at it longer."
+   },
+   {
+    "ko": "살아 있다는 건, 다시 시작할 수 있다는 뜻이다.",
+    "en": "Being alive means you can start again."
+   },
+   {
+    "ko": "버티는 것도 실력이다. 오늘도 실력 발휘했다.",
+    "en": "Holding on is a skill. Used it again today."
+   },
+   {
+    "ko": "아파 보니까 알겠다. 나를 제일 아끼지 않았던 건 나였다.",
+    "en": "Getting sick taught me: the one who cared least about me was me."
+   }
+  ],
+  "CELEBRATE": [
+   {
+    "ko": "남의 행복을 진심으로 기뻐할 수 있다는 것. 그게 어른이 됐다는 증거 같다.",
+    "en": "Being truly happy for someone else. Maybe that's what being a grown-up is."
+   },
+   {
+    "ko": "우리가 언제 이렇게 컸지. 엊그제까지 교복 입고 떡볶이 먹던 애들이.",
+    "en": "When did we grow up? Just yesterday we were eating tteokbokki in school uniforms."
+   },
+   {
+    "ko": "박수 치다가 울컥했다. 다들 이렇게 열심히 살고 있었구나.",
+    "en": "I teared up while clapping. Everyone's been trying so hard."
+   },
+   {
+    "ko": "각자의 길로 흩어져도, 오늘 같은 날엔 다시 모인다. 그게 친구다.",
+    "en": "We scatter down our own roads, but on days like this, we gather again. That's what friends are."
+   }
+  ],
+  "SHADOW": [
+   {
+    "ko": "세상은 생각보다 차갑다. 그래서 따뜻한 사람 하나가 더 크게 보인다.",
+    "en": "The world is colder than I thought. That's why one warm person looks so big."
+   },
+   {
+    "ko": "사람을 믿었다가 다쳤다. 그래도 믿는 쪽을 택할 거다. 안 믿고 사는 건 더 춥더라.",
+    "en": "I trusted and got hurt. I'll still choose to trust. Living without it is colder."
+   },
+   {
+    "ko": "인생은 원래 엉망진창이다. 다들 아닌 척할 뿐.",
+    "en": "Life is a mess for everyone. They just pretend it isn't."
+   },
+   {
+    "ko": "넘어지는 건 창피한 게 아니다. 안 일어나는 게 아쉬운 거지.",
+    "en": "Falling isn't shameful. Staying down is the shame."
+   },
+   {
+    "ko": "비밀은 무겁다. 말하고 나니 생각보다 가벼웠다.",
+    "en": "Secrets are heavy. Once I said it, it felt lighter than I expected."
+   },
+   {
+    "ko": "오늘 같은 날도 인생의 한 페이지다. 찢을 순 없으니 그냥 넘기자.",
+    "en": "Days like today are pages too. Can't tear them out, so turn them."
+   }
+  ],
+  "TOGETHER": [
+   {
+    "ko": "사랑은 설렘으로 시작해서 습관으로 완성된다.",
+    "en": "Love starts with butterflies and is finished by habits."
+   },
+   {
+    "ko": "싸워도 같은 집으로 돌아온다. 그게 가족이 된다는 거다.",
+    "en": "You fight, and you still come home to the same place. That's what becoming family means."
+   },
+   {
+    "ko": "특별한 날보다 아무 일 없는 날에 더 사랑하게 된다.",
+    "en": "You fall harder on the days when nothing happens."
+   },
+   {
+    "ko": "서로를 바꾸려 하지 않기로 했다. 대신 이해하기로 했다.",
+    "en": "We stopped trying to change each other. We decided to understand instead."
+   },
+   {
+    "ko": "오래된 사랑은 말이 줄어든다. 대신 눈빛이 길어진다.",
+    "en": "Old love uses fewer words. The looks just get longer."
+   }
+  ],
+  "FAMILY": [
+   {
+    "ko": "가족은 고를 수 없다. 그래서 더 어렵고, 그래서 더 소중하다.",
+    "en": "You can't choose family. That's what makes it harder, and more precious."
+   },
+   {
+    "ko": "집에 가면 나는 여전히 막내다. 몇 살이 되어도.",
+    "en": "At home I'm still the kid. No matter how old I get."
+   },
+   {
+    "ko": "미워도 다시 한번. 가족이니까.",
+    "en": "Even when it's hard, once more. Because it's family."
+   },
+   {
+    "ko": "엄마 밥이 맛있는 건 레시피 때문이 아니라는 걸, 이제야 안다.",
+    "en": "Mom's food tastes good, and it was never the recipe. I finally get it."
+   }
+  ],
+  "FRIENDS": [
+   {
+    "ko": "인생에 진짜 친구 한 명이면 성공한 거래. 그럼 나는 꽤 성공했다.",
+    "en": "They say one true friend means you've made it. Then I've made it pretty big."
+   },
+   {
+    "ko": "오래된 친구는 설명이 필요 없다. 그냥 '야' 한마디면 된다.",
+    "en": "Old friends need no explanation. Just 'hey' is enough."
+   },
+   {
+    "ko": "시간이 지나도 변하지 않는 사람이 있다는 것. 그게 위로가 된다.",
+    "en": "Knowing someone who doesn't change with time is a comfort."
+   },
+   {
+    "ko": "우리는 서로의 흑역사를 지켜 주는 사이다. 그게 우정이다.",
+    "en": "We guard each other's embarrassing pasts. That's friendship."
+   }
+  ],
+  "FATE": [
+   {
+    "ko": "우연이 세 번 겹치면 운명이라고 했다. 이건 몇 번째더라.",
+    "en": "Three coincidences make it fate, they say. What number is this?"
+   },
+   {
+    "ko": "별이 정해 둔 길이라도, 걷는 건 결국 내 발이다.",
+    "en": "Even if the stars set the road, it's still my feet doing the walking."
+   },
+   {
+    "ko": "인생은 계획대로 되지 않는다. 그래서 재미있다.",
+    "en": "Life never goes to plan. That's the fun of it."
+   },
+   {
+    "ko": "모든 일에는 때가 있다. 오늘이 그때였나 보다.",
+    "en": "There's a time for everything. Today must have been that time."
+   }
+  ],
+  "TIME": [
+   {
+    "ko": "어른이 되면 다 괜찮아질 줄 알았다. 어른도 그냥 큰 아이였다.",
+    "en": "I thought everything would be fine once I grew up. Grown-ups are just bigger kids."
+   },
+   {
+    "ko": "나이는 숫자일 뿐이라더니, 숫자가 꽤 무겁다.",
+    "en": "They say age is just a number. It's a heavy number, though."
+   },
+   {
+    "ko": "시간은 흐르는 게 아니라 쌓이는 거다. 오늘도 한 겹.",
+    "en": "Time doesn't pass. It piles up. One more layer today."
+   },
+   {
+    "ko": "돌아보면 다 청춘이었다. 지금도 나중에 보면 청춘이겠지.",
+    "en": "Looking back, it was all youth. Someday, so will this be."
+   }
+  ],
+  "DAILY": [
+   {
+    "ko": "평범한 하루가 제일 어렵고, 제일 소중하다.",
+    "en": "Ordinary days are the hardest, and the most precious."
+   },
+   {
+    "ko": "행복은 생각보다 작다. 그래서 자주 놓친다.",
+    "en": "Happiness is smaller than you think. That's why we miss it so often."
+   },
+   {
+    "ko": "오늘도 별일 없었다. 그게 별일이다.",
+    "en": "Nothing special happened today. That's special in itself."
+   },
+   {
+    "ko": "인생은 큰 사건이 아니라 이런 사소한 순간들로 만들어진다.",
+    "en": "Life isn't made of big events. It's made of small moments like this."
+   },
+   {
+    "ko": "웃은 날이 우는 날보다 하루라도 많으면 된다.",
+    "en": "As long as there's one more day of laughing than crying."
+   },
+   {
+    "ko": "내일 일은 내일의 내가 하겠지. 오늘의 나는 이걸로 충분하다.",
+    "en": "Tomorrow's me will handle tomorrow. Today's me has done enough."
+   }
+  ]
+ },
+ "byCard": {
+  "MOM_FUNERAL": "PARENT_DEATH",
+  "DAD_FUNERAL": "PARENT_DEATH",
+  "PARENT_FUNERAL": "PARENT_DEATH",
+  "PARTNER_FUNERAL": "PARTNER_DEATH",
+  "FRIEND_FUNERAL": "GOODBYE",
+  "FAMILY_FUNERAL": "GOODBYE",
+  "RELATIVE_FUNERAL": "GOODBYE",
+  "PET_FAREWELL": "GOODBYE",
+  "PREGNANCY_LOSS": "GOODBYE",
+  "START_DATING": "LOVE_BEGINS",
+  "FIRST_DATE": "LOVE_BEGINS",
+  "PROPOSAL": "VOWS",
+  "MEET_PARENTS": "VOWS",
+  "WEDDING": "VOWS",
+  "BREAKUP": "BREAKUP",
+  "CALL_OFF": "BREAKUP",
+  "DIVORCE": "DIVORCE",
+  "AFFAIR": "DIVORCE",
+  "BIRTH": "NEW_LIFE",
+  "NEPHEW_BIRTH": "NEW_LIFE",
+  "KID_SCHOOL": "NEW_LIFE",
+  "PET_ADOPT": "NEW_LIFE",
+  "PROMOTION": "WORK_UP",
+  "JOB_START": "WORK_UP",
+  "JOB_CHANGE": "WORK_UP",
+  "INDEPENDENCE": "WORK_UP",
+  "LAYOFF": "WORK_DOWN",
+  "SHOP_CLOSE": "WORK_DOWN",
+  "RETIREMENT": "RETIREMENT",
+  "MOVE_CITY": "MOVING",
+  "NEW_HOME": "MOVING",
+  "FLIGHT": "MOVING",
+  "WINDFALL": "MONEY_UP",
+  "LOSS": "MONEY_DOWN",
+  "HOSPITAL": "HEALTH",
+  "HOSPITAL_SELF": "HEALTH",
+  "RECOVERED": "HEALTH",
+  "FRIEND_WEDDING": "CELEBRATE",
+  "SIBLING_WEDDING": "CELEBRATE",
+  "GRADUATION": "CELEBRATE"
+ },
+ "byEventCat": {
+  "money_up": "MONEY_UP",
+  "money_down": "MONEY_DOWN",
+  "romance": "LOVE_BEGINS",
+  "marriage": "TOGETHER",
+  "partner": "TOGETHER",
+  "health": "HEALTH",
+  "career": "WORK_UP",
+  "family": "FAMILY",
+  "friendship": "FRIENDS",
+  "fate": "FATE",
+  "life": "TIME",
+  "milestone": "TIME",
+  "school": "TIME",
+  "dark": "SHADOW",
+  "betrayal": "SHADOW",
+  "chaos": "SHADOW",
+  "secrets": "SHADOW"
+ }
+}
