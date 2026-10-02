@@ -1606,7 +1606,8 @@
    "rarity": "common",
    "tone": "dark",
    "requires": [
-    "age>=20"
+    "age>=20",
+    "inKorea"
    ],
    "trigger": {
     "signals": {

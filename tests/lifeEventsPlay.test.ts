@@ -53,7 +53,7 @@ describe("Life events in a played life", () => {
     for (const { shown, days, g } of lives) {
       expect(g.isOver()).toBe(true);
       expect(days).toBeGreaterThanOrEqual(3);
-      expect(days).toBeLessThanOrEqual(50);
+      expect(days).toBeLessThanOrEqual(60); // a marriage from 20 to the end can run ~55 days
       const hist = g.state.story!.events!.history;
       expect(Object.values(hist).reduce((a, h) => a + h.length, 0)).toBeGreaterThanOrEqual(shown.length);
     }

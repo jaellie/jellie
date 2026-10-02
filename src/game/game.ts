@@ -798,7 +798,7 @@ export class Game {
     const fatedNpc = Object.values(st.world?.npcs ?? {}).find((n) => n.fated);
     const withFated = !!fatedNpc && st.relationship.partnerId === fatedNpc.id;
     const partnerFar = (o.partner || o.who === "partner") && !!st.relationship.longDistance && loc !== "home" && loc !== "airport";
-    const fatedFar = (o.fated || o.who === "fated") && !withFated && !!life && life.from !== "same" && loc !== "airport" && !!st.world?.relationships[fatedNpc?.id ?? ""];
+    const fatedFar = (o.fated || o.who === "fated") && !withFated && !!life && life.from !== "same" && loc !== "airport" && loc !== "home" && !!st.world?.relationships[fatedNpc?.id ?? ""];
     if (partnerFar || fatedFar) {
       const k = partnerFar ? "{partner}" : "{fated}";
       const abroad = life?.from === "abroad";
@@ -1112,7 +1112,10 @@ export class Game {
         pool.push({ item: { id: `date:${id}`, kind: "date", locationId: id, activityId: "date", withPartner: true, label: bi(`${f.partnerName}와(과) ${ko}`, `${en} with ${f.partnerName}`) }, weight: 1.2 });
     }
     const tripCost = CFG.tripCostUnits as Record<string, number>;
-    for (const dest of ["coast", "tokyo", "paris"]) {
+    // A day with a story moment (the meeting, a confession…) stays where the story is: no trip that day,
+    // or you'd "meet at the Tokyo airport" for no reason.
+    const storyDay = this.s.dayKind === "fated" || this.s.dayKind === "arc" || this.s.dayKind2 === "fated" || this.s.dayKind2 === "arc";
+    for (const dest of storyDay ? [] : ["coast", "tokyo", "paris"]) {
       if (st.money < tripCost[dest] + 1) continue;
       const intl = getDestination(dest).international;
       const w = 0.35 * Math.exp((mods.travel ?? 0) + (intl ? mods.overseas ?? 0 : 0)) * (0.6 + st.traits.novelty);

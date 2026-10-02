@@ -363,7 +363,7 @@
    "away": true,
    "income": 0.5,
    "meet": {
-    "ko": "(휴가 나온 군인이 길을 물었다. 서울 지리를 하나도 모른다고 했다.)",
+    "ko": "(휴가 나온 군인이 길을 물었다. 이 동네 지리를 하나도 모른다고 했다.)",
     "en": "(A soldier on leave asks you for directions. They don't know the city at all.)"
    },
    "kind": "civil"
@@ -763,7 +763,7 @@
     "en": "…They disappeared into the rain. You kept thinking about that umbrella."
    },
    "SLOW_BURN": {
-    "ko": "서울로 돌아온 뒤에도 가끔 연락을 주고받았다. {fatedCity}의 날씨를 묻는 게 습관이 됐다.",
+    "ko": "집으로 돌아온 뒤에도 가끔 연락을 주고받았다. {fatedCity}의 날씨를 묻는 게 습관이 됐다.",
     "en": "Back home, you still texted now and then. Asking about the weather in {fatedCity} became a habit."
    }
   },

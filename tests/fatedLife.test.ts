@@ -631,3 +631,28 @@ describe("Occasions while living apart", () => {
     expect(day100?.line).toMatch(/화면 너머/);
   });
 });
+
+describe("International couples", () => {
+  it("Singapore × Madrid: no trip on a story day, no 'flew in' over the phone, the abroad confession is at the airport", () => {
+    for (const seed of [1, 2, 3, 4, 5, 6, 7, 8]) {
+      const g = createGame({ name: "Jae", gender: "F", likes: "M", birth: { year: 1996, month: 5, day: 3 }, birthplace: "Singapore", home: "Singapore", nationality: "SG", mbti: "ENFP", seed, lang: "en",
+        fated: { name: "Mateo", gender: "M", birth: { year: 1995, month: 8, day: 9 }, birthplace: "Madrid", nationality: "ES", from: "abroad", city: "madrid", status: "stranger" } } as never);
+      for (let d = 0; d < 14 && !g.isOver(); d++) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) if (b.kind === "popup") {
+            const sc = b.popup.scene as { sceneKey?: string } | undefined;
+            if (b.popup.source === "story") {
+              expect(g.state.world?.travel?.active ?? false).toBe(false);
+              if (sc?.sceneKey === "home" || ["instagram", "language_exchange_app", "dating_app", "online_community"].includes(sc?.sceneKey ?? "")) expect(b.popup.line).not.toMatch(/flew in|비행기를 타고 왔다/);
+              if (b.popup.title === "Saying It") expect(sc?.sceneKey).toBe("airport");
+            }
+            g.choose(0);
+          }
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        g.endDay();
+      }
+    }
+  }, 240000);
+});
