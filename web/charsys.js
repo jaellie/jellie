@@ -37,8 +37,11 @@ function paint(sp,age,view){
  const hcol=(x,y)=>{if(ga<=0)return hc0;const t=ga*(.55+.9*hash(seed,x,y)),a=hx(hc0);return th(a.map((v,i)=>v+(GRAYC[i]-v)*t))};
  const hair=(x,y)=>set(x,y,hcol(x,y));const hrect=(x0,y0,x1,y1)=>{for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++)hair(x,y)};
  const b=bodyAt(sp,age),hw=3+b,L=Math.floor(8-hw),R=Math.floor(7+hw),aw=b>=1.5?2:1;
- const OS=((sp.g==='M'?OUT_M:OUT_F)[sp.outfit||0]||OUT_F[0])[3],P=(PALS[sp.pal||0]||PALS[0])[3];
- const top=P[0],acc=P[1],bot=OS.bot==='jeans'?'#4f78b8':P[2],shoeC=SHOE[OS.shoe];
+ let OS=((sp.g==='M'?OUT_M:OUT_F)[sp.outfit||0]||OUT_F[0])[3],P=(PALS[sp.pal||0]||PALS[0])[3];
+ // Big days dress everyone for the occasion: a white gown or a black suit at the wedding, black at a funeral.
+ if(sp.dress==='wedding'){if(sp.g==='M'){OS={top:'collar',bot:'trousers',shoe:'shoe'};P=['#2e2c3e','#f7f3ea','#2e2c3e']}else{OS={top:'blouse',bot:'gown',shoe:'flat'};P=['#fbf8f2','#ffd6e2','#fbf8f2']}}
+ else if(sp.dress==='funeral'){OS=sp.g==='M'?{top:'collar',bot:'trousers',shoe:'shoe'}:{top:'blouse',bot:'skirt',shoe:'flat'};P=['#26232c','#f7f3ea','#26232c']}
+ const top=P[0],acc=P[1],bot=OS.bot==='jeans'?'#4f78b8':P[2],shoeC=sp.dress==='wedding'&&sp.g!=='M'?'#f7f3ea':sp.dress?'#1c1a20':SHOE[OS.shoe];
  const hs=HS[sp.hair]||HS.short,fid=sp.face||0,E=OUT,mouthC=dk(skin,.38),BL='#e8a09a';
  const tall=[0,1,3].includes(fid)&&age<45,blink=[];
  const side=view==='right'||view==='left',back=view==='back',s=view==='34'?1:0;
@@ -47,7 +50,8 @@ function paint(sp,age,view){
   // back hair
   if(!hs.bald){if(hs.len>=9)hrect(3,10,12,Math.min(hs.len,13));if(hs.wave){hrect(1,3,2,4);hrect(13,3,14,4);for(let y=5;y<hs.len;y++){const o=WV[(y-5)%6];for(let k=0;k<3;k++){const xl=1+o+k,xr=14-o-k,cl=k===0?lt(hcol(xl,y),.18):k===2?dk(hcol(xl,y),.22):hcol(xl,y);set(xl,y,cl);set(xr,y,k===0?lt(hcol(xr,y),.18):k===2?dk(hcol(xr,y),.22):hcol(xr,y))}}const yl=hs.len;[[1,yl],[2,yl],[3,yl],[4,yl-1],[4,yl],[2,yl+1],[3,yl+1]].forEach(([x,y])=>{hair(x,y);hair(15-x,y)});set(3,yl,dk(hcol(3,yl),.22));set(12,yl,dk(hcol(12,yl),.22))}else if(hs.w===2){hrect(1,3,2,hs.len);hrect(13,3,14,hs.len)}else{hrect(2,4,2,hs.len);hrect(13,4,13,hs.len)}if(hs.flip){hair(1,hs.len);hair(14,hs.len)}}
   // body
-  if(OS.bot==='skirt'){rect(L,18,R,18,bot);rect(L-1,19,R+1,20,bot);const la=b>=1.5?4:5,ra=b>=1.5?11:10;rect(la,21,6,22,skin);rect(9,21,ra,22,skin);rect(la,23,6,23,shoeC);rect(9,23,ra,23,shoeC)}
+  if(OS.bot==='gown'){rect(L,18,R,18,bot);rect(L-1,19,R+1,21,bot);rect(L-2,22,R+2,23,bot);rect(L-2,23,R+2,23,dk(bot,.1));rect(R+1,19,R+1,21,dk(bot,.06))}
+  else if(OS.bot==='skirt'){rect(L,18,R,18,bot);rect(L-1,19,R+1,20,bot);const la=b>=1.5?4:5,ra=b>=1.5?11:10;rect(la,21,6,22,skin);rect(9,21,ra,22,skin);rect(la,23,6,23,shoeC);rect(9,23,ra,23,shoeC)}
   else{rect(L,18,R,18,bot);rect(L,19,6,22,bot);rect(9,19,R,22,bot);rect(R,19,R,22,dk(bot,.12));rect(L,23,6,23,shoeC);rect(9,23,R,23,shoeC)}
   rect(L,12,R,17,top);rect(R,13,R,17,dk(top,.1));
   const sl=OS.top==='tee'?13:OS.top==='blouse'?15:16;[[L-aw,L-1],[R+1,R+aw]].forEach(([a0,a1])=>{rect(a0,12,a1,sl,top);if(sl<16)rect(a0,sl+1,a1,16,skin);rect(a0,17,a1,17,skin)});
@@ -77,7 +81,7 @@ function paint(sp,age,view){
   // side view (right-facing)
   if(!hs.bald){hrect(3,4,6,hs.len>=9?Math.min(hs.len,11):Math.max(7,hs.len));if(hs.len>11){if(hs.wave){for(let y=12;y<hs.len;y++){const o=WV[(y-5)%6];hrect(3+o,y,5+o,y);set(5+o,y,dk(hcol(5+o,y),.22))}hrect(3,hs.len,6,hs.len);hrect(4,hs.len+1,5,hs.len+1)}else hrect(3,12,5,hs.len)}}
   const tw=4+Math.round(b),a0=8-Math.floor(tw/2),z=a0+tw-1;
-  if(OS.bot==='skirt'){rect(a0,18,z,18,bot);rect(a0-1,19,z+1,20,bot);rect(a0+1,21,z-1,22,skin)}else{rect(a0,18,z,18,bot);rect(a0+1,19,z-1,22,bot)}rect(a0+1,23,z+1,23,shoeC);
+  if((OS.bot==='skirt'||OS.bot==='gown')){rect(a0,18,z,18,bot);rect(a0-1,19,z+1,20,bot);rect(a0+1,21,z-1,22,skin)}else{rect(a0,18,z,18,bot);rect(a0+1,19,z-1,22,bot)}rect(a0+1,23,z+1,23,shoeC);
   rect(a0,12,z,17,top);rect(a0,13,a0,17,dk(top,.1));if(OS.top==='cardigan'||OS.top==='shirtOpen')rect(z,12,z,17,acc);if(OS.top==='collar'||OS.top==='blouse')set(z,12,'#f7f3ea');
   const ax=a0+Math.floor(tw/2)-1,sl=OS.top==='tee'?13:OS.top==='blouse'?15:16;rect(ax,12,ax+aw-1,sl,dk(top,.14));if(sl<16)rect(ax,sl+1,ax+aw-1,16,skin);rect(ax,17,ax+aw-1,17,skin);
   HEADS.forEach((r,y)=>{if(r)rect(r[0],y,r[1],y,skin)});if(b>=1.5)set(12,9,skin);set(13,7,skin);rect(7,11,8,11,skD);

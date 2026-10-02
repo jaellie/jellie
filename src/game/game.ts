@@ -44,13 +44,14 @@ import "../story/eventLibrary";
 import { yearSignalMap } from "../story/destinyScript";
 import { type AstrologyChart, calculateAstrologyChart } from "../astrology/chart";
 import { compatibility } from "../destiny/compatibility";
-import { type BirthplaceInput, PLACES, type PlaceInfo, findPlace, resolveBirth } from "../destiny/birthplace";
+import { type BirthplaceInput, PLACES, type PlaceInfo, findPlace, joinPlace, resolveBirth } from "../destiny/birthplace";
 import { pickMood } from "../story/mood";
 import { type RoadView, buildRoad } from "../world/road";
 import { readingOf } from "../story/reading";
 import { confessFate } from "../story/confessFate";
 import { photoFor, setPhotoCulture } from "../integration/prototype";
-import { homeVars, nationCode } from "../story/nationality";
+import { homeVars, nationCode, nationalityOf } from "../story/nationality";
+import { currencyFor, formatMoney, localizeMoneyText } from "./currency";
 import { type FatedFrom, type FatedLife, fatedVars, findFatedJob, resolveFatedLife } from "../story/fatedProfile";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
 import type { RelationshipOriginType } from "../world/types";
@@ -67,7 +68,7 @@ import { buildCards, type MemoryCard } from "../story/cards";
 import memorialData from "../../data/story/memorial.json";
 import { AutoWorldPolicy } from "../world/decisions";
 import { DIRECTOR_CONFIG as CFG, Director, type DirectorMemory, newDirectorMemory, SPEAKER_FALLBACK, SPEAKER_REQUIRES } from "./director";
-import { type Bi, type Lang, CITY_KO, cityKo, englishPayload, COUNTRY_KO, DEST_KO, EDU_KO, SPEAKER_NAME, bi, fillNames, fixJosa, krw, langVars } from "./text";
+import { type Bi, type Lang, CITY_KO, cityKo, englishPayload, mapPayload, COUNTRY_KO, DEST_KO, EDU_KO, SPEAKER_NAME, bi, fillNames, fixJosa, krw, langVars } from "./text";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -348,7 +349,11 @@ export class Game {
       (this as unknown as Record<string, unknown>)[m] = (...a: unknown[]) => {
         setPhotoCulture(this.s.lang === "en" ? "west" : "ko");
         const r = fn.apply(this, a);
-        return this.s.lang === "en" ? englishPayload(r) : r;
+        // Amounts in story text in the player's own currency (won stays as written).
+        const cur = currencyFor(nationalityOf(this.state));
+        const lang = this.s.lang ?? "ko";
+        const m = cur === "KRW" ? r : mapPayload(r, (t) => localizeMoneyText(t, cur, lang));
+        return lang === "en" ? englishPayload(m) : m;
       };
     }
   }
@@ -1630,16 +1635,16 @@ export class Game {
       age: this.s.lang === "ko" ? `${Math.floor(st.age)}세` : `${Math.floor(st.age)} y/o`,
       /** The age as a number (style it yourself: a big number with a small "세" / "y/o"). */
       ageNum: Math.floor(st.age),
-      money: krw(st.money, UNIT),
-      income: krw(yearlyIncome(st), UNIT),
+      money: formatMoney(st.money * UNIT, currencyFor(nationalityOf(st)), this.s.lang ?? "ko"),
+      income: formatMoney(yearlyIncome(st) * UNIT, currencyFor(nationalityOf(st)), this.s.lang ?? "ko"),
       job: this.L(job),
       relationship: this.L(rel),
       location: this.L(getLocation(this.s.loc ?? this.locationAt(this.s.minute)).name),
       // On a trip, where you are now (Tokyo), not where you live.
       city: (() => {
         const trip = st.world?.travel ? getDestination(st.world.travel.destinationId) : undefined;
-        if (trip && trip.country !== "HOME") return this.s.lang === "ko" ? `${COUNTRY_KO[trip.country] ?? trip.country} · ${trip.name.ko}` : `${trip.country} · ${trip.name.en}`;
-        return this.s.lang === "ko" ? `${COUNTRY_KO[st.location.country] ?? st.location.country} · ${cityKo(st.location.city)}` : `${st.location.country} · ${st.location.city}`;
+        if (trip && trip.country !== "HOME") return this.s.lang === "ko" ? joinPlace(COUNTRY_KO[trip.country] ?? trip.country, trip.name.ko) : joinPlace(trip.country, trip.name.en);
+        return this.s.lang === "ko" ? joinPlace(COUNTRY_KO[st.location.country] ?? st.location.country, cityKo(st.location.city)) : joinPlace(st.location.country, st.location.city);
       })(),
       minute: this.s.minute,
     };

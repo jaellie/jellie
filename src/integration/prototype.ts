@@ -66,6 +66,8 @@ export interface PrototypeScene {
   photo?: string;
   /** With a photo: the only people to draw on it (actor.who), side by side on the floor — you, and your partner if here. */
   photoCast?: string[];
+  /** Clothes for the day: "wedding" (gown / black suit) or "funeral" (black formal). */
+  dress?: "wedding" | "funeral";
   /** True when roomKey is only a stand-in for a place that has no painter yet. */
   standIn: boolean;
   /** Bitmap to show when there is no procedural painter yet. */
@@ -168,7 +170,10 @@ export function toPrototypeScene(scene: Scene): PrototypeScene {
       // On a painting, only the two who matter stand in it: you and your partner (or the one you're
       // falling for) — just you when they aren't there. Never a row of everyone.
       const two = [actors.find((a) => a.role === "me"), actors.find((a) => a.role === "partner") ?? actors.find((a) => a.role === "fated")];
-      return { photo, photoCast: two.filter((a): a is NonNullable<typeof a> => !!a).map((a) => a.who) };
+      // Dressed for the day: wedding gown / black suit at a wedding, black formal clothes at a funeral.
+      const id = photo.slice(3, -4);
+      const dress = /^wedding_/.test(id) ? ("wedding" as const) : /^funeral_hall/.test(id) ? ("funeral" as const) : undefined;
+      return { photo, photoCast: two.filter((a): a is NonNullable<typeof a> => !!a).map((a) => a.who), ...(dress ? { dress } : {}) };
     })(),
     standIn: !own,
     assetPath: scene.background.assetPath,

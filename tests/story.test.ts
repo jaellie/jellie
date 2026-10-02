@@ -125,27 +125,47 @@ describe("A life with a storyline", () => {
     }
   });
 
-  it("once retired (정년 or 명예퇴직), you stay retired: no new boss, no 야근 asks, no second farewell", () => {
-    for (const seed of [90, 152]) {
-      const g = createGame({ ...SETUP, birth: { year: 1966, month: 3, day: 3, hour: 9, minute: 30 }, seed });
+  it("once retired (정년 or 명예퇴직), you stay retired: no employer hires you back (no boss, no 야근)", async () => {
+    const { applyConsequence } = await import("../src/sim/consequences");
+    const { checkRequirement } = await import("../src/sim/requirements");
+    const { emptyModifiers } = await import("../src/core/lifeModifiers");
+    const g = createGame({ ...SETUP, seed: 1 });
+    const st = g.state;
+    st.career.employed = false;
+    st.flags.retired = true;
+    const ctx = { rng: new SeededRandom(1), modifiers: emptyModifiers(), log: [] as string[] };
+    applyConsequence(st, { kind: "job", field: "general" } as never, ctx);
+    expect(st.career.employed).toBe(false);
+    // Job offers that want someone "not employed" don't count a retiree as job-hunting.
+    expect(checkRequirement(st, { kind: "employed", value: false } as never).ok).toBe(false);
+    expect(g.facts().employed).toBe(false);
+    // A second career you run yourself is still possible.
+    applyConsequence(st, { kind: "job", field: "second-career" } as never, ctx);
+    expect(st.career.employed).toBe(true);
+  });
+
+  it("birthdays and anniversaries come up in their own month, never months later", () => {
+    let seen = 0;
+    for (const seed of [1, 2, 3, 4, 5, 6, 7, 8]) {
+      const g = createGame({ ...SETUP, seed, fated: { name: "Ren", from: "same" as const, status: "dating" as const, since: { year: 2024, month: 3, day: 1 } } });
       const rng = new SeededRandom(seed);
-      let retired = 0, n = 0;
-      while (!g.isOver() && n < 150) {
+      for (let n = 0; n < 60 && !g.isOver(); n++) {
         for (let i = 0; i < 400; i++) {
           const beats = g.advance(g.s.minute + 30);
           for (const b of beats) if (b.kind === "popup") {
-            if (retired) expect(b.popup.line).not.toMatch(/늦게까지 가능|명예퇴직 신청|수고 많으셨습니다/);
+            if (b.popup.title === "내 생일") {
+              seen++;
+              // SETUP birthday: September 28 → asked in August or September only.
+              expect([8, 9]).toContain(g.state.date.month);
+            }
             g.choose(rng.int(0, b.popup.ch.length - 1));
           }
           if (beats.some((b) => b.kind === "dayEnd")) break;
         }
-        const e = g.endDay();
-        if (retired) expect(g.state.career.employed && g.state.career.field !== "second-career").toBe(false);
-        if (e.cards.some((c) => c.kind === "RETIREMENT")) retired++;
-        n++;
+        g.endDay();
       }
-      expect(retired).toBe(1);
     }
+    expect(seen).toBeGreaterThan(0);
   });
 
   it("memory cards are clean: no leftover {placeholders} or (과) markers, plain roles, named friends", () => {

@@ -172,8 +172,37 @@ export function romanize(hangul: string): string {
 
 /** English text with no Korean left: family words translated, NPC names in their English form (서준 → Noah), other names romanized. */
 export function englishOnly(text: string): string {
-  if (!/[가-힣]/.test(text)) return text;
-  return text.replace(/[가-힣]+/g, (w) => FAMILY_EN[w] ?? nameEn(w) ?? romanize(w));
+  const t = /[가-힣]/.test(text) ? text.replace(/[가-힣]+/g, (w) => FAMILY_EN[w] ?? nameEn(w) ?? romanize(w)) : text;
+  return plainEnglish(t);
+}
+
+/**
+ * English reads unnaturally with Korean-style punctuation: no tildes ("Hmm~", "Thanks~!") and no em
+ * dashes. "Look — I made…" → "Look, I made…"; a line that trails off ("Wait—") → "Wait…".
+ */
+export function plainEnglish(text: string): string {
+  if (!/[~—]/.test(text)) return text;
+  return text
+    .replace(/(\d)\s*~\s*(\d)/g, "$1 to $2")
+    .replace(/~+/g, "")
+    .replace(/\s*—\s*(?=$|[)"'’”…])/g, "…")
+    .replace(/([.!?…][)"'’”]*)\s*—\s*/g, "$1 ")
+    .replace(/(^|[(“‘])\s*—\s*/g, "$1")
+    .replace(/\s*—\s*/g, ", ")
+    .replace(/,\s*,/g, ",")
+    .replace(/ {2,}/g, " ");
+}
+
+/** Deep copy of a UI payload with every string passed through fn. */
+export function mapPayload<T>(value: T, fn: (s: string) => string): T {
+  if (typeof value === "string") return fn(value) as unknown as T;
+  if (Array.isArray(value)) return value.map((v) => mapPayload(v, fn)) as unknown as T;
+  if (value && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) out[k] = mapPayload(v, fn);
+    return out as T;
+  }
+  return value;
 }
 
 /** Deep copy of a UI payload with every string made English-only. */

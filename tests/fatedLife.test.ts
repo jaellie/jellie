@@ -603,6 +603,12 @@ describe("City pickers", () => {
     expect(searchPlaces("여수")[0]).toMatchObject({ id: "yeosu", name: "여수", countryName: "한국" });
     expect(searchPlaces("여수수")).toEqual([]);
     expect(searchPlaces("to", "en").map((p) => p.name)).toContain("Tokyo");
+    // A country finds its cities: "영국" → 런던 · 영국, "UK" → London.
+    expect(searchPlaces("영국").map((p) => p.name)).toContain("런던");
+    expect(searchPlaces("영국").every((p) => p.country === "GB")).toBe(true);
+    expect(searchPlaces("uk", "en").map((p) => p.name)).toContain("London");
+    expect(searchPlaces("일본").map((p) => p.name)).toContain("도쿄");
+    expect(searchPlaces("France", "en").map((p) => p.name)).toContain("Paris");
   });
   it("the partner's city (by id) decides near/far, measured from my home", () => {
     const g = createGame({ ...JAE, seed: 2, home: "New York", fated: { ...REN, city: "busan", status: "dating" } } as never);

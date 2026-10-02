@@ -343,8 +343,8 @@ export function ensureArcs(state: LifeState, rng: SeededRandom): void {
 function queueOccasions(state: LifeState, rng: SeededRandom): void {
   const st = state.story!;
   const m = state.monthIndex;
-  // Stale ones (the day never came) quietly pass.
-  const q = (st.occasions = (st.occasions ?? []).filter((o) => m - o.month <= 4));
+  // Stale ones (the day never came) quietly pass: a birthday is never asked about months later.
+  const q = (st.occasions = (st.occasions ?? []).filter((o) => m <= o.month));
   const last = (st.occasionLast ??= {});
   const add = (kind: NonNullable<StoryState["occasions"]>[number]["kind"], n?: number, big = false) => {
     if (q.some((o) => o.kind === kind)) return;
@@ -375,7 +375,8 @@ function queueOccasions(state: LifeState, rng: SeededRandom): void {
 
 /** The celebration waiting for today, if any (taken off the queue when it plays). */
 export function dueOccasion(state: LifeState): NonNullable<StoryState["occasions"]>[number] | undefined {
-  return state.story?.occasions?.find((o) => o.month <= state.monthIndex && state.monthIndex - o.month <= 4);
+  // Only in its own month, or the month just before ("곧 내 생일이다").
+  return state.story?.occasions?.find((o) => state.monthIndex >= o.month - 1 && state.monthIndex <= o.month);
 }
 
 export function monthlyStoryTick(state: LifeState, rng: SeededRandom): void {

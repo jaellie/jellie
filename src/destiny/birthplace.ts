@@ -98,7 +98,15 @@ export function countryName(code: string, lang: "ko" | "en" = "ko"): string {
       REGION.set(lang, null);
     }
   }
-  return REGION.get(lang)?.of(code) ?? code;
+  const n = REGION.get(lang)?.of(code) ?? code;
+  // "홍콩(중국 특별행정구)" / "Hong Kong SAR China" → just "홍콩" / "Hong Kong".
+  return n.replace(/\s*\(.*\)$/, "").replace(/ SAR China$/, "");
+}
+
+/** "서울 · 한국", but a city-state only once: "싱가포르", not "싱가포르 · 싱가포르". */
+export function joinPlace(a: string, b: string): string {
+  const k = (x: string) => x.replace(/\s+/g, "").toLowerCase();
+  return !a || !b || k(a) === k(b) ? a || b : `${a} · ${b}`;
 }
 
 /**
@@ -106,17 +114,37 @@ export function countryName(code: string, lang: "ko" | "en" = "ko"): string {
  * that start with it, then names that contain it). The UI must make the player tap one of these —
  * typed text that matches nothing ("여수수") is not a city, and the field stays unconfirmed.
  */
-export function searchPlaces(query: string, lang: "ko" | "en" = "ko", limit = 8): Array<{ id: string; name: string; country: string; countryName: string }> {
+export function searchPlaces(query: string, lang: "ko" | "en" = "ko", limit = 8): Array<{ id: string; name: string; country: string; countryName: string; label: string }> {
   const q = norm(query ?? "");
   if (!q) return [];
   const scored: Array<{ p: PlaceInfo; s: number }> = [];
   for (const p of PLACES) {
     const keys = [p.ko, p.en, p.id, ...(p.aliases ?? [])].map(norm);
-    const s = keys.includes(q) ? 0 : keys.some((k) => k.startsWith(q)) ? 1 : keys.some((k) => k.includes(q)) ? 2 : -1;
+    let s = keys.includes(q) ? 0 : keys.some((k) => k.startsWith(q)) ? 1 : keys.some((k) => k.includes(q)) ? 2 : -1;
+    // A country name finds its cities too ("영국" / "UK" → 런던 · 영국), after any city that matches by name.
+    if (s < 0 && countryKeys(p.country).some((k) => k === q || (q.length >= 2 && k.startsWith(q)))) s = 3;
     if (s >= 0) scored.push({ p, s });
   }
   scored.sort((a, b) => a.s - b.s || (a.p.country === "KR" ? 0 : 1) - (b.p.country === "KR" ? 0 : 1) || a.p[lang].localeCompare(b.p[lang], lang));
-  return scored.slice(0, limit).map(({ p }) => ({ id: p.id, name: p[lang], country: p.country, countryName: countryName(p.country, lang) }));
+  return scored.slice(0, limit).map(({ p }) => ({ id: p.id, name: p[lang], country: p.country, countryName: countryName(p.country, lang), label: joinPlace(p[lang], countryName(p.country, lang)) }));
+}
+
+/** Everyday names people type for a country, beyond the official ones. */
+const COUNTRY_ALIASES: Record<string, string[]> = {
+  GB: ["uk", "england", "britain", "great britain", "잉글랜드", "영국"],
+  US: ["usa", "america", "united states", "미국", "미합중국"],
+  KR: ["korea", "south korea", "대한민국", "한국", "남한"],
+  JP: ["japan", "일본"],
+  CN: ["china", "중국"],
+  TW: ["taiwan", "대만"],
+  AE: ["uae", "emirates", "아랍에미리트"],
+  NL: ["holland", "netherlands", "네덜란드"],
+  CZ: ["czechia", "czech republic", "체코"],
+};
+const COUNTRY_KEYS = new Map<string, string[]>();
+function countryKeys(code: string): string[] {
+  if (!COUNTRY_KEYS.has(code)) COUNTRY_KEYS.set(code, [code, countryName(code, "ko"), countryName(code, "en"), ...(COUNTRY_ALIASES[code] ?? [])].map(norm));
+  return COUNTRY_KEYS.get(code)!;
 }
 
 /** The one city this text names exactly (by id, Korean/English name or alias) — or undefined: ask again. */
