@@ -23,6 +23,8 @@ class Message:
     time: datetime
     sender: str
     text: str
+    # 링크 미리보기에서 얻은 (링크, 제목) 목록. 디스코드에서만 채워진다.
+    link_titles: tuple[tuple[str, str], ...] = ()
 
 
 _PC_DATE = re.compile(r"^-+\s*(\d{4})년 (\d{1,2})월 (\d{1,2})일 .*?-+$")
