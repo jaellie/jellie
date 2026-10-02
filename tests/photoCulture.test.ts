@@ -16,12 +16,14 @@ describe("Culture-bound paintings (Korean vs Western versions)", () => {
     vi.doUnmock("../data/world/photos.json");
   });
 
-  it("until the Western painting is added, English falls back to the existing one", async () => {
+  it("English uses each Western painting that exists and falls back to the Korean one otherwise", async () => {
     vi.resetModules();
     const { photoFor, setPhotoCulture } = await import("../src/integration/prototype");
     setPhotoCulture("west");
-    expect(photoFor("funeral_hall")).toBe("bg/funeral_hall.png");
-    expect(photoFor("diner")).toBe("bg/diner.png");
+    const data = (await import("../data/world/photos.json")).default as { have: string[]; west: Record<string, string> };
+    for (const [ko, west] of Object.entries(data.west)) {
+      expect(photoFor(ko)).toBe(`bg/${data.have.includes(west) ? west : ko}.png`);
+    }
     setPhotoCulture("ko");
   });
 });
