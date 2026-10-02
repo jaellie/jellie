@@ -49,7 +49,7 @@ import { pickMood } from "../story/mood";
 import { type RoadView, buildRoad } from "../world/road";
 import { readingOf } from "../story/reading";
 import { confessFate } from "../story/confessFate";
-import { photoFor } from "../integration/prototype";
+import { photoFor, setPhotoCulture } from "../integration/prototype";
 import { homeVars, nationCode } from "../story/nationality";
 import { type FatedFrom, type FatedLife, fatedVars, findFatedJob, resolveFatedLife } from "../story/fatedProfile";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
@@ -346,6 +346,7 @@ export class Game {
       const fn = (this as unknown as Record<string, (...a: unknown[]) => unknown>)[m];
       if (typeof fn !== "function") continue;
       (this as unknown as Record<string, unknown>)[m] = (...a: unknown[]) => {
+        setPhotoCulture(this.s.lang === "en" ? "west" : "ko");
         const r = fn.apply(this, a);
         return this.s.lang === "en" ? englishPayload(r) : r;
       };

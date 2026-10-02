@@ -109,11 +109,18 @@ export interface PrototypeScene {
   }>;
 }
 
-const PHOTOS = photoData as { have: string[]; fallback: Record<string, string> };
+const PHOTOS = photoData as { have: string[]; fallback: Record<string, string>; west: Record<string, string> };
 const HAVE = new Set(PHOTOS.have);
+/** Which culture's paintings to show: the English game gets Western versions of culture-bound places
+ *  (a Korean funeral hall → a Western funeral chapel) once that painting exists. Set per game call. */
+let culture: "ko" | "west" = "ko";
+export function setPhotoCulture(c: "ko" | "west"): void {
+  culture = c;
+}
+const local = (id: string): string => (culture === "west" && PHOTOS.west[id] && HAVE.has(PHOTOS.west[id]) ? PHOTOS.west[id] : id);
 /** The painted background for a place ("bg/park_proposal.png"): its own, else the nearest one we have. */
 export function photoFor(bgId: string, locationId?: string): string | undefined {
-  for (const id of [bgId, PHOTOS.fallback[bgId], locationId, locationId ? PHOTOS.fallback[locationId] : undefined]) if (id && HAVE.has(id)) return `bg/${id}.png`;
+  for (const id of [bgId, PHOTOS.fallback[bgId], locationId, locationId ? PHOTOS.fallback[locationId] : undefined]) if (id && HAVE.has(id)) return `bg/${local(id)}.png`;
   // Every scene gets a painting — never the old drawn room.
   return HAVE.has("street_day") ? "bg/street_day.png" : undefined;
 }

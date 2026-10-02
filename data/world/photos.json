@@ -1,5 +1,5 @@
 {
- "_doc": "Painted popup backgrounds (assets/bg/<id>.png). scene.photo = bg/<bgId>.png if we have it, else its fallback (by background, then by place), else street_day — every scene gets a painting.",
+ "_doc": "Painted popup backgrounds (assets/bg/<id>.png). scene.photo = bg/<bgId>.png if we have it, else its fallback (by background, then by place), else street_day — every scene gets a painting. 'west': the English game uses these Western versions of culture-bound places once the painting is in 'have'.",
  "have": [
   "airplane_cabin",
   "airport_arrival",
@@ -106,5 +106,11 @@
   "instagram": "home_night",
   "dating_app": "home_night",
   "online_community": "home_night"
+ },
+ "west": {
+  "funeral_hall": "funeral_hall_west",
+  "family_home": "family_home_west",
+  "diner": "diner_west",
+  "wedding_ceremony": "wedding_ceremony_west"
  }
 }

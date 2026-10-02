@@ -1,4 +1,4 @@
-# 배경 HD 리메이크 프롬프트 (79장)
+# 배경 HD 리메이크 프롬프트 (79장 + 서양 버전 4장)
 
 ## 왜 다시 만드나
 1. 화질: 지금 그림은 274×186이라 휴대폰에서 뭉개져 보여요.
@@ -136,11 +136,18 @@ The place:
 - `cinema` ★ — Inside a movie theater, seen from the front with the camera's back to the screen: tiers of red seats rise behind, a soft projector beam glowing from the back wall. The foreground is the wide, open floor between the screen and the first row. Dim, warm glow from the screen lighting the floor.
 
 ### 큰 날
-- `wedding_ceremony` — A wedding hall: white flower arch at the altar in the middle distance, rows of decorated chairs on the LEFT and RIGHT, a flower-lined aisle leading to it; the foreground is the open floor at the altar end of the aisle.
+- `wedding_ceremony` — A Korean wedding hall (예식장): a raised white runway with glowing floor lights, crystal chandeliers, white flower arch at the altar in the middle distance, rows of decorated chairs on the LEFT and RIGHT, a flower-lined aisle leading to it; the foreground is the open floor at the altar end of the aisle.
 - `wedding_spring` — An outdoor spring wedding chapel garden: cherry blossom trees, a white wooden arch with flowers in the middle distance, white chairs on both sides, petals falling.
 - `wedding_reception` — A wedding reception hall: round tables with candles at the sides, a long head table with flowers far back, string lights; the open dance floor in the center.
 - `hospital` ★ — A hospital room: the bed on the RIGHT with soft sheets, an IV stand and monitor beside it, a window with soft light in the back, a visitor chair on the LEFT; open floor in the center.
 - `funeral_hall` ★ — A Korean funeral hall: an altar with white chrysanthemums and a framed portrait (no face shown, just soft light on the frame) far back, incense smoke; the open floor in front of the altar in the center. Quiet, gentle, not scary.
+
+### 한국/영어 2가지 버전 (영어 게임에서는 _west 그림이 나와요)
+> 한국에서는 자연스럽지만 해외에서는 어색한 장소예요. 위의 한국 버전과 아래의 서양 버전을 **둘 다** 만들어 주세요. 영어 버전으로 플레이하면 게임이 자동으로 `_west` 그림을 써요.
+- `funeral_hall_west` — A Western funeral chapel: wooden pews on the LEFT and RIGHT, a closed wooden casket with a white lily spray far back under soft stained-glass light, candles and flower stands; the open aisle floor in the middle foreground. Quiet, gentle, not scary.
+- `family_home_west` — Parents' cozy suburban house living room: a fireplace with framed family photos (no faces visible) on the mantel, an armchair on the LEFT, a sofa on the RIGHT, warm lamp light; open wooden floor in the middle foreground.
+- `diner_west` — A classic American diner: a long counter with red stools along the RIGHT side, booths along the LEFT window, a pie display far back, checkered floor; open floor in the middle foreground by the entrance.
+- `wedding_ceremony_west` — A small church wedding: wooden pews with white flowers and ribbons on the LEFT and RIGHT, an altar with candles and a stained-glass window far back, a white aisle runner; the open floor at the altar end of the aisle in the middle foreground.
 
 ---
 
