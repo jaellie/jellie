@@ -15,8 +15,15 @@
   - → 중요한 건 위쪽 끝이나 좌우 끝에 두지 마세요.
 
 ## 쓰는 방법
-- **한 장씩** 보내세요. 시트로 묶으면 화질이 떨어져요.
-- 아래 **공통 규칙** 블록 + 장면 한 줄(예: `SCENE: cinema — …`)을 같이 붙여 넣으세요.
+- 이미지 툴은 메시지 하나에 그림 **한 장**만 만들어요. 그래서 한 번에 한 장면씩 보내세요.
+- 아래 **공통 규칙** 블록 맨 끝의 "The place:" 뒤에 장면 설명 **한 줄만** 붙여서 보내세요 (id는 빼고 설명 부분만).
+  - 장면 목록 전체를 붙이면 안 돼요.
+- 나온 그림에 아래 문제가 있으면 같은 대화에서 고쳐 달라고 하세요:
+  - 사람이 그려졌으면: "Remove all people. Keep everything else the same."
+  - 글씨가 있으면: "Replace all writing on signs with abstract wavy lines."
+  - 가운데 아래 바닥에 물건이 있으면: "Move it to the side and keep the bottom-middle floor empty."
+- 픽셀 격자와 위치 맞추기는 그림을 받은 뒤 제가 해요: 선명한 픽셀로 다시 정리하고, 캐릭터가 바닥에 딱 서도록 위치를 맞춰요.
+- 오른쪽 아래의 ✦ 워터마크가 있으면 그 부분은 제가 바닥 무늬로 지울게요.
 - 같은 장소의 다른 시간대 버전(예: home_morning / home_evening / home_rain / home_winter)은, 첫 장을 뽑은 다음 같은 대화에서 "Same room, same camera and layout, only change: …"로 요청하면 구도가 똑같이 나와요.
 - 받은 파일은 이름을 장면 id로 바꿔서 주세요 (예: `cinema.png`). 바로 게임에 넣을게요.
 
@@ -25,28 +32,15 @@
 ## 공통 규칙 (매번 맨 위에 붙여 넣기)
 
 ```
-Create ONE background illustration for a cozy pixel-art life & romance mobile game.
+A high-resolution pixel art illustration, 16:9 landscape. An EMPTY place, completely deserted: no people, no figures, no animals anywhere in the picture.
 
-FORMAT
-- 16:9 landscape, 1920×1080. High-resolution pixel art: draw on a 480×270 pixel grid and upscale exactly 4× with nearest-neighbor, so every pixel is a crisp 4×4 square. No blur, no anti-aliasing, no painterly smoothing, no photo textures.
-- Style: emotional, cinematic pixel art (in the spirit of Eastward, A Short Hike, Coffee Talk, Unpacking). Soft pastel palette with warm light, gentle dithered gradients, atmospheric depth, small cozy details. Clean dark outlines on objects.
+Style: emotional, cinematic pixel art like Eastward or Coffee Talk. Crisp square pixels, soft pastel colors, warm glowing light, gentle dithering, cozy small details.
 
-EMPTY SCENE
-- Absolutely NO people, no silhouettes, no animals, no characters of any kind. The game adds two characters later.
-- No readable text, letters, numbers or logos anywhere (signs may show abstract squiggles only).
+Composition: eye-level camera, straight-on, one-point perspective. The bottom third of the picture is open, empty floor (or ground) right in front of the viewer, flat and clear all the way to the bottom edge in the middle. Furniture, seats and props are placed along the left and right sides and further back, never in the middle of the foreground. A warm pool of light falls on that empty floor in the lower middle.
 
-THE STANDING SPOT (most important)
-- Two characters will stand side by side in the exact horizontal center, feet on a line at 88% of the image height (y ≈ 955 px), each about 33% of the image height tall (heads reach y ≈ 590 px), together about 26% of the image width (x ≈ 700–1220 px).
-- That spot must be a place where two people would naturally STAND in this location: open, flat, walkable floor or ground at the same level, seen from eye level.
-- In the zone x 640–1280, from y 820 px down to the bottom: only plain floor/ground. No furniture, no seats, no table edges, no counters, no steps, ledges, curbs, railings, rugs' edges or shadows cutting through it.
-- Furniture and props sit to the LEFT and RIGHT sides, or further back. Anything directly behind the standing spot must have its base higher than y ≈ 760 px (clearly farther away), and must not be taller-looking than a person standing there unless it is a wall, window or scenery.
-- Camera: straight-on, eye level (horizon / eye line at about 55% of the image height), slight one-point perspective. The floor clearly recedes behind the standing spot so the characters look grounded IN the room, not pasted on top.
-- Keep the top 12% and the far left/right 8% free of anything important (they get cropped).
+All signs, screens and posters show only abstract wavy lines, never letters or words in any language. No watermark, no frame, no border, no guide lines, no text.
 
-LIGHT & MOOD
-- Lighting that makes the standing spot the warm focal point (a pool of soft light, window light or lamp glow falling there). Slightly darker, softer edges. Feels like a quiet, meaningful moment in someone's life.
-
-SCENE:
+The place:
 ```
 
 ---
@@ -56,7 +50,7 @@ SCENE:
 > ★ 표시는 지금 캐릭터가 어색하게 서 있던 곳이에요. 서는 자리를 특히 다시 설계했어요.
 
 ### 집
-- `home_living_room` — A cozy one-room apartment living room by day: sofa against the left wall, TV stand on the right, window in the back wall with sheer curtains, plants, a low table pushed to the left. The center is an open wooden floor with a soft rug far behind the standing spot.
+- `home_living_room` — A cozy one-room apartment living room by day: sofa against the left wall, TV stand on the right, window in the back wall with sheer curtains, plants, a low table pushed to the left. The middle foreground is open wooden floor; a soft rug lies further back.
 - `home_morning` — Same room, early morning: yellow sunrise beams from the back window falling across the open floor in the center, a coffee mug on the side table.
 - `home_evening` — Same room, evening: warm lamp light, orange-purple dusk in the window, the TV glowing softly on the right, a blanket on the sofa.
 - `home_night` — Same room, night: dark blue moonlight from the window, one small warm desk lamp, a phone charging on the side table; quiet and a little lonely.
@@ -67,18 +61,18 @@ SCENE:
 - `family_home` — Parents' older Korean apartment living room: low wooden cabinet, framed family photos (no faces visible), floor cushions pushed to the sides, a warm ceiling light. Open floor in the center.
 
 ### 도시·거리
-- `street_day` — A neighborhood street by day: small shops on both sides, a crosswalk far in the back, the sidewalk-wide pedestrian lane in the center leading into the distance (characters stand on the pavement, not on a curb).
+- `street_day` — A neighborhood street by day: small shops on both sides, a crosswalk far in the back, the sidewalk-wide pedestrian lane in the center leading into the distance; the foreground is wide, flat pavement with no curb.
 - `street_evening` — Same street at sunset: pink-orange sky, street lamps just turning on, long shadows.
 - `street_night` — Same street at night: shop windows glowing, neon squiggles, lamp light pooling on the pavement in the center.
 - `street_rain` — Same street in the rain: wet shiny pavement with reflections, umbrellas leaning by a shop door, soft gray light.
 - `street_snow` — Same street in snow: snow on roofs and the pavement edges, footprints, warm shop light.
 
 ### 카페·식당
-- `cafe_day` ★ — A cozy café interior by day. The counter with an espresso machine is set far back against the back wall (its base high in the image, around y 700). Wooden tables and chairs on the left and right sides. The center is an open, flat wooden floor with no step or ledge — like the space where you stand after ordering.
+- `cafe_day` ★ — A cozy café interior by day. The counter with an espresso machine is set far back against the back wall. Wooden tables and chairs on the left and right sides. The middle foreground is open, flat wooden floor with no step or ledge.
 - `cafe_evening` — Same café in the evening: warm pendant lights, dusk outside the side windows.
 - `cafe_rain` — Same café on a rainy day: big side window streaked with rain, dim warm lights.
 - `cafe_snow` — Same café in winter: snow outside the window, a wreath on the wall, steaming mugs on the counter.
-- `cafe_window` ★ — A café corner with a big street-facing window in the BACK wall; the window bar table and two stools are pushed to the LEFT side. The two characters stand on the open floor in front of the window, a quiet street visible behind them.
+- `cafe_window` ★ — A café corner with a big street-facing window in the BACK wall; the window bar table and two stools are pushed to the LEFT side. Open floor in the middle foreground in front of the window, a quiet street visible through it.
 - `cafe_outdoor` — A sunny café terrace in summer: striped parasols and round tables at the left and right, flower pots; the open paved terrace in the center.
 - `beach_cafe` — A beach café's wooden deck: rattan chairs and small tables at the sides, the sea and sky behind; open deck boards in the center.
 - `paris_cafe` — A Paris sidewalk café: red awning, small bistro tables along both sides, cream Haussmann buildings behind; open cobbled pavement in the center.
@@ -90,13 +84,13 @@ SCENE:
 ### 일·학교
 - `office` ★ — An open-plan office by day: rows of desks with monitors on the LEFT and RIGHT, windows in the back; the open carpet walkway in the center.
 - `office_night` — Same office at night: most lights off, a few monitors and desk lamps glowing, city lights through the windows.
-- `office_farewell` ★ — Same office, a farewell gathering: a cake and a bouquet on a desk at the side, paper decorations (no text), cups; the open center where a person would stand to give a goodbye speech.
+- `office_farewell` ★ — Same office, a farewell gathering: a cake and a bouquet on a desk at the side, paper decorations (no text), cups; open floor in the middle foreground.
 - `meeting_room` ★ — A meeting room: the long table runs along the LEFT side, a whiteboard with abstract squiggles and a big window in the back; open floor in the center by the window.
 - `branch_office` — A modern glass-walled office in a foreign city: open-plan desks on both sides, skyscrapers through the window, a reception counter far back with an abstract logo shape; open floor in the center.
 - `classroom` ★ — A classroom seen from the side of the teacher's area: a blackboard with abstract chalk squiggles in the back, rows of desks pushed toward the LEFT and RIGHT edges; the open floor in front of the blackboard in the center.
 - `campus` — A university campus: red-brick buildings with a clock tower, trees, lamp posts; the wide stone path in the center.
 - `campus_evening` — Same campus at sunset: pink-orange sky, lamps lit.
-- `library` — A quiet library: tall bookshelves on both sides receding into the distance, warm reading lamps; the open aisle between the shelves in the center (a natural place to stand and talk quietly).
+- `library` — A quiet library: tall bookshelves on both sides receding into the distance, warm reading lamps; the open aisle between the shelves in the middle, leading into the distance.
 - `kitchen_classroom` ★ — A cooking class kitchen: cooking stations along the LEFT and RIGHT, a long counter with pots far back against the wall; open tiled floor in the center.
 - `gym_day` — A gym by day: treadmills along the window on the LEFT, a weight rack on the RIGHT, a mirror wall far back; open rubber floor mat in the center.
 - `gym_evening` — Same gym, orange dusk light through the windows.
@@ -106,7 +100,7 @@ SCENE:
 ### 공항·비행기·호텔·여행
 - `airport_departure` — An airport departure hall: big windows with a plane far outside, check-in counters at the sides, departure boards with abstract squiggles; open shiny terminal floor in the center.
 - `airport_arrival` — An airport arrivals hall: sliding doors far back, a waiting rail and flowers at the sides; open floor in the center (the reunion spot).
-- `airplane_cabin` ★ — Inside a plane, seen from the front galley / boarding-door area looking back into the cabin: the rows of seats start further back (their bases above y 760) on the LEFT and RIGHT of the aisle. The characters stand on the wider open galley floor in the foreground, not in the narrow aisle. Soft window light from the small oval windows.
+- `airplane_cabin` ★ — Inside a plane, seen from the front galley / boarding-door area looking back into the cabin: the rows of seats start further back on the LEFT and RIGHT of the aisle. The foreground is the wide, open galley floor, not the narrow aisle. Soft window light from the small oval windows.
 - `business_hotel_room` ★ — A neat business hotel room: bed against the RIGHT wall, a desk with a lamp on the LEFT, a big window with city lights in the back; open carpet in the center.
 - `tokyo_hotel` ★ — A Tokyo hotel room: bed on the RIGHT, a small sofa on the LEFT, a big window with Tokyo night skyline and a tower; open floor in the center.
 - `paris_hotel` ★ — A Paris hotel room: tall French window with a small balcony in the back showing rooftops, a bed on the RIGHT, a vintage armchair on the LEFT; open parquet floor in the center.
@@ -128,7 +122,7 @@ SCENE:
 - `park_snow` — Same park in snow: snow-covered trees and benches, soft footprints on the path.
 - `park_evening` — Same park at sunset: golden-pink sky, lamp posts turning on.
 - `park_night` — Same park at night: lamp posts pooling warm light on the path, stars.
-- `park_proposal` — Same park at night, decorated for a proposal: fairy lights strung in an arch BEHIND the standing spot, candles and rose petals along both edges of the path, a small bouquet on a bench at the side.
+- `park_proposal` — Same park at night, decorated for a proposal: fairy lights strung in an arch over the path in the middle distance, candles and rose petals along both edges of the path, a small bouquet on a bench at the side.
 - `beach_day` — A sunny beach: sand in the center, gentle waves behind, beach umbrellas at the sides.
 - `beach_sunset` — Same beach at sunset: orange-pink sky, sun touching the sea, golden reflections.
 - `beach_night` — Same beach at night: full moon, a moonlight path on the sea, folded umbrellas, a distant lighthouse.
@@ -139,11 +133,11 @@ SCENE:
 - `surf_school` — A surf school on the beach: surfboards standing in racks at the LEFT and RIGHT, a little hut with a striped awning far back; open sand in the center.
 - `amusement_park` — An amusement park plaza by day: Ferris wheel and roller coaster behind, colorful stalls at the sides; open plaza in the center.
 - `amusement_park_night` — Same plaza at night: everything lit with colorful lights, starry sky.
-- `cinema` ★ — Inside a movie theater, seen from the front with the camera's back to the screen: tiers of red seats rise behind, a soft projector beam glowing from the back wall. The characters stand on the wide open floor between the screen and the first row (the first row starts above y 760). Dim, warm glow from the screen lighting the floor.
+- `cinema` ★ — Inside a movie theater, seen from the front with the camera's back to the screen: tiers of red seats rise behind, a soft projector beam glowing from the back wall. The foreground is the wide, open floor between the screen and the first row. Dim, warm glow from the screen lighting the floor.
 
 ### 큰 날
-- `wedding_ceremony` — A wedding hall: white flower arch at the altar BEHIND the standing spot, rows of decorated chairs on the LEFT and RIGHT, a flower-lined aisle leading to it; the couple's spot is at the altar end of the aisle.
-- `wedding_spring` — An outdoor spring wedding chapel garden: cherry blossom trees, a white wooden arch with flowers behind the standing spot, white chairs on both sides, petals falling.
+- `wedding_ceremony` — A wedding hall: white flower arch at the altar in the middle distance, rows of decorated chairs on the LEFT and RIGHT, a flower-lined aisle leading to it; the foreground is the open floor at the altar end of the aisle.
+- `wedding_spring` — An outdoor spring wedding chapel garden: cherry blossom trees, a white wooden arch with flowers in the middle distance, white chairs on both sides, petals falling.
 - `wedding_reception` — A wedding reception hall: round tables with candles at the sides, a long head table with flowers far back, string lights; the open dance floor in the center.
 - `hospital` ★ — A hospital room: the bed on the RIGHT with soft sheets, an IV stand and monitor beside it, a window with soft light in the back, a visitor chair on the LEFT; open floor in the center.
 - `funeral_hall` ★ — A Korean funeral hall: an altar with white chrysanthemums and a framed portrait (no face shown, just soft light on the frame) far back, incense smoke; the open floor in front of the altar in the center. Quiet, gentle, not scary.
