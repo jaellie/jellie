@@ -964,7 +964,13 @@ export class Game {
     const sub = (b: Bi) => this.fill(fillStory(this.L(b), st, f, vars));
     // Living apart (long distance, or apart for work): a video call, a parcel, a flight — never "where shall we go?".
     const apart = !solo && !!st.relationship.longDistance && !!def.apart;
-    const choices = solo ? def.soloChoices ?? def.choices : apart ? def.apart!.choices : def.choices;
+    // Together: one of several ways the day can go (never the same one twice in a row).
+    const forms = [{ line: def.line, choices: def.choices }, ...(def.variants ?? [])];
+    const lastKey = `occLast_${o.kind}`;
+    const fi = solo || apart || forms.length < 2 ? 0 : ((n) => (n >= Number(st.flags[lastKey] ?? -1) ? n + 1 : n))(this.rng(`occ${this.s.dayIndex}`).int(0, forms.length - 2));
+    if (!solo && !apart) st.flags[lastKey] = fi;
+    const form = forms[Math.min(fi, forms.length - 1)];
+    const choices = solo ? def.soloChoices ?? def.choices : apart ? def.apart!.choices : form.choices;
     const who = solo ? "me" : def.who;
     const popup: Popup = {
       id: `occ${this.s.dayIndex}-${o.kind}`,
@@ -973,7 +979,7 @@ export class Game {
       name: this.speaker(who),
       ...this.portrait(who === "partner" ? "partner" : who),
       title: sub(def.title),
-      line: sub(solo ? def.solo! : apart ? def.apart!.line : def.line),
+      line: sub(solo ? def.solo! : apart ? def.apart!.line : form.line),
       ch: choices.map((c) => ({ t: sub(c.t) })),
       big: true,
       scene: this.photoScene(solo || apart ? undefined : "partner"),
@@ -2045,7 +2051,7 @@ export function splitSpeakerTag(text: string): { tag?: string; text: string } {
 }
 
 type OccasionChoice = { t: Bi; r: Bi };
-type OccasionDef = { title: Bi; who: string; location: string; line: Bi; solo?: Bi; choices: OccasionChoice[]; soloChoices?: OccasionChoice[]; apart?: { line: Bi; choices: OccasionChoice[] } };
+type OccasionDef = { title: Bi; who: string; location: string; line: Bi; solo?: Bi; choices: OccasionChoice[]; soloChoices?: OccasionChoice[]; variants?: Array<{ line: Bi; choices: OccasionChoice[] }>; apart?: { line: Bi; choices: OccasionChoice[] } };
 const OCCASIONS = occasionData as unknown as Record<string, OccasionDef>;
 
 type FunPick = { loc: string; act: string; label: Bi; r: Bi; season?: string };

@@ -1696,8 +1696,7 @@
          "kind": "parentCritical",
          "who": "mom"
         }
-       ],
-       "card": "MOM_FUNERAL"
+       ]
       },
       "RECOVERY": {
        "r": {
@@ -1889,8 +1888,7 @@
          "kind": "parentCritical",
          "who": "mom"
         }
-       ],
-       "card": "MOM_FUNERAL"
+       ]
       },
       "RECOVERY": {
        "r": {
