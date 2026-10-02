@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+# 실제 대화 파일과 결과물은 개인정보라 커밋하지 않음
+*.txt
+*.xlsx
+*.csv
+!tests/fixtures/*
+!docs/sample_구매요청.xlsx
