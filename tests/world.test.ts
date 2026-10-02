@@ -287,7 +287,7 @@ describe("Scene composition & world view model", () => {
     expect(scene.background.layers.map((l) => l.id)).not.toContain("gym_treadmills");
     const vm = buildWorldViewModel({ state, world, visit, lang: "en" });
     expect(vm.header.date).toBe("2024.04.03");
-    expect(vm.header.age).toBe("27 yrs");
+    expect(vm.header.age).toBe("27 y/o");
     expect(vm.actions.at(-1)!.id).toBe("LEAVE");
     expect(vm.locationName).toBe("Gym");
     expect(destinationsMenu(world, 19).some((d) => d.id === "gym" && d.open)).toBe(true);

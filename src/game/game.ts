@@ -1623,8 +1623,8 @@ export class Game {
     const rel = f.married ? bi(`${f.partnerName}와(과) 결혼`, `Married to ${f.partnerName}`) : f.dating ? bi(`${f.partnerName}와(과) 연애 중`, `Dating ${f.partnerName}`) : bi("싱글", "Single");
     return {
       date: this.s.day ? this.L(this.s.day.label) : "",
-      age: this.s.lang === "ko" ? `${Math.floor(st.age)}세` : `${Math.floor(st.age)} yrs`,
-      /** The age as a number (style it yourself: a big number with a small "세" / "yrs"). */
+      age: this.s.lang === "ko" ? `${Math.floor(st.age)}세` : `${Math.floor(st.age)} y/o`,
+      /** The age as a number (style it yourself: a big number with a small "세" / "y/o"). */
       ageNum: Math.floor(st.age),
       money: krw(st.money, UNIT),
       income: krw(yearlyIncome(st), UNIT),
