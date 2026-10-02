@@ -1083,6 +1083,120 @@
         }
        ]
       }
+     ],
+     "variants": [
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "(길 한복판에서 목소리가 커졌다. 지나가던 사람들이 쳐다본다.)",
+        "en": "(Voices rise in the middle of the street. People turn to look.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "'우리 나중에 얘기하자' 하고 손을 잡는다",
+          "en": "\"Let's talk later\" and take their hand"
+         }
+        },
+        {
+         "t": {
+          "ko": "(입을 꾹 다문다)",
+          "en": "(Clam up)"
+         }
+        },
+        {
+         "t": {
+          "ko": "먼저 '미안해'라고 말한다",
+          "en": "Say \"I'm sorry\" first"
+         }
+        }
+       ],
+       "location": "street"
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "(새벽 두 시. 서운한 말이 카톡으로 길게 왔다. 읽고 나니 잠이 달아났다.)",
+        "en": "(2 a.m. A long, hurt message arrives. You're wide awake now.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "전화를 걸어 솔직하게 말한다",
+          "en": "Call and talk honestly"
+         }
+        },
+        {
+         "t": {
+          "ko": "('그래' 한 마디만 보낸다)",
+          "en": "(Send just \"ok\")"
+         }
+        },
+        {
+         "t": {
+          "ko": "지금 그 집 앞으로 간다",
+          "en": "Go to their place right now"
+         }
+        }
+       ],
+       "location": "home"
+      },
+      {
+       "element": "METAL",
+       "line": {
+        "ko": "(약속 시간 40분 지각. 연락도 없었다. {partner}이(가) 숨을 몰아쉬며 들어왔다.)",
+        "en": "(Forty minutes late, no message. {partner} rushes in, out of breath.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "화난 이유를 차분히 말한다",
+          "en": "Calmly explain why you're upset"
+         }
+        },
+        {
+         "t": {
+          "ko": "(아무렇지 않은 척 메뉴판만 본다)",
+          "en": "(Act fine and study the menu)"
+         }
+        },
+        {
+         "t": {
+          "ko": "물부터 건네준다",
+          "en": "Hand them a glass of water first"
+         }
+        }
+       ],
+       "location": "cafe"
+      },
+      {
+       "element": "EARTH",
+       "line": {
+        "ko": "(집에서 같이 저녁을 먹다가, 사소한 말 한마디에 분위기가 얼어붙었다.)",
+        "en": "(Over dinner at home, one small comment freezes the room.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "숟가락을 내려놓고 마주 본다",
+          "en": "Put the spoon down and face them"
+         }
+        },
+        {
+         "t": {
+          "ko": "(묵묵히 밥만 먹는다)",
+          "en": "(Keep eating in silence)"
+         }
+        },
+        {
+         "t": {
+          "ko": "반찬을 {partner} 앞으로 밀어 준다",
+          "en": "Slide the side dish toward {partner}"
+         }
+        }
+       ],
+       "location": "home"
+      }
      ]
     },
     "MEET_FRIENDS": {
@@ -1243,6 +1357,148 @@
         }
        ]
       }
+     ],
+     "variants": [
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "(친구들이 갑자기 노래방으로 2차를 가자고 했다. {partner}이(가) 마이크를 넘겨받았다.)",
+        "en": "(Your friends drag everyone to karaoke. Someone hands {partner} the mic.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "같이 듀엣으로 부른다",
+          "en": "Jump in for a duet"
+         }
+        },
+        {
+         "t": {
+          "ko": "옆에서 탬버린으로 응원한다",
+          "en": "Cheer them on with a tambourine"
+         }
+        },
+        {
+         "t": {
+          "ko": "(친구들 반응을 지켜본다)",
+          "en": "(Watch how your friends react)"
+         }
+        }
+       ],
+       "location": "street",
+       "outcomes": {
+        "GOOD": {
+         "r": {
+          "ko": "{partner}의 노래가 끝나자 친구들이 기립 박수를 쳤다. 단톡방 프사가 {partner}의 노래 영상으로 바뀌었다.",
+          "en": "When {partner} finished, your friends gave a standing ovation. The group chat photo became a clip of the song."
+         }
+        },
+        "AWKWARD": {
+         "r": {
+          "ko": "{partner}은(는) 열심히 불렀지만, 다들 각자 휴대폰만 봤다.",
+          "en": "{partner} sang their heart out, but everyone was on their phones."
+         }
+        }
+       }
+      },
+      {
+       "element": "EARTH",
+       "line": {
+        "ko": "(친구들을 집으로 초대했다. {partner}이(가) 앞치마를 두르고 부엌에 섰다.)",
+        "en": "(You invited friends over. {partner} put on an apron and took over the kitchen.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "같이 요리하며 소개한다",
+          "en": "Cook together while you introduce them"
+         }
+        },
+        {
+         "t": {
+          "ko": "친구들 앞에 음식을 하나씩 날라 준다",
+          "en": "Carry each dish out to your friends"
+         }
+        },
+        {
+         "t": {
+          "ko": "(친구들과 거실에 앉아 기다린다)",
+          "en": "(Wait in the living room with your friends)"
+         }
+        }
+       ],
+       "location": "home",
+       "outcomes": {
+        "GOOD": {
+         "r": {
+          "ko": "친구 하나가 조용히 말했다. '야, 이 사람 놓치지 마.'",
+          "en": "One friend whispered: \"Don't you dare let this one go.\""
+         }
+        },
+        "AWKWARD": {
+         "r": {
+          "ko": "음식은 맛있었지만 {partner}은(는) 거의 부엌에만 있었다.",
+          "en": "The food was great, but {partner} barely left the kitchen."
+         }
+        }
+       }
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "(친한 친구 한 명에게만 먼저 소개하기로 했다. 셋이 조용한 카페에 앉았다.)",
+        "en": "(You decided to introduce them to your closest friend first. The three of you sit in a quiet café.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "둘의 공통점을 먼저 꺼낸다",
+          "en": "Bring up what the two have in common"
+         }
+        },
+        {
+         "t": {
+          "ko": "{partner}의 손을 잡고 소개한다",
+          "en": "Hold {partner}'s hand while introducing them"
+         }
+        },
+        {
+         "t": {
+          "ko": "(둘이 알아서 친해지게 둔다)",
+          "en": "(Let them get to know each other on their own)"
+         }
+        }
+       ],
+       "location": "cafe"
+      },
+      {
+       "element": "WOOD",
+       "line": {
+        "ko": "(친구들과 한강 피크닉. {partner}이(가) 돗자리를 펴고 친구들에게 간식을 나눠 준다.)",
+        "en": "(A riverside picnic with friends. {partner} spreads the mat and hands out snacks.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "친구들에게 {partner} 자랑을 한다",
+          "en": "Brag about {partner} to your friends"
+         }
+        },
+        {
+         "t": {
+          "ko": "배드민턴 팀을 {partner}과(와) 같이 한다",
+          "en": "Team up with {partner} for badminton"
+         }
+        },
+        {
+         "t": {
+          "ko": "(친구들 틈에서 {partner}을(를) 지켜본다)",
+          "en": "(Watch {partner} from among your friends)"
+         }
+        }
+       ],
+       "location": "park"
+      }
      ]
     },
     "FIRST_KISS": {
@@ -1388,7 +1644,121 @@
         "street"
        ]
       }
-     }
+     },
+     "variants": [
+      {
+       "element": "METAL",
+       "line": {
+        "ko": "(상견례 자리. 아버님이 안경을 고쳐 쓰셨다.) 그래, 앞으로 계획은 어떻게 되나?",
+        "en": "(The families meet. {partner}'s father adjusts his glasses.) So, what are your plans from here?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "준비해 온 계획을 차근차근 말씀드린다",
+          "en": "Walk him through the plan you prepared"
+         }
+        },
+        {
+         "t": {
+          "ko": "솔직하게 아직 고민 중인 것까지 말씀드린다",
+          "en": "Honestly share what you're still figuring out"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…이 자리에서 결혼이 아니라는 걸 깨닫는다) 파혼한다",
+          "en": "(…Realize this marriage isn't right) Call it off"
+         }
+        }
+       ],
+       "location": "restaurant"
+      },
+      {
+       "element": "EARTH",
+       "line": {
+        "ko": "(상견례 자리. 어머님이 반찬을 내 쪽으로 밀어 주셨다.) 많이 먹어요. 우리 애가 맨날 자랑해서 궁금했어요.",
+        "en": "(The families meet. {partner}'s mother pushes a dish toward you.) Eat up. Our kid talks about you all the time."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "감사하다고 웃으며 맛있게 먹는다",
+          "en": "Thank her with a smile and dig in"
+         }
+        },
+        {
+         "t": {
+          "ko": "{partner} 어린 시절 이야기를 여쭤본다",
+          "en": "Ask about {partner} as a kid"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…모든 게 숨 막힌다) 파혼한다",
+          "en": "(…Everything feels suffocating) Call it off"
+         }
+        }
+       ],
+       "location": "restaurant"
+      },
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "(상견례 도중 양가 아버지가 같은 고향이라는 걸 알게 됐다. 분위기가 갑자기 뜨거워졌다.)",
+        "en": "(Halfway through, the two fathers find out they're from the same hometown. The room heats right up.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "같이 맞장구치며 분위기를 띄운다",
+          "en": "Join in and keep the energy going"
+         }
+        },
+        {
+         "t": {
+          "ko": "{partner}과(와) 눈빛으로 웃는다",
+          "en": "Share a laugh with {partner} across the table"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…이 결혼은 아닌 것 같다) 파혼한다",
+          "en": "(…This marriage isn't right) Call it off"
+         }
+        }
+       ],
+       "location": "restaurant"
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "(상견례가 끝나 갈 무렵, 어머님이 조용히 물으셨다.) …우리 애, 정말 행복하게 해 줄 수 있어요?",
+        "en": "(As the meeting winds down, {partner}'s mother asks quietly) …Can you really make our child happy?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "'네. 매일 노력하겠습니다'",
+          "en": "\"Yes. I'll work at it every day\""
+         }
+        },
+        {
+         "t": {
+          "ko": "'저도 많이 행복해요'라고 솔직하게 답한다",
+          "en": "Answer honestly: \"They make me very happy too\""
+         }
+        },
+        {
+         "t": {
+          "ko": "(…대답하지 못한다) 파혼한다",
+          "en": "(…You can't answer) Call it off"
+         }
+        }
+       ],
+       "location": "restaurant"
+      }
+     ]
     },
     "WEDDING": {
      "title": {
@@ -1457,7 +1827,117 @@
         "street"
        ]
       }
-     }
+     },
+     "variants": [
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "(드디어 결혼식 날. 입장 음악 대신 둘이 고른 신나는 노래가 흘러나왔다.)",
+        "en": "(Wedding day. Instead of a march, the upbeat song you two picked starts playing.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "박자에 맞춰 걸어 들어간다",
+          "en": "Walk in on the beat"
+         }
+        },
+        {
+         "t": {
+          "ko": "웃음과 눈물이 동시에 터진다",
+          "en": "Laugh and cry at the same time"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…문 앞에서 돌아선다)",
+          "en": "(…Turn around at the door)"
+         }
+        }
+       ]
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "(드디어 결혼식 날. 문이 열리기 직전, {partner}에게서 문자가 왔다.) '긴장돼? 나도. 3초 뒤에 보자.'",
+        "en": "(Wedding day. Just before the doors open, a text from {partner}:) \"Nervous? Me too. See you in three seconds.\""
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "문이 열리자 곧장 {partner}만 본다",
+          "en": "When the doors open, look only at {partner}"
+         }
+        },
+        {
+         "t": {
+          "ko": "눈물이 앞을 가린다",
+          "en": "Tears blur everything"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…휴대폰을 꺼 버린다)",
+          "en": "(…Turn the phone off)"
+         }
+        }
+       ]
+      },
+      {
+       "element": "EARTH",
+       "line": {
+        "ko": "(드디어 결혼식 날. 맨 앞줄에서 할머니가 손수건을 꼭 쥐고 계신다.)",
+        "en": "(Wedding day. In the front row, Grandma clutches a handkerchief.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "서약한다",
+          "en": "Say your vows"
+         }
+        },
+        {
+         "t": {
+          "ko": "할머니와 눈이 마주쳐 울컥한다",
+          "en": "Catch Grandma's eye and choke up"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…도망친다)",
+          "en": "(…Run)"
+         }
+        }
+       ]
+      },
+      {
+       "element": "METAL",
+       "line": {
+        "ko": "(드디어 결혼식 날. 밤새 다듬은 혼인 서약서를 손에 쥐었다.)",
+        "en": "(Wedding day. You hold the vows you rewrote all night.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "한 글자도 틀리지 않고 읽는다",
+          "en": "Read it word for word"
+         }
+        },
+        {
+         "t": {
+          "ko": "종이를 접고 즉석에서 말한다",
+          "en": "Fold the paper and speak from the heart"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…종이를 내려놓고 식장을 나간다)",
+          "en": "(…Put the paper down and walk out)"
+         }
+        }
+       ]
+      }
+     ]
     }
    }
   },
@@ -2780,7 +3260,121 @@
        },
        "effects": []
       }
-     }
+     },
+     "variants": [
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "(밤 열한 시 반. {fated}에게서 사진 한 장이 왔다. 달이 엄청 크다.) 너네 동네에서도 보여?",
+        "en": "(11:30 p.m. {fated} sends a photo. The moon is huge.) Can you see it from your place too?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "창문 열고 같은 달을 찍어 보낸다",
+          "en": "Open the window and send back the same moon"
+         }
+        },
+        {
+         "t": {
+          "ko": "'보여. 근데 네 사진이 더 예뻐'",
+          "en": "\"I can. Your photo's prettier though\""
+         }
+        },
+        {
+         "t": {
+          "ko": "(내일 아침에 '봤어!'라고 답한다)",
+          "en": "(Reply 'saw it!' in the morning)"
+         }
+        }
+       ],
+       "location": "home"
+      },
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "(새벽 한 시. {fated}에게서 음성 메시지.) …지금 라면 끓이는데, 너도 배고프지?",
+        "en": "(1 a.m. A voice message from {fated}.) …I'm making ramen. You hungry too?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "'지금 나갈게' 하고 편의점 앞으로 간다",
+          "en": "\"Coming out now\" and head to the convenience store"
+         }
+        },
+        {
+         "t": {
+          "ko": "같이 영상통화하며 라면 먹는다",
+          "en": "Eat ramen together on a video call"
+         }
+        },
+        {
+         "t": {
+          "ko": "(배고픔을 참고 잔다)",
+          "en": "(Ignore the hunger and sleep)"
+         }
+        }
+       ],
+       "location": "home"
+      },
+      {
+       "element": "WOOD",
+       "line": {
+        "ko": "(자정 무렵 {fated}에게서 링크가 왔다.) 이 노래 들어 봐. 듣다가 네 생각나서.",
+        "en": "(Around midnight {fated} sends a link.) Listen to this song. It made me think of you."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "바로 듣고 전화를 건다",
+          "en": "Listen right away and call"
+         }
+        },
+        {
+         "t": {
+          "ko": "답장으로 노래 하나를 보낸다",
+          "en": "Send back a song of your own"
+         }
+        },
+        {
+         "t": {
+          "ko": "(저장해 두고 내일 듣는다)",
+          "en": "(Save it for tomorrow)"
+         }
+        }
+       ],
+       "location": "home"
+      },
+      {
+       "element": "METAL",
+       "line": {
+        "ko": "(밤 열두 시 정각. {fated}의 카톡.) 오늘 하루 중에 제일 좋았던 거 하나만 말해 줘.",
+        "en": "(Midnight exactly. {fated} texts.) Tell me the one best thing about your day."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "'지금 이 카톡'이라고 보낸다",
+          "en": "Send: \"This text, right now\""
+         }
+        },
+        {
+         "t": {
+          "ko": "길게 하루를 털어놓는다",
+          "en": "Tell them about your whole day"
+         }
+        },
+        {
+         "t": {
+          "ko": "(내일 정리해서 답한다)",
+          "en": "(Answer tomorrow, once you've thought it through)"
+         }
+        }
+       ],
+       "location": "home"
+      }
+     ]
     },
     "NOT_A_DATE": {
      "title": {
@@ -2869,7 +3463,121 @@
        },
        "effects": []
       }
-     }
+     },
+     "variants": [
+      {
+       "element": "WOOD",
+       "line": {
+        "ko": "(둘이서 공원을 한 바퀴 더 돌았다. 벌써 세 바퀴째다.) …우리 왜 계속 걷고 있지?",
+        "en": "(You've circled the park again. That's lap three.) …Why are we still walking?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "'헤어지기 싫어서'",
+          "en": "\"Because I don't want to say goodbye yet\""
+         }
+        },
+        {
+         "t": {
+          "ko": "'글쎄, 너는 왜 걷는데?'",
+          "en": "\"I don't know. Why are you?\""
+         }
+        },
+        {
+         "t": {
+          "ko": "'운동하는 거지 뭐'",
+          "en": "\"It's exercise, obviously\""
+         }
+        }
+       ],
+       "location": "park"
+      },
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "(즉흥으로 들어간 소품 가게. {fated}이(가) 커플 키링을 집어 들었다.) …이거 우리 같지 않아?",
+        "en": "(A random gift shop. {fated} picks up a pair of matching keychains.) …Doesn't this look like us?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "'응. 하나씩 하자'",
+          "en": "\"Yeah. One each\""
+         }
+        },
+        {
+         "t": {
+          "ko": "'우리가 뭔데?'",
+          "en": "\"And what are we, exactly?\""
+         }
+        },
+        {
+         "t": {
+          "ko": "'친구끼리도 하나?'",
+          "en": "\"Do friends do that too?\""
+         }
+        }
+       ],
+       "location": "street"
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "(문 닫을 때까지 카페에 앉아 있었다. 직원이 의자를 올리기 시작했다.) …우리 이렇게 오래 있던 거 처음이다.",
+        "en": "(You stayed at the café until closing. Staff started stacking chairs.) …We've never stayed this long before."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "'너랑 있으면 시간이 빨리 가'",
+          "en": "\"Time flies with you\""
+         }
+        },
+        {
+         "t": {
+          "ko": "'그러게. 왜 그럴까?'",
+          "en": "\"Right. Wonder why?\""
+         }
+        },
+        {
+         "t": {
+          "ko": "'커피가 맛있어서 그래'",
+          "en": "\"The coffee's just good\""
+         }
+        }
+       ],
+       "location": "cafe"
+      },
+      {
+       "element": "EARTH",
+       "line": {
+        "ko": "(둘이서 국밥집. {fated}이(가) 내 그릇에 고기를 슬쩍 옮겨 줬다.) …이런 건 친구한테도 해?",
+        "en": "(A soup place, just you two. {fated} slips some meat into your bowl.) …Do you do this for friends too?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "'아니. 너한테만'",
+          "en": "\"No. Only you\""
+         }
+        },
+        {
+         "t": {
+          "ko": "'너는 해?'",
+          "en": "\"Do you?\""
+         }
+        },
+        {
+         "t": {
+          "ko": "'친구니까 하는 거지'",
+          "en": "\"Sure, that's what friends do\""
+         }
+        }
+       ],
+       "location": "diner"
+      }
+     ]
     },
     "JEALOUS": {
      "title": {
@@ -2958,7 +3666,121 @@
        },
        "effects": []
       }
-     }
+     },
+     "variants": [
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "({fated}이(가) 낯선 사람과 웃으며 이야기하고 있다. 꽤 오래.)",
+        "en": "({fated} is laughing with someone you don't know. For quite a while.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "다가가서 자연스럽게 옆에 선다",
+          "en": "Walk over and stand right beside them"
+         }
+        },
+        {
+         "t": {
+          "ko": "(멀리서 휴대폰만 본다)",
+          "en": "(Stare at your phone from a distance)"
+         }
+        },
+        {
+         "t": {
+          "ko": "나중에 '그 사람 누구야?' 하고 웃으며 묻는다",
+          "en": "Later, ask with a grin: \"Who was that?\""
+         }
+        }
+       ],
+       "location": "street"
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "({fated}의 휴대폰 화면에 하트 이모티콘이 잔뜩 붙은 메시지가 떴다. 보낸 사람 이름은 모르는 이름.)",
+        "en": "(A message full of heart emojis pops up on {fated}'s phone, from a name you don't know.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "솔직하게 '신경 쓰여'라고 말한다",
+          "en": "Say honestly: \"That bothers me\""
+         }
+        },
+        {
+         "t": {
+          "ko": "(못 본 척한다)",
+          "en": "(Pretend you didn't see)"
+         }
+        },
+        {
+         "t": {
+          "ko": "'인기 많네?' 하고 장난친다",
+          "en": "Tease: \"Popular, huh?\""
+         }
+        }
+       ],
+       "location": "cafe"
+      },
+      {
+       "element": "WOOD",
+       "line": {
+        "ko": "(공원에서 {fated}에게 예전 친구가 반갑게 달려와 안겼다.)",
+        "en": "(At the park, an old friend of {fated}'s runs up and hugs them.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "인사하며 {fated}의 손을 잡는다",
+          "en": "Say hi and take {fated}'s hand"
+         }
+        },
+        {
+         "t": {
+          "ko": "(한 발 뒤로 물러선다)",
+          "en": "(Step back)"
+         }
+        },
+        {
+         "t": {
+          "ko": "'다음엔 나도 그렇게 반겨 줘' 하고 웃는다",
+          "en": "Laugh: \"Greet me like that next time\""
+         }
+        }
+       ],
+       "location": "park"
+      },
+      {
+       "element": "METAL",
+       "line": {
+        "ko": "(모임 자리. 누군가 {fated}에게 '오늘 진짜 멋있다'며 계속 말을 건다.)",
+        "en": "(At a group dinner, someone keeps telling {fated} how great they look tonight.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "{fated} 옆자리로 옮겨 앉는다",
+          "en": "Move to the seat next to {fated}"
+         }
+        },
+        {
+         "t": {
+          "ko": "(물만 계속 마신다)",
+          "en": "(Keep sipping water)"
+         }
+        },
+        {
+         "t": {
+          "ko": "집에 가는 길에 '나도 오늘 멋있다고 생각했는데' 한다",
+          "en": "On the way home: \"I thought you looked great too, you know\""
+         }
+        }
+       ],
+       "location": "restaurant"
+      }
+     ]
     },
     "CONFESS": {
      "title": {
