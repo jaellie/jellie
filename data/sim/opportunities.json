@@ -1623,7 +1623,7 @@
       "type": "SOCIAL",
       "title": "Language Exchange Group",
       "emoji": "🗣️",
-      "baseProbability": 0.015,
+      "baseProbability": 0.007,
       "affinity": {
         "social": 0.6,
         "overseas": 0.5,
@@ -1639,7 +1639,7 @@
       "circumstances": {
         "abroad": 1.5
       },
-      "cooldownMonths": 18,
+      "cooldownMonths": 60,
       "expiresInMonths": 1,
       "choices": [
         {

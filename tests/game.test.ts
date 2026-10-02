@@ -5,6 +5,7 @@ import { Director, guardRequirements, newDirectorMemory } from "../src/game/dire
 import { computeFacts, meets } from "../src/game/facts";
 import { fillNames, fixJosa } from "../src/game/text";
 import { splitSpeakerTag } from "../src/game/game";
+import { startArc } from "../src/story/storyEngine";
 import { SeededRandom } from "../src/core/rng";
 import messageData from "../data/game/messages.json";
 import seqData from "../data/story/sequences.json";
@@ -348,6 +349,11 @@ describe("Distance is always explained", () => {
     const lines: string[] = [];
     for (const [seed, setup] of [[7, { birth: { year: 1960, month: 9, day: 28 }, home: "New York", fated: { name: "Ren", gender: "M", birth: { year: 1996, month: 4, day: 7 }, city: "new york", status: "dating", since: { year: 2025, month: 1, day: 1 } } }], [7, { birth: { year: 1996, month: 9, day: 28 }, fated: { name: "Ren", gender: "M", birth: { year: 1996, month: 4, day: 7 }, from: "abroad", status: "dating", since: { year: 2025, month: 1, day: 1 } } }]] as const) {
       const g = createGame({ name: "Jae", gender: "F", likes: "M", mbti: "ENFP", seed, ...setup } as never);
+      // The far partner's emergency, on purpose (it otherwise only comes by chance).
+      if ("from" in setup.fated) {
+        const arc = startArc(g.state, "PARTNER_PASSING", new SeededRandom(1))!;
+        arc.steps.forEach((x) => (x.dueMonth = g.state.monthIndex + 1));
+      }
       for (let d = 0; d < 30 && !g.isOver(); d++) {
         for (let i = 0; i < 400; i++) {
           const beats = g.advance(g.s.minute + 30);

@@ -1279,9 +1279,11 @@
     "HOME",
     "CAFE"
    ],
-   "requires": [],
-   "weight": 1,
-   "cooldownDays": 20,
+   "requires": [
+    "!partnered"
+   ],
+   "weight": 0.35,
+   "cooldownDays": 120,
    "line": {
     "ko": "(언어교환 앱 광고가 떴다.)",
     "en": "(An ad for a language-exchange app pops up.)"
