@@ -101,5 +101,38 @@ class DiscordCliTest(unittest.TestCase):
             cli.main(["chat.txt", "--post"])
 
 
+class ScheduledRunTest(unittest.TestCase):
+    """자동 실행용 옵션: --last-days, --only-if-new"""
+
+    def run_cli(self, now, *extra):
+        req, calls = fake_api([PAGE])
+        with tempfile.TemporaryDirectory() as d, \
+                mock.patch.object(discord_source, "_request", req), \
+                mock.patch.object(cli, "_now", return_value=now), \
+                mock.patch.dict("os.environ", {"DISCORD_BOT_TOKEN": "t"}):
+            code = cli.main(["--discord", "42", "-o", str(Path(d, "r.xlsx")), "--post", *extra])
+        return code, [c for c in calls if c[0] == "POST"]
+
+    def test_posts_when_new_request_within_window(self):
+        # 마지막 요청(이하늘 재게시)은 10/01 16:00 KST
+        code, posts = self.run_cli(datetime(2026, 10, 1, 21, 0), "--last-days", "7", "--only-if-new", "24")
+        self.assertEqual((code, len(posts)), (0, 1))
+
+    def test_skips_when_nothing_new(self):
+        code, posts = self.run_cli(datetime(2026, 10, 3, 21, 0), "--last-days", "7", "--only-if-new", "24")
+        self.assertEqual((code, posts), (0, []))
+
+    def test_last_days_limits_period(self):
+        # --last-days 1 = 오늘 0시부터
+        req, _ = fake_api([PAGE])
+        with mock.patch.object(discord_source, "_request", req), \
+                mock.patch.object(cli, "_now", return_value=datetime(2026, 10, 1, 21, 0)), \
+                mock.patch.object(collect, "collect", wraps=collect.collect) as spy, \
+                tempfile.TemporaryDirectory() as d, \
+                mock.patch.dict("os.environ", {"DISCORD_BOT_TOKEN": "t"}):
+            cli.main(["--discord", "42", "-o", str(Path(d, "r.xlsx")), "--last-days", "1"])
+        self.assertEqual(spy.call_args.kwargs["since"], datetime(2026, 10, 1))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -14,7 +14,11 @@ import os
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from . import collect, discord_source, export, parser
+from . import KST, collect, discord_source, export, parser
+
+
+def _now() -> datetime:
+    return datetime.now(KST).replace(tzinfo=None)
 
 
 def _day(text: str) -> datetime:
@@ -26,6 +30,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("chat", nargs="?", help="카카오톡 '대화 내보내기' 파일 (.txt 또는 .csv)")
     ap.add_argument("--discord", metavar="CHANNEL_ID", help="디스코드 채널 ID (카톡 파일 대신)")
     ap.add_argument("--post", action="store_true", help="(디스코드) 결과 엑셀을 같은 채널에 올리기")
+    ap.add_argument("--last-days", type=int, metavar="N", help="최근 N일만 집계 (--since 대신)")
+    ap.add_argument("--only-if-new", type=int, metavar="HOURS",
+                    help="(디스코드) 최근 HOURS시간 안에 새 요청이 없으면 올리지 않음 (자동 실행용)")
     ap.add_argument("-o", "--output", help="결과 파일 (.xlsx 또는 .csv)")
     ap.add_argument("--since", type=_day, help="이 날짜부터 (YYYY-MM-DD)")
     ap.add_argument("--until", type=_day, help="이 날짜까지, 당일 포함 (YYYY-MM-DD)")
@@ -37,6 +44,11 @@ def main(argv: list[str] | None = None) -> int:
         ap.error("카카오톡 파일 경로 또는 --discord 채널 ID 중 하나만 지정하세요.")
     if args.post and not args.discord:
         ap.error("--post는 --discord와 함께 쓸 때만 동작합니다.")
+    if args.last_days is not None:
+        if args.since:
+            ap.error("--since와 --last-days는 함께 쓸 수 없습니다.")
+        today = _now().replace(hour=0, minute=0, second=0, microsecond=0)
+        args.since = today - timedelta(days=args.last_days - 1)
 
     token = ""
     if args.discord:
@@ -58,7 +70,10 @@ def main(argv: list[str] | None = None) -> int:
         default_out = chat.with_name(chat.stem + "_구매요청.xlsx")
 
     if not messages:
-        print("메시지를 하나도 읽지 못했습니다. 파일 형식이나 채널 ID를 확인해 주세요.")
+        if args.discord:
+            print("채널에 메시지가 없습니다.")
+            return 0
+        print("메시지를 하나도 읽지 못했습니다. 카카오톡 '대화 내보내기'로 저장한 파일인지 확인해 주세요.")
         return 1
 
     until = args.until + timedelta(days=1) if args.until else None
@@ -84,6 +99,14 @@ def main(argv: list[str] | None = None) -> int:
     print(f"대화 기간: {period} · 읽은 메시지 {result.scanned}개")
     print(summary)
     print(f"저장: {out}")
+
+    if args.post and args.only_if_new is not None:
+        cutoff = _now() - timedelta(hours=args.only_if_new)
+        fresh = sum(1 for r in result.requests if any(a.time >= cutoff for a in r.asks))
+        if not fresh:
+            print(f"최근 {args.only_if_new}시간 동안 새 구매 요청이 없어 디스코드에 올리지 않습니다.")
+            return 0
+        summary = f"새 요청 {fresh}건 · " + summary
 
     if args.post:
         text = f"🛒 **Moa 구매 요청 집계**\n{summary}\n단가를 입력하면 금액과 합계가 자동 계산돼요."

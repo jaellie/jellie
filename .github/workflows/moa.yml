@@ -1,7 +1,10 @@
 name: Moa 구매요청 집계
 
-# GitHub 웹사이트 Actions 탭에서 버튼으로 실행 (Python 설치 불필요)
+# 1) 매일 밤 자동 실행: 최근 7일 요청을 집계하고, 지난 24시간 동안 새 요청이 있을 때만 디스코드에 올림
+# 2) Actions 탭에서 버튼으로 직접 실행 (기간 지정 가능)
 on:
+  schedule:
+    - cron: "57 11 * * *"   # 매일 20:57 KST (GitHub은 UTC 기준). 혼잡하면 몇 분~수십 분 늦을 수 있음
   workflow_dispatch:
     inputs:
       channel_id:
@@ -39,6 +42,7 @@ jobs:
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           CHANNEL_ID: ${{ inputs.channel_id || vars.MOA_CHANNEL_ID }}
+          SCHEDULED: ${{ github.event_name == 'schedule' }}
           SINCE: ${{ inputs.since }}
           UNTIL: ${{ inputs.until }}
           POST: ${{ inputs.post }}
@@ -48,15 +52,19 @@ jobs:
             echo "채널 ID가 없습니다. 실행할 때 입력하거나 저장소 변수 MOA_CHANNEL_ID를 등록하세요."; exit 1
           fi
           args=(--discord "$CHANNEL_ID" -o "구매요청_$(TZ=Asia/Seoul date +%Y%m%d).xlsx")
-          [ -n "$SINCE" ] && args+=(--since "$SINCE")
-          [ -n "$UNTIL" ] && args+=(--until "$UNTIL")
-          [ "$POST" = "true" ] && args+=(--post)
-          [ "$MASK" = "true" ] && args+=(--mask-names)
+          if [ "$SCHEDULED" = "true" ]; then
+            args+=(--last-days 7 --only-if-new 24 --post)
+          else
+            [ -n "$SINCE" ] && args+=(--since "$SINCE")
+            [ -n "$UNTIL" ] && args+=(--until "$UNTIL")
+            [ "$POST" = "true" ] && args+=(--post)
+            [ "$MASK" = "true" ] && args+=(--mask-names)
+          fi
           python -m purchase_collector "${args[@]}"
 
-      # /moa로 실행했는데 실패하면, 디스코드에서 아무 소식이 없는 대신 실패를 알린다
+      # 실패하면 디스코드에서 아무 소식이 없는 대신 실패를 알린다
       - name: Notify failure on Discord
-        if: ${{ failure() && inputs.post }}
+        if: ${{ failure() && (github.event_name == 'schedule' || inputs.post) }}
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           CHANNEL_ID: ${{ inputs.channel_id || vars.MOA_CHANNEL_ID }}

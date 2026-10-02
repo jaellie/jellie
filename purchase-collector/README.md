@@ -113,6 +113,8 @@ python -m purchase_collector 카카오톡대화.txt --mask-names
 | `--all-links` | 쇼핑몰이 아닌 링크도 구매 요청으로 포함 |
 | `--discord 채널ID` | 카톡 파일 대신 디스코드 채널 읽기 |
 | `--post` | (디스코드) 결과 엑셀을 채널에 올리기 |
+| `--last-days N` | 최근 N일만 집계 (오늘 포함) |
+| `--only-if-new H` | (디스코드) 최근 H시간 안에 새 요청이 없으면 올리지 않음 |
 
 ### ③ 디스코드에서 쓰기
 
@@ -141,20 +143,29 @@ python -m purchase_collector --discord 채널ID --since 2026-09-28
 python -m purchase_collector --discord 채널ID --since 2026-09-28 --post
 ```
 
-### ③-2 디스코드: Python 설치 없이 웹에서 버튼으로 실행
+### ③-2 디스코드: 매일 자동 실행 (Python 설치 불필요)
 
-GitHub Actions가 대신 실행해 줍니다 (무료).
+GitHub Actions가 **매일 밤 9시쯤** 알아서 실행합니다 (무료).
 
+- 엑셀에는 **최근 7일** 동안 올라온 구매 요청이 모두 들어갑니다.
+- **지난 24시간 동안 새 요청이 없으면 올리지 않습니다.** 같은 파일이 매일 쌓이지 않게 하려는 것입니다.
+- 실패하면 채널에 "⚠️ 실패" 메시지와 실행 기록 링크를 남깁니다.
+
+**설정 (처음 한 번)**
 1. 저장소 → **Settings → Secrets and variables → Actions**
    - **Secrets** 탭 → New repository secret → 이름 `DISCORD_BOT_TOKEN`, 값은 봇 토큰
-   - (선택) **Variables** 탭 → 이름 `MOA_CHANNEL_ID`, 값은 채널 ID (등록하면 매번 입력할 필요 없음)
-2. 저장소 → **Actions** 탭 → 왼쪽 **Moa 구매요청 집계** → **Run workflow**
-3. 날짜를 넣고 초록 버튼을 누르면 1~2분 뒤 디스코드 채널에 엑셀이 올라옵니다.
-   - 실행 화면 아래 **Artifacts**에서도 엑셀을 내려받을 수 있습니다 (7일 보관).
+   - **Variables** 탭 → New repository variable → 이름 `MOA_CHANNEL_ID`, 값은 `#구매요청` 채널 ID (자동 실행에 필수)
+2. 끝. 다음 날 밤부터 자동으로 돌아갑니다.
 
-### ③-3 디스코드: 채널에서 `/moa` 명령으로 실행
+**바로 한 번 돌려 보고 싶을 때:** **Actions** 탭 → 왼쪽 **Moa 구매요청 집계** → **Run workflow**. 이때는 날짜를 직접 지정할 수 있고, 새 요청이 없어도 올립니다.
 
-GitHub에 들어가지 않고 디스코드 채널에 `/moa`만 입력하면 엑셀이 올라오게 할 수 있습니다. 설정 방법은 [discord-worker/README.md](discord-worker/README.md)에 있습니다.
+**끄고 싶을 때 (행사가 끝났을 때):** Actions 탭 → Moa 구매요청 집계 → 오른쪽 위 **⋯ → Disable workflow**. 다시 켤 때는 같은 곳에서 Enable.
+
+**시간을 바꾸고 싶을 때:** `.github/workflows/moa.yml`의 `cron: "57 11 * * *"`를 고칩니다. GitHub은 UTC 기준이라 **한국 시간에서 9시간을 뺀** 값을 씁니다 (예: 아침 8시 30분 → `30 23 * * *`).
+
+참고
+- GitHub 사정으로 실행이 몇 분~수십 분 늦어질 수 있습니다.
+- 저장소에 60일 동안 아무 변경이 없으면 GitHub이 자동 실행을 멈춥니다. 멈추기 전에 이메일로 알려주고, Enable을 누르면 다시 켜집니다.
 
 ### ④ 테스트
 ```bash
