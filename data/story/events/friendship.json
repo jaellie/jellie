@@ -948,7 +948,7 @@
   {
    "id": "GROUP_TRIP_WRONG",
    "cat": "friendship",
-   "rarity": "common",
+   "rarity": "uncommon",
    "tone": "light",
    "requires": [
     "hasFriend",
@@ -959,13 +959,13 @@
      "group:BI_GYEON": 0.3,
      "SIX_HARMONY@month": 0.15,
      "JUPITER@H11": 0.3,
-     "YEOKMA": 0.45,
+     "YEOKMA": 0.2,
      "JUPITER@H9": 0.3,
      "JUPITER@H4": 0.2,
      "URANUS>ASC:conjunction": 0.2
     },
     "mods": {
-     "travel": 0.4
+     "travel": 0.2
     }
    },
    "location": "airport",
