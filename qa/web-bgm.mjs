@@ -27,5 +27,26 @@ for (let i = 0; i < 40; i++) {
 await p.waitForTimeout(4000);
 console.log("screen text:", (await p.locator("body").innerText()).slice(0, 40).replace(/\n/g, " "));
 console.log("game:", JSON.stringify(await state()));
+// Keep playing (tap through popups) until the "시간이 흐른다" skip screen has come and gone:
+// the menu track must never come back once the game has started.
+let menuBack = false;
+for (let t = 0; t < 240; t++) {
+  await p.waitForTimeout(500);
+  await p.touchscreen.tap(195, 690).catch(() => {});
+  const st = await p.evaluate(() => ({ menu: !window.__bgm.audio.menu.paused, log: window.__bgm.log }));
+  if (st.menu) menuBack = true;
+  if (st.log.includes("skip") && st.log.lastIndexOf("play") > st.log.indexOf("skip")) break;
+}
+// Deterministic check of the time-skip screen ("시간이 흐른다" = screen "skip") and the ending.
+for (const scr of ["skip", "play", "skip", "end"]) {
+  await p.evaluate((x) => window.__bgm.setScreen(x), scr);
+  await p.waitForTimeout(1500);
+  const st = await state();
+  if (!st.menu.paused) menuBack = true;
+  console.log(`screen ${scr}:`, JSON.stringify(st));
+}
+const log = await p.evaluate(() => window.__bgm.log);
+console.log("screens seen:", JSON.stringify([...new Set(log)]), "| menu track came back:", menuBack);
+console.log("after skip:", JSON.stringify(await state()));
 console.log("errors:", JSON.stringify(errs));
 await b.close();

@@ -1,5 +1,5 @@
 // Background music: "Step by Step" on the title + character setup, "Sunset Homecoming" for the whole game
-// (play + ending). Crossfades when the screen changes.
+// (play, the time-skip screen, the ending). Crossfades when the screen changes.
 // Phones only allow sound after a real tap (touchend / click — not the first touch-down), so every tap
 // retries until the music is actually playing. iPhones ignore audio.volume: there the tracks just swap.
 (() => {
@@ -47,8 +47,12 @@
     } else start(next);
   }
 
+  const log = [];
   function setScreen(screen) {
-    want = screen === "play" || screen === "end" ? "game" : "menu";
+    log.push(screen); if (log.length > 400) log.shift();
+    // Only the title and character setup get "Step by Step"; everything in the game (play, the
+    // "시간이 흐른다" skip screen, the ending…) stays on "Sunset Homecoming".
+    want = screen === "title" || screen === "setup" ? "menu" : "game";
     apply();
   }
 
@@ -82,5 +86,5 @@
     };
   }, 30);
 
-  window.__bgm = { setScreen, audio, canFade };
+  window.__bgm = { setScreen, audio, canFade, log };
 })();
