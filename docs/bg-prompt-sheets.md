@@ -232,3 +232,35 @@ TILES:
 | 9 | park_night | park_proposal | beach_day | beach_sunset | beach_night | beach_cloudy | beach_winter | surf_school |
 | 10 | boardwalk | boardwalk_night | amusement_park | amusement_park_night | wedding_ceremony | wedding_ceremony_west | wedding_spring | wedding_reception |
 | 11 | hospital | funeral_hall | funeral_hall_west | | | | | |
+
+---
+
+## 다시 뽑기 (1차 결과 검수 후)
+
+### A. 시트 1을 만든 대화에 이어서 보내기 (같은 거실 유지)
+```
+Redo only tiles 5, 6 and 8, keeping the exact same style, room and colors. In tile 5 (rainy day) and tile 6 (winter) move the coffee table to the left side next to the sofa. In tile 8 move the flower vase to the right side. In all three, the bottom-middle floor must be completely empty.
+```
+
+### B. 시트 7을 만든 대화에 이어서 보내기 (글씨 지우기)
+```
+In tiles 4 and 5 (Paris street), replace the letters on the red café awning with plain stripes. Keep everything else exactly the same.
+```
+
+### C. 새 대화에서 (2×2, 4장)
+```
+One image: a 2×2 grid of 4 equal 16:9 tiles separated by thin white lines. No labels, no captions, no titles, no numbers under or on the tiles.
+
+STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Bright, colorful palette (calm and gentle in tiles 3 and 4), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic.
+
+EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The whole bottom third of each tile is open, empty floor right in front of the viewer, from the left edge of the middle to the right edge of the middle; all furniture is pushed to the far left and far right or far back. No letters anywhere.
+
+TILES:
+1. Inside an airplane, seen from the wide front galley area near the boarding door: the galley floor fills the whole bottom third and is completely empty; the first rows of blue seats begin far back in the upper half, on both sides of a narrow aisle; small oval windows with soft light.
+2. Inside a movie theater, seen from the front with the screen behind the viewer: a wide empty carpeted floor fills the whole bottom third; the red seats start far back and rise in tiers in the upper half; a soft projector beam from the back wall.
+3. A hospital room: the bed stands against the RIGHT wall at the far right edge, an IV stand and monitor beside it, a window with soft light in the back wall, a visitor chair at the far left; the middle and bottom of the room is empty floor.
+4. A Korean funeral hall: a wide altar covered with white chrysanthemums and a framed portrait (no face, just soft light on the frame) far back against the wall in the upper half, incense smoke; a wide empty floor with a soft mat fills the bottom third in front of it. Quiet and gentle.
+```
+| C 칸 | 1 | 2 | 3 | 4 |
+|---|---|---|---|---|
+| 이름 | airplane_cabin | cinema | hospital | funeral_hall |

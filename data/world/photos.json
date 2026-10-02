@@ -36,6 +36,7 @@
   "family_home_west",
   "family_restaurant",
   "funeral_hall",
+  "funeral_hall_west",
   "gym_day",
   "gym_evening",
   "gym_night",
@@ -80,6 +81,7 @@
   "tokyo_street",
   "tokyo_street_night",
   "wedding_ceremony",
+  "wedding_ceremony_west",
   "wedding_reception",
   "wedding_spring"
  ],
