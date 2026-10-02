@@ -3602,7 +3602,27 @@
        "line": {
         "ko": "({fated}의 스토리에 낯선 사람과 찍은 사진이 올라왔다. 하트가 세 개.)",
         "en": "({fated}'s story: a photo with someone you don't know. Three hearts.)"
-       }
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "바로 영상통화를 건다",
+          "en": "Video-call them right away"
+         }
+        },
+        {
+         "t": {
+          "ko": "(못 본 척 스크롤을 내린다)",
+          "en": "(Scroll past like you didn't see)"
+         }
+        },
+        {
+         "t": {
+          "ko": "'인기 많네?' 하고 장난스럽게 DM을 보낸다",
+          "en": "DM them, teasing: \"Popular, huh?\""
+         }
+        }
+       ]
       }
      },
      "choices": [

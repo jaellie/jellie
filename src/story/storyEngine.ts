@@ -73,7 +73,7 @@ interface ArcStepDef {
    * altBy "speaker": the first entry whose speaker can still speak (mom → dad → me); arc.data.kind
    * ("sibling") selects its own entry first.
    */
-  alt?: Record<string, { who: string; line: Bi; location?: string }>;
+  alt?: Record<string, { who: string; line: Bi; location?: string; choices?: Array<{ t: Bi }> }>;
   /** The destined person is in the scene though you speak (the confession). */
   withFated?: boolean;
   /**
@@ -593,7 +593,7 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
   const who = mv?.who ?? base.who;
   const line = mv?.line ?? base.line;
   const location = mv?.location ?? base.location;
-  const stepChoices = mv?.choices ?? def.choices;
+  const stepChoices = mv?.choices ?? base.choices ?? def.choices;
   const vars: Record<string, string> = {};
   if (arc.data?.relative) vars.relative = String(arc.data.relative);
   if (arc.type === "PARENT_PASSING") {
@@ -750,9 +750,13 @@ function mbtiVariant(state: LifeState, arc: ActiveArc, key: string, def: ArcStep
 }
 
 /** Pick the arc step's speaker/line: by cause, or the first speaker who can still speak. */
-function arcSpeaker(def: ArcStepDef, arc: ActiveArc, facts: LifeFacts, state?: LifeState): { who: string; line: Bi; location?: string } {
+function arcSpeaker(def: ArcStepDef, arc: ActiveArc, facts: LifeFacts, state?: LifeState): { who: string; line: Bi; location?: string; choices?: Array<{ t: Bi }> } {
   if (def.alt && def.altBy === "distance") {
-    const a = def.alt[state?.story?.fatedLife?.from ?? ""];
+    // Apart (they live abroad / in another city, or you've become long-distance since): the far-apart
+    // version (a story post, a video call), never "take their hand".
+    const from = state?.story?.fatedLife?.from ?? "";
+    const laterApart = from !== "abroad" && from !== "city" && !!state?.relationship.longDistance;
+    const a = def.alt[from] ?? (from === "city" ? def.alt.abroad : laterApart ? def.alt.abroad ?? def.alt.city : undefined);
     if (a) return a;
   }
   if (def.alt && def.altBy === "parent") {
@@ -874,8 +878,8 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
   const mv = stepVariant(state, arc, step.key, def, ctx.facts);
   if (def.variants?.length) markSeen(`step:${arc.type}:${step.key}:${arc.data?.[`v_${step.key}`] ?? "base"}`);
   // A variant's choices change the words; the odds stay with the base choice at the same position.
-  const vch = mv?.choices;
-  const choices = vch && vch.length === def.choices.length ? vch.map((c, i) => ({ ...def.choices[i], ...c })) : vch ?? def.choices;
+  const vch = mv?.choices ?? arcSpeaker(def, arc, ctx.facts, state).choices;
+  const choices: ArcStepDef["choices"] = vch && vch.length === def.choices.length ? vch.map((c, i) => ({ ...def.choices[i], ...c })) : ((vch as ArcStepDef["choices"] | undefined) ?? def.choices);
   const ch = choices[Math.max(0, Math.min(choices.length - 1, choiceIndex))];
   let outcome = ch.outcome ?? Object.keys(def.outcomes)[0];
   if (ch.roll) {

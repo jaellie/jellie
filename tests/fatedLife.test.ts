@@ -686,3 +686,33 @@ describe("International couples", () => {
     }
   }, 240000);
 });
+
+describe("Apart means no touching", () => {
+  it("jealousy while long-distance is a story post with remote choices, never 'take their hand'", async () => {
+    const { startArc, sceneFor } = (await import("../src/story/storyEngine")) as unknown as { startArc: Function; sceneFor?: Function };
+    for (const from of ["abroad", "city", "same"] as const) {
+      const g = createGame({ ...JAE, seed: 2, fated: { ...REN, from, status: "talking" } });
+      if (from === "same") g.state.relationship.longDistance = true;
+      const arc = g.state.story!.arcs.find((a) => a.type === "TALKING") ?? startArc(g.state, "TALKING", new SeededRandom(1));
+      arc.step = arc.steps.findIndex((x: { key: string }) => x.key === "JEALOUS");
+      if (arc.step < 0) continue;
+      arc.steps.forEach((x: { dueMonth: number }) => (x.dueMonth = g.state.monthIndex));
+      let seen = false;
+      for (let d = 0; d < 6 && !seen && !g.isOver(); d++) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) if (b.kind === "popup") {
+            if (b.popup.title === "질투") {
+              seen = true;
+              expect(b.popup.ch.map((c) => c.t).join(" ")).not.toMatch(/손을 잡|hand/);
+            }
+            g.choose(0);
+          }
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        g.endDay();
+      }
+      expect(seen).toBe(true);
+    }
+  });
+});
