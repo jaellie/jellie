@@ -146,7 +146,7 @@ describe("A life with a storyline", () => {
 
   it("birthdays and anniversaries come up in their own month, never months later", () => {
     let seen = 0;
-    for (const seed of [1, 2, 3, 4, 5, 6, 7, 8]) {
+    for (let seed = 1; seed <= 40 && seen < 3; seed++) {
       const g = createGame({ ...SETUP, seed, fated: { name: "Ren", from: "same" as const, status: "dating" as const, since: { year: 2024, month: 3, day: 1 } } });
       const rng = new SeededRandom(seed);
       for (let n = 0; n < 60 && !g.isOver(); n++) {

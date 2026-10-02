@@ -1753,6 +1753,8 @@ export function createGame(input: GameSetup): Game {
   st.money = Math.max(st.money, 1.85);
   st.flags.likes = setup.likes ?? (setup.gender === "F" ? "M" : "F");
   st.flags.mbti = (setup.mbti ?? "").toUpperCase();
+  // Each life picks its own versions of the big moments (story variants).
+  st.flags.lifeSalt = seed;
   // Most Korean men have served by 25; the rest may get the letter.
   // (Only Korean men get the 입영 통지서.)
   if (setup.gender === "M") st.flags.militaryDone = nationCode(setup.nationality) && nationCode(setup.nationality) !== "KR" ? true : new SeededRandom(hash(seed, "military")).chance(0.85);

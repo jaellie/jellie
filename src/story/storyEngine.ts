@@ -26,6 +26,7 @@ import type { LifeState } from "../sim/types";
 import { annualMortality } from "../sim/lifeTick";
 import { generateNpc, npcAge } from "../world/npcs";
 import type { WorldNpc } from "../world/types";
+import { freshness, markSeen } from "./deviceMemory";
 import { type LifeFacts, computeFacts, meets } from "../game/facts";
 import { SPEAKER_REQUIRES } from "../game/director";
 import { fillNames } from "../game/text";
@@ -83,6 +84,13 @@ interface ArcStepDef {
   byMbti?: Array<{ me?: string; them?: string; who?: string; line: Bi; location?: string; choices?: ArcStepDef["choices"]; outcomes?: Record<string, { r: Bi; who?: string }> }>;
   /** The climax as the charts write it (confessFate.ts): key → variant. */
   byFate?: Record<string, { who?: string; line: Bi; location?: string; choices?: ArcStepDef["choices"]; outcomes?: Record<string, { r: Bi; who?: string }> }>;
+  /**
+   * Other ways the same moment can go (different place, words, mood). One is picked per life: leaning
+   * toward the variant whose `element` is the player's 일간 (day master: WOOD/FIRE/EARTH/METAL/WATER),
+   * and, on the same device, toward ones not seen in earlier lives. `choices` only replace the words
+   * (odds stay with the base choice at the same position); `outcomes` replace result lines.
+   */
+  variants?: Array<{ element?: string; who?: string; line: Bi; location?: string; title?: Bi; choices?: Array<{ t: Bi }>; outcomes?: Record<string, { r: Bi; who?: string }> }>;
   /** "distance": by where the destined partner lives (city / abroad). */
   altBy?: "cause" | "speaker" | "distance" | "parent";
   /** A fixed outcome, or a roll (bent by 궁합 when the partner is the destined person). */
@@ -580,7 +588,7 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
     const title = { ko: sp.seq.titles.ko[sp.n], en: sp.seq.titles.en[sp.n] };
     return { ref: `arc:${arc.id}`, who: sp.who, line: themText(sp.line, arc), choices: sp.choices.map((c) => themText(c.t, arc)), location: def.location, activity: def.activity, vars: {}, title, needsFated: arc.type === "TALKING" || arc.type === "PARTING", needsPartner: arc.type === "DATING" && def.location !== "home" };
   }
-  const mv = mbtiVariant(state, arc, step.key, def) ?? fateVariant(state, def);
+  const mv = stepVariant(state, arc, step.key, def, facts);
   const base = arcSpeaker(def, arc, facts, state);
   const who = mv?.who ?? base.who;
   const line = mv?.line ?? base.line;
@@ -597,7 +605,7 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
   const online = loc === "instagram" || loc === "language_exchange_app" || loc === "dating_app" || loc === "online_community";
   const seqCur = SEQS[step.key] ? seqState(arc) : undefined;
   let climaxLine = line;
-  let title = def.title;
+  let title = (mv as StepVariant | undefined)?.title ?? def.title;
   if (seqCur?.key === step.key) {
     title = { ko: SEQS[step.key].titles.ko[3], en: SEQS[step.key].titles.en[3] };
     // How the lead-up went colors the moment.
@@ -697,6 +705,29 @@ export function confessReading(state: LifeState, arc: ActiveArc | undefined, key
     return [...by].map(([h, v]) => `${h}: ${v.join(" · ")}`).join("  /  ");
   };
   return { ko: group("ko"), en: group("en") };
+}
+
+/**
+ * This life's version of the step: the base (or its MBTI-matched version) or one of `variants`,
+ * picked once per life and remembered. Far-apart / by-cause alternatives keep priority.
+ */
+type StepVariant = NonNullable<ArcStepDef["byMbti"]>[number] & { title?: Bi };
+function stepVariant(state: LifeState, arc: ActiveArc, key: string, def: ArcStepDef, facts?: LifeFacts): StepVariant | undefined {
+  const m = mbtiVariant(state, arc, key, def) ?? fateVariant(state, def);
+  const vs = def.variants ?? [];
+  if (!vs.length || fateVariant(state, def)) return m;
+  if (facts && arcSpeaker(def, arc, facts, state).line !== def.line) return m;
+  const memo = `v_${key}`;
+  const known = arc.data?.[memo];
+  if (known !== undefined) return known === "base" ? m : vs[Number(known)] ?? m;
+  const el = String((state.chart as { dayMaster?: { element?: string } } | undefined)?.dayMaster?.element ?? "");
+  const pool = [{ id: "base", w: 1 }, ...vs.map((v, i) => ({ id: String(i), w: v.element && v.element === el ? 2.5 : 1 }))].map((o) => ({ ...o, w: o.w * freshness(`step:${arc.type}:${key}:${o.id}`) }));
+  let h = 2166136261;
+  for (const c of `${state.flags.lifeSalt ?? 0}:${arc.type}:${key}`) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0;
+  let r = ((h % 10000) / 10000) * pool.reduce((a, o) => a + o.w, 0);
+  const pick = pool.find((o) => (r -= o.w) < 0) ?? pool[0];
+  arc.data = { ...arc.data, [memo]: pick.id };
+  return pick.id === "base" ? m : (vs[Number(pick.id)] as StepVariant);
 }
 
 function mbtiVariant(state: LifeState, arc: ActiveArc, key: string, def: ArcStepDef) {
@@ -830,7 +861,7 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
     const r = fit < 0 && c.rMiss ? c.rMiss : c.r ?? { ko: "…", en: "…" };
     // Before the climax, the scene moves to where the charts set it (the letter → the library).
     // (Living abroad: the climax is the airport goodbye — the scene goes there, not the park.)
-    const climaxLoc = sp.n === 2 ? (mbtiVariant(state, arc, step.key, def) ?? fateVariant(state, def))?.location ?? arcSpeaker(def, arc, ctx.facts, state).location : undefined;
+    const climaxLoc = sp.n === 2 ? stepVariant(state, arc, step.key, def, ctx.facts)?.location ?? arcSpeaker(def, arc, ctx.facts, state).location : undefined;
     return { r: themText(r, arc), outcome: "SEQ", more: true, ...(climaxLoc && climaxLoc !== def.location ? { scene: [climaxLoc] } : {}) };
   }
   const seqCur = SEQS[step.key] && seqState(arc)?.key === step.key ? seqState(arc) : undefined;
@@ -840,8 +871,11 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
     arc.data = { ...arc.data, seq: "", seqDone: (done.includes(step.key) ? done : [...done, step.key]).join(",") };
   }
   const sparkBend = (k: string) => (seqCur && k === SEQS[step.key].good ? Math.max(0.4, Math.min(2, 1 + seqCur.spark * 1.5)) : 1);
-  const mv = mbtiVariant(state, arc, step.key, def) ?? fateVariant(state, def);
-  const choices = mv?.choices ?? def.choices;
+  const mv = stepVariant(state, arc, step.key, def, ctx.facts);
+  if (def.variants?.length) markSeen(`step:${arc.type}:${step.key}:${arc.data?.[`v_${step.key}`] ?? "base"}`);
+  // A variant's choices change the words; the odds stay with the base choice at the same position.
+  const vch = mv?.choices;
+  const choices = vch && vch.length === def.choices.length ? vch.map((c, i) => ({ ...def.choices[i], ...c })) : vch ?? def.choices;
   const ch = choices[Math.max(0, Math.min(choices.length - 1, choiceIndex))];
   let outcome = ch.outcome ?? Object.keys(def.outcomes)[0];
   if (ch.roll) {

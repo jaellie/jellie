@@ -18,6 +18,7 @@
  * wait in a queue and surface on the next played day that isn't grave (at most one per day);
  * anything left waiting too long resolves off-screen by temperament and leaves a memory card.
  */
+import { freshness, markSeen } from "./deviceMemory";
 import type { SeededRandom } from "../core/rng";
 import type { LifeModifierKey, LifeModifiers } from "../core/lifeModifiers";
 import type { LifeState } from "../sim/types";
@@ -133,7 +134,7 @@ export const RARITY_PER_YEAR = { common: 0.08, uncommon: 0.035, rare: 0.012, leg
 /** It's a romance game: love stories come up more often than their rarity alone would say. */
 export const CATEGORY_WEIGHT: Record<string, number> = { romance: 2 };
 /** Months between new (non-chain) events. */
-export const EVENT_GAP: [number, number] = [20, 36];
+export const EVENT_GAP: [number, number] = [9, 18];
 /** Waiting longer than this, an event resolves off-screen. */
 export const EVENT_PATIENCE = 30;
 
@@ -224,7 +225,8 @@ export function rollLifeEvents(state: LifeState, rng: SeededRandom, ctx: { signa
     if (es.pending.some((p) => p.id === def.id)) continue;
     if (!eventApplies(def, ctx.facts)) continue;
     const p = (RARITY_PER_YEAR[def.rarity] / 12) * (CATEGORY_WEIGHT[def.cat] ?? 1) * Math.exp(triggerScore(def, { ...ctx, traits }));
-    cands.push({ item: def, weight: p });
+    // Lives on this device lean toward events this player hasn't met yet.
+    cands.push({ item: def, weight: p * freshness(`ev:${def.id}`) });
   }
   const total = cands.reduce((a, c) => a + c.weight, 0);
   if (!cands.length || !rng.chance(Math.min(0.9, total))) return;
@@ -232,6 +234,7 @@ export function rollLifeEvents(state: LifeState, rng: SeededRandom, ctx: { signa
   const ev: PendingEvent = { uid: `ev${es.seq++}`, id: def.id, due: now };
   es.pending.push(ev);
   (es.history[def.id] ??= []).push(now);
+  markSeen(`ev:${def.id}`);
   es.next = now + rng.int(EVENT_GAP[0], EVENT_GAP[1]);
   return ev;
 }

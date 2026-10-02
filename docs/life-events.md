@@ -4,7 +4,7 @@ All **245** ideas are in the game: **315 events** across 15 files under `data/st
 
 ## How an event happens (사주-driven, not scripted)
 
-- **When**: each month a new event may roll (at most one every 16–30 months). Its chance = rarity × e^(trigger score).
+- **When**: each month a new event may roll (at most one every 9–18 months; on the same device, events you have already met in earlier lives are less likely). Its chance = rarity × e^(trigger score).
   - rarity per year: common 8% · uncommon 3.5% · rare 1.2% · legendary 0.25%
   - trigger score: this year's 사주/점성술 signals (도화, 역마, 편재, 삼재, 대운 전환, ♄□☉, SR 앵귤러…) + the month's hidden modifiers (risk, stability, wealth…) + MBTI temperament + life facts
 - **Who it can happen to**: `requires` is re-checked when it shows (no texts from the dead, no work drama without a job). A keyword guard lints every popup against its requirements.
