@@ -1,0 +1,9 @@
+[
+  {"id": "1006", "type": 0, "timestamp": "2026-10-01T07:00:00.000000+00:00", "author": {"id": "u1", "username": "haneul", "global_name": "이하늘"}, "content": "(아까 그 종이컵 다시 올려요) https://www.coupang.com/vp/products/1111111?itemId=2222&vendorItemId=3333&utm_source=share"},
+  {"id": "1005", "type": 0, "timestamp": "2026-10-01T06:13:00.000000+00:00", "author": {"id": "u4", "username": "minho", "global_name": "정민호"}, "content": "1장이면 됩니다"},
+  {"id": "1004", "type": 19, "timestamp": "2026-10-01T06:12:00.000000+00:00", "author": {"id": "u4", "username": "minho", "global_name": "정민호"}, "content": "현수막은 여기서 <https://www.11st.co.kr/products/5555555>"},
+  {"id": "1003", "type": 0, "timestamp": "2026-09-30T04:05:00.000000+00:00", "author": {"id": "b1", "username": "Moa", "bot": true}, "content": "봇 메시지는 무시 https://www.coupang.com/vp/products/9999999"},
+  {"id": "1002", "type": 0, "timestamp": "2026-09-30T01:15:30.000000+00:00", "author": {"id": "u1", "username": "haneul", "global_name": "이하늘"}, "content": "종이컵 2박스요"},
+  {"id": "1001", "type": 0, "timestamp": "2026-09-30T01:15:00.000000+00:00", "author": {"id": "u1", "username": "haneul", "global_name": "이하늘"}, "content": "https://www.coupang.com/vp/products/1111111?itemId=2222&vendorItemId=3333&q=cup"},
+  {"id": "1000", "type": 7, "timestamp": "2026-09-30T00:00:00.000000+00:00", "author": {"id": "u9", "username": "newbie"}, "content": ""}
+]
