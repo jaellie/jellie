@@ -15,7 +15,7 @@ cp "$SRC/Love Sim Game.dc.html" "$ROOT/web/index.html"
 cp "$SRC/support.js" "$SRC/charsys.js" "$SRC/props.js" "$ROOT/web/"
 cp "$SRC/uploads/logo-ko.png" "$SRC/uploads/logo-en.png" "$ROOT/web/uploads/"
 cp "$ROOT/dist/lovesim-engine.js" "$ROOT/web/uploads/lovesim-engine.js"
-mkdir -p "$ROOT/web/bg" && cp "$ROOT"/assets/bg/*.png "$ROOT/web/bg/"
+mkdir -p "$ROOT/web/bg" "$ROOT/web/audio" && cp "$ROOT"/assets/bg/*.png "$ROOT/web/bg/" && cp "$ROOT"/assets/audio/*.m4a "$ROOT/web/audio/"
 
 # Everything local (works offline, no CDN).
 sed -i 's|https://unpkg.com/react@18.3.1/umd/react.production.min.js|vendor/react.production.min.js|; s|https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js|vendor/react-dom.production.min.js|; s|https://unpkg.com/@babel/standalone@7.29.0/babel.min.js|vendor/babel.min.js|' "$ROOT/web/support.js"
