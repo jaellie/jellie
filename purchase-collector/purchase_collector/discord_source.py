@@ -17,7 +17,7 @@ from . import KST
 from .parser import Message
 
 API = "https://discord.com/api/v10"
-USER_AGENT = "DiscordBot (https://github.com/jaellie/jellie, 1.0)"
+USER_AGENT = "DiscordBot (https://github.com/jaellie/jellie, 1.0) Blueberry"
 PAGE_SIZE = 100
 MAX_PAGES = 50  # 최대 5,000개 메시지
 USER_MESSAGE_TYPES = {0, 19}  # 일반 메시지, 답장
@@ -60,34 +60,82 @@ def to_message(raw: dict) -> Message | None:
     if raw.get("type", 0) not in USER_MESSAGE_TYPES or raw.get("author", {}).get("bot"):
         return None
     when = datetime.fromisoformat(raw["timestamp"]).astimezone(KST).replace(tzinfo=None)
-    return Message(when, _display_name(raw["author"]), raw.get("content", ""))
+    # 디스코드가 링크마다 만들어 주는 미리보기 카드(embed)의 제목
+    titles = tuple(
+        (e["url"], e["title"].strip())
+        for e in raw.get("embeds") or []
+        if e.get("url") and (e.get("title") or "").strip()
+    )
+    return Message(when, _display_name(raw["author"]), raw.get("content", ""), titles)
 
 
-def fetch_messages(channel_id: str, token: str, since: datetime | None = None) -> list[Message]:
-    """채널의 메시지를 최신부터 거슬러 올라가며 가져온다. since보다 오래된 메시지가 나오면 멈춘다."""
-    out: list[Message] = []
+def _time(raw: dict) -> datetime:
+    return datetime.fromisoformat(raw["timestamp"]).astimezone(KST).replace(tzinfo=None)
+
+
+def _pages(channel_id: str, token: str):
+    """채널 메시지를 최신부터 100개씩 거슬러 올라가며 돌려준다."""
     before = None
-    saw_content = False
     for _ in range(MAX_PAGES):
         query = f"?limit={PAGE_SIZE}" + (f"&before={before}" if before else "")
         page = _request("GET", f"/channels/{channel_id}/messages{query}", token)
         if not page:
-            break
-        for raw in page:
-            saw_content = saw_content or bool(raw.get("content"))
-            msg = to_message(raw)
-            if msg:
-                out.append(msg)
+            return
+        yield page
+        if len(page) < PAGE_SIZE:
+            return
         before = page[-1]["id"]
-        oldest = datetime.fromisoformat(page[-1]["timestamp"]).astimezone(KST).replace(tzinfo=None)
-        if len(page) < PAGE_SIZE or (since and oldest < since):
-            break
-    if out and not saw_content:
+
+
+def _convert(raws: list[dict]) -> list[Message]:
+    out = [m for m in (to_message(r) for r in raws) if m]
+    if out and not any(r.get("content") for r in raws if not r.get("author", {}).get("bot")):
         raise DiscordError(
             "메시지 본문이 모두 비어 있습니다. Developer Portal → Bot → 'Message Content Intent'를 켜 주세요."
         )
     out.sort(key=lambda m: m.time)
     return out
+
+
+def fetch_messages(channel_id: str, token: str, since: datetime | None = None) -> list[Message]:
+    """채널의 메시지를 가져온다. since보다 오래된 메시지가 나오면 멈춘다."""
+    raws: list[dict] = []
+    for page in _pages(channel_id, token):
+        raws.extend(page)
+        if since and _time(page[-1]) < since:
+            break
+    return _convert(raws)
+
+
+def fetch_since_last_post(
+    channel_id: str, token: str, marker: str, fallback_since: datetime
+) -> tuple[list[Message], datetime]:
+    """봇이 마지막으로 올린 정리 메시지(marker로 시작) 이후의 메시지를 가져온다.
+
+    정리 메시지를 기준으로 삼기 때문에, 자동 실행이 늦어지거나 하루 빠져도 링크가 누락·중복되지 않는다.
+    정리 메시지가 없으면(처음 실행) fallback_since 이후만 본다.
+    """
+    raws: list[dict] = []
+    cutoff = None
+    for page in _pages(channel_id, token):
+        for raw in page:
+            if cutoff is None and raw.get("author", {}).get("bot") and raw.get("content", "").startswith(marker):
+                cutoff = _time(raw)  # 최신순이므로 처음 만난 것이 가장 최근 정리 메시지
+        raws.extend(page)
+        if cutoff or _time(page[-1]) < fallback_since:
+            break
+    since = cutoff or fallback_since
+    return [m for m in _convert(raws) if m.time > since], since
+
+
+def post_message(channel_id: str, token: str, content: str) -> str:
+    """글 메시지를 올리고 메시지 ID를 돌려준다. 응답에 ID가 없으면 실패로 본다."""
+    body = json.dumps({"content": content, "allowed_mentions": {"parse": []}}).encode()
+    result = _request("POST", f"/channels/{channel_id}/messages", token, body=body,
+                      content_type="application/json")
+    if not isinstance(result, dict) or not result.get("id"):
+        raise DiscordError("메시지 전송 응답에 메시지 ID가 없습니다. 전송에 실패했을 수 있습니다.")
+    return result["id"]
 
 
 def post_file(channel_id: str, token: str, path: Path, text: str) -> str:

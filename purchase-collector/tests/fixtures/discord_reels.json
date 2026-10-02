@@ -1,0 +1,101 @@
+[
+ {
+  "id": "2009",
+  "type": 0,
+  "timestamp": "2026-10-02T11:30:00+00:00",
+  "author": {
+   "username": "seojun",
+   "global_name": "박서준"
+  },
+  "content": "웃겨서 공유 https://www.tiktok.com/@sample/video/7300000000000000001",
+  "embeds": []
+ },
+ {
+  "id": "2008",
+  "type": 0,
+  "timestamp": "2026-10-02T11:00:00+00:00",
+  "author": {
+   "username": "yujin",
+   "global_name": "최유진"
+  },
+  "content": "https://youtube.com/shorts/AbC123xyz?si=share999 #요리 #자취",
+  "embeds": [
+   {
+    "url": "https://www.youtube.com/shorts/AbC123xyz",
+    "title": "자취생 5분 계란찜 (샘플)"
+   }
+  ]
+ },
+ {
+  "id": "2007",
+  "type": 0,
+  "timestamp": "2026-10-02T10:00:20+00:00",
+  "author": {
+   "username": "haneul",
+   "global_name": "이하늘"
+  },
+  "content": "하체 루틴 #운동",
+  "embeds": []
+ },
+ {
+  "id": "2006",
+  "type": 0,
+  "timestamp": "2026-10-02T10:00:00+00:00",
+  "author": {
+   "username": "haneul",
+   "global_name": "이하늘"
+  },
+  "content": "https://www.instagram.com/reel/SAMPLEreel1/?igsh=abc",
+  "embeds": []
+ },
+ {
+  "id": "2005",
+  "type": 0,
+  "timestamp": "2026-10-02T09:00:00+00:00",
+  "author": {
+   "username": "haneul",
+   "global_name": "이하늘"
+  },
+  "content": "#요리 https://youtu.be/AbC123xyz",
+  "embeds": [
+   {
+    "url": "https://www.youtube.com/watch?v=AbC123xyz",
+    "title": "자취생 5분 계란찜 (샘플)"
+   }
+  ]
+ },
+ {
+  "id": "2004",
+  "type": 0,
+  "timestamp": "2026-10-02T08:00:00+00:00",
+  "author": {
+   "username": "minho",
+   "global_name": "정민호"
+  },
+  "content": "이건 그냥 기사 https://news.example.com/a1 <#123456>",
+  "embeds": []
+ },
+ {
+  "id": "2003",
+  "type": 0,
+  "timestamp": "2026-10-01T12:00:00+00:00",
+  "author": {
+   "id": "bot",
+   "username": "Blueberry",
+   "bot": true
+  },
+  "content": "🫐 **Blueberry 릴스 정리** · 10/01 · 새 영상 1개",
+  "embeds": []
+ },
+ {
+  "id": "2002",
+  "type": 0,
+  "timestamp": "2026-10-01T09:00:00+00:00",
+  "author": {
+   "username": "haneul",
+   "global_name": "이하늘"
+  },
+  "content": "어제 이미 정리된 영상 https://youtube.com/shorts/OldOne111 #공부",
+  "embeds": []
+ }
+]

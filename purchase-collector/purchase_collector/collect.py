@@ -49,7 +49,7 @@ class Result:
     scanned: int
 
 
-def _follow_ups(messages: list[Message], i: int) -> list[str]:
+def follow_ups(messages: list[Message], i: int) -> list[str]:
     """i번째 메시지 직후, 같은 사람이 링크 없이 덧붙인 말."""
     base = messages[i]
     out = []
@@ -78,7 +78,7 @@ def collect(
         if not urls:
             continue
         own_text = links.strip_urls(msg.text)
-        extra = _follow_ups(scoped, i)
+        extra = follow_ups(scoped, i)
         memo = " ".join([own_text, *extra]).strip()
         qty, _ = links.quantity(memo)
         for url in urls:
