@@ -97,6 +97,9 @@ export function applyConsequence(s: LifeState, c: Consequence, ctx: ConsequenceC
       log.push(`moved to ${s.location.city}`);
       break;
     case "job":
+      // Retired (정년 / 명예퇴직) is not "between jobs": no employer hires you back — no boss, no 야근.
+      // Only a second career you run yourself is still possible.
+      if (s.flags.retired && c.field !== "second-career") { log.push("retired — no new job"); break; }
       s.flags.retired = false;
       if (!s.career.employed || (c.field && c.field !== s.career.field)) s.career.cid = (s.career.cid ?? 0) + 1;
       s.career = {

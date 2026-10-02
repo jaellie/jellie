@@ -14,6 +14,8 @@
     audio[k] = a;
   }
   let want = "menu", playing = null, unlocked = false;
+  let muted = false;
+  try { muted = localStorage.getItem("bgm-muted") === "1"; } catch {}
   const fades = new Map();
 
   function fade(a, to, ms, then) {
@@ -28,23 +30,29 @@
     fades.set(a, id);
   }
 
+  // Only the wanted track may ever play: anything else that is still sounding gets faded out and
+  // paused, and a play() that finishes after the wish changed (or after muting) is stopped again.
+  const ok = (a) => !muted && !document.hidden && audio[want] === a;
   function start(a) {
+    if (!ok(a)) return;
     const p = a.play();
-    if (p && p.then) p.then(() => fade(a, VOLUME, FADE_IN)).catch(() => { if (playing && audio[playing] === a) playing = null; });
-    else fade(a, VOLUME, FADE_IN);
+    const went = () => { if (ok(a)) fade(a, VOLUME, FADE_IN); else { clearInterval(fades.get(a)); a.pause(); } };
+    if (p && p.then) p.then(went).catch(() => { if (playing && audio[playing] === a) playing = null; });
+    else went();
   }
 
   function apply() {
-    if (!unlocked || document.hidden) return;
+    if (!unlocked || document.hidden || muted) return;
     const next = audio[want];
+    let leaving = false;
+    for (const [k, a] of Object.entries(audio)) if (k !== want && !a.paused) {
+      leaving = true;
+      fade(a, 0, canFade ? FADE_OUT : 0, () => { if (audio[want] !== a) a.pause(); });
+    }
     if (want === playing && !next.paused) return;
-    const prev = playing && playing !== want ? audio[playing] : null;
     playing = want;
-    if (prev) {
-      fade(prev, 0, canFade ? FADE_OUT : 0, () => prev.pause());
-      // Fade out first, then fade the new track in (straight swap where fades don't work).
-      canFade ? setTimeout(() => start(next), FADE_OUT * 0.6) : start(next);
-    } else start(next);
+    // Fade out first, then fade the new track in (straight swap where fades don't work).
+    leaving && canFade ? setTimeout(() => start(next), FADE_OUT * 0.6) : start(next);
   }
 
   const log = [];
@@ -86,5 +94,25 @@
     };
   }, 30);
 
-  window.__bgm = { setScreen, audio, canFade, log };
+  // 🔊 / 🔇 button in the top-right corner (remembered on this device).
+  function setMuted(m) {
+    muted = m;
+    try { localStorage.setItem("bgm-muted", m ? "1" : "0"); } catch {}
+    if (m) { for (const a of Object.values(audio)) { clearInterval(fades.get(a)); a.pause(); } playing = null; }
+    else if (unlocked) apply();
+    if (btn) { btn.textContent = m ? "🔇" : "🔊"; btn.setAttribute("aria-label", m ? "Music on" : "Music off"); }
+  }
+  let btn = null;
+  function addButton() {
+    btn = document.createElement("button");
+    btn.type = "button";
+    btn.style.cssText = "position:fixed;z-index:2147483000;top:calc(env(safe-area-inset-top,0px) + 6px);right:calc(env(safe-area-inset-right,0px) + 8px);width:32px;height:32px;padding:0;border:2px solid rgba(255,255,255,.35);border-radius:8px;background:rgba(26,20,32,.55);color:#fff;font-size:16px;line-height:28px;text-align:center;cursor:pointer;opacity:.85";
+    btn.addEventListener("click", (e) => { e.stopPropagation(); unlocked = true; setMuted(!muted); });
+    for (const ev of ["pointerdown", "pointerup", "touchstart", "touchend"]) btn.addEventListener(ev, (e) => e.stopPropagation());
+    document.body.appendChild(btn);
+    setMuted(muted);
+  }
+  if (document.body) addButton(); else document.addEventListener("DOMContentLoaded", addButton);
+
+  window.__bgm = { setScreen, audio, canFade, log, setMuted, get muted() { return muted; } };
 })();

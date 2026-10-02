@@ -123,6 +123,7 @@ export function toPrototypeScene(scene: Scene): PrototypeScene {
   const hasPainter = scene.background.renderer?.startsWith("ROOMS.");
   const own = hasPainter ? scene.background.renderer!.slice(6) : loc.prototypeId;
   const roomKey = own ?? STAND_IN[loc.id];
+  const photo = photoFor(scene.background.id, loc.id);
   const overlays = scene.overlays.map((o) => ({ condition: o.condition, background: o.kind === "tint" ? o.color! : o.css ?? "" }));
   // Until the variant bitmap exists, the base painter stands in — so draw the variant's own conditions as overlays too.
   if (!hasPainter && roomKey && scene.background.status !== "ready") {
@@ -156,7 +157,6 @@ export function toPrototypeScene(scene: Scene): PrototypeScene {
     sceneKey: loc.id,
     bgId: scene.background.id,
     ...(() => {
-      const photo = photoFor(scene.background.id, loc.id);
       if (!photo) return {};
       // On a painting, only the two who matter stand in it: you and your partner (or the one you're
       // falling for) — just you when they aren't there. Never a row of everyone.
@@ -166,7 +166,8 @@ export function toPrototypeScene(scene: Scene): PrototypeScene {
     standIn: !own,
     assetPath: scene.background.assetPath,
     baseColor: (scene.online ? undefined : FALLBACK_BG[loc.type]) ?? "#ead8bb",
-    overlays,
+    // Paintings already show their own time and weather — no rain lines / tints drawn over them.
+    overlays: photo ? [] : overlays,
     actors,
     ...(() => {
       const d = decorFor(scene.background.id, loc.id, !!scene.online);

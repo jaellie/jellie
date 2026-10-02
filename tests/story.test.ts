@@ -125,6 +125,29 @@ describe("A life with a storyline", () => {
     }
   });
 
+  it("once retired (정년 or 명예퇴직), you stay retired: no new boss, no 야근 asks, no second farewell", () => {
+    for (const seed of [90, 152]) {
+      const g = createGame({ ...SETUP, birth: { year: 1966, month: 3, day: 3, hour: 9, minute: 30 }, seed });
+      const rng = new SeededRandom(seed);
+      let retired = 0, n = 0;
+      while (!g.isOver() && n < 150) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) if (b.kind === "popup") {
+            if (retired) expect(b.popup.line).not.toMatch(/늦게까지 가능|명예퇴직 신청|수고 많으셨습니다/);
+            g.choose(rng.int(0, b.popup.ch.length - 1));
+          }
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        const e = g.endDay();
+        if (retired) expect(g.state.career.employed && g.state.career.field !== "second-career").toBe(false);
+        if (e.cards.some((c) => c.kind === "RETIREMENT")) retired++;
+        n++;
+      }
+      expect(retired).toBe(1);
+    }
+  });
+
   it("memory cards are clean: no leftover {placeholders} or (과) markers, plain roles, named friends", () => {
     for (const seed of [7, 8, 9, 10]) {
       const { days } = playWhole(seed, (n, rng) => rng.int(0, n - 1));

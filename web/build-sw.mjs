@@ -4,6 +4,10 @@ import { join, relative } from "node:path";
 import { createHash } from "node:crypto";
 const root = new URL(".", import.meta.url).pathname;
 const skip = new Set(["sw.js", "build-sw.mjs", "head.html"]);
+// Cache-bust bgm.js in the page so phones never keep an old copy.
+const bgmHash = createHash("sha1").update(readFileSync(join(root, "bgm.js"))).digest("hex").slice(0, 8);
+const indexPath = join(root, "index.html");
+writeFileSync(indexPath, readFileSync(indexPath, "utf8").replace(/src="bgm\.js(\?v=[0-9a-f]*)?"/, `src="bgm.js?v=${bgmHash}"`));
 const files = [];
 const walk = (d) => { for (const f of readdirSync(d)) { const p = join(d, f); if (statSync(p).isDirectory()) walk(p); else if (!skip.has(f) && !f.startsWith(".")) files.push(relative(root, p)); } };
 walk(root);
@@ -22,7 +26,8 @@ self.addEventListener("fetch", (e) => {
   if (url.origin !== location.origin) return;
   const fresh = e.request.mode === "navigate" || /\.(html|js|webmanifest)$/.test(url.pathname) || url.pathname.endsWith("/");
   const save = (res) => { if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); } return res; };
-  if (fresh) e.respondWith(fetch(e.request).then(save).catch(() => caches.match(e.request, { ignoreSearch: true })));
+  // no-cache: always ask the server (GitHub Pages lets browsers keep files 10 min otherwise).
+  if (fresh) e.respondWith(fetch(url.href, { cache: "no-cache", credentials: "same-origin" }).then(save).catch(() => caches.match(e.request, { ignoreSearch: true })));
   else e.respondWith(caches.match(e.request, { ignoreSearch: true }).then((hit) => hit || fetch(e.request).then(save)));
 });
 `);

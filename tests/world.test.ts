@@ -316,7 +316,9 @@ describe("Claude Design prototype adapter", () => {
     const v = engine.visit({ state, world, modifiers: emptyModifiers(), rng, seed: 8 }, { locationId: "cafe", activityId: "drink_coffee", date: { year: 2024, month: 5, day: 4 }, hour: 21 });
     const p = toPrototypeScene(composeScene(v, world, state));
     expect(p.roomKey).toBe("cafe");
-    expect(p.overlays.map((o) => o.condition)).toContain("NIGHT");
+    // A painting shows its own time/weather — nothing (rain lines, tints) is drawn over it.
+    expect(p.photo).toBeTruthy();
+    expect(p.overlays).toEqual([]);
     expect(p.actors[0].who).toBe("me");
     const gym = toPrototypeScene(composeScene(engine.visit({ state, world, modifiers: emptyModifiers(), rng, seed: 8 }, { locationId: "gym", date: { year: 2024, month: 5, day: 6 }, hour: 19 }), world, state));
     // Not painted yet → the closest existing painter stands in (never a blank background).

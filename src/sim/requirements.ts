@@ -21,6 +21,7 @@ export function checkRequirement(s: LifeState, r: Requirement): RequirementCheck
     case "enrolledIn":
       return s.enrollment?.program === r.program ? { ok: true } : { ok: false, reason: `not in ${r.program} program` };
     case "employed":
+      if (!r.value && s.flags.retired) return { ok: false, reason: "retired" };
       return s.career.employed === r.value ? { ok: true } : { ok: false, reason: r.value ? "not employed" : "already employed" };
     case "money":
       return s.money >= r.min ? { ok: true } : { ok: false, reason: `needs ${r.min}k (has ${Math.floor(s.money)}k)` };
