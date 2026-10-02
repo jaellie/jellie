@@ -141,6 +141,17 @@ python -m purchase_collector --discord 채널ID --since 2026-09-28
 python -m purchase_collector --discord 채널ID --since 2026-09-28 --post
 ```
 
+### ③-2 디스코드: Python 설치 없이 웹에서 버튼으로 실행
+
+GitHub Actions가 대신 실행해 줍니다 (무료).
+
+1. 저장소 → **Settings → Secrets and variables → Actions**
+   - **Secrets** 탭 → New repository secret → 이름 `DISCORD_BOT_TOKEN`, 값은 봇 토큰
+   - (선택) **Variables** 탭 → 이름 `MOA_CHANNEL_ID`, 값은 채널 ID (등록하면 매번 입력할 필요 없음)
+2. 저장소 → **Actions** 탭 → 왼쪽 **Moa 구매요청 집계** → **Run workflow**
+3. 날짜를 넣고 초록 버튼을 누르면 1~2분 뒤 디스코드 채널에 엑셀이 올라옵니다.
+   - 실행 화면 아래 **Artifacts**에서도 엑셀을 내려받을 수 있습니다 (7일 보관).
+
 ### ④ 테스트
 ```bash
 python -m unittest discover -s tests
