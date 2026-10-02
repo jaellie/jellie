@@ -10,6 +10,7 @@
  * The UI offers `fatedOptions(lang)`; setup sends `fated.from`, `fated.job` (id or free text) and
  * optionally `fated.city` (another country's or Korean city).
  */
+import routineData from "../../data/story/meetRoutines.json";
 import data from "../../data/story/fatedProfile.json";
 import type { SeededRandom } from "../core/rng";
 import { PLACES, type PlaceInfo, findPlace, offsetAtInstant } from "../destiny/birthplace";
@@ -186,6 +187,8 @@ const MEET_KINDS = (data as unknown as { meetKinds: Record<string, MeetKind> }).
 
 const ONLINE = (data as unknown as { meetOnline: { abroad: Array<{ location: string; line: Bi }>; near: Array<{ location: string; line: Bi }> } }).meetOnline;
 
+const ROUTINES = routineData.routines as Array<{ id: string; signals: string[]; location: string; activity?: string; line: Bi }>;
+
 export function meetPlan(state: LifeState, again: boolean): { location: string; activity?: string; line: Bi; intro: Bi; kind?: MeetKind } {
   const p = meetPlanBase(state, again);
   const kind = again ? undefined : p.location === "language_exchange_app" ? MEET_KINDS.app : MEET_KINDS[p.location] ? MEET_KINDS[p.location] : p.location === "airplane" ? MEET_KINDS.flight : p.location === "business_hotel" || (state.story?.fatedLife?.from === "city" && p.location === "street") ? MEET_KINDS.trip : undefined;
@@ -201,6 +204,19 @@ function meetPlanBase(state: LifeState, again: boolean): { location: string; act
   const fated = Object.values(state.world?.npcs ?? {}).find((n) => n.fated);
   const pick = (fated?.spriteSeed ?? 7) >>> 0;
   const near = ONLINE.near;
+  // How you meet follows the chart of that year: 도화 → a party or a festival, 역마 → the last bus or a
+  // station, 천을귀인 → someone introduces or helps you, 화개 → a library or a gallery, 목성 7하우스 →
+  // a blind date… (about 3 times in 4; otherwise it follows their job).
+  if ((life.from === "same" || life.from === "city") && pick % 4 !== 3) {
+    const ev = state.story?.script?.find((e) => e.theme === "LOVE_MEETING" && !e.done);
+    // "사주:DOHWA" → DOHWA, "점성:JUPITER@7H" → JUPITER@H7
+    const sig = new Set((ev?.signals ?? []).map((x) => x.replace(/^(사주|점성):/, "").replace(/^([A-Z]+)@(\d+)H$/, "$1@H$2")));
+    const ms = ROUTINES.filter((r) => r.signals.some((x) => sig.has(x)));
+    if (ms.length) {
+      const r = ms[(pick + Number(state.flags.lifeSalt ?? 0)) % ms.length];
+      return { location: r.location, ...(r.activity ? { activity: r.activity } : {}), line: r.line, intro };
+    }
+  }
   if (life.from === "same") return pick % 4 === 0 ? { location: near[pick % near.length].location, line: near[pick % near.length].line, intro } : { location: life.job.place, line: life.job.meet ?? TEXT.meetCity, intro };
   if (life.from === "city") return pick % 4 === 1 ? { location: near[pick % near.length].location, line: near[pick % near.length].line, intro } : state.career.employed ? { location: "business_hotel", line: TEXT.meetCity, intro } : { location: "street", line: TEXT.meetCityTrip, intro };
   if (life.job.away && pick % 2 === 0) return { location: "airplane", line: TEXT.meetAbroadFlight, intro };
