@@ -831,6 +831,8 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
     e.done = true;
     e.outcome = outcome;
     const o = v.outcomes[outcome];
+    // The first on-screen moment with them: from now on, you know them.
+    if (v.withFated || v.who === "fated" || v.meet) state.flags.fatedMet = true;
     applyEffects(o.effects, ctx, { event: e });
     ctx.facts = { ...ctx.facts, ...liveNames(state) };
     if (o.card) queueCard(state, o.card, ctx, e.data);

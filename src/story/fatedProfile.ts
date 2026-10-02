@@ -187,7 +187,7 @@ const MEET_KINDS = (data as unknown as { meetKinds: Record<string, MeetKind> }).
 
 const ONLINE = (data as unknown as { meetOnline: { abroad: Array<{ location: string; line: Bi }>; near: Array<{ location: string; line: Bi }> } }).meetOnline;
 
-const ROUTINES = routineData.routines as Array<{ id: string; signals: string[]; location: string; activity?: string; line: Bi }>;
+const ROUTINES = routineData.routines as Array<{ id: string; signals: string[]; location: string; activity?: string; line: Bi; work?: boolean }>;
 
 export function meetPlan(state: LifeState, again: boolean): { location: string; activity?: string; line: Bi; intro: Bi; kind?: MeetKind } {
   const p = meetPlanBase(state, again);
@@ -211,9 +211,11 @@ function meetPlanBase(state: LifeState, again: boolean): { location: string; act
     const ev = state.story?.script?.find((e) => e.theme === "LOVE_MEETING" && !e.done);
     // "사주:DOHWA" → DOHWA, "점성:JUPITER@7H" → JUPITER@H7
     const sig = new Set((ev?.signals ?? []).map((x) => x.replace(/^(사주|점성):/, "").replace(/^([A-Z]+)@(\d+)H$/, "$1@H$2")));
-    const ms = ROUTINES.filter((r) => r.signals.some((x) => sig.has(x)));
+    const employee = state.career.employed && !["own-business", "second-career"].includes(state.career.field ?? "");
+    const ms = ROUTINES.filter((r) => r.signals.some((x) => sig.has(x)) && (!r.work || employee));
     if (ms.length) {
       const r = ms[(pick + Number(state.flags.lifeSalt ?? 0)) % ms.length];
+      if (r.work) state.flags.fatedCoworker = "1";
       return { location: r.location, ...(r.activity ? { activity: r.activity } : {}), line: r.line, intro };
     }
   }

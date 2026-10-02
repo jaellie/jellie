@@ -14,7 +14,7 @@
     {
      "requires": [
       "!partnered",
-      "!fatedKnown",
+      "!fatedMet",
       "fatedSingle"
      ],
      "location": "cafe",
@@ -195,25 +195,26 @@
     {
      "requires": [
       "!partnered",
-      "fatedAvailable"
+      "fatedAvailable",
+      "fatedMet"
      ],
      "priority": 1,
      "location": "cafe",
      "who": "me",
      "withFated": true,
      "title": {
-      "ko": "고백",
-      "en": "A confession"
+      "ko": "다르게 보이기 시작했다",
+      "en": "Suddenly, it's different"
      },
      "line": {
-      "ko": "(오늘따라 {fated}에게서 눈을 뗄 수가 없다. 이 마음, 전해볼까?)",
-      "en": "(Today you can't take your eyes off {fated}. Should you tell them how you feel?)"
+      "ko": "(오래 알고 지낸 {fated}이(가) 오늘따라 다르게 보인다. 웃을 때 눈이 저렇게 접혔었나? …그냥 친구였는데. 분명히, 그냥 친구였는데.)",
+      "en": "({fated}, someone you've known for ages, looks different today. Did their eyes always crinkle like that when they smile? …They were just a friend. Definitely just a friend.)"
      },
      "choices": [
       {
        "t": {
-        "ko": "용기 내서 고백한다",
-        "en": "Gather courage and confess"
+        "ko": "이 마음, 전해 보기로 한다",
+        "en": "Decide to tell them how you feel"
        },
        "weights": {
         "START_DATING": 0.7,
@@ -223,8 +224,8 @@
       },
       {
        "t": {
-        "ko": "조금 더 가까워진다",
-        "en": "Get a little closer first"
+        "ko": "괜히 연락을 더 자주 해 본다",
+        "en": "Start texting them a little more often"
        },
        "weights": {
         "START_DATING": 0.2,
@@ -234,8 +235,8 @@
       },
       {
        "t": {
-        "ko": "마음을 접는다",
-        "en": "Let the feeling go"
+        "ko": "(우정을 지키기로 한다)",
+        "en": "(Decide to protect the friendship)"
        },
        "weights": {
         "START_DATING": 0.05,
@@ -251,8 +252,8 @@
      "outcomes": {
       "START_DATING": {
        "r": {
-        "ko": "(심장이 터질 것 같다. 오늘, 말하기로 했다.)",
-        "en": "(Your heart is pounding. Today, you're going to say it.)"
+        "ko": "(심장이 터질 것 같다. 친구에서 한 걸음, 오늘 말하기로 했다.)",
+        "en": "(Your heart is pounding. One step past friends: today you're going to say it.)"
        },
        "effects": [
         {
@@ -527,6 +528,110 @@
          "kind": "setFlag",
          "name": "distance",
          "value": true
+        }
+       ]
+      }
+     }
+    },
+    {
+     "requires": [
+      "!partnered",
+      "fatedAvailable",
+      "fatedMet",
+      "fatedCoworker",
+      "!selfEmployed"
+     ],
+     "priority": 2,
+     "location": "office",
+     "who": "me",
+     "withFated": true,
+     "title": {
+      "ko": "동료가 다르게 보이기 시작했다",
+      "en": "A coworker, suddenly different"
+     },
+     "line": {
+      "ko": "(야근 끝, 엘리베이터 안. 매일 보던 동료 {fated}이(가) 오늘따라 낯설게 설렌다. 넥타이를 풀던 손이 왜 이렇게 눈에 들어오지?)",
+      "en": "(Late at the office, in the elevator. {fated}, the coworker you see every day, suddenly makes your heart jump. Why can't you stop watching their hands?)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "이 마음, 전해 보기로 한다",
+        "en": "Decide to tell them how you feel"
+       },
+       "weights": {
+        "START_DATING": 0.7,
+        "SLOW_BURN": 0.2,
+        "MISSED": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "괜히 연락을 더 자주 해 본다",
+        "en": "Start texting them a little more often"
+       },
+       "weights": {
+        "START_DATING": 0.2,
+        "SLOW_BURN": 0.7,
+        "MISSED": 0.1
+       }
+      },
+      {
+       "t": {
+        "ko": "(회사에서는 선을 지키기로 한다)",
+        "en": "(Keep it professional at work)"
+       },
+       "weights": {
+        "START_DATING": 0.05,
+        "SLOW_BURN": 0.25,
+        "MISSED": 0.7
+       }
+      }
+     ],
+     "compat": {
+      "START_DATING": 1,
+      "MISSED": -1
+     },
+     "outcomes": {
+      "START_DATING": {
+       "r": {
+        "ko": "(심장이 터질 것 같다. 친구에서 한 걸음, 오늘 말하기로 했다.)",
+        "en": "(Your heart is pounding. One step past friends: today you're going to say it.)"
+       },
+       "effects": [
+        {
+         "kind": "beginTalkingFated",
+         "confessNow": true
+        }
+       ]
+      },
+      "SLOW_BURN": {
+       "r": {
+        "ko": "조금씩 가까워지고 있다. 아직은, 친구지만.",
+        "en": "You're growing closer, little by little. Friends, for now."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.35
+        }
+       ]
+      },
+      "MISSED": {
+       "r": {
+        "ko": "…{fated}에게는 이미 마음에 둔 사람이 있었다.",
+        "en": "…{fated} already had someone in their heart."
+       },
+       "effects": [
+        {
+         "kind": "fatedTaken"
+        },
+        {
+         "kind": "memory",
+         "text": "A love that stayed one-sided.",
+         "tags": [
+          "fate"
+         ]
         }
        ]
       }

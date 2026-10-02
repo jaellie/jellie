@@ -37,6 +37,10 @@ export interface LifeFacts {
   hasSibling: boolean;
   /** The destined person from setup: already known (met, name known), single, your partner, free to fall for. */
   fatedKnown: boolean;
+  /** You've actually met them on screen (or setup said you already know them). Off-screen acquaintance doesn't count. */
+  fatedMet: boolean;
+  /** The destined person shares your workplace (they'd be a coworker). */
+  fatedCoworker: boolean;
   fatedSingle: boolean;
   fatedPartner: boolean;
   fatedAvailable: boolean;
@@ -188,6 +192,8 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
     dadAlive: s.family?.dad.alive ?? true,
     hasSibling: (s.family?.siblings ?? []).some((x) => x.alive),
     fatedKnown,
+    fatedMet: !!s.flags.fatedMet || fatedPartner,
+    fatedCoworker: !!fated && s.career.employed && (fated.profile?.job === "office" || String(s.flags.fatedCoworker ?? "") === "1"),
     fatedSingle,
     fatedPartner,
     fatedAvailable: fatedKnown && fatedSingle && !fatedPartner && fatedRel?.stage !== "DECEASED",

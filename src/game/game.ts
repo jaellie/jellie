@@ -2004,6 +2004,7 @@ function addFatedPerson(st: LifeState, setup: GameSetup, life: FatedLife, rng: S
   // "Just know each other": names known, no spark yet — the destined year is when it changes.
   const acquaintance = status === "acquaintance";
   if (status === "stranger") return;
+  st.flags.fatedMet = true;
   const origin = { type: (from === "abroad" ? "LANGUAGE_EXCHANGE_APP" : "FRIEND_OF_FRIEND") as RelationshipOriginType, locationId: home.id, firstEncounterDate: { ...st.date } };
   const couple = status === "dating" || status === "married";
   w.relationships[npc.id] = { npcId: npc.id, stage: couple ? "PARTNER" : "ACQUAINTANCE", closeness: couple ? 0.6 : acquaintance ? 0.25 : 0.4, spark: couple ? 0.7 : acquaintance ? 0.1 : 0.35, conversations: acquaintance ? 3 : 8, origin, lastContact: { ...st.date }, channel: from === "abroad" ? "ONLINE" : "IN_PERSON", metOffline: from !== "abroad" };

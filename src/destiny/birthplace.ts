@@ -114,7 +114,7 @@ export function joinPlace(a: string, b: string): string {
  * that start with it, then names that contain it). The UI must make the player tap one of these —
  * typed text that matches nothing ("여수수") is not a city, and the field stays unconfirmed.
  */
-export function searchPlaces(query: string, lang: "ko" | "en" = "ko", limit = 8): Array<{ id: string; name: string; country: string; countryName: string; label: string }> {
+export function searchPlaces(query: string, lang: "ko" | "en" = "ko", limit = 20): Array<{ id: string; name: string; country: string; countryName: string; label: string }> {
   const q = norm(query ?? "");
   if (!q) return [];
   const scored: Array<{ p: PlaceInfo; s: number }> = [];
@@ -122,10 +122,13 @@ export function searchPlaces(query: string, lang: "ko" | "en" = "ko", limit = 8)
     const keys = [p.ko, p.en, p.id, ...(p.aliases ?? [])].map(norm);
     let s = keys.includes(q) ? 0 : keys.some((k) => k.startsWith(q)) ? 1 : keys.some((k) => k.includes(q)) ? 2 : -1;
     // A country name finds its cities too ("영국" / "UK" → 런던 · 영국), after any city that matches by name.
-    if (s < 0 && countryKeys(p.country).some((k) => k === q || (q.length >= 2 && k.startsWith(q)))) s = 3;
+    // (one Hangul syllable is enough: "독" → 독일; Latin needs two letters: "ge" → Germany)
+    if (s < 0 && countryKeys(p.country).some((k) => k === q || ((q.length >= 2 || /[가-힣]/.test(q)) && k.startsWith(q)))) s = 3;
     if (s >= 0) scored.push({ p, s });
   }
-  scored.sort((a, b) => a.s - b.s || (a.p.country === "KR" ? 0 : 1) - (b.p.country === "KR" ? 0 : 1) || a.p[lang].localeCompare(b.p[lang], lang));
+  // Cities found by name: alphabetical. Cities found by their country: biggest first (뉴욕, 보스턴, 워싱턴…).
+  const order = new Map(PLACES.map((p, i) => [p, i]));
+  scored.sort((a, b) => a.s - b.s || (a.p.country === "KR" ? 0 : 1) - (b.p.country === "KR" ? 0 : 1) || (a.s === 3 ? order.get(a.p)! - order.get(b.p)! : a.p[lang].localeCompare(b.p[lang], lang)));
   return scored.slice(0, limit).map(({ p }) => ({ id: p.id, name: p[lang], country: p.country, countryName: countryName(p.country, lang), label: joinPlace(p[lang], countryName(p.country, lang)) }));
 }
 

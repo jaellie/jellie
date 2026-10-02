@@ -407,9 +407,29 @@ describe("'아니, 아직 그냥 아는 사이야' (acquaintance)", () => {
     expect(g.state.story!.arcs.some((a) => a.type === "TALKING")).toBe(false);
     const love = g.state.story!.script.find((e) => e.theme === "LOVE_MEETING");
     expect(love).toBeDefined();
-    // When it comes, it's the "suddenly I can't take my eyes off them" confession, with their name.
+    // When it comes, it's the moment a friend suddenly looks different (friends to lovers), with their name.
     const def = storyPopup(g.state, "fated", love!.id, g.facts(), new SeededRandom(1), { peek: true })!;
-    expect(def.title?.ko).toBe("고백");
+    expect(def.title?.ko).toBe("다르게 보이기 시작했다");
+  });
+
+  it("left to fate, someone you only 'know' off-screen is still a first meeting, never a crush out of nowhere", () => {
+    const g = createGame({ ...JAE, seed: 4, fated: { sealed: true } } as never);
+    const fated = Object.values(g.state.world!.npcs).find((n) => n.fated)!;
+    // the background world made you acquainted before you ever met on screen
+    g.state.world!.relationships[fated.id] = { ...(g.state.world!.relationships[fated.id] ?? {}), npcId: fated.id, stage: "ACQUAINTANCE", closeness: 0.3, spark: 0.1, conversations: 2 } as never;
+    expect(g.facts().fatedKnown).toBe(true);
+    expect(g.facts().fatedMet).toBe(false);
+    const love = g.state.story!.script.find((e) => e.theme === "LOVE_MEETING")!;
+    const def = storyPopup(g.state, "fated", love.id, g.facts(), new SeededRandom(1), { peek: true })!;
+    expect(["다르게 보이기 시작했다", "동료가 다르게 보이기 시작했다", "고백"]).not.toContain(def.title?.ko);
+  });
+
+  it("a coworker you already know gets the office version of that moment", () => {
+    const g = createGame({ ...JAE, seed: 4, job: "office", fated: { ...REN, from: "same", status: "acquaintance" } } as never);
+    g.state.flags.fatedCoworker = "1";
+    const love = g.state.story!.script.find((e) => e.theme === "LOVE_MEETING")!;
+    const def = storyPopup(g.state, "fated", love.id, g.facts(), new SeededRandom(1), { peek: true })!;
+    expect(def.title?.ko).toBe("동료가 다르게 보이기 시작했다");
   });
 });
 
