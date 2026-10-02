@@ -1,0 +1,78 @@
+name: job-digest
+
+on:
+  schedule:
+    - cron: "52 21 * * *"   # 매일 06:52 KST (GitHub 혼잡으로 몇 분~수십 분 늦을 수 있음)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "메일을 보내지 않고 미리보기만 생성"
+        type: boolean
+        default: false
+  push:
+    paths:
+      - "job-digest/**"
+      - ".github/workflows/job-digest.yml"
+
+concurrency:
+  group: job-digest
+  cancel-in-progress: false
+
+defaults:
+  run:
+    working-directory: job-digest
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover -s tests -v
+
+  digest:
+    if: github.event_name != 'push'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # state.json / 실행 로그 커밋용
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run digest
+        env:
+          DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python -m jobdigest run --dry-run
+          else
+            python -m jobdigest run
+          fi
+
+      - name: Upload preview
+        if: inputs.dry_run
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview
+          path: job-digest/out/preview.html
+
+      # 발송에 실패해도 실행 로그는 남긴다. 매일 커밋되므로 60일 비활성으로 스케줄이 꺼지는 것도 막아준다.
+      - name: Commit state and log
+        if: ${{ always() && !inputs.dry_run }}
+        run: |
+          git config user.name "job-digest-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state.json logs/
+          git diff --cached --quiet && exit 0
+          git commit -m "chore(job-digest): $(TZ=Asia/Seoul date +%F) 실행 기록"
+          git pull --rebase
+          git push

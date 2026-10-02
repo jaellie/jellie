@@ -1,0 +1,37 @@
+# 공공기관 취준 데일리 브리핑 설정
+# 키워드는 "하나라도 포함되면" 통과합니다. 빈 리스트([])는 "조건 없음"입니다.
+
+[recruit]
+enabled = true
+# 공고 제목 또는 NCS 직무분류에 포함될 단어
+keywords = ["행정", "사무", "일반직"]
+# 제목에 있으면 제외할 단어
+exclude_keywords = []
+# 근무지역 (예: ["서울", "경기"]). 비우면 전국
+regions = []
+# 근무지역이 "전국"인 공고도 포함할지
+include_nationwide = true
+# 특정 기관만 보고 싶을 때 (예: ["국민연금공단", "한국전력공사"])
+institutions = []
+# 이미 받은 공고 중 마감 N일 이내면 다시 알려줌
+deadline_alert_days = 3
+max_pages = 5
+
+[press]
+enabled = true
+# 관심 부처 (보도자료 MinisterCode에 포함되는 이름)
+departments = ["행정안전부", "인사혁신처", "기획재정부"]
+# 제목에 포함될 단어 (비우면 위 부처의 보도자료 전부)
+keywords = []
+exclude_keywords = []
+max_items = 15
+
+[mail]
+subject_prefix = "[공공기관 취준 브리핑]"
+# 새 소식이 없어도 "오늘은 없음" 메일을 보낼지 (파이프라인이 살아있다는 확인용)
+send_when_empty = true
+
+[ai]
+# 무료 Gemini API 키(GEMINI_API_KEY)가 있을 때만 켜세요. 꺼져 있어도 브리핑은 정상 발송됩니다.
+enabled = false
+model = "gemini-2.5-flash"

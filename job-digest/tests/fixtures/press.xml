@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+  <header><resultCode>0</resultCode><resultMsg>샘플 데이터 — 실제 보도자료 아님</resultMsg></header>
+  <body>
+    <NewsItem>
+      <NewsItemId>P2001</NewsItemId>
+      <Title>공공기관 디지털 민원 서비스 개선 계획 발표 (샘플)</Title>
+      <MinisterCode>행정안전부</MinisterCode>
+      <ApproveDate>10/02/2026 09:00:00</ApproveDate>
+      <OriginalUrl>https://example.org/press/P2001</OriginalUrl>
+      <DataContents>&lt;p&gt;행정안전부는 국민이 &lt;b&gt;한 번에&lt;/b&gt; 민원을 처리할 수 있도록 서비스를 개선한다고 밝혔다. 이 문장은 샘플 데이터입니다.&lt;/p&gt;</DataContents>
+    </NewsItem>
+    <NewsItem>
+      <NewsItemId>P2002</NewsItemId>
+      <Title>2027년 공무원 채용 시험 일정 사전 안내 (샘플)</Title>
+      <MinisterCode>인사혁신처</MinisterCode>
+      <ApproveDate>10/02/2026 10:30:00</ApproveDate>
+      <OriginalUrl>https://example.org/press/P2002</OriginalUrl>
+      <DataContents>샘플 데이터: 내년도 채용 시험 일정을 미리 안내한다.</DataContents>
+    </NewsItem>
+    <NewsItem>
+      <NewsItemId>P2003</NewsItemId>
+      <Title>농산물 수급 동향 점검 회의 개최 (샘플)</Title>
+      <MinisterCode>농림축산식품부</MinisterCode>
+      <ApproveDate>10/01/2026 15:00:00</ApproveDate>
+      <OriginalUrl>https://example.org/press/P2003</OriginalUrl>
+      <DataContents>관심 부처가 아니므로 필터에서 제외되는 샘플.</DataContents>
+    </NewsItem>
+  </body>
+</response>

@@ -1,0 +1,13 @@
+{
+  "resultCode": 200,
+  "resultMsg": "성공(샘플 데이터 — 실제 공고 아님)",
+  "totalCount": 6,
+  "result": [
+    {"recrutPblntSn": "S1001", "instNm": "한국샘플공단", "recrutPbancTtl": "2026년 하반기 일반직 6급(행정) 신입 채용", "ncsCdNmLst": "경영.회계.사무", "hireTypeNmLst": "정규직", "workRgnNmLst": "서울특별시", "pbancBgngYmd": "20260928", "pbancEndYmd": "20261010", "srcUrl": "https://example.org/jobs/S1001"},
+    {"recrutPblntSn": "S1002", "instNm": "샘플진흥원", "recrutPbancTtl": "사무행정 체험형 인턴 모집", "ncsCdNmLst": "경영.회계.사무", "hireTypeNmLst": "청년인턴(체험형)", "workRgnNmLst": "전국", "pbancBgngYmd": "20261001", "pbancEndYmd": "20261003", "srcUrl": "https://example.org/jobs/S1002"},
+    {"recrutPblntSn": "S1003", "instNm": "샘플에너지공사", "recrutPbancTtl": "전기직 경력 채용", "ncsCdNmLst": "전기.전자", "hireTypeNmLst": "정규직", "workRgnNmLst": "전라남도", "pbancBgngYmd": "20260925", "pbancEndYmd": "20261015", "srcUrl": "https://example.org/jobs/S1003"},
+    {"recrutPblntSn": "S1004", "instNm": "샘플정보원", "recrutPbancTtl": "행정지원 기간제 근로자 채용", "ncsCdNmLst": "경영.회계.사무", "hireTypeNmLst": "비정규직", "workRgnNmLst": "대전광역시", "pbancBgngYmd": "20260920", "pbancEndYmd": "20260930", "srcUrl": "https://example.org/jobs/S1004"},
+    {"recrutPblntSn": "S1005", "instNm": "샘플복지재단", "recrutPbancTtl": "일반행정 공무직 상시채용", "ncsCdNmLst": "사회복지.종교", "hireTypeNmLst": "무기계약직", "workRgnNmLst": "경기도", "pbancBgngYmd": "20261002", "pbancEndYmd": "", "srcUrl": ""},
+    {"recrutPblntSn": "S1006", "instNm": "한국샘플공단", "recrutPbancTtl": "IT 개발직 신입 채용", "ncsCdNmLst": "정보통신", "hireTypeNmLst": "정규직", "workRgnNmLst": "서울특별시", "pbancBgngYmd": "20261002", "pbancEndYmd": "20261020", "srcUrl": "https://example.org/jobs/S1006"}
+  ]
+}
