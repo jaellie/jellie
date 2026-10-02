@@ -54,6 +54,19 @@ jobs:
           [ "$MASK" = "true" ] && args+=(--mask-names)
           python -m purchase_collector "${args[@]}"
 
+      # /moa로 실행했는데 실패하면, 디스코드에서 아무 소식이 없는 대신 실패를 알린다
+      - name: Notify failure on Discord
+        if: ${{ failure() && inputs.post }}
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          CHANNEL_ID: ${{ inputs.channel_id || vars.MOA_CHANNEL_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          [ -z "$DISCORD_BOT_TOKEN" ] || [ -z "$CHANNEL_ID" ] && exit 0
+          body=$(python -c 'import json,os; print(json.dumps({"content": "⚠️ Moa 집계에 실패했어요. 실행 기록: <" + os.environ["RUN_URL"] + ">"}))')
+          curl -sS -X POST "https://discord.com/api/v10/channels/$CHANNEL_ID/messages" \
+            -H "Authorization: Bot $DISCORD_BOT_TOKEN" -H "Content-Type: application/json" --data "$body"
+
       # 디스코드에 안 올렸을 때도 Actions 화면에서 내려받을 수 있게
       - uses: actions/upload-artifact@v4
         if: always()

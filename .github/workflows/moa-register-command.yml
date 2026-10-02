@@ -1,0 +1,35 @@
+name: Moa /moa 명령 등록
+
+# 처음 한 번 (또는 명령 내용을 바꿨을 때) Actions 탭에서 실행
+on:
+  workflow_dispatch:
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Register slash command
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          APP_ID: ${{ vars.DISCORD_APPLICATION_ID }}
+          GUILD_ID: ${{ vars.DISCORD_GUILD_ID }}
+        run: |
+          if [ -z "$APP_ID" ]; then
+            echo "저장소 변수 DISCORD_APPLICATION_ID가 없습니다 (Developer Portal → General Information → Application ID)."; exit 1
+          fi
+          # 서버 ID가 있으면 그 서버에만 등록 (바로 반영), 없으면 전체 등록
+          if [ -n "$GUILD_ID" ]; then
+            url="https://discord.com/api/v10/applications/$APP_ID/guilds/$GUILD_ID/commands"
+          else
+            url="https://discord.com/api/v10/applications/$APP_ID/commands"
+          fi
+          status=$(curl -sS -o response.json -w "%{http_code}" -X PUT "$url" \
+            -H "Authorization: Bot $DISCORD_BOT_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data @purchase-collector/discord-worker/commands.json)
+          cat response.json; echo
+          if [ "$status" != "200" ]; then
+            echo "등록 실패 (HTTP $status)"; exit 1
+          fi
+          echo "✅ /moa 명령 등록 완료"
