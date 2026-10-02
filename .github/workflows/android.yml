@@ -34,6 +34,8 @@ jobs:
           npx cap add android
           # Portrait only; keep the screen on top of the dark background.
           sed -i 's|<activity|<activity android:screenOrientation="portrait"|' android/app/src/main/AndroidManifest.xml
+          # Keep the game's own colors in phone dark mode: a light app theme, and no forced darkening.
+          sed -i 's/DayNight/Light/g; s|\(<style name="AppTheme[^>]*>\)|\1<item name="android:forceDarkAllowed">false</item>|g' android/app/src/main/res/values/styles.xml
           npx capacitor-assets generate --android --iconBackgroundColor '#ffe8f0' --splashBackgroundColor '#1a1420' || echo "icons: using defaults"
           npx cap sync android
       - name: Build APK
