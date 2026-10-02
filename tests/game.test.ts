@@ -441,3 +441,25 @@ describe("Painted moments", () => {
     expect(night?.cast?.length).toBe(2);
   }, 120000);
 });
+
+describe("Alone in your room", () => {
+  it("on the phone at home (app match, late-night texts) only you are in the picture, unless you live together (married)", () => {
+    let checked = 0;
+    for (const [seed, status] of [[1, "stranger"], [2, "talking"], [3, "acquaintance"], [6, "stranger"]] as const) {
+      const g = createGame({ name: "J", gender: "F", likes: "M", birth: { year: 1997, month: 9, day: 28 }, mbti: "ENFP", seed, fated: { name: "Ren", status } } as never);
+      for (let d = 0; d < 15 && !g.isOver(); d++) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) if (b.kind === "popup") {
+            const sc = b.popup.scene as { online?: boolean; sceneKey?: string; photoCast?: string[] } | undefined;
+            if (sc?.photoCast && (sc.online || sc.sceneKey === "home") && g.state.relationship.status !== "MARRIED") (expect(sc.photoCast).toEqual(["me"]), checked++);
+            g.choose(0);
+          }
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        g.endDay();
+      }
+    }
+    expect(checked).toBeGreaterThan(0);
+  }, 120000);
+});

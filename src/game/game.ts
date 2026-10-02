@@ -840,6 +840,10 @@ export class Game {
     const me = sc.actors.find((a) => a.role === "me");
     const cast = me ? [me.who] : [];
     const fatedNpc = Object.values(st.world?.npcs ?? {}).find((n) => n.fated);
+    // Alone in your room on the phone (an app match, 2 a.m. texts, a call): just you. Only someone you
+    // live with (your spouse) is home with you.
+    const remote = !!sc.online || (sc.sceneKey === "home" && st.relationship.status !== "MARRIED");
+    if (remote) withWho = undefined;
     const id = withWho === "partner" ? st.relationship.partnerId : withWho === "fated" ? fatedNpc?.id : undefined;
     const npc = id ? st.world?.npcs[id] : undefined;
     if (id && npc && !npc.deceased) {
