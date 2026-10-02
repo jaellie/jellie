@@ -1,15 +1,16 @@
-// Web build: BGM — "Step by Step" on title/setup, crossfade to "Sunset Homecoming" when the game starts.
+// Web build (phone emulation, touch taps): BGM — "Step by Step" on title/setup, crossfade to "Sunset Homecoming" when the game starts.
 // Serve web/ on :8765 first. Usage: node qa/web-bgm.mjs
 import { chromium } from "playwright";
 const b = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium-1194/chrome-linux/chrome", args: ["--autoplay-policy=user-gesture-required"] });
-const p = await b.newPage({ viewport: { width: 390, height: 844 } });
+const p = await b.newPage({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 });
 const errs = [];
 p.on("pageerror", (e) => errs.push(e.message.slice(0, 200)));
 await p.goto("http://localhost:8765/", { waitUntil: "networkidle" });
 await p.waitForTimeout(1500);
 const state = () => p.evaluate(() => Object.fromEntries(Object.entries(window.__bgm.audio).map(([k, a]) => [k, { paused: a.paused, vol: +a.volume.toFixed(2) }])));
 console.log("before tap:", JSON.stringify(await state()));
-const click = async (t) => { const l = p.getByText(t, { exact: false }).last(); if ((await l.count()) && (await l.isVisible())) { await l.click(); await p.waitForTimeout(500); return true; } return false; };
+// Real touch taps (touchstart/touchend), like a phone — not mouse clicks.
+const click = async (t) => { const l = p.getByText(t, { exact: false }).last(); if ((await l.count()) && (await l.isVisible())) { await l.tap(); await p.waitForTimeout(500); return true; } return false; };
 await click("START"); await p.waitForTimeout(2500);
 console.log("title (after tap):", JSON.stringify(await state()));
 await click("한국어"); await p.waitForTimeout(800);
