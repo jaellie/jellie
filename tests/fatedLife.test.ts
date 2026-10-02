@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import routineData from "../data/story/meetRoutines.json";
 import { createGame, type Game } from "../src/game/game";
 import { FATED_JOBS, fatedOptions, fatedVars, findFatedJob, meetPlan } from "../src/story/fatedProfile";
 import { storyPopup } from "../src/story/storyEngine";
@@ -51,14 +52,20 @@ describe("The destined person's life (where they live, their job)", () => {
     expect(love.signals.some((t) => t.startsWith("상대:"))).toBe(true);
   });
 
-  it("same neighborhood: you meet where they work (the barista at your café, the doctor in the ER) — or now and then on an app", () => {
+  it("same neighborhood: you meet where they work (the barista at your café, the doctor in the ER), on an app, or where that year's chart sends you", () => {
     let atWork = 0;
+    const routinePlaces = new Set(routineData.routines.map((r) => r.location));
     for (const [job, place] of [["barista", "cafe"], ["doctor", "hospital"], ["trainer", "gym"]] as const) {
       for (const seed of [2, 3, 4]) {
         const g = createGame({ ...JAE, seed, fated: { ...REN, from: "same", job, status: "stranger" } });
+        // Without a meeting signal in the chart, the meeting follows their job.
+        g.state.story!.script.filter((e) => e.theme === "LOVE_MEETING").forEach((e) => (e.signals = []));
         const loc = meetPlan(g.state, false).location;
         expect([place, "dating_app", "instagram"]).toContain(loc);
         if (loc === place) atWork++;
+        // With one (도화), it can be a party, a festival or a café instead.
+        g.state.story!.script.filter((e) => e.theme === "LOVE_MEETING").forEach((e) => (e.signals = ["사주:DOHWA"]));
+        expect([place, "dating_app", "instagram", ...routinePlaces]).toContain(meetPlan(g.state, false).location);
       }
     }
     expect(atWork).toBeGreaterThan(4);
