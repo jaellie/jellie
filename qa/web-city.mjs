@@ -1,4 +1,3 @@
-// City fields in the web build only accept a picked city. Serve web/ on :8765, then: node qa/web-city.mjs <out-dir>
 // Web build: the city fields only accept a picked city ("여수수" can't pass; "여수" → pick "여수 · 한국").
 // Serve web/ on :8765 first. Usage: node qa/web-city.mjs <out-dir>
 import { chromium } from "playwright";
