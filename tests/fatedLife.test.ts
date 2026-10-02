@@ -199,6 +199,23 @@ describe("The mood line (top of the screen)", () => {
     expect(sources.filter((s) => s === "fated:MOVE").length).toBeGreaterThan(5);
   });
 
+  it("never mentions a parent who has passed (엄마 아빠 목소리… only while they're alive)", async () => {
+    const { pickMood } = await import("../src/story/mood");
+    const { startArc } = await import("../src/story/storyEngine");
+    const g = createGame({ ...JAE, seed: 3, fated: { ...JUNG, from: "same", status: "stranger" } });
+    const st = g.state;
+    const arc = startArc(st, "PARENT_PASSING", new SeededRandom(1), { who: "mom" })!;
+    arc.steps.forEach((x) => (x.dueMonth = st.monthIndex + 1));
+    const lines = (n: number) => Array.from({ length: n }, (_, i) => pickMood(st, g.facts(), { SAMJAE: 1 }, new SeededRandom(i)).ko);
+    expect(lines(80)).toContain("(엄마 아빠 목소리가 요즘 부쩍 작아졌다.)");
+    st.family!.dad.alive = false;
+    const momOnly = lines(80);
+    expect(momOnly).not.toContain("(엄마 아빠 목소리가 요즘 부쩍 작아졌다.)");
+    expect(momOnly).toContain("(엄마 목소리가 요즘 부쩍 작아졌다.)");
+    st.family!.mom.alive = false;
+    for (const l of lines(120)) expect(l).not.toMatch(/엄마|아빠|부모님 목소리가 작/);
+  });
+
   it("a destined turning point's big popup says why (the chart signals behind it)", () => {
     const g = createGame({ ...JAE, seed: 1, fated: { ...JUNG, from: "same", status: "stranger" } });
     let reading: string | undefined;

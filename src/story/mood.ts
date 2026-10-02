@@ -11,6 +11,7 @@ import type { SeededRandom } from "../core/rng";
 import type { LifeState } from "../sim/types";
 import { type LifeFacts, meets } from "../game/facts";
 import { lifeEvent } from "./lifeEvents";
+import { guardRequirements } from "../game/director";
 
 type Line = { ko: string; en: string; mbti?: string; when?: string[] };
 type Bank = {
@@ -47,7 +48,9 @@ export function allMoodLines(): Line[] {
 
 export function pickMood(state: LifeState, facts: LifeFacts, signals: Record<string, number>, rng: SeededRandom, recent: string[] = []): Mood {
   const mbti = String(state.flags.mbti ?? "").toUpperCase();
-  const fits = (l: Line) => (!l.mbti || mbti.includes(l.mbti)) && (!l.when || meets(l.when, facts)) && !recent.includes(l.ko);
+  // The same keyword guard as popups: no "엄마" line once Mom has passed, no 팀장 after retiring…
+  const guarded = (l: Line) => guardRequirements([l.ko, l.en]).every((g) => meets(g.requires, facts));
+  const fits = (l: Line) => (!l.mbti || mbti.includes(l.mbti)) && (!l.when || meets(l.when, facts)) && !recent.includes(l.ko) && guarded(l);
   const cands: Array<{ item: Mood; weight: number }> = [];
   const add = (lines: Line[] | undefined, source: string, weight: number) => {
     for (const l of lines ?? []) if (fits(l)) cands.push({ item: { ko: l.ko, en: l.en, source }, weight });
@@ -67,6 +70,7 @@ export function pickMood(state: LifeState, facts: LifeFacts, signals: Record<str
     if (!step || step.dueMonth - now > AHEAD.arc) continue;
     if (a.type === "AFFAIR" && step.key !== "DISCOVER") continue;
     if (a.type === "DATING" && step.key === "FIRST_DATE") continue;
+    if (a.type === "PARENT_PASSING" && a.data?.who && state.family?.[a.data.who as "mom" | "dad"]?.alive === false) continue;
     add(BANK.arcs[a.type], `arc:${a.type}`, 5);
   }
   // 3. Life events waiting in the wings.

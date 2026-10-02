@@ -173,7 +173,18 @@
   "PARENT_PASSING": [
    {
     "ko": "(엄마 아빠 목소리가 요즘 부쩍 작아졌다.)",
-    "en": "(Mom and Dad sound smaller on the phone lately.)"
+    "en": "(Mom and Dad sound smaller on the phone lately.)",
+    "when": ["momAlive", "dadAlive"]
+   },
+   {
+    "ko": "(엄마 목소리가 요즘 부쩍 작아졌다.)",
+    "en": "(Mom sounds smaller on the phone lately.)",
+    "when": ["momAlive", "!dadAlive"]
+   },
+   {
+    "ko": "(아빠 목소리가 요즘 부쩍 작아졌다.)",
+    "en": "(Dad sounds smaller on the phone lately.)",
+    "when": ["dadAlive", "!momAlive"]
    }
   ],
   "PET_FAREWELL": [
@@ -437,7 +448,8 @@
    },
    {
     "ko": "(올해는 조심해야 한다고 엄마가 그랬다.)",
-    "en": "(Mom said this is a year to be careful.)"
+    "en": "(Mom said this is a year to be careful.)",
+    "when": ["momAlive"]
    }
   ],
   "CHEONEUL_GWIIN": [
