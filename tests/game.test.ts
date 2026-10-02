@@ -346,7 +346,7 @@ describe("Starting broke", () => {
 describe("Distance is always explained", () => {
   it("living abroad, a funeral back home comes with the flight; a far partner's emergency sends you to them", () => {
     const lines: string[] = [];
-    for (const [seed, setup] of [[7, { birth: { year: 1960, month: 9, day: 28 }, home: "New York", fated: { name: "Jung", gender: "M", birth: { year: 1998, month: 11, day: 14 }, city: "new york", status: "dating", since: { year: 2025, month: 1, day: 1 } } }], [7, { birth: { year: 1996, month: 9, day: 28 }, fated: { name: "Jung", gender: "M", birth: { year: 1998, month: 11, day: 14 }, from: "abroad", status: "dating", since: { year: 2025, month: 1, day: 1 } } }]] as const) {
+    for (const [seed, setup] of [[7, { birth: { year: 1960, month: 9, day: 28 }, home: "New York", fated: { name: "Ren", gender: "M", birth: { year: 1996, month: 4, day: 7 }, city: "new york", status: "dating", since: { year: 2025, month: 1, day: 1 } } }], [7, { birth: { year: 1996, month: 9, day: 28 }, fated: { name: "Ren", gender: "M", birth: { year: 1996, month: 4, day: 7 }, from: "abroad", status: "dating", since: { year: 2025, month: 1, day: 1 } } }]] as const) {
       const g = createGame({ name: "Jae", gender: "F", likes: "M", mbti: "ENFP", seed, ...setup } as never);
       for (let d = 0; d < 30 && !g.isOver(); d++) {
         for (let i = 0; i < 400; i++) {

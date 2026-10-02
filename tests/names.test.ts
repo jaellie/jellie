@@ -62,7 +62,7 @@ describe("NPC names fit the language, the place and the person", () => {
 
   it("in a played life, Korean text never shows a Latin generated name; English text never shows Hangul", () => {
     for (const lang of ["ko", "en"] as const) {
-      const g = createGame({ ...JAE, name: lang === "en" ? "Jae" : "제이", seed: 5, lang, fated: { name: lang === "en" ? "Jung" : "정", gender: "M", from: "same", status: "dating" } });
+      const g = createGame({ ...JAE, name: lang === "en" ? "Jae" : "제이", seed: 5, lang, fated: { name: lang === "en" ? "Ren" : "렌", gender: "M", from: "same", status: "dating" } });
       const latin = new Set(Object.values(pools).flatMap((c) => [...c.MALE, ...c.FEMALE].map((p) => p.en)));
       for (let d = 0; d < 10 && !g.isOver(); d++) {
         for (let i = 0; i < 400; i++) {

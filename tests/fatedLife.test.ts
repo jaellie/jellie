@@ -5,7 +5,7 @@ import { storyPopup } from "../src/story/storyEngine";
 import { SeededRandom } from "../src/core/rng";
 
 const JAE = { name: "Jae Kim", gender: "F" as const, likes: "M" as const, birth: { year: 1997, month: 9, day: 28 }, mbti: "ENFP" };
-const JUNG = { name: "Jung Choi", gender: "M" as const, mbti: "INFP", birth: { year: 1998, month: 11, day: 14 } };
+const REN = { name: "Ren Park", gender: "M" as const, mbti: "INFP", birth: { year: 1996, month: 4, day: 7 } };
 
 /** Play days, answering every popup with `pick`, until `stop` or `maxDays`. */
 function play(g: Game, stop: (g: Game) => boolean, pick: (p: { ch: unknown[] }) => number, maxDays = 30) {
@@ -37,7 +37,7 @@ describe("The destined person's life (where they live, their job)", () => {
   });
 
   it("abroad: they live in a foreign city; you meet on the app (or on a flight), then love is long distance", () => {
-    const g = createGame({ ...JAE, seed: 1, fated: { ...JUNG, from: "abroad", job: "developer", city: "Tokyo", status: "stranger" } });
+    const g = createGame({ ...JAE, seed: 1, fated: { ...REN, from: "abroad", job: "developer", city: "Tokyo", status: "stranger" } });
     const life = g.state.story!.fatedLife!;
     expect(life.city.id).toBe("tokyo");
     expect(life.job.id).toBe("developer");
@@ -55,7 +55,7 @@ describe("The destined person's life (where they live, their job)", () => {
     let atWork = 0;
     for (const [job, place] of [["barista", "cafe"], ["doctor", "hospital"], ["trainer", "gym"]] as const) {
       for (const seed of [2, 3, 4]) {
-        const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "same", job, status: "stranger" } });
+        const g = createGame({ ...JAE, seed, fated: { ...REN, from: "same", job, status: "stranger" } });
         const loc = meetPlan(g.state, false).location;
         expect([place, "dating_app", "instagram"]).toContain(loc);
         if (loc === place) atWork++;
@@ -67,7 +67,7 @@ describe("The destined person's life (where they live, their job)", () => {
   it("a missed meeting isn't the end: fate brings them around again (at most twice)", () => {
     let again = 0;
     for (let seed = 1; seed <= 6; seed++) {
-      const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "same", status: "stranger" } });
+      const g = createGame({ ...JAE, seed, fated: { ...REN, from: "same", status: "stranger" } });
       // Always walk past them.
       play(g, (x) => x.state.age > 40, (p) => p.ch.length - 1, 14);
       again += g.state.story!.script.filter((e) => e.data?.again).length;
@@ -77,14 +77,14 @@ describe("The destined person's life (where they live, their job)", () => {
   });
 
   it("status 'talking' (썸) starts with the texts and plays up to the confession; 'dating' starts as a couple", () => {
-    const t = createGame({ ...JAE, seed: 3, fated: { ...JUNG, from: "same", status: "talking" } });
+    const t = createGame({ ...JAE, seed: 3, fated: { ...REN, from: "same", status: "talking" } });
     expect(t.state.story!.arcs.some((a) => a.type === "TALKING")).toBe(true);
     expect(t.state.story!.script.some((e) => e.theme === "LOVE_MEETING")).toBe(false);
     const seen = play(t, (x) => !x.state.story!.arcs.some((a) => a.type === "TALKING"), () => 0, 12);
     const titles = seen.map((s) => s.title);
     expect(titles).toContain("새벽 카톡");
     expect(titles).toContain("마음을 건네다");
-    const d = createGame({ ...JAE, seed: 3, fated: { ...JUNG, from: "same", status: "dating" } });
+    const d = createGame({ ...JAE, seed: 3, fated: { ...REN, from: "same", status: "dating" } });
     expect(d.state.relationship.status).toBe("DATING");
     expect(d.facts().fatedPartner).toBe(true);
   });
@@ -92,7 +92,7 @@ describe("The destined person's life (where they live, their job)", () => {
   it("dating someone abroad: the long-distance arc (call → visit → who moves) — and moving ends it", () => {
     let moved = 0;
     for (let seed = 1; seed <= 4; seed++) {
-      const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "abroad", city: "Paris", status: "dating" } });
+      const g = createGame({ ...JAE, seed, fated: { ...REN, from: "abroad", city: "Paris", status: "dating" } });
       const seen = play(g, (x) => !!x.state.flags.ldrDone || x.state.relationship.status !== "DATING", () => 0, 10);
       const call = seen.find((s) => s.title === "장거리 연애");
       expect(call?.line).toContain("시차");
@@ -103,7 +103,7 @@ describe("The destined person's life (where they live, their job)", () => {
   });
 
   it("their job shows up in your life together (night shifts, flights, a zero month…)", () => {
-    const g = createGame({ ...JAE, seed: 4, fated: { ...JUNG, from: "same", job: "nurse", status: "dating" } });
+    const g = createGame({ ...JAE, seed: 4, fated: { ...REN, from: "same", job: "nurse", status: "dating" } });
     const f = g.facts();
     expect(f.fatedJobNight).toBe(true);
     expect(f.fatedJobCare).toBe(true);
@@ -115,7 +115,7 @@ describe("Who says the result line", () => {
   it("'not yet' to a proposal: the reply is your partner's, not yours", () => {
     let checked = 0;
     for (let seed = 1; seed <= 6 && !checked; seed++) {
-      const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "same", status: "dating" } });
+      const g = createGame({ ...JAE, seed, fated: { ...REN, from: "same", status: "dating" } });
       const seen = play(g, (x) => x.state.engaged || x.state.relationship.status !== "DATING", (p) => (p.ch.length === 3 ? 1 : 0), 20);
       const reply = seen.find((s) => s.title === "사랑의 서약" && s.result?.includes("오래 기다리진 못할"));
       if (reply) {
@@ -174,7 +174,7 @@ describe("The mood line (top of the screen)", () => {
       expect(l.en.length).toBeGreaterThan(3);
       expect(l.ko).not.toMatch(/[0-9]{1,2}:[0-9]{2}/);
     }
-    const g = createGame({ ...JAE, seed: 2, fated: { ...JUNG, from: "abroad", status: "talking" } });
+    const g = createGame({ ...JAE, seed: 2, fated: { ...REN, from: "abroad", status: "talking" } });
     let moods = 0;
     for (let d = 0; d < 6; d++) {
       let today = 0;
@@ -202,7 +202,7 @@ describe("The mood line (top of the screen)", () => {
   it("never mentions a parent who has passed (엄마 아빠 목소리… only while they're alive)", async () => {
     const { pickMood } = await import("../src/story/mood");
     const { startArc } = await import("../src/story/storyEngine");
-    const g = createGame({ ...JAE, seed: 3, fated: { ...JUNG, from: "same", status: "stranger" } });
+    const g = createGame({ ...JAE, seed: 3, fated: { ...REN, from: "same", status: "stranger" } });
     const st = g.state;
     const arc = startArc(st, "PARENT_PASSING", new SeededRandom(1), { who: "mom" })!;
     arc.steps.forEach((x) => (x.dueMonth = st.monthIndex + 1));
@@ -217,7 +217,7 @@ describe("The mood line (top of the screen)", () => {
   });
 
   it("a destined turning point's big popup says why (the chart signals behind it)", () => {
-    const g = createGame({ ...JAE, seed: 1, fated: { ...JUNG, from: "same", status: "stranger" } });
+    const g = createGame({ ...JAE, seed: 1, fated: { ...REN, from: "same", status: "stranger" } });
     let reading: string | undefined;
     for (let d = 0; d < 12 && !reading && !g.isOver(); d++) {
       for (let i = 0; i < 400 && !reading; i++) {
@@ -237,7 +237,7 @@ describe("The mood line (top of the screen)", () => {
 describe("Others' big moments are popups", () => {
   it("a friend's wedding comes as an invitation on your next played day (with their name), then a memory card", async () => {
     const { queueChain } = await import("../src/story/lifeEvents");
-    const g = createGame({ ...JAE, seed: 7, fated: { ...JUNG, status: "dating" } });
+    const g = createGame({ ...JAE, seed: 7, fated: { ...REN, status: "dating" } });
     queueChain(g.state, "INVITE_FRIEND_WEDDING", [0, 0], new SeededRandom(1), { vars: { buddy: "하윤" } });
     g.endDay();
     let seen: { title?: string; line: string; result?: string } | undefined;
@@ -261,15 +261,15 @@ describe("Others' big moments are popups", () => {
 
 describe("The life road (play screen)", () => {
   it("you walk alone; together your partner walks beside you holding hands — long distance too (drawn faded)", () => {
-    const single = createGame({ ...JAE, seed: 8, fated: { ...JUNG, status: "stranger" } });
+    const single = createGame({ ...JAE, seed: 8, fated: { ...REN, status: "stranger" } });
     expect(single.road().walkers.map((w) => w.role)).toEqual(["me"]);
-    const near = createGame({ ...JAE, seed: 8, fated: { ...JUNG, from: "same", status: "dating" } });
+    const near = createGame({ ...JAE, seed: 8, fated: { ...REN, from: "same", status: "dating" } });
     const r = near.road();
     expect(r.walkers.map((w) => w.role)).toEqual(["partner", "me"]);
     expect(r.walkers[0].holds).toBe("me");
     expect(["city", "town", "seaside"]).toContain(r.backdrop.theme);
     expect(r.walking).toBe(true);
-    const far = createGame({ ...JAE, seed: 8, fated: { ...JUNG, from: "abroad", status: "dating" } });
+    const far = createGame({ ...JAE, seed: 8, fated: { ...REN, from: "abroad", status: "dating" } });
     const farWalkers = far.road().walkers;
     expect(farWalkers.map((w) => w.role)).toEqual(["partner", "me"]);
     expect(farWalkers[0].apart).toBe(true);
@@ -290,7 +290,7 @@ describe("Round fixes: status-aware moods, long distance, partner looks, skyline
     const conditional = allMoodLines().filter((l) => l.when?.length);
     const bad: string[] = [];
     for (const seed of [2, 4, 8]) {
-      const g = createGame({ ...JAE, seed, lang: "ko", fated: { ...JUNG, from: seed === 8 ? "same" : "abroad", status: "dating" } });
+      const g = createGame({ ...JAE, seed, lang: "ko", fated: { ...REN, from: seed === 8 ? "same" : "abroad", status: "dating" } });
       const rng = new SeededRandom(seed);
       for (let d = 0; d < 30 && !g.isOver(); d++) {
         const f = g.facts();
@@ -329,7 +329,7 @@ describe("The English version stays English; the story starts in 2026", () => {
   it("no Korean anywhere shown in whole English lives (names romanized, family words translated)", () => {
     const hits: string[] = [];
     for (const seed of [1, 3]) {
-      const g = createGame({ name: "Jae", gender: "F", likes: "M", birth: { year: 1997, month: 9, day: 28 }, mbti: "ENFP", seed, lang: "en", birthplace: "Seoul", family: { grandparents: 2, siblings: [{ rel: "OLDER_BROTHER" }] }, fated: { name: "Jung", from: seed === 3 ? "abroad" : "same", status: seed === 1 ? "talking" : "stranger" } });
+      const g = createGame({ name: "Jae", gender: "F", likes: "M", birth: { year: 1997, month: 9, day: 28 }, mbti: "ENFP", seed, lang: "en", birthplace: "Seoul", family: { grandparents: 2, siblings: [{ rel: "OLDER_BROTHER" }] }, fated: { name: "Ren", from: seed === 3 ? "abroad" : "same", status: seed === 1 ? "talking" : "stranger" } });
       const rng = new SeededRandom(seed);
       const check = (t: unknown) => {
         const s = JSON.stringify(t ?? "");
@@ -353,20 +353,20 @@ describe("The English version stays English; the story starts in 2026", () => {
   });
 
   it("starts on the day you got together / got married — or in your youth (20)", () => {
-    const g = createGame({ ...JAE, seed: 1, fated: { ...JUNG, status: "dating", since: { year: 2024, month: 5, day: 3 } } });
+    const g = createGame({ ...JAE, seed: 1, fated: { ...REN, status: "dating", since: { year: 2024, month: 5, day: 3 } } });
     expect(g.state.date.year).toBe(2024);
     expect(g.state.relationship.status).toBe("DATING");
     expect(g.s.day?.prologue).toBeUndefined();
-    const wed = createGame({ ...JAE, seed: 1, fated: { ...JUNG, status: "married", since: { year: 2022, month: 10, day: 9 } } });
+    const wed = createGame({ ...JAE, seed: 1, fated: { ...REN, status: "married", since: { year: 2022, month: 10, day: 9 } } });
     expect(wed.state.date.year).toBe(2022);
     expect(wed.state.relationship.status).toBe("MARRIED");
     expect(wed.state.story!.script.some((e) => e.theme === "MARRIAGE" || e.theme === "LOVE_MEETING")).toBe(false);
-    const talking = createGame({ ...JAE, seed: 1, fated: { ...JUNG, status: "talking" } });
+    const talking = createGame({ ...JAE, seed: 1, fated: { ...REN, status: "talking" } });
     expect(Math.floor(talking.state.age)).toBe(20);
   });
 
   it("celebrations: 100일 and anniversaries, sometimes a birthday coming up", () => {
-    const g = createGame({ ...JAE, seed: 3, fated: { ...JUNG, from: "same", status: "dating", since: { year: 2020, month: 1, day: 1 } } });
+    const g = createGame({ ...JAE, seed: 3, fated: { ...REN, from: "same", status: "dating", since: { year: 2020, month: 1, day: 1 } } });
     const titles: string[] = [];
     for (let d = 0; d < 14 && !g.isOver(); d++) {
       for (let i = 0; i < 400; i++) {
@@ -381,7 +381,7 @@ describe("The English version stays English; the story starts in 2026", () => {
 
   it("strangers: the years before the meeting pass off-screen — the first day IS the meeting", () => {
     for (const status of ["stranger", "acquaintance"] as const) {
-      const g = createGame({ ...JAE, seed: 1, fated: { ...JUNG, from: "same", status } });
+      const g = createGame({ ...JAE, seed: 1, fated: { ...REN, from: "same", status } });
       expect(g.s.dayKind).toBe("fated");
       expect(g.state.story!.script.find((e) => e.id === g.s.dayRef)?.theme).toBe("LOVE_MEETING");
       expect(g.state.date.year).toBeGreaterThanOrEqual(JAE.birth.year + 20);
@@ -393,7 +393,7 @@ describe("The English version stays English; the story starts in 2026", () => {
 describe("'아니, 아직 그냥 아는 사이야' (acquaintance)", () => {
   it("you know each other's names but there's no 썸; the destined year brings the confession", () => {
     expect(fatedOptions("ko").statuses.map((s) => s.id)).toEqual(["married", "dating", "talking", "acquaintance", "stranger"]);
-    const g = createGame({ ...JAE, seed: 4, fated: { ...JUNG, from: "same", status: "acquaintance" } });
+    const g = createGame({ ...JAE, seed: 4, fated: { ...REN, from: "same", status: "acquaintance" } });
     const f = g.facts();
     expect(f.fatedKnown).toBe(true);
     expect(f.partnered).toBe(false);
@@ -419,7 +419,7 @@ describe("My job (setup.job)", () => {
   });
 
   it("the job shapes the life: employed or not, student, self-employed (no coworkers), the HUD label", () => {
-    const make = (job: string) => createGame({ ...JAE, job, seed: 3, fated: { ...JUNG, status: "dating" } });
+    const make = (job: string) => createGame({ ...JAE, job, seed: 3, fated: { ...REN, status: "dating" } });
     const nurse = make("nurse");
     expect(nurse.hud().job).toBe("간호사");
     expect(nurse.facts().employed).toBe(true);
@@ -437,7 +437,7 @@ describe("My job (setup.job)", () => {
 
 describe("Big moments in four parts, shaped by both MBTIs", () => {
   it("the confession is 4 popups on one day: their move → your inner moment → the moment before → the climax", () => {
-    const g = createGame({ ...JAE, mbti: "ENFP", seed: 7, fated: { ...JUNG, mbti: "INFJ", from: "same", status: "talking" } });
+    const g = createGame({ ...JAE, mbti: "ENFP", seed: 7, fated: { ...REN, mbti: "INFJ", from: "same", status: "talking" } });
     const seen = play(g, (x) => !x.state.story!.arcs.some((a) => a.type === "TALKING"), () => 0, 14);
     const parts = ["설렘의 시작", "두근거리는 밤", "한 걸음 앞", "마음을 건네다"];
     const titles = seen.map((s) => s.title).filter((t) => parts.includes(t ?? ""));
@@ -447,7 +447,7 @@ describe("Big moments in four parts, shaped by both MBTIs", () => {
 
   it("their temperament sets the scene; your own letters decide your options", () => {
     const first = (me: string, them: string) => {
-      const g = createGame({ ...JAE, mbti: me, seed: 7, fated: { ...JUNG, mbti: them, from: "same", status: "talking" } });
+      const g = createGame({ ...JAE, mbti: me, seed: 7, fated: { ...REN, mbti: them, from: "same", status: "talking" } });
       const seen = play(g, (x) => !x.state.story!.arcs.some((a) => a.type === "TALKING"), () => 0, 14);
       return seen.filter((s) => ["설렘의 시작", "두근거리는 밤", "한 걸음 앞", "마음을 건네다"].includes(s.title ?? ""));
     };
@@ -473,7 +473,7 @@ describe("Left entirely to fate (운명에 맡기기)", () => {
     expect(Math.floor(jae.state.age)).toBeGreaterThanOrEqual(42);
     expect(jae.state.story!.script.some((e) => e.theme === "MARRIAGE")).toBe(false);
     // Naming them (or anything else about them) means it isn't sealed.
-    expect(createGame({ ...JAE, seed: 1, fated: { ...JUNG, status: "dating" } }).state.story!.fateMode).toBeUndefined();
+    expect(createGame({ ...JAE, seed: 1, fated: { ...REN, status: "dating" } }).state.story!.fateMode).toBeUndefined();
   });
 
   it("a solitary chart's ending is told as a story: the last love, then a life alone", () => {
@@ -496,7 +496,7 @@ describe("Weekend picks just for fun, by country", () => {
   const menuLabels = (country: string, city: string, status: "dating" | "stranger") => {
     const labels = new Set<string>();
     for (let seed = 1; seed <= 12; seed++) {
-      const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "same", status } });
+      const g = createGame({ ...JAE, seed, fated: { ...REN, from: "same", status } });
       g.state.location = { country, city };
       for (let k = 0; k < 4; k++) { g.s.dayIndex = k; for (const o of g.weekendMenu()) labels.add(o.label.ko); }
     }
@@ -512,7 +512,7 @@ describe("Weekend picks just for fun, by country", () => {
     expect(fr).toMatch(/센 강변|불랑제리|벼룩시장|테라스|비스트로|페탕크|미술관|자전거|뤽상부르|뱅쇼/);
   });
   it("a fun pick answers with its own little line", () => {
-    const g = createGame({ ...JAE, seed: 2, fated: { ...JUNG, from: "same", status: "dating" } });
+    const g = createGame({ ...JAE, seed: 2, fated: { ...REN, from: "same", status: "dating" } });
     const fun = g.weekendMenu().find((o) => o.id.startsWith("fun:"));
     if (fun) expect(fun.reply?.ko).toMatch(/^\(/);
   });
@@ -533,7 +533,7 @@ describe("Meeting online isn't always the same app", () => {
   it("abroad: language exchange, dating app, Instagram, a fan community — varied by person", () => {
     const places = new Set<string>();
     for (let seed = 1; seed <= 24; seed++) {
-      const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "abroad", city: "Tokyo", status: "stranger" } });
+      const g = createGame({ ...JAE, seed, fated: { ...REN, from: "abroad", city: "Tokyo", status: "stranger" } });
       places.add(meetPlan(g.state, false).location);
     }
     expect(places.size).toBeGreaterThanOrEqual(3);
@@ -543,10 +543,10 @@ describe("Meeting online isn't always the same app", () => {
 
 describe("Where you live now (setup.home)", () => {
   it("sets the story's city (and abroad), not the charts", () => {
-    const busan = createGame({ ...JAE, seed: 2, home: "부산", fated: { ...JUNG, status: "dating" } });
+    const busan = createGame({ ...JAE, seed: 2, home: "부산", fated: { ...REN, status: "dating" } });
     expect(busan.state.location).toEqual({ country: "Korea", city: "Busan" });
     expect(busan.road().backdrop.theme).toBe("seaside");
-    const tokyo = createGame({ ...JAE, seed: 2, home: "Tokyo", fated: { ...JUNG, status: "dating" } });
+    const tokyo = createGame({ ...JAE, seed: 2, home: "Tokyo", fated: { ...REN, status: "dating" } });
     expect(tokyo.state.location.country).toBe("Japan");
     expect(tokyo.state.flags.livedAbroad).toBe(true);
     // The chart is the same either way (it follows the birthplace).
@@ -556,7 +556,7 @@ describe("Where you live now (setup.home)", () => {
 
 describe("Without a home city, you live where you were born", () => {
   it("born in New York → the story starts in New York (not a random Korean city)", () => {
-    const g = createGame({ ...JAE, seed: 5, birthplace: "New York", fated: { ...JUNG, status: "dating" } });
+    const g = createGame({ ...JAE, seed: 5, birthplace: "New York", fated: { ...REN, status: "dating" } });
     expect(g.state.location).toEqual({ country: "USA", city: "New York" });
   });
 });
@@ -564,14 +564,14 @@ describe("Without a home city, you live where you were born", () => {
 describe("Where they live is measured from where you live", () => {
   it("you in New York, them in Busan → abroad, and they really are in Busan (never a random Tokyo)", () => {
     for (const from of ["abroad", "city", "same"] as const) {
-      const g = createGame({ ...JAE, seed: 3, home: "New York", fated: { ...JUNG, from, city: "부산", status: "stranger" } });
+      const g = createGame({ ...JAE, seed: 3, home: "New York", fated: { ...REN, from, city: "부산", status: "stranger" } });
       expect(g.state.location.city).toBe("New York");
       expect(g.state.story!.fatedLife!.city.id).toBe("busan");
       expect(g.state.story!.fatedLife!.from).toBe("abroad");
     }
   });
   it("without a home city, a birthplace given as coordinates still sets where you live", () => {
-    const g = createGame({ ...JAE, seed: 3, birthplace: { lat: 40.71, lon: -74.0 } as never, fated: { ...JUNG, status: "dating" } });
+    const g = createGame({ ...JAE, seed: 3, birthplace: { lat: 40.71, lon: -74.0 } as never, fated: { ...REN, status: "dating" } });
     expect(g.state.location.city).toBe("New York");
   });
 });
@@ -580,7 +580,7 @@ describe("Saying no to a proposal", () => {
   it("a good match stays together after a refused ring; the question comes again later", () => {
     let checked = 0;
     for (const seed of [1, 2, 3, 4, 5, 6, 7, 8]) {
-      const g = createGame({ ...JAE, seed, fated: { ...JUNG, from: "same", status: "dating" } });
+      const g = createGame({ ...JAE, seed, fated: { ...REN, from: "same", status: "dating" } });
       g.state.story!.compat = { score: 0.9, chemistry: 0.8, stability: 0.9, friction: 0.1 };
       const refused = () => !!g.state.story!.arcs.find((a) => a.type === "DATING")?.data?.refused;
       const seen = play(g, refused, (p) => p.ch.length - 1, 120);
@@ -605,7 +605,7 @@ describe("City pickers", () => {
     expect(searchPlaces("to", "en").map((p) => p.name)).toContain("Tokyo");
   });
   it("the partner's city (by id) decides near/far, measured from my home", () => {
-    const g = createGame({ ...JAE, seed: 2, home: "New York", fated: { ...JUNG, city: "busan", status: "dating" } } as never);
+    const g = createGame({ ...JAE, seed: 2, home: "New York", fated: { ...REN, city: "busan", status: "dating" } } as never);
     expect(g.state.story!.fatedLife!.city.id).toBe("busan");
     expect(g.state.story!.fatedLife!.from).toBe("abroad");
   });
@@ -614,7 +614,7 @@ describe("City pickers", () => {
 describe("The first confession", () => {
   it("is never a one-popup jump: becoming a couple always goes through the 4-part confession", () => {
     for (const [seed, status] of [[2, "acquaintance"], [4, "stranger"], [6, "stranger"], [9, "acquaintance"]] as const) {
-      const g = createGame({ ...JAE, seed, fated: { ...JUNG, status } });
+      const g = createGame({ ...JAE, seed, fated: { ...REN, status } });
       const seen = play(g, (x) => !!x.facts().fatedPartner, () => 0, 60);
       if (!g.facts().fatedPartner) continue;
       const titles = seen.map((s) => s.title);
@@ -641,7 +641,7 @@ describe("The first confession", () => {
 
 describe("Occasions while living apart", () => {
   it("a long-distance anniversary is a video call / a flight, never 'where shall we go?'", () => {
-    const g = createGame({ ...JAE, seed: 5, fated: { ...JUNG, city: "paris", status: "dating", since: { year: 2025, month: 1, day: 1 } } } as never);
+    const g = createGame({ ...JAE, seed: 5, fated: { ...REN, city: "paris", status: "dating", since: { year: 2025, month: 1, day: 1 } } } as never);
     expect(g.state.relationship.longDistance).toBe(true);
     // Day 100 comes while still apart (seed 5 moves in together before the first anniversary).
     const day100 = play(g, (x) => !x.state.relationship.longDistance, () => 0, 30).find((s) => s.title === "100일");
