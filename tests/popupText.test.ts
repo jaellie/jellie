@@ -27,11 +27,17 @@ describe("Popup text: who's talking, and how choices read", () => {
     expect(bad).toEqual([]);
   });
 
-  it("the story starts in the city you live in, even after the skipped years", () => {
-    for (let seed = 1; seed <= 8; seed++) {
+  it("left to fate: you start single, and a move in the skipped years is told first thing", () => {
+    let moved = 0;
+    for (let seed = 1; seed <= 16; seed++) {
       const g = createGame({ name: "Mina", gender: "F", likes: "M", birth: { year: 1997, month: 9, day: 28 }, mbti: "ENFP", seed, home: "honolulu", birthplace: "newyork", nationality: "US", lang: "en", fated: { sealed: true } } as never);
-      expect(g.state.location.city).toBe("Honolulu");
+      expect(g.state.relationship.status).toBe("SINGLE");
+      if (g.state.location.city === "Honolulu") continue;
+      moved++;
+      const p = g.advance(g.s.minute + 30).find((b) => b.kind === "popup");
+      expect(p && p.kind === "popup" && p.popup.line).toContain(`moved to ${g.state.location.city}`);
     }
+    expect(moved).toBeGreaterThan(0);
   });
 
   it("a parent's funeral always ends with its line", () => {

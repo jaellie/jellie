@@ -2272,7 +2272,189 @@
        ]
       }
      },
-     "chain": true
+     "chain": true,
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "다음 생에도 {parent} {child}로 태어날게",
+          "en": "Next life, I'll be your {child} again."
+         },
+         "outcome": "NEXT"
+        },
+        {
+         "t": {
+          "ko": "(어릴 때 불러 주던 자장가를 대신 불러 준다)",
+          "en": "(Sing them the lullaby they used to sing to you)"
+         },
+         "outcome": "SONG"
+        },
+        {
+         "t": {
+          "ko": "미안해. 자주 못 와서",
+          "en": "I'm sorry I didn't come more often."
+         },
+         "outcome": "SORRY"
+        }
+       ],
+       "outcomes": {
+        "NEXT": {
+         "r": {
+          "ko": "{parent}가 눈을 감은 채 고개를 끄덕였다. 약속이야. 그게 마지막 대답이었다.",
+          "en": "{parent} nodded, eyes closed. A promise. That was the last answer."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "SONG": {
+         "r": {
+          "ko": "두 번째 소절에서 {parent}의 숨이 고르게 잦아들었다. 목소리가 갈라져도 끝까지 불렀다.",
+          "en": "By the second verse, {parent}'s breathing slowed and settled. You sang to the end, even when your voice broke."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "SORRY": {
+         "r": {
+          "ko": "'…알아. 바빴잖아. 잘 살고 있으니까 그걸로 됐어.' 손등을 두 번 토닥이고 {parent}는 잠들었다. 다시 깨지 않았다.",
+          "en": "'…I know. You were busy. You're doing well, and that's enough.' Two pats on the back of your hand, and {parent} fell asleep. They didn't wake up."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(사진첩을 꺼내 함께 넘겨 본다)",
+          "en": "(Bring out the photo album and turn the pages together)"
+         },
+         "outcome": "ALBUM"
+        },
+        {
+         "t": {
+          "ko": "걱정 마. 나 잘 살게",
+          "en": "Don't worry. I'll be okay."
+         },
+         "outcome": "OKAY"
+        },
+        {
+         "t": {
+          "ko": "(아무도 모르게 휴대폰 녹음 버튼을 누른다)",
+          "en": "(Quietly press record on your phone)"
+         },
+         "outcome": "VOICE"
+        }
+       ],
+       "outcomes": {
+        "ALBUM": {
+         "r": {
+          "ko": "내 돌 사진에서 {parent}의 손가락이 멈췄다. '이때 네가 처음 걸었어.' 그 이야기를 끝으로, 조용히 떠났다.",
+          "en": "{parent}'s finger stopped on your baby photo. 'This is when you took your first steps.' After that story, they slipped away quietly."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "OKAY": {
+         "r": {
+          "ko": "'…그래. 넌 잘 살 거야. 내가 알아.' 그 믿음 하나를 남기고 {parent}가 떠났다.",
+          "en": "'…I know you will. I just know.' {parent} left you that one belief, and then was gone."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "VOICE": {
+         "r": {
+          "ko": "녹음된 건 4분 32초. 숨소리, 작은 웃음 한 번, 그리고 사랑한다는 말. 몇 년이 지나도 지우지 못했다.",
+          "en": "Four minutes and thirty-two seconds: breathing, one small laugh, and 'I love you.' Years later, you still couldn't delete it."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "고마워. 나 키워 줘서",
+          "en": "Thank you for raising me."
+         },
+         "outcome": "RAISED"
+        },
+        {
+         "t": {
+          "ko": "(침대 옆에 누워 어릴 때처럼 팔베개를 한다)",
+          "en": "(Lie down beside them, your head on their arm like when you were little)"
+         },
+         "outcome": "ARM"
+        },
+        {
+         "t": {
+          "ko": "아직 할 얘기 많단 말이야",
+          "en": "We still have so much to talk about."
+         },
+         "outcome": "MORE"
+        }
+       ],
+       "outcomes": {
+        "RAISED": {
+         "r": {
+          "ko": "{parent}가 고개를 저었다. '…네가 나를 키웠지.' 그 말을 이해하는 데 몇 년이 걸렸다.",
+          "en": "{parent} shook their head. '…You're the one who raised me.' It took you years to understand that."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "ARM": {
+         "r": {
+          "ko": "팔은 여전히 따뜻했다. 새벽녘, 그 온기가 천천히 식어 가는 걸 끝까지 느꼈다.",
+          "en": "Their arm was still warm. Toward dawn, you felt that warmth slowly fade, and you stayed until the very end."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "MORE": {
+         "r": {
+          "ko": "'…다 들었어. 말 안 해도.' {parent}의 마지막 말이었다.",
+          "en": "'…I heard all of it. You didn't have to say a thing.' Those were {parent}'s last words."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        }
+       }
+      }
+     ]
     },
     "FUNERAL": {
      "title": {
@@ -2350,7 +2532,131 @@
        ]
       }
      },
-     "chain": true
+     "chain": true,
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(조문객 한 명 한 명에게 {parent} 이야기를 청해 듣는다)",
+          "en": "(Ask each guest for a story about {parent})"
+         },
+         "outcome": "STORIES"
+        },
+        {
+         "t": {
+          "ko": "(영정 앞에서 {parent}에게 편지를 쓴다)",
+          "en": "(Write {parent} a letter in front of the portrait)"
+         },
+         "outcome": "LETTER"
+        }
+       ],
+       "outcomes": {
+        "STORIES": {
+         "r": {
+          "ko": "{parent}에게는 내가 모르는 얼굴이 많았다. 누군가에겐 은인이었고, 누군가에겐 첫 친구였다.",
+          "en": "{parent} had so many sides you never knew. A lifesaver to one person, a first friend to another."
+         },
+         "effects": [
+          {
+           "kind": "familyObligation",
+           "delta": 0.1
+          }
+         ]
+        },
+        "LETTER": {
+         "r": {
+          "ko": "마지막 한 줄을 쓰는 데 세 시간이 걸렸다. 다음에 또 만나.",
+          "en": "The last line took three hours to write: See you again."
+         },
+         "effects": []
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(밥 한술 못 뜨는 가족들 손에 숟가락을 쥐여 준다)",
+          "en": "(Put spoons in the hands of family members who can't eat)"
+         },
+         "outcome": "CARE"
+        },
+        {
+         "t": {
+          "ko": "(발인 날, 운구 행렬 맨 앞에 선다)",
+          "en": "(On the last morning, walk at the front of the procession)"
+         },
+         "outcome": "LEAD"
+        }
+       ],
+       "outcomes": {
+        "CARE": {
+         "r": {
+          "ko": "'{parent}가 보면 혼낼 거야. 먹자.' 그 말에 다들 울면서 밥을 먹었다.",
+          "en": "'{parent} would scold us for this. Eat.' Everyone ate, crying."
+         },
+         "effects": [
+          {
+           "kind": "familyObligation",
+           "delta": 0.15
+          }
+         ]
+        },
+        "LEAD": {
+         "r": {
+          "ko": "영정 사진이 생각보다 무거웠다. 이 무게를 평생 기억하기로 했다.",
+          "en": "The portrait was heavier than you expected. You decided to remember that weight for the rest of your life."
+         },
+         "effects": [
+          {
+           "kind": "familyObligation",
+           "delta": 0.1
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(빈소 구석에서 {parent}의 휴대폰 사진첩을 연다)",
+          "en": "(In a quiet corner, open the photos on {parent}'s phone)"
+         },
+         "outcome": "PHONE"
+        },
+        {
+         "t": {
+          "ko": "끝까지 웃으며 손님을 맞는다",
+          "en": "Greet every guest with a smile, to the end"
+         },
+         "outcome": "SMILE"
+        }
+       ],
+       "outcomes": {
+        "PHONE": {
+         "r": {
+          "ko": "사진 대부분이 내 뒷모습이었다. 몰래, 오래, 나를 찍고 있었다.",
+          "en": "Most of the photos were of you from behind. Quietly, for years, they'd been taking pictures of you."
+         },
+         "effects": []
+        },
+        "SMILE": {
+         "r": {
+          "ko": "{parent}가 늘 그랬으니까. 마지막 손님이 가고 나서야 무너졌다.",
+          "en": "Because that's what {parent} always did. You only fell apart after the last guest left."
+         },
+         "effects": [
+          {
+           "kind": "familyObligation",
+           "delta": 0.1
+          }
+         ]
+        }
+       }
+      }
+     ]
     },
     "AFTER": {
      "title": {
@@ -2432,7 +2738,159 @@
         }
        ]
       }
-     }
+     },
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(첫 기일에 {parent}가 좋아하던 꽃을 들고 간다)",
+          "en": "(Bring {parent}'s favorite flowers on the first anniversary)"
+         },
+         "outcome": "FLOWERS"
+        },
+        {
+         "t": {
+          "ko": "(괜찮은 척을 그만두고 친구에게 전화한다)",
+          "en": "(Stop pretending you're fine and call a friend)"
+         },
+         "outcome": "CALL"
+        }
+       ],
+       "outcomes": {
+        "FLOWERS": {
+         "r": {
+          "ko": "꽃을 놓고 한참 수다를 떨었다. 대답은 없었지만, 이상하게 다 들은 것 같았다.",
+          "en": "You set down the flowers and talked for a long time. No answer, but somehow it felt like they heard every word."
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "Flowers on the first anniversary.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        },
+        "CALL": {
+         "r": {
+          "ko": "'…나 사실 하나도 안 괜찮아.' 친구는 아무 말 없이 한 시간 동안 들어 주었다.",
+          "en": "'…I'm actually not okay at all.' Your friend just listened, without a word, for an hour."
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "The call where I stopped pretending.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "{parent}처럼 살아 보기로 한다",
+          "en": "Decide to live a little more like {parent}"
+         },
+         "outcome": "LIVE"
+        },
+        {
+         "t": {
+          "ko": "(유품 상자에서 내 어릴 적 그림을 찾는다)",
+          "en": "(Find your childhood drawings in their keepsake box)"
+         },
+         "outcome": "DRAWING"
+        }
+       ],
+       "outcomes": {
+        "LIVE": {
+         "r": {
+          "ko": "아침마다 창문을 열고 화분에 물을 준다. {parent}가 하던 대로. 그렇게 하루가 조금 덜 무너진다.",
+          "en": "Every morning you open the window and water the plants, the way {parent} did. The days fall apart a little less."
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "Living a little like my parent.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        },
+        "DRAWING": {
+         "r": {
+          "ko": "삐뚤빼뚤한 크레파스 그림 뒷면에 날짜와 한 줄. '오늘 우리 {child}가 나를 그려 줬다.'",
+          "en": "On the back of a crooked crayon drawing: a date and one line. 'Today my {child} drew a picture of me.'"
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "My old drawing, kept all these years.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "{parent} 번호를 지우지 않기로 한다",
+          "en": "Decide not to delete {parent}'s number"
+         },
+         "outcome": "KEEP"
+        },
+        {
+         "t": {
+          "ko": "(남겨진 가계부를 처음부터 읽는다)",
+          "en": "(Read the household ledger they left, from page one)"
+         },
+         "outcome": "LEDGER"
+        }
+       ],
+       "outcomes": {
+        "KEEP": {
+         "r": {
+          "ko": "가끔 그 번호로 오늘 있었던 일을 보낸다. 답장은 없지만, 하루를 정리하는 방법이 됐다.",
+          "en": "Sometimes you text that number about your day. There's never a reply, but it's become how you close out the day."
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "Texts to a number that never answers.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        },
+        "LEDGER": {
+         "r": {
+          "ko": "학원비, 운동화, 수학여행비. 빼곡한 숫자 사이에 내가 있었다.",
+          "en": "Tutoring fees, sneakers, a school trip. Between all those numbers, there you were."
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "My life in my parent's ledger.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        }
+       }
+      }
+     ]
     }
    }
   },
@@ -2643,7 +3101,93 @@
        ]
       }
      },
-     "chain": true
+     "chain": true,
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(택시 안에서 {partner}에게 계속 문자를 보낸다)",
+          "en": "(Keep texting {partner} from the taxi)"
+         },
+         "outcome": "TEXTS"
+        },
+        {
+         "t": {
+          "ko": "(신발도 제대로 못 신고 뛰쳐나간다)",
+          "en": "(Run out the door, shoes barely on)"
+         },
+         "outcome": "RUN"
+        }
+       ],
+       "outcomes": {
+        "TEXTS": {
+         "r": {
+          "ko": "금방 갈게. 조금만 기다려. 사랑해. 읽음 표시는 끝내 뜨지 않았다. 그래도 밤새 곁을 지켰다.",
+          "en": "On my way. Hang on. I love you. None of them showed as read. You stayed by their side all night anyway."
+         },
+         "effects": [
+          {
+           "kind": "partnerCritical"
+          }
+         ]
+        },
+        "RUN": {
+         "r": {
+          "ko": "병원 복도가 끝없이 길었다. 도착했을 때 {partner}의 손은 아직 따뜻했다.",
+          "en": "The hospital hallway went on forever. When you got there, {partner}'s hand was still warm."
+         },
+         "effects": [
+          {
+           "kind": "partnerCritical"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(기도 같은 걸 해 본 적 없는데, 처음으로 기도한다)",
+          "en": "(You've never prayed before. You pray now.)"
+         },
+         "outcome": "PRAY"
+        },
+        {
+         "t": {
+          "ko": "(떨리는 손으로 보호자 서류부터 챙긴다)",
+          "en": "(With shaking hands, take care of the paperwork first)"
+         },
+         "outcome": "PAPERS"
+        }
+       ],
+       "outcomes": {
+        "PRAY": {
+         "r": {
+          "ko": "누구에게 하는 건지도 모르는 기도를 밤새 했다. 한 번만, 딱 한 번만.",
+          "en": "All night you prayed to no one in particular. Just once. Please, just this once."
+         },
+         "effects": [
+          {
+           "kind": "partnerCritical"
+          }
+         ]
+        },
+        "PAPERS": {
+         "r": {
+          "ko": "손은 떨렸지만 해야 할 일을 했다. {partner}이(가) 늘 나를 믿어 주던 방식으로.",
+          "en": "Your hands shook, but you did what had to be done. The way {partner} always trusted you to."
+         },
+         "effects": [
+          {
+           "kind": "partnerCritical"
+          }
+         ]
+        }
+       }
+      }
+     ]
     },
     "FAREWELL": {
      "title": {
@@ -2693,7 +3237,97 @@
         "funeral_hall"
        ]
       }
-     }
+     },
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(영정 앞에서 우리가 처음 만난 날 이야기를 한다)",
+          "en": "(In front of the portrait, tell the story of the day you met)"
+         },
+         "outcome": "FIRST"
+        },
+        {
+         "t": {
+          "ko": "다음 생에도 나를 찾아와 줘",
+          "en": "Find me again in the next life."
+         },
+         "outcome": "NEXT"
+        }
+       ],
+       "outcomes": {
+        "FIRST": {
+         "r": {
+          "ko": "기억나? 그날 네가… 끝까지 이야기했다. {partner}이(가) 늘 웃던 대목에서, 나도 웃었다.",
+          "en": "Remember? That day, you… You told it all the way through. At the part where {partner} always laughed, you laughed too."
+         },
+         "effects": [
+          {
+           "kind": "partnerDies"
+          }
+         ],
+         "card": "PARTNER_FUNERAL"
+        },
+        "NEXT": {
+         "r": {
+          "ko": "향이 다 타들어 갈 때까지 그 자리에 서 있었다. 대답을 들은 것 같았다.",
+          "en": "You stood there until the incense burned all the way down. It felt like you'd heard an answer."
+         },
+         "effects": [
+          {
+           "kind": "partnerDies"
+          }
+         ],
+         "card": "PARTNER_FUNERAL"
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(우리 사진을 한 장씩 꺼내 영정 옆에 놓는다)",
+          "en": "(Set your photos together, one by one, beside the portrait)"
+         },
+         "outcome": "PHOTOS"
+        },
+        {
+         "t": {
+          "ko": "(아무 말 없이 영정 사진을 오래 바라본다)",
+          "en": "(Look at the portrait for a long time, without a word)"
+         },
+         "outcome": "LOOK"
+        }
+       ],
+       "outcomes": {
+        "PHOTOS": {
+         "r": {
+          "ko": "사진은 수백 장인데, 고마운 건 그보다 많았다.",
+          "en": "Hundreds of photos, and even more things to be thankful for."
+         },
+         "effects": [
+          {
+           "kind": "partnerDies"
+          }
+         ],
+         "card": "PARTNER_FUNERAL"
+        },
+        "LOOK": {
+         "r": {
+          "ko": "{partner}은(는) 사진 속에서도 나를 보고 웃고 있었다. 그 얼굴을 오래 외웠다.",
+          "en": "Even in the photo, {partner} was smiling at you. You memorized that face."
+         },
+         "effects": [
+          {
+           "kind": "partnerDies"
+          }
+         ],
+         "card": "PARTNER_FUNERAL"
+        }
+       }
+      }
+     ]
     }
    }
   },
@@ -2889,7 +3523,93 @@
         "funeral_hall"
        ]
       }
-     }
+     },
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(어릴 때 {relative} 댁에서 보낸 여름을 떠올린다)",
+          "en": "(Remember the summers at {relative}'s place)"
+         },
+         "outcome": "SUMMER"
+        },
+        {
+         "t": {
+          "ko": "(가족 단톡방에 처음으로 긴 글을 쓴다)",
+          "en": "(Write a long message in the family group chat for the first time)"
+         },
+         "outcome": "CHAT"
+        }
+       ],
+       "outcomes": {
+        "SUMMER": {
+         "r": {
+          "ko": "평상, 수박, 모기향 냄새. 그 여름의 {relative}는 늘 웃고 계셨다. 향을 피우고, 오래 절을 했다.",
+          "en": "The porch, the watermelon, the smell of bug spray. In those summers, {relative} was always smiling. You lit the incense and bowed for a long time."
+         },
+         "effects": [
+          {
+           "kind": "relativeDies"
+          }
+         ]
+        },
+        "CHAT": {
+         "r": {
+          "ko": "한참 동안 읽음 표시만 떴다. 그리고 하나둘, 각자의 기억을 꺼내 놓기 시작했다.",
+          "en": "For a long while, only read receipts. Then one by one, everyone started sharing a memory of their own."
+         },
+         "effects": [
+          {
+           "kind": "relativeDies"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(오랜만에 만난 사촌들과 밤을 새운다)",
+          "en": "(Stay up all night with cousins you haven't seen in years)"
+         },
+         "outcome": "COUSINS"
+        },
+        {
+         "t": {
+          "ko": "(못 드린 안부 전화를 떠올린다)",
+          "en": "(Think of all the calls you never made)"
+         },
+         "outcome": "CALLS"
+        }
+       ],
+       "outcomes": {
+        "COUSINS": {
+         "r": {
+          "ko": "어릴 때 이야기로 울다가 웃다가 했다. {relative}가 마지막으로 모아 준 자리 같았다.",
+          "en": "You cried and laughed over childhood stories. It felt like one last get-together {relative} had arranged."
+         },
+         "effects": [
+          {
+           "kind": "relativeDies"
+          }
+         ]
+        },
+        "CALLS": {
+         "r": {
+          "ko": "'다음 명절에 찾아뵐게요.' 그 다음은 오지 않았다. 그날 밤, 미뤄 둔 안부 전화를 전부 걸었다.",
+          "en": "'I'll visit next holiday.' Next holiday never came. That night, you made every call you'd been putting off."
+         },
+         "effects": [
+          {
+           "kind": "relativeDies"
+          }
+         ]
+        }
+       }
+      }
+     ]
     }
    }
   },

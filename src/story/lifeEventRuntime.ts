@@ -7,7 +7,7 @@ import type { SeededRandom } from "../core/rng";
 import type { LifeModifiers } from "../core/lifeModifiers";
 import type { LifeState } from "../sim/types";
 import { aliveSiblings, siblingLabel } from "./family";
-import { EVENT_PATIENCE, type FamilyMember, type PersonCtx, pendingApplies, pickChain, type LifeEventOutcome, type StoryEffect, eventState, familyReactions, instinctiveChoice, lifeEvent, outcomeWeights, queueChain, temperament } from "./lifeEvents";
+import { EVENT_PATIENCE, type FamilyMember, type PersonCtx, pendingApplies, pickChain, type LifeEventOutcome, type StoryEffect, eventState, familyReactions, instinctiveChoice, lifeEvent, eventView, outcomeWeights, queueChain, temperament } from "./lifeEvents";
 import { compatibility } from "../destiny/compatibility";
 import { type StoryCtx, applyStoryEffects, queueCard } from "./storyEngine";
 
@@ -112,9 +112,10 @@ export function resolveLifeEvent(uid: string, choiceIndex: number, ctx: StoryCtx
   const es = eventState(state);
   const p = es.pending.find((x) => x.uid === uid);
   if (!p) return;
-  const def = lifeEvent(p.id);
+  const base = lifeEvent(p.id);
   es.pending = es.pending.filter((x) => x !== p);
-  if (!def) return;
+  if (!base) return;
+  const def = eventView(state, base, uid);
   const person = personOf(ctx);
   const weights = outcomeWeights(def, choiceIndex, person);
   const outcome = rng.weighted(Object.entries(weights).map(([item, weight]) => ({ item, weight })));

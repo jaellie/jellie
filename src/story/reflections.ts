@@ -9,7 +9,7 @@ import type { SeededRandom } from "../core/rng";
 import type { LifeState } from "../sim/types";
 import { freshness, markSeen } from "./deviceMemory";
 
-type Bi = { ko: string; en: string };
+type Bi = { ko: string; en: string; needs?: string };
 const LINES = data.lines as Record<string, Bi[]>;
 const BY_CARD = data.byCard as Record<string, string>;
 const BY_EVENT = data.byEventCat as Record<string, string>;
@@ -25,7 +25,9 @@ export function pickReflection(state: LifeState, category: string, rng: SeededRa
   const pool = LINES[category];
   if (!pool?.length) return;
   const used = new Set(String(state.flags.usedLines ?? "").split(",").filter(Boolean));
-  const cands = pool.map((b, i) => ({ item: i, weight: freshness(`q:${category}:${i}`) })).filter((c) => !used.has(`${category}:${c.item}`));
+  // A line about calling your parents never comes once they're both gone.
+  const parents = !!(state.family?.mom?.alive || state.family?.dad?.alive);
+  const cands = pool.map((b, i) => ({ item: i, weight: freshness(`q:${category}:${i}`) })).filter((c) => !used.has(`${category}:${c.item}`) && !(pool[c.item].needs === "parents" && !parents));
   if (!cands.length) return;
   const i = rng.weighted(cands);
   used.add(`${category}:${i}`);

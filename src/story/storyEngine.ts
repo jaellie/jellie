@@ -91,6 +91,12 @@ interface ArcStepDef {
    * (odds stay with the base choice at the same position); `outcomes` replace result lines.
    */
   variants?: Array<{ element?: string; who?: string; line: Bi; location?: string; title?: Bi; choices?: Array<{ t: Bi }>; outcomes?: Record<string, { r: Bi; who?: string }> }>;
+  /**
+   * Other choices for the same moment, kept apart from `variants` so they work with `alt` (mom/dad,
+   * by cause) too: one set per arc (the base counts as one), favoring ones this device hasn't seen.
+   * A choice without `outcome` keeps the base choice's at its position; `outcomes` add or reword results.
+   */
+  choiceSets?: Array<{ choices: Array<{ t: Bi; outcome?: string }>; outcomes?: Record<string, { r: Bi; effects?: StoryEffect[]; card?: string; who?: string }> }>;
   /** "distance": by where the destined partner lives (city / abroad). */
   altBy?: "cause" | "speaker" | "distance" | "parent";
   /** A fixed outcome, or a roll (bent by 궁합 when the partner is the destined person). */
@@ -301,7 +307,7 @@ export function startArc(state: LifeState, type: ArcType, rng: SeededRandom, dat
   return arc;
 }
 
-function endArc(state: LifeState, type: ArcType): void {
+export function endArc(state: LifeState, type: ArcType): void {
   state.story!.arcs = state.story!.arcs.filter((a) => a.type !== type);
 }
 
@@ -593,7 +599,7 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
   const who = mv?.who ?? base.who;
   const line = mv?.line ?? base.line;
   const location = mv?.location ?? base.location;
-  const stepChoices = mv?.choices ?? base.choices ?? def.choices;
+  const stepChoices = mv?.choices ?? base.choices ?? choiceSet(state, arc, step.key, def)?.choices ?? def.choices;
   const vars: Record<string, string> = {};
   if (arc.data?.relative) vars.relative = String(arc.data.relative);
   if (arc.type === "PARENT_PASSING") {
@@ -728,6 +734,24 @@ function stepVariant(state: LifeState, arc: ActiveArc, key: string, def: ArcStep
   const pick = pool.find((o) => (r -= o.w) < 0) ?? pool[0];
   arc.data = { ...arc.data, [memo]: pick.id };
   return pick.id === "base" ? m : (vs[Number(pick.id)] as StepVariant);
+}
+
+/** This arc's set of choices for a step (see `choiceSets`), remembered on the arc. */
+function choiceSet(state: LifeState, arc: ActiveArc, key: string, def: ArcStepDef): NonNullable<ArcStepDef["choiceSets"]>[number] | undefined {
+  const sets = def.choiceSets ?? [];
+  if (!sets.length) return;
+  const memo = `cs_${key}`;
+  let i = arc.data?.[memo] as number | undefined;
+  if (i === undefined) {
+    const pool = [-1, ...sets.map((_, k) => k)].map((k) => ({ k, w: freshness(`cs:${arc.type}:${key}:${k}`) }));
+    let h = 2166136261;
+    for (const c of `${state.flags.lifeSalt ?? 0}:${arc.id}:${key}`) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0;
+    let r = ((h % 10000) / 10000) * pool.reduce((a, o) => a + o.w, 0);
+    i = (pool.find((o) => (r -= o.w) < 0) ?? pool[0]).k;
+    arc.data = { ...arc.data, [memo]: i };
+    markSeen(`cs:${arc.type}:${key}:${i}`);
+  }
+  return sets[i];
 }
 
 function mbtiVariant(state: LifeState, arc: ActiveArc, key: string, def: ArcStepDef) {
@@ -880,7 +904,8 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
   const mv = stepVariant(state, arc, step.key, def, ctx.facts);
   if (def.variants?.length) markSeen(`step:${arc.type}:${step.key}:${arc.data?.[`v_${step.key}`] ?? "base"}`);
   // A variant's choices change the words; the odds stay with the base choice at the same position.
-  const vch = mv?.choices ?? arcSpeaker(def, arc, ctx.facts, state).choices;
+  const cs = mv?.choices || arcSpeaker(def, arc, ctx.facts, state).choices ? undefined : choiceSet(state, arc, step.key, def);
+  const vch = mv?.choices ?? arcSpeaker(def, arc, ctx.facts, state).choices ?? cs?.choices;
   const choices: ArcStepDef["choices"] = vch && vch.length === def.choices.length ? vch.map((c, i) => ({ ...def.choices[i], ...c })) : ((vch as ArcStepDef["choices"] | undefined) ?? def.choices);
   const ch = choices[Math.max(0, Math.min(choices.length - 1, choiceIndex))];
   let outcome = ch.outcome ?? Object.keys(def.outcomes)[0];
@@ -907,7 +932,8 @@ export function resolveStory(ref: string, choiceIndex: number, ctx: StoryCtx, ch
     outcome = "REFUSED_STAY";
     arc.data = { ...arc.data, refused: refusals + 1 };
   }
-  const o = { ...def.outcomes[outcome], ...(mv?.outcomes?.[outcome] ?? {}) };
+  const o = { ...def.outcomes[outcome], ...(cs?.outcomes?.[outcome] ?? {}), ...(mv?.outcomes?.[outcome] ?? {}) } as ArcStepDef["outcomes"][string];
+  o.effects ??= [];
   arc.step += 1;
   if (stay) {
     arc.step -= 1;
@@ -1066,7 +1092,7 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
         let npc = w ? Object.values(w.npcs).find((n) => n.fated) : undefined;
         // Only the confession itself makes you a couple. From anywhere else, it's where the 썸 starts —
         // and the confession (4 parts) is next.
-        if (npc && src.arc?.type !== "TALKING" && st0(state).confessFate !== undefined) {
+        if (npc && src.arc?.type !== "TALKING") {
           applyEffects([{ kind: "beginTalkingFated", confessNow: true }], ctx, src);
           break;
         }

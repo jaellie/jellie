@@ -38,7 +38,7 @@ import { type CrowdState, stepCrowd } from "../world/walkers";
 import { cultureOf, nameEn, pickName } from "../world/names";
 import { marriageFate } from "../story/marriageFate";
 import { bondPhase, hasBond, pendingMeetings, updateBond, type BondEnd } from "../story/bond";
-import { lifeEvent, nextDueEvent, pendingApplies, queueChain, rollLifeEvents, weekdayOnly } from "../story/lifeEvents";
+import { eventView, lifeEvent, nextDueEvent, pendingApplies, queueChain, rollLifeEvents, weekdayOnly } from "../story/lifeEvents";
 import { resolveLifeEvent, resolveStaleEvents } from "../story/lifeEventRuntime";
 import "../story/eventLibrary";
 import { yearSignalMap } from "../story/destinyScript";
@@ -54,6 +54,8 @@ import { homeVars, nationCode, nationalityOf } from "../story/nationality";
 import { currencyFor, formatMoney, localizeMoneyText } from "./currency";
 import { pickReflection, reflectionCategory } from "../story/reflections";
 const BIG_MOMENTS = new Set(["PARENT_DEATH", "PARTNER_DEATH", "GOODBYE", "VOWS"]);
+/** The line category for a story moment with no card of its own. */
+const ARC_LINE: Record<string, string> = { DATING: "TOGETHER", TALKING: "LOVE_BEGINS", ENGAGEMENT: "VOWS", PARENT_PASSING: "PARENT_DEATH", FAMILY_PASSING: "GOODBYE", PARTNER_PASSING: "PARTNER_DEATH", ILLNESS: "HEALTH", LONG_DISTANCE: "TOGETHER", PARTING: "BREAKUP", DIVORCE: "DIVORCE", AFFAIR: "SHADOW", PREGNANCY: "NEW_LIFE" };
 import { type FatedFrom, type FatedLife, fatedVars, findFatedJob, resolveFatedLife } from "../story/fatedProfile";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
 import type { RelationshipOriginType } from "../world/types";
@@ -65,7 +67,7 @@ import { focusOf, toPrototypeScene, withPositions, type PrototypeScene } from ".
 import { WorldEngine } from "../world/worldEngine";
 import type { NPCSchedule } from "../world/types";
 import { type LifeFacts, computeFacts, meets } from "./facts";
-import { STORY_ONLY_TEMPLATES, dueOccasion, isBigMoment, startArc, eventDayWanted, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent, confessReading } from "../story/storyEngine";
+import { STORY_ONLY_TEMPLATES, dueOccasion, isBigMoment, startArc, eventDayWanted, upcomingHint, ensureArcs, fillStory, hintFor, initStory, isGrave, monthlyStoryTick, patientLabel, resolveStory, scheduleNext, storyPopup, fatedEvent, confessReading, endArc } from "../story/storyEngine";
 import { buildCards, type MemoryCard } from "../story/cards";
 import memorialData from "../../data/story/memorial.json";
 import { AutoWorldPolicy } from "../world/decisions";
@@ -228,6 +230,8 @@ interface Pending {
   eventUid?: string;
   /** A celebration (100일, an anniversary, a birthday): its choices' replies. */
   occasion?: Array<{ ko: string; en: string }>;
+  /** A plain notice (the move): its choices' replies. */
+  note?: Array<{ ko: string; en: string }>;
 }
 
 export interface PlanOption {
@@ -286,6 +290,8 @@ export interface GameSave {
   /** Today's mood line (shown at the top) and whether the beat went out; the last few, to avoid repeats. */
   mood?: string;
   moodShown?: boolean;
+  /** Moved during the skipped years: told in a popup first thing on the first day. */
+  movedNote?: { city: string; country: string; why: "school" | "work" | "fresh" };
   recentMoods?: string[];
   pending?: Pending;
   life: LifeState;
@@ -704,6 +710,11 @@ export class Game {
     const s = this.s;
     const beats: Beat[] = [];
     if (s.over || s.pending || !s.day) return beats;
+    if (s.movedNote) {
+      const b = this.fireMoved(s.movedNote);
+      s.movedNote = undefined;
+      if (b) return this.tidy([b]);
+    }
     if (!s.moodShown && s.mood) {
       s.moodShown = true;
       beats.push({ kind: "mood", text: s.mood });
@@ -890,8 +901,9 @@ export class Game {
     const st = this.state;
     const f = this.facts();
     const p = st.story?.events?.pending.find((x) => x.uid === s.eventUid);
-    const def = p ? lifeEvent(p.id) : undefined;
-    if (!p || !def || !pendingApplies(st, p, def, f)) return;
+    const base = p ? lifeEvent(p.id) : undefined;
+    if (!p || !base || !pendingApplies(st, p, base, f)) return;
+    const def = eventView(st, base, p.uid);
     const vars = langVars({ sibling: f.siblingName ?? "", sister: f.sisterName ?? "", brother: f.brotherName ?? "", ex: f.exName ?? "", kid: f.kidName ?? "", me: s.setup.name, ...p.vars }, s.lang);
     const popup: Popup = {
       id: `ev${s.dayIndex}`,
@@ -972,6 +984,32 @@ export class Game {
       })()), // a snapshot (wander() keeps moving the live scene)
     };
     s.pending = { popup, storyRef: def.ref, patient, vars };
+    return { kind: "popup", popup };
+  }
+
+  /** "(새 직장 때문에 보스턴으로 이사했다.)": a move from the skipped years, told before anything else. */
+  private fireMoved(m: { city: string; country: string; why: "school" | "work" | "fresh" }): Beat | undefined {
+    const ko = this.s.lang === "ko";
+    const place = ko ? cityKo(m.city) : m.city;
+    const why = { school: bi("새 학교", "a new school"), work: bi("새 직장", "a new job"), fresh: bi("새 출발", "a fresh start") }[m.why];
+    const line = bi(fixJosa(`(${why.ko} 때문에 ${place}(으)로 이사했다. 낯선 동네, 낯선 길. 여기서 무슨 일이 기다리고 있을까.)`), `(You moved to ${place} for ${why.en}. A new neighborhood, new streets. Who knows what's waiting here.)`);
+    const opts = [
+      { t: bi("(동네부터 걸어 본다)", "(Walk the neighborhood first)"), r: bi("골목 끝 빵집이 마음에 들었다. 여기서도 잘 살 수 있을 것 같다.", "A bakery at the end of the street won you over. You could make a life here.") },
+      { t: bi("(짐부터 푼다)", "(Unpack first)"), r: bi("상자를 하나씩 비울 때마다 이 집이 조금씩 내 집이 됐다.", "With every box you emptied, the place became a little more yours.") },
+    ];
+    const popup: Popup = {
+      id: `moved${this.s.dayIndex}`,
+      source: "event",
+      who: "me",
+      name: this.speaker("me"),
+      ...this.portrait("me"),
+      title: this.L(bi("새로운 곳", "Somewhere new")),
+      line: this.L(line),
+      ch: opts.map((o) => ({ t: this.L(o.t) })),
+      big: true,
+      scene: this.photoScene(),
+    };
+    this.s.pending = { popup, note: opts.map((o) => o.r) };
     return { kind: "popup", popup };
   }
 
@@ -1272,12 +1310,14 @@ export class Game {
       const text = [this.L(res.r), ...res.extra.map((x) => this.L(x))].join(" ");
       // A friend's death or a wedding always gets its line.
       const evHint = evId === "FRIEND_PASSING_NEWS" ? "GOODBYE" : evId && /WEDDING/.test(evId) ? "CELEBRATE" : undefined;
-      const quote = evHint ? this.reflect(n0, undefined, 1, evHint) : this.reflect(n0, evId ? lifeEvent(evId)?.cat : undefined, 0.5);
+      const evDef = evId ? lifeEvent(evId) : undefined;
+      const quote = evHint ? this.reflect(n0, undefined, 1, evHint) : this.reflect(n0, evDef?.cat, evDef?.big ? 0.85 : 0.5);
       return { who: "me", line: this.fill(fillStory(text, st, this.facts(), p.vars ?? {})), log: label, ...(quote ? { quote } : {}) };
     }
     if (p.storyRef) {
       const label = p.popup.ch[index]?.t;
       const n0 = st.story?.cards.length ?? 0;
+      const arcType = p.storyRef.startsWith("arc:") ? st.story?.arcs.find((a) => a.id === p.storyRef!.slice(4))?.type : undefined;
       const res = resolveStory(p.storyRef, index, { state: st, seed: s.seed, rng, mods, facts: this.facts() }, label);
       if (!res) return;
       // A big moment in parts (a funeral, a wedding): its card is made early, its line comes at the very end.
@@ -1285,7 +1325,7 @@ export class Game {
       if (partCat) s.momentCat = partCat;
       const momentCat = s.momentCat;
       if (!res.more) s.momentCat = undefined;
-      const quote = res.more ? undefined : this.reflect(n0, undefined, 0.8, momentCat);
+      const quote = res.more ? undefined : this.reflect(n0, undefined, 0.8, momentCat ?? (p.storyRef.startsWith("fated:") ? "FATE" : arcType ? ARC_LINE[arcType] : undefined));
       if (res.scene?.length) this.setSequence(res.scene);
       if (!st.alive) s.minute = CFG.dayEndMinute;
       // A big moment in four parts: the next part opens right after this one.
@@ -1313,10 +1353,16 @@ export class Game {
       const daily = rng.chance(0.15) ? pickReflection(st, story.who === "partner" ? "TOGETHER" : story.who === "friend" ? "FRIENDS" : "DAILY", rng) : undefined;
       return { who: story.who === "me" ? "me" : story.who, name: p.popup.name, line: this.fill(this.L(c.r)), ...(daily ? { quote: this.L(daily) } : {}) };
     }
+    if (p.note) {
+      const r = p.note[index] ?? p.note[0];
+      const quote = this.reflect(0, undefined, 1, "MOVING");
+      return { who: "me", line: this.fill(this.L(r)), log: p.popup.ch[index]?.t, ...(quote ? { quote } : {}) };
+    }
     if (p.occasion) {
       const r = p.occasion[index] ?? p.occasion[0];
       st.flags.lastOccasionMonth = st.monthIndex;
-      return { who: "me", line: this.fill(this.L(r)), log: p.popup.ch[index]?.t };
+      const quote = this.reflect(st.story?.cards.length ?? 0, undefined, 0.35, "TOGETHER");
+      return { who: "me", line: this.fill(this.L(r)), log: p.popup.ch[index]?.t, ...(quote ? { quote } : {}) };
     }
     if (p.plan) {
       const o = p.plan[index];
@@ -1327,7 +1373,8 @@ export class Game {
       }
       // Today's life event keeps its own time and place (the court, 본가…); the weekend plan fills the rest.
       s.dayPlan = { locationId: o.locationId, activityId: o.activityId, withPartner: o.withPartner, sequence: (s.dayPlan.sequence ?? []).filter((q) => q.keep) };
-      return { who: "me", line: this.fill(this.L(o.reply ?? (o.kind === "home" ? bi("(이불 밖은 위험해.)", "(Outside the blanket is dangerous.)") : bi("(좋아, 가보자!)", "(Okay, let's go!)")))), log: this.L(o.label) };
+      const quote = this.reflect(st.story?.cards.length ?? 0, undefined, 0.12, "DAILY");
+      return { who: "me", line: this.fill(this.L(o.reply ?? (o.kind === "home" ? bi("(이불 밖은 위험해.)", "(Outside the blanket is dangerous.)") : bi("(좋아, 가보자!)", "(Okay, let's go!)")))), log: this.L(o.label), ...(quote ? { quote } : {}) };
     }
     return;
   }
@@ -1858,11 +1905,21 @@ export function createGame(input: GameSetup): Game {
   // a random move picked on the way).
   const homeAt = { ...st.location };
   const years = g.skipToMeeting();
+  // Left to fate (or not met yet): the story opens with you single, whoever came and went before.
+  const pid = st.relationship.partnerId;
+  if (years > 0 && pid && !st.world?.npcs[pid]?.fated && st.relationship.status !== "SINGLE") {
+    const ex = st.npcs.find((n) => n.id === pid);
+    if (ex) ex.role = "EX";
+    if (st.world?.relationships[pid]) st.world.relationships[pid].stage = "EX";
+    st.relationship = { status: "SINGLE" };
+    st.engaged = false;
+    delete st.flags.longterm;
+    for (const t of ["DATING", "ENGAGEMENT", "PREGNANCY", "DIVORCE", "AFFAIR", "LONG_DISTANCE"] as const) endArc(st, t);
+  }
+  // A move in those years is never silent: the first thing that day is where you live now, and why.
   if (st.location.city !== homeAt.city || st.location.country !== homeAt.country) {
-    st.location = homeAt;
-    if (st.world) st.world.country = homeAt.country;
-    if (st.career.abroad && homeAt.country === st.homeCountry) st.career.abroad = false;
-    st.relationship.longDistance = false;
+    if (st.world) st.world.country = st.location.country;
+    save.movedNote = { city: st.location.city, country: st.location.country, why: st.enrollment ? "school" : st.career.employed ? "work" : "fresh" };
   }
   const mode = st.story!.fateMode;
   if (mode === "lifelong") save.prologue = bi(`${years > 0 ? `${years}년 뒤, ` : ""}평생을 함께할 사람을 만난다.`, `${years > 0 ? `${years} year${years > 1 ? "s" : ""} later, ` : ""}you meet the one you'll spend your life with.`);

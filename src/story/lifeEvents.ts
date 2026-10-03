@@ -108,6 +108,31 @@ export interface LifeEventDef {
   line: Bi;
   choices: Array<{ t: Bi; w: Record<string, number> }>;
   outcomes: Record<string, LifeEventOutcome>;
+  /**
+   * Other ways the same moment can be lived (a different opening line, different choices and their own
+   * results): one is picked each time it happens (the base counts as one), favoring ones this device
+   * hasn't seen lately — so a friend's death never asks the same two things twice.
+   */
+  choiceSets?: Array<{ line?: Bi; choices: Array<{ t: Bi; w: Record<string, number> }>; outcomes?: Record<string, LifeEventOutcome> }>;
+}
+
+/** This occurrence's version of the event (see `choiceSets`), the same at the popup and when it resolves. */
+export function eventView(state: LifeState, def: LifeEventDef, uid: string): LifeEventDef {
+  const sets = def.choiceSets ?? [];
+  if (!sets.length) return def;
+  const memo = `cs_${uid}`;
+  let i = state.flags[memo] as number | undefined;
+  if (i === undefined) {
+    const pool = [-1, ...sets.map((_, k) => k)].map((k) => ({ k, w: freshness(`ev:${def.id}:${k}`) }));
+    let h = 2166136261;
+    for (const c of `${state.flags.lifeSalt ?? 0}:${uid}`) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0;
+    let r = ((h % 10000) / 10000) * pool.reduce((a, o) => a + o.w, 0);
+    i = (pool.find((o) => (r -= o.w) < 0) ?? pool[0]).k;
+    state.flags[memo] = i;
+    markSeen(`ev:${def.id}:${i}`);
+  }
+  const set = sets[i];
+  return set ? { ...def, line: set.line ?? def.line, choices: set.choices, outcomes: { ...def.outcomes, ...(set.outcomes ?? {}) } } : def;
 }
 
 export interface PendingEvent {

@@ -432,7 +432,152 @@
      }
     }
    },
-   "queuedBy": "engine"
+   "queuedBy": "engine",
+   "choiceSets": [
+    {
+     "line": {
+      "ko": "(새벽에 단톡방이 울렸다. {buddy}의 부고였다. 지난달에도 통화했는데.)",
+      "en": "(The group chat buzzed at dawn. It was news of {buddy}'s death. You'd talked just last month.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(옛 친구들을 모아 함께 조문을 간다)",
+        "en": "(Round up the old crew and go pay respects together)"
+       },
+       "w": {
+        "CREW": 1.0
+       }
+      },
+      {
+       "t": {
+        "ko": "({buddy}이(가) 마지막으로 보낸 사진을 다시 본다)",
+        "en": "(Look at the last photo {buddy} sent you)"
+       },
+       "w": {
+        "PHOTO": 1.0
+       }
+      }
+     ],
+     "outcomes": {
+      "CREW": {
+       "r": {
+        "ko": "십 년 만에 다 모인 자리가 {buddy}의 장례식이었다. 우리 이제 자주 보자. 이번엔 다들 진심이었다.",
+        "en": "The first time the whole crew had been together in ten years was {buddy}'s funeral. Let's see each other more. This time, everyone meant it."
+       },
+       "effects": [
+        {
+         "kind": "money",
+         "amount": -0.1
+        }
+       ],
+       "card": {
+        "caption": {
+         "ko": "친구 {buddy}의 장례식",
+         "en": "{buddy}'s funeral"
+        },
+        "location": "funeral_hall",
+        "actors": [
+         "me",
+         "guest"
+        ],
+        "priority": 8
+       }
+      },
+      "PHOTO": {
+       "r": {
+        "ko": "별것 아닌 점심 사진이었다. 맛있어 보이지? 그 평범함이 이렇게 아플 줄 몰랐다.",
+        "en": "Just a photo of an ordinary lunch. Looks good, right? You never knew something so ordinary could hurt this much."
+       },
+       "effects": [],
+       "card": {
+        "caption": {
+         "ko": "친구 {buddy}을(를) 보내며",
+         "en": "Saying goodbye to {buddy}"
+        },
+        "location": "funeral_hall",
+        "actors": [
+         "me",
+         "guest"
+        ],
+        "priority": 8
+       }
+      }
+     }
+    },
+    {
+     "choices": [
+      {
+       "t": {
+        "ko": "({buddy}의 가족에게 우리가 함께한 이야기를 들려준다)",
+        "en": "(Tell {buddy}'s family stories from your years together)"
+       },
+       "w": {
+        "FAMILY": 1.0
+       }
+      },
+      {
+       "t": {
+        "ko": "(같이 가자던 여행지를 혼자 다녀온다)",
+        "en": "(Take the trip you two always talked about, alone)"
+       },
+       "w": {
+        "TRIP": 1.0
+       }
+      }
+     ],
+     "outcomes": {
+      "FAMILY": {
+       "r": {
+        "ko": "{buddy}의 어머니가 내 손을 꼭 잡으셨다. 우리 애가 그렇게 웃고 다녔구나. 둘 다 한참 울었다.",
+        "en": "{buddy}'s mother held your hand tight. So that's how my kid laughed out there. You both cried for a long time."
+       },
+       "effects": [
+        {
+         "kind": "money",
+         "amount": -0.1
+        }
+       ],
+       "card": {
+        "caption": {
+         "ko": "친구 {buddy}의 장례식",
+         "en": "{buddy}'s funeral"
+        },
+        "location": "funeral_hall",
+        "actors": [
+         "me",
+         "guest"
+        ],
+        "priority": 8
+       }
+      },
+      "TRIP": {
+       "r": {
+        "ko": "{buddy}이(가) 가고 싶다던 바다 앞에 혼자 섰다. 봐, 왔어. 파도가 대답처럼 밀려왔다.",
+        "en": "You stood alone at the beach {buddy} always wanted to see. Look, I made it. A wave rolled in like an answer."
+       },
+       "effects": [
+        {
+         "kind": "money",
+         "amount": -0.3
+        }
+       ],
+       "card": {
+        "caption": {
+         "ko": "{buddy}와(과) 가기로 했던 바다",
+         "en": "The beach {buddy} wanted to see"
+        },
+        "location": "funeral_hall",
+        "actors": [
+         "me",
+         "guest"
+        ],
+        "priority": 8
+       }
+      }
+     }
+    }
+   ]
   }
  ]
 }
