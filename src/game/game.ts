@@ -1226,7 +1226,7 @@ export class Game {
     if (f.hasFriend) {
       // With a partner by your side it's a double date, not "meet 다은".
       const together = f.partnered && !f.apart;
-      pool.push({ item: { id: "friend", kind: "friend", locationId: "cafe", activityId: "meet_friend", ...(together ? { withPartner: true } : {}), label: together ? bi(`${f.friendName}네 커플과 더블 데이트`, `Double date with ${f.friendName} and their partner`) : bi(`${f.friendName} 만나기`, `Meet ${f.friendName}`) }, weight: 1.5 + st.traits.sociability });
+      pool.push({ item: { id: "friend", kind: "friend", locationId: "cafe", activityId: "meet_friend", ...(together ? { withPartner: true } : {}), label: together ? bi(`${f.friendName}네 커플과 더블 데이트`, `Double date with ${f.friendName} and their partner`) : bi(`${f.friendName} 만나기`, `Meet ${f.friendName}`) }, weight: together ? 0.18 : 1.5 + st.traits.sociability }); // a double date is a rare treat
     }
     if (f.partnered && f.apart) {
       // Long distance: no dinner dates — a video-call date, or something sent across the distance.
