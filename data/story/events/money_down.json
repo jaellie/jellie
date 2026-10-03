@@ -32,7 +32,7 @@
    "who": "app",
    "line": {
     "ko": "[증권 앱] 보유 종목 거래정지 — 상장폐지 사유가 발생했습니다.",
-    "en": "[Brokerage app] Trading halted on your holding — grounds for delisting."
+    "en": "[Brokerage app] Trading halted on one of your stocks. It may be delisted."
    },
    "choices": [
     {
@@ -238,7 +238,7 @@
    "who": "stranger",
    "line": {
     "ko": "(동창이 휴대폰 화면을 보여줬다.) 이거 봐, 어제 하룻밤에 삼백 땄어. 너도 딱 한 번만 해봐.",
-    "en": "(An old classmate shows you their phone.) Look — I made three million won in one night. Try it, just once."
+    "en": "(An old classmate shows you their phone.) Look. I made three million won in one night. Try it, just once."
    },
    "choices": [
     {
@@ -456,7 +456,7 @@
     "BAILOUT": {
      "r": {
       "ko": "부모님이 적금을 깨셨다. 아무 말씀도 안 하셨다. 그게 더 아팠다.",
-      "en": "Your parents broke their savings. They didn't say a word. That hurt the most."
+      "en": "Your parents emptied their savings. They didn't say a word. That hurt the most."
      },
      "effects": [
       {
@@ -639,7 +639,7 @@
     "RECOVER": {
      "r": {
       "ko": "{partner}은(는) 한참 울다가 말했다. '같이 가. 병원도, 모임도.'",
-      "en": "{partner} cried a long time, then said, 'We go together. The clinic, the meetings — all of it.'"
+      "en": "{partner} cried a long time, then said, 'We do this together. The clinic, the meetings, all of it.'"
      },
      "effects": [
       {
@@ -815,7 +815,7 @@
     "RESET": {
      "r": {
       "ko": "빚은 사라졌고, 신용도 사라졌다. 남은 건 나 하나. 거기서부터 다시.",
-      "en": "The debt was gone — and your credit with it. Just you, left. Start from there."
+      "en": "The debt was gone. So was your credit. Just you, left. Start from there."
      },
      "effects": [
       {
@@ -1189,7 +1189,7 @@
    "who": "me",
    "line": {
     "ko": "({f:lease} 만기 한 달 전. 집주인 연락이 끊겼다. 등기부를 떼어보니 — 이 집은 이미 경매에 넘어가 있었다.)",
-    "en": "(A month before your {f:lease} ends, the landlord goes silent. You pull the registry — the place is already up for auction.)"
+    "en": "(A month before your {f:lease} ends, the landlord goes silent. You pull the records. The place is already up for auction.)"
    },
    "choices": [
     {
@@ -1530,7 +1530,7 @@
     {
      "t": {
       "ko": "너를 믿고 넣는다",
-      "en": "Put money in — I trust you"
+      "en": "I'm in. I trust you"
      },
      "w": {
       "SCAM": 0.7,
@@ -1551,7 +1551,7 @@
     "SCAM": {
      "r": {
       "ko": "석 달 뒤, {friend}의 번호는 없는 번호가 됐다. 나 말고도 열두 명이었다.",
-      "en": "Three months later, {friend}'s number was disconnected. You weren't the only one — there were twelve."
+      "en": "Three months later, {friend}'s number was disconnected. You weren't the only one. There were twelve of you."
      },
      "effects": [
       {
@@ -1624,7 +1624,7 @@
    "who": "unknown",
    "line": {
     "ko": "[서울중앙지검] 고객님 명의 계좌가 금융범죄에 연루되어 확인이 필요합니다. 안전계좌로 이체하시면…",
-    "en": "[Seoul Prosecutors] An account in your name is linked to financial crimes. Please transfer your funds to a secure account so we can…"
+    "en": "[Prosecutor's Office] An account in your name is linked to financial crimes. Please transfer your funds to a secure account so we can…"
    },
    "choices": [
     {
@@ -1700,7 +1700,7 @@
    "who": "unknown",
    "line": {
     "ko": "(문자) 나야. 폰 액정 깨져서 이 번호로 보내. 급하게 결제할 게 있는데 카드 사진이랑 인증번호 좀…",
-    "en": "(Text) It's me. My screen broke, so I'm using this number. I need to pay for something urgently — can you send your card photo and the code…"
+    "en": "(Text) It's me. My screen broke, so I'm using this number. I need to pay for something urgently. Can you send a photo of your card and the code…"
    },
    "choices": [
     {
@@ -1715,7 +1715,7 @@
     {
      "t": {
       "ko": "(급하다니 보내준다)",
-      "en": "(It sounds urgent — send it)"
+      "en": "(It sounds urgent. Send it)"
      },
      "w": {
       "SCAMMED": 1.0
@@ -2043,7 +2043,7 @@
     "FINE": {
      "r": {
       "ko": "빠뜨린 게 있었다. 가산세까지 붙었다.",
-      "en": "You'd missed something. Penalties on top."
+      "en": "You'd missed something. Penalties on top of it."
      },
      "effects": [
       {
@@ -2115,7 +2115,7 @@
     "RUIN": {
      "r": {
       "ko": "한 방은 오지 않았다. 남은 건 빚과, 떠나간 사람들.",
-      "en": "The big win never came. Only debt was left, and the people who'd drifted away."
+      "en": "The big win never came. All that was left was debt, and the people who'd drifted away."
      },
      "effects": [
       {
@@ -2232,7 +2232,7 @@
     "GIVE": {
      "r": {
       "ko": "이번 달만 벌써 세 번째 송금이다. 내 적금은 또 깨졌다.",
-      "en": "The third transfer this month. Your savings broke again."
+      "en": "The third transfer this month. Your savings took another hit."
      },
      "effects": [
       {
@@ -2249,7 +2249,7 @@
     "BOUNDARY": {
      "r": {
       "ko": "처음으로 선을 그었다. 서운한 소리를 들었지만, 다음 달엔 연락이 줄었다.",
-      "en": "For the first time, you drew a line. You got an earful — but the calls dropped off the next month."
+      "en": "For the first time, you drew a line. You got an earful, but the calls dropped off the next month."
      },
      "effects": [
       {
@@ -2314,7 +2314,7 @@
    "who": "stranger",
    "line": {
     "ko": "(주차장에서 후진하다 쿵. 하필 외제차였다. 차주가 내렸다.) …보험 처리하실 거죠?",
-    "en": "(Backing out of a parking spot — thud. Of course it was an imported car. The owner got out.) …You'll go through insurance, right?"
+    "en": "(Backing out of a parking spot. Thud. Of course it was an imported car. The owner got out.) …You'll go through insurance, right?"
    },
    "choices": [
     {
@@ -2411,7 +2411,7 @@
    "who": "neighbor",
    "line": {
     "ko": "(새벽 세 시, 초인종) 죄송해요! 저희 집 배관이 터져서 아래층으로 물이… 지금 천장에서 물 새죠?!",
-    "en": "(3 a.m., the doorbell) I'm so sorry! Our pipe burst and the water's going downstairs — is it leaking through your ceiling?!"
+    "en": "(3 a.m., the doorbell) I'm so sorry! Our pipe burst and the water's going downstairs. Is it leaking through your ceiling?!"
    },
    "choices": [
     {
@@ -2618,7 +2618,7 @@
     "FROZEN": {
      "r": {
       "ko": "30분 만에 막았다. 명의 도용 방지 서비스에 전부 가입했다.",
-      "en": "You stopped it within thirty minutes. Then signed up for every identity-protection service there is."
+      "en": "You stopped it within thirty minutes. Then you signed up for every identity-protection service there is."
      }
     },
     "PARTIAL": {
@@ -2684,7 +2684,7 @@
     "STOP": {
      "r": {
       "ko": "{partner}은(는) 밤새 같이 계정을 지우고, 은행에 도박 사이트 차단을 신청해줬다. 무서웠지만, 혼자가 아니었다.",
-      "en": "{partner} spent the night deleting accounts with you and had the bank block gambling sites. It was scary — but you weren't alone."
+      "en": "{partner} spent the night deleting accounts with you and had the bank block gambling sites. It was scary, but you weren't alone."
      },
      "effects": [
       {
@@ -2863,7 +2863,7 @@
    "who": "me",
    "line": {
     "ko": "(통장 잔고 앞에서 한참을 앉아 있었다. 오늘, 스스로 멈추기로 했다.)",
-    "en": "(You sat in front of your bank balance for a long time. Today you decided to stop — on your own.)"
+    "en": "(You sat in front of your bank balance for a long time. Today you decided to stop, on your own.)"
    },
    "choices": [
     {
@@ -2984,7 +2984,7 @@
     {
      "t": {
       "ko": "(집에 전화하려다 그만둔다)",
-      "en": "(Almost call home — then don't)"
+      "en": "(Almost call home, then don't)"
      },
      "w": {
       "ALONE": 1.0
@@ -2995,7 +2995,7 @@
     "SIGN": {
      "r": {
       "ko": "😢 [학자금 대출] 때문에 빚이 생겼다… 졸업하면 갚을 수 있겠지.",
-      "en": "😢 Thanks to my [student loan], I'm in debt now… I'll pay it off after graduation. Probably."
+      "en": "😢 My [student loan] put me in debt… I'll pay it off after graduation. Probably."
      },
      "effects": [
       {
@@ -3007,7 +3007,7 @@
     "SHIFT": {
      "r": {
       "ko": "😢 [학자금 대출] 때문에 빚이 생겼다… 주말 {f:store} 야간 알바도 시작했다. 조금이라도 빨리 갚으려고.",
-      "en": "😢 Thanks to my [student loan], I'm in debt now… Took the weekend night shift at the {f:store} too, to pay it off faster."
+      "en": "😢 My [student loan] put me in debt… You took the weekend night shift at the {f:store} too, to pay it off faster."
      },
      "effects": [
       {
@@ -3019,7 +3019,7 @@
     "ALONE": {
      "r": {
       "ko": "😢 [학자금 대출] 때문에 빚이 생겼다… 집에는 말하지 않기로 했다. 괜히 걱정하실 테니까.",
-      "en": "😢 Thanks to my [student loan], I'm in debt now… You decided not to tell anyone at home. They'd only worry."
+      "en": "😢 My [student loan] put me in debt… You decided not to tell anyone at home. They'd only worry."
      },
      "effects": [
       {
@@ -3086,7 +3086,7 @@
     "OPEN": {
      "r": {
       "ko": "😢 [마이너스 통장] 때문에 빚이 생겼다… 일만 구하면 금방 메울 거야.",
-      "en": "😢 Thanks to the [overdraft], I'm in debt now… Once I find work, I'll fill it right back up."
+      "en": "😢 The [overdraft] put me in debt… Once I find work, I'll pay it right back."
      },
      "effects": [
       {
@@ -3098,7 +3098,7 @@
     "RAMEN": {
      "r": {
       "ko": "😢 [마이너스 통장] 때문에 빚이 생겼다… {f:ramen} 종류별로 다 먹어 봤다. 순위도 매겼다.",
-      "en": "😢 Thanks to the [overdraft], I'm in debt now… You've tried every {f:ramen} brand. You've ranked them."
+      "en": "😢 The [overdraft] put me in debt… You've tried every {f:ramen} brand. You've ranked them."
      },
      "effects": [
       {
@@ -3110,7 +3110,7 @@
     "GIG": {
      "r": {
       "ko": "😢 [마이너스 통장] 때문에 빚이 생겼다… 그래도 다음 주부터 물류센터 단기 알바. 시작이 반이다.",
-      "en": "😢 Thanks to the [overdraft], I'm in debt now… But a warehouse gig starts next week. Starting is half the battle."
+      "en": "😢 The [overdraft] put me in debt… But a warehouse gig starts next week. Getting started is half the battle."
      },
      "effects": [
       {

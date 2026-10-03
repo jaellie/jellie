@@ -766,7 +766,7 @@
       {
        "t": {
         "ko": "둘 다 좋아. 네가 골라",
-        "en": "Both are great — you pick"
+        "en": "Both are great. You pick"
        },
        "weights": {
         "ENGAGED": 0.8,
@@ -812,7 +812,7 @@
       "NOT_YET": {
        "r": {
         "ko": "결혼 준비로 처음 크게 다퉜다. 그래도 식은 예정대로 하기로 했다.",
-        "en": "Your first big fight — over the wedding. The date stays, though."
+        "en": "Your first big fight was about the wedding. The date stays, though."
        },
        "effects": []
       },
@@ -977,7 +977,7 @@
       "BREAKUP": {
        "r": {
         "ko": "…대화가 자꾸 어긋났다.",
-        "en": "…The conversation kept missing."
+        "en": "…You kept talking past each other."
        },
        "effects": [
         {
@@ -1572,7 +1572,7 @@
      "who": "me",
      "line": {
       "ko": "(역마가 또 들썩인다. 여기서 산 지도 꽤 됐다. 문득 {homeland} 생각이 난다.)",
-      "en": "(The travelling star stirs again. You've lived here a while now. {homeland} crosses your mind.)"
+      "en": "(The wanderer's star stirs again. You've lived here a while now. {homeland} crosses your mind.)"
      },
      "choices": [
       {
@@ -1613,7 +1613,7 @@
       "ABROAD": {
        "r": {
         "ko": "몇 년 만의 인천공항. 공기 냄새부터 달랐다. 돌아왔다.",
-        "en": "Incheon Airport after all these years. Even the air smelled different. You were home."
+        "en": "Back at the airport in {homeland} after all these years. Even the air smelled different. You were home."
        },
        "effects": [
         {
@@ -2034,7 +2034,7 @@
      "who": "friend",
      "line": {
       "ko": "이번에 큰 기회가 있는데, 같이 해볼래?",
-      "en": "There's a big opportunity—want in?"
+      "en": "There's a big opportunity. Want in?"
      },
      "choices": [
       {

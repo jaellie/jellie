@@ -40,7 +40,7 @@
     "HEAL": {
      "r": {
       "ko": "{who}이(가) 어색하게 웃었다. 그날 우리는 오래 이야기했다. 서툴러도, 진심이었다.",
-      "en": "{who} gave an awkward smile. You talked for a long time that day. Clumsy — but sincere."
+      "en": "{who} gave an awkward smile. You talked for a long time that day. Clumsy, but sincere."
      },
      "card": {
       "caption": {
@@ -58,7 +58,7 @@
     "SLOW": {
      "r": {
       "ko": "그래도 문은 열어두기로 했다. 다음 {f:holiday}엔 {who}이(가) 먼저 안부를 물었다.",
-      "en": "You left the door open. At the next {f:holiday}, {who} asked how you were — first."
+      "en": "You left the door open. At the next {f:holiday}, {who} was the first to ask how you were."
      }
     }
    }
@@ -89,7 +89,7 @@
    "who": "relative",
    "line": {
     "ko": "(유산을 정리하려고 가족들이 모였다. 이야기가 나오자마자 목소리가 높아졌다.) 장남이 더 받아야지! / 모시고 산 사람이 더 받아야지!",
-    "en": "(The family gathered to settle the estate. The moment it came up, voices rose.) 'The eldest should get more!' 'No — whoever took care of them should!'"
+    "en": "(The family gathered to settle the estate. The moment it came up, voices rose.) 'The eldest should get more!' 'No, whoever took care of them should!'"
    },
    "choices": [
     {
@@ -367,7 +367,7 @@
    "who": "me",
    "line": {
     "ko": "(몇 년 만에 초인종이 울렸다. 문 앞에 {sibling}이(가) 서 있었다. 많이 야위었다.)",
-    "en": "(After years, the doorbell rang. {sibling} stood at the door — much thinner.)"
+    "en": "(Years later, the doorbell rang. {sibling} stood at the door, much thinner.)"
    },
    "choices": [
     {
@@ -395,7 +395,7 @@
     "PAYS": {
      "r": {
       "ko": "{sibling}이(가) 봉투를 내밀었다. 빌려간 돈에, 이자까지.",
-      "en": "{sibling} held out an envelope. What they'd borrowed — with interest."
+      "en": "{sibling} held out an envelope: what they'd borrowed, with interest."
      },
      "effects": [
       {
@@ -509,7 +509,7 @@
     "APOLOGY": {
      "r": {
       "ko": "엄마는 한참 말이 없었다. 그리고 처음으로 '미안하다'고 했다. 늦었지만, 들었다.",
-      "en": "Mom said nothing for a long time. Then, for the first time: 'I'm sorry.' Late — but you heard it."
+      "en": "Mom said nothing for a long time. Then, for the first time: 'I'm sorry.' Late, but you heard it."
      },
      "effects": [
       {
@@ -628,7 +628,7 @@
     "CUT": {
      "r": {
       "ko": "몇 번의 {f:holiday}이(가) 조용히 지나갔다. 마음 한쪽이 편하면서도, 계속 아팠다.",
-      "en": "Several {f:holiday} passed quietly. Part of you felt at peace — and part of you kept aching."
+      "en": "Holidays came and went quietly. Part of you felt at peace. Part of you kept aching."
      },
      "effects": [
       {
@@ -696,7 +696,7 @@
    "who": "me",
    "line": {
     "ko": "(몇 년 만에 엄마의 번호가 화면에 떴다. 지웠는데도, 그 숫자는 외우고 있었다.)",
-    "en": "(For the first time in years, Mom's number lit up the screen. You'd deleted it — but you still knew it by heart.)"
+    "en": "(For the first time in years, Mom's number lit up the screen. You'd deleted it, but you still knew it by heart.)"
    },
    "choices": [
     {
@@ -723,7 +723,7 @@
     "MEND": {
      "r": {
       "ko": "'…잘 지냈니.' 그 한마디에 몇 년이 녹아내렸다. 다음 주에 엄마 집에 가기로 했다.",
-      "en": "'…Have you been well?' Years melted in those words. You'll visit Mom next week."
+      "en": "'…Have you been well?' Those words melted the years away. You'll visit Mom next week."
      },
      "effects": [
       {
@@ -838,7 +838,7 @@
     "CUT": {
      "r": {
       "ko": "몇 번의 {f:holiday}이(가) 조용히 지나갔다. 마음 한쪽이 편하면서도, 계속 아팠다.",
-      "en": "Several {f:holiday} passed quietly. Part of you felt at peace — and part of you kept aching."
+      "en": "Holidays came and went quietly. Part of you felt at peace. Part of you kept aching."
      },
      "effects": [
       {
@@ -906,7 +906,7 @@
    "who": "me",
    "line": {
     "ko": "(몇 년 만에 아빠의 번호가 화면에 떴다. 지웠는데도, 그 숫자는 외우고 있었다.)",
-    "en": "(For the first time in years, Dad's number lit up the screen. You'd deleted it — but you still knew it by heart.)"
+    "en": "(For the first time in years, Dad's number lit up the screen. You'd deleted it, but you still knew it by heart.)"
    },
    "choices": [
     {
@@ -933,7 +933,7 @@
     "MEND": {
      "r": {
       "ko": "'…잘 지냈니.' 그 한마디에 몇 년이 녹아내렸다. 다음 주에 아빠 집에 가기로 했다.",
-      "en": "'…Have you been well?' Years melted in those words. You'll visit Dad next week."
+      "en": "'…Have you been well?' Those words melted the years away. You'll visit Dad next week."
      },
      "effects": [
       {
@@ -1051,7 +1051,7 @@
     "CARE": {
      "r": {
       "ko": "엄마의 약 봉지를 시간별로 나누는 게 하루의 시작이 됐다. 힘들지만, 엄마의 손은 따뜻했다.",
-      "en": "Sorting Mom's pills by the hour became how each day began. It was hard — but their hands were warm."
+      "en": "Sorting Mom's pills by the hour became how each day began. It was hard, but her hands were warm."
      },
      "effects": [
       {
@@ -1084,7 +1084,7 @@
     "SHARE": {
      "r": {
       "ko": "단톡방에 간병 당번표가 올라왔다. 다툼도 있었지만, 다들 자기 칸을 채웠다.",
-      "en": "A caregiving rota went up in the family chat. There were fights — but everyone filled their slots."
+      "en": "A caregiving schedule went up in the family chat. There were fights, but everyone showed up for their shifts."
      },
      "effects": [
       {
@@ -1100,7 +1100,7 @@
     "FACILITY": {
      "r": {
       "ko": "주말마다 면회를 간다. 돌아오는 길이 늘 길다. 엄마은(는) 괜찮다고 웃는다.",
-      "en": "You visit every weekend. The drive home always feels long. Mom smiles and says they're fine."
+      "en": "You visit every weekend. The drive home always feels long. Mom smiles and says she's fine."
      },
      "effects": [
       {
@@ -1303,7 +1303,7 @@
     "CARE": {
      "r": {
       "ko": "아빠의 약 봉지를 시간별로 나누는 게 하루의 시작이 됐다. 힘들지만, 아빠의 손은 따뜻했다.",
-      "en": "Sorting Dad's pills by the hour became how each day began. It was hard — but their hands were warm."
+      "en": "Sorting Dad's pills by the hour became how each day began. It was hard, but his hands were warm."
      },
      "effects": [
       {
@@ -1336,7 +1336,7 @@
     "SHARE": {
      "r": {
       "ko": "단톡방에 간병 당번표가 올라왔다. 다툼도 있었지만, 다들 자기 칸을 채웠다.",
-      "en": "A caregiving rota went up in the family chat. There were fights — but everyone filled their slots."
+      "en": "A caregiving schedule went up in the family chat. There were fights, but everyone showed up for their shifts."
      },
      "effects": [
       {
@@ -1352,7 +1352,7 @@
     "FACILITY": {
      "r": {
       "ko": "주말마다 면회를 간다. 돌아오는 길이 늘 길다. 아빠은(는) 괜찮다고 웃는다.",
-      "en": "You visit every weekend. The drive home always feels long. Dad smiles and says they're fine."
+      "en": "You visit every weekend. The drive home always feels long. Dad smiles and says he's fine."
      },
      "effects": [
       {
@@ -1866,7 +1866,7 @@
     "BLOWUP": {
      "r": {
       "ko": "상이 뒤집어질 뻔했다. 올해 {f:holiday}은(는) 음식 준비하다 말고 끝났다.",
-      "en": "The table nearly flipped. This year's {f:holiday} ended halfway through frying the pancakes."
+      "en": "The table nearly flipped. This year's {f:holiday} ended before dinner was even ready."
      },
      "effects": [
       {
@@ -1932,7 +1932,7 @@
    "who": "dad",
    "line": {
     "ko": "소개할 사람이 있어. 놀라지 말고. (옆에 선 사람은 — 나와 동갑이었다.)",
-    "en": "There's someone I want you to meet. Don't be shocked. (The person beside them was — exactly your age.)"
+    "en": "There's someone I want you to meet. Don't be shocked. (The person beside them was exactly your age.)"
    },
    "choices": [
     {
@@ -1968,7 +1968,7 @@
     "ACCEPT": {
      "r": {
       "ko": "어색했지만, 아빠이(가) 그렇게 웃는 걸 오랜만에 봤다.",
-      "en": "Awkward — but you hadn't seen Dad smile like that in years."
+      "en": "Awkward, but you hadn't seen Dad smile like that in years."
      },
      "card": {
       "caption": {
@@ -2041,7 +2041,7 @@
    "who": "mom",
    "line": {
     "ko": "소개할 사람이 있어. 놀라지 말고. (옆에 선 사람은 — 나와 동갑이었다.)",
-    "en": "There's someone I want you to meet. Don't be shocked. (The person beside them was — exactly your age.)"
+    "en": "There's someone I want you to meet. Don't be shocked. (The person beside them was exactly your age.)"
    },
    "choices": [
     {
@@ -2077,7 +2077,7 @@
     "ACCEPT": {
      "r": {
       "ko": "어색했지만, 엄마이(가) 그렇게 웃는 걸 오랜만에 봤다.",
-      "en": "Awkward — but you hadn't seen Mom smile like that in years."
+      "en": "Awkward, but you hadn't seen Mom smile like that in years."
      },
      "card": {
       "caption": {
@@ -2273,7 +2273,7 @@
    "who": "relative",
    "line": {
     "ko": "[가족 단톡방] 누구네 딸은 벌써 집 샀다더라~ 우리 집 애들은 언제쯤? 😊",
-    "en": "[Family group chat] So-and-so's daughter already bought a house~ When will OUR kids? 😊"
+    "en": "[Family group chat] So-and-so's daughter already bought a house! When will OUR kids? 😊"
    },
    "choices": [
     {

@@ -32,7 +32,7 @@
    "who": "app",
    "line": {
     "ko": "[증권 앱] 보유 종목 +312% — 몇 년 전 사두고 잊고 있던 그 종목이었다.",
-    "en": "[Brokerage app] Holding up +312% — a stock you bought years ago and completely forgot about."
+    "en": "[Brokerage app] A stock you bought years ago and completely forgot about is up 312%."
    },
    "choices": [
     {
@@ -121,7 +121,7 @@
     "DROP": {
      "r": {
       "ko": "다음 달, 절반으로 꺾였다. 그래도 본전보다는 많다.",
-      "en": "Next month it fell by half. Still more than you started with."
+      "en": "The next month it fell by half. Still more than you started with."
      },
      "effects": [
       {
@@ -490,7 +490,7 @@
     "SPREE": {
      "r": {
       "ko": "일등석, 스위트룸, 명품관. 통장의 숫자가 빠르게 줄어드는 게 보였다.",
-      "en": "First class, suites, flagship stores. You could watch the balance fall."
+      "en": "First class, suites, flagship stores. You could watch the balance shrink."
      },
      "effects": [
       {
@@ -584,7 +584,7 @@
    "who": "me",
    "line": {
     "ko": "({f:store}에서 거스름돈 대신 산 즉석복권. 동전으로 긁는데 — 같은 그림이 세 개.)",
-    "en": "(A scratch ticket you bought with your change at the {f:store}. You scratch it with a coin — three matching pictures.)"
+    "en": "(A scratch ticket you bought with your change at the {f:store}. You scratch it with a coin. Three matching pictures.)"
    },
    "choices": [
     {
@@ -734,7 +734,7 @@
     "CHECK": {
      "r": {
       "ko": "대사관에 확인해보니 진짜였다. 세상에.",
-      "en": "You checked with the embassy. It was real. Good heavens."
+      "en": "You checked with the embassy. It was real. Wow."
      },
      "effects": [
       {
@@ -779,13 +779,13 @@
    "who": "app",
    "line": {
     "ko": "[{f:housingapp}] 축하합니다. 신청하신 단지에 당첨되셨습니다. 계약 기간: 이번 주.",
-    "en": "[{f:housingapp}] Congratulations — you've won the apartment lottery. Contract deadline: this week."
+    "en": "[{f:housingapp}] Congratulations! You've won the apartment lottery. Contract deadline: this week."
    },
    "choices": [
     {
      "t": {
       "ko": "계약한다 (대출 영끌)",
-      "en": "Sign — borrow every last won"
+      "en": "Sign, and borrow every last cent"
      },
      "w": {
       "OWN": 1.0
@@ -805,7 +805,7 @@
     "OWN": {
      "r": {
       "ko": "계약서에 도장을 찍었다. 이제 내 집이 생긴다 — 30년 대출과 함께.",
-      "en": "You stamped the contract. A home of your own — along with a thirty-year loan."
+      "en": "You signed the contract. A home of your own, along with a thirty-year loan."
      },
      "effects": [
       {
@@ -906,7 +906,7 @@
     "STAY": {
      "r": {
       "ko": "숫자만 올랐을 뿐, 생활은 그대로다. 그래도 마음은 든든하다.",
-      "en": "Only the number went up — life is the same. Still, it feels solid."
+      "en": "Only the number went up. Life is the same. Still, it feels solid."
      },
      "effects": [
       {
@@ -1008,7 +1008,7 @@
     "FLOP": {
      "r": {
       "ko": "유행은 석 달 만에 식었다. 창고에 재고만 남았다.",
-      "en": "The trend cooled in three months. Only the unsold stock remained."
+      "en": "The trend cooled in three months. All that was left was unsold stock."
      },
      "effects": [
       {
@@ -1175,7 +1175,7 @@
    "who": "me",
    "line": {
     "ko": "(길에서 두툼한 지갑을 주웠다. 현금이 가득하고, 명함에는 '회장'이라고 적혀 있다.)",
-    "en": "(You found a thick wallet on the street. Stuffed with cash — and the business card says 'Chairman'.)"
+    "en": "(You found a thick wallet on the street. Stuffed with cash, and the business card says 'Chairman'.)"
    },
    "choices": [
     {
@@ -1276,7 +1276,7 @@
     {
      "t": {
       "ko": "전부 저축한다",
-      "en": "Save every won"
+      "en": "Save every penny"
      },
      "w": {
       "SAVE": 1.0
@@ -1503,7 +1503,7 @@
     {
      "t": {
       "ko": "믿고 투자한다",
-      "en": "Invest — I believe in you"
+      "en": "Invest. I believe in you"
      },
      "w": {
       "IN": 1.0
@@ -1570,7 +1570,7 @@
    "who": "friend",
    "line": {
     "ko": "(투자한 지 몇 해. {friend}이(가) 할 얘기가 있다며 불렀다.)",
-    "en": "(Years after you invested, {friend} asked to meet — there was something to tell you.)"
+    "en": "(Years after you invested, {friend} asked to meet. There was something to tell you.)"
    },
    "choices": [
     {
@@ -1732,7 +1732,7 @@
    "who": "me",
    "line": {
     "ko": "(본가 창고에서 어릴 적 모은 카드 앨범이 나왔다. 검색해보니 — 이 한 장이 경매에서…)",
-    "en": "(Your childhood trading-card album turned up in the storage room back home. You looked it up — this one card sells at auction for…)"
+    "en": "(Your childhood trading-card album turned up in the storage room back home. You looked it up. This one card sells at auction for…)"
    },
    "choices": [
     {
@@ -1747,7 +1747,7 @@
     {
      "t": {
       "ko": "추억이니까 간직한다",
-      "en": "Keep it — it's a memory"
+      "en": "Keep it. It's a memory"
      },
      "w": {
       "KEEP": 1.0
@@ -1845,7 +1845,7 @@
     "CASH": {
      "r": {
       "ko": "정든 골목과 작별했다. 통장이 무거워진 만큼 마음은 조금 허전했다.",
-      "en": "You said goodbye to the old alleys. The heavier the account, the emptier your heart felt."
+      "en": "You said goodbye to the old alleys. The fuller the account, the emptier your heart felt."
      },
      "effects": [
       {

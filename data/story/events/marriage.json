@@ -57,7 +57,7 @@
     "POSTPONE": {
      "r": {
       "ko": "겁이 났다고 했다. 식은 미루되, 우리는 미루지 않기로 했다.",
-      "en": "They said they got scared. You'd postpone the ceremony — but not each other."
+      "en": "They said they got scared. You'd postpone the ceremony, but not each other."
      },
      "effects": [
       {
@@ -231,7 +231,7 @@
     "WEDDING": {
      "r": {
       "ko": "반지도, 계획도 없었지만 우리는 웃었다. 순서는 조금 바뀌었어도.",
-      "en": "No ring, no plan — but you both laughed. The order was a little mixed up, that's all."
+      "en": "No ring, no plan, but you both laughed. The order was a little mixed up, that's all."
      },
      "effects": [
       {
@@ -386,7 +386,7 @@
     "RESPECT": {
      "r": {
       "ko": "시어머니이(가) 잠시 멈칫하더니, 나중에 전 한 접시를 따로 싸 주셨다.",
-      "en": "Your mother-in-law paused — and later wrapped up a plate of pancakes just for you."
+      "en": "Your mother-in-law paused. Later, she packed up a container of food just for you."
      }
     }
    }
@@ -508,7 +508,7 @@
     "RESPECT": {
      "r": {
       "ko": "장모님이(가) 잠시 멈칫하더니, 나중에 전 한 접시를 따로 싸 주셨다.",
-      "en": "Your mother-in-law paused — and later wrapped up a plate of pancakes just for you."
+      "en": "Your mother-in-law paused. Later, she packed up a container of food just for you."
      }
     }
    }
@@ -800,7 +800,7 @@
     "SLOW": {
      "r": {
       "ko": "주말마다 조금씩 만났다. 아이들은 아직 나를 '삼촌/이모'라고 부른다.",
-      "en": "You met a little every weekend. The kids still call you by a polite title for now."
+      "en": "You met a little every weekend. For now, the kids still keep a polite distance."
      },
      "effects": [
       {
@@ -1728,7 +1728,7 @@
     "TRAINEE": {
      "r": {
       "ko": "{kid}은(는) 새벽까지 연습실에 산다. 발목엔 늘 파스가 붙어 있다.",
-      "en": "{kid} lives in the practice room until dawn. Always a pain patch on their ankle."
+      "en": "{kid} lives in the practice room until dawn. There's always a pain patch on their ankle."
      },
      "chain": [
       {
@@ -1970,7 +1970,7 @@
     "STRAIN": {
      "r": {
       "ko": "…누구의 집도 아닌 집이 됐다. 방문을 닫는 시간이 길어졌다.",
-      "en": "…It became nobody's home. The doors stayed closed longer."
+      "en": "…It stopped feeling like anyone's home. Bedroom doors stayed shut longer."
      },
      "effects": [
       {
@@ -2057,7 +2057,7 @@
     "BLOWUP": {
      "r": {
       "ko": "숟가락 소리만 남은 식탁. 그날 밤 짐을 싸서 나왔다.",
-      "en": "Only the clink of spoons was left. That night you packed and moved out."
+      "en": "Only the clink of spoons filled the silence. That night you packed and moved out."
      },
      "effects": [
       {

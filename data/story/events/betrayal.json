@@ -293,7 +293,7 @@
     "CAUGHT": {
      "r": {
       "ko": "…양다리였다. 두 사람 모두에게 똑같은 말을 하고 있었다.",
-      "en": "…They were two-timing. Saying the same sweet things to both of you."
+      "en": "…They were seeing someone else, saying the same sweet things to both of you."
      },
      "effects": [
       {
@@ -315,7 +315,7 @@
     "EXCUSE": {
      "r": {
       "ko": "말도 안 되는 변명이 돌아왔다. 믿는 척했지만, 마음은 이미 떠났다.",
-      "en": "A ridiculous excuse came back. You pretended to believe it, but you'd already left in your heart."
+      "en": "A ridiculous excuse came back. You pretended to believe it, but in your heart you'd already left."
      },
      "effects": [
       {
@@ -753,7 +753,7 @@
    "who": "unknown",
    "line": {
     "ko": "(SNS로 알게 된 해외 파견 의사라는 사람. 매일 다정하던 그가, 오늘 급하게 돈을 부탁한다.) 통관비만 보내주면 바로 한국에 갈게요.",
-    "en": "(A 'doctor posted abroad' you met on social media. Sweet every day — and today, urgently asking for money.) Just send the customs fee and I'll fly to Korea."
+    "en": "(A 'doctor stationed abroad' you met on social media. Sweet every single day. And today, suddenly, asking for money.) Just cover the customs fee and I can fly out to see you."
    },
    "choices": [
     {
@@ -1093,7 +1093,7 @@
     "SPLIT": {
      "r": {
       "ko": "돈 이야기는 결국 마음 이야기였다. 우리는 끝났다.",
-      "en": "The money talk was really a heart talk. You were done."
+      "en": "The fight about money was really about your hearts. You were done."
      },
      "effects": [
       {
@@ -1158,7 +1158,7 @@
     "FORGIVE": {
      "r": {
       "ko": "부끄러웠다고 했다. 내가 떠날까 봐. 우리는 처음부터 다시 서로를 소개했다.",
-      "en": "They said they were ashamed — afraid you'd leave. You introduced yourselves to each other all over again."
+      "en": "They said they'd been ashamed, afraid you'd leave. You introduced yourselves to each other all over again."
      }
     },
     "SPLIT": {
@@ -1550,7 +1550,7 @@
     "MISTAKE": {
      "r": {
       "ko": "…다음 날 아침, 지울 수 없는 실수가 남았다.",
-      "en": "…The next morning, a mistake you can't undo."
+      "en": "…By morning, you'd made a mistake you can't undo."
      },
      "effects": [
       {
@@ -1698,7 +1698,7 @@
    "who": "me",
    "line": {
     "ko": "(퇴근하고 오니 집이 비어 있었다. {partner}의 짐도, 통장의 돈도.)",
-    "en": "(You came home to an empty place. {partner}'s things — and the money in your account — gone.)"
+    "en": "(You came home to an empty place. {partner}'s things were gone. So was the money in your account.)"
    },
    "choices": [
     {
@@ -1895,7 +1895,7 @@
    "who": "me",
    "line": {
     "ko": "(오늘도 {partner}이(가) 내 하루를 분 단위로 물었다. 숨이 막힌다.)",
-    "en": "(Again today {partner} asked about your day minute by minute. You can't breathe.)"
+    "en": "(Again today, {partner} wanted a minute-by-minute account of your day. You can't breathe.)"
    },
    "choices": [
     {

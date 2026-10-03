@@ -121,7 +121,7 @@
      },
      "r": {
       "ko": "(냄새만 맡았다.)",
-      "en": "(Just smelled it.)"
+      "en": "(Just enjoyed the smell.)"
      },
      "effects": []
     }
@@ -296,7 +296,7 @@
      },
      "r": {
       "ko": "(눈으로만 먹었다.)",
-      "en": "(Ate with my eyes.)"
+      "en": "(Feasted with my eyes only.)"
      },
      "effects": []
     }
@@ -464,7 +464,7 @@
     {
      "t": {
       "ko": "내일의 나에게",
-      "en": "Leave it to tomorrow's me"
+      "en": "Leave it for future me"
      },
      "r": {
       "ko": "(내일의 나, 파이팅.)",
@@ -589,7 +589,7 @@
      },
      "r": {
       "ko": "(오늘만큼은.)",
-      "en": "(Just today.)"
+      "en": "(Just this once.)"
      },
      "effects": [
       {
@@ -605,7 +605,7 @@
      },
      "r": {
       "ko": "(마음만 받기로.)",
-      "en": "(The thought is enough.)"
+      "en": "(It's the thought that counts.)"
      },
      "effects": []
     }
@@ -864,7 +864,7 @@
      },
      "r": {
       "ko": "(…그래, 알겠다.)",
-      "en": "(…okay, I see.)"
+      "en": "(…Oh. Okay.)"
      },
      "effects": []
     }
@@ -885,7 +885,7 @@
    "cooldownDays": 8,
    "line": {
     "ko": "[아빠] 휴대폰 사진이 다 없어졌다. 어떻게 하냐",
-    "en": "[Dad] All the photos on my phone are gone. What do I do"
+    "en": "[Dad] All the photos on my phone are gone. What do I do?"
    },
    "choices": [
     {
@@ -1039,7 +1039,7 @@
      },
      "r": {
       "ko": "(나중에 꼭 걸어야지.)",
-      "en": "(Must remember to call back.)"
+      "en": "(Note to self: call back.)"
      },
      "effects": []
     }
@@ -1108,7 +1108,7 @@
      },
      "r": {
       "ko": "(이번엔 잃어버리지 말자.)",
-      "en": "(Don't lose these ones.)"
+      "en": "(Don't lose these.)"
      },
      "effects": [
       {
@@ -1212,7 +1212,7 @@
      },
      "r": {
       "ko": "(다음 생에…)",
-      "en": "(Next life…)"
+      "en": "(Maybe in my next life…)"
      },
      "effects": []
     }
@@ -1233,7 +1233,7 @@
    "cooldownDays": 20,
    "line": {
     "ko": "(동네 요리교실 수강생 모집 공고를 봤다.)",
-    "en": "(Saw a sign-up notice for a neighborhood cooking class.)"
+    "en": "(A neighborhood cooking class is taking sign-ups.)"
    },
    "choices": [
     {
@@ -1296,7 +1296,7 @@
      },
      "r": {
       "ko": "(첫 채팅 상대가 생겼다.)",
-      "en": "(Got a first chat partner.)"
+      "en": "(Matched with my first chat partner.)"
      },
      "effects": [
       {
@@ -1345,7 +1345,7 @@
      },
      "r": {
       "ko": "(동네가 새로워 보인다.)",
-      "en": "(The neighborhood looks new.)"
+      "en": "(The neighborhood looks brand new.)"
      },
      "effects": []
     },
@@ -1356,7 +1356,7 @@
      },
      "r": {
       "ko": "(이게 은퇴의 맛.)",
-      "en": "(The taste of retirement.)"
+      "en": "(So this is retirement.)"
      },
      "effects": []
     }
@@ -1637,7 +1637,7 @@
     {
      "t": {
       "ko": "제목 보여 줘",
-      "en": "Show me the title"
+      "en": "Tell me the title"
      },
      "r": {
       "ko": "제목은 '걸으면서 웃게 되는 노래'였다.",
@@ -1735,7 +1735,7 @@
     {
      "t": {
       "ko": "양말까지는 좀…",
-      "en": "Socks are a bit much…"
+      "en": "The next day, you both showed up wearing them."
      },
      "r": {
       "ko": "{partner}이(가) 몰래 사서 서랍에 넣어 뒀다.",
@@ -1819,7 +1819,7 @@
      },
      "r": {
       "ko": "하트 하나가 돌아왔다.",
-      "en": "One heart came back."
+      "en": "They sent back a single heart."
      },
      "effects": []
     }
@@ -1984,7 +1984,7 @@
      },
      "r": {
       "ko": "이겼다. 다음 날 아침, 토스트가 조금 탔다.",
-      "en": "You won. Next morning, the toast was a little burnt."
+      "en": "You won. The next morning, the toast was a little burnt."
      },
      "effects": []
     },
@@ -2124,7 +2124,7 @@
      },
      "r": {
       "ko": "가방 맨 밑에서 나왔다. 영수증 스무 장과 함께.",
-      "en": "Found at the very bottom, along with twenty receipts."
+      "en": "Found them at the very bottom, under twenty receipts."
      },
      "effects": []
     }
@@ -2206,7 +2206,7 @@
      },
      "r": {
       "ko": "손가락이 바다 한가운데를 찍었다. 다시 찍기로 했다.",
-      "en": "Your finger landed in the middle of the ocean. You agreed on a redo."
+      "en": "Your finger landed in the middle of the ocean. You agreed to try again."
      },
      "effects": []
     }
@@ -2682,7 +2682,7 @@
      },
      "r": {
       "ko": "가끔 꺼내 볼 생각이다.",
-      "en": "You'll take it out now and then."
+      "en": "Now and then, you'll take it out and read it again."
      },
      "effects": []
     }
@@ -2712,7 +2712,7 @@
      },
      "r": {
       "ko": "세 시간 동안 이야기했는데 결론은 없었다. 그게 좋았다.",
-      "en": "Three hours of talking, no conclusions. It was great."
+      "en": "Three hours of talking, nothing decided. It was great."
      },
      "effects": [
       {
@@ -2770,7 +2770,7 @@
      },
      "r": {
       "ko": "마지막 상자를 옮기고 {f:movefood}을(를) 먹었다. 세상에서 제일 맛있었다.",
-      "en": "After the last box, jajangmyeon on the floor. Best meal ever."
+      "en": "After the last box, {f:movefood} on the floor. Best meal ever."
      },
      "effects": [
       {
@@ -2925,7 +2925,7 @@
      },
      "r": {
       "ko": "맛은 그대로였다. 우리만 조금 나이 들었다.",
-      "en": "Same taste. Only you two got a little older."
+      "en": "It tasted exactly the same. Only you two had gotten older."
      },
      "effects": [
       {
@@ -2984,7 +2984,7 @@
      },
      "r": {
       "ko": "3주째 되던 날, 둘 다 늦잠을 잤다. 서로 용서했다.",
-      "en": "Week three, you both overslept. Mutual forgiveness."
+      "en": "Week three, you both overslept. You forgave each other."
      },
      "effects": [
       {
@@ -3504,7 +3504,7 @@
      },
      "r": {
       "ko": "두 시간 동안 진짜로 공부했다. 둘 다 놀랐다.",
-      "en": "Two whole hours of actual studying. You both were shocked."
+      "en": "Two whole hours of actual studying. You were both shocked."
      },
      "effects": []
     },

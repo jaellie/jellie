@@ -19,7 +19,7 @@
     "act": "date",
     "label": {
      "ko": "인생네컷 찍으러 가기",
-     "en": "Go take a four-cut photo booth strip"
+     "en": "Squeeze into a photo booth"
     },
     "r": {
      "ko": "(머리띠를 다섯 개나 써 봤다. 결국 토끼 귀로.)",
@@ -95,7 +95,7 @@
     },
     "r": {
      "ko": "(삼각김밥까지 나눠 먹었다. 별거 아닌데 제일 좋았다.)",
-     "en": "(You split a rice triangle too. Nothing special — the best part.)"
+     "en": "(You split a rice ball too. Nothing special, and the best part of the day.)"
     }
    },
    {
@@ -119,7 +119,7 @@
     },
     "r": {
      "ko": "(목적지 없이 달리다 처음 보는 바다에 도착했다.)",
-     "en": "(No destination — you ended up at a sea you'd never seen.)"
+     "en": "(No destination. You ended up at a sea you'd never seen.)"
     }
    },
    {
@@ -453,7 +453,7 @@
     },
     "r": {
      "ko": "(이불 밖은 위험해.)",
-     "en": "(Outside the blanket is dangerous.)"
+     "en": "(Staying in. The blanket wins.)"
     }
    },
    {
@@ -550,7 +550,7 @@
     "act": "date",
     "label": {
      "ko": "하나미 — 벚꽃 아래 도시락",
-     "en": "Hanami — a bento under the cherry blossoms"
+     "en": "Hanami: a bento under the cherry blossoms"
     },
     "r": {
      "ko": "(돗자리 자리 잡느라 아침 6시에 나왔다. 그럴 가치가 있었다.)",
@@ -815,7 +815,7 @@
     },
     "r": {
      "ko": "(바게트, 치즈, 와인 한 병. 해가 질 때까지.)",
-     "en": "(Baguette, cheese, a bottle of wine — until sunset.)"
+     "en": "(Baguette, cheese, a bottle of wine, and the sun going down.)"
     }
    },
    {
@@ -839,7 +839,7 @@
     },
     "r": {
      "ko": "(낡은 엽서 한 장을 샀다. 100년 전 누군가의 연애편지.)",
-     "en": "(You bought an old postcard — someone's love letter from a century ago.)"
+     "en": "(You bought an old postcard: someone's love letter from a century ago.)"
     }
    },
    {
@@ -899,7 +899,7 @@
     },
     "r": {
      "ko": "(길을 잃었다. 덕분에 더 예쁜 골목을 찾았다.)",
-     "en": "(You got lost — and found a prettier street.)"
+     "en": "(You got lost and found an even prettier street.)"
     }
    },
    {
@@ -1172,7 +1172,7 @@
     },
     "r": {
      "ko": "(넘어질 때마다 서로를 붙잡았다. 둘 다 넘어졌다.)",
-     "en": "(You caught each other every fall. You both fell.)"
+     "en": "(You kept catching each other. You both fell anyway.)"
     },
     "season": "WINTER"
    },
@@ -1355,7 +1355,7 @@
    "act": "watch_tv",
    "label": {
     "ko": "시차 맞춰 모닝콜 해 주기",
-    "en": "A morning call across the time difference"
+    "en": "A good-morning call across time zones"
    },
    "r": {
     "ko": "(내 밤이 {p}의 아침이 됐다.)",

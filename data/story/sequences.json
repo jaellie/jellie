@@ -32,7 +32,7 @@
       "fits": "P",
       "r": {
        "ko": "{them}이(가) 대답 대신 나를 오래 쳐다봤다.",
-       "en": "{them} didn't answer — just looked at you for a long time."
+       "en": "{them} didn't answer. They just looked at you for a long time."
       },
       "rMiss": {
        "ko": "{them}이(가) '…아니야' 하고 웃어넘겼다. 타이밍을 놓친 것 같다.",
@@ -95,7 +95,7 @@
      {
       "t": {
        "ko": "의미 같은 거 따지지 말고, 그냥 좋은 거지",
-       "en": "Don't overthink it — it's just nice."
+       "en": "Don't overthink it. It's just nice."
       },
       "fits": "F",
       "r": {
@@ -112,7 +112,7 @@
    "SJ": {
     "line": {
      "ko": "({them}이(가) 내가 지나가듯 말한 가게를 기억하고 예약까지 해 뒀다.) 저번에 여기 가 보고 싶다고 했잖아. 7시로 해 놨어.",
-     "en": "({them} remembered the place you mentioned in passing — and booked it.) You said you wanted to try this place. I got us a table at seven."
+     "en": "({them} remembered the place you mentioned in passing, and booked it.) You said you wanted to try this place. I got us a table at seven."
     },
     "choices": [
      {
@@ -176,7 +176,7 @@
       "fits": "P",
       "r": {
        "ko": "숨이 턱까지 찼을 때 첫 불꽃이 터졌다. {them}이(가) 내 손을 잡고 하늘을 가리켰다.",
-       "en": "Out of breath as the first firework burst. {them} grabbed your hand and pointed up."
+       "en": "You were out of breath when the first firework burst. {them} grabbed your hand and pointed up."
       },
       "rMiss": {
        "ko": "늦게 도착해서 마지막 불꽃만 봤다. 그래도 {them}은(는) 웃고 있었다.",
@@ -401,7 +401,7 @@
      {
       "t": {
        "ko": "비 오는 날 고백하면 평생 안 잊겠지?",
-       "en": "A confession on a rainy day — you'd never forget it, right?"
+       "en": "A confession on a rainy day. You'd never forget it, right?"
       },
       "fits": "N",
       "r": {
@@ -516,7 +516,7 @@
       "fits": "T",
       "r": {
        "ko": "{them}이(가) 웃다가, 갑자기 조용해졌다.",
-       "en": "{them} laughed — then suddenly went quiet."
+       "en": "{them} laughed, then suddenly went quiet."
       },
       "rMiss": {
        "ko": "'느끼했어?' {them}이(가) 살짝 시무룩해졌다.",
@@ -607,7 +607,7 @@
       "fits": "J",
       "r": {
        "ko": "{them}이(가) 새끼손가락을 내밀었다. 손가락이 걸리고, 거리가 좁혀졌다.",
-       "en": "{them} held out a pinky. Fingers hooked; the distance closed."
+       "en": "{them} held out a pinky. Fingers hooked, the distance closed."
       },
       "rMiss": {
        "ko": "{them}이(가) 고개를 끄덕였다. 약속은 했는데, 아직 발이 안 떨어진다.",
@@ -711,11 +711,11 @@
    },
    "SJ": {
     "ko": "(립밤을 발랐던가? 아까 먹은 {f:street} 냄새는? 머릿속 체크리스트가 바쁘게 돌아간다.)",
-    "en": "(Lip balm — did you put some on? The {f:street} earlier? The checklist in your head is running fast.)"
+    "en": "(Lip balm: did you put some on? The {f:street} earlier? The checklist in your head is running fast.)"
    },
    "SP": {
     "ko": "(생각은 필요 없다. 지금 이 거리, 이 공기면 충분하다.)",
-    "en": "(No thinking needed. This distance, this air — it's enough.)"
+    "en": "(No thinking needed. This distance, this air. It's enough.)"
    }
   },
   "mePool": [
@@ -775,7 +775,7 @@
     "fits": "J",
     "r": {
      "ko": "하나, 둘—",
-     "en": "One, two—"
+     "en": "One, two…"
     },
     "me": "J"
    },
@@ -938,7 +938,7 @@
      {
       "t": {
        "ko": "(손을 흔들다가, 다시 돌아선다)",
-       "en": "(Wave goodbye — then turn back)"
+       "en": "(Wave goodbye, then turn back)"
       },
       "fits": "F",
       "r": {
@@ -1053,7 +1053,7 @@
       "fits": "J",
       "r": {
        "ko": "{them}이(가) 끝까지 들었다. 내 계획마다 '우리'가 들어 있는 걸 알아챈 것 같았다.",
-       "en": "{them} listened to the end — and seemed to notice 'we' was in every plan."
+       "en": "{them} listened to the end, and seemed to notice 'we' was in every plan."
       },
       "rMiss": {
        "ko": "{them}이(가) 고개를 끄덕였지만, 듣고 싶은 말은 따로 있는 것 같았다.",
@@ -1271,7 +1271,7 @@
     "fits": "P",
     "r": {
      "ko": "아무것도 정하지 않았는데, 이미 다 정해진 것 같았다.",
-     "en": "Nothing decided — and somehow, everything was."
+     "en": "Nothing decided, and somehow, everything was."
     },
     "me": "P"
    }
@@ -1286,7 +1286,7 @@
      {
       "t": {
        "ko": "(무슨 일인지 알 것 같아 심장이 뛴다)",
-       "en": "(Your heart races — you think you know)"
+       "en": "(Your heart races. You think you know)"
       },
       "fits": "N",
       "r": {
@@ -1472,7 +1472,7 @@
    "NF": {
     "line": {
      "ko": "(마지막으로 만나자는 {them}의 문자. 처음 만났던 카페였다.) …우리, 좋았던 것만 기억하자.",
-     "en": "({them} texted to meet one last time — at the café where you first met.) …Let's only remember the good parts."
+     "en": "({them} texted to meet one last time, at the café where you first met.) …Let's only remember the good parts."
     },
     "choices": [
      {
@@ -1578,7 +1578,7 @@
    "SJ": {
     "line": {
      "ko": "({them}이(가) 내 물건을 상자에 정리해 왔다. 칫솔까지 하나하나.) …이거, 네 거.",
-     "en": "({them} packed your things in a box — down to the toothbrush.) …These are yours."
+     "en": "({them} packed your things in a box, down to the toothbrush.) …These are yours."
     },
     "choices": [
      {
@@ -1631,7 +1631,7 @@
    "SP": {
     "line": {
      "ko": "({them}이(가) 갑자기 말했다.) 마지막으로 우리 처음 갔던 데 가 볼래? 지금.",
-     "en": "({them} says suddenly:) One last time — want to go where we first went? Right now."
+     "en": "({them} says suddenly:) One last time. Want to go where we first went? Right now."
     },
     "choices": [
      {
@@ -1642,7 +1642,7 @@
       "fits": "P",
       "r": {
        "ko": "그곳은 그대로였다. 우리만 달라졌다.",
-       "en": "The place hadn't changed. Only we had."
+       "en": "The place hadn't changed. Only you two had."
       },
       "rMiss": {
        "ko": "{them}이(가) 대답 대신 창밖만 봤다.",
@@ -1667,7 +1667,7 @@
      {
       "t": {
        "ko": "(웃다가 눈물이 난다)",
-       "en": "(Laugh — then cry)"
+       "en": "(Laugh, then cry)"
       },
       "fits": "F",
       "r": {
@@ -1842,7 +1842,7 @@
       "fits": "N",
       "r": {
        "ko": "'어떻게 잊어.' {them}이(가) 작게 말했다.",
-       "en": "'How could I forget.' {them} said quietly."
+       "en": "'How could I forget?' {them} said quietly."
       },
       "rMiss": {
        "ko": "{them}이(가) 대답 대신 창밖만 봤다.",

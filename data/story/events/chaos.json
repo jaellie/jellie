@@ -85,7 +85,7 @@
     "EARPLUGS": {
      "r": {
       "ko": "귀마개는 소리를 막았지만, 알람 소리도 막았다. 지각했다.",
-      "en": "The earplugs blocked the noise — and the alarm. You were late."
+      "en": "The earplugs blocked the noise. And the alarm. You were late."
      }
     }
    }
@@ -316,7 +316,7 @@
    "who": "me",
    "line": {
     "ko": "(현관문이 열린 틈에 {pet}이(가) 뛰쳐나가 골목 저편으로 사라졌다.)",
-    "en": "(The front door was open for a second — and {pet} bolted out and vanished down the alley.)"
+    "en": "(The front door was open for one second, and {pet} bolted out and vanished down the alley.)"
    },
    "choices": [
     {
@@ -552,7 +552,7 @@
     "HACK": {
      "r": {
       "ko": "도어락 밑에 건전지를 대자 삐— 문이 열렸다. 혼자 박수를 쳤다.",
-      "en": "You held the battery to the terminals — beep — the door opened. You applauded yourself."
+      "en": "You held the battery to the terminals. Beep. The door opened. You gave yourself a round of applause."
      }
     },
     "SLEEP_OUT": {
@@ -608,13 +608,13 @@
     "BOND": {
      "r": {
       "ko": "밤새 번갈아 화장실을 드나들다 새벽에 둘이 기절하듯 웃었다. 이런 모습까지 봤으면 끝까지 가야지.",
-      "en": "Taking turns all night, by dawn you were both laughing, half-dead. After seeing each other like this, you're in it for good."
+      "en": "You took turns all night. By dawn you were both laughing, half dead. After seeing each other like this, you're in it for good."
      }
     },
     "ER": {
      "r": {
       "ko": "나란히 수액을 맞았다. 링거 두 개가 커플템 같았다.",
-      "en": "You got IV drips side by side. Matching drips, like a couple accessory."
+      "en": "Side by side on IV drips. The world's worst couple accessory."
      },
      "effects": [
       {
@@ -1041,7 +1041,7 @@
    "who": "app",
    "line": {
     "ko": "[이벤트 당첨] 축하합니다! 댓글 이벤트 1등 — 제주 왕복 항공권 2매!",
-    "en": "[Giveaway] Congratulations! First place in the comment giveaway — two round-trip tickets to Jeju!"
+    "en": "[Giveaway] Congratulations! You won first place in the comment giveaway: two round-trip tickets to Jeju!"
    },
    "choices": [
     {
@@ -1120,7 +1120,7 @@
     {
      "t": {
       "ko": "(친구들을 부른다, {f:movefood} 쏜다)",
-      "en": "(Call in friends — jajangmyeon's on you)"
+      "en": "(Call in friends. {f:movefood} is on you)"
      },
      "w": {
       "FRIENDS": 0.7,
@@ -1142,12 +1142,12 @@
     "FRIENDS": {
      "r": {
       "ko": "빈 바닥에 신문지를 깔고 {f:movefood}을(를) 먹었다. 새 집의 첫 끼였다.",
-      "en": "You spread newspaper on the bare floor and ate jajangmyeon. The first meal in the new place."
+      "en": "You spread newspaper on the bare floor and ate {f:movefood}. The first meal in the new place."
      },
      "card": {
       "caption": {
        "ko": "새 집의 첫 {f:movefood}",
-       "en": "First jajangmyeon in the new place"
+       "en": "First {f:movefood} in the new place"
       },
       "location": "home",
       "actors": [
@@ -1205,7 +1205,7 @@
    "who": "crush",
    "line": {
     "ko": "({f:karaoke}. {crush}이(가) 부른 노래 가사가 전부 나한테 하는 말 같다. 노래가 끝나고 마이크를 내려놓았다.) …들었어?",
-    "en": "(Karaoke. Every lyric {crush} sang felt aimed at you. The song ended; they set the mic down.) …Did you hear it?"
+    "en": "({f:karaoke}. Every lyric {crush} sang felt aimed at you. The song ended. They set the mic down.) …Did you hear it?"
    },
    "choices": [
     {
@@ -1344,7 +1344,7 @@
     "NOREPLY": {
      "r": {
       "ko": "답은 오지 않았다. 아침에 이불을 발로 백 번 찼다.",
-      "en": "No reply. In the morning you kicked your blanket a hundred times."
+      "en": "No reply. In the morning, you wanted to crawl under a rock."
      }
     },
     "CAUGHT": {
@@ -1466,7 +1466,7 @@
     {
      "t": {
       "ko": "(이왕 이렇게 된 거, DM을 보낸다)",
-      "en": "(In for a penny — send a DM)"
+      "en": "(In for a penny. Send a DM)"
      },
      "w": {
       "DM": 1.0
@@ -1489,7 +1489,7 @@
     "DM": {
      "r": {
       "ko": "'오랜만이야' 한 줄. 답장은 '누구세요?'였다. 번호도 계정도 바뀐 거였다.",
-      "en": "'Long time no see.' The reply: 'Who is this?' Different person — they'd changed accounts."
+      "en": "'Long time no see.' The reply: 'Who is this?' Wrong person. They'd changed accounts."
      }
     }
    }
@@ -1519,7 +1519,7 @@
    "who": "app",
    "line": {
     "ko": "[중고거래] 입금 확인되면 바로 택배 보내드릴게요~ 오늘까지만 이 가격이에요 😊",
-    "en": "[Secondhand app] I'll ship it as soon as the payment clears~ This price is only good today 😊"
+    "en": "[Secondhand app] I'll ship it as soon as the payment clears! This price is only good today 😊"
    },
    "choices": [
     {
@@ -1644,7 +1644,7 @@
     "FRIEND": {
      "r": {
       "ko": "거래는 끝났는데 대화는 한 시간 더 이어졌다. 매너 온도 99도.",
-      "en": "The deal was done; the chat went on another hour. Five-star manners."
+      "en": "The deal was done, but you kept chatting for another hour. Five-star manners."
      },
      "effects": [
       {

@@ -66,7 +66,7 @@
      },
      "r": {
       "ko": "하나, 둘, 셋. 각자의 방에서 동시에 초를 껐다. 이상하게 하나도 안 멀게 느껴졌다.",
-      "en": "One, two, three — two candles, two rooms, one breath. It didn't feel far at all."
+      "en": "One, two, three. Two candles, two rooms, one breath. It didn't feel far at all."
      }
     },
     {
@@ -76,7 +76,7 @@
      },
      "r": {
       "ko": "문을 연 {partner}이(가) 한참 말을 못 했다. 그리고 그대로 안겼다.",
-      "en": "{partner} opened the door and couldn't speak. Then just fell into your arms."
+      "en": "{partner} opened the door and couldn't speak. Then they just fell into your arms."
      }
     }
    ]
@@ -244,7 +244,7 @@
   "apart": {
    "line": {
     "ko": "(사귄 지 {n}년. 오늘도 우리는 다른 하늘 아래 있다.) {n}주년인데… 이번엔 어떻게 보낼까?",
-    "en": "({n} years together — and still under different skies.) It's our {n}-year anniversary… how should we spend it this time?"
+    "en": "({n} years together, and still under different skies.) It's our {n}-year anniversary… how should we spend it this time?"
    },
    "choices": [
     {
@@ -254,7 +254,7 @@
      },
      "r": {
       "ko": "같은 음식, 다른 식탁. 건배는 화면에 대고 했다. 잔이 부딪히는 소리가 들리는 것 같았다.",
-      "en": "Same food, different tables. You toasted the screen — you could almost hear the glasses clink."
+      "en": "Same food, different tables. You toasted the screen. You could almost hear the glasses clink."
      }
     },
     {
@@ -462,7 +462,7 @@
      },
      "r": {
       "ko": "자정이 되기 5분 전, 현관문을 열었다. 아슬아슬하게 {n}주년 안에 도착했다.",
-      "en": "You opened the door five minutes before midnight — made it inside your anniversary, just barely."
+      "en": "You opened the door five minutes before midnight. You made it, just barely."
      }
     },
     {
@@ -734,7 +734,7 @@
      },
      "r": {
       "ko": "12시 00분, 제일 먼저 {partner}의 전화가 왔다. 시차 때문에 거긴 대낮이었다.",
-      "en": "12:00 sharp, {partner} called first. With the time difference it was broad daylight there."
+      "en": "12:00 sharp, {partner} called first. In their time zone, it was the middle of the day."
      }
     },
     {
@@ -744,7 +744,7 @@
      },
      "r": {
       "ko": "일주일 늦게 도착한 편지. 그래서 생일이 일주일 더 길었다.",
-      "en": "The letter came a week late — so your birthday lasted a week longer."
+      "en": "The letter came a week late, so your birthday lasted a week longer."
      }
     }
    ]
@@ -791,7 +791,7 @@
    {
     "line": {
      "ko": "(곧 내 생일. {partner}이(가) 물었다.) 갖고 싶은 거 딱 세 개만 말해 봐.",
-     "en": "(Your birthday's coming. {partner} asks) Tell me three things you want. Just three."
+     "en": "(Your birthday's coming. {partner} asks:) Tell me three things you want. Just three."
     },
     "choices": [
      {
@@ -847,7 +847,7 @@
     },
     "r": {
      "ko": "문이 열리는 순간 {partner}이(가) 소리를 질렀다. 그리고 울었다.",
-     "en": "When the door opened, {partner} screamed — then cried."
+     "en": "When the door opened, {partner} screamed, then cried."
     }
    },
    {
@@ -884,7 +884,7 @@
      },
      "r": {
       "ko": "문을 연 {partner}이(가) 소리를 질렀다. 그리고 울었다. 최고의 생일이었대.",
-      "en": "{partner} opened the door, screamed — then cried. Best birthday ever, they said."
+      "en": "{partner} opened the door, screamed, then cried. Best birthday ever, they said."
      }
     },
     {

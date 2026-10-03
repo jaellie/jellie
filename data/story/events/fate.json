@@ -53,7 +53,7 @@
     "GWIIN": {
      "r": {
       "ko": "차 한 잔이 인생 상담이 됐고, 상담이 기회가 됐다. 그분은 내 귀인이었다.",
-      "en": "One cup of tea became life advice, and the advice became an opportunity. He was your guardian angel — the benefactor in your stars."
+      "en": "One cup of tea became life advice, and the advice became an opportunity. He was your guardian angel, the benefactor written in your stars."
      },
      "effects": [
       {
@@ -204,7 +204,7 @@
    "who": "stranger",
    "line": {
     "ko": "(새로 알게 된 사람이 명함을 내밀었다. 이름 첫 글자가… 물 수(水) 변이었다.) 반가워요. 이상하게 처음 보는 것 같지 않네요.",
-    "en": "(Someone new handed you their card. The first character of their name… had the water radical.) Nice to meet you. Strange — it doesn't feel like the first time."
+    "en": "(Someone new handed you their card. The first character of their name… had the water radical.) Nice to meet you. Strange. It doesn't feel like the first time."
    },
    "choices": [
     {
@@ -222,7 +222,7 @@
     "LOVE": {
      "r": {
       "ko": "세 번째 만남에서 그 이야기를 해줬다. 둘 다 한참 웃었다. 그리고 손을 잡았다.",
-      "en": "On your third meeting you told them the story. You both laughed for ages. Then held hands."
+      "en": "On your third meeting you told them the story. You both laughed for ages. Then you held hands."
      },
      "effects": [
       {
@@ -245,7 +245,7 @@
     "FRIEND": {
      "r": {
       "ko": "연인은 아니었지만, 평생 가는 친구가 됐다. 점괘는 반쯤 맞았다.",
-      "en": "Not a lover — but a friend for life. The fortune was half right."
+      "en": "Not a lover, but a friend for life. The fortune was half right."
      },
      "effects": [
       {
@@ -310,7 +310,7 @@
     "WIN": {
      "r": {
       "ko": "5등도 아니고 3등이었다! 돼지꿈은 과학이다.",
-      "en": "Not fifth prize — third! Pig dreams are science."
+      "en": "Not fifth prize. Third! Pig dreams are science."
      },
      "effects": [
       {
@@ -452,7 +452,7 @@
    "who": "relative",
    "line": {
     "ko": "올해 너 삼재라더라. 들삼재. 조심해서 나쁠 거 없다. 부적이라도 써줄까?",
-    "en": "They say this is your samjae — the start of your three bad-luck years. Can't hurt to be careful. Want a talisman?"
+    "en": "They say this is your samjae, the start of three bad-luck years. Can't hurt to be careful. Want a talisman?"
    },
    "choices": [
     {
@@ -537,7 +537,7 @@
    "who": "stranger",
    "line": {
     "ko": "(처음 보는 사람인데, 이 장면을 전에 본 것 같다. 상대도 같은 표정이다.) …우리, 어디서 만난 적 있죠?",
-    "en": "(You've never seen this person before — but you've seen this moment. They have the same look on their face.) …Have we met somewhere?"
+    "en": "(You've never seen this person before, but you've seen this moment. They have the same look on their face.) …Have we met somewhere?"
    },
    "choices": [
     {
@@ -745,7 +745,7 @@
    "who": "fortune",
    "line": {
     "ko": "(몇 달째 이유 없이 아팠다. 병원에서는 다 정상이라고 했다. 용하다는 무당이 한참 나를 보더니 말했다.) 신이 너를 부르고 있어.",
-    "en": "(For months you'd been sick for no reason; every hospital said you were fine. A famous shaman studied you a long time, then said:) The spirits are calling you."
+    "en": "(For months you'd been sick for no reason, and every hospital said you were fine. A famous shaman studied you a long time, then said:) The spirits are calling you."
    },
    "choices": [
     {
@@ -850,7 +850,7 @@
    "who": "me",
    "line": {
     "ko": "(재미로 간 전생 체험 카페. 눈을 감자 조선 시대 어느 마당이 보였다. 그리고 — 낯익은 얼굴이.)",
-    "en": "(A past-life café you tried for fun. When you closed your eyes, you saw a courtyard in the Joseon era. And — a familiar face.)"
+    "en": "(A past-life café you tried for fun. When you closed your eyes, you saw a courtyard in the Joseon era. And a familiar face.)"
    },
    "choices": [
     {
@@ -877,7 +877,7 @@
     "STORY": {
      "r": {
       "ko": "전생의 나는 그 사람을 끝내 기다리다 죽었다고 했다. 믿지 않으면서도 코끝이 시큰했다.",
-      "en": "In that life, they said, you died still waiting for that person. You didn't believe it — and still your nose stung."
+      "en": "In that life, they said, you died still waiting for that person. You didn't believe it, and still your eyes stung."
      },
      "effects": [
       {
@@ -951,7 +951,7 @@
     "WIN": {
      "r": {
       "ko": "당첨! 크진 않았지만, 7번 버스를 탈 때마다 웃게 됐다.",
-      "en": "A win! Not big — but now you smile every time you take the number 7 bus."
+      "en": "A win! Not a big one, but now you smile every time you take the number 7 bus."
      },
      "effects": [
       {
@@ -1256,13 +1256,13 @@
    "who": "stranger",
    "line": {
     "ko": "(낯선 도시의 골목. 누가 {homeLang}(으)로 내 이름을 불렀다.) 야! 너 맞지? 고등학교 때 짝꿍!",
-    "en": "(An alley in a foreign city. Someone called your name — in {homeLang}.) Hey! It's you, right? My deskmate from high school!"
+    "en": "(An alley in a foreign city. Someone called your name in {homeLang}.) Hey! It's you, right? My deskmate from high school!"
    },
    "choices": [
     {
      "t": {
       "ko": "대박, 여기서?!",
-      "en": "No way — here?!"
+      "en": "No way! Here?!"
      },
      "w": {
       "FRIEND": 0.8,
@@ -1346,7 +1346,7 @@
     {
      "t": {
       "ko": "괜찮아요~ (끊는다)",
-      "en": "No problem~ (Hang up)"
+      "en": "No problem! (Hang up)"
      },
      "w": {
       "NOTHING": 1.0
@@ -1401,7 +1401,7 @@
    "who": "me",
    "line": {
     "ko": "(지하철역 계단에서 누군가 쓰러졌다. 모두가 멈춰 선 순간, 몸이 먼저 움직였다.)",
-    "en": "(Someone collapsed on the subway stairs. Everyone froze — and your body moved first.)"
+    "en": "(Someone collapsed on the subway stairs. Everyone froze, but your body moved first.)"
    },
    "choices": [
     {
@@ -1417,7 +1417,7 @@
     {
      "t": {
       "ko": "119에 신고하고 AED를 찾는다",
-      "en": "Call 119 and find the defibrillator"
+      "en": "Call an ambulance and find the defibrillator"
      },
      "w": {
       "SAVED": 0.8,
@@ -1585,7 +1585,7 @@
    "who": "stranger",
    "line": {
     "ko": "(모임에서 만난 사람과 생일 이야기가 나왔다. 같은 해, 같은 날. 태어난 시간까지 똑같았다.) …사주도 같겠네요?",
-    "en": "(Birthdays came up with someone you met at a gathering. Same year, same day — even the same hour.) …So our saju must be the same too?"
+    "en": "(Birthdays came up with someone you met at a gathering. Same year, same day, even the same hour.) …So our saju must be the same too?"
    },
    "choices": [
     {
@@ -1613,7 +1613,7 @@
     "LOVE": {
      "r": {
       "ko": "거울을 보는 것 같은 사람이었다. 첫 생일을 둘이 같이 맞았다.",
-      "en": "Like looking into a mirror. You celebrated your first birthday together — both of them."
+      "en": "Like looking in a mirror. That year, you celebrated your shared birthday together."
      },
      "effects": [
       {

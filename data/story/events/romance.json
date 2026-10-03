@@ -351,7 +351,7 @@
    "who": "crush",
    "line": {
     "ko": "(술자리가 끝나고, {crush}이(가) 조용히 말했다.) …사실 나 너 좋아해. 오래전부터.",
-    "en": "(After drinks, {crush} said quietly) …I like you. I have for a long time."
+    "en": "(After drinks, {crush} said quietly:) …I like you. I have for a long time."
    },
    "choices": [
     {
@@ -608,7 +608,7 @@
     "SECRET": {
      "r": {
       "ko": "아무도 모르게 만나기로 했다. 비밀 연애의 시작.",
-      "en": "You agreed to date in secret. A hidden romance begins."
+      "en": "You agreed to date in secret. A secret office romance begins."
      },
      "effects": [
       {
@@ -839,7 +839,7 @@
    "who": "me",
    "line": {
     "ko": "({partner}의 답장이 점점 늦어진다. 시차 때문일까, 마음 때문일까.)",
-    "en": "({partner}'s replies come later and later. Is it the time difference — or the heart?)"
+    "en": "({partner}'s replies come later and later. Is it the time zones, or is it something more?)"
    },
    "choices": [
     {
@@ -1059,7 +1059,7 @@
     "REUNITE": {
      "r": {
       "ko": "다시 만났다. 이번엔, 다를 거라고 믿고 싶었다.",
-      "en": "You got back together. This time, you wanted to believe, would be different."
+      "en": "You got back together. You wanted to believe this time would be different."
      },
      "effects": [
       {
@@ -1967,7 +1967,7 @@
     "REAL": {
      "r": {
       "ko": "리바운드일 줄 알았는데, 생각보다 오래 웃었다.",
-      "en": "You thought it'd be a rebound. You laughed longer than expected."
+      "en": "You thought it'd be a rebound. You laughed more than you expected to."
      },
      "effects": [
       {

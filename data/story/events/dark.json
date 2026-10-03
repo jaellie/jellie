@@ -462,7 +462,7 @@
     "STAYS": {
      "r": {
       "ko": "{partner}은(는) 문 앞에서 한참 서 있다가, 신발을 벗었다.",
-      "en": "{partner} stood at the door a long time — then took off their shoes."
+      "en": "{partner} stood at the door for a long time. Then they took off their shoes."
      },
      "effects": [
       {
@@ -554,7 +554,7 @@
     "PULL_OUT": {
      "r": {
       "ko": "같이 가본 그곳에서 엄마의 손을 잡고 걸어 나왔다. 엄마가 '내가 왜 그랬을까' 하며 울었다.",
-      "en": "You went together — and walked out holding Mom's hand. 'Why did I do that?' she cried."
+      "en": "You went together, and walked out holding Mom's hand. 'Why did I do that?' she cried."
      },
      "effects": [
       {
@@ -921,7 +921,7 @@
    "who": "me",
    "line": {
     "ko": "(정신 차려보니 새벽 여섯 시. 랭킹은 올랐는데, 삶은 내려갔다.)",
-    "en": "(You look up — 6 a.m. Your ranking went up. Your life went down.)"
+    "en": "(You look up. 6 a.m. Your ranking went up. Your life went down.)"
    },
    "choices": [
     {
@@ -1042,7 +1042,7 @@
     "SLIP": {
      "r": {
       "ko": "반품하고 나니 허전해서, 또 샀다.",
-      "en": "After the returns, you felt empty — so you bought more."
+      "en": "After the returns, you felt empty. So you bought more."
      }
     },
     "DEBT": {
@@ -1321,7 +1321,7 @@
     "HIDE": {
      "r": {
       "ko": "모든 사진을 지웠다. 온라인의 내가 사라지자 조금 숨이 쉬어졌다.",
-      "en": "You deleted every photo. With the online you gone, breathing got a little easier."
+      "en": "You deleted every photo. With the online version of you gone, it got a little easier to breathe."
      }
     }
    }
@@ -1435,7 +1435,7 @@
    "who": "app",
    "line": {
     "ko": "[유튜브] '충격! 그 사람의 숨겨진 과거' — 썸네일에 내 얼굴이 있다. 조회수 120만.",
-    "en": "[YouTube] 'SHOCKING! Their hidden past' — your face is on the thumbnail. 1.2 million views."
+    "en": "[YouTube] 'SHOCKING! Their hidden past.' Your face is on the thumbnail. 1.2 million views."
    },
    "choices": [
     {
@@ -1516,7 +1516,7 @@
     "FADE": {
      "r": {
       "ko": "다음 주, 렉카는 다른 사람을 찾아 떠났다.",
-      "en": "The next week, the wrecker moved on to someone else."
+      "en": "The next week, the channel moved on to someone else."
      }
     }
    }
@@ -1752,7 +1752,7 @@
     "LONG": {
      "r": {
       "ko": "경찰서에서 세 시간. 결국 누명은 벗었지만, 그날 밤 잠을 못 잤다.",
-      "en": "Three hours at the police station. You were cleared — but you couldn't sleep that night."
+      "en": "Three hours at the police station. You were cleared, but you couldn't sleep that night."
      },
      "effects": [
       {
@@ -1798,7 +1798,7 @@
    "who": "unknown",
    "line": {
     "ko": "네가 숨기고 싶은 거 알아. 이번 주까지 300 보내. 안 그러면 다 퍼뜨린다.",
-    "en": "I know what you want to hide. Send three million by the end of the week. Or I spread it everywhere."
+    "en": "I know what you want to hide. Send three million won by the end of the week. Or I spread it everywhere."
    },
    "choices": [
     {
@@ -2095,7 +2095,7 @@
     "SLOW": {
      "r": {
       "ko": "다음 날엔 문을 열었다. 하루 늦었지만, 열었다.",
-      "en": "The next day, you opened it. A day late — but you did."
+      "en": "The next day, you opened it. A day late, but you did."
      },
      "effects": [
       {

@@ -32,7 +32,7 @@
    "who": "doctor",
    "line": {
     "ko": "건강검진 결과에서 재검이 필요한 부분이 보여요. 너무 걱정하진 마시고, 정밀검사를 받아보시죠.",
-    "en": "Your checkup shows something we should look at again. Don't panic — but let's do a detailed exam."
+    "en": "Your checkup shows something we should look at again. Don't panic, but let's do a detailed exam."
    },
    "choices": [
     {
@@ -48,7 +48,7 @@
     {
      "t": {
       "ko": "(바빠서 미룬다)",
-      "en": "(Too busy — put it off)"
+      "en": "(Too busy. Put it off)"
      },
      "w": {
       "BENIGN": 0.4,
@@ -219,7 +219,7 @@
    "who": "nurse",
    "line": {
     "ko": "오늘 목표는 복도 끝까지예요. 천천히, 할 수 있어요.",
-    "en": "Today's goal: the end of the hallway. Slowly — you can do it."
+    "en": "Today's goal: the end of the hallway. Slowly. You can do it."
    },
    "choices": [
     {
@@ -236,7 +236,7 @@
     "WALK": {
      "r": {
       "ko": "복도 끝에서 뒤를 돌아보니 간호사들이 박수를 치고 있었다. 의사들은 기적이라고 했다.",
-      "en": "At the end of the hallway you turned around — the nurses were clapping. The doctors called it a miracle."
+      "en": "At the end of the hallway you turned around. The nurses were clapping. The doctors called it a miracle."
      },
      "effects": [
       {
@@ -285,7 +285,7 @@
    "who": "doctor",
    "line": {
     "ko": "평생 관리하셔야 하는 병이에요. 완치는 어렵지만, 잘 관리하면 충분히 일상생활 가능합니다.",
-    "en": "It's a condition you'll manage for life. There's no cure — but with care, you can live a full, normal life."
+    "en": "It's a condition you'll manage for life. There's no cure, but with care you can live a full, normal life."
    },
    "choices": [
     {
@@ -313,7 +313,7 @@
     "MANAGE": {
      "r": {
       "ko": "약통에 요일을 적었다. 아침 산책이 생겼다. 몸이 조금씩 대답했다.",
-      "en": "You labeled a pill box by day. Morning walks became routine. Your body started answering back."
+      "en": "You labeled a pill box by day. Morning walks became routine. Your body started responding."
      },
      "effects": [
       {
@@ -653,7 +653,7 @@
    "who": "counselor",
    "line": {
     "ko": "여기까지 오신 것만으로도 큰 걸음이에요. 천천히, 편하게 이야기해 주세요.",
-    "en": "Coming here at all is a big step. Take your time — tell me whatever feels okay."
+    "en": "Coming here at all is a big step. Take your time. Tell me whatever feels okay."
    },
    "choices": [
     {
@@ -724,7 +724,7 @@
    "who": "me",
    "line": {
     "ko": "(지하철 안. 갑자기 숨이 막히고, 심장이 터질 것 같다. 문이 열리자마자 뛰쳐나왔다.)",
-    "en": "(On the subway. Suddenly you can't breathe; your heart feels like it'll burst. You bolt the moment the doors open.)"
+    "en": "(On the subway. Suddenly you can't breathe. Your heart feels like it'll burst. You bolt the moment the doors open.)"
    },
    "choices": [
     {
@@ -756,7 +756,7 @@
     "AVOID": {
      "r": {
       "ko": "버스로 한 시간 돌아서 다녔다. 몇 달 뒤, 친구와 함께 한 정거장부터 다시 탔다.",
-      "en": "You took the bus the long way — an extra hour. Months later, with a friend beside you, you rode one stop again."
+      "en": "You took the long way by bus, an extra hour. Months later, with a friend beside you, you rode the subway one stop again."
      }
     }
    }

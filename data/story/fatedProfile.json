@@ -25,7 +25,7 @@
    "en": "Another country",
    "hint": {
     "ko": "시차, 영상통화, 누가 옮길까?",
-    "en": "Time zones, video calls — who moves?"
+    "en": "Time zones, video calls, and the question of who moves"
    }
   }
  ],
@@ -123,7 +123,7 @@
    "care": true,
    "meet": {
     "ko": "(병문안 간 병원에서, 간호사가 길 잃은 나를 병동까지 데려다줬다.)",
-    "en": "(Visiting someone at the hospital, you get lost — a nurse walks you all the way to the ward.)"
+    "en": "(Visiting someone at the hospital, you get lost. A nurse walks you all the way to the ward.)"
    },
    "work": "hospital",
    "kind": "employee"
@@ -277,7 +277,7 @@
    "unstable": true,
    "meet": {
     "ko": "(카페 작은 공연. 노래가 끝나고, 그 사람이 정확히 나를 보며 인사했다.)",
-    "en": "(A small café gig. When the song ends, they bow — looking straight at you.)"
+    "en": "(A small café gig. When the song ends, they bow, looking straight at you.)"
    },
    "work": "cafe",
    "kind": "self"
@@ -292,7 +292,7 @@
    "unstable": true,
    "meet": {
     "ko": "(독립영화 상영회. 엔딩 크레딧이 끝나자 주연 배우가 내 옆자리에서 일어났다.)",
-    "en": "(An indie screening. As the credits end, the lead actor stands up — from the seat next to yours.)"
+    "en": "(An indie screening. As the credits end, the lead actor stands up. From the seat next to yours.)"
    },
    "kind": "self"
   },
@@ -306,7 +306,7 @@
    "unstable": true,
    "meet": {
     "ko": "(공원에서 셔터 소리가 났다.) 죄송해요, 빛이 너무 좋아서… 사진 보내드릴까요?",
-    "en": "(A shutter clicks in the park.) Sorry — the light was perfect. Want me to send you the photo?"
+    "en": "(A shutter clicks in the park.) Sorry! The light was perfect. Want me to send you the photo?"
    },
    "work": "park",
    "kind": "self"
@@ -534,7 +534,7 @@
    "income": 0.6,
    "meet": {
     "ko": "(통장 정리하러 간 은행. 번호표 37번을 부른 그 사람의 웃는 얼굴.)",
-    "en": "(At the bank to update your passbook. The smile of the person who called number 37.)"
+    "en": "(At the bank on an errand. The smile of the person who called number 37.)"
    },
    "kind": "employee"
   },
@@ -680,11 +680,11 @@
  },
  "meetAbroadFlight": {
   "ko": "({fatedCity}행 비행기. 흔들리는 기내에서 제복 차림의 그 사람이 괜찮냐고 물었다.)",
-  "en": "(A flight to {fatedCity}. Turbulence — and someone in uniform asks if you're okay.)"
+  "en": "(A flight to {fatedCity}. Turbulence, and someone in uniform asks if you're okay.)"
  },
  "meetAgain": {
   "ko": "(몇 년 만이었다. 그때 그 사람이, 거짓말처럼 다시 눈앞에 있었다.)",
-  "en": "(It had been years. That person — impossibly — was right in front of you again.)"
+  "en": "(It had been years. And impossibly, that person was right in front of you again.)"
  },
  "intro": {
   "ko": "이름은 {fatedName}. {fatedJobCop}라고 했다.",
@@ -823,7 +823,7 @@
     },
     {
      "ko": "같이 덕질하자고 한다",
-     "en": "Suggest fangirling/fanboying together"
+     "en": "Suggest going to a show together"
     },
     {
      "ko": "(읽고 답을 미룬다)",
@@ -854,7 +854,7 @@
     "location": "dating_app",
     "line": {
      "ko": "(여행 모드로 켜 둔 소개팅 앱. {fatedCity}에 사는 사람과 매칭됐다.) 시차가 꽤 나네요… 그래도, 대화할래요?",
-     "en": "(The dating app, left in travel mode. A match from {fatedCity}.) Quite the time difference… still want to talk?"
+     "en": "(The dating app, left in travel mode. A match from {fatedCity}.) We're pretty far apart… still want to talk?"
     }
    },
    {

@@ -1326,7 +1326,7 @@ export class Game {
       if (opening && r.success !== false) (st.flags.meetOpen = opening), (st.flags.meetOpenMonth = st.monthIndex);
       const sceneDef = p.opp.choices.find((c) => c.id === choiceId)?.scene;
       if (sceneDef?.length && r.success !== false) this.setSequence(sceneDef);
-      const line = r.success === undefined ? bi("(결정했다.)", "(Decided.)") : r.success ? bi("(잘 됐다!)", "(It worked out!)") : bi("(…이번엔 잘 안 됐다.)", "(…It didn't work out this time.)");
+      const line = r.success === undefined ? bi("(결정했다.)", "(Decision made.)") : r.success ? bi("(잘 됐다!)", "(It worked out!)") : bi("(…이번엔 잘 안 됐다.)", "(…It didn't work out this time.)");
       return { who: "me", line: this.L(line), log: p.popup.ch[index]?.t };
     }
     if (p.worldEvent) {
@@ -1334,7 +1334,7 @@ export class Game {
       const choiceId = e.choices![index].id;
       const r = resolveWorldEvent(e, choiceId, { state: st, world: st.world!, modifiers: mods, rng });
       if (st.story) ensureArcs(st, rng);
-      const line = r.success === undefined ? bi("(그렇게 하기로 했다.)", "(So be it.)") : r.success ? bi("(좋다고 했다!)", "(They said yes!)") : bi("(…어색하게 웃었다.)", "(…an awkward smile.)");
+      const line = r.success === undefined ? bi("(그렇게 하기로 했다.)", "(So be it.)") : r.success ? bi("(좋다고 했다!)", "(They said yes!)") : bi("(…어색하게 웃었다.)", "(…They smiled awkwardly.)");
       return { who: r.success === false ? p.popup.who : "me", name: p.popup.name, line: this.L(line) };
     }
     if (p.eventUid) {
@@ -1416,7 +1416,7 @@ export class Game {
       // Today's life event keeps its own time and place (the court, 본가…); the weekend plan fills the rest.
       s.dayPlan = { locationId: o.locationId, activityId: o.activityId, withPartner: o.withPartner, sequence: (s.dayPlan.sequence ?? []).filter((q) => q.keep) };
       const quote = this.reflect(st.story?.cards.length ?? 0, undefined, 0.12, "DAILY");
-      return { who: "me", line: this.fill(this.L(o.reply ?? (o.kind === "home" ? bi("(이불 밖은 위험해.)", "(Outside the blanket is dangerous.)") : bi("(좋아, 가보자!)", "(Okay, let's go!)")))), log: this.L(o.label), ...(quote ? { quote } : {}) };
+      return { who: "me", line: this.fill(this.L(o.reply ?? (o.kind === "home" ? bi("(이불 밖은 위험해.)", "(Staying in. The blanket wins.)") : bi("(좋아, 가보자!)", "(Okay, let's go!)")))), log: this.L(o.label), ...(quote ? { quote } : {}) };
     }
     return;
   }

@@ -243,7 +243,7 @@
     "OKAY": {
      "r": {
       "ko": "원하던 곳은 아니었지만, {kid}은(는) 웃으며 '거기서 잘해볼게요' 했다.",
-      "en": "Not their first choice — but {kid} smiled and said, 'I'll make it work there.'"
+      "en": "Not their first choice, but {kid} smiled and said, 'I'll make it work there.'"
      }
     }
    }
@@ -306,7 +306,7 @@
     "GO": {
      "r": {
       "ko": "공항에서 {kid}이(가) 몇 번이나 뒤를 돌아봤다. 통장은 가벼워졌고, 마음은 무거워졌다.",
-      "en": "At the airport, {kid} looked back again and again. The bank account got lighter; your heart got heavier."
+      "en": "At the airport, {kid} looked back again and again. The bank account got lighter. Your heart got heavier."
      },
      "effects": [
       {
@@ -458,7 +458,7 @@
    "who": "me",
    "line": {
     "ko": "(야간 대학원 모집 공고. 오래전에 접었던 공부가 다시 하고 싶어졌다.)",
-    "en": "(An ad for a night graduate program. You find you want to study again — something you gave up long ago.)"
+    "en": "(An ad for a night graduate program. You realize you want to study again, something you gave up long ago.)"
    },
    "choices": [
     {
@@ -628,7 +628,7 @@
    "who": "app",
    "line": {
     "ko": "[커뮤니티] '올해 대상 작품, 해외 작품 표절 의혹' — 비교 이미지가 퍼지고 있다.",
-    "en": "[Online forum] 'This year's grand-prize entry: plagiarism allegations' — comparison images are spreading."
+    "en": "[Online forum] 'Plagiarism allegations against this year's grand-prize winner.' Comparison images are spreading."
    },
    "choices": [
     {
@@ -857,7 +857,7 @@
     "FRIENDS": {
      "r": {
       "ko": "실력은 늘었고, 좋은 친구가 생겼다.",
-      "en": "Your skills improved — and you gained a good friend."
+      "en": "Your language skills improved, and you gained a good friend."
      },
      "effects": [
       {

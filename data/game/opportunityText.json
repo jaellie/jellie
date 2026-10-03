@@ -59,7 +59,7 @@
    },
    "line": {
     "ko": "(해외 대학원 모집 공고를 봤다.)",
-    "en": "(You saw an application call for grad school abroad.)"
+    "en": "(You see an ad for grad programs abroad.)"
    },
    "choices": {
     "APPLY": {
@@ -236,7 +236,7 @@
     },
     "PASS": {
      "ko": "워라밸이 더 중요해요",
-     "en": "Pass (keep balance)"
+     "en": "Pass (keep my work-life balance)"
     }
    }
   },
@@ -257,7 +257,7 @@
     },
     "REMOTE": {
      "ko": "출장 많은 역할로 조율한다",
-     "en": "Negotiate frequent business trips instead"
+     "en": "Ask for regular business trips instead"
     },
     "DECLINE": {
      "ko": "여기 남는다",
@@ -429,7 +429,7 @@
    },
    "line": {
     "ko": "이번에 새로 모임 만드는데 올래?",
-    "en": "We're starting a new group—want to come?"
+    "en": "We're starting a new group. Want to come?"
    },
    "choices": {
     "JOIN": {
@@ -459,7 +459,7 @@
    },
    "line": {
     "ko": "(언어교환 모임 공고를 봤다.)",
-    "en": "(You saw a language-exchange meetup notice.)"
+    "en": "(You see a flyer for a language-exchange meetup.)"
    },
    "choices": {
     "JOIN": {
@@ -717,7 +717,7 @@
    },
    "line": {
     "ko": "(바닷가 서핑 스쿨 광고를 봤다.)",
-    "en": "(Saw an ad for a surf school on the coast.)"
+    "en": "(You see an ad for a surf school on the coast.)"
    },
    "choices": {
     "JOIN": {
@@ -811,7 +811,7 @@
     },
     "FRESH_START": {
      "ko": "차라리 잘됐다",
-     "en": "Honestly, a fresh start"
+     "en": "Honestly? Maybe it's a fresh start"
     }
    }
   }

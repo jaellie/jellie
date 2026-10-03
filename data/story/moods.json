@@ -173,18 +173,27 @@
   "PARENT_PASSING": [
    {
     "ko": "(엄마 아빠 목소리가 요즘 부쩍 작아졌다.)",
-    "en": "(Mom and Dad sound smaller on the phone lately.)",
-    "when": ["momAlive", "dadAlive"]
+    "en": "(Lately, Mom and Dad sound frailer on the phone.)",
+    "when": [
+     "momAlive",
+     "dadAlive"
+    ]
    },
    {
     "ko": "(엄마 목소리가 요즘 부쩍 작아졌다.)",
-    "en": "(Mom sounds smaller on the phone lately.)",
-    "when": ["momAlive", "!dadAlive"]
+    "en": "(Lately, Mom sounds frailer on the phone.)",
+    "when": [
+     "momAlive",
+     "!dadAlive"
+    ]
    },
    {
     "ko": "(아빠 목소리가 요즘 부쩍 작아졌다.)",
-    "en": "(Dad sounds smaller on the phone lately.)",
-    "when": ["dadAlive", "!momAlive"]
+    "en": "(Lately, Dad sounds frailer on the phone.)",
+    "when": [
+     "dadAlive",
+     "!momAlive"
+    ]
    }
   ],
   "PET_FAREWELL": [
@@ -200,7 +209,7 @@
    },
    {
     "ko": "(시차에 맞춰 알람을 맞추는 게 일상이 됐다.)",
-    "en": "(Setting alarms around the time difference has become normal.)"
+    "en": "(Setting alarms around the time zones has become normal.)"
    }
   ],
   "TALKING": [
@@ -449,7 +458,9 @@
    {
     "ko": "(올해는 조심해야 한다고 엄마가 그랬다.)",
     "en": "(Mom said this is a year to be careful.)",
-    "when": ["momAlive"]
+    "when": [
+     "momAlive"
+    ]
    }
   ],
   "CHEONEUL_GWIIN": [

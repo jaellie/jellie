@@ -45,7 +45,7 @@
     {
      "t": {
       "ko": "(그날 일이 있어서 {f:weddingmoney}만 보낸다)",
-      "en": "(Busy that day — just send {f:weddingmoney})"
+      "en": "(Busy that day. Just send {f:weddingmoney})"
      },
      "w": {
       "SEND": 1.0
@@ -81,7 +81,7 @@
     "TOAST": {
      "r": {
       "ko": "축사 중간에 목이 메었다. 하객들이 웃고, {buddy}은(는) 울었다.",
-      "en": "Your voice cracked halfway through the toast. The guests laughed; {buddy} cried."
+      "en": "Your voice cracked halfway through the toast. The guests laughed. {buddy} cried."
      },
      "effects": [
       {
@@ -291,7 +291,7 @@
     "PHOTO": {
      "r": {
       "ko": "흔들린 사진이 절반이었지만, 제일 좋은 표정은 다 내가 찍었다.",
-      "en": "Half the photos were blurry — but you caught all the best faces."
+      "en": "Half the photos were blurry, but you caught all the best faces."
      },
      "effects": [
       {
@@ -385,7 +385,7 @@
    "who": "me",
    "line": {
     "ko": "({relative}에게서 사진 한 장이 왔다. 쭈글쭈글한 작은 얼굴.) 너 이제 이모야! (고모야, 삼촌이야, 뭐든!)",
-    "en": "(A photo from {relative}: a tiny, wrinkly face.) You're an aunt now! (Or uncle — whatever!)"
+    "en": "(A photo from {relative}: a tiny, wrinkly face.) Guess who's an aunt or uncle now!"
    },
    "choices": [
     {

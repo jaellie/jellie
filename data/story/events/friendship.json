@@ -302,13 +302,13 @@
    "who": "stranger",
    "line": {
     "ko": "(길에서 누가 어깨를 쳤다.) 너… 혹시 초등학교 때 3반? 나야, 맨날 같이 {f:street} 먹던!",
-    "en": "(Someone tapped your shoulder on the street.) Hey… were you in class 3 in grade school? It's me — we ate {f:street} together every day!"
+    "en": "(Someone tapped your shoulder on the street.) Hey… weren't you in my class back in elementary school? It's me! We ate {f:street} together every day!"
    },
    "choices": [
     {
      "t": {
       "ko": "대박, 너 그대로다!",
-      "en": "No way — you haven't changed!"
+      "en": "No way! You haven't changed a bit!"
      },
      "w": {
       "FRIEND": 0.8,
@@ -426,13 +426,13 @@
     "REPAID": {
      "r": {
       "ko": "정확히 월말에 들어왔다. 커피 쿠폰까지 같이.",
-      "en": "It came back right at the end of the month — with a coffee voucher."
+      "en": "It came back right at the end of the month, with a coffee gift card."
      }
     },
     "NO": {
      "r": {
       "ko": "{friend}은(는) 괜찮다고 했다. 조금 서운한 목소리였다.",
-      "en": "{friend} said it was fine. Sounded a little hurt."
+      "en": "{friend} said it was fine, but sounded a little hurt."
      }
     }
    }
@@ -462,7 +462,7 @@
    "who": "me",
    "line": {
     "ko": "(TV를 켰더니 {friend}이(가) 나왔다. 예능 프로그램 메인 게스트로.)",
-    "en": "(You turned on the TV and there was {friend} — the main guest on a variety show.)"
+    "en": "(You turned on the TV, and there was {friend}, the main guest on a variety show.)"
    },
    "choices": [
     {
@@ -553,7 +553,7 @@
     "TEARS": {
      "r": {
       "ko": "마지막 문장에서 두 사람도, 나도 울었다.",
-      "en": "At the last line, everyone at the front was crying — you included."
+      "en": "At the last line, everyone up front was crying, you included."
      },
      "card": {
       "caption": {
@@ -625,7 +625,7 @@
    "who": "stranger",
    "line": {
     "ko": "(소개팅 상대가 조심스럽게 말했다.) 사실… 소개해준 친구분이 미리 연락해서 당신 험담을 하더라고요.",
-    "en": "(Your blind date said carefully:) Actually… the friend who set us up messaged me beforehand — and trashed you."
+    "en": "(Your blind date said carefully:) Actually… the friend who set us up messaged me beforehand and trashed you."
    },
    "choices": [
     {
@@ -702,7 +702,7 @@
    "who": "app",
    "line": {
     "ko": "[게임 메신저] 달토끼: 우리 5년째 같이 하는데 한 번 만날래? 나 이번 주에 그쪽 가.",
-    "en": "[Game chat] MoonRabbit: We've played together for five years — want to meet? I'm in your city this week."
+    "en": "[Game chat] MoonRabbit: We've played together for five years. Want to meet? I'm in your city this week."
    },
    "choices": [
     {
@@ -729,7 +729,7 @@
     "BEST": {
      "r": {
       "ko": "카페 문을 열고 들어온 달토끼는 쉰 살 아저씨였다. 그날 여섯 시간을 떠들었다.",
-      "en": "MoonRabbit walked into the café — a fifty-year-old guy. You talked for six hours."
+      "en": "MoonRabbit walked into the café: a fifty-year-old guy. You talked for six hours."
      },
      "effects": [
       {
@@ -804,7 +804,7 @@
     {
      "t": {
       "ko": "오, 밀어줄게!",
-      "en": "Oh — I'll help you out!"
+      "en": "Oh! I'll help you out!"
      },
      "w": {
       "COUPLE": 0.6,
@@ -825,7 +825,7 @@
     "COUPLE": {
      "r": {
       "ko": "둘이 사귄다. {f:holiday}에 {friend}이(가) 우리 집 식탁에 앉아 있다. 이상하고, 좋다.",
-      "en": "They're dating. Now {friend} sits at your family's {f:holiday} table. Strange — and nice."
+      "en": "They're dating. Now {friend} sits at your family's {f:holiday} table. Strange, and nice."
      },
      "card": {
       "caption": {
@@ -1071,7 +1071,7 @@
    "who": "me",
    "line": {
     "ko": "(내가 산 가방, 내가 간 카페, 내 머리 스타일까지. {friend}이(가) 전부 똑같이 따라 한다. 오늘은 내 SNS 말투까지.)",
-    "en": "(The bag you bought, the café you went to, even your haircut — {friend} copies it all. Today, even the way you write your posts.)"
+    "en": "(The bag you bought, the café you went to, even your haircut: {friend} copies it all. Today, even the way you write your posts.)"
    },
    "choices": [
     {
