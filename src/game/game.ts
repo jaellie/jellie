@@ -53,6 +53,7 @@ import { photoFor, setPhotoCulture } from "../integration/prototype";
 import { homeVars, nationCode, nationalityOf } from "../story/nationality";
 import { currencyFor, formatMoney, localizeMoneyText } from "./currency";
 import { pickReflection, reflectionCategory } from "../story/reflections";
+import { applyCulture } from "../story/culture";
 const BIG_MOMENTS = new Set(["PARENT_DEATH", "PARTNER_DEATH", "GOODBYE", "VOWS"]);
 /** The line category for a story moment with no card of its own. */
 const ARC_LINE: Record<string, string> = { DATING: "TOGETHER", TALKING: "LOVE_BEGINS", ENGAGEMENT: "VOWS", PARENT_PASSING: "PARENT_DEATH", FAMILY_PASSING: "GOODBYE", PARTNER_PASSING: "PARTNER_DEATH", ILLNESS: "HEALTH", LONG_DISTANCE: "TOGETHER", PARTING: "BREAKUP", DIVORCE: "DIVORCE", AFFAIR: "SHADOW", PREGNANCY: "NEW_LIFE" };
@@ -319,7 +320,14 @@ type Message = { id: string; from: string; requires?: string[]; weight?: number;
 
 const STORIES = storyData.stories as unknown as Story[];
 const MESSAGES = messageData.messages as unknown as Message[];
-const OPP_TEXT = oppText.opportunities as unknown as Record<string, { who: string; title: Bi; line: Bi; choices: Record<string, Bi> }>;
+type OppText = { who: string; title: Bi; line: Bi; choices: Record<string, Bi> };
+const OPP_TEXT = oppText.opportunities as unknown as Record<string, OppText & { byAge?: Array<{ min?: number; max?: number } & Partial<OppText>> }>;
+/** An offer's words at your age (grad school at 45 isn't a professor's suggestion anymore). */
+function oppTextAt(id: string, age: number): OppText {
+  const t = OPP_TEXT[id];
+  const f = t.byAge?.find((x) => (x.min === undefined || age >= x.min) && (x.max === undefined || age <= x.max));
+  return f ? { who: f.who ?? t.who, title: f.title ?? t.title, line: f.line ?? t.line, choices: { ...t.choices, ...(f.choices ?? {}) } } : t;
+}
 const UNIT = CFG.moneyUnitWon;
 
 function hash(...parts: Array<string | number>): number {
@@ -413,7 +421,12 @@ export class Game {
   facts(): LifeFacts {
     return computeFacts(this.state, { weekend: this.s.day?.weekend });
   }
+  /** Food and customs by nationality ({f:ramen} → 라면 / mac and cheese…), whatever the language. */
+  private cult(text: string): string {
+    return applyCulture(text, String(this.state.flags.nationality ?? "KR"), this.s.lang === "en" ? "en" : "ko");
+  }
   private fill(text: string): string {
+    text = this.cult(text);
     const f = this.facts();
     const t = fillNames(text, { ...langVars({ ...homeVars(this.state), ...fatedVars(this.state) }, this.s.lang ?? "ko"), partner: f.partnerName, friend: f.friendName, crush: f.crushName, fated: f.fatedName, sibling: this.siblingSender(), me: this.s.setup.name, spouse: this.spouseWord() });
     return this.s.lang === "ko" ? fixJosa(t) : t;
@@ -694,9 +707,15 @@ export class Game {
   private tidy(beats: Beat[]): Beat[] {
     for (const b of beats) {
       if (b.kind === "toast") {
+        b.text = this.cult(b.text);
         const t = splitSpeakerTag(b.text);
         if (t.tag) (b.from = t.tag), (b.text = t.text);
+      } else if (b.kind === "mood") {
+        b.text = this.cult(b.text);
       } else if (b.kind === "popup") {
+        b.popup.line = this.cult(b.popup.line);
+        if (b.popup.title) b.popup.title = this.cult(b.popup.title);
+        b.popup.ch = b.popup.ch.map((c) => ({ ...c, t: this.cult(c.t) }));
         const t = splitSpeakerTag(b.popup.line);
         if (t.tag) (b.popup.name = t.tag), (b.popup.line = t.text);
         if (b.popup.name) b.popup.line = dropOwnName(b.popup.line, b.popup.name);
@@ -1063,11 +1082,12 @@ export class Game {
       if (!SPEAKER_REQUIRES[who] || meets(SPEAKER_REQUIRES[who], facts)) return who;
       return (SPEAKER_FALLBACK[who] ?? []).find((w) => !SPEAKER_REQUIRES[w] || meets(SPEAKER_REQUIRES[w], facts));
     };
-    const usable = cands.filter((c) => speakerFor(OPP_TEXT[c.template.id].who));
+    const usable = cands.filter((c) => speakerFor(oppTextAt(c.template.id, Math.floor(st.age)).who));
     if (!usable.length) return;
     const pickC = rng.weighted(usable.map((c) => ({ item: c, weight: c.opportunity.score.probability })));
     const opp = pickC.explain();
-    const text = { ...OPP_TEXT[opp.templateId], who: speakerFor(OPP_TEXT[opp.templateId].who)! };
+    const at = oppTextAt(opp.templateId, Math.floor(st.age));
+    const text = { ...at, who: speakerFor(at.who)! };
     const available = this.events.options(st, opp).filter((o) => o.available);
     if (!available.length) return;
     this.director.record("major", { id: `opp:${opp.templateId}`, texts: [text.line.ko] });
@@ -1166,7 +1186,7 @@ export class Game {
     place("park", "walk", bi("공원 산책", "A walk in the park"), 1);
     place("cafe", "read", bi("카페에서 책 읽기", "Read at a café"), 1);
     place("cinema", "watch_movie", bi("영화 보러 가기", "See a movie"), 0.8 * novelty("cinema"));
-    place("diner", "eat", bi("분식집에서 떡볶이", "Tteokbokki at the diner"), 0.7);
+    place("diner", "eat", bi("{f:street} 먹으러 가기", "Go out for {f:street}"), 0.7);
     place("amusement_park", "ride", bi("놀이공원 가기", "Amusement park"), 0.5 * novelty("amusement_park"));
     place("library", "read", bi("도서관 가기", "Go to the library"), 0.5 + Math.max(0, mods.education));
     place("street", "shop", bi("시내 구경", "Wander downtown"), 0.7);
@@ -1259,6 +1279,8 @@ export class Game {
   choose(index: number): ChoiceResult | undefined {
     const r = this.chooseRaw(index);
     if (r) {
+      r.line = this.cult(r.line);
+      if (r.quote) r.quote = this.cult(r.quote);
       const t = splitSpeakerTag(r.line);
       if (t.tag) (r.name = t.tag), (r.line = t.text);
       if (r.name) r.line = dropOwnName(r.line, r.name);
@@ -1532,7 +1554,7 @@ export class Game {
     // notes: what happened meanwhile, off-screen ("사채 — 불법 이자는 무효라고 했다…"), also at the top of `lines`.
     updateBond(st);
     const ended = !st.alive || !!st.story?.bond?.over;
-    const out = { over: ended, fromAge, toAge: Math.floor(st.age), lines, cards, notes, photo: gapPhoto(st, before, snapshot(st), lines, rng) };
+    const out = { over: ended, fromAge, toAge: Math.floor(st.age), lines: lines.map((l) => this.cult(l)), cards: cards.map((c) => ({ ...c, caption: this.cult(c.caption) })), notes: notes.map((n) => this.cult(n)), photo: gapPhoto(st, before, snapshot(st), lines, rng) };
     if (ended) {
       s.over = true;
       return out;
@@ -1610,7 +1632,7 @@ export class Game {
       fadeMs: 4000,
       lineMs: 3500,
       epitaph,
-      lines: picked.map((l) => l.text[lang]),
+      lines: picked.map((l) => this.cult(l.text[lang])),
       cards: [],
     };
   }

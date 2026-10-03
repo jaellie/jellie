@@ -21,8 +21,8 @@
    ],
    "weight": 1,
    "text": {
-    "ko": "[사진] 오늘 만든 반찬",
-    "en": "[photo] Side dishes I made today"
+    "ko": "[사진] 오늘 만든 {f:sides}",
+    "en": "[photo] {f:sides} I made today"
    }
   },
   {
@@ -814,8 +814,8 @@
    ],
    "weight": 1,
    "text": {
-    "ko": "이번 명절에 내려가?",
-    "en": "Going home for the holidays?"
+    "ko": "이번 {f:holiday}에 내려가?",
+    "en": "Going home for {f:holiday}?"
    }
   },
   {
@@ -924,8 +924,8 @@
    ],
    "weight": 1,
    "text": {
-    "ko": "김치 보냈다. 택배 오면 바로 냉장고에 넣어.",
-    "en": "Sent you kimchi. Put it in the fridge as soon as it arrives."
+    "ko": "{f:pickle} 보냈다. 택배 오면 바로 냉장고에 넣어.",
+    "en": "Sent you {f:pickle}. Put it in the fridge as soon as it arrives."
    }
   },
   {
@@ -984,8 +984,8 @@
    ],
    "weight": 1,
    "text": {
-    "ko": "반찬 남은 거 있으면 버리지 말고 볶음밥 해 먹어.",
-    "en": "If there are leftover side dishes, don't toss them. Make fried rice."
+    "ko": "{f:sides} 남은 거 있으면 버리지 말고 볶음밥 해 먹어.",
+    "en": "If there are leftover {f:sides}, don't toss them. Make fried rice."
    }
   },
   {
@@ -996,8 +996,8 @@
    ],
    "weight": 1,
    "text": {
-    "ko": "너 좋아하는 갈비찜 했는데 언제 와?",
-    "en": "Made your favorite braised ribs. When are you coming?"
+    "ko": "너 좋아하는 {f:momdish} 했는데 언제 와?",
+    "en": "Made your favorite {f:momdish}. When are you coming?"
    }
   },
   {
@@ -1128,8 +1128,8 @@
    ],
    "weight": 1,
    "text": {
-    "ko": "명절에 뭐 먹고 싶어? 미리 장 봐 둘게.",
-    "en": "What do you want to eat for the holiday? I'll shop ahead."
+    "ko": "{f:holiday}에 뭐 먹고 싶어? 미리 장 봐 둘게.",
+    "en": "What do you want to eat for the {f:holiday}? I'll shop ahead."
    }
   },
   {
@@ -1260,8 +1260,8 @@
    ],
    "weight": 1,
    "text": {
-    "ko": "[아빠] 이번 주말에 등산 갈래? 정상에서 컵라면 사 줄게",
-    "en": "[Dad] Hiking this weekend? I'll buy you cup noodles at the top."
+    "ko": "[아빠] 이번 주말에 등산 갈래? 정상에서 {f:ramen} 사 줄게",
+    "en": "[Dad] Hiking this weekend? I'll buy you {f:ramen} at the top."
    }
   },
   {

@@ -301,8 +301,8 @@
    "activity": "walk",
    "who": "stranger",
    "line": {
-    "ko": "(길에서 누가 어깨를 쳤다.) 너… 혹시 초등학교 때 3반? 나야, 맨날 같이 떡볶이 먹던!",
-    "en": "(Someone tapped your shoulder on the street.) Hey… were you in class 3 in grade school? It's me — we ate tteokbokki together every day!"
+    "ko": "(길에서 누가 어깨를 쳤다.) 너… 혹시 초등학교 때 3반? 나야, 맨날 같이 {f:street} 먹던!",
+    "en": "(Someone tapped your shoulder on the street.) Hey… were you in class 3 in grade school? It's me — we ate {f:street} together every day!"
    },
    "choices": [
     {
@@ -329,8 +329,8 @@
    "outcomes": {
     "FRIEND": {
      "r": {
-      "ko": "그 떡볶이집은 아직 있었다. 둘이 옛날 그 자리에 앉았다.",
-      "en": "The tteokbokki place was still there. You sat in your old seats."
+      "ko": "그 {f:street}집은 아직 있었다. 둘이 옛날 그 자리에 앉았다.",
+      "en": "The {f:street} place was still there. You sat in your old seats."
      },
      "effects": [
       {
@@ -339,8 +339,8 @@
      ],
      "card": {
       "caption": {
-       "ko": "그 떡볶이집",
-       "en": "That tteokbokki place"
+       "ko": "그 {f:street}집",
+       "en": "That {f:street} place"
       },
       "location": "diner",
       "actors": [
@@ -824,8 +824,8 @@
    "outcomes": {
     "COUPLE": {
      "r": {
-      "ko": "둘이 사귄다. 명절에 {friend}이(가) 우리 집 식탁에 앉아 있다. 이상하고, 좋다.",
-      "en": "They're dating. Now {friend} sits at your family's holiday table. Strange — and nice."
+      "ko": "둘이 사귄다. {f:holiday}에 {friend}이(가) 우리 집 식탁에 앉아 있다. 이상하고, 좋다.",
+      "en": "They're dating. Now {friend} sits at your family's {f:holiday} table. Strange — and nice."
      },
      "card": {
       "caption": {
@@ -883,8 +883,8 @@
    "activity": "eat",
    "who": "crush",
    "line": {
-    "ko": "부탁 하나만. 이번 명절에 우리 집에 연인인 척 좀 같이 가줘! 결혼 잔소리 때문에 죽겠어.",
-    "en": "One favor. Come home with me for the holidays and pretend we're together! The marriage nagging is killing me."
+    "ko": "부탁 하나만. 이번 {f:holiday}에 우리 집에 연인인 척 좀 같이 가줘! 결혼 잔소리 때문에 죽겠어.",
+    "en": "One favor. Come home with me for {f:holiday} and pretend we're together! The marriage nagging is killing me."
    },
    "choices": [
     {
@@ -939,8 +939,8 @@
     },
     "NO": {
      "r": {
-      "ko": "{crush}은(는) 결국 혼자 가서 잔소리를 들었다. 치킨으로 위로해줬다.",
-      "en": "{crush} went alone and got nagged. You consoled them with fried chicken."
+      "ko": "{crush}은(는) 결국 혼자 가서 잔소리를 들었다. {f:delivery}(으)로 위로해줬다.",
+      "en": "{crush} went alone and got nagged. You consoled them with {f:delivery}."
      }
     }
    }
@@ -1014,8 +1014,8 @@
     },
     "CHAOS": {
      "r": {
-      "ko": "반나절을 헤맸다. 그래도 저녁엔 다 같이 컵라면을 먹으며 웃었다.",
-      "en": "Half a day lost. But by evening everyone was laughing over cup noodles."
+      "ko": "반나절을 헤맸다. 그래도 저녁엔 다 같이 {f:ramen}을(를) 먹으며 웃었다.",
+      "en": "Half a day lost. But by evening everyone was laughing over {f:ramen}."
      }
     },
     "FIGHT": {

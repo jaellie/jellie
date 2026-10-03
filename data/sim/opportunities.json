@@ -145,6 +145,15 @@
         {
           "kind": "enrolledIn",
           "program": "BACHELOR"
+        },
+        {
+          "kind": "age",
+          "min": 18,
+          "max": 32
+        },
+        {
+          "kind": "enrolled",
+          "value": true
         }
       ],
       "circumstances": {

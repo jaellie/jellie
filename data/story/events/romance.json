@@ -1977,8 +1977,8 @@
     },
     "TOO_SOON": {
      "r": {
-      "ko": "집에 와서 혼자 라면을 끓였다. 아직은 이게 편하다.",
-      "en": "You came home and made ramen alone. This is easier, for now."
+      "ko": "집에 와서 혼자 {f:ramen}을(를) 끓였다. 아직은 이게 편하다.",
+      "en": "You came home and made {f:ramen} alone. This is easier, for now."
      }
     }
    }

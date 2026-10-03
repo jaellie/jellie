@@ -294,8 +294,8 @@
    "activity": "eat",
    "who": "inlaw",
    "line": {
-    "ko": "(명절 아침, 시어머니이(가) 부엌에서 한마디 하셨다.) 요즘 사람들은 도무지 어른을 몰라. 우리 {partner}이(가) 아깝지.",
-    "en": "(Holiday morning, your mother-in-law remarked in the kitchen:) Young people today have no respect. {partner} deserved better."
+    "ko": "({f:holiday} 아침, 시어머니이(가) 부엌에서 한마디 하셨다.) 요즘 사람들은 도무지 어른을 몰라. 우리 {partner}이(가) 아깝지.",
+    "en": "({f:holiday} morning, your mother-in-law remarked in the kitchen:) Young people today have no respect. {partner} deserved better."
    },
    "choices": [
     {
@@ -362,8 +362,8 @@
     },
     "BLOWUP": {
      "r": {
-      "ko": "명절 상이 얼어붙었다. 그날 이후 전화가 뜸해졌다.",
-      "en": "The holiday table froze. The phone calls grew rare after that."
+      "ko": "{f:holiday} 상이 얼어붙었다. 그날 이후 전화가 뜸해졌다.",
+      "en": "The {f:holiday} table froze. The phone calls grew rare after that."
      },
      "effects": [
       {
@@ -416,8 +416,8 @@
    "activity": "eat",
    "who": "inlaw",
    "line": {
-    "ko": "(명절 아침, 장모님이(가) 부엌에서 한마디 하셨다.) 요즘 사람들은 도무지 어른을 몰라. 우리 {partner}이(가) 아깝지.",
-    "en": "(Holiday morning, your mother-in-law remarked in the kitchen:) Young people today have no respect. {partner} deserved better."
+    "ko": "({f:holiday} 아침, 장모님이(가) 부엌에서 한마디 하셨다.) 요즘 사람들은 도무지 어른을 몰라. 우리 {partner}이(가) 아깝지.",
+    "en": "({f:holiday} morning, your mother-in-law remarked in the kitchen:) Young people today have no respect. {partner} deserved better."
    },
    "choices": [
     {
@@ -484,8 +484,8 @@
     },
     "BLOWUP": {
      "r": {
-      "ko": "명절 상이 얼어붙었다. 그날 이후 전화가 뜸해졌다.",
-      "en": "The holiday table froze. The phone calls grew rare after that."
+      "ko": "{f:holiday} 상이 얼어붙었다. 그날 이후 전화가 뜸해졌다.",
+      "en": "The {f:holiday} table froze. The phone calls grew rare after that."
      },
      "effects": [
       {
@@ -1996,8 +1996,8 @@
     },
     "COMPROMISE": {
      "r": {
-      "ko": "걸어서 5분 거리로 이사했다. 반찬이 자주 문 앞에 놓여 있다.",
-      "en": "You moved five minutes away. Side dishes often appear at your door."
+      "ko": "걸어서 5분 거리로 이사했다. {f:sides}이(가) 자주 문 앞에 놓여 있다.",
+      "en": "You moved five minutes away. {f:sides} often appear at your door."
      }
     },
     "FIGHT": {

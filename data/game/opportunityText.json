@@ -86,7 +86,16 @@
      "ko": "넘긴다",
      "en": "Ignore the opportunity"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 32,
+     "line": {
+      "ko": "(서른이 넘어 유학이라니. 그래도 해외 대학원 모집 공고에서 눈을 뗄 수가 없었다.)",
+      "en": "(Studying abroad, past thirty? Still, you can't take your eyes off that overseas grad program ad.)"
+     }
+    }
+   ]
   },
   "LOCAL_GRAD_SCHOOL": {
    "who": "me",
@@ -107,7 +116,17 @@
      "ko": "지금은 아니다",
      "en": "Not now"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 33,
+     "who": "me",
+     "line": {
+      "ko": "(오래 덮어 둔 공부가 다시 하고 싶어졌다. 이 나이에 대학원이라니. 그래도 마음이 자꾸 그쪽으로 간다.)",
+      "en": "(You want to study again, something you shelved years ago. Grad school, at this age? Your heart keeps drifting there anyway.)"
+     }
+    }
+   ]
   },
   "RESEARCH_POSITION": {
    "who": "professor",
@@ -128,7 +147,17 @@
      "ko": "사양할게요",
      "en": "Decline"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 38,
+     "who": "me",
+     "line": {
+      "ko": "(옛 지도교수에게서 연락이 왔다. 이 나이에 박사 과정, 해 볼 생각 있냐고.)",
+      "en": "(Your old advisor reached out. A PhD, at this stage of life? They think you should.)"
+     }
+    }
+   ]
   },
   "CERTIFICATION": {
    "who": "me",
@@ -149,7 +178,16 @@
      "ko": "건너뛴다",
      "en": "Skip it"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 50,
+     "line": {
+      "ko": "(이 나이에 자격증 시험이라니. 그래도 두 번째 인생을 위한 준비라고 생각하기로 했다.)",
+      "en": "(A certification exam, at your age? You decide to call it getting ready for your second act.)"
+     }
+    }
+   ]
   },
   "FIRST_JOB": {
    "who": "recruiter",
@@ -170,7 +208,16 @@
      "ko": "더 찾아본다",
      "en": "Keep looking"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 45,
+     "line": {
+      "ko": "경력은 조금 다르지만, 연륜이 필요한 자리예요. 함께해 보시겠어요?",
+      "en": "Your background's a little different, but this role needs real experience. Would you join us?"
+     }
+    }
+   ]
   },
   "PROMOTION": {
    "who": "boss",
@@ -258,7 +305,16 @@
      "ko": "하던 일을 계속한다",
      "en": "Stay on my path"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 50,
+     "line": {
+      "ko": "(쉰이 넘어 완전히 다른 일을 해 볼 기회가 생겼다. 늦었다고 하기엔, 아직 남은 날이 많다.)",
+      "en": "(Past fifty, a chance to do something completely different. Too late? There are plenty of days left.)"
+     }
+    }
+   ]
   },
   "BUSINESS_OPPORTUNITY": {
    "who": "friend",
@@ -384,7 +440,16 @@
      "ko": "혼자가 좋아",
      "en": "Keep to myself"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 60,
+     "line": {
+      "ko": "이번에 동네 산책 모임 만드는데 같이 할래?",
+      "en": "I'm starting a neighborhood walking group. Want to join?"
+     }
+    }
+   ]
   },
   "LANGUAGE_EXCHANGE": {
    "who": "me",
@@ -405,7 +470,16 @@
      "ko": "넘긴다",
      "en": "Pass"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 40,
+     "line": {
+      "ko": "(언어교환 모임 공고를 봤다. 다들 젊겠지만, 배움에 나이가 어디 있나.)",
+      "en": "(A flyer for a language exchange meetup. They'll all be young, but there's no age limit on learning.)"
+     }
+    }
+   ]
   },
   "ROMANTIC_ENCOUNTER": {
    "who": "stranger",
@@ -430,7 +504,16 @@
      "ko": "그냥 지나친다",
      "en": "Let it pass"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 60,
+     "line": {
+      "ko": "(동네 산책길, 매일 같은 시간에 마주치는 사람이 있다. 오늘은 그쪽이 먼저 목례를 했다.)",
+      "en": "(On your daily walk, there's someone you pass at the same time every day. Today, they nodded first.)"
+     }
+    }
+   ]
   },
   "PROPOSAL": {
    "who": "partner",
@@ -455,7 +538,16 @@
      "ko": "헤어지자",
      "en": "Break up"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 50,
+     "line": {
+      "ko": "우리… 이 나이에 무슨 결혼이냐 하겠지만, 남은 날들을 너랑 같이 보내고 싶어.",
+      "en": "I know people will say we're too old for this, but… I want to spend the rest of my days with you."
+     }
+    }
+   ]
   },
   "RELATIONSHIP_STRAIN": {
    "who": "partner",
@@ -585,7 +677,16 @@
      "ko": "안 한다",
      "en": "Not for me"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 60,
+     "line": {
+      "ko": "(동네 헬스장에서 시니어 할인을 한다. 무릎을 생각하면 지금이 시작할 때다.)",
+      "en": "(The neighborhood gym has a senior discount. For your knees' sake, now's the time.)"
+     }
+    }
+   ]
   },
   "COOKING_CLASS_SIGNUP": {
    "who": "me",
@@ -627,7 +728,16 @@
      "ko": "안 한다",
      "en": "Not for me"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 45,
+     "line": {
+      "ko": "(바닷가 서핑 스쿨 광고를 봤다. 수강생 대부분이 이십 대겠지. …그게 뭐 어때서.)",
+      "en": "(An ad for a surf school by the beach. Everyone there's probably in their twenties. …So what.)"
+     }
+    }
+   ]
   },
   "DATING_APP": {
    "who": "friend",
@@ -648,7 +758,16 @@
      "ko": "별로야",
      "en": "Not for me"
     }
-   }
+   },
+   "byAge": [
+    {
+     "min": 45,
+     "line": {
+      "ko": "요즘은 우리 나이에도 다들 앱으로 만나더라. 너도 한번 해 봐!",
+      "en": "These days, even people our age meet on apps. You should try it!"
+     }
+    }
+   ]
   },
   "TRIP_ABROAD": {
    "who": "me",

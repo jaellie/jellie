@@ -391,7 +391,7 @@
    "income": 0.45,
    "unstable": true,
    "meet": {
-    "ko": "(동네 분식집 사장님이 오늘따라 떡볶이를 한 국자 더 얹어줬다.) 요즘 힘들어 보여서요.",
+    "ko": "(동네 분식집 사장님이 오늘따라 {f:street}을(를) 한 국자 더 얹어줬다.) 요즘 힘들어 보여서요.",
     "en": "(The owner of the neighborhood snack bar adds an extra scoop today.) You've looked tired lately."
    },
    "work": "diner",
@@ -507,8 +507,8 @@
    "shift": "day",
    "income": 0.75,
    "meet": {
-    "ko": "(야근 끝, 편의점 앞. 같은 컵라면을 집어 든 그 사람이 웃었다.)",
-    "en": "(After overtime, outside the convenience store. The person who grabbed the same cup noodles laughed.)"
+    "ko": "(야근 끝, {f:store} 앞. 같은 {f:ramen}을(를) 집어 든 그 사람이 웃었다.)",
+    "en": "(After overtime, outside the {f:store}. The person who grabbed the same {f:ramen} laughed.)"
    },
    "kind": "employee"
   },
@@ -667,8 +667,8 @@
   }
  ],
  "meetCity": {
-  "ko": "({fatedCity} 출장 마지막 날. 호텔 앞 편의점에서 우산 하나를 두고 그 사람과 마주쳤다. {fatedCity}에 산다고 했다.)",
-  "en": "(The last day of a work trip to {fatedCity}. You and a stranger reach for the last umbrella at a convenience store. They live in {fatedCity}.)"
+  "ko": "({fatedCity} 출장 마지막 날. 호텔 앞 {f:store}에서 우산 하나를 두고 그 사람과 마주쳤다. {fatedCity}에 산다고 했다.)",
+  "en": "(The last day of a work trip to {fatedCity}. You and a stranger reach for the last umbrella at a {f:store}. They live in {fatedCity}.)"
  },
  "meetCityTrip": {
   "ko": "({fatedCity} 여행 중, 게스트하우스 옥상에서 그 사람이 먼저 말을 걸었다. {fatedCity} 토박이라고 했다.)",

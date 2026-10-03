@@ -1056,8 +1056,8 @@
     },
     "STAY": {
      "r": {
-      "ko": "할머니는 혀를 찼지만, 나는 우리 동네 떡집이 좋다.",
-      "en": "The fortune teller clicked her tongue, but you love your neighborhood rice-cake shop."
+      "ko": "할머니는 혀를 찼지만, 나는 우리 동네 {f:bakery}이(가) 좋다.",
+      "en": "The fortune teller clicked her tongue, but you love your neighborhood {f:bakery}."
      }
     }
    }
@@ -1518,8 +1518,8 @@
    "outcomes": {
     "FRIEND": {
      "r": {
-      "ko": "그분은 대신 매년 명절에 과일 상자를 보냈다. 그렇게 가족 같은 사이가 됐다.",
-      "en": "Instead, every holiday they sent a box of fruit. You became like family."
+      "ko": "그분은 대신 매년 {f:holiday}에 과일 상자를 보냈다. 그렇게 가족 같은 사이가 됐다.",
+      "en": "Instead, every {f:holiday} they sent a box of fruit. You became like family."
      },
      "effects": [
       {

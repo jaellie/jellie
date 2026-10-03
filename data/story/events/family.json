@@ -57,8 +57,8 @@
     },
     "SLOW": {
      "r": {
-      "ko": "그래도 문은 열어두기로 했다. 다음 명절엔 {who}이(가) 먼저 안부를 물었다.",
-      "en": "You left the door open. At the next holiday, {who} asked how you were — first."
+      "ko": "그래도 문은 열어두기로 했다. 다음 {f:holiday}엔 {who}이(가) 먼저 안부를 물었다.",
+      "en": "You left the door open. At the next {f:holiday}, {who} asked how you were — first."
      }
     }
    }
@@ -189,8 +189,8 @@
     },
     "WIN": {
      "r": {
-      "ko": "내 몫은 챙겼다. 대신 그 뒤로 명절에 빈자리가 생겼다.",
-      "en": "You got your share. And the holidays had an empty seat after that."
+      "ko": "내 몫은 챙겼다. 대신 그 뒤로 {f:holiday}에 빈자리가 생겼다.",
+      "en": "You got your share. And {f:holiday} had an empty seat after that."
      },
      "effects": [
       {
@@ -422,8 +422,8 @@
     },
     "SORRY": {
      "r": {
-      "ko": "돈은 없었다. 대신 '미안해'를 백 번쯤 들었다. 된장찌개를 끓였다.",
-      "en": "No money. Just 'I'm sorry' about a hundred times. You made soybean stew."
+      "ko": "돈은 없었다. 대신 '미안해'를 백 번쯤 들었다. {f:stew}을(를) 끓였다.",
+      "en": "No money. Just 'I'm sorry' about a hundred times. You made {f:stew}."
      },
      "effects": [
       {
@@ -627,8 +627,8 @@
    "outcomes": {
     "CUT": {
      "r": {
-      "ko": "몇 번의 명절이 조용히 지나갔다. 마음 한쪽이 편하면서도, 계속 아팠다.",
-      "en": "Several holidays passed quietly. Part of you felt at peace — and part of you kept aching."
+      "ko": "몇 번의 {f:holiday}이(가) 조용히 지나갔다. 마음 한쪽이 편하면서도, 계속 아팠다.",
+      "en": "Several {f:holiday} passed quietly. Part of you felt at peace — and part of you kept aching."
      },
      "effects": [
       {
@@ -837,8 +837,8 @@
    "outcomes": {
     "CUT": {
      "r": {
-      "ko": "몇 번의 명절이 조용히 지나갔다. 마음 한쪽이 편하면서도, 계속 아팠다.",
-      "en": "Several holidays passed quietly. Part of you felt at peace — and part of you kept aching."
+      "ko": "몇 번의 {f:holiday}이(가) 조용히 지나갔다. 마음 한쪽이 편하면서도, 계속 아팠다.",
+      "en": "Several {f:holiday} passed quietly. Part of you felt at peace — and part of you kept aching."
      },
      "effects": [
       {
@@ -1821,8 +1821,8 @@
    "activity": "eat",
    "who": "relative",
    "line": {
-    "ko": "(명절 상. 술이 몇 순배 돌자, 누군가 건드리지 말아야 할 얘기를 꺼냈다.) 너는 언제 철들래? 남들은 벌써 다 자리 잡았던데.",
-    "en": "(Holiday table. A few rounds of drinks in, someone brings up exactly what they shouldn't.) When are you going to grow up? Everyone else has settled down already."
+    "ko": "({f:holiday} 상. 술이 몇 순배 돌자, 누군가 건드리지 말아야 할 얘기를 꺼냈다.) 너는 언제 철들래? 남들은 벌써 다 자리 잡았던데.",
+    "en": "({f:holiday} table. A few rounds of drinks in, someone brings up exactly what they shouldn't.) When are you going to grow up? Everyone else has settled down already."
    },
    "choices": [
     {
@@ -1865,8 +1865,8 @@
     },
     "BLOWUP": {
      "r": {
-      "ko": "상이 뒤집어질 뻔했다. 올해 명절은 전 부치다 말고 끝났다.",
-      "en": "The table nearly flipped. This year's holiday ended halfway through frying the pancakes."
+      "ko": "상이 뒤집어질 뻔했다. 올해 {f:holiday}은(는) 음식 준비하다 말고 끝났다.",
+      "en": "The table nearly flipped. This year's {f:holiday} ended halfway through frying the pancakes."
      },
      "effects": [
       {
@@ -1876,8 +1876,8 @@
      ],
      "card": {
       "caption": {
-       "ko": "뒤집힐 뻔한 명절 상",
-       "en": "The holiday table that nearly flipped"
+       "ko": "뒤집힐 뻔한 {f:holiday} 상",
+       "en": "The {f:holiday} table that nearly flipped"
       },
       "location": "family_home",
       "actors": [

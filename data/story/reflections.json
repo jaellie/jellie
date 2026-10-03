@@ -658,8 +658,8 @@
     "en": "Being truly happy for someone else. Maybe that's what being a grown-up is."
    },
    {
-    "ko": "우리가 언제 이렇게 컸지. 엊그제까지 교복 입고 떡볶이 먹던 애들이.",
-    "en": "When did we grow up? Just yesterday we were eating tteokbokki in school uniforms."
+    "ko": "우리가 언제 이렇게 컸지. 엊그제까지 교복 입고 {f:street} 먹던 애들이.",
+    "en": "When did we grow up? Just yesterday we were eating {f:street} in school uniforms."
    },
    {
     "ko": "박수 치다가 울컥했다. 다들 이렇게 열심히 살고 있었구나.",

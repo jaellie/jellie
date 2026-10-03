@@ -1,0 +1,1070 @@
+{
+ "_doc": "Food and customs that change with your nationality (not your language). Text uses {f:key}; the region comes from the nationality (see src/story/culture.ts). Each entry: region → [ko, en]. Missing regions fall back to OTHER.",
+ "regionOf": {
+  "KR": "KR",
+  "JP": "JP",
+  "CN": "CN",
+  "TW": "CN",
+  "HK": "CN",
+  "MO": "CN",
+  "TH": "SEA",
+  "VN": "SEA",
+  "PH": "SEA",
+  "MY": "SEA",
+  "SG": "SEA",
+  "ID": "SEA",
+  "KH": "SEA",
+  "LA": "SEA",
+  "MM": "SEA",
+  "IN": "SASIA",
+  "PK": "SASIA",
+  "BD": "SASIA",
+  "LK": "SASIA",
+  "NP": "SASIA",
+  "AE": "MENA",
+  "SA": "MENA",
+  "QA": "MENA",
+  "KW": "MENA",
+  "EG": "MENA",
+  "TR": "MENA",
+  "IR": "MENA",
+  "IL": "MENA",
+  "JO": "MENA",
+  "LB": "MENA",
+  "MA": "MENA",
+  "TN": "MENA",
+  "US": "NAM",
+  "CA": "NAM",
+  "MX": "LATAM",
+  "BR": "LATAM",
+  "AR": "LATAM",
+  "CL": "LATAM",
+  "CO": "LATAM",
+  "PE": "LATAM",
+  "CU": "LATAM",
+  "AU": "OCEANIA",
+  "NZ": "OCEANIA",
+  "GB": "EUROPE",
+  "IE": "EUROPE",
+  "FR": "EUROPE",
+  "DE": "EUROPE",
+  "IT": "EUROPE",
+  "ES": "EUROPE",
+  "PT": "EUROPE",
+  "NL": "EUROPE",
+  "BE": "EUROPE",
+  "CH": "EUROPE",
+  "AT": "EUROPE",
+  "SE": "EUROPE",
+  "NO": "EUROPE",
+  "DK": "EUROPE",
+  "FI": "EUROPE",
+  "PL": "EUROPE",
+  "CZ": "EUROPE",
+  "HU": "EUROPE",
+  "GR": "EUROPE",
+  "RU": "EUROPE",
+  "UA": "EUROPE",
+  "RO": "EUROPE",
+  "NG": "AFRICA",
+  "KE": "AFRICA",
+  "ZA": "AFRICA",
+  "GH": "AFRICA",
+  "ET": "AFRICA",
+  "TZ": "AFRICA"
+ },
+ "words": {
+  "ramen": {
+   "KR": [
+    "라면",
+    "ramyeon"
+   ],
+   "JP": [
+    "컵라면",
+    "cup noodles"
+   ],
+   "CN": [
+    "컵라면",
+    "instant noodles"
+   ],
+   "SEA": [
+    "인스턴트 쌀국수",
+    "instant noodles"
+   ],
+   "SASIA": [
+    "매기 누들",
+    "Maggi noodles"
+   ],
+   "MENA": [
+    "인스턴트 누들",
+    "instant noodles"
+   ],
+   "NAM": [
+    "마카로니 앤 치즈",
+    "mac and cheese"
+   ],
+   "LATAM": [
+    "컵라면",
+    "cup noodles"
+   ],
+   "EUROPE": [
+    "인스턴트 누들",
+    "instant noodles"
+   ],
+   "OCEANIA": [
+    "2분 누들",
+    "two-minute noodles"
+   ],
+   "AFRICA": [
+    "인스턴트 누들",
+    "instant noodles"
+   ],
+   "OTHER": [
+    "인스턴트 누들",
+    "instant noodles"
+   ]
+  },
+  "store": {
+   "KR": [
+    "편의점",
+    "convenience store"
+   ],
+   "JP": [
+    "편의점",
+    "konbini"
+   ],
+   "CN": [
+    "편의점",
+    "convenience store"
+   ],
+   "SEA": [
+    "편의점",
+    "convenience store"
+   ],
+   "NAM": [
+    "동네 마트",
+    "corner store"
+   ],
+   "EUROPE": [
+    "동네 슈퍼",
+    "corner shop"
+   ],
+   "OCEANIA": [
+    "동네 가게",
+    "corner shop"
+   ],
+   "OTHER": [
+    "동네 가게",
+    "corner shop"
+   ]
+  },
+  "street": {
+   "KR": [
+    "떡볶이",
+    "tteokbokki"
+   ],
+   "JP": [
+    "타코야키",
+    "takoyaki"
+   ],
+   "CN": [
+    "꼬치구이",
+    "street skewers"
+   ],
+   "SEA": [
+    "사테 꼬치",
+    "satay skewers"
+   ],
+   "SASIA": [
+    "파니푸리",
+    "pani puri"
+   ],
+   "MENA": [
+    "팔라펠",
+    "falafel"
+   ],
+   "NAM": [
+    "핫도그",
+    "hot dogs"
+   ],
+   "LATAM": [
+    "타코",
+    "tacos"
+   ],
+   "EUROPE": [
+    "감자튀김",
+    "fries"
+   ],
+   "OCEANIA": [
+    "피시 앤 칩스",
+    "fish and chips"
+   ],
+   "AFRICA": [
+    "수야 꼬치",
+    "suya skewers"
+   ],
+   "OTHER": [
+    "길거리 꼬치",
+    "street skewers"
+   ]
+  },
+  "streetset": {
+   "KR": [
+    "떡볶이, 순대, 어묵",
+    "Tteokbokki, sundae, fish cakes"
+   ],
+   "JP": [
+    "타코야키, 야키소바, 닭꼬치",
+    "Takoyaki, yakisoba, yakitori"
+   ],
+   "CN": [
+    "꼬치, 만두, 군고구마",
+    "Skewers, dumplings, roasted sweet potatoes"
+   ],
+   "SEA": [
+    "사테, 쌀국수, 망고 찹쌀밥",
+    "Satay, noodles, mango sticky rice"
+   ],
+   "SASIA": [
+    "파니푸리, 사모사, 짜이",
+    "Pani puri, samosas, chai"
+   ],
+   "MENA": [
+    "팔라펠, 샤와르마, 민트티",
+    "Falafel, shawarma, mint tea"
+   ],
+   "NAM": [
+    "핫도그, 프레츨, 레모네이드",
+    "Hot dogs, pretzels, lemonade"
+   ],
+   "LATAM": [
+    "타코, 엘로테, 추로스",
+    "Tacos, elote, churros"
+   ],
+   "EUROPE": [
+    "감자튀김, 크레페, 핫와인",
+    "Fries, crêpes, mulled wine"
+   ],
+   "OCEANIA": [
+    "미트파이, 피시 앤 칩스, 아이스크림",
+    "Meat pies, fish and chips, ice cream"
+   ],
+   "OTHER": [
+    "꼬치, 튀김, 주스",
+    "Skewers, fried snacks, juice"
+   ]
+  },
+  "delivery": {
+   "KR": [
+    "치킨",
+    "fried chicken"
+   ],
+   "JP": [
+    "가라아게",
+    "karaage"
+   ],
+   "CN": [
+    "양꼬치",
+    "lamb skewers"
+   ],
+   "SEA": [
+    "팟타이",
+    "pad thai"
+   ],
+   "SASIA": [
+    "비리야니",
+    "biryani"
+   ],
+   "MENA": [
+    "샤와르마",
+    "shawarma"
+   ],
+   "NAM": [
+    "피자",
+    "pizza"
+   ],
+   "LATAM": [
+    "엠파나다",
+    "empanadas"
+   ],
+   "EUROPE": [
+    "피자",
+    "pizza"
+   ],
+   "OCEANIA": [
+    "피자",
+    "pizza"
+   ],
+   "AFRICA": [
+    "졸로프 라이스",
+    "jollof rice"
+   ],
+   "OTHER": [
+    "피자",
+    "pizza"
+   ]
+  },
+  "chimaek": {
+   "KR": [
+    "치맥",
+    "fried chicken and beer"
+   ],
+   "JP": [
+    "가라아게에 맥주",
+    "karaage and beer"
+   ],
+   "CN": [
+    "양꼬치에 맥주",
+    "lamb skewers and beer"
+   ],
+   "SASIA": [
+    "사모사에 짜이",
+    "samosas and chai"
+   ],
+   "MENA": [
+    "샤와르마에 민트티",
+    "shawarma and mint tea"
+   ],
+   "OTHER": [
+    "피자에 맥주",
+    "pizza and beer"
+   ]
+  },
+  "movefood": {
+   "KR": [
+    "짜장면",
+    "jjajangmyeon"
+   ],
+   "JP": [
+    "이사 소바",
+    "moving-day soba"
+   ],
+   "CN": [
+    "만두",
+    "dumplings"
+   ],
+   "SEA": [
+    "볶음밥",
+    "fried rice"
+   ],
+   "SASIA": [
+    "커리",
+    "curry"
+   ],
+   "MENA": [
+    "케밥",
+    "kebabs"
+   ],
+   "NAM": [
+    "피자",
+    "pizza"
+   ],
+   "LATAM": [
+    "타코",
+    "tacos"
+   ],
+   "EUROPE": [
+    "피자",
+    "pizza"
+   ],
+   "OCEANIA": [
+    "피시 앤 칩스",
+    "fish and chips"
+   ],
+   "OTHER": [
+    "피자",
+    "pizza"
+   ]
+  },
+  "soup": {
+   "KR": [
+    "국밥",
+    "gukbap"
+   ],
+   "JP": [
+    "라멘",
+    "ramen"
+   ],
+   "CN": [
+    "우육면",
+    "beef noodle soup"
+   ],
+   "SEA": [
+    "쌀국수",
+    "pho"
+   ],
+   "SASIA": [
+    "커리",
+    "curry"
+   ],
+   "MENA": [
+    "렌틸 수프",
+    "lentil soup"
+   ],
+   "NAM": [
+    "칠리",
+    "chili"
+   ],
+   "LATAM": [
+    "포솔레",
+    "pozole"
+   ],
+   "EUROPE": [
+    "굴라시",
+    "goulash"
+   ],
+   "OCEANIA": [
+    "미트파이",
+    "meat pies"
+   ],
+   "AFRICA": [
+    "페퍼 수프",
+    "pepper soup"
+   ],
+   "OTHER": [
+    "수프",
+    "soup"
+   ]
+  },
+  "bday": {
+   "KR": [
+    "미역국",
+    "seaweed soup"
+   ],
+   "JP": [
+    "세키한",
+    "sekihan"
+   ],
+   "CN": [
+    "장수면",
+    "longevity noodles"
+   ],
+   "SASIA": [
+    "파야삼",
+    "payasam"
+   ],
+   "OTHER": [
+    "생일 케이크",
+    "birthday cake"
+   ]
+  },
+  "liquor": {
+   "KR": [
+    "소주",
+    "soju"
+   ],
+   "JP": [
+    "사케",
+    "sake"
+   ],
+   "CN": [
+    "바이주",
+    "baijiu"
+   ],
+   "SEA": [
+    "맥주",
+    "beer"
+   ],
+   "SASIA": [
+    "맥주",
+    "beer"
+   ],
+   "MENA": [
+    "맥주",
+    "beer"
+   ],
+   "NAM": [
+    "위스키",
+    "whiskey"
+   ],
+   "LATAM": [
+    "테킬라",
+    "tequila"
+   ],
+   "EUROPE": [
+    "와인",
+    "wine"
+   ],
+   "OCEANIA": [
+    "맥주",
+    "beer"
+   ],
+   "OTHER": [
+    "맥주",
+    "beer"
+   ]
+  },
+  "bbq": {
+   "KR": [
+    "삼겹살",
+    "Korean BBQ"
+   ],
+   "JP": [
+    "야키니쿠",
+    "yakiniku"
+   ],
+   "CN": [
+    "훠궈",
+    "hot pot"
+   ],
+   "SEA": [
+    "바비큐",
+    "barbecue"
+   ],
+   "SASIA": [
+    "탄두리 치킨",
+    "tandoori chicken"
+   ],
+   "MENA": [
+    "케밥",
+    "kebabs"
+   ],
+   "NAM": [
+    "바비큐",
+    "barbecue"
+   ],
+   "LATAM": [
+    "아사도",
+    "asado"
+   ],
+   "EUROPE": [
+    "스테이크",
+    "steak"
+   ],
+   "OCEANIA": [
+    "바비큐",
+    "a barbie"
+   ],
+   "AFRICA": [
+    "브라이",
+    "braai"
+   ],
+   "OTHER": [
+    "바비큐",
+    "barbecue"
+   ]
+  },
+  "stallsoup": {
+   "KR": [
+    "어묵 국물",
+    "fish cake broth"
+   ],
+   "JP": [
+    "오뎅 국물",
+    "oden broth"
+   ],
+   "CN": [
+    "뜨거운 두유",
+    "hot soy milk"
+   ],
+   "MENA": [
+    "뜨거운 민트티",
+    "hot mint tea"
+   ],
+   "SASIA": [
+    "뜨거운 짜이",
+    "hot chai"
+   ],
+   "EUROPE": [
+    "핫와인",
+    "mulled wine"
+   ],
+   "OTHER": [
+    "핫초코",
+    "hot cocoa"
+   ]
+  },
+  "wintersnack": {
+   "KR": [
+    "붕어빵",
+    "fish-shaped pastries"
+   ],
+   "JP": [
+    "타이야키",
+    "taiyaki"
+   ],
+   "CN": [
+    "군고구마",
+    "roasted sweet potatoes"
+   ],
+   "EUROPE": [
+    "군밤",
+    "roasted chestnuts"
+   ],
+   "LATAM": [
+    "추로스",
+    "churros"
+   ],
+   "MENA": [
+    "군밤",
+    "roasted chestnuts"
+   ],
+   "OTHER": [
+    "핫초코",
+    "hot cocoa"
+   ]
+  },
+  "onigiri": {
+   "KR": [
+    "삼각김밥",
+    "triangle kimbap"
+   ],
+   "JP": [
+    "오니기리",
+    "onigiri"
+   ],
+   "CN": [
+    "찐빵",
+    "steamed buns"
+   ],
+   "SEA": [
+    "바나나잎 주먹밥",
+    "rice parcels"
+   ],
+   "OTHER": [
+    "샌드위치",
+    "sandwiches"
+   ]
+  },
+  "spa": {
+   "KR": [
+    "찜질방에서 양머리 하고 식혜",
+    "Towel-hat day at the jjimjilbang, with sikhye"
+   ],
+   "JP": [
+    "온천 갔다가 커피 우유",
+    "A hot spring, then coffee milk"
+   ],
+   "MENA": [
+    "하맘에서 하루 종일",
+    "A whole day at the hammam"
+   ],
+   "EUROPE": [
+    "사우나에서 하루 종일",
+    "A whole day at the sauna"
+   ],
+   "OTHER": [
+    "스파에서 하루 종일 뒹굴기",
+    "Lounging at a spa all day"
+   ]
+  },
+  "gift": {
+   "KR": [
+    "떡",
+    "rice cakes"
+   ],
+   "JP": [
+    "화과자",
+    "wagashi"
+   ],
+   "CN": [
+    "월병",
+    "mooncakes"
+   ],
+   "SEA": [
+    "과일",
+    "fruit"
+   ],
+   "SASIA": [
+    "미타이",
+    "mithai sweets"
+   ],
+   "MENA": [
+    "바클라바",
+    "baklava"
+   ],
+   "NAM": [
+    "쿠키",
+    "cookies"
+   ],
+   "LATAM": [
+    "빵",
+    "pan dulce"
+   ],
+   "EUROPE": [
+    "케이크",
+    "cake"
+   ],
+   "OCEANIA": [
+    "쿠키",
+    "cookies"
+   ],
+   "OTHER": [
+    "쿠키",
+    "cookies"
+   ]
+  },
+  "bakery": {
+   "KR": [
+    "떡집",
+    "rice cake shop"
+   ],
+   "JP": [
+    "화과자 가게",
+    "wagashi shop"
+   ],
+   "CN": [
+    "만두 가게",
+    "dumpling shop"
+   ],
+   "OTHER": [
+    "빵집",
+    "bakery"
+   ]
+  },
+  "pickle": {
+   "KR": [
+    "김치",
+    "kimchi"
+   ],
+   "JP": [
+    "츠케모노",
+    "pickles"
+   ],
+   "CN": [
+    "짜차이",
+    "pickled mustard greens"
+   ],
+   "SASIA": [
+    "아차르",
+    "achar pickles"
+   ],
+   "MENA": [
+    "올리브 절임",
+    "pickled olives"
+   ],
+   "OTHER": [
+    "수제 잼",
+    "homemade jam"
+   ]
+  },
+  "sides": {
+   "KR": [
+    "반찬",
+    "side dishes"
+   ],
+   "JP": [
+    "반찬",
+    "side dishes"
+   ],
+   "CN": [
+    "반찬",
+    "side dishes"
+   ],
+   "OTHER": [
+    "음식",
+    "food"
+   ]
+  },
+  "stew": {
+   "KR": [
+    "된장찌개",
+    "doenjang stew"
+   ],
+   "JP": [
+    "미소 된장국",
+    "miso soup"
+   ],
+   "CN": [
+    "토마토 달걀 볶음",
+    "tomato and egg stir-fry"
+   ],
+   "SEA": [
+    "똠얌",
+    "tom yum"
+   ],
+   "SASIA": [
+    "달",
+    "dal"
+   ],
+   "MENA": [
+    "렌틸 수프",
+    "lentil soup"
+   ],
+   "NAM": [
+    "치킨 수프",
+    "chicken soup"
+   ],
+   "LATAM": [
+    "콩 수프",
+    "black bean soup"
+   ],
+   "EUROPE": [
+    "파스타",
+    "pasta"
+   ],
+   "OTHER": [
+    "수프",
+    "soup"
+   ]
+  },
+  "momdish": {
+   "KR": [
+    "갈비찜",
+    "braised short ribs"
+   ],
+   "JP": [
+    "니쿠자가",
+    "nikujaga"
+   ],
+   "CN": [
+    "홍샤오러우",
+    "red-braised pork"
+   ],
+   "SEA": [
+    "렌당",
+    "rendang"
+   ],
+   "SASIA": [
+    "버터 치킨",
+    "butter chicken"
+   ],
+   "MENA": [
+    "마클루바",
+    "maqluba"
+   ],
+   "NAM": [
+    "미트로프",
+    "meatloaf"
+   ],
+   "LATAM": [
+    "엔칠라다",
+    "enchiladas"
+   ],
+   "EUROPE": [
+    "로스트 치킨",
+    "roast chicken"
+   ],
+   "OCEANIA": [
+    "양고기 구이",
+    "roast lamb"
+   ],
+   "AFRICA": [
+    "졸로프 라이스",
+    "jollof rice"
+   ],
+   "OTHER": [
+    "로스트 치킨",
+    "roast chicken"
+   ]
+  },
+  "makefood": {
+   "KR": [
+    "만두",
+    "dumplings"
+   ],
+   "JP": [
+    "교자",
+    "gyoza"
+   ],
+   "CN": [
+    "만두",
+    "dumplings"
+   ],
+   "SASIA": [
+    "사모사",
+    "samosas"
+   ],
+   "MENA": [
+    "마물 쿠키",
+    "ma'amoul"
+   ],
+   "LATAM": [
+    "타말레",
+    "tamales"
+   ],
+   "OTHER": [
+    "쿠키",
+    "cookies"
+   ]
+  },
+  "sick": {
+   "KR": [
+    "죽",
+    "rice porridge"
+   ],
+   "JP": [
+    "오카유",
+    "okayu"
+   ],
+   "CN": [
+    "죽",
+    "congee"
+   ],
+   "SEA": [
+    "쌀죽",
+    "rice porridge"
+   ],
+   "SASIA": [
+    "키치디",
+    "khichdi"
+   ],
+   "MENA": [
+    "렌틸 수프",
+    "lentil soup"
+   ],
+   "NAM": [
+    "치킨 누들 수프",
+    "chicken noodle soup"
+   ],
+   "LATAM": [
+    "닭고기 수프",
+    "caldo de pollo"
+   ],
+   "OTHER": [
+    "치킨 수프",
+    "chicken soup"
+   ]
+  },
+  "stall": {
+   "KR": [
+    "포장마차",
+    "a street tent bar"
+   ],
+   "JP": [
+    "이자카야",
+    "an izakaya"
+   ],
+   "CN": [
+    "야시장 노점",
+    "a night-market stall"
+   ],
+   "SEA": [
+    "야시장 노점",
+    "a night-market stall"
+   ],
+   "NAM": [
+    "동네 바",
+    "a dive bar"
+   ],
+   "LATAM": [
+    "타코 노점",
+    "a taco stand"
+   ],
+   "EUROPE": [
+    "동네 펍",
+    "the local pub"
+   ],
+   "OCEANIA": [
+    "동네 펍",
+    "the local pub"
+   ],
+   "OTHER": [
+    "길거리 노점",
+    "a street stall"
+   ]
+  },
+  "holiday": {
+   "KR": [
+    "명절",
+    "the holidays"
+   ],
+   "JP": [
+    "오봉",
+    "Obon"
+   ],
+   "CN": [
+    "춘절",
+    "Lunar New Year"
+   ],
+   "SEA": [
+    "명절",
+    "the holidays"
+   ],
+   "SASIA": [
+    "디왈리",
+    "Diwali"
+   ],
+   "MENA": [
+    "이드",
+    "Eid"
+   ],
+   "NAM": [
+    "추수감사절",
+    "Thanksgiving"
+   ],
+   "LATAM": [
+    "크리스마스",
+    "Christmas"
+   ],
+   "EUROPE": [
+    "크리스마스",
+    "Christmas"
+   ],
+   "OCEANIA": [
+    "크리스마스",
+    "Christmas"
+   ],
+   "OTHER": [
+    "명절",
+    "the holidays"
+   ]
+  },
+  "app": {
+   "KR": [
+    "카톡",
+    "KakaoTalk"
+   ],
+   "JP": [
+    "라인",
+    "LINE"
+   ],
+   "CN": [
+    "위챗",
+    "WeChat"
+   ],
+   "SEA": [
+    "라인",
+    "LINE"
+   ],
+   "NAM": [
+    "문자",
+    "a text"
+   ],
+   "OTHER": [
+    "왓츠앱",
+    "WhatsApp"
+   ]
+  },
+  "exam": {
+   "KR": [
+    "수능",
+    "the Suneung"
+   ],
+   "JP": [
+    "입시",
+    "entrance exams"
+   ],
+   "CN": [
+    "가오카오",
+    "the gaokao"
+   ],
+   "NAM": [
+    "SAT",
+    "the SAT"
+   ],
+   "OTHER": [
+    "입학시험",
+    "the entrance exam"
+   ]
+  },
+  "rites": {
+   "KR": [
+    "제사",
+    "the memorial rites"
+   ],
+   "JP": [
+    "불단 추모",
+    "the family altar"
+   ],
+   "CN": [
+    "성묘",
+    "tomb sweeping"
+   ],
+   "OTHER": [
+    "추모 모임",
+    "the memorial gathering"
+   ]
+  }
+ }
+}

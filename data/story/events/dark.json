@@ -679,8 +679,8 @@
     },
     "HABIT": {
      "r": {
-      "ko": "아침마다 머리가 깨질 것 같았다. 그래도 저녁이면 또 편의점에 갔다.",
-      "en": "Every morning your head split. Every evening, back to the convenience store."
+      "ko": "아침마다 머리가 깨질 것 같았다. 그래도 저녁이면 또 {f:store}에 갔다.",
+      "en": "Every morning your head split. Every evening, back to the {f:store}."
      },
      "effects": [
       {
@@ -784,8 +784,8 @@
     },
     {
      "t": {
-      "ko": "(퇴원하자마자 편의점에 간다)",
-      "en": "(Head to the convenience store the moment you're discharged)"
+      "ko": "(퇴원하자마자 {f:store}에 간다)",
+      "en": "(Head to the {f:store} the moment you're discharged)"
      },
      "w": {
       "RELAPSE": 1.0
@@ -1030,8 +1030,8 @@
    "outcomes": {
     "CLEAN": {
      "r": {
-      "ko": "반품 상자를 들고 편의점을 여섯 번 왕복했다. 이상하게 후련했다.",
-      "en": "You made six trips to the convenience store with returns. It felt oddly freeing."
+      "ko": "반품 상자를 들고 {f:store}을(를) 여섯 번 왕복했다. 이상하게 후련했다.",
+      "en": "You made six trips to the {f:store} with returns. It felt oddly freeing."
      },
      "lean": {
       "traits": {
@@ -1191,8 +1191,8 @@
    "location": "home",
    "who": "police",
    "line": {
-    "ko": "잡았습니다. 몇 달 동안 선생님 집 앞 편의점에서 매일 기다렸다고 진술했습니다. 접근금지 명령이 나올 겁니다.",
-    "en": "We caught them. They admitted waiting at the convenience store near your place every day for months. A restraining order is coming."
+    "ko": "잡았습니다. 몇 달 동안 선생님 집 앞 {f:store}에서 매일 기다렸다고 진술했습니다. 접근금지 명령이 나올 겁니다.",
+    "en": "We caught them. They admitted waiting at the {f:store} near your place every day for months. A restraining order is coming."
    },
    "choices": [
     {
@@ -1717,8 +1717,8 @@
    "activity": "shop",
    "who": "stranger",
    "line": {
-    "ko": "(편의점 사장님이 팔을 붙잡았다.) CCTV에 다 찍혔어요! 계산 안 한 거 있죠? 경찰 부를 거예요.",
-    "en": "(The convenience-store owner grabbed your arm.) It's all on camera! You didn't pay for something, did you? I'm calling the police."
+    "ko": "({f:store} 사장님이 팔을 붙잡았다.) CCTV에 다 찍혔어요! 계산 안 한 거 있죠? 경찰 부를 거예요.",
+    "en": "(The {f:store} owner grabbed your arm.) It's all on camera! You didn't pay for something, did you? I'm calling the police."
    },
    "choices": [
     {
@@ -1982,8 +1982,8 @@
     },
     {
      "t": {
-      "ko": "(편의점까지만 나가본다)",
-      "en": "(Go as far as the convenience store)"
+      "ko": "({f:store}까지만 나가본다)",
+      "en": "(Go as far as the {f:store})"
      },
      "w": {
       "STEP": 0.7,
@@ -2021,7 +2021,7 @@
     },
     "STEP": {
      "r": {
-      "ko": "햇빛이 따가웠다. 편의점 직원이 '어서 오세요'라고 했다. 그게 좋았다.",
+      "ko": "햇빛이 따가웠다. {f:store} 직원이 '어서 오세요'라고 했다. 그게 좋았다.",
       "en": "The sunlight stung. The clerk said, 'Welcome.' That felt good."
      }
     }
@@ -2262,8 +2262,8 @@
     },
     "ANGRY": {
      "r": {
-      "ko": "문을 쾅 닫고 나갔다. 그날 밤도 편의점에 갔다.",
-      "en": "You slammed the door and left. That night, the convenience store again."
+      "ko": "문을 쾅 닫고 나갔다. 그날 밤도 {f:store}에 갔다.",
+      "en": "You slammed the door and left. That night, the {f:store} again."
      },
      "effects": [
       {

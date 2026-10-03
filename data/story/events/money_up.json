@@ -220,8 +220,8 @@
    "outcomes": {
     "CASH": {
      "r": {
-      "ko": "치킨 백 마리 값이 들어왔다. 친구들에게 한 마리씩 쐈다.",
-      "en": "A hundred fried chickens' worth landed. You treated your friends to one each."
+      "ko": "{f:delivery} 백 인분 값이 들어왔다. 친구들에게 한턱씩 쐈다.",
+      "en": "Enough for a hundred orders of {f:delivery}. You treated all your friends."
      },
      "effects": [
       {
@@ -583,8 +583,8 @@
    "activity": "shop",
    "who": "me",
    "line": {
-    "ko": "(편의점에서 거스름돈 대신 산 즉석복권. 동전으로 긁는데 — 같은 그림이 세 개.)",
-    "en": "(A scratch ticket you bought with your change at the convenience store. You scratch it with a coin — three matching pictures.)"
+    "ko": "({f:store}에서 거스름돈 대신 산 즉석복권. 동전으로 긁는데 — 같은 그림이 세 개.)",
+    "en": "(A scratch ticket you bought with your change at the {f:store}. You scratch it with a coin — three matching pictures.)"
    },
    "choices": [
     {
@@ -610,8 +610,8 @@
    "outcomes": {
     "CASH": {
      "r": {
-      "ko": "오만 원. 오늘 저녁은 삼겹살이다.",
-      "en": "Fifty thousand won. Pork belly for dinner tonight."
+      "ko": "오만 원. 오늘 저녁은 {f:bbq}(이)다.",
+      "en": "Fifty thousand won. {f:bbq} for dinner tonight."
      },
      "effects": [
       {
@@ -622,7 +622,7 @@
     },
     "MORE": {
      "r": {
-      "ko": "또 당첨! 이번엔 오십만 원. 편의점 사장님이 박수를 쳤다.",
+      "ko": "또 당첨! 이번엔 오십만 원. {f:store} 사장님이 박수를 쳤다.",
       "en": "Another win! Five hundred thousand this time. The shop owner applauded."
      },
      "effects": [
@@ -1095,8 +1095,8 @@
    "outcomes": {
     "SOLD": {
      "r": {
-      "ko": "계약서에 서명한 날, 창업 멤버들과 떡볶이를 먹으며 울었다.",
-      "en": "The day you signed, you ate tteokbokki with the founding team and cried."
+      "ko": "계약서에 서명한 날, 창업 멤버들과 {f:street}을(를) 먹으며 울었다.",
+      "en": "The day you signed, you ate {f:street} with the founding team and cried."
      },
      "effects": [
       {
@@ -1522,8 +1522,8 @@
    "outcomes": {
     "IN": {
      "r": {
-      "ko": "계약서 대신 손을 맞잡았다. 개업식 날 떡을 돌렸다.",
-      "en": "Instead of a contract, you shook hands. You handed out rice cakes on opening day."
+      "ko": "계약서 대신 손을 맞잡았다. 개업식 날 {f:gift}을(를) 돌렸다.",
+      "en": "Instead of a contract, you shook hands. You handed out {f:gift} on opening day."
      },
      "effects": [
       {

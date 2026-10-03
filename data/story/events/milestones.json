@@ -117,7 +117,98 @@
     }
    },
    "activity": "eat",
-   "queuedBy": "engine"
+   "queuedBy": "engine",
+   "byAge": [
+    {
+     "min": 45,
+     "max": 59,
+     "line": {
+      "ko": "(친구 {buddy}에게서 연락이 왔다.) 나… 결혼해. 이 나이에 무슨 청첩장이냐고 웃지 마. 너는 꼭 와 줘.",
+      "en": "(A message from your friend {buddy}.) I'm… getting married. Don't laugh at a wedding invite at our age. You have to come."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "드디어! 당연히 가지",
+        "en": "Finally! Of course I'll be there"
+       }
+      },
+      {
+       "t": {
+        "ko": "축사는 내가 할게",
+        "en": "I'll give the toast"
+       }
+      },
+      {
+       "t": {
+        "ko": "(그날 일이 있어서 축하 선물만 보낸다)",
+        "en": "(Busy that day. Send a gift instead)"
+       }
+      }
+     ],
+     "outcomes": {
+      "ATTEND": {
+       "r": {
+        "ko": "늦게 만난 만큼 둘은 서로를 아꼈다. 맨 앞줄에서 제일 크게 박수를 쳤다.",
+        "en": "They'd found each other late, and it showed in how they treated each other. You clapped the loudest from the front row."
+       }
+      },
+      "TOAST": {
+       "r": {
+        "ko": "늦게 왔다는 건, 제대로 왔다는 뜻이다. 축사 한 줄에 {buddy}이(가) 울었다.",
+        "en": "Late just means it arrived right. One line of your toast, and {buddy} was in tears."
+       }
+      }
+     }
+    },
+    {
+     "min": 60,
+     "line": {
+      "ko": "(친구 {buddy}에게서 전화가 왔다.) 나 결혼한다. 이 나이에 무슨 결혼이냐 하겠지만… 남은 날들을 같이 걷고 싶은 사람이 생겼어.",
+      "en": "(A call from your friend {buddy}.) I'm getting married. I know, at our age… But I found someone I want to walk the rest of the way with."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "잘했다. 진심으로 축하한다",
+        "en": "Good for you. I mean it, congratulations"
+       }
+      },
+      {
+       "t": {
+        "ko": "축사는 내가 할게. 우리 나이에만 할 수 있는 축사로",
+        "en": "I'll give the toast. The kind only people our age can give"
+       }
+      },
+      {
+       "t": {
+        "ko": "(무릎이 안 좋아 못 가고, 화분을 보낸다)",
+        "en": "(Your knees won't make the trip. Send a plant)"
+       }
+      }
+     ],
+     "outcomes": {
+      "ATTEND": {
+       "r": {
+        "ko": "작은 식당을 빌린 소박한 식이었다. {buddy}은(는) 스무 살처럼 웃었다.",
+        "en": "A small ceremony in a rented restaurant. {buddy} smiled like a twenty-year-old."
+       }
+      },
+      "TOAST": {
+       "r": {
+        "ko": "인생에 늦은 사랑은 없더라. 그 한마디에 하객 모두가 고개를 끄덕였다.",
+        "en": "Turns out there's no such thing as late love. Every guest nodded at that line."
+       }
+      },
+      "SEND": {
+       "r": {
+        "ko": "고맙다, 친구야. 화분 잘 키울게. 답장 끝에 하트가 세 개 붙어 있었다.",
+        "en": "Thank you, old friend. I'll take good care of it. The reply ended with three hearts."
+       }
+      }
+     }
+    }
+   ]
   },
   {
    "id": "INVITE_SIBLING_WEDDING",
@@ -248,7 +339,30 @@
      }
     }
    },
-   "queuedBy": "engine"
+   "queuedBy": "engine",
+   "byAge": [
+    {
+     "min": 50,
+     "line": {
+      "ko": "({relative}이(가) 늦은 나이에 결혼한다. 청첩장을 받아 들고, 괜히 웃음이 났다.)",
+      "en": "({relative} is getting married, later in life. Holding the invitation, you couldn't stop smiling.)"
+     },
+     "outcomes": {
+      "QUIET": {
+       "r": {
+        "ko": "희끗한 머리 위로 꽃잎이 내려앉았다. 괜히 코끝이 찡했다.",
+        "en": "Petals settled on graying hair. Your nose stung for no reason."
+       }
+      },
+      "TOAST": {
+       "r": {
+        "ko": "우리 {relative}, 이제라도 행복해야 해. 그 한마디에 식장이 조용해졌다.",
+        "en": "Be happy, {relative}. Better late than never. The hall went quiet."
+       }
+      }
+     }
+    }
+   ]
   },
   {
    "id": "NEPHEW_BORN",

@@ -251,8 +251,8 @@
     },
     "HELPER": {
      "r": {
-      "ko": "할머니 댁 창문을 같이 막았다. 그 뒤로 할머니는 김치를 나눠주신다.",
-      "en": "You helped board up her windows. Ever since, she shares her kimchi with you."
+      "ko": "할머니 댁 창문을 같이 막았다. 그 뒤로 할머니는 {f:pickle}을(를) 나눠주신다.",
+      "en": "You helped board up her windows. Ever since, she shares her {f:pickle} with you."
      },
      "effects": [
       {

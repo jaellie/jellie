@@ -114,10 +114,24 @@ export interface LifeEventDef {
    * hasn't seen lately — so a friend's death never asks the same two things twice.
    */
   choiceSets?: Array<{ line?: Bi; choices: Array<{ t: Bi; w: Record<string, number> }>; outcomes?: Record<string, LifeEventOutcome> }>;
+  /**
+   * The same moment at an unusual age (a friend's wedding at 70, a classroom at 45): the first form whose
+   * [min, max] holds your age replaces the words; `choices` keep the base odds at the same position and
+   * `outcomes` replace only result lines.
+   */
+  byAge?: Array<{ min?: number; max?: number; title?: Bi; line?: Bi; choices?: Array<{ t: Bi }>; outcomes?: Record<string, { r: Bi }> }>;
 }
 
 /** This occurrence's version of the event (see `choiceSets`), the same at the popup and when it resolves. */
 export function eventView(state: LifeState, def: LifeEventDef, uid: string): LifeEventDef {
+  const age = Math.floor(state.age);
+  const aged = def.byAge?.find((f) => (f.min === undefined || age >= f.min) && (f.max === undefined || age <= f.max));
+  if (aged) {
+    const outcomes = { ...def.outcomes };
+    for (const [k, o] of Object.entries(aged.outcomes ?? {})) if (outcomes[k]) outcomes[k] = { ...outcomes[k], r: o.r };
+    const choices = aged.choices?.length === def.choices.length ? def.choices.map((c, i) => ({ ...c, t: aged.choices![i].t })) : def.choices;
+    return { ...def, title: aged.title ?? def.title, line: aged.line ?? def.line, choices, outcomes };
+  }
   const sets = def.choiceSets ?? [];
   if (!sets.length) return def;
   const memo = `cs_${uid}`;

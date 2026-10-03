@@ -81,8 +81,8 @@
     },
     "SALVAGE": {
      "r": {
-      "ko": "원금의 10%를 건졌다. 그걸로 소주를 샀다.",
-      "en": "You salvaged 10% of what you'd put in. You spent it on soju."
+      "ko": "원금의 10%를 건졌다. 그걸로 {f:liquor}을(를) 샀다.",
+      "en": "You salvaged 10% of what you'd put in. You spent it on {f:liquor}."
      },
      "effects": [
       {
@@ -1063,8 +1063,8 @@
     },
     "REFUSE": {
      "r": {
-      "ko": "'정 없는 놈.' 명절마다 그 말이 따라다녔다.",
-      "en": "'Heartless.' That word followed you to every holiday."
+      "ko": "'정 없는 놈.' {f:holiday}마다 그 말이 따라다녔다.",
+      "en": "'Heartless.' That word followed you to every {f:holiday}."
      },
      "effects": [
       {
@@ -1909,8 +1909,8 @@
    "outcomes": {
     "PLAN": {
      "r": {
-      "ko": "일 년 동안 배달앱을 지웠다. 마지막 할부가 끝나던 날 치킨을 시켰다.",
-      "en": "You deleted the delivery apps for a year. The day the last installment cleared, you ordered fried chicken."
+      "ko": "일 년 동안 배달앱을 지웠다. 마지막 할부가 끝나던 날 {f:delivery}을(를) 시켰다.",
+      "en": "You deleted the delivery apps for a year. The day the last installment cleared, you ordered {f:delivery}."
      },
      "effects": [
       {
@@ -2278,8 +2278,8 @@
     },
     "AVOID": {
      "r": {
-      "ko": "전화를 안 받는 동안 마음이 편하지 않았다. 명절이 두려워졌다.",
-      "en": "Not answering didn't bring peace. You started dreading the holidays."
+      "ko": "전화를 안 받는 동안 마음이 편하지 않았다. {f:holiday}이(가) 두려워졌다.",
+      "en": "Not answering didn't bring peace. You started dreading {f:holiday}."
      },
      "effects": [
       {
@@ -3006,8 +3006,8 @@
     },
     "SHIFT": {
      "r": {
-      "ko": "😢 [학자금 대출] 때문에 빚이 생겼다… 주말 편의점 야간 알바도 시작했다. 조금이라도 빨리 갚으려고.",
-      "en": "😢 Thanks to my [student loan], I'm in debt now… Took the weekend night shift at the convenience store too, to pay it off faster."
+      "ko": "😢 [학자금 대출] 때문에 빚이 생겼다… 주말 {f:store} 야간 알바도 시작했다. 조금이라도 빨리 갚으려고.",
+      "en": "😢 Thanks to my [student loan], I'm in debt now… Took the weekend night shift at the {f:store} too, to pay it off faster."
      },
      "effects": [
       {
@@ -3065,8 +3065,8 @@
     },
     {
      "t": {
-      "ko": "당분간 라면으로 버틴다",
-      "en": "Live on ramen for a while"
+      "ko": "당분간 {f:ramen}(으)로 버틴다",
+      "en": "Live on {f:ramen} for a while"
      },
      "w": {
       "RAMEN": 1.0
@@ -3097,8 +3097,8 @@
     },
     "RAMEN": {
      "r": {
-      "ko": "😢 [마이너스 통장] 때문에 빚이 생겼다… 라면 종류별로 다 먹어 봤다. 순위도 매겼다.",
-      "en": "😢 Thanks to the [overdraft], I'm in debt now… You've tried every ramen brand. You've ranked them."
+      "ko": "😢 [마이너스 통장] 때문에 빚이 생겼다… {f:ramen} 종류별로 다 먹어 봤다. 순위도 매겼다.",
+      "en": "😢 Thanks to the [overdraft], I'm in debt now… You've tried every {f:ramen} brand. You've ranked them."
      },
      "effects": [
       {

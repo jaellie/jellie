@@ -17,8 +17,8 @@
    "choices": [
     {
      "t": {
-      "ko": "편의점 우산을 산다",
-      "en": "Buy a convenience-store umbrella"
+      "ko": "{f:store} 우산을 산다",
+      "en": "Buy a {f:store} umbrella"
      },
      "r": {
       "ko": "(비닐우산 컬렉션이 또 늘었다.)",
@@ -491,12 +491,12 @@
    "choices": [
     {
      "t": {
-      "ko": "치킨",
-      "en": "Fried chicken"
+      "ko": "{f:delivery}",
+      "en": "{f:delivery}"
      },
      "r": {
-      "ko": "(역시 치킨.)",
-      "en": "(Chicken never fails.)"
+      "ko": "(역시 {f:delivery}.)",
+      "en": "({f:delivery} never fails.)"
      },
      "effects": [
       {
@@ -837,8 +837,8 @@
    "weight": 1,
    "cooldownDays": 6,
    "line": {
-    "ko": "이번 명절엔 올 거지?",
-    "en": "You're coming for the holidays, right?"
+    "ko": "이번 {f:holiday}엔 올 거지?",
+    "en": "You're coming for {f:holiday}, right?"
    },
    "choices": [
     {
@@ -1066,8 +1066,8 @@
       "en": "Lucky day"
      },
      "r": {
-      "ko": "(떡볶이 사 먹었다.)",
-      "en": "(Spent it on tteokbokki.)"
+      "ko": "({f:street} 사 먹었다.)",
+      "en": "(Spent it on {f:street}.)"
      },
      "effects": []
     }
@@ -1386,7 +1386,7 @@
       "en": "Go to {homeMarket}"
      },
      "r": {
-      "ko": "(고향 과자랑 라면을 한가득 샀다.)",
+      "ko": "(고향 과자랑 {f:ramen}을(를) 한가득 샀다.)",
       "en": "(Bought a bag full of snacks from home.)"
      },
      "effects": [
@@ -1569,8 +1569,8 @@
       "en": "Let's just run!"
      },
      "r": {
-      "ko": "편의점 앞까지 뛰었다. 숨이 차서 웃음이 멈추지 않았다.",
-      "en": "You ran to the convenience store, out of breath and laughing."
+      "ko": "{f:store} 앞까지 뛰었다. 숨이 차서 웃음이 멈추지 않았다.",
+      "en": "You ran to the {f:store}, out of breath and laughing."
      },
      "effects": []
     }
@@ -2107,8 +2107,8 @@
       "en": "I don't either…"
      },
      "r": {
-      "ko": "열쇠공을 기다리며 계단에 앉아 편의점 아이스크림을 먹었다.",
-      "en": "You sat on the stairs eating convenience store ice cream while waiting for the locksmith."
+      "ko": "열쇠공을 기다리며 계단에 앉아 {f:store} 아이스크림을 먹었다.",
+      "en": "You sat on the stairs eating {f:store} ice cream while waiting for the locksmith."
      },
      "effects": [
       {
@@ -2454,8 +2454,8 @@
       "en": "Let's go"
      },
      "r": {
-      "ko": "둘이 만든 만두는 모양이 다 달랐다. 맛은 같았다.",
-      "en": "Your dumplings all came out different shapes. They tasted the same."
+      "ko": "둘이 만든 {f:makefood}은(는) 모양이 다 달랐다. 맛은 같았다.",
+      "en": "Your {f:makefood} all came out different shapes. They tasted the same."
      },
      "effects": [
       {
@@ -2769,7 +2769,7 @@
       "en": "Help till the end"
      },
      "r": {
-      "ko": "마지막 상자를 옮기고 짜장면을 먹었다. 세상에서 제일 맛있었다.",
+      "ko": "마지막 상자를 옮기고 {f:movefood}을(를) 먹었다. 세상에서 제일 맛있었다.",
       "en": "After the last box, jajangmyeon on the floor. Best meal ever."
      },
      "effects": [
@@ -2873,8 +2873,8 @@
       "en": "I'm coming over"
      },
      "r": {
-      "ko": "편의점 술과 휴지 한 통으로 밤을 새웠다.",
-      "en": "You stayed up all night with convenience store drinks and a box of tissues."
+      "ko": "{f:store} 술과 휴지 한 통으로 밤을 새웠다.",
+      "en": "You stayed up all night with {f:store} drinks and a box of tissues."
      },
      "effects": [
       {
@@ -2914,8 +2914,8 @@
    "weight": 1,
    "cooldownDays": 10,
    "line": {
-    "ko": "야, 우리 학교 앞 떡볶이집 아직 있대!",
-    "en": "Hey, that tteokbokki place by our old school is still open!"
+    "ko": "야, 우리 학교 앞 {f:street}집 아직 있대!",
+    "en": "Hey, that {f:street} place by our old school is still open!"
    },
    "choices": [
     {
@@ -2944,7 +2944,7 @@
       "en": "Is the old owner still there?"
      },
      "r": {
-      "ko": "사장님이 우리를 알아보셨다. 오뎅 국물을 더 주셨다.",
+      "ko": "사장님이 우리를 알아보셨다. {f:stallsoup}을(를) 더 주셨다.",
       "en": "The owner recognized you and gave extra broth."
      },
      "effects": [
@@ -2995,12 +2995,12 @@
     },
     {
      "t": {
-      "ko": "운동 후 치킨 조건으로",
-      "en": "Only if there's fried chicken after"
+      "ko": "운동 후 {f:delivery} 조건으로",
+      "en": "Only if there's {f:delivery} after"
      },
      "r": {
-      "ko": "운동은 30분, 치킨은 두 시간이었다.",
-      "en": "Thirty minutes of exercise, two hours of chicken."
+      "ko": "운동은 30분, {f:delivery}은(는) 두 시간이었다.",
+      "en": "Thirty minutes of exercise, two hours of {f:delivery}."
      },
      "effects": [
       {

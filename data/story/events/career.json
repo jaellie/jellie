@@ -703,8 +703,8 @@
     },
     "FAIL": {
      "r": {
-      "ko": "또 떨어졌다. 독서실 사장님이 컵라면을 하나 주셨다.",
-      "en": "Failed again. The study-room owner gave you a cup of instant noodles."
+      "ko": "또 떨어졌다. 독서실 사장님이 {f:ramen}을(를) 하나 주셨다.",
+      "en": "Failed again. The study-room owner gave you a cup of {f:ramen}."
      },
      "chain": [
       {
@@ -2134,8 +2134,8 @@
    "choices": [
     {
      "t": {
-      "ko": "(편의점 도시락 같이 먹던 너가?!)",
-      "en": "(You — the one who ate convenience-store lunches with me?!)"
+      "ko": "({f:store} 도시락 같이 먹던 너가?!)",
+      "en": "(You — the one who ate {f:store} lunches with me?!)"
      },
      "w": {
       "FRIENDS": 0.7,

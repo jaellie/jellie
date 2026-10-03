@@ -565,14 +565,14 @@
       {
        "them": "P",
        "line": {
-        "ko": "(라면을 먹다가 {partner}이(가) 갑자기 말했다.) …우리 그냥, 결혼할까?",
-        "en": "(Halfway through a bowl of ramyeon, {partner} suddenly says:) …Should we just get married?"
+        "ko": "({f:ramen}을(를) 먹다가 {partner}이(가) 갑자기 말했다.) …우리 그냥, 결혼할까?",
+        "en": "(Halfway through a bowl of {f:ramen}, {partner} suddenly says:) …Should we just get married?"
        },
        "choices": [
         {
          "t": {
-          "ko": "…지금 라면 먹다가?! 응!",
-          "en": "…Over ramyeon?! Yes!"
+          "ko": "…지금 {f:ramen} 먹다가?! 응!",
+          "en": "…Over {f:ramen}?! Yes!"
          },
          "outcome": "ENGAGED"
         },
@@ -757,8 +757,8 @@
      "outcomes": {
       "MAKEUP": {
        "r": {
-        "ko": "다 싸우고 나니 배가 고팠다. 같이 떡볶이를 먹었다. 조금 더 가까워진 기분이었다.",
-        "en": "After the fight you were both hungry. You shared tteokbokki and felt a little closer."
+        "ko": "다 싸우고 나니 배가 고팠다. 같이 {f:street}을(를) 먹었다. 조금 더 가까워진 기분이었다.",
+        "en": "After the fight you were both hungry. You shared {f:street} and felt a little closer."
        },
        "effects": []
       },
@@ -1116,7 +1116,7 @@
       {
        "element": "WATER",
        "line": {
-        "ko": "(새벽 두 시. 서운한 말이 카톡으로 길게 왔다. 읽고 나니 잠이 달아났다.)",
+        "ko": "(새벽 두 시. 서운한 말이 {f:app}(으)로 길게 왔다. 읽고 나니 잠이 달아났다.)",
         "en": "(2 a.m. A long, hurt message arrives. You're wide awake now.)"
        },
        "choices": [
@@ -1190,8 +1190,8 @@
         },
         {
          "t": {
-          "ko": "반찬을 {partner} 앞으로 밀어 준다",
-          "en": "Slide the side dish toward {partner}"
+          "ko": "{f:sides}을(를) {partner} 앞으로 밀어 준다",
+          "en": "Slide the {f:sides} toward {partner}"
          }
         }
        ],
@@ -1677,7 +1677,7 @@
       {
        "element": "EARTH",
        "line": {
-        "ko": "(상견례 자리. 어머님이 반찬을 내 쪽으로 밀어 주셨다.) 많이 먹어요. 우리 애가 맨날 자랑해서 궁금했어요.",
+        "ko": "(상견례 자리. 어머님이 {f:sides}을(를) 내 쪽으로 밀어 주셨다.) 많이 먹어요. 우리 애가 맨날 자랑해서 궁금했어요.",
         "en": "(The families meet. {partner}'s mother pushes a dish toward you.) Eat up. Our kid talks about you all the time."
        },
        "choices": [
@@ -2671,8 +2671,8 @@
      "activity": "rest",
      "who": "me",
      "line": {
-      "ko": "(몇 달 뒤.) ({parent}가 없는 첫 명절이 다가온다.)",
-      "en": "(Months later.) (The first holiday without {parent} is coming.)"
+      "ko": "(몇 달 뒤.) ({parent}가 없는 첫 {f:holiday}이(가) 다가온다.)",
+      "en": "(Months later.) (The first {f:holiday} without {parent} is coming.)"
      },
      "altBy": "parent",
      "alt": {
@@ -3598,8 +3598,8 @@
         },
         "CALLS": {
          "r": {
-          "ko": "'다음 명절에 찾아뵐게요.' 그 다음은 오지 않았다. 그날 밤, 미뤄 둔 안부 전화를 전부 걸었다.",
-          "en": "'I'll visit next holiday.' Next holiday never came. That night, you made every call you'd been putting off."
+          "ko": "'다음 {f:holiday}에 찾아뵐게요.' 그 다음은 오지 않았다. 그날 밤, 미뤄 둔 안부 전화를 전부 걸었다.",
+          "en": "'I'll visit next {f:holiday}.' Next {f:holiday} never came. That night, you made every call you'd been putting off."
          },
          "effects": [
           {
@@ -3896,7 +3896,7 @@
    "steps": {
     "TEXTS": {
      "title": {
-      "ko": "새벽 카톡",
+      "ko": "새벽 {f:app}",
       "en": "2 a.m. texts"
      },
      "after": [
@@ -3906,7 +3906,7 @@
      "location": "home",
      "who": "fated",
      "line": {
-      "ko": "(새벽 두 시. {fated}에게서 온 카톡.) 자? …아니 그냥, 뭐 하나 궁금해서.",
+      "ko": "(새벽 두 시. {fated}에게서 온 {f:app}.) 자? …아니 그냥, 뭐 하나 궁금해서.",
       "en": "(2 a.m. A text from {fated}.) You up? …No reason. Just wondering what you're doing."
      },
      "altBy": "distance",
@@ -3935,7 +3935,7 @@
       },
       {
        "t": {
-        "ko": "안 자 ㅎㅎ (밤새 카톡한다)",
+        "ko": "안 자 ㅎㅎ (밤새 {f:app}한다)",
         "en": "Not asleep lol (text all night)"
        },
        "roll": {
@@ -4013,20 +4013,20 @@
       {
        "element": "FIRE",
        "line": {
-        "ko": "(새벽 한 시. {fated}에게서 음성 메시지.) …지금 라면 끓이는데, 너도 배고프지?",
-        "en": "(1 a.m. A voice message from {fated}.) …I'm making ramen. You hungry too?"
+        "ko": "(새벽 한 시. {fated}에게서 음성 메시지.) …지금 {f:ramen} 끓이는데, 너도 배고프지?",
+        "en": "(1 a.m. A voice message from {fated}.) …I'm making {f:ramen}. You hungry too?"
        },
        "choices": [
         {
          "t": {
-          "ko": "지금 나갈게 (편의점 앞으로 간다)",
-          "en": "Coming out now (head to the convenience store)"
+          "ko": "지금 나갈게 ({f:store} 앞으로 간다)",
+          "en": "Coming out now (head to the {f:store})"
          }
         },
         {
          "t": {
-          "ko": "같이 영상통화하며 라면 먹는다",
-          "en": "Eat ramen together on a video call"
+          "ko": "같이 영상통화하며 {f:ramen} 먹는다",
+          "en": "Eat {f:ramen} together on a video call"
          }
         },
         {
@@ -4069,13 +4069,13 @@
       {
        "element": "METAL",
        "line": {
-        "ko": "(밤 열두 시 정각. {fated}의 카톡.) 오늘 하루 중에 제일 좋았던 거 하나만 말해 줘.",
+        "ko": "(밤 열두 시 정각. {fated}의 {f:app}.) 오늘 하루 중에 제일 좋았던 거 하나만 말해 줘.",
         "en": "(Midnight exactly. {fated} texts.) Tell me the one best thing about your day."
        },
        "choices": [
         {
          "t": {
-          "ko": "지금 이 카톡",
+          "ko": "지금 이 {f:app}",
           "en": "This text, right now"
          }
         },
@@ -4272,7 +4272,7 @@
       {
        "element": "EARTH",
        "line": {
-        "ko": "(둘이서 국밥집. {fated}이(가) 내 그릇에 고기를 슬쩍 옮겨 줬다.) …이런 건 친구한테도 해?",
+        "ko": "(둘이서 {f:soup}집. {fated}이(가) 내 그릇에 고기를 슬쩍 옮겨 줬다.) …이런 건 친구한테도 해?",
         "en": "(A soup place, just you two. {fated} slips some meat into your bowl.) …Do you do this for friends too?"
        },
        "choices": [
@@ -4963,8 +4963,8 @@
        "who": "me",
        "location": "home",
        "line": {
-        "ko": "(늦은 밤, {fated}과(와) 라면을 끓여 먹고 설거지를 하는데 이상하게 편하다. 이 사람이랑은 침묵도 대화 같다.)",
-        "en": "(Late night, washing up after ramen with {fated}. It's strangely easy. With this person, even silence feels like talking.)"
+        "ko": "(늦은 밤, {fated}과(와) {f:ramen}을(를) 끓여 먹고 설거지를 하는데 이상하게 편하다. 이 사람이랑은 침묵도 대화 같다.)",
+        "en": "(Late night, washing up after {f:ramen} with {fated}. It's strangely easy. With this person, even silence feels like talking.)"
        },
        "choices": [
         {

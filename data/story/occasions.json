@@ -166,8 +166,8 @@
     "choices": [
      {
       "t": {
-       "ko": "편의점 케이크라도!",
-       "en": "Convenience store cake, then!"
+       "ko": "{f:store} 케이크라도!",
+       "en": "{f:store} cake, then!"
       },
       "r": {
        "ko": "촛불 대신 휴대폰 손전등을 켰다. 충분했다.",
@@ -604,8 +604,8 @@
        "en": "Let's camp in the living room"
       },
       "r": {
-       "ko": "이불로 텐트를 만들고 라면을 끓였다. 최고의 기념일이었다.",
-       "en": "A blanket tent and instant noodles. Best anniversary yet."
+       "ko": "이불로 텐트를 만들고 {f:ramen}을(를) 끓였다. 최고의 기념일이었다.",
+       "en": "A blanket tent and {f:ramen}. Best anniversary yet."
       }
      },
      {
@@ -702,12 +702,12 @@
    },
    {
     "t": {
-     "ko": "본가에 가서 미역국 먹기",
-     "en": "Go home for birthday seaweed soup"
+     "ko": "본가에 가서 {f:bday} 먹기",
+     "en": "Go home for birthday {f:bday}"
     },
     "r": {
-     "ko": "엄마의 미역국은 여전히 세상에서 제일 맛있었다.",
-     "en": "Mom's seaweed soup is still the best in the world."
+     "ko": "엄마의 {f:bday}은(는) 여전히 세상에서 제일 맛있었다.",
+     "en": "Mom's {f:bday} is still the best in the world."
     }
    }
   ],

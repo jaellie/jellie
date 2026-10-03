@@ -151,8 +151,8 @@
     },
     "TRUCE": {
      "r": {
-      "ko": "알고 보니 그 집도 사정이 있었다. 명절에 떡을 나눠 먹는 사이가 됐다.",
-      "en": "Turns out they had their own troubles. Now you share rice cakes at the holidays."
+      "ko": "알고 보니 그 집도 사정이 있었다. {f:holiday}에 {f:gift}을(를) 나눠 먹는 사이가 됐다.",
+      "en": "Turns out they had their own troubles. Now you share {f:gift} at {f:holiday}."
      },
      "effects": [
       {
@@ -447,8 +447,8 @@
    "activity": "walk",
    "who": "me",
    "line": {
-    "ko": "(비 오는 밤, 편의점 앞 박스 안에서 새끼 고양이가 떨고 있다. 눈이 마주쳤다.)",
-    "en": "(A rainy night. In a box outside the convenience store, a kitten is shivering. Your eyes meet.)"
+    "ko": "(비 오는 밤, {f:store} 앞 박스 안에서 새끼 고양이가 떨고 있다. 눈이 마주쳤다.)",
+    "en": "(A rainy night. In a box outside the {f:store}, a kitten is shivering. Your eyes meet.)"
    },
    "choices": [
     {
@@ -527,8 +527,8 @@
     },
     {
      "t": {
-      "ko": "(9V 건전지를 사러 편의점으로 뛴다)",
-      "en": "(Sprint to the convenience store for a 9-volt battery)"
+      "ko": "(9V 건전지를 사러 {f:store}(으)로 뛴다)",
+      "en": "(Sprint to the {f:store} for a 9-volt battery)"
      },
      "w": {
       "HACK": 0.7,
@@ -557,7 +557,7 @@
     },
     "SLEEP_OUT": {
      "r": {
-      "ko": "편의점도 문을 닫았다. 24시 찜질방에서 잤다.",
+      "ko": "{f:store}도 문을 닫았다. 24시 찜질방에서 잤다.",
       "en": "Even the store was closed. You slept at a 24-hour sauna."
      }
     }
@@ -1119,7 +1119,7 @@
    "choices": [
     {
      "t": {
-      "ko": "(친구들을 부른다, 짜장면 쏜다)",
+      "ko": "(친구들을 부른다, {f:movefood} 쏜다)",
       "en": "(Call in friends — jajangmyeon's on you)"
      },
      "w": {
@@ -1141,12 +1141,12 @@
    "outcomes": {
     "FRIENDS": {
      "r": {
-      "ko": "빈 바닥에 신문지를 깔고 짜장면을 먹었다. 새 집의 첫 끼였다.",
+      "ko": "빈 바닥에 신문지를 깔고 {f:movefood}을(를) 먹었다. 새 집의 첫 끼였다.",
       "en": "You spread newspaper on the bare floor and ate jajangmyeon. The first meal in the new place."
      },
      "card": {
       "caption": {
-       "ko": "새 집의 첫 짜장면",
+       "ko": "새 집의 첫 {f:movefood}",
        "en": "First jajangmyeon in the new place"
       },
       "location": "home",
@@ -1300,8 +1300,8 @@
    "activity": "use_phone",
    "who": "me",
    "line": {
-    "ko": "(새벽 2시, 소주 세 병. 정신을 차려보니 {ex}에게 '자니…?'를 보낸 뒤였다. 1이 사라졌다.)",
-    "en": "(2 a.m., three bottles of soju. When you came to, you'd already sent {ex} 'u up…?'. It shows as read.)"
+    "ko": "(새벽 2시, {f:liquor} 세 병. 정신을 차려보니 {ex}에게 '자니…?'를 보낸 뒤였다. 1이 사라졌다.)",
+    "en": "(2 a.m., three bottles of {f:liquor}. When you came to, you'd already sent {ex} 'u up…?'. It shows as read.)"
    },
    "choices": [
     {
@@ -1680,8 +1680,8 @@
    "activity": "cook",
    "who": "me",
    "line": {
-    "ko": "(라면 물을 올려놓고 깜빡 잠들었다. 연기 냄새에 눈을 떴다. 화재경보기가 울린다.)",
-    "en": "(You put water on for ramen and dozed off. You wake to the smell of smoke. The fire alarm is screaming.)"
+    "ko": "({f:ramen} 물을 올려놓고 깜빡 잠들었다. 연기 냄새에 눈을 떴다. 화재경보기가 울린다.)",
+    "en": "(You put water on for {f:ramen} and dozed off. You wake to the smell of smoke. The fire alarm is screaming.)"
    },
    "choices": [
     {

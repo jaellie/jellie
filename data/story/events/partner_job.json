@@ -442,8 +442,8 @@
     },
     {
      "t": {
-      "ko": "집에서 둘이 치킨",
-      "en": "Fried chicken at home, just us"
+      "ko": "집에서 둘이 {f:delivery}",
+      "en": "{f:delivery} at home, just us"
      },
      "w": {
       "COZY": 1.0
@@ -465,8 +465,8 @@
     },
     "COZY": {
      "r": {
-      "ko": "치킨 한 마리, 맥주 두 캔. 이 정도가 딱 좋았다.",
-      "en": "One chicken, two beers. Exactly right."
+      "ko": "{f:delivery} 하나, 맥주 두 캔. 이 정도가 딱 좋았다.",
+      "en": "Some {f:delivery}, two beers. Exactly right."
      },
      "effects": [
       {

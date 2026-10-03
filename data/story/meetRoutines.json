@@ -197,8 +197,8 @@
    ],
    "location": "street",
    "line": {
-    "ko": "(새로 이사 온 옆집 사람이 떡을 들고 초인종을 눌렀다.)",
-    "en": "(The new neighbor rings your bell holding a plate of rice cakes.)"
+    "ko": "(새로 이사 온 옆집 사람이 {f:gift}을(를) 들고 초인종을 눌렀다.)",
+    "en": "(The new neighbor rings your bell holding a plate of {f:gift}.)"
    }
   },
   {
@@ -258,8 +258,8 @@
    ],
    "location": "diner",
    "line": {
-    "ko": "(줄 서는 국숫집. 마지막 한 자리에 합석하게 됐다. 앞사람이 내 그릇에 김치를 덜어 줬다.)",
-    "en": "(A noodle place with a line. You end up sharing the last table. The stranger across moves some kimchi into your bowl.)"
+    "ko": "(줄 서는 국숫집. 마지막 한 자리에 합석하게 됐다. 앞사람이 내 그릇에 {f:pickle}을(를) 덜어 줬다.)",
+    "en": "(A noodle place with a line. You end up sharing the last table. The stranger across moves some {f:pickle} into your bowl.)"
    }
   },
   {
@@ -314,8 +314,8 @@
    "location": "office",
    "work": true,
    "line": {
-    "ko": "(야근하는 사무실, 불 켜진 자리는 둘뿐. 옆 팀 사람이 컵라면 두 개를 들고 왔다.)",
-    "en": "(Working late, only two desks still lit. Someone from the next team comes over holding two cup noodles.)"
+    "ko": "(야근하는 사무실, 불 켜진 자리는 둘뿐. 옆 팀 사람이 {f:ramen} 두 개를 들고 왔다.)",
+    "en": "(Working late, only two desks still lit. Someone from the next team comes over holding two {f:ramen}.)"
    }
   },
   {

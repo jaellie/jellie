@@ -364,8 +364,8 @@
    },
    "free": {
     "line": {
-     "ko": "(아무 계획 없이 걷다가 비가 쏟아졌다. 편의점 처마 밑, 둘이 나란히 섰다.)",
-     "en": "(Walking with no plan, rain pours down. Under a convenience-store awning, side by side.)"
+     "ko": "(아무 계획 없이 걷다가 비가 쏟아졌다. {f:store} 처마 밑, 둘이 나란히 섰다.)",
+     "en": "(Walking with no plan, rain pours down. Under a {f:store} awning, side by side.)"
     },
     "choices": [
      {
@@ -417,8 +417,8 @@
    },
    "mixed": {
     "line": {
-     "ko": "(계획대로 되는 게 하나도 없는 날이었다. 예약은 꼬였고, 결국 둘이 포장마차에 앉았다.)",
-     "en": "(Nothing went to plan. The reservation fell through, and you ended up at a street tent bar.)"
+     "ko": "(계획대로 되는 게 하나도 없는 날이었다. 예약은 꼬였고, 결국 둘이 {f:stall}에 앉았다.)",
+     "en": "(Nothing went to plan. The reservation fell through, and you ended up at {f:stall}.)"
     },
     "choices": [
      {
@@ -453,7 +453,7 @@
      },
      {
       "t": {
-       "ko": "(어묵 국물을 건네며 눈을 맞춘다)",
+       "ko": "({f:stallsoup}을(를) 건네며 눈을 맞춘다)",
        "en": "(Pass them the hot broth and hold their gaze)"
       },
       "fits": "F",
@@ -710,8 +710,8 @@
     "en": "(Heart rate: definitely 1.5× normal. The cause is obvious. It's standing right in front of you.)"
    },
    "SJ": {
-    "ko": "(립밤을 발랐던가? 아까 먹은 떡볶이 냄새는? 머릿속 체크리스트가 바쁘게 돌아간다.)",
-    "en": "(Lip balm — did you put some on? The tteokbokki earlier? The checklist in your head is running fast.)"
+    "ko": "(립밤을 발랐던가? 아까 먹은 {f:street} 냄새는? 머릿속 체크리스트가 바쁘게 돌아간다.)",
+    "en": "(Lip balm — did you put some on? The {f:street} earlier? The checklist in your head is running fast.)"
    },
    "SP": {
     "ko": "(생각은 필요 없다. 지금 이 거리, 이 공기면 충분하다.)",
@@ -1332,8 +1332,8 @@
    },
    "free": {
     "line": {
-     "ko": "(라면을 끓이다가 둘 다 동시에 웃음이 터졌다. 이유는 없었다.)",
-     "en": "(Making ramyeon, you both burst out laughing at once. For no reason.)"
+     "ko": "({f:ramen}을(를) 끓이다가 둘 다 동시에 웃음이 터졌다. 이유는 없었다.)",
+     "en": "(Making {f:ramen}, you both burst out laughing at once. For no reason.)"
     },
     "choices": [
      {
@@ -1377,8 +1377,8 @@
        "en": "{them} answered by touching foreheads."
       },
       "rMiss": {
-       "ko": "'매일 라면은 좀…' {them}이(가) 웃었다.",
-       "en": "'Ramyeon every day, though…' {them} laughed."
+       "ko": "'매일 {f:ramen}은(는) 좀…' {them}이(가) 웃었다.",
+       "en": "'{f:ramen} every day, though…' {them} laughed."
       }
      }
     ]
