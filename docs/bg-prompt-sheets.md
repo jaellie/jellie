@@ -1,5 +1,11 @@
 # 배경 픽셀 시트 프롬프트 — 8장씩 3×3 (11번, 총 83장)
 
+## 2차 안내 (크게 만들고 제가 자르는 방식)
+- 시트 하나당 **가능한 가장 큰 해상도**로 요청하세요 (최소 2688×1512). 칸 사이는 **16픽셀 흰 간격**이라, 제가 안쪽을 깎지 않고 정확히 잘라요.
+- 만약 만들어 주는 도구가 큰 해상도를 못 주면(가로 1800 이하), 프롬프트의 `3×3 grid of 9`를 `2×2 grid of 4`로, `first 8 tiles`를 `first 4 tiles`로 바꾸고 칸을 4개씩 나눠 주세요. 칸이 클수록 선명해요.
+- 받으면 제가 칸별로 자른 뒤 320×180 픽셀 격자에 맞춰 정리하고 3배(960×540)로 키워서 넣어요. 그래서 원본 칸이 590px 정도만 돼도 깨지지 않아요.
+- 색감은 "은은한 노란 필터 + 풍부한 그라디언트 + 감성 톤"으로 모든 시트에 반영했어요.
+
 ## 쓰는 방법
 - 시트 하나 = 메시지 하나. 아래 **시트 1 ~ 11** 블록을 하나씩 통째로 복사해서 보내세요 (공통 규칙이 이미 들어 있어요).
 - 같은 장소의 시간대·날씨 버전은 같은 시트에 모아 뒀어요. 그래서 방 구조가 똑같이 나와요.
@@ -14,9 +20,9 @@
 
 ## 시트 1 — 집 (같은 거실)
 ```
-One image: a 3×3 grid of 9 equal 16:9 tiles separated by thin white lines. Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
+One single very large image (as high-resolution as you can output, at least 2688×1512): a 3×3 grid of 9 equal 16:9 tiles separated by solid white gaps exactly 16 pixels wide, with a 16-pixel white margin around the whole grid. Every tile must be completely filled edge to edge (nothing cut off or faded at the tile borders). Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
 
-STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Bright, colorful, cheerful palette (candy pastels plus vivid accents), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic: no photo lighting, no soft blur, no fine textures, no painterly detail.
+STYLE (every tile): retro pixel art like a 320×180-pixel SNES / Game Boy Advance game screen scaled up, with big chunky square pixels clearly visible and aligned to one grid (no blur, no anti-aliasing). COLOR: rich, soft, emotional color with lots of smooth stepped gradients (dithered skies, gentle light bloom, color-graded shadows in blue-violet and highlights in warm gold). Muted and slightly desaturated, NOT pop and NOT neon: as if a faint warm yellow film filter were laid over the whole image, like a golden-hour nostalgic memory. About 48 harmonious colors. Cozy like Stardew Valley.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The bottom-middle of each tile is open, empty floor right in front of the viewer; furniture stands along the left and right sides or further back. All signs and screens show only wavy lines, never letters.
 
@@ -33,9 +39,9 @@ TILES:
 
 ## 시트 2 — 부모님 집 · 거리 · 분식집
 ```
-One image: a 3×3 grid of 9 equal 16:9 tiles separated by thin white lines. Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
+One single very large image (as high-resolution as you can output, at least 2688×1512): a 3×3 grid of 9 equal 16:9 tiles separated by solid white gaps exactly 16 pixels wide, with a 16-pixel white margin around the whole grid. Every tile must be completely filled edge to edge (nothing cut off or faded at the tile borders). Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
 
-STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Bright, colorful, cheerful palette (candy pastels plus vivid accents), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic: no photo lighting, no soft blur, no fine textures, no painterly detail.
+STYLE (every tile): retro pixel art like a 320×180-pixel SNES / Game Boy Advance game screen scaled up, with big chunky square pixels clearly visible and aligned to one grid (no blur, no anti-aliasing). COLOR: rich, soft, emotional color with lots of smooth stepped gradients (dithered skies, gentle light bloom, color-graded shadows in blue-violet and highlights in warm gold). Muted and slightly desaturated, NOT pop and NOT neon: as if a faint warm yellow film filter were laid over the whole image, like a golden-hour nostalgic memory. About 48 harmonious colors. Cozy like Stardew Valley.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The bottom-middle of each tile is open, empty floor or pavement right in front of the viewer; furniture and objects stand along the left and right sides or further back. All signs and screens show only wavy lines, never letters.
 
@@ -52,9 +58,9 @@ TILES:
 
 ## 시트 3 — 카페
 ```
-One image: a 3×3 grid of 9 equal 16:9 tiles separated by thin white lines. Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
+One single very large image (as high-resolution as you can output, at least 2688×1512): a 3×3 grid of 9 equal 16:9 tiles separated by solid white gaps exactly 16 pixels wide, with a 16-pixel white margin around the whole grid. Every tile must be completely filled edge to edge (nothing cut off or faded at the tile borders). Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
 
-STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Bright, colorful, cheerful palette (candy pastels plus vivid accents), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic: no photo lighting, no soft blur, no fine textures, no painterly detail.
+STYLE (every tile): retro pixel art like a 320×180-pixel SNES / Game Boy Advance game screen scaled up, with big chunky square pixels clearly visible and aligned to one grid (no blur, no anti-aliasing). COLOR: rich, soft, emotional color with lots of smooth stepped gradients (dithered skies, gentle light bloom, color-graded shadows in blue-violet and highlights in warm gold). Muted and slightly desaturated, NOT pop and NOT neon: as if a faint warm yellow film filter were laid over the whole image, like a golden-hour nostalgic memory. About 48 harmonious colors. Cozy like Stardew Valley.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The bottom-middle of each tile is open, empty floor right in front of the viewer, with no step or ledge; tables and chairs stand along the left and right sides or further back. All signs and menus show only wavy lines, never letters.
 
@@ -71,9 +77,9 @@ TILES:
 
 ## 시트 4 — 식당 · 사무실
 ```
-One image: a 3×3 grid of 9 equal 16:9 tiles separated by thin white lines. Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
+One single very large image (as high-resolution as you can output, at least 2688×1512): a 3×3 grid of 9 equal 16:9 tiles separated by solid white gaps exactly 16 pixels wide, with a 16-pixel white margin around the whole grid. Every tile must be completely filled edge to edge (nothing cut off or faded at the tile borders). Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
 
-STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Bright, colorful, cheerful palette (candy pastels plus vivid accents), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic: no photo lighting, no soft blur, no fine textures, no painterly detail.
+STYLE (every tile): retro pixel art like a 320×180-pixel SNES / Game Boy Advance game screen scaled up, with big chunky square pixels clearly visible and aligned to one grid (no blur, no anti-aliasing). COLOR: rich, soft, emotional color with lots of smooth stepped gradients (dithered skies, gentle light bloom, color-graded shadows in blue-violet and highlights in warm gold). Muted and slightly desaturated, NOT pop and NOT neon: as if a faint warm yellow film filter were laid over the whole image, like a golden-hour nostalgic memory. About 48 harmonious colors. Cozy like Stardew Valley.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The bottom-middle of each tile is open, empty floor right in front of the viewer; tables, desks and booths stand along the left and right sides or further back. All signs, screens and whiteboards show only wavy lines, never letters.
 
@@ -90,9 +96,9 @@ TILES:
 
 ## 시트 5 — 학교 · 일 · 영화관
 ```
-One image: a 3×3 grid of 9 equal 16:9 tiles separated by thin white lines. Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
+One single very large image (as high-resolution as you can output, at least 2688×1512): a 3×3 grid of 9 equal 16:9 tiles separated by solid white gaps exactly 16 pixels wide, with a 16-pixel white margin around the whole grid. Every tile must be completely filled edge to edge (nothing cut off or faded at the tile borders). Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
 
-STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Bright, colorful, cheerful palette (candy pastels plus vivid accents), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic: no photo lighting, no soft blur, no fine textures, no painterly detail.
+STYLE (every tile): retro pixel art like a 320×180-pixel SNES / Game Boy Advance game screen scaled up, with big chunky square pixels clearly visible and aligned to one grid (no blur, no anti-aliasing). COLOR: rich, soft, emotional color with lots of smooth stepped gradients (dithered skies, gentle light bloom, color-graded shadows in blue-violet and highlights in warm gold). Muted and slightly desaturated, NOT pop and NOT neon: as if a faint warm yellow film filter were laid over the whole image, like a golden-hour nostalgic memory. About 48 harmonious colors. Cozy like Stardew Valley.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The bottom-middle of each tile is open, empty floor or path right in front of the viewer; desks, seats and benches stand along the left and right sides or further back. All signs, boards and screens show only wavy lines, never letters.
 
@@ -109,9 +115,9 @@ TILES:
 
 ## 시트 6 — 헬스장 · 공항 · 호텔
 ```
-One image: a 3×3 grid of 9 equal 16:9 tiles separated by thin white lines. Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
+One single very large image (as high-resolution as you can output, at least 2688×1512): a 3×3 grid of 9 equal 16:9 tiles separated by solid white gaps exactly 16 pixels wide, with a 16-pixel white margin around the whole grid. Every tile must be completely filled edge to edge (nothing cut off or faded at the tile borders). Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
 
-STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Bright, colorful, cheerful palette (candy pastels plus vivid accents), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic: no photo lighting, no soft blur, no fine textures, no painterly detail.
+STYLE (every tile): retro pixel art like a 320×180-pixel SNES / Game Boy Advance game screen scaled up, with big chunky square pixels clearly visible and aligned to one grid (no blur, no anti-aliasing). COLOR: rich, soft, emotional color with lots of smooth stepped gradients (dithered skies, gentle light bloom, color-graded shadows in blue-violet and highlights in warm gold). Muted and slightly desaturated, NOT pop and NOT neon: as if a faint warm yellow film filter were laid over the whole image, like a golden-hour nostalgic memory. About 48 harmonious colors. Cozy like Stardew Valley.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The bottom-middle of each tile is open, empty floor right in front of the viewer; machines, seats, beds and counters stand along the left and right sides or further back. All signs and boards show only wavy lines, never letters.
 
@@ -128,9 +134,9 @@ TILES:
 
 ## 시트 7 — 파리 · 도쿄
 ```
-One image: a 3×3 grid of 9 equal 16:9 tiles separated by thin white lines. Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
+One single very large image (as high-resolution as you can output, at least 2688×1512): a 3×3 grid of 9 equal 16:9 tiles separated by solid white gaps exactly 16 pixels wide, with a 16-pixel white margin around the whole grid. Every tile must be completely filled edge to edge (nothing cut off or faded at the tile borders). Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
 
-STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Bright, colorful, cheerful palette (candy pastels plus vivid accents), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic: no photo lighting, no soft blur, no fine textures, no painterly detail.
+STYLE (every tile): retro pixel art like a 320×180-pixel SNES / Game Boy Advance game screen scaled up, with big chunky square pixels clearly visible and aligned to one grid (no blur, no anti-aliasing). COLOR: rich, soft, emotional color with lots of smooth stepped gradients (dithered skies, gentle light bloom, color-graded shadows in blue-violet and highlights in warm gold). Muted and slightly desaturated, NOT pop and NOT neon: as if a faint warm yellow film filter were laid over the whole image, like a golden-hour nostalgic memory. About 48 harmonious colors. Cozy like Stardew Valley.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The bottom-middle of each tile is open, empty floor, street or plaza right in front of the viewer; objects stand along the left and right sides or further back. All signs show only wavy lines, never letters in any language.
 
@@ -147,9 +153,9 @@ TILES:
 
 ## 시트 8 — 파리 · 공원
 ```
-One image: a 3×3 grid of 9 equal 16:9 tiles separated by thin white lines. Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
+One single very large image (as high-resolution as you can output, at least 2688×1512): a 3×3 grid of 9 equal 16:9 tiles separated by solid white gaps exactly 16 pixels wide, with a 16-pixel white margin around the whole grid. Every tile must be completely filled edge to edge (nothing cut off or faded at the tile borders). Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
 
-STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Bright, colorful, cheerful palette (candy pastels plus vivid accents), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic: no photo lighting, no soft blur, no fine textures, no painterly detail.
+STYLE (every tile): retro pixel art like a 320×180-pixel SNES / Game Boy Advance game screen scaled up, with big chunky square pixels clearly visible and aligned to one grid (no blur, no anti-aliasing). COLOR: rich, soft, emotional color with lots of smooth stepped gradients (dithered skies, gentle light bloom, color-graded shadows in blue-violet and highlights in warm gold). Muted and slightly desaturated, NOT pop and NOT neon: as if a faint warm yellow film filter were laid over the whole image, like a golden-hour nostalgic memory. About 48 harmonious colors. Cozy like Stardew Valley.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The bottom-middle of each tile is open, empty ground or path right in front of the viewer; benches, trees and objects stand along the left and right sides or further back. No letters anywhere.
 
@@ -166,9 +172,9 @@ TILES:
 
 ## 시트 9 — 공원 밤 · 바다
 ```
-One image: a 3×3 grid of 9 equal 16:9 tiles separated by thin white lines. Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
+One single very large image (as high-resolution as you can output, at least 2688×1512): a 3×3 grid of 9 equal 16:9 tiles separated by solid white gaps exactly 16 pixels wide, with a 16-pixel white margin around the whole grid. Every tile must be completely filled edge to edge (nothing cut off or faded at the tile borders). Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
 
-STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Bright, colorful, cheerful palette (candy pastels plus vivid accents), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic: no photo lighting, no soft blur, no fine textures, no painterly detail.
+STYLE (every tile): retro pixel art like a 320×180-pixel SNES / Game Boy Advance game screen scaled up, with big chunky square pixels clearly visible and aligned to one grid (no blur, no anti-aliasing). COLOR: rich, soft, emotional color with lots of smooth stepped gradients (dithered skies, gentle light bloom, color-graded shadows in blue-violet and highlights in warm gold). Muted and slightly desaturated, NOT pop and NOT neon: as if a faint warm yellow film filter were laid over the whole image, like a golden-hour nostalgic memory. About 48 harmonious colors. Cozy like Stardew Valley.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The bottom-middle of each tile is open, empty ground, path or sand right in front of the viewer; benches, umbrellas and objects stand along the left and right sides or further back. No letters anywhere.
 
@@ -185,9 +191,9 @@ TILES:
 
 ## 시트 10 — 산책로 · 놀이공원 · 결혼식
 ```
-One image: a 3×3 grid of 9 equal 16:9 tiles separated by thin white lines. Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
+One single very large image (as high-resolution as you can output, at least 2688×1512): a 3×3 grid of 9 equal 16:9 tiles separated by solid white gaps exactly 16 pixels wide, with a 16-pixel white margin around the whole grid. Every tile must be completely filled edge to edge (nothing cut off or faded at the tile borders). Fill the first 8 tiles in reading order (left to right, top to bottom). The 9th tile (bottom right) stays plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
 
-STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Bright, colorful, cheerful palette (candy pastels plus vivid accents), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic: no photo lighting, no soft blur, no fine textures, no painterly detail.
+STYLE (every tile): retro pixel art like a 320×180-pixel SNES / Game Boy Advance game screen scaled up, with big chunky square pixels clearly visible and aligned to one grid (no blur, no anti-aliasing). COLOR: rich, soft, emotional color with lots of smooth stepped gradients (dithered skies, gentle light bloom, color-graded shadows in blue-violet and highlights in warm gold). Muted and slightly desaturated, NOT pop and NOT neon: as if a faint warm yellow film filter were laid over the whole image, like a golden-hour nostalgic memory. About 48 harmonious colors. Cozy like Stardew Valley.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The bottom-middle of each tile is open, empty floor or path right in front of the viewer; chairs, tables, stalls and objects stand along the left and right sides or further back. No letters anywhere.
 
@@ -204,9 +210,9 @@ TILES:
 
 ## 시트 11 — 병원 · 장례식 (3장)
 ```
-One image: a 3×3 grid of 9 equal 16:9 tiles separated by thin white lines. Fill only the first 3 tiles (top row). The other 6 tiles stay plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
+One single very large image (as high-resolution as you can output, at least 2688×1512): a 3×3 grid of 9 equal 16:9 tiles separated by solid white gaps exactly 16 pixels wide, with a 16-pixel white margin around the whole grid. Every tile must be completely filled edge to edge (nothing cut off or faded at the tile borders). Fill only the first 3 tiles (top row). The other 6 tiles stay plain white and empty. No labels, no captions, no titles, no numbers under or on the tiles.
 
-STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SNES / Game Boy Advance game screen blown up, with big chunky square pixels clearly visible. Soft, gentle colors (still colorful, but calm), limited to about 32 colors, flat color areas, simple dithering instead of smooth gradients, dark pixel outlines. Cute and cozy like Kairosoft or Stardew Valley. NOT realistic: no photo lighting, no soft blur, no fine textures, no painterly detail. Quiet and gentle, not scary.
+STYLE (every tile): retro pixel art like a 320×180-pixel SNES / Game Boy Advance game screen scaled up, with big chunky square pixels clearly visible and aligned to one grid (no blur, no anti-aliasing). COLOR: rich, soft, emotional color with lots of smooth stepped gradients (dithered skies, gentle light bloom, color-graded shadows in blue-violet and highlights in warm gold). Muted and slightly desaturated, NOT pop and NOT neon: as if a faint warm yellow film filter were laid over the whole image, like a golden-hour nostalgic memory. About 48 harmonious colors. Cozy like Stardew Valley. Quiet and gentle, not scary.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. The bottom-middle of each tile is open, empty floor right in front of the viewer; beds, pews and objects stand along the left and right sides or further back. No letters anywhere.
 
