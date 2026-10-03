@@ -51,6 +51,7 @@ import { readingOf } from "../story/reading";
 import { confessFate } from "../story/confessFate";
 import { photoFor, setPhotoCulture } from "../integration/prototype";
 import { homeVars, nationCode, nationalityOf } from "../story/nationality";
+import { countryName } from "../destiny/birthplace";
 import { currencyFor, formatMoney, localizeMoneyText } from "./currency";
 import { pickReflection, reflectionCategory } from "../story/reflections";
 import { applyCulture, cultureRegion } from "../story/culture";
@@ -373,7 +374,7 @@ export class Game {
     this.director = new Director(save.director);
     // English game: everything handed to the UI is English-only — family words translated, Korean
     // names romanized (재윤 → Jaeyun). The engine keeps its own data as is.
-    for (const m0 of ["advance", "choose", "endDay", "memorial", "ending", "hud", "scene", "road", "people", "lifeLog", "mood", "doActivity", "goTo", "leave", "fated"] as const) {
+    for (const m0 of ["advance", "choose", "endDay", "memorial", "ending", "hud", "scene", "road", "people", "lifeLog", "mood", "doActivity", "goTo", "leave", "fated", "partnerCard"] as const) {
       const m = m0;
       const fn = (this as unknown as Record<string, (...a: unknown[]) => unknown>)[m];
       if (typeof fn !== "function") continue;
@@ -1768,6 +1769,30 @@ export class Game {
    * The destined person as the engine made them — draw their sprite from this (also when they were left
    * to fate): gender "M" | "F", a stable sprite seed, their name once you know it.
    */
+  /** The player's name can be changed any time (the rest of the setup can't: that needs a new life). */
+  rename(name: string): void {
+    const n = name.trim().slice(0, 16);
+    if (n) this.s.setup.name = n;
+  }
+
+  /** What the player can see about their partner (name, job, birthday, nationality), or undefined when single. */
+  partnerCard(): { name: string; job: string; birth: string; nationality: string } | undefined {
+    const st = this.state;
+    const pid = st.relationship.partnerId;
+    const f = this.facts();
+    if (!pid || !f.partnered) return undefined;
+    const npc = st.npcs.find((n) => n.id === pid);
+    const wn = st.world?.npcs[pid];
+    const fated = !!wn?.fated;
+    const life = st.story?.fatedLife;
+    const b = npc?.birth ?? (wn ? { year: wn.birthYear, month: wn.birthMonth, day: wn.birthDay } : undefined);
+    const lang = this.s.lang ?? "ko";
+    const birth = b ? (lang === "ko" ? `${b.year}년 ${b.month}월 ${b.day}일` : `${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][b.month - 1]} ${b.day}, ${b.year}`) : "—";
+    const job = fated && life ? (lang === "ko" ? life.job.ko : life.job.en) : typeof wn?.profile?.job === "string" ? String(wn.profile.job) : "—";
+    const code = fated && life ? life.city.country : wn?.foreign ? undefined : nationalityOf(st);
+    return { name: f.partnerName ?? npc?.name ?? wn?.name ?? "", job, birth, nationality: code ? countryName(code, lang) : "—" };
+  }
+
   fated(): { gender: "M" | "F"; seed: number; name?: string; known: boolean } | undefined {
     const n = Object.values(this.state.world?.npcs ?? {}).find((x) => x.fated);
     if (!n) return undefined;

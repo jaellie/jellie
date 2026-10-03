@@ -85,3 +85,16 @@ describe("Culture-bound paintings follow the nationality, not the language", () 
     expect(photoFor("funeral_hall")).toBe("bg/funeral_hall.png");
   });
 });
+
+describe("Partner card and rename", () => {
+  it("shows the partner's name, job, birthday and nationality; the player can rename", () => {
+    const g = createGame({ name: "Mina", gender: "F", likes: "M", birth: { year: 1995, month: 3, day: 3 }, mbti: "ENFP", seed: 5, nationality: "US", birthplace: "newyork", home: "newyork", lang: "en", fated: { name: "Ren", from: "same", status: "dating", since: { year: 2023, month: 1, day: 1 }, birth: { year: 1994, month: 5, day: 9 }, job: "doctor" } } as never);
+    const c = g.partnerCard();
+    expect(c?.name).toBe("Ren");
+    expect(c?.birth).toBe("May 9, 1994");
+    expect(c?.job).toBe("Doctor");
+    expect(c?.nationality).toBe("United States");
+    g.rename("  Hana ");
+    expect(g.s.setup.name).toBe("Hana");
+  });
+});
