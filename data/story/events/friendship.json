@@ -118,8 +118,8 @@
    "choices": [
     {
      "t": {
-      "ko": "'방금 뭐야?' 라고 보낸다",
-      "en": "Send: 'What was that?'"
+      "ko": "방금 뭐야?",
+      "en": "What was that?"
      },
      "w": {
       "CLEAR": 0.5,

@@ -210,7 +210,7 @@ export function progressRelationship(ctx: EncounterContext, npc: WorldNpc, rel: 
         kind: "TRAVEL_OPPORTUNITY",
         scale: "MAJOR",
         npcId: npc.id,
-        text: text(`${npc.name}: "언젠가 우리 동네에 놀러 와!"`, `${npc.name}: "You should come visit me sometime!"`),
+        text: text("언젠가 우리 동네에 놀러 와!", "You should come visit me sometime!"),
         choices: [
           { id: "GO", label: text("여행 계획 세우기", "Plan a trip") },
           { id: "LATER", label: text("언젠가…", "Someday…") },

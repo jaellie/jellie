@@ -53,6 +53,7 @@ import { photoFor, setPhotoCulture } from "../integration/prototype";
 import { homeVars, nationCode, nationalityOf } from "../story/nationality";
 import { currencyFor, formatMoney, localizeMoneyText } from "./currency";
 import { pickReflection, reflectionCategory } from "../story/reflections";
+const BIG_MOMENTS = new Set(["PARENT_DEATH", "PARTNER_DEATH", "GOODBYE", "VOWS"]);
 import { type FatedFrom, type FatedLife, fatedVars, findFatedJob, resolveFatedLife } from "../story/fatedProfile";
 import type { GrandparentRel, Sibling, SiblingRel } from "../sim/types";
 import type { RelationshipOriginType } from "../world/types";
@@ -276,6 +277,8 @@ export interface GameSave {
   /** A second, lighter story moment sharing today (afternoon). */
   dayKind2?: "fated" | "arc";
   dayRef2?: string;
+  /** The line category of a multi-part moment (its card is made in an early part, its line comes at the end). */
+  momentCat?: string;
   /** Today's life event (library), if one surfaces. */
   eventUid?: string;
   /** Fated event foreshadowed today. */
@@ -467,10 +470,12 @@ export class Game {
     return npc && knowsName(this.state.world, npcId) ? npc.name : this.L(bi("낯선 사람", "Stranger"));
   }
   /** The line for the moment just resolved: by the memory card it made (or the life event's category). */
-  private reflect(cardsBefore: number, eventCat: string | undefined, chance: number): string | undefined {
+  private reflect(cardsBefore: number, eventCat: string | undefined, chance: number, catHint?: string): string | undefined {
     const st = this.state;
     const kinds = (st.story?.cards ?? []).slice(cardsBefore).map((c) => c.kind);
-    const cat = reflectionCategory(kinds, eventCat);
+    const cat = reflectionCategory(kinds, eventCat) ?? catHint;
+    // Deaths and vows always get their line.
+    if (cat && BIG_MOMENTS.has(cat)) chance = 1;
     if (!cat || !this.rng(`quote${this.s.dayIndex}:${st.story?.cards.length ?? 0}`).chance(chance)) return;
     const line = pickReflection(st, cat, this.rng(`quotePick${this.s.dayIndex}:${cat}`));
     return line ? this.L(line) : undefined;
@@ -688,6 +693,8 @@ export class Game {
       } else if (b.kind === "popup") {
         const t = splitSpeakerTag(b.popup.line);
         if (t.tag) (b.popup.name = t.tag), (b.popup.line = t.text);
+        if (b.popup.name) b.popup.line = dropOwnName(b.popup.line, b.popup.name);
+        b.popup.ch = b.popup.ch.map((c) => ({ ...c, t: unquoteChoice(c.t) }));
       }
     }
     return beats;
@@ -847,10 +854,12 @@ export class Game {
    * is about them, your partner / the one you're falling for — stand in it (photoCast), even if the
    * live scene hadn't placed them yet.
    */
-  private photoScene(withWho?: "partner" | "fated", paint?: string): PrototypeScene | undefined {
+  private photoScene(withWho?: "partner" | "fated", paint?: string, myWedding = false): PrototypeScene | undefined {
     const st = this.state;
     if (!this.s.lastScene) return undefined;
     const sc = JSON.parse(JSON.stringify(this.s.lastScene)) as PrototypeScene;
+    // Only at your own wedding do you two wear the gown and suit; as a guest you come as you are.
+    if (sc.dress === "wedding" && !myWedding) sc.dress = "none";
     // A moment with its own light (the first kiss: dusk, then moonlight).
     const own = paint ? photoFor(paint) : undefined;
     if (own === `bg/${paint}.png`) sc.photo = own;
@@ -957,6 +966,9 @@ export class Game {
         const arc = kind === "arc" ? st.story?.arcs.find((a) => a.id === ref) : undefined;
         if (arc?.type !== "DATING" || arc.steps[arc.step]?.key !== "FIRST_KISS") return undefined;
         return def.title?.ko === "달빛 아래" ? "park_night" : "park_evening";
+      })(), (() => {
+        const arc = kind === "arc" ? st.story?.arcs.find((a) => a.id === ref) : undefined;
+        return arc?.type === "ENGAGEMENT" && arc.steps[arc.step]?.key === "WEDDING";
       })()), // a snapshot (wander() keeps moving the live scene)
     };
     s.pending = { popup, storyRef: def.ref, patient, vars };
@@ -1211,6 +1223,7 @@ export class Game {
     if (r) {
       const t = splitSpeakerTag(r.line);
       if (t.tag) (r.name = t.tag), (r.line = t.text);
+      if (r.name) r.line = dropOwnName(r.line, r.name);
     }
     return r;
   }
@@ -1257,7 +1270,9 @@ export class Game {
       const res = resolveLifeEvent(p.eventUid, index, { state: st, seed: s.seed, rng, mods, facts: this.facts(), signals: this.yearSignals() });
       if (!res) return;
       const text = [this.L(res.r), ...res.extra.map((x) => this.L(x))].join(" ");
-      const quote = this.reflect(n0, evId ? lifeEvent(evId)?.cat : undefined, 0.5);
+      // A friend's death or a wedding always gets its line.
+      const evHint = evId === "FRIEND_PASSING_NEWS" ? "GOODBYE" : evId && /WEDDING/.test(evId) ? "CELEBRATE" : undefined;
+      const quote = evHint ? this.reflect(n0, undefined, 1, evHint) : this.reflect(n0, evId ? lifeEvent(evId)?.cat : undefined, 0.5);
       return { who: "me", line: this.fill(fillStory(text, st, this.facts(), p.vars ?? {})), log: label, ...(quote ? { quote } : {}) };
     }
     if (p.storyRef) {
@@ -1265,7 +1280,12 @@ export class Game {
       const n0 = st.story?.cards.length ?? 0;
       const res = resolveStory(p.storyRef, index, { state: st, seed: s.seed, rng, mods, facts: this.facts() }, label);
       if (!res) return;
-      const quote = res.more ? undefined : this.reflect(n0, undefined, 0.8);
+      // A big moment in parts (a funeral, a wedding): its card is made early, its line comes at the very end.
+      const partCat = reflectionCategory((st.story?.cards ?? []).slice(n0).map((c) => c.kind));
+      if (partCat) s.momentCat = partCat;
+      const momentCat = s.momentCat;
+      if (!res.more) s.momentCat = undefined;
+      const quote = res.more ? undefined : this.reflect(n0, undefined, 0.8, momentCat);
       if (res.scene?.length) this.setSequence(res.scene);
       if (!st.alive) s.minute = CFG.dayEndMinute;
       // A big moment in four parts: the next part opens right after this one.
@@ -1834,7 +1854,16 @@ export function createGame(input: GameSetup): Game {
   if (sealed) sealFate(st, setup, new SeededRandom(hash(seed, "sealed")));
   save.dayKind = "calm";
   // Not met yet: skip straight to the day you meet.
+  // The years skipped happen off-screen, but the story starts where you said you live (never a city
+  // a random move picked on the way).
+  const homeAt = { ...st.location };
   const years = g.skipToMeeting();
+  if (st.location.city !== homeAt.city || st.location.country !== homeAt.country) {
+    st.location = homeAt;
+    if (st.world) st.world.country = homeAt.country;
+    if (st.career.abroad && homeAt.country === st.homeCountry) st.career.abroad = false;
+    st.relationship.longDistance = false;
+  }
   const mode = st.story!.fateMode;
   if (mode === "lifelong") save.prologue = bi(`${years > 0 ? `${years}년 뒤, ` : ""}평생을 함께할 사람을 만난다.`, `${years > 0 ? `${years} year${years > 1 ? "s" : ""} later, ` : ""}you meet the one you'll spend your life with.`);
   else if (mode === "solitary") save.prologue = bi(`${years > 0 ? `${years}년 뒤, ` : ""}내 인생의 마지막 사랑이 찾아온다.`, `${years > 0 ? `${years} year${years > 1 ? "s" : ""} later, ` : ""}the last love of your life arrives.`);
@@ -2059,6 +2088,21 @@ function applyFamilySetup(st: LifeState, setup: GameSetup, rng: SeededRandom): v
 const CONTENT_TAG = /^(사진|영상|동영상|링크|이모티콘|스티커|음성|photo|video|link|sticker|voice)$/i;
 
 /** "[아빠] 차 조심해라" → { tag: "아빠", text: "차 조심해라" }; "[사진] …" is content, not a speaker. */
+const reEsc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** The popup already shows who's talking: never "민준: …" or "(민준: …)" under 민준's name again. */
+export function dropOwnName(line: string, name: string): string {
+  const n = reEsc(name.trim());
+  if (!n) return line;
+  const wrapped = new RegExp(`^\\(\\s*${n}\\s*[:：]\\s*([^()]*)\\)$`).exec(line.trim());
+  if (wrapped) return wrapped[1].trim();
+  return line.replace(new RegExp(`^\\s*${n}\\s*[:：]\\s*`), "");
+}
+/** A choice is said, not quoted: 'X' / "X" → X (actions and thoughts stay in parentheses). */
+export function unquoteChoice(t: string): string {
+  const m = /^\s*(['"“‘])(.*)(['"”’])\s*$/.exec(t);
+  return m && !/['"“”‘’]/.test(m[2].replace(/\b'(s|t|re|m|ll|ve|d)\b/g, "")) ? m[2] : t;
+}
+
 export function splitSpeakerTag(text: string): { tag?: string; text: string } {
   // At the start, or right after an opening narration: "(전화가 왔다.) [아빠] 밥은 먹었니?"
   // A whole reply in brackets: "([아빠] 그래.)" → 아빠: "그래."

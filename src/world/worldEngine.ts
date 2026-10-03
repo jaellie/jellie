@@ -158,7 +158,7 @@ export class WorldEngine {
             date: time.date,
             locationId: loc.id,
             npcId: rel.npcId,
-            text: t(`${npc?.name}: "우리 실제로 한번 만나볼래요?"`, `${npc?.name}: "Want to meet in person sometime?"`),
+            text: t("우리 실제로 한번 만나볼래요?", "Want to meet in person sometime?"),
             choices: [
               { id: "MEET", label: t("카페에서 만나기", "Meet at a café") },
               { id: "NOT_YET", label: t("아직은 온라인으로", "Keep it online for now") },

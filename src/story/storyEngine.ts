@@ -1310,7 +1310,7 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
         // You move to where they live.
         const life = state.story?.fatedLife;
         if (!life) break;
-        const abroad = life.city.country !== "KR";
+        const abroad = life.city.country !== String(state.flags.nationality ?? "KR");
         state.location = { country: abroad ? COUNTRY_NAME[life.city.country] ?? life.city.country : state.location.country, city: life.city.en };
         if (abroad) (state.flags.livedAbroad = true), state.career.employed && (state.career.abroad = true);
         life.from = "same";

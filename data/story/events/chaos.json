@@ -195,8 +195,8 @@
    "choices": [
     {
      "t": {
-      "ko": "'팀장님 저희 팀장님이 오늘 최고시라는 뜻이었습니다!'",
-      "en": "'I meant you're the BEST today, sir!'"
+      "ko": "팀장님, 저희 팀장님이 오늘 최고시라는 뜻이었습니다!",
+      "en": "I meant you're the BEST today, sir!"
      },
      "w": {
       "SAVED": 0.4,
@@ -895,8 +895,8 @@
    "choices": [
     {
      "t": {
-      "ko": "(본인 등판: '네, 접니다')",
-      "en": "(Show up in the comments: 'Yep, that's me')"
+      "ko": "네, 접니다 (본인 등판)",
+      "en": "Yep, that's me (show up in the comments)"
      },
      "w": {
       "LEGEND": 0.7,
@@ -1316,8 +1316,8 @@
     },
     {
      "t": {
-      "ko": "'잘못 보냈어' 라고 보낸다",
-      "en": "Send: 'wrong person lol'"
+      "ko": "잘못 보냈어",
+      "en": "Wrong person lol"
      },
      "w": {
       "CAUGHT": 1.0

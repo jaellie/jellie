@@ -67,7 +67,8 @@ export interface PrototypeScene {
   /** With a photo: the only people to draw on it (actor.who), side by side on the floor — you, and your partner if here. */
   photoCast?: string[];
   /** Clothes for the day: "wedding" (gown / black suit) or "funeral" (black formal). */
-  dress?: "wedding" | "funeral";
+  /** "none": a wedding you are a guest at (only the couple dress up). */
+  dress?: "wedding" | "funeral" | "none";
   /** True when roomKey is only a stand-in for a place that has no painter yet. */
   standIn: boolean;
   /** Bitmap to show when there is no procedural painter yet. */

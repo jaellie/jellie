@@ -563,8 +563,8 @@
    "choices": [
     {
      "t": {
-      "ko": "'사랑하는 가족에게'",
-      "en": "'To my beloved family'"
+      "ko": "사랑하는 가족에게",
+      "en": "To my beloved family"
      },
      "w": {
       "FAMILY": 1.0

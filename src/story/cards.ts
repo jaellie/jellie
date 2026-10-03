@@ -98,6 +98,8 @@ export function buildCards(state: LifeState, lang: "ko" | "en", seed: number): M
     caption = lang === "ko" ? fillNames(caption, vars) : caption.replace(/\{(\w+)\}/g, (_m, k: string) => vars[k] ?? "");
     if (lang === "ko") caption = fixJosa(caption);
     const ps = toPrototypeScene(scene);
+    // Only your own wedding card has you in the gown and suit.
+    if (ps.dress === "wedding" && c.kind !== "WEDDING") ps.dress = "none";
     // Role names the UI can map to sprites (inlaw, guest, baby, pet…).
     ps.actors = ps.actors.map((a, i) => ({ ...a, role: baseRole(roles[i]) }));
     return { kind: c.kind, age: c.age, caption, scene: ps };

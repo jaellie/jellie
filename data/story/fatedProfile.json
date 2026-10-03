@@ -770,8 +770,8 @@
   "dating_app": {
    "choices": [
     {
-     "ko": "먼저 '안녕하세요' 보내기",
-     "en": "Send the first 'hi'"
+     "ko": "안녕하세요 (먼저 보내기)",
+     "en": "Hi (send it first)"
     },
     {
      "ko": "프로필 사진만 한참 본다",

@@ -129,8 +129,8 @@
     },
     {
      "t": {
-      "ko": "'이번엔 언제 와?' 하고 달력을 꺼낸다",
-      "en": "\"When are you back?\" — get out the calendar"
+      "ko": "이번엔 언제 와? (달력을 꺼낸다)",
+      "en": "When are you back? (get out the calendar)"
      },
      "w": {
       "SWEET": 0.5,
@@ -427,8 +427,8 @@
    "location": "restaurant",
    "who": "partner",
    "line": {
-    "ko": "{partner}: 나 이번에 크게 인정받았어! …오늘 저녁은 내가 쏜다. 어디 가고 싶어?",
-    "en": "{partner}: I just got a big bump — they finally noticed me! …Dinner's on me tonight. Where do you want to go?"
+    "ko": "나 이번에 크게 인정받았어! …오늘 저녁은 내가 쏜다. 어디 가고 싶어?",
+    "en": "I just got a big bump — they finally noticed me! …Dinner's on me tonight. Where do you want to go?"
    },
    "choices": [
     {
