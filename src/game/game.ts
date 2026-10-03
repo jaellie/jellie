@@ -53,7 +53,7 @@ import { photoFor, setPhotoCulture } from "../integration/prototype";
 import { homeVars, nationCode, nationalityOf } from "../story/nationality";
 import { currencyFor, formatMoney, localizeMoneyText } from "./currency";
 import { pickReflection, reflectionCategory } from "../story/reflections";
-import { applyCulture } from "../story/culture";
+import { applyCulture, cultureRegion } from "../story/culture";
 import { OPENING_OF } from "../story/fatedProfile";
 const BIG_MOMENTS = new Set(["PARENT_DEATH", "PARTNER_DEATH", "GOODBYE", "VOWS"]);
 /** Ordinary lines keep at least this many played days apart. */
@@ -378,7 +378,8 @@ export class Game {
       const fn = (this as unknown as Record<string, (...a: unknown[]) => unknown>)[m];
       if (typeof fn !== "function") continue;
       (this as unknown as Record<string, unknown>)[m] = (...a: unknown[]) => {
-        setPhotoCulture(this.s.lang === "en" ? "west" : "ko");
+        // Culture-bound paintings follow the nationality, not the UI language (a Korean-language game as a US citizen shows the Western ones).
+        setPhotoCulture(cultureRegion(nationalityOf(this.state)) === "KR" ? "ko" : "west");
         const r = fn.apply(this, a);
         // Amounts in story text in the player's own currency (won stays as written).
         const cur = currencyFor(nationalityOf(this.state));

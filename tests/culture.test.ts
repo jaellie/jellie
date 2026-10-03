@@ -71,3 +71,17 @@ describe("Money in story text", () => {
     expect(localizeMoneyText("영수증 7,777원.", "KRW", "ko")).toBe("영수증 7,777원.");
   });
 });
+
+describe("Culture-bound paintings follow the nationality, not the language", () => {
+  const enter = (nat: string, lang: "ko" | "en") => {
+    const g = createGame({ name: "Mina", gender: "F", likes: "M", birth: { year: 1985, month: 3, day: 3 }, mbti: "ENFP", seed: 5, nationality: nat, birthplace: nat === "US" ? "newyork" : "seoul", home: nat === "US" ? "newyork" : "seoul", lang } as never);
+    g.scene();
+  };
+  it("a Korean-language game as a US citizen gets the Western version; Korean citizens keep the Korean one", async () => {
+    const { photoFor } = await import("../src/integration/prototype");
+    enter("US", "ko");
+    expect(photoFor("funeral_hall")).toBe("bg/funeral_hall_west.png");
+    enter("KR", "en");
+    expect(photoFor("funeral_hall")).toBe("bg/funeral_hall.png");
+  });
+});
