@@ -1759,8 +1759,8 @@
      ],
      "card": {
       "caption": {
-       "ko": "{sibling}의 결혼식, 맨 앞줄",
-       "en": "{sibling}'s wedding — front row"
+       "ko": "{sibling}이(가) 결혼했다. 맨 앞줄에서 제일 크게 울었다.",
+       "en": "{sibling} got married. I cried the loudest, front row."
       },
       "location": "wedding_venue",
       "actors": [

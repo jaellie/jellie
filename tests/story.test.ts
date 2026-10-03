@@ -382,13 +382,13 @@ describe("Family from setup", () => {
     expect(toasts.filter((t) => t.from === "오빠" || t.from === "민수").every((t) => t.from === "오빠")).toBe(true);
   });
 
-  it("funeral captions: 친구 {name}의 장례식, and relatives by their relation (never '가족의 장례식')", () => {
+  it("funeral captions: 보고 싶을 거야, {name}, and relatives by their relation (never '가족의 장례식')", () => {
     const all: MemoryCard[] = [];
     for (const seed of [5, 6, 7, 8]) all.push(...playUntil(createGame({ ...SETUP, family: FAMILY, seed }), () => false, (p) => p.ch.length - 1, 60).cards);
-    for (const c of all.filter((c) => c.kind === "FRIEND_FUNERAL")) expect(c.caption).toMatch(/^친구 .+의 장례식$/);
+    for (const c of all.filter((c) => c.kind === "FRIEND_FUNERAL")) expect(c.caption).toMatch(/^(보고 싶을 거야|편히 쉬어), .+\.$/);
     for (const c of all.filter((c) => c.kind === "RELATIVE_FUNERAL" || c.kind === "FAMILY_FUNERAL")) {
       expect(c.caption).not.toBe("가족의 장례식");
-      expect(c.caption).toMatch(/^(외할머니|외할아버지|할머니|할아버지|이모|이모부|외삼촌|고모|고모부|큰아버지|작은아버지|오빠 민수|여동생 .+)의 장례식$/);
+      expect(c.caption).toMatch(/^(편히 쉬세요|보고 싶을 거예요), (외할머니|외할아버지|할머니|할아버지|이모|이모부|외삼촌|고모|고모부|큰아버지|작은아버지|오빠 민수|여동생 .+)\.$/);
     }
     expect(all.some((c) => c.kind === "RELATIVE_FUNERAL")).toBe(true);
   });

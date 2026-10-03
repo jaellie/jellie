@@ -557,8 +557,8 @@
      },
      "card": {
       "caption": {
-       "ko": "{friend}의 결혼식 축사",
-       "en": "The speech at {friend}'s wedding"
+       "ko": "{friend}이(가) 결혼했다. 축사는 내가 했다.",
+       "en": "{friend} got married. I gave the toast."
       },
       "location": "wedding_venue",
       "actors": [

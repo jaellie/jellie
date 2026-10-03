@@ -9,9 +9,19 @@
     "partner"
    ],
    "caption": {
-    "ko": "{partner}와(과) 사귀기 시작했다",
-    "en": "Started dating {partner}"
-   }
+    "ko": "{partner}와(과) 사귀기 시작한 날. 세상이 조금 더 반짝였다.",
+    "en": "The day {partner} and I started dating. The world sparkled a little more."
+   },
+   "captions": [
+    {
+     "ko": "{partner}와(과) 사귀기 시작한 날. 세상이 조금 더 반짝였다.",
+     "en": "The day {partner} and I started dating. The world sparkled a little more."
+    },
+    {
+     "ko": "오늘부터 1일, {partner}.",
+     "en": "Day one with {partner}."
+    }
+   ]
   },
   "FIRST_DATE": {
    "location": "restaurant",
@@ -21,9 +31,15 @@
     "partner"
    ],
    "caption": {
-    "ko": "{partner}와(과)의 첫 데이트",
-    "en": "First date with {partner}"
-   }
+    "ko": "{partner}와(과)의 첫 데이트. 심장이 하루 종일 바빴다.",
+    "en": "First date with {partner}. My heart was busy all day."
+   },
+   "captions": [
+    {
+     "ko": "{partner}와(과)의 첫 데이트. 심장이 하루 종일 바빴다.",
+     "en": "First date with {partner}. My heart was busy all day."
+    }
+   ]
   },
   "PROPOSAL": {
    "location": "park",
@@ -33,9 +49,15 @@
     "partner"
    ],
    "caption": {
-    "ko": "{partner}의 프러포즈",
-    "en": "{partner}'s proposal"
-   }
+    "ko": "{partner}이(가) 반지를 꺼냈다. 대답은 물론, 응.",
+    "en": "{partner} pulled out a ring. The answer, of course, was yes."
+   },
+   "captions": [
+    {
+     "ko": "{partner}이(가) 반지를 꺼냈다. 대답은 물론, 응.",
+     "en": "{partner} pulled out a ring. The answer, of course, was yes."
+    }
+   ]
   },
   "MEET_PARENTS": {
    "location": "restaurant",
@@ -47,9 +69,15 @@
     "inlaw2"
    ],
    "caption": {
-    "ko": "{f:familiesmeet}",
-    "en": "Meeting the families"
-   }
+    "ko": "{f:familiesmeet}. 두 가족이 처음으로 한 식탁에 앉았다.",
+    "en": "Two families at one table for the first time."
+   },
+   "captions": [
+    {
+     "ko": "{f:familiesmeet}. 두 가족이 처음으로 한 식탁에 앉았다.",
+     "en": "Two families at one table for the first time."
+    }
+   ]
   },
   "CALL_OFF": {
    "location": "street",
@@ -58,9 +86,15 @@
     "me"
    ],
    "caption": {
-    "ko": "파혼했다",
-    "en": "The engagement was called off"
-   }
+    "ko": "반지를 돌려준 날. 그래도 나를 지켰다.",
+    "en": "The day I gave the ring back. I chose myself."
+   },
+   "captions": [
+    {
+     "ko": "반지를 돌려준 날. 그래도 나를 지켰다.",
+     "en": "The day I gave the ring back. I chose myself."
+    }
+   ]
   },
   "WEDDING": {
    "location": "wedding_venue",
@@ -72,9 +106,25 @@
     "guest2"
    ],
    "caption": {
-    "ko": "{partner}와(과) 결혼했다",
-    "en": "Married {partner}"
-   }
+    "ko": "{partner}와(과) 결혼했다. 평생의 첫날.",
+    "en": "Married {partner}. The first day of forever."
+   },
+   "captions": [
+    {
+     "ko": "{partner}와(과) 결혼했다. 평생의 첫날.",
+     "en": "Married {partner}. The first day of forever."
+    },
+    {
+     "ko": "{partner}와(과) 결혼했다. {partner}은(는) 세상에서 제일 예쁜 신부였다.",
+     "en": "Married {partner}. The most beautiful bride in the world.",
+     "sex": "F"
+    },
+    {
+     "ko": "{partner}와(과) 결혼했다. {partner}은(는) 최고로 잘생긴 신랑이었다.",
+     "en": "Married {partner}. The most handsome groom there ever was.",
+     "sex": "M"
+    }
+   ]
   },
   "NEW_HOME": {
    "location": "home",
@@ -84,9 +134,15 @@
     "partner"
    ],
    "caption": {
-    "ko": "우리의 첫 집",
-    "en": "Our first home"
-   }
+    "ko": "우리의 첫 집. 아직 아무것도 없는데, 다 있는 것 같았다.",
+    "en": "Our first home. Nothing in it yet, and somehow everything."
+   },
+   "captions": [
+    {
+     "ko": "우리의 첫 집. 아직 아무것도 없는데, 다 있는 것 같았다.",
+     "en": "Our first home. Nothing in it yet, and somehow everything."
+    }
+   ]
   },
   "BREAKUP": {
    "location": "street",
@@ -95,9 +151,15 @@
     "me"
    ],
    "caption": {
-    "ko": "{partner}와(과) 헤어졌다",
-    "en": "Broke up with {partner}"
-   }
+    "ko": "고마웠어, {partner}. 잘 지내.",
+    "en": "Thank you, {partner}. Take care."
+   },
+   "captions": [
+    {
+     "ko": "고마웠어, {partner}. 잘 지내.",
+     "en": "Thank you, {partner}. Take care."
+    }
+   ]
   },
   "DIVORCE": {
    "location": "court",
@@ -107,9 +169,15 @@
     "partner"
    ],
    "caption": {
-    "ko": "이혼했다",
-    "en": "Got divorced"
-   }
+    "ko": "각자의 길로. 그래도 고마웠던 날들.",
+    "en": "Our separate ways. Still grateful for the days we had."
+   },
+   "captions": [
+    {
+     "ko": "각자의 길로. 그래도 고마웠던 날들.",
+     "en": "Our separate ways. Still grateful for the days we had."
+    }
+   ]
   },
   "BIRTH": {
    "location": "hospital",
@@ -120,9 +188,15 @@
     "baby"
    ],
    "caption": {
-    "ko": "{kid}가 태어났다",
-    "en": "{kid} was born"
-   }
+    "ko": "{kid}이(가) 태어났다. 안녕, 우리 아가.",
+    "en": "{kid} was born. Hello, little one."
+   },
+   "captions": [
+    {
+     "ko": "{kid}이(가) 태어났다. 안녕, 우리 아가.",
+     "en": "{kid} was born. Hello, little one."
+    }
+   ]
   },
   "PET_ADOPT": {
    "location": "home",
@@ -132,9 +206,15 @@
     "pet"
    ],
    "caption": {
-    "ko": "{pet}와(과) 가족이 되었다",
-    "en": "{pet} joined the family"
-   }
+    "ko": "{pet}, 우리 집에 온 걸 환영해!",
+    "en": "Welcome home, {pet}!"
+   },
+   "captions": [
+    {
+     "ko": "{pet}, 우리 집에 온 걸 환영해!",
+     "en": "Welcome home, {pet}!"
+    }
+   ]
   },
   "PET_FAREWELL": {
    "location": "park",
@@ -143,9 +223,15 @@
     "me"
    ],
    "caption": {
-    "ko": "{pet}와(과) 작별했다",
-    "en": "Said goodbye to {pet}"
-   }
+    "ko": "고마웠어, {pet}. 무지개다리 건너에서 기다려 줘.",
+    "en": "Thank you, {pet}. Wait for me across the rainbow bridge."
+   },
+   "captions": [
+    {
+     "ko": "고마웠어, {pet}. 무지개다리 건너에서 기다려 줘.",
+     "en": "Thank you, {pet}. Wait for me across the rainbow bridge."
+    }
+   ]
   },
   "JOB_START": {
    "location": "office",
@@ -155,9 +241,15 @@
     "coworker"
    ],
    "caption": {
-    "ko": "취업했다",
-    "en": "Got a job"
-   }
+    "ko": "첫 출근. 사원증 사진은 조금 어색했다.",
+    "en": "First day at work. The ID photo was a little awkward."
+   },
+   "captions": [
+    {
+     "ko": "첫 출근. 사원증 사진은 조금 어색했다.",
+     "en": "First day at work. The ID photo was a little awkward."
+    }
+   ]
   },
   "JOB_CHANGE": {
    "location": "office",
@@ -167,9 +259,15 @@
     "coworker"
    ],
    "caption": {
-    "ko": "이직에 성공했다",
-    "en": "Changed jobs"
-   }
+    "ko": "새 회사, 새 시작. 잘해 보자.",
+    "en": "New company, new start. Let's do this."
+   },
+   "captions": [
+    {
+     "ko": "새 회사, 새 시작. 잘해 보자.",
+     "en": "New company, new start. Let's do this."
+    }
+   ]
   },
   "PROMOTION": {
    "location": "office",
@@ -180,9 +278,15 @@
     "coworker2"
    ],
    "caption": {
-    "ko": "팀장으로 승진했다",
-    "en": "Promoted to team lead"
-   }
+    "ko": "팀장이 됐다. 버텨 온 날들이 이름표가 됐다.",
+    "en": "Made team lead. All the days I held on turned into a nameplate."
+   },
+   "captions": [
+    {
+     "ko": "팀장이 됐다. 버텨 온 날들이 이름표가 됐다.",
+     "en": "Made team lead. All the days I held on turned into a nameplate."
+    }
+   ]
   },
   "LAYOFF": {
    "location": "street",
@@ -191,9 +295,15 @@
     "me"
    ],
    "caption": {
-    "ko": "구조조정으로 회사를 떠났다",
-    "en": "Laid off in a restructuring"
-   }
+    "ko": "상자 하나에 담긴 몇 년. 그래도 끝이 아니다.",
+    "en": "Years packed into one box. Still, it's not the end."
+   },
+   "captions": [
+    {
+     "ko": "상자 하나에 담긴 몇 년. 그래도 끝이 아니다.",
+     "en": "Years packed into one box. Still, it's not the end."
+    }
+   ]
   },
   "INDEPENDENCE": {
    "location": "cafe",
@@ -202,9 +312,15 @@
     "me"
    ],
    "caption": {
-    "ko": "내 가게를 열었다",
-    "en": "Opened my own place"
-   }
+    "ko": "내 가게를 열었다. 간판 불이 켜지던 순간을 잊지 못한다.",
+    "en": "Opened my own place. I'll never forget the moment the sign lit up."
+   },
+   "captions": [
+    {
+     "ko": "내 가게를 열었다. 간판 불이 켜지던 순간을 잊지 못한다.",
+     "en": "Opened my own place. I'll never forget the moment the sign lit up."
+    }
+   ]
   },
   "RETIREMENT": {
    "location": "office",
@@ -215,9 +331,15 @@
     "coworker2"
    ],
    "caption": {
-    "ko": "회사를 떠났다",
-    "en": "Left the company"
-   }
+    "ko": "수고했어, 나. 정말 수고 많았어.",
+    "en": "Good work, me. Really, good work."
+   },
+   "captions": [
+    {
+     "ko": "수고했어, 나. 정말 수고 많았어.",
+     "en": "Good work, me. Really, good work."
+    }
+   ]
   },
   "FLIGHT": {
    "location": "airplane",
@@ -226,9 +348,15 @@
     "me"
    ],
    "caption": {
-    "ko": "{city}(으)로 향하는 비행기 안",
-    "en": "On the plane to {city}"
-   }
+    "ko": "{city}(으)로. 창밖의 구름까지 설렜다.",
+    "en": "To {city}. Even the clouds outside looked excited."
+   },
+   "captions": [
+    {
+     "ko": "{city}(으)로. 창밖의 구름까지 설렜다.",
+     "en": "To {city}. Even the clouds outside looked excited."
+    }
+   ]
   },
   "MOVE_CITY": {
    "location": "home",
@@ -237,9 +365,15 @@
     "me"
    ],
    "caption": {
-    "ko": "{city}(으)로 이사했다",
-    "en": "Moved to {city}"
-   }
+    "ko": "{city}에서의 첫날. 여기서 잘 살아 보자.",
+    "en": "First day in {city}. Let's make a good life here."
+   },
+   "captions": [
+    {
+     "ko": "{city}에서의 첫날. 여기서 잘 살아 보자.",
+     "en": "First day in {city}. Let's make a good life here."
+    }
+   ]
   },
   "WINDFALL": {
    "location": "home",
@@ -248,9 +382,15 @@
     "me"
    ],
    "caption": {
-    "ko": "큰돈이 들어왔다",
-    "en": "A big windfall"
-   }
+    "ko": "큰돈이 들어왔다. 제일 먼저 떠오른 건 사람들이었다.",
+    "en": "A windfall. The first thing I thought of was people."
+   },
+   "captions": [
+    {
+     "ko": "큰돈이 들어왔다. 제일 먼저 떠오른 건 사람들이었다.",
+     "en": "A windfall. The first thing I thought of was people."
+    }
+   ]
   },
   "LOSS": {
    "location": "home",
@@ -259,9 +399,15 @@
     "me"
    ],
    "caption": {
-    "ko": "큰돈을 잃었다",
-    "en": "Lost a lot of money"
-   }
+    "ko": "큰돈을 잃었다. 나는 잃지 않았다.",
+    "en": "Lost a lot of money. Didn't lose myself."
+   },
+   "captions": [
+    {
+     "ko": "큰돈을 잃었다. 나는 잃지 않았다.",
+     "en": "Lost a lot of money. Didn't lose myself."
+    }
+   ]
   },
   "HOSPITAL": {
    "location": "hospital",
@@ -271,9 +417,15 @@
     "patient"
    ],
    "caption": {
-    "ko": "{patient}의 투병",
-    "en": "{patient}'s illness"
-   }
+    "ko": "힘내, {patient}. 내가 곁에 있을게.",
+    "en": "Hang in there, {patient}. I'm right here."
+   },
+   "captions": [
+    {
+     "ko": "힘내, {patient}. 내가 곁에 있을게.",
+     "en": "Hang in there, {patient}. I'm right here."
+    }
+   ]
   },
   "RECOVERED": {
    "location": "park",
@@ -283,9 +435,15 @@
     "patient"
    ],
    "caption": {
-    "ko": "{patient}이(가) 완치되었다",
-    "en": "{patient} recovered"
-   }
+    "ko": "{patient}이(가) 다 나았다! 오늘따라 하늘이 유난히 파랗다.",
+    "en": "{patient} is all better! The sky is extra blue today."
+   },
+   "captions": [
+    {
+     "ko": "{patient}이(가) 다 나았다! 오늘따라 하늘이 유난히 파랗다.",
+     "en": "{patient} is all better! The sky is extra blue today."
+    }
+   ]
   },
   "MOM_FUNERAL": {
    "location": "funeral_hall",
@@ -295,9 +453,19 @@
     "relative"
    ],
    "caption": {
-    "ko": "엄마의 장례식",
-    "en": "Mom's funeral"
-   }
+    "ko": "엄마, 사랑해요. 편히 쉬세요.",
+    "en": "I love you, Mom. Rest easy."
+   },
+   "captions": [
+    {
+     "ko": "엄마, 사랑해요. 편히 쉬세요.",
+     "en": "I love you, Mom. Rest easy."
+    },
+    {
+     "ko": "보고 싶을 거예요, 엄마.",
+     "en": "I'll miss you, Mom."
+    }
+   ]
   },
   "DAD_FUNERAL": {
    "location": "funeral_hall",
@@ -307,9 +475,19 @@
     "relative"
    ],
    "caption": {
-    "ko": "아빠의 장례식",
-    "en": "Dad's funeral"
-   }
+    "ko": "아빠, 고마웠어요. 편히 쉬세요.",
+    "en": "Thank you, Dad. Rest easy."
+   },
+   "captions": [
+    {
+     "ko": "아빠, 고마웠어요. 편히 쉬세요.",
+     "en": "Thank you, Dad. Rest easy."
+    },
+    {
+     "ko": "보고 싶을 거예요, 아빠.",
+     "en": "I'll miss you, Dad."
+    }
+   ]
   },
   "PARENT_FUNERAL": {
    "location": "funeral_hall",
@@ -319,9 +497,15 @@
     "relative"
    ],
    "caption": {
-    "ko": "{patient}의 장례식",
-    "en": "{patient}'s funeral"
-   }
+    "ko": "편히 쉬세요, {patient}.",
+    "en": "Rest easy, {patient}."
+   },
+   "captions": [
+    {
+     "ko": "편히 쉬세요, {patient}.",
+     "en": "Rest easy, {patient}."
+    }
+   ]
   },
   "FAMILY_FUNERAL": {
    "location": "funeral_hall",
@@ -331,9 +515,19 @@
     "relative"
    ],
    "caption": {
-    "ko": "{relative}의 장례식",
-    "en": "{relative}'s funeral"
-   }
+    "ko": "편히 쉬세요, {relative}.",
+    "en": "Rest in peace, {relative}."
+   },
+   "captions": [
+    {
+     "ko": "편히 쉬세요, {relative}.",
+     "en": "Rest in peace, {relative}."
+    },
+    {
+     "ko": "보고 싶을 거예요, {relative}.",
+     "en": "We'll miss you, {relative}."
+    }
+   ]
   },
   "FRIEND_WEDDING": {
    "location": "wedding_venue",
@@ -344,9 +538,25 @@
     "guest"
    ],
    "caption": {
-    "ko": "{friend}의 결혼식",
-    "en": "{friend}'s wedding"
-   }
+    "ko": "{friend}이(가) 결혼했다. 축하해!",
+    "en": "{friend} got married. Congratulations!"
+   },
+   "captions": [
+    {
+     "ko": "{friend}이(가) 결혼했다. 축하해!",
+     "en": "{friend} got married. Congratulations!"
+    },
+    {
+     "ko": "{friend}이(가) 결혼했다. {friend}은(는) 오늘도 예뻤다.",
+     "en": "{friend} got married. Gorgeous, as always.",
+     "sex": "F"
+    },
+    {
+     "ko": "{friend}이(가) 결혼했다. 최고로 잘생긴 신랑이었다.",
+     "en": "{friend} got married. The most handsome groom there ever was.",
+     "sex": "M"
+    }
+   ]
   },
   "FRIEND_FUNERAL": {
    "location": "funeral_hall",
@@ -356,9 +566,19 @@
     "relative"
    ],
    "caption": {
-    "ko": "친구 {friend}의 장례식",
-    "en": "Friend {friend}'s funeral"
-   }
+    "ko": "보고 싶을 거야, {friend}.",
+    "en": "I'll miss you, {friend}."
+   },
+   "captions": [
+    {
+     "ko": "보고 싶을 거야, {friend}.",
+     "en": "I'll miss you, {friend}."
+    },
+    {
+     "ko": "편히 쉬어, {friend}.",
+     "en": "Rest easy, {friend}."
+    }
+   ]
   },
   "PARTNER_FUNERAL": {
    "location": "funeral_hall",
@@ -368,9 +588,19 @@
     "relative"
    ],
    "caption": {
-    "ko": "{partner}을(를) 떠나보냈다",
-    "en": "Said goodbye to {partner}"
-   }
+    "ko": "사랑해, {partner}. 다음 생에도.",
+    "en": "I love you, {partner}. In the next life too."
+   },
+   "captions": [
+    {
+     "ko": "사랑해, {partner}. 다음 생에도.",
+     "en": "I love you, {partner}. In the next life too."
+    },
+    {
+     "ko": "기다려 줘, {partner}. 언젠가 다 이야기해 줄게.",
+     "en": "Wait for me, {partner}. Someday I'll tell you everything."
+    }
+   ]
   },
   "GRADUATION": {
    "location": "university",
@@ -380,9 +610,15 @@
     "friend"
    ],
    "caption": {
-    "ko": "졸업했다",
-    "en": "Graduated"
-   }
+    "ko": "졸업! 학사모가 하늘 높이 날았다.",
+    "en": "Graduated! Caps flew high into the sky."
+   },
+   "captions": [
+    {
+     "ko": "졸업! 학사모가 하늘 높이 날았다.",
+     "en": "Graduated! Caps flew high into the sky."
+    }
+   ]
   },
   "KID_SCHOOL": {
    "location": "university",
@@ -392,9 +628,15 @@
     "kid"
    ],
    "caption": {
-    "ko": "{kid}의 입학식",
-    "en": "{kid}'s first day of school"
-   }
+    "ko": "{kid}의 첫 등교. 가방이 몸보다 컸다.",
+    "en": "{kid}'s first day of school. The backpack was bigger than they were."
+   },
+   "captions": [
+    {
+     "ko": "{kid}의 첫 등교. 가방이 몸보다 컸다.",
+     "en": "{kid}'s first day of school. The backpack was bigger than they were."
+    }
+   ]
   },
   "SHOP_CLOSE": {
    "location": "cafe",
@@ -404,9 +646,15 @@
     "friend"
    ],
    "caption": {
-    "ko": "가게 문을 닫던 날",
-    "en": "The day I closed the shop"
-   }
+    "ko": "가게 문을 닫던 날. 그동안 고마웠어요.",
+    "en": "The day I closed the shop. Thank you for everything."
+   },
+   "captions": [
+    {
+     "ko": "가게 문을 닫던 날. 그동안 고마웠어요.",
+     "en": "The day I closed the shop. Thank you for everything."
+    }
+   ]
   },
   "RELATIVE_FUNERAL": {
    "location": "funeral_hall",
@@ -417,9 +665,19 @@
     "relative2"
    ],
    "caption": {
-    "ko": "{relative}의 장례식",
-    "en": "{relative}'s funeral"
-   }
+    "ko": "편히 쉬세요, {relative}.",
+    "en": "Rest in peace, {relative}."
+   },
+   "captions": [
+    {
+     "ko": "편히 쉬세요, {relative}.",
+     "en": "Rest in peace, {relative}."
+    },
+    {
+     "ko": "보고 싶을 거예요, {relative}.",
+     "en": "We'll miss you, {relative}."
+    }
+   ]
   },
   "SIBLING_WEDDING": {
    "location": "wedding_venue",
@@ -430,9 +688,25 @@
     "guest"
    ],
    "caption": {
-    "ko": "{relative}의 결혼식",
-    "en": "{relative}'s wedding"
-   }
+    "ko": "{relative}이(가) 결혼했다. 행복해야 해.",
+    "en": "{relative} got married. Be happy."
+   },
+   "captions": [
+    {
+     "ko": "{relative}이(가) 결혼했다. 행복해야 해.",
+     "en": "{relative} got married. Be happy."
+    },
+    {
+     "ko": "{relative}이(가) 결혼했다. 오늘따라 유난히 예뻤다.",
+     "en": "{relative} got married. Especially beautiful today.",
+     "sex": "F"
+    },
+    {
+     "ko": "{relative}이(가) 결혼했다. 오늘만큼은 진짜 멋있었다.",
+     "en": "{relative} got married. Truly dashing, just for today.",
+     "sex": "M"
+    }
+   ]
   },
   "NEPHEW_BIRTH": {
    "location": "hospital",
@@ -443,9 +717,15 @@
     "baby"
    ],
    "caption": {
-    "ko": "{relative}네 아기가 태어났다",
-    "en": "{relative} had a baby"
-   }
+    "ko": "{relative}네 아기가 태어났다. 작은 손에 세상이 다 들어 있었다.",
+    "en": "{relative} had a baby. The whole world fit in that tiny hand."
+   },
+   "captions": [
+    {
+     "ko": "{relative}네 아기가 태어났다. 작은 손에 세상이 다 들어 있었다.",
+     "en": "{relative} had a baby. The whole world fit in that tiny hand."
+    }
+   ]
   },
   "PREGNANCY_LOSS": {
    "location": "hospital",
@@ -455,9 +735,15 @@
     "partner"
    ],
    "caption": {
-    "ko": "지켜주지 못한 작은 생명",
-    "en": "The little life we couldn't keep"
-   }
+    "ko": "지켜 주지 못한 작은 생명. 잊지 않을게.",
+    "en": "The little life we couldn't keep. We'll never forget."
+   },
+   "captions": [
+    {
+     "ko": "지켜 주지 못한 작은 생명. 잊지 않을게.",
+     "en": "The little life we couldn't keep. We'll never forget."
+    }
+   ]
   },
   "AFFAIR": {
    "location": "street",
@@ -466,9 +752,15 @@
     "me"
    ],
    "caption": {
-    "ko": "믿었던 사람의 뒷모습",
-    "en": "The back of someone I trusted"
-   }
+    "ko": "믿었던 사람의 뒷모습. 그래도 나는 다시 일어난다.",
+    "en": "The back of someone I trusted. I'll still get back up."
+   },
+   "captions": [
+    {
+     "ko": "믿었던 사람의 뒷모습. 그래도 나는 다시 일어난다.",
+     "en": "The back of someone I trusted. I'll still get back up."
+    }
+   ]
   }
  }
 }

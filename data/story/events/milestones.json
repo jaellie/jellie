@@ -66,8 +66,8 @@
      ],
      "card": {
       "caption": {
-       "ko": "{buddy}의 결혼식",
-       "en": "{buddy}'s wedding"
+       "ko": "{buddy}이(가) 결혼했다. 축하해!",
+       "en": "{buddy} got married. Congratulations!"
       },
       "location": "wedding_venue",
       "actors": [
@@ -91,8 +91,8 @@
      ],
      "card": {
       "caption": {
-       "ko": "{buddy}의 결혼식, 나의 축사",
-       "en": "My toast at {buddy}'s wedding"
+       "ko": "{buddy}이(가) 결혼했다. 내 축사에 다들 울었다.",
+       "en": "{buddy} got married. My toast made everyone cry."
       },
       "location": "wedding_venue",
       "actors": [
@@ -276,8 +276,8 @@
      ],
      "card": {
       "caption": {
-       "ko": "{relative}의 결혼식",
-       "en": "{relative}'s wedding"
+       "ko": "{relative}이(가) 결혼했다. 행복해야 해.",
+       "en": "{relative} got married. Be happy."
       },
       "location": "wedding_venue",
       "actors": [
@@ -301,8 +301,8 @@
      ],
      "card": {
       "caption": {
-       "ko": "{relative}의 결혼식",
-       "en": "{relative}'s wedding"
+       "ko": "{relative}이(가) 결혼했다. 행복해야 해.",
+       "en": "{relative} got married. Be happy."
       },
       "location": "wedding_venue",
       "actors": [
@@ -326,8 +326,8 @@
      ],
      "card": {
       "caption": {
-       "ko": "{relative}의 결혼식",
-       "en": "{relative}'s wedding"
+       "ko": "{relative}이(가) 결혼했다. 행복해야 해.",
+       "en": "{relative} got married. Be happy."
       },
       "location": "wedding_venue",
       "actors": [
@@ -515,8 +515,8 @@
      ],
      "card": {
       "caption": {
-       "ko": "친구 {buddy}의 장례식",
-       "en": "{buddy}'s funeral"
+       "ko": "보고 싶을 거야, {buddy}.",
+       "en": "I'll miss you, {buddy}."
       },
       "location": "funeral_hall",
       "actors": [
@@ -534,8 +534,8 @@
      "effects": [],
      "card": {
       "caption": {
-       "ko": "친구 {buddy}을(를) 보내며",
-       "en": "Saying goodbye to {buddy}"
+       "ko": "편히 쉬어, {buddy}.",
+       "en": "Rest easy, {buddy}."
       },
       "location": "funeral_hall",
       "actors": [
@@ -587,8 +587,8 @@
        ],
        "card": {
         "caption": {
-         "ko": "친구 {buddy}의 장례식",
-         "en": "{buddy}'s funeral"
+         "ko": "보고 싶을 거야, {buddy}.",
+         "en": "I'll miss you, {buddy}."
         },
         "location": "funeral_hall",
         "actors": [
@@ -606,8 +606,8 @@
        "effects": [],
        "card": {
         "caption": {
-         "ko": "친구 {buddy}을(를) 보내며",
-         "en": "Saying goodbye to {buddy}"
+         "ko": "편히 쉬어, {buddy}.",
+         "en": "Rest easy, {buddy}."
         },
         "location": "funeral_hall",
         "actors": [
@@ -654,8 +654,8 @@
        ],
        "card": {
         "caption": {
-         "ko": "친구 {buddy}의 장례식",
-         "en": "{buddy}'s funeral"
+         "ko": "보고 싶을 거야, {buddy}.",
+         "en": "I'll miss you, {buddy}."
         },
         "location": "funeral_hall",
         "actors": [

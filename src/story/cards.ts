@@ -13,7 +13,8 @@ import { fillNames, fixJosa, CITY_KO, cityKo, langVars } from "../game/text";
 import { STAGE } from "../world/stage";
 
 type Bi = { ko: string; en: string };
-const CARDS = cardData.cards as unknown as Record<string, { location: string; activity: string | null; actors: string[]; caption: Bi }>;
+type Caption = Bi & { sex?: "F" | "M" };
+const CARDS = cardData.cards as unknown as Record<string, { location: string; activity: string | null; actors: string[]; caption: Bi; captions?: Caption[] }>;
 
 /** A card kind from cards.json, or an inline life-event card (caption/place/actors carried in its vars). */
 function cardDef(c: { kind: string; vars: Record<string, string> }): (typeof CARDS)[string] | undefined {
@@ -94,7 +95,14 @@ export function buildCards(state: LifeState, lang: "ko" | "en", seed: number): M
       props: [],
     };
     const vars: Record<string, string> = { ...langVars(c.vars, lang), city: lang === "ko" ? cityKo(c.vars.city) : c.vars.city };
-    let caption = def.caption[lang].replace(/\{(\w+)\}/g, (m, k: string) => (k in vars ? m : ""));
+    // One of the card's lines, said like a memory ("보고 싶을 거야, 지훈."): a bride or a groom line when we
+    // know who it's about, picked steadily per card.
+    const who = subjectSex(state, c, actors);
+    const pool = (CARDS[c.kind]?.captions ?? []).filter((x) => !x.sex || x.sex === who);
+    const gendered = pool.filter((x) => x.sex);
+    const pickFrom = gendered.length && h(seed, c.kind, c.age, "cap") % 3 !== 0 ? gendered : pool;
+    const chosen = pickFrom.length ? pickFrom[h(seed, c.kind, c.age, "capi") % pickFrom.length] : def.caption;
+    let caption = chosen[lang].replace(/\{(\w+)\}/g, (m, k: string) => (k in vars ? m : ""));
     caption = lang === "ko" ? fillNames(caption, vars) : caption.replace(/\{(\w+)\}/g, (_m, k: string) => vars[k] ?? "");
     if (lang === "ko") caption = fixJosa(caption);
     const ps = toPrototypeScene(scene);
@@ -104,4 +112,19 @@ export function buildCards(state: LifeState, lang: "ko" | "en", seed: number): M
     ps.actors = ps.actors.map((a, i) => ({ ...a, role: baseRole(roles[i]) }));
     return { kind: c.kind, age: c.age, caption, scene: ps };
   });
+}
+
+/** Who the card is about, as F / M when we can tell (the partner on a wedding card, the friend, a sister). */
+function subjectSex(state: LifeState, c: { kind: string; vars: Record<string, string> }, actors: SceneActor[]): "F" | "M" | undefined {
+  const sx = (v?: string) => (v === "FEMALE" ? "F" : v === "MALE" ? "M" : undefined);
+  if (c.kind === "WEDDING") return sx(actors.find((a) => a.kind === "partner")?.sex);
+  const name = c.vars.friend || c.vars.buddy;
+  if (name) {
+    const npc = Object.values(state.world?.npcs ?? {}).find((n) => n.name === name) ?? state.npcs.find((n) => n.name === name);
+    return sx(npc && ("sex" in npc ? npc.sex : (npc as { birth?: { sex?: string } }).birth?.sex));
+  }
+  const rel = c.vars.relative ?? "";
+  if (/언니|누나|여동생|sister/i.test(rel)) return "F";
+  if (/오빠|형|남동생|brother/i.test(rel)) return "M";
+  return undefined;
 }

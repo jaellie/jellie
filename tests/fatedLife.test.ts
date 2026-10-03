@@ -260,7 +260,7 @@ describe("Others' big moments are popups", () => {
         if (beats.some((b) => b.kind === "dayEnd")) break;
       }
       const r = g.endDay();
-      if (seen) expect(r.cards.some((c) => c.caption.includes("하윤의 결혼식"))).toBe(true);
+      if (seen) expect(r.cards.some((c) => c.caption.includes("하윤이 결혼했다"))).toBe(true);
     }
     expect(seen?.line).toContain("하윤");
     expect(seen?.line).toContain("청첩장");
