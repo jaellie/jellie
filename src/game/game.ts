@@ -1223,7 +1223,11 @@ export class Game {
       const loc = getLocation(id);
       if (!loc.online && loc.region === st.world!.homeRegion) place(id, h.activityId, bi(`${loc.name.ko} 가기`, `Go to ${loc.name.en}`), 2.5);
     }
-    if (f.hasFriend) pool.push({ item: { id: "friend", kind: "friend", locationId: "cafe", activityId: "meet_friend", label: bi(`${f.friendName} 만나기`, `Meet ${f.friendName}`) }, weight: 1.5 + st.traits.sociability });
+    if (f.hasFriend) {
+      // With a partner by your side it's a double date, not "meet 다은".
+      const together = f.partnered && !f.apart;
+      pool.push({ item: { id: "friend", kind: "friend", locationId: "cafe", activityId: "meet_friend", ...(together ? { withPartner: true } : {}), label: together ? bi(`${f.friendName}네 커플과 더블 데이트`, `Double date with ${f.friendName} and their partner`) : bi(`${f.friendName} 만나기`, `Meet ${f.friendName}`) }, weight: 1.5 + st.traits.sociability });
+    }
     if (f.partnered && f.apart) {
       // Long distance: no dinner dates — a video-call date, or something sent across the distance.
       pool.push({ item: { id: "call:partner", kind: "home", locationId: "home", activityId: "watch_tv", label: bi(`${f.partnerName}와(과) 영상통화 데이트`, `A video-call date with ${f.partnerName}`) }, weight: 1.6 });
