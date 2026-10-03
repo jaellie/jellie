@@ -1612,7 +1612,7 @@
      "outcomes": {
       "ABROAD": {
        "r": {
-        "ko": "몇 년 만에 {homeland}의 공항. 공기 냄새부터 달랐다. 돌아왔다.",
+        "ko": "몇 년 만에 밟는 공항. 공기 냄새부터 달랐다. 돌아왔다.",
         "en": "Back at the airport in {homeland} after all these years. Even the air smelled different. You were home."
        },
        "effects": [
