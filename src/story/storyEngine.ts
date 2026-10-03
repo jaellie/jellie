@@ -581,6 +581,11 @@ export function storyPopup(state: LifeState, kind: "fated" | "arc", ref: string,
   }
   const arc = state.story!.arcs.find((a) => a.id === ref);
   if (!arc) return;
+  // Living in the same place now (someone moved, or you came home): the long-distance story is over.
+  if (arc.type === "LONG_DISTANCE" && !state.relationship.longDistance) {
+    if (!opts.peek) endArc(state, "LONG_DISTANCE");
+    return;
+  }
   const step = arc.steps[arc.step];
   // While you live apart, the in-person dating steps wait until you're in the same place.
   if (arc.type === "DATING" && state.relationship.longDistance && IN_PERSON.includes(step.key)) {

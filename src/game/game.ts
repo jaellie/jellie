@@ -56,6 +56,8 @@ import { pickReflection, reflectionCategory } from "../story/reflections";
 import { applyCulture } from "../story/culture";
 import { OPENING_OF } from "../story/fatedProfile";
 const BIG_MOMENTS = new Set(["PARENT_DEATH", "PARTNER_DEATH", "GOODBYE", "VOWS"]);
+/** Ordinary lines keep at least this many played days apart. */
+const QUOTE_GAP_DAYS = 4;
 /** The line category for a story moment with no card of its own. */
 const ARC_LINE: Record<string, string> = { DATING: "TOGETHER", TALKING: "LOVE_BEGINS", ENGAGEMENT: "VOWS", PARENT_PASSING: "PARENT_DEATH", FAMILY_PASSING: "GOODBYE", PARTNER_PASSING: "PARTNER_DEATH", ILLNESS: "HEALTH", LONG_DISTANCE: "TOGETHER", PARTING: "BREAKUP", DIVORCE: "DIVORCE", AFFAIR: "SHADOW", PREGNANCY: "NEW_LIFE" };
 import { type FatedFrom, type FatedLife, fatedVars, findFatedJob, resolveFatedLife } from "../story/fatedProfile";
@@ -285,6 +287,8 @@ export interface GameSave {
   dayRef2?: string;
   /** The line category of a multi-part moment (its card is made in an early part, its line comes at the end). */
   momentCat?: string;
+  /** The day the last line came (they're rare: a few days apart unless it's a death or a vow). */
+  lastQuoteDay?: number;
   /** Today's life event (library), if one surfaces. */
   eventUid?: string;
   /** Fated event foreshadowed today. */
@@ -504,10 +508,13 @@ export class Game {
     const st = this.state;
     const kinds = (st.story?.cards ?? []).slice(cardsBefore).map((c) => c.kind);
     const cat = reflectionCategory(kinds, eventCat) ?? catHint;
-    // Deaths and vows always get their line.
-    if (cat && BIG_MOMENTS.has(cat)) chance = 1;
+    // Deaths and vows always get their line; everything else is rare, and never two days running.
+    const big = !!cat && BIG_MOMENTS.has(cat);
+    if (big) chance = 1;
+    else if (this.s.lastQuoteDay !== undefined && this.s.dayIndex - this.s.lastQuoteDay < QUOTE_GAP_DAYS) return;
     if (!cat || !this.rng(`quote${this.s.dayIndex}:${st.story?.cards.length ?? 0}`).chance(chance)) return;
     const line = pickReflection(st, cat, this.rng(`quotePick${this.s.dayIndex}:${cat}`));
+    if (line) this.s.lastQuoteDay = this.s.dayIndex;
     return line ? this.L(line) : undefined;
   }
   private speaker(role: string): string {
@@ -1349,7 +1356,7 @@ export class Game {
       // A friend's death or a wedding always gets its line.
       const evHint = evId === "FRIEND_PASSING_NEWS" ? "GOODBYE" : evId && /WEDDING/.test(evId) ? "CELEBRATE" : undefined;
       const evDef = evId ? lifeEvent(evId) : undefined;
-      const quote = evHint ? this.reflect(n0, undefined, 1, evHint) : this.reflect(n0, evDef?.cat, evDef?.big ? 0.85 : 0.5);
+      const quote = evHint ? this.reflect(n0, undefined, evHint === "GOODBYE" ? 1 : 0.5, evHint) : this.reflect(n0, evDef?.cat, evDef?.big ? 0.35 : 0.1);
       return { who: "me", line: this.fill(fillStory(text, st, this.facts(), p.vars ?? {})), log: label, ...(quote ? { quote } : {}) };
     }
     if (p.storyRef) {
@@ -1367,7 +1374,9 @@ export class Game {
       if (!res.more) s.momentCat = undefined;
       // The funeral itself always gets its line (and the days after get another).
       const funeral = !!res.more && (stepKey === "FUNERAL" || stepKey === "FAREWELL") && !!arcType && ARC_LINE[arcType] !== undefined;
-      const quote = res.more && !funeral ? undefined : this.reflect(n0, undefined, funeral ? 1 : 0.8, momentCat ?? (p.storyRef.startsWith("fated:") ? "FATE" : arcType ? ARC_LINE[arcType] : undefined));
+      // One line per big moment: a parent's goodbye gets it at the funeral, not again in the months after.
+      const afterFuneral = !res.more && arcType === "PARENT_PASSING";
+      const quote = (res.more && !funeral) || afterFuneral ? undefined : this.reflect(n0, undefined, funeral ? 1 : 0.35, momentCat ?? (p.storyRef.startsWith("fated:") ? "FATE" : arcType ? ARC_LINE[arcType] : undefined));
       if (res.scene?.length) this.setSequence(res.scene);
       if (!st.alive) s.minute = CFG.dayEndMinute;
       // A big moment in four parts: the next part opens right after this one.
@@ -1392,18 +1401,18 @@ export class Game {
       const c = story.choices[index];
       applyConsequences(st, c.effects ?? [], { rng, modifiers: mods, log: [] });
       // Now and then an ordinary moment gets its line too.
-      const daily = rng.chance(0.15) ? pickReflection(st, story.who === "partner" ? "TOGETHER" : story.who === "friend" ? "FRIENDS" : "DAILY", rng) : undefined;
-      return { who: story.who === "me" ? "me" : story.who, name: p.popup.name, line: this.fill(this.L(c.r)), ...(daily ? { quote: this.L(daily) } : {}) };
+      const daily = this.reflect(st.story?.cards.length ?? 0, undefined, 0.04, story.who === "partner" ? "TOGETHER" : story.who === "friend" ? "FRIENDS" : "DAILY");
+      return { who: story.who === "me" ? "me" : story.who, name: p.popup.name, line: this.fill(this.L(c.r)), ...(daily ? { quote: daily } : {}) };
     }
     if (p.note) {
       const r = p.note[index] ?? p.note[0];
-      const quote = this.reflect(0, undefined, 1, "MOVING");
+      const quote = this.reflect(0, undefined, 0.6, "MOVING");
       return { who: "me", line: this.fill(this.L(r)), log: p.popup.ch[index]?.t, ...(quote ? { quote } : {}) };
     }
     if (p.occasion) {
       const r = p.occasion[index] ?? p.occasion[0];
       st.flags.lastOccasionMonth = st.monthIndex;
-      const quote = this.reflect(st.story?.cards.length ?? 0, undefined, 0.35, "TOGETHER");
+      const quote = this.reflect(st.story?.cards.length ?? 0, undefined, 0.15, "TOGETHER");
       return { who: "me", line: this.fill(this.L(r)), log: p.popup.ch[index]?.t, ...(quote ? { quote } : {}) };
     }
     if (p.plan) {
@@ -1415,7 +1424,7 @@ export class Game {
       }
       // Today's life event keeps its own time and place (the court, 본가…); the weekend plan fills the rest.
       s.dayPlan = { locationId: o.locationId, activityId: o.activityId, withPartner: o.withPartner, sequence: (s.dayPlan.sequence ?? []).filter((q) => q.keep) };
-      const quote = this.reflect(st.story?.cards.length ?? 0, undefined, 0.12, "DAILY");
+      const quote = undefined as string | undefined;
       return { who: "me", line: this.fill(this.L(o.reply ?? (o.kind === "home" ? bi("(이불 밖은 위험해.)", "(Staying in. The blanket wins.)") : bi("(좋아, 가보자!)", "(Okay, let's go!)")))), log: this.L(o.label), ...(quote ? { quote } : {}) };
     }
     return;
@@ -2315,32 +2324,78 @@ function gapPhoto(st: LifeState, a: Snap, b: Snap, lines: string[], rng: SeededR
   return pool.length ? pool[rng.int(0, pool.length - 1)] : undefined;
 }
 
+/**
+ * What you'd add after the fact, in your own voice ("파리에 다녀왔다. 돈 모아서 또 가야지."). One of a few
+ * per kind, steady for the same moment.
+ */
+const AFTERTHOUGHT: Record<string, Array<[string, string]>> = {
+  parent: [["아직도 가끔 번호를 누를 뻔한다.", "Sometimes I still almost dial the number."], ["밥 먹었냐는 그 말이 그립다.", "I miss being asked if I've eaten."]],
+  married: [["평생 같이 걸을 사람이 생겼다.", "Now I have someone to walk the rest of the way with."], ["아직도 반지를 볼 때마다 웃음이 난다.", "I still smile every time I look at the ring."]],
+  dating: [["요즘은 휴대폰만 봐도 웃음이 난다.", "Lately even my phone makes me smile."], ["하루하루가 조금 더 반짝인다.", "Every day sparkles a little more."]],
+  divorced: [["그래도 나는 다시 시작할 거다.", "Still, I'm going to start again."], ["각자의 자리에서 행복하길.", "I hope we're both happy, wherever we are."]],
+  brokeUp: [["괜찮아질 거다. 아마도.", "I'll be okay. Probably."], ["좋았던 기억만 가져가기로 했다.", "I'm keeping only the good memories."]],
+  abroad: [["모든 게 낯설고, 그래서 설렌다.", "Everything's unfamiliar, and that's the exciting part."], ["여기서도 잘 살아 볼 거다.", "I'm going to make a good life here too."]],
+  home: [["역시 집이 최고다.", "There really is no place like home."], ["공항 냄새마저 반가웠다.", "Even the airport smelled like home."]],
+  moved: [["새 동네 단골집부터 찾아야지.", "First thing: find a regular spot in the new neighborhood."], ["상자는 아직 반도 못 풀었다.", "Still haven't unpacked half the boxes."]],
+  retired: [["이제부터는 내 시간이다.", "From now on, my time is my own."], ["수고했어, 나. 정말로.", "Good work, me. Really."]],
+  leftJob: [["잠깐 쉬어 가도 괜찮다.", "It's okay to rest for a while."], ["다음 문은 어디서 열릴까.", "I wonder where the next door will open."]],
+  newJob: [["첫 출근 날, 긴장해서 엘리베이터 버튼을 두 번 눌렀다.", "I was so nervous on day one, I pressed the elevator button twice."], ["이번엔 오래 다닐 수 있으면 좋겠다.", "I hope this one sticks."]],
+  changedJob: [["새 명함이 아직 어색하다.", "The new business card still feels strange."], ["새로운 사람들, 새로운 점심 메뉴.", "New people, new lunch spots."]],
+  promoted: [["버틴 보람이 있었다.", "All that holding on paid off."], ["오늘 저녁은 나한테 맛있는 걸 사 줘야지.", "Tonight I'm treating myself."]],
+  graduated: [["학사모를 던질 때 조금 울었다.", "I cried a little when the caps went up."], ["이제 진짜 어른이 되는 걸까.", "So is this when I really grow up?"]],
+  school: [["가방은 무거운데 마음은 가볍다.", "The bag is heavy, but my heart feels light."]],
+  trip: [["돈 모아서 또 가야지.", "Saving up to go back."]],
+  habit: [["이번엔 꾸준히 해 보자.", "This time, I'm sticking with it."]],
+  saved: [["통장을 볼 때마다 든든하다.", "Checking my balance feels good these days."]],
+  tight: [["당분간 허리띠 좀 졸라매자.", "Time to tighten the belt for a while."]],
+  ordinary: [["그래도 나쁘지 않은 나날이었다.", "Not bad days, all in all."], ["별일 없는 게 제일 큰 복이다.", "No news really is the best news."]],
+};
+
 function summarize(a: Snap, b: Snap, _lang: Lang): { bi: Bi[] } {
   const out: Array<{ p: number; t: Bi }> = [];
-  const add = (p: number, ko: string, en: string) => out.push({ p, t: bi(ko, en) });
-  if (a.mom && !b.mom) add(10, "엄마가 세상을 떠났다.", "Mom passed away.");
-  if (a.dad && !b.dad) add(10, "아빠가 세상을 떠났다.", "Dad passed away.");
-  if (a.status !== "MARRIED" && b.status === "MARRIED") add(9, fixJosa(`${b.partner ?? ""}와(과) 결혼했다.`), `Married ${b.partner ?? ""}.`);
-  else if ((a.status === "SINGLE" || a.status === "DIVORCED") && b.status === "DATING") add(8, fixJosa(`${b.partner ?? ""}와(과) 연애를 시작했다.`), `Started dating ${b.partner ?? ""}.`);
-  if (a.status === "MARRIED" && b.status === "DIVORCED") add(8, "이혼했다.", "Got divorced.");
-  else if ((a.status === "DATING" || a.status === "MARRIED") && b.status === "SINGLE") add(7, fixJosa(`${a.partner ?? ""}와(과) 헤어졌다.`), `Broke up with ${a.partner ?? ""}.`);
-  if (a.country !== b.country) add(7, b.country === b.home ? "고향으로 돌아왔다." : fixJosa(`${COUNTRY_KO[b.country] ?? b.country}(으)로 떠났다.`), b.country === b.home ? "Moved back home." : `Moved to ${b.country}.`);
-  else if (a.city !== b.city) add(5, fixJosa(`${cityKo(b.city)}(으)로 이사했다.`), `Moved to ${b.city}.`);
-  if (!a.retired && b.retired) add(6, "은퇴했다.", "Retired.");
-  else if (a.employed && !b.employed) add(6, "회사를 떠났다.", "Left the job.");
-  else if (!a.employed && b.employed) add(6, "새 일을 시작했다.", "Started a new job.");
-  else if (a.employed && b.employed && a.cid !== b.cid) add(5, "이직했다.", "Changed jobs.");
-  if (b.employed && a.cid === b.cid && b.level > a.level) add(5, "승진했다.", "Got promoted.");
-  if (b.education !== a.education && EDU_KO[b.education]?.ko) add(5, EDU_KO[b.education].ko + ".", EDU_KO[b.education].en);
-  if (!a.enrolled && b.enrolled) add(4, "다시 공부를 시작했다.", "Went back to school.");
+  const pick = (k: string, salt: string): [string, string] => {
+    const pool = AFTERTHOUGHT[k] ?? [];
+    return pool[hash(salt, k, b.money.toFixed(0), b.city) % Math.max(1, pool.length)] ?? ["", ""];
+  };
+  const add = (p: number, ko: string, en: string, k?: string) => {
+    const [tk, te] = k ? pick(k, ko) : ["", ""];
+    out.push({ p, t: bi(tk ? `${ko} ${tk}` : ko, te ? `${en} ${te}` : en) });
+  };
+  if (a.mom && !b.mom) add(10, "엄마가 세상을 떠났다.", "Mom passed away.", "parent");
+  if (a.dad && !b.dad) add(10, "아빠가 세상을 떠났다.", "Dad passed away.", "parent");
+  if (a.status !== "MARRIED" && b.status === "MARRIED") add(9, fixJosa(`${b.partner ?? ""}와(과) 결혼했다.`), `Married ${b.partner ?? ""}.`, "married");
+  else if ((a.status === "SINGLE" || a.status === "DIVORCED") && b.status === "DATING") add(8, fixJosa(`${b.partner ?? ""}와(과) 연애를 시작했다.`), `Started dating ${b.partner ?? ""}.`, "dating");
+  if (a.status === "MARRIED" && b.status === "DIVORCED") add(8, "이혼했다.", "Got divorced.", "divorced");
+  else if ((a.status === "DATING" || a.status === "MARRIED") && b.status === "SINGLE") add(7, fixJosa(`${a.partner ?? ""}와(과) 헤어졌다.`), `Broke up with ${a.partner ?? ""}.`, "brokeUp");
+  if (a.country !== b.country) add(7, b.country === b.home ? "고향으로 돌아왔다." : fixJosa(`${COUNTRY_KO[b.country] ?? b.country}(으)로 떠났다.`), b.country === b.home ? "Moved back home." : `Moved to ${b.country}.`, b.country === b.home ? "home" : "abroad");
+  else if (a.city !== b.city) add(5, fixJosa(`${cityKo(b.city)}(으)로 이사했다.`), `Moved to ${b.city}.`, "moved");
+  if (!a.retired && b.retired) add(6, "은퇴했다.", "Retired.", "retired");
+  else if (a.employed && !b.employed) add(6, "회사를 떠났다.", "Left the job.", "leftJob");
+  else if (!a.employed && b.employed) add(6, "새 일을 시작했다.", "Started a new job.", "newJob");
+  else if (a.employed && b.employed && a.cid !== b.cid) add(5, "이직했다.", "Changed jobs.", "changedJob");
+  if (b.employed && a.cid === b.cid && b.level > a.level) add(5, "승진했다.", "Got promoted.", "promoted");
+  if (b.education !== a.education && EDU_KO[b.education]?.ko) add(5, EDU_KO[b.education].ko + ".", EDU_KO[b.education].en + ".", "graduated");
+  if (!a.enrolled && b.enrolled) add(4, "다시 공부를 시작했다.", "Went back to school.", "school");
   const newTrips = b.trips.slice(a.trips.length);
-  for (const d of newTrips.slice(0, 1)) add(3, `${DEST_KO[d] ?? d}에 다녀왔다.`, `Took a trip to ${d}.`);
-  for (const h of b.habits.filter((x) => !a.habits.includes(x)).slice(0, 1)) add(2, `${getLocation(h).name.ko}에 다니기 시작했다.`, `Started going to ${getLocation(h).name.en}.`);
-  if (b.money - a.money > 30) add(1, "돈을 꽤 모았다.", "Saved up a good amount.");
-  if (a.money - b.money > 20) add(1, "돈이 많이 나갔다.", "Money got tight.");
+  for (const d of newTrips.slice(0, 1)) {
+    // Next time, with someone: your partner, your parents (if they're still here), or friends.
+    const who: Array<[string, string]> = [["", ""]];
+    if (b.partner) who.push([fixJosa(`${b.partner}와(과)`), b.partner]);
+    if (b.mom && b.dad) who.push(["부모님과", "Mom and Dad"]);
+    else if (b.mom) who.push(["엄마와", "Mom"]);
+    else if (b.dad) who.push(["아빠와", "Dad"]);
+    who.push(["친구들과", "my friends"]);
+    const [wk, we] = who[hash(d, b.money.toFixed(0), "trip") % who.length];
+    const tail: [string, string] = wk ? [`다음엔 ${wk} 같이 와야지.`, `Next time, I'm bringing ${we}.`] : pick("trip", d);
+    out.push({ p: 3, t: bi(`${DEST_KO[d] ?? d}에 다녀왔다. ${tail[0]}`, `Took a trip to ${d[0].toUpperCase()}${d.slice(1).replace(/_/g, " ")}. ${tail[1]}`) });
+  }
+  for (const h of b.habits.filter((x) => !a.habits.includes(x)).slice(0, 1)) add(2, `${getLocation(h).name.ko}에 다니기 시작했다.`, `Started going to ${getLocation(h).name.en}.`, "habit");
+  if (b.money - a.money > 30) add(1, "돈을 꽤 모았다.", "Saved up a good amount.", "saved");
+  if (a.money - b.money > 20) add(1, "돈이 많이 나갔다.", "Money got tight.", "tight");
   out.sort((x, y) => y.p - x.p);
   const top = out.slice(0, 4).map((x) => x.t);
-  return { bi: top.length ? top : [bi("평범한 나날이 이어졌다.", "Ordinary days went by.")] };
+  const [ok, oe] = pick("ordinary", "ordinary");
+  return { bi: top.length ? top : [bi(`평범한 나날이 이어졌다. ${ok}`, `Ordinary days went by. ${oe}`)] };
 }
 
 export { meets };

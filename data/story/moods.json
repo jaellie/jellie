@@ -204,12 +204,12 @@
   ],
   "LONG_DISTANCE": [
    {
-    "ko": "(휴대폰 세계 시계에 {fatedCity}을(를) 추가해 뒀다.)",
-    "en": "(You added {fatedCity} to your phone's world clock.)"
+    "ko": "(휴대폰 날씨 앱에 {fatedCity}을(를) 추가해 뒀다.)",
+    "en": "(You added {fatedCity} to your weather app.)"
    },
    {
-    "ko": "(시차에 맞춰 알람을 맞추는 게 일상이 됐다.)",
-    "en": "(Setting alarms around the time zones has become normal.)"
+    "ko": "(자기 전 통화가 하루의 마지막 일과가 됐다.)",
+    "en": "(A call before bed has become the last thing you do every day.)"
    }
   ],
   "TALKING": [

@@ -1354,8 +1354,8 @@
    "loc": "home",
    "act": "watch_tv",
    "label": {
-    "ko": "시차 맞춰 모닝콜 해 주기",
-    "en": "A good-morning call across time zones"
+    "ko": "아침에 모닝콜 해 주기",
+    "en": "A good-morning call"
    },
    "r": {
     "ko": "(내 밤이 {p}의 아침이 됐다.)",

@@ -167,6 +167,8 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
   // Any flag set by an event can be required directly as "f_<name>" (e.g. "f_gambling", "!f_cult").
   const flagFacts: Record<string, boolean> = {};
   for (const [k, v] of Object.entries(s.flags)) if (v) flagFacts[`f_${k}`] = true;
+  // The long-distance flag only counts while you really live apart.
+  if (!s.relationship.longDistance) delete flagFacts.f_longDistance;
   return {
     ...flagFacts,
     age: Math.floor(s.age),

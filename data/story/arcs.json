@@ -3917,6 +3917,13 @@
         "ko": "(밤 열한 시. {fatedCity}은 지금 {fatedTime}. {fated}에게서 온 메시지.) 거기 몇 시야? …자기 전에 목소리 듣고 싶어서.",
         "en": "(11 p.m. It's {fatedTime} in {fatedCity}. A message from {fated}.) What time is it there? …Wanted to hear your voice before you sleep."
        }
+      },
+      "city": {
+       "who": "fated",
+       "line": {
+        "ko": "(밤 열한 시. {fatedCity}에 사는 {fated}에게서 온 메시지.) 오늘 하루 어땠어? …자기 전에 목소리 듣고 싶어서.",
+        "en": "(11 p.m. A message from {fated}, all the way in {fatedCity}.) How was your day? …Wanted to hear your voice before you sleep."
+       }
       }
      },
      "choices": [
@@ -4117,8 +4124,8 @@
        "who": "fated",
        "location": "home",
        "line": {
-        "ko": "(시차를 맞춰 화면 두 개로 같은 영화를 틀었다. {fated}이(가) 먼저 웃음이 터졌다.) …이거 데이트 맞지?",
-        "en": "(Two screens, one movie, synced across the time zones. {fated} laughs first.) …This counts as a date, right?"
+        "ko": "(시간을 맞춰 화면 두 개로 같은 영화를 틀었다. {fated}이(가) 먼저 웃음이 터졌다.) …이거 데이트 맞지?",
+        "en": "(Two screens, one movie, perfectly in sync. {fated} laughs first.) …This counts as a date, right?"
        }
       }
      },

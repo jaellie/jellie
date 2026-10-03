@@ -69,6 +69,8 @@ export function pickMood(state: LifeState, facts: LifeFacts, signals: Record<str
     const step = a.steps[a.step];
     if (!step || step.dueMonth - now > AHEAD.arc) continue;
     if (a.type === "AFFAIR" && step.key !== "DISCOVER") continue;
+    // Long distance is only a mood while you actually live apart.
+    if (a.type === "LONG_DISTANCE" && !state.relationship.longDistance) continue;
     if (a.type === "DATING" && step.key === "FIRST_DATE") continue;
     if (a.type === "PARENT_PASSING" && a.data?.who && state.family?.[a.data.who as "mom" | "dad"]?.alive === false) continue;
     add(BANK.arcs[a.type], `arc:${a.type}`, 5);
