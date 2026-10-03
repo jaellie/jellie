@@ -98,3 +98,14 @@ describe("Partner card and rename", () => {
     expect(g.s.setup.name).toBe("Hana");
   });
 });
+
+describe("My card", () => {
+  it("has the same fields as the partner card", () => {
+    const g = createGame({ name: "Mina", gender: "F", likes: "M", birth: { year: 1995, month: 3, day: 3 }, mbti: "ENFP", seed: 5, nationality: "US", birthplace: "newyork", home: "newyork", lang: "en" } as never);
+    const c = g.myCard();
+    expect(c.name).toBe("Mina");
+    expect(c.birth).toBe("Mar 3, 1995");
+    expect(c.nationality).toBe("United States");
+    expect(c.job.length).toBeGreaterThan(0);
+  });
+});

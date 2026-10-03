@@ -374,7 +374,7 @@ export class Game {
     this.director = new Director(save.director);
     // English game: everything handed to the UI is English-only — family words translated, Korean
     // names romanized (재윤 → Jaeyun). The engine keeps its own data as is.
-    for (const m0 of ["advance", "choose", "endDay", "memorial", "ending", "hud", "scene", "road", "people", "lifeLog", "mood", "doActivity", "goTo", "leave", "fated", "partnerCard"] as const) {
+    for (const m0 of ["advance", "choose", "endDay", "memorial", "ending", "hud", "scene", "road", "people", "lifeLog", "mood", "doActivity", "goTo", "leave", "fated", "partnerCard", "myCard"] as const) {
       const m = m0;
       const fn = (this as unknown as Record<string, (...a: unknown[]) => unknown>)[m];
       if (typeof fn !== "function") continue;
@@ -1773,6 +1773,14 @@ export class Game {
   rename(name: string): void {
     const n = name.trim().slice(0, 16);
     if (n) this.s.setup.name = n;
+  }
+
+  /** The player's own card, in the same format as the partner's. */
+  myCard(): { name: string; job: string; birth: string; nationality: string } {
+    const b = this.s.setup.birth;
+    const lang = this.s.lang ?? "ko";
+    const birth = lang === "ko" ? `${b.year}년 ${b.month}월 ${b.day}일` : `${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][b.month - 1]} ${b.day}, ${b.year}`;
+    return { name: this.s.setup.name, job: this.hud().job, birth, nationality: countryName(nationalityOf(this.state), lang) };
   }
 
   /** What the player can see about their partner (name, job, birthday, nationality), or undefined when single. */
