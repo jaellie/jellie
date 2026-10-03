@@ -557,12 +557,13 @@
    "tone": "warm",
    "big": false,
    "title": {
-    "ko": "몰래 찾아가기",
+    "ko": "깜짝 방문",
     "en": "A surprise visit"
    },
    "requires": [
     "fatedPartner",
-    "!fatedFar"
+    "!fatedFar",
+    "!fatedJobTemp"
    ],
    "trigger": {
     "signals": {
@@ -576,8 +577,77 @@
    "location": "street",
    "who": "partner",
    "line": {
-    "ko": "({partner}이(가) 일하는 곳에 몰래 찾아갔다. {fatedJob}인 {partner}은(는) 일할 때 전혀 다른 사람 같았다.)",
-    "en": "(You drop by {partner}'s work unannounced. As a {fatedJob_en}, {partner} is like a different person at work.)"
+    "ko": "({partner}이(가) 일하는 곳에 깜짝 찾아갔다. {fatedJob}인 {partner}은(는) 일할 때 전혀 다른 사람 같았다.)",
+    "en": "(You surprise {partner} at work. As a {fatedJob_en}, {partner} is like a different person on the job.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "멀리서 지켜보기만 한다",
+      "en": "Just watch from a distance"
+     },
+     "w": {
+      "PROUD": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "손을 흔든다",
+      "en": "Wave"
+     },
+     "w": {
+      "CAUGHT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "PROUD": {
+     "r": {
+      "ko": "괜히 뿌듯했다. 저 사람이 내 사람이다.",
+      "en": "You felt oddly proud. That's your person."
+     },
+     "effects": []
+    },
+    "CAUGHT": {
+     "r": {
+      "ko": "{partner}의 동료들이 휘파람을 불었다. {partner}은(는) 귀까지 빨개졌다.",
+      "en": "{partner}'s coworkers whistled. {partner} went red to the ears."
+     },
+     "effects": []
+    }
+   },
+   "repeatable": true,
+   "cooldown": 48
+  },
+  {
+   "id": "PJ_PARTTIME_VISIT",
+   "cat": "partner",
+   "rarity": "common",
+   "tone": "warm",
+   "big": false,
+   "title": {
+    "ko": "깜짝 방문",
+    "en": "A surprise visit"
+   },
+   "requires": [
+    "fatedPartner",
+    "!fatedFar",
+    "fatedJobTemp"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.3,
+     "JUPITER@H7": 0.3
+    },
+    "mods": {
+     "romance": 0.3
+    }
+   },
+   "location": "street",
+   "who": "partner",
+   "line": {
+    "ko": "({partner}이(가) 아르바이트하는 곳에 깜짝 찾아갔다. 일하는 {partner}은(는) 평소와 전혀 다른 사람 같았다.)",
+    "en": "(You surprise {partner} at {partner}'s part-time job. {partner} is like a different person on the job.)"
    },
    "choices": [
     {

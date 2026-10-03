@@ -96,6 +96,8 @@ export interface LifeFacts {
   fatedJobUnstable: boolean;
   fatedJobCare: boolean;
   fatedJobRich: boolean;
+  /** Their "job" is a part-time gig (job seeker, student, between jobs). */
+  fatedJobTemp: boolean;
   /** The destined person lives in another city / country (and you haven't moved together yet). */
   fatedFar: boolean;
   /** Together but living apart (long distance): no in-person dates or dinners until someone moves. */
@@ -240,6 +242,7 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
     fatedJobUnstable: fatedPartner && !!job?.unstable,
     fatedJobCare: fatedPartner && !!job?.care,
     fatedJobRich: fatedPartner && (job?.income ?? 0) >= 0.8,
+    fatedJobTemp: fatedPartner && (job?.id === "job_seeker" || job?.id === "unemployed" || job?.id === "student"),
     fatedFar: !!life && life.from !== "same",
     apart: partnered && !!s.relationship.longDistance,
     fatedAbroad: !!life && life.from === "abroad",
