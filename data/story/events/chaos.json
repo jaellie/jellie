@@ -242,7 +242,8 @@
    "tone": "light",
    "requires": [
     "partnered",
-    "momAlive"
+    "momAlive",
+    "!married"
    ],
    "trigger": {
     "signals": {
@@ -287,6 +288,62 @@
      "r": {
       "ko": "엄마 답장: '엄마도 보고 싶어 ♥ 근데 누구니? 데려와.' 가족 단톡방까지 소문이 났다.",
       "en": "Mom's reply: 'Miss you too ♥ But who is it? Bring them over.' Word reached the family group chat."
+     }
+    }
+   }
+  },
+  {
+   "id": "WRONG_KAKAO_LOVE_MARRIED",
+   "cat": "chaos",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "married",
+    "momAlive"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.36,
+     "STEM_COMBINATION@day": 0.24,
+     "SIX_HARMONY@day": 0.2,
+     "JUPITER@H5": 0.16,
+     "JUPITER@H7": 0.16,
+     "SR:SUN@H5": 0.16,
+     "SR:SUN@H7": 0.16
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "({partner}에게 보낸다는 게… 엄마에게 보냈다. '보고 싶어 ♥ 오늘 일찍 들어올 거지?')",
+    "en": "(Meant for {partner}… sent to Mom: 'Miss you ♥ you'll be home early tonight, right?')"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(수습 문자를 보낸다)",
+      "en": "(Send a damage-control text)"
+     },
+     "w": {
+      "MOM": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(휴대폰을 던진다)",
+      "en": "(Throw your phone across the room)"
+     },
+     "w": {
+      "MOM": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "MOM": {
+     "r": {
+      "ko": "엄마 답장: '엄마도 보고 싶네 ♥ 근데 이거 {partner}한테 보낼 거였지? 아직도 신혼이구나.' 가족 단톡방까지 소문이 났다.",
+      "en": "Mom's reply: 'Miss you too ♥ But that was meant for {partner}, wasn't it? Still newlyweds, huh.' Word reached the family group chat."
      }
     }
    }
