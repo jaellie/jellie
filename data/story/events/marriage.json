@@ -113,8 +113,8 @@
    "activity": "talk_family",
    "who": "mom",
    "line": {
-    "ko": "예단은 얼마를 해야 하니? 저쪽 집에서 말이 좀 많던데…",
-    "en": "How much are we supposed to give for the wedding gifts? Their family has a lot to say…"
+    "ko": "{f:weddinggifts}은(는) 얼마를 해야 하니? 저쪽 집에서 말이 좀 많던데…",
+    "en": "How much are we supposed to give for {f:weddinggifts}? Their family has a lot to say…"
    },
    "choices": [
     {
@@ -1566,8 +1566,8 @@
     },
     "REGRET": {
      "r": {
-      "ko": "일 년 뒤, {kid}은(는) 검정고시 책을 펼쳤다. 돌아가는 길도 길이었다.",
-      "en": "A year later, {kid} opened a GED prep book. The long way round is still a way."
+      "ko": "일 년 뒤, {kid}은(는) {f:ged} 책을 펼쳤다. 돌아가는 길도 길이었다.",
+      "en": "A year later, {kid} opened a {f:ged} prep book. The long way round is still a way."
      }
     },
     "CLASH": {
@@ -1699,8 +1699,8 @@
    "location": "home",
    "who": "kid",
    "line": {
-    "ko": "나 기획사 오디션 붙었어!! 연습생 하게 해줘, 제발!",
-    "en": "I passed an agency audition!! Please let me be a trainee, please!"
+    "ko": "나 {f:trainee}, 제발!",
+    "en": "{f:trainee}, please!"
    },
    "choices": [
     {

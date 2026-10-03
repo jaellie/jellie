@@ -1065,6 +1065,466 @@
     "추모 모임",
     "the memorial gathering"
    ]
+  },
+  "karaoke": {
+   "KR": [
+    "노래방",
+    "karaoke"
+   ],
+   "JP": [
+    "가라오케",
+    "karaoke"
+   ],
+   "CN": [
+    "KTV",
+    "KTV"
+   ],
+   "SEA": [
+    "가라오케",
+    "karaoke"
+   ],
+   "OTHER": [
+    "가라오케 바",
+    "a karaoke bar"
+   ]
+  },
+  "teamdinner": {
+   "KR": [
+    "회식",
+    "team dinner"
+   ],
+   "JP": [
+    "노미카이",
+    "nomikai"
+   ],
+   "NAM": [
+    "해피 아워",
+    "happy hour"
+   ],
+   "OCEANIA": [
+    "퇴근 후 펍 모임",
+    "after-work drinks"
+   ],
+   "EUROPE": [
+    "퇴근 후 한잔",
+    "after-work drinks"
+   ],
+   "OTHER": [
+    "팀 저녁 모임",
+    "team dinner"
+   ]
+  },
+  "familiesmeet": {
+   "KR": [
+    "상견례",
+    "the families' meeting"
+   ],
+   "JP": [
+    "양가 상견례",
+    "the families' meeting"
+   ],
+   "OTHER": [
+    "양가 첫 만남",
+    "meeting the families"
+   ]
+  },
+  "portrait": {
+   "KR": [
+    "영정 사진",
+    "the funeral portrait"
+   ],
+   "OTHER": [
+    "추모 사진",
+    "the memorial photo"
+   ]
+  },
+  "portraitfront": {
+   "KR": [
+    "영정 앞",
+    "the portrait"
+   ],
+   "OTHER": [
+    "추모 사진 앞",
+    "the memorial photo"
+   ]
+  },
+  "burialday": {
+   "KR": [
+    "발인 날",
+    "the day of the procession"
+   ],
+   "OTHER": [
+    "장례식 날",
+    "the day of the funeral"
+   ]
+  },
+  "wake": {
+   "KR": [
+    "빈소",
+    "the wake"
+   ],
+   "JP": [
+    "빈소",
+    "the wake"
+   ],
+   "CN": [
+    "빈소",
+    "the wake"
+   ],
+   "OTHER": [
+    "장례식장",
+    "the funeral home"
+   ]
+  },
+  "respects": {
+   "KR": [
+    "향을 피우고, 오래 절을 했다",
+    "You lit incense and bowed for a long time"
+   ],
+   "JP": [
+    "향을 올리고, 오래 손을 모았다",
+    "You offered incense and held your hands together for a long time"
+   ],
+   "CN": [
+    "향을 피우고, 오래 고개를 숙였다",
+    "You lit incense and bowed your head for a long time"
+   ],
+   "SEA": [
+    "향을 피우고, 오래 고개를 숙였다",
+    "You lit incense and bowed your head for a long time"
+   ],
+   "OTHER": [
+    "꽃을 놓고, 오래 고개를 숙였다",
+    "You laid down flowers and bowed your head for a long time"
+   ]
+  },
+  "bow": {
+   "KR": [
+    "오래 절을 했다",
+    "You bowed for a long time"
+   ],
+   "JP": [
+    "오래 손을 모았다",
+    "You held your hands together for a long time"
+   ],
+   "OTHER": [
+    "오래 고개를 숙였다",
+    "You bowed your head for a long time"
+   ]
+  },
+  "studyroom": {
+   "KR": [
+    "노량진 독서실",
+    "a Noryangjin study room"
+   ],
+   "JP": [
+    "입시 학원 자습실",
+    "a cram-school study room"
+   ],
+   "CN": [
+    "도서관 열람실",
+    "the library reading room"
+   ],
+   "OTHER": [
+    "도서관 열람실",
+    "the library"
+   ]
+  },
+  "examtown": {
+   "KR": [
+    "노량진",
+    "Noryangjin"
+   ],
+   "OTHER": [
+    "도서관",
+    "The library"
+   ]
+  },
+  "cheapmeal": {
+   "KR": [
+    "컵밥",
+    "cup-rice"
+   ],
+   "JP": [
+    "편의점 도시락",
+    "konbini bento"
+   ],
+   "OTHER": [
+    "샌드위치",
+    "sandwich"
+   ]
+  },
+  "studydesk": {
+   "KR": [
+    "독서실 책상",
+    "the study-room desk"
+   ],
+   "OTHER": [
+    "도서관 책상",
+    "the library desk"
+   ]
+  },
+  "studyowner": {
+   "KR": [
+    "독서실 사장님",
+    "The study-room owner"
+   ],
+   "OTHER": [
+    "도서관 사서님",
+    "The librarian"
+   ]
+  },
+  "cram": {
+   "KR": [
+    "학원",
+    "cram school"
+   ],
+   "JP": [
+    "주쿠",
+    "juku"
+   ],
+   "CN": [
+    "보습반",
+    "cram classes"
+   ],
+   "OTHER": [
+    "과외",
+    "tutoring"
+   ]
+  },
+  "retake": {
+   "KR": [
+    "재수",
+    "retake year"
+   ],
+   "JP": [
+    "재수",
+    "ronin year"
+   ],
+   "OTHER": [
+    "재도전",
+    "second try"
+   ]
+  },
+  "selfgrade": {
+   "KR": [
+    "가채점",
+    "checking the answer key"
+   ],
+   "OTHER": [
+    "결과 확인",
+    "checking the results"
+   ]
+  },
+  "ged": {
+   "KR": [
+    "검정고시",
+    "GED"
+   ],
+   "NAM": [
+    "GED",
+    "GED"
+   ],
+   "OTHER": [
+    "학력 인정 시험",
+    "equivalency exam"
+   ]
+  },
+  "downtown": {
+   "KR": [
+    "명동",
+    "Myeongdong"
+   ],
+   "JP": [
+    "시부야",
+    "Shibuya"
+   ],
+   "CN": [
+    "번화가",
+    "downtown"
+   ],
+   "NAM": [
+    "시내",
+    "downtown"
+   ],
+   "EUROPE": [
+    "시내 중심가",
+    "the city center"
+   ],
+   "OTHER": [
+    "번화가",
+    "downtown"
+   ]
+  },
+  "basement": {
+   "KR": [
+    "반지하",
+    "the basement rooms"
+   ],
+   "OTHER": [
+    "지하층 집",
+    "the basement apartment"
+   ]
+  },
+  "weddinggifts": {
+   "KR": [
+    "예단",
+    "the wedding gifts"
+   ],
+   "OTHER": [
+    "결혼 선물",
+    "the wedding gifts"
+   ]
+  },
+  "weddingmoney": {
+   "KR": [
+    "축의금",
+    "a cash gift"
+   ],
+   "JP": [
+    "축의금",
+    "a cash gift"
+   ],
+   "CN": [
+    "홍바오",
+    "a red envelope"
+   ],
+   "OTHER": [
+    "축하 선물",
+    "a gift"
+   ]
+  },
+  "lease": {
+   "KR": [
+    "전세",
+    "lease"
+   ],
+   "OTHER": [
+    "임대 계약",
+    "lease"
+   ]
+  },
+  "leasescam": {
+   "KR": [
+    "전세사기",
+    "The lease scam"
+   ],
+   "OTHER": [
+    "임대 사기",
+    "The rental scam"
+   ]
+  },
+  "housinglottery": {
+   "KR": [
+    "청약",
+    "apartment lottery"
+   ],
+   "OTHER": [
+    "주택 추첨",
+    "housing lottery"
+   ]
+  },
+  "housingapp": {
+   "KR": [
+    "청약홈",
+    "Housing subscription"
+   ],
+   "OTHER": [
+    "주택청",
+    "Housing office"
+   ]
+  },
+  "spaovernight": {
+   "KR": [
+    "24시 찜질방",
+    "a 24-hour jjimjilbang"
+   ],
+   "JP": [
+    "넷카페",
+    "an internet café"
+   ],
+   "OTHER": [
+    "24시간 사우나",
+    "a 24-hour sauna"
+   ]
+  },
+  "snackbar": {
+   "KR": [
+    "분식집",
+    "snack bar"
+   ],
+   "JP": [
+    "타코야키 가게",
+    "takoyaki stand"
+   ],
+   "OTHER": [
+    "동네 식당",
+    "diner"
+   ]
+  },
+  "noodleshop": {
+   "KR": [
+    "국숫집",
+    "noodle place"
+   ],
+   "JP": [
+    "라멘 가게",
+    "ramen shop"
+   ],
+   "CN": [
+    "국숫집",
+    "noodle shop"
+   ],
+   "SEA": [
+    "쌀국숫집",
+    "pho place"
+   ],
+   "OTHER": [
+    "동네 식당",
+    "diner"
+   ]
+  },
+  "secondround": {
+   "KR": [
+    "2차",
+    "the after-party"
+   ],
+   "OTHER": [
+    "2차",
+    "the after-party"
+   ]
+  },
+  "trainee": {
+   "KR": [
+    "기획사 오디션 붙었어!! 연습생 하게 해줘",
+    "I passed an agency audition!! Please let me be a trainee"
+   ],
+   "JP": [
+    "기획사 오디션 붙었어!! 연습생 하게 해줘",
+    "I passed an agency audition!! Please let me be a trainee"
+   ],
+   "OTHER": [
+    "연기 학교 오디션 붙었어!! 보내 줘",
+    "I got into the performing arts school!! Please let me go"
+   ]
+  },
+  "riverHan": {
+   "OTHER": [
+    "한강",
+    "the Han River"
+   ]
+  },
+  "riverAny": {
+   "OTHER": [
+    "강변",
+    "the riverside"
+   ]
+  },
+  "river": {
+   "OTHER": [
+    "강변",
+    "the riverside"
+   ]
   }
  }
 }

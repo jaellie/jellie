@@ -744,7 +744,7 @@
    ],
    "weight": 1,
    "text": {
-    "ko": "[동료] 금요일에 회식이래요…",
+    "ko": "[동료] 금요일에 {f:teamdinner}(이)래요…",
     "en": "[Coworker] Team dinner on Friday, apparently…"
    }
   },

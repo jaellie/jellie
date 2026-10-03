@@ -3,7 +3,7 @@ import { createGame } from "../src/game/game";
 import { SeededRandom } from "../src/core/rng";
 import { applyCulture, cultureRegion } from "../src/story/culture";
 
-const KOREAN_FOOD = /라면|떡볶이|짜장면|국밥|미역국|소주|삼겹살|붕어빵|김치|ramyeon|tteokbokki|jjajangmyeon|gukbap|soju|kimchi/;
+const KOREAN_FOOD = /노래방|상견례|영정|노량진|독서실|찜질방|분식집|축의금|청약|전세|반지하|명동|컵밥|가채점|검정고시|회식|빈소|발인|절을 했다|라면|떡볶이|짜장면|국밥|미역국|소주|삼겹살|붕어빵|김치|ramyeon|tteokbokki|jjajangmyeon|gukbap|soju|kimchi/;
 
 function play(nat: string, lang: "ko" | "en", seed: number): string[] {
   const g = createGame({ name: "Mina", gender: "F", likes: "M", birth: { year: 1985, month: 3, day: 3 }, mbti: "ENFP", seed, nationality: nat, birthplace: nat === "US" ? "newyork" : "seoul", home: nat === "US" ? "newyork" : "seoul", lang, fated: { name: "Ren", from: "same", status: "dating", since: { year: 2023, month: 1, day: 1 } } } as never);
@@ -59,5 +59,15 @@ describe("Unusual-age moments read their age", () => {
     expect(eventView(g.state, def, "u1").line.ko).toContain("이 나이에");
     g.state.age = 28;
     expect(eventView(g.state, def, "u2").line.ko).toBe(def.line.ko);
+  });
+});
+
+import { localizeMoneyText } from "../src/game/currency";
+describe("Money in story text", () => {
+  it("converts every way won is written, with the right Korean particle after it", () => {
+    expect(localizeMoneyText("시장에서 3천 원으로", "USD", "ko")).toBe("시장에서 $2로");
+    expect(localizeMoneyText("잊고 있던 만 원이 나왔다", "USD", "ko")).toBe("잊고 있던 $7가 나왔다");
+    expect(localizeMoneyText("영수증 7,777원.", "USD", "ko")).toBe("영수증 $6.");
+    expect(localizeMoneyText("영수증 7,777원.", "KRW", "ko")).toBe("영수증 7,777원.");
   });
 });

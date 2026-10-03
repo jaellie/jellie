@@ -1163,8 +1163,8 @@
    "tone": "dark",
    "big": true,
    "title": {
-    "ko": "전세사기",
-    "en": "The lease scam"
+    "ko": "{f:leasescam}",
+    "en": "{f:leasescam}"
    },
    "requires": [
     "!homeOwner",
@@ -1188,8 +1188,8 @@
    "location": "home",
    "who": "me",
    "line": {
-    "ko": "(전세 만기 한 달 전. 집주인 연락이 끊겼다. 등기부를 떼어보니 — 이 집은 이미 경매에 넘어가 있었다.)",
-    "en": "(A month before your lease ends, the landlord goes silent. You pull the registry — the place is already up for auction.)"
+    "ko": "({f:lease} 만기 한 달 전. 집주인 연락이 끊겼다. 등기부를 떼어보니 — 이 집은 이미 경매에 넘어가 있었다.)",
+    "en": "(A month before your {f:lease} ends, the landlord goes silent. You pull the registry — the place is already up for auction.)"
    },
    "choices": [
     {

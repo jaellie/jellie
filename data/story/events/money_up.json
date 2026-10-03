@@ -753,8 +753,8 @@
    "tone": "joy",
    "big": true,
    "title": {
-    "ko": "청약 당첨",
-    "en": "Apartment lottery"
+    "ko": "{f:housinglottery} 당첨",
+    "en": "{f:housinglottery}"
    },
    "requires": [
     "!homeOwner",
@@ -778,8 +778,8 @@
    "activity": "use_phone",
    "who": "app",
    "line": {
-    "ko": "[청약홈] 축하합니다. 신청하신 단지에 당첨되셨습니다. 계약 기간: 이번 주.",
-    "en": "[Housing subscription] Congratulations — you've won the apartment lottery. Contract deadline: this week."
+    "ko": "[{f:housingapp}] 축하합니다. 신청하신 단지에 당첨되셨습니다. 계약 기간: 이번 주.",
+    "en": "[{f:housingapp}] Congratulations — you've won the apartment lottery. Contract deadline: this week."
    },
    "choices": [
     {

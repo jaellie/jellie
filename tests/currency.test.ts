@@ -16,7 +16,7 @@ describe("Money in the player's own currency", () => {
   it("rewrites won amounts inside story text, and leaves them alone for Korean nationals", () => {
     expect(localizeMoneyText("Amount due: ₩4,870,000.", "USD", "en")).toBe("Amount due: $3,500.");
     expect(localizeMoneyText("I made three million won in one night.", "USD", "en")).toBe("I made $2,200 in one night.");
-    expect(localizeMoneyText("카드에 천만 원이 긁혀 있었다.", "USD", "ko")).toBe("카드에 $7,200이 긁혀 있었다.");
+    expect(localizeMoneyText("카드에 천만 원이 긁혀 있었다.", "USD", "ko")).toBe("카드에 $7,200가 긁혀 있었다.");
     expect(localizeMoneyText("Amount due: ₩4,870,000.", "KRW", "en")).toBe("Amount due: ₩4,870,000.");
   });
 

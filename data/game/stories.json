@@ -2310,8 +2310,8 @@
    "weight": 1,
    "cooldownDays": 10,
    "line": {
-    "ko": "노래방 가자! 오늘은 내가 너 18번 맞혀 볼게.",
-    "en": "Let's do karaoke! I bet I can guess your go-to song."
+    "ko": "{f:karaoke} 가자! 오늘은 내가 너 18번 맞혀 볼게.",
+    "en": "Let's do {f:karaoke}! I bet I can guess your go-to song."
    },
    "choices": [
     {

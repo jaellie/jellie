@@ -557,8 +557,8 @@
     },
     "SLEEP_OUT": {
      "r": {
-      "ko": "{f:store}도 문을 닫았다. 24시 찜질방에서 잤다.",
-      "en": "Even the store was closed. You slept at a 24-hour sauna."
+      "ko": "{f:store}도 문을 닫았다. {f:spaovernight}에서 잤다.",
+      "en": "Even the store was closed. You slept at {f:spaovernight}."
      }
     }
    }
@@ -889,7 +889,7 @@
    "activity": "post",
    "who": "app",
    "line": {
-    "ko": "[SNS] (친구 결혼식 뒤풀이 노래방에서 막춤을 추던 영상이 '오늘의 짤'이 됐다. 조회수 80만.)",
+    "ko": "[SNS] (친구 결혼식 뒤풀이 {f:karaoke}에서 막춤을 추던 영상이 '오늘의 짤'이 됐다. 조회수 80만.)",
     "en": "[Social media] (A clip of you dancing like a maniac at a friend's wedding after-party went viral as today's meme. 800K views.)"
    },
    "choices": [
@@ -1204,7 +1204,7 @@
    },
    "who": "crush",
    "line": {
-    "ko": "(노래방. {crush}이(가) 부른 노래 가사가 전부 나한테 하는 말 같다. 노래가 끝나고 마이크를 내려놓았다.) …들었어?",
+    "ko": "({f:karaoke}. {crush}이(가) 부른 노래 가사가 전부 나한테 하는 말 같다. 노래가 끝나고 마이크를 내려놓았다.) …들었어?",
     "en": "(Karaoke. Every lyric {crush} sang felt aimed at you. The song ended; they set the mic down.) …Did you hear it?"
    },
    "choices": [
@@ -1249,8 +1249,8 @@
      ],
      "card": {
       "caption": {
-       "ko": "노래방 고백",
-       "en": "The karaoke confession"
+       "ko": "{f:karaoke} 고백",
+       "en": "The {f:karaoke} confession"
       },
       "location": "street",
       "actors": [

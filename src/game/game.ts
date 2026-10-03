@@ -363,7 +363,8 @@ export class Game {
     this.director = new Director(save.director);
     // English game: everything handed to the UI is English-only — family words translated, Korean
     // names romanized (재윤 → Jaeyun). The engine keeps its own data as is.
-    for (const m of ["advance", "choose", "endDay", "memorial", "ending", "hud", "scene", "road", "people", "lifeLog", "mood", "doActivity", "goTo", "leave", "fated"] as const) {
+    for (const m0 of ["advance", "choose", "endDay", "memorial", "ending", "hud", "scene", "road", "people", "lifeLog", "mood", "doActivity", "goTo", "leave", "fated"] as const) {
+      const m = m0;
       const fn = (this as unknown as Record<string, (...a: unknown[]) => unknown>)[m];
       if (typeof fn !== "function") continue;
       (this as unknown as Record<string, unknown>)[m] = (...a: unknown[]) => {
@@ -372,7 +373,14 @@ export class Game {
         // Amounts in story text in the player's own currency (won stays as written).
         const cur = currencyFor(nationalityOf(this.state));
         const lang = this.s.lang ?? "ko";
-        const m = cur === "KRW" ? r : mapPayload(r, (t) => localizeMoneyText(t, cur, lang));
+        // …and any culture word that slipped through ({f:ramen}), by nationality.
+        const nat = String(this.state.flags.nationality ?? "KR");
+        const ln = lang === "en" ? "en" : "ko";
+        // (Per-frame views carry no story text: skip the deep copy when there's nothing to convert.)
+        const m = cur === "KRW" && (m0 === "scene" || m0 === "road" || m0 === "hud" || m0 === "people") ? r : mapPayload(r, (t) => {
+          const c = t.includes("{f:") ? applyCulture(t, nat, ln) : t;
+          return cur === "KRW" ? c : localizeMoneyText(c, cur, lang);
+        });
         return lang === "en" ? englishPayload(m) : m;
       };
     }
@@ -423,6 +431,8 @@ export class Game {
   }
   /** Food and customs by nationality ({f:ramen} → 라면 / mac and cheese…), whatever the language. */
   private cult(text: string): string {
+    // The river is where you live: 한강 only in Seoul.
+    if (text.includes("{f:river}")) text = text.replaceAll("{f:river}", this.state.location.city === "Seoul" ? "{f:riverHan}" : "{f:riverAny}");
     return applyCulture(text, String(this.state.flags.nationality ?? "KR"), this.s.lang === "en" ? "en" : "ko");
   }
   private fill(text: string): string {

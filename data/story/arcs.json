@@ -145,7 +145,7 @@
         },
         {
          "t": {
-          "ko": "노래방 가자!",
+          "ko": "{f:karaoke} 가자!",
           "en": "Karaoke!"
          },
          "outcome": "GOOD"
@@ -1362,8 +1362,8 @@
       {
        "element": "FIRE",
        "line": {
-        "ko": "(친구들이 갑자기 노래방으로 2차를 가자고 했다. {partner}이(가) 마이크를 넘겨받았다.)",
-        "en": "(Your friends drag everyone to karaoke. Someone hands {partner} the mic.)"
+        "ko": "(친구들이 갑자기 {f:karaoke}(으)로 2차를 가자고 했다. {partner}이(가) 마이크를 넘겨받았다.)",
+        "en": "(Your friends drag everyone to {f:karaoke}. Someone hands {partner} the mic.)"
        },
        "choices": [
         {
@@ -1474,7 +1474,7 @@
       {
        "element": "WOOD",
        "line": {
-        "ko": "(친구들과 한강 피크닉. {partner}이(가) 돗자리를 펴고 친구들에게 간식을 나눠 준다.)",
+        "ko": "(친구들과 {f:river} 피크닉. {partner}이(가) 돗자리를 펴고 친구들에게 간식을 나눠 준다.)",
         "en": "(A riverside picnic with friends. {partner} spreads the mat and hands out snacks.)"
        },
        "choices": [
@@ -1580,7 +1580,7 @@
    "steps": {
     "MEET_PARENTS": {
      "title": {
-      "ko": "상견례",
+      "ko": "{f:familiesmeet}",
       "en": "Meeting the parents"
      },
      "after": [
@@ -1628,7 +1628,7 @@
       },
       "CALL_OFF": {
        "r": {
-        "ko": "…상견례 자리에서 파혼했다. 반지를 돌려주었다.",
+        "ko": "…{f:familiesmeet} 자리에서 파혼했다. 반지를 돌려주었다.",
         "en": "…You broke off the engagement at the family meeting. You returned the ring."
        },
        "effects": [
@@ -1649,7 +1649,7 @@
       {
        "element": "METAL",
        "line": {
-        "ko": "(상견례 자리. 아버님이 안경을 고쳐 쓰셨다.) 그래, 앞으로 계획은 어떻게 되나?",
+        "ko": "({f:familiesmeet} 자리. 아버님이 안경을 고쳐 쓰셨다.) 그래, 앞으로 계획은 어떻게 되나?",
         "en": "(The families meet. {partner}'s father adjusts his glasses.) So, what are your plans from here?"
        },
        "choices": [
@@ -1677,7 +1677,7 @@
       {
        "element": "EARTH",
        "line": {
-        "ko": "(상견례 자리. 어머님이 {f:sides}을(를) 내 쪽으로 밀어 주셨다.) 많이 먹어요. 우리 애가 맨날 자랑해서 궁금했어요.",
+        "ko": "({f:familiesmeet} 자리. 어머님이 {f:sides}을(를) 내 쪽으로 밀어 주셨다.) 많이 먹어요. 우리 애가 맨날 자랑해서 궁금했어요.",
         "en": "(The families meet. {partner}'s mother pushes a dish toward you.) Eat up. Our kid talks about you all the time."
        },
        "choices": [
@@ -1705,7 +1705,7 @@
       {
        "element": "FIRE",
        "line": {
-        "ko": "(상견례 도중 양가 아버지가 같은 고향이라는 걸 알게 됐다. 분위기가 갑자기 뜨거워졌다.)",
+        "ko": "({f:familiesmeet} 도중 양가 아버지가 같은 고향이라는 걸 알게 됐다. 분위기가 갑자기 뜨거워졌다.)",
         "en": "(Halfway through, the two fathers find out they're from the same hometown. The room heats right up.)"
        },
        "choices": [
@@ -1733,7 +1733,7 @@
       {
        "element": "WATER",
        "line": {
-        "ko": "(상견례가 끝나 갈 무렵, 어머님이 조용히 물으셨다.) …우리 애, 정말 행복하게 해 줄 수 있어요?",
+        "ko": "({f:familiesmeet}이(가) 끝나 갈 무렵, 어머님이 조용히 물으셨다.) …우리 애, 정말 행복하게 해 줄 수 있어요?",
         "en": "(As the meeting winds down, {partner}'s mother asks quietly) …Can you really make our child happy?"
        },
        "choices": [
@@ -2469,7 +2469,7 @@
      "activity": "mourn",
      "who": "me",
      "line": {
-      "ko": "(사흘 뒤, 장례식장.) (영정 사진 속 {parent}가 웃고 있다. 조문객들이 오고, 또 갔다.)",
+      "ko": "(사흘 뒤, 장례식장.) ({f:portrait} 속 {parent}가 웃고 있다. 조문객들이 오고, 또 갔다.)",
       "en": "(Three days later, the funeral hall.) ({parent} smiles in the funeral portrait. Mourners come, and go.)"
      },
      "altBy": "parent",
@@ -2477,14 +2477,14 @@
       "mom": {
        "who": "me",
        "line": {
-        "ko": "(사흘 뒤, 장례식장.) (영정 사진 속 엄마가 웃고 있다. 작년 생일에 내가 찍어 드린 사진이다. 조문객들이 오고, 또 갔다.)",
+        "ko": "(사흘 뒤, 장례식장.) ({f:portrait} 속 엄마가 웃고 있다. 작년 생일에 내가 찍어 드린 사진이다. 조문객들이 오고, 또 갔다.)",
         "en": "(Three days later, the funeral hall.) (Mom smiles in the funeral portrait — the photo you took on her last birthday. Mourners come, and go.)"
        }
       },
       "dad": {
        "who": "me",
        "line": {
-        "ko": "(사흘 뒤, 장례식장.) (영정 사진 속 아빠는 어색하게 웃고 있다. 사진만 찍으면 늘 그러셨다. 조문객들이 오고, 또 갔다.)",
+        "ko": "(사흘 뒤, 장례식장.) ({f:portrait} 속 아빠는 어색하게 웃고 있다. 사진만 찍으면 늘 그러셨다. 조문객들이 오고, 또 갔다.)",
         "en": "(Three days later, the funeral hall.) (Dad smiles awkwardly in the portrait — the way he always did for photos. Mourners come, and go.)"
        }
       }
@@ -2508,7 +2508,7 @@
      "outcomes": {
       "STAY": {
        "r": {
-        "ko": "사흘 밤을 꼬박 새웠다. 발인 날 아침, 하늘이 이상하리만치 맑았다.",
+        "ko": "사흘 밤을 꼬박 새웠다. {f:burialday} 아침, 하늘이 이상하리만치 맑았다.",
         "en": "You stayed up three nights. On the morning of the procession, the sky was strangely clear."
        },
        "effects": [
@@ -2545,7 +2545,7 @@
         },
         {
          "t": {
-          "ko": "(영정 앞에서 {parent}에게 편지를 쓴다)",
+          "ko": "({f:portraitfront}에서 {parent}에게 편지를 쓴다)",
           "en": "(Write {parent} a letter in front of the portrait)"
          },
          "outcome": "LETTER"
@@ -2584,7 +2584,7 @@
         },
         {
          "t": {
-          "ko": "(발인 날, 운구 행렬 맨 앞에 선다)",
+          "ko": "({f:burialday}, 운구 행렬 맨 앞에 선다)",
           "en": "(On the last morning, walk at the front of the procession)"
          },
          "outcome": "LEAD"
@@ -2605,7 +2605,7 @@
         },
         "LEAD": {
          "r": {
-          "ko": "영정 사진이 생각보다 무거웠다. 이 무게를 평생 기억하기로 했다.",
+          "ko": "{f:portrait}이(가) 생각보다 무거웠다. 이 무게를 평생 기억하기로 했다.",
           "en": "The portrait was heavier than you expected. You decided to remember that weight for the rest of your life."
          },
          "effects": [
@@ -2621,7 +2621,7 @@
        "choices": [
         {
          "t": {
-          "ko": "(빈소 구석에서 {parent}의 휴대폰 사진첩을 연다)",
+          "ko": "({f:wake} 구석에서 {parent}의 휴대폰 사진첩을 연다)",
           "en": "(In a quiet corner, open the photos on {parent}'s phone)"
          },
          "outcome": "PHONE"
@@ -2875,7 +2875,7 @@
         },
         "LEDGER": {
          "r": {
-          "ko": "학원비, 운동화, 수학여행비. 빼곡한 숫자 사이에 내가 있었다.",
+          "ko": "{f:cram}비, 운동화, 수학여행비. 빼곡한 숫자 사이에 내가 있었다.",
           "en": "Tutoring fees, sneakers, a school trip. Between all those numbers, there you were."
          },
          "effects": [
@@ -3202,7 +3202,7 @@
      "activity": "mourn",
      "who": "me",
      "line": {
-      "ko": "(영정 사진 속 {partner}이(가) 웃고 있다.)",
+      "ko": "({f:portrait} 속 {partner}이(가) 웃고 있다.)",
       "en": "({partner} smiles out of the memorial photo.)"
      },
      "choices": [
@@ -3243,7 +3243,7 @@
        "choices": [
         {
          "t": {
-          "ko": "(영정 앞에서 우리가 처음 만난 날 이야기를 한다)",
+          "ko": "({f:portraitfront}에서 우리가 처음 만난 날 이야기를 한다)",
           "en": "(In front of the portrait, tell the story of the day you met)"
          },
          "outcome": "FIRST"
@@ -3287,14 +3287,14 @@
        "choices": [
         {
          "t": {
-          "ko": "(우리 사진을 한 장씩 꺼내 영정 옆에 놓는다)",
+          "ko": "(우리 사진을 한 장씩 꺼내 {f:portrait} 옆에 놓는다)",
           "en": "(Set your photos together, one by one, beside the portrait)"
          },
          "outcome": "PHOTOS"
         },
         {
          "t": {
-          "ko": "(아무 말 없이 영정 사진을 오래 바라본다)",
+          "ko": "(아무 말 없이 {f:portrait}을(를) 오래 바라본다)",
           "en": "(Look at the portrait for a long time, without a word)"
          },
          "outcome": "LOOK"
@@ -3511,8 +3511,8 @@
      "outcomes": {
       "GOODBYE": {
        "r": {
-        "ko": "향을 피우고, 오래 절을 했다.",
-        "en": "You lit incense and bowed for a long time."
+        "ko": "{f:respects}.",
+        "en": "{f:respects}."
        },
        "effects": [
         {
@@ -3545,8 +3545,8 @@
        "outcomes": {
         "SUMMER": {
          "r": {
-          "ko": "평상, 수박, 모기향 냄새. 그 여름의 {relative}는 늘 웃고 계셨다. 향을 피우고, 오래 절을 했다.",
-          "en": "The porch, the watermelon, the smell of bug spray. In those summers, {relative} was always smiling. You lit the incense and bowed for a long time."
+          "ko": "평상, 수박, 모기향 냄새. 그 여름의 {relative}는 늘 웃고 계셨다. {f:respects}.",
+          "en": "The porch, the watermelon, the smell of bug spray. In those summers, {relative} was always smiling. {f:respects}."
          },
          "effects": [
           {

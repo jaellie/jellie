@@ -569,8 +569,8 @@
    "activity": "study",
    "who": "app",
    "line": {
-    "ko": "[국가고시센터] 최종 합격자 발표가 게시되었습니다. (노량진 독서실에서 1년, 떨리는 손으로 클릭한다.)",
-    "en": "[National exam center] Final results are posted. (After a year in a Noryangjin study room, you click with shaking hands.)"
+    "ko": "[국가고시센터] 최종 합격자 발표가 게시되었습니다. ({f:studyroom}에서 1년, 떨리는 손으로 클릭한다.)",
+    "en": "[National exam center] Final results are posted. (After a year in {f:studyroom}, you click with shaking hands.)"
    },
    "choices": [
     {
@@ -587,8 +587,8 @@
    "outcomes": {
     "PASS": {
      "r": {
-      "ko": "수험번호가 있었다. 독서실 책상에 엎드려 한참 울었다.",
-      "en": "Your exam number was there. You put your head down on the desk and cried a long time."
+      "ko": "수험번호가 있었다. {f:studydesk}에 엎드려 한참 울었다.",
+      "en": "Your exam number was there. You put your head down on {f:studydesk} and cried a long time."
      },
      "effects": [
       {
@@ -652,8 +652,8 @@
    "activity": "study",
    "who": "me",
    "line": {
-    "ko": "(노량진, 다시 1년. 같은 자리, 같은 컵밥. 오늘이 또 발표 날이다.)",
-    "en": "(Noryangjin, another year. Same seat, same cup-rice. Results day, again.)"
+    "ko": "({f:examtown}, 다시 1년. 같은 자리, 같은 {f:cheapmeal}. 오늘이 또 발표 날이다.)",
+    "en": "({f:examtown}, another year. Same seat, same {f:cheapmeal}. Results day, again.)"
    },
    "choices": [
     {
@@ -703,8 +703,8 @@
     },
     "FAIL": {
      "r": {
-      "ko": "또 떨어졌다. 독서실 사장님이 {f:ramen}을(를) 하나 주셨다.",
-      "en": "Failed again. The study-room owner gave you a cup of {f:ramen}."
+      "ko": "또 떨어졌다. {f:studyowner}이(가) {f:ramen}을(를) 하나 주셨다.",
+      "en": "Failed again. {f:studyowner} gave you a cup of {f:ramen}."
      },
      "chain": [
       {
@@ -1092,8 +1092,8 @@
    "choices": [
     {
      "t": {
-      "ko": "(동료들과 마지막 회식을 한다)",
-      "en": "(Have one last team dinner)"
+      "ko": "(동료들과 마지막 {f:teamdinner}을(를) 한다)",
+      "en": "(Have one last {f:teamdinner})"
      },
      "w": {
       "END": 1.0
@@ -1506,8 +1506,8 @@
    "activity": "walk",
    "who": "scout",
    "line": {
-    "ko": "(명동 한복판) 저기요! 혹시 연예계 관심 있으세요? 저희 기획사에서 모델을 찾고 있어요.",
-    "en": "(In the middle of Myeongdong) Excuse me! Are you interested in entertainment? Our agency is looking for models."
+    "ko": "({f:downtown} 한복판) 저기요! 혹시 연예계 관심 있으세요? 저희 기획사에서 모델을 찾고 있어요.",
+    "en": "(In the middle of {f:downtown}) Excuse me! Are you interested in entertainment? Our agency is looking for models."
    },
    "choices": [
     {

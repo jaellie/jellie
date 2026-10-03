@@ -45,8 +45,8 @@
     },
     {
      "t": {
-      "ko": "학원을 하나 더 보내야겠네요",
-      "en": "Maybe one more cram school, then"
+      "ko": "{f:cram}을(를) 하나 더 보내야겠네요",
+      "en": "Maybe one more {f:cram}, then"
      },
      "w": {
       "PRESSURE": 1.0
@@ -74,8 +74,8 @@
     },
     "PRESSURE": {
      "r": {
-      "ko": "{kid}은(는) 학원 가방을 멘 채 한숨을 쉬었다. 그 한숨이 오래 마음에 남았다.",
-      "en": "{kid} sighed, cram-school bag on their back. That sigh stayed with you."
+      "ko": "{kid}은(는) {f:cram} 가방을 멘 채 한숨을 쉬었다. 그 한숨이 오래 마음에 남았다.",
+      "en": "{kid} sighed, {f:cram} bag on their back. That sigh stayed with you."
      }
     }
    }
@@ -141,8 +141,8 @@
    "outcomes": {
     "JACKPOT": {
      "r": {
-      "ko": "가채점을 하던 {kid}이(가) 소리를 질렀다. {f:exam} 대박이었다.",
-      "en": "Checking the answer key, {kid} screamed. They'd aced it."
+      "ko": "{f:selfgrade}을(를) 하던 {kid}이(가) 소리를 질렀다. {f:exam} 대박이었다.",
+      "en": "{f:selfgrade}, {kid} screamed. They'd aced it."
      },
      "effects": [
       {
@@ -206,8 +206,8 @@
    "activity": "cook",
    "who": "kid",
    "line": {
-    "ko": "(재수 1년. 다시 {f:exam} 날 아침이다.) 이번엔 진짜 다녀올게요.",
-    "en": "(A year of retaking. It's exam morning again.) This time, for real."
+    "ko": "({f:retake} 1년. 다시 {f:exam} 날 아침이다.) 이번엔 진짜 다녀올게요.",
+    "en": "({f:retake}. It's exam morning again.) This time, for real."
    },
    "choices": [
     {
@@ -224,13 +224,13 @@
    "outcomes": {
     "JACKPOT": {
      "r": {
-      "ko": "재수 성공. {kid}이(가) 합격증을 들고 울었다. 나도 울었다.",
-      "en": "The retake paid off. {kid} cried holding the acceptance letter. So did you."
+      "ko": "{f:retake} 성공. {kid}이(가) 합격증을 들고 울었다. 나도 울었다.",
+      "en": "The {f:retake} paid off. {kid} cried holding the acceptance letter. So did you."
      },
      "card": {
       "caption": {
-       "ko": "재수 성공",
-       "en": "The retake that worked"
+       "ko": "{f:retake} 성공",
+       "en": "The {f:retake} that worked"
       },
       "location": "home",
       "actors": [

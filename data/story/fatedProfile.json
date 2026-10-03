@@ -391,8 +391,8 @@
    "income": 0.45,
    "unstable": true,
    "meet": {
-    "ko": "(동네 분식집 사장님이 오늘따라 {f:street}을(를) 한 국자 더 얹어줬다.) 요즘 힘들어 보여서요.",
-    "en": "(The owner of the neighborhood snack bar adds an extra scoop today.) You've looked tired lately."
+    "ko": "(동네 {f:snackbar} 사장님이 오늘따라 {f:street}을(를) 한 국자 더 얹어줬다.) 요즘 힘들어 보여서요.",
+    "en": "(The owner of the neighborhood {f:snackbar} adds an extra scoop today.) You've looked tired lately."
    },
    "work": "diner",
    "kind": "self"

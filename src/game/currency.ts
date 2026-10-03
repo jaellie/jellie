@@ -61,5 +61,21 @@ export function localizeMoneyText(text: string, currency: string, lang: "ko" | "
     const v = (KO_DIGIT[d] ?? 1) * (KO_SUB[sub] ?? 1) * (unit === "억" ? 1e8 : 1e4);
     return roundish(v, currency, lang);
   });
-  return t;
+  // 천 원, 오천 원, 5천 원, 3만 원, 7,777원, 0원 (then the particle after it, by how the unit is read)
+  t = t.replace(/(?:^|(?<=[\s(']))([일이삼사오육칠팔구]?)(천|백) 원/g, (_, d: string, sub: string) => roundish((KO_DIGIT[d] ?? 1) * KO_SUB[sub], currency, lang));
+  t = t.replace(/(?<![\d,])(\d+)(천|만) ?원/g, (_, n: string, unit: string) => roundish(Number(n) * (unit === "만" ? 1e4 : 1e3), currency, lang));
+  t = t.replace(/(?<![\d,₩$€£¥])(\d{1,3}(?:,\d{3})+|\d+)원(?![가-힣])/g, (_, n: string) => roundish(Number(n.replace(/,/g, "")), currency, lang));
+  return lang === "ko" ? fixParticles(t, currency) : t;
+}
+
+/** How the unit is read in Korean ends the word: 달러/유로 (no final consonant), 엔/위안 (ㄴ), 헤알 (ㄹ). */
+const UNIT_END: Record<string, "none" | "n" | "l"> = { JPY: "n", CNY: "n", VND: "n", CHF: "n", BRL: "l" };
+function fixParticles(t: string, currency: string): string {
+  const end = UNIT_END[currency] ?? "none";
+  const P: Record<string, [string, string]> = { 이: ["이", "가"], 가: ["이", "가"], 을: ["을", "를"], 를: ["을", "를"], 은: ["은", "는"], 는: ["은", "는"], 과: ["과", "와"], 와: ["과", "와"], 으로: ["으로", "로"], 로: ["으로", "로"] };
+  return t.replace(/([$€£¥₹฿₫₱₩]|[A-Z]{3} )([\d,.]+)(으로|로|이|가|을|를|은|는|과|와)(?![가-힣])/g, (_m, sym: string, num: string, p: string) => {
+    const pair = P[p];
+    const out = p === "으로" || p === "로" ? (end === "n" ? "으로" : "로") : pair[end === "none" ? 1 : 0];
+    return sym + num + out;
+  });
 }

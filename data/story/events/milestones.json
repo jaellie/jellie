@@ -26,8 +26,8 @@
    "choices": [
     {
      "t": {
-      "ko": "당연히 가지! 축의금도 두둑하게",
-      "en": "Of course! And a generous gift"
+      "ko": "당연히 가지! {f:weddingmoney}도 두둑하게",
+      "en": "Of course! And {f:weddingmoney}"
      },
      "w": {
       "ATTEND": 1.0
@@ -44,8 +44,8 @@
     },
     {
      "t": {
-      "ko": "(그날 일이 있어서 축의금만 보낸다)",
-      "en": "(Busy that day — just send a gift)"
+      "ko": "(그날 일이 있어서 {f:weddingmoney}만 보낸다)",
+      "en": "(Busy that day — just send {f:weddingmoney})"
      },
      "w": {
       "SEND": 1.0
@@ -504,8 +504,8 @@
    "outcomes": {
     "GO": {
      "r": {
-      "ko": "영정 사진 속 {buddy}은(는) 늘 그렇듯 웃고 있었다. 오래 절을 했다.",
-      "en": "In the portrait, {buddy} was smiling as always. You bowed for a long time."
+      "ko": "{f:portrait} 속 {buddy}은(는) 늘 그렇듯 웃고 있었다. {f:bow}.",
+      "en": "In the portrait, {buddy} was smiling as always. {f:bow}."
      },
      "effects": [
       {

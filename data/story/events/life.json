@@ -228,8 +228,8 @@
     },
     "DAMAGE": {
      "r": {
-      "ko": "반지하에 물이 들어찼다. 젖은 앨범을 햇볕에 말렸다.",
-      "en": "Water flooded the basement rooms. You dried soaked photo albums in the sun."
+      "ko": "{f:basement}에 물이 들어찼다. 젖은 앨범을 햇볕에 말렸다.",
+      "en": "Water flooded {f:basement}. You dried soaked photo albums in the sun."
      },
      "effects": [
       {

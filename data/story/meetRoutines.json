@@ -258,8 +258,8 @@
    ],
    "location": "diner",
    "line": {
-    "ko": "(줄 서는 국숫집. 마지막 한 자리에 합석하게 됐다. 앞사람이 내 그릇에 {f:pickle}을(를) 덜어 줬다.)",
-    "en": "(A noodle place with a line. You end up sharing the last table. The stranger across moves some {f:pickle} into your bowl.)"
+    "ko": "(줄 서는 {f:noodleshop}. 마지막 한 자리에 합석하게 됐다. 앞사람이 내 그릇에 {f:pickle}을(를) 덜어 줬다.)",
+    "en": "(A {f:noodleshop} with a line. You end up sharing the last table. The stranger across moves some {f:pickle} into your bowl.)"
    }
   },
   {
