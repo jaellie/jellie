@@ -58,6 +58,9 @@ import { OPENING_OF } from "../story/fatedProfile";
 const BIG_MOMENTS = new Set(["PARENT_DEATH", "PARTNER_DEATH", "GOODBYE", "VOWS"]);
 /** Ordinary lines keep at least this many played days apart. */
 const QUOTE_GAP_DAYS = 4;
+/** At most this many lines in a whole life; the last two are kept for deaths and vows. */
+const QUOTE_MAX = 6;
+const QUOTE_MAX_ORDINARY = 4;
 /** The line category for a story moment with no card of its own. */
 const ARC_LINE: Record<string, string> = { DATING: "TOGETHER", TALKING: "LOVE_BEGINS", ENGAGEMENT: "VOWS", PARENT_PASSING: "PARENT_DEATH", FAMILY_PASSING: "GOODBYE", PARTNER_PASSING: "PARTNER_DEATH", ILLNESS: "HEALTH", LONG_DISTANCE: "TOGETHER", PARTING: "BREAKUP", DIVORCE: "DIVORCE", AFFAIR: "SHADOW", PREGNANCY: "NEW_LIFE" };
 import { type FatedFrom, type FatedLife, fatedVars, findFatedJob, resolveFatedLife } from "../story/fatedProfile";
@@ -289,6 +292,8 @@ export interface GameSave {
   momentCat?: string;
   /** The day the last line came (they're rare: a few days apart unless it's a death or a vow). */
   lastQuoteDay?: number;
+  /** Lines shown so far in this life (a handful per life, at most). */
+  quoteCount?: number;
   /** Today's life event (library), if one surfaces. */
   eventUid?: string;
   /** Fated event foreshadowed today. */
@@ -510,11 +515,13 @@ export class Game {
     const cat = reflectionCategory(kinds, eventCat) ?? catHint;
     // Deaths and vows always get their line; everything else is rare, and never two days running.
     const big = !!cat && BIG_MOMENTS.has(cat);
+    const used = this.s.quoteCount ?? 0;
+    if (used >= (big ? QUOTE_MAX : QUOTE_MAX_ORDINARY)) return;
     if (big) chance = 1;
     else if (this.s.lastQuoteDay !== undefined && this.s.dayIndex - this.s.lastQuoteDay < QUOTE_GAP_DAYS) return;
     if (!cat || !this.rng(`quote${this.s.dayIndex}:${st.story?.cards.length ?? 0}`).chance(chance)) return;
     const line = pickReflection(st, cat, this.rng(`quotePick${this.s.dayIndex}:${cat}`));
-    if (line) this.s.lastQuoteDay = this.s.dayIndex;
+    if (line) (this.s.lastQuoteDay = this.s.dayIndex), (this.s.quoteCount = used + 1);
     return line ? this.L(line) : undefined;
   }
   private speaker(role: string): string {

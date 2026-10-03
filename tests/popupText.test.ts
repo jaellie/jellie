@@ -64,4 +64,21 @@ describe("Popup text: who's talking, and how choices read", () => {
     expect(quoted).toBe(funerals);
     expect(after).toBe(0);
   }, 120000);
+
+  it("a whole life has at most six lines", () => {
+    for (let seed = 1; seed <= 4; seed++) {
+      const g = createGame({ name: "민아", gender: "F", likes: "M", birth: { year: 1960, month: 9, day: 28 }, mbti: "ENFP", seed, fated: { name: "Ren", from: "same", status: "dating", since: { year: 2023, month: 1, day: 1 } } } as never);
+      const rng = new SeededRandom(seed);
+      let lines = 0;
+      for (let n = 0; n < 120 && !g.isOver(); n++) {
+        for (let i = 0; i < 400; i++) {
+          const beats = g.advance(g.s.minute + 30);
+          for (const b of beats) if (b.kind === "popup" && g.choose(rng.int(0, b.popup.ch.length - 1))?.quote) lines++;
+          if (beats.some((b) => b.kind === "dayEnd")) break;
+        }
+        g.endDay();
+      }
+      expect(lines).toBeLessThanOrEqual(6);
+    }
+  }, 120000);
 });
