@@ -24,9 +24,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -73,9 +76,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -121,9 +127,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -169,9 +178,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -217,9 +229,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -250,11 +265,11 @@ LAYOUT:
 4. A city park by day. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: a gentle green hill with a few small distant trees at the end of the path.
-- Left side: two large trees and one wooden bench on the left side of the path; one lamp post far back.
-- Right side: two large trees and one wooden bench on the right side of the path; one lamp post far back.
+- Left side: one GIANT, extremely lush, full tree in the left foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
+- Right side: one GIANT, extremely lush, full tree in the right foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
 - Ground: a wide sandy-beige path in the center winding slightly to the hill; green lawn on both sides; the bottom-center is completely empty path.
-- Light and sky: a blue sky with warm peach-white clouds, golden sunlight beams between the tree leaves.
-- Exact counts: 4 large trees, 2 benches, 2 lamp posts. No flower beds. Nothing else.
+- Light and sky: a blue sky with warm peach-white clouds, golden sunlight beams streaming through the thick leaves; the canopies are a deep rich green with lighter yellow-green highlights.
+- Exact counts: 2 giant foreground trees (one per side), 2 medium trees, 2 benches, 2 lamp posts. The trees are the stars of the picture: huge, dense, rich with leaves and detail. No flower beds. Nothing else.
 ```
 
 ## 시트 6
@@ -265,44 +280,47 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
 1. The same park at sunset. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: a gentle green hill with a few small distant trees at the end of the path.
-- Left side: two large trees and one wooden bench on the left side of the path; one lamp post far back.
-- Right side: two large trees and one wooden bench on the right side of the path; one lamp post far back.
+- Left side: one GIANT, extremely lush, full tree in the left foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
+- Right side: one GIANT, extremely lush, full tree in the right foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
 - Ground: a wide sandy-beige path in the center winding slightly to the hill; green lawn on both sides; the bottom-center is completely empty path.
-- Light and sky: an orange-pink-violet sunset sky, long tree shadows, the lamp posts starting to glow with soft halos.
-- Exact counts: 4 large trees, 2 benches, 2 lamp posts. No flower beds. Nothing else.
+- Light and sky: an orange-pink-violet sunset sky, long tree shadows, the lamp posts starting to glow with soft halos; the huge canopies are rich green with golden-orange rim light.
+- Exact counts: 2 giant foreground trees (one per side), 2 medium trees, 2 benches, 2 lamp posts. The trees are the stars of the picture: huge, dense, rich with leaves and detail. No flower beds. Nothing else.
 2. The same park at night. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: a gentle green hill with a few small distant trees at the end of the path.
-- Left side: two large trees and one wooden bench on the left side of the path; one lamp post far back.
-- Right side: two large trees and one wooden bench on the right side of the path; one lamp post far back.
+- Left side: one GIANT, extremely lush, full tree in the left foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
+- Right side: one GIANT, extremely lush, full tree in the right foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
 - Ground: a wide sandy-beige path in the center winding slightly to the hill; green lawn on both sides; the bottom-center is completely empty path.
-- Light and sky: a deep indigo starry sky with a moon, warm lamp halos on the path, a few glowing fireflies.
-- Exact counts: 4 large trees, 2 benches, 2 lamp posts. No flower beds. Nothing else.
+- Light and sky: a deep indigo starry sky with a moon, warm lamp halos on the path, a few glowing fireflies; the huge canopies are deep teal-green with moonlit silver edges.
+- Exact counts: 2 giant foreground trees (one per side), 2 medium trees, 2 benches, 2 lamp posts. The trees are the stars of the picture: huge, dense, rich with leaves and detail. No flower beds. Nothing else.
 3. The same park in spring. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: a gentle green hill with a few small distant trees at the end of the path.
-- Left side: two large trees and one wooden bench on the left side of the path; one lamp post far back.
-- Right side: two large trees and one wooden bench on the right side of the path; one lamp post far back.
+- Left side: one GIANT, extremely lush, full tree in the left foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
+- Right side: one GIANT, extremely lush, full tree in the right foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
 - Ground: a wide sandy-beige path in the center winding slightly to the hill; green lawn on both sides; the bottom-center is completely empty path.
-- Light and sky: a soft baby-blue sky with pink-tinted clouds, golden light beams; the four large trees are full cherry blossom trees with pink petals drifting and scattered over the path.
-- Exact counts: 4 large trees, 2 benches, 2 lamp posts. No flower beds. Nothing else.
+- Light and sky: a soft baby-blue sky with pink-tinted clouds, golden light beams; ALL FOUR trees are full cherry blossom trees with enormous, dense, fluffy canopies covered in thousands of pink and white blossoms (soft pink, rose, white, with lilac shadows), the two foreground trees filling the left and right sides of the tile like a pink tunnel, pink petals drifting in the air and scattered over the path and benches.
+- Exact counts: 2 giant foreground trees (one per side), 2 medium trees, 2 benches, 2 lamp posts. The trees are the stars of the picture: huge, dense, rich with leaves and detail. No flower beds. Nothing else.
 4. The same park in autumn. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: a gentle green hill with a few small distant trees at the end of the path.
-- Left side: two large trees and one wooden bench on the left side of the path; one lamp post far back.
-- Right side: two large trees and one wooden bench on the right side of the path; one lamp post far back.
+- Left side: one GIANT, extremely lush, full tree in the left foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
+- Right side: one GIANT, extremely lush, full tree in the right foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
 - Ground: a wide sandy-beige path in the center winding slightly to the hill; green lawn on both sides; the bottom-center is completely empty path.
-- Light and sky: a warm amber-peach sky, low golden light beams; the four large trees have orange, red and gold leaves, fallen leaves covering the path edges.
-- Exact counts: 4 large trees, 2 benches, 2 lamp posts. No flower beds. Nothing else.
+- Light and sky: a warm amber-peach sky, low golden light beams; ALL FOUR trees have enormous, dense, full canopies of orange, crimson, amber and gold leaves with rich color variation, the two foreground trees filling the left and right sides of the tile like a golden tunnel, thick piles of fallen leaves under them and along the path edges, leaves drifting in the air.
+- Exact counts: 2 giant foreground trees (one per side), 2 medium trees, 2 benches, 2 lamp posts. The trees are the stars of the picture: huge, dense, rich with leaves and detail. No flower beds. Nothing else.
 ```
 
 ## 시트 7
@@ -313,25 +331,28 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
 1. The same park in winter. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: a gentle green hill with a few small distant trees at the end of the path.
-- Left side: two large trees and one wooden bench on the left side of the path; one lamp post far back.
-- Right side: two large trees and one wooden bench on the right side of the path; one lamp post far back.
+- Left side: one GIANT, extremely lush, full tree in the left foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
+- Right side: one GIANT, extremely lush, full tree in the right foreground (its trunk very thick, its canopy huge, dense and rounded, covering about 30% of the tile width and rising past the top edge of the tile) with one wooden bench under it, plus one large medium-distance tree behind it; one lamp post far back.
 - Ground: a wide sandy-beige path in the center winding slightly to the hill; green lawn on both sides; the bottom-center is completely empty path.
-- Light and sky: a pale lilac-white sky with soft falling snow; the four large trees are bare with snow on branches; the lawn and benches are covered in snow; warm lamp halos.
-- Exact counts: 4 large trees, 2 benches, 2 lamp posts. No flower beds. Nothing else.
+- Light and sky: a pale lilac-white sky with soft falling snow; the four trees are huge, thick-trunked and bare, with their many branches heavily covered in snow and frost forming a big lacy canopy, the two foreground trees filling the left and right sides of the tile; the lawn and benches are covered in snow; warm lamp halos.
+- Exact counts: 2 giant foreground trees (one per side), 2 medium trees, 2 benches, 2 lamp posts. The trees are the stars of the picture: huge, dense, rich with leaves and detail. No flower beds. Nothing else.
 2. A romantic park spot at dusk for a proposal. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: an arch of warm fairy lights spanning the path in the middle distance, a pink-violet dusk sky behind it.
-- Left side: three glowing paper lanterns along the left path edge; one large tree; one picnic blanket with a small basket at the far left, away from the center.
-- Right side: three glowing paper lanterns along the right path edge; one large tree.
+- Left side: three glowing paper lanterns along the left path edge; one GIANT lush tree with a huge dense canopy covering about 30% of the tile width; one picnic blanket with a small basket at the far left, away from the center.
+- Right side: three glowing paper lanterns along the right path edge; one GIANT lush tree with a huge dense canopy covering about 30% of the tile width.
 - Ground: a sandy path with scattered rose petals along its edges only; the bottom-center is completely empty path.
 - Light and sky: a pink, violet and amber dusk sky, warm golden glow from the fairy lights and lanterns with soft halos.
 - Exact counts: 1 light arch, 6 lanterns, 2 trees, 1 blanket. Nothing else.
@@ -361,9 +382,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -409,9 +433,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -457,9 +484,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -505,9 +535,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -553,9 +586,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -586,8 +622,8 @@ LAYOUT:
 4. A university campus by day. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: a red-brick main building with a small clock tower at the center, tall windows, under a bright sky.
-- Left side: a green lawn with two trees and one bicycle rack with 3 bicycles on the left.
-- Right side: a green lawn with two trees and one bench on the right.
+- Left side: a green lawn with one GIANT lush tree (huge dense canopy, about 30% of the tile width) and one medium tree, and one bicycle rack with 3 bicycles on the left.
+- Right side: a green lawn with one GIANT lush tree (huge dense canopy, about 30% of the tile width) and one medium tree, and one bench on the right.
 - Ground: a paved path leading to the building entrance; the bottom-center is completely empty path.
 - Light and sky: a blue-peach sky with soft clouds and golden sunlight.
 - Exact counts: 1 building, 1 clock tower, 4 trees, 1 bike rack, 3 bicycles, 1 bench. Nothing else.
@@ -601,17 +637,20 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
 1. The same campus at sunset. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: the red-brick main building with a clock tower glowing in golden light, windows lit warm.
-- Left side: a lawn with two trees and the bike rack with 3 bicycles on the left, long shadows.
-- Right side: a lawn with two trees and one bench on the right, long shadows.
+- Left side: a lawn with one GIANT lush tree (huge dense canopy, about 30% of the tile width) and one medium tree, and the bike rack with 3 bicycles on the left, long shadows.
+- Right side: a lawn with one GIANT lush tree (huge dense canopy, about 30% of the tile width) and one medium tree, and one bench on the right, long shadows.
 - Ground: a paved path to the entrance; the bottom-center is completely empty.
 - Light and sky: an orange, rose and lavender sunset sky with warm golden light beams.
 - Exact counts: 1 building, 1 clock tower, 4 trees, 1 bike rack, 3 bicycles, 1 bench. Nothing else.
@@ -649,9 +688,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -697,9 +739,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -745,9 +790,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -778,8 +826,8 @@ LAYOUT:
 4. A spring outdoor wedding. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: a flower arch in the middle distance with cherry blossom trees behind it under a soft pink-blue sky.
-- Left side: five white chairs in a row along the left of the aisle; one cherry blossom tree.
-- Right side: five white chairs in a row along the right of the aisle; one cherry blossom tree.
+- Left side: five white chairs in a row along the left of the aisle; one GIANT cherry blossom tree with an enormous, dense canopy covered in pink and white blossoms (about 35% of the tile width, rising past the top edge), petals falling.
+- Right side: five white chairs in a row along the right of the aisle; one GIANT cherry blossom tree with an enormous, dense canopy covered in pink and white blossoms (about 35% of the tile width, rising past the top edge), petals falling.
 - Ground: a green lawn with a petal-strewn aisle in the center; the bottom-center is completely empty.
 - Light and sky: a pink-peach-baby-blue sky, golden light beams, drifting petals.
 - Exact counts: 1 arch, 10 chairs, 2 trees. Nothing else.
@@ -793,9 +841,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -841,9 +892,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -889,9 +943,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
@@ -914,16 +971,16 @@ LAYOUT:
 3. The Eiffel Tower by day from a park lawn. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: the Eiffel Tower centered in the distance.
-- Left side: a row of trimmed trees and one bench on the left.
-- Right side: a row of trimmed trees and one bench on the right.
+- Left side: one GIANT lush tree with a huge dense canopy in the left foreground (about 30% of the tile width) plus a row of trimmed trees behind it, and one bench.
+- Right side: one GIANT lush tree with a huge dense canopy in the right foreground (about 30% of the tile width) plus a row of trimmed trees behind it, and one bench.
 - Ground: a green lawn with a wide pale path in the center leading to the tower; the bottom-center is completely empty path.
 - Light and sky: a blue-peach sky with soft white clouds, golden sunlight.
 - Exact counts: 1 tower, 6 trees, 2 benches, 2 lamp posts. Nothing else.
 4. The Eiffel Tower at sunset. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: the Eiffel Tower centered in the distance.
-- Left side: a row of trimmed trees and one bench on the left.
-- Right side: a row of trimmed trees and one bench on the right.
+- Left side: one GIANT lush tree with a huge dense canopy in the left foreground (about 30% of the tile width) plus a row of trimmed trees behind it, and one bench.
+- Right side: one GIANT lush tree with a huge dense canopy in the right foreground (about 30% of the tile width) plus a row of trimmed trees behind it, and one bench.
 - Ground: a green lawn with a wide pale path in the center leading to the tower; the bottom-center is completely empty path.
 - Light and sky: a pink-orange-violet sunset sky behind the tower, long shadows, lamps starting to glow.
 - Exact counts: 1 tower, 6 trees, 2 benches, 2 lamp posts. Nothing else.
@@ -937,17 +994,20 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
 1. The Eiffel Tower at night. Outdoor, one-point perspective, camera at eye level in the middle of the scene.
 LAYOUT:
 - Background: the Eiffel Tower centered in the distance.
-- Left side: a row of trimmed trees and one bench on the left.
-- Right side: a row of trimmed trees and one bench on the right.
+- Left side: one GIANT lush tree with a huge dense canopy in the left foreground (about 30% of the tile width) plus a row of trimmed trees behind it, and one bench.
+- Right side: one GIANT lush tree with a huge dense canopy in the right foreground (about 30% of the tile width) plus a row of trimmed trees behind it, and one bench.
 - Ground: a green lawn with a wide pale path in the center leading to the tower; the bottom-center is completely empty path.
 - Light and sky: a deep indigo starry sky, the tower sparkling with golden lights, warm lamp halos.
 - Exact counts: 1 tower, 6 trees, 2 benches, 2 lamp posts. Nothing else.
@@ -985,9 +1045,12 @@ STYLE (every tile): very low-resolution retro pixel art, like a 160×90-pixel SN
 
 COLOR (the most important part): extremely emotional, cinematic and nostalgic color, as if a warm golden-yellow film filter and a soft vintage color grade were laid over the whole image. Rich, deep and harmonious, not pop and not neon: warm amber highlights, creamy yellows, dusty roses, deep teal-violet and indigo shadows, slightly faded blacks. Use a wide variety of beautiful, moody sky and window colors that fit the time and weather (peach, rose, lavender, teal, amber, indigo, pale mint, misty gray-blue), with smooth, rich, multi-color gradients (dithering is fine too). Make light feel alive: beams of light through windows or between trees, glowing halos around lamps and the sun, light spilling over the floor, glowing and softly blooming into the surroundings with smooth, dreamy gradients and gentle light bleed; soft glows and blur around lights are welcome.
 
+TREES (very important): wherever a tile has trees, make them the stars of the picture: very large, extremely lush, dense and full of leaves or blossoms, richly detailed with several shades of color, with thick trunks, big canopies that fill much of the tile and rise past the top edge.
+
 LAYOUT RULES (very important): every tile has its own LAYOUT list. Place each listed object exactly where stated and in exactly the stated number, and add NOTHING that is not listed (no extra plants, no extra picture frames, no extra furniture, no extra shelves, no extra windows). Indoor rooms are completely closed boxes: the walls are solid and continuous, with NO doorways, arches, openings, pass-throughs, hallways or holes in any wall unless the layout explicitly lists one. Keep the walls clean and calm with generous empty space. Keep the same room layout identical across tiles that say "the same" room: only the light, sky, weather and listed small items change.
 
 EVERY TILE: an empty place with absolutely no people, no figures and no animals. Eye-level, straight-on view. STRICT: the bottom-center of each tile (the middle 40% of the width and the bottom 35% of the height) must be completely empty floor/ground, with NO coffee table, NO table, NO chair, NO box, NO plant and NO object of any kind there (a flat rug lying on the floor is allowed). Furniture, trees and props stand only along the left and right sides or far back against the wall. All signs and screens show only wavy lines, never letters.
+
 
 
 TILES:
