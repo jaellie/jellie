@@ -478,7 +478,11 @@ describe("The sky over the road", () => {
     expect(at(14).phase).toBe("afternoon");
     expect(at(18.5).phase).toBe("sunset");
     expect(at(23).phase).toBe("night");
-    for (const h of [6, 9, 14, 18.5, 20, 23]) expect(at(h).gradient).toHaveLength(4);
+    for (const h of [6, 9, 14, 18.5, 20, 23]) expect(at(h).gradient).toHaveLength(6);
+    // Not the same sky every day: three palette families per time of day, and the season tints the horizon.
+    const days = new Set([0, 1, 2, 3, 4, 5].map((d) => skyAt(18.5 * 60, "CLEAR", { day: d }).gradient.join()));
+    expect(days.size).toBeGreaterThanOrEqual(2);
+    expect(skyAt(14 * 60, "CLEAR", { day: 1, season: "AUTUMN" }).gradient[5]).not.toBe(skyAt(14 * 60, "CLEAR", { day: 1, season: "WINTER" }).gradient[5]);
     expect(at(9).flyers.birds).toBeGreaterThan(0);
     expect(at(14).flyers.plane).toBeGreaterThan(0);
     expect(at(23).flyers.shootingStar).toBeGreaterThan(0);

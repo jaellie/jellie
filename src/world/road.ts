@@ -189,7 +189,7 @@ export function buildRoad(
       trees: TREES[season],
       timeOfDay: timeOfDay(opts.minute),
       weather,
-      sky: skyAt(opts.minute, weather),
+      sky: skyAt(opts.minute, weather, { day: state.monthIndex * 31 + opts.seed, season }),
       skyline: trip ? skylineFor(TRIP_CITY[trip.destinationId] ?? state.location.city, "", opts.lang) : skylineFor(state.location.city, state.location.country, opts.lang),
       // On a trip abroad, the road is in that city (Tokyo), not at home.
       city: tripDest && tripDest.country !== "HOME" ? tripDest.name[opts.lang] : opts.lang === "ko" ? opts.cityName(state.location.city) : state.location.city,
