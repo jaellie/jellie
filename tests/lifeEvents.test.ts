@@ -25,7 +25,7 @@ const FACTS = new Set(["korean", "inKorea",
   "recentlyBrokeUp", "hasEx", "momAlive", "dadAlive", "hasSibling", "fatedKnown", "fatedSingle", "fatedPartner", "fatedAvailable", "partnerCritical", "hasFriend", "abroad",
   "traveling", "weekend", "broke", "comfortable", "hasHabit", "alive", "male", "female", "partnerYears", "hasKid", "kidAge", "hasSister", "hasBrother", "parentsTogether",
   "hasPet", "homeOwner", "famous", "money", "debt", "inDebt", "rich", "engaged", "pregnant", "partnerAgeGap", "mbtiE", "mbtiN", "mbtiF", "mbtiP",
-  "likesSameSex", "likesBoth", "partnerSameSex", "siblingMarried", "hasCrushFriend", "fatedJobNight", "fatedJobAway", "fatedJobUnstable", "fatedJobCare", "fatedJobRich", "fatedFar", "fatedAbroad",
+  "likesSameSex", "likesBoth", "partnerSameSex", "siblingMarried", "hasCrushFriend", "fatedJobNight", "fatedJobAway", "fatedJobUnstable", "fatedJobCare", "fatedJobRich", "fatedJobTemp", "fatedFar", "fatedAbroad",
 ]);
 const TRAITS = new Set(["riskTolerance", "novelty", "sociability", "ambition", "socialEnergy", "socialInitiation", "noveltySeeking", "emotionalExpression", "conflictAvoidance", "planning", "independence", "relationshipPacing", "creativity", "careerDrive", "spontaneity"]);
 const P = "(SUN|MOON|MERCURY|VENUS|MARS|JUPITER|SATURN|URANUS|NEPTUNE|PLUTO|ASC|MC)";
