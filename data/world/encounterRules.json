@@ -1,0 +1,474 @@
+{
+ "_doc": "Encounter + relationship progression tuning. Recurrence builds familiarity; talking needs familiarity; friendship needs repeated conversations; romance needs friendship/acquaintance AND eligibility AND a (rare) spark. Nothing here is guaranteed.",
+ "familiarityPerSighting": 0.09,
+ "familiarityDecayPerMonthAbsent": 0.03,
+ "stages": {
+  "FAMILIAR_FACE": {
+   "minCount": 2
+  },
+  "RECOGNIZES": {
+   "minCount": 3,
+   "minFamiliarity": 0.25
+  },
+  "ACQUAINTANCE": {
+   "minConversations": 1
+  },
+  "FRIEND": {
+   "minConversations": 6,
+   "minCloseness": 0.45
+  },
+  "CLOSE_FRIEND": {
+   "minConversations": 16,
+   "minCloseness": 0.75
+  }
+ },
+ "conversationChance": {
+  "base": 0.06,
+  "perFamiliarity": 0.22,
+  "socialnessWeight": 0.5,
+  "max": 0.6
+ },
+ "closenessPerConversation": 0.03,
+ "friendshipChance": 0.15,
+ "sparkPerConversation": 0.05,
+ "romanceChance": {
+  "base": 0.04,
+  "sparkWeight": 0.4
+ },
+ "transientPresence": {
+  "min": 0,
+  "max": 3
+ },
+ "regularAttendance": 0.75,
+ "regularsPerLocation": {
+  "GYM": 6,
+  "CLASS": 5,
+  "CAFE": 4,
+  "UNIVERSITY": 8,
+  "WORKPLACE": 6,
+  "LIBRARY": 3,
+  "HOBBY": 4,
+  "ONLINE": 5,
+  "PARK": 3,
+  "CITY": 3,
+  "default": 2
+ },
+ "reunion": {
+  "minMonthsAway": 12,
+  "chance": 0.25
+ },
+ "onlineToOfflineChance": 0.25,
+ "travelContactKeepChance": 0.5,
+ "maxNoticedPerVisit": 3,
+ "strangerTalkFactor": 0.3,
+ "strangerKeepContactChance": 0.2,
+ "knownTalkFactor": 1.0,
+ "invitation": {
+  "chance": 0.02,
+  "minCloseness": 0.5,
+  "cooldownMonths": 12
+ },
+ "habitLapsePerMonth": 0.015,
+ "crowds": {
+  "_doc": "Who you see at each kind of place. ageMix = [minAge, maxAge, weight] bands — never tied to the player's age (ONLINE keeps peers near your age). Strangers you never bonded with move on after tenureYears (per person) or when they outgrow the place; new people arrive. People you know stay and age with you.",
+  "ageMix": {
+   "CAFE": [
+    [
+     18,
+     29,
+     4
+    ],
+    [
+     30,
+     44,
+     3
+    ],
+    [
+     45,
+     64,
+     2
+    ],
+    [
+     65,
+     80,
+     1
+    ]
+   ],
+   "RESTAURANT": [
+    [
+     20,
+     34,
+     3
+    ],
+    [
+     35,
+     54,
+     3
+    ],
+    [
+     55,
+     79,
+     2
+    ]
+   ],
+   "PARK": [
+    [
+     6,
+     15,
+     2
+    ],
+    [
+     16,
+     34,
+     2
+    ],
+    [
+     35,
+     59,
+     2
+    ],
+    [
+     60,
+     85,
+     3
+    ]
+   ],
+   "CITY": [
+    [
+     10,
+     19,
+     1
+    ],
+    [
+     20,
+     39,
+     4
+    ],
+    [
+     40,
+     64,
+     3
+    ],
+    [
+     65,
+     85,
+     2
+    ]
+   ],
+   "WORKPLACE": [
+    [
+     23,
+     34,
+     4
+    ],
+    [
+     35,
+     49,
+     3
+    ],
+    [
+     50,
+     62,
+     2
+    ]
+   ],
+   "UNIVERSITY": [
+    [
+     19,
+     26,
+     8
+    ],
+    [
+     27,
+     35,
+     1
+    ]
+   ],
+   "CLASS": [
+    [
+     22,
+     39,
+     3
+    ],
+    [
+     40,
+     64,
+     3
+    ],
+    [
+     65,
+     75,
+     1
+    ]
+   ],
+   "GYM": [
+    [
+     18,
+     34,
+     4
+    ],
+    [
+     35,
+     54,
+     3
+    ],
+    [
+     55,
+     70,
+     1
+    ]
+   ],
+   "LIBRARY": [
+    [
+     14,
+     24,
+     3
+    ],
+    [
+     25,
+     54,
+     3
+    ],
+    [
+     55,
+     80,
+     2
+    ]
+   ],
+   "HOBBY": [
+    [
+     18,
+     40,
+     4
+    ],
+    [
+     41,
+     60,
+     2
+    ]
+   ],
+   "HOSPITAL": [
+    [
+     1,
+     20,
+     1
+    ],
+    [
+     21,
+     59,
+     2
+    ],
+    [
+     60,
+     90,
+     3
+    ]
+   ],
+   "ENTERTAINMENT": [
+    [
+     10,
+     19,
+     2
+    ],
+    [
+     20,
+     39,
+     4
+    ],
+    [
+     40,
+     60,
+     2
+    ]
+   ],
+   "BEACH": [
+    [
+     5,
+     17,
+     2
+    ],
+    [
+     18,
+     45,
+     4
+    ],
+    [
+     46,
+     75,
+     2
+    ]
+   ],
+   "TOURIST_SITE": [
+    [
+     15,
+     30,
+     3
+    ],
+    [
+     31,
+     60,
+     3
+    ],
+    [
+     61,
+     80,
+     2
+    ]
+   ],
+   "AIRPORT": [
+    [
+     5,
+     20,
+     1
+    ],
+    [
+     21,
+     60,
+     4
+    ],
+    [
+     61,
+     80,
+     1
+    ]
+   ],
+   "HOTEL": [
+    [
+     22,
+     60,
+     4
+    ],
+    [
+     61,
+     80,
+     1
+    ]
+   ],
+   "WEDDING_VENUE": [
+    [
+     20,
+     39,
+     3
+    ],
+    [
+     40,
+     70,
+     3
+    ]
+   ],
+   "default": [
+    [
+     18,
+     34,
+     3
+    ],
+    [
+     35,
+     59,
+     3
+    ],
+    [
+     60,
+     80,
+     2
+    ]
+   ]
+  },
+  "tenureYears": [
+   3,
+   9
+  ],
+  "staffAge": [
+   20,
+   58
+  ],
+  "minAgeToBefriend": 16,
+  "ambient": {
+   "_doc": "Extra passers-by drawn in the scene (visual only, never NPCs you can meet): [min, max] per location type. The stage fills the whole screen, so a place looks busy like a Kairosoft map. None at home.",
+   "CITY": [
+    4,
+    7
+   ],
+   "CAFE": [
+    2,
+    5
+   ],
+   "PARK": [
+    3,
+    6
+   ],
+   "WORKPLACE": [
+    3,
+    5
+   ],
+   "RESTAURANT": [
+    2,
+    5
+   ],
+   "UNIVERSITY": [
+    3,
+    6
+   ],
+   "ENTERTAINMENT": [
+    3,
+    6
+   ],
+   "BEACH": [
+    3,
+    6
+   ],
+   "TOURIST_SITE": [
+    5,
+    8
+   ],
+   "AIRPORT": [
+    5,
+    8
+   ],
+   "HOSPITAL": [
+    2,
+    4
+   ],
+   "LIBRARY": [
+    2,
+    3
+   ],
+   "GYM": [
+    2,
+    4
+   ],
+   "CLASS": [
+    1,
+    3
+   ],
+   "WEDDING_VENUE": [
+    4,
+    6
+   ],
+   "HOBBY": [
+    2,
+    4
+   ],
+   "HOME": [
+    0,
+    0
+   ],
+   "FAMILY_HOME": [
+    0,
+    0
+   ],
+   "HOTEL": [
+    1,
+    2
+   ],
+   "ONLINE": [
+    0,
+    0
+   ],
+   "default": [
+    1,
+    3
+   ]
+  }
+ }
+}

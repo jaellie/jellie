@@ -1,0 +1,2310 @@
+{
+ "_doc": "Life events: dark. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "CULT_JOIN",
+   "cat": "dark",
+   "rarity": "rare",
+   "tone": "dark",
+   "requires": [
+    "age>=18",
+    "!f_cult"
+   ],
+   "trigger": {
+    "signals": {
+     "daeunShift": 0.6,
+     "unfavorable": 0.6,
+     "HWAGAE": 0.5,
+     "group:PYEON_IN": 0.4,
+     "SATURN>MOON:hard": 0.4,
+     "SAMJAE": 0.3
+    },
+    "mods": {
+     "stability": -0.6,
+     "social": -0.5,
+     "introspection": 0.3
+    },
+    "facts": {
+     "single": 0.4,
+     "hasFriend": -0.5
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "cultist",
+   "line": {
+    "ko": "(지하철역 앞) 인상이 참 좋으시네요. 혹시 요즘 마음이 많이 힘드시지 않으세요? 잠깐 차 한잔만…",
+    "en": "(Outside the subway station) You have such a kind face. Have things been weighing on your heart lately? Just one cup of tea…"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(외로워서, 조금만 이야기를 듣는다)",
+      "en": "(Lonely enough to listen for a bit)"
+     },
+     "w": {
+      "JOINED": 0.55,
+      "CLOSE": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "바빠서요",
+      "en": "I'm busy"
+     },
+     "w": {
+      "WALK": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "JOINED": {
+     "r": {
+      "ko": "'선생님'은 내 이야기를 끝까지 들어줬다. 세 달 뒤, 나는 매일 밤 그곳에 있었다.",
+      "en": "The 'teacher' listened to your whole story. Three months later you were there every night."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "cult",
+       "value": true
+      },
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.2,
+       "min": 3
+      }
+     ],
+     "chain": [
+      {
+       "oneOf": [
+        {
+         "to": "CULT_ESCAPE",
+         "w": 0.55,
+         "lean": {
+          "traits": {
+           "independence": 0.5
+          },
+          "mods": {
+           "family": 0.4
+          },
+          "facts": {
+           "hasFriend": 0.4
+          }
+         }
+        },
+        {
+         "to": "CULT_DEEPER",
+         "w": 0.45,
+         "lean": {
+          "mods": {
+           "social": -0.5,
+           "stability": -0.5
+          },
+          "facts": {
+           "single": 0.3
+          }
+         }
+        }
+       ],
+       "after": [
+        6,
+        30
+       ],
+       "p": 0.95
+      }
+     ],
+     "lean": {
+      "mods": {
+       "social": -0.5,
+       "stability": -0.4
+      }
+     }
+    },
+    "CLOSE": {
+     "r": {
+      "ko": "차는 따뜻했지만 말이 이상했다. '조상 제사비'라는 말에 자리를 떴다.",
+      "en": "The tea was warm, but the talk was strange. At the words 'ancestral ritual fee', you left."
+     }
+    },
+    "WALK": {
+     "r": {
+      "ko": "등 뒤에서 '복 받으세요'라는 말이 들렸다.",
+      "en": "Behind you, someone called out, 'Bless you.'"
+     }
+    }
+   }
+  },
+  {
+   "id": "CULT_ESCAPE",
+   "cat": "dark",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "탈출",
+    "en": "Getting out"
+   },
+   "requires": [
+    "f_cult"
+   ],
+   "chainOnly": true,
+   "location": "street",
+   "activity": "walk",
+   "who": "cultist",
+   "line": {
+    "ko": "이제 마지막 단계입니다. 가진 것을 모두 바치면, 가족도 구원받습니다.",
+    "en": "This is the final stage. Give everything you have, and your family will be saved too."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(새벽에 짐을 싸서 나온다)",
+      "en": "(Pack up and leave before dawn)"
+     },
+     "w": {
+      "OUT": 0.8,
+      "PULLED": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "(가족에게 몰래 연락한다)",
+      "en": "(Secretly contact your family)"
+     },
+     "w": {
+      "RESCUE": 0.85,
+      "PULLED": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "…네",
+      "en": "…Yes"
+     },
+     "w": {
+      "PULLED": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "OUT": {
+     "r": {
+      "ko": "첫차를 탔다. 창밖이 밝아올수록 숨이 쉬어졌다.",
+      "en": "You caught the first train. The brighter it got outside, the easier it was to breathe."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "cult"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "첫차",
+       "en": "The first train"
+      },
+      "location": "street",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     }
+    },
+    "RESCUE": {
+     "r": {
+      "ko": "가족들이 새벽 주차장에서 기다리고 있었다. 아무도 나를 탓하지 않았다.",
+      "en": "Your family was waiting in the parking lot before dawn. No one blamed you."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "cult"
+      },
+      {
+       "kind": "familySupport",
+       "delta": 0.2
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "새벽 주차장의 가족",
+       "en": "Family in the dawn parking lot"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "relative",
+       "relative"
+      ],
+      "priority": 8
+     }
+    },
+    "PULLED": {
+     "r": {
+      "ko": "통장이 비었다. 그래도 거기서 나오는 데 1년이 더 걸렸다.",
+      "en": "Your account was emptied. It still took another year to get out."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.5,
+       "min": 5
+      }
+     ],
+     "chain": [
+      {
+       "to": "CULT_ESCAPE",
+       "after": [
+        8,
+        16
+       ],
+       "p": 0.9
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PARTNER_JOINS_CULT",
+   "cat": "dark",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "그 모임",
+    "en": "That group"
+   },
+   "requires": [
+    "partnered"
+   ],
+   "trigger": {
+    "signals": {
+     "daeunShift": 0.6,
+     "unfavorable": 0.6,
+     "HWAGAE": 0.5,
+     "group:PYEON_IN": 0.4,
+     "SATURN>MOON:hard": 0.4,
+     "SAMJAE": 0.3
+    },
+    "mods": {
+     "stability": -0.5,
+     "romance": -0.3
+    }
+   },
+   "location": "home",
+   "activity": "invite_partner",
+   "who": "partner",
+   "line": {
+    "ko": "요즘 다니는 모임이 있는데… 너도 같이 가자. 거기 가면 마음이 편해져. 선생님이 너를 꼭 보고 싶대.",
+    "en": "There's a group I've been going to… come with me. It brings me such peace. The teacher really wants to meet you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "같이 가서 뭔지 본다",
+      "en": "Go along and see what it is"
+     },
+     "w": {
+      "SEE": 0.6,
+      "SWALLOWED": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "그거 사이비야. 가지 마",
+      "en": "That's a cult. Don't go"
+     },
+     "w": {
+      "FIGHT": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(몰래 탈퇴 상담소에 연락한다)",
+      "en": "(Secretly contact a cult-exit counselor)"
+     },
+     "w": {
+      "RESCUE": 0.7,
+      "FIGHT": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "SEE": {
+     "r": {
+      "ko": "예배당 뒷자리에서 {partner}의 텅 빈 눈을 봤다. 그날 밤 오래 이야기했다. {partner}이(가) 울었다.",
+      "en": "From the back pew you saw the emptiness in {partner}'s eyes. You talked long into the night. {partner} cried."
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "Pulled my partner back from a cult",
+       "tags": [
+        "event"
+       ]
+      }
+     ]
+    },
+    "SWALLOWED": {
+     "r": {
+      "ko": "{partner}은(는) 점점 집에 늦게 왔다. 통장에서 헌금이 빠져나갔다.",
+      "en": "{partner} came home later and later. 'Offerings' kept leaving the account."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.2,
+       "min": 3
+      },
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "PARTNER_CULT_END",
+       "after": [
+        6,
+        20
+       ],
+       "p": 1.0
+      }
+     ]
+    },
+    "FIGHT": {
+     "r": {
+      "ko": "'너는 몰라!' {partner}이(가) 문을 닫았다.",
+      "en": "'You don't understand!' {partner} slammed the door."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "PARTNER_CULT_END",
+       "after": [
+        4,
+        16
+       ],
+       "p": 1.0
+      }
+     ]
+    },
+    "RESCUE": {
+     "r": {
+      "ko": "상담사와 함께 기다렸다. 몇 주 뒤, {partner}이(가) 스스로 그곳을 나왔다.",
+      "en": "You waited alongside the counselor. Weeks later, {partner} walked out on their own."
+     },
+     "card": {
+      "caption": {
+       "ko": "스스로 나온 {partner}",
+       "en": "{partner} walked out"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 7
+     }
+    }
+   }
+  },
+  {
+   "id": "PARTNER_CULT_END",
+   "cat": "dark",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "선택",
+    "en": "The choice"
+   },
+   "requires": [
+    "partnered"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "who": "partner",
+   "line": {
+    "ko": "나 이제 거기서 살기로 했어. 너도 오면 좋겠어. 안 오면… 우린 여기까지야.",
+    "en": "I've decided to live there now. I want you to come. If you won't… this is where we end."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…가지 마",
+      "en": "…Don't go"
+     },
+     "w": {
+      "STAYS": 0.4,
+      "GONE": 0.6
+     }
+    },
+    {
+     "t": {
+      "ko": "(보내준다)",
+      "en": "(Let them go)"
+     },
+     "w": {
+      "GONE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "STAYS": {
+     "r": {
+      "ko": "{partner}은(는) 문 앞에서 한참 서 있다가, 신발을 벗었다.",
+      "en": "{partner} stood at the door for a long time. Then they took off their shoes."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "distance"
+      }
+     ],
+     "lean": {
+      "compat": 0.8
+     }
+    },
+    "GONE": {
+     "r": {
+      "ko": "{partner}의 빈 옷장을 한참 바라봤다.",
+      "en": "You stared at {partner}'s empty closet for a long time."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "비어버린 옷장",
+       "en": "An empty closet"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     }
+    }
+   }
+  },
+  {
+   "id": "FAMILY_RECRUITS_CULT",
+   "cat": "dark",
+   "rarity": "rare",
+   "tone": "dark",
+   "requires": [
+    "momAlive",
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "daeunShift": 0.6,
+     "unfavorable": 0.6,
+     "HWAGAE": 0.5,
+     "group:PYEON_IN": 0.4,
+     "SATURN>MOON:hard": 0.4,
+     "SAMJAE": 0.3
+    },
+    "mods": {
+     "family": 0.4,
+     "stability": -0.4
+    }
+   },
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "mom",
+   "line": {
+    "ko": "주말에 엄마랑 좋은 데 가자. 선생님이 너 꼭 데려오래. 거기 가면 우리 집 액운이 다 풀린대.",
+    "en": "Come somewhere nice with me this weekend. The teacher said to bring you. They say all our family's bad luck will lift."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…엄마, 거기 어디예요?",
+      "en": "…Mom, where is this place?"
+     },
+     "w": {
+      "PULL_OUT": 0.55,
+      "DEEP": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "엄마, 거기 가지 마세요",
+      "en": "Mom, please don't go there"
+     },
+     "w": {
+      "FIGHT": 0.6,
+      "PULL_OUT": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "PULL_OUT": {
+     "r": {
+      "ko": "같이 가본 그곳에서 엄마의 손을 잡고 걸어 나왔다. 엄마가 '내가 왜 그랬을까' 하며 울었다.",
+      "en": "You went together, and walked out holding Mom's hand. 'Why did I do that?' she cried."
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": 0.2
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "엄마의 손을 잡고 나온 날",
+       "en": "The day I walked Mom out"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "relative"
+      ],
+      "priority": 7
+     }
+    },
+    "DEEP": {
+     "r": {
+      "ko": "엄마는 점점 그곳에 빠져들었다. 적금이 헌금으로 바뀌었다.",
+      "en": "Mom sank deeper. Her savings became 'offerings'."
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": 0.2
+      }
+     ],
+     "chain": [
+      {
+       "to": "FAMILY_DRAINS_MONEY",
+       "after": [
+        3,
+        12
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "FIGHT": {
+     "r": {
+      "ko": "'엄마가 다 너 잘되라고 하는 거야!' 전화가 끊겼다.",
+      "en": "'I'm doing this for you!' She hung up."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ALCOHOL",
+   "cat": "dark",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=20",
+    "!f_alcohol"
+   ],
+   "trigger": {
+    "signals": {
+     "unfavorable": 0.5,
+     "SATURN>MOON:hard": 0.6,
+     "SAMJAE": 0.3,
+     "group:SANG_GWAN": 0.3
+    },
+    "mods": {
+     "stability": -0.5,
+     "social": -0.3
+    },
+    "traits": {
+     "planning": -0.3,
+     "emotionalExpression": -0.3
+    }
+   },
+   "location": "home",
+   "activity": "eat",
+   "who": "me",
+   "line": {
+    "ko": "(혼술이 습관이 됐다. 오늘은 몇 병째인지 세지 않았다.)",
+    "en": "(Drinking alone has become a habit. Tonight you didn't count the bottles.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "내일부터 줄이자",
+      "en": "Cut back starting tomorrow"
+     },
+     "w": {
+      "CUT": 0.55,
+      "HABIT": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "(한 병 더 딴다)",
+      "en": "(Open one more)"
+     },
+     "w": {
+      "HABIT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CUT": {
+     "r": {
+      "ko": "평일엔 안 마시기로 했다. 달력에 동그라미가 늘어갔다.",
+      "en": "No drinking on weekdays. The circles on the calendar kept adding up."
+     },
+     "lean": {
+      "traits": {
+       "planning": 0.4
+      }
+     }
+    },
+    "HABIT": {
+     "r": {
+      "ko": "아침마다 머리가 깨질 것 같았다. 그래도 저녁이면 또 {f:store}에 갔다.",
+      "en": "Every morning your head split. Every evening, back to the {f:store}."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "alcohol",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "oneOf": [
+        {
+         "to": "ALCOHOL_BOTTOM",
+         "w": 0.5,
+         "lean": {
+          "traits": {
+           "planning": -0.5
+          },
+          "mods": {
+           "stability": -0.5
+          },
+          "signals": {
+           "SATURN>MOON:hard": 0.5,
+           "SAMJAE": 0.3
+          }
+         }
+        },
+        {
+         "to": "ALCOHOL_PARTNER_INTERVENES",
+         "w": 0.3,
+         "lean": {
+          "facts": {
+           "married": 0.4
+          },
+          "compat": 0.5
+         }
+        },
+        {
+         "to": "ALCOHOL_RECOVERY",
+         "w": 0.2,
+         "lean": {
+          "traits": {
+           "planning": 0.6
+          },
+          "signals": {
+           "favorable": 0.4,
+           "CHEONEUL_GWIIN": 0.5
+          }
+         }
+        }
+       ],
+       "after": [
+        6,
+        24
+       ],
+       "p": 0.8
+      }
+     ],
+     "lean": {
+      "traits": {
+       "planning": -0.3
+      },
+      "mods": {
+       "stability": -0.3
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "ALCOHOL_BOTTOM",
+   "cat": "dark",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "바닥",
+    "en": "Rock bottom"
+   },
+   "requires": [
+    "f_alcohol"
+   ],
+   "chainOnly": true,
+   "location": "hospital",
+   "activity": "checkup",
+   "who": "doctor",
+   "line": {
+    "ko": "(눈을 떠보니 응급실이었다.) 어젯밤 길에서 쓰러지셨어요. 간 수치가… 이대로면 위험합니다.",
+    "en": "(You wake up in the ER.) You collapsed on the street last night. Your liver numbers are… this is dangerous."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "치료 프로그램에 등록한다",
+      "en": "Sign up for treatment"
+     },
+     "w": {
+      "CLEAN": 0.8,
+      "RELAPSE": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "(퇴원하자마자 {f:store}에 간다)",
+      "en": "(Head to the {f:store} the moment you're discharged)"
+     },
+     "w": {
+      "RELAPSE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CLEAN": {
+     "r": {
+      "ko": "첫 모임에서 이름을 말하고 '알코올 중독자입니다'라고 했다. 목소리가 떨렸다.",
+      "en": "At the first meeting, you said your name and 'I'm an alcoholic.' Your voice shook."
+     },
+     "chain": [
+      {
+       "to": "ALCOHOL_RECOVERY",
+       "after": [
+        10,
+        18
+       ],
+       "p": 0.85
+      }
+     ]
+    },
+    "RELAPSE": {
+     "r": {
+      "ko": "손이 떨렸다. 한 잔이면 멈출 줄 알았다.",
+      "en": "Your hands shook. You thought one glass would stop it."
+     },
+     "effects": [
+      {
+       "kind": "illness",
+       "patient": "self"
+      }
+     ],
+     "chain": [
+      {
+       "to": "ALCOHOL_BOTTOM",
+       "after": [
+        8,
+        20
+       ],
+       "p": 0.4
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ALCOHOL_RECOVERY",
+   "cat": "dark",
+   "rarity": "common",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "금주 1년",
+    "en": "One year sober"
+   },
+   "requires": [
+    "f_alcohol"
+   ],
+   "chainOnly": true,
+   "location": "library",
+   "activity": "read",
+   "who": "me",
+   "line": {
+    "ko": "(금주 1년. 오늘 모임에서 1년 기념 코인을 받는다.)",
+    "en": "(One year sober. Today your group gives you your one-year coin.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(소감을 말한다)",
+      "en": "(Say a few words)"
+     },
+     "w": {
+      "SOBER": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SOBER": {
+     "r": {
+      "ko": "'어제 마시지 않은 나에게 박수를.' 모두가 웃으며 손뼉을 쳤다.",
+      "en": "'A round of applause for yesterday-me, who didn't drink.' Everyone laughed and clapped."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "alcohol"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "금주 1년",
+       "en": "One year sober"
+      },
+      "location": "library",
+      "actors": [
+       "me",
+       "stranger",
+       "stranger"
+      ],
+      "priority": 7
+     }
+    }
+   }
+  },
+  {
+   "id": "GAME_ADDICTION",
+   "cat": "dark",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=15",
+    "age<=45"
+   ],
+   "trigger": {
+    "signals": {
+     "group:SIK_SHIN": 0.3,
+     "unfavorable": 0.4,
+     "SATURN@H12": 0.4
+    },
+    "mods": {
+     "social": -0.4
+    },
+    "traits": {
+     "noveltySeeking": 0.3,
+     "planning": -0.3
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(정신 차려보니 새벽 여섯 시. 랭킹은 올랐는데, 삶은 내려갔다.)",
+    "en": "(You look up. 6 a.m. Your ranking went up. Your life went down.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(계정을 지운다)",
+      "en": "(Delete the account)"
+     },
+     "w": {
+      "QUIT": 0.6,
+      "BACK": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(한 판만 더…)",
+      "en": "(Just one more match…)"
+     },
+     "w": {
+      "DEEP": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "QUIT": {
+     "r": {
+      "ko": "계정 삭제 버튼 앞에서 10분을 망설였다. 누르고 나니 이상하게 개운했다.",
+      "en": "You hovered over 'delete' for ten minutes. After you pressed it, you felt strangely light."
+     }
+    },
+    "BACK": {
+     "r": {
+      "ko": "일주일 뒤 새 계정을 만들었다. 이번엔 적당히, 라고 다짐하며.",
+      "en": "A week later you made a new account. 'In moderation this time,' you promised."
+     }
+    },
+    "DEEP": {
+     "r": {
+      "ko": "현질 내역이 석 달 치 생활비를 넘었다. 약속을 세 번 연달아 펑크 냈다.",
+      "en": "Your in-game spending topped three months of living costs. You bailed on plans three times in a row."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.15,
+       "min": 3
+      },
+      {
+       "kind": "social",
+       "delta": -0.1
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SHOPPING_ADDICTION",
+   "cat": "dark",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "unfavorable": 0.4,
+     "group:GYEOB_JAE": 0.4,
+     "SATURN>MOON:hard": 0.3
+    },
+    "mods": {
+     "wealth": -0.3,
+     "stability": -0.3
+    },
+    "traits": {
+     "spontaneity": 0.4,
+     "planning": -0.4
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(현관 앞에 택배 상자가 쌓여 있다. 뜯지도 않은 게 반이다. 결제 알림이 또 울린다.)",
+    "en": "(Boxes pile up at the front door. Half of them unopened. Another payment notification pings.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "전부 반품하고 앱을 지운다",
+      "en": "Return it all and delete the apps"
+     },
+     "w": {
+      "CLEAN": 0.7,
+      "SLIP": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(장바구니를 비우지 못한다)",
+      "en": "(You can't bring yourself to empty the cart)"
+     },
+     "w": {
+      "DEBT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CLEAN": {
+     "r": {
+      "ko": "반품 상자를 들고 {f:store}을(를) 여섯 번 왕복했다. 이상하게 후련했다.",
+      "en": "You made six trips to the {f:store} with returns. It felt oddly freeing."
+     },
+     "lean": {
+      "traits": {
+       "planning": 0.4
+      }
+     }
+    },
+    "SLIP": {
+     "r": {
+      "ko": "반품하고 나니 허전해서, 또 샀다.",
+      "en": "After the returns, you felt empty. So you bought more."
+     }
+    },
+    "DEBT": {
+     "r": {
+      "ko": "카드 명세서를 펼치기가 무서워졌다.",
+      "en": "You became afraid to open the card statement."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": 10
+      }
+     ],
+     "chain": [
+      {
+       "to": "CREDIT_CARD_DEBT",
+       "after": [
+        2,
+        8
+       ],
+       "p": 0.6
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "STALKER",
+   "cat": "dark",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "모르는 번호",
+    "en": "Unknown number"
+   },
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "unfavorable": 0.6,
+     "SAMJAE": 0.5,
+     "SATURN>SUN:hard": 0.5,
+     "SATURN>MOON:hard": 0.5,
+     "group:PYEON_GWAN": 0.4
+    },
+    "mods": {
+     "stability": -0.4
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "unknown",
+   "line": {
+    "ko": "오늘 입은 파란 코트 예쁘더라. 밤엔 왜 그 골목으로 다녀? 위험하잖아.",
+    "en": "That blue coat looked great on you today. Why do you take that alley at night? It's dangerous."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "경찰에 신고한다",
+      "en": "Report it to the police"
+     },
+     "w": {
+      "REPORT": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(번호를 차단한다)",
+      "en": "(Block the number)"
+     },
+     "w": {
+      "BLOCK": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "당장 이사를 알아본다",
+      "en": "Start looking for a new place right away"
+     },
+     "w": {
+      "MOVE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "REPORT": {
+     "r": {
+      "ko": "경찰이 순찰을 늘렸다. 그래도 밤마다 현관 잠금장치를 두 번씩 확인했다.",
+      "en": "The police stepped up patrols. You still checked the lock twice every night."
+     },
+     "chain": [
+      {
+       "to": "STALKER_CAUGHT",
+       "after": [
+        1,
+        6
+       ],
+       "p": 0.8,
+       "urgent": true
+      }
+     ]
+    },
+    "BLOCK": {
+     "r": {
+      "ko": "다른 번호로 또 왔다. 또, 또.",
+      "en": "It came again, from another number. And another."
+     },
+     "chain": [
+      {
+       "to": "STALKER_CAUGHT",
+       "after": [
+        2,
+        8
+       ],
+       "p": 0.7,
+       "urgent": true
+      }
+     ]
+    },
+    "MOVE": {
+     "r": {
+      "ko": "짐을 싸는 동안 창밖을 몇 번이나 확인했다. 새 동네에서는 누구에게도 주소를 말하지 않았다.",
+      "en": "While packing, you checked the window again and again. In the new neighborhood you told no one your address."
+     },
+     "effects": [
+      {
+       "kind": "moveCity"
+      },
+      {
+       "kind": "money",
+       "amount": -5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "STALKER_CAUGHT",
+   "cat": "dark",
+   "rarity": "common",
+   "tone": "joy",
+   "chainOnly": true,
+   "location": "home",
+   "who": "police",
+   "line": {
+    "ko": "잡았습니다. 몇 달 동안 선생님 집 앞 {f:store}에서 매일 기다렸다고 진술했습니다. 접근금지 명령이 나올 겁니다.",
+    "en": "We caught them. They admitted waiting at the {f:store} near your place every day for months. A restraining order is coming."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(다리가 풀려 주저앉는다)",
+      "en": "(Your legs give out)"
+     },
+     "w": {
+      "SAFE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "감사합니다… 정말로요",
+      "en": "Thank you… truly"
+     },
+     "w": {
+      "SAFE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SAFE": {
+     "r": {
+      "ko": "그날 밤, 몇 달 만에 처음으로 불을 끄고 잤다.",
+      "en": "That night, for the first time in months, you slept with the lights off."
+     },
+     "card": {
+      "caption": {
+       "ko": "불을 끄고 잔 밤",
+       "en": "The night I slept with the lights off"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    }
+   }
+  },
+  {
+   "id": "DOXXED",
+   "cat": "dark",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=16"
+   ],
+   "trigger": {
+    "signals": {
+     "unfavorable": 0.48,
+     "SAMJAE": 0.4,
+     "SATURN>SUN:hard": 0.4,
+     "SATURN>MOON:hard": 0.4,
+     "group:PYEON_GWAN": 0.32
+    },
+    "mods": {
+     "communication": -0.4,
+     "volatility": 0.3
+    }
+   },
+   "location": "online_community",
+   "activity": "post",
+   "who": "app",
+   "line": {
+    "ko": "[커뮤니티] 내 이름, 사진, 사는 동네까지 정리된 글이 올라왔다. 댓글이 300개.",
+    "en": "[Online forum] A post compiling your name, photos, even your neighborhood. 300 comments."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "캡처하고 고소한다",
+      "en": "Screenshot everything and sue"
+     },
+     "w": {
+      "SUE": 0.7,
+      "WORSE": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "계정을 전부 닫는다",
+      "en": "Close every account"
+     },
+     "w": {
+      "HIDE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SUE": {
+     "r": {
+      "ko": "변호사 사무실에서 캡처 파일 삼백 장을 넘겼다. 글쓴이는 합의를 빌었다.",
+      "en": "You handed three hundred screenshots to the lawyer. The poster begged to settle."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      }
+     ],
+     "chain": [
+      {
+       "to": "LAWSUIT_WIN",
+       "after": [
+        8,
+        24
+       ],
+       "p": 0.4
+      }
+     ]
+    },
+    "WORSE": {
+     "r": {
+      "ko": "고소 소식에 글이 더 퍼졌다. 한동안 밖에 나가지 못했다.",
+      "en": "News of the lawsuit spread the post further. For a while you couldn't go out."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": -0.1
+      }
+     ]
+    },
+    "HIDE": {
+     "r": {
+      "ko": "모든 사진을 지웠다. 온라인의 내가 사라지자 조금 숨이 쉬어졌다.",
+      "en": "You deleted every photo. With the online version of you gone, it got a little easier to breathe."
+     }
+    }
+   }
+  },
+  {
+   "id": "FAKE_RUMOR",
+   "cat": "dark",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=15"
+   ],
+   "trigger": {
+    "signals": {
+     "unfavorable": 0.36,
+     "SAMJAE": 0.3,
+     "SATURN>SUN:hard": 0.3,
+     "SATURN>MOON:hard": 0.3,
+     "group:PYEON_GWAN": 0.24,
+     "group:GYEOB_JAE": 0.42,
+     "group:BI_GYEON": 0.18,
+     "BRANCH_CLASH@month": 0.24
+    },
+    "mods": {
+     "communication": -0.4
+    }
+   },
+   "location": "online_community",
+   "activity": "post",
+   "who": "app",
+   "line": {
+    "ko": "[익명 게시판] 누가 봐도 나인 사람에 대한 글. 전부 거짓말인데 '좋아요'가 계속 늘어난다.",
+    "en": "[Anonymous board] A post about someone who is obviously you. Every word is a lie, and the likes keep climbing."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "해명글을 올린다",
+      "en": "Post a rebuttal"
+     },
+     "w": {
+      "CLEARED": 0.55,
+      "FIRE": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "(시간이 지나길 기다린다)",
+      "en": "(Wait for it to blow over)"
+     },
+     "w": {
+      "FADES": 0.7,
+      "FIRE": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "CLEARED": {
+     "r": {
+      "ko": "증거 사진 세 장에 여론이 뒤집혔다. 글쓴이가 글을 지웠다.",
+      "en": "Three photos of proof flipped the crowd. The poster deleted it."
+     }
+    },
+    "FIRE": {
+     "r": {
+      "ko": "해명할수록 불이 붙었다. 사람들은 진실보다 이야기를 좋아했다.",
+      "en": "The more you explained, the hotter it burned. People liked a story more than the truth."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": -0.15
+      }
+     ]
+    },
+    "FADES": {
+     "r": {
+      "ko": "일주일 뒤, 사람들은 다른 이야기로 넘어갔다. 나만 기억했다.",
+      "en": "A week later everyone moved on to something else. Only you remembered."
+     }
+    }
+   }
+  },
+  {
+   "id": "CYBER_WRECKER",
+   "cat": "dark",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "사이버렉카",
+    "en": "The rage-bait channel"
+   },
+   "requires": [
+    "famous"
+   ],
+   "trigger": {
+    "signals": {
+     "unfavorable": 0.6,
+     "SAMJAE": 0.5,
+     "SATURN>SUN:hard": 0.5,
+     "SATURN>MOON:hard": 0.5,
+     "group:PYEON_GWAN": 0.4
+    },
+    "mods": {
+     "volatility": 0.5
+    }
+   },
+   "location": "online_community",
+   "activity": "post",
+   "who": "app",
+   "line": {
+    "ko": "[유튜브] '충격! 그 사람의 숨겨진 과거' — 썸네일에 내 얼굴이 있다. 조회수 120만.",
+    "en": "[YouTube] 'SHOCKING! Their hidden past.' Your face is on the thumbnail. 1.2 million views."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "법적 대응을 예고한다",
+      "en": "Announce legal action"
+     },
+     "w": {
+      "SUE": 0.6,
+      "FLAME": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "직접 해명 영상을 올린다",
+      "en": "Post your own video"
+     },
+     "w": {
+      "HONEST": 0.6,
+      "FLAME": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(침묵한다)",
+      "en": "(Stay silent)"
+     },
+     "w": {
+      "FADE": 0.6,
+      "FLAME": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "SUE": {
+     "r": {
+      "ko": "내용증명이 도착하자 영상이 내려갔다. 사과 영상은 조회수가 3천이었다.",
+      "en": "The moment the legal notice arrived, the video came down. The apology video got 3,000 views."
+     },
+     "chain": [
+      {
+       "to": "LAWSUIT_WIN",
+       "after": [
+        8,
+        24
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "HONEST": {
+     "r": {
+      "ko": "떨리는 목소리로 찍은 12분짜리 영상. 댓글이 조금씩 바뀌었다.",
+      "en": "A twelve-minute video in a shaking voice. Slowly, the comments changed."
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "Faced the internet myself",
+       "tags": [
+        "event"
+       ]
+      }
+     ]
+    },
+    "FLAME": {
+     "r": {
+      "ko": "영상이 영상을 낳았다. 한동안 모자를 눌러쓰고 다녔다.",
+      "en": "Videos spawned more videos. For a while you went out only with a cap pulled low."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": -0.2
+      }
+     ]
+    },
+    "FADE": {
+     "r": {
+      "ko": "다음 주, 렉카는 다른 사람을 찾아 떠났다.",
+      "en": "The next week, the channel moved on to someone else."
+     }
+    }
+   }
+  },
+  {
+   "id": "FRAUD_INVOLVED",
+   "cat": "dark",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=19",
+    "age<=40"
+   ],
+   "trigger": {
+    "signals": {
+     "unfavorable": 0.55,
+     "SAMJAE": 0.55,
+     "SATURN>SUN:hard": 0.25,
+     "SATURN>MOON:hard": 0.25,
+     "group:PYEON_GWAN": 0.2,
+     "group:GYEOB_JAE": 0.4,
+     "URANUS@H2": 0.3,
+     "URANUS@H8": 0.25,
+     "BRANCH_CLASH@month": 0.15
+    },
+    "mods": {
+     "wealth": -0.3
+    },
+    "traits": {
+     "planning": -0.3
+    }
+   },
+   "location": "court",
+   "activity": "wait",
+   "who": "police",
+   "line": {
+    "ko": "[경찰] 귀하 명의 계좌가 보이스피싱 인출 계좌로 사용되었습니다. 출석해 주셔야 합니다.",
+    "en": "[Police] An account in your name was used to cash out a phone scam. You need to come in."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…그 아르바이트 때문인가?",
+      "en": "…Was it that part-time gig?"
+     },
+     "w": {
+      "CLEARED": 0.6,
+      "FINED": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "변호사와 함께 간다",
+      "en": "Go with a lawyer"
+     },
+     "w": {
+      "CLEARED": 0.8,
+      "FINED": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "CLEARED": {
+     "r": {
+      "ko": "'통장만 빌려주면 된다'던 알바였다. 몰랐다는 게 인정됐다. 한참을 떨었다.",
+      "en": "It was the gig that said 'just lend your account'. They accepted you didn't know. You shook for a long time."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -1
+      }
+     ]
+    },
+    "FINED": {
+     "r": {
+      "ko": "몰랐어도 책임은 있다고 했다. 벌금과 함께 계좌가 1년 정지됐다.",
+      "en": "Even without knowing, you were responsible, they said. A fine, and your accounts frozen for a year."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -8
+      }
+     ],
+     "card": "LOSS"
+    }
+   }
+  },
+  {
+   "id": "WITNESS_CRIME",
+   "cat": "dark",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "목격자",
+    "en": "The witness"
+   },
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "unfavorable": 0.42,
+     "SAMJAE": 0.35,
+     "SATURN>SUN:hard": 0.35,
+     "SATURN>MOON:hard": 0.35,
+     "group:PYEON_GWAN": 0.28
+    }
+   },
+   "location": "court",
+   "activity": "wait",
+   "who": "police",
+   "line": {
+    "ko": "그날 밤 골목에서 보신 걸 증언해 주실 수 있을까요? 선생님이 유일한 목격자입니다.",
+    "en": "Would you testify about what you saw in the alley that night? You're the only witness."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "증언하겠습니다",
+      "en": "I'll testify"
+     },
+     "w": {
+      "JUSTICE": 0.75,
+      "THREAT": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "…저는 아무것도 못 봤어요",
+      "en": "…I didn't see anything"
+     },
+     "w": {
+      "SILENT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "JUSTICE": {
+     "r": {
+      "ko": "법정에서 손이 떨렸지만 끝까지 말했다. 피해자 가족이 복도에서 고개를 숙였다.",
+      "en": "Your hands shook in court, but you said it all. The victim's family bowed to you in the hallway."
+     },
+     "card": {
+      "caption": {
+       "ko": "증인석",
+       "en": "The witness stand"
+      },
+      "location": "court",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 7
+     }
+    },
+    "THREAT": {
+     "r": {
+      "ko": "증언 다음 날, 현관 앞에 이상한 쪽지가 있었다. 경찰이 신변 보호를 붙여줬다.",
+      "en": "The day after you testified, a strange note was at your door. The police put you under protection."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "witnessProtection",
+       "value": true
+      }
+     ]
+    },
+    "SILENT": {
+     "r": {
+      "ko": "그 골목을 지날 때마다, 그날 밤이 떠올랐다.",
+      "en": "Every time you pass that alley, that night comes back."
+     }
+    }
+   }
+  },
+  {
+   "id": "WRONGLY_ACCUSED",
+   "cat": "dark",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=15"
+   ],
+   "trigger": {
+    "signals": {
+     "unfavorable": 0.36,
+     "SAMJAE": 0.3,
+     "SATURN>SUN:hard": 0.3,
+     "SATURN>MOON:hard": 0.3,
+     "group:PYEON_GWAN": 0.24
+    }
+   },
+   "location": "street",
+   "activity": "shop",
+   "who": "stranger",
+   "line": {
+    "ko": "({f:store} 사장님이 팔을 붙잡았다.) CCTV에 다 찍혔어요! 계산 안 한 거 있죠? 경찰 부를 거예요.",
+    "en": "(The {f:store} owner grabbed your arm.) It's all on camera! You didn't pay for something, did you? I'm calling the police."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "CCTV 같이 봐요. 지금 당장",
+      "en": "Let's watch the footage together. Right now"
+     },
+     "w": {
+      "CLEARED": 0.8,
+      "LONG": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "(너무 억울해서 말이 안 나온다)",
+      "en": "(Too stunned to speak)"
+     },
+     "w": {
+      "LONG": 0.6,
+      "CLEARED": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "CLEARED": {
+     "r": {
+      "ko": "영상 속 사람은 나와 같은 점퍼를 입은 다른 사람이었다. 사장님이 음료수를 쥐여주며 사과했다.",
+      "en": "The person in the video was someone else in the same jacket. The owner apologized and pressed a drink into your hands."
+     }
+    },
+    "LONG": {
+     "r": {
+      "ko": "경찰서에서 세 시간. 결국 누명은 벗었지만, 그날 밤 잠을 못 잤다.",
+      "en": "Three hours at the police station. You were cleared, but you couldn't sleep that night."
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "Wrongly accused",
+       "tags": [
+        "event"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "BLACKMAIL",
+   "cat": "dark",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "협박",
+    "en": "Blackmail"
+   },
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "unfavorable": 0.36,
+     "SAMJAE": 0.3,
+     "SATURN>SUN:hard": 0.3,
+     "SATURN>MOON:hard": 0.3,
+     "group:PYEON_GWAN": 0.24,
+     "HWAGAE": 0.3,
+     "group:PYEON_IN": 0.3,
+     "BRANCH_CLASH@year": 0.24,
+     "URANUS>MOON:hard": 0.36,
+     "URANUS>SUN:hard": 0.24
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "unknown",
+   "line": {
+    "ko": "네가 숨기고 싶은 거 알아. 이번 주까지 300 보내. 안 그러면 다 퍼뜨린다.",
+    "en": "I know what you want to hide. Send three million won by the end of the week. Or I spread it everywhere."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(돈을 보낸다)",
+      "en": "(Send the money)"
+     },
+     "w": {
+      "AGAIN": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "경찰에 신고한다",
+      "en": "Report it"
+     },
+     "w": {
+      "CAUGHT": 0.7,
+      "POSTED": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(무시한다)",
+      "en": "(Ignore it)"
+     },
+     "w": {
+      "BLUFF": 0.6,
+      "POSTED": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "AGAIN": {
+     "r": {
+      "ko": "일주일 뒤, 같은 번호에서 '한 번 더'라는 문자가 왔다.",
+      "en": "A week later, the same number: 'One more time.'"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      }
+     ],
+     "chain": [
+      {
+       "to": "BLACKMAIL_END",
+       "after": [
+        1,
+        4
+       ],
+       "p": 1.0,
+       "urgent": true
+      }
+     ]
+    },
+    "CAUGHT": {
+     "r": {
+      "ko": "경찰이 계좌를 추적했다. 범인은 해외 조직의 말단이었다.",
+      "en": "The police traced the account. It was a low-level member of an overseas ring."
+     }
+    },
+    "POSTED": {
+     "r": {
+      "ko": "정말 퍼졌다. 하지만 생각보다 세상은 나에게 관심이 없었다. 그게 구원이었다.",
+      "en": "It really got out. But the world cared less than you feared. That was the saving grace."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": -0.1
+      }
+     ]
+    },
+    "BLUFF": {
+     "r": {
+      "ko": "아무 일도 없었다. 처음부터 아무것도 없었던 거다.",
+      "en": "Nothing happened. There had never been anything."
+     }
+    }
+   }
+  },
+  {
+   "id": "BLACKMAIL_END",
+   "cat": "dark",
+   "rarity": "common",
+   "tone": "dark",
+   "chainOnly": true,
+   "location": "street",
+   "activity": "walk",
+   "who": "police",
+   "line": {
+    "ko": "협박범이 또 연락했다고요? 이번엔 저희가 같이 대응하겠습니다. 돈을 보내는 척만 하세요.",
+    "en": "They contacted you again? This time we'll handle it together. Just pretend to send the money."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…네, 해볼게요",
+      "en": "…Okay, let's do it"
+     },
+     "w": {
+      "CAUGHT": 0.8,
+      "GONE": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "CAUGHT": {
+     "r": {
+      "ko": "송금 약속 장소에 나온 건 경찰이었다. 끝났다.",
+      "en": "The ones who showed up at the handoff were the police. It was over."
+     },
+     "card": {
+      "caption": {
+       "ko": "끝난 협박",
+       "en": "The end of the threats"
+      },
+      "location": "street",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     }
+    },
+    "GONE": {
+     "r": {
+      "ko": "범인은 눈치를 채고 사라졌다. 그 번호는 다시 울리지 않았다.",
+      "en": "The blackmailer sensed it and vanished. The number never rang again."
+     }
+    }
+   }
+  },
+  {
+   "id": "HIKIKOMORI",
+   "cat": "dark",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "age>=16",
+    "age<=45",
+    "!employed"
+   ],
+   "trigger": {
+    "signals": {
+     "daeunShift": 0.6,
+     "unfavorable": 0.6,
+     "HWAGAE": 0.5,
+     "group:PYEON_IN": 0.4,
+     "SATURN>MOON:hard": 0.4,
+     "SAMJAE": 0.3
+    },
+    "mods": {
+     "social": -0.6,
+     "stability": -0.3
+    },
+    "traits": {
+     "socialEnergy": -0.4
+    },
+    "facts": {
+     "jobless": 0.6,
+     "hasFriend": -0.4
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(방문을 닫은 지 석 달. 배달 음식과 모니터 불빛이 하루의 전부다.)",
+    "en": "(Three months since you shut your door. Delivery food and the glow of a monitor are the whole day.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(오늘도 커튼을 친다)",
+      "en": "(Draw the curtains again today)"
+     },
+     "w": {
+      "STAY": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "({f:store}까지만 나가본다)",
+      "en": "(Go as far as the {f:store})"
+     },
+     "w": {
+      "STEP": 0.7,
+      "STAY": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "STAY": {
+     "r": {
+      "ko": "계절이 바뀌는 걸 창문 틈으로만 봤다.",
+      "en": "You watched the season change only through a gap in the curtains."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "hikikomori",
+       "value": true
+      },
+      {
+       "kind": "social",
+       "delta": -0.2
+      }
+     ],
+     "chain": [
+      {
+       "to": "HIKIKOMORI_OUT",
+       "after": [
+        6,
+        24
+       ],
+       "p": 0.9
+      }
+     ]
+    },
+    "STEP": {
+     "r": {
+      "ko": "햇빛이 따가웠다. {f:store} 직원이 '어서 오세요'라고 했다. 그게 좋았다.",
+      "en": "The sunlight stung. The clerk said, 'Welcome.' That felt good."
+     }
+    }
+   }
+  },
+  {
+   "id": "HIKIKOMORI_OUT",
+   "cat": "dark",
+   "rarity": "common",
+   "tone": "joy",
+   "requires": [
+    "f_hikikomori"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(누군가 방문 앞에 쪽지를 두고 갔다. '밥 먹자. 네가 좋아하는 거 했어.')",
+    "en": "(Someone left a note at your door. 'Come eat. I made your favorite.')"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(문을 연다)",
+      "en": "(Open the door)"
+     },
+     "w": {
+      "OUT": 0.85,
+      "SLOW": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "(쪽지를 오래 들여다본다)",
+      "en": "(Stare at the note a long time)"
+     },
+     "w": {
+      "SLOW": 0.6,
+      "OUT": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "OUT": {
+     "r": {
+      "ko": "식탁에 앉았다. 아무도 이유를 묻지 않았다. 그게 고마웠다.",
+      "en": "You sat at the table. No one asked why. You were grateful for that."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "hikikomori"
+      },
+      {
+       "kind": "social",
+       "delta": 0.15
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시 연 방문",
+       "en": "The door, opened again"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    },
+    "SLOW": {
+     "r": {
+      "ko": "다음 날엔 문을 열었다. 하루 늦었지만, 열었다.",
+      "en": "The next day, you opened it. A day late, but you did."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "hikikomori"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CULT_DEEPER",
+   "cat": "dark",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "f_cult"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(교단 합숙소로 들어온 지 석 달. 가족의 전화를 한 번도 받지 않았다. 휴대폰에 음성메시지가 쌓여 있다.)",
+    "en": "(Three months since you moved into the group's house. You haven't answered your family once. Voicemails are piling up.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(음성메시지를 하나 틀어본다)",
+      "en": "(Play one voicemail)"
+     },
+     "w": {
+      "CALL_HOME": 0.7,
+      "STAY": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(휴대폰을 교단에 반납한다)",
+      "en": "(Hand your phone over to the group)"
+     },
+     "w": {
+      "STAY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CALL_HOME": {
+     "r": {
+      "ko": "…'밥은 먹고 다니니.' 그 한마디에 한참을 울었다.",
+      "en": "…'Are you eating properly?' At those words, you cried a long time."
+     },
+     "chain": [
+      {
+       "to": "CULT_ESCAPE",
+       "after": [
+        1,
+        6
+       ],
+       "p": 0.9
+      }
+     ],
+     "lean": {
+      "mods": {
+       "family": 0.5
+      }
+     }
+    },
+    "STAY": {
+     "r": {
+      "ko": "세상과의 마지막 끈을 내려놓았다. 통장도 교단의 것이 됐다.",
+      "en": "You let go of your last line to the world. Your savings became the group's too."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.3,
+       "min": 5
+      }
+     ],
+     "chain": [
+      {
+       "to": "CULT_ESCAPE",
+       "after": [
+        12,
+        36
+       ],
+       "p": 0.6,
+       "lean": {
+        "traits": {
+         "independence": 0.5
+        }
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ALCOHOL_PARTNER_INTERVENES",
+   "cat": "dark",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "걱정",
+    "en": "Worried"
+   },
+   "requires": [
+    "partnered",
+    "f_alcohol"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "activity": "invite_partner",
+   "who": "partner",
+   "line": {
+    "ko": "오늘은 내 얘기 좀 들어줘. 네가 술 마시는 게… 이제 무서워.",
+    "en": "Please listen to me tonight. Your drinking… it scares me now."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…알았어. 같이 병원 가자",
+      "en": "…Okay. Let's go to the clinic together"
+     },
+     "w": {
+      "HELP": 0.8,
+      "ANGRY": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "내가 알아서 할게",
+      "en": "I'll handle it myself"
+     },
+     "w": {
+      "ANGRY": 0.6,
+      "HELP": 0.2,
+      "LEAVE": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "HELP": {
+     "r": {
+      "ko": "{partner}이(가) 진료실 밖에서 기다려줬다. 나오자마자 손을 잡았다.",
+      "en": "{partner} waited outside the doctor's office. The moment you came out, they took your hand."
+     },
+     "chain": [
+      {
+       "to": "ALCOHOL_RECOVERY",
+       "after": [
+        10,
+        14
+       ],
+       "p": 0.85
+      }
+     ],
+     "lean": {
+      "compat": 0.6
+     }
+    },
+    "ANGRY": {
+     "r": {
+      "ko": "문을 쾅 닫고 나갔다. 그날 밤도 {f:store}에 갔다.",
+      "en": "You slammed the door and left. That night, the {f:store} again."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "ALCOHOL_BOTTOM",
+       "after": [
+        6,
+        18
+       ],
+       "p": 0.6
+      }
+     ]
+    },
+    "LEAVE": {
+     "r": {
+      "ko": "'나도 지쳤어.' {partner}은(는) 그날 짐을 쌌다.",
+      "en": "'I'm exhausted too.' {partner} packed that day."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ],
+     "chain": [
+      {
+       "to": "ALCOHOL_BOTTOM",
+       "after": [
+        4,
+        12
+       ],
+       "p": 0.7
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

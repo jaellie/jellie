@@ -1,0 +1,17 @@
+{
+  "_doc": "The 12 Earthly Branches (地支) in cycle order. Index 0 = 子. hiddenStems (지장간) are listed 여기→중기→정기 (residual→middle→main) with relative weights summing to 1. The last entry is always the main qi (정기) used for the branch's Ten God label.",
+  "branches": [
+    { "id": "ZI",   "hanja": "子", "ko": "자", "animal": "Rat",     "element": "WATER", "yinYang": "YANG", "hiddenStems": [["REN", 0.3], ["GUI", 0.7]] },
+    { "id": "CHOU", "hanja": "丑", "ko": "축", "animal": "Ox",      "element": "EARTH", "yinYang": "YIN",  "hiddenStems": [["GUI", 0.3], ["XIN", 0.1], ["JI", 0.6]] },
+    { "id": "YIN",  "hanja": "寅", "ko": "인", "animal": "Tiger",   "element": "WOOD",  "yinYang": "YANG", "hiddenStems": [["WU", 0.2], ["BING", 0.2], ["JIA", 0.6]] },
+    { "id": "MAO",  "hanja": "卯", "ko": "묘", "animal": "Rabbit",  "element": "WOOD",  "yinYang": "YIN",  "hiddenStems": [["JIA", 0.3], ["YI", 0.7]] },
+    { "id": "CHEN", "hanja": "辰", "ko": "진", "animal": "Dragon",  "element": "EARTH", "yinYang": "YANG", "hiddenStems": [["YI", 0.3], ["GUI", 0.1], ["WU", 0.6]] },
+    { "id": "SI",   "hanja": "巳", "ko": "사", "animal": "Snake",   "element": "FIRE",  "yinYang": "YIN",  "hiddenStems": [["WU", 0.2], ["GENG", 0.2], ["BING", 0.6]] },
+    { "id": "WU",   "hanja": "午", "ko": "오", "animal": "Horse",   "element": "FIRE",  "yinYang": "YANG", "hiddenStems": [["BING", 0.3], ["JI", 0.2], ["DING", 0.5]] },
+    { "id": "WEI",  "hanja": "未", "ko": "미", "animal": "Goat",    "element": "EARTH", "yinYang": "YIN",  "hiddenStems": [["DING", 0.3], ["YI", 0.1], ["JI", 0.6]] },
+    { "id": "SHEN", "hanja": "申", "ko": "신", "animal": "Monkey",  "element": "METAL", "yinYang": "YANG", "hiddenStems": [["WU", 0.2], ["REN", 0.2], ["GENG", 0.6]] },
+    { "id": "YOU",  "hanja": "酉", "ko": "유", "animal": "Rooster", "element": "METAL", "yinYang": "YIN",  "hiddenStems": [["GENG", 0.3], ["XIN", 0.7]] },
+    { "id": "XU",   "hanja": "戌", "ko": "술", "animal": "Dog",     "element": "EARTH", "yinYang": "YANG", "hiddenStems": [["XIN", 0.3], ["DING", 0.1], ["WU", 0.6]] },
+    { "id": "HAI",  "hanja": "亥", "ko": "해", "animal": "Pig",     "element": "WATER", "yinYang": "YIN",  "hiddenStems": [["WU", 0.2], ["JIA", 0.2], ["REN", 0.6]] }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "두근두근, 내 운명의 사람 · Doki Doki Destiny Lover",
+  "short_name": "두근두근",
+  "description": "사주·점성술·MBTI가 그리는 단 하나의 인연 이야기",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1420",
+  "theme_color": "#1a1420",
+  "lang": "ko",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

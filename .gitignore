@@ -1,0 +1,5 @@
+node_modules/
+dist/*
+!dist/lovesim-engine.js
+coverage/
+qa/screenshots/

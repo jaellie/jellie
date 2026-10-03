@@ -1,0 +1,408 @@
+{
+ "_doc": "First-meeting scenes by the chart signals of the LOVE_MEETING turning point (도화 → a party or festival, 역마 → a bus or station, 천을귀인 → introduced or helped, 화개 → a library or gallery, 목성 7하우스 → a blind date…). A matching scene is used about 3 times in 4; otherwise the meeting follows the other person's job. 'work': only when you're someone's employee (a coworker, a client, the new hire).",
+ "routines": [
+  {
+   "id": "dohwa_party",
+   "signals": [
+    "DOHWA"
+   ],
+   "location": "restaurant",
+   "line": {
+    "ko": "(친구 생일 파티. 처음 보는 사람이 내 옆자리에 앉더니 케이크 초를 같이 불었다.)",
+    "en": "(A friend's birthday party. A stranger sits next to you and ends up blowing out the candles with you.)"
+   }
+  },
+  {
+   "id": "dohwa_festival",
+   "signals": [
+    "DOHWA"
+   ],
+   "location": "street",
+   "line": {
+    "ko": "(동네 축제. 사람들 사이에서 누군가와 정면으로 부딪혔다. 손에 든 솜사탕이 둘 다 망가졌다.)",
+    "en": "(A street festival. You collide head-on with someone in the crowd. Both your cotton candies are ruined.)"
+   }
+  },
+  {
+   "id": "dohwa_cafe_wink",
+   "signals": [
+    "DOHWA"
+   ],
+   "location": "cafe",
+   "line": {
+    "ko": "(카페 창가. 맞은편 자리 사람이 내 책 제목을 보고 웃었다. 같은 책을 들고 있었다.)",
+    "en": "(A café window seat. The person across smiles at the title of your book. They're holding the same one.)"
+   }
+  },
+  {
+   "id": "yeokma_bus",
+   "signals": [
+    "YEOKMA"
+   ],
+   "location": "street",
+   "line": {
+    "ko": "(막차 버스. 졸다가 옆 사람 어깨에 기댔다. 눈을 떠 보니 그 사람이 내 정류장까지 지나쳐 줬다.)",
+    "en": "(The last bus. You doze off on a stranger's shoulder. When you wake, they've ridden past their own stop so you wouldn't fall.)"
+   }
+  },
+  {
+   "id": "yeokma_station",
+   "signals": [
+    "YEOKMA"
+   ],
+   "location": "street",
+   "line": {
+    "ko": "(기차역 대합실. 열차 지연 안내가 나오자 옆 사람이 한숨을 쉬었다. '…같이 커피라도 마실래요?')",
+    "en": "(A train station waiting room. The delay announcement comes on and the person next to you sighs. \"…Want to grab a coffee?\")"
+   }
+  },
+  {
+   "id": "yeokma_map",
+   "signals": [
+    "YEOKMA",
+    "URANUS@H7"
+   ],
+   "location": "street",
+   "line": {
+    "ko": "(처음 가 보는 동네에서 길을 잃었다. 지도를 들여다보던 사람도 똑같이 길을 잃은 사람이었다.)",
+    "en": "(Lost in a neighborhood you don't know. The person studying the map is just as lost.)"
+   }
+  },
+  {
+   "id": "gwiin_senior",
+   "signals": [
+    "CHEONEUL_GWIIN"
+   ],
+   "location": "restaurant",
+   "line": {
+    "ko": "(존경하는 선배가 '꼭 소개해 주고 싶은 사람이 있어'라며 저녁 자리를 만들었다.)",
+    "en": "(A mentor you look up to set up dinner: \"There's someone I really want you to meet.\")"
+   }
+  },
+  {
+   "id": "gwiin_lost_wallet",
+   "signals": [
+    "CHEONEUL_GWIIN"
+   ],
+   "location": "cafe",
+   "line": {
+    "ko": "(잃어버린 지갑을 찾아 준 사람이 카페에서 기다리고 있었다. 지갑 속 사진을 보고 웃었다고 했다.)",
+    "en": "(The person who found your lost wallet is waiting at a café. They admit the photo inside made them smile.)"
+   }
+  },
+  {
+   "id": "gwiin_rain",
+   "signals": [
+    "CHEONEUL_GWIIN",
+    "SAMJAE"
+   ],
+   "location": "street",
+   "line": {
+    "ko": "(되는 일 하나 없던 날, 소나기까지 쏟아졌다. 낯선 사람이 우산을 반쯤 기울여 줬다.)",
+    "en": "(Nothing went right today, and then the downpour. A stranger tilts half their umbrella over you.)"
+   }
+  },
+  {
+   "id": "hwagae_library",
+   "signals": [
+    "HWAGAE"
+   ],
+   "location": "library",
+   "line": {
+    "ko": "(도서관 맨 끝 서가. 같은 책에 동시에 손을 뻗었다.)",
+    "en": "(The last aisle of the library. You both reach for the same book at the same moment.)"
+   }
+  },
+  {
+   "id": "hwagae_gallery",
+   "signals": [
+    "HWAGAE",
+    "JUPITER@H9"
+   ],
+   "location": "cafe",
+   "line": {
+    "ko": "(작은 전시회. 같은 그림 앞에서 둘 다 한참을 서 있었다. 먼저 말을 건 건 그쪽이었다.)",
+    "en": "(A small exhibition. You both stand in front of the same painting for a long time. They speak first.)"
+   }
+  },
+  {
+   "id": "hwagae_temple",
+   "signals": [
+    "HWAGAE",
+    "SATURN@H7"
+   ],
+   "location": "park",
+   "line": {
+    "ko": "(조용한 산책길 끝 작은 절 앞. 같은 소원지를 쓰고 있던 사람과 눈이 마주쳤다.)",
+    "en": "(At a small temple at the end of a quiet trail, your eyes meet someone writing a wish on the same paper.)"
+   }
+  },
+  {
+   "id": "study_class",
+   "signals": [
+    "JUPITER@H9",
+    "group:JEONG_IN",
+    "group:PYEON_IN"
+   ],
+   "location": "cooking_class",
+   "line": {
+    "ko": "(원데이 클래스. 짝꿍으로 배정된 사람이 칼질을 너무 못해서 웃음이 터졌다.)",
+    "en": "(A one-day class. Your assigned partner is hopeless with a knife, and you burst out laughing.)"
+   }
+  },
+  {
+   "id": "study_group",
+   "signals": [
+    "group:JEONG_IN",
+    "JUPITER@H9"
+   ],
+   "location": "university",
+   "line": {
+    "ko": "(스터디 모임 첫날. 늦게 들어온 사람이 남은 자리, 내 옆에 앉았다.)",
+    "en": "(First day of a study group. The latecomer takes the only empty seat: next to you.)"
+   }
+  },
+  {
+   "id": "blind_date",
+   "signals": [
+    "JUPITER@H7",
+    "group:JEONG_GWAN",
+    "group:JEONG_JAE"
+   ],
+   "location": "restaurant",
+   "line": {
+    "ko": "(친구가 반강제로 잡아 준 소개팅. 별 기대 없이 문을 열었는데, 그 사람이 먼저 일어나 인사했다.)",
+    "en": "(A blind date your friend practically forced on you. You walk in expecting nothing. They stand up to greet you first.)"
+   }
+  },
+  {
+   "id": "friends_gathering",
+   "signals": [
+    "JUPITER@H11",
+    "group:BI_GYEON",
+    "group:GYEOB_JAE"
+   ],
+   "location": "restaurant",
+   "line": {
+    "ko": "(친구의 친구들까지 모인 자리. 건배할 때 잔이 부딪힌 사람과 이상하게 대화가 끊기지 않았다.)",
+    "en": "(A get-together with friends of friends. The person you clinked glasses with: somehow the conversation never stops.)"
+   }
+  },
+  {
+   "id": "neighbor",
+   "signals": [
+    "JUPITER@H4",
+    "URANUS@H4",
+    "SATURN@H4"
+   ],
+   "location": "street",
+   "line": {
+    "ko": "(새로 이사 온 옆집 사람이 {f:gift}을(를) 들고 초인종을 눌렀다.)",
+    "en": "(The new neighbor rings your bell holding a plate of {f:gift}.)"
+   }
+  },
+  {
+   "id": "gym_spot",
+   "signals": [
+    "JUPITER@H6",
+    "SATURN@H6",
+    "group:SIK_SHIN"
+   ],
+   "location": "gym",
+   "line": {
+    "ko": "(헬스장. 무거운 걸 들다 휘청이는 나를 옆 사람이 잡아 줬다.)",
+    "en": "(At the gym, you wobble under a heavy lift and the person next to you steadies it.)"
+   }
+  },
+  {
+   "id": "cinema_seat",
+   "signals": [
+    "JUPITER@H5",
+    "group:SANG_GWAN"
+   ],
+   "location": "cinema",
+   "line": {
+    "ko": "(혼자 보러 온 영화. 옆자리 사람이 같은 장면에서 울고, 같은 장면에서 웃었다.)",
+    "en": "(A movie you came to see alone. The person beside you cries at the same scene and laughs at the same one.)"
+   }
+  },
+  {
+   "id": "park_dog",
+   "signals": [
+    "JUPITER@H5",
+    "favorable"
+   ],
+   "location": "park",
+   "line": {
+    "ko": "(공원. 목줄 풀린 강아지가 나한테 달려왔다. 뒤따라 뛰어온 주인이 숨을 몰아쉬며 사과했다.)",
+    "en": "(At the park, a dog off its leash runs straight to you. Its owner runs up behind, out of breath, apologizing.)"
+   }
+  },
+  {
+   "id": "umbrella_swap",
+   "signals": [
+    "URANUS@H7",
+    "unfavorable"
+   ],
+   "location": "cafe",
+   "line": {
+    "ko": "(카페를 나서며 우산을 챙겼는데, 내 우산이 아니었다. 문밖에서 누군가 내 우산을 들고 서 있었다.)",
+    "en": "(Leaving the café you grab an umbrella. It isn't yours. Someone outside is holding yours.)"
+   }
+  },
+  {
+   "id": "diner_last_seat",
+   "signals": [
+    "group:PYEON_JAE",
+    "favorable"
+   ],
+   "location": "diner",
+   "line": {
+    "ko": "(줄 서는 {f:noodleshop}. 마지막 한 자리에 합석하게 됐다. 앞사람이 내 그릇에 {f:pickle}을(를) 덜어 줬다.)",
+    "en": "(A {f:noodleshop} with a line. You end up sharing the last table. The stranger across moves some {f:pickle} into your bowl.)"
+   }
+  },
+  {
+   "id": "work_new_hire",
+   "signals": [
+    "group:JEONG_GWAN",
+    "group:PYEON_GWAN",
+    "JUPITER@H10"
+   ],
+   "location": "office",
+   "work": true,
+   "line": {
+    "ko": "(우리 팀에 새로 온 사람. 첫인사를 하던 그 사람과 눈이 마주쳤는데, 이상하게 오래 기억에 남았다.)",
+    "en": "(A new hire joins your team. Your eyes meet during their first hello, and somehow it stays with you all day.)"
+   }
+  },
+  {
+   "id": "work_project",
+   "signals": [
+    "group:JEONG_GWAN",
+    "SATURN@H10",
+    "group:SIK_SHIN"
+   ],
+   "location": "office",
+   "work": true,
+   "line": {
+    "ko": "(다른 팀과의 합동 프로젝트 첫 회의. 내 의견에 유일하게 고개를 끄덕여 준 사람이 있었다.)",
+    "en": "(First meeting of a joint project with another team. One person was the only one nodding at your idea.)"
+   }
+  },
+  {
+   "id": "work_client",
+   "signals": [
+    "group:JEONG_JAE",
+    "group:PYEON_JAE",
+    "JUPITER@H7"
+   ],
+   "location": "office",
+   "work": true,
+   "line": {
+    "ko": "(거래처 미팅. 딱딱한 회의가 끝나고, 그쪽 담당자가 엘리베이터에서 먼저 말을 걸었다.) 아까 그 아이디어, 진짜 좋던데요.",
+    "en": "(A client meeting. After the stiff meeting, their rep speaks first in the elevator.) That idea of yours earlier was really good."
+   }
+  },
+  {
+   "id": "work_late",
+   "signals": [
+    "URANUS@H10",
+    "group:PYEON_GWAN",
+    "SATURN@H6"
+   ],
+   "location": "office",
+   "work": true,
+   "line": {
+    "ko": "(야근하는 사무실, 불 켜진 자리는 둘뿐. 옆 팀 사람이 {f:ramen} 두 개를 들고 왔다.)",
+    "en": "(Working late, only two desks still lit. Someone from the next team comes over holding two {f:ramen}.)"
+   }
+  },
+  {
+   "id": "work_workshop",
+   "signals": [
+    "JUPITER@H11",
+    "JUPITER@H10",
+    "group:BI_GYEON"
+   ],
+   "location": "office",
+   "work": true,
+   "line": {
+    "ko": "(회사 워크숍 조별 활동. 제비뽑기로 같은 조가 된 사람이 미션마다 나를 먼저 챙겼다.)",
+    "en": "(Team-building day at work. The person drawn into your group kept looking out for you at every task.)"
+   }
+  }
+ ],
+ "openings": {
+  "gym": {
+   "location": "gym",
+   "line": {
+    "ko": "(헬스장에서 늘 옆 러닝머신을 쓰던 사람. 오늘은 그 사람이 먼저 이어폰을 뺐다.) …매일 같은 시간에 오시네요.",
+    "en": "(The person who always takes the treadmill next to yours at the gym. Today they pull out an earbud first.) …You come at the same time every day, huh?"
+   }
+  },
+  "cooking_class": {
+   "location": "cooking_class",
+   "line": {
+    "ko": "(요리 교실에서 같은 조가 된 사람. 양파를 썰다 말고 둘 다 눈물을 닦으며 웃었다.) 이거, 원래 이렇게 우는 거예요?",
+    "en": "(Your partner at cooking class. Halfway through the onions, you're both wiping tears and laughing.) Is this how much it's supposed to make you cry?"
+   }
+  },
+  "surf_school": {
+   "location": "surf_school",
+   "line": {
+    "ko": "(서핑 스쿨 첫날. 둘 다 보드에서 열 번째로 떨어졌다. 물속에서 눈이 마주쳤다.) …우리 둘이 꼴찌네요.",
+    "en": "(First day of surf school. You both fall off the board for the tenth time and lock eyes underwater.) …Looks like we're tied for last."
+   }
+  },
+  "dating_app": {
+   "location": "dating_app",
+   "line": {
+    "ko": "(앱에서 매칭된 사람에게서 첫 메시지가 왔다.) 프로필에 쓴 그 책, 저도 제일 좋아해요.",
+    "en": "(A first message from your new match.) That book on your profile? It's my favorite too."
+   }
+  },
+  "language_exchange_app": {
+   "location": "language_exchange_app",
+   "line": {
+    "ko": "(언어교환 앱에서 매주 대화하던 사람과 오늘 처음으로 영상 통화를 켰다.) …생각했던 목소리랑 똑같네요.",
+    "en": "(The person you've been trading languages with every week. Today, for the first time, you turn on video.) …You sound exactly like I imagined."
+   }
+  },
+  "social_group": {
+   "location": "cafe",
+   "line": {
+    "ko": "(새로 들어간 모임 첫날. 자기소개 차례에 그 사람과 눈이 마주쳤다. 둘 다 같은 대목에서 웃었다.)",
+    "en": "(First day with the new group. During introductions your eyes meet, and you both laugh at the same moment.)"
+   }
+  },
+  "university": {
+   "location": "university",
+   "line": {
+    "ko": "(같은 수업에서 조별 과제를 하게 된 사람. 밤샘 준비 중에 그 사람이 커피를 건넸다.) 이거 끝나면 밥이라도 같이 먹어요.",
+    "en": "(Your group-project partner in class. During an all-nighter, they hand you a coffee.) Let's at least grab a meal when this is over."
+   }
+  },
+  "exchange": {
+   "location": "university",
+   "line": {
+    "ko": "(교환학생 첫 주. 기숙사 휴게실에서 내 나라 노래를 흥얼거리던 사람.) …혹시, 그 노래 아세요?",
+    "en": "(First week of the exchange semester. In the dorm lounge, someone is humming a song from back home.) …Wait, you know that song?"
+   }
+  },
+  "study": {
+   "location": "library",
+   "line": {
+    "ko": "(자격증 스터디 첫 모임. 옆자리 사람이 내 형광펜을 빌려 갔다. 돌려줄 때 작은 쪽지가 붙어 있었다.)",
+    "en": "(First meeting of your exam study group. The person next to you borrows your highlighter. When it comes back, there's a little note stuck to it.)"
+   }
+  },
+  "newjob": {
+   "location": "office",
+   "line": {
+    "ko": "(새 직장 첫 출근. 옆자리 사람이 모니터 너머로 사탕을 건넸다.) 첫날은 원래 다 긴장돼요.",
+    "en": "(First day at the new job. The person at the next desk passes you a candy over the monitor.) Everyone's nervous on day one."
+   }
+  }
+ }
+}

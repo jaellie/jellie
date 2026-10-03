@@ -1,0 +1,12 @@
+{
+  "name": "dokidoki-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Android wrapper for the web game (web/) — built in CI, see .github/workflows/android.yml",
+  "devDependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.0.0",
+    "@capacitor/core": "^7.0.0"
+  }
+}

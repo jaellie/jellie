@@ -1,0 +1,2736 @@
+{
+  "_doc": "Opportunity templates. 'affinity' says which LifeModifier keys make the offer more/less likely (multiplier = exp(Σ affinity × delta)). Requirements hard-gate *eligibility*; 'circumstances' softly shape likelihood; choice 'requirements' gate what the player can actually do (block/redirect). Money is in thousands. 'maxTimesTaken' caps how often a template can be accepted in one life.",
+  "templates": [
+    {
+      "id": "UNIVERSITY_ADMISSION",
+      "type": "EDUCATION",
+      "title": "University Admission",
+      "emoji": "🏫",
+      "baseProbability": 0.12,
+      "affinity": {
+        "education": 1.0,
+        "opportunity": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 17,
+          "max": 26
+        },
+        {
+          "kind": "education",
+          "min": "HIGH_SCHOOL",
+          "max": "HIGH_SCHOOL"
+        },
+        {
+          "kind": "enrolled",
+          "value": false
+        }
+      ],
+      "circumstances": {
+        "agePeak": 18.5,
+        "ageSpread": 3
+      },
+      "cooldownMonths": 10,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "LOCAL",
+          "label": "Enroll at a local university",
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -6
+            },
+            {
+              "kind": "enroll",
+              "program": "BACHELOR",
+              "months": 48
+            },
+            {
+              "kind": "memory",
+              "text": "Started university close to home.",
+              "tags": [
+                "education"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.7,
+            "traits": {
+              "ambition": 0.3
+            },
+            "familyObligation": 0.2
+          }
+        },
+        {
+          "id": "FAR",
+          "label": "Enroll at a university in another city",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 8
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -10
+            },
+            {
+              "kind": "moveCity"
+            },
+            {
+              "kind": "enroll",
+              "program": "BACHELOR",
+              "months": 48
+            },
+            {
+              "kind": "memory",
+              "text": "Moved to a new city for university.",
+              "tags": [
+                "education",
+                "mobility"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.55,
+            "traits": {
+              "novelty": 0.7,
+              "ambition": 0.3,
+              "independence": 0.3
+            },
+            "familyObligation": -0.6
+          }
+        },
+        {
+          "id": "WORK",
+          "label": "Start working instead",
+          "consequences": [
+            {
+              "kind": "job",
+              "field": "service"
+            },
+            {
+              "kind": "memory",
+              "text": "Chose to start working right away.",
+              "tags": [
+                "career"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.25,
+            "poverty": 0.6,
+            "familyObligation": 0.4
+          }
+        }
+      ],
+      "maxTimesTaken": 1
+    },
+    {
+      "id": "EXCHANGE_SEMESTER",
+      "type": "MOBILITY",
+      "title": "Exchange Semester Abroad",
+      "emoji": "✈️",
+      "baseProbability": 0.04,
+      "affinity": {
+        "overseas": 0.9,
+        "mobility": 0.6,
+        "education": 0.5,
+        "travel": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "enrolledIn",
+          "program": "BACHELOR"
+        },
+        {
+          "kind": "age",
+          "min": 18,
+          "max": 32
+        },
+        {
+          "kind": "enrolled",
+          "value": true
+        }
+      ],
+      "circumstances": {
+        "cost": 8,
+        "familyObligationPenalty": 0.4
+      },
+      "cooldownMonths": 12,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "GO",
+          "label": "Go on exchange",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 5
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -6
+            },
+            {
+              "kind": "social",
+              "delta": 3
+            },
+            {
+              "kind": "setFlag",
+              "name": "livedAbroad",
+              "value": true
+            },
+            {
+              "kind": "memory",
+              "text": "Spent a semester abroad. The world felt bigger.",
+              "tags": [
+                "overseas",
+                "education"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.6,
+              "riskTolerance": 0.3
+            },
+            "partnered": -0.2,
+            "familyObligation": -0.5
+          }
+        },
+        {
+          "id": "FAMILY_HELP",
+          "label": "Go with family support",
+          "requirements": [
+            {
+              "kind": "familySupport",
+              "min": 0.5
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "familySupport",
+              "delta": -0.1
+            },
+            {
+              "kind": "social",
+              "delta": 3
+            },
+            {
+              "kind": "setFlag",
+              "name": "livedAbroad",
+              "value": true
+            },
+            {
+              "kind": "memory",
+              "text": "Family helped pay for an exchange semester abroad.",
+              "tags": [
+                "overseas",
+                "education",
+                "family"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.6
+            },
+            "familyObligation": -0.5
+          }
+        },
+        {
+          "id": "STAY",
+          "label": "Stay where I am",
+          "consequences": [],
+          "appeal": {
+            "base": 0.38,
+            "traits": {
+              "novelty": -0.4
+            },
+            "partnered": 0.3,
+            "poverty": 0.3
+          }
+        }
+      ],
+      "maxTimesTaken": 1
+    },
+    {
+      "id": "STUDY_ABROAD_GRAD",
+      "type": "EDUCATION",
+      "title": "Graduate School Abroad",
+      "emoji": "🎓",
+      "baseProbability": 0.025,
+      "affinity": {
+        "education": 1.0,
+        "overseas": 1.0,
+        "mobility": 0.6,
+        "career": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 21,
+          "max": 38
+        },
+        {
+          "kind": "education",
+          "min": "BACHELOR",
+          "max": "BACHELOR"
+        },
+        {
+          "kind": "enrolled",
+          "value": false
+        }
+      ],
+      "circumstances": {
+        "agePeak": 25,
+        "ageSpread": 5,
+        "cost": 40,
+        "familyObligationPenalty": 0.5
+      },
+      "cooldownMonths": 12,
+      "expiresInMonths": 3,
+      "choices": [
+        {
+          "id": "APPLY",
+          "label": "Apply",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 30
+            }
+          ],
+          "success": {
+            "base": 0.55,
+            "affinity": {
+              "education": 0.8,
+              "overseas": 0.4
+            }
+          },
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -30
+            },
+            {
+              "kind": "moveAbroad"
+            },
+            {
+              "kind": "enroll",
+              "program": "MASTER",
+              "months": 24,
+              "abroad": true
+            },
+            {
+              "kind": "memory",
+              "text": "Moved abroad for graduate school.",
+              "tags": [
+                "overseas",
+                "education",
+                "relocation"
+              ]
+            }
+          ],
+          "onFailure": [
+            {
+              "kind": "memory",
+              "text": "Applied to grad school abroad and was rejected.",
+              "tags": [
+                "education"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "novelty": 0.5,
+              "ambition": 0.5,
+              "riskTolerance": 0.3
+            },
+            "partnered": -0.3,
+            "familyObligation": -0.8
+          }
+        },
+        {
+          "id": "FAMILY_HELP",
+          "label": "Ask family for help",
+          "requirements": [
+            {
+              "kind": "familySupport",
+              "min": 0.6
+            }
+          ],
+          "success": {
+            "base": 0.55,
+            "affinity": {
+              "education": 0.8
+            }
+          },
+          "consequences": [
+            {
+              "kind": "familySupport",
+              "delta": -0.3
+            },
+            {
+              "kind": "moveAbroad"
+            },
+            {
+              "kind": "enroll",
+              "program": "MASTER",
+              "months": 24,
+              "abroad": true
+            },
+            {
+              "kind": "memory",
+              "text": "With family's help, moved abroad for graduate school.",
+              "tags": [
+                "overseas",
+                "education",
+                "family"
+              ]
+            }
+          ],
+          "onFailure": [
+            {
+              "kind": "memory",
+              "text": "Applied abroad with family backing; didn't get in.",
+              "tags": [
+                "education"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.5,
+              "ambition": 0.4
+            },
+            "familyObligation": -0.8
+          }
+        },
+        {
+          "id": "LOAN",
+          "label": "Take a loan",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 5
+            }
+          ],
+          "success": {
+            "base": 0.55,
+            "affinity": {
+              "education": 0.8
+            }
+          },
+          "consequences": [
+            {
+              "kind": "debt",
+              "amount": 35
+            },
+            {
+              "kind": "moveAbroad"
+            },
+            {
+              "kind": "enroll",
+              "program": "MASTER",
+              "months": 24,
+              "abroad": true
+            },
+            {
+              "kind": "memory",
+              "text": "Took a loan and moved abroad for graduate school.",
+              "tags": [
+                "overseas",
+                "education",
+                "debt"
+              ]
+            }
+          ],
+          "onFailure": [
+            {
+              "kind": "memory",
+              "text": "Was ready to borrow for grad school abroad, but wasn't admitted.",
+              "tags": [
+                "education"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.3,
+            "traits": {
+              "riskTolerance": 0.7,
+              "novelty": 0.4,
+              "ambition": 0.3,
+              "spontaneity": 0.2
+            },
+            "familyObligation": -0.8
+          }
+        },
+        {
+          "id": "LOCAL_INSTEAD",
+          "label": "Go to a local graduate school instead",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 8
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -8
+            },
+            {
+              "kind": "enroll",
+              "program": "MASTER",
+              "months": 24
+            },
+            {
+              "kind": "memory",
+              "text": "Chose a graduate program at home.",
+              "tags": [
+                "education"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.35,
+            "traits": {
+              "ambition": 0.4,
+              "novelty": -0.3
+            },
+            "familyObligation": 0.3,
+            "partnered": 0.2
+          }
+        },
+        {
+          "id": "WAIT",
+          "label": "Work for another year and save",
+          "consequences": [
+            {
+              "kind": "setFlag",
+              "name": "savingForAbroad",
+              "value": true
+            }
+          ],
+          "appeal": {
+            "base": 0.3,
+            "poverty": 0.5,
+            "traits": {
+              "riskTolerance": -0.3,
+              "planning": 0.4
+            }
+          }
+        },
+        {
+          "id": "IGNORE",
+          "label": "Ignore the opportunity",
+          "consequences": [],
+          "appeal": {
+            "base": 0.2,
+            "traits": {
+              "novelty": -0.5,
+              "ambition": -0.3
+            },
+            "partnered": 0.3,
+            "familyObligation": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "LOCAL_GRAD_SCHOOL",
+      "type": "EDUCATION",
+      "title": "Graduate School Offer",
+      "emoji": "📚",
+      "baseProbability": 0.02,
+      "affinity": {
+        "education": 1.0,
+        "stability": 0.2,
+        "introspection": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 21,
+          "max": 45
+        },
+        {
+          "kind": "education",
+          "min": "BACHELOR",
+          "max": "BACHELOR"
+        },
+        {
+          "kind": "enrolled",
+          "value": false
+        }
+      ],
+      "circumstances": {
+        "agePeak": 25,
+        "ageSpread": 7,
+        "cost": 10
+      },
+      "cooldownMonths": 12,
+      "expiresInMonths": 3,
+      "choices": [
+        {
+          "id": "ENROLL",
+          "label": "Enroll",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 6
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -8
+            },
+            {
+              "kind": "enroll",
+              "program": "MASTER",
+              "months": 24
+            },
+            {
+              "kind": "memory",
+              "text": "Started a master's program.",
+              "tags": [
+                "education"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "ambition": 0.5
+            },
+            "familyObligation": -0.2
+          }
+        },
+        {
+          "id": "DECLINE",
+          "label": "Not now",
+          "consequences": [],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "ambition": -0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "RESEARCH_POSITION",
+      "type": "EDUCATION",
+      "title": "Research / PhD Position",
+      "emoji": "🔬",
+      "baseProbability": 0.02,
+      "affinity": {
+        "education": 0.9,
+        "introspection": 0.5,
+        "career": 0.3,
+        "overseas": 0.2
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 23,
+          "max": 45
+        },
+        {
+          "kind": "education",
+          "min": "MASTER",
+          "max": "MASTER"
+        },
+        {
+          "kind": "enrolled",
+          "value": false
+        }
+      ],
+      "cooldownMonths": 18,
+      "expiresInMonths": 3,
+      "choices": [
+        {
+          "id": "ACCEPT",
+          "label": "Accept the position",
+          "consequences": [
+            {
+              "kind": "enroll",
+              "program": "PHD",
+              "months": 48
+            },
+            {
+              "kind": "memory",
+              "text": "Began a doctoral research position.",
+              "tags": [
+                "education",
+                "research"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.4,
+            "traits": {
+              "ambition": 0.4,
+              "novelty": 0.2
+            },
+            "poverty": -0.3
+          }
+        },
+        {
+          "id": "DECLINE",
+          "label": "Decline",
+          "consequences": [],
+          "appeal": {
+            "base": 0.55
+          }
+        }
+      ]
+    },
+    {
+      "id": "CERTIFICATION",
+      "type": "EDUCATION",
+      "title": "Professional Certification",
+      "emoji": "📜",
+      "baseProbability": 0.02,
+      "affinity": {
+        "education": 0.6,
+        "career": 0.6,
+        "stability": 0.2
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 19,
+          "max": 60
+        },
+        {
+          "kind": "enrolled",
+          "value": false
+        }
+      ],
+      "cooldownMonths": 24,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "STUDY",
+          "label": "Study for it",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 2
+            }
+          ],
+          "success": {
+            "base": 0.65,
+            "affinity": {
+              "education": 0.6
+            }
+          },
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -2
+            },
+            {
+              "kind": "careerLevel",
+              "delta": 1
+            },
+            {
+              "kind": "memory",
+              "text": "Earned a professional certification.",
+              "tags": [
+                "education",
+                "career"
+              ]
+            }
+          ],
+          "onFailure": [
+            {
+              "kind": "money",
+              "amount": -2
+            },
+            {
+              "kind": "memory",
+              "text": "Failed a certification exam.",
+              "tags": [
+                "education"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "ambition": 0.5
+            }
+          }
+        },
+        {
+          "id": "SKIP",
+          "label": "Skip it",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45
+          }
+        }
+      ]
+    },
+    {
+      "id": "FIRST_JOB",
+      "type": "CAREER",
+      "title": "Job Offer",
+      "emoji": "💼",
+      "baseProbability": 0.12,
+      "affinity": {
+        "career": 1.0,
+        "opportunity": 0.4
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 18,
+          "max": 60
+        },
+        {
+          "kind": "employed",
+          "value": false
+        },
+        {
+          "kind": "enrolled",
+          "value": false
+        }
+      ],
+      "cooldownMonths": 2,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "ACCEPT",
+          "label": "Accept",
+          "consequences": [
+            {
+              "kind": "job"
+            },
+            {
+              "kind": "memory",
+              "text": "Started a new job.",
+              "tags": [
+                "career"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.8,
+            "poverty": 0.5
+          },
+          "scene": [
+            "office"
+          ]
+        },
+        {
+          "id": "DECLINE",
+          "label": "Keep looking",
+          "consequences": [],
+          "appeal": {
+            "base": 0.2,
+            "traits": {
+              "ambition": 0.2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "PROMOTION",
+      "type": "CAREER",
+      "title": "Promotion Opportunity",
+      "emoji": "📈",
+      "baseProbability": 0.018,
+      "affinity": {
+        "career": 1.0,
+        "stability": 0.2,
+        "opportunity": 0.4
+      },
+      "requirements": [
+        {
+          "kind": "employed",
+          "value": true
+        },
+        {
+          "kind": "age",
+          "min": 22,
+          "max": 65
+        }
+      ],
+      "cooldownMonths": 18,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "GO_FOR_IT",
+          "label": "Go for it",
+          "success": {
+            "base": 0.6,
+            "affinity": {
+              "career": 0.8
+            }
+          },
+          "consequences": [
+            {
+              "kind": "careerLevel",
+              "delta": 1
+            },
+            {
+              "kind": "memory",
+              "text": "Got promoted.",
+              "tags": [
+                "career"
+              ]
+            }
+          ],
+          "onFailure": [
+            {
+              "kind": "memory",
+              "text": "Went for a promotion and missed out.",
+              "tags": [
+                "career"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.6,
+            "traits": {
+              "ambition": 0.6
+            }
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Pass (keep balance)",
+          "consequences": [],
+          "appeal": {
+            "base": 0.3,
+            "partnered": 0.2,
+            "familyObligation": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTERNATIONAL_JOB",
+      "type": "MOBILITY",
+      "title": "International Job Offer",
+      "emoji": "🌏",
+      "baseProbability": 0.012,
+      "affinity": {
+        "overseas": 1.0,
+        "career": 0.7,
+        "mobility": 0.6,
+        "relocation": 0.5
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 22,
+          "max": 55
+        },
+        {
+          "kind": "education",
+          "min": "BACHELOR"
+        },
+        {
+          "kind": "enrolled",
+          "value": false
+        },
+        {
+          "kind": "abroad",
+          "value": false
+        }
+      ],
+      "circumstances": {
+        "agePeak": 30,
+        "ageSpread": 8,
+        "familyObligationPenalty": 0.5,
+        "relationship": {
+          "MARRIED": 0.7
+        }
+      },
+      "cooldownMonths": 18,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "MOVE",
+          "label": "Take it and move abroad",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 4
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -4
+            },
+            {
+              "kind": "moveAbroad"
+            },
+            {
+              "kind": "job",
+              "abroad": true
+            },
+            {
+              "kind": "careerLevel",
+              "delta": 1
+            },
+            {
+              "kind": "memory",
+              "text": "Moved abroad for work.",
+              "tags": [
+                "overseas",
+                "career",
+                "relocation"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.6,
+              "ambition": 0.5,
+              "riskTolerance": 0.4
+            },
+            "partnered": -0.4,
+            "familyObligation": -0.9
+          }
+        },
+        {
+          "id": "REMOTE",
+          "label": "Negotiate frequent business trips instead",
+          "requirements": [
+            {
+              "kind": "employed",
+              "value": true
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "setFlag",
+              "name": "frequentTraveler",
+              "value": true
+            },
+            {
+              "kind": "memory",
+              "text": "Turned an overseas offer into a travel-heavy role at home.",
+              "tags": [
+                "career",
+                "travel"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.4,
+            "traits": {
+              "novelty": 0.2
+            },
+            "familyObligation": 0.4,
+            "partnered": 0.3
+          }
+        },
+        {
+          "id": "DECLINE",
+          "label": "Stay where I am",
+          "consequences": [],
+          "appeal": {
+            "base": 0.35,
+            "traits": {
+              "novelty": -0.5,
+              "riskTolerance": -0.4
+            },
+            "familyObligation": 0.6,
+            "partnered": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOMESTIC_RELOCATION",
+      "type": "MOBILITY",
+      "title": "Job Relocation (Domestic)",
+      "emoji": "🚚",
+      "baseProbability": 0.015,
+      "affinity": {
+        "relocation": 1.0,
+        "career": 0.4,
+        "mobility": 0.5,
+        "change": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "employed",
+          "value": true
+        },
+        {
+          "kind": "age",
+          "min": 22,
+          "max": 60
+        }
+      ],
+      "circumstances": {
+        "familyObligationPenalty": 0.3
+      },
+      "cooldownMonths": 24,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "MOVE",
+          "label": "Relocate",
+          "consequences": [
+            {
+              "kind": "moveCity"
+            },
+            {
+              "kind": "careerLevel",
+              "delta": 1
+            },
+            {
+              "kind": "social",
+              "delta": -2
+            },
+            {
+              "kind": "memory",
+              "text": "Relocated to another city for work.",
+              "tags": [
+                "relocation",
+                "career"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "novelty": 0.6,
+              "ambition": 0.4,
+              "spontaneity": 0.2
+            },
+            "familyObligation": -0.5,
+            "partnered": -0.08
+          }
+        },
+        {
+          "id": "STAY",
+          "label": "Stay",
+          "consequences": [],
+          "appeal": {
+            "base": 0.42,
+            "familyObligation": 0.4,
+            "traits": {
+              "novelty": -0.4,
+              "planning": 0.2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAREER_CHANGE",
+      "type": "CAREER",
+      "title": "Career Change Opportunity",
+      "emoji": "🔀",
+      "baseProbability": 0.01,
+      "affinity": {
+        "change": 1.0,
+        "risk": 0.4,
+        "creativity": 0.3,
+        "career": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "employed",
+          "value": true
+        },
+        {
+          "kind": "age",
+          "min": 24,
+          "max": 58
+        }
+      ],
+      "cooldownMonths": 36,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "SWITCH",
+          "label": "Make the switch",
+          "consequences": [
+            {
+              "kind": "job",
+              "field": "new-field"
+            },
+            {
+              "kind": "careerLevel",
+              "delta": -1
+            },
+            {
+              "kind": "memory",
+              "text": "Changed careers.",
+              "tags": [
+                "career",
+                "change"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.35,
+            "traits": {
+              "novelty": 0.5,
+              "riskTolerance": 0.5,
+              "spontaneity": 0.3,
+              "independence": 0.2
+            },
+            "familyObligation": -0.4
+          }
+        },
+        {
+          "id": "STAY",
+          "label": "Stay on my path",
+          "consequences": [],
+          "appeal": {
+            "base": 0.55
+          }
+        }
+      ]
+    },
+    {
+      "id": "BUSINESS_OPPORTUNITY",
+      "type": "WEALTH",
+      "title": "Business Opportunity",
+      "emoji": "🏪",
+      "baseProbability": 0.008,
+      "affinity": {
+        "business": 1.0,
+        "wealth": 0.6,
+        "risk": 0.5,
+        "opportunity": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 22,
+          "max": 65
+        },
+        {
+          "kind": "enrolled",
+          "value": false
+        }
+      ],
+      "circumstances": {
+        "cost": 20
+      },
+      "cooldownMonths": 36,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "START",
+          "label": "Start the business",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 15
+            }
+          ],
+          "success": {
+            "base": 0.45,
+            "affinity": {
+              "business": 0.8,
+              "wealth": 0.5
+            }
+          },
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": 45
+            },
+            {
+              "kind": "setFlag",
+              "name": "entrepreneur",
+              "value": true
+            },
+            {
+              "kind": "memory",
+              "text": "Started a business that took off.",
+              "tags": [
+                "business",
+                "wealth"
+              ]
+            }
+          ],
+          "onFailure": [
+            {
+              "kind": "money",
+              "amount": -15
+            },
+            {
+              "kind": "memory",
+              "text": "Started a business that failed.",
+              "tags": [
+                "business"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.3,
+            "traits": {
+              "riskTolerance": 0.7,
+              "ambition": 0.4,
+              "independence": 0.4
+            },
+            "familyObligation": -0.4
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Pass",
+          "consequences": [],
+          "appeal": {
+            "base": 0.55,
+            "traits": {
+              "riskTolerance": -0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "INVESTMENT",
+      "type": "WEALTH",
+      "title": "Investment Opportunity",
+      "emoji": "💹",
+      "baseProbability": 0.015,
+      "affinity": {
+        "wealth": 1.0,
+        "risk": 0.4,
+        "volatility": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 22,
+          "max": 80
+        },
+        {
+          "kind": "money",
+          "min": 10
+        }
+      ],
+      "cooldownMonths": 18,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "INVEST",
+          "label": "Invest",
+          "consequences": [
+            {
+              "kind": "gamble",
+              "stake": 10,
+              "volatilityKey": "volatility"
+            },
+            {
+              "kind": "memory",
+              "text": "Made an investment.",
+              "tags": [
+                "wealth"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.4,
+            "traits": {
+              "riskTolerance": 0.6,
+              "planning": -0.2
+            }
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Keep savings safe",
+          "consequences": [],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "riskTolerance": -0.4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "BUSINESS_TRIP",
+      "type": "MOBILITY",
+      "title": "Business Trip",
+      "emoji": "🧳",
+      "baseProbability": 0.03,
+      "affinity": {
+        "travel": 1.0,
+        "career": 0.3,
+        "mobility": 0.4
+      },
+      "requirements": [
+        {
+          "kind": "employed",
+          "value": true
+        }
+      ],
+      "circumstances": {
+        "employed": 1
+      },
+      "cooldownMonths": 6,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "GO",
+          "label": "Go",
+          "consequences": [
+            {
+              "kind": "social",
+              "delta": 1
+            },
+            {
+              "kind": "memory",
+              "text": "Went on a business trip.",
+              "tags": [
+                "travel",
+                "career"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.7
+          },
+          "scene": [
+            "airport",
+            "business_hotel",
+            "branch_office"
+          ]
+        },
+        {
+          "id": "SEND_SOMEONE",
+          "label": "Send a colleague",
+          "consequences": [],
+          "appeal": {
+            "base": 0.3,
+            "familyObligation": 0.4,
+            "partnered": 0.2
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRAVEL",
+      "type": "MOBILITY",
+      "title": "Travel Chance",
+      "emoji": "🗺️",
+      "baseProbability": 0.03,
+      "affinity": {
+        "travel": 1.0,
+        "mobility": 0.5,
+        "change": 0.2
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 16,
+          "max": 85
+        }
+      ],
+      "circumstances": {
+        "cost": 3
+      },
+      "cooldownMonths": 8,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "GO",
+          "label": "Take the trip",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 3
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "trip",
+              "scope": "DOMESTIC"
+            },
+            {
+              "kind": "money",
+              "amount": -3
+            },
+            {
+              "kind": "memory",
+              "text": "Took a memorable trip.",
+              "tags": [
+                "travel"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "novelty": 0.5
+            }
+          },
+          "scene": [
+            "street",
+            "beach"
+          ]
+        },
+        {
+          "id": "SKIP",
+          "label": "Maybe next time",
+          "consequences": [],
+          "appeal": {
+            "base": 0.4,
+            "poverty": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "RETURN_HOME",
+      "type": "FAMILY",
+      "title": "Chance to Move Back Home",
+      "emoji": "🏠",
+      "baseProbability": 0.02,
+      "affinity": {
+        "family": 0.6,
+        "stability": 0.6,
+        "mobility": -0.3,
+        "overseas": -0.4
+      },
+      "requirements": [
+        {
+          "kind": "abroad",
+          "value": true
+        },
+        {
+          "kind": "enrolled",
+          "value": false
+        }
+      ],
+      "circumstances": {
+        "familyObligationPenalty": -1.0
+      },
+      "cooldownMonths": 24,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "RETURN",
+          "label": "Move back home",
+          "consequences": [
+            {
+              "kind": "moveHome"
+            },
+            {
+              "kind": "memory",
+              "text": "Moved back to my home country.",
+              "tags": [
+                "relocation",
+                "family"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.35,
+            "familyObligation": 0.9,
+            "traits": {
+              "novelty": -0.4
+            }
+          }
+        },
+        {
+          "id": "STAY",
+          "label": "Stay abroad",
+          "consequences": [],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "novelty": 0.4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEW_SOCIAL_GROUP",
+      "type": "SOCIAL",
+      "title": "New Social Group",
+      "emoji": "🎉",
+      "baseProbability": 0.03,
+      "affinity": {
+        "social": 1.0,
+        "communication": 0.4
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 14,
+          "max": 85
+        }
+      ],
+      "cooldownMonths": 10,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "JOIN",
+          "label": "Join in",
+          "consequences": [
+            {
+              "kind": "social",
+              "delta": 3
+            },
+            {
+              "kind": "memory",
+              "text": "Found a new circle of friends.",
+              "tags": [
+                "social"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "sociability": 0.7,
+              "socialInitiation": 0.3
+            }
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Keep to myself",
+          "consequences": [],
+          "appeal": {
+            "base": 0.4,
+            "traits": {
+              "sociability": -0.5
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "LANGUAGE_EXCHANGE",
+      "type": "SOCIAL",
+      "title": "Language Exchange Group",
+      "emoji": "🗣️",
+      "baseProbability": 0.007,
+      "affinity": {
+        "social": 0.6,
+        "overseas": 0.5,
+        "communication": 0.5
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 16,
+          "max": 50
+        }
+      ],
+      "circumstances": {
+        "abroad": 1.5
+      },
+      "cooldownMonths": 60,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "JOIN",
+          "label": "Join",
+          "consequences": [
+            {
+              "kind": "startHabit",
+              "locationId": "language_exchange_app",
+              "activityId": "chat",
+              "perMonth": 6
+            },
+            {
+              "kind": "social",
+              "delta": 2
+            },
+            {
+              "kind": "setFlag",
+              "name": "speaksLanguage",
+              "value": true
+            },
+            {
+              "kind": "memory",
+              "text": "Joined a language exchange group.",
+              "tags": [
+                "social",
+                "overseas"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "sociability": 0.4,
+              "novelty": 0.4
+            }
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Pass",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROMANTIC_ENCOUNTER",
+      "type": "ROMANCE",
+      "title": "Romantic Encounter",
+      "emoji": "💘",
+      "baseProbability": 0.03,
+      "affinity": {
+        "romance": 1.0,
+        "social": 0.4
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 17,
+          "max": 70
+        },
+        {
+          "kind": "relationship",
+          "in": [
+            "SINGLE",
+            "DIVORCED"
+          ]
+        }
+      ],
+      "circumstances": {
+        "agePeak": 27,
+        "ageSpread": 10
+      },
+      "cooldownMonths": 4,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "ASK_OUT",
+          "label": "Ask them out",
+          "success": {
+            "base": 0.5,
+            "affinity": {
+              "romance": 0.8
+            }
+          },
+          "consequences": [
+            {
+              "kind": "startDating"
+            },
+            {
+              "kind": "memory",
+              "text": "Started dating someone new.",
+              "tags": [
+                "romance"
+              ]
+            }
+          ],
+          "onFailure": [
+            {
+              "kind": "memory",
+              "text": "Asked someone out; it didn't work out.",
+              "tags": [
+                "romance"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "sociability": 0.4,
+              "riskTolerance": 0.3,
+              "socialInitiation": 0.4
+            }
+          }
+        },
+        {
+          "id": "FRIENDS",
+          "label": "Stay friends",
+          "consequences": [
+            {
+              "kind": "social",
+              "delta": 1
+            }
+          ],
+          "appeal": {
+            "base": 0.35
+          }
+        },
+        {
+          "id": "IGNORE",
+          "label": "Let it pass",
+          "consequences": [],
+          "appeal": {
+            "base": 0.25,
+            "traits": {
+              "sociability": -0.4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "PROPOSAL",
+      "type": "ROMANCE",
+      "title": "Talk of Marriage",
+      "emoji": "💍",
+      "baseProbability": 0.04,
+      "affinity": {
+        "marriage": 1.0,
+        "stability": 0.4,
+        "family": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "relationship",
+          "in": [
+            "DATING"
+          ]
+        },
+        {
+          "kind": "relationshipMonths",
+          "min": 12
+        },
+        {
+          "kind": "age",
+          "min": 22,
+          "max": 65
+        }
+      ],
+      "circumstances": {
+        "agePeak": 31,
+        "ageSpread": 8
+      },
+      "cooldownMonths": 12,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "MARRY",
+          "label": "Get married",
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -8
+            },
+            {
+              "kind": "marry"
+            },
+            {
+              "kind": "memory",
+              "text": "Got married.",
+              "tags": [
+                "romance",
+                "family"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.55,
+            "traits": {
+              "riskTolerance": 0.1,
+              "planning": 0.2,
+              "relationshipPacing": -0.3
+            }
+          }
+        },
+        {
+          "id": "NOT_YET",
+          "label": "Not yet",
+          "consequences": [],
+          "appeal": {
+            "base": 0.4,
+            "traits": {
+              "novelty": 0.3,
+              "relationshipPacing": 0.4,
+              "independence": 0.2
+            }
+          }
+        },
+        {
+          "id": "BREAK_UP",
+          "label": "Break up",
+          "consequences": [
+            {
+              "kind": "breakUp"
+            },
+            {
+              "kind": "memory",
+              "text": "Ended a long relationship.",
+              "tags": [
+                "romance"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.08
+          }
+        }
+      ]
+    },
+    {
+      "id": "RELATIONSHIP_STRAIN",
+      "type": "ROMANCE",
+      "title": "Relationship Under Strain",
+      "emoji": "🌧️",
+      "baseProbability": 0.01,
+      "affinity": {
+        "volatility": 0.8,
+        "change": 0.5,
+        "stability": -0.8
+      },
+      "requirements": [
+        {
+          "kind": "relationship",
+          "in": [
+            "DATING",
+            "MARRIED"
+          ]
+        }
+      ],
+      "circumstances": {
+        "abroad": 1.2,
+        "longDistance": 2.5
+      },
+      "cooldownMonths": 18,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "WORK_ON_IT",
+          "label": "Work on it together",
+          "success": {
+            "base": 0.7,
+            "affinity": {
+              "stability": 0.6
+            }
+          },
+          "consequences": [
+            {
+              "kind": "memory",
+              "text": "Got through a hard stretch together.",
+              "tags": [
+                "romance"
+              ]
+            }
+          ],
+          "onFailure": [
+            {
+              "kind": "breakUp",
+              "divorce": true
+            },
+            {
+              "kind": "memory",
+              "text": "Despite trying, the relationship ended.",
+              "tags": [
+                "romance",
+                "loss"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.65,
+            "traits": {
+              "emotionalExpression": 0.4,
+              "conflictAvoidance": 0.2
+            }
+          }
+        },
+        {
+          "id": "SEPARATE",
+          "label": "Separate",
+          "consequences": [
+            {
+              "kind": "breakUp",
+              "divorce": true
+            },
+            {
+              "kind": "memory",
+              "text": "Decided to separate.",
+              "tags": [
+                "romance",
+                "loss"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.25,
+            "traits": {
+              "novelty": 0.3,
+              "independence": 0.4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "CREATIVE_PROJECT",
+      "type": "CREATIVE",
+      "title": "Creative Project",
+      "emoji": "🎨",
+      "baseProbability": 0.02,
+      "affinity": {
+        "creativity": 1.0,
+        "communication": 0.5,
+        "introspection": 0.2
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 12,
+          "max": 90
+        }
+      ],
+      "cooldownMonths": 12,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "START",
+          "label": "Start it",
+          "consequences": [
+            {
+              "kind": "setFlag",
+              "name": "creativeHobby",
+              "value": true
+            },
+            {
+              "kind": "memory",
+              "text": "Started a creative project.",
+              "tags": [
+                "creative"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "novelty": 0.3,
+              "creativity": 0.5
+            }
+          }
+        },
+        {
+          "id": "SKIP",
+          "label": "No time",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOLO_RETREAT",
+      "type": "PERSONAL",
+      "title": "Retreat / Solitude",
+      "emoji": "🏔️",
+      "baseProbability": 0.012,
+      "affinity": {
+        "introspection": 1.0,
+        "creativity": 0.2,
+        "social": -0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 18,
+          "max": 90
+        }
+      ],
+      "cooldownMonths": 24,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "GO",
+          "label": "Take time alone",
+          "consequences": [
+            {
+              "kind": "memory",
+              "text": "Spent time alone and came back clearer.",
+              "tags": [
+                "introspection"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "sociability": -0.4
+            }
+          }
+        },
+        {
+          "id": "SKIP",
+          "label": "Stay busy",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "sociability": 0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "MENTOR",
+      "type": "SOCIAL",
+      "title": "A Mentor Appears",
+      "emoji": "🧙",
+      "baseProbability": 0.012,
+      "affinity": {
+        "opportunity": 0.8,
+        "education": 0.4,
+        "career": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 14,
+          "max": 45
+        }
+      ],
+      "cooldownMonths": 36,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "LEARN",
+          "label": "Learn from them",
+          "consequences": [
+            {
+              "kind": "careerLevel",
+              "delta": 1
+            },
+            {
+              "kind": "social",
+              "delta": 1
+            },
+            {
+              "kind": "memory",
+              "text": "Met a mentor who changed how I see things.",
+              "tags": [
+                "mentor"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.65
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Go my own way",
+          "consequences": [],
+          "appeal": {
+            "base": 0.3,
+            "traits": {
+              "riskTolerance": 0.2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "FAMILY_NEED",
+      "type": "FAMILY",
+      "title": "Family Needs Help",
+      "emoji": "👪",
+      "baseProbability": 0.008,
+      "affinity": {
+        "family": 1.0,
+        "volatility": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 22,
+          "max": 75
+        }
+      ],
+      "cooldownMonths": 36,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "SUPPORT",
+          "label": "Support them",
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -8
+            },
+            {
+              "kind": "familyObligation",
+              "delta": 0.2
+            },
+            {
+              "kind": "memory",
+              "text": "Stepped up when family needed help.",
+              "tags": [
+                "family"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.65,
+            "familyObligation": 0.3,
+            "traits": {
+              "emotionalExpression": 0.3
+            }
+          }
+        },
+        {
+          "id": "MOVE_HOME",
+          "label": "Move back to be near them",
+          "requirements": [
+            {
+              "kind": "abroad",
+              "value": true
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "moveHome"
+            },
+            {
+              "kind": "familyObligation",
+              "delta": 0.3
+            },
+            {
+              "kind": "memory",
+              "text": "Moved home to be with family.",
+              "tags": [
+                "family",
+                "relocation"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.4,
+            "familyObligation": 0.8
+          }
+        },
+        {
+          "id": "DISTANCE",
+          "label": "Keep my distance",
+          "consequences": [
+            {
+              "kind": "familyObligation",
+              "delta": -0.1
+            }
+          ],
+          "appeal": {
+            "base": 0.2,
+            "traits": {
+              "riskTolerance": 0.2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "JOIN_GYM",
+      "type": "SOCIAL",
+      "title": "Join a Gym",
+      "emoji": "🏋️",
+      "baseProbability": 0.02,
+      "affinity": {
+        "stability": 0.4,
+        "social": 0.3,
+        "change": 0.2
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 16,
+          "max": 70
+        }
+      ],
+      "cooldownMonths": 24,
+      "expiresInMonths": 1,
+      "maxTimesTaken": 1,
+      "choices": [
+        {
+          "id": "JOIN",
+          "label": "Sign up",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 0.5
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -0.5
+            },
+            {
+              "kind": "startHabit",
+              "locationId": "gym",
+              "activityId": "workout",
+              "perMonth": 8
+            },
+            {
+              "kind": "memory",
+              "text": "Joined a gym.",
+              "tags": [
+                "routine",
+                "gym"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.4,
+              "sociability": 0.2
+            }
+          },
+          "scene": [
+            "gym"
+          ]
+        },
+        {
+          "id": "PASS",
+          "label": "Not for me",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": -0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "COOKING_CLASS_SIGNUP",
+      "type": "SOCIAL",
+      "title": "Cooking Class",
+      "emoji": "🍳",
+      "baseProbability": 0.012,
+      "affinity": {
+        "creativity": 0.6,
+        "social": 0.5,
+        "family": 0.2
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 18,
+          "max": 75
+        }
+      ],
+      "cooldownMonths": 24,
+      "expiresInMonths": 1,
+      "maxTimesTaken": 1,
+      "choices": [
+        {
+          "id": "JOIN",
+          "label": "Sign up",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 1
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -1
+            },
+            {
+              "kind": "startHabit",
+              "locationId": "cooking_class",
+              "activityId": "learn_recipe",
+              "perMonth": 4
+            },
+            {
+              "kind": "memory",
+              "text": "Signed up for a cooking class.",
+              "tags": [
+                "routine",
+                "cooking_class"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.4,
+              "sociability": 0.2
+            }
+          },
+          "scene": [
+            "cooking_class"
+          ]
+        },
+        {
+          "id": "PASS",
+          "label": "Not for me",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": -0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "SURF_LESSONS",
+      "type": "SOCIAL",
+      "title": "Surf Lessons",
+      "emoji": "🏄",
+      "baseProbability": 0.006,
+      "affinity": {
+        "travel": 0.5,
+        "mobility": 0.4,
+        "change": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 16,
+          "max": 55
+        }
+      ],
+      "cooldownMonths": 24,
+      "expiresInMonths": 1,
+      "maxTimesTaken": 1,
+      "choices": [
+        {
+          "id": "JOIN",
+          "label": "Sign up",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 1.5
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": -1.5
+            },
+            {
+              "kind": "startHabit",
+              "locationId": "surf_school",
+              "activityId": "surf_lesson",
+              "perMonth": 4
+            },
+            {
+              "kind": "memory",
+              "text": "Started surf lessons at the coast.",
+              "tags": [
+                "routine",
+                "surf_school"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.4,
+              "sociability": 0.2
+            }
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Not for me",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": -0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "DATING_APP",
+      "type": "SOCIAL",
+      "title": "Try a Dating App",
+      "emoji": "📱",
+      "baseProbability": 0.012,
+      "affinity": {
+        "romance": 1.0,
+        "social": 0.3
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 19,
+          "max": 60
+        },
+        {
+          "kind": "relationship",
+          "in": [
+            "SINGLE",
+            "DIVORCED"
+          ]
+        }
+      ],
+      "cooldownMonths": 24,
+      "expiresInMonths": 1,
+      "maxTimesTaken": 1,
+      "choices": [
+        {
+          "id": "JOIN",
+          "label": "Sign up",
+          "requirements": [],
+          "consequences": [
+            {
+              "kind": "money",
+              "amount": 0
+            },
+            {
+              "kind": "startHabit",
+              "locationId": "dating_app",
+              "activityId": "swipe",
+              "perMonth": 4
+            },
+            {
+              "kind": "memory",
+              "text": "Downloaded a dating app.",
+              "tags": [
+                "routine",
+                "dating_app"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.4,
+              "sociability": 0.2
+            }
+          }
+        },
+        {
+          "id": "PASS",
+          "label": "Not for me",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": -0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "TRIP_ABROAD",
+      "type": "MOBILITY",
+      "title": "Trip Abroad",
+      "emoji": "🗼",
+      "baseProbability": 0.015,
+      "affinity": {
+        "travel": 1.0,
+        "overseas": 0.8,
+        "mobility": 0.5
+      },
+      "requirements": [
+        {
+          "kind": "age",
+          "min": 19,
+          "max": 80
+        },
+        {
+          "kind": "enrolled",
+          "value": false
+        }
+      ],
+      "circumstances": {
+        "cost": 5,
+        "familyObligationPenalty": 0.4
+      },
+      "cooldownMonths": 18,
+      "expiresInMonths": 2,
+      "choices": [
+        {
+          "id": "GO",
+          "label": "Book the trip",
+          "requirements": [
+            {
+              "kind": "money",
+              "min": 5
+            }
+          ],
+          "consequences": [
+            {
+              "kind": "trip",
+              "scope": "INTERNATIONAL"
+            },
+            {
+              "kind": "memory",
+              "text": "Booked a trip abroad.",
+              "tags": [
+                "travel"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.45,
+            "traits": {
+              "novelty": 0.6,
+              "spontaneity": 0.3
+            },
+            "familyObligation": -0.4
+          },
+          "scene": [
+            "airport",
+            "airplane"
+          ]
+        },
+        {
+          "id": "SAVE",
+          "label": "Save the money",
+          "consequences": [],
+          "appeal": {
+            "base": 0.45,
+            "poverty": 0.6,
+            "traits": {
+              "riskTolerance": -0.2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "LAYOFF",
+      "type": "CAREER",
+      "title": "Restructuring",
+      "emoji": "📦",
+      "baseProbability": 0.0025,
+      "affinity": {
+        "volatility": 0.8,
+        "stability": -0.8,
+        "career": -0.3
+      },
+      "requirements": [
+        {
+          "kind": "employed",
+          "value": true
+        },
+        {
+          "kind": "age",
+          "min": 26,
+          "max": 64
+        }
+      ],
+      "cooldownMonths": 36,
+      "expiresInMonths": 1,
+      "choices": [
+        {
+          "id": "ACCEPT",
+          "label": "Accept it",
+          "consequences": [
+            {
+              "kind": "quitJob"
+            },
+            {
+              "kind": "money",
+              "amount": 6
+            },
+            {
+              "kind": "memory",
+              "text": "Laid off in a restructuring.",
+              "tags": [
+                "career",
+                "loss"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.5,
+            "traits": {
+              "conflictAvoidance": 0.3
+            }
+          }
+        },
+        {
+          "id": "ARGUE",
+          "label": "Argue it's unfair",
+          "consequences": [
+            {
+              "kind": "quitJob"
+            },
+            {
+              "kind": "money",
+              "amount": 9
+            },
+            {
+              "kind": "memory",
+              "text": "Fought a layoff; still let go, with a better package.",
+              "tags": [
+                "career",
+                "loss"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.35,
+            "traits": {
+              "independence": 0.3,
+              "conflictAvoidance": -0.4
+            }
+          }
+        },
+        {
+          "id": "FRESH_START",
+          "label": "Honestly, a fresh start",
+          "consequences": [
+            {
+              "kind": "quitJob"
+            },
+            {
+              "kind": "money",
+              "amount": 6
+            },
+            {
+              "kind": "memory",
+              "text": "Left the company after a restructuring — a fresh start.",
+              "tags": [
+                "career",
+                "change"
+              ]
+            }
+          ],
+          "appeal": {
+            "base": 0.3,
+            "traits": {
+              "novelty": 0.4,
+              "spontaneity": 0.3
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

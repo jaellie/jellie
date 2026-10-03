@@ -1,0 +1,33 @@
+{
+  "_doc": "MBTI → personality dimensions (same names as the Claude Design prototype's persona()) and → LifeModifiers. Personality shapes BOTH which opportunities appear (a DestinyModifierSource, like Saju/Astrology) AND how the player decides (traits used by decision policies and world encounters). Fictional game tendencies.",
+  "baseline": {
+    "socialEnergy":        { "E": 0.70, "I": 0.32 },
+    "socialInitiation":    { "E": 0.66, "I": 0.36 },
+    "noveltySeeking":      { "N": 0.66, "S": 0.40 },
+    "creativity":          { "N": 0.62, "S": 0.42 },
+    "emotionalExpression": { "F": 0.66, "T": 0.40 },
+    "conflictAvoidance":   { "F": 0.60, "T": 0.42 },
+    "planning":            { "J": 0.70, "P": 0.34 },
+    "relationshipPacing":  { "J": 0.42, "P": 0.60 }
+  },
+  "composite": {
+    "riskTolerance": { "base": 0.42, "N": 0.10, "J": -0.06, "P": 0.06 },
+    "independence":  { "base": 0.48, "E": -0.06, "I": 0.08, "F": -0.04, "T": 0.06 },
+    "careerDrive":   { "base": 0.50, "J": 0.08, "F": -0.04, "T": 0.04 }
+  },
+  "jitter": 0.12,
+  "letters": {
+    "E": { "social": 0.15, "romance": 0.06, "communication": 0.06 },
+    "I": { "introspection": 0.15, "social": -0.05, "education": 0.03 },
+    "N": { "change": 0.08, "creativity": 0.10, "travel": 0.06, "overseas": 0.06 },
+    "S": { "stability": 0.10, "career": 0.03, "wealth": 0.03 },
+    "T": { "career": 0.06, "business": 0.06 },
+    "F": { "family": 0.06, "social": 0.05, "romance": 0.04 },
+    "J": { "stability": 0.06, "career": 0.05, "education": 0.05 },
+    "P": { "travel": 0.08, "change": 0.06, "volatility": 0.05 }
+  },
+  "identity": {
+    "A": { "stability": 0.04, "risk": 0.03 },
+    "T": { "volatility": 0.05, "introspection": 0.03 }
+  }
+}

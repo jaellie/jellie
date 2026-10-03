@@ -1,0 +1,2051 @@
+{
+ "_doc": "The life road's skyline and street vibe per city (Subway Surfers world-tour style): landmarks rise on the horizon, street props line the road. Keyed by the birthplace gazetteer id (data/destiny/birthplaces.json). Anywhere else: 'korea' for a Korean city, 'world' for a foreign one.",
+ "cities": [
+  {
+   "id": "seoul",
+   "ko": "서울",
+   "en": "Seoul",
+   "landmarks": [
+    {
+     "ko": "N서울타워",
+     "en": "N Seoul Tower"
+    },
+    {
+     "ko": "롯데월드타워",
+     "en": "Lotte World Tower"
+    },
+    {
+     "ko": "경복궁 기와지붕",
+     "en": "Gyeongbokgung roofs"
+    },
+    {
+     "ko": "한강 다리",
+     "en": "Han River bridge"
+    }
+   ],
+   "street": [
+    {
+     "ko": "한글 네온 간판",
+     "en": "Hangul neon signs"
+    },
+    {
+     "ko": "편의점",
+     "en": "Convenience store"
+    },
+    {
+     "ko": "포장마차",
+     "en": "Street food tent"
+    },
+    {
+     "ko": "따릉이 자전거",
+     "en": "Public bikes"
+    },
+    {
+     "ko": "은행나무 가로수",
+     "en": "Ginkgo trees"
+    }
+   ],
+   "palette": {
+    "sky": "#9fd0ff",
+    "buildings": "#b8b3c9",
+    "accent": "#ff6f91"
+   }
+  },
+  {
+   "id": "busan",
+   "ko": "부산",
+   "en": "Busan",
+   "landmarks": [
+    {
+     "ko": "광안대교",
+     "en": "Gwangan Bridge"
+    },
+    {
+     "ko": "해운대 마천루",
+     "en": "Haeundae towers"
+    },
+    {
+     "ko": "감천문화마을",
+     "en": "Gamcheon Culture Village"
+    }
+   ],
+   "street": [
+    {
+     "ko": "바다 갈매기",
+     "en": "Seagulls"
+    },
+    {
+     "ko": "어묵 노점",
+     "en": "Fish-cake stalls"
+    },
+    {
+     "ko": "알록달록 계단 집",
+     "en": "Colorful hillside houses"
+    },
+    {
+     "ko": "항구 크레인",
+     "en": "Port cranes"
+    }
+   ],
+   "palette": {
+    "sky": "#8fd4ff",
+    "buildings": "#c6d6e2",
+    "accent": "#ff9f5a"
+   }
+  },
+  {
+   "id": "incheon",
+   "ko": "인천",
+   "en": "Incheon",
+   "landmarks": [
+    {
+     "ko": "인천대교",
+     "en": "Incheon Bridge"
+    },
+    {
+     "ko": "송도 센트럴파크 빌딩",
+     "en": "Songdo towers"
+    },
+    {
+     "ko": "차이나타운 패루",
+     "en": "Chinatown gate"
+    }
+   ],
+   "street": [
+    {
+     "ko": "공항 리무진",
+     "en": "Airport buses"
+    },
+    {
+     "ko": "짜장면 가게",
+     "en": "Jajangmyeon shops"
+    },
+    {
+     "ko": "항구 컨테이너",
+     "en": "Harbor containers"
+    }
+   ],
+   "palette": {
+    "sky": "#a4d6ff",
+    "buildings": "#c3c8d6",
+    "accent": "#e8553e"
+   }
+  },
+  {
+   "id": "daegu",
+   "ko": "대구",
+   "en": "Daegu",
+   "landmarks": [
+    {
+     "ko": "83타워",
+     "en": "83 Tower"
+    },
+    {
+     "ko": "팔공산 능선",
+     "en": "Palgongsan ridge"
+    }
+   ],
+   "street": [
+    {
+     "ko": "서문시장 노점",
+     "en": "Seomun market stalls"
+    },
+    {
+     "ko": "사과 상자",
+     "en": "Apple crates"
+    },
+    {
+     "ko": "뜨거운 아스팔트 아지랑이",
+     "en": "Summer heat haze"
+    }
+   ],
+   "palette": {
+    "sky": "#ffd99a",
+    "buildings": "#d6c2a8",
+    "accent": "#e0502e"
+   }
+  },
+  {
+   "id": "daejeon",
+   "ko": "대전",
+   "en": "Daejeon",
+   "landmarks": [
+    {
+     "ko": "엑스포 한빛탑",
+     "en": "Hanbit Tower"
+    },
+    {
+     "ko": "계룡산 능선",
+     "en": "Gyeryongsan ridge"
+    }
+   ],
+   "street": [
+    {
+     "ko": "과학관 로켓",
+     "en": "Science-park rocket"
+    },
+    {
+     "ko": "빵집 긴 줄",
+     "en": "Bakery queue"
+    },
+    {
+     "ko": "KTX 역",
+     "en": "KTX station"
+    }
+   ],
+   "palette": {
+    "sky": "#a9d8ff",
+    "buildings": "#c8cfda",
+    "accent": "#4a8fe0"
+   }
+  },
+  {
+   "id": "gwangju",
+   "ko": "광주",
+   "en": "Gwangju",
+   "landmarks": [
+    {
+     "ko": "무등산",
+     "en": "Mudeungsan"
+    },
+    {
+     "ko": "아시아문화전당",
+     "en": "Asia Culture Center"
+    }
+   ],
+   "street": [
+    {
+     "ko": "5·18 기념 꽃",
+     "en": "May 18 memorial flowers"
+    },
+    {
+     "ko": "떡갈비 식당",
+     "en": "Tteokgalbi restaurants"
+    },
+    {
+     "ko": "예술의 거리",
+     "en": "Art street"
+    }
+   ],
+   "palette": {
+    "sky": "#a2d9ff",
+    "buildings": "#cdd2c0",
+    "accent": "#7ac05a"
+   }
+  },
+  {
+   "id": "jeju",
+   "ko": "제주",
+   "en": "Jeju",
+   "landmarks": [
+    {
+     "ko": "한라산",
+     "en": "Hallasan"
+    },
+    {
+     "ko": "성산일출봉",
+     "en": "Seongsan Ilchulbong"
+    },
+    {
+     "ko": "돌하르방",
+     "en": "Dol hareubang"
+    }
+   ],
+   "street": [
+    {
+     "ko": "현무암 돌담",
+     "en": "Basalt stone walls"
+    },
+    {
+     "ko": "감귤 나무",
+     "en": "Tangerine trees"
+    },
+    {
+     "ko": "바다 해녀",
+     "en": "Haenyeo divers"
+    },
+    {
+     "ko": "유채꽃",
+     "en": "Canola flowers"
+    }
+   ],
+   "palette": {
+    "sky": "#8ad8ff",
+    "buildings": "#6a6a6a",
+    "accent": "#ffb000"
+   }
+  },
+  {
+   "id": "gyeongju",
+   "ko": "경주",
+   "en": "Gyeongju",
+   "landmarks": [
+    {
+     "ko": "첨성대",
+     "en": "Cheomseongdae"
+    },
+    {
+     "ko": "대릉원 고분",
+     "en": "Royal tombs"
+    },
+    {
+     "ko": "불국사 지붕",
+     "en": "Bulguksa roofs"
+    }
+   ],
+   "street": [
+    {
+     "ko": "한옥 기와",
+     "en": "Hanok tiles"
+    },
+    {
+     "ko": "황남빵 가게",
+     "en": "Hwangnam bread shops"
+    },
+    {
+     "ko": "벚꽃길",
+     "en": "Cherry blossom road"
+    }
+   ],
+   "palette": {
+    "sky": "#b7e0ff",
+    "buildings": "#8a7a6a",
+    "accent": "#d94f4f"
+   }
+  },
+  {
+   "id": "tokyo",
+   "ko": "도쿄",
+   "en": "Tokyo",
+   "landmarks": [
+    {
+     "ko": "도쿄타워",
+     "en": "Tokyo Tower"
+    },
+    {
+     "ko": "스카이트리",
+     "en": "Skytree"
+    },
+    {
+     "ko": "후지산 실루엣",
+     "en": "Mt. Fuji silhouette"
+    }
+   ],
+   "street": [
+    {
+     "ko": "자판기",
+     "en": "Vending machines"
+    },
+    {
+     "ko": "엉킨 전선",
+     "en": "Tangled power lines"
+    },
+    {
+     "ko": "노렌 가게 커튼",
+     "en": "Noren shop curtains"
+    },
+    {
+     "ko": "횡단보도 인파",
+     "en": "Scramble crossing"
+    },
+    {
+     "ko": "빨간 우체통",
+     "en": "Red mailboxes"
+    }
+   ],
+   "palette": {
+    "sky": "#a8d4ff",
+    "buildings": "#d8d2e0",
+    "accent": "#e8384f"
+   }
+  },
+  {
+   "id": "osaka",
+   "ko": "오사카",
+   "en": "Osaka",
+   "landmarks": [
+    {
+     "ko": "오사카성",
+     "en": "Osaka Castle"
+    },
+    {
+     "ko": "도톤보리 글리코 간판",
+     "en": "Dotonbori Glico sign"
+    },
+    {
+     "ko": "츠텐카쿠",
+     "en": "Tsutenkaku"
+    }
+   ],
+   "street": [
+    {
+     "ko": "타코야키 노점",
+     "en": "Takoyaki stalls"
+    },
+    {
+     "ko": "거대한 게 간판",
+     "en": "Giant crab sign"
+    },
+    {
+     "ko": "상점가 아케이드",
+     "en": "Shopping arcade"
+    }
+   ],
+   "palette": {
+    "sky": "#ffcf9a",
+    "buildings": "#d9c4b6",
+    "accent": "#ff5a36"
+   }
+  },
+  {
+   "id": "kyoto",
+   "ko": "교토",
+   "en": "Kyoto",
+   "landmarks": [
+    {
+     "ko": "후시미 이나리 도리이",
+     "en": "Fushimi Inari torii"
+    },
+    {
+     "ko": "기요미즈데라",
+     "en": "Kiyomizu-dera"
+    },
+    {
+     "ko": "오층탑",
+     "en": "Five-story pagoda"
+    }
+   ],
+   "street": [
+    {
+     "ko": "대나무 숲",
+     "en": "Bamboo grove"
+    },
+    {
+     "ko": "붉은 도리이",
+     "en": "Red torii gates"
+    },
+    {
+     "ko": "등롱",
+     "en": "Stone lanterns"
+    },
+    {
+     "ko": "단풍",
+     "en": "Maple leaves"
+    }
+   ],
+   "palette": {
+    "sky": "#c8e6ff",
+    "buildings": "#7a5c4a",
+    "accent": "#d8342c"
+   }
+  },
+  {
+   "id": "fukuoka",
+   "ko": "후쿠오카",
+   "en": "Fukuoka",
+   "landmarks": [
+    {
+     "ko": "후쿠오카 타워",
+     "en": "Fukuoka Tower"
+    },
+    {
+     "ko": "캐널시티",
+     "en": "Canal City"
+    }
+   ],
+   "street": [
+    {
+     "ko": "야타이 포장마차",
+     "en": "Yatai food stalls"
+    },
+    {
+     "ko": "돈코츠 라멘 간판",
+     "en": "Tonkotsu ramen signs"
+    }
+   ],
+   "palette": {
+    "sky": "#a6d8ff",
+    "buildings": "#d0ccd8",
+    "accent": "#f06a3a"
+   }
+  },
+  {
+   "id": "sapporo",
+   "ko": "삿포로",
+   "en": "Sapporo",
+   "landmarks": [
+    {
+     "ko": "TV 타워",
+     "en": "TV Tower"
+    },
+    {
+     "ko": "시계탑",
+     "en": "Clock Tower"
+    }
+   ],
+   "street": [
+    {
+     "ko": "눈 조각",
+     "en": "Snow sculptures"
+    },
+    {
+     "ko": "맥주 간판",
+     "en": "Beer signs"
+    },
+    {
+     "ko": "눈 쌓인 거리",
+     "en": "Snowy streets"
+    }
+   ],
+   "palette": {
+    "sky": "#dbeeff",
+    "buildings": "#e8eef4",
+    "accent": "#3a7ad6"
+   }
+  },
+  {
+   "id": "beijing",
+   "ko": "베이징",
+   "en": "Beijing",
+   "landmarks": [
+    {
+     "ko": "천안문",
+     "en": "Tiananmen"
+    },
+    {
+     "ko": "자금성 지붕",
+     "en": "Forbidden City roofs"
+    },
+    {
+     "ko": "CCTV 빌딩",
+     "en": "CCTV Tower"
+    }
+   ],
+   "street": [
+    {
+     "ko": "후퉁 골목",
+     "en": "Hutong alleys"
+    },
+    {
+     "ko": "홍등",
+     "en": "Red lanterns"
+    },
+    {
+     "ko": "자전거 행렬",
+     "en": "Bicycles"
+    }
+   ],
+   "palette": {
+    "sky": "#d8e0ea",
+    "buildings": "#c9a88a",
+    "accent": "#d8282e"
+   }
+  },
+  {
+   "id": "shanghai",
+   "ko": "상하이",
+   "en": "Shanghai",
+   "landmarks": [
+    {
+     "ko": "동방명주",
+     "en": "Oriental Pearl Tower"
+    },
+    {
+     "ko": "상하이 타워",
+     "en": "Shanghai Tower"
+    },
+    {
+     "ko": "와이탄 건물들",
+     "en": "The Bund"
+    }
+   ],
+   "street": [
+    {
+     "ko": "네온 강변",
+     "en": "Neon riverfront"
+    },
+    {
+     "ko": "딤섬 가게",
+     "en": "Dumpling shops"
+    },
+    {
+     "ko": "스쿠터",
+     "en": "Scooters"
+    }
+   ],
+   "palette": {
+    "sky": "#b9c8e8",
+    "buildings": "#a8b0c8",
+    "accent": "#ff3a7a"
+   }
+  },
+  {
+   "id": "hongkong",
+   "ko": "홍콩",
+   "en": "Hong Kong",
+   "landmarks": [
+    {
+     "ko": "빅토리아 하버 스카이라인",
+     "en": "Victoria Harbour skyline"
+    },
+    {
+     "ko": "IFC 타워",
+     "en": "IFC Tower"
+    }
+   ],
+   "street": [
+    {
+     "ko": "겹겹이 네온 간판",
+     "en": "Stacked neon signs"
+    },
+    {
+     "ko": "2층 트램",
+     "en": "Double-decker trams"
+    },
+    {
+     "ko": "붉은 택시",
+     "en": "Red taxis"
+    },
+    {
+     "ko": "딤섬 수레",
+     "en": "Dim sum carts"
+    }
+   ],
+   "palette": {
+    "sky": "#9fb8e8",
+    "buildings": "#8e94b8",
+    "accent": "#ff2a6a"
+   }
+  },
+  {
+   "id": "taipei",
+   "ko": "타이베이",
+   "en": "Taipei",
+   "landmarks": [
+    {
+     "ko": "타이베이 101",
+     "en": "Taipei 101"
+    },
+    {
+     "ko": "중정기념당",
+     "en": "CKS Memorial Hall"
+    }
+   ],
+   "street": [
+    {
+     "ko": "야시장",
+     "en": "Night market"
+    },
+    {
+     "ko": "스쿠터 무리",
+     "en": "Scooter swarms"
+    },
+    {
+     "ko": "버블티 가게",
+     "en": "Bubble tea shops"
+    }
+   ],
+   "palette": {
+    "sky": "#a8d0ff",
+    "buildings": "#c8c0b8",
+    "accent": "#ff7a2a"
+   }
+  },
+  {
+   "id": "singapore",
+   "ko": "싱가포르",
+   "en": "Singapore",
+   "landmarks": [
+    {
+     "ko": "마리나 베이 샌즈",
+     "en": "Marina Bay Sands"
+    },
+    {
+     "ko": "머라이언",
+     "en": "Merlion"
+    },
+    {
+     "ko": "슈퍼트리",
+     "en": "Supertrees"
+    }
+   ],
+   "street": [
+    {
+     "ko": "호커 센터",
+     "en": "Hawker centres"
+    },
+    {
+     "ko": "열대 나무",
+     "en": "Tropical trees"
+    },
+    {
+     "ko": "깨끗한 보도",
+     "en": "Spotless sidewalks"
+    }
+   ],
+   "palette": {
+    "sky": "#9ae0ff",
+    "buildings": "#d4e4ea",
+    "accent": "#1ab0a0"
+   }
+  },
+  {
+   "id": "bangkok",
+   "ko": "방콕",
+   "en": "Bangkok",
+   "landmarks": [
+    {
+     "ko": "왓 아룬",
+     "en": "Wat Arun"
+    },
+    {
+     "ko": "왕궁 첨탑",
+     "en": "Grand Palace spires"
+    }
+   ],
+   "street": [
+    {
+     "ko": "툭툭",
+     "en": "Tuk-tuks"
+    },
+    {
+     "ko": "길거리 팟타이",
+     "en": "Street pad thai"
+    },
+    {
+     "ko": "황금 불탑",
+     "en": "Golden stupas"
+    },
+    {
+     "ko": "엉킨 전선",
+     "en": "Tangled wires"
+    }
+   ],
+   "palette": {
+    "sky": "#ffd88a",
+    "buildings": "#e0c89a",
+    "accent": "#ffb000"
+   }
+  },
+  {
+   "id": "hanoi",
+   "ko": "하노이",
+   "en": "Hanoi",
+   "landmarks": [
+    {
+     "ko": "호안끼엠 호수 거북탑",
+     "en": "Turtle Tower"
+    },
+    {
+     "ko": "롯데센터 하노이",
+     "en": "Lotte Center Hanoi"
+    }
+   ],
+   "street": [
+    {
+     "ko": "오토바이 물결",
+     "en": "Motorbike waves"
+    },
+    {
+     "ko": "논라 모자",
+     "en": "Conical hats"
+    },
+    {
+     "ko": "쌀국수 목욕탕 의자",
+     "en": "Pho stalls with tiny stools"
+    }
+   ],
+   "palette": {
+    "sky": "#cfe6c8",
+    "buildings": "#e8d8b0",
+    "accent": "#e84a3a"
+   }
+  },
+  {
+   "id": "hochiminh",
+   "ko": "호찌민",
+   "en": "Ho Chi Minh City",
+   "landmarks": [
+    {
+     "ko": "비텍스코 타워",
+     "en": "Bitexco Tower"
+    },
+    {
+     "ko": "노트르담 성당",
+     "en": "Notre-Dame Cathedral"
+    }
+   ],
+   "street": [
+    {
+     "ko": "오토바이 물결",
+     "en": "Motorbike waves"
+    },
+    {
+     "ko": "반미 노점",
+     "en": "Banh mi carts"
+    },
+    {
+     "ko": "커피 가게",
+     "en": "Coffee stalls"
+    }
+   ],
+   "palette": {
+    "sky": "#ffe2a0",
+    "buildings": "#e6d2b0",
+    "accent": "#f05a28"
+   }
+  },
+  {
+   "id": "kualalumpur",
+   "ko": "쿠알라룸푸르",
+   "en": "Kuala Lumpur",
+   "landmarks": [
+    {
+     "ko": "페트로나스 트윈 타워",
+     "en": "Petronas Towers"
+    },
+    {
+     "ko": "KL 타워",
+     "en": "KL Tower"
+    }
+   ],
+   "street": [
+    {
+     "ko": "야자수",
+     "en": "Palm trees"
+    },
+    {
+     "ko": "노천 식당",
+     "en": "Open-air stalls"
+    }
+   ],
+   "palette": {
+    "sky": "#a0dcff",
+    "buildings": "#c8d0dc",
+    "accent": "#2a9a6a"
+   }
+  },
+  {
+   "id": "manila",
+   "ko": "마닐라",
+   "en": "Manila",
+   "landmarks": [
+    {
+     "ko": "인트라무로스",
+     "en": "Intramuros"
+    },
+    {
+     "ko": "마카티 빌딩",
+     "en": "Makati towers"
+    }
+   ],
+   "street": [
+    {
+     "ko": "지프니",
+     "en": "Jeepneys"
+    },
+    {
+     "ko": "사리사리 가게",
+     "en": "Sari-sari stores"
+    }
+   ],
+   "palette": {
+    "sky": "#9ad8ff",
+    "buildings": "#d8c8b0",
+    "accent": "#e8b020"
+   }
+  },
+  {
+   "id": "denpasar",
+   "ko": "발리",
+   "en": "Bali",
+   "landmarks": [
+    {
+     "ko": "울루와뚜 사원",
+     "en": "Uluwatu Temple"
+    },
+    {
+     "ko": "사원 문 짠디 븐타르",
+     "en": "Candi bentar gates"
+    }
+   ],
+   "street": [
+    {
+     "ko": "짜낭 꽃 바구니",
+     "en": "Canang offerings"
+    },
+    {
+     "ko": "서핑보드",
+     "en": "Surfboards"
+    },
+    {
+     "ko": "야자수",
+     "en": "Palm trees"
+    }
+   ],
+   "palette": {
+    "sky": "#8fe2ff",
+    "buildings": "#c8a878",
+    "accent": "#ff8a3a"
+   }
+  },
+  {
+   "id": "mumbai",
+   "ko": "뭄바이",
+   "en": "Mumbai",
+   "landmarks": [
+    {
+     "ko": "인디아 게이트웨이",
+     "en": "Gateway of India"
+    },
+    {
+     "ko": "타지 마할 호텔",
+     "en": "Taj Mahal Palace"
+    }
+   ],
+   "street": [
+    {
+     "ko": "릭샤",
+     "en": "Auto rickshaws"
+    },
+    {
+     "ko": "노란 택시",
+     "en": "Yellow-black taxis"
+    },
+    {
+     "ko": "차이 노점",
+     "en": "Chai stalls"
+    }
+   ],
+   "palette": {
+    "sky": "#ffd0a0",
+    "buildings": "#d8b890",
+    "accent": "#ff6a1a"
+   }
+  },
+  {
+   "id": "dubai",
+   "ko": "두바이",
+   "en": "Dubai",
+   "landmarks": [
+    {
+     "ko": "부르즈 할리파",
+     "en": "Burj Khalifa"
+    },
+    {
+     "ko": "부르즈 알 아랍",
+     "en": "Burj Al Arab"
+    }
+   ],
+   "street": [
+    {
+     "ko": "사막 모래",
+     "en": "Desert sand"
+    },
+    {
+     "ko": "야자수 가로수",
+     "en": "Palm-lined roads"
+    },
+    {
+     "ko": "슈퍼카",
+     "en": "Supercars"
+    }
+   ],
+   "palette": {
+    "sky": "#ffe6b0",
+    "buildings": "#e8dcc8",
+    "accent": "#d8a038"
+   }
+  },
+  {
+   "id": "istanbul",
+   "ko": "이스탄불",
+   "en": "Istanbul",
+   "landmarks": [
+    {
+     "ko": "아야 소피아",
+     "en": "Hagia Sophia"
+    },
+    {
+     "ko": "블루 모스크 첨탑",
+     "en": "Blue Mosque minarets"
+    },
+    {
+     "ko": "갈라타 탑",
+     "en": "Galata Tower"
+    }
+   ],
+   "street": [
+    {
+     "ko": "시미트 수레",
+     "en": "Simit carts"
+    },
+    {
+     "ko": "터키 램프",
+     "en": "Mosaic lamps"
+    },
+    {
+     "ko": "빨간 트램",
+     "en": "Red tram"
+    }
+   ],
+   "palette": {
+    "sky": "#b8d8ff",
+    "buildings": "#d8c0a0",
+    "accent": "#1a6ac8"
+   }
+  },
+  {
+   "id": "sydney",
+   "ko": "시드니",
+   "en": "Sydney",
+   "landmarks": [
+    {
+     "ko": "오페라 하우스",
+     "en": "Opera House"
+    },
+    {
+     "ko": "하버 브리지",
+     "en": "Harbour Bridge"
+    }
+   ],
+   "street": [
+    {
+     "ko": "서핑 비치",
+     "en": "Surf beach"
+    },
+    {
+     "ko": "유칼립투스",
+     "en": "Eucalyptus"
+    },
+    {
+     "ko": "페리",
+     "en": "Ferries"
+    }
+   ],
+   "palette": {
+    "sky": "#8ed6ff",
+    "buildings": "#e0e4e8",
+    "accent": "#f8b020"
+   }
+  },
+  {
+   "id": "melbourne",
+   "ko": "멜버른",
+   "en": "Melbourne",
+   "landmarks": [
+    {
+     "ko": "유레카 타워",
+     "en": "Eureka Tower"
+    },
+    {
+     "ko": "플린더스 역",
+     "en": "Flinders Street Station"
+    }
+   ],
+   "street": [
+    {
+     "ko": "골목 그래피티",
+     "en": "Laneway graffiti"
+    },
+    {
+     "ko": "초록 트램",
+     "en": "Green trams"
+    },
+    {
+     "ko": "플랫 화이트 카페",
+     "en": "Flat-white cafés"
+    }
+   ],
+   "palette": {
+    "sky": "#b0d4f0",
+    "buildings": "#c8b8a8",
+    "accent": "#3aa05a"
+   }
+  },
+  {
+   "id": "auckland",
+   "ko": "오클랜드",
+   "en": "Auckland",
+   "landmarks": [
+    {
+     "ko": "스카이 타워",
+     "en": "Sky Tower"
+    },
+    {
+     "ko": "하버 브리지",
+     "en": "Harbour Bridge"
+    }
+   ],
+   "street": [
+    {
+     "ko": "요트",
+     "en": "Sailboats"
+    },
+    {
+     "ko": "양 떼 언덕",
+     "en": "Sheep hills"
+    }
+   ],
+   "palette": {
+    "sky": "#9ad8ff",
+    "buildings": "#d0dce4",
+    "accent": "#2a8ab0"
+   }
+  },
+  {
+   "id": "newyork",
+   "ko": "뉴욕",
+   "en": "New York",
+   "landmarks": [
+    {
+     "ko": "엠파이어 스테이트 빌딩",
+     "en": "Empire State Building"
+    },
+    {
+     "ko": "자유의 여신상",
+     "en": "Statue of Liberty"
+    },
+    {
+     "ko": "브루클린 브리지",
+     "en": "Brooklyn Bridge"
+    }
+   ],
+   "street": [
+    {
+     "ko": "노란 택시",
+     "en": "Yellow cabs"
+    },
+    {
+     "ko": "소화전",
+     "en": "Fire hydrants"
+    },
+    {
+     "ko": "브라운스톤 계단",
+     "en": "Brownstone stoops"
+    },
+    {
+     "ko": "핫도그 카트",
+     "en": "Hot-dog carts"
+    },
+    {
+     "ko": "지하철 입구",
+     "en": "Subway entrances"
+    }
+   ],
+   "palette": {
+    "sky": "#a8c8f0",
+    "buildings": "#b0a8a0",
+    "accent": "#ffd000"
+   }
+  },
+  {
+   "id": "losangeles",
+   "ko": "로스앤젤레스",
+   "en": "Los Angeles",
+   "landmarks": [
+    {
+     "ko": "할리우드 사인",
+     "en": "Hollywood Sign"
+    },
+    {
+     "ko": "그리피스 천문대",
+     "en": "Griffith Observatory"
+    }
+   ],
+   "street": [
+    {
+     "ko": "야자수 가로수",
+     "en": "Palm-lined boulevards"
+    },
+    {
+     "ko": "스타의 거리 별",
+     "en": "Walk of Fame stars"
+    },
+    {
+     "ko": "타코 트럭",
+     "en": "Taco trucks"
+    }
+   ],
+   "palette": {
+    "sky": "#ffd8a8",
+    "buildings": "#e8d0b8",
+    "accent": "#ff5a8a"
+   }
+  },
+  {
+   "id": "sanfrancisco",
+   "ko": "샌프란시스코",
+   "en": "San Francisco",
+   "landmarks": [
+    {
+     "ko": "금문교",
+     "en": "Golden Gate Bridge"
+    },
+    {
+     "ko": "트랜스아메리카 피라미드",
+     "en": "Transamerica Pyramid"
+    }
+   ],
+   "street": [
+    {
+     "ko": "케이블카",
+     "en": "Cable cars"
+    },
+    {
+     "ko": "가파른 언덕길",
+     "en": "Steep hills"
+    },
+    {
+     "ko": "빅토리안 집",
+     "en": "Victorian houses"
+    },
+    {
+     "ko": "안개",
+     "en": "Fog"
+    }
+   ],
+   "palette": {
+    "sky": "#c8d8e8",
+    "buildings": "#d8c8c0",
+    "accent": "#e04a2a"
+   }
+  },
+  {
+   "id": "chicago",
+   "ko": "시카고",
+   "en": "Chicago",
+   "landmarks": [
+    {
+     "ko": "윌리스 타워",
+     "en": "Willis Tower"
+    },
+    {
+     "ko": "클라우드 게이트",
+     "en": "Cloud Gate"
+    }
+   ],
+   "street": [
+    {
+     "ko": "고가 철도 L",
+     "en": "The 'L' train"
+    },
+    {
+     "ko": "딥디쉬 피자 가게",
+     "en": "Deep-dish pizza shops"
+    }
+   ],
+   "palette": {
+    "sky": "#a8c8e8",
+    "buildings": "#9098a8",
+    "accent": "#2a6ad8"
+   }
+  },
+  {
+   "id": "seattle",
+   "ko": "시애틀",
+   "en": "Seattle",
+   "landmarks": [
+    {
+     "ko": "스페이스 니들",
+     "en": "Space Needle"
+    },
+    {
+     "ko": "레이니어산",
+     "en": "Mount Rainier"
+    }
+   ],
+   "street": [
+    {
+     "ko": "비 오는 거리",
+     "en": "Rainy streets"
+    },
+    {
+     "ko": "커피 가게",
+     "en": "Coffee shops"
+    },
+    {
+     "ko": "파이크 마켓 간판",
+     "en": "Pike Place sign"
+    }
+   ],
+   "palette": {
+    "sky": "#b8c8d8",
+    "buildings": "#a8b0b8",
+    "accent": "#2a9a6a"
+   }
+  },
+  {
+   "id": "lasvegas",
+   "ko": "라스베이거스",
+   "en": "Las Vegas",
+   "landmarks": [
+    {
+     "ko": "스트립 카지노",
+     "en": "The Strip casinos"
+    },
+    {
+     "ko": "에펠탑 복제",
+     "en": "Paris Las Vegas tower"
+    }
+   ],
+   "street": [
+    {
+     "ko": "네온 간판",
+     "en": "Neon signs"
+    },
+    {
+     "ko": "사막 선인장",
+     "en": "Desert cacti"
+    },
+    {
+     "ko": "웨딩 채플",
+     "en": "Wedding chapels"
+    }
+   ],
+   "palette": {
+    "sky": "#3a2a6a",
+    "buildings": "#c89ad8",
+    "accent": "#ff3ab0"
+   }
+  },
+  {
+   "id": "honolulu",
+   "ko": "호놀룰루",
+   "en": "Honolulu",
+   "landmarks": [
+    {
+     "ko": "다이아몬드 헤드",
+     "en": "Diamond Head"
+    },
+    {
+     "ko": "와이키키 호텔들",
+     "en": "Waikiki hotels"
+    }
+   ],
+   "street": [
+    {
+     "ko": "서핑보드",
+     "en": "Surfboards"
+    },
+    {
+     "ko": "하와이안 셔츠",
+     "en": "Aloha shirts"
+    },
+    {
+     "ko": "야자수",
+     "en": "Palm trees"
+    }
+   ],
+   "palette": {
+    "sky": "#8ae0ff",
+    "buildings": "#f0e0c8",
+    "accent": "#ff6a4a"
+   }
+  },
+  {
+   "id": "boston",
+   "ko": "보스턴",
+   "en": "Boston",
+   "landmarks": [
+    {
+     "ko": "프루덴셜 타워",
+     "en": "Prudential Tower"
+    },
+    {
+     "ko": "주 의사당 금빛 돔",
+     "en": "State House dome"
+    }
+   ],
+   "street": [
+    {
+     "ko": "붉은 벽돌집",
+     "en": "Red-brick rowhouses"
+    },
+    {
+     "ko": "대학 깃발",
+     "en": "College banners"
+    }
+   ],
+   "palette": {
+    "sky": "#b0cce8",
+    "buildings": "#b87a60",
+    "accent": "#b01a2a"
+   }
+  },
+  {
+   "id": "washington",
+   "ko": "워싱턴 D.C.",
+   "en": "Washington, D.C.",
+   "landmarks": [
+    {
+     "ko": "워싱턴 기념탑",
+     "en": "Washington Monument"
+    },
+    {
+     "ko": "국회의사당",
+     "en": "Capitol"
+    }
+   ],
+   "street": [
+    {
+     "ko": "벚꽃",
+     "en": "Cherry blossoms"
+    },
+    {
+     "ko": "박물관 계단",
+     "en": "Museum steps"
+    }
+   ],
+   "palette": {
+    "sky": "#b8d4f0",
+    "buildings": "#e8e4dc",
+    "accent": "#2a4a9a"
+   }
+  },
+  {
+   "id": "vancouver",
+   "ko": "밴쿠버",
+   "en": "Vancouver",
+   "landmarks": [
+    {
+     "ko": "캐나다 플레이스 돛",
+     "en": "Canada Place sails"
+    },
+    {
+     "ko": "노스쇼어 산",
+     "en": "North Shore mountains"
+    }
+   ],
+   "street": [
+    {
+     "ko": "바다 수상비행기",
+     "en": "Seaplanes"
+    },
+    {
+     "ko": "단풍잎 깃발",
+     "en": "Maple-leaf flags"
+    },
+    {
+     "ko": "삼나무",
+     "en": "Cedar trees"
+    }
+   ],
+   "palette": {
+    "sky": "#a8d0e8",
+    "buildings": "#c0d0d8",
+    "accent": "#d82a2a"
+   }
+  },
+  {
+   "id": "toronto",
+   "ko": "토론토",
+   "en": "Toronto",
+   "landmarks": [
+    {
+     "ko": "CN 타워",
+     "en": "CN Tower"
+    },
+    {
+     "ko": "로저스 센터",
+     "en": "Rogers Centre"
+    }
+   ],
+   "street": [
+    {
+     "ko": "빨간 스트리트카",
+     "en": "Red streetcars"
+    },
+    {
+     "ko": "단풍잎",
+     "en": "Maple leaves"
+    }
+   ],
+   "palette": {
+    "sky": "#b0d0f0",
+    "buildings": "#b8c0cc",
+    "accent": "#e02a2a"
+   }
+  },
+  {
+   "id": "mexicocity",
+   "ko": "멕시코시티",
+   "en": "Mexico City",
+   "landmarks": [
+    {
+     "ko": "독립기념탑 천사상",
+     "en": "Angel of Independence"
+    },
+    {
+     "ko": "라틴아메리카 타워",
+     "en": "Torre Latinoamericana"
+    }
+   ],
+   "street": [
+    {
+     "ko": "파펠 피카도 깃발",
+     "en": "Papel picado banners"
+    },
+    {
+     "ko": "타코 노점",
+     "en": "Taco stands"
+    },
+    {
+     "ko": "알록달록 벽",
+     "en": "Colorful walls"
+    }
+   ],
+   "palette": {
+    "sky": "#ffd8a0",
+    "buildings": "#e8a878",
+    "accent": "#e83a8a"
+   }
+  },
+  {
+   "id": "london",
+   "ko": "런던",
+   "en": "London",
+   "landmarks": [
+    {
+     "ko": "빅벤",
+     "en": "Big Ben"
+    },
+    {
+     "ko": "런던아이",
+     "en": "London Eye"
+    },
+    {
+     "ko": "타워 브리지",
+     "en": "Tower Bridge"
+    }
+   ],
+   "street": [
+    {
+     "ko": "빨간 2층 버스",
+     "en": "Red double-deckers"
+    },
+    {
+     "ko": "빨간 공중전화",
+     "en": "Red phone boxes"
+    },
+    {
+     "ko": "블랙 캡",
+     "en": "Black cabs"
+    },
+    {
+     "ko": "펍 간판",
+     "en": "Pub signs"
+    }
+   ],
+   "palette": {
+    "sky": "#c0ccd8",
+    "buildings": "#a8a098",
+    "accent": "#c8102e"
+   }
+  },
+  {
+   "id": "paris",
+   "ko": "파리",
+   "en": "Paris",
+   "landmarks": [
+    {
+     "ko": "에펠탑",
+     "en": "Eiffel Tower"
+    },
+    {
+     "ko": "개선문",
+     "en": "Arc de Triomphe"
+    },
+    {
+     "ko": "사크레쾨르",
+     "en": "Sacré-Cœur"
+    }
+   ],
+   "street": [
+    {
+     "ko": "카페 테라스",
+     "en": "Café terraces"
+    },
+    {
+     "ko": "철제 발코니",
+     "en": "Iron balconies"
+    },
+    {
+     "ko": "가로등",
+     "en": "Lamp posts"
+    },
+    {
+     "ko": "바게트 빵집",
+     "en": "Baguette bakeries"
+    },
+    {
+     "ko": "모리스 광고탑",
+     "en": "Morris columns"
+    }
+   ],
+   "palette": {
+    "sky": "#c8dcf0",
+    "buildings": "#e8dcc8",
+    "accent": "#2a3a8a"
+   }
+  },
+  {
+   "id": "rome",
+   "ko": "로마",
+   "en": "Rome",
+   "landmarks": [
+    {
+     "ko": "콜로세움",
+     "en": "Colosseum"
+    },
+    {
+     "ko": "성 베드로 대성당 돔",
+     "en": "St. Peter's dome"
+    }
+   ],
+   "street": [
+    {
+     "ko": "베스파",
+     "en": "Vespas"
+    },
+    {
+     "ko": "젤라토 가게",
+     "en": "Gelato shops"
+    },
+    {
+     "ko": "분수",
+     "en": "Fountains"
+    },
+    {
+     "ko": "우산 소나무",
+     "en": "Umbrella pines"
+    }
+   ],
+   "palette": {
+    "sky": "#ffe0b0",
+    "buildings": "#e0b890",
+    "accent": "#b8402a"
+   }
+  },
+  {
+   "id": "milan",
+   "ko": "밀라노",
+   "en": "Milan",
+   "landmarks": [
+    {
+     "ko": "두오모 첨탑",
+     "en": "Duomo spires"
+    },
+    {
+     "ko": "보스코 베르티칼레",
+     "en": "Bosco Verticale"
+    }
+   ],
+   "street": [
+    {
+     "ko": "노란 트램",
+     "en": "Yellow trams"
+    },
+    {
+     "ko": "부티크 쇼윈도",
+     "en": "Boutique windows"
+    }
+   ],
+   "palette": {
+    "sky": "#d0dcea",
+    "buildings": "#d8d0c8",
+    "accent": "#1a1a1a"
+   }
+  },
+  {
+   "id": "barcelona",
+   "ko": "바르셀로나",
+   "en": "Barcelona",
+   "landmarks": [
+    {
+     "ko": "사그라다 파밀리아",
+     "en": "Sagrada Família"
+    },
+    {
+     "ko": "아그바르 타워",
+     "en": "Torre Glòries"
+    }
+   ],
+   "street": [
+    {
+     "ko": "가우디 타일 벤치",
+     "en": "Gaudí mosaic benches"
+    },
+    {
+     "ko": "해변",
+     "en": "Beach"
+    },
+    {
+     "ko": "타파스 바",
+     "en": "Tapas bars"
+    }
+   ],
+   "palette": {
+    "sky": "#a8d8ff",
+    "buildings": "#e8c8a0",
+    "accent": "#f0a020"
+   }
+  },
+  {
+   "id": "madrid",
+   "ko": "마드리드",
+   "en": "Madrid",
+   "landmarks": [
+    {
+     "ko": "왕궁",
+     "en": "Royal Palace"
+    },
+    {
+     "ko": "쿠아트로 토레스",
+     "en": "Cuatro Torres"
+    }
+   ],
+   "street": [
+    {
+     "ko": "츄러스 가게",
+     "en": "Churros shops"
+    },
+    {
+     "ko": "발코니 꽃",
+     "en": "Balcony flowers"
+    }
+   ],
+   "palette": {
+    "sky": "#b0d8ff",
+    "buildings": "#e8d0b0",
+    "accent": "#c8282a"
+   }
+  },
+  {
+   "id": "lisbon",
+   "ko": "리스본",
+   "en": "Lisbon",
+   "landmarks": [
+    {
+     "ko": "벨렝탑",
+     "en": "Belém Tower"
+    },
+    {
+     "ko": "4월 25일 다리",
+     "en": "25 de Abril Bridge"
+    }
+   ],
+   "street": [
+    {
+     "ko": "노란 트램 28",
+     "en": "Yellow tram 28"
+    },
+    {
+     "ko": "아줄레주 타일",
+     "en": "Azulejo tiles"
+    },
+    {
+     "ko": "에그타르트 가게",
+     "en": "Pastel de nata shops"
+    }
+   ],
+   "palette": {
+    "sky": "#a8d8ff",
+    "buildings": "#f0e0c0",
+    "accent": "#f0c020"
+   }
+  },
+  {
+   "id": "berlin",
+   "ko": "베를린",
+   "en": "Berlin",
+   "landmarks": [
+    {
+     "ko": "브란덴부르크 문",
+     "en": "Brandenburg Gate"
+    },
+    {
+     "ko": "TV 타워",
+     "en": "TV Tower"
+    }
+   ],
+   "street": [
+    {
+     "ko": "장벽 그래피티",
+     "en": "Wall graffiti"
+    },
+    {
+     "ko": "암펠만 신호등",
+     "en": "Ampelmann lights"
+    },
+    {
+     "ko": "커리부어스트 노점",
+     "en": "Currywurst stands"
+    }
+   ],
+   "palette": {
+    "sky": "#c0d0e0",
+    "buildings": "#b8b8b0",
+    "accent": "#e8c020"
+   }
+  },
+  {
+   "id": "amsterdam",
+   "ko": "암스테르담",
+   "en": "Amsterdam",
+   "landmarks": [
+    {
+     "ko": "운하 옆 좁은 집들",
+     "en": "Canal houses"
+    },
+    {
+     "ko": "풍차",
+     "en": "Windmill"
+    }
+   ],
+   "street": [
+    {
+     "ko": "자전거 무리",
+     "en": "Bicycles everywhere"
+    },
+    {
+     "ko": "운하 보트",
+     "en": "Canal boats"
+    },
+    {
+     "ko": "튤립",
+     "en": "Tulips"
+    }
+   ],
+   "palette": {
+    "sky": "#b8d0e8",
+    "buildings": "#a87a5a",
+    "accent": "#f07a1a"
+   }
+  },
+  {
+   "id": "vienna",
+   "ko": "빈",
+   "en": "Vienna",
+   "landmarks": [
+    {
+     "ko": "슈테판 대성당",
+     "en": "St. Stephen's Cathedral"
+    },
+    {
+     "ko": "쇤브룬 궁전",
+     "en": "Schönbrunn"
+    }
+   ],
+   "street": [
+    {
+     "ko": "마차",
+     "en": "Fiacre carriages"
+    },
+    {
+     "ko": "카페 케이크",
+     "en": "Café cakes"
+    }
+   ],
+   "palette": {
+    "sky": "#c8dcf0",
+    "buildings": "#f0e4c8",
+    "accent": "#c8282a"
+   }
+  },
+  {
+   "id": "prague",
+   "ko": "프라하",
+   "en": "Prague",
+   "landmarks": [
+    {
+     "ko": "프라하 성",
+     "en": "Prague Castle"
+    },
+    {
+     "ko": "천문 시계탑",
+     "en": "Astronomical Clock"
+    }
+   ],
+   "street": [
+    {
+     "ko": "주황 지붕",
+     "en": "Orange rooftops"
+    },
+    {
+     "ko": "카를교 조각상",
+     "en": "Charles Bridge statues"
+    },
+    {
+     "ko": "트르들로 가게",
+     "en": "Trdelník stands"
+    }
+   ],
+   "palette": {
+    "sky": "#c8d8ec",
+    "buildings": "#e8b890",
+    "accent": "#d86a2a"
+   }
+  },
+  {
+   "id": "moscow",
+   "ko": "모스크바",
+   "en": "Moscow",
+   "landmarks": [
+    {
+     "ko": "성 바실리 대성당",
+     "en": "St. Basil's Cathedral"
+    },
+    {
+     "ko": "크렘린 탑",
+     "en": "Kremlin towers"
+    }
+   ],
+   "street": [
+    {
+     "ko": "눈 쌓인 광장",
+     "en": "Snowy squares"
+    },
+    {
+     "ko": "양파 돔",
+     "en": "Onion domes"
+    }
+   ],
+   "palette": {
+    "sky": "#d8e0ea",
+    "buildings": "#d8c0b0",
+    "accent": "#d82a2a"
+   }
+  },
+  {
+   "id": "cairo",
+   "ko": "카이로",
+   "en": "Cairo",
+   "landmarks": [
+    {
+     "ko": "피라미드",
+     "en": "Pyramids"
+    },
+    {
+     "ko": "카이로 타워",
+     "en": "Cairo Tower"
+    }
+   ],
+   "street": [
+    {
+     "ko": "사막 모래",
+     "en": "Desert sand"
+    },
+    {
+     "ko": "낙타",
+     "en": "Camels"
+    },
+    {
+     "ko": "시장 천막",
+     "en": "Bazaar awnings"
+    }
+   ],
+   "palette": {
+    "sky": "#ffe6b0",
+    "buildings": "#e8cfa0",
+    "accent": "#d8a020"
+   }
+  },
+  {
+   "id": "saopaulo",
+   "ko": "상파울루",
+   "en": "São Paulo",
+   "landmarks": [
+    {
+     "ko": "파울리스타 대로 빌딩",
+     "en": "Paulista Avenue towers"
+    },
+    {
+     "ko": "이비라푸에라 오벨리스크",
+     "en": "Ibirapuera Obelisk"
+    }
+   ],
+   "street": [
+    {
+     "ko": "그래피티 벽",
+     "en": "Graffiti walls"
+    },
+    {
+     "ko": "열대 나무",
+     "en": "Tropical trees"
+    }
+   ],
+   "palette": {
+    "sky": "#b0d0f0",
+    "buildings": "#b8b8b8",
+    "accent": "#20a040"
+   }
+  }
+ ],
+ "generic": {
+  "korea": {
+   "id": "korea",
+   "ko": "한국 도시",
+   "en": "Korean city",
+   "landmarks": [
+    {
+     "ko": "아파트 단지",
+     "en": "Apartment blocks"
+    },
+    {
+     "ko": "교회 첨탑 십자가",
+     "en": "Church steeples"
+    }
+   ],
+   "street": [
+    {
+     "ko": "편의점",
+     "en": "Convenience store"
+    },
+    {
+     "ko": "치킨집 간판",
+     "en": "Fried-chicken signs"
+    },
+    {
+     "ko": "은행나무",
+     "en": "Ginkgo trees"
+    }
+   ],
+   "palette": {
+    "sky": "#a8d8ff",
+    "buildings": "#c8c8d0",
+    "accent": "#ff6f91"
+   }
+  },
+  "world": {
+   "id": "world",
+   "ko": "도시",
+   "en": "City",
+   "landmarks": [
+    {
+     "ko": "고층 빌딩",
+     "en": "High-rises"
+    }
+   ],
+   "street": [
+    {
+     "ko": "가로수",
+     "en": "Street trees"
+    },
+    {
+     "ko": "카페",
+     "en": "Cafés"
+    },
+    {
+     "ko": "버스 정류장",
+     "en": "Bus stops"
+    }
+   ],
+   "palette": {
+    "sky": "#a8d8ff",
+    "buildings": "#c8c8d0",
+    "accent": "#3a8fd6"
+   }
+  }
+ }
+}

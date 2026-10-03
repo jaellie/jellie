@@ -1,0 +1,1482 @@
+{
+ "_doc": "Birthplaces (city → coordinates + IANA time zone). The time zone gives the historical UTC offset at the birth moment (daylight time included); coordinates give the Ascendant/MC and houses. Add a city with one line.",
+ "places": [
+  {
+   "id": "seoul",
+   "ko": "서울",
+   "en": "Seoul",
+   "country": "KR",
+   "lat": 37.5665,
+   "lon": 126.978,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "서울특별시",
+    "서울시"
+   ]
+  },
+  {
+   "id": "busan",
+   "ko": "부산",
+   "en": "Busan",
+   "country": "KR",
+   "lat": 35.1796,
+   "lon": 129.0756,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "부산광역시",
+    "Pusan"
+   ]
+  },
+  {
+   "id": "incheon",
+   "ko": "인천",
+   "en": "Incheon",
+   "country": "KR",
+   "lat": 37.4563,
+   "lon": 126.7052,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "인천광역시"
+   ]
+  },
+  {
+   "id": "daegu",
+   "ko": "대구",
+   "en": "Daegu",
+   "country": "KR",
+   "lat": 35.8714,
+   "lon": 128.6014,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "대구광역시",
+    "Taegu"
+   ]
+  },
+  {
+   "id": "daejeon",
+   "ko": "대전",
+   "en": "Daejeon",
+   "country": "KR",
+   "lat": 36.3504,
+   "lon": 127.3845,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "대전광역시",
+    "Taejon"
+   ]
+  },
+  {
+   "id": "gwangju",
+   "ko": "광주",
+   "en": "Gwangju",
+   "country": "KR",
+   "lat": 35.1595,
+   "lon": 126.8526,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "광주광역시",
+    "Kwangju"
+   ]
+  },
+  {
+   "id": "ulsan",
+   "ko": "울산",
+   "en": "Ulsan",
+   "country": "KR",
+   "lat": 35.5384,
+   "lon": 129.3114,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "울산광역시"
+   ]
+  },
+  {
+   "id": "sejong",
+   "ko": "세종",
+   "en": "Sejong",
+   "country": "KR",
+   "lat": 36.48,
+   "lon": 127.289,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "세종특별자치시"
+   ]
+  },
+  {
+   "id": "suwon",
+   "ko": "수원",
+   "en": "Suwon",
+   "country": "KR",
+   "lat": 37.2636,
+   "lon": 127.0286,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "seongnam",
+   "ko": "성남",
+   "en": "Seongnam",
+   "country": "KR",
+   "lat": 37.42,
+   "lon": 127.1267,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "분당",
+    "Bundang"
+   ]
+  },
+  {
+   "id": "goyang",
+   "ko": "고양",
+   "en": "Goyang",
+   "country": "KR",
+   "lat": 37.6584,
+   "lon": 126.832,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "일산",
+    "Ilsan"
+   ]
+  },
+  {
+   "id": "yongin",
+   "ko": "용인",
+   "en": "Yongin",
+   "country": "KR",
+   "lat": 37.2411,
+   "lon": 127.1776,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "bucheon",
+   "ko": "부천",
+   "en": "Bucheon",
+   "country": "KR",
+   "lat": 37.5034,
+   "lon": 126.766,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "ansan",
+   "ko": "안산",
+   "en": "Ansan",
+   "country": "KR",
+   "lat": 37.3219,
+   "lon": 126.8309,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "anyang",
+   "ko": "안양",
+   "en": "Anyang",
+   "country": "KR",
+   "lat": 37.3943,
+   "lon": 126.9568,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "namyangju",
+   "ko": "남양주",
+   "en": "Namyangju",
+   "country": "KR",
+   "lat": 37.636,
+   "lon": 127.2165,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "hwaseong",
+   "ko": "화성",
+   "en": "Hwaseong",
+   "country": "KR",
+   "lat": 37.1995,
+   "lon": 126.8311,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "동탄"
+   ]
+  },
+  {
+   "id": "pyeongtaek",
+   "ko": "평택",
+   "en": "Pyeongtaek",
+   "country": "KR",
+   "lat": 36.9921,
+   "lon": 127.1129,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "uijeongbu",
+   "ko": "의정부",
+   "en": "Uijeongbu",
+   "country": "KR",
+   "lat": 37.7381,
+   "lon": 127.0337,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "paju",
+   "ko": "파주",
+   "en": "Paju",
+   "country": "KR",
+   "lat": 37.7599,
+   "lon": 126.7802,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "gimpo",
+   "ko": "김포",
+   "en": "Gimpo",
+   "country": "KR",
+   "lat": 37.6153,
+   "lon": 126.7157,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "chuncheon",
+   "ko": "춘천",
+   "en": "Chuncheon",
+   "country": "KR",
+   "lat": 37.8813,
+   "lon": 127.7298,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "wonju",
+   "ko": "원주",
+   "en": "Wonju",
+   "country": "KR",
+   "lat": 37.3422,
+   "lon": 127.9202,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "gangneung",
+   "ko": "강릉",
+   "en": "Gangneung",
+   "country": "KR",
+   "lat": 37.7519,
+   "lon": 128.8761,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "sokcho",
+   "ko": "속초",
+   "en": "Sokcho",
+   "country": "KR",
+   "lat": 38.207,
+   "lon": 128.5918,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "cheongju",
+   "ko": "청주",
+   "en": "Cheongju",
+   "country": "KR",
+   "lat": 36.6424,
+   "lon": 127.489,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "chungju",
+   "ko": "충주",
+   "en": "Chungju",
+   "country": "KR",
+   "lat": 36.991,
+   "lon": 127.9259,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "cheonan",
+   "ko": "천안",
+   "en": "Cheonan",
+   "country": "KR",
+   "lat": 36.8151,
+   "lon": 127.1139,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "asan",
+   "ko": "아산",
+   "en": "Asan",
+   "country": "KR",
+   "lat": 36.7898,
+   "lon": 127.0018,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "jeonju",
+   "ko": "전주",
+   "en": "Jeonju",
+   "country": "KR",
+   "lat": 35.8242,
+   "lon": 127.148,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "gunsan",
+   "ko": "군산",
+   "en": "Gunsan",
+   "country": "KR",
+   "lat": 35.9676,
+   "lon": 126.7366,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "iksan",
+   "ko": "익산",
+   "en": "Iksan",
+   "country": "KR",
+   "lat": 35.9483,
+   "lon": 126.9577,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "mokpo",
+   "ko": "목포",
+   "en": "Mokpo",
+   "country": "KR",
+   "lat": 34.8118,
+   "lon": 126.3922,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "yeosu",
+   "ko": "여수",
+   "en": "Yeosu",
+   "country": "KR",
+   "lat": 34.7604,
+   "lon": 127.6622,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "suncheon",
+   "ko": "순천",
+   "en": "Suncheon",
+   "country": "KR",
+   "lat": 34.9507,
+   "lon": 127.4872,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "pohang",
+   "ko": "포항",
+   "en": "Pohang",
+   "country": "KR",
+   "lat": 36.019,
+   "lon": 129.3435,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "gyeongju",
+   "ko": "경주",
+   "en": "Gyeongju",
+   "country": "KR",
+   "lat": 35.8562,
+   "lon": 129.2247,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "andong",
+   "ko": "안동",
+   "en": "Andong",
+   "country": "KR",
+   "lat": 36.5684,
+   "lon": 128.7294,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "gumi",
+   "ko": "구미",
+   "en": "Gumi",
+   "country": "KR",
+   "lat": 36.1195,
+   "lon": 128.3446,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "changwon",
+   "ko": "창원",
+   "en": "Changwon",
+   "country": "KR",
+   "lat": 35.228,
+   "lon": 128.6811,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "마산",
+    "Masan"
+   ]
+  },
+  {
+   "id": "jinju",
+   "ko": "진주",
+   "en": "Jinju",
+   "country": "KR",
+   "lat": 35.18,
+   "lon": 128.1076,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "gimhae",
+   "ko": "김해",
+   "en": "Gimhae",
+   "country": "KR",
+   "lat": 35.2285,
+   "lon": 128.8894,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "geoje",
+   "ko": "거제",
+   "en": "Geoje",
+   "country": "KR",
+   "lat": 34.8806,
+   "lon": 128.6211,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "tongyeong",
+   "ko": "통영",
+   "en": "Tongyeong",
+   "country": "KR",
+   "lat": 34.8544,
+   "lon": 128.4331,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "jeju",
+   "ko": "제주",
+   "en": "Jeju",
+   "country": "KR",
+   "lat": 33.4996,
+   "lon": 126.5312,
+   "tz": "Asia/Seoul",
+   "aliases": [
+    "제주시",
+    "Cheju"
+   ]
+  },
+  {
+   "id": "seogwipo",
+   "ko": "서귀포",
+   "en": "Seogwipo",
+   "country": "KR",
+   "lat": 33.2541,
+   "lon": 126.5601,
+   "tz": "Asia/Seoul"
+  },
+  {
+   "id": "pyongyang",
+   "ko": "평양",
+   "en": "Pyongyang",
+   "country": "KP",
+   "lat": 39.0392,
+   "lon": 125.7625,
+   "tz": "Asia/Pyongyang"
+  },
+  {
+   "id": "tokyo",
+   "ko": "도쿄",
+   "en": "Tokyo",
+   "country": "JP",
+   "lat": 35.6762,
+   "lon": 139.6503,
+   "tz": "Asia/Tokyo",
+   "aliases": [
+    "동경"
+   ]
+  },
+  {
+   "id": "yokohama",
+   "ko": "요코하마",
+   "en": "Yokohama",
+   "country": "JP",
+   "lat": 35.4437,
+   "lon": 139.638,
+   "tz": "Asia/Tokyo"
+  },
+  {
+   "id": "osaka",
+   "ko": "오사카",
+   "en": "Osaka",
+   "country": "JP",
+   "lat": 34.6937,
+   "lon": 135.5023,
+   "tz": "Asia/Tokyo"
+  },
+  {
+   "id": "kyoto",
+   "ko": "교토",
+   "en": "Kyoto",
+   "country": "JP",
+   "lat": 35.0116,
+   "lon": 135.7681,
+   "tz": "Asia/Tokyo"
+  },
+  {
+   "id": "kobe",
+   "ko": "고베",
+   "en": "Kobe",
+   "country": "JP",
+   "lat": 34.6901,
+   "lon": 135.1955,
+   "tz": "Asia/Tokyo"
+  },
+  {
+   "id": "nagoya",
+   "ko": "나고야",
+   "en": "Nagoya",
+   "country": "JP",
+   "lat": 35.1815,
+   "lon": 136.9066,
+   "tz": "Asia/Tokyo"
+  },
+  {
+   "id": "fukuoka",
+   "ko": "후쿠오카",
+   "en": "Fukuoka",
+   "country": "JP",
+   "lat": 33.5904,
+   "lon": 130.4017,
+   "tz": "Asia/Tokyo"
+  },
+  {
+   "id": "hiroshima",
+   "ko": "히로시마",
+   "en": "Hiroshima",
+   "country": "JP",
+   "lat": 34.3853,
+   "lon": 132.4553,
+   "tz": "Asia/Tokyo"
+  },
+  {
+   "id": "sendai",
+   "ko": "센다이",
+   "en": "Sendai",
+   "country": "JP",
+   "lat": 38.2682,
+   "lon": 140.8694,
+   "tz": "Asia/Tokyo"
+  },
+  {
+   "id": "sapporo",
+   "ko": "삿포로",
+   "en": "Sapporo",
+   "country": "JP",
+   "lat": 43.0618,
+   "lon": 141.3545,
+   "tz": "Asia/Tokyo"
+  },
+  {
+   "id": "naha",
+   "ko": "나하",
+   "en": "Naha",
+   "country": "JP",
+   "lat": 26.2124,
+   "lon": 127.6809,
+   "tz": "Asia/Tokyo",
+   "aliases": [
+    "오키나와",
+    "Okinawa"
+   ]
+  },
+  {
+   "id": "beijing",
+   "ko": "베이징",
+   "en": "Beijing",
+   "country": "CN",
+   "lat": 39.9042,
+   "lon": 116.4074,
+   "tz": "Asia/Shanghai",
+   "aliases": [
+    "북경",
+    "Peking"
+   ]
+  },
+  {
+   "id": "shanghai",
+   "ko": "상하이",
+   "en": "Shanghai",
+   "country": "CN",
+   "lat": 31.2304,
+   "lon": 121.4737,
+   "tz": "Asia/Shanghai",
+   "aliases": [
+    "상해"
+   ]
+  },
+  {
+   "id": "guangzhou",
+   "ko": "광저우",
+   "en": "Guangzhou",
+   "country": "CN",
+   "lat": 23.1291,
+   "lon": 113.2644,
+   "tz": "Asia/Shanghai"
+  },
+  {
+   "id": "shenzhen",
+   "ko": "선전",
+   "en": "Shenzhen",
+   "country": "CN",
+   "lat": 22.5431,
+   "lon": 114.0579,
+   "tz": "Asia/Shanghai",
+   "aliases": [
+    "심천"
+   ]
+  },
+  {
+   "id": "qingdao",
+   "ko": "칭다오",
+   "en": "Qingdao",
+   "country": "CN",
+   "lat": 36.0671,
+   "lon": 120.3826,
+   "tz": "Asia/Shanghai",
+   "aliases": [
+    "청도"
+   ]
+  },
+  {
+   "id": "dalian",
+   "ko": "다롄",
+   "en": "Dalian",
+   "country": "CN",
+   "lat": 38.914,
+   "lon": 121.6147,
+   "tz": "Asia/Shanghai",
+   "aliases": [
+    "대련"
+   ]
+  },
+  {
+   "id": "harbin",
+   "ko": "하얼빈",
+   "en": "Harbin",
+   "country": "CN",
+   "lat": 45.8038,
+   "lon": 126.5349,
+   "tz": "Asia/Shanghai"
+  },
+  {
+   "id": "yanji",
+   "ko": "옌지",
+   "en": "Yanji",
+   "country": "CN",
+   "lat": 42.9048,
+   "lon": 129.5089,
+   "tz": "Asia/Shanghai",
+   "aliases": [
+    "연길"
+   ]
+  },
+  {
+   "id": "hongkong",
+   "ko": "홍콩",
+   "en": "Hong Kong",
+   "country": "HK",
+   "lat": 22.3193,
+   "lon": 114.1694,
+   "tz": "Asia/Hong_Kong"
+  },
+  {
+   "id": "macau",
+   "ko": "마카오",
+   "en": "Macau",
+   "country": "MO",
+   "lat": 22.1987,
+   "lon": 113.5439,
+   "tz": "Asia/Macau"
+  },
+  {
+   "id": "taipei",
+   "ko": "타이베이",
+   "en": "Taipei",
+   "country": "TW",
+   "lat": 25.033,
+   "lon": 121.5654,
+   "tz": "Asia/Taipei",
+   "aliases": [
+    "타이페이"
+   ]
+  },
+  {
+   "id": "ulaanbaatar",
+   "ko": "울란바토르",
+   "en": "Ulaanbaatar",
+   "country": "MN",
+   "lat": 47.8864,
+   "lon": 106.9057,
+   "tz": "Asia/Ulaanbaatar"
+  },
+  {
+   "id": "singapore",
+   "ko": "싱가포르",
+   "en": "Singapore",
+   "country": "SG",
+   "lat": 1.3521,
+   "lon": 103.8198,
+   "tz": "Asia/Singapore"
+  },
+  {
+   "id": "kualalumpur",
+   "ko": "쿠알라룸푸르",
+   "en": "Kuala Lumpur",
+   "country": "MY",
+   "lat": 3.139,
+   "lon": 101.6869,
+   "tz": "Asia/Kuala_Lumpur"
+  },
+  {
+   "id": "bangkok",
+   "ko": "방콕",
+   "en": "Bangkok",
+   "country": "TH",
+   "lat": 13.7563,
+   "lon": 100.5018,
+   "tz": "Asia/Bangkok"
+  },
+  {
+   "id": "hanoi",
+   "ko": "하노이",
+   "en": "Hanoi",
+   "country": "VN",
+   "lat": 21.0278,
+   "lon": 105.8342,
+   "tz": "Asia/Ho_Chi_Minh"
+  },
+  {
+   "id": "hochiminh",
+   "ko": "호찌민",
+   "en": "Ho Chi Minh City",
+   "country": "VN",
+   "lat": 10.8231,
+   "lon": 106.6297,
+   "tz": "Asia/Ho_Chi_Minh",
+   "aliases": [
+    "호치민",
+    "사이공",
+    "Saigon"
+   ]
+  },
+  {
+   "id": "manila",
+   "ko": "마닐라",
+   "en": "Manila",
+   "country": "PH",
+   "lat": 14.5995,
+   "lon": 120.9842,
+   "tz": "Asia/Manila"
+  },
+  {
+   "id": "cebu",
+   "ko": "세부",
+   "en": "Cebu",
+   "country": "PH",
+   "lat": 10.3157,
+   "lon": 123.8854,
+   "tz": "Asia/Manila"
+  },
+  {
+   "id": "jakarta",
+   "ko": "자카르타",
+   "en": "Jakarta",
+   "country": "ID",
+   "lat": -6.2088,
+   "lon": 106.8456,
+   "tz": "Asia/Jakarta"
+  },
+  {
+   "id": "denpasar",
+   "ko": "발리",
+   "en": "Bali (Denpasar)",
+   "country": "ID",
+   "lat": -8.6705,
+   "lon": 115.2126,
+   "tz": "Asia/Makassar",
+   "aliases": [
+    "덴파사르",
+    "Denpasar",
+    "Bali"
+   ]
+  },
+  {
+   "id": "newdelhi",
+   "ko": "뉴델리",
+   "en": "New Delhi",
+   "country": "IN",
+   "lat": 28.6139,
+   "lon": 77.209,
+   "tz": "Asia/Kolkata",
+   "aliases": [
+    "델리",
+    "Delhi"
+   ]
+  },
+  {
+   "id": "mumbai",
+   "ko": "뭄바이",
+   "en": "Mumbai",
+   "country": "IN",
+   "lat": 19.076,
+   "lon": 72.8777,
+   "tz": "Asia/Kolkata",
+   "aliases": [
+    "봄베이",
+    "Bombay"
+   ]
+  },
+  {
+   "id": "dubai",
+   "ko": "두바이",
+   "en": "Dubai",
+   "country": "AE",
+   "lat": 25.2048,
+   "lon": 55.2708,
+   "tz": "Asia/Dubai"
+  },
+  {
+   "id": "istanbul",
+   "ko": "이스탄불",
+   "en": "Istanbul",
+   "country": "TR",
+   "lat": 41.0082,
+   "lon": 28.9784,
+   "tz": "Europe/Istanbul"
+  },
+  {
+   "id": "tashkent",
+   "ko": "타슈켄트",
+   "en": "Tashkent",
+   "country": "UZ",
+   "lat": 41.2995,
+   "lon": 69.2401,
+   "tz": "Asia/Tashkent"
+  },
+  {
+   "id": "almaty",
+   "ko": "알마티",
+   "en": "Almaty",
+   "country": "KZ",
+   "lat": 43.222,
+   "lon": 76.8512,
+   "tz": "Asia/Almaty"
+  },
+  {
+   "id": "vladivostok",
+   "ko": "블라디보스토크",
+   "en": "Vladivostok",
+   "country": "RU",
+   "lat": 43.1155,
+   "lon": 131.8855,
+   "tz": "Asia/Vladivostok"
+  },
+  {
+   "id": "sakhalin",
+   "ko": "유즈노사할린스크",
+   "en": "Yuzhno-Sakhalinsk",
+   "country": "RU",
+   "lat": 46.9591,
+   "lon": 142.738,
+   "tz": "Asia/Sakhalin",
+   "aliases": [
+    "사할린",
+    "Sakhalin"
+   ]
+  },
+  {
+   "id": "sydney",
+   "ko": "시드니",
+   "en": "Sydney",
+   "country": "AU",
+   "lat": -33.8688,
+   "lon": 151.2093,
+   "tz": "Australia/Sydney"
+  },
+  {
+   "id": "melbourne",
+   "ko": "멜버른",
+   "en": "Melbourne",
+   "country": "AU",
+   "lat": -37.8136,
+   "lon": 144.9631,
+   "tz": "Australia/Melbourne",
+   "aliases": [
+    "멜번"
+   ]
+  },
+  {
+   "id": "brisbane",
+   "ko": "브리즈번",
+   "en": "Brisbane",
+   "country": "AU",
+   "lat": -27.4698,
+   "lon": 153.0251,
+   "tz": "Australia/Brisbane"
+  },
+  {
+   "id": "perth",
+   "ko": "퍼스",
+   "en": "Perth",
+   "country": "AU",
+   "lat": -31.9505,
+   "lon": 115.8605,
+   "tz": "Australia/Perth"
+  },
+  {
+   "id": "auckland",
+   "ko": "오클랜드",
+   "en": "Auckland",
+   "country": "NZ",
+   "lat": -36.8485,
+   "lon": 174.7633,
+   "tz": "Pacific/Auckland"
+  },
+  {
+   "id": "newyork",
+   "ko": "뉴욕",
+   "en": "New York",
+   "country": "US",
+   "lat": 40.7128,
+   "lon": -74.006,
+   "tz": "America/New_York",
+   "aliases": [
+    "NYC",
+    "New York City"
+   ]
+  },
+  {
+   "id": "boston",
+   "ko": "보스턴",
+   "en": "Boston",
+   "country": "US",
+   "lat": 42.3601,
+   "lon": -71.0589,
+   "tz": "America/New_York"
+  },
+  {
+   "id": "washington",
+   "ko": "워싱턴 D.C.",
+   "en": "Washington, D.C.",
+   "country": "US",
+   "lat": 38.9072,
+   "lon": -77.0369,
+   "tz": "America/New_York",
+   "aliases": [
+    "워싱턴",
+    "Washington DC",
+    "DC"
+   ]
+  },
+  {
+   "id": "philadelphia",
+   "ko": "필라델피아",
+   "en": "Philadelphia",
+   "country": "US",
+   "lat": 39.9526,
+   "lon": -75.1652,
+   "tz": "America/New_York"
+  },
+  {
+   "id": "atlanta",
+   "ko": "애틀랜타",
+   "en": "Atlanta",
+   "country": "US",
+   "lat": 33.749,
+   "lon": -84.388,
+   "tz": "America/New_York"
+  },
+  {
+   "id": "chicago",
+   "ko": "시카고",
+   "en": "Chicago",
+   "country": "US",
+   "lat": 41.8781,
+   "lon": -87.6298,
+   "tz": "America/Chicago"
+  },
+  {
+   "id": "dallas",
+   "ko": "댈러스",
+   "en": "Dallas",
+   "country": "US",
+   "lat": 32.7767,
+   "lon": -96.797,
+   "tz": "America/Chicago",
+   "aliases": [
+    "달라스"
+   ]
+  },
+  {
+   "id": "houston",
+   "ko": "휴스턴",
+   "en": "Houston",
+   "country": "US",
+   "lat": 29.7604,
+   "lon": -95.3698,
+   "tz": "America/Chicago"
+  },
+  {
+   "id": "denver",
+   "ko": "덴버",
+   "en": "Denver",
+   "country": "US",
+   "lat": 39.7392,
+   "lon": -104.9903,
+   "tz": "America/Denver"
+  },
+  {
+   "id": "losangeles",
+   "ko": "로스앤젤레스",
+   "en": "Los Angeles",
+   "country": "US",
+   "lat": 34.0522,
+   "lon": -118.2437,
+   "tz": "America/Los_Angeles",
+   "aliases": [
+    "LA",
+    "엘에이",
+    "로스엔젤레스",
+    "L.A."
+   ]
+  },
+  {
+   "id": "sanfrancisco",
+   "ko": "샌프란시스코",
+   "en": "San Francisco",
+   "country": "US",
+   "lat": 37.7749,
+   "lon": -122.4194,
+   "tz": "America/Los_Angeles",
+   "aliases": [
+    "샌프란",
+    "SF"
+   ]
+  },
+  {
+   "id": "seattle",
+   "ko": "시애틀",
+   "en": "Seattle",
+   "country": "US",
+   "lat": 47.6062,
+   "lon": -122.3321,
+   "tz": "America/Los_Angeles"
+  },
+  {
+   "id": "lasvegas",
+   "ko": "라스베이거스",
+   "en": "Las Vegas",
+   "country": "US",
+   "lat": 36.1699,
+   "lon": -115.1398,
+   "tz": "America/Los_Angeles",
+   "aliases": [
+    "라스베가스"
+   ]
+  },
+  {
+   "id": "honolulu",
+   "ko": "호놀룰루",
+   "en": "Honolulu",
+   "country": "US",
+   "lat": 21.3069,
+   "lon": -157.8583,
+   "tz": "Pacific/Honolulu",
+   "aliases": [
+    "하와이",
+    "Hawaii"
+   ]
+  },
+  {
+   "id": "anchorage",
+   "ko": "앵커리지",
+   "en": "Anchorage",
+   "country": "US",
+   "lat": 61.2181,
+   "lon": -149.9003,
+   "tz": "America/Anchorage"
+  },
+  {
+   "id": "toronto",
+   "ko": "토론토",
+   "en": "Toronto",
+   "country": "CA",
+   "lat": 43.6532,
+   "lon": -79.3832,
+   "tz": "America/Toronto"
+  },
+  {
+   "id": "vancouver",
+   "ko": "밴쿠버",
+   "en": "Vancouver",
+   "country": "CA",
+   "lat": 49.2827,
+   "lon": -123.1207,
+   "tz": "America/Vancouver"
+  },
+  {
+   "id": "montreal",
+   "ko": "몬트리올",
+   "en": "Montreal",
+   "country": "CA",
+   "lat": 45.5017,
+   "lon": -73.5673,
+   "tz": "America/Toronto",
+   "aliases": [
+    "Montréal"
+   ]
+  },
+  {
+   "id": "mexicocity",
+   "ko": "멕시코시티",
+   "en": "Mexico City",
+   "country": "MX",
+   "lat": 19.4326,
+   "lon": -99.1332,
+   "tz": "America/Mexico_City"
+  },
+  {
+   "id": "saopaulo",
+   "ko": "상파울루",
+   "en": "São Paulo",
+   "country": "BR",
+   "lat": -23.5505,
+   "lon": -46.6333,
+   "tz": "America/Sao_Paulo",
+   "aliases": [
+    "상파울로",
+    "Sao Paulo"
+   ]
+  },
+  {
+   "id": "buenosaires",
+   "ko": "부에노스아이레스",
+   "en": "Buenos Aires",
+   "country": "AR",
+   "lat": -34.6037,
+   "lon": -58.3816,
+   "tz": "America/Argentina/Buenos_Aires"
+  },
+  {
+   "id": "lima",
+   "ko": "리마",
+   "en": "Lima",
+   "country": "PE",
+   "lat": -12.0464,
+   "lon": -77.0428,
+   "tz": "America/Lima"
+  },
+  {
+   "id": "santiago",
+   "ko": "산티아고",
+   "en": "Santiago",
+   "country": "CL",
+   "lat": -33.4489,
+   "lon": -70.6693,
+   "tz": "America/Santiago"
+  },
+  {
+   "id": "bogota",
+   "ko": "보고타",
+   "en": "Bogotá",
+   "country": "CO",
+   "lat": 4.711,
+   "lon": -74.0721,
+   "tz": "America/Bogota",
+   "aliases": [
+    "Bogota"
+   ]
+  },
+  {
+   "id": "london",
+   "ko": "런던",
+   "en": "London",
+   "country": "GB",
+   "lat": 51.5074,
+   "lon": -0.1278,
+   "tz": "Europe/London"
+  },
+  {
+   "id": "manchester",
+   "ko": "맨체스터",
+   "en": "Manchester",
+   "country": "GB",
+   "lat": 53.4808,
+   "lon": -2.2426,
+   "tz": "Europe/London"
+  },
+  {
+   "id": "edinburgh",
+   "ko": "에든버러",
+   "en": "Edinburgh",
+   "country": "GB",
+   "lat": 55.9533,
+   "lon": -3.1883,
+   "tz": "Europe/London",
+   "aliases": [
+    "에딘버러"
+   ]
+  },
+  {
+   "id": "dublin",
+   "ko": "더블린",
+   "en": "Dublin",
+   "country": "IE",
+   "lat": 53.3498,
+   "lon": -6.2603,
+   "tz": "Europe/Dublin"
+  },
+  {
+   "id": "paris",
+   "ko": "파리",
+   "en": "Paris",
+   "country": "FR",
+   "lat": 48.8566,
+   "lon": 2.3522,
+   "tz": "Europe/Paris"
+  },
+  {
+   "id": "lyon",
+   "ko": "리옹",
+   "en": "Lyon",
+   "country": "FR",
+   "lat": 45.764,
+   "lon": 4.8357,
+   "tz": "Europe/Paris"
+  },
+  {
+   "id": "berlin",
+   "ko": "베를린",
+   "en": "Berlin",
+   "country": "DE",
+   "lat": 52.52,
+   "lon": 13.405,
+   "tz": "Europe/Berlin"
+  },
+  {
+   "id": "munich",
+   "ko": "뮌헨",
+   "en": "Munich",
+   "country": "DE",
+   "lat": 48.1351,
+   "lon": 11.582,
+   "tz": "Europe/Berlin",
+   "aliases": [
+    "München"
+   ]
+  },
+  {
+   "id": "hamburg",
+   "ko": "함부르크",
+   "en": "Hamburg",
+   "country": "DE",
+   "lat": 53.5511,
+   "lon": 9.9937,
+   "tz": "Europe/Berlin"
+  },
+  {
+   "id": "frankfurt",
+   "ko": "프랑크푸르트",
+   "en": "Frankfurt",
+   "country": "DE",
+   "lat": 50.1109,
+   "lon": 8.6821,
+   "tz": "Europe/Berlin"
+  },
+  {
+   "id": "amsterdam",
+   "ko": "암스테르담",
+   "en": "Amsterdam",
+   "country": "NL",
+   "lat": 52.3676,
+   "lon": 4.9041,
+   "tz": "Europe/Amsterdam"
+  },
+  {
+   "id": "brussels",
+   "ko": "브뤼셀",
+   "en": "Brussels",
+   "country": "BE",
+   "lat": 50.8503,
+   "lon": 4.3517,
+   "tz": "Europe/Brussels"
+  },
+  {
+   "id": "madrid",
+   "ko": "마드리드",
+   "en": "Madrid",
+   "country": "ES",
+   "lat": 40.4168,
+   "lon": -3.7038,
+   "tz": "Europe/Madrid"
+  },
+  {
+   "id": "barcelona",
+   "ko": "바르셀로나",
+   "en": "Barcelona",
+   "country": "ES",
+   "lat": 41.3851,
+   "lon": 2.1734,
+   "tz": "Europe/Madrid"
+  },
+  {
+   "id": "lisbon",
+   "ko": "리스본",
+   "en": "Lisbon",
+   "country": "PT",
+   "lat": 38.7223,
+   "lon": -9.1393,
+   "tz": "Europe/Lisbon"
+  },
+  {
+   "id": "rome",
+   "ko": "로마",
+   "en": "Rome",
+   "country": "IT",
+   "lat": 41.9028,
+   "lon": 12.4964,
+   "tz": "Europe/Rome"
+  },
+  {
+   "id": "milan",
+   "ko": "밀라노",
+   "en": "Milan",
+   "country": "IT",
+   "lat": 45.4642,
+   "lon": 9.19,
+   "tz": "Europe/Rome"
+  },
+  {
+   "id": "vienna",
+   "ko": "빈",
+   "en": "Vienna",
+   "country": "AT",
+   "lat": 48.2082,
+   "lon": 16.3738,
+   "tz": "Europe/Vienna",
+   "aliases": [
+    "비엔나",
+    "Wien"
+   ]
+  },
+  {
+   "id": "zurich",
+   "ko": "취리히",
+   "en": "Zurich",
+   "country": "CH",
+   "lat": 47.3769,
+   "lon": 8.5417,
+   "tz": "Europe/Zurich",
+   "aliases": [
+    "Zürich"
+   ]
+  },
+  {
+   "id": "prague",
+   "ko": "프라하",
+   "en": "Prague",
+   "country": "CZ",
+   "lat": 50.0755,
+   "lon": 14.4378,
+   "tz": "Europe/Prague"
+  },
+  {
+   "id": "warsaw",
+   "ko": "바르샤바",
+   "en": "Warsaw",
+   "country": "PL",
+   "lat": 52.2297,
+   "lon": 21.0122,
+   "tz": "Europe/Warsaw"
+  },
+  {
+   "id": "stockholm",
+   "ko": "스톡홀름",
+   "en": "Stockholm",
+   "country": "SE",
+   "lat": 59.3293,
+   "lon": 18.0686,
+   "tz": "Europe/Stockholm"
+  },
+  {
+   "id": "copenhagen",
+   "ko": "코펜하겐",
+   "en": "Copenhagen",
+   "country": "DK",
+   "lat": 55.6761,
+   "lon": 12.5683,
+   "tz": "Europe/Copenhagen"
+  },
+  {
+   "id": "oslo",
+   "ko": "오슬로",
+   "en": "Oslo",
+   "country": "NO",
+   "lat": 59.9139,
+   "lon": 10.7522,
+   "tz": "Europe/Oslo"
+  },
+  {
+   "id": "helsinki",
+   "ko": "헬싱키",
+   "en": "Helsinki",
+   "country": "FI",
+   "lat": 60.1699,
+   "lon": 24.9384,
+   "tz": "Europe/Helsinki"
+  },
+  {
+   "id": "athens",
+   "ko": "아테네",
+   "en": "Athens",
+   "country": "GR",
+   "lat": 37.9838,
+   "lon": 23.7275,
+   "tz": "Europe/Athens"
+  },
+  {
+   "id": "moscow",
+   "ko": "모스크바",
+   "en": "Moscow",
+   "country": "RU",
+   "lat": 55.7558,
+   "lon": 37.6173,
+   "tz": "Europe/Moscow"
+  },
+  {
+   "id": "cairo",
+   "ko": "카이로",
+   "en": "Cairo",
+   "country": "EG",
+   "lat": 30.0444,
+   "lon": 31.2357,
+   "tz": "Africa/Cairo"
+  },
+  {
+   "id": "nairobi",
+   "ko": "나이로비",
+   "en": "Nairobi",
+   "country": "KE",
+   "lat": -1.2921,
+   "lon": 36.8219,
+   "tz": "Africa/Nairobi"
+  },
+  {
+   "id": "lagos",
+   "ko": "라고스",
+   "en": "Lagos",
+   "country": "NG",
+   "lat": 6.5244,
+   "lon": 3.3792,
+   "tz": "Africa/Lagos"
+  },
+  {
+   "id": "johannesburg",
+   "ko": "요하네스버그",
+   "en": "Johannesburg",
+   "country": "ZA",
+   "lat": -26.2041,
+   "lon": 28.0473,
+   "tz": "Africa/Johannesburg"
+  }
+ ]
+}

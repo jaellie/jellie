@@ -1,0 +1,656 @@
+{
+ "_doc": "Life events: life. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "EMIGRATE",
+   "cat": "life",
+   "rarity": "rare",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "이민",
+    "en": "Emigrating"
+   },
+   "requires": [
+    "!abroad",
+    "age>=25",
+    "age<=55"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.9,
+     "JUPITER@H9": 0.6,
+     "JUPITER@H4": 0.4,
+     "URANUS>ASC:conjunction": 0.4
+    },
+    "mods": {
+     "overseas": 0.7,
+     "relocation": 0.5
+    },
+    "traits": {
+     "noveltySeeking": 0.3
+    }
+   },
+   "location": "airport",
+   "activity": "check_in",
+   "who": "me",
+   "line": {
+    "ko": "(이민 서류의 마지막 장. 서명만 하면 된다. 창밖으로 익숙한 동네가 보인다.)",
+    "en": "(The last page of the immigration papers. Only your signature left. Out the window, the neighborhood you know so well.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(서명한다)",
+      "en": "(Sign)"
+     },
+     "w": {
+      "GO": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(펜을 내려놓는다)",
+      "en": "(Put the pen down)"
+     },
+     "w": {
+      "STAY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "GO": {
+     "r": {
+      "ko": "공항 출국장에서 가족들이 손을 흔들었다. 비행기 창밖으로 {homeland}이(가) 작아졌다.",
+      "en": "At departures, the family waved. From the plane window, {homeland} grew small."
+     },
+     "effects": [
+      {
+       "kind": "moveAbroad"
+      },
+      {
+       "kind": "job",
+       "abroad": true
+      }
+     ],
+     "card": "FLIGHT",
+     "lean": {
+      "traits": {
+       "noveltySeeking": 0.3
+      }
+     }
+    },
+    "STAY": {
+     "r": {
+      "ko": "서류는 서랍에 들어갔다. 여기서, 더 잘 살아보기로 했다.",
+      "en": "The papers went into a drawer. You'd make a better life right here."
+     }
+    }
+   }
+  },
+  {
+   "id": "MILITARY_ENLISTMENT",
+   "cat": "life",
+   "rarity": "common",
+   "tone": "light",
+   "big": true,
+   "title": {
+    "ko": "입대",
+    "en": "Enlistment"
+   },
+   "requires": [
+    "male",
+    "!f_militaryDone",
+    "age<=28",
+    "korean"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.3
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "officer",
+   "line": {
+    "ko": "[입영 통지서] 귀하는 다음 달, 신병교육대로 입영하시기 바랍니다.",
+    "en": "[Enlistment notice] You are to report to basic training next month."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(미용실에서 머리를 민다)",
+      "en": "(Get your head shaved)"
+     },
+     "w": {
+      "SERVE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(가족과 마지막 외식을 한다)",
+      "en": "(One last family dinner out)"
+     },
+     "w": {
+      "SERVE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SERVE": {
+     "r": {
+      "ko": "훈련소 정문 앞에서 뒤를 돌아봤다. 1년 반 뒤, 다른 사람이 되어 그 문을 나왔다.",
+      "en": "At the training camp gate you looked back once. A year and a half later, you walked out that gate a different person."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "militaryDone",
+       "value": true
+      },
+      {
+       "kind": "memory",
+       "text": "Military service",
+       "tags": [
+        "event"
+       ]
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "훈련소 정문",
+       "en": "The training camp gate"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "relative"
+      ],
+      "priority": 7
+     }
+    }
+   }
+  },
+  {
+   "id": "NATURAL_DISASTER",
+   "cat": "life",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "태풍",
+    "en": "Typhoon"
+   },
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "SAMJAE": 0.5,
+     "URANUS@H4": 0.5,
+     "BRANCH_CLASH@year": 0.4,
+     "unfavorable": 0.3
+    }
+   },
+   "location": "home",
+   "who": "app",
+   "line": {
+    "ko": "[긴급재난문자] 태풍 경보. 외출을 자제하고 창문을 단단히 고정하십시오.",
+    "en": "[Emergency alert] Typhoon warning. Stay indoors and secure your windows."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(창문에 테이프를 붙이고 버틴다)",
+      "en": "(Tape the windows and ride it out)"
+     },
+     "w": {
+      "SAFE": 0.6,
+      "DAMAGE": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "이웃 할머니 댁부터 들여다본다",
+      "en": "Check on the elderly neighbor first"
+     },
+     "w": {
+      "HELPER": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SAFE": {
+     "r": {
+      "ko": "밤새 창문이 울었다. 아침에 보니 동네 간판 몇 개가 날아가 있었다.",
+      "en": "The windows howled all night. In the morning, a few shop signs were gone."
+     }
+    },
+    "DAMAGE": {
+     "r": {
+      "ko": "{f:basement}에 물이 들어찼다. 젖은 앨범을 햇볕에 말렸다.",
+      "en": "Water flooded {f:basement}. You dried soaked photo albums in the sun."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -6
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "햇볕에 말린 앨범",
+       "en": "Albums drying in the sun"
+      },
+      "location": "street",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     }
+    },
+    "HELPER": {
+     "r": {
+      "ko": "할머니 댁 창문을 같이 막았다. 그 뒤로 할머니는 {f:pickle}을(를) 나눠주신다.",
+      "en": "You helped board up her windows. Ever since, she shares her {f:pickle} with you."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PANDEMIC",
+   "cat": "life",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "거리두기",
+    "en": "Lockdown"
+   },
+   "requires": [
+    "age>=15"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>MOON:hard": 0.3,
+     "SAMJAE": 0.3
+    },
+    "mods": {
+     "social": -0.3
+    }
+   },
+   "location": "home",
+   "activity": "watch_tv",
+   "who": "app",
+   "line": {
+    "ko": "[안전안내문자] 사회적 거리두기 최고 단계. 모임을 취소하고 가급적 집에 머물러 주십시오.",
+    "en": "[Safety alert] Social distancing at the highest level. Cancel gatherings and stay home whenever possible."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(집에서 새 취미를 시작한다)",
+      "en": "(Start a new hobby at home)"
+     },
+     "w": {
+      "HOBBY": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(화상으로 사람들을 만난다)",
+      "en": "(See people over video)"
+     },
+     "w": {
+      "VIDEO": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(창밖만 본다)",
+      "en": "(Just watch from the window)"
+     },
+     "w": {
+      "LONELY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "HOBBY": {
+     "r": {
+      "ko": "빵을 굽고, 화분을 키우고, 퍼즐을 맞췄다. 그해 가장 많이 배운 건 나 자신이었다.",
+      "en": "You baked bread, grew plants, did puzzles. What you learned most about that year was yourself."
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "The pandemic year",
+       "tags": [
+        "event"
+       ]
+      }
+     ]
+    },
+    "VIDEO": {
+     "r": {
+      "ko": "화면 속 네모 칸들이 그해의 친구였다. 줌 술자리는 새벽까지 이어졌다.",
+      "en": "Little squares on a screen were that year's friends. Video drinking nights ran until dawn."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.05
+      }
+     ]
+    },
+    "LONELY": {
+     "r": {
+      "ko": "달력의 날짜가 전부 같아 보였다. 그래도 봄은 왔다.",
+      "en": "Every day on the calendar looked the same. Spring came anyway."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": -0.1
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "WEDDING_ABROAD",
+   "cat": "life",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "requires": [
+    "engaged"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.3,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2,
+     "YEOKMA": 0.45,
+     "JUPITER@H9": 0.3,
+     "JUPITER@H4": 0.2,
+     "URANUS>ASC:conjunction": 0.2
+    },
+    "mods": {
+     "travel": 0.4
+    }
+   },
+   "location": "home",
+   "activity": "invite_partner",
+   "who": "partner",
+   "line": {
+    "ko": "우리 결혼식, 해외에서 작게 하는 건 어때? 바닷가에서, 가족들만 모시고.",
+    "en": "What if we have a small wedding abroad? On a beach, just family."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "좋아! 바다로 가자",
+      "en": "Yes! Let's go to the sea"
+     },
+     "w": {
+      "ABROAD": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "우리 부모님이 서운해하실 거야",
+      "en": "Our parents would be hurt"
+     },
+     "w": {
+      "HOME": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "ABROAD": {
+     "r": {
+      "ko": "맨발로 모래 위를 걸어 들어갔다. 파도 소리가 축가였다.",
+      "en": "You walked in barefoot over the sand. The waves sang the wedding song."
+     },
+     "effects": [
+      {
+       "kind": "trip",
+       "scope": "INTERNATIONAL"
+      },
+      {
+       "kind": "setFlag",
+       "name": "weddingAbroad",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "파도 소리 결혼식",
+       "en": "A wedding to the sound of waves"
+      },
+      "location": "beach",
+      "actors": [
+       "me",
+       "partner",
+       "guest"
+      ],
+      "priority": 8
+     }
+    },
+    "HOME": {
+     "r": {
+      "ko": "양가 부모님이 모두 웃는 결혼식을 하기로 했다. 신혼여행은 바다로.",
+      "en": "You chose a wedding where both families could smile. The honeymoon would be by the sea."
+     }
+    }
+   }
+  },
+  {
+   "id": "BECOME_GRANDPARENT",
+   "cat": "life",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "첫 손주",
+    "en": "A grandchild"
+   },
+   "requires": [
+    "hasKid",
+    "kidAge>=26",
+    "!f_grandparent"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.5,
+     "STEM_COMBINATION@hour": 0.5,
+     "HALF_HARMONY@hour": 0.3,
+     "BRANCH_CLASH@hour": 0.6
+    },
+    "mods": {
+     "family": 0.5
+    }
+   },
+   "location": "hospital",
+   "activity": "visit_patient",
+   "who": "kid",
+   "line": {
+    "ko": "저희… 아기 가졌어요! 이제 손주 보시는 거예요!",
+    "en": "We're… having a baby! You're going to be a grandparent!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(소리를 지르며 {kid}을(를) 안는다)",
+      "en": "(Scream and hug {kid})"
+     },
+     "w": {
+      "JOY": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(눈물이 먼저 난다)",
+      "en": "(Tears come first)"
+     },
+     "w": {
+      "JOY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "JOY": {
+     "r": {
+      "ko": "신생아실 유리창 너머, {kid}을(를) 닮은 작은 얼굴이 있었다. 시간이 이렇게 흘렀구나.",
+      "en": "Behind the nursery glass was a tiny face that looked just like {kid}. So this is how time flows."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "grandparent",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "첫 손주",
+       "en": "My first grandchild"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "kid",
+       "baby"
+      ],
+      "priority": 9
+     }
+    }
+   }
+  },
+  {
+   "id": "WRITING_WILL",
+   "cat": "life",
+   "rarity": "uncommon",
+   "tone": "revelation",
+   "requires": [
+    "age>=70"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN_RETURN": 0.5,
+     "HWAGAE": 0.4
+    },
+    "mods": {
+     "introspection": 0.5
+    }
+   },
+   "location": "home",
+   "activity": "study",
+   "who": "lawyer",
+   "line": {
+    "ko": "유언장의 첫 줄은 어떻게 시작하시겠어요? 천천히 생각하셔도 됩니다.",
+    "en": "How would you like the first line of your will to begin? Take all the time you need."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "사랑하는 가족에게",
+      "en": "To my beloved family"
+     },
+     "w": {
+      "FAMILY": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(기부할 곳을 먼저 적는다)",
+      "en": "(Write down the charities first)"
+     },
+     "w": {
+      "GIVE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(지난 삶을 천천히 돌아본다)",
+      "en": "(Slowly look back on your life)"
+     },
+     "w": {
+      "LOOK": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "FAMILY": {
+     "r": {
+      "ko": "한 줄 쓰는 데 한 시간이 걸렸다. 고맙다는 말이 제일 많았다.",
+      "en": "One line took an hour. The words you wrote most were 'thank you'."
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "Wrote my will",
+       "tags": [
+        "event"
+       ]
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "유언장의 첫 줄",
+       "en": "The first line of my will"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     }
+    },
+    "GIVE": {
+     "r": {
+      "ko": "남은 것의 일부를 보육원에 남기기로 했다. 마음이 가벼웠다.",
+      "en": "You left part of what remains to an orphanage. Your heart felt light."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -10
+      },
+      {
+       "kind": "memory",
+       "text": "Left a gift in my will",
+       "tags": [
+        "event"
+       ]
+      }
+     ]
+    },
+    "LOOK": {
+     "r": {
+      "ko": "사진첩을 넘기며 오후를 다 보냈다. 후회보다 웃은 날이 많았다.",
+      "en": "You spent the whole afternoon turning photo-album pages. More laughing days than regrets."
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "Looked back on my life",
+       "tags": [
+        "event"
+       ]
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

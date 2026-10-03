@@ -1,0 +1,2329 @@
+{
+ "_doc": "Life events: family. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "COMING_AROUND",
+   "cat": "family",
+   "rarity": "common",
+   "tone": "revelation",
+   "chainOnly": true,
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "me",
+   "line": {
+    "ko": "({who}이(가) 조용히 말을 꺼냈다.) 그때는 내가 서툴렀어. {subject} 이야기, 이제는 제대로 듣고 싶어.",
+    "en": "({who} brought it up quietly.) I handled it badly back then. I want to really hear {subject} story now."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "기다렸어요",
+      "en": "I was waiting for this"
+     },
+     "w": {
+      "HEAL": 0.85,
+      "SLOW": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "…아직은 조금 서운해요",
+      "en": "…It still hurts a little"
+     },
+     "w": {
+      "SLOW": 0.6,
+      "HEAL": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "HEAL": {
+     "r": {
+      "ko": "{who}이(가) 어색하게 웃었다. 그날 우리는 오래 이야기했다. 서툴러도, 진심이었다.",
+      "en": "{who} gave an awkward smile. You talked for a long time that day. Clumsy, but sincere."
+     },
+     "card": {
+      "caption": {
+       "ko": "{who}이(가) 돌아온 날",
+       "en": "The day {who} came around"
+      },
+      "location": "family_home",
+      "actors": [
+       "me",
+       "relative"
+      ],
+      "priority": 6
+     }
+    },
+    "SLOW": {
+     "r": {
+      "ko": "그래도 문은 열어두기로 했다. 다음 {f:holiday}엔 {who}이(가) 먼저 안부를 물었다.",
+      "en": "You left the door open. At the next {f:holiday}, {who} was the first to ask how you were."
+     }
+    }
+   }
+  },
+  {
+   "id": "INHERITANCE_FEUD",
+   "cat": "family",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "유산 분쟁",
+    "en": "The inheritance fight"
+   },
+   "chainOnly": true,
+   "hooks": [
+    {
+     "on": "parentDies",
+     "p": 0.14,
+     "after": [
+      2,
+      8
+     ]
+    }
+   ],
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "relative",
+   "line": {
+    "ko": "(유산을 정리하려고 가족들이 모였다. 이야기가 나오자마자 목소리가 높아졌다.) 장남이 더 받아야지! / 모시고 산 사람이 더 받아야지!",
+    "en": "(The family gathered to settle the estate. The moment it came up, voices rose.) 'The eldest should get more!' 'No, whoever took care of them should!'"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "법대로 똑같이 나누자",
+      "en": "Split it equally, by the book"
+     },
+     "w": {
+      "FAIR": 0.55,
+      "COURT": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "저는 필요 없어요",
+      "en": "I don't need any of it"
+     },
+     "w": {
+      "GIVE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(내 몫은 끝까지 챙긴다)",
+      "en": "(Fight for your share to the end)"
+     },
+     "w": {
+      "COURT": 0.6,
+      "WIN": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "FAIR": {
+     "r": {
+      "ko": "한참의 고성 끝에 도장을 찍었다. 다들 지쳐 있었다.",
+      "en": "After hours of shouting, everyone signed. Everyone was exhausted."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 15
+      }
+     ]
+    },
+    "GIVE": {
+     "r": {
+      "ko": "통장에 들어온 건 없지만, 마음은 조금 가벼웠다. 누군가는 뒤에서 나를 바보라고 했다.",
+      "en": "Nothing landed in your account, but your heart felt lighter. Someone called you a fool behind your back."
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": 0.1
+      }
+     ]
+    },
+    "COURT": {
+     "r": {
+      "ko": "가족끼리 법정에 섰다. 이긴 사람도 진 사람도 없는 싸움이었다.",
+      "en": "Family, facing each other in court. A fight nobody won."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 8
+      },
+      {
+       "kind": "setFlag",
+       "name": "familyFeud",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "법정에 선 가족",
+       "en": "Family in a courtroom"
+      },
+      "location": "court",
+      "actors": [
+       "me",
+       "relative",
+       "relative"
+      ],
+      "priority": 7
+     },
+     "chain": [
+      {
+       "to": "LAWSUIT_WIN",
+       "after": [
+        10,
+        30
+       ],
+       "p": 0.3
+      }
+     ]
+    },
+    "WIN": {
+     "r": {
+      "ko": "내 몫은 챙겼다. 대신 그 뒤로 {f:holiday}에 빈자리가 생겼다.",
+      "en": "You got your share. And {f:holiday} had an empty seat after that."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 30
+      },
+      {
+       "kind": "setFlag",
+       "name": "familyFeud",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SIBLING_BORROWS_VANISHES",
+   "cat": "family",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "hasSibling",
+    "age>=22",
+    "money>=5"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.66,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "SAMJAE": 0.36,
+     "unfavorable": 0.3,
+     "BRANCH_CLASH@month": 0.54,
+     "BRANCH_CLASH@year": 0.48,
+     "PUNISHMENT@month": 0.24,
+     "SATURN>MOON:hard": 0.3
+    },
+    "mods": {
+     "wealth": -0.3
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "sibling",
+   "line": {
+    "ko": "급해서 그래. 딱 석 달만 빌려줘. 이번엔 진짜야. 부탁이야.",
+    "en": "It's urgent. Just lend me some for three months. I mean it this time. Please."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…얼마면 돼?",
+      "en": "…How much do you need?"
+     },
+     "w": {
+      "GONE": 0.5,
+      "BACK": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "안 돼. 무슨 일인지 먼저 말해",
+      "en": "No. Tell me what's going on first"
+     },
+     "w": {
+      "ANGRY": 0.6,
+      "TRUTH": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "조금만 보낸다",
+      "en": "Send a little"
+     },
+     "w": {
+      "BACK": 0.7,
+      "GONE": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "GONE": {
+     "r": {
+      "ko": "돈을 보낸 다음 날부터 {sibling}의 전화가 꺼져 있었다.",
+      "en": "The day after you sent the money, {sibling}'s phone went dead."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.3,
+       "min": 10
+      },
+      {
+       "kind": "setFlag",
+       "name": "siblingGone",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "꺼져 있는 전화",
+       "en": "A phone that stays off"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     },
+     "chain": [
+      {
+       "to": "SIBLING_RETURNS",
+       "after": [
+        18,
+        60
+       ],
+       "p": 0.6
+      }
+     ]
+    },
+    "BACK": {
+     "r": {
+      "ko": "석 달 하고 일주일 뒤, 돈이 들어왔다. 메모: '늦어서 미안.'",
+      "en": "Three months and a week later, the money came back. Memo: 'Sorry it's late.'"
+     }
+    },
+    "ANGRY": {
+     "r": {
+      "ko": "'너까지 그러냐.' {sibling}이(가) 전화를 끊었다. 한동안 연락이 없었다.",
+      "en": "'You too, huh?' {sibling} hung up. No word for a long while."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "siblingRift",
+       "value": true
+      }
+     ]
+    },
+    "TRUTH": {
+     "r": {
+      "ko": "사업이 망했다고 했다. 같이 은행에 가서 대출 상담을 받았다.",
+      "en": "Their business had gone under. You went to the bank together to talk about a loan."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -5
+      },
+      {
+       "kind": "familySupport",
+       "delta": 0.1
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SIBLING_RETURNS",
+   "cat": "family",
+   "rarity": "common",
+   "tone": "revelation",
+   "big": true,
+   "title": {
+    "ko": "돌아온 형제",
+    "en": "The prodigal sibling"
+   },
+   "requires": [
+    "hasSibling",
+    "f_siblingGone"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(몇 년 만에 초인종이 울렸다. 문 앞에 {sibling}이(가) 서 있었다. 많이 야위었다.)",
+    "en": "(Years later, the doorbell rang. {sibling} stood at the door, much thinner.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…들어와. 밥은 먹었어?",
+      "en": "…Come in. Have you eaten?"
+     },
+     "w": {
+      "PAYS": 0.4,
+      "SORRY": 0.6
+     }
+    },
+    {
+     "t": {
+      "ko": "무슨 낯으로 왔어",
+      "en": "How dare you show your face"
+     },
+     "w": {
+      "SORRY": 0.5,
+      "LEAVES": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "PAYS": {
+     "r": {
+      "ko": "{sibling}이(가) 봉투를 내밀었다. 빌려간 돈에, 이자까지.",
+      "en": "{sibling} held out an envelope: what they'd borrowed, with interest."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 15
+      },
+      {
+       "kind": "clearFlag",
+       "name": "siblingGone"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "돌아온 {sibling}",
+       "en": "{sibling} came back"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "relative"
+      ],
+      "priority": 7
+     }
+    },
+    "SORRY": {
+     "r": {
+      "ko": "돈은 없었다. 대신 '미안해'를 백 번쯤 들었다. {f:stew}을(를) 끓였다.",
+      "en": "No money. Just 'I'm sorry' about a hundred times. You made {f:stew}."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "siblingGone"
+      }
+     ]
+    },
+    "LEAVES": {
+     "r": {
+      "ko": "{sibling}은(는) 고개를 숙이고 돌아섰다. 그래도 이번엔 번호가 살아 있다.",
+      "en": "{sibling} bowed their head and turned away. But this time, the number still works."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "siblingGone"
+      },
+      {
+       "kind": "setFlag",
+       "name": "siblingRift",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "FAVORITISM_BLOWUP",
+   "cat": "family",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "hasSibling",
+    "momAlive",
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.8,
+     "BRANCH_CLASH@month": 0.6,
+     "PUNISHMENT@month": 0.4,
+     "group:GYEOB_JAE": 0.3,
+     "SATURN>MOON:hard": 0.5
+    },
+    "mods": {
+     "family": -0.3
+    },
+    "traits": {
+     "emotionalExpression": 0.3
+    }
+   },
+   "location": "family_home",
+   "activity": "eat",
+   "who": "me",
+   "line": {
+    "ko": "(엄마가 또 {sibling} 편을 들었다. 평생 삼켜온 말이 결국 튀어나왔다.) 왜 맨날 {sibling}만 챙겨? 나는 뭔데?",
+    "en": "(Mom took {sibling}'s side again. The words you'd swallowed your whole life finally came out.) Why is it always {sibling}? What am I?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(울면서 끝까지 말한다)",
+      "en": "(Crying, say all of it)"
+     },
+     "w": {
+      "APOLOGY": 0.5,
+      "DENIAL": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "(말을 멈추고 나와버린다)",
+      "en": "(Stop mid-sentence and walk out)"
+     },
+     "w": {
+      "COLD": 0.7,
+      "APOLOGY": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "APOLOGY": {
+     "r": {
+      "ko": "엄마는 한참 말이 없었다. 그리고 처음으로 '미안하다'고 했다. 늦었지만, 들었다.",
+      "en": "Mom said nothing for a long time. Then, for the first time: 'I'm sorry.' Late, but you heard it."
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "Mom finally apologized",
+       "tags": [
+        "event"
+       ]
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "처음 들은 미안하다는 말",
+       "en": "The first 'I'm sorry'"
+      },
+      "location": "family_home",
+      "actors": [
+       "me",
+       "relative"
+      ],
+      "priority": 7
+     }
+    },
+    "DENIAL": {
+     "r": {
+      "ko": "'내가 언제 그랬니?' 그 말에 더 할 말이 없어졌다.",
+      "en": "'When did I ever do that?' After that, there was nothing left to say."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      },
+      {
+       "kind": "familySupport",
+       "delta": -0.1
+      }
+     ]
+    },
+    "COLD": {
+     "r": {
+      "ko": "그 뒤로 본가에 가는 횟수가 줄었다. 아무도 이유를 묻지 않았다.",
+      "en": "You visited home less after that. Nobody asked why."
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": -0.1
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CUT_OFF_MOM",
+   "cat": "family",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "절연",
+    "en": "Cutting ties"
+   },
+   "requires": [
+    "momAlive",
+    "age>=22",
+    "!f_cutOffMom"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.88,
+     "BRANCH_CLASH@month": 0.66,
+     "PUNISHMENT@month": 0.44,
+     "group:GYEOB_JAE": 0.33,
+     "SATURN>MOON:hard": 0.55
+    },
+    "mods": {
+     "family": -0.5,
+     "change": 0.3
+    },
+    "traits": {
+     "independence": 0.4
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(또 같은 말다툼. 오늘은 전화를 끊으며 결심했다. 다시는 엄마에게 연락하지 않겠다고.)",
+    "en": "(The same fight, again. Hanging up today, you decided: you won't call Mom ever again.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(번호를 지운다)",
+      "en": "(Delete the number)"
+     },
+     "w": {
+      "CUT": 0.85,
+      "WAVER": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "(차단까지는 못 한다)",
+      "en": "(Can't bring yourself to block it)"
+     },
+     "w": {
+      "WAVER": 0.7,
+      "CUT": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "CUT": {
+     "r": {
+      "ko": "몇 번의 {f:holiday}이(가) 조용히 지나갔다. 마음 한쪽이 편하면서도, 계속 아팠다.",
+      "en": "Holidays came and went quietly. Part of you felt at peace. Part of you kept aching."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "cutOffMom",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "지워진 번호",
+       "en": "A deleted number"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     },
+     "chain": [
+      {
+       "to": "RECONCILE_MOM",
+       "after": [
+        24,
+        96
+       ],
+       "p": 0.55
+      }
+     ]
+    },
+    "WAVER": {
+     "r": {
+      "ko": "한 달 뒤, 결국 먼저 전화를 걸었다. 둘 다 그 일은 말하지 않았다.",
+      "en": "A month later, you called first after all. Neither of you mentioned it."
+     }
+    }
+   }
+  },
+  {
+   "id": "RECONCILE_MOM",
+   "cat": "family",
+   "rarity": "uncommon",
+   "tone": "revelation",
+   "big": true,
+   "title": {
+    "ko": "다시 걸려온 전화",
+    "en": "The call"
+   },
+   "requires": [
+    "momAlive",
+    "f_cutOffMom"
+   ],
+   "trigger": {
+    "signals": {
+     "group:BI_GYEON": 0.24,
+     "SIX_HARMONY@month": 0.12,
+     "JUPITER@H11": 0.24
+    },
+    "mods": {
+     "family": 0.5
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(몇 년 만에 엄마의 번호가 화면에 떴다. 지웠는데도, 그 숫자는 외우고 있었다.)",
+    "en": "(For the first time in years, Mom's number lit up the screen. You'd deleted it, but you still knew it by heart.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "받는다",
+      "en": "Answer"
+     },
+     "w": {
+      "MEND": 0.7,
+      "TRY": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(끝까지 받지 않는다)",
+      "en": "(Let it ring out)"
+     },
+     "w": {
+      "NO": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "MEND": {
+     "r": {
+      "ko": "'…잘 지냈니.' 그 한마디에 몇 년이 녹아내렸다. 다음 주에 엄마 집에 가기로 했다.",
+      "en": "'…Have you been well?' Those words melted the years away. You'll visit Mom next week."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "cutOffMom"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시 걸려온 엄마의 전화",
+       "en": "Mom's call, again"
+      },
+      "location": "family_home",
+      "actors": [
+       "me",
+       "relative"
+      ],
+      "priority": 8
+     }
+    },
+    "TRY": {
+     "r": {
+      "ko": "어색한 통화였다. 그래도 끊기 전에 '또 전화할게'라고 말했다.",
+      "en": "An awkward call. But before hanging up, you said, 'I'll call again.'"
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "cutOffMom"
+      }
+     ]
+    },
+    "NO": {
+     "r": {
+      "ko": "벨소리가 멈췄다. 음성 메시지 하나가 남았다. 아직 듣지 않았다.",
+      "en": "The ringing stopped. A voicemail was left. You haven't listened to it yet."
+     },
+     "chain": [
+      {
+       "to": "RECONCILE_MOM",
+       "after": [
+        12,
+        48
+       ],
+       "p": 0.4
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CUT_OFF_DAD",
+   "cat": "family",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "절연",
+    "en": "Cutting ties"
+   },
+   "requires": [
+    "dadAlive",
+    "age>=22",
+    "!f_cutOffDad"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.88,
+     "BRANCH_CLASH@month": 0.66,
+     "PUNISHMENT@month": 0.44,
+     "group:GYEOB_JAE": 0.33,
+     "SATURN>MOON:hard": 0.55
+    },
+    "mods": {
+     "family": -0.5,
+     "change": 0.3
+    },
+    "traits": {
+     "independence": 0.4
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(또 같은 말다툼. 오늘은 전화를 끊으며 결심했다. 다시는 아빠에게 연락하지 않겠다고.)",
+    "en": "(The same fight, again. Hanging up today, you decided: you won't call Dad ever again.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(번호를 지운다)",
+      "en": "(Delete the number)"
+     },
+     "w": {
+      "CUT": 0.85,
+      "WAVER": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "(차단까지는 못 한다)",
+      "en": "(Can't bring yourself to block it)"
+     },
+     "w": {
+      "WAVER": 0.7,
+      "CUT": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "CUT": {
+     "r": {
+      "ko": "몇 번의 {f:holiday}이(가) 조용히 지나갔다. 마음 한쪽이 편하면서도, 계속 아팠다.",
+      "en": "Holidays came and went quietly. Part of you felt at peace. Part of you kept aching."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "cutOffDad",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "지워진 번호",
+       "en": "A deleted number"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     },
+     "chain": [
+      {
+       "to": "RECONCILE_DAD",
+       "after": [
+        24,
+        96
+       ],
+       "p": 0.55
+      }
+     ]
+    },
+    "WAVER": {
+     "r": {
+      "ko": "한 달 뒤, 결국 먼저 전화를 걸었다. 둘 다 그 일은 말하지 않았다.",
+      "en": "A month later, you called first after all. Neither of you mentioned it."
+     }
+    }
+   }
+  },
+  {
+   "id": "RECONCILE_DAD",
+   "cat": "family",
+   "rarity": "uncommon",
+   "tone": "revelation",
+   "big": true,
+   "title": {
+    "ko": "다시 걸려온 전화",
+    "en": "The call"
+   },
+   "requires": [
+    "dadAlive",
+    "f_cutOffDad"
+   ],
+   "trigger": {
+    "signals": {
+     "group:BI_GYEON": 0.24,
+     "SIX_HARMONY@month": 0.12,
+     "JUPITER@H11": 0.24
+    },
+    "mods": {
+     "family": 0.5
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(몇 년 만에 아빠의 번호가 화면에 떴다. 지웠는데도, 그 숫자는 외우고 있었다.)",
+    "en": "(For the first time in years, Dad's number lit up the screen. You'd deleted it, but you still knew it by heart.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "받는다",
+      "en": "Answer"
+     },
+     "w": {
+      "MEND": 0.7,
+      "TRY": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(끝까지 받지 않는다)",
+      "en": "(Let it ring out)"
+     },
+     "w": {
+      "NO": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "MEND": {
+     "r": {
+      "ko": "'…잘 지냈니.' 그 한마디에 몇 년이 녹아내렸다. 다음 주에 아빠 집에 가기로 했다.",
+      "en": "'…Have you been well?' Those words melted the years away. You'll visit Dad next week."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "cutOffDad"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시 걸려온 아빠의 전화",
+       "en": "Dad's call, again"
+      },
+      "location": "family_home",
+      "actors": [
+       "me",
+       "relative"
+      ],
+      "priority": 8
+     }
+    },
+    "TRY": {
+     "r": {
+      "ko": "어색한 통화였다. 그래도 끊기 전에 '또 전화할게'라고 말했다.",
+      "en": "An awkward call. But before hanging up, you said, 'I'll call again.'"
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "cutOffDad"
+      }
+     ]
+    },
+    "NO": {
+     "r": {
+      "ko": "벨소리가 멈췄다. 음성 메시지 하나가 남았다. 아직 듣지 않았다.",
+      "en": "The ringing stopped. A voicemail was left. You haven't listened to it yet."
+     },
+     "chain": [
+      {
+       "to": "RECONCILE_DAD",
+       "after": [
+        12,
+        48
+       ],
+       "p": 0.4
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CAREGIVER_MOM",
+   "cat": "family",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "momAlive",
+    "age>=38"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.35,
+     "SATURN>MOON:hard": 0.55,
+     "SATURN@H6": 0.25,
+     "SATURN@H12": 0.2,
+     "unfavorable": 0.2,
+     "SAMJAE": 0.2,
+     "BRANCH_CLASH@year": 0.4,
+     "BRANCH_CLASH@month": 0.3,
+     "PUNISHMENT@month": 0.2,
+     "group:GYEOB_JAE": 0.15
+    },
+    "mods": {
+     "family": 0.4
+    }
+   },
+   "location": "family_home",
+   "activity": "help_family",
+   "who": "me",
+   "line": {
+    "ko": "(엄마이(가) 넘어진 뒤로 혼자서는 거동이 힘들다. 요양병원 대기는 1년. 누군가는 곁에 있어야 한다.)",
+    "en": "(Since the fall, Mom can barely get around alone. The nursing-home waitlist is a year. Someone has to be there.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "내가 모실게",
+      "en": "I'll take care of them"
+     },
+     "w": {
+      "CARE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "가족들이 돌아가며 맡자",
+      "en": "Let's take turns as a family"
+     },
+     "w": {
+      "SHARE": 0.7,
+      "CARE": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "좋은 요양원을 알아보자",
+      "en": "Let's find a good care home"
+     },
+     "w": {
+      "FACILITY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CARE": {
+     "r": {
+      "ko": "엄마의 약 봉지를 시간별로 나누는 게 하루의 시작이 됐다. 힘들지만, 엄마의 손은 따뜻했다.",
+      "en": "Sorting Mom's pills by the hour became how each day began. It was hard, but her hands were warm."
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": 0.3
+      },
+      {
+       "kind": "money",
+       "amount": -15
+      },
+      {
+       "kind": "setFlag",
+       "name": "caregiver",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "엄마의 약 봉지",
+       "en": "Mom's pill packets"
+      },
+      "location": "family_home",
+      "actors": [
+       "me",
+       "relative"
+      ],
+      "priority": 7
+     }
+    },
+    "SHARE": {
+     "r": {
+      "ko": "단톡방에 간병 당번표가 올라왔다. 다툼도 있었지만, 다들 자기 칸을 채웠다.",
+      "en": "A caregiving schedule went up in the family chat. There were fights, but everyone showed up for their shifts."
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": 0.15
+      },
+      {
+       "kind": "money",
+       "amount": -5
+      }
+     ]
+    },
+    "FACILITY": {
+     "r": {
+      "ko": "주말마다 면회를 간다. 돌아오는 길이 늘 길다. 엄마은(는) 괜찮다고 웃는다.",
+      "en": "You visit every weekend. The drive home always feels long. Mom smiles and says she's fine."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -10
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PARENT_DEMENTIA_MOM",
+   "cat": "family",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "누구세요?",
+    "en": "Who are you?"
+   },
+   "requires": [
+    "momAlive",
+    "age>=35"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.49,
+     "SATURN>MOON:hard": 0.42,
+     "SATURN@H6": 0.35,
+     "SATURN@H12": 0.28,
+     "unfavorable": 0.28,
+     "SAMJAE": 0.28
+    },
+    "mods": {
+     "family": 0.3
+    }
+   },
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "me",
+   "line": {
+    "ko": "(본가에 들어서자 엄마이(가) 나를 보고 물었다. '누구세요?' — 아주 잠깐이었다.)",
+    "en": "(When you walked in, Mom looked at you and asked, 'Who are you?' It was only for a moment.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "병원에 모시고 간다",
+      "en": "Take them to the hospital"
+     },
+     "w": {
+      "DIAG": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(피곤하셔서 그런 거겠지…)",
+      "en": "(They're just tired…)"
+     },
+     "w": {
+      "DENIAL": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "DIAG": {
+     "r": {
+      "ko": "초기 치매였다. 의사는 '지금부터가 중요합니다'라고 했다. 달력에 약 먹는 시간을 적어드렸다.",
+      "en": "Early-stage dementia. 'What you do now matters,' the doctor said. You wrote their medication times on the calendar."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "dementia_mom",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "엄마가 나를 못 알아보던 날",
+       "en": "The day Mom didn't recognize me"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "patient"
+      ],
+      "priority": 8
+     },
+     "chain": [
+      {
+       "to": "DEMENTIA_LUCID",
+       "after": [
+        8,
+        36
+       ],
+       "p": 0.8,
+       "vars": {
+        "who_ko": "엄마",
+        "who_en": "Mom",
+        "whoKey": "mom"
+       }
+      }
+     ]
+    },
+    "DENIAL": {
+     "r": {
+      "ko": "몇 달 뒤, 같은 질문을 또 들었다. 이번엔 더 길었다.",
+      "en": "A few months later, the same question. Longer, this time."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "dementia_mom",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "DEMENTIA_LUCID",
+       "after": [
+        8,
+        36
+       ],
+       "p": 0.6,
+       "vars": {
+        "who_ko": "엄마",
+        "who_en": "Mom",
+        "whoKey": "mom"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CAREGIVER_DAD",
+   "cat": "family",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "dadAlive",
+    "age>=38"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.35,
+     "SATURN>MOON:hard": 0.55,
+     "SATURN@H6": 0.25,
+     "SATURN@H12": 0.2,
+     "unfavorable": 0.2,
+     "SAMJAE": 0.2,
+     "BRANCH_CLASH@year": 0.4,
+     "BRANCH_CLASH@month": 0.3,
+     "PUNISHMENT@month": 0.2,
+     "group:GYEOB_JAE": 0.15
+    },
+    "mods": {
+     "family": 0.4
+    }
+   },
+   "location": "family_home",
+   "activity": "help_family",
+   "who": "me",
+   "line": {
+    "ko": "(아빠이(가) 넘어진 뒤로 혼자서는 거동이 힘들다. 요양병원 대기는 1년. 누군가는 곁에 있어야 한다.)",
+    "en": "(Since the fall, Dad can barely get around alone. The nursing-home waitlist is a year. Someone has to be there.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "내가 모실게",
+      "en": "I'll take care of them"
+     },
+     "w": {
+      "CARE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "가족들이 돌아가며 맡자",
+      "en": "Let's take turns as a family"
+     },
+     "w": {
+      "SHARE": 0.7,
+      "CARE": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "좋은 요양원을 알아보자",
+      "en": "Let's find a good care home"
+     },
+     "w": {
+      "FACILITY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CARE": {
+     "r": {
+      "ko": "아빠의 약 봉지를 시간별로 나누는 게 하루의 시작이 됐다. 힘들지만, 아빠의 손은 따뜻했다.",
+      "en": "Sorting Dad's pills by the hour became how each day began. It was hard, but his hands were warm."
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": 0.3
+      },
+      {
+       "kind": "money",
+       "amount": -15
+      },
+      {
+       "kind": "setFlag",
+       "name": "caregiver",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "아빠의 약 봉지",
+       "en": "Dad's pill packets"
+      },
+      "location": "family_home",
+      "actors": [
+       "me",
+       "relative"
+      ],
+      "priority": 7
+     }
+    },
+    "SHARE": {
+     "r": {
+      "ko": "단톡방에 간병 당번표가 올라왔다. 다툼도 있었지만, 다들 자기 칸을 채웠다.",
+      "en": "A caregiving schedule went up in the family chat. There were fights, but everyone showed up for their shifts."
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": 0.15
+      },
+      {
+       "kind": "money",
+       "amount": -5
+      }
+     ]
+    },
+    "FACILITY": {
+     "r": {
+      "ko": "주말마다 면회를 간다. 돌아오는 길이 늘 길다. 아빠은(는) 괜찮다고 웃는다.",
+      "en": "You visit every weekend. The drive home always feels long. Dad smiles and says he's fine."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -10
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PARENT_DEMENTIA_DAD",
+   "cat": "family",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "누구세요?",
+    "en": "Who are you?"
+   },
+   "requires": [
+    "dadAlive",
+    "age>=35"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.49,
+     "SATURN>MOON:hard": 0.42,
+     "SATURN@H6": 0.35,
+     "SATURN@H12": 0.28,
+     "unfavorable": 0.28,
+     "SAMJAE": 0.28
+    },
+    "mods": {
+     "family": 0.3
+    }
+   },
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "me",
+   "line": {
+    "ko": "(본가에 들어서자 아빠이(가) 나를 보고 물었다. '누구세요?' — 아주 잠깐이었다.)",
+    "en": "(When you walked in, Dad looked at you and asked, 'Who are you?' It was only for a moment.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "병원에 모시고 간다",
+      "en": "Take them to the hospital"
+     },
+     "w": {
+      "DIAG": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(피곤하셔서 그런 거겠지…)",
+      "en": "(They're just tired…)"
+     },
+     "w": {
+      "DENIAL": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "DIAG": {
+     "r": {
+      "ko": "초기 치매였다. 의사는 '지금부터가 중요합니다'라고 했다. 달력에 약 먹는 시간을 적어드렸다.",
+      "en": "Early-stage dementia. 'What you do now matters,' the doctor said. You wrote their medication times on the calendar."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "dementia_dad",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "아빠가 나를 못 알아보던 날",
+       "en": "The day Dad didn't recognize me"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "patient"
+      ],
+      "priority": 8
+     },
+     "chain": [
+      {
+       "to": "DEMENTIA_LUCID",
+       "after": [
+        8,
+        36
+       ],
+       "p": 0.8,
+       "vars": {
+        "who_ko": "아빠",
+        "who_en": "Dad",
+        "whoKey": "dad"
+       }
+      }
+     ]
+    },
+    "DENIAL": {
+     "r": {
+      "ko": "몇 달 뒤, 같은 질문을 또 들었다. 이번엔 더 길었다.",
+      "en": "A few months later, the same question. Longer, this time."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "dementia_dad",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "DEMENTIA_LUCID",
+       "after": [
+        8,
+        36
+       ],
+       "p": 0.6,
+       "vars": {
+        "who_ko": "아빠",
+        "who_en": "Dad",
+        "whoKey": "dad"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "DEMENTIA_LUCID",
+   "cat": "family",
+   "rarity": "common",
+   "tone": "revelation",
+   "big": true,
+   "title": {
+    "ko": "또렷했던 날",
+    "en": "A clear day"
+   },
+   "chainOnly": true,
+   "location": "hospital",
+   "activity": "visit_patient",
+   "who": "me",
+   "line": {
+    "ko": "(면회 날. 오늘따라 {who}의 눈빛이 또렷했다.) …우리 애기, 밥은 먹고 다니니?",
+    "en": "(Visiting day. {who}'s eyes were unusually clear today.) …My baby. Are you eating properly?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(손을 꼭 잡는다)",
+      "en": "(Hold their hand tight)"
+     },
+     "w": {
+      "LUCID": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "네, 잘 먹고 다녀요",
+      "en": "Yes, I'm eating well"
+     },
+     "w": {
+      "LUCID": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "LUCID": {
+     "r": {
+      "ko": "딱 십 분이었다. 그 십 분 동안 {who}은(는) 나를 알아봤다.",
+      "en": "Just ten minutes. For those ten minutes, {who} knew you."
+     },
+     "card": {
+      "caption": {
+       "ko": "{who}이(가) 나를 알아본 십 분",
+       "en": "The ten minutes {who} knew me"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "patient"
+      ],
+      "priority": 8
+     }
+    }
+   }
+  },
+  {
+   "id": "FAMILY_BUSINESS_WAR",
+   "cat": "family",
+   "rarity": "rare",
+   "tone": "dark",
+   "requires": [
+    "dadAlive",
+    "hasSibling",
+    "age>=30"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.48,
+     "BRANCH_CLASH@month": 0.36,
+     "PUNISHMENT@month": 0.24,
+     "group:GYEOB_JAE": 0.18,
+     "SATURN>MOON:hard": 0.3,
+     "group:JEONG_GWAN": 0.36,
+     "JUPITER@H10": 0.42,
+     "JUPITER>MC:conjunction": 0.36,
+     "favorable": 0.24
+    },
+    "mods": {
+     "business": 0.4
+    }
+   },
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "dad",
+   "line": {
+    "ko": "평생 일군 가게다. 이제 누가 맡을 거냐. {sibling}은(는) 자기가 해야 한다더라.",
+    "en": "I built that shop over a lifetime. Who's taking it over now? {sibling} says it should be them."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "제가 할게요",
+      "en": "I'll do it"
+     },
+     "w": {
+      "TAKE": 0.5,
+      "WAR": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "{sibling}에게 양보한다",
+      "en": "Let {sibling} have it"
+     },
+     "w": {
+      "YIELD": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "가게를 정리하시죠",
+      "en": "Let's sell the shop"
+     },
+     "w": {
+      "SELL": 0.7,
+      "WAR": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "TAKE": {
+     "r": {
+      "ko": "간판은 그대로 두고 메뉴를 하나 바꿨다. 아빠는 매일 아침 가게를 둘러보고 가신다.",
+      "en": "You kept the sign and changed one thing on the menu. Dad still stops by every morning."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "own-business"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "물려받은 간판",
+       "en": "The sign I inherited"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "relative"
+      ],
+      "priority": 7
+     }
+    },
+    "WAR": {
+     "r": {
+      "ko": "{sibling}와(과) 변호사를 사이에 두고 만났다. 가게 셔터는 몇 달째 내려져 있다.",
+      "en": "You met {sibling} with lawyers between you. The shop's shutters have been down for months."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "siblingRift",
+       "value": true
+      },
+      {
+       "kind": "money",
+       "amount": -10
+      }
+     ]
+    },
+    "YIELD": {
+     "r": {
+      "ko": "{sibling}이(가) 가게를 맡았다. 개업식 날, 내 이름으로 된 화환이 제일 컸다.",
+      "en": "{sibling} took over. At the reopening, the wreath with your name on it was the biggest."
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": 0.15
+      }
+     ]
+    },
+    "SELL": {
+     "r": {
+      "ko": "가게를 판 돈을 나눴다. 마지막 영업일, 온 가족이 거기서 저녁을 먹었다.",
+      "en": "You split the money from the sale. On the last day, the whole family ate dinner there."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 25
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SIBLING_MARRIES_DISLIKED",
+   "cat": "family",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "hasSibling",
+    "!siblingMarried",
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.4,
+     "BRANCH_CLASH@month": 0.3,
+     "PUNISHMENT@month": 0.2,
+     "group:GYEOB_JAE": 0.15,
+     "SATURN>MOON:hard": 0.25,
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.3,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2
+    },
+    "mods": {
+     "family": -0.2
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "sibling",
+   "line": {
+    "ko": "나 이 사람이랑 결혼할 거야. 다들 반대하는 거 알아. 너는… 와줄 거지?",
+    "en": "I'm marrying this person. I know everyone's against it. You'll… come, won't you?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당연히 가지",
+      "en": "Of course I'll be there"
+     },
+     "w": {
+      "ATTEND": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "솔직히 나도 걱정돼",
+      "en": "Honestly, I'm worried too"
+     },
+     "w": {
+      "ANYWAY": 0.6,
+      "CALLOFF": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(가족들 편에 선다)",
+      "en": "(Side with the family)"
+     },
+     "w": {
+      "ANYWAY": 0.8,
+      "CALLOFF": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "ATTEND": {
+     "r": {
+      "ko": "하객석 앞줄에 나 혼자 앉아 있었다. {sibling}이(가) 버진로드에서 나를 보고 울었다.",
+      "en": "You sat alone in the front row. Walking down the aisle, {sibling} saw you and cried."
+     },
+     "effects": [
+      {
+       "kind": "siblingMarries"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "{sibling}이(가) 결혼했다. 맨 앞줄에서 제일 크게 울었다.",
+       "en": "{sibling} got married. I cried the loudest, front row."
+      },
+      "location": "wedding_venue",
+      "actors": [
+       "me",
+       "relative",
+       "guest"
+      ],
+      "priority": 7
+     }
+    },
+    "ANYWAY": {
+     "r": {
+      "ko": "{sibling}은(는) 결국 결혼했다. 청첩장은 우편으로 왔다.",
+      "en": "{sibling} got married anyway. The invitation came in the mail."
+     },
+     "effects": [
+      {
+       "kind": "siblingMarries"
+      },
+      {
+       "kind": "setFlag",
+       "name": "siblingRift",
+       "value": true
+      }
+     ]
+    },
+    "CALLOFF": {
+     "r": {
+      "ko": "몇 달 뒤 {sibling}이(가) 전화했다. '네 말이 맞았어.' 목소리가 젖어 있었다.",
+      "en": "Months later, {sibling} called. 'You were right.' Their voice was wet."
+     }
+    }
+   }
+  },
+  {
+   "id": "HOLIDAY_BLOWUP",
+   "cat": "family",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=18"
+   ],
+   "repeatable": true,
+   "cooldown": 120,
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.8,
+     "BRANCH_CLASH@month": 0.6,
+     "PUNISHMENT@month": 0.4,
+     "group:GYEOB_JAE": 0.3,
+     "SATURN>MOON:hard": 0.5
+    },
+    "mods": {
+     "family": -0.2
+    }
+   },
+   "location": "family_home",
+   "activity": "eat",
+   "who": "relative",
+   "line": {
+    "ko": "({f:holiday} 상. 술이 몇 순배 돌자, 누군가 건드리지 말아야 할 얘기를 꺼냈다.) 너는 언제 철들래? 남들은 벌써 다 자리 잡았던데.",
+    "en": "({f:holiday} table. A few rounds of drinks in, someone brings up exactly what they shouldn't.) When are you going to grow up? Everyone else has settled down already."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(웃으며 잔을 채운다)",
+      "en": "(Smile and refill their glass)"
+     },
+     "w": {
+      "SURVIVE": 0.7,
+      "BLOWUP": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "제 인생은 제가 알아서 해요",
+      "en": "I'll handle my own life, thanks"
+     },
+     "w": {
+      "BLOWUP": 0.55,
+      "RESPECT": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "(조용히 설거지하러 간다)",
+      "en": "(Slip away to do the dishes)"
+     },
+     "w": {
+      "SURVIVE": 0.8,
+      "BLOWUP": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "SURVIVE": {
+     "r": {
+      "ko": "무사히 넘어갔다. 돌아오는 차 안에서 한숨이 길었다.",
+      "en": "You survived it. The sigh on the drive home was a long one."
+     }
+    },
+    "BLOWUP": {
+     "r": {
+      "ko": "상이 뒤집어질 뻔했다. 올해 {f:holiday}은(는) 음식 준비하다 말고 끝났다.",
+      "en": "The table nearly flipped. This year's {f:holiday} ended before dinner was even ready."
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": -0.1
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "뒤집힐 뻔한 {f:holiday} 상",
+       "en": "The {f:holiday} table that nearly flipped"
+      },
+      "location": "family_home",
+      "actors": [
+       "me",
+       "relative",
+       "relative"
+      ],
+      "priority": 5
+     }
+    },
+    "RESPECT": {
+     "r": {
+      "ko": "잠깐의 정적. 그리고 막내 고모가 내 편을 들었다. '얘가 뭐가 어때서.'",
+      "en": "A moment of silence. Then your youngest aunt took your side: 'What's wrong with this kid?'"
+     }
+    }
+   }
+  },
+  {
+   "id": "PARENT_NEW_PARTNER_DAD",
+   "cat": "family",
+   "rarity": "rare",
+   "tone": "light",
+   "big": true,
+   "title": {
+    "ko": "동갑내기 새 식구",
+    "en": "A new family member, my age"
+   },
+   "requires": [
+    "dadAlive",
+    "!parentsTogether",
+    "age>=25"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.3,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2,
+     "BRANCH_CLASH@year": 0.4,
+     "BRANCH_CLASH@month": 0.3,
+     "PUNISHMENT@month": 0.2,
+     "group:GYEOB_JAE": 0.15,
+     "SATURN>MOON:hard": 0.25
+    }
+   },
+   "location": "restaurant",
+   "activity": "eat",
+   "who": "dad",
+   "line": {
+    "ko": "소개할 사람이 있어. 놀라지 말고. (옆에 선 사람은 — 나와 동갑이었다.)",
+    "en": "There's someone I want you to meet. Don't be shocked. (The person beside them was exactly your age.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…축하드려요",
+      "en": "…Congratulations"
+     },
+     "w": {
+      "ACCEPT": 0.8,
+      "AWKWARD": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "제정신이에요?",
+      "en": "Are you out of your mind?"
+     },
+     "w": {
+      "FIGHT": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(밥만 먹고 일어난다)",
+      "en": "(Eat and leave)"
+     },
+     "w": {
+      "AWKWARD": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "ACCEPT": {
+     "r": {
+      "ko": "어색했지만, 아빠이(가) 그렇게 웃는 걸 오랜만에 봤다.",
+      "en": "Awkward, but you hadn't seen Dad smile like that in years."
+     },
+     "card": {
+      "caption": {
+       "ko": "아빠의 새 사람",
+       "en": "Dad's new someone"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "relative",
+       "stranger"
+      ],
+      "priority": 6
+     }
+    },
+    "FIGHT": {
+     "r": {
+      "ko": "식당이 조용해졌다. 그 뒤로 몇 달, 연락하지 않았다.",
+      "en": "The restaurant went quiet. You didn't talk for months."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    },
+    "AWKWARD": {
+     "r": {
+      "ko": "호칭을 뭐라고 해야 할지 끝내 정하지 못했다.",
+      "en": "You never figured out what to call them."
+     }
+    }
+   }
+  },
+  {
+   "id": "PARENT_NEW_PARTNER_MOM",
+   "cat": "family",
+   "rarity": "rare",
+   "tone": "light",
+   "big": true,
+   "title": {
+    "ko": "동갑내기 새 식구",
+    "en": "A new family member, my age"
+   },
+   "requires": [
+    "momAlive",
+    "!parentsTogether",
+    "age>=25"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.3,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2,
+     "BRANCH_CLASH@year": 0.4,
+     "BRANCH_CLASH@month": 0.3,
+     "PUNISHMENT@month": 0.2,
+     "group:GYEOB_JAE": 0.15,
+     "SATURN>MOON:hard": 0.25
+    }
+   },
+   "location": "restaurant",
+   "activity": "eat",
+   "who": "mom",
+   "line": {
+    "ko": "소개할 사람이 있어. 놀라지 말고. (옆에 선 사람은 — 나와 동갑이었다.)",
+    "en": "There's someone I want you to meet. Don't be shocked. (The person beside them was exactly your age.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…축하드려요",
+      "en": "…Congratulations"
+     },
+     "w": {
+      "ACCEPT": 0.8,
+      "AWKWARD": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "제정신이에요?",
+      "en": "Are you out of your mind?"
+     },
+     "w": {
+      "FIGHT": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(밥만 먹고 일어난다)",
+      "en": "(Eat and leave)"
+     },
+     "w": {
+      "AWKWARD": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "ACCEPT": {
+     "r": {
+      "ko": "어색했지만, 엄마이(가) 그렇게 웃는 걸 오랜만에 봤다.",
+      "en": "Awkward, but you hadn't seen Mom smile like that in years."
+     },
+     "card": {
+      "caption": {
+       "ko": "엄마의 새 사람",
+       "en": "Mom's new someone"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "relative",
+       "stranger"
+      ],
+      "priority": 6
+     }
+    },
+    "FIGHT": {
+     "r": {
+      "ko": "식당이 조용해졌다. 그 뒤로 몇 달, 연락하지 않았다.",
+      "en": "The restaurant went quiet. You didn't talk for months."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    },
+    "AWKWARD": {
+     "r": {
+      "ko": "호칭을 뭐라고 해야 할지 끝내 정하지 못했다.",
+      "en": "You never figured out what to call them."
+     }
+    }
+   }
+  },
+  {
+   "id": "SIBLING_LEAVES_KID",
+   "cat": "family",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "맡겨진 아이",
+    "en": "The kid left with me"
+   },
+   "requires": [
+    "hasSibling",
+    "age>=25",
+    "!f_raisingNephew"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.48,
+     "BRANCH_CLASH@month": 0.36,
+     "PUNISHMENT@month": 0.24,
+     "group:GYEOB_JAE": 0.18,
+     "SATURN>MOON:hard": 0.3,
+     "SIX_HARMONY@hour": 0.3,
+     "STEM_COMBINATION@hour": 0.3,
+     "HALF_HARMONY@hour": 0.18,
+     "BRANCH_CLASH@hour": 0.36
+    },
+    "mods": {
+     "family": 0.4
+    }
+   },
+   "location": "home",
+   "who": "sibling",
+   "line": {
+    "ko": "미안해. 딱 한 달만 우리 애 좀 맡아줘. 설명은 나중에 할게. 너밖에 없어.",
+    "en": "I'm sorry. Just take my kid for one month. I'll explain later. You're all I've got."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…데려와",
+      "en": "…Bring them over"
+     },
+     "w": {
+      "MONTH": 0.55,
+      "YEARS": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "무슨 일인지 먼저 말해",
+      "en": "Tell me what's going on first"
+     },
+     "w": {
+      "HELP": 0.6,
+      "YEARS": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "MONTH": {
+     "r": {
+      "ko": "한 달 동안 집이 시끄러웠다. 조카가 돌아가던 날, 집이 너무 조용했다.",
+      "en": "The house was loud for a month. The day the kid went home, it was far too quiet."
+     },
+     "card": {
+      "caption": {
+       "ko": "한 달 동안의 조카",
+       "en": "A month with my sibling's kid"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "kid"
+      ],
+      "priority": 5
+     }
+    },
+    "YEARS": {
+     "r": {
+      "ko": "한 달이 일 년이 되고, 일 년이 몇 해가 됐다. 이제 조카는 나를 '우리 집 어른'이라고 부른다.",
+      "en": "A month became a year, and a year became several. Now the kid calls you 'my grown-up'."
+     },
+     "effects": [
+      {
+       "kind": "adoptKid"
+      },
+      {
+       "kind": "setFlag",
+       "name": "siblingGone",
+       "value": true
+      },
+      {
+       "kind": "setFlag",
+       "name": "raisingNephew",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "조카를 키우게 된 날",
+       "en": "The day I started raising my sibling's kid"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "kid"
+      ],
+      "priority": 8
+     },
+     "chain": [
+      {
+       "to": "SIBLING_RETURNS",
+       "after": [
+        24,
+        72
+       ],
+       "p": 0.6
+      }
+     ]
+    },
+    "HELP": {
+     "r": {
+      "ko": "이혼 소송 중이라고 했다. 대신 변호사비를 보탰다.",
+      "en": "They were going through a divorce. You chipped in for the lawyer instead."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -8
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "FAMILY_CHAT_DRAMA",
+   "cat": "family",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=18"
+   ],
+   "repeatable": true,
+   "cooldown": 96,
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.32,
+     "BRANCH_CLASH@month": 0.24,
+     "PUNISHMENT@month": 0.16,
+     "group:GYEOB_JAE": 0.12,
+     "SATURN>MOON:hard": 0.2
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "relative",
+   "line": {
+    "ko": "[가족 단톡방] 누구네 딸은 벌써 집 샀다더라~ 우리 집 애들은 언제쯤? 😊",
+    "en": "[Family group chat] So-and-so's daughter already bought a house! When will OUR kids? 😊"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(읽씹)",
+      "en": "(Leave it on read)"
+     },
+     "w": {
+      "IGNORE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(웃는 이모티콘으로 응수한다)",
+      "en": "(Reply with a smiley)"
+     },
+     "w": {
+      "EMOJI": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(단톡방을 나간다)",
+      "en": "(Leave the chat)"
+     },
+     "w": {
+      "LEAVE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "IGNORE": {
+     "r": {
+      "ko": "숫자 '1'이 사라지자 단톡방이 더 조용해졌다. 폭풍 전야였다.",
+      "en": "The moment the read receipt vanished, the chat went dead quiet. The calm before the storm."
+     }
+    },
+    "EMOJI": {
+     "r": {
+      "ko": "고모가 이모티콘 세 개로 답했다. 평화가 유지됐다.",
+      "en": "Your aunt replied with three emojis. Peace was maintained."
+     }
+    },
+    "LEAVE": {
+     "r": {
+      "ko": "'OO님이 나갔습니다.' 5분 뒤: '초대되었습니다.' 사촌들까지 이 얘기를 알게 됐다.",
+      "en": "'You left the chat.' Five minutes later: 'You were added back.' Even your cousins heard about it."
+     }
+    }
+   }
+  }
+ ]
+}

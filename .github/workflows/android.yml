@@ -1,0 +1,60 @@
+# Builds an installable Android APK from web/ (Capacitor) and publishes it as a GitHub Release.
+name: Build Android APK
+
+on:
+  push:
+    branches: [main, claude/great-fermat-fq0udu]
+    paths: ["web/**", "app/**", ".github/workflows/android.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Install Capacitor
+        working-directory: app
+        run: npm install --no-audit --no-fund
+      - name: Create the Android project with the game inside
+        working-directory: app
+        run: |
+          rm -rf www android
+          cp -r ../web www
+          rm -f www/build-sw.mjs www/head.html
+          npx cap add android
+          # Portrait only; keep the screen on top of the dark background.
+          sed -i 's|<activity|<activity android:screenOrientation="portrait"|' android/app/src/main/AndroidManifest.xml
+          # Keep the game's own colors in phone dark mode: a light app theme, and no forced darkening.
+          sed -i 's/DayNight/Light/g; s|\(<style name="AppTheme[^>]*>\)|\1<item name="android:forceDarkAllowed">false</item>|g' android/app/src/main/res/values/styles.xml
+          npx capacitor-assets generate --android --iconBackgroundColor '#ffe8f0' --splashBackgroundColor '#1a1420' || echo "icons: using defaults"
+          npx cap sync android
+      - name: Build APK
+        working-directory: app/android
+        run: ./gradlew assembleDebug --no-daemon
+      - name: Name the APK
+        run: cp app/android/app/build/outputs/apk/debug/app-debug.apk dokidoki.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dokidoki-apk
+          path: dokidoki.apk
+      - name: Publish as the "latest-apk" release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest-apk
+          name: 두근두근 APK (latest)
+          body: |
+            Android 테스트용 APK — 폰에서 다운로드 후 설치 (알 수 없는 앱 설치 허용 필요).
+            Built from ${{ github.sha }}.
+          files: dokidoki.apk
+          make_latest: true
+          prerelease: true

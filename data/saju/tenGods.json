@@ -1,0 +1,15 @@
+{
+  "_doc": "Ten Gods (十神) are derived from the relationship of any stem to the Day Master: relation = element relationship (SAME / DM_GENERATES / DM_CONTROLS / CONTROLS_DM / GENERATES_DM), polarity = same or different yin/yang. 'distributionKey' is the analytical bucket in TenGodDistribution; 'group' is the 5-way family (比劫/食傷/財/官/印).",
+  "tenGods": [
+    { "id": "BI_GYEON",   "hanja": "比肩", "ko": "비견", "en": "Peer",              "relation": "SAME",          "samePolarity": true,  "distributionKey": "peer",             "group": "PEER" },
+    { "id": "GYEOB_JAE",  "hanja": "劫財", "ko": "겁재", "en": "Rob Wealth",        "relation": "SAME",          "samePolarity": false, "distributionKey": "competition",      "group": "PEER" },
+    { "id": "SIK_SHIN",   "hanja": "食神", "ko": "식신", "en": "Eating God",        "relation": "DM_GENERATES",  "samePolarity": true,  "distributionKey": "expression",       "group": "OUTPUT" },
+    { "id": "SANG_GWAN",  "hanja": "傷官", "ko": "상관", "en": "Hurting Officer",   "relation": "DM_GENERATES",  "samePolarity": false, "distributionKey": "creativity",       "group": "OUTPUT" },
+    { "id": "PYEON_JAE",  "hanja": "偏財", "ko": "편재", "en": "Indirect Wealth",   "relation": "DM_CONTROLS",   "samePolarity": true,  "distributionKey": "indirectWealth",   "group": "WEALTH" },
+    { "id": "JEONG_JAE",  "hanja": "正財", "ko": "정재", "en": "Direct Wealth",     "relation": "DM_CONTROLS",   "samePolarity": false, "distributionKey": "directWealth",     "group": "WEALTH" },
+    { "id": "CHIL_SAL",   "hanja": "七殺", "ko": "칠살", "en": "Seven Killings",    "relation": "CONTROLS_DM",   "samePolarity": true,  "distributionKey": "sevenKillings",    "group": "OFFICER" },
+    { "id": "JEONG_GWAN", "hanja": "正官", "ko": "정관", "en": "Direct Officer",    "relation": "CONTROLS_DM",   "samePolarity": false, "distributionKey": "directOfficer",    "group": "OFFICER" },
+    { "id": "PYEON_IN",   "hanja": "偏印", "ko": "편인", "en": "Indirect Resource", "relation": "GENERATES_DM",  "samePolarity": true,  "distributionKey": "indirectResource", "group": "RESOURCE" },
+    { "id": "JEONG_IN",   "hanja": "正印", "ko": "정인", "en": "Direct Resource",   "relation": "GENERATES_DM",  "samePolarity": false, "distributionKey": "directResource",   "group": "RESOURCE" }
+  ]
+}

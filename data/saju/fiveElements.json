@@ -1,0 +1,11 @@
+{
+  "_doc": "Five Elements (五行). 'generates' = 相生 (A feeds B). 'controls' = 相剋 (A restrains B). All element relationships in code derive from this file.",
+  "order": ["WOOD", "FIRE", "EARTH", "METAL", "WATER"],
+  "elements": {
+    "WOOD":  { "hanja": "木", "ko": "목", "generates": "FIRE",  "controls": "EARTH" },
+    "FIRE":  { "hanja": "火", "ko": "화", "generates": "EARTH", "controls": "METAL" },
+    "EARTH": { "hanja": "土", "ko": "토", "generates": "METAL", "controls": "WATER" },
+    "METAL": { "hanja": "金", "ko": "금", "generates": "WATER", "controls": "WOOD" },
+    "WATER": { "hanja": "水", "ko": "수", "generates": "WOOD",  "controls": "FIRE" }
+  }
+}

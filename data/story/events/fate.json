@@ -1,0 +1,1650 @@
+{
+ "_doc": "Life events: fate. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "MEET_GWIIN",
+   "cat": "fate",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "CHEONEUL_GWIIN": 1.2,
+     "JUPITER@H11": 0.5,
+     "JUPITER@H10": 0.4,
+     "favorable": 0.4,
+     "SR:angular:JUPITER": 0.4
+    },
+    "mods": {
+     "opportunity": 0.5
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "mentor",
+   "line": {
+    "ko": "(엘리베이터에서 우연히 마주친 어르신이 명함을 건넸다.) 자네, 눈빛이 좋구먼. 언제 한번 찾아오게.",
+    "en": "(An older gentleman you bumped into in the elevator handed you his card.) You've got good eyes, young one. Come see me sometime."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "찾아간다",
+      "en": "Go see him"
+     },
+     "w": {
+      "GWIIN": 0.75,
+      "POLITE": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "(명함을 지갑에 넣어둔다)",
+      "en": "(Tuck the card in your wallet)"
+     },
+     "w": {
+      "LATER": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "GWIIN": {
+     "r": {
+      "ko": "차 한 잔이 인생 상담이 됐고, 상담이 기회가 됐다. 그분은 내 귀인이었다.",
+      "en": "One cup of tea became life advice, and the advice became an opportunity. He was your guardian angel, the benefactor written in your stars."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 10
+      },
+      {
+       "kind": "newFriend"
+      },
+      {
+       "kind": "setFlag",
+       "name": "gwiin",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "귀인과의 차 한 잔",
+       "en": "Tea with a benefactor"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 7
+     }
+    },
+    "POLITE": {
+     "r": {
+      "ko": "좋은 이야기를 많이 들었다. 가끔 안부 문자를 주고받는다.",
+      "en": "You heard a lot of wise things. Now and then you trade messages."
+     }
+    },
+    "LATER": {
+     "r": {
+      "ko": "1년 뒤 지갑을 정리하다 그 명함을 발견했다. 번호는 여전히 살아 있었다.",
+      "en": "A year later, cleaning out your wallet, you found the card. The number still worked."
+     },
+     "chain": [
+      {
+       "to": "MEET_GWIIN",
+       "after": [
+        6,
+        18
+       ],
+       "p": 0.5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "FORTUNE_TELLER",
+   "cat": "fate",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=19",
+    "single"
+   ],
+   "repeatable": true,
+   "cooldown": 84,
+   "trigger": {
+    "signals": {
+     "HWAGAE": 0.9,
+     "group:PYEON_IN": 0.6,
+     "CHEONEUL_GWIIN": 0.3
+    },
+    "mods": {
+     "romance": 0.3,
+     "introspection": 0.3
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "fortune",
+   "line": {
+    "ko": "(점집 방석에 앉자마자) 올해 네 옆에 물 수(水) 자 들어간 사람이 온다. 놓치지 마라.",
+    "en": "(The moment you sit on the cushion) This year, someone with the water character (水) in their name comes into your life. Don't let them go."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(복채를 두고 조용히 나온다)",
+      "en": "(Leave the fee and slip out quietly)"
+     },
+     "w": {
+      "NOTED": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "에이, 다 맞는 말 아니에요?",
+      "en": "Come on, doesn't that fit everyone?"
+     },
+     "w": {
+      "SKEPTIC": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "NOTED": {
+     "r": {
+      "ko": "돌아오는 길, 괜히 사람들 이름표를 읽게 됐다.",
+      "en": "On the way home, you found yourself reading people's name tags."
+     },
+     "chain": [
+      {
+       "to": "FORTUNE_COMES_TRUE",
+       "after": [
+        3,
+        14
+       ],
+       "p": 0.6
+      }
+     ]
+    },
+    "SKEPTIC": {
+     "r": {
+      "ko": "할머니가 웃었다. '두고 봐라.'",
+      "en": "The old woman laughed. 'You'll see.'"
+     },
+     "chain": [
+      {
+       "to": "FORTUNE_COMES_TRUE",
+       "after": [
+        3,
+        14
+       ],
+       "p": 0.35
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "FORTUNE_COMES_TRUE",
+   "cat": "fate",
+   "rarity": "common",
+   "tone": "romance",
+   "requires": [
+    "single"
+   ],
+   "chainOnly": true,
+   "location": "cafe",
+   "activity": "sit_alone",
+   "who": "stranger",
+   "line": {
+    "ko": "(새로 알게 된 사람이 명함을 내밀었다. 이름 첫 글자가… 물 수(水) 변이었다.) 반가워요. 이상하게 처음 보는 것 같지 않네요.",
+    "en": "(Someone new handed you their card. The first character of their name… had the water radical.) Nice to meet you. Strange. It doesn't feel like the first time."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(점집 할머니 말이 떠오른다)",
+      "en": "(The fortune teller's words come back)"
+     },
+     "w": {
+      "LOVE": 0.6,
+      "FRIEND": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "LOVE": {
+     "r": {
+      "ko": "세 번째 만남에서 그 이야기를 해줬다. 둘 다 한참 웃었다. 그리고 손을 잡았다.",
+      "en": "On your third meeting you told them the story. You both laughed for ages. Then you held hands."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "점괘가 맞은 날",
+       "en": "The day the fortune came true"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 7
+     }
+    },
+    "FRIEND": {
+     "r": {
+      "ko": "연인은 아니었지만, 평생 가는 친구가 됐다. 점괘는 반쯤 맞았다.",
+      "en": "Not a lover, but a friend for life. The fortune was half right."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PIG_DREAM",
+   "cat": "fate",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.48,
+     "JUPITER@H2": 0.42,
+     "JUPITER@H8": 0.36,
+     "CHEONEUL_GWIIN": 0.48,
+     "favorable": 0.24,
+     "JUPITER>SUN:harmonious": 0.24,
+     "HWAGAE": 0.54,
+     "group:PYEON_IN": 0.36
+    },
+    "mods": {
+     "wealth": 0.3
+    }
+   },
+   "location": "home",
+   "activity": "sleep",
+   "who": "me",
+   "line": {
+    "ko": "(꿈에 황금 돼지 세 마리가 품으로 뛰어들었다. 눈을 떴는데도 손끝이 따뜻하다.)",
+    "en": "(In your dream, three golden pigs leapt into your arms. Even awake, your fingertips feel warm.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "오늘 당장 복권을 산다",
+      "en": "Buy a lottery ticket today"
+     },
+     "w": {
+      "WIN": 0.35,
+      "NOTHING": 0.65
+     }
+    },
+    {
+     "t": {
+      "ko": "아무에게도 말하지 않는다 (말하면 복이 달아난대서)",
+      "en": "Tell no one (they say the luck runs off if you do)"
+     },
+     "w": {
+      "STREAK": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "WIN": {
+     "r": {
+      "ko": "5등도 아니고 3등이었다! 돼지꿈은 과학이다.",
+      "en": "Not fifth prize. Third! Pig dreams are science."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 15
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "돼지꿈의 과학",
+       "en": "The science of pig dreams"
+      },
+      "location": "street",
+      "actors": [
+       "me"
+      ],
+      "priority": 5
+     }
+    },
+    "NOTHING": {
+     "r": {
+      "ko": "꽝이었다. 돼지들이 복권 말고 다른 걸 가져다주려나.",
+      "en": "Nothing. Maybe the pigs meant some other kind of luck."
+     }
+    },
+    "STREAK": {
+     "r": {
+      "ko": "그 주에 이상하게 일이 잘 풀렸다. 주차 자리, 초록불, 마지막 한 개 남은 빵까지.",
+      "en": "That week, things went weirdly right. Parking spots, green lights, the last loaf on the shelf."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 3
+      },
+      {
+       "kind": "setFlag",
+       "name": "luckyStreak",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "TAEMONG",
+   "cat": "fate",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "pregnant"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.3,
+     "STEM_COMBINATION@hour": 0.3,
+     "HALF_HARMONY@hour": 0.18,
+     "BRANCH_CLASH@hour": 0.36,
+     "HWAGAE": 0.54,
+     "group:PYEON_IN": 0.36,
+     "CHEONEUL_GWIIN": 0.18
+    }
+   },
+   "location": "home",
+   "activity": "sleep",
+   "who": "me",
+   "line": {
+    "ko": "(꿈에 커다란 복숭아가 품에 안겼다. 달콤한 향이 방 안에 남아 있는 것 같다. 태몽일까?)",
+    "en": "(In a dream, a huge peach landed in your arms. The sweet scent seems to linger in the room. A conception dream?)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "가족들에게 이야기한다",
+      "en": "Tell the family"
+     },
+     "w": {
+      "SHARE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(혼자 간직한다)",
+      "en": "(Keep it to yourself)"
+     },
+     "w": {
+      "KEEP": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "SHARE": {
+     "r": {
+      "ko": "가족 단톡방이 해몽으로 뜨거워졌다. 다들 좋은 꿈이라고 했다.",
+      "en": "The family chat blew up with dream interpretations. Everyone agreed: a good one."
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": 0.1
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "복숭아 태몽",
+       "en": "The peach dream"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     }
+    },
+    "KEEP": {
+     "r": {
+      "ko": "아기가 태어나면 제일 먼저 이 꿈 이야기를 해주기로 했다.",
+      "en": "You decided this dream will be the first story you tell the baby."
+     }
+    }
+   }
+  },
+  {
+   "id": "SAMJAE_STREAK",
+   "cat": "fate",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "SAMJAE": 2.0,
+     "unfavorable": 0.4
+    }
+   },
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "relative",
+   "line": {
+    "ko": "올해 너 삼재라더라. 들삼재. 조심해서 나쁠 거 없다. 부적이라도 써줄까?",
+    "en": "They say this is your samjae, the start of three bad-luck years. Can't hurt to be careful. Want a talisman?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "부적 받을게요",
+      "en": "I'll take the talisman"
+     },
+     "w": {
+      "CHARM": 0.6,
+      "BUMPS": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "미신이에요",
+      "en": "That's superstition"
+     },
+     "w": {
+      "BUMPS": 0.6,
+      "FINE": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "CHARM": {
+     "r": {
+      "ko": "지갑 속 부적 덕분인지, 큰일 없이 넘어갔다.",
+      "en": "Maybe thanks to the talisman in your wallet, the year passed without disaster."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.3
+      }
+     ]
+    },
+    "BUMPS": {
+     "r": {
+      "ko": "이번 달만 휴대폰 액정, 접촉사고, 지갑 분실. 삼재는 삼재인가.",
+      "en": "In one month: a cracked phone screen, a fender-bender, a lost wallet. samjae is samjae, apparently."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -4
+      }
+     ]
+    },
+    "FINE": {
+     "r": {
+      "ko": "아무 일도 없었다. 연말에 이모에게 '거봐요'라고 문자를 보냈다.",
+      "en": "Nothing happened. At year's end you texted your aunt: 'See?'"
+     }
+    }
+   }
+  },
+  {
+   "id": "DEJA_VU",
+   "cat": "fate",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "requires": [
+    "single",
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "HWAGAE": 0.54,
+     "group:PYEON_IN": 0.36,
+     "CHEONEUL_GWIIN": 0.18,
+     "DOHWA": 0.54,
+     "STEM_COMBINATION@day": 0.36,
+     "SIX_HARMONY@day": 0.3,
+     "JUPITER@H5": 0.24,
+     "JUPITER@H7": 0.24,
+     "SR:SUN@H5": 0.24,
+     "SR:SUN@H7": 0.24
+    }
+   },
+   "location": "cafe",
+   "activity": "sit_alone",
+   "who": "stranger",
+   "line": {
+    "ko": "(처음 보는 사람인데, 이 장면을 전에 본 것 같다. 상대도 같은 표정이다.) …우리, 어디서 만난 적 있죠?",
+    "en": "(You've never seen this person before, but you've seen this moment. They have the same look on their face.) …Have we met somewhere?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "저도 그 생각 했어요",
+      "en": "I was just thinking that"
+     },
+     "w": {
+      "ROMANCE": 0.45,
+      "FRIEND": 0.55
+     }
+    },
+    {
+     "t": {
+      "ko": "(웃으며 지나친다)",
+      "en": "(Smile and walk on)"
+     },
+     "w": {
+      "PASS": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "ROMANCE": {
+     "r": {
+      "ko": "세 시간을 이야기했다. 헤어질 때 둘 다 '다음에'라고 말하지 않았다. '내일'이라고 했다.",
+      "en": "You talked for three hours. When you parted, neither said 'next time'. You both said 'tomorrow'."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "데자뷔",
+       "en": "Déjà vu"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 7
+     }
+    },
+    "FRIEND": {
+     "r": {
+      "ko": "알고 보니 같은 동네에서 자랐다. 스쳐 지나간 적이 수백 번은 됐을 거다.",
+      "en": "Turns out you grew up in the same neighborhood. You must have passed each other hundreds of times."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    },
+    "PASS": {
+     "r": {
+      "ko": "집에 오는 길 내내 그 얼굴이 떠올랐다.",
+      "en": "That face stayed with you all the way home."
+     }
+    }
+   }
+  },
+  {
+   "id": "INYEON_RECONNECTS",
+   "cat": "fate",
+   "rarity": "rare",
+   "tone": "romance",
+   "big": true,
+   "title": {
+    "ko": "인연",
+    "en": "Fated, again"
+   },
+   "requires": [
+    "single",
+    "fatedKnown",
+    "fatedAvailable",
+    "age>=22"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.72,
+     "STEM_COMBINATION@day": 0.48,
+     "SIX_HARMONY@day": 0.4,
+     "JUPITER@H5": 0.32,
+     "JUPITER@H7": 0.32,
+     "SR:SUN@H5": 0.32,
+     "SR:SUN@H7": 0.32
+    },
+    "mods": {
+     "romance": 0.5
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "fated",
+   "line": {
+    "ko": "잘 지냈어? 오늘 길 가다가… 문득 네 생각이 났어. 목소리 듣고 싶어서.",
+    "en": "How have you been? I was walking today and… you just crossed my mind. I wanted to hear your voice."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "우리 만나자",
+      "en": "Let's meet"
+     },
+     "w": {
+      "LOVE": 0.55,
+      "CATCHUP": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "(안부만 주고받는다)",
+      "en": "(Just catch up)"
+     },
+     "w": {
+      "SPARK": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "LOVE": {
+     "r": {
+      "ko": "몇 년의 시간이 한 번에 접혔다. 이번에는 놓치지 않기로 했다.",
+      "en": "Years folded away in an instant. This time, you weren't going to let go."
+     },
+     "effects": [
+      {
+       "kind": "startDatingFated"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "돌아온 인연",
+       "en": "The bond that came back"
+      },
+      "location": "park",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 9
+     },
+     "lean": {
+      "mods": {
+       "romance": 0.5
+      }
+     }
+    },
+    "CATCHUP": {
+     "r": {
+      "ko": "밤늦게까지 옛날 이야기를 했다. 헤어지는 길, 둘 다 뒤를 돌아봤다.",
+      "en": "You talked about the old days late into the night. Walking away, you both looked back."
+     },
+     "effects": [
+      {
+       "kind": "sparkFated",
+       "amount": 0.35
+      }
+     ]
+    },
+    "SPARK": {
+     "r": {
+      "ko": "짧은 통화였다. 그래도 그날 밤은 잠이 오지 않았다.",
+      "en": "A short call. Still, you couldn't sleep that night."
+     },
+     "effects": [
+      {
+       "kind": "sparkFated",
+       "amount": 0.2
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SHINBYEONG",
+   "cat": "fate",
+   "rarity": "legendary",
+   "tone": "revelation",
+   "big": true,
+   "title": {
+    "ko": "신병",
+    "en": "The calling"
+   },
+   "requires": [
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "HWAGAE": 1.2,
+     "group:PYEON_IN": 0.6,
+     "SATURN@H12": 0.5,
+     "unfavorable": 0.3
+    },
+    "mods": {
+     "introspection": 0.5
+    }
+   },
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "fortune",
+   "line": {
+    "ko": "(몇 달째 이유 없이 아팠다. 병원에서는 다 정상이라고 했다. 용하다는 무당이 한참 나를 보더니 말했다.) 신이 너를 부르고 있어.",
+    "en": "(For months you'd been sick for no reason, and every hospital said you were fine. A famous shaman studied you a long time, then said:) The spirits are calling you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(받아들인다)",
+      "en": "(Accept it)"
+     },
+     "w": {
+      "CALLING": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "큰 병원에서 다시 검사한다",
+      "en": "Get tested again at a big hospital"
+     },
+     "w": {
+      "MEDICAL": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "굿을 한다",
+      "en": "Hold a gut ritual"
+     },
+     "w": {
+      "GUT": 0.6,
+      "CALLING": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "CALLING": {
+     "r": {
+      "ko": "신내림 굿을 받았다. 이상하게, 아프던 몸이 가벼워졌다. 사람들이 나를 찾아오기 시작했다.",
+      "en": "You went through the initiation. Strangely, your sick body felt light. People began coming to you."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "second-career"
+      },
+      {
+       "kind": "setFlag",
+       "name": "shaman",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "신내림",
+       "en": "The calling"
+      },
+      "location": "family_home",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 9
+     }
+    },
+    "MEDICAL": {
+     "r": {
+      "ko": "다른 병원에서 원인을 찾았다. 갑상선이었다. 약 두 알로 해결됐다.",
+      "en": "A different hospital found the cause: your thyroid. Two pills a day fixed it."
+     }
+    },
+    "GUT": {
+     "r": {
+      "ko": "굿이 끝난 새벽, 몇 달 만에 깊이 잤다.",
+      "en": "The dawn after the ritual, you slept deeply for the first time in months."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PAST_LIFE",
+   "cat": "fate",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "HWAGAE": 0.9,
+     "group:PYEON_IN": 0.6,
+     "CHEONEUL_GWIIN": 0.3
+    },
+    "mods": {
+     "introspection": 0.4
+    }
+   },
+   "location": "cafe",
+   "activity": "sit_alone",
+   "who": "me",
+   "line": {
+    "ko": "(재미로 간 전생 체험 카페. 눈을 감자 조선 시대 어느 마당이 보였다. 그리고 — 낯익은 얼굴이.)",
+    "en": "(A past-life café you tried for fun. When you closed your eyes, you saw a courtyard in the Joseon era. And a familiar face.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(더 깊이 들어간다)",
+      "en": "(Go deeper)"
+     },
+     "w": {
+      "STORY": 0.6,
+      "FUNNY": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(눈을 뜬다)",
+      "en": "(Open your eyes)"
+     },
+     "w": {
+      "FUNNY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "STORY": {
+     "r": {
+      "ko": "전생의 나는 그 사람을 끝내 기다리다 죽었다고 했다. 믿지 않으면서도 코끝이 시큰했다.",
+      "en": "In that life, they said, you died still waiting for that person. You didn't believe it, and still your eyes stung."
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "A past-life story",
+       "tags": [
+        "event"
+       ]
+      }
+     ]
+    },
+    "FUNNY": {
+     "r": {
+      "ko": "전생에 나는 임금님의 수라간 막내였단다. 그래서 요리를 좋아하나.",
+      "en": "Apparently in a past life you were the youngest cook in the royal kitchen. Maybe that's why you love cooking."
+     }
+    }
+   }
+  },
+  {
+   "id": "LUCKY_NUMBER",
+   "cat": "fate",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "age>=15"
+   ],
+   "repeatable": true,
+   "cooldown": 96,
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.32,
+     "JUPITER@H2": 0.28,
+     "JUPITER@H8": 0.24,
+     "CHEONEUL_GWIIN": 0.32,
+     "favorable": 0.16,
+     "JUPITER>SUN:harmonious": 0.16,
+     "HWAGAE": 0.36,
+     "group:PYEON_IN": 0.24
+    }
+   },
+   "location": "street",
+   "activity": "commute",
+   "who": "me",
+   "line": {
+    "ko": "(요즘 어딜 가도 7이다. 7번 버스, 7시 7분, 영수증 7,777원.)",
+    "en": "(Lately it's 7 everywhere. The number 7 bus, 7:07, a receipt for ₩7,777.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "7로만 복권을 산다",
+      "en": "Buy a ticket with nothing but 7s"
+     },
+     "w": {
+      "WIN": 0.3,
+      "NOTHING": 0.7
+     }
+    },
+    {
+     "t": {
+      "ko": "(그냥 웃는다)",
+      "en": "(Just smile)"
+     },
+     "w": {
+      "SMILE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "WIN": {
+     "r": {
+      "ko": "당첨! 크진 않았지만, 7번 버스를 탈 때마다 웃게 됐다.",
+      "en": "A win! Not a big one, but now you smile every time you take the number 7 bus."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 5
+      }
+     ]
+    },
+    "NOTHING": {
+     "r": {
+      "ko": "꽝. 그래도 오늘 7번 버스는 바로 왔다.",
+      "en": "No luck. But today the number 7 bus came right away."
+     }
+    },
+    "SMILE": {
+     "r": {
+      "ko": "7은 그냥 7이었다. 그래도 기분은 좋았다.",
+      "en": "Seven was just seven. It felt nice anyway."
+     }
+    }
+   }
+  },
+  {
+   "id": "LUCKY_DIRECTION_MOVE",
+   "cat": "fate",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=22"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.54,
+     "JUPITER@H9": 0.36,
+     "JUPITER@H4": 0.24,
+     "URANUS>ASC:conjunction": 0.24,
+     "HWAGAE": 0.54,
+     "group:PYEON_IN": 0.36,
+     "CHEONEUL_GWIIN": 0.18
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "fortune",
+   "line": {
+    "ko": "올해 너한테는 동쪽이 길하다. 이사를 가려면 동쪽으로 가라. 막힌 게 뚫린다.",
+    "en": "This year, the east is lucky for you. If you move, move east. What's been stuck will open up."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "동쪽으로 이사한다",
+      "en": "Move east"
+     },
+     "w": {
+      "GOOD": 0.6,
+      "SAME": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(지금 집이 좋다)",
+      "en": "(I like where I am)"
+     },
+     "w": {
+      "STAY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "GOOD": {
+     "r": {
+      "ko": "새 동네는 햇살이 좋았다. 이상하게 일이 술술 풀렸다.",
+      "en": "The new neighborhood got lovely sunlight. Somehow, things just started flowing."
+     },
+     "effects": [
+      {
+       "kind": "moveCity"
+      },
+      {
+       "kind": "money",
+       "amount": 3
+      },
+      {
+       "kind": "setFlag",
+       "name": "luckyMove",
+       "value": true
+      }
+     ],
+     "card": "MOVE_CITY"
+    },
+    "SAME": {
+     "r": {
+      "ko": "방향이 바뀌었을 뿐, 삶은 비슷했다. 그래도 새 창문이 마음에 든다.",
+      "en": "Only the direction changed; life was much the same. You do like the new window, though."
+     },
+     "effects": [
+      {
+       "kind": "moveCity"
+      }
+     ]
+    },
+    "STAY": {
+     "r": {
+      "ko": "할머니는 혀를 찼지만, 나는 우리 동네 {f:bakery}이(가) 좋다.",
+      "en": "The fortune teller clicked her tongue, but you love your neighborhood {f:bakery}."
+     }
+    }
+   }
+  },
+  {
+   "id": "NAME_CHANGE",
+   "cat": "fate",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "unfavorable": 0.6,
+     "daeunShift": 0.4,
+     "HWAGAE": 0.4,
+     "SAMJAE": 0.3
+    },
+    "mods": {
+     "change": 0.4
+    }
+   },
+   "location": "court",
+   "activity": "wait",
+   "who": "me",
+   "line": {
+    "ko": "(이름 때문에 일이 안 풀린다는 말을 세 번째 들었다. 작명소에서 받은 새 이름 세 개가 책상 위에 있다.)",
+    "en": "(For the third time, someone said your name is why things don't work out. Three new names from a naming master sit on your desk.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "법원에 개명 신청을 한다",
+      "en": "File a name change at the court"
+     },
+     "w": {
+      "RENAMED": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(내 이름이 좋다)",
+      "en": "(I like my name)"
+     },
+     "w": {
+      "KEEP": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "RENAMED": {
+     "r": {
+      "ko": "새 이름이 익숙해지는 데 1년이 걸렸다. 그 1년 동안, 이상하게 좋은 일이 많았다.",
+      "en": "It took a year for the new name to feel like yours. That year, oddly many good things happened."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "renamed",
+       "value": true
+      },
+      {
+       "kind": "money",
+       "amount": 2
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "새 이름",
+       "en": "A new name"
+      },
+      "location": "court",
+      "actors": [
+       "me"
+      ],
+      "priority": 6
+     }
+    },
+    "KEEP": {
+     "r": {
+      "ko": "부모님이 지어준 이름을 다시 불러봤다. 나쁘지 않았다.",
+      "en": "You said the name your parents gave you out loud. Not bad at all."
+     }
+    }
+   }
+  },
+  {
+   "id": "HAUNTED_HOUSE",
+   "cat": "fate",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "HWAGAE": 0.6,
+     "URANUS@H4": 0.6,
+     "SAMJAE": 0.3
+    }
+   },
+   "location": "home",
+   "activity": "sleep",
+   "who": "me",
+   "line": {
+    "ko": "(새로 이사 온 집. 새벽마다 부엌에서 그릇이 달그락거린다. 오늘은 발소리까지 들렸다.)",
+    "en": "(Your new place. Every night, dishes rattle in the kitchen. Tonight you heard footsteps too.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(손전등을 들고 가본다)",
+      "en": "(Grab a flashlight and go look)"
+     },
+     "w": {
+      "CAT": 0.4,
+      "PIPES": 0.4,
+      "MYSTERY": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "다음 날 바로 이사 나간다",
+      "en": "Move out the next day"
+     },
+     "w": {
+      "LEAVE": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "CAT": {
+     "r": {
+      "ko": "싱크대 밑에 새끼 고양이 한 마리가 떨고 있었다. 오늘부터 우리 식구다.",
+      "en": "Under the sink, a kitten was shivering. As of today, it's family."
+     },
+     "effects": [
+      {
+       "kind": "adoptPet",
+       "species": "CAT"
+      }
+     ],
+     "card": "PET_ADOPT"
+    },
+    "PIPES": {
+     "r": {
+      "ko": "배관 소리였다. 수리 기사님이 웃었다. '이 동네 집들이 다 그래요.'",
+      "en": "It was the pipes. The plumber laughed. 'All the houses around here do that.'"
+     }
+    },
+    "MYSTERY": {
+     "r": {
+      "ko": "아무것도 없었다. 다음 날, 전 세입자가 두고 간 편지를 찾았다. '잘 지내줘요.'",
+      "en": "Nothing there. The next day, you found a letter the last tenant left: 'Please be happy here.'"
+     }
+    },
+    "LEAVE": {
+     "r": {
+      "ko": "보증금을 반쯤 날리고 나왔다. 새 집에선 푹 잤다.",
+      "en": "You lost half the deposit getting out. You slept like a rock in the new place."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      },
+      {
+       "kind": "moveCity"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "MEET_ACQUAINTANCE_ABROAD",
+   "cat": "fate",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "abroad"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.54,
+     "JUPITER@H9": 0.36,
+     "JUPITER@H4": 0.24,
+     "URANUS>ASC:conjunction": 0.24,
+     "group:BI_GYEON": 0.36,
+     "SIX_HARMONY@month": 0.18,
+     "JUPITER@H11": 0.36
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "stranger",
+   "line": {
+    "ko": "(낯선 도시의 골목. 누가 {homeLang}(으)로 내 이름을 불렀다.) 야! 너 맞지? 고등학교 때 짝꿍!",
+    "en": "(An alley in a foreign city. Someone called your name in {homeLang}.) Hey! It's you, right? My deskmate from high school!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "대박, 여기서?!",
+      "en": "No way! Here?!"
+     },
+     "w": {
+      "FRIEND": 0.8,
+      "ROMANCE": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "FRIEND": {
+     "r": {
+      "ko": "같은 도시에 산 지 1년째였다. 그날 이후 주말마다 {homeFood}을(를) 같이 해 먹는다.",
+      "en": "They'd been living in the same city for a year. Since then, you cook {homeFood} together every weekend."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "지구 반대편의 짝꿍",
+       "en": "My deskmate, across the world"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "friend"
+      ],
+      "priority": 6
+     }
+    },
+    "ROMANCE": {
+     "r": {
+      "ko": "그 시절엔 몰랐던 게 보였다. 타지라서 그랬을까.",
+      "en": "You saw what you'd missed back then. Maybe it was being so far from home."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "WRONG_NUMBER_FRIEND",
+   "cat": "fate",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "age>=15"
+   ],
+   "trigger": {
+    "signals": {
+     "group:BI_GYEON": 0.3,
+     "SIX_HARMONY@month": 0.15,
+     "JUPITER@H11": 0.3,
+     "HWAGAE": 0.45,
+     "group:PYEON_IN": 0.3,
+     "CHEONEUL_GWIIN": 0.15
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "unknown",
+   "line": {
+    "ko": "어… 수진이 아니에요? 아, 죄송해요! 번호가 바뀌었나 봐요. …근데 목소리가 되게 편하시네요.",
+    "en": "Uh… isn't this Sujin? Oh, I'm so sorry! The number must have changed. …But your voice is really easy to talk to."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(웃으며 조금 더 이야기한다)",
+      "en": "(Laugh and chat a little longer)"
+     },
+     "w": {
+      "FRIEND": 0.8,
+      "NOTHING": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "괜찮아요~ (끊는다)",
+      "en": "No problem! (Hang up)"
+     },
+     "w": {
+      "NOTHING": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "FRIEND": {
+     "r": {
+      "ko": "잘못 걸린 전화가 한 시간이 됐다. 지금은 매년 생일에 케이크를 보내주는 사이다.",
+      "en": "A wrong number turned into an hour. Now you send each other cakes every birthday."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    },
+    "NOTHING": {
+     "r": {
+      "ko": "짧은 통화였다. 그래도 그날 하루가 조금 따뜻했다.",
+      "en": "A short call. It warmed the day a little, though."
+     }
+    }
+   }
+  },
+  {
+   "id": "SAVE_STRANGER",
+   "cat": "fate",
+   "rarity": "rare",
+   "tone": "revelation",
+   "big": true,
+   "title": {
+    "ko": "3분",
+    "en": "Three minutes"
+   },
+   "requires": [
+    "age>=18"
+   ],
+   "trigger": {
+    "signals": {
+     "CHEONEUL_GWIIN": 0.8,
+     "favorable": 0.3,
+     "group:JEONG_IN": 0.4
+    },
+    "mods": {
+     "opportunity": 0.3
+    }
+   },
+   "location": "street",
+   "activity": "commute",
+   "who": "me",
+   "line": {
+    "ko": "(지하철역 계단에서 누군가 쓰러졌다. 모두가 멈춰 선 순간, 몸이 먼저 움직였다.)",
+    "en": "(Someone collapsed on the subway stairs. Everyone froze, but your body moved first.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(심폐소생술을 한다)",
+      "en": "(Start CPR)"
+     },
+     "w": {
+      "SAVED": 0.85,
+      "AMBULANCE": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "119에 신고하고 AED를 찾는다",
+      "en": "Call an ambulance and find the defibrillator"
+     },
+     "w": {
+      "SAVED": 0.8,
+      "AMBULANCE": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "SAVED": {
+     "r": {
+      "ko": "구급대원이 도착했을 때, 그 사람은 숨을 쉬고 있었다. 손이 한참 떨렸다.",
+      "en": "When the paramedics arrived, they were breathing. Your hands shook for a long time."
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "Saved a stranger's life",
+       "tags": [
+        "event"
+       ]
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "계단 위의 3분",
+       "en": "Three minutes on the stairs"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "stranger"
+      ],
+      "priority": 8
+     },
+     "chain": [
+      {
+       "to": "CEO_THANKS",
+       "after": [
+        1,
+        4
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "AMBULANCE": {
+     "r": {
+      "ko": "구급차에 실려 갔다. 나중에 무사하다는 소식을 들었다.",
+      "en": "They were taken away in an ambulance. Later, you heard they made it."
+     },
+     "chain": [
+      {
+       "to": "CEO_THANKS",
+       "after": [
+        1,
+        4
+       ],
+       "p": 0.3
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CEO_THANKS",
+   "cat": "fate",
+   "rarity": "common",
+   "tone": "joy",
+   "chainOnly": true,
+   "location": "cafe",
+   "activity": "sit_alone",
+   "who": "stranger",
+   "line": {
+    "ko": "(말끔한 정장의 사람이 찾아왔다.) 그날 저를 살려주신 분이죠? 제가 작은 기업을 하나 운영하는데… 은혜를 갚고 싶습니다.",
+    "en": "(Someone in a sharp suit came to find you.) You're the one who saved me that day, aren't you? I run a small company… I'd like to repay you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "사람 살린 걸로 충분해요",
+      "en": "Saving a life is enough for me"
+     },
+     "w": {
+      "FRIEND": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(명함을 받는다)",
+      "en": "(Take the business card)"
+     },
+     "w": {
+      "OFFER": 0.6,
+      "REWARD": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "FRIEND": {
+     "r": {
+      "ko": "그분은 대신 매년 {f:holiday}에 과일 상자를 보냈다. 그렇게 가족 같은 사이가 됐다.",
+      "en": "Instead, every {f:holiday} they sent a box of fruit. You became like family."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    },
+    "OFFER": {
+     "r": {
+      "ko": "'우리 회사에 와주면 좋겠어요.' 그 자리에서 채용 제안을 받았다.",
+      "en": "'I'd love for you to join us.' A job offer, right then and there."
+     },
+     "effects": [
+      {
+       "kind": "job"
+      },
+      {
+       "kind": "careerLevel",
+       "delta": 1
+      }
+     ],
+     "card": "JOB_CHANGE"
+    },
+    "REWARD": {
+     "r": {
+      "ko": "봉투를 한사코 쥐여줬다. 병원비라도 쓰라며.",
+      "en": "They insisted on pressing an envelope into your hands."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 20
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SAME_BIRTHDAY_SOULMATE",
+   "cat": "fate",
+   "rarity": "rare",
+   "tone": "romance",
+   "requires": [
+    "single",
+    "age>=20"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.54,
+     "STEM_COMBINATION@day": 0.36,
+     "SIX_HARMONY@day": 0.3,
+     "JUPITER@H5": 0.24,
+     "JUPITER@H7": 0.24,
+     "SR:SUN@H5": 0.24,
+     "SR:SUN@H7": 0.24,
+     "HWAGAE": 0.54,
+     "group:PYEON_IN": 0.36,
+     "CHEONEUL_GWIIN": 0.18
+    }
+   },
+   "location": "restaurant",
+   "activity": "eat",
+   "who": "stranger",
+   "line": {
+    "ko": "(모임에서 만난 사람과 생일 이야기가 나왔다. 같은 해, 같은 날. 태어난 시간까지 똑같았다.) …사주도 같겠네요?",
+    "en": "(Birthdays came up with someone you met at a gathering. Same year, same day, even the same hour.) …So our saju must be the same too?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "그럼 궁합은 최고겠네요",
+      "en": "Then our compatibility must be perfect"
+     },
+     "w": {
+      "LOVE": 0.55,
+      "TWIN": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "(신기해하며 번호를 교환한다)",
+      "en": "(Amazed, swap numbers)"
+     },
+     "w": {
+      "TWIN": 0.7,
+      "LOVE": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "LOVE": {
+     "r": {
+      "ko": "거울을 보는 것 같은 사람이었다. 첫 생일을 둘이 같이 맞았다.",
+      "en": "Like looking in a mirror. That year, you celebrated your shared birthday together."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "같은 날 태어난 우리",
+       "en": "Born on the same day"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 8
+     }
+    },
+    "TWIN": {
+     "r": {
+      "ko": "연인보다는 영혼의 쌍둥이였다. 매년 생일을 같이 보낸다.",
+      "en": "More soul-twin than lover. You spend every birthday together."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,117 @@
+{
+  "_doc": "Astrology Layer C balancing data (log-scale LifeModifiers deltas, 0 = neutral). FICTIONAL game tendencies. Houses carry life areas; planets say how a house is activated; aspects/returns add timing.",
+  "layerScales": { "natal": 1.0, "annual": 0.5, "monthly": 0.12, "progressed": 0.35, "solarReturn": 0.3, "lunarReturn": 0.08 },
+
+  "houses": {
+    "1":  { "change": 0.5, "social": 0.2, "opportunity": 0.2 },
+    "2":  { "wealth": 0.7, "stability": 0.3 },
+    "3":  { "communication": 0.6, "travel": 0.3, "education": 0.2 },
+    "4":  { "family": 0.6, "relocation": 0.4, "stability": 0.2 },
+    "5":  { "romance": 0.6, "creativity": 0.5 },
+    "6":  { "career": 0.3, "stability": 0.4 },
+    "7":  { "marriage": 0.7, "romance": 0.3, "business": 0.2 },
+    "8":  { "wealth": 0.3, "volatility": 0.4, "change": 0.3, "business": 0.2 },
+    "9":  { "travel": 0.6, "overseas": 0.7, "education": 0.6 },
+    "10": { "career": 0.8, "opportunity": 0.3 },
+    "11": { "social": 0.7, "opportunity": 0.3 },
+    "12": { "introspection": 0.7, "social": -0.2 }
+  },
+
+  "_planetsDoc": "How a planet in a house activates it: houseFactor × house deltas, plus its own flavour.",
+  "planets": {
+    "SUN":     { "houseFactor": 0.12, "flavour": {} },
+    "MOON":    { "houseFactor": 0.10, "flavour": { "family": 0.02 } },
+    "MERCURY": { "houseFactor": 0.05, "flavour": { "communication": 0.02 } },
+    "VENUS":   { "houseFactor": 0.08, "flavour": { "romance": 0.03 } },
+    "MARS":    { "houseFactor": 0.06, "flavour": { "risk": 0.02, "change": 0.02 } },
+    "JUPITER": { "houseFactor": 0.30, "flavour": { "opportunity": 0.06 } },
+    "SATURN":  { "houseFactor": 0.12, "flavour": { "stability": 0.06, "opportunity": -0.03 } },
+    "URANUS":  { "houseFactor": 0.10, "flavour": { "change": 0.08, "volatility": 0.05 } },
+    "NEPTUNE": { "houseFactor": 0.06, "flavour": { "introspection": 0.05, "creativity": 0.04 } },
+    "PLUTO":   { "houseFactor": 0.06, "flavour": { "change": 0.05, "volatility": 0.04 } }
+  },
+
+  "natalHouseScale": 0.5,
+
+  "elements": {
+    "_doc": "Applied × (share − 0.25) × 4 for the weighted element balance of Sun/Moon/ASC/personal planets.",
+    "FIRE":  { "opportunity": 0.08, "risk": 0.06, "change": 0.05 },
+    "EARTH": { "stability": 0.08, "wealth": 0.05, "career": 0.04 },
+    "AIR":   { "social": 0.08, "communication": 0.07, "travel": 0.04 },
+    "WATER": { "family": 0.07, "romance": 0.05, "introspection": 0.05 }
+  },
+  "modalities": {
+    "CARDINAL": { "career": 0.05, "opportunity": 0.04 },
+    "FIXED":    { "stability": 0.06 },
+    "MUTABLE":  { "change": 0.05, "travel": 0.04 }
+  },
+
+  "natalAspects": {
+    "_doc": "key = 'A-B:nature' (alphabetical pair). Applied × (1 − orb/10).",
+    "JUPITER-VENUS:harmonious": { "romance": 0.08, "social": 0.05 },
+    "JUPITER-VENUS:conjunction": { "romance": 0.08, "social": 0.05 },
+    "MARS-VENUS:conjunction":   { "romance": 0.08, "risk": 0.03 },
+    "MARS-VENUS:harmonious":    { "romance": 0.06 },
+    "MARS-VENUS:hard":          { "romance": 0.04, "volatility": 0.05 },
+    "MOON-VENUS:harmonious":    { "family": 0.05, "marriage": 0.04 },
+    "JUPITER-SUN:harmonious":   { "opportunity": 0.08 },
+    "JUPITER-SUN:conjunction":  { "opportunity": 0.08, "risk": 0.03 },
+    "SATURN-SUN:hard":          { "stability": 0.04, "volatility": 0.04, "opportunity": -0.04 },
+    "MOON-SATURN:hard":         { "introspection": 0.05, "family": -0.03 },
+    "SUN-URANUS:conjunction":   { "change": 0.08, "volatility": 0.04 },
+    "SUN-URANUS:hard":          { "change": 0.06, "volatility": 0.05 },
+    "MC-SUN:conjunction":       { "career": 0.08 },
+    "JUPITER-MC:harmonious":    { "career": 0.06, "opportunity": 0.04 }
+  },
+
+  "transitAspects": {
+    "_doc": "key = 'TRANSIT>NATAL:nature'. Applied × (1 − orb/transitOrb·1.5) × annual/monthly scale.",
+    "JUPITER>SUN:conjunction":   { "opportunity": 0.25, "career": 0.1 },
+    "JUPITER>SUN:harmonious":    { "opportunity": 0.18 },
+    "JUPITER>VENUS:conjunction": { "romance": 0.25, "marriage": 0.15, "social": 0.1 },
+    "JUPITER>VENUS:harmonious":  { "romance": 0.15, "social": 0.08 },
+    "JUPITER>MC:conjunction":    { "career": 0.25, "opportunity": 0.1 },
+    "JUPITER>ASC:conjunction":   { "change": 0.12, "opportunity": 0.15, "travel": 0.08 },
+    "SATURN>SUN:hard":           { "stability": 0.08, "volatility": 0.12, "opportunity": -0.1 },
+    "SATURN>SUN:conjunction":    { "stability": 0.12, "career": 0.06, "opportunity": -0.06 },
+    "SATURN>MOON:hard":          { "family": 0.06, "introspection": 0.1, "volatility": 0.06 },
+    "SATURN>VENUS:conjunction":  { "marriage": 0.12, "romance": -0.05, "stability": 0.06 },
+    "URANUS>SUN:conjunction":    { "change": 0.25, "relocation": 0.12, "volatility": 0.12 },
+    "URANUS>SUN:hard":           { "change": 0.2, "volatility": 0.12, "relocation": 0.08 },
+    "URANUS>MOON:hard":          { "relocation": 0.15, "change": 0.15, "family": -0.05 },
+    "URANUS>ASC:conjunction":    { "change": 0.2, "mobility": 0.1 },
+    "NEPTUNE>SUN:hard":          { "introspection": 0.12, "stability": -0.06 },
+    "PLUTO>SUN:hard":            { "change": 0.15, "volatility": 0.1 },
+    "VENUS>VENUS:conjunction":   { "romance": 0.3, "social": 0.15 },
+    "MARS>SUN:conjunction":      { "risk": 0.2, "change": 0.1 },
+    "SUN>SUN:conjunction":       { "opportunity": 0.2, "social": 0.1 }
+  },
+
+  "returns": {
+    "SATURN":  { "change": 0.15, "stability": 0.1, "career": 0.08, "marriage": 0.05 },
+    "JUPITER": { "opportunity": 0.15, "travel": 0.05, "education": 0.05 }
+  },
+
+  "_timeTechniquesDoc": "Secondary progressions, Solar Return, Lunar Return (src/astrology/techniques.ts). pointDomains = the life areas a natal/progressed point speaks for; nature: harmonious/conjunction push that area up, hard pulls it down and adds hardExtras. Each block's weights are multiplied by layerScales.<layer>.",
+  "timeTechniques": {
+    "pointDomains": {
+      "SUN":     { "career": 0.3, "opportunity": 0.2 },
+      "MOON":    { "family": 0.3, "introspection": 0.2 },
+      "MERCURY": { "communication": 0.3, "education": 0.2 },
+      "VENUS":   { "romance": 0.4, "marriage": 0.2, "social": 0.2 },
+      "MARS":    { "risk": 0.2, "business": 0.2, "change": 0.1 },
+      "JUPITER": { "opportunity": 0.3, "wealth": 0.2 },
+      "SATURN":  { "stability": 0.3, "career": 0.1 },
+      "ASC":     { "change": 0.2, "mobility": 0.2 },
+      "MC":      { "career": 0.4, "opportunity": 0.1 }
+    },
+    "nature": { "harmonious": 1, "conjunction": 0.8, "hard": -0.5 },
+    "hardExtras": { "volatility": 0.2, "change": 0.15 },
+    "progressed": {
+      "aspect": 1, "progressedPointShare": 0.5, "moonHouse": 0.5,
+      "ingress": { "SUN": { "change": 0.3, "opportunity": 0.1 }, "MOON": { "introspection": 0.2, "change": 0.1 } }
+    },
+    "solarReturn": { "sunHouse": 0.4, "moonHouse": 0.25, "ascNatalHouse": 0.35, "angularPlanet": 0.5, "contact": 0.3 },
+    "lunarReturn": { "moonHouse": 0.3, "ascNatalHouse": 0.3, "angularPlanet": 0.3, "contact": 0.3 }
+  }
+}

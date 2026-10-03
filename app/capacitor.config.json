@@ -1,0 +1,6 @@
+{
+  "appId": "com.jelliestudio.dokidoki",
+  "appName": "두근두근",
+  "webDir": "www",
+  "android": { "backgroundColor": "#1a1420" }
+}
