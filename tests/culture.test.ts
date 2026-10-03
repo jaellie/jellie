@@ -109,3 +109,15 @@ describe("My card", () => {
     expect(c.job.length).toBeGreaterThan(0);
   });
 });
+
+describe("Siblings are called by title, never by name", () => {
+  it("Korean uses 오빠 / 언니 / 동생, English capitalizes at a sentence start", async () => {
+    const g = createGame({ name: "Mina", gender: "F", likes: "M", birth: { year: 1975, month: 3, day: 3 }, mbti: "ENFP", seed: 3, lang: "ko", family: { mom: { alive: true }, dad: { alive: true }, siblings: [{ rel: "OLDER_BROTHER" }] } } as never);
+    const names = (g as unknown as { state: { family: { siblings: { name: string }[] } } }).state.family.siblings.map((x) => x.name);
+    const t = (g as unknown as { fill(t: string): string }).fill("{sibling}이(가) 전화를 끊었다.");
+    expect(t).toBe("오빠가 전화를 끊었다.");
+    for (const n of names) expect(t).not.toContain(n);
+    const { englishOnly } = await import("../src/game/text");
+    expect(englishOnly("오빠 hung up. 'Yeah.' 언니 laughed. You held 형's hand.")).toBe("My older brother hung up. 'Yeah.' My older sister laughed. You held my older brother's hand.");
+  });
+});

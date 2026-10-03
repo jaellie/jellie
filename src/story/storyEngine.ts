@@ -31,7 +31,7 @@ import { type LifeFacts, computeFacts, meets } from "../game/facts";
 import { SPEAKER_REQUIRES } from "../game/director";
 import { fillNames } from "../game/text";
 import { compatFactor } from "../destiny/compatibility";
-import { AUNTS_UNCLES, GRANDPARENT_WORD, aliveSiblings, siblingLabel } from "./family";
+import { AUNTS_UNCLES, GRANDPARENT_WORD, aliveSiblings, siblingLabel, siblingSender } from "./family";
 import { fireHooks, lifeEvent, pendingApplies, queueChain } from "./lifeEvents";
 import { buildDestinyScript, loveYears, resolveOutcome } from "./destinyScript";
 import { confessFate } from "./confessFate";
@@ -1269,7 +1269,7 @@ function applyEffects(effects: StoryEffect[], ctx: StoryCtx, src: { event?: Fate
         if (sib) {
           sib.alive = false;
           const l = siblingLabel(state, sib);
-          fireHooks(state, "siblingDies", rng, { vars: { who_ko: l.ko, who_en: sib.name } });
+          fireHooks(state, "siblingDies", rng, { vars: { who_ko: l.ko, who_en: siblingSender(state, sib).en } });
         }
         if (src.arc?.type === "FAMILY_PASSING") queueCard(state, String(src.arc.data?.card ?? "RELATIVE_FUNERAL"), ctx, src.arc.data);
         break;

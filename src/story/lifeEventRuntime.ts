@@ -6,7 +6,7 @@
 import type { SeededRandom } from "../core/rng";
 import type { LifeModifiers } from "../core/lifeModifiers";
 import type { LifeState } from "../sim/types";
-import { aliveSiblings, siblingLabel } from "./family";
+import { aliveSiblings, siblingLabel, siblingSender } from "./family";
 import { EVENT_PATIENCE, type FamilyMember, type PersonCtx, pendingApplies, pickChain, type LifeEventOutcome, type StoryEffect, eventState, familyReactions, instinctiveChoice, lifeEvent, eventView, outcomeWeights, queueChain, temperament } from "./lifeEvents";
 import { compatibility } from "../destiny/compatibility";
 import { type StoryCtx, applyStoryEffects, queueCard } from "./storyEngine";
@@ -37,7 +37,7 @@ function familyFor(state: LifeState, exclude: string, facts: StoryCtx["facts"]):
   const sibs = aliveSiblings(state);
   for (const [i, sib] of sibs.entries()) {
     if (exclude === "sibling" && i === 0) continue;
-    out.push({ key: sib.id, label: { ko: siblingLabel(state, sib).ko, en: sib.name }, openness: hash01(`${sib.id}|${key}`) });
+    out.push({ key: sib.id, label: { ko: siblingLabel(state, sib).ko, en: siblingSender(state, sib).en }, openness: hash01(`${sib.id}|${key}`) });
   }
   const pid = state.relationship.partnerId;
   if (facts.partnered && facts.partnerName && exclude !== "partner" && pid) out.push({ key: `partner:${pid}`, label: { ko: facts.partnerName, en: facts.partnerName }, openness: hash01(`${pid}|${key}`) });
@@ -50,7 +50,7 @@ function subjectOf(state: LifeState, subject: string, facts: StoryCtx["facts"]):
   const sib = aliveSiblings(state)[0];
   if (subject === "sibling" && sib) {
     const l = siblingLabel(state, sib);
-    return { ko: l.ko, en: `${sib.name}'s`, key: sib.id };
+    return { ko: l.ko, en: `${siblingSender(state, sib).en}'s`, key: sib.id };
   }
   if (subject === "partner") return { ko: facts.partnerName ?? "", en: `${facts.partnerName ?? ""}'s`, key: `partner:${state.relationship.partnerId ?? ""}` };
   if (subject === "kid") return { ko: facts.kidName ?? "", en: `${facts.kidName ?? ""}'s`, key: "kid" };

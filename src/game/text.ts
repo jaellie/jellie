@@ -173,7 +173,9 @@ export function romanize(hangul: string): string {
 /** English text with no Korean left: family words translated, NPC names in their English form (서준 → Noah), other names romanized. */
 export function englishOnly(text: string): string {
   const t = /[가-힣]/.test(text) ? text.replace(/[가-힣]+/g, (w) => FAMILY_EN[w] ?? nameEn(w) ?? romanize(w)) : text;
-  return plainEnglish(t);
+  // "my older brother hung up." at the start of a sentence → "My older brother hung up."
+  const cap = t.replace(/(^|[.!?…][)"'’”]*\s+|(?:^|\s)["'“‘(]+)my (?=(?:older|younger|uncle|aunt|cousin|niece))/g, (_m, pre: string) => `${pre}My `);
+  return plainEnglish(cap);
 }
 
 /**

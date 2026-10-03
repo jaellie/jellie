@@ -150,7 +150,8 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
   const fatedPartner = partnered && !!fated && s.relationship.partnerId === fated.id;
   const fatedSingle = !!fated && fated.single && !fated.deceased;
   const sibs = (s.family?.siblings ?? []).filter((x) => x.alive);
-  const label = (x: { rel: string; name: string }) => `${siblingWord(s, x.rel as SiblingRel).ko} ${x.name}`;
+  // Siblings are only ever called by what you call them (형, 누나, 오빠, 언니, 동생), never by a name.
+  const label = (x: { rel: string }) => siblingWord(s, x.rel as SiblingRel).ko;
   const mbti = String(s.flags.mbti ?? "").toUpperCase();
   const pid = s.relationship.partnerId;
   const likes = String(s.flags.likes ?? "");
