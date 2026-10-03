@@ -96,7 +96,7 @@
     "Maggi noodles"
    ],
    "MENA": [
-    "인스턴트 누들",
+    "컵라면",
     "instant noodles"
    ],
    "NAM": [
@@ -108,7 +108,7 @@
     "cup noodles"
    ],
    "EUROPE": [
-    "인스턴트 누들",
+    "컵라면",
     "instant noodles"
    ],
    "OCEANIA": [
@@ -116,11 +116,11 @@
     "two-minute noodles"
    ],
    "AFRICA": [
-    "인스턴트 누들",
+    "컵라면",
     "instant noodles"
    ],
    "OTHER": [
-    "인스턴트 누들",
+    "컵라면",
     "instant noodles"
    ]
   },
