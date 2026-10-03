@@ -188,6 +188,28 @@ const MEET_KINDS = (data as unknown as { meetKinds: Record<string, MeetKind> }).
 const ONLINE = (data as unknown as { meetOnline: { abroad: Array<{ location: string; line: Bi }>; near: Array<{ location: string; line: Bi }> } }).meetOnline;
 
 const ROUTINES = routineData.routines as Array<{ id: string; signals: string[]; location: string; activity?: string; line: Bi; work?: boolean }>;
+/** Where something you signed up for (the gym, grad school, a dating app…) can turn into the meeting. */
+const OPENINGS = (routineData as unknown as { openings: Record<string, { location: string; line: Bi }> }).openings;
+/** Accepting an offer opens a door: (template:choice) → opening. */
+export const OPENING_OF: Record<string, string> = {
+  "JOIN_GYM:JOIN": "gym", "COOKING_CLASS_SIGNUP:JOIN": "cooking_class", "SURF_LESSONS:JOIN": "surf_school", "DATING_APP:JOIN": "dating_app",
+  "LANGUAGE_EXCHANGE:JOIN": "language_exchange_app", "NEW_SOCIAL_GROUP:JOIN": "social_group", "LOCAL_GRAD_SCHOOL:ENROLL": "university",
+  "RESEARCH_POSITION:ACCEPT": "university", "STUDY_ABROAD_GRAD:LOCAL_INSTEAD": "university", "STUDY_ABROAD_GRAD:APPLY": "exchange",
+  "STUDY_ABROAD_GRAD:FAMILY_HELP": "exchange", "STUDY_ABROAD_GRAD:LOAN": "exchange", "EXCHANGE_SEMESTER:GO": "exchange",
+  "EXCHANGE_SEMESTER:FAMILY_HELP": "exchange", "CERTIFICATION:STUDY": "study", "CAREER_CHANGE:SWITCH": "newjob", "UNIVERSITY_ADMISSION:LOCAL": "university",
+  "UNIVERSITY_ADMISSION:FAR": "university", "LATE_DEGREE:ENROLL": "university",
+};
+
+/** The latest door you opened: an offer you took in the last three years, or a routine/class you're in now. */
+function openingFor(state: LifeState, pick: number): { location: string; line: Bi } | undefined {
+  const flag = state.flags.meetOpen ? String(state.flags.meetOpen) : undefined;
+  if (flag && OPENINGS[flag] && state.monthIndex - Number(state.flags.meetOpenMonth ?? 0) <= 36) return OPENINGS[flag];
+  // Something you're just doing anyway (a class, a routine): now and then.
+  if (pick % 3 !== 0) return;
+  if (state.enrollment) return OPENINGS[state.enrollment.abroad ? "exchange" : "university"];
+  const habits = Object.keys(state.world?.habits ?? {}).filter((h) => OPENINGS[h]);
+  return habits.length ? OPENINGS[habits[habits.length - 1]] : undefined;
+}
 
 export function meetPlan(state: LifeState, again: boolean): { location: string; activity?: string; line: Bi; intro: Bi; kind?: MeetKind } {
   const p = meetPlanBase(state, again);
@@ -199,6 +221,12 @@ function meetPlanBase(state: LifeState, again: boolean): { location: string; act
   const life = state.story?.fatedLife;
   const intro = TEXT[life && life.from !== "same" ? "introAway" : "intro"];
   if (!life) return { location: "cafe", line: { ko: "(자꾸 눈이 마주치던 그 사람이 먼저 다가왔다.)", en: "(The person whose eyes kept meeting yours walks over.)" }, intro };
+  // Something you signed up for (and kept up) is where it happens: the gym you joined, the grad school
+  // you enrolled in, the app you downloaded. Near home — or online, wherever they live.
+  const open = openingFor(state, ((Object.values(state.world?.npcs ?? {}).find((n) => n.fated)?.spriteSeed ?? 7) >>> 0) + Number(state.flags.lifeSalt ?? 0));
+  if (open && (life.from === "same" || life.from === "city" || ["dating_app", "language_exchange_app"].includes(open.location))) {
+    return { location: open.location, line: open.line, intro };
+  }
   if (again) return { location: life.from === "abroad" ? "airport" : life.job.place === "language_exchange_app" ? "cafe" : life.job.place, line: TEXT.meetAgain, intro };
   // Not everyone meets the same way: a stable pick per person (their sprite seed), online or not.
   const fated = Object.values(state.world?.npcs ?? {}).find((n) => n.fated);

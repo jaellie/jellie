@@ -52,20 +52,22 @@ describe("The destined person's life (where they live, their job)", () => {
     expect(love.signals.some((t) => t.startsWith("상대:"))).toBe(true);
   });
 
-  it("same neighborhood: you meet where they work (the barista at your café, the doctor in the ER), on an app, or where that year's chart sends you", () => {
+  it("same neighborhood: you meet where they work (the barista at your café, the doctor in the ER), on an app, where that year's chart sends you, or somewhere you signed up for", () => {
     let atWork = 0;
     const routinePlaces = new Set(routineData.routines.map((r) => r.location));
+    // …or a class / routine you're already in (the cooking class, the gym).
+    const openPlaces = Object.values((routineData as unknown as { openings: Record<string, { location: string }> }).openings).map((o) => o.location);
     for (const [job, place] of [["barista", "cafe"], ["doctor", "hospital"], ["trainer", "gym"]] as const) {
       for (const seed of [2, 3, 4]) {
         const g = createGame({ ...JAE, seed, fated: { ...REN, from: "same", job, status: "stranger" } });
         // Without a meeting signal in the chart, the meeting follows their job.
         g.state.story!.script.filter((e) => e.theme === "LOVE_MEETING").forEach((e) => (e.signals = []));
         const loc = meetPlan(g.state, false).location;
-        expect([place, "dating_app", "instagram"]).toContain(loc);
+        expect([place, "dating_app", "instagram", ...openPlaces]).toContain(loc);
         if (loc === place) atWork++;
         // With one (도화), it can be a party, a festival or a café instead.
         g.state.story!.script.filter((e) => e.theme === "LOVE_MEETING").forEach((e) => (e.signals = ["사주:DOHWA"]));
-        expect([place, "dating_app", "instagram", ...routinePlaces]).toContain(meetPlan(g.state, false).location);
+        expect([place, "dating_app", "instagram", ...routinePlaces, ...openPlaces]).toContain(meetPlan(g.state, false).location);
       }
     }
     expect(atWork).toBeGreaterThan(4);
@@ -734,5 +736,14 @@ describe("Apart means no touching", () => {
       }
       expect(seen).toBe(true);
     }
+  });
+});
+
+describe("Doors you open lead to people", () => {
+  it("an offer you took (the gym) becomes where you meet", () => {
+    const g = createGame({ ...JAE, seed: 3, fated: { ...REN, from: "same", job: "barista", status: "stranger" } });
+    g.state.flags.meetOpen = "gym";
+    g.state.flags.meetOpenMonth = g.state.monthIndex;
+    expect(meetPlan(g.state, false).location).toBe("gym");
   });
 });

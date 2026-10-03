@@ -54,6 +54,7 @@ import { homeVars, nationCode, nationalityOf } from "../story/nationality";
 import { currencyFor, formatMoney, localizeMoneyText } from "./currency";
 import { pickReflection, reflectionCategory } from "../story/reflections";
 import { applyCulture } from "../story/culture";
+import { OPENING_OF } from "../story/fatedProfile";
 const BIG_MOMENTS = new Set(["PARENT_DEATH", "PARTNER_DEATH", "GOODBYE", "VOWS"]);
 /** The line category for a story moment with no card of its own. */
 const ARC_LINE: Record<string, string> = { DATING: "TOGETHER", TALKING: "LOVE_BEGINS", ENGAGEMENT: "VOWS", PARENT_PASSING: "PARENT_DEATH", FAMILY_PASSING: "GOODBYE", PARTNER_PASSING: "PARTNER_DEATH", ILLNESS: "HEALTH", LONG_DISTANCE: "TOGETHER", PARTING: "BREAKUP", DIVORCE: "DIVORCE", AFFAIR: "SHADOW", PREGNANCY: "NEW_LIFE" };
@@ -1320,6 +1321,9 @@ export class Game {
     if (p.opp && p.choiceIds) {
       const choiceId = p.choiceIds[index];
       const r = this.events.resolve(st, p.opp, { choose: () => choiceId }, mods, rng);
+      // A door opened (the gym, grad school, an app): the one you're meant to meet may be there.
+      const opening = OPENING_OF[`${p.opp.templateId}:${choiceId}`];
+      if (opening && r.success !== false) (st.flags.meetOpen = opening), (st.flags.meetOpenMonth = st.monthIndex);
       const sceneDef = p.opp.choices.find((c) => c.id === choiceId)?.scene;
       if (sceneDef?.length && r.success !== false) this.setSequence(sceneDef);
       const line = r.success === undefined ? bi("(결정했다.)", "(Decided.)") : r.success ? bi("(잘 됐다!)", "(It worked out!)") : bi("(…이번엔 잘 안 됐다.)", "(…It didn't work out this time.)");
@@ -1339,6 +1343,8 @@ export class Game {
       const n0 = st.story?.cards.length ?? 0;
       const res = resolveLifeEvent(p.eventUid, index, { state: st, seed: s.seed, rng, mods, facts: this.facts(), signals: this.yearSignals() });
       if (!res) return;
+      const evOpen = evId ? OPENING_OF[`${evId}:${res.outcome}`] : undefined;
+      if (evOpen) (st.flags.meetOpen = evOpen), (st.flags.meetOpenMonth = st.monthIndex);
       const text = [this.L(res.r), ...res.extra.map((x) => this.L(x))].join(" ");
       // A friend's death or a wedding always gets its line.
       const evHint = evId === "FRIEND_PASSING_NEWS" ? "GOODBYE" : evId && /WEDDING/.test(evId) ? "CELEBRATE" : undefined;
@@ -1349,7 +1355,9 @@ export class Game {
     if (p.storyRef) {
       const label = p.popup.ch[index]?.t;
       const n0 = st.story?.cards.length ?? 0;
-      const arcType = p.storyRef.startsWith("arc:") ? st.story?.arcs.find((a) => a.id === p.storyRef!.slice(4))?.type : undefined;
+      const arcNow = p.storyRef.startsWith("arc:") ? st.story?.arcs.find((a) => a.id === p.storyRef!.slice(4)) : undefined;
+      const arcType = arcNow?.type;
+      const stepKey = arcNow?.steps[arcNow.step]?.key;
       const res = resolveStory(p.storyRef, index, { state: st, seed: s.seed, rng, mods, facts: this.facts() }, label);
       if (!res) return;
       // A big moment in parts (a funeral, a wedding): its card is made early, its line comes at the very end.
@@ -1357,7 +1365,9 @@ export class Game {
       if (partCat) s.momentCat = partCat;
       const momentCat = s.momentCat;
       if (!res.more) s.momentCat = undefined;
-      const quote = res.more ? undefined : this.reflect(n0, undefined, 0.8, momentCat ?? (p.storyRef.startsWith("fated:") ? "FATE" : arcType ? ARC_LINE[arcType] : undefined));
+      // The funeral itself always gets its line (and the days after get another).
+      const funeral = !!res.more && (stepKey === "FUNERAL" || stepKey === "FAREWELL") && !!arcType && ARC_LINE[arcType] !== undefined;
+      const quote = res.more && !funeral ? undefined : this.reflect(n0, undefined, funeral ? 1 : 0.8, momentCat ?? (p.storyRef.startsWith("fated:") ? "FATE" : arcType ? ARC_LINE[arcType] : undefined));
       if (res.scene?.length) this.setSequence(res.scene);
       if (!st.alive) s.minute = CFG.dayEndMinute;
       // A big moment in four parts: the next part opens right after this one.
