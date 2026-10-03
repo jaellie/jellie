@@ -21,7 +21,7 @@ const EFFECTS = new Set([
 ]);
 const DYNAMIC_SPEAKERS = new Set(["me", "mom", "dad", "partner", "friend", "crush", "sibling", "kid", "ex", "fated", "boss", "coworker", "stranger", "doctor", "nurse", "relative", "inlaw", "judge", "recruiter", "app", "professor", "mentor", "barista", "instructor", "work"]);
 const FACTS = new Set(["korean", "inKorea", 
-  "age", "employed", "selfEmployed", "student", "jobless", "retired", "careerCid", "recentlyPromoted", "recentlyLostJob", "partnered", "dating", "married", "single", "divorced",
+  "age", "employed", "selfEmployed", "student", "jobless", "retired", "careerCid", "recentlyPromoted", "recentlyLostJob", "creator", "partnered", "dating", "married", "single", "divorced",
   "recentlyBrokeUp", "hasEx", "momAlive", "dadAlive", "hasSibling", "fatedKnown", "fatedSingle", "fatedPartner", "fatedAvailable", "partnerCritical", "hasFriend", "abroad",
   "traveling", "weekend", "broke", "comfortable", "hasHabit", "alive", "male", "female", "partnerYears", "hasKid", "kidAge", "hasSister", "hasBrother", "parentsTogether",
   "hasPet", "homeOwner", "famous", "money", "debt", "inDebt", "rich", "engaged", "pregnant", "partnerAgeGap", "mbtiE", "mbtiN", "mbtiF", "mbtiP",

@@ -15,6 +15,8 @@ export interface LifeFacts {
   employed: boolean;
   /** Runs their own place (no boss, no 명예퇴직 offers). */
   selfEmployed: boolean;
+  /** Self-employed as a creator (YouTuber, streamer): no shop, no customers. */
+  creator: boolean;
   student: boolean;
   jobless: boolean;
   retired: boolean;
@@ -178,6 +180,7 @@ export function computeFacts(s: LifeState, opts: { weekend?: boolean } = {}): Li
     alive: s.alive,
     employed: s.career.employed,
     selfEmployed: s.career.employed && ["own-business", "second-career"].includes(s.career.field ?? ""),
+    creator: s.career.employed && s.career.field === "own-business" && !!s.flags.influencer,
     student: !!s.enrollment,
     jobless: !s.career.employed && !s.enrollment && s.age < 65 && !s.flags.retired,
     retired: !s.career.employed && (s.age >= 65 || !!s.flags.retired),

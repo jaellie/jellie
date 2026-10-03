@@ -1300,7 +1300,8 @@
     "en": "Bankrupt"
    },
    "requires": [
-    "selfEmployed"
+    "selfEmployed",
+    "!creator"
    ],
    "trigger": {
     "signals": {
@@ -1401,6 +1402,211 @@
        "business": 0.5
       }
      }
+    }
+   }
+  },
+  {
+   "id": "CREATOR_CHANNEL_SUSPENDED",
+   "cat": "money_down",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "채널 수익 정지",
+    "en": "Channel demonetized"
+   },
+   "requires": [
+    "selfEmployed",
+    "creator"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.56,
+     "URANUS@H2": 0.42,
+     "URANUS@H8": 0.35,
+     "SAMJAE": 0.42,
+     "unfavorable": 0.63,
+     "BRANCH_CLASH@month": 0.21,
+     "SATURN>SUN:hard": 0.42,
+     "SATURN>MC:conjunction": 0.35,
+     "group:PYEON_GWAN": 0.42,
+     "group:SANG_GWAN": 0.28
+    },
+    "mods": {
+     "business": -0.6
+    }
+   },
+   "location": "home",
+   "activity": "use_phone",
+   "who": "bank",
+   "line": {
+    "ko": "[플랫폼] 채널 수익 창출이 중단되었습니다. 광고 수익 계좌가 정지되었습니다.",
+    "en": "[Platform] Monetization has been suspended on your channel. Your ad revenue account is frozen."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "채널을 정리한다",
+      "en": "Shut the channel down"
+     },
+     "w": {
+      "CLOSE": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "그래도 계속 올린다",
+      "en": "Keep uploading anyway"
+     },
+     "w": {
+      "HOLD": 0.4,
+      "CLOSE": 0.6
+     }
+    }
+   ],
+   "outcomes": {
+    "CLOSE": {
+     "r": {
+      "ko": "마지막 영상을 내리던 날, 댓글창에 '고생했어요'가 줄지어 달렸다.",
+      "en": "The day you took down the last video, the comments filled with 'You worked so hard.'"
+     },
+     "effects": [
+      {
+       "kind": "quitJob"
+      },
+      {
+       "kind": "debt",
+       "amount": 15
+      }
+     ],
+     "chain": [
+      {
+       "to": "CREATOR_RESTART",
+       "after": [
+        24,
+        60
+       ],
+       "p": 0.5,
+       "lean": {
+        "traits": {
+         "ambition": 0.5,
+         "careerDrive": 0.4
+        },
+        "signals": {
+         "favorable": 0.4,
+         "CHEONEUL_GWIIN": 0.5,
+         "daeunShift": 0.3
+        }
+       }
+      }
+     ]
+    },
+    "HOLD": {
+     "r": {
+      "ko": "수익 없이 영상을 올렸다. 기적처럼 영상 하나가 알고리즘을 탔다.",
+      "en": "You kept uploading without income. Miraculously, one video caught the algorithm."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": 10
+      }
+     ],
+     "lean": {
+      "mods": {
+       "business": 0.5
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "CREATOR_RESTART",
+   "cat": "money_down",
+   "rarity": "common",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "다시 켠 카메라",
+    "en": "Camera on again"
+   },
+   "chainOnly": true,
+   "location": "home",
+   "activity": "use_phone",
+   "who": "me",
+   "line": {
+    "ko": "(채널을 접은 지 몇 년. 중고 카메라 한 대를 샀다. 다시 해보기로 했다.)",
+    "en": "(Years after you closed the channel, you bought a used camera. You're going to try again.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "새 채널을 연다",
+      "en": "Open a new channel"
+     },
+     "w": {
+      "RISE": 0.65,
+      "SLOW": 0.35
+     }
+    },
+    {
+     "t": {
+      "ko": "(천천히, 작게 시작한다)",
+      "en": "(Start slowly, small)"
+     },
+     "w": {
+      "SLOW": 0.6,
+      "RISE": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "RISE": {
+     "r": {
+      "ko": "첫 영상에 댓글이 달렸다. 1년 만에 구독자가 다시 모였다.",
+      "en": "The first video got comments. Within a year the subscribers were back."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "own-business"
+      },
+      {
+       "kind": "money",
+       "amount": 20
+      },
+      {
+       "kind": "clearFlag",
+       "name": "bankrupt"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시 켠 녹화 버튼",
+       "en": "The record button, on again"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     }
+    },
+    "SLOW": {
+     "r": {
+      "ko": "크게 벌진 못했다. 그래도 매일 무언가를 만들 이유가 생겼다.",
+      "en": "No fortune. But there's a reason to make something every day now."
+     },
+     "effects": [
+      {
+       "kind": "job",
+       "field": "own-business"
+      },
+      {
+       "kind": "money",
+       "amount": 5
+      }
+     ]
     }
    }
   },
