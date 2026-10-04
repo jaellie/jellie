@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <filter id="wob" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="38" result="t"/>
+      <feColorMatrix in="t" type="matrix" values="0 0 0 0 0.12  0 0 0 0 0.10  0 0 0 0 0.08  0 0 0 0.55 0" result="g"/>
+      <feComposite in="g" in2="SourceGraphic" operator="in" result="gi"/>
+      <feBlend in="SourceGraphic" in2="gi" mode="multiply"/>
+    </filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="blurfar"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs><g filter="url(#grain)"><g filter="url(#wob)">
+    <path d="M128 40 q-18 0 -18 -14 q0 -12 18 -12 q18 0 18 12 q0 14 -18 14" stroke="#2E3A32" stroke-width="8" fill="none"/>
+    <path d="M128 46 C70 46 64 120 58 170 L50 188 L206 188 L198 170 C192 120 186 46 128 46Z" fill="#4E7A5A"/>
+    <path d="M94 80 C80 110 78 140 76 168" stroke="#9CC3A0" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.7"/>
+    <rect x="44" y="182" width="168" height="18" rx="9" fill="#2E3A32"/>
+    <circle cx="128" cy="214" r="18" fill="#D8A85C"/>
+    <path d="M150 46 l34 -18 l-6 28z" fill="#F3EBDD" opacity="0.9"/></g></g></svg>
