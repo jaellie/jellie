@@ -174,14 +174,16 @@ export class Home {
 
     // decorative closed doors
     const addDoor = (wall, x, z, rot, color) => { const d = H.door(0.86, 2.05, color); at(d.group, x, 0, z, rot); this.wallBy[wall].decor.add(d.group); return d; };
-    addDoor('hallSouth', 5.35, 3.48, 0);
-    addDoor('hallSouth', 7.2, 3.48, 0);
+    addDoor('hallSouth', 4.95, 3.48, 0);   // Room 2
+    addDoor('hallSouth', 7.2, 3.48, 0);    // Room 1
+    addDoor('hallNorth', 4.45, 4.47, PI, '#EADCC6'); // storage room (창고)
+    addDoor('eastEntry', 7.87, 3.98, -PI / 2);       // bathroom at the end of the hall
     // sliding door to the bedroom (kitchen west wall)
     // wall air conditioner (decor)
     const ac = H.wallAC(); at(ac, F.ac.x + 0.12, F.ac.y, F.ac.z, PI / 2); this.wallBy.west.decor.add(ac);
     // a framed print in the hall
-    const frame = box(0.6, 0.45, 0.03, '#C48A52', { r: 0.01 }); at(frame, 5.6, 1.3, 4.48, PI); this.wallBy.hallNorth.decor.add(frame);
-    const art = box(0.5, 0.35, 0.01, '#F2C9A4'); at(art, 5.6, 1.35, 4.46, PI); this.wallBy.hallNorth.decor.add(art);
+    const frame = box(0.6, 0.45, 0.03, '#C48A52', { r: 0.01 }); at(frame, 5.75, 1.3, 4.48, PI); this.wallBy.hallNorth.decor.add(frame);
+    const art = box(0.5, 0.35, 0.01, '#F2C9A4'); at(art, 5.75, 1.35, 4.46, PI); this.wallBy.hallNorth.decor.add(art);
     // small kitchen window (north wall, above the dish rack)
     this.kWin = box(0.55, 0.5, 0.02, null, { m: new THREE.MeshBasicMaterial({ color: '#FFD9A0', toneMapped: false }), cast: false });
     at(this.kWin, 3.15, 1.62, 7.79); this.wallBy.kitchenNorth.decor.add(this.kWin);

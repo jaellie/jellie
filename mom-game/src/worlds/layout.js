@@ -32,7 +32,7 @@ export const layout = {
     lfBag: { x: 1.1, z: 3.25 },
     ac: { x: 0.0, z: 1.95, y: 1.95 },
     shelf: { x: 0.0, z: 3.92 },
-    intercom: { x: 4.5, z: 3.45, y: 1.4 },
+    intercom: { x: 4.2, z: 3.45, y: 1.4 },
     rug: { x: 2.0, z: 2.1, w: 1.7, d: 2.1 },
     // kitchen: fridges + sink/hob on the north wall, L-counter on the west wall,
     // speckled peninsula (dining counter) coming off the east wall
