@@ -57,7 +57,11 @@ namespace BigGreenBear
         {
             if (texCache.TryGetValue(name, out var t) && t != null) return t;
             t = Resources.Load<Texture2D>("BGB/Art/" + name);
-            if (t == null && !optional) Debug.LogWarning("[BigGreenBear] Missing art: Resources/BGB/Art/" + name + ".png");
+            if (t == null)
+            {
+                // optional = "use it if it exists" (e.g. not every character has every expression)
+                if (!optional) Debug.LogWarning("[BigGreenBear] Missing art: Resources/BGB/Art/" + name + ".png");
+            }
             else t.wrapMode = TextureWrapMode.Clamp;
             texCache[name] = t;
             return t;
