@@ -53,6 +53,15 @@ namespace BigGreenBear
 #endif
         }
 
+        public static bool Quit()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame;
+#else
+            return Input.GetKeyDown(KeyCode.Escape);
+#endif
+        }
+
         public static bool Restart()
         {
 #if ENABLE_INPUT_SYSTEM

@@ -151,7 +151,7 @@ script = {
         "chapterTitle": T("Bellflower Winter Night", "벨플라워 겨울밤"),
         "prompt": T("What do you do?", "무엇을 할까?"),
         "toBeContinued": T("To be continued.", "계속."),
-        "controls": T("Enter / click: continue   ·   1-4: choose   ·   L: 한국어", "Enter / 클릭: 계속   ·   1-4: 선택   ·   L: English"),
+        "controls": T("Enter / click: continue   ·   1-4: choose   ·   L: 한국어   ·   Esc: quit", "Enter / 클릭: 계속   ·   1-4: 선택   ·   L: English   ·   Esc: 종료"),
         "motionOn": T("M: reduced motion ON", "M: 움직임 줄이기 켜짐"),
         "motionOff": T("M: reduce motion", "M: 움직임 줄이기"),
     },

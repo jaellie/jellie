@@ -349,6 +349,9 @@ namespace BigGreenBear
         {
             sound.SetRain(rain.Intensity);
 
+            // Esc closes the built game (in the Editor, press the Play button again instead).
+            if (SliceInput.Quit()) Application.Quit();
+
             if (SliceInput.Language())
             {
                 lang = lang == "ko" ? "en" : "ko";

@@ -31,8 +31,8 @@
    "ko": "계속."
   },
   "controls": {
-   "en": "Enter / click: continue   ·   1-4: choose   ·   L: 한국어",
-   "ko": "Enter / 클릭: 계속   ·   1-4: 선택   ·   L: English"
+   "en": "Enter / click: continue   ·   1-4: choose   ·   L: 한국어   ·   Esc: quit",
+   "ko": "Enter / 클릭: 계속   ·   1-4: 선택   ·   L: English   ·   Esc: 종료"
   },
   "motionOn": {
    "en": "M: reduced motion ON",
