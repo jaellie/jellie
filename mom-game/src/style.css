@@ -1,0 +1,124 @@
+:root {
+  --paper: #fffaf0;
+  --ink: #3a2e28;
+  --warm: #f5d7a8;
+  --rose: #e9a3ae;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #1a1412; color: var(--ink); }
+body { font-family: 'Gowun Batang', serif; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; touch-action: none; }
+canvas { display: block; }
+
+/* film feel */
+#vignette { position: fixed; inset: 0; pointer-events: none; z-index: 5;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(70,38,18,0.38) 100%); }
+#grain { position: fixed; inset: -50%; pointer-events: none; z-index: 6; opacity: 0.05; mix-blend-mode: overlay;
+  animation: grain 0.9s steps(4) infinite; }
+body.past #grain { opacity: 0.13; }
+body.past #sepia { opacity: 1; }
+#sepia { position: fixed; inset: 0; pointer-events: none; z-index: 5; opacity: 0; transition: opacity 1.5s;
+  background: rgba(190, 140, 70, 0.13); mix-blend-mode: multiply; }
+@keyframes grain { 0% { transform: translate(0,0) } 25% { transform: translate(-3%, 2%) } 50% { transform: translate(2%, -3%) } 75% { transform: translate(-1%, 3%) } }
+
+#fade { position: fixed; inset: 0; z-index: 30; background: #000; opacity: 1; pointer-events: none; transition: opacity 1s ease; }
+
+/* start screen */
+#start { position: fixed; inset: 0; z-index: 40; background: #0f0b0a; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity 1.4s ease; }
+#start p { font-size: clamp(20px, 3.2vw, 34px); color: #ffe7c2; letter-spacing: 0.08em; margin: 0; padding: 0 24px; text-align: center;
+  text-shadow: 0 0 18px rgba(255, 200, 120, 0.8), 0 0 42px rgba(255, 170, 90, 0.45); animation: breathe 3.2s ease-in-out infinite; }
+#start.hide { opacity: 0; pointer-events: none; }
+@keyframes breathe { 0%, 100% { opacity: 0.55 } 50% { opacity: 1 } }
+
+/* interaction hint (soft round E bubble) */
+#hint { position: fixed; z-index: 10; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%;
+  background: rgba(255, 250, 240, 0.92); color: #8a5a3c; font: 700 17px/34px 'Gowun Batang', serif; text-align: center;
+  box-shadow: 0 2px 10px rgba(120, 70, 30, 0.3), 0 0 0 3px rgba(255, 220, 170, 0.45); pointer-events: none; opacity: 0;
+  transition: opacity 0.25s; animation: bob 1.6s ease-in-out infinite; }
+#hint.on { opacity: 1; }
+@keyframes bob { 0%, 100% { translate: 0 0 } 50% { translate: 0 -4px } }
+
+/* speech bubble above Mom */
+#bubble { position: fixed; z-index: 11; transform: translate(-50%, -100%); padding: 10px 16px; border-radius: 18px;
+  background: rgba(255, 251, 244, 0.96); color: var(--ink); font-size: clamp(15px, 1.6vw, 19px); white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(110, 60, 30, 0.25); pointer-events: none; opacity: 0; transition: opacity 0.35s; }
+#bubble::after { content: ''; position: absolute; left: 50%; bottom: -8px; margin-left: -8px; border: 8px solid transparent; border-bottom: 0; border-top-color: rgba(255, 251, 244, 0.96); }
+#bubble.on { opacity: 1; }
+
+/* cards */
+#cardLayer { position: fixed; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center;
+  background: rgba(40, 22, 12, 0.35); opacity: 0; pointer-events: none; transition: opacity 0.4s; }
+#cardLayer.on { opacity: 1; pointer-events: auto; }
+.card { position: relative; max-width: min(560px, 88vw); max-height: 86vh; overflow: auto; padding: 34px 36px 30px;
+  background: var(--paper); border-radius: 6px; box-shadow: 0 18px 50px rgba(60, 25, 10, 0.45);
+  transform: translateY(30px) scale(0.96); transition: transform 0.5s cubic-bezier(.2,.9,.3,1.2); }
+#cardLayer.on .card { transform: none; }
+.card .title { font-size: 15px; color: #a07a5c; letter-spacing: 0.06em; margin-bottom: 10px; }
+.card .hand { font-family: 'Nanum Pen Script', cursive; font-size: clamp(27px, 3.4vw, 36px); line-height: 1.35; white-space: pre-wrap; color: #33261f; }
+.card.note { background: linear-gradient(#fffaf0, #fff4df); transform-origin: center; rotate: -1.2deg; }
+.card.note::before { content: ''; position: absolute; top: -10px; left: 50%; width: 90px; height: 24px; margin-left: -45px;
+  background: rgba(240, 200, 150, 0.6); rotate: 2deg; }
+.card .lines { background-image: repeating-linear-gradient(transparent 0 47px, rgba(170, 130, 100, 0.18) 47px 48px); }
+.close-tip { margin-top: 18px; font-size: 13px; color: #b39a85; text-align: right; }
+.icon-big { font-size: 64px; text-align: center; line-height: 1.1; margin: 4px 0 12px; }
+
+.card.photo { padding: 18px 18px 22px; background: #fdfbf7; rotate: 1deg; }
+.card.photo .img { width: min(480px, 80vw); aspect-ratio: 4 / 3; background: #eadfce center / cover no-repeat; display: flex;
+  align-items: center; justify-content: center; font-size: 54px; color: #b89c80; }
+.card.photo .img img { width: 100%; height: 100%; object-fit: cover; }
+.card.photo .cap { font-family: 'Nanum Pen Script', cursive; font-size: 30px; text-align: center; margin-top: 12px; }
+.card.photo .dots { text-align: center; color: #c9b39c; letter-spacing: 6px; font-size: 13px; margin-top: 6px; }
+
+/* gift box */
+.giftbox { position: relative; width: 120px; height: 110px; margin: 10px auto 18px; }
+.giftbox .base { position: absolute; bottom: 0; left: 10px; width: 100px; height: 72px; background: #e98f9e; border-radius: 6px; }
+.giftbox .lid { position: absolute; top: 18px; left: 4px; width: 112px; height: 26px; background: #f0a3b0; border-radius: 6px; transition: transform 0.7s cubic-bezier(.3,1.6,.5,1); }
+.giftbox .rib { position: absolute; left: 52px; width: 16px; background: #fff3c9; }
+.giftbox .base .rib { top: 0; bottom: 0; left: 42px; }
+.giftbox .lid .rib { top: 0; bottom: 0; left: 48px; }
+.giftbox .bow { position: absolute; top: -18px; left: 36px; width: 40px; height: 22px; border-radius: 50% 50% 40% 40%; border: 7px solid #fff3c9; border-bottom-color: transparent; }
+.giftbox.shake { animation: shake 0.5s ease-in-out 2; }
+.giftbox.open .lid { transform: translate(30px, -46px) rotate(24deg); }
+.giftbox .inside { position: absolute; left: 0; right: 0; top: 24px; text-align: center; font-size: 46px; opacity: 0; transform: translateY(20px); transition: all 0.7s 0.2s; }
+.giftbox.open .inside { opacity: 1; transform: translateY(-34px); }
+@keyframes shake { 25% { rotate: -6deg } 75% { rotate: 6deg } }
+.reveal { opacity: 0; transition: opacity 0.8s 0.6s; }
+.reveal.on { opacity: 1; }
+
+/* voice */
+.card.voice { text-align: center; min-width: min(420px, 86vw); }
+.card.voice .wave { display: flex; gap: 5px; justify-content: center; height: 40px; align-items: center; margin: 6px 0 14px; }
+.card.voice .wave i { width: 6px; border-radius: 3px; background: #e8a3ae; animation: wave 1s ease-in-out infinite; }
+@keyframes wave { 0%, 100% { height: 8px } 50% { height: 34px } }
+.card.voice .sub { min-height: 3.6em; }
+
+/* letter */
+.card.letter { max-width: min(680px, 92vw); width: 680px; max-height: 88vh; padding: 46px 48px 38px; background: #fffaf0;
+  background-image: repeating-linear-gradient(transparent 0 51px, rgba(170, 130, 100, 0.16) 51px 52px); rotate: 0deg; }
+.card.letter .hand { font-size: clamp(28px, 3.6vw, 38px); line-height: 52px; }
+.card.letter .final { font-family: 'Nanum Pen Script', cursive; font-size: clamp(38px, 5vw, 54px); color: #b0485c; text-align: center; margin-top: 30px; opacity: 0; transition: opacity 2s; }
+.card.letter .final.on { opacity: 1; }
+.card.letter .from { font-family: 'Nanum Pen Script', cursive; font-size: 30px; text-align: right; opacity: 0; transition: opacity 2s 1s; }
+.card.letter .from.on { opacity: 1; }
+.hand .ch { opacity: 0; transition: opacity 0.35s; }
+.hand .ch.on { opacity: 1; }
+
+/* memory shelf browser */
+.card.shelf { max-width: min(640px, 92vw); width: 640px; }
+.card.shelf .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+.card.shelf .it { border-radius: 10px; padding: 10px 4px; text-align: center; background: #fbf1e3; cursor: pointer; border: 2px solid transparent; }
+.card.shelf .it.sel { border-color: #e7a2ad; background: #fde9e4; }
+.card.shelf .it .e { font-size: 32px; }
+.card.shelf .it .t { font-size: 12px; margin-top: 4px; color: #7d6352; }
+.card.shelf .empty { font-family: 'Nanum Pen Script', cursive; font-size: 28px; text-align: center; color: #9c8471; padding: 20px; }
+.xbtn { position: absolute; top: 8px; right: 12px; font-size: 22px; color: #b39a85; cursor: pointer; padding: 4px 8px; }
+
+/* touch controls */
+.joy-zone { position: fixed; left: 0; top: 0; bottom: 0; width: 50%; z-index: 9; }
+.joy-base { position: fixed; width: 120px; height: 120px; border-radius: 50%; background: rgba(255, 245, 230, 0.18); border: 2px solid rgba(255, 245, 230, 0.4); opacity: 0; transition: opacity 0.2s; left: 40px; bottom: 40px; }
+.joy-base.on { opacity: 1; }
+.joy-knob { position: absolute; left: 35px; top: 35px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255, 245, 230, 0.75); }
+.touch-btn { position: fixed; right: 36px; bottom: 36px; z-index: 12; width: 78px; height: 78px; border-radius: 50%; background: rgba(255, 245, 230, 0.75); color: #e19aa7; font-size: 30px; line-height: 78px; text-align: center; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2); }
+.touch-btn.on { transform: scale(0.92); background: rgba(255, 235, 220, 0.95); }
+
+#portrait { position: fixed; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center; background: #1a1210; color: #ffe7c2; font-size: 22px; text-align: center; padding: 30px; }
+@media (orientation: portrait) { body.touch #portrait { display: flex; } }
