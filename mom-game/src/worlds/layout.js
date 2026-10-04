@@ -9,7 +9,9 @@ export const layout = {
   living: { x0: 0, x1: 4.0, z0: 0, z1: 4.5 },
   kitchen: { x0: 0, x1: 3.5, z0: 4.5, z1: 7.8 },
   hall: { x0: 4.0, x1: 7.9, z0: 3.45, z1: 4.5 },
-  entry: { x0: 6.5, x1: 7.9, z0: 4.5, z1: 6.25, doorX: 7.1 },
+  // front door on the entry's east (right) wall: you come in from the right,
+  // the living room and kitchen are to the left
+  entry: { x0: 6.5, x1: 7.9, z0: 4.5, z1: 6.25, doorZ: 5.35 },
   // no balcony in front of the living room (the window goes straight outside)
   window: { x0: 0.8, x1: 3.3, top: 2.2, mullions: [1.63, 2.47] },
 
@@ -42,8 +44,8 @@ export const layout = {
     chairs: [{ x: 2.3, z: 5.1, r: 0 }, { x: 3.0, z: 5.1, r: 0 }],
     fan: { x: 3.3, z: 4.72 },
     // entry
-    shoeCabinet: { x: 7.73, z: 5.3, len: 1.25 },
-    keyTray: { x: 7.7, z: 4.95 },
-    shoes: { x: 6.85, z: 5.15 },
+    shoeCabinet: { x: 7.05, z: 6.08, len: 1.0 }, // along the entry's north wall
+    keyTray: { x: 7.3, z: 6.08 },
+    shoes: { x: 7.05, z: 4.85 },
   },
 };

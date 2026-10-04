@@ -20,6 +20,7 @@ const SEA_Y = -55;
 // side walls that stand between the camera and Mom in each view
 const CUT_ALSO_LIVING = ['kitchenEast', 'entryWest'];
 const CUT_ALSO_KITCHEN = ['eastLiving'];
+const CUT_ALSO_ENTRY = ['kitchenEast', 'hallNorth'];
 
 function plankTexture(w, d, base = H.P.floor) {
   const t = canvasTexture(512, 512, (c) => {
@@ -175,8 +176,6 @@ export class Home {
     const addDoor = (wall, x, z, rot, color) => { const d = H.door(0.86, 2.05, color); at(d.group, x, 0, z, rot); this.wallBy[wall].decor.add(d.group); return d; };
     addDoor('hallSouth', 5.35, 3.48, 0);
     addDoor('hallSouth', 7.2, 3.48, 0);
-    // door to the utility balcony (kitchen east wall)
-    addDoor('kitchenEast', 3.47, 6.75, -PI / 2, '#EFE3CF');
     // sliding door to the bedroom (kitchen west wall)
     // wall air conditioner (decor)
     const ac = H.wallAC(); at(ac, F.ac.x + 0.12, F.ac.y, F.ac.z, PI / 2); this.wallBy.west.decor.add(ac);
@@ -537,20 +536,20 @@ export class Home {
   buildEntry() {
     const s = this.scene, game = this.game;
     // front door
-    const d = H.door(0.9, 2.05, '#E7D8C0'); at(d.group, L.entry.doorX, 0, L.entry.z1 - 0.03, PI); s.add(d.group); this.frontDoor = d;
-    const mat2 = box(0.8, 0.012, 0.5, '#B98A7A', { r: 0.01, cast: false }); at(mat2, L.entry.doorX, -0.07, L.entry.z1 - 0.35); s.add(mat2);
+    const d = H.door(0.9, 2.05, '#E7D8C0'); at(d.group, L.entry.x1 - 0.03, 0, L.entry.doorZ, -PI / 2); s.add(d.group); this.frontDoor = d;
+    const mat2 = box(0.8, 0.012, 0.5, '#B98A7A', { r: 0.01, cast: false }); at(mat2, L.entry.x1 - 0.35, -0.07, L.entry.doorZ, PI / 2); s.add(mat2);
     // shoe cabinet + key tray
-    const sc = H.shoeCabinet(F.shoeCabinet.len); at(sc, F.shoeCabinet.x, 0, F.shoeCabinet.z, -PI / 2); s.add(sc);
-    this.collider.addBox(F.shoeCabinet.x - 0.18, 7.9, F.shoeCabinet.z - F.shoeCabinet.len / 2, F.shoeCabinet.z + F.shoeCabinet.len / 2, 'shoecab');
-    const kt = H.keyTray(); at(kt.group, F.keyTray.x, 0.97, F.keyTray.z, -PI / 2); s.add(kt.group); this.keyTray = kt;
+    const sc = H.shoeCabinet(F.shoeCabinet.len); at(sc, F.shoeCabinet.x, 0, F.shoeCabinet.z, PI); s.add(sc);
+    this.collider.addBox(F.shoeCabinet.x - F.shoeCabinet.len / 2, F.shoeCabinet.x + F.shoeCabinet.len / 2, F.shoeCabinet.z - 0.18, 6.25, 'shoecab');
+    const kt = H.keyTray(); at(kt.group, F.keyTray.x, 0.97, F.keyTray.z, PI); s.add(kt.group); this.keyTray = kt;
     // black rubber shoes on the floor + slippers (shown while Mom wears the shoes)
-    this.floorShoes = H.pairOfShoes(() => rubberShoe(content.mom.shoes)); at(this.floorShoes, F.shoes.x, -0.07, F.shoes.z, PI); this.floorShoes.scale.setScalar(1.15); s.add(this.floorShoes);
-    this.floorSlippers = H.pairOfShoes(() => slipper(content.mom.slippers)); at(this.floorSlippers, F.shoes.x + 0.05, -0.04, F.shoes.z - 0.5, 0); s.add(this.floorSlippers);
+    this.floorShoes = H.pairOfShoes(() => rubberShoe(content.mom.shoes)); at(this.floorShoes, F.shoes.x, -0.07, F.shoes.z, -PI / 2); this.floorShoes.scale.setScalar(1.15); s.add(this.floorShoes);
+    this.floorSlippers = H.pairOfShoes(() => slipper(content.mom.slippers)); at(this.floorSlippers, F.shoes.x - 0.5, -0.04, F.shoes.z + 0.05, PI / 2); s.add(this.floorSlippers);
     this.floorSlippers.visible = false;
 
-    this.inter.add({ id: 'door', x: L.entry.doorX, z: L.entry.z1 - 0.3, y: 1.3, reach: 0.85, onUse: () => this.useDoor() });
+    this.inter.add({ id: 'door', x: L.entry.x1 - 0.3, z: L.entry.doorZ, y: 1.3, reach: 0.85, onUse: () => this.useDoor() });
     if (content.features.mall) {
-      this.inter.add({ id: 'key', x: F.keyTray.x, z: F.keyTray.z, y: 1.05, reach: 1.0,
+      this.inter.add({ id: 'key', x: F.keyTray.x, z: F.keyTray.z, y: 1.05, reach: 0.95,
         onUse: async () => {
           game.audio.play('coin'); game.mom.play('reach', 0.7);
           await game.tweens.add(0.4, (t) => { kt.key.position.y = 0.03 + t * 0.15; });
@@ -639,7 +638,7 @@ export class Home {
     g.audio.setLoops(this.loopKeys());
     if (!from) { mom.position.set(2.0, 0, 2.9); mom.face(PI, true); return; }
     // coming back in through the front door
-    mom.position.set(7.1, 0, 5.4); mom.face(PI, true);
+    mom.position.set(7.35, 0, L.entry.doorZ); mom.face(-PI / 2, true);
     setTimeout(() => g.say(from === 'past' ? '…꿈이었나?' : '다녀왔습니다~'), 1200);
   }
 
@@ -648,10 +647,10 @@ export class Home {
   exit() { this.ring?.stop(); this.ring = null; this.game.mom.stand(); this.sitting = null; }
 
   cameraYawFor(p, cur) {
-    const k = cur > 1 ? 1 : 0; // hysteresis
-    const inKitchen = p.x < 3.6 && p.z > (k ? 4.6 : 5.0);
-    const inEntry = p.x > (k ? 6.3 : 6.55) && p.z > (k ? 4.45 : 4.65);
-    return inKitchen || inEntry ? PI : 0;
+    const wasKitchen = cur > 1.5, wasEntry = cur < -0.75; // hysteresis
+    const inKitchen = p.x < 3.6 && p.z > (wasKitchen ? 4.6 : 5.0);
+    const inEntry = p.x > (wasEntry ? 6.3 : 6.55) && p.z > (wasEntry ? 4.4 : 4.6);
+    return inKitchen ? PI : inEntry ? -PI / 2 : 0; // entry: camera looks east, at the front door
   }
 
   // in the living room the camera leans toward the room center so side furniture never blocks Mom
@@ -733,7 +732,7 @@ export class Home {
     if (where === 'beach') {
       g.audio.play('door');
       await g.tweens.add(0.9, (t) => { this.frontDoor.leaf.rotation.y = -t * 1.3; });
-      g.mom.faceToward(L.entry.doorX, 7);
+      g.mom.faceToward(9, L.entry.doorZ);
       g.goTo('beach', { color: '#FFE2B0', ms: 1800 });
     } else if (where === 'mall') g.goTo('mall', { color: '#000', ms: 1200, cinematic: () => g.playCinematic(makeDrive(g)) });
     else g.goTo('past', { color: '#FFFFFF', ms: 2000 });
@@ -753,7 +752,7 @@ export class Home {
     // camera cutaway: walls between the camera and the room shrink to a low stub
     const yaw = g.cam.yaw, dx = -Math.sin(yaw), dz = -Math.cos(yaw);
     for (const w of this.walls) {
-      const extra = (yaw > 1.5 ? CUT_ALSO_KITCHEN : CUT_ALSO_LIVING).includes(w.name);
+      const extra = (yaw > 1.5 ? CUT_ALSO_KITCHEN : yaw < -0.75 ? CUT_ALSO_ENTRY : CUT_ALSO_LIVING).includes(w.name);
       const cut = extra || w.n[0] * dx + w.n[1] * dz > 0.45;
       const target = cut ? 0.1 : 1;
       w.scale += (target - w.scale) * (1 - Math.exp(-dt * 6));

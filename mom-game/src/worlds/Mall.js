@@ -343,9 +343,9 @@ export class Mall {
 // ── the little car (no brand) ───────────────────────────────
 export function makeCar() {
   const g = new THREE.Group();
-  const body = box(4.0, 0.7, 1.75, '#E9E4DA', { r: 0.18, opts: { rough: 0.3, metal: 0.25 } }); body.position.y = 0.3; g.add(body);
-  const cabin = box(2.2, 0.6, 1.55, '#E9E4DA', { r: 0.2, opts: { rough: 0.3, metal: 0.25 } }); at(cabin, -0.2, 0.95, 0); g.add(cabin);
-  const glass = box(2.0, 0.45, 1.58, '#3E4A55', { r: 0.12, opts: { rough: 0.1, metal: 0.4 } }); at(glass, -0.2, 1.02, 0); g.add(glass);
+  const body = box(4.0, 0.7, 1.75, '#17181B', { r: 0.18, opts: { rough: 0.22, metal: 0.4 } }); // Dad's car is black body.position.y = 0.3; g.add(body);
+  const cabin = box(2.2, 0.6, 1.55, '#17181B', { r: 0.2, opts: { rough: 0.22, metal: 0.4 } }); at(cabin, -0.2, 0.95, 0); g.add(cabin);
+  const glass = box(2.0, 0.45, 1.58, '#4A5560', { r: 0.12, opts: { rough: 0.08, metal: 0.5 } }); at(glass, -0.2, 1.02, 0); g.add(glass);
   for (const [x, z] of [[1.3, 0.85], [-1.3, 0.85], [1.3, -0.85], [-1.3, -0.85]]) {
     const w = cyl(0.36, 0.36, 0.25, '#232326', { seg: 12 }); w.rotation.x = PI / 2; at(w, x, 0.36, z); w.position.z = z - Math.sign(z) * 0.12 * 0; g.add(w); w.userData.wheel = true;
   }
