@@ -43,6 +43,7 @@ namespace BigGreenBear
         public Effect[] effects;
         public string next;
         public string target;   // optional: a hotspot id you can click in the scene to pick this choice
+        public string group;    // "travel" = shown in its own column on the right
     }
 
     [Serializable]
@@ -64,6 +65,7 @@ namespace BigGreenBear
     {
         public string id;
         public LText name;
+        public string color;    // name color, "#RRGGBB"
     }
 
     [Serializable]

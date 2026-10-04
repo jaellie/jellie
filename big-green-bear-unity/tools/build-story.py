@@ -30,8 +30,8 @@ def N(id, text=None, speaker="", next="", effects=None, choices=None, branches=N
     nodes.append({"id": id, "speaker": speaker, "text": text or EMPTY, "next": next, "effects": effects or [],
                   "choices": choices or [], "branches": branches or [], "fx": fx or [], "hold": hold})
 
-def C(text, next, conditions=None, effects=None, target=""):
-    return {"text": text, "next": next, "conditions": conditions or [], "effects": effects or [], "target": target}
+def C(text, next, conditions=None, effects=None, target="", group=""):
+    return {"text": text, "next": next, "conditions": conditions or [], "effects": effects or [], "target": target, "group": group}
 
 def B(to, *conditions): return {"to": to, "conditions": list(conditions)}
 
@@ -73,7 +73,7 @@ def travel(here, chapter_tag, mood_out, mood_in_cafe, places=("square", "flower"
         if here == "cafe": effects.append(flag("cafe_changed"))  # next time, the room is remembered differently
         effects += [E("go", id=mood_in_cafe if p == "cafe" else mood_out, value=p)]
         lbl = PLACES[p]
-        out.append(C(K("이동: " + lbl["ko"], "Go to " + lbl["en"]), f"{chapter_tag}_{p}", effects=effects))
+        out.append(C(K("→ " + lbl["ko"], "→ " + lbl["en"]), f"{chapter_tag}_{p}", effects=effects, group="travel"))
     return out
 
 # ======================================================================
@@ -550,8 +550,10 @@ seq("pass_01", [
     ("bear", K("니니!", "Nini!"), [face("bear", "searching")]),
     ("", K("어둠 속에서, 훌쩍이는 소리.", "In the dark, a small sniffle."), [focus("nini")]),
     ("nini", K("곰…? 방울… 방울 잃어버렸어.", "Bear…? My bell… I lost my bell."), [face("nini", "worried")]),
-    ("bear", K("여기 있어. 찾았어. 나중에 줄게. 일단 나가자.", "It's right here. I found it. I'll give it to you later. Let's get out first."),
-     [E("bell", value="bear"), face("bear", "neutral")]),
+    ("bear", K("여기 있어. 찾았어.", "It's right here. I found it."), [E("bell", value="bear"), face("bear", "neutral")]),
+    ("", K("곰이 니니의 작은 손에 방울을 쥐여 준다. 아주 작게, 한 번 울린다.", "Bear closes Nini's small hand around the bell. It rings once, very softly."),
+     [E("bell", value="nini"), E("sound", "bell"), focus("nini")]),
+    ("bear", K("꼭 쥐고 있어. 이제 나가자.", "Hold on to it tight. Now let's get out."), [focus("both")]),
     ("", K("물이 허리까지 차오른다. 곰은 니니를 번쩍 들어 올린다. 상자 위, 따뜻한 불빛이 새어 나오는 점검구 쪽으로.",
            "The water climbs to the waist. Bear lifts Nini high, up over the crates, toward the hatch and the warm light leaking through it."),
      [E("water", num=0.36), focus("hatch")]),
@@ -731,10 +733,11 @@ seq("c4_all", [
     ("moss", K("21:15 — 안은 안 봤어. 괜찮겠지 했어.", "21:15 — Didn't look inside. I thought it'd be fine."), [E("clock", value="21:15")]),
     ("finch", K("22:00 — 출구 앞에 잠깐만. 괜찮겠지 했어요.", "22:00 — In front of the exit, just for a while. I thought it would be fine."), [E("clock", value="22:00")]),
     ("oliver", K("23:50 — 누가 신고했겠지. 괜찮겠지 했어요.", "23:50 — Someone must have called. I thought it would be fine."), [E("clock", value="23:50")]),
+    ("", K("23:47 — 니니가 초록 방울을 꼭 쥐고 밖으로 나왔다.", "23:47 — Nini climbed out, holding the small green bell tight."), [E("clock", value="23:47")]),
     ("", K("23:48 — 그리고 빅그린베어는 갇혔다.", "23:48 — And Big Green Bear was trapped."), [E("clock", value="23:48"), E("water", num=0.5)], ["echo"]),
     ("", K("00:05 — 신고.", "00:05 — The call."), [E("clock", value="00:05")]),
     ("", K("00:30 — 구조대 도착.", "00:30 — The rescue team arrives."), [E("clock", value="00:30")]),
-    ("", K("00:42 — 구조. 초록 방울을 아직 쥔 채로.", "00:42 — Pulled out. Still holding the small green bell."), [E("clock", value="00:42"), E("water", num=0.2)]),
+    ("", K("00:42 — 구조.", "00:42 — Pulled out."), [E("clock", value="00:42"), E("water", num=0.2)]),
     ("", K("01:00 — 병원.", "01:00 — The hospital."), [E("clock", value="01:00")]),
     ("", K("아무도 자신이 살인을 했다고 생각하지 않았다.", "Not one of them thought they had killed anyone."), [], [], 1.2),
     ("", K("하지만 그 모든 '괜찮겠지'가 모여, 한 사람이 죽었다.", "But every 'it'll be fine', added together, killed a man."), [], ["echo"]),
@@ -753,13 +756,12 @@ N("ch5_start", effects=[
 seq("h_01", [
     ("", K("환한 방. 모든 게 멀리 있다.", "A bright room. Everything far away."), [focus("wide")]),
     ("hazel", K("…20분만 빨랐어도.", "…If we'd had twenty more minutes."), [focus("hazel"), face("hazel", "worried")]),
-    ("", K("손에 무언가 쥐여 있다. 작고, 차갑다.", "Something is closed in the paw. Small, and cold."), [focus("pillow")]),
-    ("hazel", K("이거, 끝까지 꼭 쥐고 계셨어요. 작은 초록 방울.", "You held on to this the whole time. A little green bell."), [focus("hazel")]),
+    ("", K("빈 손. 방울은 이제 여기 없다. 그래도 괜찮다. 있어야 할 곳에 있으니까.", "An empty paw. The bell isn't here any more. That's all right. It's where it belongs."), [focus("ceiling")]),
     ("hazel", K("그 아이는 무사해요.", "She's safe."), [face("hazel", "neutral")]),
-    ("bear", K("니니는… 집에 갔나요?", "Nini… did she get home?"), [focus("pillow")]),
+    ("bear", K("니니는… 집에 갔나요?", "Nini… did she get home?"), [focus("ceiling")]),
     ("hazel", K("네.", "Yes."), [focus("hazel")]),
     ("", K("", ""), [], [], 2.6),
-    ("bear", K("다행이다.", "Good."), [focus("pillow"), E("beepLoop", num=1.8)]),
+    ("bear", K("다행이다.", "Good."), [focus("ceiling"), E("beepLoop", num=1.8)]),
     ("bear", K("그럼… 됐어요.", "Then… that's enough.")),
     ("", K("", ""), [E("beepLoop", num=0), E("sound", "flatline"), E("clock", value="01:17")], [], 4.5),
 ], "epi_start")
@@ -845,16 +847,16 @@ script = {
         "theEnd": K("끝", "The End"),
     },
     "speakers": [
-        {"id": "bear", "name": K("빅그린베어", "Big Green Bear")},
-        {"id": "nini", "name": K("니니", "Nini")},
-        {"id": "niniadult", "name": K("니니", "Nini")},
-        {"id": "lily", "name": K("릴리", "Lily")},
-        {"id": "finch", "name": K("핀치 씨", "Mr. Finch")},
-        {"id": "mabel", "name": K("메이블", "Mabel")},
-        {"id": "oliver", "name": K("올리버", "Oliver")},
-        {"id": "hazel", "name": K("헤이즐 선생님", "Dr. Hazel")},
-        {"id": "fox", "name": K("폭스", "Fox")},
-        {"id": "moss", "name": K("모스 씨", "Mr. Moss")},
+        {"id": "bear", "name": K("빅그린베어", "Big Green Bear"), "color": "#8FD18A"},
+        {"id": "nini", "name": K("니니", "Nini"), "color": "#F2D16B"},
+        {"id": "niniadult", "name": K("니니", "Nini"), "color": "#F2D16B"},
+        {"id": "lily", "name": K("릴리", "Lily"), "color": "#F2A0B5"},
+        {"id": "finch", "name": K("핀치 씨", "Mr. Finch"), "color": "#E9A15B"},
+        {"id": "mabel", "name": K("메이블", "Mabel"), "color": "#D9B38C"},
+        {"id": "oliver", "name": K("올리버", "Oliver"), "color": "#8EC5E8"},
+        {"id": "hazel", "name": K("헤이즐 선생님", "Dr. Hazel"), "color": "#C9E4E0"},
+        {"id": "fox", "name": K("폭스", "Fox"), "color": "#F08A5D"},
+        {"id": "moss", "name": K("모스 씨", "Mr. Moss"), "color": "#B7A6E0"},
     ],
     "clues": clues,
     "nodes": nodes,

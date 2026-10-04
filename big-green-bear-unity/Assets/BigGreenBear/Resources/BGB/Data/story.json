@@ -73,70 +73,80 @@
    "name": {
     "en": "Big Green Bear",
     "ko": "빅그린베어"
-   }
+   },
+   "color": "#8FD18A"
   },
   {
    "id": "nini",
    "name": {
     "en": "Nini",
     "ko": "니니"
-   }
+   },
+   "color": "#F2D16B"
   },
   {
    "id": "niniadult",
    "name": {
     "en": "Nini",
     "ko": "니니"
-   }
+   },
+   "color": "#F2D16B"
   },
   {
    "id": "lily",
    "name": {
     "en": "Lily",
     "ko": "릴리"
-   }
+   },
+   "color": "#F2A0B5"
   },
   {
    "id": "finch",
    "name": {
     "en": "Mr. Finch",
     "ko": "핀치 씨"
-   }
+   },
+   "color": "#E9A15B"
   },
   {
    "id": "mabel",
    "name": {
     "en": "Mabel",
     "ko": "메이블"
-   }
+   },
+   "color": "#D9B38C"
   },
   {
    "id": "oliver",
    "name": {
     "en": "Oliver",
     "ko": "올리버"
-   }
+   },
+   "color": "#8EC5E8"
   },
   {
    "id": "hazel",
    "name": {
     "en": "Dr. Hazel",
     "ko": "헤이즐 선생님"
-   }
+   },
+   "color": "#C9E4E0"
   },
   {
    "id": "fox",
    "name": {
     "en": "Fox",
     "ko": "폭스"
-   }
+   },
+   "color": "#F08A5D"
   },
   {
    "id": "moss",
    "name": {
     "en": "Mr. Moss",
     "ko": "모스 씨"
-   }
+   },
+   "color": "#B7A6E0"
   }
  ],
  "clues": [
@@ -697,7 +707,8 @@
        "id": "dry"
       }
      ],
-     "target": "nini"
+     "target": "nini",
+     "group": ""
     },
     {
      "text": {
@@ -714,7 +725,8 @@
        "id": "dry"
       }
      ],
-     "target": "clock"
+     "target": "clock",
+     "group": ""
     },
     {
      "text": {
@@ -731,7 +743,8 @@
        "id": "dry"
       }
      ],
-     "target": "lights"
+     "target": "lights",
+     "group": ""
     },
     {
      "text": {
@@ -748,7 +761,8 @@
        "id": "dry"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": ""
     }
    ],
    "branches": [],
@@ -802,7 +816,8 @@
      "next": "nini_03",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -812,7 +827,8 @@
      "next": "nini_please",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     }
    ],
    "branches": [],
@@ -1487,7 +1503,8 @@
       "clue_c_notice"
      ],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -1497,7 +1514,8 @@
      "next": "finch2",
      "conditions": [],
      "effects": [],
-     "target": "finch"
+     "target": "finch",
+     "group": ""
     },
     {
      "text": {
@@ -1507,7 +1525,8 @@
      "next": "fox2",
      "conditions": [],
      "effects": [],
-     "target": "fox"
+     "target": "fox",
+     "group": ""
     },
     {
      "text": {
@@ -1519,7 +1538,8 @@
       "!gate2_seen"
      ],
      "effects": [],
-     "target": "gate"
+     "target": "gate",
+     "group": ""
     },
     {
      "text": {
@@ -1531,7 +1551,8 @@
       "!clue_c_bell"
      ],
      "effects": [],
-     "target": "puddle"
+     "target": "puddle",
+     "group": ""
     },
     {
      "text": {
@@ -1541,12 +1562,13 @@
      "next": "c2_clock",
      "conditions": [],
      "effects": [],
-     "target": "clock"
+     "target": "clock",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c2_flower",
      "conditions": [],
@@ -1557,12 +1579,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c2_cafe",
      "conditions": [],
@@ -1573,12 +1596,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c2_park",
      "conditions": [],
@@ -1589,12 +1613,13 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c2_gate",
      "conditions": [],
@@ -1605,7 +1630,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
@@ -1615,7 +1641,8 @@
      "next": "c2_think",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     }
    ],
    "branches": [],
@@ -2151,7 +2178,8 @@
      "next": "lily2",
      "conditions": [],
      "effects": [],
-     "target": "lily"
+     "target": "lily",
+     "group": ""
     },
     {
      "text": {
@@ -2163,7 +2191,8 @@
       "!shopclock2_seen"
      ],
      "effects": [],
-     "target": "shopclock"
+     "target": "shopclock",
+     "group": ""
     },
     {
      "text": {
@@ -2175,12 +2204,13 @@
       "!garland2_seen"
      ],
      "effects": [],
-     "target": "garland"
+     "target": "garland",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c2_square",
      "conditions": [],
@@ -2191,12 +2221,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c2_cafe",
      "conditions": [],
@@ -2207,12 +2238,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c2_park",
      "conditions": [],
@@ -2223,12 +2255,13 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c2_gate",
      "conditions": [],
@@ -2239,7 +2272,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -2610,7 +2644,8 @@
      "next": "mabel2",
      "conditions": [],
      "effects": [],
-     "target": "mabel"
+     "target": "mabel",
+     "group": ""
     },
     {
      "text": {
@@ -2622,7 +2657,8 @@
       "!clue_c_noise"
      ],
      "effects": [],
-     "target": "floor"
+     "target": "floor",
+     "group": ""
     },
     {
      "text": {
@@ -2632,7 +2668,8 @@
      "next": "window2",
      "conditions": [],
      "effects": [],
-     "target": "window"
+     "target": "window",
+     "group": ""
     },
     {
      "text": {
@@ -2644,12 +2681,13 @@
       "cafe_changed"
      ],
      "effects": [],
-     "target": "cafeclock"
+     "target": "cafeclock",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c2_square",
      "conditions": [],
@@ -2664,12 +2702,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c2_flower",
      "conditions": [],
@@ -2684,12 +2723,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c2_park",
      "conditions": [],
@@ -2704,12 +2744,13 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c2_gate",
      "conditions": [],
@@ -2724,7 +2765,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -3017,7 +3059,8 @@
      "next": "oliver2",
      "conditions": [],
      "effects": [],
-     "target": "oliver"
+     "target": "oliver",
+     "group": ""
     },
     {
      "text": {
@@ -3029,7 +3072,8 @@
       "!clue_c_choir"
      ],
      "effects": [],
-     "target": "notice"
+     "target": "notice",
+     "group": ""
     },
     {
      "text": {
@@ -3041,12 +3085,13 @@
       "!bench2_seen"
      ],
      "effects": [],
-     "target": "bench"
+     "target": "bench",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c2_square",
      "conditions": [],
@@ -3057,12 +3102,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c2_flower",
      "conditions": [],
@@ -3073,12 +3119,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c2_cafe",
      "conditions": [],
@@ -3089,12 +3136,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c2_gate",
      "conditions": [],
@@ -3105,7 +3153,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -3355,7 +3404,8 @@
      "next": "moss2",
      "conditions": [],
      "effects": [],
-     "target": "moss"
+     "target": "moss",
+     "group": ""
     },
     {
      "text": {
@@ -3367,7 +3417,8 @@
       "!clue_c_beep"
      ],
      "effects": [],
-     "target": "pump"
+     "target": "pump",
+     "group": ""
     },
     {
      "text": {
@@ -3379,12 +3430,13 @@
       "!repair2_seen"
      ],
      "effects": [],
-     "target": "repair"
+     "target": "repair",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c2_square",
      "conditions": [],
@@ -3395,12 +3447,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c2_flower",
      "conditions": [],
@@ -3411,12 +3464,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c2_cafe",
      "conditions": [],
@@ -3427,12 +3481,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c2_park",
      "conditions": [],
@@ -3443,7 +3498,8 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -3747,7 +3803,8 @@
      "next": "c2_q_finch",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -3757,7 +3814,8 @@
      "next": "c2_q_lily",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -3767,7 +3825,8 @@
      "next": "c2_q_mabel",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -3777,7 +3836,8 @@
      "next": "c2_q_oliver",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -3787,7 +3847,8 @@
      "next": "c2_q_right",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     }
    ],
    "branches": [],
@@ -4139,7 +4200,8 @@
       "clue_c_oliver2"
      ],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -4149,7 +4211,8 @@
      "next": "c3_clock",
      "conditions": [],
      "effects": [],
-     "target": "clock"
+     "target": "clock",
+     "group": ""
     },
     {
      "text": {
@@ -4161,12 +4224,13 @@
       "!c3_gatelook_seen"
      ],
      "effects": [],
-     "target": "gate"
+     "target": "gate",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c3_flower",
      "conditions": [],
@@ -4177,12 +4241,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c3_cafe",
      "conditions": [],
@@ -4193,12 +4258,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c3_park",
      "conditions": [],
@@ -4209,12 +4275,13 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c3_gate",
      "conditions": [],
@@ -4225,7 +4292,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
@@ -4235,7 +4303,8 @@
      "next": "c3_think",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     }
    ],
    "branches": [],
@@ -4363,12 +4432,13 @@
      "next": "lily3",
      "conditions": [],
      "effects": [],
-     "target": "lily"
+     "target": "lily",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c3_square",
      "conditions": [],
@@ -4379,12 +4449,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c3_cafe",
      "conditions": [],
@@ -4395,12 +4466,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c3_park",
      "conditions": [],
@@ -4411,12 +4483,13 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c3_gate",
      "conditions": [],
@@ -4427,7 +4500,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -4591,7 +4665,8 @@
      "next": "mabel3",
      "conditions": [],
      "effects": [],
-     "target": "mabel"
+     "target": "mabel",
+     "group": ""
     },
     {
      "text": {
@@ -4603,12 +4678,13 @@
       "!floor3_seen"
      ],
      "effects": [],
-     "target": "floor"
+     "target": "floor",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c3_square",
      "conditions": [],
@@ -4623,12 +4699,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c3_flower",
      "conditions": [],
@@ -4643,12 +4720,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c3_park",
      "conditions": [],
@@ -4663,12 +4741,13 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c3_gate",
      "conditions": [],
@@ -4683,7 +4762,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -4920,12 +5000,13 @@
      "next": "oliver3",
      "conditions": [],
      "effects": [],
-     "target": "oliver"
+     "target": "oliver",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c3_square",
      "conditions": [],
@@ -4936,12 +5017,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c3_flower",
      "conditions": [],
@@ -4952,12 +5034,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c3_cafe",
      "conditions": [],
@@ -4968,12 +5051,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c3_gate",
      "conditions": [],
@@ -4984,7 +5068,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -5148,12 +5233,13 @@
      "next": "moss3",
      "conditions": [],
      "effects": [],
-     "target": "moss"
+     "target": "moss",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c3_square",
      "conditions": [],
@@ -5164,12 +5250,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c3_flower",
      "conditions": [],
@@ -5180,12 +5267,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c3_cafe",
      "conditions": [],
@@ -5196,12 +5284,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c3_park",
      "conditions": [],
@@ -5212,7 +5301,8 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -5299,7 +5389,8 @@
      "next": "c3_q1_no1",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -5309,7 +5400,8 @@
      "next": "c3_q1_no2",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -5319,7 +5411,8 @@
      "next": "c3_q1_yes",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     }
    ],
    "branches": [],
@@ -5395,7 +5488,8 @@
      "next": "c3_q2_no",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -5405,7 +5499,8 @@
      "next": "c3_q2_no",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -5415,7 +5510,8 @@
      "next": "c3_q2_yes",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     }
    ],
    "branches": [],
@@ -5477,7 +5573,8 @@
      "next": "c3_q3_no",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -5487,7 +5584,8 @@
      "next": "c3_q3_yes",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     }
    ],
    "branches": [],
@@ -5690,8 +5788,8 @@
    "id": "pass_01_4",
    "speaker": "bear",
    "text": {
-    "en": "It's right here. I found it. I'll give it to you later. Let's get out first.",
-    "ko": "여기 있어. 찾았어. 나중에 줄게. 일단 나가자."
+    "en": "It's right here. I found it.",
+    "ko": "여기 있어. 찾았어."
    },
    "next": "pass_01_5",
    "effects": [
@@ -5714,10 +5812,56 @@
    "id": "pass_01_5",
    "speaker": "",
    "text": {
+    "en": "Bear closes Nini's small hand around the bell. It rings once, very softly.",
+    "ko": "곰이 니니의 작은 손에 방울을 쥐여 준다. 아주 작게, 한 번 울린다."
+   },
+   "next": "pass_01_6",
+   "effects": [
+    {
+     "type": "bell",
+     "value": "nini"
+    },
+    {
+     "type": "sound",
+     "id": "bell"
+    },
+    {
+     "type": "focus",
+     "value": "nini"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_6",
+   "speaker": "bear",
+   "text": {
+    "en": "Hold on to it tight. Now let's get out.",
+    "ko": "꼭 쥐고 있어. 이제 나가자."
+   },
+   "next": "pass_01_7",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "both"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_7",
+   "speaker": "",
+   "text": {
     "en": "The water climbs to the waist. Bear lifts Nini high, up over the crates, toward the hatch and the warm light leaking through it.",
     "ko": "물이 허리까지 차오른다. 곰은 니니를 번쩍 들어 올린다. 상자 위, 따뜻한 불빛이 새어 나오는 점검구 쪽으로."
    },
-   "next": "pass_01_6",
+   "next": "pass_01_8",
    "effects": [
     {
      "type": "water",
@@ -5734,13 +5878,13 @@
    "hold": 0
   },
   {
-   "id": "pass_01_6",
+   "id": "pass_01_8",
    "speaker": "",
    "text": {
     "en": "Nini's boots kick the crates. They shift.",
     "ko": "니니의 장화가 상자를 찬다. 상자가 기우뚱한다."
    },
-   "next": "pass_01_7",
+   "next": "pass_01_9",
    "effects": [
     {
      "type": "sound",
@@ -5753,13 +5897,13 @@
    "hold": 0
   },
   {
-   "id": "pass_01_7",
+   "id": "pass_01_9",
    "speaker": "nini",
    "text": {
     "en": "Are you coming?",
     "ko": "같이 가?"
    },
-   "next": "pass_01_8",
+   "next": "pass_01_10",
    "effects": [
     {
      "type": "focus",
@@ -5772,39 +5916,11 @@
    "hold": 0
   },
   {
-   "id": "pass_01_8",
+   "id": "pass_01_10",
    "speaker": "bear",
    "text": {
     "en": "Go.",
     "ko": "가."
-   },
-   "next": "pass_01_9",
-   "effects": [],
-   "choices": [],
-   "branches": [],
-   "fx": [],
-   "hold": 0
-  },
-  {
-   "id": "pass_01_9",
-   "speaker": "",
-   "text": {
-    "en": "",
-    "ko": ""
-   },
-   "next": "pass_01_10",
-   "effects": [],
-   "choices": [],
-   "branches": [],
-   "fx": [],
-   "hold": 1.4
-  },
-  {
-   "id": "pass_01_10",
-   "speaker": "nini",
-   "text": {
-    "en": "But you're coming too, right?",
-    "ko": "근데 곰도 오는 거지?"
    },
    "next": "pass_01_11",
    "effects": [],
@@ -5815,12 +5931,40 @@
   },
   {
    "id": "pass_01_11",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "pass_01_12",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 1.4
+  },
+  {
+   "id": "pass_01_12",
+   "speaker": "nini",
+   "text": {
+    "en": "But you're coming too, right?",
+    "ko": "근데 곰도 오는 거지?"
+   },
+   "next": "pass_01_13",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_13",
    "speaker": "bear",
    "text": {
     "en": "Of course.",
     "ko": "물론이지."
    },
-   "next": "pass_01_12",
+   "next": "pass_01_14",
    "effects": [
     {
      "type": "face",
@@ -5834,13 +5978,13 @@
    "hold": 0
   },
   {
-   "id": "pass_01_12",
+   "id": "pass_01_14",
    "speaker": "",
    "text": {
     "en": "Nini wriggles up through the hatch. The yellow boots are the last thing to go.",
     "ko": "니니가 점검구 밖으로 빠져나간다. 노란 장화가 마지막으로 보이고, 사라진다."
    },
-   "next": "pass_01_13",
+   "next": "pass_01_15",
    "effects": [
     {
      "type": "exit",
@@ -5859,13 +6003,13 @@
    "hold": 0
   },
   {
-   "id": "pass_01_13",
+   "id": "pass_01_15",
    "speaker": "",
    "text": {
     "en": "11:47.",
     "ko": "11시 47분."
    },
-   "next": "pass_01_14",
+   "next": "pass_01_16",
    "effects": [
     {
      "type": "stuck",
@@ -5889,13 +6033,13 @@
    "hold": 0.6
   },
   {
-   "id": "pass_01_14",
+   "id": "pass_01_16",
    "speaker": "",
    "text": {
     "en": "The crates slide into the water. The hatch is suddenly too high to reach.",
     "ko": "상자들이 물속으로 미끄러진다. 점검구가, 닿지 않을 만큼 높아진다."
    },
-   "next": "pass_01_15",
+   "next": "pass_01_17",
    "effects": [
     {
      "type": "water",
@@ -5916,13 +6060,13 @@
    "hold": 0
   },
   {
-   "id": "pass_01_15",
+   "id": "pass_01_17",
    "speaker": "",
    "text": {
     "en": "The fur is heavy. So heavy.",
     "ko": "털이 무겁다. 아주 무겁다."
    },
-   "next": "pass_01_16",
+   "next": "pass_01_18",
    "effects": [
     {
      "type": "face",
@@ -5942,13 +6086,13 @@
    "hold": 0
   },
   {
-   "id": "pass_01_16",
+   "id": "pass_01_18",
    "speaker": "",
    "text": {
     "en": "The square side is locked. The cafe side is blocked.",
     "ko": "광장 쪽은 잠겨 있다. 카페 쪽은 막혀 있다."
    },
-   "next": "pass_01_17",
+   "next": "pass_01_19",
    "effects": [],
    "choices": [],
    "branches": [],
@@ -5958,13 +6102,13 @@
    "hold": 0
   },
   {
-   "id": "pass_01_17",
+   "id": "pass_01_19",
    "speaker": "",
    "text": {
     "en": "The water is cold.",
     "ko": "물이 차갑다."
    },
-   "next": "pass_01_18",
+   "next": "pass_01_20",
    "effects": [
     {
      "type": "water",
@@ -5979,7 +6123,7 @@
    "hold": 0.8
   },
   {
-   "id": "pass_01_18",
+   "id": "pass_01_20",
    "speaker": "",
    "text": {
     "en": "…",
@@ -6510,7 +6654,8 @@
       "clue_cs_oliver"
      ],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -6520,7 +6665,8 @@
      "next": "finch4",
      "conditions": [],
      "effects": [],
-     "target": "finch"
+     "target": "finch",
+     "group": ""
     },
     {
      "text": {
@@ -6530,12 +6676,13 @@
      "next": "fox4",
      "conditions": [],
      "effects": [],
-     "target": "fox"
+     "target": "fox",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c4_flower",
      "conditions": [],
@@ -6546,12 +6693,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c4_cafe",
      "conditions": [],
@@ -6562,12 +6710,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c4_park",
      "conditions": [],
@@ -6578,12 +6727,13 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c4_gate",
      "conditions": [],
@@ -6594,7 +6744,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
@@ -6604,7 +6755,8 @@
      "next": "c4_think",
      "conditions": [],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     }
    ],
    "branches": [],
@@ -6801,12 +6953,13 @@
      "next": "lily4",
      "conditions": [],
      "effects": [],
-     "target": "lily"
+     "target": "lily",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c4_square",
      "conditions": [],
@@ -6817,12 +6970,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c4_cafe",
      "conditions": [],
@@ -6833,12 +6987,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c4_park",
      "conditions": [],
@@ -6849,12 +7004,13 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c4_gate",
      "conditions": [],
@@ -6865,7 +7021,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -7015,12 +7172,13 @@
      "next": "mabel4",
      "conditions": [],
      "effects": [],
-     "target": "mabel"
+     "target": "mabel",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c4_square",
      "conditions": [],
@@ -7035,12 +7193,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c4_flower",
      "conditions": [],
@@ -7055,12 +7214,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c4_park",
      "conditions": [],
@@ -7075,12 +7235,13 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c4_gate",
      "conditions": [],
@@ -7095,7 +7256,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -7245,12 +7407,13 @@
      "next": "oliver4",
      "conditions": [],
      "effects": [],
-     "target": "oliver"
+     "target": "oliver",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c4_square",
      "conditions": [],
@@ -7261,12 +7424,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c4_flower",
      "conditions": [],
@@ -7277,12 +7441,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c4_cafe",
      "conditions": [],
@@ -7293,12 +7458,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the town gate",
-      "ko": "이동: 마을 입구"
+      "en": "→ the town gate",
+      "ko": "→ 마을 입구"
      },
      "next": "c4_gate",
      "conditions": [],
@@ -7309,7 +7475,8 @@
        "value": "gate"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -7459,12 +7626,13 @@
      "next": "moss4",
      "conditions": [],
      "effects": [],
-     "target": "moss"
+     "target": "moss",
+     "group": ""
     },
     {
      "text": {
-      "en": "Go to Bellflower Square",
-      "ko": "이동: 벨플라워 광장"
+      "en": "→ Bellflower Square",
+      "ko": "→ 벨플라워 광장"
      },
      "next": "c4_square",
      "conditions": [],
@@ -7475,12 +7643,13 @@
        "value": "square"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Lily's flower shop",
-      "ko": "이동: 릴리의 꽃가게"
+      "en": "→ Lily's flower shop",
+      "ko": "→ 릴리의 꽃가게"
      },
      "next": "c4_flower",
      "conditions": [],
@@ -7491,12 +7660,13 @@
        "value": "flower"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to Mabel's cafe",
-      "ko": "이동: 메이블의 카페"
+      "en": "→ Mabel's cafe",
+      "ko": "→ 메이블의 카페"
      },
      "next": "c4_cafe",
      "conditions": [],
@@ -7507,12 +7677,13 @@
        "value": "cafe"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     },
     {
      "text": {
-      "en": "Go to the park",
-      "ko": "이동: 공원"
+      "en": "→ the park",
+      "ko": "→ 공원"
      },
      "next": "c4_park",
      "conditions": [],
@@ -7523,7 +7694,8 @@
        "value": "park"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": "travel"
     }
    ],
    "branches": [],
@@ -7683,7 +7855,8 @@
        "id": "picks"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -7704,7 +7877,8 @@
        "id": "picks"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -7725,7 +7899,8 @@
        "id": "picks"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -7746,7 +7921,8 @@
        "id": "picks"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -7767,7 +7943,8 @@
        "id": "picks"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -7784,7 +7961,8 @@
        "id": "pick_nobody"
       }
      ],
-     "target": ""
+     "target": "",
+     "group": ""
     },
     {
      "text": {
@@ -7796,7 +7974,8 @@
       "picks>=2"
      ],
      "effects": [],
-     "target": ""
+     "target": "",
+     "group": ""
     }
    ],
    "branches": [],
@@ -8082,10 +8261,29 @@
    "id": "c4_all_8",
    "speaker": "",
    "text": {
+    "en": "23:47 — Nini climbed out, holding the small green bell tight.",
+    "ko": "23:47 — 니니가 초록 방울을 꼭 쥐고 밖으로 나왔다."
+   },
+   "next": "c4_all_9",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "23:47"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_9",
+   "speaker": "",
+   "text": {
     "en": "23:48 — And Big Green Bear was trapped.",
     "ko": "23:48 — 그리고 빅그린베어는 갇혔다."
    },
-   "next": "c4_all_9",
+   "next": "c4_all_10",
    "effects": [
     {
      "type": "clock",
@@ -8104,13 +8302,13 @@
    "hold": 0
   },
   {
-   "id": "c4_all_9",
+   "id": "c4_all_10",
    "speaker": "",
    "text": {
     "en": "00:05 — The call.",
     "ko": "00:05 — 신고."
    },
-   "next": "c4_all_10",
+   "next": "c4_all_11",
    "effects": [
     {
      "type": "clock",
@@ -8123,13 +8321,13 @@
    "hold": 0
   },
   {
-   "id": "c4_all_10",
+   "id": "c4_all_11",
    "speaker": "",
    "text": {
     "en": "00:30 — The rescue team arrives.",
     "ko": "00:30 — 구조대 도착."
    },
-   "next": "c4_all_11",
+   "next": "c4_all_12",
    "effects": [
     {
      "type": "clock",
@@ -8142,13 +8340,13 @@
    "hold": 0
   },
   {
-   "id": "c4_all_11",
+   "id": "c4_all_12",
    "speaker": "",
    "text": {
-    "en": "00:42 — Pulled out. Still holding the small green bell.",
-    "ko": "00:42 — 구조. 초록 방울을 아직 쥔 채로."
+    "en": "00:42 — Pulled out.",
+    "ko": "00:42 — 구조."
    },
-   "next": "c4_all_12",
+   "next": "c4_all_13",
    "effects": [
     {
      "type": "clock",
@@ -8165,13 +8363,13 @@
    "hold": 0
   },
   {
-   "id": "c4_all_12",
+   "id": "c4_all_13",
    "speaker": "",
    "text": {
     "en": "01:00 — The hospital.",
     "ko": "01:00 — 병원."
    },
-   "next": "c4_all_13",
+   "next": "c4_all_14",
    "effects": [
     {
      "type": "clock",
@@ -8184,13 +8382,13 @@
    "hold": 0
   },
   {
-   "id": "c4_all_13",
+   "id": "c4_all_14",
    "speaker": "",
    "text": {
     "en": "Not one of them thought they had killed anyone.",
     "ko": "아무도 자신이 살인을 했다고 생각하지 않았다."
    },
-   "next": "c4_all_14",
+   "next": "c4_all_15",
    "effects": [],
    "choices": [],
    "branches": [],
@@ -8198,7 +8396,7 @@
    "hold": 1.2
   },
   {
-   "id": "c4_all_14",
+   "id": "c4_all_15",
    "speaker": "",
    "text": {
     "en": "But every 'it'll be fine', added together, killed a man.",
@@ -8340,14 +8538,14 @@
    "id": "h_01_2",
    "speaker": "",
    "text": {
-    "en": "Something is closed in the paw. Small, and cold.",
-    "ko": "손에 무언가 쥐여 있다. 작고, 차갑다."
+    "en": "An empty paw. The bell isn't here any more. That's all right. It's where it belongs.",
+    "ko": "빈 손. 방울은 이제 여기 없다. 그래도 괜찮다. 있어야 할 곳에 있으니까."
    },
    "next": "h_01_3",
    "effects": [
     {
      "type": "focus",
-     "value": "pillow"
+     "value": "ceiling"
     }
    ],
    "choices": [],
@@ -8359,29 +8557,10 @@
    "id": "h_01_3",
    "speaker": "hazel",
    "text": {
-    "en": "You held on to this the whole time. A little green bell.",
-    "ko": "이거, 끝까지 꼭 쥐고 계셨어요. 작은 초록 방울."
-   },
-   "next": "h_01_4",
-   "effects": [
-    {
-     "type": "focus",
-     "value": "hazel"
-    }
-   ],
-   "choices": [],
-   "branches": [],
-   "fx": [],
-   "hold": 0
-  },
-  {
-   "id": "h_01_4",
-   "speaker": "hazel",
-   "text": {
     "en": "She's safe.",
     "ko": "그 아이는 무사해요."
    },
-   "next": "h_01_5",
+   "next": "h_01_4",
    "effects": [
     {
      "type": "face",
@@ -8395,17 +8574,17 @@
    "hold": 0
   },
   {
-   "id": "h_01_5",
+   "id": "h_01_4",
    "speaker": "bear",
    "text": {
     "en": "Nini… did she get home?",
     "ko": "니니는… 집에 갔나요?"
    },
-   "next": "h_01_6",
+   "next": "h_01_5",
    "effects": [
     {
      "type": "focus",
-     "value": "pillow"
+     "value": "ceiling"
     }
    ],
    "choices": [],
@@ -8414,13 +8593,13 @@
    "hold": 0
   },
   {
-   "id": "h_01_6",
+   "id": "h_01_5",
    "speaker": "hazel",
    "text": {
     "en": "Yes.",
     "ko": "네."
    },
-   "next": "h_01_7",
+   "next": "h_01_6",
    "effects": [
     {
      "type": "focus",
@@ -8433,13 +8612,13 @@
    "hold": 0
   },
   {
-   "id": "h_01_7",
+   "id": "h_01_6",
    "speaker": "",
    "text": {
     "en": "",
     "ko": ""
    },
-   "next": "h_01_8",
+   "next": "h_01_7",
    "effects": [],
    "choices": [],
    "branches": [],
@@ -8447,17 +8626,17 @@
    "hold": 2.6
   },
   {
-   "id": "h_01_8",
+   "id": "h_01_7",
    "speaker": "bear",
    "text": {
     "en": "Good.",
     "ko": "다행이다."
    },
-   "next": "h_01_9",
+   "next": "h_01_8",
    "effects": [
     {
      "type": "focus",
-     "value": "pillow"
+     "value": "ceiling"
     },
     {
      "type": "beepLoop",
@@ -8470,13 +8649,13 @@
    "hold": 0
   },
   {
-   "id": "h_01_9",
+   "id": "h_01_8",
    "speaker": "bear",
    "text": {
     "en": "Then… that's enough.",
     "ko": "그럼… 됐어요."
    },
-   "next": "h_01_10",
+   "next": "h_01_9",
    "effects": [],
    "choices": [],
    "branches": [],
@@ -8484,7 +8663,7 @@
    "hold": 0
   },
   {
-   "id": "h_01_10",
+   "id": "h_01_9",
    "speaker": "",
    "text": {
     "en": "",

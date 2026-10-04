@@ -135,10 +135,10 @@ locations.append({
     "layers": [layer("far", "hospital_far", 14, 30, 1000, order=-40), layer("mid", "hospital_mid", 8, 22, 930, order=-30),
                layer("ground", "hospital_floor", 0.6, 22, 0, order=-20), layer("fg", "hospital_fg", -4, 9, 0, at="viewTop", order=40)],
     "actors": [actor("hazel", 2.4, 0.4)],
-    "anchors": [anchor("monitor", "mid", 1660, 500), anchor("pillow", "mid", 742, 640), anchor("window", "far", 1510, 400),
+    "anchors": [anchor("monitor", "mid", 1660, 500), anchor("flowers", "mid", 1215, 600), anchor("chair", "mid", 860, 580), anchor("window", "far", 1510, 400),
                 anchor("ceiling", "far", 380, 160)],
-    "focus": [focus("wide", 0, 0, 0), focus("pillow", -1.6, 0.3, 3.0), focus("monitor", 2.6, 0.6, 3.0), focus("hazel", 1.8, -0.2, 2.4)],
-    "hotspots": [hot("monitor", radius=1.2), hot("pillow", radius=1.2), hot("hazel", radius=1.0)],
+    "focus": [focus("wide", 0, 0, 0), focus("flowers", 0.6, 0.2, 3.0), focus("ceiling", -1.2, 1.4, 1.6), focus("monitor", 2.6, 0.6, 3.0), focus("hazel", 1.8, -0.2, 2.4)],
+    "hotspots": [hot("monitor", radius=1.2), hot("flowers", radius=1.0), hot("chair", radius=1.0), hot("hazel", radius=1.0)],
     "lights": [light("ceiling", "ceiling", 14, 1.0, "cold"), light("hospital", "monitor", 4, 0, "fluorescent")],
 })
 

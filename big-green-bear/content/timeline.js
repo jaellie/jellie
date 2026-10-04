@@ -92,7 +92,7 @@ BGB.story.timeline({
   tl_2348: { time: "23:48", order: 2348, text: { en: "You are not.", ko: "나는 나가지 못한다." }, truth: "The costume, soaked, catches; the water rises.", revealWhen: [{ type: "flag", id: "tl_2348_known" }] },
   tl_0005: { time: "00:05", order: 2405, text: { en: "Someone calls for help.", ko: "누군가 구조를 요청한다." }, truth: "Emergency call. Delay: everyone assumed someone else had called.", revealWhen: [{ type: "flag", id: "tl_0005_known" }] },
   tl_0030: { time: "00:30", order: 2430, text: { en: "The rescue team arrives.", ko: "구조대가 도착한다." }, truth: "Rescue arrives.", revealWhen: [{ type: "flag", id: "tl_0030_known" }] },
-  tl_0042: { time: "00:42", order: 2442, text: { en: "They reach you.", ko: "그들이 나에게 닿는다." }, truth: "Bear is pulled out, still holding the bell.", revealWhen: [{ type: "flag", id: "tl_0042_known" }] },
+  tl_0042: { time: "00:42", order: 2442, text: { en: "They reach you.", ko: "그들이 나에게 닿는다." }, truth: "Bear is pulled out. Twenty minutes too late.", revealWhen: [{ type: "flag", id: "tl_0042_known" }] },
   tl_0100: { time: "01:00", order: 2500, text: { en: "A bright room.", ko: "환한 방." }, truth: "Transported to hospital.", revealWhen: [{ type: "flag", id: "tl_0100_known" }] },
   tl_0117: { time: "01:17", order: 2517, text: { en: "Quiet.", ko: "고요." }, truth: "Big Green Bear dies.", revealWhen: [{ type: "flag", id: "tl_0117_known" }] },
 });

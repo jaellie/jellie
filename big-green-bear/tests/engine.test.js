@@ -352,7 +352,7 @@ test("NG+: second-playthrough text, reinterpreted evidence, seen-dialogue skippi
   assert.equal(v.seenBefore, true, "dialogue seen in a previous run can be skipped");
   drain(g2);
   g2.unlockEvidence("green_bell");
-  assert.match(g2.evidenceView("green_bell").text.en, /still holding it/);
+  assert.match(g2.evidenceView("green_bell").text.en, /closed her hand around it/);
   assert.ok(solve(g2), "NG+ is completable even before every optional clue was seen");
 });
 

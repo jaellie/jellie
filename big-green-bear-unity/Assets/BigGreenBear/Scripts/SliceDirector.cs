@@ -32,6 +32,7 @@ namespace BigGreenBear
 
         readonly Dictionary<string, Node> nodes = new Dictionary<string, Node>();
         readonly Dictionary<string, string> speakerNames = new Dictionary<string, string>();
+        readonly Dictionary<string, Color> speakerColors = new Dictionary<string, Color>();
         readonly Dictionary<string, Clue> clueDefs = new Dictionary<string, Clue>();
         readonly Dictionary<string, float> flags = new Dictionary<string, float>();
         readonly List<string> clues = new List<string>();
@@ -70,7 +71,13 @@ namespace BigGreenBear
         void RefreshStaticText()
         {
             speakerNames.Clear();
-            if (script.speakers != null) foreach (var sp in script.speakers) speakerNames[sp.id] = L(sp.name);
+            speakerColors.Clear();
+            if (script.speakers != null)
+                foreach (var sp in script.speakers)
+                {
+                    speakerNames[sp.id] = L(sp.name);
+                    if (!string.IsNullOrEmpty(sp.color) && ColorUtility.TryParseHtmlString(sp.color, out var col)) speakerColors[sp.id] = col;
+                }
             ui.SetTitle(L(script.ui.title), L(script.ui.subtitle), "");
             ui.SetHint(L(script.ui.controls) + "   ·   " + L(reducedMotion ? script.ui.motionOn : script.ui.motionOff));
             ui.SetChapterHud(phase == Phase.Title ? "" : L(chapterTitle));
@@ -288,7 +295,12 @@ namespace BigGreenBear
                 ApplyLineFx(n);
 
                 currentChoices = new List<Choice>();
-                if (n.choices != null) foreach (var c in n.choices) if (Check(c.conditions)) currentChoices.Add(c);
+                if (n.choices != null)
+                {
+                    // things to do first, then places to go (they get their own column on the right)
+                    foreach (var c in n.choices) if (Check(c.conditions) && !IsTravel(c)) currentChoices.Add(c);
+                    foreach (var c in n.choices) if (Check(c.conditions) && IsTravel(c)) currentChoices.Add(c);
+                }
                 bool hasText = n.text != null && !n.text.IsEmpty;
 
                 if (hasText)
@@ -343,16 +355,24 @@ namespace BigGreenBear
             }
             speakerNames.TryGetValue(who, out var name);
             bool echoLine = n.fx != null && System.Array.IndexOf(n.fx, "echo") >= 0;
-            ui.ShowLine(narration ? "" : name, L(n.text), narration, echoLine);
+            if (!speakerColors.TryGetValue(who, out var nameColor)) nameColor = SliceUI.Green;
+            ui.ShowLine(narration ? "" : name, L(n.text), narration, echoLine, nameColor);
         }
+
+        static bool IsTravel(Choice c) => c.group == "travel";
 
         void ShowCurrentChoices()
         {
             foreach (var a in stage.actors.Values) { a.SetDim(false); a.SetSpeaking(false); }
             var labels = new List<string>();
-            foreach (var c in currentChoices) labels.Add(L(c.text));
+            int travel = 0;
+            foreach (var c in currentChoices)
+            {
+                labels.Add(L(c.text));
+                if (IsTravel(c)) travel++;
+            }
             bool hasText = current != null && current.text != null && !current.text.IsEmpty;
-            ui.ShowChoices(hasText ? L(current.text) : L(script.ui.prompt), labels);
+            ui.ShowChoices(hasText ? L(current.text) : L(script.ui.prompt), labels, travel);
         }
 
         void ApplyLineFx(Node n)

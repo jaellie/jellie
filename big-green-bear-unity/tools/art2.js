@@ -450,17 +450,16 @@ function hospitalMid() {
     <!-- IV stand -->
     <rect x="470" y="380" width="10" height="550" fill="#7A8A8E"/><rect x="430" y="380" width="90" height="8" fill="#7A8A8E"/>
     <path d="M450 388 L450 470 Q475 500 500 470 L500 388Z" fill="#E7F0EE" opacity="0.9"/>
-    <path d="M475 500 Q520 640 640 700" stroke="#C9D3CF" stroke-width="4" fill="none"/>
-    <!-- bed -->
-    <rect x="600" y="700" width="900" height="70" rx="10" fill="#E7EEEC"/>
-    <rect x="600" y="760" width="900" height="40" fill="#B9C5C2"/>
-    <rect x="620" y="800" width="14" height="130" fill="#7A8A8E"/><rect x="1466" y="800" width="14" height="130" fill="#7A8A8E"/>
-    <rect x="1440" y="560" width="60" height="240" rx="10" fill="#9AA6AB"/>
-    <ellipse cx="760" cy="676" rx="140" ry="44" fill="#F5F8F7"/>
-    <!-- a green ear on the pillow -->
-    <circle cx="742" cy="640" r="60" fill="${P.green}"/><circle cx="700" cy="598" r="24" fill="${P.green}"/><circle cx="700" cy="598" r="12" fill="${P.creamShade}"/>
-    <path d="M722 646 L746 646" stroke="${P.ink}" stroke-width="4" stroke-linecap="round"/>
-    <path d="M800 690 Q1100 640 1420 700 L1420 740 L800 740Z" fill="#DCE5E2"/>
+    <!-- a visitor's chair and a small table: the bed is where WE are (first person) -->
+    <rect x="760" y="640" width="200" height="24" rx="8" fill="#B9C5C2"/>
+    <rect x="770" y="520" width="16" height="140" fill="#9AA6AB"/><rect x="934" y="520" width="16" height="140" fill="#9AA6AB"/>
+    <rect x="770" y="500" width="180" height="26" rx="10" fill="#B9C5C2"/>
+    <rect x="776" y="664" width="12" height="266" fill="#7A8A8E"/><rect x="932" y="664" width="12" height="266" fill="#7A8A8E"/>
+    <rect x="1120" y="700" width="220" height="20" rx="6" fill="#E7EEEC"/>
+    <rect x="1140" y="720" width="12" height="210" fill="#7A8A8E"/><rect x="1308" y="720" width="12" height="210" fill="#7A8A8E"/>
+    <rect x="1190" y="640" width="44" height="60" rx="8" fill="#EEF5F2" opacity="0.9"/>
+    <path d="M1212 640 Q1196 590 1180 570 M1212 640 Q1214 586 1224 560 M1212 640 Q1236 600 1252 584" stroke="#7FA08A" stroke-width="5" fill="none"/>
+    <circle cx="1180" cy="566" r="12" fill="${P.goldLight}"/><circle cx="1224" cy="556" r="12" fill="#E9C46A"/><circle cx="1254" cy="580" r="11" fill="${P.goldLight}"/>
     <!-- monitor -->
     <rect x="1600" y="520" width="16" height="410" fill="#7A8A8E"/>
     <rect x="1540" y="420" width="240" height="170" rx="12" fill="#20262B"/>
@@ -474,7 +473,12 @@ function hospitalFloor() {
   return svg(W, GH, 275, tiles, 0.5);
 }
 function hospitalFg() {
-  return svg(W, H, 277, `<g filter="url(#soft)"><path d="M-20 -20 L220 -20 Q160 400 240 1180 L-20 1180Z" fill="#9FC0C4" opacity="0.85"/></g>`, 1);
+  return svg(W, H, 277, `<g filter="url(#soft)"><path d="M-20 -20 L220 -20 Q160 400 240 1180 L-20 1180Z" fill="#9FC0C4" opacity="0.85"/>
+    <!-- the foot of the bed, seen from the pillow: white blanket and the rail -->
+    <path d="M-20 1180 L-20 860 Q500 790 1024 812 Q1560 790 2068 850 L2068 1180Z" fill="#EEF3F1"/>
+    <path d="M300 840 Q700 900 1000 830 M1150 835 Q1500 900 1800 850" stroke="#D3DDDA" stroke-width="10" fill="none"/>
+    <rect x="160" y="760" width="1728" height="18" rx="9" fill="#8C9A9E"/>
+    <rect x="200" y="760" width="14" height="80" fill="#8C9A9E"/><rect x="1834" y="760" width="14" height="80" fill="#8C9A9E"/></g>`, 1);
 }
 
 /* ---- attic, years later (the only daylight in the game) ---- */

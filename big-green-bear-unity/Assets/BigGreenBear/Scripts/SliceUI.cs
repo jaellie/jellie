@@ -22,7 +22,8 @@ namespace BigGreenBear
         public static bool ReducedMotion;
 
         static readonly Color Cream = new Color(0.953f, 0.922f, 0.867f);
-        static readonly Color Green = new Color(0.62f, 0.78f, 0.62f);
+        public static readonly Color Green = new Color(0.62f, 0.78f, 0.62f);
+        static readonly Color Travel = new Color(0.93f, 0.80f, 0.55f);   // "→ place" choices
         static readonly Color Faint = new Color(0.953f, 0.922f, 0.867f, 0.55f);
 
         Font serif, mono, bold;
@@ -257,11 +258,12 @@ namespace BigGreenBear
 
         public void SetLanguage(string l) => lang = l;
 
-        public void ShowLine(string speakerName, string text, bool narration, bool echoLine)
+        public void ShowLine(string speakerName, string text, bool narration, bool echoLine, Color nameColor)
         {
             ClearChoices();
             prompt.text = "";
             speaker.text = string.IsNullOrEmpty(speakerName) ? "" : speakerName.ToUpperInvariant();
+            speaker.color = nameColor;
             body.fontStyle = narration ? FontStyle.Italic : FontStyle.Normal;
             body.color = narration ? new Color(Cream.r * 0.9f, Cream.g * 0.9f, Cream.b * 0.9f) : Cream;
             echo.fontStyle = body.fontStyle;
@@ -296,7 +298,14 @@ namespace BigGreenBear
             cont.enabled = true;
         }
 
-        public void ShowChoices(string promptText, List<string> labels)
+        public void ShowChoices(string promptText, List<string> labels) => ShowChoices(promptText, labels, 0);
+
+        // Layout: things to do fill columns of up to 4 rows from the left; the last
+        // `travel` labels ("→ place") get their own column on the right.
+        const int RowsPerColumn = 4;
+        const float RowHeight = 46f;
+
+        public void ShowChoices(string promptText, List<string> labels, int travel)
         {
             if (typing != null) StopCoroutine(typing);
             IsTyping = false;
@@ -308,11 +317,31 @@ namespace BigGreenBear
             bandTarget = 0.62f;
             ClearChoices();
             catcher.gameObject.SetActive(false);
+
+            if (travel < 0) travel = 0;
+            if (travel > labels.Count) travel = labels.Count;
+            int actions = labels.Count - travel;
+            int actionCols = (actions + RowsPerColumn - 1) / RowsPerColumn;
+            int travelCols = (travel + RowsPerColumn - 1) / RowsPerColumn;
+            int cols = actionCols + travelCols;
+            if (cols < 1) cols = 1;
+            float boxW = choiceBox.sizeDelta.x;
+            float colW = boxW / cols;
+            int fontSize = cols >= 3 ? 26 : cols == 2 ? 30 : 32;
+
             for (int i = 0; i < labels.Count; i++)
             {
                 int index = i;
+                bool isTravel = i >= actions;
+                int k = isTravel ? i - actions : i;
+                int col = (isTravel ? actionCols : 0) + k / RowsPerColumn;
+                int row = k % RowsPerColumn;
                 // Each row is a wide, gap-free strip: clicking anywhere near the words works.
-                var rt = NewRect("Choice" + i, choiceBox, new Vector2(0, 1), new Vector2(0, 1), new Vector2(-300, -46 - i * 46), new Vector2(1900, 46));
+                // The outer columns stretch to the screen edges so there is no dead zone.
+                float x = col * colW, w = colW;
+                if (col == 0) { x -= 300; w += 300; }
+                if (col == cols - 1) w += 300;
+                var rt = NewRect("Choice" + i, choiceBox, new Vector2(0, 1), new Vector2(0, 1), new Vector2(x, -RowHeight - row * RowHeight), new Vector2(w, RowHeight));
                 var img = rt.gameObject.AddComponent<Image>();
                 img.color = new Color(1, 1, 1, 1f);
                 var btn = rt.gameObject.AddComponent<Button>();
@@ -328,9 +357,17 @@ namespace BigGreenBear
                 hl.color = new Color(1, 1, 1, 0f);
                 hl.raycastTarget = false;
                 choiceHighlights.Add(hl);
-                var t = NewText("Label", rt, Vector2.zero, Vector2.one, new Vector2(312, 0), Vector2.zero, 32, Cream, TextAnchor.MiddleLeft);
-                ((RectTransform)t.transform).sizeDelta = new Vector2(-312, 0);
-                t.text = (i + 1) + ".   " + labels[i];
+                // the label sits inside the column proper, not the stretched edge
+                float pad = (col == 0 ? 300f : 0f) + 12f;
+                var t = NewText("Label", rt, Vector2.zero, Vector2.one, new Vector2(pad, 0), Vector2.zero, fontSize, isTravel ? Travel : Cream, TextAnchor.MiddleLeft);
+                ((RectTransform)t.transform).sizeDelta = new Vector2(-pad - (col == cols - 1 ? 300f : 0f) - 12f, 0);
+                t.horizontalOverflow = HorizontalWrapMode.Wrap;
+                t.verticalOverflow = VerticalWrapMode.Truncate;
+                // long labels in narrow columns shrink a little instead of being cut off
+                t.resizeTextForBestFit = true;
+                t.resizeTextMinSize = 18;
+                t.resizeTextMaxSize = fontSize;
+                t.text = (i + 1) + ".  " + labels[i];
                 choiceButtons.Add(btn);
             }
         }

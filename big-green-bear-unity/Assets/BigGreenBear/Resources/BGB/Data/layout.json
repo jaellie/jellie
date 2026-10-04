@@ -1375,10 +1375,16 @@
      "py": 500
     },
     {
-     "id": "pillow",
+     "id": "flowers",
      "layer": "mid",
-     "px": 742,
-     "py": 640
+     "px": 1215,
+     "py": 600
+    },
+    {
+     "id": "chair",
+     "layer": "mid",
+     "px": 860,
+     "py": 580
     },
     {
      "id": "window",
@@ -1401,10 +1407,16 @@
      "zoom": 0
     },
     {
-     "id": "pillow",
-     "x": -1.6,
-     "y": 0.3,
+     "id": "flowers",
+     "x": 0.6,
+     "y": 0.2,
      "zoom": 3.0
+    },
+    {
+     "id": "ceiling",
+     "x": -1.2,
+     "y": 1.4,
+     "zoom": 1.6
     },
     {
      "id": "monitor",
@@ -1426,9 +1438,14 @@
      "radius": 1.2
     },
     {
-     "id": "pillow",
-     "anchor": "pillow",
-     "radius": 1.2
+     "id": "flowers",
+     "anchor": "flowers",
+     "radius": 1.0
+    },
+    {
+     "id": "chair",
+     "anchor": "chair",
+     "radius": 1.0
     },
     {
      "id": "hazel",

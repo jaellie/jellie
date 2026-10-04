@@ -13,4 +13,9 @@
     <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
     <filter id="softer"><feGaussianBlur stdDeviation="14"/></filter>
     <filter id="blurfar"><feGaussianBlur stdDeviation="2.2"/></filter>
-  </defs><g filter="url(#grain)"><g filter="url(#wob)"><g filter="url(#soft)"><path d="M-20 -20 L220 -20 Q160 400 240 1180 L-20 1180Z" fill="#9FC0C4" opacity="0.85"/></g></g></g></svg>
+  </defs><g filter="url(#grain)"><g filter="url(#wob)"><g filter="url(#soft)"><path d="M-20 -20 L220 -20 Q160 400 240 1180 L-20 1180Z" fill="#9FC0C4" opacity="0.85"/>
+    <!-- the foot of the bed, seen from the pillow: white blanket and the rail -->
+    <path d="M-20 1180 L-20 860 Q500 790 1024 812 Q1560 790 2068 850 L2068 1180Z" fill="#EEF3F1"/>
+    <path d="M300 840 Q700 900 1000 830 M1150 835 Q1500 900 1800 850" stroke="#D3DDDA" stroke-width="10" fill="none"/>
+    <rect x="160" y="760" width="1728" height="18" rx="9" fill="#8C9A9E"/>
+    <rect x="200" y="760" width="14" height="80" fill="#8C9A9E"/><rect x="1834" y="760" width="14" height="80" fill="#8C9A9E"/></g></g></g></svg>

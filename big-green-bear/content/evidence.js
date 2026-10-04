@@ -220,12 +220,12 @@ BGB.story.evidence({
       {
         conditions: [NGP],
         text: {
-          en: "Nini's green bell. You didn't find it in a puddle. You found it down there, in the water, and you were still holding it when they reached you.",
-          ko: "니니의 초록 종. 웅덩이에서 주운 게 아니다. 저 아래, 물속에서 찾았다. 사람들이 왔을 때도 여전히 쥐고 있었다.",
+          en: "Nini's green bell. You didn't find it in a puddle. You found it down there, in the water, and you closed her hand around it before you lifted her out.",
+          ko: "니니의 초록 종. 웅덩이에서 주운 게 아니다. 저 아래, 물속에서 찾았다. 그리고 니니를 들어 올리기 전에, 그 작은 손에 쥐여 주었다.",
         },
       },
     ],
-    realMeaning: "Bear found the bell in the passage while searching for Nini and held it until rescue. Dr. Hazel gave it to Nini.",
+    realMeaning: "Bear found the bell in the passage while searching for Nini and gave it back to her before pushing her out through the hatch. She kept it all her life.",
   },
 
   t_lily_packing: {
