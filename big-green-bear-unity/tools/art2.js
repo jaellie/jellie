@@ -166,8 +166,13 @@ function moss(expr) {
 function niniAdult(expr) {
   return svg(500, 720, 137, `${shadow}
     ${body(P.yellow, P.yellowShade, { w: 116, top: 350, shoes: "#6B4E3B", armLen: 120 })}
-    <path d="M190 360 Q250 400 310 360 L318 392 Q250 430 182 392Z" fill="${P.green}"/>
-    <path d="M296 384 L320 470 L292 474Z" fill="${P.green}"/>
+    <!-- a big, chunky knitted scarf -->
+    <path d="M150 330 Q250 380 350 330 L362 410 Q250 470 138 410Z" fill="${P.green}"/>
+    <path d="M154 352 Q250 400 346 352 M150 380 Q250 432 352 380" stroke="#8FB08C" stroke-width="7" fill="none" opacity="0.8"/>
+    <path d="M262 400 L330 410 L346 560 L282 566Z" fill="${P.green}"/>
+    <path d="M272 440 L336 446 M278 480 L340 486 M282 520 L344 526" stroke="#8FB08C" stroke-width="7" opacity="0.8"/>
+    <path d="M282 566 l6 22 M298 565 l4 22 M314 564 l2 22 M330 563 l0 22 M344 562 l-2 22" stroke="${P.greenShade}" stroke-width="6" stroke-linecap="round"/>
+    <path d="M150 330 Q250 380 350 330" stroke="${P.greenShade}" stroke-width="4" fill="none"/>
     <ellipse cx="162" cy="210" rx="44" ry="18" transform="rotate(-24 162 210)" fill="#FBF7EE"/>
     <ellipse cx="338" cy="210" rx="44" ry="18" transform="rotate(24 338 210)" fill="#FBF7EE"/>
     <ellipse cx="250" cy="236" rx="92" ry="104" fill="#FBF7EE"/>
