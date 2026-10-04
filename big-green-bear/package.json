@@ -1,0 +1,11 @@
+{
+  "name": "big-green-bear",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Big Green Bear's Adventure — narrative mystery engine + vertical slice. No dependencies, no build step.",
+  "scripts": {
+    "test": "node --test tests/engine.test.js",
+    "test:browser": "node tests/e2e.js",
+    "validate": "node -e \"const B=require('./tests/load.js').load();const r=B.validate(B.story);console.log(r.errors.join('\\n')||'no errors');console.log(r.warnings.join('\\n')||'no warnings');process.exit(r.errors.length?1:0)\""
+  }
+}

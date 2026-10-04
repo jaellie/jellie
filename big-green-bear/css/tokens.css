@@ -1,0 +1,66 @@
+/*
+ * tokens.css — EVERY color, font, size and timing value lives here.
+ *
+ * This is the one file to replace or remap when connecting a design system.
+ * base.css and memory.css only ever reference these variables.
+ *
+ * --instability (0 = perfect memory, 1 = nothing left) is set by the engine
+ * from memory reliability. Tokens below derive "drift" from it so the whole
+ * palette cools and loosens as memory fails.
+ */
+:root {
+  /* palette — warm off-white on near-black, muted green, dark navy */
+  --c-bg: #0d0f12;
+  --c-bg-raised: #15191e;
+  --c-ink: #ece6d8;
+  --c-ink-soft: #b9b3a6;
+  --c-ink-faint: #7d786e;
+  --c-green: #8fae8b; /* the bear, the bell */
+  --c-green-deep: #4f6b52;
+  --c-navy: #1b2433;
+  --c-gray: #3a3f47;
+  --c-line: #2a3038;
+  --c-accent: #d9b77e; /* festival lights — used sparingly */
+  --c-water: #0b1a2a;
+  --c-focus: #f2d58c;
+
+  /* type */
+  --font-text: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif KR", "Nanum Myeongjo", serif;
+  --font-ui: system-ui, -apple-system, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --text-base: 1.125rem;
+  --leading: 1.7;
+  --measure: 38rem;
+
+  /* space & shape */
+  --gutter: 16px;
+  --gap: 0.75rem;
+  --radius: 4px;
+  --line: 1px solid var(--c-line);
+
+  /* motion */
+  --t-fast: 120ms;
+  --t-med: 320ms;
+  --t-slow: 900ms;
+
+  /* memory-driven (engine sets --instability) */
+  --instability: 0;
+  --water-height: calc(max(0, var(--instability) - 0.12) * 55vh);
+  --cold: calc(var(--instability) * 0.9);
+  --drift: calc(var(--instability) * 3px);
+}
+
+:root[data-text-size="s"] { --text-base: 1rem; }
+:root[data-text-size="l"] { --text-base: 1.3rem; }
+:root[data-text-size="xl"] { --text-base: 1.5rem; }
+
+:root[data-contrast="high"] {
+  --c-bg: #000;
+  --c-bg-raised: #0a0a0a;
+  --c-ink: #fff;
+  --c-ink-soft: #f0f0f0;
+  --c-ink-faint: #cfcfcf;
+  --c-line: #9a9a9a;
+  --c-green: #b6e3b0;
+  --c-focus: #ffe600;
+}

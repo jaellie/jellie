@@ -1,0 +1,102 @@
+/*
+ * memory.css — the interface as narrator.
+ *
+ * Nothing here is decoration. Each rule is a symptom of memory failing,
+ * driven by attributes the engine sets on <html>:
+ *
+ *   data-memory = stable | faint | unsteady | fragmented | final
+ *   --instability = 0 .. 1           (continuous; drives water + cold)
+ *   data-fx       = authored effects of the current scene/line:
+ *                   echo, drift, clock1147, cold, minimal, still
+ *   .fx-<id>      = one-off effects fired by { type: "fx", id } (tide, ripple, flicker)
+ *   data-motion   = full | reduce     (user setting + prefers-reduced-motion)
+ *   data-effects  = full | gentle     (user setting: softer distortion)
+ *
+ * Rules of restraint: no shake, no strobe, no glitch spam, no colour-only
+ * meaning. Each effect is slow and could be mistaken for atmosphere —
+ * until it can't.
+ */
+
+/* ---------- water: rises from the bottom as memory fails ----------
+ * It rises BEHIND the text (#main sits above it), so it never costs
+ * readability or contrast — it only changes the room the words are in. */
+#main { position: relative; z-index: 6; }
+.water {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; pointer-events: none;
+  height: var(--water-height);
+  background: var(--c-water);
+  opacity: 0.6;
+  border-top: 1px solid rgb(143 174 139 / 0.18);
+  transition: height 6s ease-in-out, opacity 2s;
+}
+:root[data-screen="title"] .water { height: 0; }
+.fx-tide .water { height: calc(var(--water-height) + 9vh); transition-duration: 2.5s; }
+.fx-ripple .water { opacity: 0.8; }
+:root[data-motion="full"] .water { animation: swell 9s ease-in-out infinite; }
+@keyframes swell {
+  50% { transform: translateY(-4px); }
+}
+
+/* ---------- cold: colour temperature drains away ---------- */
+#main { filter: saturate(calc(1 - var(--cold) * 0.75)) brightness(calc(1 - var(--cold) * 0.12)); transition: filter 4s; }
+:root[data-fx~="cold"] #main { filter: saturate(0.3) brightness(0.92); }
+
+/* ---------- hesitation: interactions lag a little ---------- */
+:root[data-memory="faint"] button { transition-delay: 30ms; }
+:root[data-memory="unsteady"] button { transition-delay: 90ms; }
+:root[data-memory="fragmented"] button, :root[data-memory="final"] button { transition-delay: 160ms; }
+:root[data-memory="unsteady"] .line-text, :root[data-memory="fragmented"] .line-text { letter-spacing: 0.005em; }
+
+/* ---------- drift: lists don't stay quite where you left them ---------- */
+:root[data-motion="full"][data-memory="unsteady"] .choices,
+:root[data-motion="full"][data-memory="fragmented"] .choices,
+:root[data-motion="full"][data-memory="final"] .choices,
+:root[data-motion="full"][data-fx~="drift"] .choices,
+:root[data-motion="full"][data-fx~="drift"] .scene-text {
+  animation: drift 14s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(calc(var(--drift) + 2px), calc(var(--drift) * -0.6)); }
+}
+
+/* ---------- echo: a line remembered twice ---------- */
+:root[data-fx~="echo"] .line-echo {
+  display: block; position: absolute; inset: 0; margin: 0;
+  font-size: 1.25em; font-family: var(--font-text); white-space: pre-line;
+  color: var(--c-ink-faint); opacity: 0.22;
+  transform: translate(4px, -0.55em);
+  pointer-events: none;
+}
+:root[data-motion="full"][data-fx~="echo"] .line-echo { animation: echo-in var(--t-slow) ease-out both; }
+@keyframes echo-in { from { opacity: 0; } }
+
+/* ---------- 11:47: the clock that won't move ---------- */
+.hud-clock.is-stuck { color: var(--c-ink); letter-spacing: 0.12em; }
+.hud-clock.is-stuck::after { content: " ·"; color: var(--c-green); }
+:root[data-motion="full"] .hud-clock.is-stuck { animation: stuck 2.4s ease-in-out 1; }
+@keyframes stuck {
+  0%, 100% { opacity: 1; }
+  40% { opacity: 0.35; }
+}
+:root[data-motion="full"].fx-flicker .hud-clock { animation: stuck 1.2s ease-in-out 2; }
+
+/* ---------- final: the interface lets go ---------- */
+:root[data-fx~="minimal"] .hud,
+:root[data-fx~="minimal"] .toolbar,
+:root[data-fx~="minimal"] .debug-toggle { opacity: 0; pointer-events: none; transition: opacity 3s; }
+:root[data-fx~="minimal"] .prev { visibility: hidden; }
+:root[data-memory="final"] .prev { opacity: 0.4; }
+:root[data-fx~="still"] .water { animation: none; }
+
+/* ---------- user preferences always win ---------- */
+:root[data-effects="gentle"] .line-echo { transform: none; opacity: 0.12; }
+:root[data-effects="gentle"] .choices, :root[data-effects="gentle"] .scene-text { animation: none !important; }
+:root[data-effects="gentle"] #main { filter: none; }
+:root[data-effects="gentle"] .water { opacity: 0.35; }
+
+:root[data-motion="reduce"] *, :root[data-motion="reduce"] *::before, :root[data-motion="reduce"] *::after {
+  animation: none !important;
+  transition-duration: 1ms !important;
+  transition-delay: 0ms !important;
+}

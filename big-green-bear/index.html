@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" data-memory="stable" data-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Big Green Bear's Adventure</title>
+  <meta name="description" content="A small mystery in Bellflower Town.">
+  <meta name="color-scheme" content="dark">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/memory.css">
+</head>
+<body>
+  <div id="app">
+    <div id="main">
+      <header class="hud" id="hud"></header>
+      <main id="stage" tabindex="-1"></main>
+      <nav class="toolbar" id="toolbar" aria-label="Game"></nav>
+    </div>
+    <div class="water" aria-hidden="true"></div>
+    <div class="overlay" id="overlay" hidden></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="sr-only" id="live" aria-live="polite"></div>
+  </div>
+  <noscript><p style="padding:2rem">This game needs JavaScript.</p></noscript>
+
+  <!-- ========== ENGINE (do not need to edit to change the story) ========== -->
+  <script src="engine/core.js"></script>
+  <script src="engine/i18n.js"></script>
+  <script src="engine/rules.js"></script>
+  <script src="engine/game.js"></script>
+  <script src="engine/save.js"></script>
+  <script src="engine/validate.js"></script>
+  <script src="engine/audio.js"></script>
+  <script src="engine/ui.js"></script>
+
+  <!-- ========== STORY CONTENT (edit / add files here) ========== -->
+  <script src="content/config.js"></script>
+  <script src="content/locales/en.js"></script>
+  <script src="content/locales/ko.js"></script>
+  <script src="content/characters.js"></script>
+  <script src="content/chapters.js"></script>
+  <script src="content/scenes.js"></script>
+  <script src="content/evidence.js"></script>
+  <script src="content/contradictions.js"></script>
+  <script src="content/deductions.js"></script>
+  <script src="content/timeline.js"></script>
+  <script src="content/hints.js"></script>
+  <script src="content/endings.js"></script>
+  <script src="content/dialogue/ch1_festival.js"></script>
+  <script src="content/dialogue/ch2_rain.js"></script>
+
+  <!-- ========== DEV ONLY: remove this line for a production build ========== -->
+  <script src="engine/debug.js"></script>
+
+  <script src="engine/main.js"></script>
+</body>
+</html>
