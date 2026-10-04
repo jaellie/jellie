@@ -66,6 +66,28 @@ HTML 버전 게임의 스토리와 로직을 참고해서 만든 **작은 Unity 
 
 ---
 
+## 화면 비율 (16:9 고정)
+창이 어떤 모양이든 게임은 항상 **16:9 액자 안에** 보여요. 남는 곳은 검은 띠가 채워요.
+그래서 컴퓨터, 웹 브라우저, 휴대폰 어디서든 같은 구도로 보여요.
+
+## 폰트 넣기 (웹 빌드에 꼭 필요)
+웹 브라우저에서는 컴퓨터에 깔린 폰트를 쓸 수 없어서, 그냥 빌드하면 한글이 □로 나와요.
+1. 한글이 들어 있는 폰트 파일(`.ttf` 또는 `.otf`)을 **하나만** `Assets/BigGreenBear/Resources/BGB/Fonts/` 폴더에 넣으세요.
+2. 끝이에요. 게임이 자동으로 그 폰트를 써요.
+
+게임에 넣어 배포해도 되는 라이선스(예: SIL Open Font License)인지 꼭 확인하세요.
+
+## 웹(WebGL) 빌드
+1. **Unity Hub → 설치 → (Unity 6 옆) ⚙ → 모듈 추가 → `Web Build Support`** 를 체크하고 설치하세요.
+2. **File → Build Profiles → `Web`** 을 고르고 **Switch Platform** 을 누르세요.
+3. **Player Settings → Resolution and Presentation** 에서 **Default Canvas Width `1280`, Height `720`** 으로 맞추세요 (16:9).
+4. **Build** 를 누르고 빈 폴더를 고르세요.
+5. 만들어진 폴더를 통째로 zip으로 묶어서 itch.io에 올리면 돼요. ("HTML" 프로젝트로 업로드, 크기는 1280x720)
+
+참고: 웹에서는 음악이 물속처럼 먹먹해지는 효과(low-pass filter)가 동작하지 않아요. Unity 웹 빌드가 이 기능을 지원하지 않거든요. 나머지는 똑같아요.
+
+---
+
 ## 구조 (어디를 고치면 뭐가 바뀌나)
 
 ```

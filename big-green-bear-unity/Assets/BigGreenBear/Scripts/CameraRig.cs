@@ -61,6 +61,16 @@ namespace BigGreenBear
                 // memory slipping: the frame wanders, slowly, and comes back
                 target += new Vector3(Mathf.Sin(Time.time * 0.37f) * 0.35f, Mathf.Sin(Time.time * 0.29f) * 0.12f, Mathf.Sin(Time.time * 0.2f) * 0.4f) * drift;
             }
+            // Keep the 16:9 framing on any screen: on narrower (taller) screens,
+            // widen the vertical view so the sides of the scene are never cut off.
+            // The UI draws black bars over whatever falls outside the 16:9 frame.
+            const float design = 16f / 9f;
+            float aspect = cam.aspect > 0.01f ? cam.aspect : design;
+            float fov = cfg.fov;
+            if (aspect < design)
+                fov = 2f * Mathf.Atan(Mathf.Tan(cfg.fov * 0.5f * Mathf.Deg2Rad) * design / aspect) * Mathf.Rad2Deg;
+            cam.fieldOfView = fov;
+
             float speed = ReducedMotion ? 6f : 1.6f;
             current = Vector3.Lerp(current, target, 1f - Mathf.Exp(-speed * Time.deltaTime));
             cam.transform.position = current;

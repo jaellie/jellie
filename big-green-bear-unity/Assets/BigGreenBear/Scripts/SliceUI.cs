@@ -49,8 +49,12 @@ namespace BigGreenBear
 
         public void Init()
         {
-            serif = Font.CreateDynamicFontFromOSFont(new[] { "Georgia", "Palatino Linotype", "Book Antiqua", "Malgun Gothic", "Apple SD Gothic Neo", "AppleSDGothicNeo-Regular", "Noto Serif CJK KR", "Noto Sans CJK KR", "Arial" }, 40);
-            mono = Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Menlo", "Courier New", "Malgun Gothic", "Arial" }, 28);
+            // A font file dropped into Resources/BGB/Fonts wins (needed for Web builds,
+            // which cannot use the computer's own fonts). Otherwise use OS fonts.
+            var bundled = Resources.LoadAll<Font>("BGB/Fonts");
+            if (bundled != null && bundled.Length > 0) serif = bundled[0];
+            else serif = Font.CreateDynamicFontFromOSFont(new[] { "Georgia", "Palatino Linotype", "Book Antiqua", "Malgun Gothic", "Apple SD Gothic Neo", "AppleSDGothicNeo-Regular", "Noto Serif CJK KR", "Noto Sans CJK KR", "Arial" }, 40);
+            mono = (bundled != null && bundled.Length > 0) ? serif : Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Menlo", "Courier New", "Malgun Gothic", "Arial" }, 28);
             var builtin = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             if (serif == null) serif = builtin;
             if (mono == null) mono = serif;
@@ -76,15 +80,27 @@ namespace BigGreenBear
             scaler.referenceResolution = new Vector2(1920, 1080);
             scaler.matchWidthOrHeight = 0.5f;
             cgo.AddComponent<GraphicRaycaster>();
-            var root = cgo.GetComponent<RectTransform>();
+            var screenRoot = cgo.GetComponent<RectTransform>();
 
             // Click anywhere to continue (sits behind the choices).
-            var cat = NewRect("ClickToContinue", root, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            var cat = NewRect("ClickToContinue", screenRoot, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             var catImg = cat.gameObject.AddComponent<Image>();
             catImg.color = new Color(0, 0, 0, 0);
             catcher = cat.gameObject.AddComponent<Button>();
             catcher.transition = Selectable.Transition.None;
             catcher.onClick.AddListener(() => OnAdvance?.Invoke());
+
+            // The 16:9 frame. Whatever the window shape (desktop, browser, phone),
+            // the game is shown inside a 16:9 frame with black bars around it.
+            var root = NewRect("Frame16x9", screenRoot, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            root.pivot = new Vector2(0.5f, 0.5f);
+            var fitter = root.gameObject.AddComponent<AspectRatioFitter>();
+            fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
+            fitter.aspectRatio = 16f / 9f;
+            Bar(root, new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 0.5f)); // left
+            Bar(root, new Vector2(1, 0), new Vector2(1, 1), new Vector2(0, 0.5f)); // right
+            Bar(root, new Vector2(0, 1), new Vector2(1, 1), new Vector2(0.5f, 0)); // top
+            Bar(root, new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 1)); // bottom
 
             // The word band: a soft, low strip. Not a chat bubble.
             var b = NewRect("Band", root, new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 0), new Vector2(0, 330));
@@ -129,6 +145,17 @@ namespace BigGreenBear
         }
 
         /* ---------------- builders ---------------- */
+
+        // A black bar glued to one edge of the frame, reaching far outside it.
+        static void Bar(RectTransform frame, Vector2 aMin, Vector2 aMax, Vector2 pivot)
+        {
+            var rt = NewRect("Bar", frame, aMin, aMax, Vector2.zero, Vector2.zero);
+            rt.pivot = pivot;
+            rt.sizeDelta = new Vector2(6000, 6000); // big enough for any screen
+            var img = rt.gameObject.AddComponent<Image>();
+            img.color = new Color(0.02f, 0.025f, 0.03f, 1f);
+            img.raycastTarget = false;
+        }
 
         static RectTransform NewRect(string name, RectTransform parent, Vector2 aMin, Vector2 aMax, Vector2 pos, Vector2 size)
         {
