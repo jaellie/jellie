@@ -11,6 +11,7 @@ import { makeSky, makeSea, makeCoast, makeBayLights, makeGulls, skyPalette } fro
 import { rubberShoe, slipper } from '../entities/Mom.js';
 import { ease } from '../core/Tween.js';
 import { PITCH } from '../core/Camera.js';
+import { makeDrive } from './Mall.js';
 
 const PI = Math.PI;
 const lerp = THREE.MathUtils.lerp;
@@ -757,7 +758,7 @@ export class Home {
       await g.tweens.add(0.9, (t) => { this.frontDoor.leaf.rotation.y = -t * 1.3; });
       g.mom.faceToward(L.entry.doorX, 6.5);
       g.goTo('beach', { color: '#FFE2B0', ms: 1800 });
-    } else if (where === 'mall') g.goTo('mall', { color: '#000', ms: 1200 });
+    } else if (where === 'mall') g.goTo('mall', { color: '#000', ms: 1200, cinematic: () => g.playCinematic(makeDrive(g)) });
     else g.goTo('past', { color: '#FFFFFF', ms: 2000 });
   }
 

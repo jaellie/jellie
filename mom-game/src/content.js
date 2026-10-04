@@ -23,7 +23,7 @@ export const content = {
   },
 
   // Turn a whole world off if it isn't ready (its trigger object disappears).
-  features: { mall: false, past: false }, // Tier 2 / Tier 3 switch on when built
+  features: { mall: true, past: true }, // set false to hide a world's trigger
 
   // Minutes of real time for the home sunset (0 → 1). The door to the beach
   // always works after `doorAlwaysAfterMin` minutes.

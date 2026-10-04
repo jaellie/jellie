@@ -85,14 +85,21 @@ class Game {
     this.world.exit?.();
     this.tweens.clear();
     const next = this.getWorld(name);
-    if (cinematic) { this.cam.override = null; await cinematic(); await this.overlay.fade(1, { color, ms: 600 }); }
+    if (cinematic) {
+      this.cam.override = null;
+      const done = cinematic();            // starts rendering the cinematic scene right away
+      await this.overlay.fade(0, { color, ms: 900 });
+      await done;
+      await this.overlay.fade(1, { color, ms: 700 });
+      this.cinematic = null;
+    }
     this.setWorld(next, from);
     await this.overlay.fade(0, { color, ms: ms * 1.2 });
     this.busy = false; this.transitioning = false;
   }
 
   // play a separate little scene (e.g. the drive to LF Square) under the same loop
-  playCinematic(c) { return new Promise((res) => { this.cinematic = { ...c, t: 0, done: () => { this.cinematic = null; res(); } }; }); }
+  playCinematic(c) { return new Promise((res) => { this.cinematic = { ...c, t: 0, done: res }; }); }
 
   say(text, ms) { this.overlay.say(text, ms); }
 
