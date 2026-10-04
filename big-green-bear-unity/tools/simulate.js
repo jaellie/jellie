@@ -53,6 +53,19 @@ function frame(f) {
     html += `<img src="file://${ART}${it.img}.png" style="position:absolute;left:${left}px;top:${top}px;width:${it.w * s}px;height:${it.h * s}px">`;
   }
   if (wet) html += `<div style="position:absolute;inset:0;background:rgba(40,70,90,.22)"></div>`;
+  // clickable hotspots (same maths as SliceDirector.TryHotspot)
+  for (const h of L.hotspots || []) {
+    const id = h.anchor || h.id;
+    const actor = L.actors.find((a) => a.id === id);
+    if (actor && wet && id === "nini") continue;
+    const p = actor ? { x: actor.x, y: actor.height * 0.5, z: actor.z } : anchors[id];
+    if (!p) continue;
+    const d = p.z - cz, s = (W / 2) / (d * tanH * ASPECT);
+    const x = W / 2 + (p.x - cx) * s, y = H / 2 - (p.y - cy) * s, r = Math.max(h.radius * s, H * 0.05);
+    html += `<div style="position:absolute;left:${x - r}px;top:${y - r}px;width:${2 * r}px;height:${2 * r}px;border:1px dashed rgba(255,255,255,.35);border-radius:50%"></div>`;
+    html += `<div style="position:absolute;left:${x - 10}px;top:${y - 10}px;width:20px;height:20px;border-radius:50%;background:rgba(255,240,205,.8);box-shadow:0 0 12px rgba(255,240,205,.8)"></div>`;
+    html += `<div style="position:absolute;left:${x - 100}px;top:${y - 44}px;width:200px;text-align:center;color:#fff;font:14px sans-serif;text-shadow:0 1px 2px #000">${h.id}</div>`;
+  }
   html += `<div style="position:absolute;left:10px;top:8px;color:#fff;font:14px monospace">${f.id}</div></body></html>`;
   return html;
 }

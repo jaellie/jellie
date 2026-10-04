@@ -40,6 +40,7 @@ namespace BigGreenBear
         public string[] conditions;
         public Effect[] effects;
         public string next;
+        public string target;   // optional: a hotspot id you can click in the scene to pick this choice
     }
 
     [Serializable]
@@ -162,6 +163,15 @@ namespace BigGreenBear
         public string kind;       // "lamp" | "string" | "fluorescent"
     }
 
+    // A clickable thing in the world (the clock, the gate, Nini...).
+    [Serializable]
+    public class HotspotLayout
+    {
+        public string id;
+        public string anchor;     // anchor or actor id; defaults to id
+        public float radius;      // world units: how far from the centre still counts as "near"
+    }
+
     [Serializable]
     public class SceneLayout
     {
@@ -172,6 +182,7 @@ namespace BigGreenBear
         public AnchorLayout[] anchors;
         public FocusLayout[] focus;
         public LightLayout[] lights;
+        public HotspotLayout[] hotspots;
     }
 
     public static class SliceData

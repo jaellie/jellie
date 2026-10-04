@@ -129,6 +129,12 @@
       "layer": "fg",
       "px": 177,
       "py": 250
+    },
+    {
+      "id": "lights",
+      "layer": "mid",
+      "px": 1394,
+      "py": 800
     }
   ],
   "focus": [
@@ -224,6 +230,38 @@
       "radius": 5,
       "intensity": 0,
       "kind": "fluorescent"
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "nini",
+      "anchor": "nini",
+      "radius": 0.9
+    },
+    {
+      "id": "bear",
+      "anchor": "bear",
+      "radius": 1.2
+    },
+    {
+      "id": "clock",
+      "anchor": "clock",
+      "radius": 2.8
+    },
+    {
+      "id": "lights",
+      "anchor": "lights",
+      "radius": 1.6
+    },
+    {
+      "id": "gate",
+      "anchor": "gate",
+      "radius": 1.5
+    },
+    {
+      "id": "puddle",
+      "anchor": "puddle",
+      "radius": 1.0
     }
   ]
 }

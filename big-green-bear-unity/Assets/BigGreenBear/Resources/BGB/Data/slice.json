@@ -211,7 +211,8 @@
        "type": "add",
        "id": "dry"
       }
-     ]
+     ],
+     "target": "nini"
     },
     {
      "text": {
@@ -227,7 +228,8 @@
        "type": "add",
        "id": "dry"
       }
-     ]
+     ],
+     "target": "clock"
     },
     {
      "text": {
@@ -243,7 +245,8 @@
        "type": "add",
        "id": "dry"
       }
-     ]
+     ],
+     "target": "lights"
     },
     {
      "text": {
@@ -259,7 +262,8 @@
        "type": "add",
        "id": "dry"
       }
-     ]
+     ],
+     "target": ""
     }
    ],
    "branches": [],
@@ -312,7 +316,8 @@
      },
      "next": "nini_03",
      "conditions": [],
-     "effects": []
+     "effects": [],
+     "target": ""
     },
     {
      "text": {
@@ -321,7 +326,8 @@
      },
      "next": "nini_please",
      "conditions": [],
-     "effects": []
+     "effects": [],
+     "target": ""
     }
    ],
    "branches": [],
@@ -769,7 +775,8 @@
      "conditions": [
       "!gate_seen"
      ],
-     "effects": []
+     "effects": [],
+     "target": "gate"
     },
     {
      "text": {
@@ -780,7 +787,8 @@
      "conditions": [
       "!bell_found"
      ],
-     "effects": []
+     "effects": [],
+     "target": "puddle"
     },
     {
      "text": {
@@ -791,7 +799,8 @@
      "conditions": [
       "!clock_rain"
      ],
-     "effects": []
+     "effects": [],
+     "target": "clock"
     },
     {
      "text": {
@@ -802,7 +811,8 @@
      "conditions": [
       "!called"
      ],
-     "effects": []
+     "effects": [],
+     "target": "bear"
     }
    ],
    "branches": [],

@@ -53,6 +53,26 @@ namespace BigGreenBear
 #endif
         }
 
+        public static bool Click()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame;
+#else
+            return Input.GetMouseButtonDown(0);
+#endif
+        }
+
+        // Mouse position in screen pixels.
+        public static Vector2 MouseScreen()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Mouse.current != null ? Mouse.current.position.ReadValue() : new Vector2(-9999f, -9999f);
+#else
+            Vector3 mp = Input.mousePosition;
+            return new Vector2(mp.x, mp.y);
+#endif
+        }
+
         public static bool Quit()
         {
 #if ENABLE_INPUT_SYSTEM

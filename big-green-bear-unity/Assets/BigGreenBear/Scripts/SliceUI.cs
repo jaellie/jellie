@@ -30,7 +30,12 @@ namespace BigGreenBear
         Image band;
         Text speaker, body, echo, prompt, clock, chapterHud, hint, cont;
         RectTransform choiceBox;
+        RectTransform frame;
         readonly List<Button> choiceButtons = new List<Button>();
+        readonly List<Image> choiceHighlights = new List<Image>();
+        readonly List<Image> dots = new List<Image>();
+        Text hoverLabel;
+        Sprite dotSprite;
         CanvasGroup fade, titleGroup, cardGroup;
         Text titleText, subtitleText, pressText, cardLabel, cardTitle;
         Button catcher;
@@ -94,6 +99,7 @@ namespace BigGreenBear
             // the game is shown inside a 16:9 frame with black bars around it.
             var root = NewRect("Frame16x9", screenRoot, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             root.pivot = new Vector2(0.5f, 0.5f);
+            frame = root;
             var fitter = root.gameObject.AddComponent<AspectRatioFitter>();
             fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
             fitter.aspectRatio = 16f / 9f;
@@ -118,6 +124,15 @@ namespace BigGreenBear
             prompt = NewText("Prompt", root, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(-640, 236), new Vector2(1280, 40), 24, Faint, TextAnchor.UpperLeft);
 
             choiceBox = NewRect("Choices", root, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(-640, 40), new Vector2(1280, 190));
+
+            // Label that appears next to a thing in the world you can click.
+            dotSprite = MakeDot();
+            hoverLabel = NewText("HoverLabel", root, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(700, 44), 27, Cream, TextAnchor.MiddleCenter);
+            ((RectTransform)hoverLabel.transform).pivot = new Vector2(0.5f, 0f);
+            var outline = hoverLabel.gameObject.AddComponent<Outline>();
+            outline.effectColor = new Color(0f, 0f, 0f, 0.65f);
+            outline.effectDistance = new Vector2(2f, -2f);
+            hoverLabel.enabled = false;
 
             clock = NewText("Clock", root, new Vector2(1, 1), new Vector2(1, 1), new Vector2(-340, -70), new Vector2(300, 40), 26, Faint, TextAnchor.UpperRight);
             clock.font = mono;
@@ -251,19 +266,25 @@ namespace BigGreenBear
             for (int i = 0; i < labels.Count; i++)
             {
                 int index = i;
-                var rt = NewRect("Choice" + i, choiceBox, new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, -44 - i * 46), new Vector2(1100, 42));
+                // Each row is a wide, gap-free strip: clicking anywhere near the words works.
+                var rt = NewRect("Choice" + i, choiceBox, new Vector2(0, 1), new Vector2(0, 1), new Vector2(-300, -46 - i * 46), new Vector2(1900, 46));
                 var img = rt.gameObject.AddComponent<Image>();
-                img.color = new Color(1, 1, 1, 0f);
+                img.color = new Color(1, 1, 1, 1f);
                 var btn = rt.gameObject.AddComponent<Button>();
+                btn.targetGraphic = img;
                 var colors = btn.colors;
                 colors.normalColor = new Color(1, 1, 1, 0f);
                 colors.highlightedColor = new Color(1, 1, 1, 0.08f);
-                colors.selectedColor = new Color(1, 1, 1, 0.08f);
+                colors.selectedColor = new Color(1, 1, 1, 0f);
                 colors.pressedColor = new Color(1, 1, 1, 0.14f);
                 btn.colors = colors;
                 btn.onClick.AddListener(() => OnChoose?.Invoke(index));
-                var t = NewText("Label", rt, Vector2.zero, Vector2.one, new Vector2(12, 0), Vector2.zero, 32, Cream, TextAnchor.MiddleLeft);
-                ((RectTransform)t.transform).sizeDelta = new Vector2(-12, 0);
+                var hl = NewRect("Highlight", rt, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero).gameObject.AddComponent<Image>();
+                hl.color = new Color(1, 1, 1, 0f);
+                hl.raycastTarget = false;
+                choiceHighlights.Add(hl);
+                var t = NewText("Label", rt, Vector2.zero, Vector2.one, new Vector2(312, 0), Vector2.zero, 32, Cream, TextAnchor.MiddleLeft);
+                ((RectTransform)t.transform).sizeDelta = new Vector2(-312, 0);
                 t.text = (i + 1) + ".   " + labels[i];
                 choiceButtons.Add(btn);
             }
@@ -273,6 +294,95 @@ namespace BigGreenBear
         {
             foreach (var b in choiceButtons) if (b != null) Destroy(b.gameObject);
             choiceButtons.Clear();
+            choiceHighlights.Clear();
+            HideHotspots();
+        }
+
+        /* ---------------- clickable things in the world ---------------- */
+
+        public struct HotspotView
+        {
+            public Vector2 screen;  // pixels
+            public float radius;    // pixels
+            public string label;
+        }
+
+        static Sprite MakeDot()
+        {
+            const int n = 64;
+            var tex = new Texture2D(n, n, TextureFormat.RGBA32, false);
+            var px = new Color32[n * n];
+            for (int y = 0; y < n; y++)
+            for (int x = 0; x < n; x++)
+            {
+                float dx = (x - n / 2f) / (n / 2f), dy = (y - n / 2f) / (n / 2f);
+                float d = Mathf.Sqrt(dx * dx + dy * dy);
+                float a = Mathf.Clamp01(1f - d);
+                a = a * a; // soft glow
+                if (d < 0.28f) a = 1f; // bright centre
+                px[y * n + x] = new Color32(255, 240, 205, (byte)(a * 255));
+            }
+            tex.SetPixels32(px);
+            tex.Apply();
+            return Sprite.Create(tex, new Rect(0, 0, n, n), new Vector2(0.5f, 0.5f), 100f);
+        }
+
+        // Draws a soft dot on every clickable thing; the one under (or near) the mouse
+        // glows and shows its action. Returns the index of that one, or -1.
+        public int ShowHotspots(List<HotspotView> hs, Vector2 mouse)
+        {
+            int best = -1;
+            float bestD = float.MaxValue;
+            for (int i = 0; i < hs.Count; i++)
+            {
+                float d = Vector2.Distance(mouse, hs[i].screen) / Mathf.Max(1f, hs[i].radius);
+                if (d <= 1f && d < bestD) { bestD = d; best = i; }
+            }
+            while (dots.Count < hs.Count)
+            {
+                var rt = NewRect("Hotspot", frame, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(24, 24));
+                rt.pivot = new Vector2(0.5f, 0.5f);
+                var img = rt.gameObject.AddComponent<Image>();
+                img.sprite = dotSprite;
+                img.raycastTarget = false;
+                dots.Add(img);
+            }
+            for (int i = 0; i < dots.Count; i++)
+            {
+                var dot = dots[i];
+                bool on = i < hs.Count;
+                if (dot.gameObject.activeSelf != on) dot.gameObject.SetActive(on);
+                if (!on) continue;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(frame, hs[i].screen, null, out Vector2 lp);
+                var rt = dot.rectTransform;
+                rt.anchoredPosition = lp;
+                bool hot = i == best;
+                float pulse = ReducedMotion ? 0.5f : 0.5f + 0.5f * Mathf.Sin(Time.time * 2.2f + i);
+                float size = hot ? 38f : 20f + 4f * pulse;
+                rt.sizeDelta = new Vector2(size, size);
+                dot.color = new Color(1f, 1f, 1f, hot ? 0.95f : 0.35f + 0.2f * pulse);
+                if (hot)
+                {
+                    hoverLabel.enabled = true;
+                    hoverLabel.text = hs[i].label;
+                    ((RectTransform)hoverLabel.transform).anchoredPosition = lp + new Vector2(0f, 28f);
+                }
+            }
+            if (best < 0) hoverLabel.enabled = false;
+            return best;
+        }
+
+        // Light up the list row that matches the thing being hovered in the world.
+        public void HighlightChoice(int index)
+        {
+            for (int i = 0; i < choiceHighlights.Count; i++)
+                if (choiceHighlights[i] != null) choiceHighlights[i].color = new Color(1, 1, 1, i == index ? 0.09f : 0f);
+        }
+
+        public void HideHotspots()
+        {
+            foreach (var d in dots) if (d != null) d.gameObject.SetActive(false);
+            if (hoverLabel != null) hoverLabel.enabled = false;
         }
 
         public void HideWords()

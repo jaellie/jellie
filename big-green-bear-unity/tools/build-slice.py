@@ -14,8 +14,9 @@ def N(id, text=None, speaker="", next=None, effects=None, choices=None, branches
     n = {"id": id, "speaker": speaker, "text": text or T("", ""), "next": next or "", "effects": effects or [],
          "choices": choices or [], "branches": branches or [], "fx": fx or [], "hold": hold}
     nodes.append(n)
-def C(text, next, conditions=None, effects=None):
-    return {"text": text, "next": next, "conditions": conditions or [], "effects": effects or []}
+def C(text, next, conditions=None, effects=None, target=""):
+    # target = a hotspot id from layout.json: click that thing in the scene to pick this choice
+    return {"text": text, "next": next, "conditions": conditions or [], "effects": effects or [], "target": target}
 def B(to, *conditions): return {"to": to, "conditions": list(conditions)}
 
 # ---------------- opening ----------------
@@ -37,9 +38,9 @@ N("hub", branches=[
     B("hub_dry"),
 ])
 N("hub_dry", effects=[E("focus", value="wide")], choices=[
-    C(T("Talk to Nini", "니니에게 말 걸기"), "nini_01", ["!met_nini"], [E("add", "dry")]),
-    C(T("Look at the town hall clock", "시청 시계를 본다"), "clock_01", ["!clock_seen"], [E("add", "dry")]),
-    C(T("Look at the lights", "전구를 본다"), "lights_01", ["!lights_seen"], [E("add", "dry")]),
+    C(T("Talk to Nini", "니니에게 말 걸기"), "nini_01", ["!met_nini"], [E("add", "dry")], target="nini"),
+    C(T("Look at the town hall clock", "시청 시계를 본다"), "clock_01", ["!clock_seen"], [E("add", "dry")], target="clock"),
+    C(T("Look at the lights", "전구를 본다"), "lights_01", ["!lights_seen"], [E("add", "dry")], target="lights"),
     C(T("Wave at the children", "아이들에게 손을 흔든다"), "wave_01", ["!waved"], [E("add", "dry")]),
 ])
 
@@ -96,10 +97,10 @@ N("rain_06", T("The parade starts without you noticing. Lanterns bob past in the
   effects=[E("focus", value="wide")], next="hub")
 
 N("hub_rain", effects=[E("focus", value="wide")], choices=[
-    C(T("Look at the gate by the fountain", "분수 옆 철문을 본다"), "gate_01", ["!gate_seen"]),
-    C(T("Look at the puddle by the steps", "계단 옆 웅덩이를 본다"), "puddle_01", ["!bell_found"]),
-    C(T("Look at the town hall clock", "시청 시계를 본다"), "clockr_01", ["!clock_rain"]),
-    C(T("Call for Nini", "니니를 부른다"), "call_01", ["!called"]),
+    C(T("Look at the gate by the fountain", "분수 옆 철문을 본다"), "gate_01", ["!gate_seen"], target="gate"),
+    C(T("Look at the puddle by the steps", "계단 옆 웅덩이를 본다"), "puddle_01", ["!bell_found"], target="puddle"),
+    C(T("Look at the town hall clock", "시청 시계를 본다"), "clockr_01", ["!clock_rain"], target="clock"),
+    C(T("Call for Nini", "니니를 부른다"), "call_01", ["!called"], target="bear"),
 ])
 
 # ---------------- the gate: the first memory distortion ----------------
@@ -173,6 +174,12 @@ for n in nodes:
         problems.append(f"{n['id']} does nothing")
     for k in ("en", "ko"):
         if bool(n["text"]["en"]) != bool(n["text"][k]): problems.append(f"{n['id']} missing {k}")
+import os
+layout = json.load(open("Assets/BigGreenBear/Resources/BGB/Data/layout.json"))
+hot = {h["id"] for h in layout.get("hotspots", [])}
+for n in nodes:
+    for c in n["choices"]:
+        if c["target"] and c["target"] not in hot: problems.append(f"{n['id']}: unknown hotspot {c['target']}")
 if problems:
     raise SystemExit("slice.json problems:\n" + "\n".join(problems))
 out = "Assets/BigGreenBear/Resources/BGB/Data/slice.json"

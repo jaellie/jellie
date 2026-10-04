@@ -10,6 +10,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace BigGreenBear
 {
@@ -211,6 +212,7 @@ namespace BigGreenBear
                     chosen = -1;
                     while (chosen < 0) yield return null;
                     var c = currentChoices[chosen];
+                    ui.HideHotspots();
                     sound.Play("chime");
                     phase = Phase.Busy;
                     if (c.effects != null) foreach (var e in c.effects) yield return Apply(e);
@@ -377,7 +379,62 @@ namespace BigGreenBear
             {
                 int d = SliceInput.Digit();
                 if (d >= 0 && d < currentChoices.Count) chosen = d;
+                UpdateHotspots();
             }
+        }
+
+        /* ---------------- click things in the world ---------------- */
+
+        readonly List<SliceUI.HotspotView> hotViews = new List<SliceUI.HotspotView>();
+        readonly List<int> hotChoice = new List<int>();
+
+        void UpdateHotspots()
+        {
+            var cam = Camera.main;
+            hotViews.Clear();
+            hotChoice.Clear();
+            if (cam != null)
+            {
+                for (int i = 0; i < currentChoices.Count; i++)
+                {
+                    var target = currentChoices[i].target;
+                    if (string.IsNullOrEmpty(target)) continue;
+                    if (!TryHotspot(target, cam, out var view)) continue;
+                    view.label = L(currentChoices[i].text);
+                    hotViews.Add(view);
+                    hotChoice.Add(i);
+                }
+            }
+            int h = ui.ShowHotspots(hotViews, SliceInput.MouseScreen());
+            ui.HighlightChoice(h >= 0 ? hotChoice[h] : -1);
+            // A click on the list itself is handled by the list's buttons.
+            bool overUI = EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+            if (h >= 0 && SliceInput.Click() && !overUI) chosen = hotChoice[h];
+        }
+
+        bool TryHotspot(string id, Camera cam, out SliceUI.HotspotView view)
+        {
+            view = default;
+            HotspotLayout hs = null;
+            if (stage.layout.hotspots != null)
+                foreach (var x in stage.layout.hotspots) if (x.id == id) { hs = x; break; }
+            if (hs == null) return false;
+            string anchor = string.IsNullOrEmpty(hs.anchor) ? hs.id : hs.anchor;
+            Vector3 p;
+            if (stage.actors.TryGetValue(anchor, out var actor))
+            {
+                if (!actor.gameObject.activeInHierarchy) return false;
+                p = actor.transform.position + Vector3.up * actor.Height * 0.5f;
+            }
+            else if (!stage.anchors.TryGetValue(anchor, out p)) return false;
+
+            Vector3 s = cam.WorldToScreenPoint(p);
+            if (s.z <= 0f || s.x < 0f || s.y < 0f || s.x > Screen.width || s.y > Screen.height) return false;
+            Vector3 e = cam.WorldToScreenPoint(p + cam.transform.right * hs.radius);
+            float r = Mathf.Max(Vector2.Distance(new Vector2(s.x, s.y), new Vector2(e.x, e.y)), Screen.height * 0.05f);
+            view.screen = new Vector2(s.x, s.y);
+            view.radius = r;
+            return true;
         }
     }
 }
