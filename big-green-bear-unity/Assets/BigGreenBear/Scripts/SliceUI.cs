@@ -25,7 +25,7 @@ namespace BigGreenBear
         static readonly Color Green = new Color(0.62f, 0.78f, 0.62f);
         static readonly Color Faint = new Color(0.953f, 0.922f, 0.867f, 0.55f);
 
-        Font serif, mono;
+        Font serif, mono, bold;
         Canvas canvas;
         Image band;
         Text speaker, body, echo, prompt, clock, chapterHud, hint, cont;
@@ -36,6 +36,14 @@ namespace BigGreenBear
         readonly List<Image> dots = new List<Image>();
         Text hoverLabel;
         Sprite dotSprite;
+        // notebook, toast, water
+        CanvasGroup notebookGroup;
+        Text notebookTitle, notebookBody, notebookButton, toast;
+        RectTransform water;
+        Image waterImg;
+        float waterLevel, waterTarget, toastTime;
+        public bool NotebookOpen { get; private set; }
+        public event Action OnNotebookToggle;
         CanvasGroup fade, titleGroup, cardGroup;
         Text titleText, subtitleText, pressText, cardLabel, cardTitle;
         Button catcher;
@@ -60,6 +68,8 @@ namespace BigGreenBear
             if (bundled != null && bundled.Length > 0) serif = bundled[0];
             else serif = Font.CreateDynamicFontFromOSFont(new[] { "Georgia", "Palatino Linotype", "Book Antiqua", "Malgun Gothic", "Apple SD Gothic Neo", "AppleSDGothicNeo-Regular", "Noto Serif CJK KR", "Noto Sans CJK KR", "Arial" }, 40);
             mono = (bundled != null && bundled.Length > 0) ? serif : Font.CreateDynamicFontFromOSFont(new[] { "Consolas", "Menlo", "Courier New", "Malgun Gothic", "Arial" }, 28);
+            var boldFonts = Resources.LoadAll<Font>("BGB/FontsBold");
+            bold = (boldFonts != null && boldFonts.Length > 0) ? boldFonts[0] : null;
             var builtin = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             if (serif == null) serif = builtin;
             if (mono == null) mono = serif;
@@ -146,6 +156,40 @@ namespace BigGreenBear
             subtitleText.fontStyle = FontStyle.Italic;
             pressText = NewText("Press", (RectTransform)titleGroup.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-900, -190), new Vector2(1800, 40), 24, Faint, TextAnchor.MiddleCenter);
 
+            // Rising water (the flood), drawn over the world but under the words.
+            water = NewRect("Water", root, new Vector2(0, 0), new Vector2(1, 0), Vector2.zero, new Vector2(0, 0));
+            waterImg = water.gameObject.AddComponent<Image>();
+            waterImg.color = new Color(0.05f, 0.15f, 0.16f, 0.62f);
+            waterImg.raycastTarget = false;
+            water.SetSiblingIndex(4); // just above the bars, below the word band
+
+            // Toast: "noted in the notebook"
+            toast = NewText("Toast", root, new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(-600, -130), new Vector2(1200, 40), 24, Cream, TextAnchor.MiddleCenter);
+            toast.gameObject.AddComponent<Outline>().effectColor = new Color(0, 0, 0, 0.6f);
+            toast.enabled = false;
+
+            // Notebook button (bottom right) + panel
+            notebookButton = NewText("NotebookButton", root, new Vector2(1, 0), new Vector2(1, 0), new Vector2(-260, 10), new Vector2(230, 40), 22, Faint, TextAnchor.LowerRight);
+            notebookButton.raycastTarget = true;
+            var nbBtn = notebookButton.gameObject.AddComponent<Button>();
+            nbBtn.transition = Selectable.Transition.None;
+            nbBtn.onClick.AddListener(() => OnNotebookToggle?.Invoke());
+            notebookButton.enabled = false;
+
+            notebookGroup = NewGroup("Notebook", root);
+            var nbBg = NewRect("Page", (RectTransform)notebookGroup.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-560, -400), new Vector2(1120, 800));
+            var page = nbBg.gameObject.AddComponent<Image>();
+            page.color = new Color(0.93f, 0.89f, 0.81f, 0.97f);
+            page.raycastTarget = true;
+            var pageBtn = nbBg.gameObject.AddComponent<Button>();
+            pageBtn.transition = Selectable.Transition.None;
+            pageBtn.onClick.AddListener(() => OnNotebookToggle?.Invoke());
+            notebookTitle = NewText("Title", nbBg, new Vector2(0, 1), new Vector2(0, 1), new Vector2(60, -90), new Vector2(1000, 50), 34, new Color(0.18f, 0.23f, 0.2f), TextAnchor.UpperLeft);
+            notebookBody = NewText("Body", nbBg, new Vector2(0, 1), new Vector2(0, 1), new Vector2(60, -770), new Vector2(1000, 660), 22, new Color(0.15f, 0.15f, 0.15f), TextAnchor.UpperLeft);
+            notebookBody.lineSpacing = 1.2f;
+            notebookBody.verticalOverflow = VerticalWrapMode.Truncate;
+            notebookGroup.alpha = 0f;
+
             fade = NewGroup("Fade", root);
             var fadeImg = fade.gameObject.AddComponent<Image>();
             fadeImg.color = new Color(0.03f, 0.035f, 0.045f, 1f);
@@ -157,6 +201,7 @@ namespace BigGreenBear
             cardTitle = NewText("Title", (RectTransform)cardGroup.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-900, -40), new Vector2(1800, 90), 58, Cream, TextAnchor.MiddleCenter);
             cardGroup.alpha = 0f;
             titleGroup.alpha = 0f;
+            if (bold != null) { titleText.font = bold; cardTitle.font = bold; speaker.font = bold; }
         }
 
         /* ---------------- builders ---------------- */
@@ -457,9 +502,57 @@ namespace BigGreenBear
         }
 
         public void SetCatcher(bool on) => catcher.gameObject.SetActive(on);
+        public float FadeAlpha => fade.alpha;
+
+        /* ---------------- notebook / toast / water ---------------- */
+
+        public void SetNotebookButton(string label, bool visible)
+        {
+            notebookButton.text = label;
+            notebookButton.enabled = visible;
+        }
+
+        public void ShowNotebook(string title, string body)
+        {
+            NotebookOpen = true;
+            notebookTitle.text = title;
+            notebookBody.text = body;
+            notebookGroup.alpha = 1f;
+            notebookGroup.blocksRaycasts = true;
+            notebookGroup.transform.SetAsLastSibling();
+        }
+
+        public void HideNotebook()
+        {
+            NotebookOpen = false;
+            notebookGroup.alpha = 0f;
+            notebookGroup.blocksRaycasts = false;
+        }
+
+        public void Toast(string text)
+        {
+            toast.text = text;
+            toast.enabled = true;
+            toastTime = 3.2f;
+        }
+
+        // 0 = dry, 1 = the whole frame under water
+        public void SetWater(float level, bool instant = false)
+        {
+            waterTarget = Mathf.Clamp01(level);
+            if (instant) waterLevel = waterTarget;
+        }
 
         void Update()
         {
+            waterLevel = Mathf.MoveTowards(waterLevel, waterTarget, Time.deltaTime * (ReducedMotion ? 1f : 0.08f));
+            water.sizeDelta = new Vector2(0f, waterLevel * 1080f);
+            if (toastTime > 0f)
+            {
+                toastTime -= Time.deltaTime;
+                toast.color = new Color(Cream.r, Cream.g, Cream.b, Mathf.Clamp01(toastTime));
+                if (toastTime <= 0f) toast.enabled = false;
+            }
             bandAlpha = Mathf.MoveTowards(bandAlpha, bandTarget, Time.deltaTime * 1.4f);
             band.color = new Color(0.05f, 0.06f, 0.08f, bandAlpha);
 

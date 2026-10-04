@@ -19,11 +19,11 @@ namespace BigGreenBear
         float drift;      // 0..1, set by the atmosphere during memory distortion
         float idleSway = 1f;
 
-        public void Init(Camera c, CameraLayout layout, FocusLayout[] focus)
+        public void Init(Camera c, CameraLayout layout)
         {
             cam = c;
             cfg = layout;
-            focusPoints = focus ?? new FocusLayout[0];
+            focusPoints = new FocusLayout[0];
             cam.orthographic = false;
             cam.fieldOfView = cfg.fov;
             cam.nearClipPlane = 0.1f;
@@ -33,6 +33,9 @@ namespace BigGreenBear
             cam.transform.position = basePos;
             cam.transform.rotation = Quaternion.identity;
         }
+
+        // Each location has its own framings ("wide", "nini", "gate" ...).
+        public void SetFocusPoints(FocusLayout[] focus) => focusPoints = focus ?? new FocusLayout[0];
 
         public void Focus(string id)
         {
@@ -46,6 +49,13 @@ namespace BigGreenBear
         }
 
         public void SetDrift(float d) => drift = d;
+
+        // Jump straight to the current framing (used when arriving somewhere new).
+        public void Snap()
+        {
+            current = basePos + focusOffset;
+            if (cam != null) cam.transform.position = current;
+        }
         public void SetIdleSway(float s) => idleSway = s;
 
         void LateUpdate()

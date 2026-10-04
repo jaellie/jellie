@@ -15,7 +15,7 @@
  */
 BGB.story.characters({
   bear: {
-    name: { en: "Big Green Bear", ko: "큰초록곰" },
+    name: { en: "Big Green Bear", ko: "빅그린베어" },
     role: "Protagonist. The festival mascot.",
     truth: "A festival staff member working inside a heavy green bear costume. Rescued Nini from the flooding passage at 23:47, became trapped, and died in hospital at 01:17.",
     memoryVersion: "Remembers himself as a real bear. The costume's weight, heat and water appear as 'fur'.",

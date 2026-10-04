@@ -29,7 +29,7 @@ namespace BigGreenBear
 
         static readonly string[] Expressions = { "neutral", "happy", "worried", "searching", "curious", "blink" };
 
-        public void Init(ActorLayout a)
+        public void Init(ActorLayout a, string startFace)
         {
             Id = a.id;
             Height = a.height;
@@ -38,18 +38,25 @@ namespace BigGreenBear
             Stage.ApplyMaterial(sr);
             foreach (var e in Expressions)
             {
-                var tex = Resources.Load<Texture2D>("BGB/Art/" + a.sprites + "_" + e);
+                var tex = Stage.LoadTexture(a.sprites + "_" + e, true);
                 if (tex == null) continue;
                 faces[e] = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0f), tex.height / a.height);
             }
             basePos = transform.position;
-            SetFace(string.IsNullOrEmpty(a.face) ? "neutral" : a.face);
+            if (!faces.ContainsKey("neutral") && faces.Count > 0) foreach (var k in faces.Keys) { faces["neutral"] = faces[k]; break; }
+            SetFace(string.IsNullOrEmpty(startFace) ? "neutral" : startFace);
+            if (!faces.ContainsKey(face) && faces.ContainsKey("neutral")) SetFace("neutral");
             blinkAt = Time.time + Random.Range(2f, 5f);
         }
 
         public void SetFace(string expr)
         {
-            if (!faces.ContainsKey(expr)) return;
+            if (!faces.ContainsKey(expr))
+            {
+                // missing expression (e.g. "happy" for an NPC): fall back sensibly
+                if (expr == "happy" || expr == "curious" || expr == "searching") expr = "neutral";
+                if (!faces.ContainsKey(expr)) return;
+            }
             face = expr;
             if (!blinking) sr.sprite = faces[expr];
         }
@@ -104,7 +111,7 @@ namespace BigGreenBear
             else if (blinking && Time.time > blinkAt)
             {
                 blinking = false;
-                sr.sprite = faces[face];
+                if (faces.ContainsKey(face)) sr.sprite = faces[face];
                 blinkAt = Time.time + Random.Range(2.5f, 6f);
             }
 

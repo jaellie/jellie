@@ -34,6 +34,18 @@ namespace BigGreenBear
             { "rain",  new Mood { global = new Color(0.66f, 0.74f, 0.86f), globalI = 0.5f,  lamps = 0.95f, saturation = -12f, exposure = -0.08f, filter = new Color(0.9f, 0.95f, 1f),  vignette = 0.3f,  wet = 0.7f,  rain = 0.45f, bloom = 0.3f } },
             // heavier: darker, wetter, colder
             { "heavy", new Mood { global = new Color(0.52f, 0.64f, 0.74f), globalI = 0.42f, lamps = 0.8f,  saturation = -24f, exposure = -0.18f, filter = new Color(0.84f, 0.93f, 0.98f), vignette = 0.36f, wet = 1f,    rain = 0.85f, bloom = 0.25f } },
+            // indoors at the cafe: warm, dry, the rain only on the window
+            { "cafe",  new Mood { global = new Color(0.95f, 0.86f, 0.76f), globalI = 0.72f, lamps = 1f,   saturation = 0f,   exposure = 0.05f,  filter = new Color(1f, 0.95f, 0.88f), vignette = 0.28f, wet = 0f,    rain = 0f,    bloom = 0.3f } },
+            // the cafe later: the same room, colder
+            { "cafe_late", new Mood { global = new Color(0.7f, 0.75f, 0.8f), globalI = 0.5f,  lamps = 0.7f, saturation = -30f, exposure = -0.12f, filter = new Color(0.86f, 0.93f, 0.96f), vignette = 0.4f, wet = 0f, rain = 0f, bloom = 0.2f } },
+            // under the square: cold, weak, uneven light
+            { "passage", new Mood { global = new Color(0.45f, 0.6f, 0.6f), globalI = 0.32f, lamps = 0.9f, saturation = -35f, exposure = -0.2f, filter = new Color(0.78f, 0.92f, 0.9f), vignette = 0.5f, wet = 0f, rain = 0f, bloom = 0.2f } },
+            // memory breaking: the festival with no festival in it
+            { "void",  new Mood { global = new Color(0.55f, 0.66f, 0.68f), globalI = 0.38f, lamps = 0.35f, saturation = -60f, exposure = -0.25f, filter = new Color(0.74f, 0.88f, 0.88f), vignette = 0.5f, wet = 1f, rain = 0.25f, bloom = 0.1f } },
+            // a bright room. everything far away.
+            { "hospital", new Mood { global = new Color(0.86f, 0.94f, 0.94f), globalI = 0.8f, lamps = 0.6f, saturation = -45f, exposure = 0.15f, filter = new Color(0.9f, 0.98f, 1f), vignette = 0.3f, wet = 0f, rain = 0f, bloom = 0.15f } },
+            // years later. the only daylight in the game.
+            { "home",  new Mood { global = new Color(1f, 0.95f, 0.86f), globalI = 0.85f, lamps = 1f,   saturation = 5f,   exposure = 0.1f,  filter = new Color(1f, 0.97f, 0.9f),  vignette = 0.2f,  wet = 0f,    rain = 0f,    bloom = 0.3f } },
             // title: the same square, at night, in the rain, before anything
             { "title", new Mood { global = new Color(0.5f, 0.6f, 0.72f),  globalI = 0.36f, lamps = 0.85f, saturation = -20f, exposure = -0.25f, filter = new Color(0.86f, 0.92f, 1f),  vignette = 0.42f, wet = 0.9f,  rain = 0.5f,  bloom = 0.3f } },
         };
@@ -86,28 +98,44 @@ namespace BigGreenBear
                 old.enabled = false; // the template's own Global Light 2D: we bring ours
 
             global = MakeLight("GlobalLight", Light2D.LightType.Global, Vector3.zero, 0f, 1f);
-            if (layout.lights != null)
+            LightsAvailable = global != null;
+        }
+
+        GameObject lightRoot;
+
+        // Rebuild the lamps of the current location (called after Stage.LoadLocation).
+        public void SetLights(LocationLayout loc)
+        {
+            if (lightRoot != null) Destroy(lightRoot);
+            lamps.Clear();
+            lampBase.Clear();
+            lampSeed.Clear();
+            fluorescent = null;
+            if (global == null || loc == null || loc.lights == null) return;
+            lightRoot = new GameObject("LocationLights");
+            lightRoot.transform.SetParent(transform, false);
+            foreach (var l in loc.lights)
             {
-                foreach (var l in layout.lights)
+                Vector3 p = string.IsNullOrEmpty(l.anchor) ? new Vector3(l.x, l.y, l.z) : stage.Anchor(l.anchor, new Vector3(l.x, l.y, l.z)) + new Vector3(l.x, l.y, 0f);
+                var light = MakeLight("Light_" + l.id, Light2D.LightType.Point, p, l.radius, l.intensity);
+                light.transform.SetParent(lightRoot.transform, true);
+                if (l.kind == "fluorescent")
                 {
-                    Vector3 p = string.IsNullOrEmpty(l.anchor) ? new Vector3(l.x, l.y, l.z) : stage.Anchor(l.anchor, new Vector3(l.x, l.y, l.z)) + new Vector3(l.x, l.y, 0f);
-                    var light = MakeLight("Light_" + l.id, Light2D.LightType.Point, p, l.radius, l.intensity);
-                    if (l.kind == "fluorescent")
-                    {
-                        light.color = new Color(0.78f, 0.93f, 1f);
-                        light.intensity = 0f;
-                        fluorescent = light;
-                    }
-                    else
-                    {
-                        light.color = l.kind == "string" ? new Color(1f, 0.82f, 0.55f) : new Color(1f, 0.78f, 0.48f);
-                        lamps.Add(light);
-                        lampBase.Add(l.intensity);
-                        lampSeed.Add(Random.value * 10f);
-                    }
+                    light.color = new Color(0.78f, 0.93f, 1f);
+                    light.intensity = 0f;
+                    fluorescent = light;
+                }
+                else
+                {
+                    light.color = l.kind == "string" ? new Color(1f, 0.82f, 0.55f)
+                                : l.kind == "cold" ? new Color(0.75f, 0.9f, 0.85f)
+                                : l.kind == "day" ? new Color(1f, 0.95f, 0.85f)
+                                : new Color(1f, 0.78f, 0.48f);
+                    lamps.Add(light);
+                    lampBase.Add(l.intensity);
+                    lampSeed.Add(Random.value * 10f);
                 }
             }
-            LightsAvailable = global != null;
         }
 
         Light2D MakeLight(string name, Light2D.LightType type, Vector3 pos, float radius, float intensity)
@@ -139,9 +167,12 @@ namespace BigGreenBear
             else Debug.LogWarning("[BigGreenBear] Could not set Light2D sorting layers; if the scene looks black, untick 'Use 2D Lights' on SliceBootstrap.");
         }
 
+        public string MoodName { get; private set; } = "dusk";
+
         public void SetMood(string mood, bool instant = false)
         {
             if (!Moods.TryGetValue(mood, out var m)) return;
+            MoodName = mood;
             target = m;
             rain.SetIntensity(m.rain, instant);
             if (instant) cur = Clone(m);

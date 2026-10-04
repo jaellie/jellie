@@ -24,6 +24,8 @@ namespace BigGreenBear
         public string id;
         public string value;
         public float num;
+        public LText label;    // chapter card: small line
+        public LText title;    // chapter card: big line
     }
 
     [Serializable]
@@ -77,6 +79,20 @@ namespace BigGreenBear
         public LText controls;
         public LText motionOn;
         public LText motionOff;
+        public LText newGame;
+        public LText continueGame;
+        public LText notebook;
+        public LText notebookEmpty;
+        public LText clueAdded;
+        public LText theEnd;
+    }
+
+    [Serializable]
+    public class Clue
+    {
+        public string id;
+        public LText title;
+        public LText text;
     }
 
     [Serializable]
@@ -86,6 +102,7 @@ namespace BigGreenBear
         public string startClock;
         public UiStrings ui;
         public Speaker[] speakers;
+        public Clue[] clues;
         public Node[] nodes;
     }
 
@@ -118,6 +135,7 @@ namespace BigGreenBear
         public float anchorRow;   // pixel row (from the top) that sits on the horizon
         public string anchorAt;   // "horizon" | "viewTop"
         public int order;
+        public string[] when;     // optional: only build this layer if these conditions pass
     }
 
     [Serializable]
@@ -130,6 +148,7 @@ namespace BigGreenBear
         public float z;
         public float height;
         public int order;
+        public string[] when;     // placement only: show this character here only if these pass
     }
 
     [Serializable]
@@ -172,17 +191,38 @@ namespace BigGreenBear
         public float radius;      // world units: how far from the centre still counts as "near"
     }
 
+    // One place in the game (square, cafe, park ...).
+    [Serializable]
+    public class LocationLayout
+    {
+        public string id;
+        public LayerLayout[] layers;
+        public ActorLayout[] actors;     // who stands here: id, x, z, face, when
+        public AnchorLayout[] anchors;
+        public FocusLayout[] focus;
+        public LightLayout[] lights;
+        public HotspotLayout[] hotspots;
+    }
+
     [Serializable]
     public class SceneLayout
     {
         public CameraLayout camera;
         public HorizonLayout horizon;
-        public LayerLayout[] layers;
-        public ActorLayout[] actors;
-        public AnchorLayout[] anchors;
-        public FocusLayout[] focus;
-        public LightLayout[] lights;
-        public HotspotLayout[] hotspots;
+        public ActorLayout[] cast;       // every character: id, sprites, height, order, face
+        public LocationLayout[] locations;
+
+        public LocationLayout Location(string id)
+        {
+            if (locations != null) foreach (var l in locations) if (l.id == id) return l;
+            return null;
+        }
+
+        public ActorLayout Cast(string id)
+        {
+            if (cast != null) foreach (var c in cast) if (c.id == id) return c;
+            return null;
+        }
     }
 
     public static class SliceData

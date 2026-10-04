@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1152" viewBox="0 0 2048 1152">
+  <defs>
+    <filter id="wob" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="251" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="258" result="t"/>
+      <feColorMatrix in="t" type="matrix" values="0 0 0 0 0.12  0 0 0 0 0.10  0 0 0 0 0.08  0 0 0 0.55 0" result="g"/>
+      <feComposite in="g" in2="SourceGraphic" operator="in" result="gi"/>
+      <feBlend in="SourceGraphic" in2="gi" mode="multiply"/>
+    </filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="blurfar"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs><g filter="url(#grain)"><g filter="url(#wob)"><rect width="2048" height="1152" fill="#101618"/>
+    <ellipse cx="1024" cy="720" rx="160" ry="120" fill="#5E7A7A" opacity="0.18" filter="url(#softer)"/><path d="M324 930 L324 430 Q1024 30 1724 430 L1724 930" stroke="#1E2629" stroke-width="30" fill="none"/><path d="M401 930 L401 485 Q1024 129 1647 485 L1647 930" stroke="#1E2629" stroke-width="26.7" fill="none"/><path d="M478 930 L478 540 Q1024 228 1570 540 L1570 930" stroke="#1E2629" stroke-width="23.400000000000002" fill="none"/><path d="M555 930 L555 595 Q1024 327.0000000000001 1493 595 L1493 930" stroke="#1E2629" stroke-width="20.099999999999998" fill="none"/><path d="M632 930 L632 650 Q1024 425.99999999999994 1416 650 L1416 930" stroke="#1E2629" stroke-width="16.8" fill="none"/><path d="M709 930 L709 705 Q1024 525 1339 705 L1339 930" stroke="#1E2629" stroke-width="13.499999999999998" fill="none"/><path d="M786 930 L786 760 Q1024 624 1262 760 L1262 930" stroke="#1E2629" stroke-width="10.2" fill="none"/><path d="M863 930 L863 815 Q1024 723 1185 815 L1185 930" stroke="#1E2629" stroke-width="6.8999999999999995" fill="none"/></g></g></svg>

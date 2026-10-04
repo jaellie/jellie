@@ -19,7 +19,7 @@ namespace BigGreenBear
         const int Rate = 44100;
         AudioSource music, rain, crowd, sfx;
         AudioLowPassFilter musicFilter;
-        AudioClip bell, monitor, chime;
+        AudioClip bell, monitor, chime, flatline;
         float crowdTarget = 0.5f, musicTarget = 0.55f, rainLevel;
         float memory = 100f;
         float duck; // music dips under the memory slip
@@ -39,6 +39,7 @@ namespace BigGreenBear
             bell = Bell();
             monitor = Beep(1000f, 0.13f);
             chime = Beep(1320f, 0.06f);
+            flatline = Beep(1000f, 4.5f);
 
             music.volume = 0f; rain.volume = 0f; crowd.volume = 0f;
             music.Play(); rain.Play(); crowd.Play();
@@ -68,6 +69,7 @@ namespace BigGreenBear
                 case "bell": sfx.PlayOneShot(bell, 0.55f); break;
                 case "monitor": sfx.PlayOneShot(monitor, 0.09f); break;
                 case "chime": sfx.PlayOneShot(chime, 0.12f); break;
+                case "flatline": sfx.PlayOneShot(flatline, 0.07f); break;
             }
         }
 

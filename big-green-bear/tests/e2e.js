@@ -243,7 +243,7 @@ async function click(page, text) {
   page.on("pageerror", (e) => errors.push("pageerror: " + e.message));
   await page.goto(URL);
   await page.waitForSelector(".title-screen");
-  check((await page.locator(".game-title").textContent()) === "큰초록곰의 모험", "Korean detected from the browser language");
+  check((await page.locator(".game-title").textContent()) === "빅그린베어의 모험", "Korean detected from the browser language");
   check(await page.evaluate(() => document.documentElement.getAttribute("data-motion")) === "reduce", "prefers-reduced-motion respected");
   check(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), "no horizontal scroll at 375px");
   await page.screenshot({ path: path.join(SHOTS, "09-mobile-title-ko.png") });

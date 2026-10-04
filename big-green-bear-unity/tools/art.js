@@ -399,3 +399,8 @@ module.exports = {
     layer_fg: fg,
   },
 };
+
+// shared helpers for art2.js (locations + cast)
+module.exports.helpers = { P, svg, rng, defs };
+module.exports.bear = bear;
+module.exports.nini = nini;

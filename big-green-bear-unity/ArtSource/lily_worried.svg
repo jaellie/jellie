@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="720" viewBox="0 0 500 720">
+  <defs>
+    <filter id="wob" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="101" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="108" result="t"/>
+      <feColorMatrix in="t" type="matrix" values="0 0 0 0 0.12  0 0 0 0 0.10  0 0 0 0 0.08  0 0 0 0.55 0" result="g"/>
+      <feComposite in="g" in2="SourceGraphic" operator="in" result="gi"/>
+      <feBlend in="SourceGraphic" in2="gi" mode="multiply"/>
+    </filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="softer"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="blurfar"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs><g filter="url(#grain)"><g filter="url(#wob)"><ellipse cx="250" cy="708" rx="150" ry="12" fill="#000" opacity="0.28" filter="url(#soft)"/>
+    
+    <rect x="180" y="660" width="54" height="44" rx="16" fill="#5E4A3C"/>
+    <rect x="266" y="660" width="54" height="44" rx="16" fill="#5E4A3C"/>
+    <path d="M160 360 Q250 330 340 360 L370 676 Q250 700 130 676Z" fill="#C98B7E"/>
+    <path d="M140 640 Q250 690 360 640 L370 676 Q250 700 130 676Z" fill="#A86F64" opacity="0.6"/>
+    <ellipse cx="138" cy="480" rx="30" ry="100" transform="rotate(12 138 480)" fill="#A86F64"/>
+    <ellipse cx="362" cy="480" rx="30" ry="100" transform="rotate(-12 362 480)" fill="#A86F64"/>
+    <path d="M190 400 L310 400 L330 650 L170 650Z" fill="#6F8F72"/>
+    <path d="M200 430 L300 430" stroke="#F3EBDD" stroke-width="3" opacity="0.7"/>
+    <path d="M129.97242523588702 231.1752856015708 L84.55229749394906 200.82710615195572 L137.61294505323193 187.84374446903365Z" fill="#80614A"/><path d="M132.78434246584803 204.14483361421932 L95.35518461999004 164.35717041380195 L149.9765121193761 163.64262006231198Z" fill="#6B4E3B"/><path d="M141.6047191133218 178.43971410573698 L114.08514494500884 131.2520776148645 L167.46727021419062 142.84296635323932Z" fill="#80614A"/><path d="M155.98142381421917 155.3775681715041 L139.78208312959475 103.20879052257433 L189.1886453440211 126.51097089592177Z" fill="#6B4E3B"/><path d="M175.1775085483685 136.1405584239362 L171.1287774519704 81.66480439970024 L214.0272026341613 115.48380966135701Z" fill="#80614A"/><path d="M198.20898449954302 121.71477149014541 L206.5184004227765 67.72446118343652 L240.70972085626204 110.32673350563448Z" fill="#6B4E3B"/><path d="M223.8952611946848 112.83967133920171 L244.13688455397988 62.1023410607919 L267.868457583525 111.30409348429168Z" fill="#80614A"/><path d="M250.91966341858367 109.97019445489165 L282.05591122325956 65.08663318079246 L294.1112594902809 118.36579025145964Z" fill="#6B4E3B"/><path d="M277.8969238148072 113.2534298505055 L318.3317560367344 76.52436311604305 L318.0929239510816 131.1498421458407Z" fill="#80614A"/><path d="M303.44419151090125 122.5210793050744 L351.1049238895441 95.82923431205481 L338.58415395298215 149.00094032376452Z" fill="#6B4E3B"/><path d="M326.25191687493555 137.29808430837085 L378.69546644398827 122.0116815726614 L354.53457170114325 171.00403980560588Z" fill="#80614A"/><path d="M345.1509788599574 156.8269774985894 L399.6890960636458 153.72959604375615 L365.12656084849743 196.03126456287757Z" fill="#6B4E3B"/><path d="M359.17261399737487 180.1067103411673 L413.0096820143674 189.35712153925581 L369.81717740376024 222.79972229731112Z" fill="#80614A"/>
+    <circle cx="250" cy="240" r="112" fill="#E8D6BE"/>
+    <ellipse cx="250" cy="282" rx="52" ry="40" fill="#F3E7D6"/>
+    <circle cx="250" cy="262" r="11" fill="#20262B"/>
+    <circle cx="208" cy="226" r="8" fill="#20262B"/><circle cx="292" cy="226" r="8" fill="#20262B"/>
+      <path d="M192 214 L220 203" stroke="#20262B" stroke-width="5" stroke-linecap="round"/>
+      <path d="M308 214 L280 203" stroke="#20262B" stroke-width="5" stroke-linecap="round"/>
+    <path d="M236 302 Q250 292 264 302" stroke="#20262B" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <ellipse cx="190" cy="270" rx="16" ry="9" fill="#C98B7E" opacity="0.5"/><ellipse cx="310" cy="270" rx="16" ry="9" fill="#C98B7E" opacity="0.5"/>
+    <circle cx="330" cy="160" r="16" fill="#D9776B"/><circle cx="346" cy="172" r="12" fill="#F2C877"/></g></g></svg>

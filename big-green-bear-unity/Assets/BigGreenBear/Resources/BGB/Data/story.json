@@ -1,0 +1,8704 @@
+{
+ "start": "start",
+ "startClock": "17:40",
+ "ui": {
+  "title": {
+   "en": "BIG GREEN BEAR'S ADVENTURE",
+   "ko": "빅그린베어의 모험"
+  },
+  "subtitle": {
+   "en": "A small mystery in Bellflower Town",
+   "ko": "벨플라워 마을의 작은 미스터리"
+  },
+  "pressStart": {
+   "en": "",
+   "ko": ""
+  },
+  "chapterLabel": {
+   "en": "",
+   "ko": ""
+  },
+  "chapterTitle": {
+   "en": "",
+   "ko": ""
+  },
+  "prompt": {
+   "en": "What do you do?",
+   "ko": "무엇을 할까?"
+  },
+  "toBeContinued": {
+   "en": "",
+   "ko": ""
+  },
+  "controls": {
+   "en": "Enter / click: continue   ·   1-9 or click the scene: choose   ·   N: notebook   ·   L: 한국어   ·   Esc: quit",
+   "ko": "Enter / 클릭: 계속   ·   1-9 또는 장면 클릭: 선택   ·   N: 수첩   ·   L: English   ·   Esc: 종료"
+  },
+  "motionOn": {
+   "en": "M: reduced motion ON",
+   "ko": "M: 움직임 줄이기 켜짐"
+  },
+  "motionOff": {
+   "en": "M: reduce motion",
+   "ko": "M: 움직임 줄이기"
+  },
+  "newGame": {
+   "en": "New game",
+   "ko": "처음부터"
+  },
+  "continueGame": {
+   "en": "Continue",
+   "ko": "이어하기"
+  },
+  "notebook": {
+   "en": "Notebook",
+   "ko": "수첩"
+  },
+  "notebookEmpty": {
+   "en": "Nothing written yet.",
+   "ko": "아직 적은 게 없다."
+  },
+  "clueAdded": {
+   "en": "Noted:",
+   "ko": "수첩에 적었다:"
+  },
+  "theEnd": {
+   "en": "The End",
+   "ko": "끝"
+  }
+ },
+ "speakers": [
+  {
+   "id": "bear",
+   "name": {
+    "en": "Big Green Bear",
+    "ko": "빅그린베어"
+   }
+  },
+  {
+   "id": "nini",
+   "name": {
+    "en": "Nini",
+    "ko": "니니"
+   }
+  },
+  {
+   "id": "niniadult",
+   "name": {
+    "en": "Nini",
+    "ko": "니니"
+   }
+  },
+  {
+   "id": "lily",
+   "name": {
+    "en": "Lily",
+    "ko": "릴리"
+   }
+  },
+  {
+   "id": "finch",
+   "name": {
+    "en": "Mr. Finch",
+    "ko": "핀치 씨"
+   }
+  },
+  {
+   "id": "mabel",
+   "name": {
+    "en": "Mabel",
+    "ko": "메이블"
+   }
+  },
+  {
+   "id": "oliver",
+   "name": {
+    "en": "Oliver",
+    "ko": "올리버"
+   }
+  },
+  {
+   "id": "hazel",
+   "name": {
+    "en": "Dr. Hazel",
+    "ko": "헤이즐 선생님"
+   }
+  },
+  {
+   "id": "fox",
+   "name": {
+    "en": "Fox",
+    "ko": "폭스"
+   }
+  },
+  {
+   "id": "moss",
+   "name": {
+    "en": "Mr. Moss",
+    "ko": "모스 씨"
+   }
+  }
+ ],
+ "clues": [
+  {
+   "id": "c_1147",
+   "title": {
+    "en": "11:47",
+    "ko": "11:47"
+   },
+   "text": {
+    "en": "The town hall clock always says 11:47. Nobody fixes it.",
+    "ko": "시청 시계는 늘 11시 47분이다. 아무도 고치지 않는다."
+   }
+  },
+  {
+   "id": "c_mission",
+   "title": {
+    "en": "Find Nini",
+    "ko": "니니를 찾는다"
+   },
+   "text": {
+    "en": "The flower shop, the cafe, the park, the town gate, the square. Someone saw something.",
+    "ko": "꽃가게, 카페, 공원, 마을 입구, 그리고 광장. 다들 무언가 봤을 것이다."
+   }
+  },
+  {
+   "id": "c_finch",
+   "title": {
+    "en": "Mr. Finch: forty-one years",
+    "ko": "핀치 씨: 41년"
+   },
+   "text": {
+    "en": "Nini rang her bell at the stage all through the parade. The festival has never been cancelled.",
+    "ko": "니니는 퍼레이드 내내 무대 앞에서 방울을 흔들었다. 축제는 한 번도 취소된 적이 없다."
+   }
+  },
+  {
+   "id": "c_fox",
+   "title": {
+    "en": "Fox's notebook",
+    "ko": "폭스의 수첩"
+   },
+   "text": {
+    "en": "Smudged numbers: '00:05 … 00:42 … 1:17'. For tomorrow morning's paper, he said.",
+    "ko": "번진 숫자들: '00:05 … 00:42 … 1:17'. 내일 아침 기사라고 했다."
+   }
+  },
+  {
+   "id": "c_notice",
+   "title": {
+    "en": "Closed 21:15",
+    "ko": "21:15 폐쇄"
+   },
+   "text": {
+    "en": "The notice on the passage gate. Read before nine o'clock. In that moment the clock showed 11:47.",
+    "ko": "통로 철문의 안내문. 읽은 건 아홉 시도 되기 전이었다. 그 순간 시계가 11:47을 가리켰다."
+   }
+  },
+  {
+   "id": "c_bell",
+   "title": {
+    "en": "The green bell",
+    "ko": "초록 방울"
+   },
+   "text": {
+    "en": "Nini's bell. Found in the puddle by the steps. Cold, as if it had been under water a long time.",
+    "ko": "니니의 방울. 계단 위 웅덩이에서 찾았다. 물속에 오래 있었던 것처럼 차갑다."
+   }
+  },
+  {
+   "id": "c_lily",
+   "title": {
+    "en": "Lily: toward the fountain",
+    "ko": "릴리: 분수 쪽으로"
+   },
+   "text": {
+    "en": "Nini ran to the fountain, asking about her bell. Lily was packing up her wet flowers.",
+    "ko": "니니는 방울을 찾으며 분수 쪽으로 뛰어갔다. 릴리는 젖은 꽃을 정리하던 중이었다."
+   }
+  },
+  {
+   "id": "c_garland",
+   "title": {
+    "en": "The garland on the drain",
+    "ko": "빗물받이의 꽃장식"
+   },
+   "text": {
+    "en": "Lily wrapped a garland round the drain by the fountain. It looked bare.",
+    "ko": "릴리가 분수 옆 빗물받이에 꽃장식을 둘렀다. 휑해 보여서."
+   }
+  },
+  {
+   "id": "c_mabel",
+   "title": {
+    "en": "Mabel: already home",
+    "ko": "메이블: 이미 집에"
+   },
+   "text": {
+    "en": "Nini went home with her mum ages ago. Mabel saw it through the window.",
+    "ko": "니니는 엄마랑 진작 집에 갔다. 창문으로 봤다."
+   }
+  },
+  {
+   "id": "c_noise",
+   "title": {
+    "en": "Sounds under the floor",
+    "ko": "바닥 밑의 소리"
+   },
+   "text": {
+    "en": "Thud. Gurgle. 'The festival band', Mabel said. And under it, a beep.",
+    "ko": "쿵. 꾸르륵. 축제 북소리라고 했다. 그리고 그 아래, 삑— 하는 소리."
+   }
+  },
+  {
+   "id": "c_room",
+   "title": {
+    "en": "The room that changed",
+    "ko": "바뀐 방"
+   },
+   "text": {
+    "en": "The cafe window is on the other side. A table is missing. A clock that wasn't there: 11:47.",
+    "ko": "카페 창문이 반대쪽에 있다. 테이블이 하나 줄었다. 없던 시계가 생겼다. 11:47."
+   }
+  },
+  {
+   "id": "c_oliver",
+   "title": {
+    "en": "Oliver: 00:05",
+    "ko": "올리버: 00시 05분"
+   },
+   "text": {
+    "en": "The missing-child call came in at 00:05, he said. It's seven in the evening.",
+    "ko": "실종 신고는 00시 05분에 들어왔다고 했다. 지금은 저녁 일곱 시인데."
+   }
+  },
+  {
+   "id": "c_choir",
+   "title": {
+    "en": "The choir that had ended",
+    "ko": "끝난 합창"
+   },
+   "text": {
+    "en": "'Bell Choir 9:00 PM — ENDED.' It isn't nine yet.",
+    "ko": "'종소리 합창 오후 9:00 — 종료.' 아직 아홉 시도 안 됐다."
+   }
+  },
+  {
+   "id": "c_moss",
+   "title": {
+    "en": "Mr. Moss: the pump",
+    "ko": "모스 씨: 펌프 수리"
+   },
+   "text": {
+    "en": "The pump was failing. Repair: 'after the festival'. Pushed back for the second time.",
+    "ko": "펌프가 위태로웠다. 수리는 '축제 끝나고'. 두 번째로 미뤄졌다."
+   }
+  },
+  {
+   "id": "c_lock",
+   "title": {
+    "en": "Mr. Moss: locked at 21:15",
+    "ko": "모스 씨: 21:15 잠금"
+   },
+   "text": {
+    "en": "Water was getting in, so he locked the passage gate. He didn't look inside.",
+    "ko": "물이 들어와서 통로 철문을 잠갔다. 안은 확인하지 않았다."
+   }
+  },
+  {
+   "id": "c_beep",
+   "title": {
+    "en": "The beeping at the pump house",
+    "ko": "펌프장의 기계음"
+   },
+   "text": {
+    "en": "Under the pump's hum, a steady beep. Too calm for an alarm.",
+    "ko": "펌프 소리 아래로, 일정한 간격의 삑— 소리. 경보음치고는 너무 차분하다."
+   }
+  },
+  {
+   "id": "c_times",
+   "title": {
+    "en": "Nobody lied",
+    "ko": "아무도 거짓말하지 않았다"
+   },
+   "text": {
+    "en": "They are all describing the same night. Different hours of it.",
+    "ko": "다들 같은 밤의, 서로 다른 시간을 말하고 있다."
+   }
+  },
+  {
+   "id": "c_mission3",
+   "title": {
+    "en": "Put the times in order",
+    "ko": "시간을 맞춘다"
+   },
+   "text": {
+    "en": "Ask again: when exactly did each of them see her?",
+    "ko": "각자 '언제의' 니니를 봤는지 다시 묻는다."
+   }
+  },
+  {
+   "id": "c_lily2",
+   "title": {
+    "en": "Lily: around eleven",
+    "ko": "릴리: 열한 시쯤"
+   },
+   "text": {
+    "en": "Lily packed up after ten. She saw Nini around eleven.",
+    "ko": "릴리가 꽃을 정리한 건 열 시 넘어서였다. 니니를 본 건 열한 시쯤."
+   }
+  },
+  {
+   "id": "c_mabel2",
+   "title": {
+    "en": "Mabel: Nini came back out",
+    "ko": "메이블: 다시 나온 니니"
+   },
+   "text": {
+    "en": "At half ten she went home with her mum. After eleven she ran back toward the square, alone.",
+    "ko": "열 시 반, 엄마랑 집에 갔다. 열한 시 넘어, 혼자 다시 광장 쪽으로 뛰어갔다."
+   }
+  },
+  {
+   "id": "c_hatch",
+   "title": {
+    "en": "The cafe hatch",
+    "ko": "카페의 점검구"
+   },
+   "text": {
+    "en": "By the cafe's back door, a small hatch leads down into the passage.",
+    "ko": "카페 뒷문 쪽 바닥에 통로로 내려가는 작은 구멍이 있다."
+   }
+  },
+  {
+   "id": "c_oliver2",
+   "title": {
+    "en": "Oliver: someone else will",
+    "ko": "올리버: 누가 하겠지"
+   },
+   "text": {
+    "en": "He heard about the child at 23:50. Assumed the festival staff had it. The call came at 00:05.",
+    "ko": "열한 시 오십 분에 아이 얘기를 들었다. 축제 직원들이 하겠지 했다. 신고는 00:05."
+   }
+  },
+  {
+   "id": "c_crates",
+   "title": {
+    "en": "Crates at the cafe-side exit",
+    "ko": "카페 쪽 출구의 상자"
+   },
+   "text": {
+    "en": "Festival crates were stacked in front of the passage's cafe-side exit.",
+    "ko": "통로 카페 쪽 비상 출구 앞에 축제 상자가 쌓여 있다고 했다."
+   }
+  },
+  {
+   "id": "c_lost",
+   "title": {
+    "en": "When the bell was lost",
+    "ko": "방울을 잃어버린 시각"
+   },
+   "text": {
+    "en": "Nini only noticed the bell was gone once she was home. After eleven.",
+    "ko": "니니는 집에 가서야 방울이 없다는 걸 알았다. 밤 11시 넘어서."
+   }
+  },
+  {
+   "id": "c_where",
+   "title": {
+    "en": "Where Nini went",
+    "ko": "니니가 간 곳"
+   },
+   "text": {
+    "en": "Between the bars, after her bell, into the flooding passage.",
+    "ko": "철창 사이로, 방울을 찾으러, 물이 차오르는 통로로."
+   }
+  },
+  {
+   "id": "c_fold",
+   "title": {
+    "en": "The night, folded in half",
+    "ko": "반으로 접힌 밤"
+   },
+   "text": {
+    "en": "It wasn't seven. The search began at 11:40 at night.",
+    "ko": "일곱 시가 아니었다. 니니를 찾기 시작한 건 밤 11시 40분이었다."
+   }
+  },
+  {
+   "id": "c_article",
+   "title": {
+    "en": "Fox's article",
+    "ko": "폭스의 기사"
+   },
+   "text": {
+    "en": "'Child trapped in passage rescued safely. The festival mascot who saved her…' The rest has run.",
+    "ko": "'통로에 고립된 아이, 무사히 구조. 아이를 구한 축제 마스코트는…' 그다음은 번졌다."
+   }
+  },
+  {
+   "id": "c_memory",
+   "title": {
+    "en": "It already happened",
+    "ko": "이미 일어난 일"
+   },
+   "text": {
+    "en": "Not walking through the town. Remembering that night, again.",
+    "ko": "마을을 돌아다닌 게 아니었다. 그날 밤을 다시 기억하고 있었다."
+   }
+  },
+  {
+   "id": "cs_finch",
+   "title": {
+    "en": "Mr. Finch's turn",
+    "ko": "핀치 씨의 차례"
+   },
+   "text": {
+    "en": "19:30: kept the festival going. 22:00: had crates stacked at the emergency exit. 'Just for a while.'",
+    "ko": "19:30 축제를 계속했다. 22:00 비상 출구 앞에 상자를 쌓게 했다. '잠깐만.'"
+   }
+  },
+  {
+   "id": "cs_lily",
+   "title": {
+    "en": "Lily's turn",
+    "ko": "릴리의 차례"
+   },
+   "text": {
+    "en": "19:10: saw the blocked drain, scooped out a few petals. 'Somebody will clear it.'",
+    "ko": "19:10 막힌 빗물받이를 보고, 꽃잎 몇 개만 걷어 냈다. '누가 치우겠지.'"
+   }
+  },
+  {
+   "id": "cs_mabel",
+   "title": {
+    "en": "Mabel's turn",
+    "ko": "메이블의 차례"
+   },
+   "text": {
+    "en": "20:15: took the water under the floor for drums. 'Someone would know.'",
+    "ko": "20:15 바닥 밑 물소리를 북소리라 여겼다. '누군가는 알겠지.'"
+   }
+  },
+  {
+   "id": "cs_oliver",
+   "title": {
+    "en": "Oliver's turn",
+    "ko": "올리버의 차례"
+   },
+   "text": {
+    "en": "23:50: heard about the child, reported nothing. 'Someone must have called.'",
+    "ko": "23:50 아이 얘기를 듣고도 보고하지 않았다. '누가 신고했겠지.'"
+   }
+  },
+  {
+   "id": "cs_moss",
+   "title": {
+    "en": "Mr. Moss's turn",
+    "ko": "모스 씨의 차례"
+   },
+   "text": {
+    "en": "Put off the repair twice. 21:15: locked the gate without looking inside.",
+    "ko": "수리를 두 번 미뤘다. 21:15 안을 보지 않고 철문을 잠갔다."
+   }
+  }
+ ],
+ "nodes": [
+  {
+   "id": "start",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "intro",
+   "effects": [
+    {
+     "type": "card",
+     "value": "hold",
+     "label": {
+      "en": "CHAPTER 1",
+      "ko": "1장"
+     },
+     "title": {
+      "en": "Bellflower Winter Night",
+      "ko": "벨플라워 겨울밤"
+     }
+    },
+    {
+     "type": "setFlag",
+     "id": "ch1"
+    },
+    {
+     "type": "chapter",
+     "title": {
+      "en": "Bellflower Winter Night",
+      "ko": "벨플라워 겨울밤"
+     }
+    },
+    {
+     "type": "go",
+     "id": "dusk",
+     "value": "square"
+    },
+    {
+     "type": "clock",
+     "value": "17:40"
+    },
+    {
+     "type": "memory",
+     "num": 100
+    },
+    {
+     "type": "checkpoint",
+     "value": "intro"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "intro",
+   "speaker": "",
+   "text": {
+    "en": "Every winter, Bellflower Town holds a festival. Paper lanterns. Hot cider. A small parade that goes once around the square and calls it a night.",
+    "ko": "벨플라워 마을은 겨울마다 축제를 연다. 종이 등불. 따뜻한 사과주. 광장을 한 바퀴 돌고 나면 끝나는 조그만 퍼레이드."
+   },
+   "next": "intro_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "intro_1",
+   "speaker": "",
+   "text": {
+    "en": "And every winter, somebody has to be the bear.",
+    "ko": "그리고 겨울마다, 누군가는 곰이 되어야 한다."
+   },
+   "next": "intro_2",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "bear"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "intro_2",
+   "speaker": "",
+   "text": {
+    "en": "This year, it's Big Green Bear.",
+    "ko": "올해는, 빅그린베어다."
+   },
+   "next": "intro_3",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "happy"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "intro_3",
+   "speaker": "",
+   "text": {
+    "en": "The fur is warm and heavy. Children wave from across the square.",
+    "ko": "털은 따뜻하고 묵직하다. 광장 건너편에서 아이들이 손을 흔든다."
+   },
+   "next": "c1_hub",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "neutral"
+    },
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c1_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "rain_01",
+     "conditions": [
+      "dry>=2"
+     ]
+    },
+    {
+     "to": "c1_hub_menu",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c1_hub_menu",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Nini",
+      "ko": "니니에게 말 걸기"
+     },
+     "next": "nini_01",
+     "conditions": [
+      "!met_nini"
+     ],
+     "effects": [
+      {
+       "type": "add",
+       "id": "dry"
+      }
+     ],
+     "target": "nini"
+    },
+    {
+     "text": {
+      "en": "Look at the town hall clock",
+      "ko": "시청 시계를 본다"
+     },
+     "next": "clock_01",
+     "conditions": [
+      "!clock_seen"
+     ],
+     "effects": [
+      {
+       "type": "add",
+       "id": "dry"
+      }
+     ],
+     "target": "clock"
+    },
+    {
+     "text": {
+      "en": "Look at the lanterns",
+      "ko": "등불을 본다"
+     },
+     "next": "lights_01",
+     "conditions": [
+      "!lights_seen"
+     ],
+     "effects": [
+      {
+       "type": "add",
+       "id": "dry"
+      }
+     ],
+     "target": "lights"
+    },
+    {
+     "text": {
+      "en": "Wave at the children",
+      "ko": "아이들에게 손을 흔든다"
+     },
+     "next": "wave_01",
+     "conditions": [
+      "!waved"
+     ],
+     "effects": [
+      {
+       "type": "add",
+       "id": "dry"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "nini_01",
+   "speaker": "nini",
+   "text": {
+    "en": "Bear! Bear! Is it true you have bells?",
+    "ko": "곰! 곰! 진짜 방울 갖고 있어?"
+   },
+   "next": "nini_02",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "nini"
+    },
+    {
+     "type": "face",
+     "id": "nini",
+     "value": "happy"
+    },
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "happy"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "nini_02",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [
+    {
+     "text": {
+      "en": "\"I saved one for you.\"",
+      "ko": "\"너 주려고 하나 남겨 뒀지.\""
+     },
+     "next": "nini_03",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "\"Only for kids who say please.\"",
+      "ko": "\"'주세요' 하는 어린이한테만 줘.\""
+     },
+     "next": "nini_please",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "nini_please",
+   "speaker": "nini",
+   "text": {
+    "en": "Pleeease!",
+    "ko": "주세요오!"
+   },
+   "next": "nini_03",
+   "effects": [
+    {
+     "type": "face",
+     "id": "nini",
+     "value": "curious"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "nini_03",
+   "speaker": "",
+   "text": {
+    "en": "Bear hands her a small green bell. She shakes it, and it rings once: a thin, bright sound that cuts across the whole square.",
+    "ko": "작은 초록 방울을 건넨다. 니니가 흔들자 방울이 한 번 울린다. 가늘고 맑은 소리가 광장을 가로지른다."
+   },
+   "next": "nini_03_1",
+   "effects": [
+    {
+     "type": "bell",
+     "value": "nini"
+    },
+    {
+     "type": "sound",
+     "id": "bell"
+    },
+    {
+     "type": "face",
+     "id": "nini",
+     "value": "happy"
+    },
+    {
+     "type": "setFlag",
+     "id": "met_nini"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "nini_03_1",
+   "speaker": "nini",
+   "text": {
+    "en": "It's green like you!",
+    "ko": "곰처럼 초록색이다!"
+   },
+   "next": "nini_03_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "nini_03_2",
+   "speaker": "nini",
+   "text": {
+    "en": "I'm gonna show Mom. Then the parade. You're coming too, right?",
+    "ko": "엄마한테 보여 줄 거야. 그다음엔 퍼레이드! 곰도 올 거지?"
+   },
+   "next": "nini_03_3",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "both"
+    },
+    {
+     "type": "face",
+     "id": "nini",
+     "value": "curious"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "nini_03_3",
+   "speaker": "bear",
+   "text": {
+    "en": "Of course.",
+    "ko": "물론이지."
+   },
+   "next": "c1_hub",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "happy"
+    },
+    {
+     "type": "face",
+     "id": "nini",
+     "value": "happy"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "clock_01",
+   "speaker": "",
+   "text": {
+    "en": "The town hall clock says 11:47.",
+    "ko": "시청 시계는 11시 47분을 가리킨다."
+   },
+   "next": "clock_01_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "clock"
+    },
+    {
+     "type": "setFlag",
+     "id": "clock_seen"
+    },
+    {
+     "type": "clue",
+     "id": "c_1147"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "clock_01_1",
+   "speaker": "",
+   "text": {
+    "en": "It has said 11:47 for as long as anyone can remember. Nobody fixes it. People just check their phones.",
+    "ko": "기억하는 한 저 시계는 늘 11시 47분이었다. 아무도 고치지 않는다. 사람들은 그냥 휴대폰을 본다."
+   },
+   "next": "c1_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lights_01",
+   "speaker": "",
+   "text": {
+    "en": "The stall lanterns sway, warm and dry. Strings of bulbs loop low, all the way to the fountain.",
+    "ko": "노점의 등불이 빗방울 하나 없이 따뜻하게 흔들린다. 전구 줄은 분수 쪽까지 낮게 이어져 있다."
+   },
+   "next": "lights_01_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    },
+    {
+     "type": "setFlag",
+     "id": "lights_seen"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lights_01_1",
+   "speaker": "",
+   "text": {
+    "en": "Past the fountain there's a short iron gate, and steps going down. Nobody ever seems to use them.",
+    "ko": "분수 너머에 낮은 철문이 있고, 아래로 내려가는 계단이 있다. 누가 그 계단을 쓰는 걸 본 적은 없다."
+   },
+   "next": "c1_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "gate"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "wave_01",
+   "speaker": "",
+   "text": {
+    "en": "Bear waves. Three children wave back. One of them waves with her whole body.",
+    "ko": "손을 흔든다. 아이 셋이 마주 흔든다. 그중 하나는 온몸으로 흔든다."
+   },
+   "next": "c1_hub",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "happy"
+    },
+    {
+     "type": "focus",
+     "value": "bear"
+    },
+    {
+     "type": "setFlag",
+     "id": "waved"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "rain_01",
+   "speaker": "",
+   "text": {
+    "en": "Something cold taps Bear on the nose.",
+    "ko": "뭔가 차가운 게 코끝을 톡 건드린다."
+   },
+   "next": "rain_01_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "bear"
+    },
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "neutral"
+    },
+    {
+     "type": "clock",
+     "value": "18:30"
+    },
+    {
+     "type": "rain",
+     "num": 0.12
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "rain_01_1",
+   "speaker": "",
+   "text": {
+    "en": "Then another. Then the whole square looks up at once, the way crowds do.",
+    "ko": "또 하나. 그러더니 광장의 사람들이 다 같이 하늘을 올려다본다. 사람들은 늘 그렇게 한꺼번에 올려다본다."
+   },
+   "next": "rain_03",
+   "effects": [
+    {
+     "type": "mood",
+     "value": "rain"
+    },
+    {
+     "type": "setFlag",
+     "id": "rain"
+    },
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "rain_03",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "rain_met",
+     "conditions": [
+      "met_nini"
+     ]
+    },
+    {
+     "to": "rain_unmet",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "rain_met",
+   "speaker": "",
+   "text": {
+    "en": "Nini runs off toward the stalls, ringing her bell at the rain.",
+    "ko": "니니가 빗속에 방울을 흔들며 노점 쪽으로 뛰어간다."
+   },
+   "next": "rain_04",
+   "effects": [
+    {
+     "type": "exit",
+     "id": "nini",
+     "num": 7
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "rain_unmet",
+   "speaker": "",
+   "text": {
+    "en": "A little girl in a yellow raincoat runs past, into the crowd. The last green bell was meant for her.\n\nWasn't it? Bear doesn't remember giving it. But the paw is empty.",
+    "ko": "노란 우비를 입은 꼬마가 옆을 지나 사람들 속으로 뛰어간다. 마지막 남은 초록 방울은 그 애 몫이었다.\n\n그랬던가? 준 기억은 없다. 그런데 손이 비어 있다."
+   },
+   "next": "rain_04",
+   "effects": [
+    {
+     "type": "exit",
+     "id": "nini",
+     "num": 7
+    },
+    {
+     "type": "setFlag",
+     "id": "memory_gap"
+    },
+    {
+     "type": "setFlag",
+     "id": "met_nini"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "rain_04",
+   "speaker": "",
+   "text": {
+    "en": "Bear looks for a yellow raincoat in the crowd. Listens for a small green bell.\n\nNothing.",
+    "ko": "사람들 사이에서 노란 우비를 찾는다. 작은 초록 방울 소리에 귀를 기울인다.\n\n들리지 않는다."
+   },
+   "next": "rain_04_1",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "searching"
+    },
+    {
+     "type": "clock",
+     "value": "19:05"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "rain_04_1",
+   "speaker": "bear",
+   "text": {
+    "en": "Nini?",
+    "ko": "니니?"
+   },
+   "next": "rain_04_2",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "worried"
+    },
+    {
+     "type": "focus",
+     "value": "bear"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "rain_04_2",
+   "speaker": "",
+   "text": {
+    "en": "The parade starts without anyone noticing. Lanterns bob past in the rain. Nini isn't at the front.",
+    "ko": "어느새 퍼레이드가 시작된다. 빗속에서 등불이 둥실둥실 지나간다. 맨 앞에 니니가 없다."
+   },
+   "next": "ch2_start",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch2_start",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "ch2_intro",
+   "effects": [
+    {
+     "type": "card",
+     "value": "hold",
+     "label": {
+      "en": "CHAPTER 2",
+      "ko": "2장"
+     },
+     "title": {
+      "en": "Looking for Nini",
+      "ko": "니니를 찾아서"
+     }
+    },
+    {
+     "type": "setFlag",
+     "id": "ch2"
+    },
+    {
+     "type": "setFlag",
+     "id": "nini_gone"
+    },
+    {
+     "type": "setFlag",
+     "id": "finch_square"
+    },
+    {
+     "type": "setFlag",
+     "id": "fox_square"
+    },
+    {
+     "type": "chapter",
+     "title": {
+      "en": "Looking for Nini",
+      "ko": "니니를 찾아서"
+     }
+    },
+    {
+     "type": "go",
+     "id": "rain",
+     "value": "square"
+    },
+    {
+     "type": "clock",
+     "value": "19:10"
+    },
+    {
+     "type": "memory",
+     "num": 90
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch2_intro",
+   "speaker": "",
+   "text": {
+    "en": "The rain has thickened. The parade is over, and Nini is nowhere.",
+    "ko": "비가 조금 굵어졌다. 퍼레이드는 끝났는데, 니니는 어디에도 없다."
+   },
+   "next": "ch2_intro_1",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch2_intro_1",
+   "speaker": "bear",
+   "text": {
+    "en": "Someone must have seen her.",
+    "ko": "누군가는 봤을 거야."
+   },
+   "next": "ch2_intro_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch2_intro_2",
+   "speaker": "",
+   "text": {
+    "en": "Ask around. The flower shop, the cafe, the park, the town gate. And this square.",
+    "ko": "마을 사람들에게 물어보자. 꽃가게, 카페, 공원, 마을 입구. 그리고 이 광장."
+   },
+   "next": "c2_square",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_mission"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_think",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "c2_think_ready",
+     "conditions": [
+      "clue_c_lily",
+      "clue_c_mabel",
+      "clue_c_oliver",
+      "clue_c_moss",
+      "clue_c_bell",
+      "clue_c_notice"
+     ]
+    },
+    {
+     "to": "c2_think_bell",
+     "conditions": [
+      "!clue_c_bell"
+     ]
+    },
+    {
+     "to": "c2_think_people",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_think_bell",
+   "speaker": "",
+   "text": {
+    "en": "First, where she went last. The fountain, near the steps. Worth a look.",
+    "ko": "니니가 마지막으로 어디로 갔는지부터. 광장 분수 쪽, 계단 근처를 살펴봐야 할 것 같다."
+   },
+   "next": "c2_square_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_think_people",
+   "speaker": "",
+   "text": {
+    "en": "There are people still to ask. Lily at the flower shop, Mabel at the cafe, Oliver in the park, Mr. Moss at the town gate. And read that gate notice.",
+    "ko": "아직 물어보지 못한 사람이 있다. 꽃가게의 릴리, 카페의 메이블, 공원의 올리버, 마을 입구의 모스 씨. 철문 안내문도 다시 볼 것."
+   },
+   "next": "c2_square_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_think_ready",
+   "speaker": "",
+   "text": {
+    "en": "All the stories are in. And they don't fit together. Think it through, here in the square.",
+    "ko": "이야기가 다 모였다. 그런데 서로 맞지가 않는다. 광장에서 생각을 정리해 보자."
+   },
+   "next": "c2_square_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_square",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c2_square_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c2_square_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_square_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Think it through",
+      "ko": "생각을 정리한다"
+     },
+     "next": "c2_deduce",
+     "conditions": [
+      "clue_c_lily",
+      "clue_c_mabel",
+      "clue_c_oliver",
+      "clue_c_moss",
+      "clue_c_bell",
+      "clue_c_notice"
+     ],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Talk to Mr. Finch",
+      "ko": "핀치 씨에게 말 걸기"
+     },
+     "next": "finch2",
+     "conditions": [],
+     "effects": [],
+     "target": "finch"
+    },
+    {
+     "text": {
+      "en": "Talk to Fox",
+      "ko": "폭스에게 말 걸기"
+     },
+     "next": "fox2",
+     "conditions": [],
+     "effects": [],
+     "target": "fox"
+    },
+    {
+     "text": {
+      "en": "Look at the gate by the fountain",
+      "ko": "분수 옆 철문을 본다"
+     },
+     "next": "gate2",
+     "conditions": [
+      "!gate2_seen"
+     ],
+     "effects": [],
+     "target": "gate"
+    },
+    {
+     "text": {
+      "en": "Look at the puddle by the steps",
+      "ko": "계단 옆 웅덩이를 본다"
+     },
+     "next": "puddle2",
+     "conditions": [
+      "!clue_c_bell"
+     ],
+     "effects": [],
+     "target": "puddle"
+    },
+    {
+     "text": {
+      "en": "Look at the town hall clock",
+      "ko": "시청 시계를 본다"
+     },
+     "next": "c2_clock",
+     "conditions": [],
+     "effects": [],
+     "target": "clock"
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c2_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c2_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c2_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c2_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "What should I do?",
+      "ko": "어떻게 해야 하지?"
+     },
+     "next": "c2_think",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_clock",
+   "speaker": "",
+   "text": {
+    "en": "11:47. Rain or parade, that clock doesn't budge.",
+    "ko": "11시 47분. 비가 와도, 퍼레이드가 끝나도, 저 시계는 꿈쩍도 않는다."
+   },
+   "next": "c2_square_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "clock"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch2",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "finch2_again",
+     "conditions": [
+      "finch2_done"
+     ]
+    },
+    {
+     "to": "finch2_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch2_first",
+   "speaker": "finch",
+   "text": {
+    "en": "Bear! Lovely parade, wasn't it? A little rain! It'll pass.",
+    "ko": "곰! 퍼레이드 좋았죠? 비 좀 오는 거 가지고! 금방 그쳐요."
+   },
+   "next": "finch2_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "finch"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch2_first_1",
+   "speaker": "bear",
+   "text": {
+    "en": "Have you seen Nini? Little one, yellow raincoat.",
+    "ko": "니니 못 봤어요? 노란 우비 입은 꼬마요."
+   },
+   "next": "finch2_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch2_first_2",
+   "speaker": "finch",
+   "text": {
+    "en": "Nini? She was at the stage the whole parade, with her mother. Ringing a little bell the entire time. Lovely.",
+    "ko": "니니? 퍼레이드 내내 엄마랑 무대 앞에 있었는데. 방울을 계속 흔들면서. 아주 귀여웠죠."
+   },
+   "next": "finch2_first_3",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch2_first_3",
+   "speaker": "bear",
+   "text": {
+    "en": "In this rain, you're keeping the festival going?",
+    "ko": "비가 이렇게 오는데, 축제를 계속해요?"
+   },
+   "next": "finch2_first_4",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch2_first_4",
+   "speaker": "finch",
+   "text": {
+    "en": "Forty-one years, Bear. Bellflower Winter Night has never once been cancelled. Not for snow, not for flu.",
+    "ko": "41년이에요, 곰. 벨플라워 겨울밤은 단 한 번도 취소된 적이 없어요. 눈이 와도, 독감이 돌아도."
+   },
+   "next": "finch2_first_5",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_finch"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch2_first_5",
+   "speaker": "finch",
+   "text": {
+    "en": "Oh, Mr. Moss was going on about a pump earlier. Moss always worries. I told him we'd look at it after the festival.",
+    "ko": "아, 모스 씨가 아까 펌프 얘기를 하던데. 모스 씨는 늘 걱정이 많아요. 축제 끝나고 보자고 했죠."
+   },
+   "next": "c2_square_hub",
+   "effects": [
+    {
+     "type": "setFlag",
+     "id": "finch2_done"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch2_again",
+   "speaker": "finch",
+   "text": {
+    "en": "A little rain! The families have come all this way.",
+    "ko": "비 좀 오는 거 가지고! 다들 여기까지 와 줬는데."
+   },
+   "next": "c2_square_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "finch"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "fox2",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "fox2_again",
+     "conditions": [
+      "fox2_done"
+     ]
+    },
+    {
+     "to": "fox2_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "fox2_first",
+   "speaker": "fox",
+   "text": {
+    "en": "Ah, the bear. Sorry, may I ask you one thing?",
+    "ko": "아, 곰이군요. 실례지만 하나만 물어봐도 될까요?"
+   },
+   "next": "fox2_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "fox"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "fox2_first_1",
+   "speaker": "fox",
+   "text": {
+    "en": "I'm writing a piece. For tomorrow morning. The little girl's name was… Nini. Right?",
+    "ko": "기사를 쓰고 있어요. 내일 아침 기사. 그 아이 이름이… 니니, 맞죠?"
+   },
+   "next": "fox2_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "fox2_first_2",
+   "speaker": "bear",
+   "text": {
+    "en": "…'Was'?",
+    "ko": "…'였죠'라뇨?"
+   },
+   "next": "fox2_first_3",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "fox2_first_3",
+   "speaker": "fox",
+   "text": {
+    "en": "Slip of the tongue. Don't mind me. The rain's smudged all my notes.",
+    "ko": "말이 헛나왔네요. 신경 쓰지 마세요. 비 때문에 메모가 다 번져서."
+   },
+   "next": "fox2_first_4",
+   "effects": [
+    {
+     "type": "face",
+     "id": "fox",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "fox2_first_4",
+   "speaker": "",
+   "text": {
+    "en": "Fox's notebook lies open. Smudged numbers. '00:05 … 00:42 … 1:17'.",
+    "ko": "폭스의 수첩이 펼쳐져 있다. 번진 숫자들. '00:05 … 00:42 … 1:17'."
+   },
+   "next": "c2_square_hub",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_fox"
+    },
+    {
+     "type": "setFlag",
+     "id": "fox2_done"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "beep"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "fox2_again",
+   "speaker": "fox",
+   "text": {
+    "en": "Take your time. There's time. Probably.",
+    "ko": "천천히 하세요. 시간은… 있어요. 아마도."
+   },
+   "next": "c2_square_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "fox"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "gate2",
+   "speaker": "",
+   "text": {
+    "en": "An iron sign on the gate: STAFF ONLY. Below it, a newer notice, laminated and beaded with rain.\n\n'CLOSED 21:15'",
+    "ko": "철문에 걸린 쇠 표지판. '관계자 외 출입 금지'. 그 아래, 물방울이 맺힌 코팅된 새 안내문.\n\n'21:15 폐쇄'"
+   },
+   "next": "gate2_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "gate"
+    },
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "searching"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "gate2_1",
+   "speaker": "",
+   "text": {
+    "en": "A quarter past nine.",
+    "ko": "아홉 시 십오 분."
+   },
+   "next": "gate2_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "gate2_2",
+   "speaker": "",
+   "text": {
+    "en": "It isn't nine yet. Is it?",
+    "ko": "아직 아홉 시도 안 됐다. 그렇지?"
+   },
+   "next": "gate2_3",
+   "effects": [
+    {
+     "type": "distort",
+     "num": 1
+    },
+    {
+     "type": "memory",
+     "num": 86
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "clock1147",
+    "echo",
+    "fluorescent",
+    "beep",
+    "drift"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "gate2_3",
+   "speaker": "",
+   "text": {
+    "en": "Bear reads it again. Still 21:15. Water slides past and down the steps, into the dark.",
+    "ko": "안내문을 다시 읽는다. 여전히 21:15다. 물이 발밑을 스쳐 계단을 타고 어둠 속으로 흘러내린다."
+   },
+   "next": "c2_square_hub",
+   "effects": [
+    {
+     "type": "distort",
+     "num": 0
+    },
+    {
+     "type": "stuck",
+     "num": 0
+    },
+    {
+     "type": "clue",
+     "id": "c_notice"
+    },
+    {
+     "type": "setFlag",
+     "id": "gate2_seen"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "puddle2",
+   "speaker": "",
+   "text": {
+    "en": "Something small and green glints in the puddle at the top of the steps.",
+    "ko": "계단 맨 위 웅덩이에서 작고 초록색인 무언가가 반짝인다."
+   },
+   "next": "puddle2_1",
+   "effects": [
+    {
+     "type": "bell",
+     "value": "puddle"
+    },
+    {
+     "type": "focus",
+     "value": "puddle"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "puddle2_1",
+   "speaker": "",
+   "text": {
+    "en": "Bear picks it up. It rings once, very softly.",
+    "ko": "주워 든다. 아주 작게, 한 번 울린다."
+   },
+   "next": "puddle2_2",
+   "effects": [
+    {
+     "type": "sound",
+     "id": "bell"
+    },
+    {
+     "type": "bell",
+     "value": "bear"
+    },
+    {
+     "type": "focus",
+     "value": "bear"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "puddle2_2",
+   "speaker": "bear",
+   "text": {
+    "en": "Nini's bell.",
+    "ko": "니니의 방울."
+   },
+   "next": "puddle2_3",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "puddle2_3",
+   "speaker": "",
+   "text": {
+    "en": "It's wet, and colder than the rain. Cold, like it has been under water for a long time.",
+    "ko": "젖어 있고, 빗물보다 차갑다. 아주 오랫동안 물속에 잠겨 있었던 것처럼."
+   },
+   "next": "c2_square_hub",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_bell"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_flower",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c2_flower_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c2_flower_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_flower_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Lily",
+      "ko": "릴리에게 말 걸기"
+     },
+     "next": "lily2",
+     "conditions": [],
+     "effects": [],
+     "target": "lily"
+    },
+    {
+     "text": {
+      "en": "Look at the clock inside the shop",
+      "ko": "가게 안 벽시계를 본다"
+     },
+     "next": "shopclock2",
+     "conditions": [
+      "!shopclock2_seen"
+     ],
+     "effects": [],
+     "target": "shopclock"
+    },
+    {
+     "text": {
+      "en": "Look at the garland over the door",
+      "ko": "문 위의 꽃장식을 본다"
+     },
+     "next": "garland2",
+     "conditions": [
+      "!garland2_seen"
+     ],
+     "effects": [],
+     "target": "garland"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c2_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c2_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c2_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c2_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily2",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "lily2_again",
+     "conditions": [
+      "clue_c_lily"
+     ]
+    },
+    {
+     "to": "lily2_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily2_first",
+   "speaker": "lily",
+   "text": {
+    "en": "Bear! You're soaked. Look at my flowers, all bowing their heads in the rain.",
+    "ko": "곰! 홀딱 젖었네요. 이 꽃들 좀 봐요, 빗물 먹고 고개를 다 숙였어."
+   },
+   "next": "lily2_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "lily"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily2_first_1",
+   "speaker": "bear",
+   "text": {
+    "en": "Have you seen Nini? Yellow raincoat.",
+    "ko": "니니 못 봤어요? 노란 우비요."
+   },
+   "next": "lily2_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily2_first_2",
+   "speaker": "lily",
+   "text": {
+    "en": "Nini? Yes! She ran toward the fountain. Stopping everyone, asking if they'd seen a little bell.",
+    "ko": "니니요? 봤어요! 분수 쪽으로 뛰어가던데요. 방울 못 봤냐고 다들 붙잡고 물어보면서."
+   },
+   "next": "lily2_first_3",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily2_first_3",
+   "speaker": "lily",
+   "text": {
+    "en": "I remember, because I was packing up the wet flowers.",
+    "ko": "기억나요. 젖은 꽃을 정리하던 중이었거든요."
+   },
+   "next": "lily2_first_4",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_lily"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily2_first_4",
+   "speaker": "bear",
+   "text": {
+    "en": "The bell… I have it now.",
+    "ko": "방울은… 지금 내가 갖고 있는데."
+   },
+   "next": "lily2_first_5",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "searching"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily2_first_5",
+   "speaker": "lily",
+   "text": {
+    "en": "Do you? Well, good. She'll come looking for it soon.",
+    "ko": "그래요? 그럼 잘됐네요. 곧 찾으러 오겠죠."
+   },
+   "next": "c2_flower_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily2_again",
+   "speaker": "lily",
+   "text": {
+    "en": "The fountain. Looking for her bell. I was packing up the flowers. That much I'm sure of.",
+    "ko": "분수 쪽이요. 방울 찾으면서. 꽃 정리하던 중이었어요. 그건 확실해요."
+   },
+   "next": "c2_flower_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "lily"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "shopclock2",
+   "speaker": "",
+   "text": {
+    "en": "Through the window, a small wall clock. 11:47.",
+    "ko": "진열창 너머, 작은 벽시계. 11시 47분."
+   },
+   "next": "shopclock2_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "shopclock"
+    },
+    {
+     "type": "setFlag",
+     "id": "shopclock2_seen"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "clock1147"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "shopclock2_1",
+   "speaker": "lily",
+   "text": {
+    "en": "Oh, that one? It runs slow. Don't mind it.",
+    "ko": "아, 그거요? 원래 좀 느려요. 신경 쓰지 마세요."
+   },
+   "next": "shopclock2_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "shopclock2_2",
+   "speaker": "",
+   "text": {
+    "en": "The town hall clock said 11:47 too.",
+    "ko": "시청 시계도 11시 47분이었다."
+   },
+   "next": "c2_flower_hub",
+   "effects": [
+    {
+     "type": "stuck",
+     "num": 0
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "garland2",
+   "speaker": "lily",
+   "text": {
+    "en": "Pretty, isn't it? Mr. Finch ordered twice as many this year. On the railings, the lamps. I even wrapped one round the drain by the fountain. It looked so bare.",
+    "ko": "예쁘죠? 올해는 핀치 씨가 두 배로 주문했어요. 난간에도, 가로등에도. 분수 옆 빗물받이에도 하나 둘렀어요. 너무 휑해 보여서."
+   },
+   "next": "c2_flower_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "garland"
+    },
+    {
+     "type": "setFlag",
+     "id": "garland2_seen"
+    },
+    {
+     "type": "clue",
+     "id": "c_garland"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_cafe",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "c2_cafe_changed",
+     "conditions": [
+      "cafe_changed",
+      "!cafe_changed_seen"
+     ]
+    },
+    {
+     "to": "c2_cafe_enter",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_cafe_enter",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c2_cafe_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c2_cafe_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_cafe_changed",
+   "speaker": "",
+   "text": {
+    "en": "The cafe door. Warm air. Coffee.",
+    "ko": "카페 문을 연다. 따뜻한 공기. 커피 냄새."
+   },
+   "next": "c2_cafe_changed_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_cafe_changed_1",
+   "speaker": "",
+   "text": {
+    "en": "…Was the window always on that side?",
+    "ko": "…창문이 원래 저쪽에 있었나?"
+   },
+   "next": "c2_cafe_changed_2",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "window"
+    },
+    {
+     "type": "setFlag",
+     "id": "cafe_changed_seen"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "c2_cafe_changed_2",
+   "speaker": "",
+   "text": {
+    "en": "There's one table fewer. And on the wall, a clock that wasn't there before.",
+    "ko": "테이블이 하나 줄었다. 그리고 벽에, 아까는 없던 시계."
+   },
+   "next": "c2_cafe_enter",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "cafeclock"
+    },
+    {
+     "type": "clue",
+     "id": "c_room"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_cafe_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Mabel",
+      "ko": "메이블에게 말 걸기"
+     },
+     "next": "mabel2",
+     "conditions": [],
+     "effects": [],
+     "target": "mabel"
+    },
+    {
+     "text": {
+      "en": "Listen to the floor",
+      "ko": "바닥에 귀를 기울인다"
+     },
+     "next": "floor2",
+     "conditions": [
+      "!clue_c_noise"
+     ],
+     "effects": [],
+     "target": "floor"
+    },
+    {
+     "text": {
+      "en": "Look out of the window",
+      "ko": "창밖을 본다"
+     },
+     "next": "window2",
+     "conditions": [],
+     "effects": [],
+     "target": "window"
+    },
+    {
+     "text": {
+      "en": "Look at the wall clock",
+      "ko": "벽시계를 본다"
+     },
+     "next": "cafeclock2",
+     "conditions": [
+      "cafe_changed"
+     ],
+     "effects": [],
+     "target": "cafeclock"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c2_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c2_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c2_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c2_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel2",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "mabel2_again",
+     "conditions": [
+      "clue_c_mabel"
+     ]
+    },
+    {
+     "to": "mabel2_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel2_first",
+   "speaker": "mabel",
+   "text": {
+    "en": "Evening, Bear. Everyone's only coming in to get out of the rain tonight.",
+    "ko": "어서 와요, 곰. 오늘은 다들 비 피하러만 들어오네."
+   },
+   "next": "mabel2_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "mabel"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel2_first_1",
+   "speaker": "bear",
+   "text": {
+    "en": "Have you seen Nini?",
+    "ko": "니니 못 봤어요?"
+   },
+   "next": "mabel2_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel2_first_2",
+   "speaker": "mabel",
+   "text": {
+    "en": "Nini? She went home with her mum ages ago. I saw them through that window. Two of them under one umbrella.",
+    "ko": "니니? 엄마랑 진작 집에 갔어요. 저 창문으로 봤어요. 우산 하나에 둘이 꼭 붙어서."
+   },
+   "next": "mabel2_first_3",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_mabel"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel2_first_3",
+   "speaker": "bear",
+   "text": {
+    "en": "Home…? Lily said she ran to the fountain.",
+    "ko": "집에…? 릴리는 분수 쪽으로 뛰어갔다던데."
+   },
+   "next": "mabel2_first_4",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "searching"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel2_first_4",
+   "speaker": "mabel",
+   "text": {
+    "en": "Then one of us saw wrong. I saw what I saw. She went home.",
+    "ko": "그럼 둘 중 하나가 잘못 봤겠죠. 난 봤어요. 집에 갔어요."
+   },
+   "next": "c2_cafe_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel2_again",
+   "speaker": "mabel",
+   "text": {
+    "en": "She went home. Two under one umbrella. I saw it through the window.",
+    "ko": "집에 갔어요. 우산 하나에 둘이서. 창문으로 봤다니까요."
+   },
+   "next": "c2_cafe_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "mabel"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "floor2",
+   "speaker": "",
+   "text": {
+    "en": "Under the floor: a thud. Then a gurgle.",
+    "ko": "바닥 밑에서, 쿵. 그리고 꾸르륵."
+   },
+   "next": "floor2_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "floor"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "floor2_1",
+   "speaker": "mabel",
+   "text": {
+    "en": "It's been doing that all evening. Drums, from under there. The festival band, I suppose.",
+    "ko": "아까부터 그래요. 지하에서 북 치는 소리가. 축제 밴드겠죠."
+   },
+   "next": "floor2_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "floor2_2",
+   "speaker": "",
+   "text": {
+    "en": "Thud. Gurgle. And very faintly, at regular intervals: beep—",
+    "ko": "쿵. 꾸르륵. 그리고 아주 작게, 일정한 간격으로, 삑—"
+   },
+   "next": "c2_cafe_hub",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_noise"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "beep"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "window2",
+   "speaker": "",
+   "text": {
+    "en": "Through the glass, festival lights smear in the rain. Water runs down the pane. No yellow raincoat.",
+    "ko": "창밖으로 축제 등불이 번져 보인다. 빗줄기가 유리를 타고 흐른다. 노란 우비는 보이지 않는다."
+   },
+   "next": "c2_cafe_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "window"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "cafeclock2",
+   "speaker": "",
+   "text": {
+    "en": "11:47.",
+    "ko": "11시 47분."
+   },
+   "next": "cafeclock2_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "cafeclock"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "clock1147",
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "cafeclock2_1",
+   "speaker": "",
+   "text": {
+    "en": "Mabel says she can't remember when that clock went up.",
+    "ko": "메이블은 저 시계가 언제부터 있었는지 모른다고 한다."
+   },
+   "next": "c2_cafe_hub",
+   "effects": [
+    {
+     "type": "stuck",
+     "num": 0
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_park",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c2_park_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c2_park_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_park_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Oliver",
+      "ko": "올리버에게 말 걸기"
+     },
+     "next": "oliver2",
+     "conditions": [],
+     "effects": [],
+     "target": "oliver"
+    },
+    {
+     "text": {
+      "en": "Read the notice board",
+      "ko": "게시판을 본다"
+     },
+     "next": "notice2",
+     "conditions": [
+      "!clue_c_choir"
+     ],
+     "effects": [],
+     "target": "notice"
+    },
+    {
+     "text": {
+      "en": "Look at the bench",
+      "ko": "벤치를 본다"
+     },
+     "next": "bench2",
+     "conditions": [
+      "!bench2_seen"
+     ],
+     "effects": [],
+     "target": "bench"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c2_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c2_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c2_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c2_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver2",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "oliver2_again",
+     "conditions": [
+      "clue_c_oliver"
+     ]
+    },
+    {
+     "to": "oliver2_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver2_first",
+   "speaker": "oliver",
+   "text": {
+    "en": "…Yes, control. One fender-bender at the junction, two noise complaints. Yes. Yes.",
+    "ko": "…네, 본부. 교차로 접촉 사고 하나, 소음 신고 둘. 네. 네."
+   },
+   "next": "oliver2_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "oliver"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver2_first_1",
+   "speaker": "bear",
+   "text": {
+    "en": "Officer, I'm looking for a child. Nini. Yellow raincoat.",
+    "ko": "경찰관님, 아이를 찾고 있어요. 니니요. 노란 우비."
+   },
+   "next": "oliver2_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver2_first_2",
+   "speaker": "oliver",
+   "text": {
+    "en": "Missing child? Ah, that one. That call came in at 00:05.",
+    "ko": "실종 아동? 아, 그거. 그 신고는 00시 05분에 들어왔어요."
+   },
+   "next": "oliver2_first_3",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_oliver"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "beep"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "oliver2_first_3",
+   "speaker": "bear",
+   "text": {
+    "en": "…It's seven in the evening.",
+    "ko": "…지금 저녁 일곱 시인데요?"
+   },
+   "next": "oliver2_first_4",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "searching"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver2_first_4",
+   "speaker": "oliver",
+   "text": {
+    "en": "…Is it? Time's strange tonight. This radio keeps crackling.",
+    "ko": "…그랬나? 오늘 밤은 시간이 이상하네요. 무전기가 자꾸 지직거려서."
+   },
+   "next": "c2_park_hub",
+   "effects": [
+    {
+     "type": "face",
+     "id": "oliver",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver2_again",
+   "speaker": "oliver",
+   "text": {
+    "en": "00:05. That's what the log says. …It hasn't happened yet, and there's a log.",
+    "ko": "00시 05분. 기록에 그렇게 돼 있어요. …아직 안 왔는데, 기록이 있네."
+   },
+   "next": "c2_park_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "oliver"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "notice2",
+   "speaker": "",
+   "text": {
+    "en": "A poster on the board. 'BELL CHOIR — 9:00 PM. THANK YOU FOR COMING!' Stamped across it, in red: 'ENDED'.",
+    "ko": "게시판 포스터. '종소리 합창 — 오후 9:00. 와 주셔서 감사합니다!' 그 위에 빨간 도장. '종료'."
+   },
+   "next": "notice2_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "notice"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "notice2_1",
+   "speaker": "",
+   "text": {
+    "en": "The choir is at nine. It hasn't started yet.",
+    "ko": "합창은 아홉 시다. 아직 시작도 안 했다."
+   },
+   "next": "c2_park_hub",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_choir"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "bench2",
+   "speaker": "",
+   "text": {
+    "en": "A wet bench. A single small glove left on it. Yellow.",
+    "ko": "젖은 벤치. 작은 장갑 한 짝이 놓여 있다. 노란색."
+   },
+   "next": "c2_park_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "bench"
+    },
+    {
+     "type": "setFlag",
+     "id": "bench2_seen"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_gate",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c2_gate_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c2_gate_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_gate_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Mr. Moss",
+      "ko": "모스 씨에게 말 걸기"
+     },
+     "next": "moss2",
+     "conditions": [],
+     "effects": [],
+     "target": "moss"
+    },
+    {
+     "text": {
+      "en": "Listen at the pump house door",
+      "ko": "펌프장 문에 귀를 댄다"
+     },
+     "next": "pump2",
+     "conditions": [
+      "!clue_c_beep"
+     ],
+     "effects": [],
+     "target": "pump"
+    },
+    {
+     "text": {
+      "en": "Read the note on the wall",
+      "ko": "붙어 있는 쪽지를 본다"
+     },
+     "next": "repair2",
+     "conditions": [
+      "!repair2_seen"
+     ],
+     "effects": [],
+     "target": "repair"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c2_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c2_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c2_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c2_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "rain",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss2",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "moss2_again",
+     "conditions": [
+      "clue_c_moss"
+     ]
+    },
+    {
+     "to": "moss2_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss2_first",
+   "speaker": "moss",
+   "text": {
+    "en": "The bear. What're you running around for, in this?",
+    "ko": "곰이구먼. 이 날씨에 뭘 그렇게 뛰어다녀."
+   },
+   "next": "moss2_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "moss"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss2_first_1",
+   "speaker": "bear",
+   "text": {
+    "en": "I'm looking for a child. Nini.",
+    "ko": "아이를 찾아요. 니니."
+   },
+   "next": "moss2_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss2_first_2",
+   "speaker": "moss",
+   "text": {
+    "en": "Haven't seen a kid. I've been watching the pump. That thing's not right.",
+    "ko": "애는 못 봤어. 난 펌프만 보고 있었으니까. 저놈이 영 시원찮아."
+   },
+   "next": "moss2_first_3",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss2_first_3",
+   "speaker": "moss",
+   "text": {
+    "en": "Repair was booked. 'After the festival.' Second time it got pushed. Something about the budget.",
+    "ko": "수리 일정은 잡혀 있었지. '축제 끝나고.' 두 번째로 미룬 거야. 예산이 어쩌고 하면서."
+   },
+   "next": "moss2_first_4",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_moss"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss2_first_4",
+   "speaker": "moss",
+   "text": {
+    "en": "When water rises, the passage floods first. So I locked the gate at quarter past nine. Inside? Didn't look. Who'd be down there.",
+    "ko": "물이 차면 통로부터 넘쳐. 그래서 아홉 시 십오 분에 철문 잠갔어. 안은… 안 봤어. 거기 누가 있겠어."
+   },
+   "next": "moss2_first_5",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_lock"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss2_first_5",
+   "speaker": "bear",
+   "text": {
+    "en": "Quarter past nine? It's only just gone seven.",
+    "ko": "아홉 시 십오 분이요? 지금은 일곱 시 조금 넘었는데."
+   },
+   "next": "moss2_first_6",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "searching"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss2_first_6",
+   "speaker": "moss",
+   "text": {
+    "en": "…Is it? Then I'll lock it later. Me.",
+    "ko": "…그래? 그럼 이따 잠그겠지. 내가."
+   },
+   "next": "c2_gate_hub",
+   "effects": [
+    {
+     "type": "face",
+     "id": "moss",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss2_again",
+   "speaker": "moss",
+   "text": {
+    "en": "Pushed back twice. 'After the festival.' Everybody said so.",
+    "ko": "두 번 미뤘어. 축제 끝나고 하자고. 다들 그랬어."
+   },
+   "next": "c2_gate_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "moss"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pump2",
+   "speaker": "",
+   "text": {
+    "en": "Behind the door, machinery hums. A clunk. Humming again.",
+    "ko": "철문 너머, 기계가 웅웅 돈다. 덜컥. 다시 웅웅."
+   },
+   "next": "pump2_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "pump"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pump2_1",
+   "speaker": "",
+   "text": {
+    "en": "And underneath it, a sound at steady intervals. Beep— … beep— …",
+    "ko": "그리고 그 아래로, 일정한 간격의 소리. 삑— … 삑— …"
+   },
+   "next": "pump2_2",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_beep"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "beep"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "pump2_2",
+   "speaker": "",
+   "text": {
+    "en": "Too calm for a pump alarm.",
+    "ko": "펌프 경보음치고는 너무 차분하다."
+   },
+   "next": "c2_gate_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "repair2",
+   "speaker": "",
+   "text": {
+    "en": "A handwritten note. 'PUMP STN. 2 — REPAIR: AFTER FESTIVAL.' The date has been crossed out twice.",
+    "ko": "손글씨 쪽지. '2번 펌프장 — 수리: 축제 끝나고.' 날짜를 두 번 고친 자국."
+   },
+   "next": "c2_gate_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "pump"
+    },
+    {
+     "type": "setFlag",
+     "id": "repair2_seen"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_deduce",
+   "speaker": "",
+   "text": {
+    "en": "Bear opens the notebook. Everything people said about Nini.",
+    "ko": "수첩을 펼친다. 니니에 대해 들은 말들."
+   },
+   "next": "c2_deduce_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "bear"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_deduce_1",
+   "speaker": "",
+   "text": {
+    "en": "Mr. Finch: at the stage all through the parade.\nLily: running to the fountain, looking for her bell.\nMabel: went home with her mum, ages ago.\nOliver: the call came in at 00:05.",
+    "ko": "핀치 씨: 퍼레이드 내내 무대 앞에.\n릴리: 방울을 찾으며 분수 쪽으로.\n메이블: 엄마랑 진작 집에.\n올리버: 신고는 00시 05분에."
+   },
+   "next": "c2_q",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_q",
+   "speaker": "",
+   "text": {
+    "en": "Who is lying?",
+    "ko": "누가 거짓말을 하고 있지?"
+   },
+   "next": "",
+   "effects": [],
+   "choices": [
+    {
+     "text": {
+      "en": "Mr. Finch",
+      "ko": "핀치 씨"
+     },
+     "next": "c2_q_finch",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Lily",
+      "ko": "릴리"
+     },
+     "next": "c2_q_lily",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Mabel",
+      "ko": "메이블"
+     },
+     "next": "c2_q_mabel",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Oliver",
+      "ko": "올리버"
+     },
+     "next": "c2_q_oliver",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Nobody is lying",
+      "ko": "아무도 거짓말하지 않는다"
+     },
+     "next": "c2_q_right",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_q_finch",
+   "speaker": "",
+   "text": {
+    "en": "Mr. Finch talked about the seven o'clock parade. The parade really was at seven.",
+    "ko": "핀치 씨는 일곱 시 퍼레이드를 말했다. 퍼레이드는 정말 일곱 시였다."
+   },
+   "next": "c2_q",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_q_lily",
+   "speaker": "",
+   "text": {
+    "en": "Lily said she was 'packing up the wet flowers'. In rain this light, she wouldn't have started packing yet.",
+    "ko": "릴리는 '젖은 꽃을 정리하던 중'이라고 했다. 비가 이 정도라면, 릴리는 아직 정리를 시작하지도 않았을 텐데."
+   },
+   "next": "c2_q",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_q_mabel",
+   "speaker": "",
+   "text": {
+    "en": "Mabel said Nini went home 'ages ago'. She never said when 'ages ago' was.",
+    "ko": "메이블은 '진작' 집에 갔다고 했다. 언제가 '진작'이었는지는 말하지 않았다."
+   },
+   "next": "c2_q",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_q_oliver",
+   "speaker": "",
+   "text": {
+    "en": "Oliver's time hasn't happened yet. Too exact to be a lie.",
+    "ko": "올리버의 시간은 아직 오지 않은 시간이다. 거짓말이라기엔, 너무 정확하다."
+   },
+   "next": "c2_q",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_q_right",
+   "speaker": "",
+   "text": {
+    "en": "Nobody lied.",
+    "ko": "아무도 거짓말을 하지 않았다."
+   },
+   "next": "c2_q_right_1",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c2_q_right_1",
+   "speaker": "",
+   "text": {
+    "en": "They're all describing the same night. Just different hours of it.",
+    "ko": "다들 같은 밤을 말하고 있다. 다만, 서로 다른 시간을."
+   },
+   "next": "c2_q_right_2",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_times"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "c2_q_right_2",
+   "speaker": "",
+   "text": {
+    "en": "But that's the strange part. Whatever time it is now, those hours shouldn't have happened yet.",
+    "ko": "그런데 이상하다. 지금이 몇 시든, 그 시간들은 아직 오지 않았어야 한다."
+   },
+   "next": "ch3_start",
+   "effects": [
+    {
+     "type": "stuck",
+     "num": 1
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "clock1147"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "ch3_start",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "ch3_intro",
+   "effects": [
+    {
+     "type": "card",
+     "value": "hold",
+     "label": {
+      "en": "CHAPTER 3",
+      "ko": "3장"
+     },
+     "title": {
+      "en": "11:47",
+      "ko": "11:47"
+     }
+    },
+    {
+     "type": "stuck",
+     "num": 0
+    },
+    {
+     "type": "setFlag",
+     "id": "ch2",
+     "value": "false"
+    },
+    {
+     "type": "setFlag",
+     "id": "ch3"
+    },
+    {
+     "type": "setFlag",
+     "id": "finch_square",
+     "value": "false"
+    },
+    {
+     "type": "setFlag",
+     "id": "fox_square",
+     "value": "false"
+    },
+    {
+     "type": "chapter",
+     "title": {
+      "en": "11:47",
+      "ko": "11:47"
+     }
+    },
+    {
+     "type": "go",
+     "id": "heavy",
+     "value": "square"
+    },
+    {
+     "type": "clock",
+     "value": "22:30"
+    },
+    {
+     "type": "memory",
+     "num": 70
+    },
+    {
+     "type": "crowd",
+     "num": 0
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch3_intro",
+   "speaker": "",
+   "text": {
+    "en": "Somehow it's late. Most of the stalls are dark. The rain isn't something you notice anymore; it's something you're inside.",
+    "ko": "어느새 밤이 깊었다. 노점은 대부분 불이 꺼졌다. 비는 이제 신경 쓰이는 정도가 아니라, 그 안에 들어와 있는 무언가가 되었다."
+   },
+   "next": "ch3_intro_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch3_intro_1",
+   "speaker": "",
+   "text": {
+    "en": "The fur drinks the rain. Every step is heavier.",
+    "ko": "털이 빗물을 빨아들인다. 한 걸음 한 걸음이 무겁다."
+   },
+   "next": "ch3_intro_2",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch3_intro_2",
+   "speaker": "bear",
+   "text": {
+    "en": "I need to put the times back in order. When was it, that each of them saw her?",
+    "ko": "시간을 다시 맞춰 봐야 해. 다들, 언제의 니니를 본 거지?"
+   },
+   "next": "c3_square",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_mission3"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_think",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "c3_think_ready",
+     "conditions": [
+      "clue_c_lily2",
+      "clue_c_mabel2",
+      "clue_c_oliver2"
+     ]
+    },
+    {
+     "to": "c3_think_people",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_think_people",
+   "speaker": "",
+   "text": {
+    "en": "Ask again. Lily: 'when'. Mabel: 'what happened next'. Oliver: 'who'.",
+    "ko": "다시 물어보자. 릴리에게는 '언제', 메이블에게는 '그다음', 올리버에게는 '누가'."
+   },
+   "next": "c3_square_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_think_ready",
+   "speaker": "",
+   "text": {
+    "en": "The times are almost in order. Lay them out, here in the square.",
+    "ko": "시간이 거의 맞춰졌다. 광장에서 순서를 정리하자."
+   },
+   "next": "c3_square_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_square",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c3_square_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c3_square_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_square_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Put the night in order",
+      "ko": "시간 순서를 맞춘다"
+     },
+     "next": "c3_order",
+     "conditions": [
+      "clue_c_lily2",
+      "clue_c_mabel2",
+      "clue_c_oliver2"
+     ],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Look at the town hall clock",
+      "ko": "시청 시계를 본다"
+     },
+     "next": "c3_clock",
+     "conditions": [],
+     "effects": [],
+     "target": "clock"
+    },
+    {
+     "text": {
+      "en": "Look at the gate",
+      "ko": "철문을 본다"
+     },
+     "next": "c3_gatelook",
+     "conditions": [
+      "!c3_gatelook_seen"
+     ],
+     "effects": [],
+     "target": "gate"
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c3_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c3_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe_late",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c3_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c3_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "What should I do?",
+      "ko": "어떻게 해야 하지?"
+     },
+     "next": "c3_think",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_clock",
+   "speaker": "",
+   "text": {
+    "en": "11:47.",
+    "ko": "11시 47분."
+   },
+   "next": "c3_clock_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "clock"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "clock1147"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "c3_clock_1",
+   "speaker": "",
+   "text": {
+    "en": "For the first time all night, it doesn't look wrong.",
+    "ko": "저녁 내내 처음으로, 저 시각이 틀려 보이지 않는다."
+   },
+   "next": "c3_square_hub",
+   "effects": [
+    {
+     "type": "stuck",
+     "num": 0
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_gatelook",
+   "speaker": "",
+   "text": {
+    "en": "The gate is chained now. A new padlock. Water pours down the steps.",
+    "ko": "철문에 쇠사슬이 감겨 있다. 새 자물쇠. 물이 계단을 타고 쏟아져 내려간다."
+   },
+   "next": "c3_gatelook_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "gate"
+    },
+    {
+     "type": "setFlag",
+     "id": "c3_gatelook_seen"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_gatelook_1",
+   "speaker": "",
+   "text": {
+    "en": "The bars are close together. Too close for a bear. But a very small child might squeeze through.",
+    "ko": "철창 사이는 좁다. 곰은 못 지나간다. 하지만 아주 작은 아이라면."
+   },
+   "next": "c3_square_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "c3_flower",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c3_flower_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c3_flower_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_flower_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Lily",
+      "ko": "릴리에게 말 걸기"
+     },
+     "next": "lily3",
+     "conditions": [],
+     "effects": [],
+     "target": "lily"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c3_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c3_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe_late",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c3_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c3_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily3",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "lily3_again",
+     "conditions": [
+      "clue_c_lily2"
+     ]
+    },
+    {
+     "to": "lily3_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily3_first",
+   "speaker": "lily",
+   "text": {
+    "en": "Bear, still out? I'm only packing up now. Held out as long as I could, but after ten it just came down.",
+    "ko": "곰, 아직도 밖에 있었어요? 난 이제야 정리해요. 버틸 만큼 버텼는데, 열 시 넘으니까 그냥 쏟아지더라고요."
+   },
+   "next": "lily3_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "lily"
+    },
+    {
+     "type": "face",
+     "id": "lily",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily3_first_1",
+   "speaker": "bear",
+   "text": {
+    "en": "You said you saw Nini… while you were packing up.",
+    "ko": "아까 니니를 본 게… 정리하던 중이었다고 했죠."
+   },
+   "next": "lily3_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily3_first_2",
+   "speaker": "lily",
+   "text": {
+    "en": "Yes. So… after half past ten. Around eleven? Not during the parade at all.",
+    "ko": "네. 그러니까… 열 시 반은 넘었겠네요. 열한 시쯤? 퍼레이드 때가 아니었어요."
+   },
+   "next": "lily3_first_3",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_lily2"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily3_first_3",
+   "speaker": "lily",
+   "text": {
+    "en": "She'd lost her bell and she was close to tears. Someone told her they'd seen something shiny by the steps near the fountain.",
+    "ko": "방울을 잃어버렸다면서 울상이었어요. 누가 '분수 옆 계단 쪽에서 반짝이는 거 봤다'고 했대요."
+   },
+   "next": "c3_flower_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily3_again",
+   "speaker": "lily",
+   "text": {
+    "en": "Around eleven. The steps by the fountain. Someone said they'd seen something shiny there.",
+    "ko": "열한 시쯤이요. 분수 옆 계단 쪽. 누가 그쪽에서 반짝이는 걸 봤대요."
+   },
+   "next": "c3_flower_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "lily"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_cafe",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c3_cafe_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c3_cafe_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_cafe_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Mabel",
+      "ko": "메이블에게 말 걸기"
+     },
+     "next": "mabel3",
+     "conditions": [],
+     "effects": [],
+     "target": "mabel"
+    },
+    {
+     "text": {
+      "en": "Listen to the floor",
+      "ko": "바닥에 귀를 기울인다"
+     },
+     "next": "floor3",
+     "conditions": [
+      "!floor3_seen"
+     ],
+     "effects": [],
+     "target": "floor"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c3_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c3_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c3_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c3_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel3",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "mabel3_again",
+     "conditions": [
+      "clue_c_mabel2"
+     ]
+    },
+    {
+     "to": "mabel3_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel3_first",
+   "speaker": "mabel",
+   "text": {
+    "en": "Nini? She went home with her mum ages ago.",
+    "ko": "니니? 엄마랑 진작 집에 갔어요."
+   },
+   "next": "mabel3_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "mabel"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "mabel3_first_1",
+   "speaker": "mabel",
+   "text": {
+    "en": "…ages ago.",
+    "ko": "…갔어요."
+   },
+   "next": "mabel3_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo",
+    "drift"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "mabel3_first_2",
+   "speaker": "mabel",
+   "text": {
+    "en": "No. Wait. That was about half ten. Two under one umbrella.",
+    "ko": "아, 아니다. 그건 열 시 반쯤이었어요. 우산 하나에 둘이서."
+   },
+   "next": "mabel3_first_3",
+   "effects": [
+    {
+     "type": "face",
+     "id": "mabel",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel3_first_3",
+   "speaker": "mabel",
+   "text": {
+    "en": "But after eleven… a yellow raincoat ran past the window. Alone. Toward the square. I think it was her.",
+    "ko": "그런데 열한 시 넘어서… 노란 우비가 혼자 창밖으로 뛰어갔어요. 광장 쪽으로. 그 애였던 것 같아요."
+   },
+   "next": "mabel3_first_4",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_mabel2"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel3_first_4",
+   "speaker": "bear",
+   "text": {
+    "en": "She went home… and came back out. When she noticed the bell was gone.",
+    "ko": "집에 갔다가… 다시 나온 거구나. 방울이 없어진 걸 알고."
+   },
+   "next": "c3_cafe_hub",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel3_again",
+   "speaker": "mabel",
+   "text": {
+    "en": "After eleven. Alone. Toward the square. I should have stopped her.",
+    "ko": "열한 시 넘어서. 혼자. 광장 쪽으로. 붙잡을 걸 그랬어요."
+   },
+   "next": "c3_cafe_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "mabel"
+    },
+    {
+     "type": "face",
+     "id": "mabel",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "floor3",
+   "speaker": "",
+   "text": {
+    "en": "Under the floor, it isn't drums anymore. It's water. Very close.",
+    "ko": "바닥 밑에서 이제는 북소리가 아니라, 물소리가 난다. 아주 가까이서."
+   },
+   "next": "floor3_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "floor"
+    },
+    {
+     "type": "setFlag",
+     "id": "floor3_seen"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "floor3_1",
+   "speaker": "",
+   "text": {
+    "en": "By the back door, a small hatch in the floor. A way down into the passage.",
+    "ko": "카페 뒷문 쪽, 바닥의 작은 점검구. 통로로 이어지는 구멍."
+   },
+   "next": "c3_cafe_hub",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_hatch"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_park",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c3_park_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c3_park_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_park_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Oliver",
+      "ko": "올리버에게 말 걸기"
+     },
+     "next": "oliver3",
+     "conditions": [],
+     "effects": [],
+     "target": "oliver"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c3_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c3_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c3_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe_late",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c3_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver3",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "oliver3_again",
+     "conditions": [
+      "clue_c_oliver2"
+     ]
+    },
+    {
+     "to": "oliver3_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver3_first",
+   "speaker": "oliver",
+   "text": {
+    "en": "…I did hear something about a missing kid. Around ten to midnight. From the festival office.",
+    "ko": "…아이 하나 찾는다는 얘기는 들었어요. 열한 시 오십 분쯤. 축제 본부 쪽에서요."
+   },
+   "next": "oliver3_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "oliver"
+    },
+    {
+     "type": "face",
+     "id": "oliver",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver3_first_1",
+   "speaker": "bear",
+   "text": {
+    "en": "And?",
+    "ko": "그런데요?"
+   },
+   "next": "oliver3_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver3_first_2",
+   "speaker": "oliver",
+   "text": {
+    "en": "The festival has its own staff. I figured they had it. I was dealing with the accident.",
+    "ko": "축제엔 축제 직원들이 있잖아요. 그쪽에서 알아서 하겠지 했어요. 나는 사고 처리 중이었고."
+   },
+   "next": "oliver3_first_3",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_oliver2"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver3_first_3",
+   "speaker": "oliver",
+   "text": {
+    "en": "The actual call didn't come in until 00:05. Everyone thought someone else had called.",
+    "ko": "정식 신고는 00시 05분에야 들어왔어요. 다들, 누가 신고했겠지 했던 거죠."
+   },
+   "next": "c3_park_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver3_again",
+   "speaker": "oliver",
+   "text": {
+    "en": "Someone must have called. Everyone thought that. Me too.",
+    "ko": "누가 신고했겠지. 다들 그렇게 생각했어요. 나도."
+   },
+   "next": "c3_park_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "oliver"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_gate",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c3_gate_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c3_gate_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_gate_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Mr. Moss",
+      "ko": "모스 씨에게 말 걸기"
+     },
+     "next": "moss3",
+     "conditions": [],
+     "effects": [],
+     "target": "moss"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c3_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c3_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c3_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe_late",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c3_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "heavy",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss3",
+   "speaker": "moss",
+   "text": {
+    "en": "It stopped at nine. The pump. The water's got nowhere to go now.",
+    "ko": "아홉 시에 멈췄어. 펌프. 이제 물이 갈 데가 없어."
+   },
+   "next": "moss3_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "moss"
+    },
+    {
+     "type": "face",
+     "id": "moss",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss3_1",
+   "speaker": "moss",
+   "text": {
+    "en": "I locked the passage. The square side. The cafe side… they've stacked festival crates in front of that exit, I heard. Finch's lot.",
+    "ko": "통로는 잠갔어. 광장 쪽은. 카페 쪽 출구는… 축제 상자를 거기 쌓아 놨다던데. 핀치네가."
+   },
+   "next": "c3_gate_hub",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_crates"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_order",
+   "speaker": "",
+   "text": {
+    "en": "The notebook again. This time, in order.",
+    "ko": "수첩을 펼친다. 이번엔 시간 순서대로."
+   },
+   "next": "c3_q1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "bear"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_q1",
+   "speaker": "",
+   "text": {
+    "en": "When did Nini lose her bell?",
+    "ko": "니니는 언제 방울을 잃어버렸을까?"
+   },
+   "next": "",
+   "effects": [],
+   "choices": [
+    {
+     "text": {
+      "en": "During the parade (7 PM)",
+      "ko": "퍼레이드 때 (오후 7시)"
+     },
+     "next": "c3_q1_no1",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Walking home with her mum (10:30 PM)",
+      "ko": "엄마랑 집에 가던 길 (밤 10시 반)"
+     },
+     "next": "c3_q1_no2",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "She noticed after getting home (after 11 PM)",
+      "ko": "집에 간 뒤에 알아챘다 (밤 11시 넘어서)"
+     },
+     "next": "c3_q1_yes",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_q1_no1",
+   "speaker": "",
+   "text": {
+    "en": "Mr. Finch heard her bell all through the parade.",
+    "ko": "핀치 씨는 퍼레이드 내내 방울 소리를 들었다고 했다."
+   },
+   "next": "c3_q1",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_q1_no2",
+   "speaker": "",
+   "text": {
+    "en": "Mabel saw her walk home. And after eleven, saw her run back out, alone.",
+    "ko": "메이블은 집에 가는 니니를 봤다. 그리고 열한 시 넘어, 혼자 다시 뛰어나오는 니니를 봤다."
+   },
+   "next": "c3_q1",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_q1_yes",
+   "speaker": "",
+   "text": {
+    "en": "She only noticed at home. The bell was gone. So she came back out, alone.",
+    "ko": "집에서야 알았다. 방울이 없다는 걸. 그래서 혼자 다시 나왔다."
+   },
+   "next": "c3_q2",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_lost"
+    },
+    {
+     "type": "clock",
+     "value": "23:20"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_q2",
+   "speaker": "",
+   "text": {
+    "en": "And where did Nini go?",
+    "ko": "그리고 니니는 어디로 갔을까?"
+   },
+   "next": "",
+   "effects": [],
+   "choices": [
+    {
+     "text": {
+      "en": "The park",
+      "ko": "공원"
+     },
+     "next": "c3_q2_no",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Back home",
+      "ko": "다시 집으로"
+     },
+     "next": "c3_q2_no",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "The steps by the fountain, into the passage",
+      "ko": "분수 옆 계단, 지하 통로"
+     },
+     "next": "c3_q2_yes",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_q2_no",
+   "speaker": "",
+   "text": {
+    "en": "Lily saw her run to the fountain. Someone had told her about something shiny by the steps.",
+    "ko": "릴리는 니니가 분수 쪽으로 뛰어가는 걸 봤다. 누군가 계단 쪽에서 반짝이는 걸 봤다고 했다."
+   },
+   "next": "c3_q2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_q2_yes",
+   "speaker": "",
+   "text": {
+    "en": "Between the bars. A very small child could fit. Down into the passage, after her bell, where the water was rising.",
+    "ko": "철창 사이로. 아주 작은 아이라면 지나갈 수 있다. 방울을 찾으러, 물이 차오르는 통로로."
+   },
+   "next": "c3_q3",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_where"
+    },
+    {
+     "type": "clock",
+     "value": "23:35"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_q3",
+   "speaker": "",
+   "text": {
+    "en": "Then… when did I start looking for her?",
+    "ko": "그럼… 나는 언제 니니를 찾기 시작했지?"
+   },
+   "next": "",
+   "effects": [],
+   "choices": [
+    {
+     "text": {
+      "en": "Seven in the evening, at the parade",
+      "ko": "저녁 일곱 시, 퍼레이드 때"
+     },
+     "next": "c3_q3_no",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Around 11:40 at night",
+      "ko": "밤 11시 40분쯤"
+     },
+     "next": "c3_q3_yes",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_q3_no",
+   "speaker": "",
+   "text": {
+    "en": "At seven, Nini was beside her mum, ringing her bell. She hadn't gone anywhere.",
+    "ko": "일곱 시의 니니는 엄마 옆에서 방울을 흔들고 있었다. 사라진 적이 없다."
+   },
+   "next": "c3_q3",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_q3_yes",
+   "speaker": "",
+   "text": {
+    "en": "It wasn't seven.",
+    "ko": "일곱 시가 아니었다."
+   },
+   "next": "c3_q3_yes_1",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "23:40"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "c3_q3_yes_1",
+   "speaker": "",
+   "text": {
+    "en": "The evening folded the night in half. It pressed the moment the rain began against the moment Nini disappeared.",
+    "ko": "저녁이 밤을 반으로 접어 버린 것이다. 비 오기 시작한 순간과, 니니가 사라진 순간을 한데 붙여서."
+   },
+   "next": "c3_q3_yes_2",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_fold"
+    },
+    {
+     "type": "memory",
+     "num": 60
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_q3_yes_2",
+   "speaker": "bear",
+   "text": {
+    "en": "The square-side gate was locked. So… the cafe. The hatch in the floor.",
+    "ko": "광장 쪽 철문은 잠겨 있었어. 그래서… 카페로 갔지. 바닥의 구멍으로."
+   },
+   "next": "c3_passage_go",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c3_passage_go",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "pass_01",
+   "effects": [
+    {
+     "type": "setFlag",
+     "id": "nini_in_passage"
+    },
+    {
+     "type": "go",
+     "id": "passage",
+     "value": "passage"
+    },
+    {
+     "type": "water",
+     "num": 0.22
+    },
+    {
+     "type": "crowd",
+     "num": 0
+    },
+    {
+     "type": "music",
+     "num": 0.25
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01",
+   "speaker": "",
+   "text": {
+    "en": "Down through the hatch above the crates. The water is knee-high. Cold. The fur gets heavy at once.",
+    "ko": "상자 위 점검구로 내려온다. 물이 무릎까지 찬다. 차갑다. 털이 금방 무거워진다."
+   },
+   "next": "pass_01_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "bear"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_1",
+   "speaker": "bear",
+   "text": {
+    "en": "Nini!",
+    "ko": "니니!"
+   },
+   "next": "pass_01_2",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "searching"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_2",
+   "speaker": "",
+   "text": {
+    "en": "In the dark, a small sniffle.",
+    "ko": "어둠 속에서, 훌쩍이는 소리."
+   },
+   "next": "pass_01_3",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "nini"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_3",
+   "speaker": "nini",
+   "text": {
+    "en": "Bear…? My bell… I lost my bell.",
+    "ko": "곰…? 방울… 방울 잃어버렸어."
+   },
+   "next": "pass_01_4",
+   "effects": [
+    {
+     "type": "face",
+     "id": "nini",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_4",
+   "speaker": "bear",
+   "text": {
+    "en": "It's right here. I found it. I'll give it to you later. Let's get out first.",
+    "ko": "여기 있어. 찾았어. 나중에 줄게. 일단 나가자."
+   },
+   "next": "pass_01_5",
+   "effects": [
+    {
+     "type": "bell",
+     "value": "bear"
+    },
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "neutral"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_5",
+   "speaker": "",
+   "text": {
+    "en": "The water climbs to the waist. Bear lifts Nini high, up over the crates, toward the hatch and the warm light leaking through it.",
+    "ko": "물이 허리까지 차오른다. 곰은 니니를 번쩍 들어 올린다. 상자 위, 따뜻한 불빛이 새어 나오는 점검구 쪽으로."
+   },
+   "next": "pass_01_6",
+   "effects": [
+    {
+     "type": "water",
+     "num": 0.36
+    },
+    {
+     "type": "focus",
+     "value": "hatch"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_6",
+   "speaker": "",
+   "text": {
+    "en": "Nini's boots kick the crates. They shift.",
+    "ko": "니니의 장화가 상자를 찬다. 상자가 기우뚱한다."
+   },
+   "next": "pass_01_7",
+   "effects": [
+    {
+     "type": "sound",
+     "id": "chime"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_7",
+   "speaker": "nini",
+   "text": {
+    "en": "Are you coming?",
+    "ko": "같이 가?"
+   },
+   "next": "pass_01_8",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "both"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_8",
+   "speaker": "bear",
+   "text": {
+    "en": "Go.",
+    "ko": "가."
+   },
+   "next": "pass_01_9",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_9",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "pass_01_10",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 1.4
+  },
+  {
+   "id": "pass_01_10",
+   "speaker": "nini",
+   "text": {
+    "en": "But you're coming too, right?",
+    "ko": "근데 곰도 오는 거지?"
+   },
+   "next": "pass_01_11",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_11",
+   "speaker": "bear",
+   "text": {
+    "en": "Of course.",
+    "ko": "물론이지."
+   },
+   "next": "pass_01_12",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "happy"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_12",
+   "speaker": "",
+   "text": {
+    "en": "Nini wriggles up through the hatch. The yellow boots are the last thing to go.",
+    "ko": "니니가 점검구 밖으로 빠져나간다. 노란 장화가 마지막으로 보이고, 사라진다."
+   },
+   "next": "pass_01_13",
+   "effects": [
+    {
+     "type": "exit",
+     "id": "nini",
+     "value": "wait",
+     "num": 2
+    },
+    {
+     "type": "clock",
+     "value": "23:47"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_13",
+   "speaker": "",
+   "text": {
+    "en": "11:47.",
+    "ko": "11시 47분."
+   },
+   "next": "pass_01_14",
+   "effects": [
+    {
+     "type": "stuck",
+     "num": 1
+    },
+    {
+     "type": "distort",
+     "num": 1
+    },
+    {
+     "type": "focus",
+     "value": "deep"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "clock1147",
+    "echo"
+   ],
+   "hold": 0.6
+  },
+  {
+   "id": "pass_01_14",
+   "speaker": "",
+   "text": {
+    "en": "The crates slide into the water. The hatch is suddenly too high to reach.",
+    "ko": "상자들이 물속으로 미끄러진다. 점검구가, 닿지 않을 만큼 높아진다."
+   },
+   "next": "pass_01_15",
+   "effects": [
+    {
+     "type": "water",
+     "num": 0.62
+    },
+    {
+     "type": "memory",
+     "num": 40
+    },
+    {
+     "type": "focus",
+     "value": "hatch"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_15",
+   "speaker": "",
+   "text": {
+    "en": "The fur is heavy. So heavy.",
+    "ko": "털이 무겁다. 아주 무겁다."
+   },
+   "next": "pass_01_16",
+   "effects": [
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "worried"
+    },
+    {
+     "type": "music",
+     "num": 0.1
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "drift"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_16",
+   "speaker": "",
+   "text": {
+    "en": "The square side is locked. The cafe side is blocked.",
+    "ko": "광장 쪽은 잠겨 있다. 카페 쪽은 막혀 있다."
+   },
+   "next": "pass_01_17",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "pass_01_17",
+   "speaker": "",
+   "text": {
+    "en": "The water is cold.",
+    "ko": "물이 차갑다."
+   },
+   "next": "pass_01_18",
+   "effects": [
+    {
+     "type": "water",
+     "num": 0.85
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "drift"
+   ],
+   "hold": 0.8
+  },
+  {
+   "id": "pass_01_18",
+   "speaker": "",
+   "text": {
+    "en": "…",
+    "ko": "…"
+   },
+   "next": "ch4_start",
+   "effects": [
+    {
+     "type": "beep",
+     "num": 3
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "fluorescent"
+   ],
+   "hold": 1.0
+  },
+  {
+   "id": "ch4_start",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "ch4_intro",
+   "effects": [
+    {
+     "type": "card",
+     "value": "hold",
+     "label": {
+      "en": "CHAPTER 4",
+      "ko": "4장"
+     },
+     "title": {
+      "en": "It Already Happened",
+      "ko": "이미 일어난 일"
+     }
+    },
+    {
+     "type": "setFlag",
+     "id": "ch3",
+     "value": "false"
+    },
+    {
+     "type": "setFlag",
+     "id": "ch4"
+    },
+    {
+     "type": "setFlag",
+     "id": "nini_in_passage",
+     "value": "false"
+    },
+    {
+     "type": "setFlag",
+     "id": "finch_square"
+    },
+    {
+     "type": "setFlag",
+     "id": "fox_square"
+    },
+    {
+     "type": "chapter",
+     "title": {
+      "en": "It Already Happened",
+      "ko": "이미 일어난 일"
+     }
+    },
+    {
+     "type": "water",
+     "num": 0.12
+    },
+    {
+     "type": "distort",
+     "num": 0.3
+    },
+    {
+     "type": "music",
+     "num": 0.2
+    },
+    {
+     "type": "crowd",
+     "num": 0
+    },
+    {
+     "type": "go",
+     "id": "void",
+     "value": "square"
+    },
+    {
+     "type": "memory",
+     "num": 30
+    },
+    {
+     "type": "beepLoop",
+     "num": 1.4
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_intro",
+   "speaker": "",
+   "text": {
+    "en": "The square. The lanterns are lit, but nothing moves. The festival has stopped, like a photograph.",
+    "ko": "광장. 등불은 켜져 있는데, 아무도 움직이지 않는다. 축제가 사진처럼 멈춰 있다."
+   },
+   "next": "ch4_intro_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    },
+    {
+     "type": "face",
+     "id": "bear",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_intro_1",
+   "speaker": "bear",
+   "text": {
+    "en": "Have to… find Nini.",
+    "ko": "니니를… 찾아야 해."
+   },
+   "next": "ch4_intro_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_intro_2",
+   "speaker": "fox",
+   "text": {
+    "en": "You already found her.",
+    "ko": "이미 찾았잖아요."
+   },
+   "next": "ch4_intro_3",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "fox"
+    },
+    {
+     "type": "face",
+     "id": "fox",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_intro_3",
+   "speaker": "fox",
+   "text": {
+    "en": "The piece is out. Tomorrow morning's paper. Or is it this morning.",
+    "ko": "기사 나왔어요. 내일 아침 신문. 아니, 오늘 아침인가."
+   },
+   "next": "ch4_intro_4",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_intro_4",
+   "speaker": "",
+   "text": {
+    "en": "A wet newspaper. A heavy headline.\n\n'Bellflower Winter Night flood — child trapped in passage rescued safely. The festival mascot who saved her…'\n\nThe rest has run, unreadable.",
+    "ko": "젖은 신문. 굵은 제목.\n\n'벨플라워 겨울밤 폭우 사고 — 통로에 고립된 아이, 무사히 구조. 아이를 구한 축제 마스코트는…'\n\n그다음은 번져서 읽을 수 없다."
+   },
+   "next": "ch4_intro_5",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_article"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "beep"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "ch4_intro_5",
+   "speaker": "",
+   "text": {
+    "en": "Wait.",
+    "ko": "잠깐."
+   },
+   "next": "ch4_intro_6",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "bear"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0.8
+  },
+  {
+   "id": "ch4_intro_6",
+   "speaker": "bear",
+   "text": {
+    "en": "The thing I'm investigating… it's already happened.",
+    "ko": "내가 지금 조사하고 있는 사건은… 이미 일어난 일이잖아."
+   },
+   "next": "ch4_recap",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "ch4_recap",
+   "speaker": "",
+   "text": {
+    "en": "Why a notice said 'CLOSED 21:15' before nine o'clock.\n— Bear read it at twenty to midnight.",
+    "ko": "아직 아홉 시도 안 됐는데 '21:15 폐쇄'가 붙어 있던 이유.\n— 그 안내문을 읽은 건 밤 열한 시 사십 분이었다."
+   },
+   "next": "ch4_recap_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "gate"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_recap_1",
+   "speaker": "",
+   "text": {
+    "en": "Why a choir that hadn't sung yet was stamped 'ENDED'.\n— Bear passed the park after it had finished.",
+    "ko": "끝나지도 않은 합창에 '종료' 도장이 찍혀 있던 이유.\n— 공원을 지난 건 합창이 끝난 뒤였다."
+   },
+   "next": "ch4_recap_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_recap_2",
+   "speaker": "",
+   "text": {
+    "en": "Why Oliver knew about '00:05' before it came.\n— The call really did come then. Bear was already in the water.",
+    "ko": "올리버가 아직 오지 않은 '00시 05분'을 알고 있던 이유.\n— 신고는 정말 그때 들어왔다. 곰은 그때 이미 물속에 있었다."
+   },
+   "next": "ch4_recap_3",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_recap_3",
+   "speaker": "",
+   "text": {
+    "en": "Why Mabel and Lily didn't agree.\n— Both were right. About different hours.",
+    "ko": "메이블과 릴리의 말이 맞지 않았던 이유.\n— 둘 다 맞았다. 서로 다른 시간이었을 뿐."
+   },
+   "next": "ch4_recap_4",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_recap_4",
+   "speaker": "",
+   "text": {
+    "en": "Why the cafe window had moved.\n— The room didn't change. The memory of it did.",
+    "ko": "카페의 창문이 옮겨 가 있던 이유.\n— 방이 바뀐 게 아니었다. 기억이 바뀐 거였다."
+   },
+   "next": "ch4_recap_5",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_recap_5",
+   "speaker": "",
+   "text": {
+    "en": "The steady beeping, under the festival.\n— That was never part of the festival.",
+    "ko": "축제장에서 들리던 일정한 기계음.\n— 그건 축제 소리가 아니었다."
+   },
+   "next": "ch4_recap_6",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "beep"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "ch4_recap_6",
+   "speaker": "",
+   "text": {
+    "en": "And 11:47.\n— The moment Nini got out. The last moment remembered clearly.",
+    "ko": "그리고 11시 47분.\n— 니니가 밖으로 나간 시각. 또렷하게 기억나는 마지막 순간."
+   },
+   "next": "ch4_recap_7",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "clock"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "clock1147"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "ch4_recap_7",
+   "speaker": "",
+   "text": {
+    "en": "It was all one reason.",
+    "ko": "모두 하나의 이유였다."
+   },
+   "next": "ch4_recap_8",
+   "effects": [
+    {
+     "type": "stuck",
+     "num": 0
+    },
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0.8
+  },
+  {
+   "id": "ch4_recap_8",
+   "speaker": "",
+   "text": {
+    "en": "Big Green Bear wasn't walking through the town. He was remembering that night, from the beginning, again.",
+    "ko": "빅그린베어는 마을을 돌아다니고 있는 게 아니었다. 그날 밤을, 처음부터 다시 기억하고 있었다."
+   },
+   "next": "ch4_recap_9",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "c_memory"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_recap_9",
+   "speaker": "fox",
+   "text": {
+    "en": "Then there's one question left. The one I couldn't put in my piece.",
+    "ko": "그럼 이제 마지막 질문이네요. 제 기사에도 못 쓴 거."
+   },
+   "next": "ch4_recap_10",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "fox"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "ch4_recap_10",
+   "speaker": "fox",
+   "text": {
+    "en": "Who killed Big Green Bear.",
+    "ko": "누가 빅그린베어를 죽였는가."
+   },
+   "next": "c4_square",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "c4_think",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "c4_think_ready",
+     "conditions": [
+      "clue_cs_moss",
+      "clue_cs_lily",
+      "clue_cs_finch",
+      "clue_cs_mabel",
+      "clue_cs_oliver"
+     ]
+    },
+    {
+     "to": "c4_think_people",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_think_people",
+   "speaker": "",
+   "text": {
+    "en": "Everyone did something that night. Or didn't. Go to each of them again. Mr. Finch, Lily, Mabel, Oliver, Mr. Moss.",
+    "ko": "다들 그날 밤 무언가를 했다. 아니면, 하지 않았다. 한 명씩 다시 찾아가 보자. 핀치 씨, 릴리, 메이블, 올리버, 모스 씨."
+   },
+   "next": "c4_square_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_think_ready",
+   "speaker": "",
+   "text": {
+    "en": "Everyone has spoken. Time to answer.",
+    "ko": "다 들었다. 이제 대답할 차례다."
+   },
+   "next": "c4_square_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_square",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c4_square_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c4_square_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_square_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Answer: who killed Big Green Bear",
+      "ko": "대답한다: 누가 빅그린베어를 죽였는가"
+     },
+     "next": "c4_final",
+     "conditions": [
+      "clue_cs_moss",
+      "clue_cs_lily",
+      "clue_cs_finch",
+      "clue_cs_mabel",
+      "clue_cs_oliver"
+     ],
+     "effects": [],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Talk to Mr. Finch",
+      "ko": "핀치 씨에게 말 걸기"
+     },
+     "next": "finch4",
+     "conditions": [],
+     "effects": [],
+     "target": "finch"
+    },
+    {
+     "text": {
+      "en": "Talk to Fox",
+      "ko": "폭스에게 말 걸기"
+     },
+     "next": "fox4",
+     "conditions": [],
+     "effects": [],
+     "target": "fox"
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c4_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c4_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe_late",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c4_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c4_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "What should I do?",
+      "ko": "어떻게 해야 하지?"
+     },
+     "next": "c4_think",
+     "conditions": [],
+     "effects": [],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch4",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "finch4_again",
+     "conditions": [
+      "clue_cs_finch"
+     ]
+    },
+    {
+     "to": "finch4_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch4_first",
+   "speaker": "finch",
+   "text": {
+    "en": "Forty-one years. I thought if we cancelled for a bit of rain… everyone would be so disappointed.",
+    "ko": "41년이었어요. 비 좀 온다고 취소하면… 다들 실망할 거라고 생각했어요."
+   },
+   "next": "finch4_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "finch"
+    },
+    {
+     "type": "face",
+     "id": "finch",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch4_first_1",
+   "speaker": "finch",
+   "text": {
+    "en": "At half past seven I said we'd carry on. That we'd listen to Moss after the festival.",
+    "ko": "일곱 시 반에, 계속하자고 했어요. 모스 씨 말은 축제 끝나고 듣자고."
+   },
+   "next": "finch4_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch4_first_2",
+   "speaker": "finch",
+   "text": {
+    "en": "And the crates. We were short of storage… I told them to stack them in front of the cafe-side exit for a while. Just for a while.",
+    "ko": "그리고 상자들. 창고가 모자라서… 통로 카페 쪽 출구 앞에 잠깐만 쌓아 두라고 했어요. 잠깐만."
+   },
+   "next": "finch4_first_3",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "cs_finch"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch4_first_3",
+   "speaker": "finch",
+   "text": {
+    "en": "I thought it would be fine.",
+    "ko": "괜찮을 줄 알았어요."
+   },
+   "next": "c4_square_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "finch4_again",
+   "speaker": "finch",
+   "text": {
+    "en": "It was only meant to be for a while. Truly.",
+    "ko": "잠깐만이었어요. 정말로."
+   },
+   "next": "c4_square_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "finch"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "fox4",
+   "speaker": "fox",
+   "text": {
+    "en": "I wanted to call the piece 'Whose Fault Was It'. I couldn't write it.",
+    "ko": "기사 제목을 '누구의 잘못인가'로 하려고 했어요. 근데 못 쓰겠더라고요."
+   },
+   "next": "fox4_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "fox"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "fox4_1",
+   "speaker": "fox",
+   "text": {
+    "en": "Everyone only remembers their own turn. Their own small turn.",
+    "ko": "다들 자기 차례만 기억하거든요. 아주 작은, 자기 차례만."
+   },
+   "next": "c4_square_hub",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_flower",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c4_flower_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c4_flower_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_flower_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Lily",
+      "ko": "릴리에게 말 걸기"
+     },
+     "next": "lily4",
+     "conditions": [],
+     "effects": [],
+     "target": "lily"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c4_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c4_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe_late",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c4_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c4_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily4",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "lily4_again",
+     "conditions": [
+      "clue_cs_lily"
+     ]
+    },
+    {
+     "to": "lily4_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily4_first",
+   "speaker": "lily",
+   "text": {
+    "en": "I saw it. About ten past seven. My garland, lying over the drain by the fountain.",
+    "ko": "봤어요. 일곱 시 십 분쯤. 내 꽃장식이 분수 옆 빗물받이를 덮고 있는 거."
+   },
+   "next": "lily4_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "lily"
+    },
+    {
+     "type": "face",
+     "id": "lily",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily4_first_1",
+   "speaker": "lily",
+   "text": {
+    "en": "I scooped out a few petals and… went back. I had customers waiting.",
+    "ko": "꽃잎을 몇 개 걷어 내고… 그냥 갔어요. 손님이 기다리고 있었거든요."
+   },
+   "next": "lily4_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily4_first_2",
+   "speaker": "lily",
+   "text": {
+    "en": "I thought somebody would clear it.",
+    "ko": "누가 치우겠지 했어요."
+   },
+   "next": "c4_flower_hub",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "cs_lily"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "lily4_again",
+   "speaker": "lily",
+   "text": {
+    "en": "Somebody will clear it. That was all.",
+    "ko": "누가 치우겠지. 그게 다였어요."
+   },
+   "next": "c4_flower_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "lily"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_cafe",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c4_cafe_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c4_cafe_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_cafe_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Mabel",
+      "ko": "메이블에게 말 걸기"
+     },
+     "next": "mabel4",
+     "conditions": [],
+     "effects": [],
+     "target": "mabel"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c4_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "void",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c4_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "void",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c4_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "void",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c4_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "cafe_changed"
+      },
+      {
+       "type": "go",
+       "id": "void",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel4",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "mabel4_again",
+     "conditions": [
+      "clue_cs_mabel"
+     ]
+    },
+    {
+     "to": "mabel4_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel4_first",
+   "speaker": "mabel",
+   "text": {
+    "en": "Quarter past eight. A sound under the floor. First a thud. Then a gurgle.",
+    "ko": "여덟 시 십오 분. 바닥 밑에서 소리가 났어요. 처음엔 쿵, 그다음엔 꾸르륵."
+   },
+   "next": "mabel4_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "mabel"
+    },
+    {
+     "type": "face",
+     "id": "mabel",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel4_first_1",
+   "speaker": "mabel",
+   "text": {
+    "en": "I thought it was drums. I thought about calling someone, and… it was busy.",
+    "ko": "북소리인 줄 알았어요. 전화할까 하다가… 손님이 많았어요."
+   },
+   "next": "mabel4_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel4_first_2",
+   "speaker": "mabel",
+   "text": {
+    "en": "If it was water, I thought, someone would know.",
+    "ko": "그게 물이었으면, 누군가는 알았겠지 했어요."
+   },
+   "next": "c4_cafe_hub",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "cs_mabel"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "mabel4_again",
+   "speaker": "mabel",
+   "text": {
+    "en": "Someone would know. That's what I thought.",
+    "ko": "누군가는 알았겠지. 그렇게 생각했어요."
+   },
+   "next": "c4_cafe_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "mabel"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_park",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c4_park_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c4_park_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_park_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Oliver",
+      "ko": "올리버에게 말 걸기"
+     },
+     "next": "oliver4",
+     "conditions": [],
+     "effects": [],
+     "target": "oliver"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c4_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c4_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c4_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe_late",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the town gate",
+      "ko": "이동: 마을 입구"
+     },
+     "next": "c4_gate",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "gate"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver4",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "oliver4_again",
+     "conditions": [
+      "clue_cs_oliver"
+     ]
+    },
+    {
+     "to": "oliver4_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver4_first",
+   "speaker": "oliver",
+   "text": {
+    "en": "Ten to midnight. I heard a child was missing. I thought the festival staff had it.",
+    "ko": "열한 시 오십 분. 아이를 찾는다는 말을 들었어요. 축제 직원들이 하겠지 했어요."
+   },
+   "next": "oliver4_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "oliver"
+    },
+    {
+     "type": "face",
+     "id": "oliver",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver4_first_1",
+   "speaker": "oliver",
+   "text": {
+    "en": "One line to control. That's all it needed.",
+    "ko": "본부에 한 줄만 보고했으면 됐어요. 한 줄."
+   },
+   "next": "oliver4_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver4_first_2",
+   "speaker": "oliver",
+   "text": {
+    "en": "The call came at 00:05. Rescue arrived at 00:30. Fifteen minutes. Those fifteen minutes.",
+    "ko": "신고는 00시 05분. 구조대 도착은 00시 30분. 15분이요. 그 15분이."
+   },
+   "next": "c4_park_hub",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "cs_oliver"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "oliver4_again",
+   "speaker": "oliver",
+   "text": {
+    "en": "Somebody will. That's what everyone thought.",
+    "ko": "누가 하겠지. 다들 그랬어요."
+   },
+   "next": "c4_park_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "oliver"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_gate",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "c4_gate_hub",
+   "effects": [
+    {
+     "type": "checkpoint",
+     "value": "c4_gate_hub"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_gate_hub",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [
+    {
+     "text": {
+      "en": "Talk to Mr. Moss",
+      "ko": "모스 씨에게 말 걸기"
+     },
+     "next": "moss4",
+     "conditions": [],
+     "effects": [],
+     "target": "moss"
+    },
+    {
+     "text": {
+      "en": "Go to Bellflower Square",
+      "ko": "이동: 벨플라워 광장"
+     },
+     "next": "c4_square",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "square"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Lily's flower shop",
+      "ko": "이동: 릴리의 꽃가게"
+     },
+     "next": "c4_flower",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "flower"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to Mabel's cafe",
+      "ko": "이동: 메이블의 카페"
+     },
+     "next": "c4_cafe",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "cafe_late",
+       "value": "cafe"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Go to the park",
+      "ko": "이동: 공원"
+     },
+     "next": "c4_park",
+     "conditions": [],
+     "effects": [
+      {
+       "type": "go",
+       "id": "void",
+       "value": "park"
+      }
+     ],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss4",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [],
+   "choices": [],
+   "branches": [
+    {
+     "to": "moss4_again",
+     "conditions": [
+      "clue_cs_moss"
+     ]
+    },
+    {
+     "to": "moss4_first",
+     "conditions": []
+    }
+   ],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss4_first",
+   "speaker": "moss",
+   "text": {
+    "en": "I thought the repair could wait till next week. Thought that twice.",
+    "ko": "수리는 다음 주에 하면 될 줄 알았어. 두 번이나 그렇게 생각했지."
+   },
+   "next": "moss4_first_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "moss"
+    },
+    {
+     "type": "face",
+     "id": "moss",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss4_first_1",
+   "speaker": "moss",
+   "text": {
+    "en": "Nine o'clock, the pump quit. Quarter past nine, I locked the gate.",
+    "ko": "아홉 시에 펌프가 멈췄어. 아홉 시 십오 분에 철문을 잠갔어."
+   },
+   "next": "moss4_first_2",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss4_first_2",
+   "speaker": "moss",
+   "text": {
+    "en": "Didn't look inside. Who'd be down there, I said. I thought… I thought I was doing the right thing.",
+    "ko": "안은 안 봤어. 누가 거기 있겠냐고. 그게… 그게 잘한 일인 줄 알았어."
+   },
+   "next": "c4_gate_hub",
+   "effects": [
+    {
+     "type": "clue",
+     "id": "cs_moss"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "moss4_again",
+   "speaker": "moss",
+   "text": {
+    "en": "Didn't look inside. I didn't look.",
+    "ko": "안은 안 봤어. 안 봤다고."
+   },
+   "next": "c4_gate_hub",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "moss"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_final",
+   "speaker": "",
+   "text": {
+    "en": "They are all in the square again. Nobody moves.",
+    "ko": "모두 다시 광장에 서 있다. 아무도 움직이지 않는다."
+   },
+   "next": "c4_q",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    },
+    {
+     "type": "beepLoop",
+     "num": 1.2
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_q",
+   "speaker": "",
+   "text": {
+    "en": "Who killed Big Green Bear?",
+    "ko": "누가 빅그린베어를 죽였는가?"
+   },
+   "next": "",
+   "effects": [],
+   "choices": [
+    {
+     "text": {
+      "en": "Mr. Moss",
+      "ko": "모스 씨"
+     },
+     "next": "c4_pick_moss",
+     "conditions": [
+      "!pick_moss"
+     ],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "pick_moss"
+      },
+      {
+       "type": "add",
+       "id": "picks"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Lily",
+      "ko": "릴리"
+     },
+     "next": "c4_pick_lily",
+     "conditions": [
+      "!pick_lily"
+     ],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "pick_lily"
+      },
+      {
+       "type": "add",
+       "id": "picks"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Mr. Finch",
+      "ko": "핀치 씨"
+     },
+     "next": "c4_pick_finch",
+     "conditions": [
+      "!pick_finch"
+     ],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "pick_finch"
+      },
+      {
+       "type": "add",
+       "id": "picks"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Mabel",
+      "ko": "메이블"
+     },
+     "next": "c4_pick_mabel",
+     "conditions": [
+      "!pick_mabel"
+     ],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "pick_mabel"
+      },
+      {
+       "type": "add",
+       "id": "picks"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Oliver",
+      "ko": "올리버"
+     },
+     "next": "c4_pick_oliver",
+     "conditions": [
+      "!pick_oliver"
+     ],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "pick_oliver"
+      },
+      {
+       "type": "add",
+       "id": "picks"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "Nobody",
+      "ko": "아무도 아니다"
+     },
+     "next": "c4_pick_nobody",
+     "conditions": [
+      "!pick_nobody"
+     ],
+     "effects": [
+      {
+       "type": "setFlag",
+       "id": "pick_nobody"
+      }
+     ],
+     "target": ""
+    },
+    {
+     "text": {
+      "en": "All of them. A little each.",
+      "ko": "모두가. 조금씩."
+     },
+     "next": "c4_all",
+     "conditions": [
+      "picks>=2"
+     ],
+     "effects": [],
+     "target": ""
+    }
+   ],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_pick_moss",
+   "speaker": "",
+   "text": {
+    "en": "Mr. Moss put off the repair. And locked the gate without looking inside.\n\n…But that wasn't all of it.",
+    "ko": "모스 씨는 수리를 미뤘다. 그리고 안을 보지 않고 철문을 잠갔다.\n\n…그것만이 아니었다."
+   },
+   "next": "c4_q",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_pick_lily",
+   "speaker": "",
+   "text": {
+    "en": "Lily saw the blocked drain and walked on.\n\n…But that wasn't all of it.",
+    "ko": "릴리는 막힌 빗물받이를 보고도 지나쳤다.\n\n…그것만이 아니었다."
+   },
+   "next": "c4_q",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_pick_finch",
+   "speaker": "",
+   "text": {
+    "en": "Mr. Finch didn't stop the festival. And had crates stacked in front of the emergency exit.\n\n…But that wasn't all of it.",
+    "ko": "핀치 씨는 축제를 멈추지 않았다. 그리고 비상 출구 앞에 상자를 쌓게 했다.\n\n…그것만이 아니었다."
+   },
+   "next": "c4_q",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_pick_mabel",
+   "speaker": "",
+   "text": {
+    "en": "Mabel decided the water under the floor was drums.\n\n…But that wasn't all of it.",
+    "ko": "메이블은 바닥 밑의 물소리를 북소리라고 믿었다.\n\n…그것만이 아니었다."
+   },
+   "next": "c4_q",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_pick_oliver",
+   "speaker": "",
+   "text": {
+    "en": "Oliver assumed someone else had called.\n\n…But that wasn't all of it.",
+    "ko": "올리버는 누군가 신고했을 거라고 생각했다.\n\n…그것만이 아니었다."
+   },
+   "next": "c4_q",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_pick_nobody",
+   "speaker": "",
+   "text": {
+    "en": "Nobody meant to kill anyone.",
+    "ko": "아무도 죽이려 하지 않았다."
+   },
+   "next": "c4_pick_nobody_1",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_pick_nobody_1",
+   "speaker": "",
+   "text": {
+    "en": "…But it can't be nobody.",
+    "ko": "…하지만 아무도 아니라고 할 수는 없다."
+   },
+   "next": "c4_q",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "c4_all",
+   "speaker": "",
+   "text": {
+    "en": "All of them. A little each.",
+    "ko": "모두가. 조금씩."
+   },
+   "next": "c4_all_1",
+   "effects": [
+    {
+     "type": "beepLoop",
+     "num": 0
+    },
+    {
+     "type": "music",
+     "num": 0
+    },
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0.6
+  },
+  {
+   "id": "c4_all_1",
+   "speaker": "lily",
+   "text": {
+    "en": "19:10 — I only scooped out a few petals. I thought it would be fine.",
+    "ko": "19:10 — 꽃잎 몇 개만 걷어 냈어요. 괜찮겠지 했어요."
+   },
+   "next": "c4_all_2",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "19:10"
+    },
+    {
+     "type": "face",
+     "id": "lily",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_2",
+   "speaker": "finch",
+   "text": {
+    "en": "19:30 — I said we'd carry on. I thought it would be fine.",
+    "ko": "19:30 — 계속하자고 했어요. 괜찮겠지 했어요."
+   },
+   "next": "c4_all_3",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "19:30"
+    },
+    {
+     "type": "face",
+     "id": "finch",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_3",
+   "speaker": "mabel",
+   "text": {
+    "en": "20:15 — Drums, surely. I thought it would be fine.",
+    "ko": "20:15 — 북소리겠지. 괜찮겠지 했어요."
+   },
+   "next": "c4_all_4",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "20:15"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_4",
+   "speaker": "moss",
+   "text": {
+    "en": "21:00 — Repair next week. I thought it'd be fine.",
+    "ko": "21:00 — 수리는 다음 주에. 괜찮겠지 했어."
+   },
+   "next": "c4_all_5",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "21:00"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_5",
+   "speaker": "moss",
+   "text": {
+    "en": "21:15 — Didn't look inside. I thought it'd be fine.",
+    "ko": "21:15 — 안은 안 봤어. 괜찮겠지 했어."
+   },
+   "next": "c4_all_6",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "21:15"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_6",
+   "speaker": "finch",
+   "text": {
+    "en": "22:00 — In front of the exit, just for a while. I thought it would be fine.",
+    "ko": "22:00 — 출구 앞에 잠깐만. 괜찮겠지 했어요."
+   },
+   "next": "c4_all_7",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "22:00"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_7",
+   "speaker": "oliver",
+   "text": {
+    "en": "23:50 — Someone must have called. I thought it would be fine.",
+    "ko": "23:50 — 누가 신고했겠지. 괜찮겠지 했어요."
+   },
+   "next": "c4_all_8",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "23:50"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_8",
+   "speaker": "",
+   "text": {
+    "en": "23:48 — And Big Green Bear was trapped.",
+    "ko": "23:48 — 그리고 빅그린베어는 갇혔다."
+   },
+   "next": "c4_all_9",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "23:48"
+    },
+    {
+     "type": "water",
+     "num": 0.5
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_9",
+   "speaker": "",
+   "text": {
+    "en": "00:05 — The call.",
+    "ko": "00:05 — 신고."
+   },
+   "next": "c4_all_10",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "00:05"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_10",
+   "speaker": "",
+   "text": {
+    "en": "00:30 — The rescue team arrives.",
+    "ko": "00:30 — 구조대 도착."
+   },
+   "next": "c4_all_11",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "00:30"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_11",
+   "speaker": "",
+   "text": {
+    "en": "00:42 — Pulled out. Still holding the small green bell.",
+    "ko": "00:42 — 구조. 초록 방울을 아직 쥔 채로."
+   },
+   "next": "c4_all_12",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "00:42"
+    },
+    {
+     "type": "water",
+     "num": 0.2
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_12",
+   "speaker": "",
+   "text": {
+    "en": "01:00 — The hospital.",
+    "ko": "01:00 — 병원."
+   },
+   "next": "c4_all_13",
+   "effects": [
+    {
+     "type": "clock",
+     "value": "01:00"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "c4_all_13",
+   "speaker": "",
+   "text": {
+    "en": "Not one of them thought they had killed anyone.",
+    "ko": "아무도 자신이 살인을 했다고 생각하지 않았다."
+   },
+   "next": "c4_all_14",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 1.2
+  },
+  {
+   "id": "c4_all_14",
+   "speaker": "",
+   "text": {
+    "en": "But every 'it'll be fine', added together, killed a man.",
+    "ko": "하지만 그 모든 '괜찮겠지'가 모여, 한 사람이 죽었다."
+   },
+   "next": "ch5_start",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [
+    "echo"
+   ],
+   "hold": 0
+  },
+  {
+   "id": "ch5_start",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "h_01",
+   "effects": [
+    {
+     "type": "card",
+     "value": "hold",
+     "label": {
+      "en": "",
+      "ko": ""
+     },
+     "title": {
+      "en": "A Bright Room",
+      "ko": "환한 방"
+     }
+    },
+    {
+     "type": "setFlag",
+     "id": "ch4",
+     "value": "false"
+    },
+    {
+     "type": "setFlag",
+     "id": "ch5"
+    },
+    {
+     "type": "chapter",
+     "title": {
+      "en": "A Bright Room",
+      "ko": "환한 방"
+     }
+    },
+    {
+     "type": "water",
+     "num": 0
+    },
+    {
+     "type": "distort",
+     "num": 0
+    },
+    {
+     "type": "stuck",
+     "num": 0
+    },
+    {
+     "type": "music",
+     "num": 0
+    },
+    {
+     "type": "go",
+     "id": "hospital",
+     "value": "hospital"
+    },
+    {
+     "type": "memory",
+     "num": 15
+    },
+    {
+     "type": "clock",
+     "value": "01:05"
+    },
+    {
+     "type": "beepLoop",
+     "num": 1.1
+    },
+    {
+     "type": "checkpoint",
+     "value": "h_01"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "h_01",
+   "speaker": "",
+   "text": {
+    "en": "A bright room. Everything far away.",
+    "ko": "환한 방. 모든 게 멀리 있다."
+   },
+   "next": "h_01_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "h_01_1",
+   "speaker": "hazel",
+   "text": {
+    "en": "…If we'd had twenty more minutes.",
+    "ko": "…20분만 빨랐어도."
+   },
+   "next": "h_01_2",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "hazel"
+    },
+    {
+     "type": "face",
+     "id": "hazel",
+     "value": "worried"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "h_01_2",
+   "speaker": "",
+   "text": {
+    "en": "Something is closed in the paw. Small, and cold.",
+    "ko": "손에 무언가 쥐여 있다. 작고, 차갑다."
+   },
+   "next": "h_01_3",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "pillow"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "h_01_3",
+   "speaker": "hazel",
+   "text": {
+    "en": "You held on to this the whole time. A little green bell.",
+    "ko": "이거, 끝까지 꼭 쥐고 계셨어요. 작은 초록 방울."
+   },
+   "next": "h_01_4",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "hazel"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "h_01_4",
+   "speaker": "hazel",
+   "text": {
+    "en": "She's safe.",
+    "ko": "그 아이는 무사해요."
+   },
+   "next": "h_01_5",
+   "effects": [
+    {
+     "type": "face",
+     "id": "hazel",
+     "value": "neutral"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "h_01_5",
+   "speaker": "bear",
+   "text": {
+    "en": "Nini… did she get home?",
+    "ko": "니니는… 집에 갔나요?"
+   },
+   "next": "h_01_6",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "pillow"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "h_01_6",
+   "speaker": "hazel",
+   "text": {
+    "en": "Yes.",
+    "ko": "네."
+   },
+   "next": "h_01_7",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "hazel"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "h_01_7",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "h_01_8",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 2.6
+  },
+  {
+   "id": "h_01_8",
+   "speaker": "bear",
+   "text": {
+    "en": "Good.",
+    "ko": "다행이다."
+   },
+   "next": "h_01_9",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "pillow"
+    },
+    {
+     "type": "beepLoop",
+     "num": 1.8
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "h_01_9",
+   "speaker": "bear",
+   "text": {
+    "en": "Then… that's enough.",
+    "ko": "그럼… 됐어요."
+   },
+   "next": "h_01_10",
+   "effects": [],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "h_01_10",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "epi_start",
+   "effects": [
+    {
+     "type": "beepLoop",
+     "num": 0
+    },
+    {
+     "type": "sound",
+     "id": "flatline"
+    },
+    {
+     "type": "clock",
+     "value": "01:17"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 4.5
+  },
+  {
+   "id": "epi_start",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "epi_01",
+   "effects": [
+    {
+     "type": "card",
+     "value": "hold",
+     "label": {
+      "en": "",
+      "ko": ""
+     },
+     "title": {
+      "en": "Time passes",
+      "ko": "시간이 흐른다"
+     }
+    },
+    {
+     "type": "setFlag",
+     "id": "ch5",
+     "value": "false"
+    },
+    {
+     "type": "setFlag",
+     "id": "epilogue"
+    },
+    {
+     "type": "hud",
+     "num": 0
+    },
+    {
+     "type": "go",
+     "id": "home",
+     "value": "attic"
+    },
+    {
+     "type": "memory",
+     "num": 100
+    },
+    {
+     "type": "music",
+     "num": 0.35
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "epi_01",
+   "speaker": "",
+   "text": {
+    "en": "An attic. Afternoon light through a round window.",
+    "ko": "다락방. 둥근 창으로 오후 햇살이 들어온다."
+   },
+   "next": "epi_01_1",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "wide"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "epi_01_1",
+   "speaker": "",
+   "text": {
+    "en": "Nini, grown up, opens a small box.",
+    "ko": "어른이 된 니니가 작은 상자를 연다."
+   },
+   "next": "epi_01_2",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "box"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "epi_01_2",
+   "speaker": "",
+   "text": {
+    "en": "Inside: a small green bell.",
+    "ko": "그 안에, 초록색 방울."
+   },
+   "next": "epi_01_3",
+   "effects": [
+    {
+     "type": "bell",
+     "value": "box"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "epi_01_3",
+   "speaker": "",
+   "text": {
+    "en": "She rings it, once.",
+    "ko": "니니가 방울을 한 번 흔든다."
+   },
+   "next": "epi_01_4",
+   "effects": [
+    {
+     "type": "focus",
+     "value": "nini"
+    },
+    {
+     "type": "face",
+     "id": "niniadult",
+     "value": "blink"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  },
+  {
+   "id": "epi_01_4",
+   "speaker": "",
+   "text": {
+    "en": "Ting.",
+    "ko": "딸랑."
+   },
+   "next": "epi_01_5",
+   "effects": [
+    {
+     "type": "sound",
+     "id": "bell"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 1.0
+  },
+  {
+   "id": "epi_01_5",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "the_end",
+   "effects": [
+    {
+     "type": "music",
+     "num": 0
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 3.5
+  },
+  {
+   "id": "the_end",
+   "speaker": "",
+   "text": {
+    "en": "",
+    "ko": ""
+   },
+   "next": "",
+   "effects": [
+    {
+     "type": "end"
+    }
+   ],
+   "choices": [],
+   "branches": [],
+   "fx": [],
+   "hold": 0
+  }
+ ]
+}

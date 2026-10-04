@@ -1,6 +1,6 @@
 /* UI 문자열 — 한국어. 이야기 본문은 각 콘텐츠 파일 안에 함께 적혀 있습니다. */
 BGB.story.strings("ko", {
-  "game.title": "큰초록곰의 모험",
+  "game.title": "빅그린베어의 모험",
   "title.subtitle": "벨플라워 마을의 작은 미스터리",
   "title.subtitleAfter": "벨플라워 마을의 작은 미스터리. 다시 한 번.",
   "title.continue": "이어하기",

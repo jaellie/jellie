@@ -1,10 +1,15 @@
-// Stage.cs — builds the 2.5D scene from layout.json.
+// Stage.cs — builds one location of the 2.5D world from layout.json.
 //
 // The trick behind the depth: every painted layer is a flat sprite placed at a
 // different distance (z) from a PERSPECTIVE camera. Far layers move less when
 // the camera moves, near layers move more: real parallax, no 3D models.
 // Each back layer is sized and lifted so that its "floor line" (anchorRow)
 // lines up with the ground's horizon from the camera's point of view.
+//
+// LoadLocation() clears the previous place and builds the next one. Layers and
+// characters can carry "when" conditions, so the SAME place can be built
+// differently later in the story (the cafe's window moves; people leave).
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,11 +18,13 @@ namespace BigGreenBear
     public class Stage : MonoBehaviour
     {
         public SceneLayout layout;
+        public LocationLayout location;
         public Camera cam;
         public readonly Dictionary<string, SpriteRenderer> layers = new Dictionary<string, SpriteRenderer>();
         public readonly Dictionary<string, Actor> actors = new Dictionary<string, Actor>();
         public readonly Dictionary<string, Vector3> anchors = new Dictionary<string, Vector3>();
         public SpriteRenderer bell;
+        Transform content;
 
         // URP 2D "lit" sprite material, so the 2D lights actually reach our sprites.
         // Null = keep Unity's default sprite material.
@@ -44,29 +51,32 @@ namespace BigGreenBear
             return cy + (refY - cy) * (z - cz) / (refZ - cz);
         }
 
+        static readonly Dictionary<string, Texture2D> texCache = new Dictionary<string, Texture2D>();
+
+        public static Texture2D LoadTexture(string name, bool optional = false)
+        {
+            if (texCache.TryGetValue(name, out var t) && t != null) return t;
+            t = Resources.Load<Texture2D>("BGB/Art/" + name);
+            if (t == null && !optional) Debug.LogWarning("[BigGreenBear] Missing art: Resources/BGB/Art/" + name + ".png");
+            else t.wrapMode = TextureWrapMode.Clamp;
+            texCache[name] = t;
+            return t;
+        }
+
         public static Sprite LoadSprite(string name, Vector2 pivot, float pixelsPerUnit)
         {
             // Loaded as a texture so the pivot/size are controlled here, whatever
             // the import settings are.
-            var tex = Resources.Load<Texture2D>("BGB/Art/" + name);
-            if (tex == null)
-            {
-                Debug.LogWarning("[BigGreenBear] Missing art: Resources/BGB/Art/" + name + ".png");
-                return null;
-            }
-            tex.wrapMode = TextureWrapMode.Clamp;
+            var tex = LoadTexture(name);
+            if (tex == null) return null;
             return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), pivot, pixelsPerUnit);
         }
 
-        public void Build(SceneLayout l, Camera camera)
+        public void Init(SceneLayout l, Camera camera)
         {
             layout = l;
             cam = camera;
-
-            foreach (var ly in layout.layers) BuildLayer(ly);
-            foreach (var a in layout.actors) BuildActor(a);
-
-            // The small green bell — hidden until the story needs it.
+            // The small green bell lives outside the location so it can travel with Bear.
             var bellGo = new GameObject("Bell");
             bellGo.transform.SetParent(transform, false);
             bell = bellGo.AddComponent<SpriteRenderer>();
@@ -76,16 +86,37 @@ namespace BigGreenBear
             ApplyMaterial(bell);
         }
 
-        void BuildLayer(LayerLayout ly)
+        public void LoadLocation(string id, Func<string[], bool> check)
         {
-            var tex = Resources.Load<Texture2D>("BGB/Art/" + ly.sprite);
-            if (tex == null)
+            var loc = layout.Location(id);
+            if (loc == null)
             {
-                Debug.LogWarning("[BigGreenBear] Missing layer art " + ly.sprite);
+                Debug.LogError("[BigGreenBear] Unknown location: " + id);
                 return;
             }
+            location = loc;
+            string bellWhere = bellPlace;
+            PlaceBell("none");
+            if (content != null) Destroy(content.gameObject);
+            content = new GameObject("Location_" + id).transform;
+            content.SetParent(transform, false);
+            layers.Clear();
+            actors.Clear();
+            anchors.Clear();
+
+            foreach (var ly in loc.layers) if (check(ly.when)) BuildLayer(ly, loc);
+            if (loc.actors != null)
+                foreach (var a in loc.actors) if (check(a.when)) BuildActor(a);
+            // the bell follows whoever was holding it, if they are here
+            if (bellWhere == "bear" || bellWhere == "nini") PlaceBell(bellWhere);
+        }
+
+        void BuildLayer(LayerLayout ly, LocationLayout loc)
+        {
+            var tex = LoadTexture(ly.sprite);
+            if (tex == null) return;
             float unit = ly.width / tex.width; // world units per pixel
-            var sprite = LoadSprite(ly.sprite, new Vector2(0.5f, 0.5f), 1f / unit);
+            var sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 1f / unit);
 
             float anchorY;
             if (ly.anchorAt == "viewTop")
@@ -95,7 +126,7 @@ namespace BigGreenBear
             float centerY = anchorY - (tex.height * 0.5f - ly.anchorRow) * unit;
 
             var go = new GameObject("Layer_" + ly.name);
-            go.transform.SetParent(transform, false);
+            go.transform.SetParent(content, false);
             go.transform.position = new Vector3(ly.x, centerY, ly.z);
             var sr = go.AddComponent<SpriteRenderer>();
             sr.sprite = sprite;
@@ -104,8 +135,8 @@ namespace BigGreenBear
             layers[ly.name] = sr;
 
             // Anchors that live on this layer (pixel coordinates -> world).
-            if (layout.anchors == null) return;
-            foreach (var an in layout.anchors)
+            if (loc.anchors == null) return;
+            foreach (var an in loc.anchors)
             {
                 if (an.layer != ly.name) continue;
                 anchors[an.id] = new Vector3(
@@ -115,15 +146,21 @@ namespace BigGreenBear
             }
         }
 
-        void BuildActor(ActorLayout a)
+        void BuildActor(ActorLayout placement)
         {
-            var go = new GameObject("Actor_" + a.id);
-            go.transform.SetParent(transform, false);
-            go.transform.position = new Vector3(a.x, 0f, a.z);
+            var def = layout.Cast(placement.id);
+            if (def == null)
+            {
+                Debug.LogWarning("[BigGreenBear] Character not in cast: " + placement.id);
+                return;
+            }
+            var go = new GameObject("Actor_" + def.id);
+            go.transform.SetParent(content, false);
+            go.transform.position = new Vector3(placement.x, 0f, placement.z);
             var actor = go.AddComponent<Actor>();
-            actor.Init(a);
-            actors[a.id] = actor;
-            anchors[a.id] = go.transform.position + Vector3.up * a.height * 0.75f;
+            actor.Init(def, string.IsNullOrEmpty(placement.face) ? def.face : placement.face);
+            actors[def.id] = actor;
+            anchors[def.id] = go.transform.position + Vector3.up * def.height * 0.75f;
         }
 
         public Vector3 Anchor(string id, Vector3 fallback)
@@ -139,31 +176,36 @@ namespace BigGreenBear
             sr.color = c;
         }
 
-        // Puts the bell somewhere: "nini", "bear", "puddle" or "none".
+        string bellPlace = "none";
+        public string BellPlace => bellPlace;
+
+        // Puts the bell somewhere: an actor id ("nini", "bear"), an anchor id, or "none".
         public void PlaceBell(string where)
         {
             if (bell == null) return;
-            if (where == "none" || string.IsNullOrEmpty(where))
+            bellPlace = string.IsNullOrEmpty(where) ? "none" : where;
+            if (bellPlace == "none")
             {
                 bell.enabled = false;
                 bell.transform.SetParent(transform, true);
                 return;
             }
-            bell.enabled = true;
             if (actors.TryGetValue(where, out var actor))
             {
-                // held in the paw / hand on the right side
-                bell.transform.SetParent(actor.transform, false);
+                bell.enabled = true;
                 // held in the right paw / hand (measured on the drawings)
+                bell.transform.SetParent(actor.transform, false);
                 bell.transform.localPosition = where == "bear" ? new Vector3(0.6f, 0.3f, -0.05f) : new Vector3(0.27f, 0.12f, -0.05f);
                 bell.sortingOrder = actor.SortingOrder + 1;
             }
-            else
+            else if (anchors.TryGetValue(where, out var p))
             {
+                bell.enabled = true;
                 bell.transform.SetParent(transform, false);
-                bell.transform.position = Anchor(where, Vector3.zero);
+                bell.transform.position = p;
                 bell.sortingOrder = 20;
             }
+            else bell.enabled = false; // holder is not in this place
         }
     }
 }

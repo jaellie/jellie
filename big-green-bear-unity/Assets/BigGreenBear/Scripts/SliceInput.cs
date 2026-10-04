@@ -73,6 +73,15 @@ namespace BigGreenBear
 #endif
         }
 
+        public static bool Notebook()
+        {
+#if ENABLE_INPUT_SYSTEM
+            return Keyboard.current != null && (Keyboard.current.nKey.wasPressedThisFrame || Keyboard.current.tabKey.wasPressedThisFrame);
+#else
+            return Input.GetKeyDown(KeyCode.N) || Input.GetKeyDown(KeyCode.Tab);
+#endif
+        }
+
         public static bool Quit()
         {
 #if ENABLE_INPUT_SYSTEM

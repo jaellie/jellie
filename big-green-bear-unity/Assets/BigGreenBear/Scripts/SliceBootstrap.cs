@@ -14,12 +14,12 @@ namespace BigGreenBear
         public bool use2DLights = true;
 
         [Tooltip("Start in Korean. Otherwise follows the computer's language. Press L in play to switch.")]
-        public bool forceKorean = false;
+        public bool forceKorean = true;
 
         void Start()
         {
             var layout = SliceData.Load<SceneLayout>("BGB/Data/layout");
-            var script = SliceData.Load<SliceScript>("BGB/Data/slice");
+            var script = SliceData.Load<SliceScript>("BGB/Data/story");
             if (layout == null || script == null) return;
 
             // Camera: reuse the scene's main camera if there is one.
@@ -36,11 +36,11 @@ namespace BigGreenBear
 
             if (use2DLights) Stage.UseLitMaterial();
             var stage = new GameObject("Stage").AddComponent<Stage>();
-            stage.Build(layout, cam);
+            stage.Init(layout, cam);
 
             var rig = cam.gameObject.GetComponent<CameraRig>();
             if (rig == null) rig = cam.gameObject.AddComponent<CameraRig>();
-            rig.Init(cam, layout.camera, layout.focus);
+            rig.Init(cam, layout.camera);
 
             var rain = new GameObject("Rain").AddComponent<RainSystem>();
             rain.Init(cam.transform);
@@ -56,7 +56,7 @@ namespace BigGreenBear
 
             string lang = forceKorean || Application.systemLanguage == SystemLanguage.Korean ? "ko" : "en";
             var director = gameObject.AddComponent<SliceDirector>();
-            director.Init(script, stage, rig, atmo, rain, ui, audio, lang);
+            director.Init(script, layout, stage, rig, atmo, rain, ui, audio, lang);
             director.ShowTitle();
         }
     }

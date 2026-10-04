@@ -1,267 +1,1590 @@
 {
-  "camera": {
-    "fov": 36,
-    "y": 1.35,
-    "z": -10,
-    "parallax": 0.25
+ "camera": {
+  "fov": 36,
+  "y": 1.35,
+  "z": -10,
+  "parallax": 0.25
+ },
+ "horizon": {
+  "y": 1.0,
+  "z": 0.6
+ },
+ "cast": [
+  {
+   "id": "bear",
+   "sprites": "bear",
+   "face": "neutral",
+   "height": 2.5,
+   "order": 10
   },
-  "horizon": {
-    "y": 1.0,
-    "z": 0.6
+  {
+   "id": "nini",
+   "sprites": "nini",
+   "face": "happy",
+   "height": 1.35,
+   "order": 11
   },
-  "layers": [
+  {
+   "id": "lily",
+   "sprites": "lily",
+   "face": "neutral",
+   "height": 2.0,
+   "order": 9
+  },
+  {
+   "id": "finch",
+   "sprites": "finch",
+   "face": "neutral",
+   "height": 1.95,
+   "order": 9
+  },
+  {
+   "id": "mabel",
+   "sprites": "mabel",
+   "face": "neutral",
+   "height": 2.1,
+   "order": 9
+  },
+  {
+   "id": "oliver",
+   "sprites": "oliver",
+   "face": "neutral",
+   "height": 2.25,
+   "order": 9
+  },
+  {
+   "id": "hazel",
+   "sprites": "hazel",
+   "face": "neutral",
+   "height": 2.35,
+   "order": 9
+  },
+  {
+   "id": "fox",
+   "sprites": "fox",
+   "face": "neutral",
+   "height": 2.25,
+   "order": 9
+  },
+  {
+   "id": "moss",
+   "sprites": "moss",
+   "face": "neutral",
+   "height": 1.85,
+   "order": 9
+  },
+  {
+   "id": "niniadult",
+   "sprites": "niniadult",
+   "face": "neutral",
+   "height": 2.3,
+   "order": 11
+  }
+ ],
+ "locations": [
+  {
+   "id": "square",
+   "layers": [
     {
-      "name": "far",
-      "sprite": "layer_far",
-      "z": 30,
-      "width": 60,
-      "x": 0,
-      "anchorRow": 760,
-      "anchorAt": "horizon",
-      "order": -40
+     "name": "far",
+     "sprite": "layer_far",
+     "z": 30,
+     "width": 60,
+     "x": 0,
+     "anchorRow": 760,
+     "anchorAt": "horizon",
+     "order": -40
     },
     {
-      "name": "mid",
-      "sprite": "layer_mid",
-      "z": 8,
-      "width": 30,
-      "x": -4.0,
-      "anchorRow": 930,
-      "anchorAt": "horizon",
-      "order": -30
+     "name": "mid",
+     "sprite": "layer_mid",
+     "z": 8,
+     "width": 30,
+     "x": -4.0,
+     "anchorRow": 930,
+     "anchorAt": "horizon",
+     "order": -30
     },
     {
-      "name": "ground",
-      "sprite": "layer_ground",
-      "z": 0.6,
-      "width": 22,
-      "x": 0,
-      "anchorRow": 0,
-      "anchorAt": "horizon",
-      "order": -20
+     "name": "ground",
+     "sprite": "layer_ground",
+     "z": 0.6,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "horizon",
+     "order": -20
     },
     {
-      "name": "ground_wet",
-      "sprite": "layer_ground_wet",
-      "z": 0.59,
-      "width": 22,
-      "x": 0,
-      "anchorRow": 0,
-      "anchorAt": "horizon",
-      "order": -19
+     "name": "ground_wet",
+     "sprite": "layer_ground_wet",
+     "z": 0.59,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "horizon",
+     "order": -19
     },
     {
-      "name": "fg",
-      "sprite": "layer_fg",
-      "z": -4,
-      "width": 9,
-      "x": 0,
-      "anchorRow": 0,
-      "anchorAt": "viewTop",
-      "order": 40
+     "name": "fg",
+     "sprite": "layer_fg",
+     "z": -4,
+     "width": 9,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "viewTop",
+     "order": 40
     }
-  ],
-  "actors": [
+   ],
+   "actors": [
     {
-      "id": "bear",
-      "sprites": "bear",
-      "face": "neutral",
-      "x": -0.9,
-      "z": 0,
-      "height": 2.5,
-      "order": 10
+     "id": "bear",
+     "x": -0.9,
+     "z": 0,
+     "face": ""
     },
     {
-      "id": "nini",
-      "sprites": "nini",
-      "face": "happy",
-      "x": 0.85,
-      "z": -0.3,
-      "height": 1.35,
-      "order": 11
+     "id": "nini",
+     "x": 0.85,
+     "z": -0.3,
+     "face": "happy",
+     "when": [
+      "!nini_gone"
+     ]
+    },
+    {
+     "id": "finch",
+     "x": 2.6,
+     "z": 0.6,
+     "face": "",
+     "when": [
+      "finch_square"
+     ]
+    },
+    {
+     "id": "fox",
+     "x": -3.4,
+     "z": 0.4,
+     "face": "",
+     "when": [
+      "fox_square"
+     ]
     }
-  ],
-  "anchors": [
+   ],
+   "anchors": [
     {
-      "id": "clock",
-      "layer": "far",
-      "px": 1024,
-      "py": 380
+     "id": "clock",
+     "layer": "far",
+     "px": 1024,
+     "py": 380
     },
     {
-      "id": "gate",
-      "layer": "mid",
-      "px": 1950,
-      "py": 800
+     "id": "gate",
+     "layer": "mid",
+     "px": 1950,
+     "py": 800
     },
     {
-      "id": "stringL",
-      "layer": "mid",
-      "px": 420,
-      "py": 470
+     "id": "lights",
+     "layer": "mid",
+     "px": 1394,
+     "py": 800
     },
     {
-      "id": "stringC",
-      "layer": "mid",
-      "px": 1024,
-      "py": 440
+     "id": "puddle",
+     "layer": "ground_wet",
+     "px": 1560,
+     "py": 150
     },
     {
-      "id": "stringR",
-      "layer": "mid",
-      "px": 1560,
-      "py": 470
+     "id": "lamp",
+     "layer": "fg",
+     "px": 177,
+     "py": 250
     },
     {
-      "id": "stall",
-      "layer": "mid",
-      "px": 240,
-      "py": 760
+     "id": "stringC",
+     "layer": "mid",
+     "px": 1024,
+     "py": 440
     },
     {
-      "id": "puddle",
-      "layer": "ground_wet",
-      "px": 1560,
-      "py": 150
-    },
-    {
-      "id": "lamp",
-      "layer": "fg",
-      "px": 177,
-      "py": 250
-    },
-    {
-      "id": "lights",
-      "layer": "mid",
-      "px": 1394,
-      "py": 800
+     "id": "stall",
+     "layer": "mid",
+     "px": 240,
+     "py": 760
     }
-  ],
-  "focus": [
+   ],
+   "focus": [
     {
-      "id": "wide",
-      "x": 0,
-      "y": 0,
-      "zoom": 0
+     "id": "wide",
+     "x": 0,
+     "y": 0,
+     "zoom": 0
     },
     {
-      "id": "title",
-      "x": 1.5,
-      "y": 0.45,
-      "zoom": -0.6
+     "id": "title",
+     "x": 1.5,
+     "y": 0.45,
+     "zoom": -0.6
     },
     {
-      "id": "bear",
-      "x": -0.6,
-      "y": -0.2,
-      "zoom": 2.2
+     "id": "bear",
+     "x": -0.6,
+     "y": -0.2,
+     "zoom": 2.2
     },
     {
-      "id": "nini",
-      "x": 0.5,
-      "y": -0.35,
-      "zoom": 2.6
+     "id": "nini",
+     "x": 0.5,
+     "y": -0.35,
+     "zoom": 2.6
     },
     {
-      "id": "both",
-      "x": 0,
-      "y": -0.2,
-      "zoom": 1.6
+     "id": "both",
+     "x": 0,
+     "y": -0.2,
+     "zoom": 1.6
     },
     {
-      "id": "clock",
-      "x": 0,
-      "y": 1.1,
-      "zoom": 1.2
+     "id": "clock",
+     "x": 0,
+     "y": 1.1,
+     "zoom": 1.2
     },
     {
-      "id": "gate",
-      "x": 3.4,
-      "y": -0.1,
-      "zoom": 2.8
+     "id": "gate",
+     "x": 3.4,
+     "y": -0.1,
+     "zoom": 2.8
     },
     {
-      "id": "puddle",
-      "x": 5.0,
-      "y": -0.95,
-      "zoom": 4.2
+     "id": "puddle",
+     "x": 5.0,
+     "y": -0.95,
+     "zoom": 4.2
+    },
+    {
+     "id": "finch",
+     "x": 1.9,
+     "y": -0.2,
+     "zoom": 2.4
+    },
+    {
+     "id": "fox",
+     "x": -2.6,
+     "y": -0.2,
+     "zoom": 2.4
     }
-  ],
-  "lights": [
+   ],
+   "hotspots": [
     {
-      "id": "lamp",
-      "anchor": "lamp",
-      "radius": 3.2,
-      "intensity": 1.15,
-      "kind": "lamp"
+     "id": "nini",
+     "anchor": "nini",
+     "radius": 0.9
     },
     {
-      "id": "stringL",
-      "anchor": "stringL",
-      "radius": 6,
-      "intensity": 0.6,
-      "kind": "string"
+     "id": "bear",
+     "anchor": "bear",
+     "radius": 1.2
     },
     {
-      "id": "stringC",
-      "anchor": "stringC",
-      "radius": 7,
-      "intensity": 0.55,
-      "kind": "string"
+     "id": "clock",
+     "anchor": "clock",
+     "radius": 2.8
     },
     {
-      "id": "stringR",
-      "anchor": "stringR",
-      "radius": 6,
-      "intensity": 0.6,
-      "kind": "string"
+     "id": "lights",
+     "anchor": "lights",
+     "radius": 1.6
     },
     {
-      "id": "stall",
-      "anchor": "stall",
-      "radius": 4,
-      "intensity": 0.5,
-      "kind": "lamp"
+     "id": "gate",
+     "anchor": "gate",
+     "radius": 1.5
     },
     {
-      "id": "hospital",
-      "anchor": "gate",
-      "y": 1.6,
-      "radius": 5,
-      "intensity": 0,
-      "kind": "fluorescent"
+     "id": "puddle",
+     "anchor": "puddle",
+     "radius": 1.0
+    },
+    {
+     "id": "finch",
+     "anchor": "finch",
+     "radius": 1.0
+    },
+    {
+     "id": "fox",
+     "anchor": "fox",
+     "radius": 1.0
     }
-  ],
-  "hotspots": [
+   ],
+   "lights": [
     {
-      "id": "nini",
-      "anchor": "nini",
-      "radius": 0.9
+     "id": "lamp",
+     "anchor": "lamp",
+     "radius": 3.2,
+     "intensity": 1.15,
+     "kind": "lamp",
+     "x": 0,
+     "y": 0,
+     "z": 0
     },
     {
-      "id": "bear",
-      "anchor": "bear",
-      "radius": 1.2
+     "id": "stringC",
+     "anchor": "stringC",
+     "radius": 7,
+     "intensity": 0.55,
+     "kind": "string",
+     "x": 0,
+     "y": 0,
+     "z": 0
     },
     {
-      "id": "clock",
-      "anchor": "clock",
-      "radius": 2.8
+     "id": "stall",
+     "anchor": "stall",
+     "radius": 4,
+     "intensity": 0.5,
+     "kind": "lamp",
+     "x": 0,
+     "y": 0,
+     "z": 0
     },
     {
-      "id": "lights",
-      "anchor": "lights",
-      "radius": 1.6
-    },
-    {
-      "id": "gate",
-      "anchor": "gate",
-      "radius": 1.5
-    },
-    {
-      "id": "puddle",
-      "anchor": "puddle",
-      "radius": 1.0
+     "id": "hospital",
+     "anchor": "gate",
+     "radius": 5,
+     "intensity": 0,
+     "kind": "fluorescent",
+     "x": 0,
+     "y": 1.6,
+     "z": 0
     }
-  ]
+   ]
+  },
+  {
+   "id": "flower",
+   "layers": [
+    {
+     "name": "far",
+     "sprite": "layer_far",
+     "z": 30,
+     "width": 60,
+     "x": 0,
+     "anchorRow": 760,
+     "anchorAt": "horizon",
+     "order": -40
+    },
+    {
+     "name": "mid",
+     "sprite": "flower_mid",
+     "z": 8,
+     "width": 20,
+     "x": 0,
+     "anchorRow": 930,
+     "anchorAt": "horizon",
+     "order": -30
+    },
+    {
+     "name": "ground",
+     "sprite": "layer_ground",
+     "z": 0.6,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "horizon",
+     "order": -20
+    },
+    {
+     "name": "ground_wet",
+     "sprite": "layer_ground_wet",
+     "z": 0.59,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "horizon",
+     "order": -19
+    }
+   ],
+   "actors": [
+    {
+     "id": "bear",
+     "x": -2.2,
+     "z": 0,
+     "face": ""
+    },
+    {
+     "id": "lily",
+     "x": 1.4,
+     "z": 0.3,
+     "face": "",
+     "when": [
+      "!lily_gone"
+     ]
+    }
+   ],
+   "anchors": [
+    {
+     "id": "shopclock",
+     "layer": "mid",
+     "px": 1460,
+     "py": 712
+    },
+    {
+     "id": "garland",
+     "layer": "mid",
+     "px": 600,
+     "py": 660
+    },
+    {
+     "id": "buckets",
+     "layer": "mid",
+     "px": 1050,
+     "py": 860
+    },
+    {
+     "id": "window",
+     "layer": "mid",
+     "px": 1160,
+     "py": 760
+    },
+    {
+     "id": "lamp",
+     "layer": "mid",
+     "px": 1708,
+     "py": 390
+    }
+   ],
+   "focus": [
+    {
+     "id": "wide",
+     "x": 0,
+     "y": 0,
+     "zoom": 0
+    },
+    {
+     "id": "lily",
+     "x": 0.9,
+     "y": -0.2,
+     "zoom": 2.4
+    },
+    {
+     "id": "bear",
+     "x": -1.8,
+     "y": -0.2,
+     "zoom": 2.4
+    },
+    {
+     "id": "shopclock",
+     "x": 2.4,
+     "y": 0.4,
+     "zoom": 3.2
+    },
+    {
+     "id": "garland",
+     "x": -1.8,
+     "y": 0.4,
+     "zoom": 2.8
+    }
+   ],
+   "hotspots": [
+    {
+     "id": "lily",
+     "anchor": "lily",
+     "radius": 1.0
+    },
+    {
+     "id": "shopclock",
+     "anchor": "shopclock",
+     "radius": 0.9
+    },
+    {
+     "id": "garland",
+     "anchor": "garland",
+     "radius": 1.2
+    },
+    {
+     "id": "buckets",
+     "anchor": "buckets",
+     "radius": 1.6
+    }
+   ],
+   "lights": [
+    {
+     "id": "window",
+     "anchor": "window",
+     "radius": 7,
+     "intensity": 0.9,
+     "kind": "lamp",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "lamp",
+     "anchor": "lamp",
+     "radius": 4,
+     "intensity": 0.9,
+     "kind": "lamp",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "hospital",
+     "anchor": "window",
+     "radius": 5,
+     "intensity": 0,
+     "kind": "fluorescent",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    }
+   ]
+  },
+  {
+   "id": "cafe",
+   "layers": [
+    {
+     "name": "far",
+     "sprite": "cafe_far",
+     "z": 14,
+     "width": 30,
+     "x": 0,
+     "anchorRow": 1000,
+     "anchorAt": "horizon",
+     "order": -40
+    },
+    {
+     "name": "mid_a",
+     "sprite": "cafe_mid_a",
+     "z": 8,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 930,
+     "anchorAt": "horizon",
+     "order": -30,
+     "when": [
+      "!cafe_changed"
+     ]
+    },
+    {
+     "name": "mid_b",
+     "sprite": "cafe_mid_b",
+     "z": 8,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 930,
+     "anchorAt": "horizon",
+     "order": -30,
+     "when": [
+      "cafe_changed"
+     ]
+    },
+    {
+     "name": "ground",
+     "sprite": "cafe_floor",
+     "z": 0.6,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "horizon",
+     "order": -20
+    },
+    {
+     "name": "fg",
+     "sprite": "cafe_fg",
+     "z": -4,
+     "width": 9,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "viewTop",
+     "order": 40
+    }
+   ],
+   "actors": [
+    {
+     "id": "bear",
+     "x": -2.0,
+     "z": 0,
+     "face": ""
+    },
+    {
+     "id": "mabel",
+     "x": 2.2,
+     "z": 0.3,
+     "face": "",
+     "when": [
+      "!mabel_gone"
+     ]
+    }
+   ],
+   "anchors": [
+    {
+     "id": "window_a",
+     "layer": "mid_a",
+     "px": 410,
+     "py": 500
+    },
+    {
+     "id": "window_b",
+     "layer": "mid_b",
+     "px": 1630,
+     "py": 500
+    },
+    {
+     "id": "cafeclock",
+     "layer": "mid_b",
+     "px": 1024,
+     "py": 230
+    },
+    {
+     "id": "floor",
+     "layer": "ground",
+     "px": 1024,
+     "py": 120
+    },
+    {
+     "id": "pendant",
+     "layer": "far",
+     "px": 1024,
+     "py": 200
+    },
+    {
+     "id": "counter_a",
+     "layer": "mid_a",
+     "px": 1340,
+     "py": 640
+    },
+    {
+     "id": "counter_b",
+     "layer": "mid_b",
+     "px": 620,
+     "py": 640
+    }
+   ],
+   "focus": [
+    {
+     "id": "wide",
+     "x": 0,
+     "y": 0,
+     "zoom": 0
+    },
+    {
+     "id": "mabel",
+     "x": 1.6,
+     "y": -0.2,
+     "zoom": 2.4
+    },
+    {
+     "id": "bear",
+     "x": -1.6,
+     "y": -0.2,
+     "zoom": 2.4
+    },
+    {
+     "id": "window",
+     "x": -2.0,
+     "y": 0.6,
+     "zoom": 2.0
+    },
+    {
+     "id": "cafeclock",
+     "x": 0,
+     "y": 1.0,
+     "zoom": 2.0
+    },
+    {
+     "id": "floor",
+     "x": 0,
+     "y": -1.0,
+     "zoom": 2.6
+    }
+   ],
+   "hotspots": [
+    {
+     "id": "mabel",
+     "anchor": "mabel",
+     "radius": 1.0
+    },
+    {
+     "id": "window",
+     "anchor": "window_a",
+     "radius": 1.8
+    },
+    {
+     "id": "window",
+     "anchor": "window_b",
+     "radius": 1.8
+    },
+    {
+     "id": "cafeclock",
+     "anchor": "cafeclock",
+     "radius": 1.0
+    },
+    {
+     "id": "floor",
+     "anchor": "floor",
+     "radius": 1.4
+    }
+   ],
+   "lights": [
+    {
+     "id": "pendant",
+     "anchor": "pendant",
+     "radius": 9,
+     "intensity": 0.9,
+     "kind": "lamp",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "counter",
+     "anchor": "counter_a",
+     "radius": 5,
+     "intensity": 0.6,
+     "kind": "lamp",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "counter_b",
+     "anchor": "counter_b",
+     "radius": 5,
+     "intensity": 0.6,
+     "kind": "lamp",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "hospital",
+     "anchor": "pendant",
+     "radius": 6,
+     "intensity": 0,
+     "kind": "fluorescent",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    }
+   ]
+  },
+  {
+   "id": "park",
+   "layers": [
+    {
+     "name": "far",
+     "sprite": "park_far",
+     "z": 30,
+     "width": 60,
+     "x": 0,
+     "anchorRow": 760,
+     "anchorAt": "horizon",
+     "order": -40
+    },
+    {
+     "name": "mid",
+     "sprite": "park_mid",
+     "z": 8,
+     "width": 30,
+     "x": -2.0,
+     "anchorRow": 930,
+     "anchorAt": "horizon",
+     "order": -30
+    },
+    {
+     "name": "ground",
+     "sprite": "park_ground",
+     "z": 0.6,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "horizon",
+     "order": -20
+    },
+    {
+     "name": "fg",
+     "sprite": "park_fg",
+     "z": -4,
+     "width": 9,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "viewTop",
+     "order": 40
+    }
+   ],
+   "actors": [
+    {
+     "id": "bear",
+     "x": -2.4,
+     "z": 0,
+     "face": ""
+    },
+    {
+     "id": "oliver",
+     "x": 1.4,
+     "z": 0.3,
+     "face": "",
+     "when": [
+      "!oliver_gone"
+     ]
+    }
+   ],
+   "anchors": [
+    {
+     "id": "notice",
+     "layer": "mid",
+     "px": 1500,
+     "py": 700
+    },
+    {
+     "id": "bench",
+     "layer": "mid",
+     "px": 800,
+     "py": 800
+    },
+    {
+     "id": "lamp",
+     "layer": "mid",
+     "px": 1158,
+     "py": 430
+    }
+   ],
+   "focus": [
+    {
+     "id": "wide",
+     "x": 0,
+     "y": 0,
+     "zoom": 0
+    },
+    {
+     "id": "oliver",
+     "x": 1.0,
+     "y": -0.2,
+     "zoom": 2.4
+    },
+    {
+     "id": "notice",
+     "x": 2.6,
+     "y": 0.2,
+     "zoom": 3.0
+    },
+    {
+     "id": "bench",
+     "x": -1.6,
+     "y": -0.3,
+     "zoom": 2.4
+    }
+   ],
+   "hotspots": [
+    {
+     "id": "oliver",
+     "anchor": "oliver",
+     "radius": 1.0
+    },
+    {
+     "id": "notice",
+     "anchor": "notice",
+     "radius": 1.4
+    },
+    {
+     "id": "bench",
+     "anchor": "bench",
+     "radius": 1.4
+    }
+   ],
+   "lights": [
+    {
+     "id": "lamp",
+     "anchor": "lamp",
+     "radius": 6,
+     "intensity": 1.0,
+     "kind": "lamp",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "hospital",
+     "anchor": "notice",
+     "radius": 5,
+     "intensity": 0,
+     "kind": "fluorescent",
+     "x": 0,
+     "y": 1.0,
+     "z": 0
+    }
+   ]
+  },
+  {
+   "id": "gate",
+   "layers": [
+    {
+     "name": "far",
+     "sprite": "gate_far",
+     "z": 30,
+     "width": 60,
+     "x": 0,
+     "anchorRow": 760,
+     "anchorAt": "horizon",
+     "order": -40
+    },
+    {
+     "name": "mid",
+     "sprite": "gate_mid",
+     "z": 8,
+     "width": 20,
+     "x": -1.0,
+     "anchorRow": 930,
+     "anchorAt": "horizon",
+     "order": -30
+    },
+    {
+     "name": "ground",
+     "sprite": "road_ground",
+     "z": 0.6,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "horizon",
+     "order": -20
+    },
+    {
+     "name": "ground_wet",
+     "sprite": "layer_ground_wet",
+     "z": 0.59,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "horizon",
+     "order": -19
+    },
+    {
+     "name": "fg",
+     "sprite": "gate_fg",
+     "z": -4,
+     "width": 9,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "viewTop",
+     "order": 40
+    }
+   ],
+   "actors": [
+    {
+     "id": "bear",
+     "x": -2.6,
+     "z": 0,
+     "face": ""
+    },
+    {
+     "id": "moss",
+     "x": 1.6,
+     "z": 0.3,
+     "face": "",
+     "when": [
+      "!moss_gone"
+     ]
+    }
+   ],
+   "anchors": [
+    {
+     "id": "pump",
+     "layer": "mid",
+     "px": 1580,
+     "py": 780
+    },
+    {
+     "id": "repair",
+     "layer": "mid",
+     "px": 1765,
+     "py": 880
+    },
+    {
+     "id": "arch",
+     "layer": "mid",
+     "px": 1025,
+     "py": 340
+    },
+    {
+     "id": "alarm",
+     "layer": "mid",
+     "px": 1880,
+     "py": 640
+    },
+    {
+     "id": "lamp",
+     "layer": "mid",
+     "px": 428,
+     "py": 430
+    },
+    {
+     "id": "pumpwin",
+     "layer": "mid",
+     "px": 1760,
+     "py": 720
+    }
+   ],
+   "focus": [
+    {
+     "id": "wide",
+     "x": 0,
+     "y": 0,
+     "zoom": 0
+    },
+    {
+     "id": "moss",
+     "x": 1.0,
+     "y": -0.2,
+     "zoom": 2.4
+    },
+    {
+     "id": "pump",
+     "x": 3.2,
+     "y": 0.0,
+     "zoom": 3.0
+    },
+    {
+     "id": "arch",
+     "x": 0,
+     "y": 0.8,
+     "zoom": 1.6
+    }
+   ],
+   "hotspots": [
+    {
+     "id": "moss",
+     "anchor": "moss",
+     "radius": 0.9
+    },
+    {
+     "id": "pump",
+     "anchor": "pump",
+     "radius": 1.2
+    },
+    {
+     "id": "repair",
+     "anchor": "repair",
+     "radius": 0.9
+    },
+    {
+     "id": "arch",
+     "anchor": "arch",
+     "radius": 1.8
+    }
+   ],
+   "lights": [
+    {
+     "id": "lamp",
+     "anchor": "lamp",
+     "radius": 6,
+     "intensity": 1.0,
+     "kind": "lamp",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "pumpwin",
+     "anchor": "pumpwin",
+     "radius": 4,
+     "intensity": 0.7,
+     "kind": "lamp",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "hospital",
+     "anchor": "pump",
+     "radius": 5,
+     "intensity": 0,
+     "kind": "fluorescent",
+     "x": 0,
+     "y": 1.0,
+     "z": 0
+    }
+   ]
+  },
+  {
+   "id": "passage",
+   "layers": [
+    {
+     "name": "far",
+     "sprite": "passage_far",
+     "z": 20,
+     "width": 50,
+     "x": 0,
+     "anchorRow": 1000,
+     "anchorAt": "horizon",
+     "order": -40
+    },
+    {
+     "name": "mid",
+     "sprite": "passage_mid",
+     "z": 8,
+     "width": 22,
+     "x": -1.0,
+     "anchorRow": 930,
+     "anchorAt": "horizon",
+     "order": -30
+    },
+    {
+     "name": "ground",
+     "sprite": "passage_water",
+     "z": 0.6,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "horizon",
+     "order": -20
+    },
+    {
+     "name": "fg",
+     "sprite": "passage_fg",
+     "z": -4,
+     "width": 9,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "viewTop",
+     "order": 40
+    }
+   ],
+   "actors": [
+    {
+     "id": "bear",
+     "x": -1.4,
+     "z": 0,
+     "face": "worried"
+    },
+    {
+     "id": "nini",
+     "x": 1.4,
+     "z": -0.3,
+     "face": "worried",
+     "when": [
+      "nini_in_passage"
+     ]
+    }
+   ],
+   "anchors": [
+    {
+     "id": "hatch",
+     "layer": "mid",
+     "px": 1625,
+     "py": 475
+    },
+    {
+     "id": "crates",
+     "layer": "mid",
+     "px": 1580,
+     "py": 780
+    },
+    {
+     "id": "water",
+     "layer": "ground",
+     "px": 1024,
+     "py": 200
+    },
+    {
+     "id": "deep",
+     "layer": "far",
+     "px": 1024,
+     "py": 720
+    },
+    {
+     "id": "bulb1",
+     "layer": "mid",
+     "px": 420,
+     "py": 352
+    },
+    {
+     "id": "bulb2",
+     "layer": "mid",
+     "px": 1100,
+     "py": 352
+    }
+   ],
+   "focus": [
+    {
+     "id": "wide",
+     "x": 0,
+     "y": 0,
+     "zoom": 0
+    },
+    {
+     "id": "hatch",
+     "x": 3.4,
+     "y": 0.6,
+     "zoom": 3.0
+    },
+    {
+     "id": "nini",
+     "x": 1.0,
+     "y": -0.3,
+     "zoom": 2.6
+    },
+    {
+     "id": "both",
+     "x": 0,
+     "y": -0.2,
+     "zoom": 1.8
+    },
+    {
+     "id": "deep",
+     "x": 0,
+     "y": 0.4,
+     "zoom": 3.0
+    },
+    {
+     "id": "bear",
+     "x": -1.0,
+     "y": -0.2,
+     "zoom": 2.6
+    }
+   ],
+   "hotspots": [
+    {
+     "id": "hatch",
+     "anchor": "hatch",
+     "radius": 1.4
+    },
+    {
+     "id": "crates",
+     "anchor": "crates",
+     "radius": 1.6
+    },
+    {
+     "id": "water",
+     "anchor": "water",
+     "radius": 1.6
+    },
+    {
+     "id": "deep",
+     "anchor": "deep",
+     "radius": 2.0
+    },
+    {
+     "id": "nini",
+     "anchor": "nini",
+     "radius": 0.9
+    }
+   ],
+   "lights": [
+    {
+     "id": "bulb1",
+     "anchor": "bulb1",
+     "radius": 5,
+     "intensity": 0.8,
+     "kind": "cold",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "bulb2",
+     "anchor": "bulb2",
+     "radius": 5,
+     "intensity": 0.7,
+     "kind": "cold",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "hatch",
+     "anchor": "hatch",
+     "radius": 6,
+     "intensity": 1.0,
+     "kind": "lamp",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "hospital",
+     "anchor": "deep",
+     "radius": 6,
+     "intensity": 0,
+     "kind": "fluorescent",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    }
+   ]
+  },
+  {
+   "id": "hospital",
+   "layers": [
+    {
+     "name": "far",
+     "sprite": "hospital_far",
+     "z": 14,
+     "width": 30,
+     "x": 0,
+     "anchorRow": 1000,
+     "anchorAt": "horizon",
+     "order": -40
+    },
+    {
+     "name": "mid",
+     "sprite": "hospital_mid",
+     "z": 8,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 930,
+     "anchorAt": "horizon",
+     "order": -30
+    },
+    {
+     "name": "ground",
+     "sprite": "hospital_floor",
+     "z": 0.6,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "horizon",
+     "order": -20
+    },
+    {
+     "name": "fg",
+     "sprite": "hospital_fg",
+     "z": -4,
+     "width": 9,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "viewTop",
+     "order": 40
+    }
+   ],
+   "actors": [
+    {
+     "id": "hazel",
+     "x": 2.4,
+     "z": 0.4,
+     "face": ""
+    }
+   ],
+   "anchors": [
+    {
+     "id": "monitor",
+     "layer": "mid",
+     "px": 1660,
+     "py": 500
+    },
+    {
+     "id": "pillow",
+     "layer": "mid",
+     "px": 742,
+     "py": 640
+    },
+    {
+     "id": "window",
+     "layer": "far",
+     "px": 1510,
+     "py": 400
+    },
+    {
+     "id": "ceiling",
+     "layer": "far",
+     "px": 380,
+     "py": 160
+    }
+   ],
+   "focus": [
+    {
+     "id": "wide",
+     "x": 0,
+     "y": 0,
+     "zoom": 0
+    },
+    {
+     "id": "pillow",
+     "x": -1.6,
+     "y": 0.3,
+     "zoom": 3.0
+    },
+    {
+     "id": "monitor",
+     "x": 2.6,
+     "y": 0.6,
+     "zoom": 3.0
+    },
+    {
+     "id": "hazel",
+     "x": 1.8,
+     "y": -0.2,
+     "zoom": 2.4
+    }
+   ],
+   "hotspots": [
+    {
+     "id": "monitor",
+     "anchor": "monitor",
+     "radius": 1.2
+    },
+    {
+     "id": "pillow",
+     "anchor": "pillow",
+     "radius": 1.2
+    },
+    {
+     "id": "hazel",
+     "anchor": "hazel",
+     "radius": 1.0
+    }
+   ],
+   "lights": [
+    {
+     "id": "ceiling",
+     "anchor": "ceiling",
+     "radius": 14,
+     "intensity": 1.0,
+     "kind": "cold",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "hospital",
+     "anchor": "monitor",
+     "radius": 4,
+     "intensity": 0,
+     "kind": "fluorescent",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    }
+   ]
+  },
+  {
+   "id": "attic",
+   "layers": [
+    {
+     "name": "far",
+     "sprite": "attic_far",
+     "z": 14,
+     "width": 30,
+     "x": 0,
+     "anchorRow": 1000,
+     "anchorAt": "horizon",
+     "order": -40
+    },
+    {
+     "name": "mid",
+     "sprite": "attic_mid",
+     "z": 8,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 930,
+     "anchorAt": "horizon",
+     "order": -30
+    },
+    {
+     "name": "ground",
+     "sprite": "attic_floor",
+     "z": 0.6,
+     "width": 22,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "horizon",
+     "order": -20
+    },
+    {
+     "name": "fg",
+     "sprite": "attic_fg",
+     "z": -4,
+     "width": 9,
+     "x": 0,
+     "anchorRow": 0,
+     "anchorAt": "viewTop",
+     "order": 40
+    }
+   ],
+   "actors": [
+    {
+     "id": "niniadult",
+     "x": -0.4,
+     "z": 0,
+     "face": ""
+    }
+   ],
+   "anchors": [
+    {
+     "id": "box",
+     "layer": "mid",
+     "px": 1475,
+     "py": 740
+    },
+    {
+     "id": "window",
+     "layer": "far",
+     "px": 1024,
+     "py": 420
+    }
+   ],
+   "focus": [
+    {
+     "id": "wide",
+     "x": 0,
+     "y": 0,
+     "zoom": 0
+    },
+    {
+     "id": "box",
+     "x": 1.8,
+     "y": -0.2,
+     "zoom": 3.4
+    },
+    {
+     "id": "nini",
+     "x": -0.3,
+     "y": -0.1,
+     "zoom": 2.4
+    },
+    {
+     "id": "window",
+     "x": 0,
+     "y": 1.2,
+     "zoom": 1.8
+    }
+   ],
+   "hotspots": [
+    {
+     "id": "box",
+     "anchor": "box",
+     "radius": 1.0
+    },
+    {
+     "id": "window",
+     "anchor": "window",
+     "radius": 2.0
+    }
+   ],
+   "lights": [
+    {
+     "id": "window",
+     "anchor": "window",
+     "radius": 14,
+     "intensity": 1.0,
+     "kind": "day",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    {
+     "id": "hospital",
+     "anchor": "box",
+     "radius": 4,
+     "intensity": 0,
+     "kind": "fluorescent",
+     "x": 0,
+     "y": 0,
+     "z": 0
+    }
+   ]
+  }
+ ]
 }
