@@ -18,3 +18,4 @@
 # generated previews (re-create with node tools/simulate.js)
 ArtSource/_*.html
 ArtSource/sim_*.png
+ArtSource/_*.png
