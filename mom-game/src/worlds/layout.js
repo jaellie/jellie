@@ -6,44 +6,44 @@ export const layout = {
   size: '84㎡ (33평)',
   wallH: 2.4,
   wallT: 0.14,
-  living: { x0: 0, x1: 3.8, z0: 0, z1: 4.3 },
-  kitchen: { x0: 0, x1: 3.3, z0: 4.3, z1: 6.8 },
-  hall: { x0: 3.8, x1: 7.4, z0: 3.2, z1: 4.3 },
-  entry: { x0: 6.1, x1: 7.4, z0: 4.3, z1: 5.8, doorX: 6.6 },
-  balcony: { x0: 0, x1: 3.8, z0: -1.5, z1: 0 },
-  window: { x0: 0.8, x1: 3.0, top: 2.2, doorPane: [1.53, 2.27] },
+  living: { x0: 0, x1: 4.0, z0: 0, z1: 4.5 },
+  kitchen: { x0: 0, x1: 3.5, z0: 4.5, z1: 7.8 },
+  hall: { x0: 4.0, x1: 7.9, z0: 3.45, z1: 4.5 },
+  entry: { x0: 6.5, x1: 7.9, z0: 4.5, z1: 6.25, doorX: 7.1 },
+  // no balcony in front of the living room (the window goes straight outside)
+  window: { x0: 0.8, x1: 3.3, top: 2.2, mullions: [1.63, 2.47] },
 
   // Which side the camera swings to when Mom is in the kitchen / entry.
   // The living room is seen from the kitchen side, looking at the window.
   kitchenSide: 'north',
 
   furniture: {
-    // living room — east wall (TV side; facing the window the TV is on the left)
-    stool: { x: 3.5, z: 0.32 },
-    phone: { x: 3.59, z: 0.85 },
-    tvStand: { x: 3.56, z: 2.0, len: 1.7 },
+    // living room — east wall (TV side; facing the window the TV is on the right)
+    stool: { x: 3.7, z: 0.32 },
+    phone: { x: 3.79, z: 0.85 },
+    tvStand: { x: 3.76, z: 2.05, len: 1.7 },
+    windowPlant: { x: 1.05, z: 0.32 },
     // living room — west wall (sofa side)
-    sofa: { x: 0.43, z: 1.9, len: 2.1 },
+    sofa: { x: 0.43, z: 1.95, len: 2.1 },
     palm: { x: 0.4, z: 0.42 },
-    lamp: { x: 0.25, z: 3.04 },
-    lfBag: { x: 1.08, z: 3.15 },
-    ac: { x: 0.0, z: 1.9, y: 1.95 },
-    shelf: { x: 0.0, z: 3.8 },
-    intercom: { x: 4.3, z: 3.2, y: 1.4 },
-    rug: { x: 1.85, z: 2.0, w: 1.7, d: 2.1 },
-    // kitchen
-    darkFridge: { x: 0.5, z: 6.44 },
-    silverFridge: { x: 1.4, z: 6.44 },
-    counter: { x0: 1.85, x1: 3.3 },
-    sideCounter: { x: 3.01, z0: 5.45, z1: 6.18 },
-    table: { x: 2.0, z: 4.9 },
-    chairs: [{ x: 1.7, z: 4.22, r: 0 }, { x: 2.32, z: 4.22, r: 0 }, { x: 1.12, z: 4.9, r: Math.PI / 2 }],
-    fan: { x: 3.02, z: 4.55 },
+    lamp: { x: 0.25, z: 3.12 },
+    lfBag: { x: 1.1, z: 3.25 },
+    ac: { x: 0.0, z: 1.95, y: 1.95 },
+    shelf: { x: 0.0, z: 3.92 },
+    intercom: { x: 4.5, z: 3.45, y: 1.4 },
+    rug: { x: 2.0, z: 2.1, w: 1.7, d: 2.1 },
+    // kitchen: fridges + sink/hob on the north wall, L-counter on the west wall,
+    // speckled peninsula (dining counter) coming off the east wall
+    darkFridge: { x: 0.5, z: 7.44 },
+    silverFridge: { x: 1.4, z: 7.44 },
+    counter: { x0: 1.85, x1: 3.5 },
+    westCounter: { x: 0.3, z0: 4.95, z1: 6.95 },
+    table: { x: 2.7, z: 5.88, w: 1.6, d: 0.75 },
+    chairs: [{ x: 2.3, z: 5.1, r: 0 }, { x: 3.0, z: 5.1, r: 0 }],
+    fan: { x: 3.3, z: 4.72 },
     // entry
-    shoeCabinet: { x: 7.23, z: 5.02, len: 1.25 },
-    keyTray: { x: 7.2, z: 4.72 },
-    shoes: { x: 6.38, z: 4.92 },
-    // balcony
-    balconyPlant: { x: 0.45, z: -1.0 },
+    shoeCabinet: { x: 7.73, z: 5.3, len: 1.25 },
+    keyTray: { x: 7.7, z: 4.95 },
+    shoes: { x: 6.85, z: 5.15 },
   },
 };

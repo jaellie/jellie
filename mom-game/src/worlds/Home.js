@@ -19,7 +19,7 @@ const F = L.furniture;
 const SEA_Y = -55;
 // side walls that stand between the camera and Mom in each view
 const CUT_ALSO_LIVING = ['kitchenEast', 'entryWest'];
-const CUT_ALSO_KITCHEN = ['eastLiving', 'balconyEast', 'balconyWest'];
+const CUT_ALSO_KITCHEN = ['eastLiving'];
 
 function plankTexture(w, d, base = H.P.floor) {
   const t = canvasTexture(512, 512, (c) => {
@@ -80,10 +80,10 @@ export class Home {
     // warm lamps that fade up as the sun gets lower
     this.lamps = [];
     const addLamp = (x, y, z, base, add, dist = 6) => { const p = new THREE.PointLight('#FFC98A', base, dist, 1.6); p.position.set(x, y, z); s.add(p); this.lamps.push({ p, base, add }); return p; };
-    addLamp(1.9, 2.25, 2.3, 1.2, 3.5, 7);       // ceiling box light (living)
+    addLamp(2.0, 2.25, 2.3, 1.2, 3.5, 7);       // ceiling box light (living)
     addLamp(F.lamp.x + 0.1, 0.95, F.lamp.z, 0.8, 2.2, 4.5); // side lamp by the sofa
-    addLamp(1.7, 2.25, 5.5, 0.9, 2.5, 6);       // kitchen ceiling
-    addLamp(6.7, 2.2, 4.6, 0.6, 1.6, 4);        // entry
+    addLamp(1.7, 2.25, 6.1, 0.9, 2.5, 6);       // kitchen ceiling
+    addLamp(7.2, 2.2, 5.3, 0.6, 1.6, 4);        // entry
 
     this.applySunset();
   }
@@ -92,12 +92,12 @@ export class Home {
   buildShell() {
     const s = this.scene, T = L.wallT, HGT = L.wallH;
     // base slab under the whole flat (unbuilt rooms read as a warm wooden board)
-    const slab = box(13.4, 0.3, 9.6, '#5B4535', { cast: false }); at(slab, 3.7, -0.36, 4.0); s.add(slab);
-    const facade = box(13.4, 54, 9.6, '#E7D7C0', { cast: false }); at(facade, 3.7, SEA_Y + 0.5, 4.0); s.add(facade);
+    const slab = box(14.4, 0.3, 9.5, '#5B4535', { cast: false }); at(slab, 3.7, -0.36, 4.75); s.add(slab);
+    const facade = box(14.4, 54, 9.5, '#E7D7C0', { cast: false }); at(facade, 3.7, SEA_Y + 0.5, 4.75); s.add(facade);
 
     const floorMat = (w, d) => new THREE.MeshStandardMaterial({ map: plankTexture(w, d), roughness: 0.6 });
     const floors = [
-      [L.living, floorMat(3.8, 4.3)], [L.kitchen, floorMat(3.3, 2.5)], [L.hall, floorMat(3.6, 1.1)],
+      [L.living, floorMat(4.0, 4.5)], [L.kitchen, floorMat(3.5, 3.3)], [L.hall, floorMat(3.9, 1.05)],
     ];
     for (const [r, m] of floors) {
       const f = box(r.x1 - r.x0, 0.06, r.z1 - r.z0, null, { m, cast: false }); at(f, (r.x0 + r.x1) / 2, -0.06, (r.z0 + r.z1) / 2); s.add(f);
@@ -105,28 +105,22 @@ export class Home {
     const e = L.entry;
     const ef = box(e.x1 - e.x0, 0.06, e.z1 - e.z0, null, { m: new THREE.MeshStandardMaterial({ map: tileTexture(1.3, 1.5), roughness: 0.5 }), cast: false });
     at(ef, (e.x0 + e.x1) / 2, -0.1, (e.z0 + e.z1) / 2); s.add(ef);
-    const b = L.balcony;
-    const bf = box(b.x1 - b.x0, 0.08, b.z1 - b.z0, null, { m: new THREE.MeshStandardMaterial({ map: tileTexture(3.8, 1.5, '#E9DCC6', '#DECBB0'), roughness: 0.7 }), cast: false });
-    at(bf, (b.x0 + b.x1) / 2, -0.1, (b.z0 + b.z1) / 2); s.add(bf);
-    const lip = box(b.x1 - b.x0 + 0.3, 0.25, 0.18, '#E7D7C0', { cast: false }); at(lip, (b.x0 + b.x1) / 2, -0.3, b.z0 - 0.09); s.add(lip);
 
     // ceiling shadow proxy (invisible, casts shadow so sun only enters via the window)
-    const ceil = shadowOnly(box(8.2, 0.08, 9.0)); at(ceil, 3.7, HGT, 2.9); s.add(ceil);
+    const ceil = shadowOnly(box(8.6, 0.08, 8.4)); at(ceil, 3.95, HGT, 3.9); s.add(ceil);
 
     // wall segments: [x0, z0, x1, z1, nx, nz, name]
     const W = [
-      [0, 0, 3.8, 0, 0, 1, 'south'],
-      [3.8, 0, 3.8, 3.2, -1, 0, 'eastLiving'],
-      [3.8, 3.2, 7.4, 3.2, 0, 1, 'hallSouth'],
-      [7.4, 3.2, 7.4, 5.8, -1, 0, 'eastEntry'],
-      [6.1, 5.8, 7.4, 5.8, 0, -1, 'entryNorth'],
-      [6.1, 4.3, 6.1, 5.8, 1, 0, 'entryWest'],
-      [3.3, 4.3, 6.1, 4.3, 0, -1, 'hallNorth'],
-      [3.3, 4.3, 3.3, 6.8, -1, 0, 'kitchenEast'],
-      [0, 6.8, 3.3, 6.8, 0, -1, 'kitchenNorth'],
-      [0, 0, 0, 6.8, 1, 0, 'west'],
-      [0, -1.5, 0, 0, 1, 0, 'balconyWest'],
-      [3.8, -1.5, 3.8, 0, -1, 0, 'balconyEast'],
+      [0, 0, 4.0, 0, 0, 1, 'south'],
+      [4.0, 0, 4.0, 3.45, -1, 0, 'eastLiving'],
+      [4.0, 3.45, 7.9, 3.45, 0, 1, 'hallSouth'],
+      [7.9, 3.45, 7.9, 6.25, -1, 0, 'eastEntry'],
+      [6.5, 6.25, 7.9, 6.25, 0, -1, 'entryNorth'],
+      [6.5, 4.5, 6.5, 6.25, 1, 0, 'entryWest'],
+      [3.5, 4.5, 6.5, 4.5, 0, -1, 'hallNorth'],
+      [3.5, 4.5, 3.5, 7.8, -1, 0, 'kitchenEast'],
+      [0, 7.8, 3.5, 7.8, 0, -1, 'kitchenNorth'],
+      [0, 0, 0, 7.8, 1, 0, 'west'],
     ];
     this.wallBy = {};
     const wallM = mat(H.P.wall, { rough: 0.95 });
@@ -168,37 +162,30 @@ export class Home {
       const w = { g, decor, n: [nx, nz], scale: 1, name };
       this.walls.push(w); this.wallBy[name] = w;
     }
-    // south wall collision: solid sides + an openable gate in the middle pane (the balcony door)
-    const [d0, d1] = L.window.doorPane;
-    this.collider.addBox(0, d0, -T, 0.02, 'wall');
-    this.collider.addBox(d1, 3.8, -T, 0.02, 'wall');
-    this.windowGate = this.collider.addBox(d0, d1, -T, 0.02, 'gate');
-    // balcony railing
-    this.collider.addBox(0, 3.8, -1.75, -1.42, 'rail');
+    // south wall (big window) is solid — no balcony in front of the living room
+    this.collider.addBox(0, 4.0, -T, 0.02, 'wall');
 
     // TV-wall tile panels (west wall)
     const panelTex = canvasTexture(256, 256, (c) => { c.fillStyle = H.P.tvWall; c.fillRect(0, 0, 256, 256); c.strokeStyle = 'rgba(255,240,220,0.35)'; c.lineWidth = 3; c.strokeRect(2, 2, 252, 124); c.strokeRect(2, 130, 252, 124); for (let i = 0; i < 300; i++) { c.fillStyle = `rgba(90,70,50,${Math.random() * 0.08})`; c.fillRect(Math.random() * 256, Math.random() * 256, 3, 3); } });
     panelTex.wrapS = panelTex.wrapT = THREE.RepeatWrapping; panelTex.repeat.set(2, 2);
     const panel = box(2.1, HGT - 0.1, 0.03, null, { m: new THREE.MeshStandardMaterial({ map: panelTex, roughness: 0.7 }), cast: false });
-    at(panel, 3.785, 0.08, F.tvStand.z, -PI / 2); this.wallBy.eastLiving.decor.add(panel);
+    at(panel, 3.985, 0.08, F.tvStand.z, -PI / 2); this.wallBy.eastLiving.decor.add(panel);
 
     // decorative closed doors
     const addDoor = (wall, x, z, rot, color) => { const d = H.door(0.86, 2.05, color); at(d.group, x, 0, z, rot); this.wallBy[wall].decor.add(d.group); return d; };
-    addDoor('hallSouth', 5.05, 3.23, 0);
-    addDoor('hallSouth', 6.75, 3.23, 0);
+    addDoor('hallSouth', 5.35, 3.48, 0);
+    addDoor('hallSouth', 7.2, 3.48, 0);
+    // door to the utility balcony (kitchen east wall)
+    addDoor('kitchenEast', 3.47, 6.75, -PI / 2, '#EFE3CF');
     // sliding door to the bedroom (kitchen west wall)
-    const sd = box(0.9, 2.05, 0.04, '#F1E4CF', { r: 0.01 }); at(sd, 0.03, 0, 5.6, PI / 2); this.wallBy.west.decor.add(sd);
-    for (let i = 0; i < 3; i++) { const gl = box(0.6, 0.45, 0.01, '#FFF8EC', { opts: { emissive: '#FFE8C8', emissiveIntensity: 0.2 } }); at(gl, 0.055, 0.35 + i * 0.55, 5.6, PI / 2); this.wallBy.west.decor.add(gl); }
     // wall air conditioner (decor)
     const ac = H.wallAC(); at(ac, F.ac.x + 0.12, F.ac.y, F.ac.z, PI / 2); this.wallBy.west.decor.add(ac);
     // a framed print in the hall
-    const frame = box(0.6, 0.45, 0.03, '#C48A52', { r: 0.01 }); at(frame, 5.9, 1.3, 4.28, PI); this.wallBy.hallNorth.decor.add(frame);
-    const art = box(0.5, 0.35, 0.01, '#F2C9A4'); at(art, 5.9, 1.35, 4.26, PI); this.wallBy.hallNorth.decor.add(art);
-    // small kitchen window (east wall)
-    this.kWin = box(0.02, 0.6, 0.6, null, { m: new THREE.MeshBasicMaterial({ color: '#FFD9A0', toneMapped: false }), cast: false });
-    at(this.kWin, 3.29, 1.15, 5.85); this.wallBy.kitchenEast.decor.add(this.kWin);
-    const kwf = box(0.04, 0.68, 0.06, '#FBFAF6', { cast: false }); at(kwf, 3.28, 1.11, 5.52); this.wallBy.kitchenEast.decor.add(kwf);
-    const kwf2 = kwf.clone(); kwf2.position.z = 6.18; this.wallBy.kitchenEast.decor.add(kwf2);
+    const frame = box(0.6, 0.45, 0.03, '#C48A52', { r: 0.01 }); at(frame, 5.6, 1.3, 4.48, PI); this.wallBy.hallNorth.decor.add(frame);
+    const art = box(0.5, 0.35, 0.01, '#F2C9A4'); at(art, 5.6, 1.35, 4.46, PI); this.wallBy.hallNorth.decor.add(art);
+    // small kitchen window (north wall, above the dish rack)
+    this.kWin = box(0.55, 0.5, 0.02, null, { m: new THREE.MeshBasicMaterial({ color: '#FFD9A0', toneMapped: false }), cast: false });
+    at(this.kWin, 3.15, 1.62, 7.79); this.wallBy.kitchenNorth.decor.add(this.kWin);
   }
 
   buildOutside() {
@@ -214,7 +201,7 @@ export class Home {
     }
     this.coast = makeCoast(4, { count: 11, radius: [170, 320], y: SEA_Y }); s.add(this.coast.group);
     this.bay = makeBayLights(5, { count: 90, radius: [180, 300], y: SEA_Y + 2 }); s.add(this.bay.points);
-    this.gulls = makeGulls(4, new THREE.Vector3(1.9, -2, -20), 12, 1); s.add(this.gulls.group);
+    this.gulls = makeGulls(4, new THREE.Vector3(2.0, -2, -20), 12, 1); s.add(this.gulls.group);
     // sun glitter path on the sea
     const glit = new THREE.Mesh(new THREE.PlaneGeometry(40, 300), new THREE.MeshBasicMaterial({ map: glowTexture(), color: '#FFD9A0', transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
     glit.rotation.x = -PI / 2; glit.position.set(-20, SEA_Y + 0.6, -150); s.add(glit); this.glitter = glit;
@@ -222,29 +209,21 @@ export class Home {
     for (const [x, z, h] of [[-70, -20, 70], [85, 10, 64]]) {
       const t = box(16, h, 13, '#EADCC6', { cast: false, opts: { rough: 1 } }); at(t, x, SEA_Y + 3, z); s.add(t);
     }
-    // balcony railing (glass + rail)
-    const b = L.balcony;
-    const glass = box(b.x1 - b.x0, 1.0, 0.03, null, { m: new THREE.MeshStandardMaterial({ color: '#DDEFF0', transparent: true, opacity: 0.25, roughness: 0.1 }), cast: false });
-    at(glass, (b.x0 + b.x1) / 2, 0.05, b.z0 + 0.08); s.add(glass);
-    const rail = box(b.x1 - b.x0, 0.05, 0.08, '#B8B4AC', { opts: { metal: 0.5, rough: 0.35 } }); at(rail, (b.x0 + b.x1) / 2, 1.05, b.z0 + 0.08); s.add(rail);
-    for (let i = 0; i <= 6; i++) { const p = box(0.04, 1.05, 0.04, '#B8B4AC', { opts: { metal: 0.5, rough: 0.35 } }); at(p, b.x0 + 0.05 + (i * (b.x1 - b.x0 - 0.1)) / 6, 0, b.z0 + 0.08); s.add(p); }
-    // balcony ceiling (shadow proxy) — the flat above
-    const bc = shadowOnly(box(4.1, 0.08, 1.7)); at(bc, 1.9, L.wallH, -0.75); s.add(bc);
-    // balcony plant with a hidden note
-    const bp = H.balconyPlant(); at(bp.group, F.balconyPlant.x, 0, F.balconyPlant.z, 0.6); s.add(bp.group);
-    this.collider.addCircle(F.balconyPlant.x, F.balconyPlant.z, 0.22);
-    this.inter.add({ id: 'balconyPlant', x: F.balconyPlant.x, z: F.balconyPlant.z, y: 0.5, reach: 1.1, discover: 'balcony_note',
+    // a little potted plant by the window with a hidden note
+    const bp = H.balconyPlant(); at(bp.group, F.windowPlant.x, 0, F.windowPlant.z, 0.6); bp.group.scale.setScalar(0.85); s.add(bp.group);
+    this.collider.addCircle(F.windowPlant.x, F.windowPlant.z, 0.2);
+    this.inter.add({ id: 'windowPlant', x: F.windowPlant.x + 0.1, z: F.windowPlant.z + 0.1, y: 0.5, reach: 0.95, discover: 'balcony_note',
       onUse: () => this.game.discover('balcony_note', bp.group.position.clone().setY(0.5)) });
-    // sea-view spot at the railing
-    this.inter.add({ id: 'railing', x: 2.1, z: -1.25, y: 1.0, reach: 1.0,
-      onUse: () => this.lookOut(new THREE.Vector3(2.6, 1.6, -0.2)) });
+    // once the curtains are open, standing at the window gives the sea-view moment again
+    this.inter.add({ id: 'seaView', x: 2.15, z: 0.5, y: 1.3, reach: 0.9, enabled: () => this.state.curtainsOpen,
+      onUse: () => this.lookOut(new THREE.Vector3(2.9, 1.62, 3.3)) });
   }
 
   buildWindowAndCurtains() {
     const s = this.scene, w = L.window, Hh = w.top;
     const frameM = mat('#FBF8F2', { rough: 0.5 });
     // frame + mullions (they cast pane-shaped shadows on the floor)
-    const parts = [[w.x0, 0.06], [w.doorPane[0], 0.05], [w.doorPane[1], 0.05], [w.x1, 0.06]];
+    const parts = [[w.x0, 0.06], [w.mullions[0], 0.05], [w.mullions[1], 0.05], [w.x1, 0.06]];
     for (const [x, t] of parts) { const m = box(t, Hh, 0.08, null, { m: frameM }); at(m, x, 0, -0.04); s.add(m); }
     const head = box(w.x1 - w.x0 + 0.06, 0.06, 0.1, null, { m: frameM }); at(head, (w.x0 + w.x1) / 2, Hh - 0.06, -0.04); s.add(head);
     const sill = box(w.x1 - w.x0 + 0.06, 0.04, 0.12, null, { m: frameM }); at(sill, (w.x0 + w.x1) / 2, 0, -0.04); s.add(sill);
@@ -252,24 +231,22 @@ export class Home {
     // glass panes
     const glassM = new THREE.MeshStandardMaterial({ color: '#FFF1DE', transparent: true, opacity: 0.12, roughness: 0.05, depthWrite: false });
     const mkGlass = (x0, x1) => { const g = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0 - 0.04, Hh - 0.08), glassM); g.position.set((x0 + x1) / 2, Hh / 2, -0.06); s.add(g); return g; };
-    mkGlass(w.x0, w.doorPane[0]); mkGlass(w.doorPane[1], w.x1);
-    this.doorGlass = mkGlass(w.doorPane[0], w.doorPane[1]);
-    this.doorGlass.position.z = -0.09;
+    mkGlass(w.x0, w.mullions[0]); mkGlass(w.mullions[0], w.mullions[1]); mkGlass(w.mullions[1], w.x1);
     // warm overexposed glow in the window (fake bloom)
     this.windowGlow = new THREE.Mesh(new THREE.PlaneGeometry(w.x1 - w.x0 + 1.4, Hh + 1.0), new THREE.MeshBasicMaterial({ map: glowTexture(), color: '#FFE6BA', transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
     this.windowGlow.position.set((w.x0 + w.x1) / 2, Hh / 2, -0.12); s.add(this.windowGlow);
 
     // curtains: rod + mauve panels + sheer
-    const rod = cyl(0.018, 0.018, 2.8, '#C9A06A', { seg: 6 }); rod.rotation.z = PI / 2; at(rod, 1.9 - 1.4, 2.3, 0.14); rod.position.x = 3.3; s.add(rod);
-    const W0 = 1.36, CH = 2.24;
+    const rod = cyl(0.018, 0.018, 3.0, '#C9A06A', { seg: 6 }); rod.rotation.z = PI / 2; at(rod, 3.55, 2.3, 0.14); s.add(rod);
+    const W0 = 1.5, CH = 2.24;
     const mk = (color, z, opts) => {
       const l = H.curtainPanel(W0, CH, color, opts), r = H.curtainPanel(W0, CH, color, opts);
-      l.position.set(0.55, 2.28, z); r.position.set(3.25, 2.28, z); r.scale.x = -1;
+      l.position.set(0.55, 2.28, z); r.position.set(3.55, 2.28, z); r.scale.x = -1;
       s.add(l, r); return [l, r];
     };
     this.sheer = mk(H.P.sheer, 0.08, { opacity: 0.55, emissive: '#FFE9CC' });
     this.curtains = mk(H.P.curtain, 0.14, {});
-    this.inter.add({ id: 'curtains', x: 1.9, z: 0.55, y: 1.2, reach: 1.25, enabled: () => !this.state.curtainsOpen && !this.busyCurtains,
+    this.inter.add({ id: 'curtains', x: 2.05, z: 0.55, y: 1.2, reach: 1.25, enabled: () => !this.state.curtainsOpen && !this.busyCurtains,
       onUse: () => this.openCurtains() });
   }
 
@@ -325,37 +302,37 @@ export class Home {
 
     // TV stand + TV (east wall)
     const tv = H.tvStand(F.tvStand.len); at(tv.group, F.tvStand.x, 0, F.tvStand.z, -PI / 2); s.add(tv.group); this.tv = tv;
-    this.collider.addBox(F.tvStand.x - 0.26, 3.8, F.tvStand.z - F.tvStand.len / 2 - 0.03, F.tvStand.z + F.tvStand.len / 2 + 0.03, 'tv');
+    this.collider.addBox(F.tvStand.x - 0.26, 4.0, F.tvStand.z - F.tvStand.len / 2 - 0.03, F.tvStand.z + F.tvStand.len / 2 + 0.03, 'tv');
     this.tvOn = false; this.tvIdx = 0; this.tvTimer = 0;
     this.tvCanvas = document.createElement('canvas'); this.tvCanvas.width = 320; this.tvCanvas.height = 180;
     this.tvTex = new THREE.CanvasTexture(this.tvCanvas); this.tvTex.colorSpace = THREE.SRGBColorSpace;
     this.tvImages = (content.photos || []).map((f) => { const im = new Image(); im.src = `${import.meta.env.BASE_URL}assets/${f}`; return im; });
-    this.inter.add({ id: 'tv', x: 2.75, z: F.tvStand.z, y: 1.1, reach: 1.0, discover: 'tv_photos',
+    this.inter.add({ id: 'tv', x: 2.95, z: F.tvStand.z, y: 1.1, reach: 1.0, discover: 'tv_photos',
       onUse: async () => {
         game.audio.play('click'); this.setTv(true);
-        await game.discover('tv_photos', new THREE.Vector3(3.4, 1.2, F.tvStand.z));
+        await game.discover('tv_photos', new THREE.Vector3(3.6, 1.2, F.tvStand.z));
       } });
     const openDoor = (pivot, sign) => game.tweens.add(0.5, (t) => { pivot.rotation.y = sign * t * 1.6; });
-    this.inter.add({ id: 'tvDoorL', x: 3.08, z: F.tvStand.z - 0.48, y: 0.4, hintY: 0.75, reach: 0.95, discover: 'tv_note1',
+    this.inter.add({ id: 'tvDoorL', x: 3.28, z: F.tvStand.z - 0.48, y: 0.4, hintY: 0.75, reach: 0.95, discover: 'tv_note1',
       onUse: async () => {
         if (tv.doorL.rotation.y === 0) { game.audio.play('click'); await openDoor(tv.doorL, -1); }
-        await game.discover('tv_note1', new THREE.Vector3(3.3, 0.4, F.tvStand.z - 0.45));
+        await game.discover('tv_note1', new THREE.Vector3(3.5, 0.4, F.tvStand.z - 0.45));
       } });
-    this.inter.add({ id: 'tvDoorR', x: 3.08, z: F.tvStand.z + 0.62, y: 0.4, hintY: 0.75, reach: 0.95, discover: 'tv_note2',
+    this.inter.add({ id: 'tvDoorR', x: 3.28, z: F.tvStand.z + 0.62, y: 0.4, hintY: 0.75, reach: 0.95, discover: 'tv_note2',
       onUse: async () => {
         if (tv.doorR.rotation.y === 0) { game.audio.play('click'); await openDoor(tv.doorR, 1); }
-        await game.discover('tv_note2', new THREE.Vector3(3.3, 0.4, F.tvStand.z + 0.6));
+        await game.discover('tv_note2', new THREE.Vector3(3.5, 0.4, F.tvStand.z + 0.6));
       } });
 
     // phone cabinet + landline (rings softly the first time she comes near)
     const ph = H.phoneCabinet(); at(ph.group, F.phone.x, 0, F.phone.z, -PI / 2); s.add(ph.group); this.phone = ph;
-    this.collider.addBox(F.phone.x - 0.22, 3.8, F.phone.z - 0.27, F.phone.z + 0.27, 'phone');
-    this.inter.add({ id: 'phone', x: 3.08, z: F.phone.z, y: 0.85, reach: 0.95, discover: 'phone_voice',
+    this.collider.addBox(F.phone.x - 0.22, 4.0, F.phone.z - 0.27, F.phone.z + 0.27, 'phone');
+    this.inter.add({ id: 'phone', x: 3.28, z: F.phone.z, y: 0.85, reach: 0.95, discover: 'phone_voice',
       onUse: async () => {
         this.ring?.stop(); this.ring = null; this.ringing = false;
         game.audio.play('click');
         ph.handset.position.y = 0.95;
-        await game.discover('phone_voice', new THREE.Vector3(3.5, 0.9, F.phone.z));
+        await game.discover('phone_voice', new THREE.Vector3(3.7, 0.9, F.phone.z));
         ph.handset.position.y = 0.79; game.audio.play('click');
       } });
 
@@ -411,19 +388,19 @@ export class Home {
   buildKitchen() {
     const s = this.scene, game = this.game;
     // tall grey wood-grain panel above the fridges
-    const top = box(1.85, L.wallH - 1.88, 0.72, H.P.panel, { r: 0.01, cast: false }); at(top, 0.95, 1.88, 6.44); s.add(top);
+    const top = box(1.85, L.wallH - 1.88, 0.72, H.P.panel, { r: 0.01, cast: false }); at(top, 0.95, 1.88, F.darkFridge.z); s.add(top);
 
     this.kitchenBack = [top];
     const df = H.darkFridge(); at(df.group, F.darkFridge.x, 0, F.darkFridge.z, PI); s.add(df.group);
     const sf = H.silverFridge(); at(sf.group, F.silverFridge.x, 0, F.silverFridge.z, PI); s.add(sf.group); this.fridge = sf;
-    this.collider.addBox(0, 1.86, 6.06, 6.8, 'fridges');
+    this.collider.addBox(0, 1.86, 7.06, 7.8, 'fridges');
     this.kitchenBack.push(df.group, sf.group);
-    this.inter.add({ id: 'darkFridge', x: F.darkFridge.x, z: 5.95, y: 1.3, reach: 0.95, discover: 'fridge_photo',
-      onUse: () => game.discover('fridge_photo', new THREE.Vector3(F.darkFridge.x + 0.12, 1.3, 6.05)) });
+    this.inter.add({ id: 'darkFridge', x: F.darkFridge.x, z: 6.95, y: 1.3, reach: 0.95, discover: 'fridge_photo',
+      onUse: () => game.discover('fridge_photo', new THREE.Vector3(F.darkFridge.x + 0.12, 1.3, 7.05)) });
 
     // silver fridge: open → light the candle → blow it out
     this.cakeStep = 0;
-    this.inter.add({ id: 'silverFridge', x: F.silverFridge.x, z: 5.95, y: 1.1, reach: 0.95, discover: 'fridge_cake',
+    this.inter.add({ id: 'silverFridge', x: F.silverFridge.x, z: 6.95, y: 1.1, reach: 0.95, discover: 'fridge_cake',
       onUse: async () => {
         const step = this.cakeStep;
         if (step === 0) {
@@ -453,60 +430,62 @@ export class Home {
 
     // counter run along the north wall (rotated so the front faces the room)
     const cx = (F.counter.x0 + F.counter.x1) / 2, clen = F.counter.x1 - F.counter.x0;
-    const cr = H.counterRun(clen); at(cr.group, cx, 0, 6.8 - 0.31, PI); s.add(cr.group); this.counter = cr;
-    this.collider.addBox(F.counter.x0, 3.3, 6.17, 6.8, 'counter');
+    const cr = H.counterRun(clen); at(cr.group, cx, 0, 7.8 - 0.31, PI); s.add(cr.group); this.counter = cr;
+    this.collider.addBox(F.counter.x0, 3.5, 7.17, 7.8, 'counter');
     this.kitchenBack.push(cr.group);
     const toWorld = (lx) => cx - lx; // rotation PI mirrors local x
     const potX = toWorld(cr.hobX - 0.12), sinkX = toWorld(cr.sinkX), hobX = toWorld(cr.hobX);
     this.steam = [];
-    for (let i = 0; i < 8; i++) { const st = glowSprite('#FFFFFF', 0.25, 0); st.position.set(potX, 1.1, 6.57); s.add(st); this.steam.push({ s: st, t: i / 8 }); }
+    for (let i = 0; i < 8; i++) { const st = glowSprite('#FFFFFF', 0.25, 0); st.position.set(potX, 1.1, 7.57); s.add(st); this.steam.push({ s: st, t: i / 8 }); }
     this.steamOn = 0;
-    this.inter.add({ id: 'pot', x: potX, z: 6.2, y: 1.0, reach: 0.9, discover: 'soup_gift',
+    this.inter.add({ id: 'pot', x: potX, z: 7.2, y: 1.0, reach: 0.9, discover: 'soup_gift',
       onUse: async () => {
         game.audio.play('lid');
         const up = cr.lid.position.y < 0.2;
         await game.tweens.add(0.5, (t) => { const u = up ? t : 1 - t; cr.lid.position.y = 0.15 + u * 0.18; cr.lid.position.x = u * 0.12; cr.lid.rotation.z = -u * 0.6; });
         this.steamOn = up ? 1 : 0;
-        if (up && !this.disc.isFound('soup_gift')) { await game.tweens.wait(0.7); await game.discover('soup_gift', new THREE.Vector3(potX, 1.15, 6.57)); }
+        if (up && !this.disc.isFound('soup_gift')) { await game.tweens.wait(0.7); await game.discover('soup_gift', new THREE.Vector3(potX, 1.15, 7.57)); }
       } });
-    this.inter.add({ id: 'whale', x: hobX + 0.3, z: 6.2, y: 1.25, reach: 0.85, discover: 'whale_note',
+    this.inter.add({ id: 'whale', x: hobX + 0.3, z: 7.2, y: 1.25, reach: 0.85, discover: 'whale_note',
       onUse: async () => {
         this.state.whale = !this.state.whale; game.audio.play('click');
-        if (this.state.whale) { game.say(content.bubbles.whale); if (!this.disc.isFound('whale_note')) { await game.tweens.wait(1.6); await game.discover('whale_note', new THREE.Vector3(hobX, 1.25, 6.75)); } }
+        if (this.state.whale) { game.say(content.bubbles.whale); if (!this.disc.isFound('whale_note')) { await game.tweens.wait(1.6); await game.discover('whale_note', new THREE.Vector3(hobX, 1.25, 7.75)); } }
       } });
-    this.inter.add({ id: 'sink', x: sinkX, z: 6.2, y: 1.0, reach: 0.85, discover: 'sink_note',
+    this.inter.add({ id: 'sink', x: sinkX, z: 7.2, y: 1.0, reach: 0.85, discover: 'sink_note',
       onUse: async () => {
         game.audio.play('dish'); game.mom.play('reach', 1.4);
         await game.tweens.add(1.3, (t) => { const p = cr.plates[3]; p.rotation.z = Math.sin(t * PI * 3) * 0.2; });
-        if (!this.disc.isFound('sink_note')) await game.discover('sink_note', new THREE.Vector3(sinkX, 1.0, 6.5));
+        if (!this.disc.isFound('sink_note')) await game.discover('sink_note', new THREE.Vector3(sinkX, 1.0, 7.5));
       } });
 
-    // side counter along the east wall (tissue box, clock, flower jar)
-    const sc = H.sideCounter(F.sideCounter.z1 - F.sideCounter.z0); at(sc, F.sideCounter.x, 0, (F.sideCounter.z0 + F.sideCounter.z1) / 2, -PI / 2); s.add(sc);
-    this.collider.addBox(2.71, 3.3, F.sideCounter.z0, F.sideCounter.z1, 'sidecounter');
+    // L-counter along the west wall (tissue box, clock, flower jar, sanitizer)
+    const WC = F.westCounter, wcLen = WC.z1 - WC.z0;
+    const sc = H.sideCounter(wcLen); at(sc, WC.x, 0, (WC.z0 + WC.z1) / 2, PI / 2); s.add(sc);
+    this.collider.addBox(0, 0.6, WC.z0, WC.z1, 'westcounter');
     this.kitchenBack.push(sc);
-    const tb = H.tissueBox(); at(tb.group, 3.02, 0.88, 5.58, -PI / 2 + 0.15); s.add(tb.group);
-    this.inter.add({ id: 'tissue', x: 3.0, z: 5.58, y: 1.0, reach: 0.95, discover: 'tissue_note',
+    const ix = 0.95; // where Mom stands in front of the counter
+    const tb = H.tissueBox(); at(tb.group, 0.3, 0.88, 5.2, PI / 2 - 0.15); s.add(tb.group);
+    this.inter.add({ id: 'tissue', x: ix, z: 5.2, y: 1.0, reach: 0.8, discover: 'tissue_note',
       onUse: async () => {
         game.audio.play('page'); tb.note.visible = true;
         await game.tweens.add(0.6, (t) => { tb.tissue.position.y = 0.12 + Math.sin(t * PI * 0.5) * 0.12; });
-        await game.discover('tissue_note', new THREE.Vector3(3.0, 1.15, 5.58));
+        await game.discover('tissue_note', new THREE.Vector3(0.3, 1.15, 5.2));
         tb.tissue.position.y = 0.12; tb.note.visible = false;
       } });
-    const clk = H.digitalClock(); at(clk.group, 3.05, 0.88, 5.84, -PI / 2 - 0.2); s.add(clk.group); this.clock = clk;
-    this.inter.add({ id: 'clock', x: 3.0, z: 5.84, y: 1.0, reach: 0.95, discover: 'clock_note',
-      onUse: async () => { game.audio.play('beep'); this.drawClock(true); await game.tweens.wait(0.6); await game.discover('clock_note', new THREE.Vector3(3.0, 1.1, 5.84)); } });
-    const fj = H.flowerJar(); at(fj.group, 3.0, 0.88, 6.06); s.add(fj.group); this.flowers = fj;
+    const clk = H.digitalClock(); at(clk.group, 0.28, 0.88, 5.85, PI / 2 + 0.2); s.add(clk.group); this.clock = clk;
+    this.inter.add({ id: 'clock', x: ix, z: 5.85, y: 1.0, reach: 0.8, discover: 'clock_note',
+      onUse: async () => { game.audio.play('beep'); this.drawClock(true); await game.tweens.wait(0.6); await game.discover('clock_note', new THREE.Vector3(0.3, 1.1, 5.85)); } });
+    const fj = H.flowerJar(); at(fj.group, 0.3, 0.88, 6.5); s.add(fj.group); this.flowers = fj;
     this.flowerSway = 0;
-    this.inter.add({ id: 'flowers', x: 2.95, z: 6.06, y: 1.2, reach: 0.95, discover: 'flower_note',
-      onUse: async () => { this.flowerSway = 1.5; game.audio.play('rustle'); game.say('음~ 향기 좋다.', 1800); await game.tweens.wait(1.0); await game.discover('flower_note', new THREE.Vector3(3.0, 1.3, 6.06)); } });
+    this.inter.add({ id: 'flowers', x: ix, z: 6.5, y: 1.2, reach: 0.8, discover: 'flower_note',
+      onUse: async () => { this.flowerSway = 1.5; game.audio.play('rustle'); game.say('음~ 향기 좋다.', 1800); await game.tweens.wait(1.0); await game.discover('flower_note', new THREE.Vector3(0.3, 1.3, 6.5)); } });
     // hand sanitizer
-    const san = cyl(0.03, 0.035, 0.14, '#E8F2F0', { seg: 8 }); at(san, 3.1, 0.88, 5.42); s.add(san);
+    const san = cyl(0.03, 0.035, 0.14, '#E8F2F0', { seg: 8 }); at(san, 0.22, 0.88, 6.85); s.add(san);
     this.kitchenBack.push(tb.group, clk.group, fj.group, san);
 
-    // dining table + chairs
-    const tbl = H.diningTable(); at(tbl.group, F.table.x, 0, F.table.z); s.add(tbl.group); this.table = tbl;
-    this.collider.addRect(F.table.x, F.table.z, 1.25, 0.72, 'table');
+    // speckled peninsula / dining counter (off the east wall) + chairs
+    const tbl = H.diningTable(F.table.w, F.table.d); at(tbl.group, F.table.x, 0, F.table.z); s.add(tbl.group); this.table = tbl;
+    this.collider.addRect(F.table.x, F.table.z, F.table.w, F.table.d, 'table');
     this.chairs = F.chairs.map((c) => { const ch = H.chair(); at(ch, c.x, 0, c.z, c.r); s.add(ch); this.collider.addCircle(c.x, c.z, 0.24); return ch; });
     const bowlW = tbl.bowl.getWorldPosition(new THREE.Vector3());
     this.inter.add({ id: 'persimmon', x: bowlW.x, z: bowlW.z, y: 0.95, reach: 1.15, discover: 'persimmon_gift',
@@ -558,18 +537,18 @@ export class Home {
   buildEntry() {
     const s = this.scene, game = this.game;
     // front door
-    const d = H.door(0.9, 2.05, '#E7D8C0'); at(d.group, L.entry.doorX, 0, 5.77, PI); s.add(d.group); this.frontDoor = d;
-    const mat2 = box(0.8, 0.012, 0.5, '#B98A7A', { r: 0.01, cast: false }); at(mat2, L.entry.doorX, -0.07, 5.45); s.add(mat2);
+    const d = H.door(0.9, 2.05, '#E7D8C0'); at(d.group, L.entry.doorX, 0, L.entry.z1 - 0.03, PI); s.add(d.group); this.frontDoor = d;
+    const mat2 = box(0.8, 0.012, 0.5, '#B98A7A', { r: 0.01, cast: false }); at(mat2, L.entry.doorX, -0.07, L.entry.z1 - 0.35); s.add(mat2);
     // shoe cabinet + key tray
     const sc = H.shoeCabinet(F.shoeCabinet.len); at(sc, F.shoeCabinet.x, 0, F.shoeCabinet.z, -PI / 2); s.add(sc);
-    this.collider.addBox(F.shoeCabinet.x - 0.18, 7.4, F.shoeCabinet.z - F.shoeCabinet.len / 2, F.shoeCabinet.z + F.shoeCabinet.len / 2, 'shoecab');
+    this.collider.addBox(F.shoeCabinet.x - 0.18, 7.9, F.shoeCabinet.z - F.shoeCabinet.len / 2, F.shoeCabinet.z + F.shoeCabinet.len / 2, 'shoecab');
     const kt = H.keyTray(); at(kt.group, F.keyTray.x, 0.97, F.keyTray.z, -PI / 2); s.add(kt.group); this.keyTray = kt;
     // black rubber shoes on the floor + slippers (shown while Mom wears the shoes)
     this.floorShoes = H.pairOfShoes(() => rubberShoe(content.mom.shoes)); at(this.floorShoes, F.shoes.x, -0.07, F.shoes.z, PI); this.floorShoes.scale.setScalar(1.15); s.add(this.floorShoes);
     this.floorSlippers = H.pairOfShoes(() => slipper(content.mom.slippers)); at(this.floorSlippers, F.shoes.x + 0.05, -0.04, F.shoes.z - 0.5, 0); s.add(this.floorSlippers);
     this.floorSlippers.visible = false;
 
-    this.inter.add({ id: 'door', x: L.entry.doorX, z: 5.5, y: 1.3, reach: 0.85, onUse: () => this.useDoor() });
+    this.inter.add({ id: 'door', x: L.entry.doorX, z: L.entry.z1 - 0.3, y: 1.3, reach: 0.85, onUse: () => this.useDoor() });
     if (content.features.mall) {
       this.inter.add({ id: 'key', x: F.keyTray.x, z: F.keyTray.z, y: 1.05, reach: 1.0,
         onUse: async () => {
@@ -603,7 +582,7 @@ export class Home {
     this.shaftMat = new THREE.MeshBasicMaterial({ map: shaftTex, color: '#FFD9A0', transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, toneMapped: false });
     const geo = new THREE.PlaneGeometry(0.55, 5.5); geo.translate(0, -2.75, 0);
     this.shafts = [];
-    for (const x of [1.0, 1.6, 2.2, 2.75]) {
+    for (const x of [1.05, 1.7, 2.35, 3.0]) {
       const g = new THREE.Group(); g.position.set(x, 1.55, -0.05);
       const a = new THREE.Mesh(geo, this.shaftMat), b = new THREE.Mesh(geo, this.shaftMat); b.rotation.y = PI / 2;
       g.add(a, b); s.add(g); this.shafts.push(g);
@@ -658,20 +637,20 @@ export class Home {
     this.floorShoes.visible = true; this.floorSlippers.visible = false;
     this.frontDoor.leaf.rotation.y = 0;
     g.audio.setLoops(this.loopKeys());
-    if (!from) { mom.position.set(1.9, 0, 2.7); mom.face(PI, true); return; }
+    if (!from) { mom.position.set(2.0, 0, 2.9); mom.face(PI, true); return; }
     // coming back in through the front door
-    mom.position.set(6.7, 0, 4.85); mom.face(PI * 1.0, true);
+    mom.position.set(7.1, 0, 5.4); mom.face(PI, true);
     setTimeout(() => g.say(from === 'past' ? '…꿈이었나?' : '다녀왔습니다~'), 1200);
   }
 
-  loopKeys() { const k = ['bgm_home']; if (this.state.curtainsOpen) k.push('waves', 'gulls'); if (this.game.mom.position.z < -0.1) k.push('wind'); return k; }
+  loopKeys() { const k = ['bgm_home']; if (this.state.curtainsOpen) k.push('waves', 'gulls'); return k; }
 
   exit() { this.ring?.stop(); this.ring = null; this.game.mom.stand(); this.sitting = null; }
 
   cameraYawFor(p, cur) {
     const k = cur > 1 ? 1 : 0; // hysteresis
-    const inKitchen = p.x < 3.45 && p.z > (k ? 4.4 : 4.8);
-    const inEntry = p.x > (k ? 5.9 : 6.15) && p.z > (k ? 4.25 : 4.45);
+    const inKitchen = p.x < 3.6 && p.z > (k ? 4.6 : 5.0);
+    const inEntry = p.x > (k ? 6.3 : 6.55) && p.z > (k ? 4.45 : 4.65);
     return inKitchen || inEntry ? PI : 0;
   }
 
@@ -679,11 +658,11 @@ export class Home {
   cameraFocus(p) {
     const f = this._focus || (this._focus = new THREE.Vector3());
     f.copy(p);
-    if (p.x < 3.8 && p.z < 4.3 && p.z > -0.2) f.x = lerp(p.x, 1.9, 0.65);
+    if (p.x < 4.0 && p.z < 4.5) f.x = lerp(p.x, 2.0, 0.65);
     return f;
   }
 
-  surfaceAt(x, z) { return x > 6.1 && z > 4.3 ? 'tile' : z < 0 ? 'tile' : 'wood'; }
+  surfaceAt(x, z) { return x > 6.5 && z > 4.5 ? 'tile' : 'wood'; }
 
   async sitSofa() {
     const g = this.game;
@@ -714,16 +693,14 @@ export class Home {
   async openCurtains() {
     const g = this.game;
     this.busyCurtains = true; g.busy = true;
-    g.mom.faceToward(1.9, 0); g.mom.play('reach', 1.4);
+    g.mom.faceToward(2.05, 0); g.mom.play('reach', 1.4);
     g.audio.play('curtain');
     await g.tweens.add(3.0, (t) => this.setCurtains(t), ease.inOut);
-    this.state.curtainsOpen = true; this.windowGate.enabled = false;
+    this.state.curtainsOpen = true;
     this.state.sunset = Math.min(1, this.state.sunset + 0.15);
     g.audio.setLoops(this.loopKeys(), 3);
-    // slide the balcony door pane open
-    g.tweens.add(1.2, (t) => { this.doorGlass.position.x = lerp(1.9, 1.2, t); });
     // emotional peak: the camera drops to her eye level and looks out to sea
-    await this.lookOut(new THREE.Vector3(2.75, 1.62, 3.3), 6.5, content.bubbles.curtains);
+    await this.lookOut(new THREE.Vector3(2.9, 1.62, 3.3), 6.5, content.bubbles.curtains);
     this.busyCurtains = false; g.busy = false;
   }
 
@@ -733,7 +710,7 @@ export class Home {
     g.cam.override = { pos: eye, look: new THREE.Vector3(eye.x - 14, -5, -60) };
     g.mom.faceToward(eye.x - 0.5, -5);
     await g.tweens.wait(1.6);
-    g.say(bubble || content.bubbles.balcony, 3200);
+    g.say(bubble || content.bubbles.curtains, 3200);
     if (hold) await g.tweens.wait(hold);
     else await g.waitForKey(8);
     g.cam.override = null;
@@ -756,7 +733,7 @@ export class Home {
     if (where === 'beach') {
       g.audio.play('door');
       await g.tweens.add(0.9, (t) => { this.frontDoor.leaf.rotation.y = -t * 1.3; });
-      g.mom.faceToward(L.entry.doorX, 6.5);
+      g.mom.faceToward(L.entry.doorX, 7);
       g.goTo('beach', { color: '#FFE2B0', ms: 1800 });
     } else if (where === 'mall') g.goTo('mall', { color: '#000', ms: 1200, cinematic: () => g.playCinematic(makeDrive(g)) });
     else g.goTo('past', { color: '#FFFFFF', ms: 2000 });
@@ -831,16 +808,13 @@ export class Home {
     if (this.tvOn) { this.tvTimer += dt; if (this.tvTimer > 3.5) { this.tvTimer = 0; this.tvIdx++; this.drawTv(); } }
     // phone rings softly the first time she comes near
     const p = g.mom.position;
-    if (!st.phoneRang && !this.disc.isFound('phone_voice') && Math.hypot(p.x - 3.3, p.z - F.phone.z) < 2.3) {
+    if (!st.phoneRang && !this.disc.isFound('phone_voice') && Math.hypot(p.x - 3.5, p.z - F.phone.z) < 2.3) {
       st.phoneRang = true; this.ringing = true; this.ring = g.audio.ring(); g.say(content.bubbles.phoneRing);
       setTimeout(() => { this.ring?.stop(); this.ring = null; this.ringing = false; }, 11000);
     }
     if (this.ringing) this.phone.handset.position.y = 0.79 + Math.max(0, Math.sin(this.time * 40)) * 0.006 * (Math.sin(this.time * 2.4) > 0 ? 1 : 0);
     this.drawClock();
     this.shelf.update(dt);
-    // balcony wind
-    const onBalcony = p.z < -0.1;
-    if (onBalcony !== this._onBalcony) { this._onBalcony = onBalcony; g.audio.setLoops(this.loopKeys(), 1.5); }
     // sea + sky
     if ((this._seaT = (this._seaT || 0) + dt) > 1 / 30) { this._seaT = 0; this.sea.update(this.time, 0.5, 0.25); }
     this.gulls.update(this.time);
