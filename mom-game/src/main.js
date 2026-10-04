@@ -51,9 +51,9 @@ class Game {
   }
 
   setWorld(w, from) {
-    this.world?.scene.remove(this.mom.root);
+    if (this.world) (this.world.root || this.world.scene).remove(this.mom.root);
     this.world = w;
-    w.scene.add(this.mom.root);
+    (w.root || w.scene).add(this.mom.root);
     this.mom.vel.set(0, 0); this.mom.stand();
     w.enter(from);
     w.home = this.worlds.home;
@@ -61,7 +61,7 @@ class Game {
     this.cam.setDefaults({ distance: w.cameraDistance, pitch: w.cameraPitch ?? PITCH });
     this.cam.targetYaw = this.cam.yaw = w.cameraYawFor(this.mom.position, 0);
     this.latchedYaw = this.cam.targetYaw;
-    this.cam.snap(w.cameraFocus?.(this.mom.position) ?? this.mom.position);
+    this.cam.snap(this.toWorld(w.cameraFocus?.(this.mom.position) ?? this.mom.position));
     document.body.classList.toggle('past', w.name === 'past');
   }
 
@@ -113,8 +113,8 @@ class Game {
 
   burst(pos) {
     const s = glowSprite('#FFE7B0', 0.2, 1, starTexture());
-    s.position.copy(pos); this.world.scene.add(s);
-    this.bursts.push({ s, t: 0, scene: this.world.scene });
+    s.position.copy(pos); const parent = this.world.root || this.world.scene; parent.add(s);
+    this.bursts.push({ s, t: 0, scene: parent });
   }
 
   waitForKey(maxSec = 8) {
@@ -174,6 +174,7 @@ class Game {
       if (active) {
         const { fwd, right } = FollowCamera.basis(this.latchedYaw);
         move = { x: right.x * mv.x + fwd.x * mv.y, z: right.z * mv.x + fwd.z * mv.y };
+        if (this.world.mirrorX) move.x = -move.x; // screen → plan coordinates
         this.lastMove = mv;
       }
       if (interact && this.world.inter.current) this.use(this.world.inter.current);
@@ -186,7 +187,7 @@ class Game {
     this.world.inter.hideSparkles = !!this.cam.override;
     const cur = this.world.inter.update(dt, this.mom);
     this.cam.targetYaw = this.world.cameraYawFor(this.mom.position, this.cam.targetYaw);
-    this.cam.update(dt, this.world.cameraFocus?.(this.mom.position) ?? this.mom.position);
+    this.cam.update(dt, this.toWorld(this.world.cameraFocus?.(this.mom.position) ?? this.mom.position));
 
     // UI anchors
     const showHint = cur && !this.busy && !this.acting && !ov.isOpen && !this.cam.override;
@@ -208,8 +209,14 @@ class Game {
 
   project(v) {
     const p = this._p || (this._p = new THREE.Vector3());
-    p.copy(v).project(this.cam.camera);
+    p.copy(v); if (this.world?.mirrorX) p.x = -p.x;
+    p.project(this.cam.camera);
     return { x: (p.x * 0.5 + 0.5) * innerWidth, y: (-p.y * 0.5 + 0.5) * innerHeight };
+  }
+
+  // plan coordinates → rendered world (mirrored worlds flip x)
+  toWorld(v, out = this._tw || (this._tw = new THREE.Vector3())) {
+    out.copy(v); if (this.world?.mirrorX) out.x = -out.x; return out;
   }
 
   debug() {

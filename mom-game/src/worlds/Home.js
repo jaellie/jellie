@@ -51,6 +51,10 @@ export class Home {
     this.name = 'home';
     this.cameraDistance = 7.2;
     this.scene = new THREE.Scene();
+    // Layout uses plan coordinates (+x east, +z north). Three.js is right-handed, so the
+    // whole flat renders through a root mirrored in x; otherwise it would look like a mirror image.
+    this.root = new THREE.Group(); this.root.scale.x = -1; this.scene.add(this.root);
+    this.mirrorX = true;
     this.collider = new Collider();
     this.state = { sunset: 0, elapsed: 0, curtains: 0, curtainsOpen: false, fan: false, whale: false, phoneRang: false, visits: 0 };
     this.time = 0;
@@ -60,13 +64,13 @@ export class Home {
 
   // ───────────────────────────────────────────────────────────
   build() {
-    const s = this.scene;
-    s.background = new THREE.Color('#2A1E1A');
-    s.fog = new THREE.Fog('#FFE3B8', 160, 700);
+    this.scene.background = new THREE.Color('#2A1E1A');
+    this.scene.fog = new THREE.Fog('#FFE3B8', 160, 700);
+    const s = this.root;
     this.rig = createRig(s, { shadowSize: 2048, extent: 7.5, hemi: 1.15 });
     this.focus = new THREE.Vector3(3.2, 0, 2.6);
 
-    this.sky = makeSky(); s.add(this.sky.mesh);
+    this.sky = makeSky(); this.scene.add(this.sky.mesh); // the sky stays un-mirrored
     this.disc = this.game.disc;
     this.inter = new Interactables(s, this.disc);
 
@@ -82,7 +86,7 @@ export class Home {
     this.lamps = [];
     const addLamp = (x, y, z, base, add, dist = 6) => { const p = new THREE.PointLight('#FFC98A', base, dist, 1.6); p.position.set(x, y, z); s.add(p); this.lamps.push({ p, base, add }); return p; };
     addLamp(2.0, 2.25, 2.3, 1.2, 3.5, 7);       // ceiling box light (living)
-    addLamp(F.lamp.x + 0.1, 0.95, F.lamp.z, 0.8, 2.2, 4.5); // side lamp by the sofa
+    addLamp(F.lamp.x - 0.1, 0.95, F.lamp.z, 0.8, 2.2, 4.5); // side lamp by the sofa
     addLamp(1.7, 2.25, 6.1, 0.9, 2.5, 6);       // kitchen ceiling
     addLamp(7.2, 2.2, 5.3, 0.6, 1.6, 4);        // entry
 
@@ -91,7 +95,7 @@ export class Home {
 
   // floors, walls (with camera cutaway), shadow proxies
   buildShell() {
-    const s = this.scene, T = L.wallT, HGT = L.wallH;
+    const s = this.root, T = L.wallT, HGT = L.wallH;
     // base slab under the whole flat (unbuilt rooms read as a warm wooden board)
     const slab = box(14.4, 0.3, 9.5, '#5B4535', { cast: false }); at(slab, 3.7, -0.36, 4.75); s.add(slab);
     const facade = box(14.4, 54, 9.5, '#E7D7C0', { cast: false }); at(facade, 3.7, SEA_Y + 0.5, 4.75); s.add(facade);
@@ -104,8 +108,18 @@ export class Home {
       const f = box(r.x1 - r.x0, 0.06, r.z1 - r.z0, null, { m, cast: false }); at(f, (r.x0 + r.x1) / 2, -0.06, (r.z0 + r.z1) / 2); s.add(f);
     }
     const e = L.entry;
-    const ef = box(e.x1 - e.x0, 0.06, e.z1 - e.z0, null, { m: new THREE.MeshStandardMaterial({ map: tileTexture(1.3, 1.5), roughness: 0.5 }), cast: false });
-    at(ef, (e.x0 + e.x1) / 2, -0.1, (e.z0 + e.z1) / 2); s.add(ef);
+    const decoT = canvasTexture(256, 256, (c) => {
+      c.fillStyle = '#F4F1EA'; c.fillRect(0, 0, 256, 256);
+      c.strokeStyle = 'rgba(190,150,80,0.85)'; c.lineWidth = 2;
+      for (const [cx, cy] of [[0, 0], [256, 0], [0, 256], [256, 256], [128, 128]]) for (let r = 18; r < 130; r += 22) { c.beginPath(); c.arc(cx, cy, r, 0, PI * 2); c.stroke(); }
+      c.strokeStyle = 'rgba(150,140,130,0.35)'; c.lineWidth = 1; for (let a = 0; a < PI * 2; a += PI / 16) { c.beginPath(); c.moveTo(128, 128); c.lineTo(128 + Math.cos(a) * 128, 128 + Math.sin(a) * 128); c.stroke(); }
+    });
+    decoT.wrapS = decoT.wrapT = THREE.RepeatWrapping; decoT.repeat.set(1.6, 1.6);
+    const ef = box(e.x1 - e.x0, 0.06, e.z1 - e.z0 - 0.3, null, { m: new THREE.MeshStandardMaterial({ map: decoT, roughness: 0.3 }), cast: false });
+    at(ef, (e.x0 + e.x1) / 2, -0.13, (e.z0 + e.z1) / 2 + 0.15); s.add(ef);
+    const terrazzoT = canvasTexture(256, 64, (c) => { c.fillStyle = '#B9B4AC'; c.fillRect(0, 0, 256, 64); for (let i = 0; i < 400; i++) { c.fillStyle = ['#E8E4DC', '#8E8A84', '#D6D0C4', '#6E6A66'][i % 4]; c.fillRect(Math.random() * 256, Math.random() * 64, 2 + Math.random() * 3, 2 + Math.random() * 2); } });
+    const step = box(e.x1 - e.x0, 0.07, 0.3, null, { m: new THREE.MeshStandardMaterial({ map: terrazzoT, roughness: 0.5 }), cast: false });
+    at(step, (e.x0 + e.x1) / 2, -0.07, e.z0 + 0.15); s.add(step);
 
     // ceiling shadow proxy (invisible, casts shadow so sun only enters via the window)
     const ceil = shadowOnly(box(8.6, 0.08, 8.4)); at(ceil, 3.95, HGT, 3.9); s.add(ceil);
@@ -170,17 +184,17 @@ export class Home {
     const panelTex = canvasTexture(256, 256, (c) => { c.fillStyle = H.P.tvWall; c.fillRect(0, 0, 256, 256); c.strokeStyle = 'rgba(255,240,220,0.35)'; c.lineWidth = 3; c.strokeRect(2, 2, 252, 124); c.strokeRect(2, 130, 252, 124); for (let i = 0; i < 300; i++) { c.fillStyle = `rgba(90,70,50,${Math.random() * 0.08})`; c.fillRect(Math.random() * 256, Math.random() * 256, 3, 3); } });
     panelTex.wrapS = panelTex.wrapT = THREE.RepeatWrapping; panelTex.repeat.set(2, 2);
     const panel = box(2.1, HGT - 0.1, 0.03, null, { m: new THREE.MeshStandardMaterial({ map: panelTex, roughness: 0.7 }), cast: false });
-    at(panel, 3.985, 0.08, F.tvStand.z, -PI / 2); this.wallBy.eastLiving.decor.add(panel);
+    at(panel, 0.015, 0.08, F.tvStand.z, PI / 2); this.wallBy.west.decor.add(panel);
 
     // decorative closed doors
     const addDoor = (wall, x, z, rot, color) => { const d = H.door(0.86, 2.05, color); at(d.group, x, 0, z, rot); this.wallBy[wall].decor.add(d.group); return d; };
     addDoor('hallSouth', 4.95, 3.48, 0);   // Room 2
-    addDoor('hallSouth', 7.2, 3.48, 0);    // Room 1
+    addDoor('hallSouth', 7.0, 3.48, 0);    // Room 1
     addDoor('hallNorth', 4.45, 4.47, PI, '#EADCC6'); // storage room (창고)
     addDoor('eastEntry', 7.87, 3.98, -PI / 2);       // bathroom at the end of the hall
     // sliding door to the bedroom (kitchen west wall)
     // wall air conditioner (decor)
-    const ac = H.wallAC(); at(ac, F.ac.x + 0.12, F.ac.y, F.ac.z, PI / 2); this.wallBy.west.decor.add(ac);
+    const ac = H.wallAC(); at(ac, F.ac.x - 0.12, F.ac.y, F.ac.z, -PI / 2); this.wallBy.eastLiving.decor.add(ac);
     // a framed print in the hall
     const frame = box(0.6, 0.45, 0.03, '#C48A52', { r: 0.01 }); at(frame, 5.75, 1.3, 4.48, PI); this.wallBy.hallNorth.decor.add(frame);
     const art = box(0.5, 0.35, 0.01, '#F2C9A4'); at(art, 5.75, 1.35, 4.46, PI); this.wallBy.hallNorth.decor.add(art);
@@ -190,7 +204,7 @@ export class Home {
   }
 
   buildOutside() {
-    const s = this.scene;
+    const s = this.root;
     this.sea = makeSea(900, 900, 46, 46); this.sea.mesh.position.y = SEA_Y; s.add(this.sea.mesh);
     const land = box(900, 0.6, 420, '#9DAF7E', { cast: false, opts: { rough: 1 } }); at(land, 0, SEA_Y, 170); s.add(land); this.land = land;
     const beach = box(900, 0.5, 14, '#E6CFA2', { cast: false }); at(beach, 0, SEA_Y + 0.05, -42); s.add(beach);
@@ -221,7 +235,7 @@ export class Home {
   }
 
   buildWindowAndCurtains() {
-    const s = this.scene, w = L.window, Hh = w.top;
+    const s = this.root, w = L.window, Hh = w.top;
     const frameM = mat('#FBF8F2', { rough: 0.5 });
     // frame + mullions (they cast pane-shaped shadows on the floor)
     const parts = [[w.x0, 0.06], [w.mullions[0], 0.05], [w.mullions[1], 0.05], [w.x1, 0.06]];
@@ -260,17 +274,17 @@ export class Home {
   }
 
   buildLiving() {
-    const s = this.scene, game = this.game;
+    const s = this.root, game = this.game;
     // rug
     const r = H.rug(F.rug.w, F.rug.d); at(r, F.rug.x, 0, F.rug.z); s.add(r);
 
-    // sofa (west wall, facing the TV)
-    const so = H.sofa(F.sofa.len); at(so.group, F.sofa.x, 0, F.sofa.z, PI / 2); s.add(so.group);
+    // sofa (east wall, facing the TV)
+    const so = H.sofa(F.sofa.len); at(so.group, F.sofa.x, 0, F.sofa.z, -PI / 2); s.add(so.group);
     this.sofa = so;
-    this.collider.addBox(0, F.sofa.x + 0.43, F.sofa.z - F.sofa.len / 2, F.sofa.z + F.sofa.len / 2, 'sofa');
+    this.collider.addBox(F.sofa.x - 0.43, 4.0, F.sofa.z - F.sofa.len / 2, F.sofa.z + F.sofa.len / 2, 'sofa');
     const envelope = box(0.16, 0.01, 0.11, '#FFF6E6'); const pp = so.pillow.getWorldPosition(new THREE.Vector3());
     at(envelope, pp.x, 0.465, pp.z - 0.05); envelope.rotation.y = 0.3; s.add(envelope);
-    this.inter.add({ id: 'sofa', x: F.sofa.x + 0.75, z: F.sofa.z + 0.25, y: 0.6, reach: 1.1, enabled: () => game.mom.pose !== 'sit',
+    this.inter.add({ id: 'sofa', x: F.sofa.x - 0.75, z: F.sofa.z - 0.25, y: 0.6, reach: 1.1, enabled: () => game.mom.pose !== 'sit',
       onUse: () => this.sitSofa() });
     this.inter.add({ id: 'cushion', x: pp.x, z: pp.z, y: 0.7, reach: 1.4, discover: 'sofa_note', enabled: () => game.mom.pose === 'sit' && this.sitting === 'sofa',
       onUse: () => this.liftCushion() });
@@ -292,7 +306,7 @@ export class Home {
     this.collider.addCircle(F.lamp.x, F.lamp.z, 0.22);
 
     // LF shopping bag
-    const bag = H.lfBag(); at(bag.group, F.lfBag.x, 0, F.lfBag.z, 0.5); s.add(bag.group);
+    const bag = H.lfBag(); at(bag.group, F.lfBag.x, 0, F.lfBag.z, -0.5); bag.group.children[0].scale.x = -1; // text reads right in the mirrored root s.add(bag.group);
     this.collider.addCircle(F.lfBag.x, F.lfBag.z, 0.2);
     this.inter.add({ id: 'lfbag', x: F.lfBag.x, z: F.lfBag.z, y: 0.5, reach: 1.1, discover: 'lfbag_gift',
       onUse: async () => {
@@ -301,46 +315,46 @@ export class Home {
         await game.discover('lfbag_gift', new THREE.Vector3(F.lfBag.x, 0.6, F.lfBag.z));
       } });
 
-    // TV stand + TV (east wall)
-    const tv = H.tvStand(F.tvStand.len); at(tv.group, F.tvStand.x, 0, F.tvStand.z, -PI / 2); s.add(tv.group); this.tv = tv;
-    this.collider.addBox(F.tvStand.x - 0.26, 4.0, F.tvStand.z - F.tvStand.len / 2 - 0.03, F.tvStand.z + F.tvStand.len / 2 + 0.03, 'tv');
+    // TV stand + TV (west wall)
+    const tv = H.tvStand(F.tvStand.len); at(tv.group, F.tvStand.x, 0, F.tvStand.z, PI / 2); tv.screen.scale.x = -1; s.add(tv.group); this.tv = tv;
+    this.collider.addBox(0, F.tvStand.x + 0.26, F.tvStand.z - F.tvStand.len / 2 - 0.03, F.tvStand.z + F.tvStand.len / 2 + 0.03, 'tv');
     this.tvOn = false; this.tvIdx = 0; this.tvTimer = 0;
     this.tvCanvas = document.createElement('canvas'); this.tvCanvas.width = 320; this.tvCanvas.height = 180;
     this.tvTex = new THREE.CanvasTexture(this.tvCanvas); this.tvTex.colorSpace = THREE.SRGBColorSpace;
     this.tvImages = (content.photos || []).map((f) => { const im = new Image(); im.src = `${import.meta.env.BASE_URL}assets/${f}`; return im; });
-    this.inter.add({ id: 'tv', x: 2.95, z: F.tvStand.z, y: 1.1, reach: 1.0, discover: 'tv_photos',
+    this.inter.add({ id: 'tv', x: 1.05, z: F.tvStand.z, y: 1.1, reach: 1.0, discover: 'tv_photos',
       onUse: async () => {
         game.audio.play('click'); this.setTv(true);
-        await game.discover('tv_photos', new THREE.Vector3(3.6, 1.2, F.tvStand.z));
+        await game.discover('tv_photos', new THREE.Vector3(0.4, 1.2, F.tvStand.z));
       } });
     const openDoor = (pivot, sign) => game.tweens.add(0.5, (t) => { pivot.rotation.y = sign * t * 1.6; });
-    this.inter.add({ id: 'tvDoorL', x: 3.28, z: F.tvStand.z - 0.48, y: 0.4, hintY: 0.75, reach: 0.95, discover: 'tv_note1',
+    this.inter.add({ id: 'tvDoorL', x: 0.72, z: F.tvStand.z + 0.48, y: 0.4, hintY: 0.75, reach: 0.95, discover: 'tv_note1',
       onUse: async () => {
         if (tv.doorL.rotation.y === 0) { game.audio.play('click'); await openDoor(tv.doorL, -1); }
-        await game.discover('tv_note1', new THREE.Vector3(3.5, 0.4, F.tvStand.z - 0.45));
+        await game.discover('tv_note1', new THREE.Vector3(0.5, 0.4, F.tvStand.z + 0.45));
       } });
-    this.inter.add({ id: 'tvDoorR', x: 3.28, z: F.tvStand.z + 0.62, y: 0.4, hintY: 0.75, reach: 0.95, discover: 'tv_note2',
+    this.inter.add({ id: 'tvDoorR', x: 0.72, z: F.tvStand.z - 0.62, y: 0.4, hintY: 0.75, reach: 0.95, discover: 'tv_note2',
       onUse: async () => {
         if (tv.doorR.rotation.y === 0) { game.audio.play('click'); await openDoor(tv.doorR, 1); }
-        await game.discover('tv_note2', new THREE.Vector3(3.5, 0.4, F.tvStand.z + 0.6));
+        await game.discover('tv_note2', new THREE.Vector3(0.5, 0.4, F.tvStand.z - 0.6));
       } });
 
     // phone cabinet + landline (rings softly the first time she comes near)
-    const ph = H.phoneCabinet(); at(ph.group, F.phone.x, 0, F.phone.z, -PI / 2); s.add(ph.group); this.phone = ph;
-    this.collider.addBox(F.phone.x - 0.22, 4.0, F.phone.z - 0.27, F.phone.z + 0.27, 'phone');
-    this.inter.add({ id: 'phone', x: 3.28, z: F.phone.z, y: 0.85, reach: 0.95, discover: 'phone_voice',
+    const ph = H.phoneCabinet(); at(ph.group, F.phone.x, 0, F.phone.z, PI / 2); s.add(ph.group); this.phone = ph;
+    this.collider.addBox(0, F.phone.x + 0.22, F.phone.z - 0.27, F.phone.z + 0.27, 'phone');
+    this.inter.add({ id: 'phone', x: 0.72, z: F.phone.z, y: 0.85, reach: 0.95, discover: 'phone_voice',
       onUse: async () => {
         this.ring?.stop(); this.ring = null; this.ringing = false;
         game.audio.play('click');
         ph.handset.position.y = 0.95;
-        await game.discover('phone_voice', new THREE.Vector3(3.7, 0.9, F.phone.z));
+        await game.discover('phone_voice', new THREE.Vector3(0.3, 0.9, F.phone.z));
         ph.handset.position.y = 0.79; game.audio.play('click');
       } });
 
     // succulent stool (water → flowers bloom → gift underneath)
     const st = H.succulentStool(); at(st.group, F.stool.x, 0, F.stool.z); s.add(st.group); this.stool = st;
     this.collider.addCircle(F.stool.x, F.stool.z, 0.22);
-    this.inter.add({ id: 'stool', x: F.stool.x - 0.15, z: F.stool.z + 0.05, y: 0.6, reach: 1.0, discover: 'stool_gift',
+    this.inter.add({ id: 'stool', x: F.stool.x + 0.15, z: F.stool.z + 0.05, y: 0.6, reach: 1.0, discover: 'stool_gift',
       onUse: async () => {
         game.mom.faceToward(F.stool.x, F.stool.z); game.mom.play('reach', 1.6);
         st.can.visible = true; game.audio.play('water');
@@ -387,7 +401,7 @@ export class Home {
   }
 
   buildKitchen() {
-    const s = this.scene, game = this.game;
+    const s = this.root, game = this.game;
     // tall grey wood-grain panel above the fridges
     const top = box(1.85, L.wallH - 1.88, 0.72, H.P.panel, { r: 0.01, cast: false }); at(top, 0.95, 1.88, F.darkFridge.z); s.add(top);
 
@@ -474,6 +488,7 @@ export class Home {
         tb.tissue.position.y = 0.12; tb.note.visible = false;
       } });
     const clk = H.digitalClock(); at(clk.group, 0.28, 0.88, 5.85, PI / 2 + 0.2); s.add(clk.group); this.clock = clk;
+    clk.group.children.forEach((c) => { if (c.material?.map) c.scale.x = -1; });
     this.inter.add({ id: 'clock', x: ix, z: 5.85, y: 1.0, reach: 0.8, discover: 'clock_note',
       onUse: async () => { game.audio.play('beep'); this.drawClock(true); await game.tweens.wait(0.6); await game.discover('clock_note', new THREE.Vector3(0.3, 1.1, 5.85)); } });
     const fj = H.flowerJar(); at(fj.group, 0.3, 0.88, 6.5); s.add(fj.group); this.flowers = fj;
@@ -536,22 +551,34 @@ export class Home {
   drawClock() { const t = this.clockText(); if (t !== this._clk) { this._clk = t; this.clock.draw(t); } }
 
   buildEntry() {
-    const s = this.scene, game = this.game;
-    // front door
-    const d = H.door(0.9, 2.05, '#E7D8C0'); at(d.group, L.entry.x1 - 0.03, 0, L.entry.doorZ, -PI / 2); s.add(d.group); this.frontDoor = d;
-    const mat2 = box(0.8, 0.012, 0.5, '#B98A7A', { r: 0.01, cast: false }); at(mat2, L.entry.x1 - 0.35, -0.07, L.entry.doorZ, PI / 2); s.add(mat2);
-    // shoe cabinet + key tray
-    const sc = H.shoeCabinet(F.shoeCabinet.len); at(sc, F.shoeCabinet.x, 0, F.shoeCabinet.z, PI); s.add(sc);
-    this.collider.addBox(F.shoeCabinet.x - F.shoeCabinet.len / 2, F.shoeCabinet.x + F.shoeCabinet.len / 2, F.shoeCabinet.z - 0.18, 6.25, 'shoecab');
-    const kt = H.keyTray(); at(kt.group, F.keyTray.x, 0.97, F.keyTray.z, PI); s.add(kt.group); this.keyTray = kt;
-    // black rubber shoes on the floor + slippers (shown while Mom wears the shoes)
-    this.floorShoes = H.pairOfShoes(() => rubberShoe(content.mom.shoes)); at(this.floorShoes, F.shoes.x, -0.07, F.shoes.z, -PI / 2); this.floorShoes.scale.setScalar(1.15); s.add(this.floorShoes);
-    this.floorSlippers = H.pairOfShoes(() => slipper(content.mom.slippers)); at(this.floorSlippers, F.shoes.x - 0.5, -0.04, F.shoes.z + 0.05, PI / 2); s.add(this.floorSlippers);
+    const s = this.root, game = this.game;
+    // front door: dark brown with a digital lock, straight ahead on the north wall
+    const d = H.door(0.92, 2.1, '#5A4034', '#4E372C', '#6A5244'); at(d.group, L.entry.doorX, 0, L.entry.z1 - 0.03, PI); d.group.scale.x = -1; s.add(d.group); this.frontDoor = d; // lock on the right, as in the photo
+    const lock = box(0.07, 0.3, 0.035, '#E8E8E6', { r: 0.01, opts: { metal: 0.4, rough: 0.3 } }); at(lock, 0.78, 0.95, 0.06); d.leaf.add(lock);
+    const lockPad = box(0.05, 0.12, 0.01, '#1B1C1F', { opts: { emissive: '#3A6A9A', emissiveIntensity: 0.3 } }); at(lockPad, 0.78, 1.1, 0.08); d.leaf.add(lockPad);
+    // tall white built-in shoe cabinet on the right (east wall), floating, with an open niche
+    const SC = F.shoeCabinet, cab = new THREE.Group(); at(cab, SC.x, 0, SC.z, -PI / 2); s.add(cab);
+    const white = mat('#FAF8F3', { rough: 0.5 });
+    const lower = box(SC.len, 0.72, 0.4, null, { m: white, r: 0.01 }); at(lower, 0, 0.22, 0); cab.add(lower);
+    const upper = box(SC.len, 1.05, 0.4, null, { m: white, r: 0.01 }); at(upper, 0, 1.3, 0); cab.add(upper);
+    const nicheBack = box(SC.len, 0.36, 0.04, '#EFE6D6'); at(nicheBack, 0, 0.94, -0.18); cab.add(nicheBack);
+    for (let i = 1; i < 3; i++) { const seam = box(0.006, 1.75, 0.005, '#E2DED6', { cast: false }); at(seam, -SC.len / 2 + (i * SC.len) / 3, 0.22, 0.202); cab.add(seam); }
+    this.collider.addBox(SC.x - 0.2, 7.9, SC.z - SC.len / 2, SC.z + SC.len / 2, 'shoecab');
+    const kt = H.keyTray(); at(kt.group, F.keyTray.x, 0.95, F.keyTray.z, -PI / 2); s.add(kt.group); this.keyTray = kt;
+    // tidy pairs tucked under the floating cabinet
+    [['#E9B8C4', 4.95], ['#2A2E3A', 5.45], ['#7FC2D6', 5.9]].forEach(([c, z]) => { const pr = H.pairOfShoes(() => box(0.09, 0.07, 0.24, c, { r: 0.03 }), 0.13); at(pr, 7.68, -0.07, z, -PI / 2); s.add(pr); });
+    // white marble wall on the left (west)
+    const marbleT = canvasTexture(256, 512, (c, W, Hh) => { c.fillStyle = '#F7F5F1'; c.fillRect(0, 0, W, Hh); c.strokeStyle = 'rgba(160,150,140,0.25)'; c.lineWidth = 1.5; for (let i = 0; i < 9; i++) { c.beginPath(); let x = Math.random() * W, y = Math.random() * Hh; c.moveTo(x, y); for (let k = 0; k < 6; k++) { x += (Math.random() - 0.3) * 60; y += (Math.random() - 0.5) * 50; c.lineTo(x, y); } c.stroke(); } c.strokeStyle = 'rgba(200,170,110,0.6)'; c.lineWidth = 3; c.strokeRect(0, 0, W, Hh / 2); c.strokeRect(0, Hh / 2, W, Hh / 2); });
+    const marble = box(L.entry.z1 - L.entry.z0, 2.3, 0.02, null, { m: new THREE.MeshStandardMaterial({ map: marbleT, roughness: 0.25 }), cast: false });
+    at(marble, L.entry.x0 + 0.011, -0.07, (L.entry.z0 + L.entry.z1) / 2, PI / 2); this.wallBy.entryWest.decor.add(marble);
+    // black rubber shoes on the floor + slippers left on the step while Mom wears the shoes
+    this.floorShoes = H.pairOfShoes(() => rubberShoe(content.mom.shoes)); at(this.floorShoes, F.shoes.x, -0.07, F.shoes.z, PI); this.floorShoes.scale.setScalar(1.15); s.add(this.floorShoes);
+    this.floorSlippers = H.pairOfShoes(() => slipper(content.mom.slippers)); at(this.floorSlippers, F.shoes.x, 0.0, L.entry.z0 + 0.12, 0); s.add(this.floorSlippers);
     this.floorSlippers.visible = false;
 
-    this.inter.add({ id: 'door', x: L.entry.x1 - 0.3, z: L.entry.doorZ, y: 1.3, reach: 0.85, onUse: () => this.useDoor() });
+    this.inter.add({ id: 'door', x: L.entry.doorX, z: L.entry.z1 - 0.35, y: 1.3, reach: 0.85, onUse: () => this.useDoor() });
     if (content.features.mall) {
-      this.inter.add({ id: 'key', x: F.keyTray.x, z: F.keyTray.z, y: 1.05, reach: 0.95,
+      this.inter.add({ id: 'key', x: F.keyTray.x - 0.35, z: F.keyTray.z, y: 1.05, reach: 0.95,
         onUse: async () => {
           game.audio.play('coin'); game.mom.play('reach', 0.7);
           await game.tweens.add(0.4, (t) => { kt.key.position.y = 0.03 + t * 0.15; });
@@ -572,7 +599,7 @@ export class Home {
   }
 
   buildLightFx() {
-    const s = this.scene;
+    const s = this.root;
     // soft light shafts (two crossed additive planes each)
     const shaftTex = canvasTexture(64, 256, (c) => {
       const g = c.createLinearGradient(0, 0, 0, 256); g.addColorStop(0, 'rgba(255,255,255,0.95)'); g.addColorStop(0.6, 'rgba(255,255,255,0.35)'); g.addColorStop(1, 'rgba(255,255,255,0)');
@@ -604,7 +631,7 @@ export class Home {
     this.rig.aim(this.focus, el, az, 30);
     const dir = this._sd || (this._sd = new THREE.Vector3());
     dir.set(Math.sin(az) * Math.cos(el), Math.sin(el), Math.cos(az) * Math.cos(el)).normalize();
-    const pal = this.sky.set(s, dir);
+    const pal = this.sky.set(s, (this._skyDir || (this._skyDir = new THREE.Vector3())).set(-dir.x, dir.y, dir.z));
     this.rig.sun.color.copy(pal.sun);
     this.rig.sun.intensity = lerp(3.6, 2.2, s) * (s > 0.85 ? 1 - (s - 0.85) * 4 : 1);
     this.rig.hemi.intensity = lerp(0.8, 1.15, open) * lerp(1.0, 0.62, s);
@@ -640,7 +667,7 @@ export class Home {
     g.audio.setLoops(this.loopKeys());
     if (!from) { mom.position.set(2.0, 0, 2.9); mom.face(PI, true); return; }
     // coming back in through the front door
-    mom.position.set(7.35, 0, L.entry.doorZ); mom.face(-PI / 2, true);
+    mom.position.set(L.entry.doorX, 0, L.entry.z1 - 0.55); mom.face(PI, true);
     setTimeout(() => g.say(from === 'past' ? '…꿈이었나?' : '다녀왔습니다~'), 1200);
   }
 
@@ -649,10 +676,10 @@ export class Home {
   exit() { this.ring?.stop(); this.ring = null; this.game.mom.stand(); this.sitting = null; }
 
   cameraYawFor(p, cur) {
-    const wasKitchen = cur > 1.5, wasEntry = cur < -0.75; // hysteresis
+    const wasKitchen = cur > 1.5; // hysteresis
     const inKitchen = p.x < 3.6 && p.z > (wasKitchen ? 4.6 : 5.0);
-    const inEntry = p.x > (wasEntry ? 6.3 : 6.55) && p.z > (wasEntry ? 4.4 : 4.6);
-    return inKitchen ? PI : inEntry ? -PI / 2 : 0; // entry: camera looks east, at the front door
+    const inEntry = p.x > (wasKitchen ? 6.3 : 6.55) && p.z > (wasKitchen ? 4.4 : 4.6);
+    return inKitchen || inEntry ? PI : 0; // kitchen + entry: camera looks north (at the counters / the front door)
   }
 
   // in the living room the camera leans toward the room center so side furniture never blocks Mom
@@ -667,7 +694,7 @@ export class Home {
 
   async sitSofa() {
     const g = this.game;
-    g.mom.sit(F.sofa.x + 0.07, F.sofa.z + 0.15, PI / 2, 0.46); this.sitting = 'sofa';
+    g.mom.sit(F.sofa.x - 0.07, F.sofa.z - 0.15, -PI / 2, 0.46); this.sitting = 'sofa';
     g.cam.targetDistance = 6.0; g.cam.targetPitch = THREE.MathUtils.degToRad(25);
     g.audio.play('sigh');
     this.state.sunset = Math.min(1, this.state.sunset + 0.04);
@@ -685,7 +712,7 @@ export class Home {
 
   standUp() {
     const g = this.game;
-    if (this.sitting === 'sofa') g.mom.position.set(F.sofa.x + 0.95, 0, F.sofa.z + 0.15);
+    if (this.sitting === 'sofa') g.mom.position.set(F.sofa.x - 0.95, 0, F.sofa.z - 0.15);
     if (this.sitting === 'chair') g.mom.position.set(F.chairs[1].x, 0, F.chairs[1].z - 0.5);
     this.sitting = null; g.mom.stand();
     g.cam.targetDistance = this.cameraDistance; g.cam.targetPitch = PITCH;
@@ -708,7 +735,7 @@ export class Home {
   async lookOut(eye, hold = 0, bubble) {
     const g = this.game;
     g.busy = true;
-    g.cam.override = { pos: eye, look: new THREE.Vector3(eye.x - 14, -5, -60) };
+    g.cam.override = { pos: g.toWorld(eye, new THREE.Vector3()), look: g.toWorld(new THREE.Vector3(eye.x + 14, -5, -60), new THREE.Vector3()) };
     g.mom.faceToward(eye.x - 0.5, -5);
     await g.tweens.wait(1.6);
     g.say(bubble || content.bubbles.curtains, 3200);
@@ -734,7 +761,7 @@ export class Home {
     if (where === 'beach') {
       g.audio.play('door');
       await g.tweens.add(0.9, (t) => { this.frontDoor.leaf.rotation.y = -t * 1.3; });
-      g.mom.faceToward(9, L.entry.doorZ);
+      g.mom.faceToward(L.entry.doorX, 7);
       g.goTo('beach', { color: '#FFE2B0', ms: 1800 });
     } else if (where === 'mall') g.goTo('mall', { color: '#000', ms: 1200, cinematic: () => g.playCinematic(makeDrive(g)) });
     else g.goTo('past', { color: '#FFFFFF', ms: 2000 });
@@ -809,7 +836,7 @@ export class Home {
     if (this.tvOn) { this.tvTimer += dt; if (this.tvTimer > 3.5) { this.tvTimer = 0; this.tvIdx++; this.drawTv(); } }
     // phone rings softly the first time she comes near
     const p = g.mom.position;
-    if (!st.phoneRang && !this.disc.isFound('phone_voice') && Math.hypot(p.x - 3.5, p.z - F.phone.z) < 2.3) {
+    if (!st.phoneRang && !this.disc.isFound('phone_voice') && Math.hypot(p.x - 0.5, p.z - F.phone.z) < 2.3) {
       st.phoneRang = true; this.ringing = true; this.ring = g.audio.ring(); g.say(content.bubbles.phoneRing);
       setTimeout(() => { this.ring?.stop(); this.ring = null; this.ringing = false; }, 11000);
     }

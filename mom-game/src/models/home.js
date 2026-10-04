@@ -202,12 +202,12 @@ export function wallAC() {
 }
 
 // ── Doors ───────────────────────────────────────────────────
-export function door(w = 0.9, h = 2.05, color = '#F3E7D3') {
+export function door(w = 0.9, h = 2.05, color = '#F3E7D3', inset = '#EAD9BE', frameColor = '#E6D2B2') {
   const g = new THREE.Group();
-  const frame = box(w + 0.12, h + 0.06, 0.06, '#E6D2B2', { r: 0.01 }); g.add(frame);
+  const frame = box(w + 0.12, h + 0.06, 0.06, frameColor, { r: 0.01 }); g.add(frame);
   const leafPivot = new THREE.Group(); at(leafPivot, -w / 2, 0, 0.035); g.add(leafPivot);
   const leaf = box(w, h, 0.04, color, { r: 0.012 }); leaf.position.x = w / 2; leafPivot.add(leaf);
-  const inset1 = box(w * 0.7, h * 0.35, 0.01, '#EAD9BE', { r: 0.01 }); at(inset1, w / 2, h * 0.55, 0.024); leafPivot.add(inset1);
+  const inset1 = box(w * 0.7, h * 0.35, 0.01, inset, { r: 0.01 }); at(inset1, w / 2, h * 0.55, 0.024); leafPivot.add(inset1);
   const inset2 = inset1.clone(); inset2.position.y = h * 0.12; leafPivot.add(inset2);
   const handle = box(0.12, 0.025, 0.04, '#B8A27A', { r: 0.01, opts: { metal: 0.6, rough: 0.35 } }); at(handle, w - 0.12, h * 0.48, 0.05); leafPivot.add(handle);
   return { group: g, leaf: leafPivot };

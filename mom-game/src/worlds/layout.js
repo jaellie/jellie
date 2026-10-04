@@ -9,9 +9,9 @@ export const layout = {
   living: { x0: 0, x1: 4.0, z0: 0, z1: 4.5 },
   kitchen: { x0: 0, x1: 3.5, z0: 4.5, z1: 7.8 },
   hall: { x0: 4.0, x1: 7.9, z0: 3.45, z1: 4.5 },
-  // front door on the entry's east (right) wall: you come in from the right,
-  // the living room and kitchen are to the left
-  entry: { x0: 6.5, x1: 7.9, z0: 4.5, z1: 6.25, doorZ: 5.35 },
+  // front door straight ahead on the entry's north wall (as seen from the hall);
+  // tall white shoe cabinet on the right (east), marble wall on the left (west)
+  entry: { x0: 6.5, x1: 7.9, z0: 4.5, z1: 6.25, doorX: 7.0 },
   // no balcony in front of the living room (the window goes straight outside)
   window: { x0: 0.8, x1: 3.3, top: 2.2, mullions: [1.63, 2.47] },
 
@@ -20,18 +20,18 @@ export const layout = {
   kitchenSide: 'north',
 
   furniture: {
-    // living room — east wall (TV side; facing the window the TV is on the right)
-    stool: { x: 3.7, z: 0.32 },
-    phone: { x: 3.79, z: 0.85 },
-    tvStand: { x: 3.76, z: 2.05, len: 1.7 },
-    windowPlant: { x: 1.05, z: 0.32 },
-    // living room — west wall (sofa side)
-    sofa: { x: 0.43, z: 1.95, len: 2.1 },
-    palm: { x: 0.4, z: 0.42 },
-    lamp: { x: 0.25, z: 3.12 },
-    lfBag: { x: 1.1, z: 3.25 },
-    ac: { x: 0.0, z: 1.95, y: 1.95 },
+    // living room — west wall (TV side; facing the window the TV is on the right)
+    stool: { x: 0.3, z: 0.32 },
+    phone: { x: 0.21, z: 0.85 },
+    tvStand: { x: 0.24, z: 2.05, len: 1.7 },
     shelf: { x: 0.0, z: 3.92 },
+    windowPlant: { x: 1.05, z: 0.32 },
+    // living room — east wall (sofa side; facing the window the sofa is on the left)
+    sofa: { x: 3.57, z: 1.95, len: 2.1 },
+    palm: { x: 3.6, z: 0.42 },
+    lamp: { x: 3.75, z: 3.22 },
+    lfBag: { x: 2.9, z: 3.28 },
+    ac: { x: 4.0, z: 1.95, y: 1.95 },
     intercom: { x: 4.2, z: 3.45, y: 1.4 },
     rug: { x: 2.0, z: 2.1, w: 1.7, d: 2.1 },
     // kitchen: fridges + sink/hob on the north wall, L-counter on the west wall,
@@ -44,8 +44,8 @@ export const layout = {
     chairs: [{ x: 2.3, z: 5.1, r: 0 }, { x: 3.0, z: 5.1, r: 0 }],
     fan: { x: 3.3, z: 4.72 },
     // entry
-    shoeCabinet: { x: 7.05, z: 6.08, len: 1.0 }, // along the entry's north wall
-    keyTray: { x: 7.3, z: 6.08 },
-    shoes: { x: 7.05, z: 4.85 },
+    shoeCabinet: { x: 7.7, z: 5.45, len: 1.55 }, // tall built-in along the east wall
+    keyTray: { x: 7.66, z: 5.45 },                 // sits in the cabinet's open niche
+    shoes: { x: 6.85, z: 5.25 },
   },
 };
