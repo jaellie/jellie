@@ -97,8 +97,8 @@ function compose(shot) {
   }
   if (shot.title) {
     html += `<div style="position:absolute;left:50%;top:150px;transform:translateX(-50%);width:1300px;height:250px;background:url('file://${ART}ui_strip.png') center/100% 100% no-repeat"></div>
-      <div style="position:absolute;left:0;right:0;top:${LANG === "en" ? 198 : 188}px;text-align:center;font-family:PB;font-size:${LANG === "en" ? 76 : 92}px;letter-spacing:${LANG === "en" ? 1 : 4}px;color:#1F2130">${LANG === "en" ? "Big Green Bear's Adventure" : "빅그린베어의 모험"}</div>
-      <div style="position:absolute;left:0;right:0;top:310px;text-align:center;font-family:PB;font-size:26px;letter-spacing:10px;color:#5A5E78">${LANG === "en" ? "BELLFLOWER · WINTER NIGHT" : "BIG GREEN BEAR'S ADVENTURE"}</div>`;
+      <div style="position:absolute;left:0;right:0;top:${LANG === "en" ? 186 : 188}px;text-align:center;font-family:PB;font-size:${LANG === "en" ? 76 : 92}px;letter-spacing:${LANG === "en" ? 1 : 4}px;color:#1F2130">${LANG === "en" ? "Big Green Bear's Adventure" : "빅그린베어의 모험"}</div>
+      <div style="position:absolute;left:0;right:0;top:${LANG === "en" ? 290 : 310}px;text-align:center;font-family:PB;font-size:${LANG === "en" ? 22 : 26}px;letter-spacing:10px;color:#5A5E78">${LANG === "en" ? "BELLFLOWER · WINTER NIGHT" : "BIG GREEN BEAR'S ADVENTURE"}</div>`;
   }
   return html + `</body></html>`;
 }
