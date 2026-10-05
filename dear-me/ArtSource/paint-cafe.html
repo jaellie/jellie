@@ -9,10 +9,10 @@ R = rng(2018);
 paper();
 
 // ---- wall: warm cream to peach; wood floor
-wash([[0.03,0.02],[0.97,0.02],[0.97,0.70],[0.03,0.70]], linear(0.1,0.1,0.9,0.7,[[0,'#ffdcaa'],[0.5,'#f6c7a0'],[1,'#e2ad98']]), {alpha:.72, rough:20, layers:3, edge:.1});
-wash([[0.03,0.69],[0.97,0.69],[0.97,0.98],[0.03,0.98]], linear(0.2,0.7,0.8,0.98,[[0,'#dc9c62'],[0.6,'#b8774f'],[1,'#8f5d4a']]), {alpha:.75, rough:14, layers:3, edge:.12});
-for (let i=0;i<5;i++) ink([[0.03,0.735+i*0.05],[0.97,0.737+i*0.05]],{w:1,gap:true,overshoot:2});
-ink([[0.035,0.692],[0.965,0.694]],{w:2.6});
+wash([[-0.03,-0.02],[1.03,-0.02],[1.03,0.70],[-0.03,0.70]], linear(0.1,0.1,0.9,0.7,[[0,'#ffdcaa'],[0.5,'#f6c7a0'],[1,'#e2ad98']]), {alpha:.72, rough:20, layers:3, edge:.1});
+wash([[-0.03,0.69],[1.03,0.69],[1.03,1.03],[-0.03,1.03]], linear(0.2,0.7,0.8,0.98,[[0,'#dc9c62'],[0.6,'#b8774f'],[1,'#8f5d4a']]), {alpha:.75, rough:14, layers:3, edge:.12});
+for (let i=0;i<5;i++) ink([[-0.01,0.735+i*0.05],[1.01,0.737+i*0.05]],{w:1,gap:true,overshoot:2});
+ink([[-0.01,0.692],[1.01,0.694]],{w:2.6,gap:false});
 
 // ---- big window across the top: the richest thing in the frame
 const wx0=0.12, wx1=0.88, wy0=0.075, wy1=0.36;
@@ -41,26 +41,67 @@ for (const x of [0.30,0.70]) { ink([[x,0.36],[x,0.40]],{w:1.6,gap:false});
   reserve(sh,'#fbf2de'); wash(sh, linear(x,0.4,x,0.43,[[0,'#f0b866'],[1,'#d98a4a']]),{alpha:.75,rough:2}); ink(sh,{w:2,close:true});
   glow(x,0.435,420,'#ffc070',.55,'screen'); glow(x,0.425,130,'#fff0c8',.6,'screen'); }
 
-// ---- three friends at the table (faces left blank, urban-sketch style)
-function person(x, top, body, hair, lit){
-  const headR=0.045, hy=top+0.026, sh=0.11;
-  const torso=[[x-0.115,0.63],[x-0.105,top+0.085]].concat(ellipsePts(x,top+0.085,0.105,0.03,18,Math.PI,Math.PI*2)).concat([[x+0.115,0.63]]);
-  reserve(torso); wash(torso, linear(x-0.1,top+0.06,x+0.1,0.63,[[0,lit],[1,body]]),{alpha:.85,rough:2}); ink(torso,{w:2,overshoot:2});
-  ink([[x-0.022,top+0.058],[x,top+0.07],[x+0.022,top+0.058]],{w:1.4,gap:false,overshoot:1});
-  const head=ellipsePts(x,hy,headR);
-  reserve(head,'#f6e2cc'); wash(head, radial(x-0.012,hy-0.008,2,headR*W*1.6,[[0,'#fbe0c6'],[1,'#e8a98a']]),{alpha:.75,rough:1,off:0});
-  wash(ellipsePts(x,hy-0.007,headR*1.12,headR*1.0*W/H,24,Math.PI*0.95,Math.PI*2.05), hair,{alpha:.92,rough:2,off:0});
-  ink(head,{w:1.6,overshoot:2,gap:true});
+// ---- three friends at the table: slender college girls, faces left blank (urban-sketch), soft blush
+function girl(x, top, o){
+  const hrx=0.034, hry=hrx*W/H*1.18, hy=top+hry;           // small oval face
+  const sy=hy+hry+0.014;                                    // shoulder line
+  const hairFill = linear(x, top-0.01, x, top+0.17, [[0,o.hairLight],[0.5,o.hair],[1,o.hairDark]]);
+  // long hair falls behind the shoulders
+  if (o.style==='long' || o.style==='pony') {
+    const len = o.style==='long' ? 0.115 : 0.0;
+    if (len > 0) paint([[x-hrx*1.25,hy-hry*0.2],[x+hrx*1.25,hy-hry*0.2],[x+hrx*1.45,sy+len],[x+hrx*0.5,sy+len+0.008],[x-hrx*0.5,sy+len+0.008],[x-hrx*1.45,sy+len]], hairFill, {rough:3, blur:.8});
+  }
+  if (o.style==='pony') {   // ponytail swinging to one side
+    paint([[x+hrx*0.7,hy-hry*0.6],[x+hrx*1.6,hy-hry*0.2],[x+hrx*1.9,hy+hry*1.6],[x+hrx*1.5,sy+0.05],[x+hrx*1.15,hy+hry*0.9]], hairFill, {rough:3, blur:.8});
+  }
+  // slim torso: narrow sloped shoulders, soft top
+  const torso=[[x-0.056,0.632],[x-0.053,sy+0.03]].concat(ellipsePts(x,sy+0.03,0.053,0.028,20,Math.PI,Math.PI*2)).concat([[x+0.056,0.632]]);
+  reserve(torso); wash(torso, linear(x-0.06,sy,x+0.06,0.63,[[0,o.lit],[1,o.top]]),{alpha:.82,rough:2}); ink(torso,{w:1.8,overshoot:2});
+  if (o.collar) ink([[x-0.018,sy+0.004],[x,sy+0.022],[x+0.018,sy+0.004]],{w:1.3,gap:false,overshoot:1});
+  if (o.cardigan) { ink([[x-0.012,sy+0.01],[x-0.016,0.63]],{w:1.3}); ink([[x+0.012,sy+0.01],[x+0.016,0.63]],{w:1.3}); }
+  // thin neck
+  const neck=[[x-0.009,hy+hry*0.75],[x+0.009,hy+hry*0.75],[x+0.01,sy+0.004],[x-0.01,sy+0.004]];
+  reserve(neck,'#f6e2cc'); wash(neck, linear(x,hy,x,sy,[[0,'#e9b89c'],[1,'#f3d2b8']]),{alpha:.7,rough:1,off:0});
+  // face
+  const head=ellipsePts(x,hy,hrx,hry,30);
+  reserve(head,'#f8e6d2'); wash(head, radial(x-0.01,hy-0.006,2,hrx*W*1.7,[[0,'#fde6cf'],[1,'#efbda0']]),{alpha:.72,rough:1,off:0});
+  ink(head,{w:1.4,overshoot:2,gap:true});
+  // hair on top: crown, side locks, bangs
+  const crown=ellipsePts(x,hy-hry*0.15,hrx*1.18,hry*1.02,26,Math.PI*0.92,Math.PI*2.08);
+  paint(crown, hairFill, {rough:2, blur:.6});
+  if (o.style==='bob') {
+    paint([[x-hrx*1.2,hy-hry*0.3],[x-hrx*0.85,hy-hry*0.3],[x-hrx*0.8,hy+hry*1.05],[x-hrx*1.25,hy+hry*1.0]], hairFill,{rough:2,blur:.6});
+    paint([[x+hrx*1.2,hy-hry*0.3],[x+hrx*0.85,hy-hry*0.3],[x+hrx*0.8,hy+hry*1.05],[x+hrx*1.25,hy+hry*1.0]], hairFill,{rough:2,blur:.6});
+  } else {
+    paint([[x-hrx*1.2,hy-hry*0.3],[x-hrx*0.82,hy-hry*0.3],[x-hrx*0.9,hy+hry*1.3],[x-hrx*1.3,sy+0.02]], hairFill,{rough:2,blur:.6});
+    if (o.style==='long') paint([[x+hrx*1.2,hy-hry*0.3],[x+hrx*0.82,hy-hry*0.3],[x+hrx*0.9,hy+hry*1.3],[x+hrx*1.3,sy+0.02]], hairFill,{rough:2,blur:.6});
+  }
+  paint([[x-hrx*0.95,hy-hry*0.55],[x+hrx*0.95,hy-hry*0.55],[x+hrx*0.75,hy-hry*0.05],[x+hrx*0.2,hy-hry*0.18],[x-hrx*0.3,hy-hry*0.02],[x-hrx*0.8,hy-hry*0.1]], hairFill,{rough:1.5,blur:.5});
+  if (o.style==='pony') { const t=[[x+hrx*0.7,hy-hry*0.75],[x+hrx*1.0,hy-hry*0.9],[x+hrx*1.05,hy-hry*0.55]]; paint(t,o.ribbon,{rough:1,blur:.3}); }
+  glow(x-hrx*0.3,hy-hry*0.8,16,'#fff2dc',.35,'screen');   // shine on the hair
+  ink(ellipsePts(x,hy-hry*0.15,hrx*1.18,hry*1.02,20,Math.PI*1.0,Math.PI*2.0),{w:1.4,overshoot:2});
+  // gentle face: smiling closed eyes, small mouth, soft blush on the cheeks
+  for (const side of [-1,1]) {
+    ink(ellipsePts(x+side*hrx*0.42, hy+hry*0.3, hrx*0.2, hry*0.13, 8, Math.PI*1.1, Math.PI*1.9), {w:1.7, gap:false, overshoot:0, color:'#4a3028'});
+    glow(x+side*hrx*0.55, hy+hry*0.6, 9, '#ff8f8f', .28, 'source-over');
+  }
+  ink(ellipsePts(x, hy+hry*0.66, hrx*0.12, hry*0.08, 8, Math.PI*0.15, Math.PI*0.85), {w:1.4, gap:false, overshoot:0, color:'#a0504a'});
+  // slender arms resting toward the table
+  for (const side of [-1,1]) {
+    const ax=x+side*0.049, arm=[[ax,sy+0.03],[ax+side*0.01,sy+0.035],[x+side*0.034,0.615],[x+side*0.024,0.618]];
+    reserve(arm); wash(arm, linear(ax,sy,ax,0.62,[[0,o.lit],[1,o.top]]),{alpha:.8,rough:1,off:0}); ink(arm,{w:1.3,close:true,overshoot:1});
+    const hand=ellipsePts(x+side*0.029,0.618,0.0095,0.0065,14); reserve(hand,'#f8e2cc'); ink(hand,{w:1.1,overshoot:1});
+  }
 }
-person(0.27, 0.48, '#8a5a3c', '#3b2a22', '#e0a070');   // Yuri
-person(0.50, 0.465, '#4f6b5a', '#2a2420', '#9cc6a0');  // Yunji
-person(0.73, 0.485, '#6a5a7e', '#4a3326', '#c6a6e0');  // Hyejin
-const cam=[[0.70,0.575],[0.76,0.575],[0.76,0.595],[0.70,0.595]]; reserve(cam,'#3a3a44'); ink(cam,{w:1.6,close:true}); glow(0.73,0.585,30,'#fff3d0',.6,'screen');
+girl(0.27, 0.455, {style:'long', hair:'#5a3a2c', hairLight:'#8a5a42', hairDark:'#3a2420', top:'#e8907a', lit:'#ffc0a0', cardigan:true});   // Yuri
+girl(0.50, 0.445, {style:'bob',  hair:'#2e2626', hairLight:'#5a4a48', hairDark:'#1e1818', top:'#8fbf9a', lit:'#d4efcf', collar:true});    // Yunji
+girl(0.73, 0.46,  {style:'pony', hair:'#7a4a32', hairLight:'#b07a54', hairDark:'#4a2c22', top:'#b49ad6', lit:'#e6d4f6', collar:true, ribbon:'#f2a0b4'}); // Hyejin
+const cam=[[0.705,0.598],[0.755,0.598],[0.755,0.616],[0.705,0.616]]; reserve(cam,'#3a3a44'); ink(cam,{w:1.6,close:true}); glow(0.73,0.607,26,'#fff3d0',.6,'screen');
 // table, cups, the notice
 const tb=[[0.08,0.625],[0.92,0.625],[0.92,0.645],[0.08,0.645]];
 reserve(tb); wash(tb, linear(0.08,0.63,0.92,0.64,[[0,'#f0b06a'],[1,'#b5784e']]),{alpha:.85,rough:2}); ink(tb,{w:2.6,close:true});
 ink([[0.48,0.645],[0.48,0.76]],{w:2.6}); ink([[0.52,0.645],[0.52,0.76]],{w:1.8}); ink([[0.40,0.76],[0.60,0.76]],{w:2.2});
-for (const x of [0.22,0.45,0.66]){ const c=[[x,0.60],[x+0.055,0.60],[x+0.05,0.625],[x+0.005,0.625]]; reserve(c,'#fffaf0'); ink([[x,0.60],[x+0.005,0.625],[x+0.05,0.625],[x+0.055,0.60]],{w:1.6}); ink([[x,0.601],[x+0.055,0.601]],{w:1.4}); }
+for (const x of [0.215,0.445,0.60]){ const c=[[x,0.60],[x+0.055,0.60],[x+0.05,0.625],[x+0.005,0.625]]; reserve(c,'#fffaf0'); ink([[x,0.60],[x+0.005,0.625],[x+0.05,0.625],[x+0.055,0.60]],{w:1.6}); ink([[x,0.601],[x+0.055,0.601]],{w:1.4}); }
 const nt=[[0.53,0.612],[0.63,0.609],[0.632,0.623],[0.532,0.625]]; reserve(nt,'#fffaf0'); ink(nt,{w:1.3,close:true});
 // plant
 const pot=[[0.82,0.62],[0.93,0.62],[0.915,0.70],[0.835,0.70]];
@@ -72,9 +113,6 @@ for (let i=0;i<14;i++){ const a=rnd(-2.7,-0.5), l=rnd(.06,.13), cx=0.875, cy=0.6
 glow(0.5,0.25,900,'#ffcf8a',.3,'screen');
 const vg=g.createRadialGradient(W*.5,H*.4,H*.3,W*.5,H*.5,H*.75); vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(150,90,80,.16)');
 g.save(); g.globalCompositeOperation='multiply'; g.fillStyle=vg; g.fillRect(0,0,W,H); g.restore();
-g.save(); for (let i=0;i<520;i++){ const side=Math.floor(rnd(0,4)); let x,y; const d=Math.pow(R(),3)*30;
-  if(side===0){x=rnd(0,W);y=d;} else if(side===1){x=rnd(0,W);y=H-d;} else if(side===2){x=d;y=rnd(0,H);} else {x=W-d;y=rnd(0,H);}
-  g.fillStyle='#efe6d2'; g.globalAlpha=rnd(.35,.8); g.beginPath(); g.ellipse(x,y,rnd(3,9),rnd(2,6),rnd(0,3),0,7); g.fill(); } g.restore();
 const tooth=g.getImageData(0,0,W,H), td=tooth.data; for (let i=0;i<td.length;i+=4){ const k=0.95+0.05*R(); td[i]*=k; td[i+1]*=k; td[i+2]*=k; } g.putImageData(tooth,0,0);
 document.title='done';
 </script>

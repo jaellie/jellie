@@ -9,11 +9,11 @@ init(1080, 1920);
 paper();
 
 // ---- wall: warm by the lamp (left), violet-blue toward the window light; floor below
-wash([[0.03,0.02],[0.97,0.02],[0.97,0.665],[0.03,0.665]], linear(0.05,0.6,0.95,0.1,[[0,'#e9a272'],[0.35,'#c08fa6'],[0.7,'#8584c4'],[1,'#5f6cb8']]), {alpha:.8, rough:22, layers:3, edge:.1});
+wash([[-0.03,-0.02],[1.03,-0.02],[1.03,0.665],[-0.03,0.665]], linear(0.05,0.6,0.95,0.1,[[0,'#e9a272'],[0.35,'#c08fa6'],[0.7,'#8584c4'],[1,'#5f6cb8']]), {alpha:.8, rough:22, layers:3, edge:.1});
 { const tg=g.createLinearGradient(0,0,0,H*.4); tg.addColorStop(0,'rgba(70,80,150,.3)'); tg.addColorStop(1,'rgba(70,80,150,0)');
   g.save(); g.globalCompositeOperation='multiply'; g.fillStyle=tg; g.fillRect(0,0,W,H*.4); g.restore(); }
-wash([[0.03,0.655],[0.97,0.655],[0.97,0.98],[0.03,0.98]], linear(0.1,0.66,0.9,0.98,[[0,'#b67e76'],[0.5,'#7d6ca2'],[1,'#4f5694']]), {alpha:.75, rough:16, layers:3, edge:.1});
-ink([[0.035,0.66],[0.965,0.662]],{w:2.6});
+wash([[-0.03,0.655],[1.03,0.655],[1.03,1.03],[-0.03,1.03]], linear(0.1,0.66,0.9,0.98,[[0,'#b67e76'],[0.5,'#7d6ca2'],[1,'#4f5694']]), {alpha:.75, rough:16, layers:3, edge:.1});
+ink([[-0.01,0.66],[1.01,0.662]],{w:2.6,gap:false});
 
 // ---- window: the richest color in the scene
 const gx0=0.22, gx1=0.78, gy0=0.115, gy1=0.385;
@@ -87,9 +87,6 @@ g.save(); g.font='italic 34px Georgia'; g.fillStyle=SEPIA; g.globalAlpha=.75; g.
 // ---- light, vignette, page edge, tooth
 const vg=g.createRadialGradient(W*.5,H*.42,H*.3,W*.5,H*.5,H*.75); vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(90,60,120,.2)');
 g.save(); g.globalCompositeOperation='multiply'; g.fillStyle=vg; g.fillRect(0,0,W,H); g.restore();
-g.save(); for (let i=0;i<520;i++){ const side=Math.floor(rnd(0,4)); let x,y; const d=Math.pow(R(),3)*30;
-  if(side===0){x=rnd(0,W);y=d;} else if(side===1){x=rnd(0,W);y=H-d;} else if(side===2){x=d;y=rnd(0,H);} else {x=W-d;y=rnd(0,H);}
-  g.fillStyle='#efe6d2'; g.globalAlpha=rnd(.35,.8); g.beginPath(); g.ellipse(x,y,rnd(3,9),rnd(2,6),rnd(0,3),0,7); g.fill(); } g.restore();
 const tooth=g.getImageData(0,0,W,H), td=tooth.data; for (let i=0;i<td.length;i+=4){ const k=0.94+0.06*R(); td[i]*=k; td[i+1]*=k; td[i+2]*=k; } g.putImageData(tooth,0,0);
 document.title='done';
 </script>
