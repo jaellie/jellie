@@ -18,7 +18,7 @@
       "id": "d_notice_match", "kind": "match", "patternId": "",
       "introKo": "{공지|notice}를 {천천히|slowly} {읽어 본다|read through}.", "introEn": "I read the notice slowly.",
       "instructionKo": "공지의 말과 뜻을 연결해 보세요.", "instructionEn": "Match each term on the notice with its meaning.",
-      "referenceDocument": "notice_exchange_2020",
+      "referenceDocument": "notice_exchange_2019",
       "matchPairs": [
         { "ko": "{신청 기간|@신청 기간}", "en": "Application period" },
         { "ko": "{모집 인원|@모집 인원}", "en": "Number of openings" },
@@ -31,7 +31,7 @@
       "id": "d_comp_eligibility", "kind": "comprehension", "patternId": "", "speaker": "yunji",
       "promptKo": "{누가|who} {지원|@지원하다}{할 수 있는데|can}?", "promptEn": "So who's eligible?",
       "instructionKo": "공지를 보고 윤지에게 대답해 보세요.", "instructionEn": "Check the notice and answer Yunji.",
-      "referenceDocument": "notice_exchange_2020",
+      "referenceDocument": "notice_exchange_2019",
       "options": [
         { "ko": "{재학생|@재학생}이면 {누구나|anyone} {지원|@지원하다}{할 수 있어|can}.", "en": "Anyone who's currently enrolled can apply.", "correct": true,
           "feedbackKo": "{맞아|right}. ‘{지원 자격|@지원 자격}: {재학생|@재학생}’이라고 {써 있어|it says}.", "feedbackEn": "Right. It says \"Eligibility: currently enrolled students.\"" },
@@ -45,7 +45,7 @@
       "id": "d_comp_documents", "kind": "comprehension", "patternId": "aya_hada", "speaker": "yuri",
       "promptKo": "{뭐|what} {내야|#aya_hada} {돼|is needed}?", "promptEn": "What do we have to turn in?",
       "instructionKo": "공지를 보고 유리에게 대답해 보세요.", "instructionEn": "Check the notice and answer Yuri.",
-      "referenceDocument": "notice_exchange_2020",
+      "referenceDocument": "notice_exchange_2019",
       "options": [
         { "ko": "{자기소개서|@자기소개서}{랑|and|PARTICLE} {지원 동기|@지원 동기}를 {제출|@제출하다}{해야 해|#aya_hada}.", "en": "We have to submit a personal statement and a statement of purpose.", "correct": true,
           "feedbackKo": "{맞아|right}.", "feedbackEn": "Right." },
@@ -63,9 +63,9 @@
       "options": [
         { "ko": "10월 1일{까지|until|PARTICLE} {신청|@신청하다}{해야 해|#aya_hada}.", "en": "We have to apply by October 1.",
           "feedbackKo": "10월 1일은 {신청|application}이 {시작되는|opens} {날|day}이야.", "feedbackEn": "October 1 is the day applications open." },
-        { "ko": "10월 7일{까지|until|PARTICLE} {신청|@신청하다}{해야 해|#aya_hada}.", "en": "We have to apply by October 7.", "correct": true,
+        { "ko": "10월 8일{까지|until|PARTICLE} {신청|@신청하다}{해야 해|#aya_hada}.", "en": "We have to apply by October 8.", "correct": true,
           "feedbackKo": "{맞아|right}. {오후|p.m.} {다섯 시|five o'clock}{까지|until|PARTICLE}.", "feedbackEn": "Right. By 5 p.m." },
-        { "ko": "10월 7일{부터|from|PARTICLE} {신청|@신청하다}{해야 해|#aya_hada}.", "en": "We have to apply starting October 7.",
+        { "ko": "10월 8일{부터|from|PARTICLE} {신청|@신청하다}{해야 해|#aya_hada}.", "en": "We have to apply starting October 8.",
           "feedbackKo": "-{부터|from}는 ‘from’, -{까지|until}는 ‘until’이야.", "feedbackEn": "부터 means \"from\"; 까지 means \"until.\"" }
       ]
     },

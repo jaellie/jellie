@@ -110,3 +110,21 @@ function paint(pts, fill, {alpha=1, rough=4, blur=1}={}){
   g.save(); g.globalAlpha=alpha; g.filter=`blur(${blur}px)`; g.fillStyle = typeof fill==='function' ? fill(g) : fill;
   roughPath(g, pts.map(([x,y])=>[X(x),Y(y)]), rough); g.fill(); g.restore();
 }
+
+// Ellipse outline as points (normalized coords); ry is auto-corrected for aspect when omitted.
+function ellipsePts(cx, cy, rx, ry, n = 32, from = 0, to = Math.PI * 2) {
+  if (ry === undefined) ry = rx * W / H;
+  const pts = [];
+  for (let i = 0; i <= n; i++) { const a = from + (to - from) * i / n; pts.push([cx + Math.cos(a) * rx, cy + Math.sin(a) * ry]); }
+  return pts;
+}
+// A soft cumulus cloud: overlapping lobes, white on top, warm light underneath.
+function cloud(cx, cy, w, warm = 'rgba(255,186,120,.85)') {
+  const lobes = 5 + Math.floor(rnd(0, 3));
+  for (let i = 0; i < lobes; i++) {
+    const t = i / (lobes - 1), x = cx - w / 2 + t * w, r = w * (0.16 + 0.12 * Math.sin(Math.PI * t)) * rnd(.85, 1.15);
+    const y = cy - r * 0.6 * Math.sin(Math.PI * t);
+    paint(ellipsePts(x, y, r, r * 0.75 * W / H, 28), linear(x, y - r * 1.2, x, y + r * 1.3,
+      [[0, 'rgba(255,255,255,.97)'], [0.55, 'rgba(255,240,224,.95)'], [1, warm]]), { rough: 3, blur: 3 });
+  }
+}

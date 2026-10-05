@@ -41,7 +41,7 @@
     { "id": "obj_box_again", "speaker": "", "ko": "{상자|box} {안|inside}에 {아직|still} {접힌|folded} {종이|paper}가 {남아 있다|is left}. {지금은|for now} {그냥|just} {둔다|leave it}.", "en": "There are still some folded papers in the box. I leave them for now." },
     { "id": "obj_box_again_end", "type": "return" },
 
-    { "id": "obj_diary", "type": "document", "document": "diary_20191003", "effects": ["sfx:paper"] },
+    { "id": "obj_diary", "type": "document", "document": "diary_20181003", "effects": ["sfx:paper"] },
     { "id": "obj_diary_2", "speaker": "", "ko": "{할까 말까|#kka_malkka}.", "en": "Should I, or shouldn't I." },
     { "id": "obj_diary_3", "speaker": "", "ko": "{그때|back then} {나|I}는 {뭘|what} {하려고 했던|#ryeogo} {걸까|was it}?", "en": "What was I trying to do back then?", "effects": ["set:read_diary"] },
     { "id": "obj_diary_4", "type": "branch", "cases": [ { "when": ["flag:seen_photo"], "next": "obj_diary_same" } ], "next": "obj_diary_end" },
@@ -51,7 +51,7 @@
     { "id": "obj_photo", "type": "photo", "photo": "photo_cafe" },
     { "id": "obj_photo_2", "speaker": "", "ko": "{혜진|Hyejin}이가 {찍은|took} {사진|photo}이다.", "en": "A photo Hyejin took." },
     { "id": "obj_photo_3", "speaker": "", "ko": "{유리|Yuri}, {혜진|Hyejin}, {그리고|and} {나|me}.", "en": "Yuri, Hyejin, and me." },
-    { "id": "obj_photo_4", "speaker": "", "ko": "{뒷면|the back}에 {날짜|date}가 {적혀 있다|is written}. 2019년 10월 3일.", "en": "The date is written on the back: October 3, 2019.", "effects": ["set:seen_photo"] },
+    { "id": "obj_photo_4", "speaker": "", "ko": "{뒷면|the back}에 {날짜|date}가 {적혀 있다|is written}. 2018년 10월 3일.", "en": "The date is written on the back: October 3, 2018.", "effects": ["set:seen_photo"] },
     { "id": "obj_photo_5", "type": "branch", "cases": [ { "when": ["flag:read_diary"], "next": "obj_photo_same" } ], "next": "obj_photo_end" },
     { "id": "obj_photo_same", "speaker": "", "ko": "…{일기|diary}{랑|and|PARTICLE} {같은|same} {날|day}이다.", "en": "…It's the same day as the diary." },
     { "id": "obj_photo_end", "type": "return" },
@@ -62,7 +62,7 @@
     { "id": "pro_close_4", "speaker": "", "ko": "…{새소리|birdsong}?", "en": "…Birds?" },
 
     { "id": "l1_title", "type": "transition", "effects": ["loop:1", "set:loop.day_started"],
-      "transition": { "to": "cafe_2019", "style": "photo", "ambience": ["birds", "cafe"], "titleKo": "2019년 10월 3일 · 나중에", "titleEn": "October 3, 2019 · Later" } },
+      "transition": { "to": "cafe_2018", "style": "photo", "ambience": ["birds", "cafe"], "titleKo": "2018년 10월 3일 · 나중에", "titleEn": "October 3, 2018 · Later" } },
     { "id": "l1_1", "speaker": "hyejin", "ko": "{자|okay}, {다들|everyone} {여기|here} {봐|look}. {하나|one}, {둘|two}—", "en": "Okay, everyone look here. One, two—" },
     { "id": "l1_2", "speaker": "hyejin", "ko": "{나중에|later} {보면|when we look at it} {재밌겠다|@재미있다}.", "en": "This'll be fun to look back on someday.", "effects": ["sfx:shutter"] },
     { "id": "l1_3", "speaker": "", "ko": "…{이 장면|this moment}, {알고 있다|I know it}.", "en": "…I know this moment." },
@@ -100,7 +100,7 @@
     { "id": "l1_20", "speaker": "", "ko": "{대답|answer}을 {못 했다|couldn't give}.", "en": "I didn't have an answer." },
 
     { "id": "l1_21", "speaker": "yuri", "ko": "{이거|this} {봐|look}. {공지|notice} {아직|still} {있어|is up}.", "en": "Look at this. The notice is still up." },
-    { "id": "l1_notice", "type": "document", "document": "notice_exchange_2020", "effects": ["clue:notice"] },
+    { "id": "l1_notice", "type": "document", "document": "notice_exchange_2019", "effects": ["clue:notice"] },
     { "id": "l1_22", "speaker": "yuri", "ko": "{아|oh}, {커피|coffee}를 {쏟아서|#aseo} {날짜|the date}가 {잘 안 보이네|is hard to see}.", "en": "Oh—I spilled coffee on it, so you can't really see the date." },
     { "id": "l1_d_match", "type": "drill", "drill": "d_notice_match" },
     { "id": "l1_d_elig", "type": "drill", "drill": "d_comp_eligibility" },
@@ -120,7 +120,7 @@
     { "id": "ig_h_c3", "speaker": "hyejin", "ko": "{그러니까|I mean} {무슨|which} {사진|photo}? {설명|@설명하다}을 {해 줘야|#aya_hada} {알지|I'd know}.", "en": "Okay, but which photo? I can't tell unless you explain.", "next": "ig_h_c2" },
     { "id": "ig_h_a", "speaker": "hyejin", "ko": "{어|uh}… {잠깐만|hang on}. {게시판|bulletin board} {찍어 둔|that I took} {게|one} {있을 거야|should be there}.", "en": "Uh… hang on. I should have a picture of the bulletin board." },
     { "id": "ig_h_photo", "type": "photo", "photo": "photo_board" },
-    { "id": "ig_h_d", "speaker": "hyejin", "ko": "{여기|here}. 10월 7일 {오후|p.m.} {다섯 시|five o'clock}{까지|until|PARTICLE}{래|they say|GRAMMAR}.", "en": "Here—it says until 5 p.m. on October 7.", "effects": ["set:know_deadline", "clue:deadline"] },
+    { "id": "ig_h_d", "speaker": "hyejin", "ko": "{여기|here}. 10월 8일 {오후|p.m.} {다섯 시|five o'clock}{까지|until|PARTICLE}{래|they say|GRAMMAR}.", "en": "Here—it says until 5 p.m. on October 8.", "effects": ["set:know_deadline", "clue:deadline"] },
     { "id": "l1_d_deadline", "type": "drill", "drill": "d_report_deadline" },
     { "id": "l1_25", "speaker": "yuri", "ko": "{일주일|a week}도 {안 남았네|isn't even left}.", "en": "That's not even a week." },
 
@@ -158,7 +158,7 @@
     { "id": "l1_52", "speaker": "yuri", "ko": "{아|oh}, {서류|documents}는 {큰|big} {봉투|envelope}에 {넣어서|#aseo} {내야|#aya_hada} {된대|they say}.", "en": "Oh, and apparently the documents have to go in a big envelope." },
     { "id": "l1_53", "speaker": "yuri", "ko": "{학교 앞|in front of school} {문구점|stationery store}에 {있을 거야|they'll probably have}. {가 볼래|want to go check}?", "en": "The stationery store in front of school should have them. Want to go check?" },
 
-    { "id": "st_title", "type": "transition", "transition": { "to": "stationery_2019", "style": "fade", "ambience": ["street"], "titleKo": "", "titleEn": "" }, "effects": ["sfx:bell"] },
+    { "id": "st_title", "type": "transition", "transition": { "to": "stationery_2018", "style": "fade", "ambience": ["street"], "titleKo": "", "titleEn": "" }, "effects": ["sfx:bell"] },
     { "id": "st_1", "speaker": "clerk", "ko": "{어서 오세요|welcome}. {뭐|what} {찾으세요|are you looking for}?", "en": "Welcome. What can I help you find?" },
     { "id": "ig_c", "type": "choice", "choices": [
         { "ko": "{봉투|envelope} {있어요|do you have}?", "en": "Do you have envelopes?", "next": "ig_c_a" },
@@ -187,7 +187,7 @@
         { "ko": "{아직|still} {모르겠어요|I'm not sure}.", "en": "I'm not sure yet." } ] },
     { "id": "st_4", "speaker": "clerk", "ko": "{잘|well} {되면|if it goes} {좋겠네요|I hope}.", "en": "I hope it goes well." },
 
-    { "id": "nt_title", "type": "transition", "transition": { "to": "room_2019", "style": "fade", "ambience": ["clock", "night"], "titleKo": "그날 밤", "titleEn": "That night" } },
+    { "id": "nt_title", "type": "transition", "transition": { "to": "room_2018", "style": "fade", "ambience": ["clock", "night"], "titleKo": "그날 밤", "titleEn": "That night" } },
     { "id": "nt_1", "speaker": "", "ko": "{봉투|envelope}는 {책상|desk} {위|top}에 {있다|is}. {신청|application} {페이지|page}도 {열려 있다|is open}.", "en": "The envelope is on the desk. The application page is open, too." },
     { "id": "nt_msg", "type": "document", "document": "msg_night", "effects": ["sfx:buzz"] },
     { "id": "nt_2", "speaker": "", "ko": "{자기소개서|@자기소개서}. {첫 문장|the first sentence}은 {이미|already} {써 놨다|have written}.", "en": "The personal statement. I've already written the first sentence." },
@@ -205,12 +205,12 @@
     { "id": "nt_5", "speaker": "", "ko": "{노트북|laptop}을 {닫는다|close}.", "en": "I close the laptop." },
     { "id": "nt_diary", "type": "branch", "cases": [ { "when": ["flag:almost_submitted"], "next": "nt_diary_almost" } ], "next": "nt_diary_delay" },
     { "id": "nt_diary_almost", "type": "document", "document": "diary_loop1_almost", "next": "nt_6", "effects": ["sfx:paper"] },
-    { "id": "nt_diary_delay", "type": "document", "document": "diary_20191003", "next": "nt_6", "effects": ["sfx:paper"] },
+    { "id": "nt_diary_delay", "type": "document", "document": "diary_20181003", "next": "nt_6", "effects": ["sfx:paper"] },
     { "id": "nt_6", "speaker": "", "ko": "{불|the light}을 {끈다|turn off}.", "en": "I turn off the light." },
     { "id": "nt_dark", "type": "transition", "transition": { "to": "void", "style": "slow", "ambience": ["clock"], "titleKo": "", "titleEn": "" } },
     { "id": "nt_7", "speaker": "", "ko": "{시계|clock} {소리|sound}.", "en": "The clock, ticking." },
     { "id": "nt_8", "speaker": "", "ko": "{그리고|and}… {종이|paper}가 {접히는|being folded} {소리|sound}?", "en": "And… the sound of paper being folded?", "effects": ["sfx:paper"] },
-    { "id": "nt_wake", "type": "transition", "transition": { "to": "room_2019", "style": "slow", "ambience": ["clock", "night"], "titleKo": "", "titleEn": "" } },
+    { "id": "nt_wake", "type": "transition", "transition": { "to": "room_2018", "style": "slow", "ambience": ["clock", "night"], "titleKo": "", "titleEn": "" } },
     { "id": "nt_9", "speaker": "", "ko": "{책상|desk} {위|top}에 {못 보던|never seen before} {쪽지|note}가 {있다|there is}.", "en": "There's a note on the desk I've never seen before." },
     { "id": "nt_note", "type": "document", "document": "note_1", "effects": ["phase:LetterFound", "clue:note_1"] },
     { "id": "nt_10", "speaker": "", "ko": "{누가|who} {쓴|wrote} {거지|is it}?", "en": "Who wrote this?" },

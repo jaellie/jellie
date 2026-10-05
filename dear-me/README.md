@@ -12,6 +12,7 @@ Preview of the present-day room (sketchbook style: pen line + watercolor wash, w
 
 ![Exploring the room](Docs/preview-explore.png)
 ![Dialogue with grammar tooltip](Docs/preview-dialogue.png)
+![The 2018 café](Docs/preview-cafe.png)
 
 ## 1. Quick start
 
@@ -49,10 +50,10 @@ switches on `ENABLE_INPUT_SYSTEM`.
 |---|---|
 | Main menu, continue/new, settings, pause | `UI/Screens.cs`, `Core/GameRoot.cs` |
 | Present-day room, 8 objects (≥5 interactive), box → diary/photo | `Data/rooms.json`, `UI/RoomView.cs` |
-| Diary (`-(으)ㄹ까 말까` in context, no lecture) | `Data/documents.json` → `diary_20191003` |
+| Diary (`-(으)ㄹ까 말까` in context, no lecture) | `Data/documents.json` → `diary_20181003` |
 | Photo → past transition, subtle (dim/bleach, no portal) | `UI/Overlays.cs` `ScreenFader` |
 | Yuri / Yunji / Hyejin café scene with the required lines | `Data/story_slice.json` `l1_*` |
-| Application notice with a coffee stain (the information gap is physical) | `notice_exchange_2020` |
+| Application notice with a coffee stain (the information gap is physical) | `notice_exchange_2019` |
 | `-(으)려고 하다` full pipeline: recognition → meaning → substitution → order → transform → negative → context → guided production → communicative use → delayed recycling | `Data/drills.json`, story nodes `l1_d_*`, `l1_c4`, `st_2`, `nt_msg`, `nt_c` |
 | Matching + reading comprehension on the notice | `d_notice_match`, `d_comp_*` |
 | Information gap #1 (deadline is under the stain; ask Hyejin, read her photo, report to Yuri) | `ig_h*`, `photo_board`, `d_report_deadline` |

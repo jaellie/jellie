@@ -4,7 +4,7 @@
       "id": "photo_cafe", "titleKo": "사진", "titleEn": "Photograph",
       "states": [
         {
-          "id": "v1", "background": "#e6d7b8", "dateStamp": "2019. 10. 03",
+          "id": "v1", "background": "#e6d7b8", "dateStamp": "2018. 10. 03",
           "shapes": [
             { "x": 0.00, "y": 0.00, "w": 1.00, "h": 0.55, "color": "#efe3c9" },
             { "x": 0.62, "y": 0.06, "w": 0.32, "h": 0.36, "color": "#f7efd9" },
@@ -20,7 +20,7 @@
           ]
         },
         {
-          "id": "v2", "background": "#e6d7b8", "dateStamp": "2019. 10. 03",
+          "id": "v2", "background": "#e6d7b8", "dateStamp": "2018. 10. 03",
           "shapes": [
             { "x": 0.00, "y": 0.00, "w": 1.00, "h": 0.55, "color": "#efe3c9" },
             { "x": 0.62, "y": 0.06, "w": 0.32, "h": 0.36, "color": "#f7efd9" },
@@ -42,13 +42,13 @@
       "id": "photo_board", "titleKo": "혜진이의 사진", "titleEn": "Hyejin's photo",
       "states": [
         {
-          "id": "v1", "background": "#b49e78", "dateStamp": "2019. 10. 03",
+          "id": "v1", "background": "#b49e78", "dateStamp": "2018. 10. 03",
           "shapes": [
             { "x": 0.04, "y": 0.06, "w": 0.30, "h": 0.40, "color": "#e9e2d0" },
             { "x": 0.38, "y": 0.08, "w": 0.58, "h": 0.84, "color": "#f6f1e4" },
             { "x": 0.42, "y": 0.14, "w": 0.50, "h": 0.12, "color": "#f6f1e4", "label": "{해외교류|exchange} {프로그램|program} {모집|@모집}", "labelEn": "Exchange program: call for participants" },
-            { "x": 0.42, "y": 0.34, "w": 0.50, "h": 0.14, "color": "#f6f1e4", "label": "{신청 기간|@신청 기간}: 10월 1일 ~ 10월 7일", "labelEn": "Application period: Oct 1 – Oct 7" },
-            { "x": 0.42, "y": 0.52, "w": 0.50, "h": 0.12, "color": "#f6f1e4", "label": "{마감|@마감}: 10월 7일 ({월|Mon}) 17:00", "labelEn": "Deadline: Mon, Oct 7, 5:00 p.m." },
+            { "x": 0.42, "y": 0.34, "w": 0.50, "h": 0.14, "color": "#f6f1e4", "label": "{신청 기간|@신청 기간}: 10월 1일 ~ 10월 8일", "labelEn": "Application period: Oct 1 – Oct 8" },
+            { "x": 0.42, "y": 0.52, "w": 0.50, "h": 0.12, "color": "#f6f1e4", "label": "{마감|@마감}: 10월 8일 ({월|Mon}) 17:00", "labelEn": "Deadline: Mon, Oct 8, 5:00 p.m." },
             { "x": 0.06, "y": 0.56, "w": 0.26, "h": 0.30, "color": "#d7c9a6" }
           ],
           "details": [

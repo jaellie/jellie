@@ -1,9 +1,9 @@
 {
   "documents": [
     {
-      "id": "diary_20191003", "kind": "diary", "titleKo": "일기장", "titleEn": "Diary",
+      "id": "diary_20181003", "kind": "diary", "titleKo": "일기장", "titleEn": "Diary",
       "lines": [
-        { "style": "heading", "ko": "2019년 10월 3일", "en": "October 3, 2019" },
+        { "style": "heading", "ko": "2018년 10월 3일", "en": "October 3, 2018" },
         { "ko": "{오늘|today}도 {아무것도|nothing} {하지 않았다|did (not)}.", "en": "Today, once again, I didn't do anything." },
         { "ko": "{정확히는|to be exact}, {할까 말까|#kka_malkka} {고민|@고민하다}{하다가|while ~ing, then|GRAMMAR|-다가: one action is interrupted and something else happens} {하지 않았다|didn't do it}.", "en": "To be precise, I kept going back and forth on whether to do it, and then I didn't." },
         { "style": "gap", "ko": "", "en": "" },
@@ -13,7 +13,7 @@
     {
       "id": "diary_loop1_almost", "kind": "diary", "titleKo": "일기장", "titleEn": "Diary",
       "lines": [
-        { "style": "heading", "ko": "2019년 10월 3일", "en": "October 3, 2019" },
+        { "style": "heading", "ko": "2018년 10월 3일", "en": "October 3, 2018" },
         { "ko": "{오늘|today}은 {거의|almost} {할 뻔했다|nearly did it}.", "en": "Today, I almost did it." },
         { "ko": "{제출|@제출하다} {버튼|button} {위|over}에서 {손|hand}이 {멈췄다|stopped}.", "en": "My hand stopped right over the Submit button." },
         { "style": "gap", "ko": "", "en": "" },
@@ -21,9 +21,9 @@
       ]
     },
     {
-      "id": "notice_exchange_2020", "kind": "notice", "titleKo": "공지", "titleEn": "Notice",
+      "id": "notice_exchange_2019", "kind": "notice", "titleKo": "공지", "titleEn": "Notice",
       "lines": [
-        { "style": "heading", "ko": "2020 {겨울|winter} {해외교류|overseas exchange} {프로그램|program} {참가자|participants} {모집|@모집}", "en": "Winter 2020 Overseas Exchange Program — Call for Participants" },
+        { "style": "heading", "ko": "2019 {겨울|winter} {해외교류|overseas exchange} {프로그램|program} {참가자|participants} {모집|@모집}", "en": "Winter 2019 Overseas Exchange Program — Call for Participants" },
         { "style": "stain", "ko": "{신청 기간|@신청 기간}: 10월 1일 ~ 10월 ■일", "en": "Application period: Oct 1 – Oct ■ (the day is hidden under a coffee stain)" },
         { "ko": "{모집 인원|@모집 인원}: 10{명|people}", "en": "Openings: 10" },
         { "ko": "{지원 자격|@지원 자격}: {재학생|@재학생}", "en": "Eligibility: currently enrolled students" },

@@ -1,0 +1,96 @@
+<!doctype html><meta charset="utf-8">
+<!-- 2018 café near campus, afternoon. Rules: ART_DIRECTION.md (gradients, rich sky, warm light). -->
+<canvas id="c"></canvas>
+<script src="painter-lib.js"></script>
+<script>
+init(1920, 1080);
+R = rng(2018);
+paper();
+
+// ---- wall and floor: warm cream to peach, wood floor gradient
+wash([[0.03,0.04],[0.97,0.04],[0.97,0.72],[0.03,0.72]], linear(0.05,0.3,0.95,0.6,[[0,'#ffd9a8'],[0.45,'#f6c9a0'],[1,'#e4b39a']]), {alpha:.7, rough:24, layers:3, edge:.1});
+wash([[0.03,0.71],[0.97,0.71],[0.97,0.965],[0.03,0.965]], linear(0.2,0.72,0.8,0.96,[[0,'#d99a62'],[0.6,'#b8774f'],[1,'#8f5d4a']]), {alpha:.75, rough:16, layers:3, edge:.12});
+for (let i=0;i<4;i++) ink([[0.03,0.76+i*0.055],[0.97,0.762+i*0.055]],{w:1,gap:true,overshoot:2});
+paint([[0.03,0.71],[0.97,0.71],[0.97,0.965],[0.03,0.965]], linear(0.15,0.71,0.15,0.965,[[0,'rgba(255,210,150,.25)'],[1,'rgba(255,210,150,0)']]), {rough:6, blur:8});
+ink([[0.035,0.712],[0.965,0.714]],{w:2.6});
+
+// ---- big window, left: the richest thing in the frame
+const win=[[0.06,0.08],[0.42,0.08],[0.42,0.52],[0.06,0.52]];
+reserve(win,'#f6efe2');
+paint([[0.075,0.10],[0.405,0.10],[0.405,0.50],[0.075,0.50]], linear(0.24,0.10,0.24,0.50,[[0,'#3f7fd1'],[0.35,'#79b3e8'],[0.62,'#bfe0f2'],[0.82,'#ffe2b0'],[1,'#ffc27a']]), {rough:2, blur:.6});
+// clouds lit gold underneath
+cloud(0.16,0.20,0.12); cloud(0.31,0.16,0.10); cloud(0.25,0.29,0.09,'rgba(255,170,110,.9)'); cloud(0.37,0.27,0.06);
+// campus trees and a sunlit building
+paint([[0.20,0.43],[0.30,0.43],[0.30,0.50],[0.20,0.50]], linear(0.25,0.41,0.25,0.5,[[0,'#ffd6a8'],[1,'#d99a72']]), {alpha:.95, rough:1, blur:.5});
+paint([[0.20,0.43],[0.25,0.405],[0.30,0.43]], linear(0.25,0.405,0.25,0.43,[[0,'#d97a5a'],[1,'#b85a4a']]), {alpha:.95, rough:1, blur:.5});
+g.save(); g.beginPath(); g.rect(X(.075),Y(.10),X(.33),Y(.40)); g.clip();
+for (let i=0;i<9;i++){ const x=0.09+i*0.039+rnd(-.008,.008), y=rnd(.45,.47), r=rnd(.018,.03);
+  paint(ellipsePts(x,y,r), radial(x-r*.3,y-r*.5,2,r*W*1.4,[[0,'#b6e07a'],[0.6,'#6fb05a'],[1,'#3c7d52']]), {alpha:.95, rough:3, blur:.8}); }
+paint([[0.075,0.475],[0.405,0.475],[0.405,0.50],[0.075,0.50]], linear(0.24,0.475,0.24,0.5,[[0,'#7fbf62'],[1,'#4f9a58']]), {alpha:.95, rough:2, blur:.8});
+g.restore();
+glow(0.30,0.46,320,'#ffd08a',.55,'screen');
+inkRect(0.06,0.08,0.36,0.44,{w:3}); inkRect(0.075,0.10,0.33,0.40,{w:2}); ink([[0.24,0.10],[0.24,0.50]],{w:2.2});
+// sunbeams through the window
+for (let i=0;i<3;i++){ const x0=0.08+i*0.11;
+  paint([[x0,0.12],[x0+0.07,0.12],[x0+0.32,0.98],[x0+0.18,0.98]], linear(x0,0.12,x0+0.25,0.98,[[0,'rgba(255,214,140,.32)'],[1,'rgba(255,190,120,0)']]), {rough:6, blur:10}); }
+
+// sunlight landing on the floor
+paint([[0.10,0.74],[0.40,0.74],[0.55,0.95],[0.18,0.95]], linear(0.25,0.74,0.35,0.95,[[0,'rgba(255,214,150,.55)'],[1,'rgba(255,190,130,.15)']]), {rough:8, blur:12});
+
+// ---- pendant lamps
+for (const x of [0.52,0.70]) { ink([[x,0.0],[x,0.16]],{w:1.6,gap:false});
+  reserve([[x-0.03,0.16],[x+0.03,0.16],[x+0.045,0.21],[x-0.045,0.21]],'#fbf2de');
+  wash([[x-0.03,0.16],[x+0.03,0.16],[x+0.045,0.21],[x-0.045,0.21]], linear(x,0.16,x,0.21,[[0,'#f0b866'],[1,'#d98a4a']]),{alpha:.75,rough:2});
+  ink([[x-0.03,0.16],[x+0.03,0.16],[x+0.045,0.21],[x-0.045,0.21]],{w:2,close:true}); glow(x,0.22,420,'#ffc070',.55,'screen'); glow(x,0.205,120,'#fff0c8',.6,'screen'); }
+
+// ---- chalkboard menu and plant
+reserve([[0.80,0.10],[0.94,0.10],[0.94,0.34],[0.80,0.34]],'#efe6d2');
+wash([[0.80,0.10],[0.94,0.10],[0.94,0.34],[0.80,0.34]], linear(0.8,0.1,0.94,0.34,[[0,'#3f5a52'],[1,'#2c3f45']]),{alpha:.9,rough:3});
+inkRect(0.80,0.10,0.14,0.24,{w:2.4});
+g.save(); g.fillStyle='rgba(255,248,230,.85)'; g.font='bold 30px Pretendard, sans-serif'; g.fillText('MENU',X(.835),Y(.15)); g.font='22px Pretendard, sans-serif';
+['아메리카노  3.0','카페라떼  3.5','유자차  3.5','레몬에이드  4.0'].forEach((t,i)=>g.fillText(t,X(.812),Y(.20+i*0.035))); g.restore();
+reserve([[0.87,0.56],[0.93,0.56],[0.92,0.70],[0.88,0.70]]);
+wash([[0.87,0.56],[0.93,0.56],[0.92,0.70],[0.88,0.70]], linear(0.9,0.56,0.9,0.7,[[0,'#e08a5a'],[1,'#a85a44']]),{alpha:.8,rough:2});
+ink([[0.87,0.56],[0.93,0.56],[0.92,0.70],[0.88,0.70]],{w:2,close:true});
+for (let i=0;i<14;i++){ const a=rnd(-2.6,-0.5), l=rnd(.05,.12), cx=0.9, cy=0.56;
+  paint([[cx,cy],[cx+Math.cos(a)*l*.5+0.01,cy+Math.sin(a)*l*.9],[cx+Math.cos(a)*l,cy+Math.sin(a)*l*1.6],[cx+Math.cos(a)*l*.5-0.01,cy+Math.sin(a)*l*.9]], linear(cx,cy,cx,cy-.15,[[0,'#3f8a5a'],[1,'#9ad06a']]),{alpha:.85,rough:2,blur:.6}); }
+
+// ---- three friends at the table (faces left blank, urban-sketch style)
+function person(x, top, body, hair, lit){
+  const headR=0.024, hy=top+0.045;
+  const torso=[[x-0.062,0.62],[x-0.058,top+0.15]].concat(ellipsePts(x,top+0.15,0.058,0.045,18,Math.PI,Math.PI*2)).concat([[x+0.062,0.62]]);
+  reserve(torso);
+  wash(torso, linear(x-0.06,top+0.1,x+0.06,0.62,[[0,lit],[1,body]]),{alpha:.85,rough:2});
+  ink(torso,{w:2,overshoot:2});
+  ink([[x-0.012,top+0.105],[x,top+0.125],[x+0.012,top+0.105]],{w:1.4,gap:false,overshoot:1}); // collar
+  const head=ellipsePts(x,hy,headR);
+  reserve(head,'#f6e2cc');
+  wash(head, radial(x-0.008,hy-0.01,2,headR*W*1.6,[[0,'#fbe0c6'],[1,'#e8a98a']]),{alpha:.75,rough:1,off:0});
+  wash(ellipsePts(x,hy-0.012,headR*1.12,headR*1.0*W/H,24,Math.PI*0.95,Math.PI*2.05), hair,{alpha:.92,rough:2,off:0});
+  ink(head,{w:1.6,overshoot:2,gap:true});
+}
+person(0.53, 0.36, '#8a5a3c', '#3b2a22', '#e0a070');   // Yuri
+person(0.65, 0.34, '#4f6b5a', '#2a2420', '#9cc6a0');   // Yunji
+person(0.77, 0.37, '#6a5a7e', '#4a3326', '#c6a6e0');   // Hyejin
+// camera in Hyejin's hands
+reserve([[0.75,0.50],[0.79,0.50],[0.79,0.53],[0.75,0.53]],'#3a3a44'); ink([[0.75,0.50],[0.79,0.50],[0.79,0.53],[0.75,0.53]],{w:1.6,close:true}); glow(0.77,0.515,30,'#fff3d0',.6,'screen');
+// table
+reserve([[0.46,0.58],[0.86,0.58],[0.86,0.62],[0.46,0.62]]);
+wash([[0.46,0.58],[0.86,0.58],[0.86,0.62],[0.46,0.62]], linear(0.46,0.58,0.86,0.62,[[0,'#f0b06a'],[1,'#b5784e']]),{alpha:.85,rough:3});
+inkRect(0.46,0.58,0.40,0.04,{w:2.6}); ink([[0.64,0.62],[0.64,0.80]],{w:2.6}); ink([[0.66,0.62],[0.66,0.80]],{w:1.8}); ink([[0.60,0.80],[0.70,0.80]],{w:2.2});
+// cups catching light
+for (const x of [0.52,0.62,0.74]){ reserve([[x,0.545],[x+0.03,0.545],[x+0.028,0.58],[x+0.002,0.58]],'#fffaf0');
+  ink([[x,0.545],[x+0.002,0.58],[x+0.028,0.58],[x+0.03,0.545]],{w:1.6}); ink([[x,0.546],[x+0.03,0.546]],{w:1.4}); }
+// the application notice on the table
+reserve([[0.68,0.585],[0.73,0.583],[0.732,0.598],[0.682,0.6]],'#fffaf0'); ink([[0.68,0.585],[0.73,0.583],[0.732,0.598],[0.682,0.6]],{w:1.3,close:true});
+
+// warm afternoon light over everything, then the page edge
+glow(0.25,0.35,900,'#ffcf8a',.35,'screen');
+const vg=g.createRadialGradient(W*.45,H*.45,H*.4,W*.5,H*.5,W*.75); vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(150,90,80,.16)');
+g.save(); g.globalCompositeOperation='multiply'; g.fillStyle=vg; g.fillRect(0,0,W,H); g.restore();
+g.save(); for (let i=0;i<420;i++){ const side=Math.floor(rnd(0,4)); let x,y; const d=Math.pow(R(),3)*30;
+  if(side===0){x=rnd(0,W);y=d;} else if(side===1){x=rnd(0,W);y=H-d;} else if(side===2){x=d;y=rnd(0,H);} else {x=W-d;y=rnd(0,H);}
+  g.fillStyle='#efe6d2'; g.globalAlpha=rnd(.35,.8); g.beginPath(); g.ellipse(x,y,rnd(3,9),rnd(2,6),rnd(0,3),0,7); g.fill(); } g.restore();
+const tooth=g.getImageData(0,0,W,H), td=tooth.data; for (let i=0;i<td.length;i+=4){ const k=0.95+0.05*R(); td[i]*=k; td[i+1]*=k; td[i+2]*=k; } g.putImageData(tooth,0,0);
+document.title='done';
+</script>

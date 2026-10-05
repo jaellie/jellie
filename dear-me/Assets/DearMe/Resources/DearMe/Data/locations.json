@@ -21,7 +21,7 @@
       ]
     },
     {
-      "id": "cafe_2019", "nameKo": "학교 앞 카페", "nameEn": "Café near campus", "top": "#f1e6cf", "bottom": "#dcc8a4", "rain": false, "night": false,
+      "id": "cafe_2018", "nameKo": "학교 앞 카페", "nameEn": "Café near campus", "image": "cafe_2018", "top": "#f1e6cf", "bottom": "#dcc8a4", "rain": false, "night": false,
       "shapes": [
         { "x": 0.00, "y": 0.70, "w": 1.00, "h": 0.30, "color": "#c9b28a" },
         { "x": 0.06, "y": 0.08, "w": 0.36, "h": 0.44, "color": "#f9f2df" },
@@ -38,7 +38,7 @@
       ]
     },
     {
-      "id": "stationery_2019", "nameKo": "학교 앞 문구점", "nameEn": "Stationery store", "top": "#ece2cc", "bottom": "#d6c49f", "rain": false, "night": false,
+      "id": "stationery_2018", "nameKo": "학교 앞 문구점", "nameEn": "Stationery store", "top": "#ece2cc", "bottom": "#d6c49f", "rain": false, "night": false,
       "shapes": [
         { "x": 0.00, "y": 0.74, "w": 1.00, "h": 0.26, "color": "#bfa982" },
         { "x": 0.04, "y": 0.10, "w": 0.30, "h": 0.60, "color": "#b89f76" },
@@ -52,7 +52,7 @@
       ]
     },
     {
-      "id": "room_2019", "nameKo": "그때의 내 방", "nameEn": "My room, back then", "top": "#1d2436", "bottom": "#2a3146", "rain": false, "night": true,
+      "id": "room_2018", "nameKo": "그때의 내 방", "nameEn": "My room, back then", "top": "#1d2436", "bottom": "#2a3146", "rain": false, "night": true,
       "shapes": [
         { "x": 0.00, "y": 0.78, "w": 1.00, "h": 0.22, "color": "#202638" },
         { "x": 0.08, "y": 0.10, "w": 0.14, "h": 0.20, "color": "#3a4560" },

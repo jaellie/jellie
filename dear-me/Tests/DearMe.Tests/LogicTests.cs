@@ -330,7 +330,7 @@ namespace DearMe.Tests
             Check(saves.Load().status == LoadStatus.Corrupt, "both slots unusable → Corrupt");
 
             storage.Values.Clear();
-            storage.Values[SaveService.PrimaryKey] = "{\"version\":0,\"nodeId\":\"l1_title\",\"state\":{\"visitedLocations\":[\"room_present\",\"cafe_2019\"]}}";
+            storage.Values[SaveService.PrimaryKey] = "{\"version\":0,\"nodeId\":\"l1_title\",\"state\":{\"visitedLocations\":[\"room_present\",\"cafe_2018\"]}}";
             var old = saves.Load();
             Check(old.status == LoadStatus.Migrated && old.data.version == SaveService.CurrentVersion && old.data.state.currentLoop == 1, "old save migrated");
 

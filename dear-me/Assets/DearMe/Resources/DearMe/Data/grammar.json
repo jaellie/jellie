@@ -39,7 +39,7 @@
       "exampleSentences": [ { "ko": "주말에 영화나 볼까 해.", "en": "I'm thinking of maybe seeing a movie this weekend.", "chapter": 1 } ], "recyclingChapters": [1, 2] },
     { "patternId": "aya_hada", "patternText": "-아/어야 하다", "meaning": "의무나 필요를 나타낸다.", "englishMeaning": "to have to / must",
       "explanation": "Something you need to do. In speech, -아/어야 돼 is just as common.", "difficulty": 2, "chapterIntroduced": 1,
-      "exampleSentences": [ { "ko": "10월 7일까지 신청해야 해.", "en": "We have to apply by October 7.", "chapter": 1 } ], "recyclingChapters": [1, 2, 5] },
+      "exampleSentences": [ { "ko": "10월 8일까지 신청해야 해.", "en": "We have to apply by October 8.", "chapter": 1 } ], "recyclingChapters": [1, 2, 5] },
     { "patternId": "kka_malkka", "patternText": "-(으)ㄹ까 말까", "meaning": "할지 안 할지 망설이는 마음을 나타낸다.", "englishMeaning": "whether or not to (do)",
       "explanation": "Hesitating between doing something and not doing it.", "difficulty": 3, "chapterIntroduced": 1,
       "exampleSentences": [ { "ko": "할까 말까 고민하다가 하지 않았다.", "en": "I went back and forth on it, and then didn't.", "chapter": 1 } ], "recyclingChapters": [1, 3, 5] },
