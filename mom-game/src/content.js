@@ -65,7 +65,7 @@ export const content = {
     palm_charm: { type: 'gift', world: 'home', title: '용 부적', icon: '🐉', token: 'dragon',
       text: '1964년 갑진년, 용띠 우리 엄마.\n올해도 용처럼 힘차게, 그리고 늘 건강하게! ✍️' },
     sofa_note: { type: 'note', world: 'home', title: '쿠션 밑 쪽지',
-      text: '사랑이란 어디 있을까?\n팔딱팔딱 뛰는 나의 가슴 속에 있지.\n사랑이란 무얼까?\n우리의 가슴과 가슴 사이를 연결해주는 금실이지.\n— 한강 (여덟 살에 쓴 시, 노벨문학상 강연 「빛과 실」)\n\n엄마랑 나 사이에도 그 금실이 있어요. ✍️' },
+      text: '사랑이란 어디 있을까?\n팔딱팔딱 뛰는 나의 가슴 속에 있지.\n사랑이란 무얼까?\n우리의 가슴과 가슴 사이를 연결해주는 금실이지.\n— 한강' },
     lfbag_gift: { hidden: true, type: 'gift', world: 'home', title: '쇼핑백 속 선물', icon: '🎀',
       text: '엄마가 좋아하는 색으로 골랐어요.\n잘 어울릴 거예요. ✍️' },
     balcony_note: { hidden: true, type: 'note', world: 'home', title: '화분 옆 쪽지',
@@ -130,9 +130,9 @@ export const content = {
 
     // ── The Past (장흥, 1970s) ─────────────────────────────
     past_shoe_note: { type: 'note', world: 'past', title: '고무신 속 쪽지', token: 'shoe',
-      text: '인생이란 탐구하면서 살아가는 것이 아니라\n살아가면서 탐구하는 것이다.\n— 양귀자, 『모순』\n\n작은 고무신 신고 뛰던 그 아이처럼,\n엄마도 지금 살아가면서 알아가는 중이에요. ✍️' },
+      text: '인생이란 탐구하면서 살아가는 것이 아니라\n살아가면서 탐구하는 것이다.\n— 양귀자, 『모순』' },
     past_persimmon_note: { type: 'note', world: 'past', title: '감에 달린 쪽지', token: 'persimmon',
-      text: '역사가 우리를 망쳐 놨지만 그래도 상관없다.\n— 이민진, 『파친코』\n\n힘든 시절을 다 지나 여기까지 온 엄마가\n정말 자랑스러워요. ✍️' },
+      text: '역사가 우리를 망쳐 놨지만 그래도 상관없다.\n— 이민진, 『파친코』' },
     past_jar_gift: { type: 'gift', world: 'past', title: '장독 속 선물', icon: '🏺',
       text: '할머니 된장 냄새가 나는 것 같아요. ✍️' },
     past_candy_note: { hidden: true, type: 'note', world: 'past', title: '사탕 껍질 쪽지', token: 'candy',
