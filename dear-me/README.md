@@ -8,6 +8,11 @@ containing the first vertical slice: **Prologue (상자) + Loop 1 (나중에)**.
 
 ---
 
+Preview of the present-day room (re-drawn in a browser from the same data files; placeholder art):
+
+![Exploring the room](Docs/preview-explore.png)
+![Dialogue with grammar tooltip](Docs/preview-dialogue.png)
+
 ## 1. Quick start
 
 1. Install **Unity 6 (6000.0 LTS or newer)** with the **Web Build Support** module.
