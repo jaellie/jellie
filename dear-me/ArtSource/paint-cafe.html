@@ -98,16 +98,25 @@ girl(0.50, 0.445, {style:'bob',  hair:'#2e2626', hairLight:'#5a4a48', hairDark:'
 girl(0.73, 0.46,  {style:'pony', hair:'#7a4a32', hairLight:'#b07a54', hairDark:'#4a2c22', top:'#b49ad6', lit:'#e6d4f6', collar:true, ribbon:'#f2a0b4'}); // Hyejin
 const cam=[[0.705,0.598],[0.755,0.598],[0.755,0.616],[0.705,0.616]]; reserve(cam,'#3a3a44'); ink(cam,{w:1.6,close:true}); glow(0.73,0.607,26,'#fff3d0',.6,'screen');
 // table, cups, the notice
-const tb=[[0.08,0.625],[0.92,0.625],[0.92,0.645],[0.08,0.645]];
-reserve(tb); wash(tb, linear(0.08,0.63,0.92,0.64,[[0,'#f0b06a'],[1,'#b5784e']]),{alpha:.85,rough:2}); ink(tb,{w:2.6,close:true});
-ink([[0.48,0.645],[0.48,0.76]],{w:2.6}); ink([[0.52,0.645],[0.52,0.76]],{w:1.8}); ink([[0.40,0.76],[0.60,0.76]],{w:2.2});
+// table with a long tablecloth down to the floor, so nobody seems to float
+const tableTop=[[0.05,0.618],[0.95,0.618],[0.97,0.645],[0.03,0.645]];
+reserve(tableTop,"#fbf4e6"); wash(tableTop, linear(0.05,0.618,0.95,0.645,[[0,'#fff1d8'],[1,'#f2cfae']]),{alpha:.6,rough:2}); ink(tableTop,{w:2.4,close:true});
+const hem=[]; for (let i=0;i<=24;i++){ const t=i/24; hem.push([0.02+t*0.96, 0.805+0.008*Math.sin(t*Math.PI*9)]); }
+const skirt=[[0.03,0.645],[0.97,0.645]].concat(hem.slice().reverse());
+reserve(skirt,'#fbf4e6');
+wash(skirt, linear(0.5,0.645,0.5,0.81,[[0,'#ffe9cf'],[0.55,'#f6c9a8'],[1,'#d99a86']]),{alpha:.75,rough:2,edge:.15});
+paint(skirt, linear(0.1,0.7,0.9,0.7,[[0,'rgba(255,214,150,.35)'],[0.5,'rgba(255,214,150,0)'],[1,'rgba(150,100,140,.18)']]),{rough:2,blur:4});
+ink([[0.03,0.645],[0.02,0.805]],{w:2.2}); ink([[0.97,0.645],[0.98,0.805]],{w:2.2}); ink(hem,{w:2,gap:true,overshoot:0});
+for (let i=1;i<9;i++){ const x=0.03+i*0.105+rnd(-.01,.01); ink([[x,0.65],[x+rnd(-.006,.006),0.80]],{w:1.1,gap:true,overshoot:2}); }
+// soft shadow where the cloth meets the floor
+paint([[0.0,0.80],[1.0,0.80],[1.0,0.83],[0.0,0.83]], linear(0.5,0.8,0.5,0.83,[[0,'rgba(120,70,60,.35)'],[1,'rgba(120,70,60,0)']]),{rough:3,blur:6});
 for (const x of [0.215,0.445,0.60]){ const c=[[x,0.60],[x+0.055,0.60],[x+0.05,0.625],[x+0.005,0.625]]; reserve(c,'#fffaf0'); ink([[x,0.60],[x+0.005,0.625],[x+0.05,0.625],[x+0.055,0.60]],{w:1.6}); ink([[x,0.601],[x+0.055,0.601]],{w:1.4}); }
 const nt=[[0.53,0.612],[0.63,0.609],[0.632,0.623],[0.532,0.625]]; reserve(nt,'#fffaf0'); ink(nt,{w:1.3,close:true});
-// plant
-const pot=[[0.82,0.62],[0.93,0.62],[0.915,0.70],[0.835,0.70]];
-reserve(pot); wash(pot, linear(0.87,0.62,0.87,0.7,[[0,'#e08a5a'],[1,'#a85a44']]),{alpha:.8,rough:2}); ink(pot,{w:2,close:true});
-for (let i=0;i<14;i++){ const a=rnd(-2.7,-0.5), l=rnd(.06,.13), cx=0.875, cy=0.62;
-  paint([[cx,cy],[cx+Math.cos(a)*l*.5+0.012,cy+Math.sin(a)*l*.5],[cx+Math.cos(a)*l,cy+Math.sin(a)*l*.9],[cx+Math.cos(a)*l*.5-0.012,cy+Math.sin(a)*l*.5]], linear(cx,cy,cx,cy-.1,[[0,'#3f8a5a'],[1,'#9ad06a']]),{alpha:.85,rough:2,blur:.6}); }
+// small plant on the table's right end
+const pot=[[0.855,0.575],[0.935,0.575],[0.925,0.618],[0.865,0.618]];
+reserve(pot); wash(pot, linear(0.89,0.575,0.89,0.618,[[0,'#e08a5a'],[1,'#a85a44']]),{alpha:.8,rough:2}); ink(pot,{w:2,close:true});
+for (let i=0;i<12;i++){ const a=rnd(-2.6,-0.55), l=rnd(.04,.08), cx=0.895, cy=0.575;
+  paint([[cx,cy],[cx+Math.cos(a)*l*.5+0.009,cy+Math.sin(a)*l*.5],[cx+Math.cos(a)*l,cy+Math.sin(a)*l*.9],[cx+Math.cos(a)*l*.5-0.009,cy+Math.sin(a)*l*.5]], linear(cx,cy,cx,cy-.07,[[0,'#3f8a5a'],[1,'#9ad06a']]),{alpha:.85,rough:2,blur:.6}); }
 
 // ---- warm afternoon light, page edge, tooth
 glow(0.5,0.25,900,'#ffcf8a',.3,'screen');
