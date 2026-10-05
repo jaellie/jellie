@@ -58,7 +58,7 @@ namespace DearMe.UI
             if (sentenceMarker && line.englishTranslation.Length > 0)
             {
                 var marker = new Token { korean = "EN", type = TokenType.Phrase };
-                var tv = AddToken(marker, line, theme.Sans, Mathf.Max(Theme.TinySize, size - 12), Theme.WithAlpha(Theme.Muted, 0.9f), true, forwardClicks);
+                var tv = AddToken(marker, line, theme.Body, Mathf.Max(Theme.TinySize, size - 12), Theme.WithAlpha(Theme.Muted, 0.9f), true, forwardClicks);
                 tv.gameObject.name = "SentenceMarker";
             }
         }
@@ -86,7 +86,7 @@ namespace DearMe.UI
                 string g = tooltips.GlossText(token);
                 if (g.Length > 0)
                 {
-                    gloss = UIFactory.Text("Gloss", rt, g, theme.Sans, Mathf.Max(14, Mathf.RoundToInt(size * 0.5f)),
+                    gloss = UIFactory.Text("Gloss", rt, g, theme.Body, Mathf.Max(14, Mathf.RoundToInt(size * 0.5f)),
                         Theme.WithAlpha(Theme.Accent, 0.95f), TextAnchor.UpperCenter, wrap: false);
                     gloss.gameObject.SetActive(false);
                 }

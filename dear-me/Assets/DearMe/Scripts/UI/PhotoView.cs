@@ -63,12 +63,12 @@ namespace DearMe.UI
                         lrt.anchoredPosition = new Vector2(0f, 6f);
                         bool dark = s.color.Length >= 7 && Theme.Hex(s.color).grayscale < 0.5f;
                         var line = KoreanMarkup.BuildLine(photo.id, "", s.label, s.labelEn);
-                        label.SetLine(line, theme.Sans, Theme.TinySize, dark ? Theme.Paper : Theme.Ink, lineAlign: 0.5f);
+                        label.SetLine(line, theme.Body, Theme.TinySize, dark ? Theme.Paper : Theme.Ink, lineAlign: 0.5f);
                     }
                 }
                 if (state.dateStamp.Length > 0)
                 {
-                    var stamp = UIFactory.Text("DateStamp", picture.rectTransform, state.dateStamp, theme.Sans, Theme.SmallSize,
+                    var stamp = UIFactory.Text("DateStamp", picture.rectTransform, state.dateStamp, theme.Body, Theme.SmallSize,
                         Theme.Hex("#E0782F"), TextAnchor.LowerRight, wrap: false);
                     var srt = stamp.rectTransform;
                     srt.anchorMin = srt.anchorMax = new Vector2(1f, 0f);
@@ -80,7 +80,7 @@ namespace DearMe.UI
                 foreach (var d in state.details)
                 {
                     var view = KoreanTextView.Create("Detail", frame.Content, theme, tooltips);
-                    view.SetLine(KoreanMarkup.BuildLine(photo.id, "", d.ko, d.en), theme.Serif, Theme.BodySize - 2, Theme.Ink, sentenceMarker: true);
+                    view.SetLine(KoreanMarkup.BuildLine(photo.id, "", d.ko, d.en), theme.Body, Theme.BodySize - 2, Theme.Ink, sentenceMarker: true);
                 }
             }
 

@@ -58,12 +58,12 @@ namespace DearMe.UI
                     bg.color = Theme.WithAlpha(Theme.Ink, 0.05f);
                     bg.raycastTarget = false;
                     UIFactory.Vertical(bubble.gameObject, 4f, new RectOffset(18, 18, 10, 12));
-                    UIFactory.Text("Name", bubble, db.SpeakerNameKo(l.speaker), theme.Sans, Theme.TinySize, Theme.Accent);
+                    UIFactory.Text("Name", bubble, db.SpeakerNameKo(l.speaker), theme.Body, Theme.TinySize, Theme.Accent);
                     parent = bubble;
                 }
                 int size = l.style == "heading" ? Theme.HeadingSize - 4 : l.style == "small" ? Theme.SmallSize : note ? Theme.HeadingSize : Theme.BodySize;
                 var view = KoreanTextView.Create("Line", parent, theme, tooltips);
-                view.SetLine(line, theme.Serif, size, Theme.Ink, sentenceMarker: true, lineAlign: note ? 0.5f : 0f);
+                view.SetLine(line, theme.Body, size, Theme.Ink, sentenceMarker: true, lineAlign: note ? 0.5f : 0f);
                 if (l.style == "stain") AddStain(view.transform);
             }
 

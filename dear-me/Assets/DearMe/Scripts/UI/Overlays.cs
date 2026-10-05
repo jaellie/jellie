@@ -34,8 +34,8 @@ namespace DearMe.UI
             UIFactory.Stretch(title);
             titleGroup = title.gameObject.AddComponent<CanvasGroup>();
             UIFactory.Vertical(title.gameObject, 10f, null, TextAnchor.MiddleCenter);
-            titleKo = UIFactory.Text("Ko", title, "", theme.Serif, Theme.HeadingSize, Theme.Paper, TextAnchor.MiddleCenter);
-            titleEn = UIFactory.Text("En", title, "", theme.Sans, Theme.SmallSize, Theme.WithAlpha(Theme.Paper, 0.6f), TextAnchor.MiddleCenter);
+            titleKo = UIFactory.Text("Ko", title, "", theme.Strong, Theme.HeadingSize, Theme.Paper, TextAnchor.MiddleCenter);
+            titleEn = UIFactory.Text("En", title, "", theme.Body, Theme.SmallSize, Theme.WithAlpha(Theme.Paper, 0.6f), TextAnchor.MiddleCenter);
             cover.gameObject.SetActive(false);
         }
 
@@ -150,7 +150,7 @@ namespace DearMe.UI
             var bg = rt.gameObject.AddComponent<Image>();
             bg.color = Theme.WithAlpha(Theme.Navy, 0.6f);
             bg.raycastTarget = false;
-            text = UIFactory.Text("Text", rt, "", theme.Sans, Theme.SmallSize, Theme.WithAlpha(Theme.Paper, 0.9f), TextAnchor.MiddleCenter, wrap: false);
+            text = UIFactory.Text("Text", rt, "", theme.Body, Theme.SmallSize, Theme.WithAlpha(Theme.Paper, 0.9f), TextAnchor.MiddleCenter, wrap: false);
             UIFactory.Stretch(text.rectTransform);
             group.alpha = 0f;
         }

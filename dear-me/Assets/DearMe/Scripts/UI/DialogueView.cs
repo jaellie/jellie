@@ -76,10 +76,10 @@ namespace DearMe.UI
             UIFactory.FitVertical(panel.gameObject);
             panel.gameObject.AddComponent<AdvanceCatcher>().view = this;
 
-            speaker = UIFactory.Text("Speaker", panel, "", theme.Sans, Theme.SmallSize, Theme.Accent);
+            speaker = UIFactory.Text("Speaker", panel, "", theme.Strong, Theme.SmallSize, Theme.Accent);
             text = KoreanTextView.Create("Line", panel, theme, tooltips);
 
-            continueMark = UIFactory.Text("Continue", panel, "▼", theme.Sans, Theme.TinySize, Theme.WithAlpha(Theme.Ink, 0.45f), TextAnchor.LowerRight, wrap: false);
+            continueMark = UIFactory.Text("Continue", panel, "▼", theme.Body, Theme.TinySize, Theme.WithAlpha(Theme.Ink, 0.45f), TextAnchor.LowerRight, wrap: false);
             UIFactory.Layout(continueMark.gameObject, minHeight: 18f);
 
             panel.gameObject.SetActive(false);
@@ -94,7 +94,7 @@ namespace DearMe.UI
             speaker.text = name;
             if (!narration && db.Characters.TryGetValue(line.speaker, out var c)) speaker.color = Theme.Hex(c.color);
             var color = narration ? Theme.Charcoal : Theme.Ink;
-            text.SetLine(line, theme.Serif, Theme.BodySize, color, sentenceMarker: true);
+            text.SetLine(line, theme.Body, Theme.BodySize, color, sentenceMarker: true);
             continueMark.gameObject.SetActive(showContinue);
         }
 

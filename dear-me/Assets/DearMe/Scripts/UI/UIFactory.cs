@@ -154,9 +154,9 @@ namespace DearMe.UI
             var button = BareButton(name, parent, theme, onClick, filled);
             var rt = (RectTransform)button.transform;
             Vertical(rt.gameObject, 2, new RectOffset(22, 22, 10, 10), TextAnchor.MiddleCenter);
-            Text("Label", rt, ko, theme.Serif, size, filled ? Theme.Paper : Theme.Ink, TextAnchor.MiddleCenter);
+            Text("Label", rt, ko, theme.Body, size, filled ? Theme.Paper : Theme.Ink, TextAnchor.MiddleCenter);
             if (!string.IsNullOrEmpty(en))
-                Text("English", rt, en, theme.Sans, Theme.TinySize, filled ? Theme.PaperDim : Theme.Muted, TextAnchor.MiddleCenter);
+                Text("English", rt, en, theme.Body, Theme.TinySize, filled ? Theme.PaperDim : Theme.Muted, TextAnchor.MiddleCenter);
             return button;
         }
 

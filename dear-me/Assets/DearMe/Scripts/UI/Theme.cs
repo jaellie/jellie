@@ -5,8 +5,8 @@ namespace DearMe.UI
     /// <summary>Palette, fonts and sizes. One restrained accent; everything else is paper and ink.</summary>
     public class Theme
     {
-        public Font Serif;   // Gowun Batang: dialogue, documents, titles
-        public Font Sans;    // Gowun Dodum: UI labels, English support text
+        public Font Body;    // Pretendard Regular: dialogue, documents, UI, English support text
+        public Font Strong;  // Pretendard SemiBold: titles, speaker names
 
         public static readonly Color Paper = Hex("#F4EFE4");
         public static readonly Color PaperDim = Hex("#E9E2D3");

@@ -84,7 +84,7 @@ Assets/DearMe/
     Core/      GameRoot (composition root, flow, back button, focus), StoryPresenter
   Editor/      Dear Me menu: Set Up Project, Validate Content, Build Web
   Resources/DearMe/Data/   all content (JSON)
-  Resources/DearMe/Fonts/  Gowun Batang + Gowun Dodum (OFL), subset to KS X 1001 Hangul + Latin
+  Resources/DearMe/Fonts/  Pretendard Regular + SemiBold (OFL), subset to KS X 1001 Hangul + Latin
 Assets/WebGLTemplates/DearMe/   web page template
 Tests/DearMe.Tests/   dotnet test runner: content validation + logic + 300 simulated playthroughs
 Tests/TypeCheck/      compiles every script against Unity API stubs (both input back-ends)
@@ -132,7 +132,7 @@ counts and the mastery state (`INTRODUCED → … → MASTERED`) are tracked in 
 
 After editing content run the tests (below) — they catch broken ids, unknown vocab/patterns,
 unreachable nodes, unbuildable answers, and **any character missing from the bundled font subset**.
-If you need rarer Hangul, re-subset the fonts from the originals (Google Fonts, OFL).
+If you need rarer Hangul, re-subset the fonts from the originals (npm package `pretendard`, `dist/public/static/alternative/*.ttf`).
 
 ## 6. Tests (no Unity needed)
 
@@ -172,4 +172,4 @@ a soft title pad; Korean text entry is intentionally not required (production us
 
 ## 8. Licenses
 
-Fonts: Gowun Batang and Gowun Dodum, SIL Open Font License 1.1 (see the `OFL-*.txt` files next to them).
+Fonts: Pretendard by Kil Hyung-jin, SIL Open Font License 1.1 (see `OFL-Pretendard.txt` next to the font files).

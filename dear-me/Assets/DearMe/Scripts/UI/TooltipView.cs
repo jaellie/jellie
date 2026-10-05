@@ -41,10 +41,10 @@ namespace DearMe.UI
             group.interactable = false;
 
             accentLine = UIFactory.Image("Accent", panel, Theme.Accent);
-            title = UIFactory.Text("Title", panel, "", theme.Serif, Theme.SmallSize + 2, Theme.Paper);
-            meaning = UIFactory.Text("Meaning", panel, "", theme.Sans, Theme.SmallSize, Theme.Paper);
-            note = UIFactory.Text("Note", panel, "", theme.Sans, Theme.TinySize, Theme.WithAlpha(Theme.Paper, 0.72f));
-            sentence = UIFactory.Text("Sentence", panel, "", theme.Sans, Theme.SmallSize, Theme.Paper);
+            title = UIFactory.Text("Title", panel, "", theme.Body, Theme.SmallSize + 2, Theme.Paper);
+            meaning = UIFactory.Text("Meaning", panel, "", theme.Body, Theme.SmallSize, Theme.Paper);
+            note = UIFactory.Text("Note", panel, "", theme.Body, Theme.TinySize, Theme.WithAlpha(Theme.Paper, 0.72f));
+            sentence = UIFactory.Text("Sentence", panel, "", theme.Body, Theme.SmallSize, Theme.Paper);
             foreach (var t in new[] { title, meaning, note, sentence })
             {
                 t.rectTransform.anchorMin = t.rectTransform.anchorMax = new Vector2(0f, 1f);

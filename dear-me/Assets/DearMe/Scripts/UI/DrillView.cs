@@ -68,14 +68,14 @@ namespace DearMe.UI
             if (drill.promptKo.Length > 0)
             {
                 if (drill.speaker.Length > 0)
-                    UIFactory.Text("Speaker", frame.Content, db.SpeakerNameKo(drill.speaker), theme.Sans, Theme.SmallSize,
+                    UIFactory.Text("Speaker", frame.Content, db.SpeakerNameKo(drill.speaker), theme.Strong, Theme.SmallSize,
                         db.Characters.TryGetValue(drill.speaker, out var c) ? Theme.Hex(c.color) : Theme.Accent);
                 AddLine(frame.Content, drill.speaker, drill.promptKo, drill.promptEn, Theme.BodySize, Theme.Ink);
             }
             else if (drill.promptEn.Length > 0)
             {
                 // Target meaning for build-a-sentence tasks.
-                UIFactory.Text("Target", frame.Content, drill.promptEn, theme.Sans, Theme.SmallSize, Theme.Muted);
+                UIFactory.Text("Target", frame.Content, drill.promptEn, theme.Body, Theme.SmallSize, Theme.Muted);
             }
 
             if (drill.referenceDocument.Length > 0 && db.Documents.TryGetValue(drill.referenceDocument, out var doc))
@@ -126,7 +126,7 @@ namespace DearMe.UI
         KoreanTextView AddLine(Transform parent, string speaker, string markup, string english, int size, Color color, bool marker = true)
         {
             var view = KoreanTextView.Create("Line", parent, theme, tooltips);
-            view.SetLine(KoreanMarkup.BuildLine(drill.id, speaker, markup, english), theme.Serif, size, color, sentenceMarker: marker);
+            view.SetLine(KoreanMarkup.BuildLine(drill.id, speaker, markup, english), theme.Body, size, color, sentenceMarker: marker);
             return view;
         }
 
@@ -143,7 +143,7 @@ namespace DearMe.UI
             var row = UIFactory.Horizontal(button.gameObject, 0f, new RectOffset(18, 18, 10, 10), TextAnchor.MiddleCenter);
             row.childForceExpandWidth = true;
             var text = KoreanTextView.Create("Text", button.transform, theme, tooltips);
-            text.SetLine(KoreanMarkup.BuildLine(drill.id, "", markup, english), theme.Serif, size, Theme.Ink, forwardClicks: true, lineAlign: 0.5f);
+            text.SetLine(KoreanMarkup.BuildLine(drill.id, "", markup, english), theme.Body, size, Theme.Ink, forwardClicks: true, lineAlign: 0.5f);
             return button;
         }
 
@@ -151,7 +151,7 @@ namespace DearMe.UI
         {
             var b = UIFactory.Button("Option", parent, theme, english, null, () => onClick(), Theme.SmallSize + 2);
             var label = b.GetComponentInChildren<Text>();
-            label.font = theme.Sans;
+            label.font = theme.Body;
             return b;
         }
 
@@ -300,7 +300,7 @@ namespace DearMe.UI
                 outcome.producedEnglish = o.en;
                 AddLine(feedback, "", db.UiKo("fb_reveal"), db.UiEn("fb_reveal"), Theme.SmallSize + 2, Theme.Ink);
                 if (o.ko.Length > 0) AddLine(feedback, "", o.ko, o.en, Theme.BodySize - 2, Theme.Accent);
-                else UIFactory.Text("Answer", feedback, o.en, theme.Sans, Theme.SmallSize + 2, Theme.Accent);
+                else UIFactory.Text("Answer", feedback, o.en, theme.Body, Theme.SmallSize + 2, Theme.Accent);
             }
             Finish();
         }
@@ -319,7 +319,7 @@ namespace DearMe.UI
                 bg.color = Theme.WithAlpha(Theme.Cream, 1f);
                 bg.raycastTarget = false;
                 UIFactory.Vertical(calendar.gameObject, 6f, new RectOffset(18, 18, 12, 12));
-                UIFactory.Text("CalendarTitle", calendar, "이번 주", theme.Sans, Theme.TinySize, Theme.Muted);
+                UIFactory.Text("CalendarTitle", calendar, "이번 주", theme.Body, Theme.TinySize, Theme.Muted);
             }
             var current = body.Find("Current");
             if (current != null) { current.gameObject.SetActive(false); Destroy(current.gameObject); }
@@ -344,7 +344,7 @@ namespace DearMe.UI
             var fb = DrillEvaluator.EvaluateSubstitution(item, index);
             if (fb.verdict == Verdict.Correct)
             {
-                UIFactory.Text("Entry", calendar, item.who + "  ·  " + item.options[item.answer], theme.Serif, Theme.SmallSize + 2, Theme.Ink);
+                UIFactory.Text("Entry", calendar, item.who + "  ·  " + item.options[item.answer], theme.Body, Theme.SmallSize + 2, Theme.Ink);
                 UIFactory.DestroyChildren(feedback);
                 PlaySfx("pencil");
                 substitutionIndex++;
@@ -489,7 +489,7 @@ namespace DearMe.UI
             for (int i = 0; i < slotButtonsB.Count; i++) Mark(slotButtonsB[i], i == pickB ? "selected" : "normal");
             string a = pickA >= 0 ? drill.slotsA[pickA].ko : "…";
             string b = pickB >= 0 ? drill.slotsB[pickB].ko : "…";
-            preview.SetLine(KoreanMarkup.BuildLine(drill.id, "me", a + " " + b, ""), theme.Serif, Theme.BodySize, Theme.Accent);
+            preview.SetLine(KoreanMarkup.BuildLine(drill.id, "me", a + " " + b, ""), theme.Body, Theme.BodySize, Theme.Accent);
             PlaySfx("tap");
         }
 

@@ -54,10 +54,10 @@ namespace DearMe.UI
                 var row = UIFactory.Horizontal(rt.gameObject, 18f, new RectOffset(22, 22, 14, 14));
                 row.childAlignment = TextAnchor.MiddleLeft;
 
-                var number = UIFactory.Text("Number", rt, (i + 1).ToString(), theme.Sans, Theme.TinySize, Theme.Muted, TextAnchor.MiddleCenter, wrap: false);
+                var number = UIFactory.Text("Number", rt, (i + 1).ToString(), theme.Body, Theme.TinySize, Theme.Muted, TextAnchor.MiddleCenter, wrap: false);
                 UIFactory.Layout(number.gameObject, preferredWidth: 18f, minWidth: 18f);
                 var text = KoreanTextView.Create("Text", rt, theme, tooltips);
-                text.SetLine(options[i], theme.Serif, Theme.ChoiceSize, Theme.Ink, sentenceMarker: false, forwardClicks: true);
+                text.SetLine(options[i], theme.Body, Theme.ChoiceSize, Theme.Ink, sentenceMarker: false, forwardClicks: true);
                 UIFactory.Layout(text.gameObject, flexibleWidth: 1f, minWidth: 0f);
             }
             list.gameObject.SetActive(true);

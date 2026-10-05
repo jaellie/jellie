@@ -49,7 +49,7 @@ namespace DearMe.UI
             this.gate = gate;
             layer = UIFactory.Rect("RoomObjects", stage);
             UIFactory.Stretch(layer);
-            hint = UIFactory.Text("ExploreHint", hudRoot, "", theme.Serif, Theme.SmallSize, Theme.WithAlpha(Theme.Paper, 0.85f), TextAnchor.UpperLeft, wrap: false);
+            hint = UIFactory.Text("ExploreHint", hudRoot, "", theme.Body, Theme.SmallSize, Theme.WithAlpha(Theme.Paper, 0.85f), TextAnchor.UpperLeft, wrap: false);
             var rt = hint.rectTransform;
             rt.anchorMin = rt.anchorMax = new Vector2(0f, 1f);
             rt.pivot = new Vector2(0f, 1f);
@@ -89,8 +89,8 @@ namespace DearMe.UI
                 var fit = label.gameObject.AddComponent<ContentSizeFitter>();
                 fit.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
                 fit.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-                UIFactory.Text("Name", label, o.labelKo, theme.Serif, Theme.TinySize, Theme.Paper, TextAnchor.MiddleCenter, wrap: false);
-                UIFactory.Text("Verb", label, "· " + o.verbKo + "  " + o.verbEn, theme.Sans, Theme.TinySize - 2, Theme.WithAlpha(Theme.Paper, 0.7f), TextAnchor.MiddleCenter, wrap: false);
+                UIFactory.Text("Name", label, o.labelKo, theme.Body, Theme.TinySize, Theme.Paper, TextAnchor.MiddleCenter, wrap: false);
+                UIFactory.Text("Verb", label, "· " + o.verbKo + "  " + o.verbEn, theme.Body, Theme.TinySize - 2, Theme.WithAlpha(Theme.Paper, 0.7f), TextAnchor.MiddleCenter, wrap: false);
 
                 var hs = rt.gameObject.AddComponent<RoomHotspot>();
                 hs.def = o;

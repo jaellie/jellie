@@ -85,8 +85,8 @@ namespace DearMe.Core
             EnsureCameraAndEventSystem();
             theme = new Theme
             {
-                Serif = LoadFont("DearMe/Fonts/GowunBatang-Regular-KS"),
-                Sans = LoadFont("DearMe/Fonts/GowunDodum-Regular-KS"),
+                Body = LoadFont("DearMe/Fonts/Pretendard-Regular-KS"),
+                Strong = LoadFont("DearMe/Fonts/Pretendard-SemiBold-KS"),
                 TouchMin = InputAdapter.IsTouchDevice ? 84f : 60f,
             };
 
@@ -254,7 +254,7 @@ namespace DearMe.Core
 
         void ShowFatal(string message)
         {
-            var t = UIFactory.Text("Fatal", canvasRoot, message, theme.Sans, Theme.BodySize, Theme.Paper, TextAnchor.MiddleCenter);
+            var t = UIFactory.Text("Fatal", canvasRoot, message, theme.Body, Theme.BodySize, Theme.Paper, TextAnchor.MiddleCenter);
             UIFactory.Stretch(t.rectTransform);
             mainMenu.Hide();
         }

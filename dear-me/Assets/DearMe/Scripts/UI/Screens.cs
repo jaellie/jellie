@@ -22,9 +22,9 @@ namespace DearMe.UI
             foreach (Transform child in b.transform)
                 if (child.name.StartsWith("Border")) child.GetComponent<Image>().color = Theme.WithAlpha(Theme.Paper, 0.55f);
             UIFactory.Vertical(b.gameObject, 2f, new RectOffset(24, 24, 10, 10), TextAnchor.MiddleLeft);
-            UIFactory.Text("Ko", b.transform, ko, theme.Serif, Theme.ChoiceSize, Theme.Paper, TextAnchor.MiddleLeft);
+            UIFactory.Text("Ko", b.transform, ko, theme.Body, Theme.ChoiceSize, Theme.Paper, TextAnchor.MiddleLeft);
             if (!string.IsNullOrEmpty(en))
-                UIFactory.Text("En", b.transform, en, theme.Sans, Theme.TinySize, Theme.WithAlpha(Theme.Paper, 0.6f), TextAnchor.MiddleLeft);
+                UIFactory.Text("En", b.transform, en, theme.Body, Theme.TinySize, Theme.WithAlpha(Theme.Paper, 0.6f), TextAnchor.MiddleLeft);
             if (width > 0f) UIFactory.Layout(b.gameObject, minHeight: theme.TouchMin, preferredWidth: width);
             return b;
         }
@@ -83,8 +83,8 @@ namespace DearMe.UI
             var v = UIFactory.Vertical(column.gameObject, 14f, new RectOffset(0, 0, 60, 60), TextAnchor.MiddleLeft);
             v.childForceExpandWidth = true;
 
-            UIFactory.Text("Title", column, "Dear Me,", theme.Serif, Theme.TitleSize, Theme.Paper, TextAnchor.MiddleLeft, wrap: false);
-            UIFactory.Text("TitleKo", column, db.UiKo("title"), theme.Serif, Theme.HeadingSize + 4, Theme.WithAlpha(Theme.Paper, 0.75f), TextAnchor.MiddleLeft, wrap: false);
+            UIFactory.Text("Title", column, "Dear Me,", theme.Strong, Theme.TitleSize, Theme.Paper, TextAnchor.MiddleLeft, wrap: false);
+            UIFactory.Text("TitleKo", column, db.UiKo("title"), theme.Strong, Theme.HeadingSize + 4, Theme.WithAlpha(Theme.Paper, 0.75f), TextAnchor.MiddleLeft, wrap: false);
             UIFactory.Layout(UIFactory.Rect("Space", column).gameObject, minHeight: 36f, preferredHeight: 36f);
 
             continueButton = ScreenParts.LightButton(column, theme, db.UiKo("menu_continue"), db.UiEn("menu_continue"), () => OnContinue?.Invoke());
@@ -92,7 +92,7 @@ namespace DearMe.UI
             ScreenParts.LightButton(column, theme, db.UiKo("menu_settings"), db.UiEn("menu_settings"), () => OnSettings?.Invoke());
 
             UIFactory.Layout(UIFactory.Rect("Space", column).gameObject, minHeight: 24f, preferredHeight: 24f);
-            UIFactory.Text("Hint", column, db.UiKo("menu_hint") + "\n" + db.UiEn("menu_hint"), theme.Sans, Theme.TinySize, Theme.WithAlpha(Theme.Paper, 0.55f));
+            UIFactory.Text("Hint", column, db.UiKo("menu_hint") + "\n" + db.UiEn("menu_hint"), theme.Body, Theme.TinySize, Theme.WithAlpha(Theme.Paper, 0.55f));
             root.gameObject.SetActive(false);
         }
 
@@ -127,8 +127,8 @@ namespace DearMe.UI
             UIFactory.DestroyChildren(card);
             UIFactory.Border(card, Theme.Line, 1.5f);
             onYes = yes;
-            UIFactory.Text("Message", card, db.UiKo(id), theme.Serif, Theme.BodySize - 2, Theme.Ink);
-            UIFactory.Text("English", card, db.UiEn(id), theme.Sans, Theme.SmallSize - 2, Theme.Muted);
+            UIFactory.Text("Message", card, db.UiKo(id), theme.Body, Theme.BodySize - 2, Theme.Ink);
+            UIFactory.Text("English", card, db.UiEn(id), theme.Body, Theme.SmallSize - 2, Theme.Muted);
             var row = UIFactory.Rect("Buttons", card);
             UIFactory.Horizontal(row.gameObject, 12f, null, TextAnchor.MiddleRight);
             var no = UIFactory.Button("No", row, theme, db.UiKo("no"), db.UiEn("no"), Cancel);
@@ -162,7 +162,7 @@ namespace DearMe.UI
         public void Build(RectTransform layer, Theme theme, ContentDatabase db)
         {
             var card = ScreenParts.ModalCard("Pause", layer, 520f, out root);
-            UIFactory.Text("Title", card, db.UiKo("title"), theme.Serif, Theme.HeadingSize, Theme.Ink);
+            UIFactory.Text("Title", card, db.UiKo("title"), theme.Strong, Theme.HeadingSize, Theme.Ink);
             UIFactory.Button("Resume", card, theme, db.UiKo("menu_resume"), db.UiEn("menu_resume"), () => OnResume?.Invoke(), filled: true);
             UIFactory.Button("Settings", card, theme, db.UiKo("menu_settings"), db.UiEn("menu_settings"), () => OnSettings?.Invoke());
             UIFactory.Button("Title", card, theme, db.UiKo("menu_to_title"), db.UiEn("menu_to_title"), () => OnTitle?.Invoke());
@@ -205,7 +205,7 @@ namespace DearMe.UI
         {
             UIFactory.DestroyChildren(card);
             UIFactory.Border(card, Theme.Line, 1.5f);
-            UIFactory.Text("Title", card, db.UiKo("settings_title"), theme.Serif, Theme.HeadingSize, Theme.Ink);
+            UIFactory.Text("Title", card, db.UiKo("settings_title"), theme.Strong, Theme.HeadingSize, Theme.Ink);
 
             int support = (int)settings.support;
             Row("settings_support", "support_" + support, () => Step(ref settings.support, -1), () => Step(ref settings.support, 1));
@@ -246,12 +246,12 @@ namespace DearMe.UI
             var label = UIFactory.Rect("Label", row);
             UIFactory.Vertical(label.gameObject, 0f);
             UIFactory.Layout(label.gameObject, flexibleWidth: 1f, minWidth: 120f);
-            UIFactory.Text("Ko", label, db.UiKo(labelId), theme.Serif, Theme.SmallSize + 2, Theme.Ink);
-            UIFactory.Text("En", label, db.UiEn(labelId), theme.Sans, Theme.TinySize, Theme.Muted);
+            UIFactory.Text("Ko", label, db.UiKo(labelId), theme.Body, Theme.SmallSize + 2, Theme.Ink);
+            UIFactory.Text("En", label, db.UiEn(labelId), theme.Body, Theme.TinySize, Theme.Muted);
 
             var left = UIFactory.Button("Minus", row, theme, "‹", null, () => { minus(); Changed(); });
             UIFactory.Layout(left.gameObject, minHeight: theme.TouchMin, preferredWidth: theme.TouchMin, minWidth: theme.TouchMin);
-            var val = UIFactory.Text("Value", row, value, theme.Sans, Theme.SmallSize - 2, Theme.Ink, TextAnchor.MiddleCenter);
+            var val = UIFactory.Text("Value", row, value, theme.Body, Theme.SmallSize - 2, Theme.Ink, TextAnchor.MiddleCenter);
             UIFactory.Layout(val.gameObject, preferredWidth: 220f, minWidth: 120f);
             var right = UIFactory.Button("Plus", row, theme, "›", null, () => { plus(); Changed(); });
             UIFactory.Layout(right.gameObject, minHeight: theme.TouchMin, preferredWidth: theme.TouchMin, minWidth: theme.TouchMin);
@@ -298,12 +298,12 @@ namespace DearMe.UI
         {
             onDone = done;
             UIFactory.DestroyChildren(column);
-            UIFactory.Text("Title", column, end.titleKo, theme.Serif, Theme.HeadingSize + 6, Theme.Ink, TextAnchor.MiddleCenter);
-            if (english) UIFactory.Text("TitleEn", column, end.titleEn, theme.Sans, Theme.SmallSize, Theme.Muted, TextAnchor.MiddleCenter);
+            UIFactory.Text("Title", column, end.titleKo, theme.Strong, Theme.HeadingSize + 6, Theme.Ink, TextAnchor.MiddleCenter);
+            if (english) UIFactory.Text("TitleEn", column, end.titleEn, theme.Body, Theme.SmallSize, Theme.Muted, TextAnchor.MiddleCenter);
             UIFactory.Layout(UIFactory.Rect("Space", column).gameObject, minHeight: 20f, preferredHeight: 20f);
-            UIFactory.Text("Body", column, end.bodyKo, theme.Serif, Theme.BodySize, Theme.Charcoal, TextAnchor.MiddleCenter);
-            if (english) UIFactory.Text("BodyEn", column, end.bodyEn, theme.Sans, Theme.SmallSize, Theme.Muted, TextAnchor.MiddleCenter);
-            UIFactory.Text("Thanks", column, db.UiKo("end_thanks"), theme.Sans, Theme.SmallSize, Theme.Muted, TextAnchor.MiddleCenter);
+            UIFactory.Text("Body", column, end.bodyKo, theme.Body, Theme.BodySize, Theme.Charcoal, TextAnchor.MiddleCenter);
+            if (english) UIFactory.Text("BodyEn", column, end.bodyEn, theme.Body, Theme.SmallSize, Theme.Muted, TextAnchor.MiddleCenter);
+            UIFactory.Text("Thanks", column, db.UiKo("end_thanks"), theme.Body, Theme.SmallSize, Theme.Muted, TextAnchor.MiddleCenter);
             var row = UIFactory.Rect("Row", column);
             UIFactory.Horizontal(row.gameObject, 0f, null, TextAnchor.MiddleCenter);
             var b = UIFactory.Button("Return", row, theme, db.UiKo("end_return"), db.UiEn("end_return"), Done, filled: true);

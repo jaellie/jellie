@@ -47,8 +47,8 @@ namespace DearMe.UI
             header.sizeDelta = new Vector2(0, HeaderHeight);
             header.anchoredPosition = Vector2.zero;
             UIFactory.Horizontal(header.gameObject, 14f, new RectOffset(32, 32, 18, 8), TextAnchor.LowerLeft);
-            f.TitleKo = UIFactory.Text("TitleKo", header, "", theme.Serif, Theme.SmallSize, Theme.Accent, TextAnchor.LowerLeft, wrap: false);
-            f.TitleEn = UIFactory.Text("TitleEn", header, "", theme.Sans, Theme.TinySize, Theme.Muted, TextAnchor.LowerLeft, wrap: false);
+            f.TitleKo = UIFactory.Text("TitleKo", header, "", theme.Strong, Theme.SmallSize, Theme.Accent, TextAnchor.LowerLeft, wrap: false);
+            f.TitleEn = UIFactory.Text("TitleEn", header, "", theme.Body, Theme.TinySize, Theme.Muted, TextAnchor.LowerLeft, wrap: false);
 
             // Footer
             float footerHeight = theme.TouchMin + 28f;

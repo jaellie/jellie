@@ -24,7 +24,7 @@
       "id": "notice_exchange_2020", "kind": "notice", "titleKo": "공지", "titleEn": "Notice",
       "lines": [
         { "style": "heading", "ko": "2020 {겨울|winter} {해외교류|overseas exchange} {프로그램|program} {참가자|participants} {모집|@모집}", "en": "Winter 2020 Overseas Exchange Program — Call for Participants" },
-        { "style": "stain", "ko": "{신청 기간|@신청 기간}: 10월 1일 ~ 10월 ▒일", "en": "Application period: Oct 1 – Oct ▒ (the day is hidden under a coffee stain)" },
+        { "style": "stain", "ko": "{신청 기간|@신청 기간}: 10월 1일 ~ 10월 ■일", "en": "Application period: Oct 1 – Oct ■ (the day is hidden under a coffee stain)" },
         { "ko": "{모집 인원|@모집 인원}: 10{명|people}", "en": "Openings: 10" },
         { "ko": "{지원 자격|@지원 자격}: {재학생|@재학생}", "en": "Eligibility: currently enrolled students" },
         { "ko": "{제출 서류|@제출 서류}: {자기소개서|@자기소개서}, {지원 동기|@지원 동기}", "en": "Required documents: personal statement, statement of purpose" },
