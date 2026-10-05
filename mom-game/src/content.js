@@ -130,7 +130,7 @@ export const content = {
 
     // ── The Past (장흥, 1970s) ─────────────────────────────
     past_shoe_note: { type: 'note', world: 'past', title: '고무신 속 쪽지', token: 'shoe',
-      text: '인생이란 탐구하면서 살아가는 것이 아니라\n살아가면서 탐구하는 것이다.\n— 양귀자, 『모순』' },
+      text: '하고 싶은 건 미루지 말고,\n좋아하는 건 좋아한다고 말하기.\n\n고무신 신고 뛰던 그 아이가 꿈꾸던 것들,\n이제는 엄마가 다 해도 돼요. ✍️' },
     past_persimmon_note: { type: 'note', world: 'past', title: '감에 달린 쪽지', token: 'persimmon',
       text: '역사가 우리를 망쳐 놨지만 그래도 상관없다.\n— 이민진, 『파친코』' },
     past_jar_gift: { type: 'gift', world: 'past', title: '장독 속 선물', icon: '🏺',
