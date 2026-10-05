@@ -6,8 +6,9 @@ using UnityEngine.UI;
 namespace DearMe.UI
 {
     /// <summary>
-    /// Keeps every canvas readable on any window: landscape scales by height, portrait by
-    /// width, and the player's text-size setting zooms the whole UI so layouts never break.
+    /// Dear Me, is a portrait phone game. The UI is laid out on a 720×1280 reference: tall phones
+    /// scale by width; anything wider than 9:16 (tablets, desktop browsers) scales by height and
+    /// shows the game in a centered portrait frame. The text-size setting zooms the whole UI.
     /// Raises Resized when the screen, orientation or safe area changes.
     /// </summary>
     public class ResponsiveCanvas : MonoBehaviour
@@ -20,8 +21,7 @@ namespace DearMe.UI
         Rect lastSafe;
         float lastScale;
 
-        static readonly Vector2 Landscape = new Vector2(1280f, 720f);
-        static readonly Vector2 Portrait = new Vector2(720f, 1280f);
+        static readonly Vector2 Reference = new Vector2(720f, 1280f);
 
         void Update()
         {
@@ -37,15 +37,37 @@ namespace DearMe.UI
 
         void Apply(Vector2Int size, float scale)
         {
-            bool portrait = size.y > size.x;
+            bool narrow = size.x <= size.y * PortraitFrame.Aspect;
             foreach (var s in scalers)
             {
                 if (s == null) continue;
                 s.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
                 s.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-                s.referenceResolution = (portrait ? Portrait : Landscape) / Mathf.Max(0.5f, scale);
-                s.matchWidthOrHeight = portrait ? 0f : 1f;
+                s.referenceResolution = Reference / Mathf.Max(0.5f, scale);
+                s.matchWidthOrHeight = narrow ? 0f : 1f;
             }
+        }
+    }
+
+    /// <summary>
+    /// The game's portrait screen. Full-screen on phones (any aspect taller than 9:16); on wider
+    /// windows it becomes a centered 9:16 column, like a phone on a desk.
+    /// </summary>
+    public class PortraitFrame : MonoBehaviour
+    {
+        public const float Aspect = 9f / 16f;
+
+        void Update()
+        {
+            var rt = (RectTransform)transform;
+            var parent = rt.parent as RectTransform;
+            if (parent == null || parent.rect.height <= 0f) return;
+            float w = Mathf.Min(parent.rect.width, parent.rect.height * Aspect);
+            rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.anchoredPosition = Vector2.zero;
+            var size = new Vector2(w, parent.rect.height);
+            if (rt.sizeDelta != size) rt.sizeDelta = size;
         }
     }
 

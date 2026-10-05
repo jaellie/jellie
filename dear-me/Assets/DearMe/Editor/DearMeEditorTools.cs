@@ -33,8 +33,9 @@ namespace DearMe.EditorTools
             PlayerSettings.productName = "Dear Me,";
             PlayerSettings.companyName = "Dear Me";
             PlayerSettings.runInBackground = false;
-            PlayerSettings.defaultWebScreenWidth = 1280;
-            PlayerSettings.defaultWebScreenHeight = 720;
+            // Portrait phone game; in a desktop browser this is the embed size (itch.io etc.).
+            PlayerSettings.defaultWebScreenWidth = 540;
+            PlayerSettings.defaultWebScreenHeight = 960;
 
             // Static hosts (GitHub Pages, many CDNs) don't send Content-Encoding headers for
             // pre-compressed files. Gzip + decompression fallback works everywhere, itch.io included.

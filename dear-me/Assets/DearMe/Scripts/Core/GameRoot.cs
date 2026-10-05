@@ -172,10 +172,15 @@ namespace DearMe.Core
             tooltips.Init(settings, db, tooltipView);
             responsive.Resized += tooltips.Reposition;
 
-            background = gameObject.AddComponent<BackgroundView>();
-            background.Build(root, settings);
+            // Everything that is "the game" lives in a portrait frame; only the backdrop and fades span the window.
+            var frame = UIFactory.Rect("PortraitFrame", root);
+            frame.gameObject.AddComponent<PortraitFrame>();
 
-            var safe = UIFactory.Rect("SafeArea", root);
+            background = gameObject.AddComponent<BackgroundView>();
+            background.Build(root, frame, settings);
+            frame.SetAsLastSibling();
+
+            var safe = UIFactory.Rect("SafeArea", frame);
             UIFactory.Stretch(safe);
             safe.gameObject.AddComponent<SafeAreaFitter>();
 
@@ -194,7 +199,7 @@ namespace DearMe.Core
             toast = gameObject.AddComponent<MemoryToast>();
             toast.Build(safe, theme, settings);
 
-            var cardLayer = UIFactory.Rect("CardLayer", root);
+            var cardLayer = UIFactory.Rect("CardLayer", frame);
             UIFactory.Stretch(cardLayer);
             documents = gameObject.AddComponent<DocumentView>();
             photos = gameObject.AddComponent<PhotoView>();
@@ -205,7 +210,7 @@ namespace DearMe.Core
             photos.Build(cardLayer, theme, tooltips, db, gate);
             drills.PlaySfx = id => audioManager.PlaySfx(id);
 
-            var screenLayer = UIFactory.Rect("ScreenLayer", root);
+            var screenLayer = UIFactory.Rect("ScreenLayer", frame);
             UIFactory.Stretch(screenLayer);
             mainMenu = gameObject.AddComponent<MainMenuView>();
             mainMenu.Build(screenLayer, theme, db);
@@ -215,7 +220,7 @@ namespace DearMe.Core
             endCard = gameObject.AddComponent<EndCardView>();
             endCard.Build(screenLayer, theme, db);
 
-            var modalLayer = UIFactory.Rect("ModalLayer", root);
+            var modalLayer = UIFactory.Rect("ModalLayer", frame);
             UIFactory.Stretch(modalLayer);
             pause = gameObject.AddComponent<PauseMenu>();
             pause.Build(modalLayer, theme, db);

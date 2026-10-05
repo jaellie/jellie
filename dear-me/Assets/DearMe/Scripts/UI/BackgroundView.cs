@@ -7,8 +7,8 @@ using UnityEngine.UI;
 namespace DearMe.UI
 {
     /// <summary>
-    /// Placeholder 2D environment painted from locations.json (flat shapes over a two-tone wall).
-    /// Final illustrated art can replace this view without touching gameplay code.
+    /// The scene: a 9:16 painting (or placeholder shapes) that covers the portrait frame, plus a
+    /// dimmed copy behind the frame so wide windows show the scene's colors instead of bars.
     /// </summary>
     public class BackgroundView : MonoBehaviour
     {
@@ -20,6 +20,7 @@ namespace DearMe.UI
         Image floorImage;
         RectTransform shapes;
         RawImage painting;
+        RawImage backdrop;
         RectTransform rainMask;
         readonly List<RectTransform> drops = new List<RectTransform>();
         readonly List<float> speeds = new List<float>();
@@ -27,33 +28,46 @@ namespace DearMe.UI
         bool raining;
 
         public RectTransform Root => root;
-        /// <summary>16:9 area holding the scene; room hotspots are placed relative to it.</summary>
+        /// <summary>9:16 area holding the scene; room hotspots are placed relative to it.</summary>
         public RectTransform Stage => stage;
         public string CurrentId { get; private set; } = "";
         /// <summary>True when the current place is a painted image rather than placeholder shapes.</summary>
         public bool IsPainted { get; private set; }
 
-        public void Build(RectTransform parent, GameSettings settings)
+        /// <param name="screen">Full-window layer (backdrop behind the portrait frame).</param>
+        /// <param name="frame">The portrait game frame.</param>
+        public void Build(RectTransform screen, RectTransform frame, GameSettings settings)
         {
             this.settings = settings;
-            root = UIFactory.Rect("Background", parent);
-            UIFactory.Stretch(root);
-            bottom = UIFactory.Image("Fill", root, Theme.Navy);
+            var back = UIFactory.Rect("Backdrop", screen);
+            UIFactory.Stretch(back);
+            bottom = UIFactory.Image("Fill", back, Theme.Navy);
             UIFactory.Stretch(bottom.rectTransform);
+            backdrop = UIFactory.Rect("BackdropArt", back).gameObject.AddComponent<RawImage>();
+            backdrop.raycastTarget = false;
+            backdrop.color = new Color(0.55f, 0.55f, 0.62f, 1f); // dimmed so the frame reads as the game
+            var bfit = backdrop.gameObject.AddComponent<AspectRatioFitter>();
+            bfit.aspectRatio = PortraitFrame.Aspect;
+            bfit.aspectMode = AspectRatioFitter.AspectMode.EnvelopeParent;
+            backdrop.gameObject.SetActive(false);
 
-            // Landscape: the stage covers the screen. Portrait: it fits the width and the rest is fill.
+            root = UIFactory.Rect("Background", frame);
+            UIFactory.Stretch(root);
+            root.gameObject.AddComponent<RectMask2D>();
+            // The stage covers the frame; on very tall phones a little of each side is cropped,
+            // so paintings keep important things inside the central 80%.
             stage = UIFactory.Rect("Stage", root);
             stage.anchorMin = Vector2.zero;
             stage.anchorMax = Vector2.one;
             aspect = stage.gameObject.AddComponent<AspectRatioFitter>();
-            aspect.aspectRatio = 16f / 9f;
+            aspect.aspectRatio = PortraitFrame.Aspect;
             aspect.aspectMode = AspectRatioFitter.AspectMode.EnvelopeParent;
 
             var floor = UIFactory.Image("Floor", stage, Theme.Navy);
             UIFactory.Stretch(floor.rectTransform);
             floorImage = floor;
             top = UIFactory.Image("Wall", stage, Theme.Navy);
-            UIFactory.PlaceNormalized(top.rectTransform, 0f, 0f, 1f, 0.62f);
+            UIFactory.PlaceNormalized(top.rectTransform, 0f, 0f, 1f, 0.70f);
             painting = UIFactory.Rect("Painting", stage).gameObject.AddComponent<RawImage>();
             painting.raycastTarget = false;
             UIFactory.Stretch(painting.rectTransform);
@@ -82,6 +96,7 @@ namespace DearMe.UI
                 top.color = bottom.color = floorImage.color = Theme.Navy;
                 IsPainted = false;
                 painting.gameObject.SetActive(false);
+                backdrop.gameObject.SetActive(false);
                 rainMask.gameObject.SetActive(false);
                 raining = false;
                 return;
@@ -90,6 +105,8 @@ namespace DearMe.UI
             IsPainted = tex != null;
             painting.texture = tex;
             painting.gameObject.SetActive(IsPainted);
+            backdrop.texture = tex;
+            backdrop.gameObject.SetActive(IsPainted);
             top.color = Theme.Hex(loc.top);
             bottom.color = Theme.Hex(loc.bottom);
             floorImage.color = bottom.color;
@@ -127,12 +144,6 @@ namespace DearMe.UI
 
         void Update()
         {
-            // Covering would crop scene objects on portrait and ultra-wide screens; fit those instead.
-            float ratio = root.rect.width / Mathf.Max(1f, root.rect.height);
-            bool fit = ratio < 1.3f || ratio > 2.0f;
-            var mode = fit ? AspectRatioFitter.AspectMode.FitInParent : AspectRatioFitter.AspectMode.EnvelopeParent;
-            if (aspect.aspectMode != mode) aspect.aspectMode = mode;
-
             if (!raining) return;
             // Reduced motion: the rain is still there, it just doesn't move.
             if (settings.reducedMotion) return;

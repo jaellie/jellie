@@ -9,7 +9,10 @@ using UnityEngine.UI;
 
 namespace DearMe.UI
 {
-    /// <summary>One inspectable object: soft outline, quiet label on hover (always shown on touch screens).</summary>
+    /// <summary>
+    /// One inspectable object: a small diamond marks it, the outline and label appear on hover
+    /// (desktop) or while the finger is down (touch), so a phone screen never fills up with labels.
+    /// </summary>
     public class RoomHotspot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         public RoomObjectDef def;
@@ -17,10 +20,13 @@ namespace DearMe.UI
         public Image fill;
         public Image[] edges;
         public GameObject label;
+        public Image marker;
         public bool visited;
         /// <summary>Over a painting: no outline until hovered, so the art isn't boxed in.</summary>
         public bool quiet;
         bool hover;
+
+        float pulse;
 
         public void OnPointerEnter(PointerEventData e) { hover = true; Refresh(); }
         public void OnPointerExit(PointerEventData e) { hover = false; Refresh(); }
@@ -28,10 +34,19 @@ namespace DearMe.UI
 
         public void Refresh()
         {
-            bool touch = InputAdapter.IsTouchDevice;
             float edgeAlpha = hover ? 0.85f : quiet ? 0f : visited ? 0.18f : 0.38f;
             foreach (var e in edges) e.color = Theme.WithAlpha(Theme.Paper, edgeAlpha);
-            label.SetActive(hover || touch);
+            label.SetActive(hover);
+        }
+
+        void Update()
+        {
+            if (marker == null) return;
+            // A slow shimmer on things not yet looked at; visited ones stay faint and still.
+            pulse += Time.unscaledDeltaTime;
+            float a = visited ? 0.35f : 0.55f + 0.35f * Mathf.Sin(pulse * 2.2f);
+            if (owner.ReducedMotion) a = visited ? 0.35f : 0.8f;
+            marker.color = Theme.WithAlpha(Theme.Paper, a);
         }
     }
 
@@ -43,6 +58,7 @@ namespace DearMe.UI
         Theme theme;
         InputGate gate;
         Action<RoomObjectDef> onInspect;
+        public bool ReducedMotion;
         readonly HashSet<string> visited = new HashSet<string>();
 
         public void Build(RectTransform stage, RectTransform hudRoot, Theme theme, InputGate gate)
@@ -105,7 +121,15 @@ namespace DearMe.UI
                 UIFactory.Text("Name", label, o.labelKo, theme.Body, Theme.TinySize, Theme.Paper, TextAnchor.MiddleCenter, wrap: false);
                 UIFactory.Text("Verb", label, "· " + o.verbKo + "  " + o.verbEn, theme.Body, Theme.TinySize - 2, Theme.WithAlpha(Theme.Paper, 0.7f), TextAnchor.MiddleCenter, wrap: false);
 
+                var marker = UIFactory.Image("Marker", rt, Theme.Paper);
+                marker.gameObject.AddComponent<LayoutElement>().ignoreLayout = true;
+                var mrt = marker.rectTransform;
+                mrt.anchorMin = mrt.anchorMax = new Vector2(0.5f, 0.5f);
+                mrt.sizeDelta = new Vector2(14f, 14f);
+                mrt.localRotation = Quaternion.Euler(0f, 0f, 45f);
+
                 var hs = rt.gameObject.AddComponent<RoomHotspot>();
+                hs.marker = marker;
                 hs.def = o;
                 hs.owner = this;
                 hs.fill = fill;

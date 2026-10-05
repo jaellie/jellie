@@ -1,121 +1,95 @@
 <!doctype html><meta charset="utf-8">
-<!-- Dear Me, scene painter: urban-sketch ink + watercolor wash on cream paper + paper-lantern night glow.
-     Coordinates are normalized (0..1, top-left) to match rooms.json hotspots. Rendered to PNG by render.js. -->
+<!-- Present-day room, rainy dusk. Portrait 9:16. Rules: ART_DIRECTION.md.
+     Coordinates are normalized (0..1, top-left) and match rooms.json hotspots.
+     Keep important things inside x 0.1–0.9 (tall phones crop the sides) and above y 0.75 (dialogue panel). -->
 <canvas id="c"></canvas>
 <script src="painter-lib.js"></script>
 <script>
-init(1920, 1080);
-// ================= the room =================
+init(1080, 1920);
 paper();
-// wall: evening indigo, lighter toward the lamp
-wash([[0.03,0.04],[0.97,0.04],[0.97,0.785],[0.03,0.785]], linear(0.05,0.5,0.95,0.3,[[0,'#e7a06e'],[0.32,'#b88aa8'],[0.62,'#7f83c4'],[1,'#5c6bb8']]), {alpha:.8, rough:26, layers:3, edge:.1});
-{ const tg=g.createLinearGradient(0,0,0,H*.6); tg.addColorStop(0,'rgba(70,80,150,.35)'); tg.addColorStop(1,'rgba(70,80,150,0)');
-  g.save(); g.globalCompositeOperation='multiply'; g.fillStyle=tg; g.fillRect(0,0,W,H*.6); g.restore(); }
-// floor
-wash([[0.03,0.775],[0.97,0.775],[0.97,0.965],[0.03,0.965]], linear(0.1,0.8,0.9,0.95,[[0,'#b07a78'],[0.5,'#7a6aa0'],[1,'#4f5694']]), {alpha:.75, rough:18, layers:3, edge:.1});
-ink([[0.035,0.776],[0.965,0.779]],{w:2.6});
-// rug
-reserve([[0.17,0.81],[0.71,0.80],[0.73,0.93],[0.15,0.94]]);
-wash([[0.17,0.81],[0.71,0.80],[0.73,0.93],[0.15,0.94]], linear(0.17,0.85,0.73,0.88,[[0,'#f0a084'],[1,'#a87aa8']]), {alpha:.65, rough:9});
-ink([[0.17,0.81],[0.71,0.80],[0.73,0.93],[0.15,0.94]],{w:1.8,close:true});
 
-// window (hotspot 0.56,0.10,0.32,0.40)
-glow(0.72,0.30,520,'#c9d8f2',.25,'screen');
-reserve([[0.575,0.13],[0.865,0.13],[0.865,0.47],[0.575,0.47]],'#e9e6ea');
-paint([[0.575,0.13],[0.865,0.13],[0.865,0.47],[0.575,0.47]], linear(0.72,0.13,0.72,0.47,[[0,'#2c2f6e'],[0.28,'#5b4a9c'],[0.52,'#b45f97'],[0.72,'#f08a6a'],[0.88,'#ffb86b'],[1,'#ffd9a0']]), {rough:2, blur:.6});
-// rain clouds lit from below
-for (let i=0;i<9;i++){ const cx=rnd(.585,.85), cy=rnd(.16,.30), rw=rnd(.04,.09);
-  paint([[cx-rw,cy+.02],[cx-rw*.4,cy-.02],[cx+rw*.5,cy-.025],[cx+rw,cy+.015],[cx+rw*.6,cy+.04],[cx-rw*.6,cy+.04]], linear(cx,cy-.03,cx,cy+.045,[[0,'rgba(70,60,130,.55)'],[0.6,'rgba(150,90,150,.5)'],[1,'rgba(255,170,130,.55)']]), {rough:8, blur:3}); }
-glow(0.72,0.44,260,'#ffb36b',.55,'screen');
-// city lights through the rain (paper-lantern warmth)
-for (let i=0;i<26;i++){ const x=rnd(.585,.855), y=rnd(.36,.46); glow(x,y,rnd(8,22),i%3?'#ffd08a':'#ffe7b8',.9,'screen'); }
-// distant rooftops
-paint([[0.575,0.40],[0.60,0.40],[0.60,0.37],[0.63,0.37],[0.63,0.39],[0.67,0.39],[0.67,0.35],[0.70,0.35],[0.70,0.385],[0.75,0.385],[0.75,0.36],[0.79,0.36],[0.79,0.395],[0.83,0.395],[0.83,0.375],[0.865,0.375],[0.865,0.47],[0.575,0.47]], linear(0.72,0.35,0.72,0.47,[[0,'#4a3a7c'],[1,'#2a2557']]), {alpha:.92, rough:1, blur:.5});
-for (let i=0;i<40;i++){ const x=rnd(.58,.86), y=rnd(.39,.46); g.save(); g.fillStyle=i%4?'#ffcf7a':'#ffe9b0'; g.globalAlpha=.85; g.fillRect(X(x),Y(y),5,7); g.restore(); }
-// frame + mullion
-inkRect(0.56,0.10,0.32,0.40,{w:3});
-inkRect(0.575,0.13,0.29,0.34,{w:2.2});
-ink([[0.718,0.13],[0.718,0.47]],{w:2.2});
-washRect(0.56,0.48,0.32,0.035,'#e9dfc8',{alpha:.5,rough:3});
-ink([[0.55,0.515],[0.89,0.515]],{w:2.6});
-// rain streaks on the glass
+// ---- wall: warm by the lamp (left), violet-blue toward the window light; floor below
+wash([[0.03,0.02],[0.97,0.02],[0.97,0.665],[0.03,0.665]], linear(0.05,0.6,0.95,0.1,[[0,'#e9a272'],[0.35,'#c08fa6'],[0.7,'#8584c4'],[1,'#5f6cb8']]), {alpha:.8, rough:22, layers:3, edge:.1});
+{ const tg=g.createLinearGradient(0,0,0,H*.4); tg.addColorStop(0,'rgba(70,80,150,.3)'); tg.addColorStop(1,'rgba(70,80,150,0)');
+  g.save(); g.globalCompositeOperation='multiply'; g.fillStyle=tg; g.fillRect(0,0,W,H*.4); g.restore(); }
+wash([[0.03,0.655],[0.97,0.655],[0.97,0.98],[0.03,0.98]], linear(0.1,0.66,0.9,0.98,[[0,'#b67e76'],[0.5,'#7d6ca2'],[1,'#4f5694']]), {alpha:.75, rough:16, layers:3, edge:.1});
+ink([[0.035,0.66],[0.965,0.662]],{w:2.6});
+
+// ---- window: the richest color in the scene
+const gx0=0.22, gx1=0.78, gy0=0.115, gy1=0.385;
+reserve([[gx0,gy0],[gx1,gy0],[gx1,gy1],[gx0,gy1]],'#e9e6ea');
+paint([[gx0,gy0],[gx1,gy0],[gx1,gy1],[gx0,gy1]], linear(0.5,gy0,0.5,gy1,[[0,'#2c2f6e'],[0.26,'#5b4a9c'],[0.5,'#b45f97'],[0.7,'#f08a6a'],[0.86,'#ffb86b'],[1,'#ffd9a0']]), {rough:2, blur:.6});
+g.save(); g.beginPath(); g.rect(X(gx0),Y(gy0),X(gx1-gx0),Y(gy1-gy0)); g.clip();
+for (let i=0;i<7;i++){ const cx=rnd(gx0+.04,gx1-.04), cy=rnd(.14,.24), rw=rnd(.08,.16);
+  paint([[cx-rw,cy+.012],[cx-rw*.4,cy-.012],[cx+rw*.5,cy-.015],[cx+rw,cy+.008],[cx+rw*.6,cy+.024],[cx-rw*.6,cy+.024]], linear(cx,cy-.018,cx,cy+.026,[[0,'rgba(70,60,130,.55)'],[0.6,'rgba(150,90,150,.5)'],[1,'rgba(255,170,130,.6)']]), {rough:10, blur:3}); }
+glow(0.5,0.37,320,'#ffb36b',.6,'screen');
+// rooftops with warm windows
+const sky=[[gx0,0.33],[0.27,0.33],[0.27,0.31],[0.33,0.31],[0.33,0.325],[0.40,0.325],[0.40,0.295],[0.46,0.295],[0.46,0.32],[0.54,0.32],[0.54,0.30],[0.61,0.30],[0.61,0.328],[0.68,0.328],[0.68,0.31],[gx1,0.31],[gx1,gy1],[gx0,gy1]];
+paint(sky, linear(0.5,0.29,0.5,gy1,[[0,'#4a3a7c'],[1,'#2a2557']]), {alpha:.93, rough:1, blur:.5});
+for (let i=0;i<46;i++){ const x=rnd(gx0+.01,gx1-.02), y=rnd(.325,.38); g.save(); g.fillStyle=i%4?'#ffcf7a':'#ffe9b0'; g.globalAlpha=.9; g.fillRect(X(x),Y(y),5,7); g.restore(); }
+for (let i=0;i<18;i++){ glow(rnd(gx0,gx1),rnd(.33,.38),rnd(8,18),'#ffd08a',.8,'screen'); }
 g.save(); g.strokeStyle='rgba(255,255,255,.55)'; g.lineCap='round';
-for (let i=0;i<70;i++){ const x=X(rnd(.58,.86)), y=Y(rnd(.14,.44)), l=rnd(14,46); g.lineWidth=rnd(1,2); g.beginPath(); g.moveTo(x,y); g.lineTo(x-l*.08,y+l); g.stroke(); }
-for (let i=0;i<14;i++){ const x=X(rnd(.58,.86)), y=Y(rnd(.15,.45)); g.fillStyle='rgba(255,255,255,.6)'; g.beginPath(); g.arc(x,y,rnd(2,4),0,7); g.fill(); }
-g.restore();
-paint([[0.575,0.515],[0.865,0.515],[0.95,0.97],[0.52,0.97]], linear(0.7,0.52,0.7,0.97,[[0,'rgba(255,170,120,.35)'],[0.5,'rgba(240,140,150,.18)'],[1,'rgba(240,140,150,0)']]), {rough:10, blur:6});
+for (let i=0;i<80;i++){ const x=X(rnd(gx0,gx1)), y=Y(rnd(gy0,gy1)), l=rnd(16,50); g.lineWidth=rnd(1,2); g.beginPath(); g.moveTo(x,y); g.lineTo(x-l*.08,y+l); g.stroke(); }
+g.restore(); g.restore();
+inkRect(0.20,0.095,0.60,0.31,{w:3}); inkRect(gx0,gy0,gx1-gx0,gy1-gy0,{w:2.2}); ink([[0.5,gy0],[0.5,gy1]],{w:2.2});
+reserve([[0.19,0.405],[0.81,0.405],[0.81,0.418],[0.19,0.418]],'#efe5d0'); ink([[0.185,0.418],[0.815,0.418]],{w:2.6});
+// warm window light falling down the wall and onto the floor
+paint([[0.22,0.42],[0.78,0.42],[0.92,0.97],[0.10,0.97]], linear(0.5,0.42,0.5,0.97,[[0,'rgba(255,170,120,.32)'],[0.5,'rgba(240,140,150,.16)'],[1,'rgba(240,140,150,0)']]), {rough:10, blur:8});
 // curtains
-for (const [cx,dir] of [[0.525,1],[0.875,-1]]){
-  reserve([[cx,0.07],[cx+0.06,0.07],[cx+0.065,0.56],[cx-0.005,0.56]]);
-  wash([[cx,0.07],[cx+0.06,0.07],[cx+0.065,0.56],[cx-0.005,0.56]], linear(cx+(dir>0?0.065:0),0.3,cx+(dir>0?0:0.065),0.3,[[0,'#ffb08a'],[0.5,'#e38a8e'],[1,'#a86a8e']]),{alpha:.75,rough:7});
-  ink([[cx,0.07],[cx-0.005,0.56]],{w:2}); ink([[cx+0.06,0.07],[cx+0.065,0.56]],{w:2});
-  ink([[cx+0.02,0.09],[cx+0.018,0.54]],{w:1.4,gap:true}); ink([[cx+0.04,0.09],[cx+0.043,0.55]],{w:1.4});
+for (const [cx,dir] of [[0.11,1],[0.79,-1]]){
+  const c=[[cx,0.075],[cx+0.10,0.075],[cx+0.11,0.47],[cx-0.01,0.47]];
+  reserve(c); wash(c, linear(cx+(dir>0?0.11:0),0.3,cx+(dir>0?0:0.11),0.3,[[0,'#ffb08a'],[0.5,'#e38a8e'],[1,'#a86a8e']]),{alpha:.75,rough:6});
+  ink([[cx,0.075],[cx-0.01,0.47]],{w:2}); ink([[cx+0.10,0.075],[cx+0.11,0.47]],{w:2});
+  ink([[cx+0.035,0.09],[cx+0.032,0.46]],{w:1.4}); ink([[cx+0.07,0.09],[cx+0.074,0.46]],{w:1.4});
 }
-ink([[0.51,0.068],[0.95,0.068]],{w:3});
+ink([[0.08,0.073],[0.92,0.073]],{w:3});
 
-// calendar (0.33,0.16,0.11,0.17)
-washRect(0.335,0.165,0.10,0.16,'#efe6d2',{alpha:.0});
-g.save(); g.fillStyle='#f3ecdc'; g.globalAlpha=.92; g.fillRect(X(.336),Y(.168),X(.098),Y(.155)); g.restore();
-washRect(0.336,0.168,0.098,0.03,'#b5603f',{alpha:.55,rough:3});
-inkRect(0.335,0.165,0.10,0.16,{w:2});
-for (let r=0;r<4;r++) ink([[0.34,0.215+r*0.027],[0.43,0.215+r*0.027]],{w:1,gap:false,overshoot:2});
-for (let c=1;c<6;c++) ink([[0.335+c*0.0167,0.205],[0.335+c*0.0167,0.32]],{w:1,gap:false,overshoot:2});
-ink([[0.385,0.15],[0.385,0.168]],{w:1.6});
+// ---- calendar on the wall (right)
+reserve([[0.70,0.465],[0.88,0.465],[0.88,0.575],[0.70,0.575]],'#f3ecdc');
+wash([[0.70,0.465],[0.88,0.465],[0.88,0.485],[0.70,0.485]], linear(0.7,0.47,0.88,0.47,[[0,'#d9704a'],[1,'#b5506a']]),{alpha:.7,rough:2});
+inkRect(0.70,0.465,0.18,0.11,{w:2});
+for (let r=0;r<4;r++) ink([[0.71,0.50+r*0.018],[0.87,0.50+r*0.018]],{w:1,gap:false,overshoot:2});
+for (let c=1;c<6;c++) ink([[0.70+c*0.03,0.49],[0.70+c*0.03,0.57]],{w:1,gap:false,overshoot:2});
+ink([[0.79,0.452],[0.79,0.466]],{w:1.6});
 
-// desk
-reserve([[0.04,0.60],[0.50,0.60],[0.50,0.64],[0.04,0.64]]); reserve([[0.06,0.64],[0.08,0.64],[0.08,0.82],[0.06,0.82]]); reserve([[0.46,0.64],[0.48,0.64],[0.48,0.82],[0.46,0.82]]);
-wash([[0.04,0.60],[0.50,0.60],[0.50,0.64],[0.04,0.64]], linear(0.1,0.6,0.5,0.6,[[0,'#e9a25a'],[1,'#a8735a']]),{alpha:.8,rough:4});
-wash([[0.06,0.64],[0.08,0.64],[0.08,0.82],[0.06,0.82]],'#8d6542',{alpha:.6,rough:3});
-wash([[0.46,0.64],[0.48,0.64],[0.48,0.82],[0.46,0.82]],'#8d6542',{alpha:.6,rough:3});
-inkRect(0.04,0.60,0.46,0.04,{w:2.6}); ink([[0.06,0.64],[0.06,0.82]],{w:2.4}); ink([[0.08,0.64],[0.08,0.82]],{w:1.8});
-ink([[0.46,0.64],[0.46,0.82]],{w:2.4}); ink([[0.48,0.64],[0.48,0.82]],{w:1.8});
+// ---- desk with lamp, cup, sticky note, phone (left)
+for (const leg of [[0.08,0.555,0.115,0.70],[0.50,0.555,0.535,0.70]]) { const [a,b,c,d]=leg; reserve([[a,b],[c,b],[c,d],[a,d]]);
+  wash([[a,b],[c,b],[c,d],[a,d]], linear(a,b,a,d,[[0,'#c88a56'],[1,'#8d6048']]),{alpha:.75,rough:2}); ink([[a,b],[a,d]],{w:2.4}); ink([[c,b],[c,d]],{w:1.8}); }
+reserve([[0.05,0.525],[0.63,0.525],[0.63,0.555],[0.05,0.555]]);
+wash([[0.05,0.525],[0.63,0.525],[0.63,0.555],[0.05,0.555]], linear(0.05,0.53,0.63,0.53,[[0,'#f0a85c'],[1,'#a8735a']]),{alpha:.82,rough:3});
+inkRect(0.05,0.525,0.58,0.03,{w:2.6});
 // lamp
-reserve([[0.12,0.42],[0.20,0.42],[0.215,0.47],[0.105,0.47]],'#fbf3df');
-wash([[0.12,0.42],[0.20,0.42],[0.215,0.47],[0.105,0.47]], linear(0.16,0.42,0.16,0.47,[[0,'#ffd27a'],[1,'#f39a4a']]),{alpha:.7,rough:3});
-ink([[0.12,0.42],[0.20,0.42],[0.215,0.47],[0.105,0.47]],{w:2.2,close:true});
-ink([[0.16,0.47],[0.16,0.58]],{w:2.4}); wash([[0.13,0.58],[0.19,0.58],[0.19,0.60],[0.13,0.60]],'#6d5848',{alpha:.6,rough:2}); inkRect(0.13,0.58,0.06,0.02,{w:2});
-glow(0.16,0.47,820,'#ffb45c',.6,'screen');
-glow(0.16,0.47,420,'#ffd98f',.45,'screen');
-glow(0.16,0.47,220,'#fff1c9',.55,'screen');
-glow(0.20,0.61,380,'#ffb45a',.4,'screen');
-// coffee cup + sticky note on the desk
-wash([[0.255,0.555],[0.285,0.555],[0.282,0.598],[0.258,0.598]],'#eee7d8',{alpha:.5,rough:2});
-ink([[0.255,0.555],[0.258,0.598],[0.282,0.598],[0.285,0.555]],{w:1.8}); ink([[0.255,0.556],[0.285,0.556]],{w:1.6});
-ink([[0.285,0.565],[0.296,0.57],[0.284,0.585]],{w:1.6,gap:false});
-wash([[0.215,0.575],[0.245,0.572],[0.247,0.599],[0.217,0.6]],'#f2d36b',{alpha:.6,rough:2});
-// phone (0.36,0.53,0.08,0.07)
-wash([[0.372,0.585],[0.425,0.583],[0.428,0.598],[0.374,0.6]],'#2f3448',{alpha:.85,rough:2});
-glow(0.40,0.59,60,'#bcd2ff',.5,'screen');
-ink([[0.372,0.585],[0.425,0.583],[0.428,0.598],[0.374,0.6]],{w:1.8,close:true});
+const shade=[[0.12,0.435],[0.24,0.435],[0.265,0.475],[0.095,0.475]];
+reserve(shade,'#fbf3df'); wash(shade, linear(0.18,0.435,0.18,0.475,[[0,'#ffd27a'],[1,'#f39a4a']]),{alpha:.72,rough:2}); ink(shade,{w:2.2,close:true});
+ink([[0.18,0.475],[0.18,0.515]],{w:2.4}); reserve([[0.14,0.512],[0.22,0.512],[0.22,0.525],[0.14,0.525]],'#8a7262'); inkRect(0.14,0.512,0.08,0.013,{w:2});
+glow(0.18,0.47,700,'#ffb45c',.62,'screen'); glow(0.18,0.47,260,'#fff1c9',.55,'screen'); glow(0.24,0.54,380,'#ffb45a',.4,'screen');
+// cup and sticky note
+reserve([[0.27,0.497],[0.32,0.497],[0.316,0.524],[0.274,0.524]],'#f6efe2');
+ink([[0.27,0.497],[0.274,0.524],[0.316,0.524],[0.32,0.497]],{w:1.8}); ink([[0.27,0.498],[0.32,0.498]],{w:1.6}); ink([[0.32,0.503],[0.336,0.507],[0.319,0.517]],{w:1.6,gap:false});
+wash([[0.235,0.508],[0.265,0.506],[0.266,0.524],[0.236,0.525]], linear(0.24,0.506,0.26,0.525,[[0,'#ffe27a'],[1,'#f2b34a']]),{alpha:.75,rough:1});
+// phone
+const ph=[[0.40,0.513],[0.47,0.512],[0.473,0.524],[0.402,0.525]];
+paint(ph, linear(0.4,0.512,0.47,0.525,[[0,'#3a3f5a'],[1,'#22263a']]), {rough:1, blur:.4}); glow(0.435,0.518,70,'#bcd2ff',.55,'screen'); ink(ph,{w:1.8,close:true});
 
-// cardboard box on the floor (0.59,0.70,0.22,0.19)
-reserve([[0.60,0.72],[0.80,0.72],[0.80,0.88],[0.60,0.88]]);
-wash([[0.60,0.74],[0.80,0.74],[0.80,0.88],[0.60,0.88]], linear(0.6,0.74,0.8,0.88,[[0,'#f0b06e'],[1,'#b0786a']]),{alpha:.75,rough:4});
-wash([[0.60,0.72],[0.80,0.72],[0.80,0.75],[0.60,0.75]],'#d9b383',{alpha:.6,rough:3});
-wash([[0.60,0.80],[0.80,0.80],[0.80,0.88],[0.60,0.88]],'#7b6aa0',{alpha:.18,rough:6});
-inkRect(0.60,0.72,0.20,0.16,{w:2.6}); ink([[0.60,0.75],[0.80,0.75]],{w:2}); ink([[0.70,0.72],[0.70,0.75]],{w:1.6});
-ink([[0.62,0.79],[0.68,0.79]],{w:1.4,gap:false}); // handwriting on the box
-g.save(); g.font='italic 26px Georgia'; g.fillStyle=SEPIA; g.globalAlpha=.75; g.fillText('2018 —', X(.625),Y(.83)); g.restore();
+// ---- rug, crumpled draft, the box (floor)
+const rug=[[0.10,0.74],[0.70,0.735],[0.76,0.86],[0.04,0.865]];
+reserve(rug); wash(rug, linear(0.1,0.78,0.76,0.82,[[0,'#f0a084'],[1,'#a87aa8']]), {alpha:.65, rough:8}); ink(rug,{w:1.8,close:true});
+const draft=[[0.21,0.768],[0.34,0.762],[0.345,0.806],[0.215,0.81]];
+g.save(); g.fillStyle='#f8f2e6'; roughPath(g, draft.map(([x,y])=>[X(x),Y(y)]), 6); g.fill(); g.restore();
+ink(draft,{w:1.8,close:true}); ink([[0.23,0.775],[0.27,0.792],[0.32,0.776]],{w:1.2}); ink([[0.24,0.80],[0.29,0.783]],{w:1.2});
+const box=[[0.57,0.645],[0.86,0.645],[0.86,0.77],[0.57,0.77]];
+reserve(box);
+wash([[0.57,0.668],[0.86,0.668],[0.86,0.77],[0.57,0.77]], linear(0.57,0.668,0.86,0.77,[[0,'#f0b06e'],[1,'#b0786a']]),{alpha:.78,rough:3});
+wash([[0.57,0.645],[0.86,0.645],[0.86,0.668],[0.57,0.668]], linear(0.57,0.645,0.86,0.668,[[0,'#ffd09a'],[1,'#d9a07a']]),{alpha:.7,rough:2});
+inkRect(0.57,0.645,0.29,0.125,{w:2.6}); ink([[0.57,0.668],[0.86,0.668]],{w:2}); ink([[0.715,0.645],[0.715,0.668]],{w:1.6});
+g.save(); g.font='italic 34px Georgia'; g.fillStyle=SEPIA; g.globalAlpha=.75; g.fillText('2018 —', X(.62),Y(.735)); g.restore();
 
-// crumpled draft on the floor (0.30,0.84,0.10,0.07)
-g.save(); g.fillStyle='#f6f0e2'; g.beginPath(); roughPath(g,[[X(.305),Y(.85)],[X(.395),Y(.845)],[X(.398),Y(.905)],[X(.31),Y(.91)]],8); g.fill(); g.restore();
-ink([[0.305,0.85],[0.395,0.845],[0.398,0.905],[0.31,0.91]],{w:1.8,close:true});
-ink([[0.32,0.86],[0.35,0.885],[0.385,0.865]],{w:1.2}); ink([[0.33,0.9],[0.36,0.875]],{w:1.2});
-
-// framed photo on wall (decor)
-reserve([[0.24,0.20],[0.30,0.20],[0.30,0.29],[0.24,0.29]]); washRect(0.245,0.21,0.05,0.07,'#8fb39a',{alpha:.55,rough:2}); inkRect(0.24,0.20,0.06,0.09,{w:2});
-
-// night shading, then the page edge frays back into paper
-const vg=g.createRadialGradient(W*.45,H*.5,H*.35,W*.5,H*.5,W*.75); vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(90,60,120,.18)');
+// ---- light, vignette, page edge, tooth
+const vg=g.createRadialGradient(W*.5,H*.42,H*.3,W*.5,H*.5,H*.75); vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(90,60,120,.2)');
 g.save(); g.globalCompositeOperation='multiply'; g.fillStyle=vg; g.fillRect(0,0,W,H); g.restore();
-g.save();
-for (let i=0;i<420;i++){ const side=Math.floor(rnd(0,4)); let x,y; const d=Math.pow(R(),3)*30;
+g.save(); for (let i=0;i<520;i++){ const side=Math.floor(rnd(0,4)); let x,y; const d=Math.pow(R(),3)*30;
   if(side===0){x=rnd(0,W);y=d;} else if(side===1){x=rnd(0,W);y=H-d;} else if(side===2){x=d;y=rnd(0,H);} else {x=W-d;y=rnd(0,H);}
-  g.fillStyle='#efe6d2'; g.globalAlpha=rnd(.35,.8); g.beginPath(); g.ellipse(x,y,rnd(3,9),rnd(2,6),rnd(0,3),0,7); g.fill(); }
-g.restore();
-// paper tooth over everything
-const tooth=g.getImageData(0,0,W,H), td=tooth.data;
-for (let i=0;i<td.length;i+=4){ const k=0.94+0.06*R(); td[i]*=k; td[i+1]*=k; td[i+2]*=k; }
-g.putImageData(tooth,0,0);
+  g.fillStyle='#efe6d2'; g.globalAlpha=rnd(.35,.8); g.beginPath(); g.ellipse(x,y,rnd(3,9),rnd(2,6),rnd(0,3),0,7); g.fill(); } g.restore();
+const tooth=g.getImageData(0,0,W,H), td=tooth.data; for (let i=0;i<td.length;i+=4){ const k=0.94+0.06*R(); td[i]*=k; td[i+1]*=k; td[i+2]*=k; } g.putImageData(tooth,0,0);
 document.title='done';
 </script>

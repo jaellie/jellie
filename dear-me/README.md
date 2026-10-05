@@ -1,5 +1,7 @@
 # Dear Me, / 디어 미,
 
+**A portrait (세로) phone game played from a web link.** Desktop browsers show it as a centered portrait column.
+
 A Korean-learning narrative mystery about a day that repeats. This folder is a **Unity project**
 containing the first vertical slice: **Prologue (상자) + Loop 1 (나중에)**.
 
@@ -10,9 +12,7 @@ containing the first vertical slice: **Prologue (상자) + Loop 1 (나중에)**.
 
 Preview of the present-day room (sketchbook style: pen line + watercolor wash, with paper-lantern night light):
 
-![Exploring the room](Docs/preview-explore.png)
-![Dialogue with grammar tooltip](Docs/preview-dialogue.png)
-![The 2018 café](Docs/preview-cafe.png)
+![Phone previews: exploring the room, dialogue with a grammar tooltip, the 2018 café](Docs/preview-phone.png)
 
 ## 1. Quick start
 
@@ -40,7 +40,8 @@ switches on `ENABLE_INPUT_SYSTEM`.
   message saying so). Test locally with Unity's *Build and Run*, or any static server
   (`npx serve Builds/WebGL`, `python3 -m http.server -d Builds/WebGL`).
 * **itch.io**: zip the *contents* of `Builds/WebGL`, upload as an HTML project, mark it
-  *played in the browser*, set the viewport to 1280×720, and enable the fullscreen button and *Mobile friendly*.
+  *played in the browser*, set the viewport to 540×960 (portrait), and enable the fullscreen button,
+  *Mobile friendly* and *Orientation: Portrait*.
 * **GitHub Pages**: push the contents of `Builds/WebGL` to a `gh-pages` branch (or `/docs`) and enable Pages.
 * No backend: saves are browser-local (PlayerPrefs → IndexedDB).
 
@@ -186,7 +187,8 @@ granulation) and Paper Lantern (warm glowing lamp and city lights at night).
 Rules: [`ArtSource/ART_DIRECTION.md`](ArtSource/ART_DIRECTION.md) — always gradients and rich color; skies and warm light come first.
 
 ```
-node ArtSource/render.js        # re-paint after editing ArtSource/*.html (needs Playwright)
+node ArtSource/render.js         # re-paint after editing ArtSource/*.html (needs Playwright)
+node ArtSource/phone-preview.js  # phone-sized screenshots of the game screen into Docs/
 ```
 
 ## 9. Licenses

@@ -80,6 +80,7 @@ namespace UnityEngine
         public Vector2 anchoredPosition { get; set; }
         public Rect rect => default;
         public void GetWorldCorners(Vector3[] fourCornersArray) { }
+        public Quaternion localRotation { get; set; }
     }
 
     public struct Vector2
@@ -111,6 +112,11 @@ namespace UnityEngine
     {
         public float x, y, z;
         public Vector3(float x, float y, float z) { this.x = x; this.y = y; this.z = z; }
+    }
+
+    public struct Quaternion
+    {
+        public static Quaternion Euler(float x, float y, float z) => default;
     }
 
     public struct Color
