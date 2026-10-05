@@ -182,6 +182,7 @@ object with an `image` field shows that painting, otherwise flat placeholder sha
 The look combines three lemo-opuscar styles: Urban Sketch (wobbly sepia fineliner, misregistered
 wash, page edge fraying into paper), Watercolor (cream cold-press paper, uneven pigment, dried edges,
 granulation) and Paper Lantern (warm glowing lamp and city lights at night).
+Rules: [`ArtSource/ART_DIRECTION.md`](ArtSource/ART_DIRECTION.md) — always gradients and rich color; skies and warm light come first.
 
 ```
 node ArtSource/render.js        # re-paint after editing ArtSource/*.html (needs Playwright)

@@ -55,10 +55,10 @@ function wash(pts, color, {alpha=.55, rough=10, layers=2, edge=.35, gran=.36, of
   c.filter = `blur(${blur}px)`;
   for (let l=0;l<layers;l++){
     const shifted = P.map(([x,y])=>[x+rnd(-rough*.4,rough*.4), y+rnd(-rough*.4,rough*.4)]);
-    c.globalAlpha = alpha/layers*1.3; c.fillStyle=color; roughPath(c, shifted, rough); c.fill();
+    c.globalAlpha = alpha/layers*1.3; c.fillStyle = typeof color === 'function' ? color(c) : color; roughPath(c, shifted, rough); c.fill();
   }
   // dried edge: pigment pools at the rim
-  c.globalAlpha = edge*alpha; c.strokeStyle=color; c.lineWidth=3; roughPath(c,P,rough); c.stroke();
+  c.globalAlpha = edge*alpha; c.strokeStyle = typeof color === 'function' ? color(c) : color; c.lineWidth=3; roughPath(c,P,rough); c.stroke();
   c.filter='none';
   // uneven pigment: some areas pool, some thin out
   c.globalCompositeOperation='destination-in'; c.globalAlpha=1;
@@ -100,4 +100,13 @@ function glow(x,y,r,color,a=.55, op='screen'){
   const gr=g.createRadialGradient(X(x),Y(y),0,X(x),Y(y),r);
   gr.addColorStop(0,color); gr.addColorStop(1,'rgba(0,0,0,0)');
   g.save(); g.globalCompositeOperation=op; g.globalAlpha=a; g.fillStyle=gr; g.fillRect(0,0,W,H); g.restore();
+}
+
+// Gradient helpers: rich color is the rule (see ART_DIRECTION.md). Stops are [t, color].
+function linear(x0,y0,x1,y1,stops){ return ctx => { const gr=ctx.createLinearGradient(X(x0),Y(y0),X(x1),Y(y1)); for (const [t,c] of stops) gr.addColorStop(t,c); return gr; }; }
+function radial(x,y,r0,r1,stops){ return ctx => { const gr=ctx.createRadialGradient(X(x),Y(y),r0,X(x),Y(y),r1); for (const [t,c] of stops) gr.addColorStop(t,c); return gr; }; }
+// Painted (not multiplied) layer, for skies and light that must stay luminous on paper.
+function paint(pts, fill, {alpha=1, rough=4, blur=1}={}){
+  g.save(); g.globalAlpha=alpha; g.filter=`blur(${blur}px)`; g.fillStyle = typeof fill==='function' ? fill(g) : fill;
+  roughPath(g, pts.map(([x,y])=>[X(x),Y(y)]), rough); g.fill(); g.restore();
 }
