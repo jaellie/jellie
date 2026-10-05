@@ -16,7 +16,7 @@ const L = JSON.parse(fs.readFileSync(path.join(ROOT, "Assets/BigGreenBear/Resour
 const S = JSON.parse(fs.readFileSync(path.join(ROOT, "Assets/BigGreenBear/Resources/BGB/Data/story.json"), "utf8"));
 const FORMAT = process.env.FORMAT || "wide"; // wide 1920x1080, square 1080x1080, story 1080x1920
 const OUT = path.join(ROOT, "Promo", process.env.LANG_PROMO === "en" ? "en" : "", FORMAT === "wide" ? "" : FORMAT);
-const [W, H] = FORMAT === "square" ? [1080, 1080] : FORMAT === "story" ? [1080, 1920] : [1920, 1080];
+const [W, H] = FORMAT === "square" ? [1080, 1080] : FORMAT === "story" ? [1080, 1920] : FORMAT === "cover" ? [1260, 1000] : [1920, 1080];
 const ASPECT = W / H;
 const K = W >= 1920 ? 1 : 0.8; // text scale
 const LANG = process.env.LANG_PROMO === "en" ? "en" : "ko";
@@ -61,8 +61,8 @@ function compose(shot) {
   items.sort((a, b) => a.order - b.order);
   const f = typeof shot.focus === "string" ? loc.focus.find((q) => q.id === shot.focus) : shot.focus;
   // narrower formats step the camera back so the characters still fit side by side
-  const back = FORMAT === "story" ? 4.2 : FORMAT === "square" ? 1.6 : 0;
-  let cx = f.x, cy = L.camera.y + f.y + (FORMAT === "story" ? 0.35 : 0), cz = L.camera.z + f.zoom - back;
+  const back = FORMAT === "story" ? 4.2 : FORMAT === "square" ? 1.6 : FORMAT === "cover" ? 0.2 : 0;
+  let cx = f.x, cy = L.camera.y + f.y + (FORMAT === "story" ? 0.35 : FORMAT === "cover" ? 0.3 : 0), cz = L.camera.z + f.zoom - back;
   // in narrow formats, frame the characters: centre them and step back until they all fit
   const cast = items.filter((it) => it.actor);
   if (FORMAT !== "wide" && cast.length) {
@@ -70,7 +70,7 @@ function compose(shot) {
     const fx = FORMAT === "story" && shot.frameXStory ? shot.frameXStory : shot.frameX;
     if (fx) { minX = Math.min(minX, fx[0]); maxX = Math.max(maxX, fx[1]); }
     cx = (minX + maxX) / 2;
-    const dist = ((maxX - minX) / 2 + 0.45) / (tanH * ASPECT);
+    const dist = ((maxX - minX) / 2 + (FORMAT === "cover" ? 0.9 : 0.45)) / (tanH * ASPECT);
     cz = Math.min(cz, -dist);
   }
 
@@ -109,7 +109,7 @@ function compose(shot) {
       </div>`;
   }
   if (shot.title) {
-    const ts = Math.min(1, (W * 0.94) / 1300), top = FORMAT === "story" ? 260 : FORMAT === "square" ? 70 : 150;
+    const ts = Math.min(1, (W * 0.94) / 1300), top = FORMAT === "story" ? 260 : FORMAT === "square" ? 70 : FORMAT === "cover" ? 60 : 150;
     html += `<div style="position:absolute;left:50%;top:${top}px;width:1300px;height:250px;transform:translateX(-50%) scale(${ts});transform-origin:top center">
       <div style="position:absolute;inset:0;background:url('file://${ART}ui_strip.png') center/100% 100% no-repeat"></div>
       <div style="position:absolute;left:0;right:0;top:${(LANG === "en" ? 186 : 188) - 150}px;text-align:center;font-family:PB;font-size:${LANG === "en" ? 76 : 92}px;letter-spacing:${LANG === "en" ? 1 : 4}px;color:#1F2130">${LANG === "en" ? "Big Green Bear's Adventure" : "빅그린베어의 모험"}</div>
