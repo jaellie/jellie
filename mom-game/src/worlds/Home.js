@@ -17,6 +17,25 @@ const PI = Math.PI;
 const lerp = THREE.MathUtils.lerp;
 const F = L.furniture;
 const SEA_Y = -55;
+const BACKDROP = '#1E1714'; // everything outside the flat (except the window view) fades into this
+
+// Outside world is only drawn where the window "portal" wrote stencil = 1,
+// so from inside the flat you see the sea and sky only through the window.
+function portalOnly(obj) {
+  obj.traverse((o) => {
+    if (!o.material) return;
+    const list = Array.isArray(o.material) ? o.material : [o.material];
+    const out = list.map((m) => {
+      const c = m.clone();
+      c.stencilWrite = true; c.stencilRef = 1; c.stencilFunc = THREE.EqualStencilFunc;
+      c.stencilFail = c.stencilZFail = c.stencilZPass = THREE.KeepStencilOp;
+      return c;
+    });
+    o.material = Array.isArray(o.material) ? out : out[0];
+    o.castShadow = false;
+  });
+  return obj;
+}
 // side walls that stand between the camera and Mom in each view
 const CUT_ALSO_LIVING = ['kitchenEast', 'entryWest'];
 const CUT_ALSO_KITCHEN = ['eastLiving'];
@@ -64,13 +83,14 @@ export class Home {
 
   // ───────────────────────────────────────────────────────────
   build() {
-    this.scene.background = new THREE.Color('#2A1E1A');
+    this.scene.background = new THREE.Color(BACKDROP);
     this.scene.fog = new THREE.Fog('#FFE3B8', 160, 700);
     const s = this.root;
     this.rig = createRig(s, { shadowSize: 2048, extent: 7.5, hemi: 1.15 });
     this.focus = new THREE.Vector3(3.2, 0, 2.6);
 
-    this.sky = makeSky(); this.scene.add(this.sky.mesh); // the sky stays un-mirrored
+    this.sky = makeSky(); this.scene.add(portalOnly(this.sky.mesh)); // un-mirrored, seen only through the window
+    this.sky.mesh.material.uniforms = this.sky.uniforms; // keep sky.set() driving the cloned material
     this.disc = this.game.disc;
     this.inter = new Interactables(s, this.disc);
 
@@ -97,8 +117,7 @@ export class Home {
   buildShell() {
     const s = this.root, T = L.wallT, HGT = L.wallH;
     // base slab under the whole flat (unbuilt rooms read as a warm wooden board)
-    const slab = box(14.4, 0.3, 9.5, '#5B4535', { cast: false }); at(slab, 3.7, -0.36, 4.75); s.add(slab);
-    const facade = box(14.4, 54, 9.5, '#E7D7C0', { cast: false }); at(facade, 3.7, SEA_Y + 0.5, 4.75); s.add(facade);
+    const facade = box(14.4, 54, 9.5, '#E7D7C0', { cast: false }); at(facade, 3.7, SEA_Y + 0.5, 4.75); s.add(portalOnly(facade));
 
     const floorMat = (w, d) => new THREE.MeshStandardMaterial({ map: plankTexture(w, d), roughness: 0.6 });
     const floors = [
@@ -139,6 +158,8 @@ export class Home {
     ];
     this.wallBy = {};
     const wallM = mat(H.P.wall, { rough: 0.95 });
+    const topM = new THREE.MeshBasicMaterial({ color: BACKDROP, toneMapped: false });
+    const wallMats = [wallM, wallM, topM, wallM, wallM, wallM]; // BoxGeometry groups: +x -x +y -y +z -z
     for (const [x0, z0, x1, z1, nx, nz, name] of W) {
       const len = Math.hypot(x1 - x0, z1 - z0);
       const ux = (x1 - x0) / len, uz = (z1 - z0) / len;
@@ -160,7 +181,7 @@ export class Home {
         if (p1 - p0 < 0.01) continue;
         const mid = (p0 + p1) / 2;
         const cx = x0 + ux * mid - nx * T / 2, cz = z0 + uz * mid - nz * T / 2;
-        const vis = box(p1 - p0 + (holes.length ? 0 : T), y1 - y0, T, null, { m: wallM, cast: false });
+        const vis = box(p1 - p0 + (holes.length ? 0 : T), y1 - y0, T, null, { m: wallMats, cast: false });
         at(vis, cx, y0, cz, rotY); g.add(vis);
         const sh = shadowOnly(box(p1 - p0 + T, y1 - y0, T)); at(sh, cx, y0, cz, rotY); s.add(sh);
       }
@@ -204,7 +225,7 @@ export class Home {
   }
 
   buildOutside() {
-    const s = this.root;
+    const s = this.outside = new THREE.Group(); this.root.add(s);
     this.sea = makeSea(900, 900, 46, 46); this.sea.mesh.position.y = SEA_Y; s.add(this.sea.mesh);
     const land = box(900, 0.6, 420, '#9DAF7E', { cast: false, opts: { rough: 1 } }); at(land, 0, SEA_Y, 170); s.add(land); this.land = land;
     const beach = box(900, 0.5, 14, '#E6CFA2', { cast: false }); at(beach, 0, SEA_Y + 0.05, -42); s.add(beach);
@@ -224,8 +245,11 @@ export class Home {
     for (const [x, z, h] of [[-70, -20, 70], [85, 10, 64]]) {
       const t = box(16, h, 13, '#EADCC6', { cast: false, opts: { rough: 1 } }); at(t, x, SEA_Y + 3, z); s.add(t);
     }
+    portalOnly(s);
+    const hm = this.coast.group.children[0].material; this.coast.group.children.forEach((c) => (c.material = hm)); this.coast.mat = hm;
+    this.bay.mat = this.bay.points.material;
     // a little potted plant by the window with a hidden note
-    const bp = H.balconyPlant(); at(bp.group, F.windowPlant.x, 0, F.windowPlant.z, 0.6); bp.group.scale.setScalar(0.85); s.add(bp.group);
+    const bp = H.balconyPlant(); at(bp.group, F.windowPlant.x, 0, F.windowPlant.z, 0.6); bp.group.scale.setScalar(0.85); this.root.add(bp.group);
     this.collider.addCircle(F.windowPlant.x, F.windowPlant.z, 0.2);
     this.inter.add({ id: 'windowPlant', x: F.windowPlant.x + 0.1, z: F.windowPlant.z + 0.1, y: 0.5, reach: 0.95, discover: 'balcony_note',
       onUse: () => this.game.discover('balcony_note', bp.group.position.clone().setY(0.5)) });
@@ -247,6 +271,12 @@ export class Home {
     const glassM = new THREE.MeshStandardMaterial({ color: '#FFF1DE', transparent: true, opacity: 0.12, roughness: 0.05, depthWrite: false });
     const mkGlass = (x0, x1) => { const g = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0 - 0.04, Hh - 0.08), glassM); g.position.set((x0 + x1) / 2, Hh / 2, -0.06); s.add(g); return g; };
     mkGlass(w.x0, w.mullions[0]); mkGlass(w.mullions[0], w.mullions[1]); mkGlass(w.mullions[1], w.x1);
+    // the window "portal": invisible, writes stencil 1 so the outside shows only through it
+    const portal = new THREE.Mesh(new THREE.PlaneGeometry(w.x1 - w.x0, Hh), new THREE.MeshBasicMaterial({
+      colorWrite: false, depthWrite: false, side: THREE.DoubleSide,
+      stencilWrite: true, stencilRef: 1, stencilFunc: THREE.AlwaysStencilFunc, stencilZPass: THREE.ReplaceStencilOp,
+    }));
+    portal.position.set((w.x0 + w.x1) / 2, Hh / 2, -0.07); portal.renderOrder = -100; s.add(portal);
     // warm overexposed glow in the window (fake bloom)
     this.windowGlow = new THREE.Mesh(new THREE.PlaneGeometry(w.x1 - w.x0 + 1.4, Hh + 1.0), new THREE.MeshBasicMaterial({ map: glowTexture(), color: '#FFE6BA', transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false }));
     this.windowGlow.position.set((w.x0 + w.x1) / 2, Hh / 2, -0.12); s.add(this.windowGlow);
