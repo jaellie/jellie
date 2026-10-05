@@ -46,9 +46,11 @@ body.touch #letterMeter { top: 10px; }
 
 /* collectibles bar: dark letter silhouettes that fill in as she finds things */
 #letterRow { position: fixed; top: 12px; left: 50%; transform: translateX(-50%); z-index: 9; pointer-events: none;
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-width: min(424px, 94vw);
+  display: flex; align-items: center; gap: 10px;
   padding: 6px 10px; border-radius: 14px; background: rgba(40, 26, 18, 0.18); opacity: 0; transition: opacity 1.2s; }
 #letterRow.on { opacity: 1; }
+#letterRow .icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; max-width: min(398px, 78vw); }
+#letterRow .count { color: #FFF6E6; font-size: 17px; white-space: nowrap; text-shadow: 0 1px 3px rgba(60, 30, 15, 0.6); }
 #letterRow span { display: block; }
 #letterRow svg { display: block; width: 18px; height: 13px; overflow: visible; }
 #letterRow .body { fill: rgba(35, 24, 18, 0.62); stroke: rgba(255, 240, 220, 0.25); stroke-width: 1; transition: fill 0.6s, stroke 0.6s; }

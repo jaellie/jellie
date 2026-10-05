@@ -63,8 +63,9 @@ export class Overlay {
     const frac = total ? found / total : 0;
     // a row of dark letter silhouettes; each found item fills one in (like a game's collectibles bar)
     const H = '<svg viewBox="0 0 28 20"><rect class="body" x="1" y="1" width="26" height="18" rx="2.5"/><path class="flap" d="M2 2.5 L14 11.5 L26 2.5"/><path class="seal" d="M14 15.6c-2.6-1.7-3.8-2.9-3.8-4.2a1.7 1.7 0 0 1 3.8-.5a1.7 1.7 0 0 1 3.8.5c0 1.3-1.2 2.5-3.8 4.2z"/></svg>';
-    if (this.hearts.childElementCount !== total) this.hearts.innerHTML = Array.from({ length: total }, () => `<span>${H}</span>`).join('');
-    [...this.hearts.children].forEach((h, i) => {
+    if (this.hearts.querySelectorAll('span').length !== total) this.hearts.innerHTML = `<div class="icons">${Array.from({ length: total }, () => `<span>${H}</span>`).join('')}</div><div class="count"></div>`;
+    this.hearts.querySelector('.count').textContent = `(${found}/${total})`;
+    [...this.hearts.querySelectorAll('span')].forEach((h, i) => {
       const got = i < found;
       if (got && !h.classList.contains('got') && celebrate) { h.classList.add('new'); setTimeout(() => h.classList.remove('new'), 1100); }
       h.classList.toggle('got', got);
