@@ -26,8 +26,8 @@ export class Overlay {
     this.layer = el('div'); this.layer.id = 'cardLayer';
     this.portrait = el('div', null, '폰을 가로로 돌려주세요 🙂'); this.portrait.id = 'portrait';
     this.meter = this.buildLetterMeter();
-    this.hearts = el('div'); this.hearts.id = 'heartRow';
-    b.append(this.vignette, this.sepia, this.grain, this.meter, this.hearts, this.fadeEl, this.hint, this.bubble, this.layer, this.portrait);
+    this.hearts = el('div'); this.hearts.id = 'letterRow';
+    b.append(this.vignette, this.sepia, this.grain, this.hearts, this.fadeEl, this.hint, this.bubble, this.layer, this.portrait);
     this.card = null;
     this.bubbleUntil = 0;
     this.layer.addEventListener('click', (e) => { if (e.target === this.layer) this.key('close'); });
@@ -61,8 +61,8 @@ export class Overlay {
 
   setLetterProgress(found, total, celebrate = false) {
     const frac = total ? found / total : 0;
-    // 🩵🤍🤍🤍 — one heart per item, found ones turn blue
-    const H = '<svg viewBox="0 0 24 22"><path d="M12 20.5C5 15.5 1.5 12 1.5 7.5A5 5 0 0 1 12 5a5 5 0 0 1 10.5 2.5c0 4.5-3.5 8-10.5 13z"/></svg>';
+    // a row of dark letter silhouettes; each found item fills one in (like a game's collectibles bar)
+    const H = '<svg viewBox="0 0 28 20"><rect class="body" x="1" y="1" width="26" height="18" rx="2.5"/><path class="flap" d="M2 2.5 L14 11.5 L26 2.5"/><path class="seal" d="M14 15.6c-2.6-1.7-3.8-2.9-3.8-4.2a1.7 1.7 0 0 1 3.8-.5a1.7 1.7 0 0 1 3.8.5c0 1.3-1.2 2.5-3.8 4.2z"/></svg>';
     if (this.hearts.childElementCount !== total) this.hearts.innerHTML = Array.from({ length: total }, () => `<span>${H}</span>`).join('');
     [...this.hearts.children].forEach((h, i) => {
       const got = i < found;
