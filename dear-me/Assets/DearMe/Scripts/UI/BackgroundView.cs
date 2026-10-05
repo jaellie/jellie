@@ -57,7 +57,7 @@ namespace DearMe.UI
             rainMask.gameObject.AddComponent<RectMask2D>();
             for (int i = 0; i < 28; i++)
             {
-                var d = UIFactory.Image("Drop", rainMask, new Color(0.75f, 0.82f, 0.92f, 0.28f)).rectTransform;
+                var d = UIFactory.Image("Drop", rainMask, new Color(1f, 1f, 1f, 0.45f)).rectTransform;
                 d.anchorMin = d.anchorMax = new Vector2(0f, 1f);
                 d.sizeDelta = new Vector2(2f, 26f + (i % 4) * 8f);
                 drops.Add(d);
