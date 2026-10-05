@@ -1,0 +1,25 @@
+# Unity
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+*.csproj
+*.sln
+*.unityproj
+*.pidb
+*.booproj
+*.svd
+*.userprefs
+.vs/
+.idea/
+.vscode/
+
+# Keep the dotnet test project
+!/Tests/DearMe.Tests/DearMe.Tests.csproj
+!/Tests/TypeCheck/DearMe.TypeCheck.csproj
+/Tests/**/bin/
+/Tests/**/obj/

@@ -1,0 +1,190 @@
+{
+  "drills": [
+    {
+      "id": "d_meaning", "kind": "meaning", "patternId": "ryeogo", "speaker": "hyejin",
+      "promptKo": "{나도|me too} {이번 주에|this week} {사진|photo} {공모전|@공모전} {신청|@신청하다}{하려고 해|#ryeogo}.",
+      "promptEn": "I'm planning to enter a photo contest this week, too.",
+      "instructionKo": "혜진이는 무슨 뜻으로 말했을까?", "instructionEn": "What did Hyejin mean?",
+      "options": [
+        { "en": "I entered a photo contest this week, too.",
+          "feedbackKo": "{과거|past tense}가 {아니야|isn't}. {혜진|Hyejin}이는 {아직|yet} {안 했어|hasn't done it}.", "feedbackEn": "It's not past tense. Hyejin hasn't entered yet." },
+        { "en": "I'm planning to enter a photo contest this week, too.", "correct": true,
+          "feedbackKo": "{맞아|right}. {-(으)려고 하다|#ryeogo}는 {계획|plans}이나 {의도|intentions}를 {말할 때|when talking about} {써|is used}.", "feedbackEn": "Right. -(으)려고 하다 is used to talk about plans and intentions." },
+        { "en": "I can't enter the photo contest this week.",
+          "feedbackKo": "-(으)려고는 ‘{못 하다|can't}’라는 {뜻|meaning}이 {아니야|isn't}.", "feedbackEn": "-(으)려고 doesn't mean \"can't.\"" }
+      ]
+    },
+    {
+      "id": "d_notice_match", "kind": "match", "patternId": "",
+      "introKo": "{공지|notice}를 {천천히|slowly} {읽어 본다|read through}.", "introEn": "I read the notice slowly.",
+      "instructionKo": "공지의 말과 뜻을 연결해 보세요.", "instructionEn": "Match each term on the notice with its meaning.",
+      "referenceDocument": "notice_exchange_2020",
+      "matchPairs": [
+        { "ko": "{신청 기간|@신청 기간}", "en": "Application period" },
+        { "ko": "{모집 인원|@모집 인원}", "en": "Number of openings" },
+        { "ko": "{지원 자격|@지원 자격}", "en": "Eligibility" },
+        { "ko": "{제출 서류|@제출 서류}", "en": "Documents to submit" }
+      ],
+      "successKo": "{이제|now} {공지|notice}가 {읽힌다|reads clearly}.", "successEn": "Now the notice makes sense."
+    },
+    {
+      "id": "d_comp_eligibility", "kind": "comprehension", "patternId": "", "speaker": "yunji",
+      "promptKo": "{누가|who} {지원|@지원하다}{할 수 있는데|can}?", "promptEn": "So who's eligible?",
+      "instructionKo": "공지를 보고 윤지에게 대답해 보세요.", "instructionEn": "Check the notice and answer Yunji.",
+      "referenceDocument": "notice_exchange_2020",
+      "options": [
+        { "ko": "{재학생|@재학생}이면 {누구나|anyone} {지원|@지원하다}{할 수 있어|can}.", "en": "Anyone who's currently enrolled can apply.", "correct": true,
+          "feedbackKo": "{맞아|right}. ‘{지원 자격|@지원 자격}: {재학생|@재학생}’이라고 {써 있어|it says}.", "feedbackEn": "Right. It says \"Eligibility: currently enrolled students.\"" },
+        { "ko": "{졸업생|graduates}도 {지원|@지원하다}{할 수 있어|can}.", "en": "Graduates can apply too.",
+          "feedbackKo": "{공지|notice}에는 {재학생|@재학생}만 {있어|is listed}.", "feedbackEn": "The notice only lists currently enrolled students." },
+        { "ko": "{열 명|ten people}만 {지원|@지원하다}{할 수 있어|can}.", "en": "Only ten people can apply.",
+          "feedbackKo": "10명은 {모집 인원|@모집 인원}이야. {몇 명|how many} {뽑는지|they pick}를 {말해|tells you}.", "feedbackEn": "10 is the number of openings—how many people they'll pick, not who can apply." }
+      ]
+    },
+    {
+      "id": "d_comp_documents", "kind": "comprehension", "patternId": "aya_hada", "speaker": "yuri",
+      "promptKo": "{뭐|what} {내야|#aya_hada} {돼|is needed}?", "promptEn": "What do we have to turn in?",
+      "instructionKo": "공지를 보고 유리에게 대답해 보세요.", "instructionEn": "Check the notice and answer Yuri.",
+      "referenceDocument": "notice_exchange_2020",
+      "options": [
+        { "ko": "{자기소개서|@자기소개서}{랑|and|PARTICLE} {지원 동기|@지원 동기}를 {제출|@제출하다}{해야 해|#aya_hada}.", "en": "We have to submit a personal statement and a statement of purpose.", "correct": true,
+          "feedbackKo": "{맞아|right}.", "feedbackEn": "Right." },
+        { "ko": "{자기소개서|@자기소개서}만 {내면 돼|you just turn in}.", "en": "You just turn in a personal statement.",
+          "feedbackKo": "{지원 동기|@지원 동기}도 {필요해|is needed}.", "feedbackEn": "You need the statement of purpose, too." },
+        { "ko": "{사진|photo}{이랑|and|PARTICLE} {자기소개서|@자기소개서}를 {제출|@제출하다}{해야 해|#aya_hada}.", "en": "We have to submit a photo and a personal statement.",
+          "feedbackKo": "{사진|photo}은 {공지|notice}에 {없어|isn't mentioned}.", "feedbackEn": "The notice doesn't mention a photo." }
+      ]
+    },
+    {
+      "id": "d_report_deadline", "kind": "comprehension", "patternId": "aya_hada", "speaker": "yuri",
+      "promptKo": "{그래서|so}, {언제까지|until when}{래|did it say|GRAMMAR}?", "promptEn": "So, until when?",
+      "instructionKo": "혜진이에게 들은 것을 유리에게 전해 보세요.", "instructionEn": "Pass on to Yuri what you learned from Hyejin.",
+      "referencePhoto": "photo_board",
+      "options": [
+        { "ko": "10월 1일{까지|until|PARTICLE} {신청|@신청하다}{해야 해|#aya_hada}.", "en": "We have to apply by October 1.",
+          "feedbackKo": "10월 1일은 {신청|application}이 {시작되는|opens} {날|day}이야.", "feedbackEn": "October 1 is the day applications open." },
+        { "ko": "10월 7일{까지|until|PARTICLE} {신청|@신청하다}{해야 해|#aya_hada}.", "en": "We have to apply by October 7.", "correct": true,
+          "feedbackKo": "{맞아|right}. {오후|p.m.} {다섯 시|five o'clock}{까지|until|PARTICLE}.", "feedbackEn": "Right. By 5 p.m." },
+        { "ko": "10월 7일{부터|from|PARTICLE} {신청|@신청하다}{해야 해|#aya_hada}.", "en": "We have to apply starting October 7.",
+          "feedbackKo": "-{부터|from}는 ‘from’, -{까지|until}는 ‘until’이야.", "feedbackEn": "부터 means \"from\"; 까지 means \"until.\"" }
+      ]
+    },
+    {
+      "id": "d_negative", "kind": "negative", "patternId": "ryeogo",
+      "introKo": "{윤지|Yunji}가 {한|said} {말|words}을 {다시|again} {떠올려 본다|go over}.", "introEn": "I go over what Yunji said.",
+      "instructionKo": "윤지의 말을 다시 만들어 보세요.", "instructionEn": "Rebuild what Yunji said.",
+      "promptEn": "\"I'm not applying this time.\"",
+      "chunks": [
+        { "ko": "{해|(casual ending)}" },
+        { "ko": "{이번에는|this time}" },
+        { "ko": "{않으려고|#ryeogo|not planning to}", "glue": false },
+        { "ko": "{신청|@신청하다}" },
+        { "ko": "{하지|do (before 않다)|GRAMMAR}", "glue": true },
+        { "ko": "{하려고|#ryeogo}", "glue": true }
+      ],
+      "answers": ["이번에는 신청하지 않으려고 해"],
+      "hintKo": "‘-지 {않다|not}’가 {먼저|first}, {그 다음에|then} ‘-(으)려고 하다’.", "hintEn": "-지 않다 comes first, then -(으)려고 하다.",
+      "successKo": "{말할 때|in speech}는 ‘{신청|@신청하다} {안 하려고 해|#ryeogo}’도 {많이|often} {써|people use}.", "successEn": "In casual speech, people also often say 신청 안 하려고 해."
+    },
+    {
+      "id": "d_substitution", "kind": "substitution", "patternId": "ryeogo", "speaker": "hyejin",
+      "instructionKo": "혜진이의 달력을 채워 보세요.", "instructionEn": "Help Hyejin fill in the calendar.",
+      "items": [
+        { "who": "유리", "baseKo": "서류를 준비하다", "baseEn": "prepare the documents",
+          "options": ["서류를 준비하려고 해", "서류를 준비하으려고 해"], "answer": 0,
+          "feedbackKo": "‘하’에는 {받침|final consonant}이 {없어|there's no}. {그래서|so} -려고.", "feedbackEn": "하 has no final consonant, so it takes -려고." },
+        { "who": "윤지", "baseKo": "도서관에서 공부하다", "baseEn": "study at the library",
+          "options": ["도서관에서 공부하으려고 해", "도서관에서 공부하려고 해"], "answer": 1,
+          "feedbackKo": "{받침|final consonant}이 {없으면|if there's none} -려고.", "feedbackEn": "No final consonant → -려고." },
+        { "who": "혜진", "baseKo": "공모전 사진을 찍다", "baseEn": "take photos for the contest",
+          "options": ["공모전 사진을 찍려고 해", "공모전 사진을 찍으려고 해"], "answer": 1,
+          "feedbackKo": "‘찍’에는 {받침|final consonant} ㄱ이 {있어|there is}. {그래서|so} -으려고.", "feedbackEn": "찍 ends in ㄱ, so it takes -으려고." },
+        { "who": "나", "baseKo": "책을 읽다", "baseEn": "read a book",
+          "options": ["책을 읽으려고 해", "책을 읽려고 해"], "answer": 0,
+          "feedbackKo": "{받침|final consonant}이 {있으면|if there is one} -으려고.", "feedbackEn": "Final consonant → -으려고." },
+        { "who": "유리", "baseKo": "포트폴리오를 만들다", "baseEn": "make a portfolio",
+          "options": ["포트폴리오를 만들으려고 해", "포트폴리오를 만들려고 해"], "answer": 1,
+          "feedbackKo": "ㄹ {받침|final consonant}은 {예외|exception}야. {만들다|to make} → {만들려고|planning to make}.", "feedbackEn": "Stems ending in ㄹ are the exception: 만들다 → 만들려고." },
+        { "who": "윤지", "baseKo": "주말에 친구를 만나다", "baseEn": "meet a friend on the weekend",
+          "options": ["주말에 친구를 만나려고 해", "주말에 친구를 만나으려고 해"], "answer": 0,
+          "feedbackKo": "‘나’에는 {받침|final consonant}이 {없어|there's no}. -려고.", "feedbackEn": "나 has no final consonant → -려고." }
+      ],
+      "successKo": "{혜진|Hyejin}이가 {달력|calendar}에 {하나씩|one by one} {적는다|writes them}.", "successEn": "Hyejin writes them on the calendar one by one."
+    },
+    {
+      "id": "d_transform", "kind": "transform", "patternId": "ryeogo", "speaker": "hyejin",
+      "promptKo": "{그럼|then} {주말에|on the weekend}는? {여행|@여행하다}{할 거야|are you going to}?", "promptEn": "And the weekend? Are you going on a trip?",
+      "instructionKo": "‘-(으)ㄹ 거야’를 ‘-(으)려고 해’로 바꿔서 대답해 보세요.", "instructionEn": "Answer by changing -(으)ㄹ 거야 into -(으)려고 해.",
+      "chunks": [
+        { "ko": "{해|(casual ending)}" },
+        { "ko": "{응|yeah}," },
+        { "ko": "{거야|(it's that)}" },
+        { "ko": "{여행|@여행하다}" },
+        { "ko": "{하려고|#ryeogo}", "glue": true },
+        { "ko": "{할|will}", "glue": true }
+      ],
+      "answers": ["응, 여행하려고 해"],
+      "alternatives": [
+        { "answer": "응, 여행할 거야", "feedbackKo": "{그것도|that's also} {맞는|correct} {말|thing to say}이야. {이번에는|this time} -려고 해로 {바꿔 봐|try switching it}.", "feedbackEn": "That's also correct. This time, try switching it to -려고 해." }
+      ],
+      "hintKo": "{대답|answer}은 ‘{응|yeah},’으로 {시작해|starts}.", "hintEn": "Start your answer with 응,.",
+      "successKo": "‘{할 거야|will}’는 {정해진|decided} {느낌|feel}, ‘{하려고 해|#ryeogo}’는 {아직|still} {계획 중|planning}인 {느낌|feel}이야.", "successEn": "할 거야 sounds decided; 하려고 해 sounds like it's still a plan."
+    },
+    {
+      "id": "d_order", "kind": "order", "patternId": "ryeogo",
+      "instructionKo": "하고 싶은 말을 순서대로 놓아 보세요.", "instructionEn": "Put what you want to say in order.",
+      "promptEn": "\"I'm planning to apply this week.\"",
+      "chunks": [
+        { "ko": "{해|(casual ending)}" },
+        { "ko": "{이번 주에|this week}" },
+        { "ko": "{하려고|#ryeogo}", "glue": true },
+        { "ko": "{신청|@신청하다}" },
+        { "ko": "{했어|did}", "glue": true }
+      ],
+      "answers": ["이번 주에 신청하려고 해"],
+      "hintKo": "‘{언제|when}’ → ‘{무엇|what}’ → ‘-려고 해’.", "hintEn": "When → what → -려고 해.",
+      "successKo": "{이번 주에|this week} {신청|@신청하다}{하려고 해|#ryeogo}.", "successEn": "I'm planning to apply this week."
+    },
+    {
+      "id": "d_context", "kind": "context", "patternId": "ryeogo", "speaker": "yunji",
+      "promptKo": "{오늘|today} {바로|right away} {신청|@신청하다}{할 거야|are you going to}?", "promptEn": "Are you applying today, right away?",
+      "instructionKo": "이 상황에 맞게 대답해 보세요.", "instructionEn": "Answer in a way that fits the situation.",
+      "options": [
+        { "ko": "{응|yeah}. {신청|@신청하다}{했어|did}.", "en": "Yeah. I applied.",
+          "feedbackKo": "{아직|yet} {신청|@신청하다}{하지 않았|didn't}{잖아|#janha}. -었어는 {이미|already} {한|done} {일|thing}이야.", "feedbackEn": "You haven't applied yet. -었어 is for something already done." },
+        { "ko": "{응|yeah}. {신청|@신청하다}{할 수 있어|can}.", "en": "Yeah. I can apply.", "grammaticalOnly": true,
+          "feedbackKo": "{문법|grammar}은 {맞아|is fine}. {그런데|but} {윤지|Yunji}는 {할 수 있는지|whether you can} {묻지 않았어|didn't ask}. {계획|plan}을 {물었어|asked about}.", "feedbackEn": "Grammatically fine—but Yunji didn't ask whether you can. She asked about your plan." },
+        { "ko": "{응|yeah}. {신청|@신청하다}{하려고 해|#ryeogo}.", "en": "Yeah. I'm planning to apply.", "correct": true,
+          "feedbackKo": "{자연스러워|natural}. {아직|yet} {안 했지만|haven't done it, but} {계획|plan}이 {있으니까|you have}.", "feedbackEn": "That sounds natural: you haven't done it yet, but it's your plan." }
+      ]
+    },
+    {
+      "id": "d_production", "kind": "production", "patternId": "ryeogo", "speaker": "yuri",
+      "promptKo": "{그럼|then} {오늘 밤에|tonight}는 {뭐|what} {하려고 해|#ryeogo}?", "promptEn": "So what are you going to do tonight?",
+      "instructionKo": "두 조각을 골라 대답을 만들어 보세요.", "instructionEn": "Pick two pieces to build your answer.",
+      "storeAs": "plan",
+      "slotsA": [
+        { "ko": "{자기소개서|@자기소개서}를", "en": "my personal statement" },
+        { "ko": "{친구|friend}를", "en": "a friend" },
+        { "ko": "{공모전|@공모전} {사진|photo}을", "en": "photos for the contest" }
+      ],
+      "slotsB": [
+        { "ko": "{쓰려고 해|#ryeogo|쓰다 + -려고 해}", "en": "planning to write" },
+        { "ko": "{만나려고 해|#ryeogo|만나다 + -려고 해}", "en": "planning to meet" },
+        { "ko": "{찍으려고 해|#ryeogo|찍다 + -으려고 해}", "en": "planning to take" }
+      ],
+      "pairs": [
+        { "a": 0, "b": 0, "verdict": "natural", "effects": ["set:plan_statement"] },
+        { "a": 1, "b": 1, "verdict": "natural", "effects": ["set:plan_other"] },
+        { "a": 1, "b": 2, "verdict": "natural", "effects": ["set:plan_other"] },
+        { "a": 2, "b": 2, "verdict": "natural", "effects": ["set:plan_other"] },
+        { "a": 0, "b": 1, "verdict": "wrong", "feedbackKo": "{자기소개서|@자기소개서}는 {만날 수 없어|you can't meet}.", "feedbackEn": "You can't meet a personal statement." },
+        { "a": 0, "b": 2, "verdict": "odd", "feedbackKo": "{문법|grammar}은 {맞지만|is fine, but}, {자기소개서|@자기소개서} {사진|photo}을 {찍는|taking} {건|thing} {좀|a bit} {이상해|weird}.", "feedbackEn": "Grammatically fine, but taking a picture of your personal statement is a bit odd." },
+        { "a": 1, "b": 0, "verdict": "wrong", "feedbackKo": "{친구|friend}를 {쓸 수는 없어|you can't write}.", "feedbackEn": "You can't write a friend." },
+        { "a": 2, "b": 0, "verdict": "odd", "feedbackKo": "‘{쓰다|to write / to use}’에는 ‘{사용하다|to use}’라는 {뜻|meaning}도 {있어|there's also}. {그래도|still} {여기서는|here} {어색해|it's awkward}.", "feedbackEn": "쓰다 can also mean \"to use,\" so this is grammatical—but it's awkward here." },
+        { "a": 2, "b": 1, "verdict": "wrong", "feedbackKo": "{사진|photo}은 {만날 수 없어|you can't meet}.", "feedbackEn": "You can't meet a photo." }
+      ],
+      "hintKo": "{다른|another} {조합|combination}을 {해 봐|try}.", "hintEn": "Try another combination."
+    }
+  ]
+}

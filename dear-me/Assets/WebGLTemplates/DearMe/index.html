@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#1B2130">
+  <title>{{{ PRODUCT_NAME }}} · 디어 미,</title>
+  <style>
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #1B2130; }
+    #unity-container { position: fixed; inset: 0; }
+    /* Full window; Unity scales the backbuffer by devicePixelRatio. */
+    #unity-canvas {
+      width: 100%; height: 100%; display: block; background: #1B2130; outline: none;
+      /* Long-press is a game gesture (detailed help), not text selection or a context menu. */
+      touch-action: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #overlay {
+      position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: #F4EFE4; font-family: "Nanum Myeongjo", "Batang", Georgia, serif; text-align: center; padding: 24px;
+      box-sizing: border-box; transition: opacity .6s ease;
+    }
+    #overlay .title { font-size: clamp(36px, 7vw, 64px); letter-spacing: .01em; }
+    #overlay .subtitle { font-size: clamp(18px, 3vw, 24px); opacity: .7; margin-top: 6px; }
+    #bar { width: min(280px, 60vw); height: 2px; background: rgba(244,239,228,.18); margin-top: 32px; }
+    #bar > div { height: 100%; width: 0; background: #A86A35; transition: width .2s; }
+    #message { margin-top: 20px; font: 15px/1.5 system-ui, sans-serif; opacity: .8; max-width: 520px; }
+    .hidden { opacity: 0; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div id="unity-container">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+  </div>
+  <div id="overlay">
+    <div class="title">Dear Me,</div>
+    <div class="subtitle">디어 미,</div>
+    <div id="bar"><div></div></div>
+    <div id="message"></div>
+  </div>
+  <script>
+    var canvas = document.querySelector("#unity-canvas");
+    var overlay = document.querySelector("#overlay");
+    var bar = document.querySelector("#bar > div");
+    var message = document.querySelector("#message");
+    canvas.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+
+    function showMessage(text) { message.textContent = text; overlay.classList.remove("hidden"); }
+
+    // Browsers block loading the build from file://. The game must be served over http(s).
+    if (location.protocol === "file:") {
+      showMessage("이 파일은 웹 서버에서 열어야 합니다. This page must be opened from a web server (http/https), not directly from disk. Upload the build folder to itch.io or GitHub Pages, or run a local server.");
+    } else {
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
+      var config = {
+        dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+        frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+#if USE_THREADS
+        workerUrl: buildUrl + "/{{{ WORKER_FILENAME }}}",
+#endif
+#if USE_WASM
+        codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+#endif
+#if MEMORY_FILENAME
+        memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
+#endif
+#if SYMBOLS_FILENAME
+        symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
+#endif
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
+        productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
+        productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
+        // Cap very dense phone screens to keep fill-rate reasonable.
+        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+        showBanner: function (msg, type) {
+          if (type === "error") showMessage(msg);
+          else console.warn(msg);
+        },
+      };
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = function () {
+        createUnityInstance(canvas, config, function (progress) {
+          bar.style.width = Math.round(progress * 100) + "%";
+        }).then(function () {
+          overlay.classList.add("hidden");
+          canvas.focus();
+        }).catch(function (err) {
+          showMessage("게임을 불러오지 못했습니다. The game failed to load: " + err);
+        });
+      };
+      script.onerror = function () {
+        showMessage("게임 파일을 찾을 수 없습니다. Could not download the game files. Check your connection and refresh.");
+      };
+      document.body.appendChild(script);
+    }
+  </script>
+</body>
+</html>

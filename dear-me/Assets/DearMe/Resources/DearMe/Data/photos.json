@@ -1,0 +1,61 @@
+{
+  "photos": [
+    {
+      "id": "photo_cafe", "titleKo": "사진", "titleEn": "Photograph",
+      "states": [
+        {
+          "id": "v1", "background": "#e6d7b8", "dateStamp": "2019. 10. 03",
+          "shapes": [
+            { "x": 0.00, "y": 0.00, "w": 1.00, "h": 0.55, "color": "#efe3c9" },
+            { "x": 0.62, "y": 0.06, "w": 0.32, "h": 0.36, "color": "#f7efd9" },
+            { "x": 0.00, "y": 0.74, "w": 1.00, "h": 0.26, "color": "#8b6b4c" },
+            { "x": 0.12, "y": 0.30, "w": 0.20, "h": 0.46, "color": "#8a5a3c", "label": "{유리|Yuri}", "labelEn": "Yuri" },
+            { "x": 0.36, "y": 0.26, "w": 0.20, "h": 0.50, "color": "#6a5a7e", "label": "{혜진|Hyejin}", "labelEn": "Hyejin" },
+            { "x": 0.70, "y": 0.34, "w": 0.18, "h": 0.42, "color": "#2a3550", "label": "{나|me}", "labelEn": "me" },
+            { "x": 0.30, "y": 0.68, "w": 0.06, "h": 0.07, "color": "#f2ece0" }
+          ],
+          "details": [
+            { "ko": "{유리|Yuri}는 {웃고 있다|is smiling}.", "en": "Yuri is smiling." },
+            { "ko": "{나|I}는 {조금|a little} {떨어져|apart} {서 있다|am standing}.", "en": "I'm standing a little apart from the others." }
+          ]
+        },
+        {
+          "id": "v2", "background": "#e6d7b8", "dateStamp": "2019. 10. 03",
+          "shapes": [
+            { "x": 0.00, "y": 0.00, "w": 1.00, "h": 0.55, "color": "#efe3c9" },
+            { "x": 0.62, "y": 0.06, "w": 0.32, "h": 0.36, "color": "#f7efd9" },
+            { "x": 0.00, "y": 0.74, "w": 1.00, "h": 0.26, "color": "#8b6b4c" },
+            { "x": 0.12, "y": 0.30, "w": 0.20, "h": 0.46, "color": "#8a5a3c", "label": "{유리|Yuri}", "labelEn": "Yuri" },
+            { "x": 0.14, "y": 0.50, "w": 0.16, "h": 0.12, "color": "#c9ab72", "label": "{봉투|envelope}", "labelEn": "envelope" },
+            { "x": 0.36, "y": 0.26, "w": 0.20, "h": 0.50, "color": "#6a5a7e", "label": "{혜진|Hyejin}", "labelEn": "Hyejin" },
+            { "x": 0.58, "y": 0.34, "w": 0.18, "h": 0.42, "color": "#2a3550", "label": "{나|me}", "labelEn": "me" },
+            { "x": 0.30, "y": 0.68, "w": 0.06, "h": 0.07, "color": "#f2ece0" }
+          ],
+          "details": [
+            { "ko": "{유리|Yuri}가 {큰|big} {서류 봉투|@서류 봉투}를 {들고 있다|is holding}.", "en": "Yuri is holding a big document envelope." },
+            { "ko": "{나|I}는 {기억|@기억하다}{보다|than|PARTICLE} {조금 더|a little} {가까이|closer} {서 있다|am standing}.", "en": "I'm standing a little closer than I remember." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "photo_board", "titleKo": "혜진이의 사진", "titleEn": "Hyejin's photo",
+      "states": [
+        {
+          "id": "v1", "background": "#b49e78", "dateStamp": "2019. 10. 03",
+          "shapes": [
+            { "x": 0.04, "y": 0.06, "w": 0.30, "h": 0.40, "color": "#e9e2d0" },
+            { "x": 0.38, "y": 0.08, "w": 0.58, "h": 0.84, "color": "#f6f1e4" },
+            { "x": 0.42, "y": 0.14, "w": 0.50, "h": 0.12, "color": "#f6f1e4", "label": "{해외교류|exchange} {프로그램|program} {모집|@모집}", "labelEn": "Exchange program: call for participants" },
+            { "x": 0.42, "y": 0.34, "w": 0.50, "h": 0.14, "color": "#f6f1e4", "label": "{신청 기간|@신청 기간}: 10월 1일 ~ 10월 7일", "labelEn": "Application period: Oct 1 – Oct 7" },
+            { "x": 0.42, "y": 0.52, "w": 0.50, "h": 0.12, "color": "#f6f1e4", "label": "{마감|@마감}: 10월 7일 ({월|Mon}) 17:00", "labelEn": "Deadline: Mon, Oct 7, 5:00 p.m." },
+            { "x": 0.06, "y": 0.56, "w": 0.26, "h": 0.30, "color": "#d7c9a6" }
+          ],
+          "details": [
+            { "ko": "{혜진|Hyejin}이의 {휴대폰|phone} {사진|photo}. {날짜|the date}가 {잘|clearly} {보인다|can be seen}.", "en": "A photo on Hyejin's phone. You can see the date clearly." }
+          ]
+        }
+      ]
+    }
+  ]
+}

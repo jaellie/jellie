@@ -1,0 +1,51 @@
+{
+  "documents": [
+    {
+      "id": "diary_20191003", "kind": "diary", "titleKo": "일기장", "titleEn": "Diary",
+      "lines": [
+        { "style": "heading", "ko": "2019년 10월 3일", "en": "October 3, 2019" },
+        { "ko": "{오늘|today}도 {아무것도|nothing} {하지 않았다|did (not)}.", "en": "Today, once again, I didn't do anything." },
+        { "ko": "{정확히는|to be exact}, {할까 말까|#kka_malkka} {고민|@고민하다}{하다가|while ~ing, then|GRAMMAR|-다가: one action is interrupted and something else happens} {하지 않았다|didn't do it}.", "en": "To be precise, I kept going back and forth on whether to do it, and then I didn't." },
+        { "style": "gap", "ko": "", "en": "" },
+        { "ko": "{내일|tomorrow}은 {진짜|really} {신청|@신청하다}{하려고 한다|#ryeogo}.", "en": "Tomorrow, I'm really going to apply." }
+      ]
+    },
+    {
+      "id": "diary_loop1_almost", "kind": "diary", "titleKo": "일기장", "titleEn": "Diary",
+      "lines": [
+        { "style": "heading", "ko": "2019년 10월 3일", "en": "October 3, 2019" },
+        { "ko": "{오늘|today}은 {거의|almost} {할 뻔했다|nearly did it}.", "en": "Today, I almost did it." },
+        { "ko": "{제출|@제출하다} {버튼|button} {위|over}에서 {손|hand}이 {멈췄다|stopped}.", "en": "My hand stopped right over the Submit button." },
+        { "style": "gap", "ko": "", "en": "" },
+        { "ko": "{내일|tomorrow}은 {진짜|really} {신청|@신청하다}{하려고 한다|#ryeogo}.", "en": "Tomorrow, I'm really going to apply." }
+      ]
+    },
+    {
+      "id": "notice_exchange_2020", "kind": "notice", "titleKo": "공지", "titleEn": "Notice",
+      "lines": [
+        { "style": "heading", "ko": "2020 {겨울|winter} {해외교류|overseas exchange} {프로그램|program} {참가자|participants} {모집|@모집}", "en": "Winter 2020 Overseas Exchange Program — Call for Participants" },
+        { "style": "stain", "ko": "{신청 기간|@신청 기간}: 10월 1일 ~ 10월 ▒일", "en": "Application period: Oct 1 – Oct ▒ (the day is hidden under a coffee stain)" },
+        { "ko": "{모집 인원|@모집 인원}: 10{명|people}", "en": "Openings: 10" },
+        { "ko": "{지원 자격|@지원 자격}: {재학생|@재학생}", "en": "Eligibility: currently enrolled students" },
+        { "ko": "{제출 서류|@제출 서류}: {자기소개서|@자기소개서}, {지원 동기|@지원 동기}", "en": "Required documents: personal statement, statement of purpose" },
+        { "style": "small", "ko": "※ {서류|documents}는 {큰|large} {봉투|envelope}에 {넣어서|#aseo} {제출|@제출하다}{해 주세요|please}.", "en": "* Please put your documents in a large envelope when you submit them." },
+        { "style": "small", "ko": "{문의|inquiries}: {국제교류팀|International Exchange Office} ({학생회관|Student Union} 2{층|floor})", "en": "Contact: International Exchange Office (Student Union, 2nd floor)" }
+      ]
+    },
+    {
+      "id": "note_1", "kind": "note", "titleKo": "쪽지", "titleEn": "Note",
+      "lines": [
+        { "ko": "{내일|tomorrow}은 {신청|@신청하다}{하지 마|#ji_ma}.", "en": "Don't apply tomorrow." }
+      ]
+    },
+    {
+      "id": "msg_night", "kind": "messages", "titleKo": "메시지", "titleEn": "Messages",
+      "lines": [
+        { "speaker": "yuri", "ko": "{신청|@신청하다}{하려고 했는데|#ryeogo} {마감|@마감} {놓친|missed} {사람|people}이 {작년에|last year} {엄청|so many} {많았대|there were, apparently}.", "en": "Apparently tons of people last year meant to apply and missed the deadline." },
+        { "speaker": "yuri", "ko": "{미루지 마|#ji_ma|don't put it off}!", "en": "Don't put it off!" },
+        { "speaker": "hyejin", "ko": "{오늘|today} {찍은|that I took} {사진|photos} {보낼게|I'll send}~", "en": "I'll send you the pics from today~" },
+        { "speaker": "hyejin", "ko": "{나중에|later} {보면|when we look} {진짜|really} {재밌을 거야|will be fun}.", "en": "These are going to be so fun to look back on." }
+      ]
+    }
+  ]
+}

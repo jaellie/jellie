@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Compiles every game script (runtime + editor) against Unity API signature stubs, so typos
+       and type errors are caught without a Unity install. Not a substitute for compiling in Unity.
+       dotnet build                        legacy Input Manager path
+       dotnet build -p:InputSystem=true    Input System package path -->
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>CS1591;CS0414;CS0649</NoWarn>
+    <DefineConstants Condition="'$(InputSystem)' == 'true'">$(DefineConstants);ENABLE_INPUT_SYSTEM</DefineConstants>
+    <DefineConstants Condition="'$(InputSystem)' != 'true'">$(DefineConstants);ENABLE_LEGACY_INPUT_MANAGER</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Assets/DearMe/Scripts/**/*.cs" />
+    <Compile Include="../../Assets/DearMe/Editor/**/*.cs" />
+    
+  </ItemGroup>
+</Project>

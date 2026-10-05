@@ -1,0 +1,10 @@
+{
+  "characters": [
+    { "id": "me", "nameKo": "나", "nameEn": "Me", "color": "#2a3550" },
+    { "id": "yuri", "nameKo": "유리", "nameEn": "Yuri", "color": "#8a5a3c" },
+    { "id": "yunji", "nameKo": "윤지", "nameEn": "Yunji", "color": "#4f6b5a" },
+    { "id": "hyejin", "nameKo": "혜진", "nameEn": "Hyejin", "color": "#6a5a7e" },
+    { "id": "clerk", "nameKo": "점원", "nameEn": "Clerk", "color": "#5b5b5b" },
+    { "id": "future", "nameKo": "???", "nameEn": "???", "color": "#3b4252" }
+  ]
+}

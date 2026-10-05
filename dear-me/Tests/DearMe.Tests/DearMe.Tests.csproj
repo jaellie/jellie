@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Runs the engine-independent game logic and validates all content outside Unity.
+       Unity ignores this folder because it lives outside Assets/. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Assets/DearMe/Scripts/Content/**/*.cs" />
+    <Compile Include="../../Assets/DearMe/Scripts/Story/**/*.cs" />
+    <Compile Include="../../Assets/DearMe/Scripts/Language/**/*.cs" />
+    <Compile Include="../../Assets/DearMe/Scripts/Save/**/*.cs" />
+    <Compile Include="../../Assets/DearMe/Scripts/Input/**/*.cs" />
+    <Compile Include="../../Assets/DearMe/Scripts/Settings/**/*.cs" />
+    <Compile Include="../../Assets/DearMe/Scripts/Layout/**/*.cs" />
+  </ItemGroup>
+</Project>

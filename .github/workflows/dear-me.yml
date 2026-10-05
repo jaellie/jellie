@@ -1,0 +1,27 @@
+name: Dear Me
+
+# Content validation, logic tests and a type-check of all Unity scripts (against API stubs).
+# Unity itself is not needed; the Web build is made in the Unity editor.
+on:
+  push:
+    paths: ["dear-me/**", ".github/workflows/dear-me.yml"]
+  pull_request:
+    paths: ["dear-me/**", ".github/workflows/dear-me.yml"]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Content + logic tests
+        run: dotnet run --project dear-me/Tests/DearMe.Tests
+      - name: Type-check (legacy input)
+        run: dotnet build dear-me/Tests/TypeCheck
+      - name: Type-check (Input System)
+        run: |
+          rm -rf dear-me/Tests/TypeCheck/obj dear-me/Tests/TypeCheck/bin
+          dotnet build dear-me/Tests/TypeCheck -p:InputSystem=true

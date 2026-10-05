@@ -1,0 +1,26 @@
+{
+  "rooms": [
+    {
+      "id": "room_present", "location": "room_present",
+      "hintKo": "방을 둘러보자.", "hintEn": "Look around the room.",
+      "objects": [
+        { "id": "window", "labelKo": "창문", "labelEn": "Window", "verbKo": "보기", "verbEn": "Look",
+          "x": 0.56, "y": 0.10, "w": 0.32, "h": 0.40, "color": "#9fb3d1", "node": "obj_window" },
+        { "id": "calendar", "labelKo": "달력", "labelEn": "Calendar", "verbKo": "보기", "verbEn": "Look",
+          "x": 0.33, "y": 0.16, "w": 0.11, "h": 0.17, "color": "#e9e2d0", "node": "obj_calendar" },
+        { "id": "phone", "labelKo": "휴대폰", "labelEn": "Phone", "verbKo": "확인하기", "verbEn": "Check",
+          "x": 0.36, "y": 0.53, "w": 0.08, "h": 0.07, "color": "#7f8aa3", "node": "obj_phone" },
+        { "id": "desk", "labelKo": "책상", "labelEn": "Desk", "verbKo": "살펴보기", "verbEn": "Examine",
+          "x": 0.04, "y": 0.52, "w": 0.28, "h": 0.12, "color": "#a08b6e", "node": "obj_desk" },
+        { "id": "draft", "labelKo": "구겨진 종이", "labelEn": "Crumpled paper", "verbKo": "펴 보기", "verbEn": "Unfold",
+          "x": 0.30, "y": 0.84, "w": 0.10, "h": 0.07, "color": "#e9e2d0", "node": "obj_draft" },
+        { "id": "box", "labelKo": "오래된 상자", "labelEn": "Old box", "verbKo": "열어 보기", "verbEn": "Open",
+          "x": 0.59, "y": 0.70, "w": 0.22, "h": 0.19, "color": "#c9a878", "node": "obj_box" },
+        { "id": "diary", "labelKo": "일기장", "labelEn": "Diary", "verbKo": "읽기", "verbEn": "Read",
+          "x": 0.62, "y": 0.60, "w": 0.08, "h": 0.09, "color": "#7a5f8a", "node": "obj_diary", "visibleWhen": ["flag:box_open"] },
+        { "id": "photo", "labelKo": "사진", "labelEn": "Photograph", "verbKo": "보기", "verbEn": "Look",
+          "x": 0.72, "y": 0.60, "w": 0.08, "h": 0.09, "color": "#efe3c9", "node": "obj_photo", "visibleWhen": ["flag:box_open"] }
+      ]
+    }
+  ]
+}

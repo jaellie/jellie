@@ -1,0 +1,4 @@
+<!-- ContentSanitizer reflects over content/save classes; keep them through IL2CPP code stripping. -->
+<linker>
+  <assembly fullname="Assembly-CSharp" preserve="all" />
+</linker>
