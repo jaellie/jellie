@@ -231,7 +231,7 @@ export class Home {
       onUse: () => this.game.discover('balcony_note', bp.group.position.clone().setY(0.5)) });
     // once the curtains are open, standing at the window gives the sea-view moment again
     this.inter.add({ id: 'seaView', x: 2.15, z: 0.5, y: 1.3, reach: 0.9, enabled: () => this.state.curtainsOpen,
-      onUse: () => this.lookOut(new THREE.Vector3(2.9, 1.62, 3.3)) });
+      onUse: () => this.lookOut(new THREE.Vector3(1.25, 1.62, 3.3)) });
   }
 
   buildWindowAndCurtains() {
@@ -728,14 +728,14 @@ export class Home {
     this.state.sunset = Math.min(1, this.state.sunset + 0.15);
     g.audio.setLoops(this.loopKeys(), 3);
     // emotional peak: the camera drops to her eye level and looks out to sea
-    await this.lookOut(new THREE.Vector3(2.9, 1.62, 3.3), 6.5, content.bubbles.curtains);
+    await this.lookOut(new THREE.Vector3(1.25, 1.62, 3.3), 6.5, content.bubbles.curtains);
     this.busyCurtains = false; g.busy = false;
   }
 
   async lookOut(eye, hold = 0, bubble) {
     const g = this.game;
     g.busy = true;
-    g.cam.override = { pos: g.toWorld(eye, new THREE.Vector3()), look: g.toWorld(new THREE.Vector3(eye.x + 14, -5, -60), new THREE.Vector3()) };
+    g.cam.override = { pos: g.toWorld(eye, new THREE.Vector3()), look: g.toWorld(new THREE.Vector3(eye.x + 6, -5, -60), new THREE.Vector3()) };
     g.mom.faceToward(eye.x - 0.5, -5);
     await g.tweens.wait(1.6);
     g.say(bubble || content.bubbles.curtains, 3200);
