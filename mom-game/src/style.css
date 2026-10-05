@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Griun Mongtori';
+  src: url('./fonts/Griun_Mongtori-Rg.woff2') format('woff2');
+  font-display: swap;
+}
 :root {
   --paper: #fffaf0;
   --ink: #3a2e28;
@@ -6,7 +11,7 @@
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; overflow: hidden; background: #1a1412; color: var(--ink); }
-body { font-family: 'Gowun Batang', serif; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; touch-action: none; }
+body { font-family: 'Griun Mongtori', 'Gowun Batang', serif; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; touch-action: none; }
 canvas { display: block; }
 
 /* film feel */
@@ -39,6 +44,17 @@ body.past #sepia { opacity: 1; }
 @keyframes meterBump { 0% { transform: scale(1) } 25% { transform: scale(1.28) rotate(-4deg) } 55% { transform: scale(1.08) rotate(2deg) } 100% { transform: scale(1) } }
 body.touch #letterMeter { top: 10px; }
 
+/* hearts: one per hidden item (found = blue) */
+#heartRow { position: fixed; top: 92px; left: 50%; transform: translateX(-50%); z-index: 9; pointer-events: none;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; max-width: min(660px, 92vw); opacity: 0; transition: opacity 1.2s; }
+#heartRow.on { opacity: 1; }
+#heartRow svg { width: 13px; height: 12px; filter: drop-shadow(0 1px 1.5px rgba(70, 35, 15, 0.35)); }
+#heartRow path { fill: #FFFFFF; stroke: rgba(150, 120, 100, 0.55); stroke-width: 1.4; transition: fill 0.6s; }
+#heartRow .got path { fill: #9ED8F2; stroke: #5FA9CC; }
+#heartRow .new { animation: heartPop 1s cubic-bezier(.3,1.8,.5,1); }
+@keyframes heartPop { 0% { transform: scale(0.3) } 60% { transform: scale(1.7) } 100% { transform: scale(1) } }
+body.touch #heartRow { top: 84px; }
+
 /* start screen */
 #start { position: fixed; inset: 0; z-index: 40; background: #0f0b0a; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity 1.4s ease; }
 #start p { font-size: clamp(20px, 3.2vw, 34px); color: #ffe7c2; letter-spacing: 0.08em; margin: 0; padding: 0 24px; text-align: center;
@@ -48,7 +64,7 @@ body.touch #letterMeter { top: 10px; }
 
 /* interaction hint (soft round E bubble) */
 #hint { position: fixed; z-index: 10; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%;
-  background: rgba(255, 250, 240, 0.92); color: #8a5a3c; font: 700 17px/34px 'Gowun Batang', serif; text-align: center;
+  background: rgba(255, 250, 240, 0.92); color: #8a5a3c; font: 700 17px/34px 'Griun Mongtori', 'Gowun Batang', serif; text-align: center;
   box-shadow: 0 2px 10px rgba(120, 70, 30, 0.3), 0 0 0 3px rgba(255, 220, 170, 0.45); pointer-events: none; opacity: 0;
   transition: opacity 0.25s; animation: bob 1.6s ease-in-out infinite; }
 #hint.on { opacity: 1; }
@@ -70,7 +86,7 @@ body.touch #letterMeter { top: 10px; }
   transform: translateY(30px) scale(0.96); transition: transform 0.5s cubic-bezier(.2,.9,.3,1.2); }
 #cardLayer.on .card { transform: none; }
 .card .title { font-size: 15px; color: #a07a5c; letter-spacing: 0.06em; margin-bottom: 10px; }
-.card .hand { font-family: 'Nanum Pen Script', cursive; font-size: clamp(27px, 3.4vw, 36px); line-height: 1.35; white-space: pre-wrap; color: #33261f; }
+.card .hand { font-family: 'Griun Mongtori', 'Nanum Pen Script', cursive; font-size: clamp(27px, 3.4vw, 36px); line-height: 1.35; white-space: pre-wrap; color: #33261f; }
 .card.note { background: linear-gradient(#fffaf0, #fff4df); transform-origin: center; rotate: -1.2deg; }
 .card.note::before { content: ''; position: absolute; top: -10px; left: 50%; width: 90px; height: 24px; margin-left: -45px;
   background: rgba(240, 200, 150, 0.6); rotate: 2deg; }
@@ -82,7 +98,7 @@ body.touch #letterMeter { top: 10px; }
 .card.photo .img { width: min(480px, 80vw); aspect-ratio: 4 / 3; background: #eadfce center / cover no-repeat; display: flex;
   align-items: center; justify-content: center; font-size: 54px; color: #b89c80; }
 .card.photo .img img { width: 100%; height: 100%; object-fit: cover; }
-.card.photo .cap { font-family: 'Nanum Pen Script', cursive; font-size: 30px; text-align: center; margin-top: 12px; }
+.card.photo .cap { font-family: 'Griun Mongtori', 'Nanum Pen Script', cursive; font-size: 30px; text-align: center; margin-top: 12px; }
 .card.photo .dots { text-align: center; color: #c9b39c; letter-spacing: 6px; font-size: 13px; margin-top: 6px; }
 
 /* gift box */
@@ -112,9 +128,9 @@ body.touch #letterMeter { top: 10px; }
 .card.letter { max-width: min(680px, 92vw); width: 680px; max-height: 88vh; padding: 46px 48px 38px; background: #fffaf0;
   background-image: repeating-linear-gradient(transparent 0 51px, rgba(170, 130, 100, 0.16) 51px 52px); rotate: 0deg; }
 .card.letter .hand { font-size: clamp(28px, 3.6vw, 38px); line-height: 52px; }
-.card.letter .final { font-family: 'Nanum Pen Script', cursive; font-size: clamp(38px, 5vw, 54px); color: #b0485c; text-align: center; margin-top: 30px; opacity: 0; transition: opacity 2s; }
+.card.letter .final { font-family: 'Griun Mongtori', 'Nanum Pen Script', cursive; font-size: clamp(38px, 5vw, 54px); color: #b0485c; text-align: center; margin-top: 30px; opacity: 0; transition: opacity 2s; }
 .card.letter .final.on { opacity: 1; }
-.card.letter .from { font-family: 'Nanum Pen Script', cursive; font-size: 30px; text-align: right; opacity: 0; transition: opacity 2s 1s; }
+.card.letter .from { font-family: 'Griun Mongtori', 'Nanum Pen Script', cursive; font-size: 30px; text-align: right; opacity: 0; transition: opacity 2s 1s; }
 .card.letter .from.on { opacity: 1; }
 .hand .ch { opacity: 0; transition: opacity 0.35s; }
 .hand .ch.on { opacity: 1; }
@@ -126,7 +142,7 @@ body.touch #letterMeter { top: 10px; }
 .card.shelf .it.sel { border-color: #e7a2ad; background: #fde9e4; }
 .card.shelf .it .e { font-size: 32px; }
 .card.shelf .it .t { font-size: 12px; margin-top: 4px; color: #7d6352; }
-.card.shelf .empty { font-family: 'Nanum Pen Script', cursive; font-size: 28px; text-align: center; color: #9c8471; padding: 20px; }
+.card.shelf .empty { font-family: 'Griun Mongtori', 'Nanum Pen Script', cursive; font-size: 28px; text-align: center; color: #9c8471; padding: 20px; }
 .xbtn { position: absolute; top: 8px; right: 12px; font-size: 22px; color: #b39a85; cursor: pointer; padding: 4px 8px; }
 
 /* touch controls */

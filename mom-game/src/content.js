@@ -25,6 +25,9 @@ export const content = {
   // Turn a whole world off if it isn't ready (its trigger object disappears).
   features: { mall: true, past: true }, // set false to hide a world's trigger
 
+  // 'chase' = low camera just behind Mom (W forward, S back, A/D turn); 'fixed' = dollhouse view
+  camera: 'chase',
+
   // Minutes of real time for the home sunset (0 → 1). The door to the beach
   // always works after `doorAlwaysAfterMin` minutes.
   sunsetMinutes: 5,

@@ -26,7 +26,8 @@ export class Overlay {
     this.layer = el('div'); this.layer.id = 'cardLayer';
     this.portrait = el('div', null, '폰을 가로로 돌려주세요 🙂'); this.portrait.id = 'portrait';
     this.meter = this.buildLetterMeter();
-    b.append(this.vignette, this.sepia, this.grain, this.meter, this.fadeEl, this.hint, this.bubble, this.layer, this.portrait);
+    this.hearts = el('div'); this.hearts.id = 'heartRow';
+    b.append(this.vignette, this.sepia, this.grain, this.meter, this.hearts, this.fadeEl, this.hint, this.bubble, this.layer, this.portrait);
     this.card = null;
     this.bubbleUntil = 0;
     this.layer.addEventListener('click', (e) => { if (e.target === this.layer) this.key('close'); });
@@ -58,7 +59,16 @@ export class Overlay {
     return wrap;
   }
 
-  setLetterProgress(frac, celebrate = false) {
+  setLetterProgress(found, total, celebrate = false) {
+    const frac = total ? found / total : 0;
+    // 🩵🤍🤍🤍 — one heart per item, found ones turn blue
+    const H = '<svg viewBox="0 0 24 22"><path d="M12 20.5C5 15.5 1.5 12 1.5 7.5A5 5 0 0 1 12 5a5 5 0 0 1 10.5 2.5c0 4.5-3.5 8-10.5 13z"/></svg>';
+    if (this.hearts.childElementCount !== total) this.hearts.innerHTML = Array.from({ length: total }, () => `<span>${H}</span>`).join('');
+    [...this.hearts.children].forEach((h, i) => {
+      const got = i < found;
+      if (got && !h.classList.contains('got') && celebrate) { h.classList.add('new'); setTimeout(() => h.classList.remove('new'), 1100); }
+      h.classList.toggle('got', got);
+    });
     const N = this.meterLines.length;
     const apply = () => this.meterLines.forEach((p, i) => {
       const f = Math.max(0, Math.min(1, frac * N - i));
@@ -68,7 +78,7 @@ export class Overlay {
     this.meter.classList.toggle('full', frac >= 0.999);
     if (celebrate) { this.meter.classList.remove('bump'); void this.meter.offsetWidth; this.meter.classList.add('bump'); }
   }
-  showLetterMeter(v) { this.meter.classList.toggle('on', v); }
+  showLetterMeter(v) { this.meter.classList.toggle('on', v); this.hearts.classList.toggle('on', v); }
 
   // ── start screen ─────────────────────────────────────────
   startScreen() {

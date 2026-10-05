@@ -112,7 +112,7 @@ export function glowSprite(color = '#FFE2A8', size = 1, opacity = 0.6, tex = glo
 }
 
 // Text sign texture in our own font
-export function textTexture(text, { w = 512, h = 128, font = '"Gowun Batang", serif', size = 64, color = '#3A2E28', bg = null, weight = 700 } = {}) {
+export function textTexture(text, { w = 512, h = 128, font = '"Griun Mongtori", "Gowun Batang", serif', size = 64, color = '#3A2E28', bg = null, weight = 700 } = {}) {
   return canvasTexture(w, h, (g) => {
     if (bg) { g.fillStyle = bg; g.fillRect(0, 0, w, h); }
     g.fillStyle = color; g.textAlign = 'center'; g.textBaseline = 'middle';

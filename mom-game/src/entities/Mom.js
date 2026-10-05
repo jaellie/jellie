@@ -233,7 +233,7 @@ export class Mom {
       p.x += this.vel.x * dt; p.z += this.vel.y * dt;
       if (collider) collider.resolve(p, this.radius);
     }
-    if (Math.hypot(move.x, move.z) > 0.1) this.targetHeading = Math.atan2(move.x, move.z);
+    if (!this.tank && Math.hypot(move.x, move.z) > 0.1) this.targetHeading = Math.atan2(move.x, move.z);
     let dh = this.targetHeading - this.heading;
     dh = Math.atan2(Math.sin(dh), Math.cos(dh));
     this.heading += dh * (1 - Math.exp(-dt * 11));

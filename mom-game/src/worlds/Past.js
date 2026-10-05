@@ -98,7 +98,7 @@ export class Past {
     const planks = canvasTexture(128, 128, (c) => { c.fillStyle = '#B98A5E'; c.fillRect(0, 0, 128, 128); c.fillStyle = 'rgba(80,50,30,0.35)'; for (let x = 0; x < 128; x += 16) c.fillRect(x, 0, 2, 128); });
     const maru = box(6.4, 0.12, 1.5, null, { m: new THREE.MeshStandardMaterial({ map: planks, roughness: 0.8 }) }); at(maru, 0, 0.5, -9.55); H.add(maru);
     for (const x of [-3, 0, 3]) { const l = box(0.15, 0.5, 0.15, '#7A5536'); at(l, x, 0, -8.9); H.add(l); }
-    this.collider.addBox(-4.3, 4.3, -13.4, -8.8);
+    this.collider.addBox(-4.3, 4.3, -13.4, -8.8, 'wall');
     // 댓돌 (stepping stone) + a pair of small black rubber shoes with a note inside
     const step = box(1.5, 0.28, 0.6, '#A49A8A', { r: 0.06 }); at(step, 0.4, 0, -8.45); H.add(step);
     const shoes = group(rubberShoe('#141414'), rubberShoe('#141414')); shoes.children[1].position.x = 0.13; shoes.scale.setScalar(0.85); at(shoes, 0.3, 0.28, -8.4, 0.05); H.add(shoes);
@@ -115,7 +115,7 @@ export class Past {
     const mud = (x, z, w, d) => {
       const m = box(w, 1.25, d, null, { m: wallM }); at(m, x, 0, z); s.add(m);
       const c = box(w + 0.15, 0.18, d + 0.25, null, { m: capM }); at(c, x, 1.25, z); s.add(c);
-      C.addRect(x, z, w, d);
+      C.addRect(x, z, w, d, 'wall');
     };
     mud(-4.6, -4, 6.8, 0.35); mud(4.6, -4, 6.8, 0.35);
     mud(-8, -8.8, 0.35, 9.6); mud(8, -8.8, 0.35, 9.6);
@@ -197,7 +197,7 @@ export class Past {
     const sign = new THREE.Mesh(new THREE.PlaneGeometry(2.0, 0.6), new THREE.MeshBasicMaterial({ map: signT })); at(sign, 0, 1.65, 1.82); shop.add(sign);
     const door = box(1.2, 1.7, 0.05, '#8C6A4A'); at(door, -1.1, 0, 1.81); shop.add(door);
     const win = box(1.4, 0.8, 0.05, '#FBF3DF', { opts: { emissive: '#FFE2A8', emissiveIntensity: 0.3 } }); at(win, 1.0, 0.7, 1.81); shop.add(win);
-    C.addRect(-13.5, -3.6, 4.6, 3.6);
+    C.addRect(-13.5, -3.6, 4.6, 3.6, 'wall');
     // candy table out front with glass jars
     const tbl = box(1.4, 0.7, 0.6, '#A87C55', { r: 0.02 }); at(tbl, -12.6, 0, -1.25); s.add(tbl); C.addRect(-12.6, -1.25, 1.4, 0.6);
     ['#E4574F', '#E8C547', '#7BB6B0'].forEach((c, i) => {

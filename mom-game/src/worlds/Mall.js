@@ -52,7 +52,7 @@ export class Mall {
     const addWall = (x, z, w, d, n, name) => {
       const g = new THREE.Group(); const m = box(w, WALL_H, d, null, { m: wallM, cast: false }); at(m, x, 0, z); g.add(m); s.add(g);
       this.walls.push({ g, n, scale: 1, name });
-      this.collider.addRect(x, z, w, d);
+      this.collider.addRect(x, z, w, d, 'wall');
     };
     addWall(0, B.z0 - 0.1, B.x1 - B.x0 + 0.4, 0.2, [0, 1], 'north');
     addWall(B.x0 - 0.1, 0, 0.2, B.z1 - B.z0, [1, 0], 'west');
@@ -61,7 +61,7 @@ export class Mall {
     for (const [x0, x1] of [[B.x0, -2.5], [2.5, B.x1]]) {
       const g = new THREE.Group(); const gl = box(x1 - x0, 3.2, 0.08, '#DDEFF0', { m: new THREE.MeshStandardMaterial({ color: '#E8F3F2', transparent: true, opacity: 0.25, roughness: 0.1 }), cast: false });
       at(gl, (x0 + x1) / 2, 0, B.z1); g.add(gl); s.add(g); this.walls.push({ g, n: [0, -1], scale: 1, name: 'front' });
-      this.collider.addBox(x0, x1, B.z1 - 0.05, B.z1 + 0.05);
+      this.collider.addBox(x0, x1, B.z1 - 0.05, B.z1 + 0.05, 'wall');
     }
     // columns + planters
     for (const [x, z] of [[-5, -4.5], [5, -4.5], [-5, 4], [5, 4]]) {
@@ -326,7 +326,7 @@ export class Mall {
     this.frCurtain.position.x = 0.5 - (Math.hypot(p.x + 12.6, p.z - 8.4) < 1.3 ? 0.35 : 0);
     // signs fade away while they hang between the camera and Mom
     for (const sg of this.signs) {
-      const block = sg.position.z > p.z + 1.2 && sg.position.z < p.z + 7 && Math.abs(sg.position.x - p.x) < sg.userData.w / 2 + 1.2;
+      const block = g.cam.mode !== 'chase' && sg.position.z > p.z + 1.2 && sg.position.z < p.z + 7 && Math.abs(sg.position.x - p.x) < sg.userData.w / 2 + 1.2;
       sg.scale.y += ((block ? 0.01 : 1) - sg.scale.y) * (1 - Math.exp(-dt * 8));
       sg.visible = sg.scale.y > 0.05;
     }

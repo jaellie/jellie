@@ -83,7 +83,7 @@ export class Home {
 
   // ───────────────────────────────────────────────────────────
   build() {
-    this.scene.background = new THREE.Color(BACKDROP);
+    this.scene.background = new THREE.Color('#EADCC8');
     this.scene.fog = new THREE.Fog('#FFE3B8', 160, 700);
     const s = this.root;
     this.rig = createRig(s, { shadowSize: 2048, extent: 7.5, hemi: 1.15 });
@@ -140,6 +140,16 @@ export class Home {
     const step = box(e.x1 - e.x0, 0.07, 0.3, null, { m: new THREE.MeshStandardMaterial({ map: terrazzoT, roughness: 0.5 }), cast: false });
     at(step, (e.x0 + e.x1) / 2, -0.07, e.z0 + 0.15); s.add(step);
 
+    // visible ceiling (seen from the low camera) + soft rectangular ceiling lights
+    const ceilM = new THREE.MeshStandardMaterial({ color: '#F7F1E6', roughness: 1, emissive: '#8A7A66', emissiveIntensity: 0.55, side: THREE.DoubleSide });
+    for (const r of [L.living, L.kitchen, L.hall, L.entry]) {
+      const c = new THREE.Mesh(new THREE.PlaneGeometry(r.x1 - r.x0, r.z1 - r.z0), ceilM);
+      c.rotation.x = PI / 2; c.position.set((r.x0 + r.x1) / 2, HGT - 0.001, (r.z0 + r.z1) / 2); c.receiveShadow = false; s.add(c);
+    }
+    const panelM = new THREE.MeshBasicMaterial({ color: '#FFF4DE', toneMapped: false });
+    for (const [x, z, w, d] of [[2.0, 2.3, 1.3, 0.7], [1.7, 6.1, 1.0, 0.6], [7.2, 5.3, 0.5, 0.5]]) {
+      const p = new THREE.Mesh(new THREE.PlaneGeometry(w, d), panelM); p.rotation.x = PI / 2; p.position.set(x, HGT - 0.01, z); s.add(p);
+    }
     // ceiling shadow proxy (invisible, casts shadow so sun only enters via the window)
     const ceil = shadowOnly(box(8.6, 0.08, 8.4)); at(ceil, 3.95, HGT, 3.9); s.add(ceil);
 
@@ -423,9 +433,9 @@ export class Home {
     } else {
       const g = c.createLinearGradient(0, 0, W, Hh); g.addColorStop(0, '#F7C9A0'); g.addColorStop(1, '#D58FA0');
       c.fillStyle = g; c.fillRect(0, 0, W, Hh);
-      c.fillStyle = 'rgba(255,255,255,0.9)'; c.font = '700 30px "Gowun Batang", serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+      c.fillStyle = 'rgba(255,255,255,0.9)'; c.font = '30px "Griun Mongtori", "Gowun Batang", serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
       c.fillText(content.tvIdleText || '', W / 2, Hh / 2 - 8);
-      c.font = '20px "Gowun Batang", serif'; c.fillText(['♡', '♡ ♡', '♡ ♡ ♡'][this.tvIdx % 3], W / 2, Hh / 2 + 30);
+      c.font = '20px "Griun Mongtori", serif'; c.fillText(['♡', '♡ ♡', '♡ ♡ ♡'][this.tvIdx % 3], W / 2, Hh / 2 + 30);
     }
     this.tvTex.needsUpdate = true;
   }
@@ -812,14 +822,14 @@ export class Home {
     const yaw = g.cam.yaw, dx = -Math.sin(yaw), dz = -Math.cos(yaw);
     for (const w of this.walls) {
       const extra = (yaw > 1.5 ? CUT_ALSO_KITCHEN : yaw < -0.75 ? CUT_ALSO_ENTRY : CUT_ALSO_LIVING).includes(w.name);
-      const cut = extra || w.n[0] * dx + w.n[1] * dz > 0.45;
+      const cut = g.cam.mode !== 'chase' && (extra || w.n[0] * dx + w.n[1] * dz > 0.45);
       const target = cut ? 0.1 : 1;
       w.scale += (target - w.scale) * (1 - Math.exp(-dt * 6));
       w.g.scale.y = w.scale; w.g.visible = w.scale > 0.02;
       w.decor.visible = w.scale > 0.6;
     }
 
-    const showBack = yaw > PI / 2;
+    const showBack = g.cam.mode === 'chase' || yaw > PI / 2;
     for (const o of this.kitchenBack) o.visible = showBack;
 
     // palm sway (+ shake when rustled)

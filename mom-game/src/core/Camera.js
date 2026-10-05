@@ -1,14 +1,15 @@
 import * as THREE from 'three';
 
-// Fixed three-quarter "dollhouse" camera. It never rotates under player control.
-// A world may request a different yaw for a zone (e.g. the kitchen); the camera
-// then swings smoothly and the movement basis is latched until keys are released.
+// Two modes:
+//  'chase' (default): low, just behind Mom's shoulder — almost first-person, her body stays in view.
+//  'fixed': the three-quarter dollhouse camera (kept as a fallback).
+// Cinematics set `override = { pos, look }` and the camera blends to it.
 
 export const PITCH = THREE.MathUtils.degToRad(28);
 
 export class FollowCamera {
   constructor() {
-    this.camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.1, 600);
+    this.camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.08, 900);
     this.target = new THREE.Vector3();
     this.yaw = 0; this.targetYaw = 0;
     this.distance = 11; this.targetDistance = 11;
@@ -17,33 +18,57 @@ export class FollowCamera {
     this.override = null;                    // cinematic: { pos, look }
     this.overrideBlend = 0;
     this._pos = new THREE.Vector3(); this._look = new THREE.Vector3();
+    this.mode = 'chase';
+    this.chaseYaw = 0; this.chaseDist = 2.3;
+    this._cpos = new THREE.Vector3(); this._clook = new THREE.Vector3();
+    this._tp = new THREE.Vector3(); this._tl = new THREE.Vector3();
     addEventListener('resize', () => this.resize());
   }
 
   resize() { this.camera.aspect = innerWidth / innerHeight; this.camera.updateProjectionMatrix(); }
+
+  setMode(mode) {
+    this.mode = mode;
+    this.camera.fov = mode === 'chase' ? 56 : 40;
+    this.camera.updateProjectionMatrix();
+  }
 
   setDefaults({ distance = 11, yaw = 0, pitch = PITCH } = {}) {
     this.distance = this.targetDistance = distance;
     this.yaw = this.targetYaw = yaw;
     this.pitch = this.targetPitch = pitch;
     this.lift = this.targetLift = 0;
-    this.override = null; this.overrideBlend = 0;
+    this.override = null; this.overrideBlend = 0; this._lastOverride = null;
   }
 
   snap(focus) { this.target.copy(focus); this.yaw = this.targetYaw; this.update(0, focus, true); }
 
-  // screen-space basis on the floor plane for a given yaw
+  // screen-space basis on the floor plane for a given yaw (fixed mode)
   static basis(yaw) {
-    // camera sits at +Z (rotated by yaw) looking toward -Z
     const fwd = { x: -Math.sin(yaw), z: -Math.cos(yaw) };
     const right = { x: Math.cos(yaw), z: -Math.sin(yaw) };
     return { fwd, right };
   }
 
+  // focus/heading in rendered-world space; dist = how far back the camera may sit (after wall checks)
+  updateChase(dt, focus, heading, dist, height, instant = false) {
+    let dy = heading - this.chaseYaw; dy = Math.atan2(Math.sin(dy), Math.cos(dy));
+    this.chaseYaw += dy * (instant ? 1 : 1 - Math.exp(-dt * 5));
+    // pull in at once when a wall gets close, ease back out slowly
+    this.chaseDist = instant || dist < this.chaseDist ? dist : this.chaseDist + (dist - this.chaseDist) * (1 - Math.exp(-dt * 2.5));
+    const h = this.chaseYaw, fx = Math.sin(h), fz = Math.cos(h), rx = -Math.cos(h), rz = Math.sin(h);
+    const sh = 0.22 * Math.min(1, this.chaseDist / 1.5); // a little over the right shoulder
+    this._tp.set(focus.x - fx * this.chaseDist + rx * sh, focus.y + height, focus.z - fz * this.chaseDist + rz * sh);
+    this._tl.set(focus.x + fx * 2.6 + rx * sh * 0.4, focus.y + height * 0.7, focus.z + fz * 2.6 + rz * sh * 0.4);
+    const k = instant ? 1 : 1 - Math.exp(-dt * 12);
+    this._cpos.lerp(this._tp, k); this._clook.lerp(this._tl, k);
+    this._pos.copy(this._cpos); this._look.copy(this._clook);
+    this.finish(dt, instant);
+  }
+
   update(dt, focus, instant = false) {
     const k = instant ? 1 : 1 - Math.exp(-dt * 4);
     this.target.lerp(focus, k);
-    // shortest-path yaw
     let dy = this.targetYaw - this.yaw;
     dy = Math.atan2(Math.sin(dy), Math.cos(dy));
     this.yaw += dy * (instant ? 1 : 1 - Math.exp(-dt * 2.6));
@@ -51,7 +76,6 @@ export class FollowCamera {
     this.distance += (this.targetDistance - this.distance) * k2;
     this.pitch += (this.targetPitch - this.pitch) * k2;
     this.lift += (this.targetLift - this.lift) * k2;
-
     const horiz = Math.cos(this.pitch) * this.distance;
     this._look.set(this.target.x, this.target.y + 0.95 + this.lift, this.target.z);
     this._pos.set(
@@ -59,7 +83,11 @@ export class FollowCamera {
       this._look.y + Math.sin(this.pitch) * this.distance,
       this._look.z + Math.cos(this.yaw) * horiz,
     );
+    this.finish(dt, instant);
+  }
 
+  // blend toward a cinematic override, then apply
+  finish(dt, instant) {
     const ob = this.override ? 1 : 0;
     this.overrideBlend += (ob - this.overrideBlend) * (instant ? 1 : 1 - Math.exp(-dt * 1.6));
     if (this.overrideBlend > 0.001 && (this.override || this._lastOverride)) {

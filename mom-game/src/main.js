@@ -34,6 +34,9 @@ class Game {
     this.tweens = new Tweens();
     this.mom = new Mom();
     this.mom.onStep = () => this.onStep();
+    this.chase = (content.camera ?? 'chase') === 'chase';
+    this.cam.setMode(this.chase ? 'chase' : 'fixed');
+    this.mom.tank = this.chase; // W forward, S back, A/D turn
     this.worlds = {};
     this.busy = false; this.acting = false; this.moveIntent = false;
     this.latchedYaw = 0; this.lastMove = { x: 0, y: 0 };
@@ -62,11 +65,12 @@ class Game {
     this.cam.targetYaw = this.cam.yaw = w.cameraYawFor(this.mom.position, 0);
     this.latchedYaw = this.cam.targetYaw;
     this.cam.snap(this.toWorld(w.cameraFocus?.(this.mom.position) ?? this.mom.position));
+    if (this.chase) this.updateCamera(0, true);
     document.body.classList.toggle('past', w.name === 'past');
   }
 
   async start() {
-    try { await Promise.race([Promise.all(['400 20px "Gowun Batang"', '700 20px "Gowun Batang"', '20px "Nanum Pen Script"'].map((f) => document.fonts.load(f, '엄마'))), new Promise((r) => setTimeout(r, 2500))]); } catch {}
+    try { await Promise.race([Promise.all(['20px "Griun Mongtori"', '400 20px "Gowun Batang"', '700 20px "Gowun Batang"', '20px "Nanum Pen Script"'].map((f) => document.fonts.load(f, '엄마'))), new Promise((r) => setTimeout(r, 2500))]); } catch {}
     const startWorld = WORLDS[params.get('world')] ? params.get('world') : 'home';
     const home = this.getWorld('home');
     if (params.has('sunset')) home.state.sunset = +params.get('sunset');
@@ -75,8 +79,9 @@ class Game {
     await this.overlay.startScreen();
     this.audio.init().then(() => this.audio.setLoops(this.audio.desired || []));
     // the little letter at the top fills in as she finds things
-    this.overlay.setLetterProgress(this.disc.progress());
-    this.disc.onFound(() => this.overlay.setLetterProgress(this.disc.progress(), true));
+    const prog = (celebrate) => { const p = this.disc.progress(); this.overlay.setLetterProgress(p.found, p.total, celebrate); };
+    prog(false);
+    this.disc.onFound(() => prog(true));
     setTimeout(() => this.overlay.showLetterMeter(true), 1800);
     await this.overlay.fade(0, { ms: 2200 });
   }
@@ -175,7 +180,13 @@ class Game {
         const a0 = Math.atan2(this.lastMove.y, this.lastMove.x), a1 = Math.atan2(mv.y, mv.x);
         if (Math.abs(Math.atan2(Math.sin(a1 - a0), Math.cos(a1 - a0))) > 0.5) this.latchedYaw = this.cam.targetYaw;
       }
-      if (active) {
+      if (active && this.chase) {
+        // A/D turn her, W walks forward, S steps back
+        const turn = -mv.x * 2.3 * dt * (this.world.mirrorX ? -1 : 1);
+        this.mom.heading += turn; this.mom.targetHeading = this.mom.heading;
+        const f = mv.y >= 0 ? mv.y : mv.y * 0.55;
+        move = { x: Math.sin(this.mom.heading) * f, z: Math.cos(this.mom.heading) * f };
+      } else if (active) {
         const { fwd, right } = FollowCamera.basis(this.latchedYaw);
         move = { x: right.x * mv.x + fwd.x * mv.y, z: right.z * mv.x + fwd.z * mv.y };
         if (this.world.mirrorX) move.x = -move.x; // screen → plan coordinates
@@ -190,8 +201,7 @@ class Game {
     this.world.update(dt);
     this.world.inter.hideSparkles = !!this.cam.override;
     const cur = this.world.inter.update(dt, this.mom);
-    this.cam.targetYaw = this.world.cameraYawFor(this.mom.position, this.cam.targetYaw);
-    this.cam.update(dt, this.toWorld(this.world.cameraFocus?.(this.mom.position) ?? this.mom.position));
+    this.updateCamera(dt);
 
     // UI anchors
     const showHint = cur && !this.busy && !this.acting && !ov.isOpen && !this.cam.override;
@@ -209,6 +219,36 @@ class Game {
 
     this.renderer.render(this.world.scene, this.cam.camera);
     if (this.fps) this.fps.frame(real);
+  }
+
+  updateCamera(dt, instant = false) {
+    if (!this.chase) {
+      this.cam.targetYaw = this.world.cameraYawFor(this.mom.position, this.cam.targetYaw);
+      this.cam.update(dt, this.toWorld(this.world.cameraFocus?.(this.mom.position) ?? this.mom.position), instant);
+      return;
+    }
+    const m = this.mom, child = m.form === 'child';
+    const want = child ? 2.0 : 2.3;
+    const dist = this.cameraRoom(m.position, m.heading, want);
+    const hw = this.world.mirrorX ? -m.heading : m.heading;
+    this.cam.updateChase(dt, this.toWorld(m.position, this._cf || (this._cf = new THREE.Vector3())), hw, dist, child ? 1.3 : 1.75, instant);
+  }
+
+  // how far behind Mom the camera can sit before a wall gets in the way (plan coordinates)
+  cameraRoom(p, heading, want) {
+    const dx = -Math.sin(heading), dz = -Math.cos(heading);
+    let best = want + 0.3;
+    for (const b of this.world.collider.boxes) {
+      if (!b.enabled || b.tag !== 'wall') continue;
+      let t0 = 0, t1 = best;
+      for (const [o, d, lo, hi] of [[p.x, dx, b.minX, b.maxX], [p.z, dz, b.minZ, b.maxZ]]) {
+        if (Math.abs(d) < 1e-6) { if (o < lo || o > hi) { t0 = Infinity; break; } continue; }
+        let a = (lo - o) / d, c = (hi - o) / d; if (a > c) [a, c] = [c, a];
+        t0 = Math.max(t0, a); t1 = Math.min(t1, c);
+      }
+      if (t0 <= t1 && t0 > 0.05 && t0 < best) best = t0;
+    }
+    return Math.max(0.45, Math.min(want, best - 0.28));
   }
 
   project(v) {
