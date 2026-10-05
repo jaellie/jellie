@@ -65,7 +65,7 @@ export const content = {
     palm_charm: { type: 'gift', world: 'home', title: '용 부적', icon: '🐉', token: 'dragon',
       text: '1964년 갑진년, 용띠 우리 엄마.\n올해도 용처럼 힘차게, 그리고 늘 건강하게! ✍️' },
     sofa_note: { type: 'note', world: 'home', title: '쿠션 밑 쪽지',
-      text: '사랑이란 어디 있을까?\n팔딱팔딱 뛰는 나의 가슴 속에 있지.\n사랑이란 무얼까?\n우리의 가슴과 가슴 사이를 연결해주는 금실이지.\n— 한강' },
+      text: '어느 늦은 저녁 나는\n흰 공기에 담긴 밥에서\n김이 피어 올라오는 것을\n보고 있었다\n그때 알았다\n무엇인가 영원히 지나가버렸다고\n지금도 영원히\n지나가버리고 있다고\n\n밥을 먹어야지\n\n나는 밥을 먹었다\n— 한강, 「어느 늦은 저녁 나는」' },
     lfbag_gift: { hidden: true, type: 'gift', world: 'home', title: '쇼핑백 속 선물', icon: '🎀',
       text: '엄마가 좋아하는 색으로 골랐어요.\n잘 어울릴 거예요. ✍️' },
     balcony_note: { hidden: true, type: 'note', world: 'home', title: '화분 옆 쪽지',
@@ -130,7 +130,7 @@ export const content = {
 
     // ── The Past (장흥, 1970s) ─────────────────────────────
     past_shoe_note: { type: 'note', world: 'past', title: '고무신 속 쪽지', token: 'shoe',
-      text: '하고 싶은 건 미루지 말고,\n좋아하는 건 좋아한다고 말하기.\n\n고무신 신고 뛰던 그 아이가 꿈꾸던 것들,\n이제는 엄마가 다 해도 돼요. ✍️' },
+      text: '인생이란 탐구하면서 살아가는 것이 아니라\n살아가면서 탐구하는 것이다.\n— 양귀자, 『모순』' },
     past_persimmon_note: { type: 'note', world: 'past', title: '감에 달린 쪽지', token: 'persimmon',
       text: '역사가 우리를 망쳐 놨지만 그래도 상관없다.\n— 이민진, 『파친코』' },
     past_jar_gift: { type: 'gift', world: 'past', title: '장독 속 선물', icon: '🏺',
