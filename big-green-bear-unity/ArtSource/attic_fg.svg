@@ -1,16 +1,2 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1152" viewBox="0 0 2048 1152">
-  <defs>
-    <filter id="wob" x="-5%" y="-5%" width="110%" height="110%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="287" result="n"/>
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="1" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="294" result="t"/>
-      <feColorMatrix in="t" type="matrix" values="0 0 0 0 0.12  0 0 0 0 0.10  0 0 0 0 0.08  0 0 0 0.55 0" result="g"/>
-      <feComposite in="g" in2="SourceGraphic" operator="in" result="gi"/>
-      <feBlend in="SourceGraphic" in2="gi" mode="multiply"/>
-    </filter>
-    <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
-    <filter id="softer"><feGaussianBlur stdDeviation="14"/></filter>
-    <filter id="blurfar"><feGaussianBlur stdDeviation="2.2"/></filter>
-  </defs><g filter="url(#grain)"><g filter="url(#wob)"><path d="M-20 -20 L700 -20 L-20 300Z" fill="#4A3A30"/><path d="M2068 -20 L1400 -20 L2068 280Z" fill="#4A3A30"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1152" viewBox="0 0 2048 1152"><defs><filter id="cut" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11" result="n"/>
+       <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#cut)"><g fill="#3A2618"><path d="M-20 -20 L700 -20 L-20 300Z"/><path d="M2068 -20 L1400 -20 L2068 280Z"/></g></g></svg>

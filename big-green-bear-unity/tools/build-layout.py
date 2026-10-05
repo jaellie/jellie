@@ -94,7 +94,7 @@ locations.append({
     "layers": [layer("far", "park_far", 30, 60, 760, order=-40), layer("mid", "park_mid", 8, 30, 930, x=-2.0, order=-30),
                layer("ground", "park_ground", 0.6, 22, 0, order=-20), layer("fg", "park_fg", -4, 9, 0, at="viewTop", order=40)],
     "actors": [actor("bear", -2.4), actor("oliver", 1.4, 0.3, "", ["!oliver_gone"])],
-    "anchors": [anchor("notice", "mid", 1500, 700), anchor("bench", "mid", 800, 800), anchor("lamp", "mid", 1158, 430)],
+    "anchors": [anchor("notice", "mid", 1500, 700), anchor("bench", "mid", 800, 800), anchor("lamp", "mid", 1158, 570)],
     "focus": [focus("wide", 0, 0, 0), focus("oliver", 1.0, -0.2, 2.4), focus("notice", 2.6, 0.2, 3.0), focus("bench", -1.6, -0.3, 2.4)],
     "hotspots": [hot("oliver", radius=1.0), hot("notice", radius=1.4), hot("bench", radius=1.4)],
     "lights": [light("lamp", "lamp", 6, 1.0), light("hospital", "notice", 5, 0, "fluorescent", y=1.0)],

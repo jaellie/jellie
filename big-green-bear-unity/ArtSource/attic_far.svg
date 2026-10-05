@@ -1,21 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1152" viewBox="0 0 2048 1152">
-  <defs>
-    <filter id="wob" x="-5%" y="-5%" width="110%" height="110%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="281" result="n"/>
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="288" result="t"/>
-      <feColorMatrix in="t" type="matrix" values="0 0 0 0 0.12  0 0 0 0 0.10  0 0 0 0 0.08  0 0 0 0.55 0" result="g"/>
-      <feComposite in="g" in2="SourceGraphic" operator="in" result="gi"/>
-      <feBlend in="SourceGraphic" in2="gi" mode="multiply"/>
-    </filter>
-    <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
-    <filter id="softer"><feGaussianBlur stdDeviation="14"/></filter>
-    <filter id="blurfar"><feGaussianBlur stdDeviation="2.2"/></filter>
-  </defs><g filter="url(#grain)"><g filter="url(#wob)"><rect x="0" y="0" width="104" height="1152" fill="#B08965"/><rect x="110" y="0" width="104" height="1152" fill="#B9926E"/><rect x="220" y="0" width="104" height="1152" fill="#B08965"/><rect x="330" y="0" width="104" height="1152" fill="#B9926E"/><rect x="440" y="0" width="104" height="1152" fill="#B08965"/><rect x="550" y="0" width="104" height="1152" fill="#B9926E"/><rect x="660" y="0" width="104" height="1152" fill="#B08965"/><rect x="770" y="0" width="104" height="1152" fill="#B9926E"/><rect x="880" y="0" width="104" height="1152" fill="#B08965"/><rect x="990" y="0" width="104" height="1152" fill="#B9926E"/><rect x="1100" y="0" width="104" height="1152" fill="#B08965"/><rect x="1210" y="0" width="104" height="1152" fill="#B9926E"/><rect x="1320" y="0" width="104" height="1152" fill="#B08965"/><rect x="1430" y="0" width="104" height="1152" fill="#B9926E"/><rect x="1540" y="0" width="104" height="1152" fill="#B08965"/><rect x="1650" y="0" width="104" height="1152" fill="#B9926E"/><rect x="1760" y="0" width="104" height="1152" fill="#B08965"/><rect x="1870" y="0" width="104" height="1152" fill="#B9926E"/><rect x="1980" y="0" width="104" height="1152" fill="#B08965"/>
-    <circle cx="1024" cy="420" r="210" fill="#5E4A3C"/><circle cx="1024" cy="420" r="190" fill="#BFD8E6"/>
-    <ellipse cx="1000" cy="480" rx="160" ry="40" fill="#F3EBDD" opacity="0.8"/>
-    <path d="M1024 230 L1024 610 M834 420 L1214 420" stroke="#5E4A3C" stroke-width="14"/>
-    <path d="M880 560 L1300 1152 L700 1152Z" fill="#F7E7C6" opacity="0.18"/>
-    <rect x="0" y="880" width="2048" height="272" fill="#8A6F5A"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1152" viewBox="0 0 2048 1152"><defs></defs><g><rect width="2048" height="1152" fill="#F7E4BE"/><line x1="0" y1="0" x2="0" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="110" y1="0" x2="110" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="220" y1="0" x2="220" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="330" y1="0" x2="330" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="440" y1="0" x2="440" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="550" y1="0" x2="550" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="660" y1="0" x2="660" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="770" y1="0" x2="770" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="880" y1="0" x2="880" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="990" y1="0" x2="990" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="1100" y1="0" x2="1100" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="1210" y1="0" x2="1210" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="1320" y1="0" x2="1320" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="1430" y1="0" x2="1430" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="1540" y1="0" x2="1540" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="1650" y1="0" x2="1650" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="1760" y1="0" x2="1760" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="1870" y1="0" x2="1870" y2="880" stroke="#C99E6C" stroke-width="5"/><line x1="1980" y1="0" x2="1980" y2="880" stroke="#C99E6C" stroke-width="5"/><rect x="0" y="880" width="2048" height="272" fill="#E2B984"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1152" viewBox="0 0 2048 1152"><defs></defs><g><circle cx="1024" cy="420" r="190" fill="#BFD8E6"/><ellipse cx="980" cy="470" rx="140" ry="36" fill="#F3EBDD"/><ellipse cx="1090" cy="380" rx="90" ry="24" fill="#F3EBDD"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1152" viewBox="0 0 2048 1152"><defs><filter id="cut" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="25" result="n"/>
+       <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#cut)"><path d="M0 0 L2048 0 L2048 1152 L0 1152Z M1024 230 A190 190 0 1 0 1024.1 230Z" fill="none"/>
+      <circle cx="1024" cy="420" r="200" fill="none" stroke="#7A5A40" stroke-width="22"/><path d="M1024 230 L1024 610 M834 420 L1214 420" stroke="#7A5A40" stroke-width="14"/></g></svg>

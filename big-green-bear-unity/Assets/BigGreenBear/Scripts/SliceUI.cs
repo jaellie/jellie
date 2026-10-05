@@ -24,6 +24,8 @@ namespace BigGreenBear
         static readonly Color Cream = new Color(0.953f, 0.922f, 0.867f);
         public static readonly Color Green = new Color(0.62f, 0.78f, 0.62f);
         static readonly Color Travel = new Color(0.93f, 0.80f, 0.55f);   // "→ place" choices
+        static readonly Color Ink = new Color(0.12f, 0.13f, 0.18f);       // words printed on cream paper
+        Color bandTint;
         static readonly Color Faint = new Color(0.953f, 0.922f, 0.867f, 0.55f);
 
         Font serif, mono, bold;
@@ -122,7 +124,9 @@ namespace BigGreenBear
             // The word band: a soft, low strip. Not a chat bubble.
             var b = NewRect("Band", root, new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 0), new Vector2(0, 330));
             band = b.gameObject.AddComponent<Image>();
-            band.color = new Color(0.05f, 0.06f, 0.08f, 0f);
+            band.sprite = UiSprite("ui_paper");
+            bandTint = band.sprite != null ? new Color(0.75f, 0.75f, 0.78f) : new Color(0.05f, 0.06f, 0.08f);
+            band.color = new Color(bandTint.r, bandTint.g, bandTint.b, 0f);
             band.raycastTarget = false;
 
             speaker = NewText("Speaker", root, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(-640, 236), new Vector2(1280, 40), 24, Green, TextAnchor.UpperLeft);
@@ -180,32 +184,50 @@ namespace BigGreenBear
             notebookGroup = NewGroup("Notebook", root);
             var nbBg = NewRect("Page", (RectTransform)notebookGroup.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-560, -400), new Vector2(1120, 800));
             var page = nbBg.gameObject.AddComponent<Image>();
-            page.color = new Color(0.93f, 0.89f, 0.81f, 0.97f);
+            page.sprite = UiSprite("ui_page");
+            page.color = page.sprite != null ? Color.white : new Color(0.93f, 0.89f, 0.81f, 0.97f);
             page.raycastTarget = true;
             var pageBtn = nbBg.gameObject.AddComponent<Button>();
             pageBtn.transition = Selectable.Transition.None;
             pageBtn.onClick.AddListener(() => OnNotebookToggle?.Invoke());
-            notebookTitle = NewText("Title", nbBg, new Vector2(0, 1), new Vector2(0, 1), new Vector2(60, -90), new Vector2(1000, 50), 34, new Color(0.18f, 0.23f, 0.2f), TextAnchor.UpperLeft);
-            notebookBody = NewText("Body", nbBg, new Vector2(0, 1), new Vector2(0, 1), new Vector2(60, -770), new Vector2(1000, 660), 22, new Color(0.15f, 0.15f, 0.15f), TextAnchor.UpperLeft);
+            notebookTitle = NewText("Title", nbBg, new Vector2(0, 1), new Vector2(0, 1), new Vector2(140, -90), new Vector2(920, 50), 34, new Color(0.18f, 0.23f, 0.2f), TextAnchor.UpperLeft);
+            notebookBody = NewText("Body", nbBg, new Vector2(0, 1), new Vector2(0, 1), new Vector2(140, -770), new Vector2(920, 660), 22, new Color(0.15f, 0.15f, 0.15f), TextAnchor.UpperLeft);
             notebookBody.lineSpacing = 1.2f;
             notebookBody.verticalOverflow = VerticalWrapMode.Truncate;
             notebookGroup.alpha = 0f;
 
             fade = NewGroup("Fade", root);
             var fadeImg = fade.gameObject.AddComponent<Image>();
-            fadeImg.color = new Color(0.03f, 0.035f, 0.045f, 1f);
+            fadeImg.sprite = UiSprite("ui_paper");
+            fadeImg.color = fadeImg.sprite != null ? new Color(0.55f, 0.55f, 0.58f, 1f) : new Color(0.03f, 0.035f, 0.045f, 1f);
             fadeImg.raycastTarget = false;
             fade.alpha = 1f;
 
             cardGroup = NewGroup("ChapterCard", root);
-            cardLabel = NewText("Label", (RectTransform)cardGroup.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-900, 40), new Vector2(1800, 40), 22, Faint, TextAnchor.MiddleCenter);
-            cardTitle = NewText("Title", (RectTransform)cardGroup.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-900, -40), new Vector2(1800, 90), 58, Cream, TextAnchor.MiddleCenter);
+            // chapter titles are cut on a strip of cream paper
+            var stripSprite = UiSprite("ui_strip");
+            if (stripSprite != null)
+            {
+                var strip = NewRect("Strip", (RectTransform)cardGroup.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-720, -95), new Vector2(1440, 200)).gameObject.AddComponent<Image>();
+                strip.sprite = stripSprite;
+                strip.raycastTarget = false;
+            }
+            cardLabel = NewText("Label", (RectTransform)cardGroup.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-900, stripSprite != null ? 92 : 40), new Vector2(1800, 40), 22, Faint, TextAnchor.MiddleCenter);
+            cardTitle = NewText("Title", (RectTransform)cardGroup.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-900, -40), new Vector2(1800, 90), 58, stripSprite != null ? Ink : Cream, TextAnchor.MiddleCenter);
             cardGroup.alpha = 0f;
             titleGroup.alpha = 0f;
             if (bold != null) { titleText.font = bold; cardTitle.font = bold; speaker.font = bold; }
         }
 
         /* ---------------- builders ---------------- */
+
+        // paper for the interface (rendered by tools/render-art.js); null if missing
+        static Sprite UiSprite(string name)
+        {
+            var tex = Stage.LoadTexture(name, true);
+            if (tex == null) return null;
+            return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100f);
+        }
 
         // A black bar glued to one edge of the frame, reaching far outside it.
         static void Bar(RectTransform frame, Vector2 aMin, Vector2 aMax, Vector2 pivot)
@@ -591,7 +613,7 @@ namespace BigGreenBear
                 if (toastTime <= 0f) toast.enabled = false;
             }
             bandAlpha = Mathf.MoveTowards(bandAlpha, bandTarget, Time.deltaTime * 1.4f);
-            band.color = new Color(0.05f, 0.06f, 0.08f, bandAlpha);
+            band.color = new Color(bandTint.r, bandTint.g, bandTint.b, bandAlpha);
 
             // continue mark: a slow pulse (still if motion is reduced)
             if (cont.enabled)

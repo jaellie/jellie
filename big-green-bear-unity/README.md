@@ -14,6 +14,19 @@
 모든 그림은 코드로 직접 그렸고, 소리도 전부 코드로 만들었어요.
 폰트는 **프리텐다드**(SIL OFL, 무료로 게임에 넣어도 되는 라이선스)를 썼어요. **$0**이에요.
 
+### 그림 스타일: 종이 조명 상자 (Paper-cut Lightbox)
+
+게임 전체가 **뒤에서 불을 켠 종이 상자** 안에 있는 것처럼 보여요. 이 이야기 자체가 빅그린베어의 기억이고, 마지막에 어른 니니가 여는 것도 작은 상자예요.
+
+- 장면마다 종이를 여러 장 겹쳐 세웠어요. **뒤쪽 종이는 밝고 비쳐 보이고, 앞쪽 종이는 어둡고 두꺼워요.** 이 밝기 차이로 깊이가 생겨요.
+- 종이마다 결이 있고, 윗가장자리에는 빛이 닿고, 아래에는 그림자가 져요. 그리고 뒤의 종이에 그림자를 드리워요.
+- 창문, 등불, 시계는 **종이를 오려 낸 구멍으로 빛이 새어 나오는 것**처럼 보여요.
+- 장소마다 온도가 하나예요. 축제 밤은 파랑, 카페는 호박색, 공원은 청록, 마을 입구는 회청색, 지하 통로는 초록빛 검정, 병원은 하얀색, 다락방은 햇빛색이에요.
+- 강한 색은 딱 두 가지예요. **빅그린베어의 초록**과 **니니의 노랑**.
+- 캐릭터는 종이 인형처럼 몸, 팔, 머리 조각을 겹쳐 만들었어요.
+
+스타일 문법은 [lemomo-ai/lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar)의 "Paper-cut Lightbox"(MIT 라이선스)를 따랐어요. 간판 글씨는 Cormorant Garamond(SIL OFL)로 그림에 그려 넣었어요.
+
 ---
 
 ## 설치 / 업데이트
@@ -83,7 +96,7 @@ Assets/BigGreenBear/
 | 끝까지 갈 수 있는지 확인 | — | `python3 tools/playtest.py` (자동으로 300번 플레이) |
 | 장소 구도, 캐릭터 위치 | `tools/build-layout.py` | `python3 tools/build-layout.py` |
 | 구도 미리보기 (Unity 없이) | — | `node tools/simulate.js cafe cafe_changed` |
-| 그림 | `tools/art.js`, `tools/art2.js` | `node tools/render-art.js` |
+| 그림 (종이) | `tools/paper/cast.js` (캐릭터), `tools/paper/places.js` (장소), `tools/paper/ui.js` (화면 종이), `tools/paper/kit.js` (색, 공용 조각) | `node tools/render-art.js` (일부만: `node tools/render-art.js cafe bear`) |
 
 ## 이야기 속 장치 (스포일러 주의)
 

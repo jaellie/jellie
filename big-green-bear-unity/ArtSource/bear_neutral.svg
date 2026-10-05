@@ -1,51 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="820" viewBox="0 0 600 820">
-  <defs>
-    <filter id="wob" x="-5%" y="-5%" width="110%" height="110%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="18" result="t"/>
-      <feColorMatrix in="t" type="matrix" values="0 0 0 0 0.12  0 0 0 0 0.10  0 0 0 0 0.08  0 0 0 0.55 0" result="g"/>
-      <feComposite in="g" in2="SourceGraphic" operator="in" result="gi"/>
-      <feBlend in="SourceGraphic" in2="gi" mode="multiply"/>
-    </filter>
-    <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
-    <filter id="softer"><feGaussianBlur stdDeviation="14"/></filter>
-    <filter id="blurfar"><feGaussianBlur stdDeviation="2.2"/></filter>
-  </defs><g filter="url(#grain)"><g filter="url(#wob)">
-    <!-- soft contact shadow -->
-    <ellipse cx="300" cy="806" rx="190" ry="16" fill="#000" opacity="0.28" filter="url(#soft)"/>
-    <!-- legs -->
-    <ellipse cx="222" cy="768" rx="74" ry="46" fill="#587659"/>
-    <ellipse cx="378" cy="768" rx="74" ry="46" fill="#587659"/>
-    <ellipse cx="222" cy="782" rx="48" ry="20" fill="#E2D6C0" opacity="0.8"/>
-    <ellipse cx="378" cy="782" rx="48" ry="20" fill="#E2D6C0" opacity="0.8"/>
-    <!-- arms (behind body) -->
-    <ellipse cx="118" cy="560" rx="56" ry="120" transform="rotate(18 118 560)" fill="#587659"/>
-    <ellipse cx="482" cy="560" rx="56" ry="120" transform="rotate(-18 482 560)" fill="#587659"/>
-    <!-- body -->
-    <ellipse cx="300" cy="560" rx="196" ry="222" fill="#6F8F72"/>
-    <path d="M140 640 Q300 800 460 640 Q430 760 300 780 Q170 760 140 640Z" fill="#587659" opacity="0.7"/>
-    <ellipse cx="300" cy="590" rx="112" ry="140" fill="#F3EBDD" opacity="0.92"/>
-    <!-- a faint seam: you'd never notice it. (You will, later.) -->
-    <path d="M206 404 Q300 424 394 404" stroke="#2E3A32" stroke-width="2" fill="none" opacity="0.35" stroke-dasharray="6 7"/>
-    <!-- paws -->
-    <ellipse cx="96" cy="664" rx="44" ry="38" fill="#6F8F72"/>
-    <ellipse cx="504" cy="664" rx="44" ry="38" fill="#6F8F72"/>
-    <!-- ears -->
-    <circle cx="176" cy="126" r="52" fill="#6F8F72"/><circle cx="424" cy="126" r="52" fill="#6F8F72"/>
-    <circle cx="176" cy="126" r="27" fill="#E2D6C0"/><circle cx="424" cy="126" r="27" fill="#E2D6C0"/>
-    <!-- head -->
-    <circle cx="300" cy="252" r="158" fill="#6F8F72"/>
-    <path d="M150 300 Q300 430 450 300 Q420 400 300 410 Q180 400 150 300Z" fill="#587659" opacity="0.55"/>
-    <ellipse cx="300" cy="300" rx="78" ry="56" fill="#F3EBDD"/>
-    <ellipse cx="300" cy="276" rx="22" ry="15" fill="#2E3A32"/>
-    <ellipse cx="294" cy="271" rx="6" ry="3.5" fill="#F3EBDD" opacity="0.6"/>
-    <ellipse cx="214" cy="292" rx="22" ry="12" fill="#C98B7E" opacity="0.45"/><ellipse cx="386" cy="292" rx="22" ry="12" fill="#C98B7E" opacity="0.45"/><circle cx="248" cy="236" r="11" fill="#20262B"/><circle cx="352" cy="236" r="11" fill="#20262B"/>
-              <circle cx="252" cy="232" r="3.2" fill="#F3EBDD"/><circle cx="356" cy="232" r="3.2" fill="#F3EBDD"/><path d="M286 318 Q300 328 314 318" stroke="#20262B" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <!-- knitted scarf, the one warm thing he always wears -->
-    <path d="M150 380 Q300 450 450 380 L458 418 Q300 494 142 418Z" fill="#D8A85C"/>
-    <path d="M160 396 Q300 462 440 396" stroke="#8A6F5A" stroke-width="4" fill="none" opacity="0.5" stroke-dasharray="3 9"/>
-    <path d="M380 430 L420 540 L384 548 L352 444Z" fill="#D8A85C"/>
-    <path d="M384 532 L420 540 L384 548Z" fill="#8A6F5A" opacity="0.6"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="820" viewBox="0 0 600 820"><defs><filter id="cut" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11" result="n"/>
+       <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#cut)"><g fill="#4A7A56"><ellipse cx="222" cy="768" rx="74" ry="46"/><ellipse cx="378" cy="768" rx="74" ry="46"/>
+      <ellipse cx="118" cy="560" rx="56" ry="120" transform="rotate(18 118 560)"/><ellipse cx="482" cy="560" rx="56" ry="120" transform="rotate(-18 482 560)"/></g>
+      <g fill="#DCCDB2"><ellipse cx="222" cy="784" rx="46" ry="18"/><ellipse cx="378" cy="784" rx="46" ry="18"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="820" viewBox="0 0 600 820"><defs><filter id="cut" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="18" result="n"/>
+       <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#cut)"><ellipse cx="300" cy="560" rx="196" ry="222" fill="#5E946A"/>
+      <path d="M206 404 Q300 424 394 404" stroke="#2C4A36" stroke-width="2" fill="none" opacity="0.5" stroke-dasharray="6 7"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="820" viewBox="0 0 600 820"><defs><filter id="cut" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="25" result="n"/>
+       <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#cut)"><ellipse cx="300" cy="592" rx="110" ry="138" fill="#F2E8D4"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="820" viewBox="0 0 600 820"><defs><filter id="cut" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="32" result="n"/>
+       <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#cut)"><g fill="#5E946A"><ellipse cx="96" cy="664" rx="44" ry="38"/><ellipse cx="504" cy="664" rx="44" ry="38"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="820" viewBox="0 0 600 820"><defs><filter id="cut" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="39" result="n"/>
+       <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#cut)"><g fill="#5E946A"><circle cx="176" cy="126" r="52"/><circle cx="424" cy="126" r="52"/></g><g fill="#DCCDB2"><circle cx="176" cy="126" r="27"/><circle cx="424" cy="126" r="27"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="820" viewBox="0 0 600 820"><defs><filter id="cut" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="46" result="n"/>
+       <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#cut)"><circle cx="300" cy="252" r="158" fill="#5E946A"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="820" viewBox="0 0 600 820"><defs><filter id="cut" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="53" result="n"/>
+       <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#cut)"><ellipse cx="300" cy="300" rx="78" ry="56" fill="#F2E8D4"/><ellipse cx="300" cy="276" rx="22" ry="15" fill="#2C4A36"/>
+      <ellipse cx="214" cy="292" rx="20" ry="11" fill="#D98C80"/><ellipse cx="386" cy="292" rx="20" ry="11" fill="#D98C80"/><circle cx="248" cy="236" r="11" fill="#1E1A22"/><circle cx="352" cy="236" r="11" fill="#1E1A22"/>
+              <circle cx="252" cy="232" r="3.2" fill="#FBF6EC"/><circle cx="356" cy="232" r="3.2" fill="#FBF6EC"/><path d="M286 318 Q300 328 314 318" stroke="#1E1A22" stroke-width="5" fill="none" stroke-linecap="round"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="820" viewBox="0 0 600 820"><defs><filter id="cut" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="60" result="n"/>
+       <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/></filter></defs><g filter="url(#cut)"><path d="M150 380 Q300 450 450 380 L458 418 Q300 494 142 418Z" fill="#D9A55A"/>
+      <path d="M380 430 L420 540 L384 548 L352 444Z" fill="#D9A55A"/>
+      <path d="M160 398 Q300 464 440 398" stroke="#7A5C46" stroke-width="4" fill="none" opacity="0.6" stroke-dasharray="3 9"/></g></svg>
