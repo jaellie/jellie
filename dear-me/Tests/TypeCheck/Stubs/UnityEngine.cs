@@ -186,6 +186,8 @@ namespace UnityEngine
     }
 
     public class TextAsset : Object { public string text => ""; }
+    public class Texture : Object { }
+    public sealed class Texture2D : Texture { }
     public sealed class Font : Object { }
     public sealed class Sprite : Object { }
 

@@ -19,6 +19,7 @@ namespace DearMe.UI
         Image bottom;
         Image floorImage;
         RectTransform shapes;
+        RawImage painting;
         RectTransform rainMask;
         readonly List<RectTransform> drops = new List<RectTransform>();
         readonly List<float> speeds = new List<float>();
@@ -29,6 +30,8 @@ namespace DearMe.UI
         /// <summary>16:9 area holding the scene; room hotspots are placed relative to it.</summary>
         public RectTransform Stage => stage;
         public string CurrentId { get; private set; } = "";
+        /// <summary>True when the current place is a painted image rather than placeholder shapes.</summary>
+        public bool IsPainted { get; private set; }
 
         public void Build(RectTransform parent, GameSettings settings)
         {
@@ -51,6 +54,10 @@ namespace DearMe.UI
             floorImage = floor;
             top = UIFactory.Image("Wall", stage, Theme.Navy);
             UIFactory.PlaceNormalized(top.rectTransform, 0f, 0f, 1f, 0.62f);
+            painting = UIFactory.Rect("Painting", stage).gameObject.AddComponent<RawImage>();
+            painting.raycastTarget = false;
+            UIFactory.Stretch(painting.rectTransform);
+            painting.gameObject.SetActive(false);
             shapes = UIFactory.Rect("Shapes", stage);
             UIFactory.Stretch(shapes);
             rainMask = UIFactory.Rect("Rain", stage);
@@ -73,14 +80,20 @@ namespace DearMe.UI
             if (loc == null)
             {
                 top.color = bottom.color = floorImage.color = Theme.Navy;
+                IsPainted = false;
+                painting.gameObject.SetActive(false);
                 rainMask.gameObject.SetActive(false);
                 raining = false;
                 return;
             }
+            var tex = LoadArt(loc.image);
+            IsPainted = tex != null;
+            painting.texture = tex;
+            painting.gameObject.SetActive(IsPainted);
             top.color = Theme.Hex(loc.top);
             bottom.color = Theme.Hex(loc.bottom);
             floorImage.color = bottom.color;
-            foreach (var s in loc.shapes)
+            if (!IsPainted) foreach (var s in loc.shapes)
             {
                 var img = UIFactory.Image("Shape", shapes, Theme.Hex(s.color));
                 UIFactory.PlaceNormalized(img.rectTransform, s.x, s.y, s.w, s.h);
@@ -94,6 +107,15 @@ namespace DearMe.UI
                 else UIFactory.Stretch(rainMask);
                 ScatterDrops();
             }
+        }
+
+        /// <summary>Painted art from Resources/DearMe/Art; null (with a warning) falls back to shapes.</summary>
+        public static Texture2D LoadArt(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return null;
+            var tex = Resources.Load<Texture2D>("DearMe/Art/" + name);
+            if (tex == null) Debug.LogWarning("[DearMe] Missing art Resources/DearMe/Art/" + name + ".png — using placeholder shapes.");
+            return tex;
         }
 
         void ScatterDrops()

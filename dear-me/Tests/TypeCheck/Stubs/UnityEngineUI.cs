@@ -79,6 +79,11 @@ namespace UnityEngine.UI
         public virtual int layoutPriority => 0;
     }
 
+    public class RawImage : MaskableGraphic
+    {
+        public Texture texture { get; set; }
+    }
+
     public class Text : MaskableGraphic, ILayoutElement
     {
         public virtual string text { get; set; }

@@ -8,7 +8,7 @@ containing the first vertical slice: **Prologue (상자) + Loop 1 (나중에)**.
 
 ---
 
-Preview of the present-day room (re-drawn in a browser from the same data files; placeholder art):
+Preview of the present-day room (sketchbook style: pen line + watercolor wash, with paper-lantern night light):
 
 ![Exploring the room](Docs/preview-explore.png)
 ![Dialogue with grammar tooltip](Docs/preview-dialogue.png)
@@ -175,6 +175,18 @@ Handled in code but **needs a check in the Unity editor / real browsers** (nothi
 Known limitations: placeholder art (flat shapes) and synthesized placeholder audio; no music beyond
 a soft title pad; Korean text entry is intentionally not required (production uses guided pieces).
 
-## 8. Licenses
+## 8. Art
+
+Scenes are painted in code and exported as PNGs into `Resources/DearMe/Art`; a location or room
+object with an `image` field shows that painting, otherwise flat placeholder shapes are drawn.
+The look combines three lemo-opuscar styles: Urban Sketch (wobbly sepia fineliner, misregistered
+wash, page edge fraying into paper), Watercolor (cream cold-press paper, uneven pigment, dried edges,
+granulation) and Paper Lantern (warm glowing lamp and city lights at night).
+
+```
+node ArtSource/render.js        # re-paint after editing ArtSource/*.html (needs Playwright)
+```
+
+## 9. Licenses
 
 Fonts: Pretendard by Kil Hyung-jin, SIL Open Font License 1.1 (see `OFL-Pretendard.txt` next to the font files).

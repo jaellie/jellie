@@ -17,9 +17,9 @@
         { "id": "box", "labelKo": "오래된 상자", "labelEn": "Old box", "verbKo": "열어 보기", "verbEn": "Open",
           "x": 0.59, "y": 0.70, "w": 0.22, "h": 0.19, "color": "#c9a878", "node": "obj_box" },
         { "id": "diary", "labelKo": "일기장", "labelEn": "Diary", "verbKo": "읽기", "verbEn": "Read",
-          "x": 0.62, "y": 0.60, "w": 0.08, "h": 0.09, "color": "#7a5f8a", "node": "obj_diary", "visibleWhen": ["flag:box_open"] },
+          "x": 0.615, "y": 0.70, "w": 0.085, "h": 0.085, "color": "#7a5f8a", "node": "obj_diary", "image": "obj_diary", "visibleWhen": ["flag:box_open"] },
         { "id": "photo", "labelKo": "사진", "labelEn": "Photograph", "verbKo": "보기", "verbEn": "Look",
-          "x": 0.72, "y": 0.60, "w": 0.08, "h": 0.09, "color": "#efe3c9", "node": "obj_photo", "visibleWhen": ["flag:box_open"] }
+          "x": 0.705, "y": 0.705, "w": 0.085, "h": 0.085, "color": "#efe3c9", "node": "obj_photo", "image": "obj_photo", "visibleWhen": ["flag:box_open"] }
       ]
     }
   ]

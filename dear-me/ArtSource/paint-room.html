@@ -1,0 +1,114 @@
+<!doctype html><meta charset="utf-8">
+<!-- Dear Me, scene painter: urban-sketch ink + watercolor wash on cream paper + paper-lantern night glow.
+     Coordinates are normalized (0..1, top-left) to match rooms.json hotspots. Rendered to PNG by render.js. -->
+<canvas id="c"></canvas>
+<script src="painter-lib.js"></script>
+<script>
+init(1920, 1080);
+// ================= the room =================
+paper();
+// wall: evening indigo, lighter toward the lamp
+wash([[0.03,0.04],[0.97,0.04],[0.97,0.785],[0.03,0.785]], '#6f86c9', {alpha:.75, rough:26, layers:3, edge:.12});
+{ const tg=g.createLinearGradient(0,0,0,H*.6); tg.addColorStop(0,'rgba(70,80,150,.35)'); tg.addColorStop(1,'rgba(70,80,150,0)');
+  g.save(); g.globalCompositeOperation='multiply'; g.fillStyle=tg; g.fillRect(0,0,W,H*.6); g.restore(); }
+// floor
+wash([[0.03,0.775],[0.97,0.775],[0.97,0.965],[0.03,0.965]], '#59609a', {alpha:.7, rough:18, layers:3, edge:.12});
+ink([[0.035,0.776],[0.965,0.779]],{w:2.6});
+// rug
+reserve([[0.17,0.81],[0.71,0.80],[0.73,0.93],[0.15,0.94]]);
+wash([[0.17,0.81],[0.71,0.80],[0.73,0.93],[0.15,0.94]], '#c7849a', {alpha:.55, rough:9});
+ink([[0.17,0.81],[0.71,0.80],[0.73,0.93],[0.15,0.94]],{w:1.8,close:true});
+
+// window (hotspot 0.56,0.10,0.32,0.40)
+glow(0.72,0.30,520,'#c9d8f2',.25,'screen');
+reserve([[0.575,0.13],[0.865,0.13],[0.865,0.47],[0.575,0.47]],'#e9e6ea');
+washRect(0.575,0.13,0.29,0.34,'#4c63a6',{alpha:.8,rough:6});
+// city lights through the rain (paper-lantern warmth)
+for (let i=0;i<26;i++){ const x=rnd(.585,.855), y=rnd(.36,.46); glow(x,y,rnd(8,22),i%3?'#ffd08a':'#ffe7b8',.9,'screen'); }
+// distant rooftops
+wash([[0.575,0.40],[0.60,0.40],[0.60,0.37],[0.63,0.37],[0.63,0.39],[0.67,0.39],[0.67,0.35],[0.70,0.35],[0.70,0.385],[0.75,0.385],[0.75,0.36],[0.79,0.36],[0.79,0.395],[0.83,0.395],[0.83,0.375],[0.865,0.375],[0.865,0.47],[0.575,0.47]],'#2c3766',{alpha:.6,rough:2});
+// frame + mullion
+inkRect(0.56,0.10,0.32,0.40,{w:3});
+inkRect(0.575,0.13,0.29,0.34,{w:2.2});
+ink([[0.718,0.13],[0.718,0.47]],{w:2.2});
+washRect(0.56,0.48,0.32,0.035,'#e9dfc8',{alpha:.5,rough:3});
+ink([[0.55,0.515],[0.89,0.515]],{w:2.6});
+// rain streaks on the glass
+g.save(); g.strokeStyle='rgba(255,255,255,.55)'; g.lineCap='round';
+for (let i=0;i<70;i++){ const x=X(rnd(.58,.86)), y=Y(rnd(.14,.44)), l=rnd(14,46); g.lineWidth=rnd(1,2); g.beginPath(); g.moveTo(x,y); g.lineTo(x-l*.08,y+l); g.stroke(); }
+for (let i=0;i<14;i++){ const x=X(rnd(.58,.86)), y=Y(rnd(.15,.45)); g.fillStyle='rgba(255,255,255,.6)'; g.beginPath(); g.arc(x,y,rnd(2,4),0,7); g.fill(); }
+g.restore();
+// curtains
+for (const [cx,dir] of [[0.525,1],[0.875,-1]]){
+  reserve([[cx,0.07],[cx+0.06,0.07],[cx+0.065,0.56],[cx-0.005,0.56]]);
+  wash([[cx,0.07],[cx+0.06,0.07],[cx+0.065,0.56],[cx-0.005,0.56]],'#d98e86',{alpha:.6,rough:7});
+  ink([[cx,0.07],[cx-0.005,0.56]],{w:2}); ink([[cx+0.06,0.07],[cx+0.065,0.56]],{w:2});
+  ink([[cx+0.02,0.09],[cx+0.018,0.54]],{w:1.4,gap:true}); ink([[cx+0.04,0.09],[cx+0.043,0.55]],{w:1.4});
+}
+ink([[0.51,0.068],[0.95,0.068]],{w:3});
+
+// calendar (0.33,0.16,0.11,0.17)
+washRect(0.335,0.165,0.10,0.16,'#efe6d2',{alpha:.0});
+g.save(); g.fillStyle='#f3ecdc'; g.globalAlpha=.92; g.fillRect(X(.336),Y(.168),X(.098),Y(.155)); g.restore();
+washRect(0.336,0.168,0.098,0.03,'#b5603f',{alpha:.55,rough:3});
+inkRect(0.335,0.165,0.10,0.16,{w:2});
+for (let r=0;r<4;r++) ink([[0.34,0.215+r*0.027],[0.43,0.215+r*0.027]],{w:1,gap:false,overshoot:2});
+for (let c=1;c<6;c++) ink([[0.335+c*0.0167,0.205],[0.335+c*0.0167,0.32]],{w:1,gap:false,overshoot:2});
+ink([[0.385,0.15],[0.385,0.168]],{w:1.6});
+
+// desk
+reserve([[0.04,0.60],[0.50,0.60],[0.50,0.64],[0.04,0.64]]); reserve([[0.06,0.64],[0.08,0.64],[0.08,0.82],[0.06,0.82]]); reserve([[0.46,0.64],[0.48,0.64],[0.48,0.82],[0.46,0.82]]);
+wash([[0.04,0.60],[0.50,0.60],[0.50,0.64],[0.04,0.64]],'#c08a52',{alpha:.75,rough:4});
+wash([[0.06,0.64],[0.08,0.64],[0.08,0.82],[0.06,0.82]],'#8d6542',{alpha:.6,rough:3});
+wash([[0.46,0.64],[0.48,0.64],[0.48,0.82],[0.46,0.82]],'#8d6542',{alpha:.6,rough:3});
+inkRect(0.04,0.60,0.46,0.04,{w:2.6}); ink([[0.06,0.64],[0.06,0.82]],{w:2.4}); ink([[0.08,0.64],[0.08,0.82]],{w:1.8});
+ink([[0.46,0.64],[0.46,0.82]],{w:2.4}); ink([[0.48,0.64],[0.48,0.82]],{w:1.8});
+// lamp
+reserve([[0.12,0.42],[0.20,0.42],[0.215,0.47],[0.105,0.47]],'#fbf3df');
+wash([[0.12,0.42],[0.20,0.42],[0.215,0.47],[0.105,0.47]],'#f3c763',{alpha:.6,rough:3});
+ink([[0.12,0.42],[0.20,0.42],[0.215,0.47],[0.105,0.47]],{w:2.2,close:true});
+ink([[0.16,0.47],[0.16,0.58]],{w:2.4}); wash([[0.13,0.58],[0.19,0.58],[0.19,0.60],[0.13,0.60]],'#6d5848',{alpha:.6,rough:2}); inkRect(0.13,0.58,0.06,0.02,{w:2});
+glow(0.16,0.47,700,'#ffc86a',.6,'screen');
+glow(0.16,0.47,220,'#fff1c9',.55,'screen');
+glow(0.20,0.61,380,'#ffb45a',.4,'screen');
+// coffee cup + sticky note on the desk
+wash([[0.255,0.555],[0.285,0.555],[0.282,0.598],[0.258,0.598]],'#eee7d8',{alpha:.5,rough:2});
+ink([[0.255,0.555],[0.258,0.598],[0.282,0.598],[0.285,0.555]],{w:1.8}); ink([[0.255,0.556],[0.285,0.556]],{w:1.6});
+ink([[0.285,0.565],[0.296,0.57],[0.284,0.585]],{w:1.6,gap:false});
+wash([[0.215,0.575],[0.245,0.572],[0.247,0.599],[0.217,0.6]],'#f2d36b',{alpha:.6,rough:2});
+// phone (0.36,0.53,0.08,0.07)
+wash([[0.372,0.585],[0.425,0.583],[0.428,0.598],[0.374,0.6]],'#2f3448',{alpha:.85,rough:2});
+glow(0.40,0.59,60,'#bcd2ff',.5,'screen');
+ink([[0.372,0.585],[0.425,0.583],[0.428,0.598],[0.374,0.6]],{w:1.8,close:true});
+
+// cardboard box on the floor (0.59,0.70,0.22,0.19)
+reserve([[0.60,0.72],[0.80,0.72],[0.80,0.88],[0.60,0.88]]);
+wash([[0.60,0.74],[0.80,0.74],[0.80,0.88],[0.60,0.88]],'#d29a5c',{alpha:.7,rough:4});
+wash([[0.60,0.72],[0.80,0.72],[0.80,0.75],[0.60,0.75]],'#d9b383',{alpha:.6,rough:3});
+wash([[0.60,0.80],[0.80,0.80],[0.80,0.88],[0.60,0.88]],'#7b6aa0',{alpha:.18,rough:6});
+inkRect(0.60,0.72,0.20,0.16,{w:2.6}); ink([[0.60,0.75],[0.80,0.75]],{w:2}); ink([[0.70,0.72],[0.70,0.75]],{w:1.6});
+ink([[0.62,0.79],[0.68,0.79]],{w:1.4,gap:false}); // handwriting on the box
+g.save(); g.font='italic 26px Georgia'; g.fillStyle=SEPIA; g.globalAlpha=.75; g.fillText('2019 —', X(.625),Y(.83)); g.restore();
+
+// crumpled draft on the floor (0.30,0.84,0.10,0.07)
+g.save(); g.fillStyle='#f6f0e2'; g.beginPath(); roughPath(g,[[X(.305),Y(.85)],[X(.395),Y(.845)],[X(.398),Y(.905)],[X(.31),Y(.91)]],8); g.fill(); g.restore();
+ink([[0.305,0.85],[0.395,0.845],[0.398,0.905],[0.31,0.91]],{w:1.8,close:true});
+ink([[0.32,0.86],[0.35,0.885],[0.385,0.865]],{w:1.2}); ink([[0.33,0.9],[0.36,0.875]],{w:1.2});
+
+// framed photo on wall (decor)
+reserve([[0.24,0.20],[0.30,0.20],[0.30,0.29],[0.24,0.29]]); washRect(0.245,0.21,0.05,0.07,'#8fb39a',{alpha:.55,rough:2}); inkRect(0.24,0.20,0.06,0.09,{w:2});
+
+// night shading, then the page edge frays back into paper
+const vg=g.createRadialGradient(W*.45,H*.5,H*.35,W*.5,H*.5,W*.75); vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(60,60,110,.22)');
+g.save(); g.globalCompositeOperation='multiply'; g.fillStyle=vg; g.fillRect(0,0,W,H); g.restore();
+g.save();
+for (let i=0;i<420;i++){ const side=Math.floor(rnd(0,4)); let x,y; const d=Math.pow(R(),3)*30;
+  if(side===0){x=rnd(0,W);y=d;} else if(side===1){x=rnd(0,W);y=H-d;} else if(side===2){x=d;y=rnd(0,H);} else {x=W-d;y=rnd(0,H);}
+  g.fillStyle='#efe6d2'; g.globalAlpha=rnd(.35,.8); g.beginPath(); g.ellipse(x,y,rnd(3,9),rnd(2,6),rnd(0,3),0,7); g.fill(); }
+g.restore();
+// paper tooth over everything
+const tooth=g.getImageData(0,0,W,H), td=tooth.data;
+for (let i=0;i<td.length;i+=4){ const k=0.94+0.06*R(); td[i]*=k; td[i+1]*=k; td[i+2]*=k; }
+g.putImageData(tooth,0,0);
+document.title='done';
+</script>

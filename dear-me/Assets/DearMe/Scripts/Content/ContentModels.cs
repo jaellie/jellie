@@ -316,6 +316,8 @@ namespace DearMe.Content
         public string id = "";
         public string nameKo = "";
         public string nameEn = "";
+        /// <summary>Painted background in Resources/DearMe/Art (no extension). Empty = flat placeholder shapes.</summary>
+        public string image = "";
         public string top = "#1d2738";
         public string bottom = "#2b3448";
         public bool rain;
@@ -352,6 +354,8 @@ namespace DearMe.Content
         public float h;
         public string color = "#c9b98f";
         public string node = "";
+        /// <summary>Painted sprite in Resources/DearMe/Art for objects that appear later (e.g. the diary).</summary>
+        public string image = "";
         public string[] visibleWhen = new string[0];
     }
 

@@ -1,7 +1,7 @@
 {
   "locations": [
     {
-      "id": "room_present", "nameKo": "내 방", "nameEn": "My room", "top": "#56617d", "bottom": "#454c63", "rain": true, "night": true,
+      "id": "room_present", "nameKo": "내 방", "nameEn": "My room", "image": "room_present", "top": "#56617d", "bottom": "#454c63", "rain": true, "night": true,
       "rainArea": { "x": 0.575, "y": 0.13, "w": 0.29, "h": 0.34 },
       "shapes": [
         { "x": 0.00, "y": 0.78, "w": 1.00, "h": 0.22, "color": "#3e4559" },

@@ -104,7 +104,7 @@ namespace DearMe.Core
             dialogue.Hide();
             if (background.CurrentId != roomDef.location && db.Locations.TryGetValue(roomDef.location, out var loc))
                 background.Show(loc);
-            room.Show(roomDef, visibleObjects, Story.State.inspectedObjects, inspect);
+            room.Show(roomDef, visibleObjects, Story.State.inspectedObjects, inspect, background.IsPainted);
         }
 
         public void PlayTransition(TransitionDef transition, Action done)

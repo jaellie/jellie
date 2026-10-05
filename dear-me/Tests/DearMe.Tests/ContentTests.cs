@@ -51,6 +51,12 @@ namespace DearMe.Tests
                     CheckFont(o.labelKo + o.verbKo, "room object " + o.id);
                 }
             }
+            string art = Path.Combine(Data.Root, "Assets/DearMe/Resources/DearMe/Art");
+            foreach (var loc in db.Locations.Values)
+                if (loc.image.Length > 0) Check(File.Exists(Path.Combine(art, loc.image + ".png")), $"location {loc.id} art '{loc.image}.png' exists");
+            foreach (var room in db.Rooms.Values)
+                foreach (var o in room.objects)
+                    if (o.image.Length > 0) Check(File.Exists(Path.Combine(art, o.image + ".png")), $"object {o.id} art '{o.image}.png' exists");
             foreach (var loc in db.Locations.Values)
             {
                 Check(ValidColor(loc.top) && ValidColor(loc.bottom), $"location {loc.id} colors");

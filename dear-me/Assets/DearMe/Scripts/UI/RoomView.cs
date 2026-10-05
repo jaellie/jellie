@@ -18,6 +18,8 @@ namespace DearMe.UI
         public Image[] edges;
         public GameObject label;
         public bool visited;
+        /// <summary>Over a painting: no outline until hovered, so the art isn't boxed in.</summary>
+        public bool quiet;
         bool hover;
 
         public void OnPointerEnter(PointerEventData e) { hover = true; Refresh(); }
@@ -27,7 +29,7 @@ namespace DearMe.UI
         public void Refresh()
         {
             bool touch = InputAdapter.IsTouchDevice;
-            float edgeAlpha = hover ? 0.85f : visited ? 0.18f : 0.38f;
+            float edgeAlpha = hover ? 0.85f : quiet ? 0f : visited ? 0.18f : 0.38f;
             foreach (var e in edges) e.color = Theme.WithAlpha(Theme.Paper, edgeAlpha);
             label.SetActive(hover || touch);
         }
@@ -59,7 +61,8 @@ namespace DearMe.UI
             hint.gameObject.SetActive(false);
         }
 
-        public void Show(RoomDef room, IList<RoomObjectDef> objects, IEnumerable<string> inspected, Action<RoomObjectDef> inspect)
+        public void Show(RoomDef room, IList<RoomObjectDef> objects, IEnumerable<string> inspected, Action<RoomObjectDef> inspect,
+            bool painted = false)
         {
             UIFactory.DestroyChildren(layer);
             visited.Clear();
@@ -74,8 +77,18 @@ namespace DearMe.UI
                 // over the shape already painted in the background.
                 bool small = o.w * o.h < 0.03f;
                 var fill = rt.gameObject.AddComponent<Image>();
-                fill.color = Theme.WithAlpha(Theme.Hex(o.color), small ? 0.92f : 0.12f);
+                // Painted rooms already show the object; the hotspot is an invisible hit area.
+                fill.color = painted ? Theme.Clear : Theme.WithAlpha(Theme.Hex(o.color), small ? 0.92f : 0.12f);
                 fill.raycastTarget = true;
+                var sprite = BackgroundView.LoadArt(o.image);
+                if (sprite != null)
+                {
+                    fill.color = Theme.Clear;
+                    var art = UIFactory.Rect("Art", rt).gameObject.AddComponent<RawImage>();
+                    art.texture = sprite;
+                    art.raycastTarget = false;
+                    UIFactory.Stretch(art.rectTransform);
+                }
                 UIFactory.Border(rt, Theme.Paper, 2f);
 
                 var label = UIFactory.Rect("Label", rt);
@@ -98,6 +111,7 @@ namespace DearMe.UI
                 hs.fill = fill;
                 hs.label = label.gameObject;
                 hs.visited = visited.Contains(o.id);
+                hs.quiet = painted;
                 var edges = new List<Image>();
                 foreach (Transform child in rt)
                     if (child.name.StartsWith("Border")) edges.Add(child.GetComponent<Image>());
