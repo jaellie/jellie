@@ -137,7 +137,7 @@ body.touch #letterRow { top: 8px; }
 .card.letter { max-width: min(680px, 92vw); width: 680px; max-height: 88vh; padding: 46px 48px 38px; background: #fffaf0;
   background-image: repeating-linear-gradient(transparent 0 51px, rgba(170, 130, 100, 0.16) 51px 52px); rotate: 0deg; }
 .card.letter .hand { font-size: clamp(28px, 3.6vw, 38px); line-height: 52px; }
-.card.letter .final { font-family: 'Griun Mongtori', 'Nanum Pen Script', cursive; font-size: clamp(38px, 5vw, 54px); color: #b0485c; text-align: center; margin-top: 30px; opacity: 0; transition: opacity 2s; }
+.card.letter .final { white-space: pre-line; font-family: 'Griun Mongtori', 'Nanum Pen Script', cursive; font-size: clamp(26px, 3.3vw, 38px); line-height: 1.5; color: #b0485c; text-align: center; margin-top: 30px; opacity: 0; transition: opacity 2s; }
 .card.letter .final.on { opacity: 1; }
 .card.letter .from { font-family: 'Griun Mongtori', 'Nanum Pen Script', cursive; font-size: 30px; text-align: right; opacity: 0; transition: opacity 2s 1s; }
 .card.letter .from.on { opacity: 1; }
