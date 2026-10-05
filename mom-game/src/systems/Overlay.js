@@ -25,11 +25,50 @@ export class Overlay {
     this.bubble = el('div'); this.bubble.id = 'bubble';
     this.layer = el('div'); this.layer.id = 'cardLayer';
     this.portrait = el('div', null, '폰을 가로로 돌려주세요 🙂'); this.portrait.id = 'portrait';
-    b.append(this.vignette, this.sepia, this.grain, this.fadeEl, this.hint, this.bubble, this.layer, this.portrait);
+    this.meter = this.buildLetterMeter();
+    b.append(this.vignette, this.sepia, this.grain, this.meter, this.fadeEl, this.hint, this.bubble, this.layer, this.portrait);
     this.card = null;
     this.bubbleUntil = 0;
     this.layer.addEventListener('click', (e) => { if (e.target === this.layer) this.key('close'); });
   }
+
+  // ── the little letter at the top center ──────────────────
+  // It starts blank; each found note/photo/gift writes a bit more of it. No numbers.
+  buildLetterMeter() {
+    const wrap = el('div'); wrap.id = 'letterMeter';
+    const N = 9, lines = [];
+    let paths = '';
+    for (let i = 0; i < N; i++) {
+      const y = 15 + i * 6.4, x0 = 9, x1 = i === N - 1 ? 34 : 51 - (i % 3) * 3;
+      let d = `M${x0} ${y}`;
+      for (let x = x0; x < x1; x += 6) d += ` q 1.5 ${i % 2 ? -2.2 : -2.6} 3 0 t 3 0`;
+      paths += `<path class="ink" d="${d}"/>`;
+    }
+    wrap.innerHTML = `
+      <svg viewBox="0 0 60 78" aria-hidden="true">
+        <path class="paper" d="M5 3 h40 l11 11 v59 a3 3 0 0 1 -3 3 h-48 a3 3 0 0 1 -3 -3 v-67 a3 3 0 0 1 3 -3 z"/>
+        <path class="fold" d="M45 3 v8 a3 3 0 0 0 3 3 h8"/>
+        <g class="rules">${Array.from({ length: N }, (_, i) => `<line x1="8" x2="52" y1="${16.5 + i * 6.4}" y2="${16.5 + i * 6.4}"/>`).join('')}</g>
+        <g class="inks">${paths}</g>
+        <g class="seal"><path d="M30 71 c-6 -4 -9 -7 -9 -10 a4 4 0 0 1 9 -1 a4 4 0 0 1 9 1 c0 3 -3 6 -9 10 z"/></g>
+      </svg>`;
+    wrap.querySelectorAll('.ink').forEach((p) => lines.push(p));
+    this.meterLines = lines;
+    requestAnimationFrame(() => lines.forEach((p) => { const L = p.getTotalLength(); p.style.strokeDasharray = `${L}`; p.style.strokeDashoffset = `${L}`; p.dataset.len = L; }));
+    return wrap;
+  }
+
+  setLetterProgress(frac, celebrate = false) {
+    const N = this.meterLines.length;
+    const apply = () => this.meterLines.forEach((p, i) => {
+      const f = Math.max(0, Math.min(1, frac * N - i));
+      p.style.strokeDashoffset = `${(+p.dataset.len || 60) * (1 - f)}`;
+    });
+    requestAnimationFrame(() => requestAnimationFrame(apply));
+    this.meter.classList.toggle('full', frac >= 0.999);
+    if (celebrate) { this.meter.classList.remove('bump'); void this.meter.offsetWidth; this.meter.classList.add('bump'); }
+  }
+  showLetterMeter(v) { this.meter.classList.toggle('on', v); }
 
   // ── start screen ─────────────────────────────────────────
   startScreen() {

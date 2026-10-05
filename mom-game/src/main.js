@@ -74,6 +74,10 @@ class Game {
     this.renderer.setAnimationLoop(() => this.tick());
     await this.overlay.startScreen();
     this.audio.init().then(() => this.audio.setLoops(this.audio.desired || []));
+    // the little letter at the top fills in as she finds things
+    this.overlay.setLetterProgress(this.disc.progress());
+    this.disc.onFound(() => this.overlay.setLetterProgress(this.disc.progress(), true));
+    setTimeout(() => this.overlay.showLetterMeter(true), 1800);
     await this.overlay.fade(0, { ms: 2200 });
   }
 

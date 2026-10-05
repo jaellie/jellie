@@ -34,5 +34,13 @@ export class Discoverables {
 
   open(id) { const d = this.get(id); return d ? this.overlay.openDiscoverable(id, d) : Promise.resolve(); }
 
+  // 0..1 share of the findable items (hidden items and switched-off worlds don't count)
+  progress() {
+    const on = (d) => !d.hidden && (d.world === 'home' || content.features?.[d.world] !== false);
+    const all = Object.entries(content.discoverables).filter(([, d]) => on(d));
+    if (!all.length) return 0;
+    return all.filter(([id]) => this.found.has(id)).length / all.length;
+  }
+
   listFound() { return this.order.filter((id) => this.exists(id)).map((id) => ({ id, d: this.get(id) })); }
 }

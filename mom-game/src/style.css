@@ -22,6 +22,23 @@ body.past #sepia { opacity: 1; }
 
 #fade { position: fixed; inset: 0; z-index: 30; background: #000; opacity: 1; pointer-events: none; transition: opacity 1s ease; }
 
+/* the little letter that writes itself (top center) */
+#letterMeter { position: fixed; top: 14px; left: 50%; width: 54px; margin-left: -27px; z-index: 9; pointer-events: none;
+  opacity: 0; transition: opacity 1.2s; filter: drop-shadow(0 3px 6px rgba(70, 35, 15, 0.35)); }
+#letterMeter.on { opacity: 0.95; }
+#letterMeter svg { display: block; width: 100%; overflow: visible; }
+#letterMeter .paper { fill: #FFFAF0; stroke: rgba(190, 150, 110, 0.55); stroke-width: 1; }
+#letterMeter .fold { fill: #F1E3CC; stroke: rgba(190, 150, 110, 0.55); stroke-width: 1; }
+#letterMeter .rules line { stroke: rgba(190, 150, 120, 0.25); stroke-width: 0.6; }
+#letterMeter .ink { fill: none; stroke: #5A3E2E; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  transition: stroke-dashoffset 1.6s ease-in-out; }
+#letterMeter .seal path { fill: #D4566A; transform-origin: 30px 64px; transform: scale(0); transition: transform 0.8s cubic-bezier(.3,1.7,.5,1) 1.2s; }
+#letterMeter.full .seal path { transform: scale(1); }
+#letterMeter.full { filter: drop-shadow(0 0 10px rgba(255, 210, 140, 0.9)) drop-shadow(0 3px 6px rgba(70, 35, 15, 0.35)); }
+#letterMeter.bump { animation: meterBump 1.4s ease; }
+@keyframes meterBump { 0% { transform: scale(1) } 25% { transform: scale(1.28) rotate(-4deg) } 55% { transform: scale(1.08) rotate(2deg) } 100% { transform: scale(1) } }
+body.touch #letterMeter { top: 10px; }
+
 /* start screen */
 #start { position: fixed; inset: 0; z-index: 40; background: #0f0b0a; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity 1.4s ease; }
 #start p { font-size: clamp(20px, 3.2vw, 34px); color: #ffe7c2; letter-spacing: 0.08em; margin: 0; padding: 0 24px; text-align: center;
