@@ -290,8 +290,8 @@ public class Mom : MonoBehaviour
     public void Drive(Vector2 input, float dt, bool allowMove)
     {
         if (!allowMove || sitting) input = Vector2.zero;
-        heading += input.x * (child ? 150f : 130f) * dt;
-        float top = child ? 1.9f : 1.9f;
+        heading += input.x * (child ? 190f : 170f) * dt;
+        float top = (child ? 3.0f : 3.4f) * (GameInput.Sprint ? 1.5f : 1f);   // hold Shift to run
         float target = input.y > 0f ? top * input.y : input.y * top * 0.55f;
         speed = Mathf.Lerp(speed, target, 1f - Mathf.Exp(-dt * 9f));
         if (Mathf.Abs(speed) > 0.02f)
@@ -339,7 +339,7 @@ public class Mom : MonoBehaviour
         runWeight = Mathf.Lerp(runWeight, runC != null ? move * 0.7f : 0f, 1f - Mathf.Exp(-dt * 10f));
         idleT += dt;
         float dir = speed < -0.05f ? -0.7f : 1f;
-        runT += dt * Mathf.Lerp(0.5f, 0.95f, move) * dir;
+        runT += dt * Mathf.Lerp(0.8f, 1.5f, move) * dir;
         if (runC != null && move > 0.15f)
         {
             float cyc = runT / (runC.length * 0.5f);

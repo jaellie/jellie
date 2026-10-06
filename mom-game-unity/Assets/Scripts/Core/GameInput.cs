@@ -32,6 +32,7 @@ public static class GameInput
     {
         get { try { return new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")); } catch (System.Exception) { return Vector2.zero; } }
     }
+    public static bool Sprint { get { return Key(KeyCode.LeftShift) || Key(KeyCode.RightShift); } }
     public static bool ResetDown { get { return Down(KeyCode.F10); } }
 
     public static bool AnyDown
