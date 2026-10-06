@@ -1,0 +1,49 @@
+<!doctype html><meta charset="utf-8"><style>
+*{margin:0;box-sizing:border-box} body{width:1920px;height:1080px;overflow:hidden;background:#1e2833;position:relative;font-family:Pretendard,system-ui,sans-serif}
+.a{position:absolute} img{display:block;position:absolute}
+#stage{left:190px;top:85px;width:1540px;height:920px;overflow:hidden;background:linear-gradient(#0f1622,#1b2a40 70%,#22344f)}
+
+</style>
+<body>
+<!-- stage content (placeholder entrance backdrop: dark navy wall + floor) -->
+<div id="stage" class="a">
+  <div class="a" style="left:0;right:0;top:720px;bottom:0;background:linear-gradient(#17233a,#0f1826)"></div>
+  <div class="a" style="left:0;right:0;top:716px;height:4px;background:#0c131f"></div>
+  <!-- clock (real layers, stopped 11:47) -->
+  <div class="a" id="clock" style="left:560px;top:30px;width:428px;height:428px">
+    <img src="/big-green-bear-2/Assets/Art/Props/Clock/prop_clock_face.png" width="428" height="428" style="left:0;top:0">
+    <img src="/big-green-bear-2/Assets/Art/Props/Clock/prop_clock_hour_hand.png" width="428" height="428" style="left:0;top:0;transform:rotate(353.5deg)">
+    <img src="/big-green-bear-2/Assets/Art/Props/Clock/prop_clock_minute_hand.png" width="428" height="428" style="left:0;top:0;transform:rotate(282deg)">
+    <img src="/big-green-bear-2/Assets/Art/Props/Clock/prop_clock_second_hand.png" width="428" height="428" style="left:0;top:0;transform:rotate(38deg)">
+  </div>
+  <!-- characters: Game 1 sprites (bear stands on the right, next to the mirror) -->
+  <img src="/big-green-bear-2-unity/Assets/BigGreenBear2/Resources/BGB2/Characters/nini_happy.png" style="left:500px;top:520px;height:300px;filter:drop-shadow(0 8px 6px #0007)">
+  <img src="/big-green-bear-2-unity/Assets/BigGreenBear2/Resources/BGB2/Characters/bear_happy.png" style="left:700px;top:360px;height:470px;filter:drop-shadow(0 10px 8px #0007)">
+  <!-- curtains -->
+  <img src="/big-green-bear-2/Assets/Art/Frames/curtain_left.png" style="left:0;top:-85px;width:700px;height:1080px">
+  <img src="/big-green-bear-2/Assets/Art/Frames/curtain_right.png" style="right:0;top:-85px;width:700px;height:1080px">
+  <!-- narration -->
+  <div class="a" style="left:0;right:0;bottom:0;height:120px;background:linear-gradient(#0000,#060b14dd)"></div>
+  <div class="a" style="left:330px;bottom:34px;color:#f2e8d4;font-size:26px">The door is heavier than it looks.</div>
+  <img src="/big-green-bear-2/Assets/Art/Frames/stage_shadow.png" style="left:-190px;top:-85px;width:1920px;height:1080px;mix-blend-mode:multiply;opacity:.8">
+</div>
+<img src="/big-green-bear-2/Assets/Art/Frames/frame_shadow.png" style="left:0;top:0;width:1920px;height:1080px">
+<img src="/big-green-bear-2/Assets/Art/Frames/frame_main.png" style="left:0;top:0;width:1920px;height:1080px">
+<!-- folder tabs -->
+<div id="tabs"></div>
+<!-- mirror: shadow, glass, reflection (flipped bear, late), overlay, dust, highlight, frame -->
+<div class="a" id="mirror" style="left:1646px;top:346px;width:389px;height:389px">
+  <img src="/big-green-bear-2/Assets/Art/Mirror/mirror_shadow.png" width="389" style="left:0;top:0">
+  <img src="/big-green-bear-2/Assets/Art/Mirror/mirror_glass.png" width="389" style="left:0;top:0">
+  <div class="a" style="left:54px;top:45px;width:282px;height:314px;border-radius:50%;overflow:hidden">
+    <img src="/big-green-bear-2-unity/Assets/BigGreenBear2/Resources/BGB2/Characters/bear_happy.png" style="left:34px;top:46px;height:300px;transform:scaleX(-1);opacity:.5;filter:blur(1.2px) saturate(.7) brightness(.9)">
+  </div>
+  <img src="/big-green-bear-2/Assets/Art/Mirror/mirror_reflection_overlay.png" width="389" style="left:0;top:0">
+  <img src="/big-green-bear-2/Assets/Art/Mirror/mirror_dust.png" width="389" style="left:0;top:0">
+  <img src="/big-green-bear-2/Assets/Art/Mirror/mirror_highlight.png" width="389" style="left:0;top:0;mix-blend-mode:screen">
+  <img src="/big-green-bear-2/Assets/Art/Mirror/mirror_frame_oval.png" width="389" style="left:0;top:0">
+</div>
+<script>
+const names=['case','people','evidence','statements','timeline','identity'];
+document.getElementById('tabs').innerHTML=names.map((n,i)=>`<img src="/big-green-bear-2/Assets/Art/UI/Tabs/ui_folder_tab_${n}.png" style="left:${n==='case'?10:18}px;top:${168+i*76}px;width:206px">`).join('');
+</script>
