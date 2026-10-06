@@ -1,7 +1,7 @@
 # 빅그린베어의 모험 II — THE OTHER BEAR (Unity)
 
 1탄(`big-green-bear-unity`)과 같은 방식이에요. **`TwinBootstrap` 하나만 붙이면** 코드가 전부 조립해요.
-캐릭터는 1탄 그림 그대로이고, 배경의 입체 소품은 KayKit(CC0) 3D low-poly 모델이에요.
+1탄에서 가져온 건 **캐릭터 디자인(곰, Nini)뿐**이에요. 배경(별, 마을, 시계탑)은 2탄 전용으로 코드로 만들고, 나무/바위는 KayKit(CC0) 3D low-poly 모델이에요.
 
 > ⚠️ 이 코드는 Unity 없이 작성했어요. 문법 검사(tree-sitter)만 통과했고 **아직 Unity에서 컴파일해 보지 않았어요.**
 > Console의 빨간 줄을 알려주시면 바로 고쳐요.
@@ -40,7 +40,7 @@ Assets/BigGreenBear2/
 │   ├── Data.cs            증거/진술 데이터 (중립적인 관찰 문장만)
 │   ├── Mats.cs, Input2.cs, Sfx.cs
 └── Resources/BGB2/
-    ├── Seasons/02-twins/  season.json + backdrop.png   ← 시즌 하나 = 폴더 하나
+    ├── Seasons/02-twins/  season.json   ← 시즌 하나 = 폴더 하나 (배경은 TowerBuilder가 코드로 생성)
     ├── Props/             KayKit FBX 11종 + forest_texture.png
     ├── Characters/        1탄 곰 / Nini PNG
     └── Fonts/             Pretendard

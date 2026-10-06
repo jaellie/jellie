@@ -1,5 +1,5 @@
 // StageBuilder.cs — builds one season's miniature stage from a SeasonTheme:
-// ground, painted backdrop (Game 1 layer), real 3D low-poly props, moonlight, fog.
+// ground, clock tower + town + stars (TowerBuilder), real 3D low-poly props, moonlight, fog.
 // Everything is low-poly and static: runs on integrated graphics (no realtime shadows).
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,18 +52,8 @@ namespace BigGreenBear2
             ground.transform.localScale = new Vector3(120f, 80f, 1f);
             ground.GetComponent<Renderer>().sharedMaterial = Mats.Lit(null, SeasonTheme.Hex(t.ground, new Color(0.14f, 0.2f, 0.35f)));
 
-            // ---- painted backdrop (flat sprite far behind; this is where Game 1's town lives)
-            var tex = LoadTex("BGB2/Seasons/" + t.id + "/" + t.backdrop);
-            if (tex != null)
-            {
-                var go = new GameObject("Backdrop");
-                go.transform.SetParent(root, false);
-                go.transform.position = new Vector3(t.backdropX, t.backdropY, t.backdropZ);
-                var sr = go.AddComponent<SpriteRenderer>();
-                sr.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), tex.width / t.backdropWidth);
-                sr.color = new Color(0.45f, 0.5f, 0.75f, 1f);   // cooled / dimmed (Game 2 = cold identity)
-                sr.sortingOrder = -10;
-            }
+            // ---- Game 2's own backdrop: stars, town silhouette and the stopped clock tower (all primitives)
+            TowerBuilder.Build(root, t.towerX, t.towerZ);
 
             // ---- real 3D props
             var forest = LoadTex("BGB2/Props/forest_texture");

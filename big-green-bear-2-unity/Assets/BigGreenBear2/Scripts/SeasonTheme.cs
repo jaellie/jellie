@@ -19,8 +19,7 @@ namespace BigGreenBear2
         public string id, title;
         public string sky, ground, fog, ambient, moon, propTint;
         public float fogNear = 14f, fogFar = 46f, moonIntensity = 1.1f;
-        public string backdrop;                     // sprite name inside the season folder
-        public float backdropWidth = 46f, backdropX, backdropY = 6.2f, backdropZ = -34f;
+        public float towerX = 2f, towerZ = -26f;    // where the old clock tower stands
         public PropPlacement[] props = new PropPlacement[0];
 
         public static SeasonTheme Load(string id)

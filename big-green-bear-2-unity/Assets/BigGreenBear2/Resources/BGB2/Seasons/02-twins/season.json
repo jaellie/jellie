@@ -10,11 +10,8 @@
   "moon": "#cfe0ff",
   "moonIntensity": 1.1,
   "propTint": "#9fb4e8",
-  "backdrop": "backdrop",
-  "backdropWidth": 46,
-  "backdropX": 2,
-  "backdropY": 6.2,
-  "backdropZ": -34,
+  "towerX": 2,
+  "towerZ": -26,
   "props": [
     { "model": "Tree_1_A_Color1", "x": -9,   "z": -2,  "scale": 1.2 },
     { "model": "Tree_3_A_Color1", "x": -5.5, "z": -9,  "scale": 1.1 },
