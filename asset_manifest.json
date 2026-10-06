@@ -1,0 +1,583 @@
+{
+  "clock/prop_clock_face.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "note": "hands share this pivot; place hands at same position & scale"
+  },
+  "clock/prop_clock_hour_hand.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "note": "points to 12 at rotation 0; rotate clockwise around center"
+  },
+  "clock/prop_clock_minute_hand.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "note": "points to 12 at rotation 0; rotate clockwise around center"
+  },
+  "clock/prop_clock_second_hand.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ]
+  },
+  "clock/prop_clock_gear_large.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "teeth": 48,
+    "pitch_radius_px": 950.0,
+    "note": "large & small share tooth pitch at 1:1 pixel scale, so they mesh"
+  },
+  "clock/prop_clock_gear_small.png": {
+    "size": [
+      1024,
+      1024
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "teeth": 18,
+    "pitch_radius_px": 356.0,
+    "note": "large & small share tooth pitch at 1:1 pixel scale, so they mesh"
+  },
+  "clock/prop_clock_pendulum.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "pivot": [
+      0.5,
+      0.9609375
+    ],
+    "note": "pivot at the suspension pin (top); swing +/- 6 deg"
+  },
+  "clock/prop_clock_chain.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "tile": "vertical, seamless (pitch 256px)"
+  },
+  "clock/prop_clock_weight.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "pivot": [
+      0.5,
+      0.90234375
+    ],
+    "note": "pivot at hook"
+  },
+  "clock/prop_clock_spring.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ]
+  },
+  "mirror/mirror_frame_oval.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "note": "glass/dust/highlight/shadow are separate; oval opening matches mirror_glass.png"
+  },
+  "mirror/mirror_frame_rectangular.png": {
+    "size": [
+      2048,
+      2048
+    ]
+  },
+  "mirror/mirror_glass.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "note": "sits UNDER the frame; reflection renders between glass and dust"
+  },
+  "mirror/mirror_glass_rect.png": {
+    "size": [
+      2048,
+      2048
+    ]
+  },
+  "mirror/mirror_dust_fullcanvas.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "note": "unmasked, for the rectangular mirror"
+  },
+  "mirror/mirror_dust.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "note": "pre-masked to the oval glass"
+  },
+  "mirror/mirror_highlight.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "note": "additive or screen blend; slide slowly for a breathing glint"
+  },
+  "mirror/mirror_shadow.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "note": "drop shadow behind the oval frame"
+  },
+  "mirror/mirror_reflection_overlay_fullcanvas.png": {
+    "size": [
+      2048,
+      2048
+    ]
+  },
+  "mirror/mirror_reflection_overlay.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "note": "put ABOVE the dynamic reflection sprite (flipX, alpha .35-.5, blur ~4px)"
+  },
+  "frame/frame_main.png": {
+    "size": [
+      3840,
+      2160
+    ],
+    "stage_opening_px": [
+      380,
+      170,
+      3460,
+      2010
+    ],
+    "note": "center is transparent; game world renders behind"
+  },
+  "frame/frame_inner.png": {
+    "size": [
+      3840,
+      2160
+    ]
+  },
+  "frame/frame_shadow.png": {
+    "size": [
+      3840,
+      2160
+    ],
+    "note": "inner vignette; layer right under frame_inner"
+  },
+  "frame/frame_corner.png": {
+    "size": [
+      1024,
+      1024
+    ],
+    "note": "top-left orientation; flipX/flipY for other corners"
+  },
+  "frame/curtain_left.png": {
+    "size": [
+      1400,
+      2160
+    ],
+    "anchor": "left",
+    "place_at": "inner edge of the stage opening (x=380 left / x=3460 right on the 3840 frame)",
+    "note": "muted burgundy; animate scaleX or swap with a drawn-closed variant"
+  },
+  "frame/curtain_right.png": {
+    "size": [
+      1400,
+      2160
+    ],
+    "anchor": "right",
+    "place_at": "inner edge of the stage opening (x=380 left / x=3460 right on the 3840 frame)",
+    "note": "muted burgundy; animate scaleX or swap with a drawn-closed variant"
+  },
+  "frame/stage_shadow.png": {
+    "size": [
+      3840,
+      2160
+    ],
+    "note": "soft spotlight falloff over the stage"
+  },
+  "ui/ui_folder.png": {
+    "size": [
+      2048,
+      1440
+    ],
+    "note": "navy archive folder; label area is blank for in-engine text"
+  },
+  "ui/ui_folder_manila.png": {
+    "size": [
+      2048,
+      1440
+    ]
+  },
+  "ui/ui_folder_tab.png": {
+    "size": [
+      640,
+      200
+    ],
+    "note": "blank; tab sticks out left"
+  },
+  "ui/ui_folder_tab_navy.png": {
+    "size": [
+      640,
+      200
+    ]
+  },
+  "ui/tabs/ui_folder_tab_case.png": {
+    "size": [
+      640,
+      200
+    ]
+  },
+  "ui/tabs/ui_folder_tab_people.png": {
+    "size": [
+      640,
+      200
+    ]
+  },
+  "ui/tabs/ui_folder_tab_evidence.png": {
+    "size": [
+      640,
+      200
+    ]
+  },
+  "ui/tabs/ui_folder_tab_statements.png": {
+    "size": [
+      640,
+      200
+    ]
+  },
+  "ui/tabs/ui_folder_tab_timeline.png": {
+    "size": [
+      640,
+      200
+    ]
+  },
+  "ui/tabs/ui_folder_tab_identity.png": {
+    "size": [
+      640,
+      200
+    ]
+  },
+  "ui/ui_folder_edge.png": {
+    "size": [
+      2048,
+      180
+    ],
+    "tile": "horizontal"
+  },
+  "ui/ui_paperclip.png": {
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "ui/ui_binderclip.png": {
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "ui/ui_pushpin.png": {
+    "size": [
+      512,
+      512
+    ]
+  },
+  "ui/ui_masking_tape.png": {
+    "size": [
+      1024,
+      300
+    ],
+    "note": "semi-transparent so paper shows through"
+  },
+  "stamps/stamp_archived.png": {
+    "size": [
+      2048,
+      640
+    ]
+  },
+  "stamps/stamp_confidential.png": {
+    "size": [
+      2048,
+      640
+    ]
+  },
+  "stamps/stamp_reviewed.png": {
+    "size": [
+      2048,
+      640
+    ]
+  },
+  "stamps/stamp_evidence.png": {
+    "size": [
+      2048,
+      640
+    ]
+  },
+  "stamps/stamp_unknown.png": {
+    "size": [
+      2048,
+      640
+    ]
+  },
+  "stamps/stamp_missing_record.png": {
+    "size": [
+      2048,
+      640
+    ]
+  },
+  "ui/ui_archive_stamp.png": {
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "ui/ui_case_label.png": {
+    "size": [
+      1400,
+      700
+    ]
+  },
+  "ui/ui_evidence_card.png": {
+    "size": [
+      1400,
+      1900
+    ],
+    "slots": {
+      "number": [
+        1040,
+        150,
+        240,
+        70
+      ],
+      "title": [
+        120,
+        330,
+        1160,
+        40
+      ],
+      "image": [
+        120,
+        430,
+        1160,
+        700
+      ],
+      "location": [
+        120,
+        1200,
+        1160,
+        40
+      ],
+      "observation": [
+        120,
+        1340,
+        1160,
+        280
+      ],
+      "handwritten": [
+        760,
+        1650,
+        520,
+        140
+      ]
+    },
+    "note": "slot rects are x,y,w,h in px; all text is rendered in-engine"
+  },
+  "ui/ui_document_card.png": {
+    "size": [
+      1400,
+      1900
+    ]
+  },
+  "ui/ui_photo_card.png": {
+    "size": [
+      1300,
+      1500
+    ],
+    "photo_window": [
+      110,
+      110,
+      1080,
+      1080
+    ],
+    "note": "photo window is transparent; put the photo sprite behind"
+  },
+  "ui/ui_timeline_card.png": {
+    "size": [
+      1600,
+      520
+    ],
+    "slots": {
+      "time": [
+        60,
+        140,
+        240,
+        120
+      ],
+      "body": [
+        390,
+        110,
+        1120,
+        330
+      ]
+    }
+  },
+  "ui/ui_identity_card.png": {
+    "size": [
+      1600,
+      1000
+    ],
+    "slots": {
+      "portrait_left": [
+        90,
+        220,
+        250,
+        680
+      ],
+      "portrait_right": [
+        352,
+        220,
+        250,
+        680
+      ]
+    },
+    "note": "split-portrait motif: same face can go in both halves, flipped"
+  },
+  "textures/texture_aged_paper.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "tile": true
+  },
+  "textures/texture_archive_paper.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "tile": true
+  },
+  "textures/texture_old_document.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "tile": false
+  },
+  "textures/texture_faded_photo.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "tile": false
+  },
+  "textures/texture_dusty_glass.png": {
+    "size": [
+      2048,
+      2048
+    ],
+    "tile": true,
+    "note": "transparent overlay"
+  },
+  "motifs/motif_double_line.svg": {
+    "size": [
+      256,
+      256
+    ],
+    "note": "stroke uses currentColor (default aged brass)"
+  },
+  "motifs/motif_double_line.png": {
+    "size": [
+      512,
+      512
+    ]
+  },
+  "motifs/motif_double_circle.svg": {
+    "size": [
+      256,
+      256
+    ],
+    "note": "stroke uses currentColor (default aged brass)"
+  },
+  "motifs/motif_double_circle.png": {
+    "size": [
+      512,
+      512
+    ]
+  },
+  "motifs/motif_mirror_frame.svg": {
+    "size": [
+      256,
+      256
+    ],
+    "note": "stroke uses currentColor (default aged brass)"
+  },
+  "motifs/motif_mirror_frame.png": {
+    "size": [
+      512,
+      512
+    ]
+  },
+  "motifs/motif_1147.svg": {
+    "size": [
+      256,
+      256
+    ],
+    "note": "stroke uses currentColor (default aged brass)"
+  },
+  "motifs/motif_1147.png": {
+    "size": [
+      512,
+      512
+    ]
+  },
+  "motifs/motif_split_portrait.svg": {
+    "size": [
+      256,
+      256
+    ],
+    "note": "stroke uses currentColor (default aged brass)"
+  },
+  "motifs/motif_split_portrait.png": {
+    "size": [
+      512,
+      512
+    ]
+  }
+}
