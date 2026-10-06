@@ -1,0 +1,25 @@
+<!doctype html><body><canvas id="c" width="640" height="800"></canvas>
+<script type="importmap">{"imports":{"three":"/r/node_modules/three/build/three.module.js","three/addons/":"/r/node_modules/three/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+const R = new THREE.WebGLRenderer({ canvas: c, alpha: true, antialias: true, preserveDrawingBuffer: true });
+R.setClearColor(0, 0);
+const loader = new GLTFLoader();
+window.render = async (name, color) => {
+  const g = await loader.loadAsync(`/kk/KayKit_Forest_Nature_Pack_1.0_FREE/Assets/gltf/${name}_Color1.gltf`);
+  const scene = new THREE.Scene();
+  const col = new THREE.Color(color);
+  g.scene.traverse(o => { if (o.isMesh) o.material = new THREE.MeshToonMaterial({ color: col }); });
+  scene.add(g.scene);
+  scene.add(new THREE.AmbientLight(0xffffff, 1.6));
+  const d = new THREE.DirectionalLight(0xbcd0ff, 1.4); d.position.set(-2, 4, 3); scene.add(d);
+  const box = new THREE.Box3().setFromObject(g.scene), ctr = box.getCenter(new THREE.Vector3()), sz = box.getSize(new THREE.Vector3());
+  const h = Math.max(sz.y, sz.x * 1.25) * 1.06;
+  const cam = new THREE.OrthographicCamera(-h * .4, h * .4, ctr.y + h / 2, ctr.y - h / 2, .1, 100);
+  cam.position.set(ctr.x, ctr.y, 20); cam.lookAt(ctr.x, ctr.y, 0);
+  R.render(scene, cam);
+  return c.toDataURL('image/png');
+};
+window.ready = true;
+</script>
