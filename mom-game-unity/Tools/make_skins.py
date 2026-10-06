@@ -50,6 +50,17 @@ def paint(variant):
     CX = 318
     for x in range(CX, 485):
         out[140:345, x] = out[140:345, 2 * CX - x]
+    # centre bangs: replace the pointed V with a rounded perm curve, a little above the eyebrows
+    HAIR_O = out[120, 120].copy(); SKIN_F = out[232, CX].copy()
+    for x in range(CX - 75, CX + 76):
+        dx = (x - CX) / 75.0
+        ya = int(186 - 24 * min(1.0, dx * dx))
+        for y in range(150, 195):
+            if y < ya: out[y, x] = HAIR_O
+            elif abs(x - CX) <= 45 and np.abs(out[y, x] - SKIN_F).sum() > 6: out[y, x] = SKIN_F
+    for y in range(195, 240):
+        for x in range(CX - 17, CX + 18):
+            if np.abs(out[y, x] - SKIN_F).sum() > 6: out[y, x] = SKIN_F
     hair_mask = F & dark & ~face_box
     im = Image.fromarray(np.clip(out, 0, 255).astype('uint8'))
     d = ImageDraw.Draw(im, 'RGBA')
@@ -59,6 +70,10 @@ def paint(variant):
             if hair_mask[cy, cx]:
                 rr = rnd.randint(8, 16)
                 d.ellipse((cx - rr, cy - rr, cx + rr, cy + rr), outline=(74, 62, 60, 190), width=3)
+    for cx in (CX - 50, CX - 25, CX, CX + 25, CX + 50):   # little perm curls along the bang edge
+        if not child:
+            yb = int(186 - 24 * min(1.0, ((cx - CX) / 75.0) ** 2)) - 9
+            d.ellipse((cx - 11, yb - 10, cx + 11, yb + 10), outline=(74, 62, 60, 220), width=3)
     out = np.array(im, float)
 
     # torso + arms: cardigan (or blouse)
