@@ -1,0 +1,2365 @@
+{
+ "_doc": "Life events: romance. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "LOVE_AT_FIRST_SIGHT",
+   "cat": "romance",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "big": true,
+   "title": {
+    "ko": "첫눈에",
+    "en": "At first sight"
+   },
+   "requires": [
+    "!partnered",
+    "age<=60"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.9,
+     "STEM_COMBINATION@day": 0.6,
+     "SIX_HARMONY@day": 0.5,
+     "JUPITER@H5": 0.4,
+     "JUPITER@H7": 0.4,
+     "SR:SUN@H5": 0.4,
+     "SR:SUN@H7": 0.4
+    },
+    "mods": {
+     "romance": 1.0
+    },
+    "traits": {
+     "novelty": 0.3
+    }
+   },
+   "location": "cafe",
+   "activity": "drink_coffee",
+   "who": "me",
+   "line": {
+    "ko": "(카페 문이 열리는 순간, 시간이 멈춘 것 같았다. 저 사람…)",
+    "en": "(The café door opened and time seemed to stop. That person…)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "용기 내서 말을 건다",
+      "en": "Work up the courage to say hi"
+     },
+     "w": {
+      "DATE": 0.6,
+      "SMILE": 0.3,
+      "GONE": 0.1
+     }
+    },
+    {
+     "t": {
+      "ko": "눈이 마주치길 기다린다",
+      "en": "Wait for your eyes to meet"
+     },
+     "w": {
+      "DATE": 0.25,
+      "SMILE": 0.5,
+      "GONE": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "(심장이 너무 뛰어서 나와 버린다)",
+      "en": "(Your heart pounds so hard you walk out)"
+     },
+     "w": {
+      "DATE": 0.05,
+      "SMILE": 0.15,
+      "GONE": 0.8
+     }
+    }
+   ],
+   "outcomes": {
+    "DATE": {
+     "r": {
+      "ko": "…번호를 받았다. 그날 밤 잠이 오지 않았다.",
+      "en": "…You got their number. You couldn't sleep that night."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "카페에서 시작된 인연",
+       "en": "It started at a café"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "partner"
+      ]
+     },
+     "lean": {
+      "traits": {
+       "sociability": 0.6
+      }
+     }
+    },
+    "SMILE": {
+     "r": {
+      "ko": "눈이 마주쳤고, 둘 다 웃었다. 그걸로 충분한 하루였다.",
+      "en": "Your eyes met and you both smiled. That was enough for one day."
+     }
+    },
+    "GONE": {
+     "r": {
+      "ko": "…다음 날도, 그다음 날도 그 카페에 갔지만 다시는 보지 못했다.",
+      "en": "…You went back day after day, but never saw them again."
+     }
+    }
+   }
+  },
+  {
+   "id": "FIRST_LOVE_REUNION",
+   "cat": "romance",
+   "rarity": "rare",
+   "tone": "romance",
+   "big": true,
+   "title": {
+    "ko": "첫사랑",
+    "en": "First love"
+   },
+   "requires": [
+    "!partnered"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.9,
+     "STEM_COMBINATION@day": 0.6,
+     "SIX_HARMONY@day": 0.5,
+     "JUPITER@H5": 0.4,
+     "JUPITER@H7": 0.4,
+     "SR:SUN@H5": 0.4,
+     "SR:SUN@H7": 0.4,
+     "HWAGAE": 0.3,
+     "daeunShift": 0.5
+    },
+    "mods": {
+     "romance": 0.8
+    }
+   },
+   "location": "street",
+   "who": "me",
+   "line": {
+    "ko": "(지하철역에서 누군가 내 이름을 불렀다. 돌아보니… 첫사랑이었다.)",
+    "en": "(Someone called your name at the subway station. You turned around… your first love.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "커피 한잔 하자고 한다",
+      "en": "Ask them for a coffee"
+     },
+     "w": {
+      "REKINDLE": 0.5,
+      "MEMORY": 0.4,
+      "AWKWARD": 0.1
+     }
+    },
+    {
+     "t": {
+      "ko": "반갑게 인사만 하고 헤어진다",
+      "en": "Just say hello and part ways"
+     },
+     "w": {
+      "REKINDLE": 0.1,
+      "MEMORY": 0.7,
+      "AWKWARD": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "REKINDLE": {
+     "r": {
+      "ko": "몇 시간이 몇 분처럼 지나갔다. 우리는 다시 시작했다.",
+      "en": "Hours passed like minutes. You started again."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "첫사랑과 다시",
+       "en": "My first love, again"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 7
+     }
+    },
+    "MEMORY": {
+     "r": {
+      "ko": "그때 우리 참 어렸다. 웃으며 헤어졌다.",
+      "en": "We were so young back then. You parted with a smile."
+     }
+    },
+    "AWKWARD": {
+     "r": {
+      "ko": "할 말이 생각나지 않았다. 세월이 지나 있었다.",
+      "en": "Nothing came to mind to say. Too many years had passed."
+     }
+    }
+   }
+  },
+  {
+   "id": "BLIND_DATE_COUSIN",
+   "cat": "romance",
+   "rarity": "common",
+   "tone": "romance",
+   "requires": [
+    "!partnered",
+    "employed"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.54,
+     "STEM_COMBINATION@day": 0.36,
+     "SIX_HARMONY@day": 0.3,
+     "JUPITER@H5": 0.24,
+     "JUPITER@H7": 0.24,
+     "SR:SUN@H5": 0.24,
+     "SR:SUN@H7": 0.24
+    },
+    "mods": {
+     "romance": 0.6,
+     "social": 0.4
+    }
+   },
+   "location": "restaurant",
+   "activity": "eat",
+   "who": "coworker",
+   "line": {
+    "ko": "우리 사촌 진짜 괜찮은 사람인데, 소개팅 한번 해볼래요?",
+    "en": "My cousin's a really great person. Want me to set you two up?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "좋아요!",
+      "en": "Sure!"
+     },
+     "w": {
+      "MATCH": 0.45,
+      "FRIENDS": 0.3,
+      "DISASTER": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "음… 부담스러운데",
+      "en": "Hmm… that's a bit much"
+     },
+     "w": {
+      "MATCH": 0.1,
+      "FRIENDS": 0.2,
+      "DECLINE": 0.7
+     }
+    }
+   ],
+   "outcomes": {
+    "MATCH": {
+     "r": {
+      "ko": "세 번째 만남에서, 그 사람이 먼저 손을 잡았다.",
+      "en": "On the third date, they reached for your hand first."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "동료가 이어준 인연",
+       "en": "Set up by a coworker"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "partner"
+      ]
+     }
+    },
+    "FRIENDS": {
+     "r": {
+      "ko": "좋은 사람이었다. 연인보다는 친구가 됐다.",
+      "en": "A good person. You became friends rather than lovers."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    },
+    "DISASTER": {
+     "r": {
+      "ko": "소개팅 내내 그 사람의 전 애인 얘기만 들었다. 두 시간 동안.",
+      "en": "You heard about their ex the entire date. For two hours."
+     }
+    },
+    "DECLINE": {
+     "r": {
+      "ko": "정중히 거절했다. 동료가 조금 서운해했다.",
+      "en": "You politely said no. Your coworker looked a little hurt."
+     }
+    }
+   }
+  },
+  {
+   "id": "DRUNK_CONFESSION",
+   "cat": "romance",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "big": true,
+   "title": {
+    "ko": "취중진담",
+    "en": "Drunk and honest"
+   },
+   "requires": [
+    "!partnered",
+    "hasCrushFriend"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.63,
+     "STEM_COMBINATION@day": 0.42,
+     "SIX_HARMONY@day": 0.35,
+     "JUPITER@H5": 0.28,
+     "JUPITER@H7": 0.28,
+     "SR:SUN@H5": 0.28,
+     "SR:SUN@H7": 0.28,
+     "group:BI_GYEON": 0.42,
+     "SIX_HARMONY@month": 0.21,
+     "JUPITER@H11": 0.42
+    },
+    "mods": {
+     "romance": 0.7
+    }
+   },
+   "location": "street",
+   "who": "crush",
+   "line": {
+    "ko": "(술자리가 끝나고, {crush}이(가) 조용히 말했다.) …사실 나 너 좋아해. 오래전부터.",
+    "en": "(After drinks, {crush} said quietly:) …I like you. I have for a long time."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…나도야",
+      "en": "…Me too"
+     },
+     "w": {
+      "LOVERS": 0.8,
+      "AWKWARD": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "술 깨고 다시 얘기하자",
+      "en": "Let's talk when we're sober"
+     },
+     "w": {
+      "LOVERS": 0.35,
+      "FRIENDS": 0.45,
+      "AWKWARD": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "우린 친구잖아",
+      "en": "But we're friends"
+     },
+     "w": {
+      "FRIENDS": 0.5,
+      "AWKWARD": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "LOVERS": {
+     "r": {
+      "ko": "다음 날 아침, 우리는 어색하게 웃었다. 그리고 연인이 됐다.",
+      "en": "The next morning you smiled awkwardly at each other. And you became a couple."
+     },
+     "effects": [
+      {
+       "kind": "startDatingFriend"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "친구에서 연인으로",
+       "en": "From friends to lovers"
+      },
+      "location": "street",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 7
+     }
+    },
+    "FRIENDS": {
+     "r": {
+      "ko": "우리는 그날 밤을 없던 일로 하기로 했다. 그래도 조금은 달라졌다.",
+      "en": "You agreed that night never happened. Still, something changed a little."
+     }
+    },
+    "AWKWARD": {
+     "r": {
+      "ko": "…그 뒤로 {crush}에게서 연락이 뜸해졌다.",
+      "en": "…After that, {crush} texted less and less."
+     },
+     "effects": [
+      {
+       "kind": "loseFriend"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SAME_DAY_CONFESSION",
+   "cat": "romance",
+   "rarity": "rare",
+   "tone": "romance",
+   "big": true,
+   "title": {
+    "ko": "같은 마음",
+    "en": "The same heart"
+   },
+   "requires": [
+    "!partnered",
+    "fatedAvailable"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.9,
+     "STEM_COMBINATION@day": 0.6,
+     "SIX_HARMONY@day": 0.5,
+     "JUPITER@H5": 0.4,
+     "JUPITER@H7": 0.4,
+     "SR:SUN@H5": 0.4,
+     "SR:SUN@H7": 0.4
+    },
+    "mods": {
+     "romance": 1.0
+    }
+   },
+   "location": "park",
+   "activity": "walk",
+   "who": "fated",
+   "line": {
+    "ko": "(오늘 고백하려고 했는데… {fated}이(가) 먼저 입을 열었다.) 나… 너 좋아하는 것 같아.",
+    "en": "(You planned to confess today… but {fated} spoke first.) I think… I like you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(웃음이 터진다) 나도 오늘 말하려 했어",
+      "en": "(You burst out laughing) I was going to say that today!"
+     },
+     "w": {
+      "LOVERS": 0.95,
+      "SHY": 0.05
+     }
+    },
+    {
+     "t": {
+      "ko": "(말없이 고개를 끄덕인다)",
+      "en": "(You nod without a word)"
+     },
+     "w": {
+      "LOVERS": 0.8,
+      "SHY": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "LOVERS": {
+     "r": {
+      "ko": "둘 다 한참을 웃었다. 같은 마음이라는 걸 알았으니… 이제 제대로 말할 차례다.",
+      "en": "You both laughed for ages. Now that you know it's mutual… it's time to say it properly."
+     },
+     "effects": [
+      {
+       "kind": "startDatingFated"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "같은 날, 같은 마음",
+       "en": "Same day, same heart"
+      },
+      "location": "park",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 8
+     }
+    },
+    "SHY": {
+     "r": {
+      "ko": "얼굴만 빨개진 채 헤어졌다. 그래도, 알 것 같았다.",
+      "en": "You parted, both red in the face. Still, you knew."
+     },
+     "effects": [
+      {
+       "kind": "sparkFated",
+       "amount": 0.4
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "OFFICE_ROMANCE",
+   "cat": "romance",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "requires": [
+    "!partnered",
+    "employed",
+    "!selfEmployed"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.63,
+     "STEM_COMBINATION@day": 0.42,
+     "SIX_HARMONY@day": 0.35,
+     "JUPITER@H5": 0.28,
+     "JUPITER@H7": 0.28,
+     "SR:SUN@H5": 0.28,
+     "SR:SUN@H7": 0.28
+    },
+    "mods": {
+     "romance": 0.7,
+     "career": 0.3
+    }
+   },
+   "location": "office",
+   "activity": "overtime",
+   "who": "coworker",
+   "line": {
+    "ko": "(야근이 끝난 사무실, 불 꺼진 복도에 우리 둘만 남았다.) …나 사실, 당신 좋아해요.",
+    "en": "(After overtime, just the two of you in the dark hallway.) …I actually like you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "나도요",
+      "en": "Me too"
+     },
+     "w": {
+      "DATE": 0.8,
+      "NOPE": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "회사에선 좀…",
+      "en": "Not at work…"
+     },
+     "w": {
+      "SECRET": 0.5,
+      "NOPE": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "DATE": {
+     "r": {
+      "ko": "그날부터 우리는 회사에선 모르는 사이, 퇴근 후엔 연인이 됐다.",
+      "en": "From then on: strangers at the office, a couple after work."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      },
+      {
+       "kind": "setFlag",
+       "name": "officeRomance",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "OFFICE_ROMANCE_PUBLIC",
+       "after": [
+        4,
+        12
+       ],
+       "p": 0.8
+      }
+     ]
+    },
+    "SECRET": {
+     "r": {
+      "ko": "아무도 모르게 만나기로 했다. 비밀 연애의 시작.",
+      "en": "You agreed to date in secret. A secret office romance begins."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      },
+      {
+       "kind": "setFlag",
+       "name": "officeRomance",
+       "value": true
+      },
+      {
+       "kind": "setFlag",
+       "name": "secretDating",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "OFFICE_ROMANCE_PUBLIC",
+       "after": [
+        3,
+        10
+       ],
+       "p": 0.9
+      }
+     ]
+    },
+    "NOPE": {
+     "r": {
+      "ko": "정중히 선을 그었다. 다음 날부터 조금 어색해졌다.",
+      "en": "You gently drew the line. Things got a bit awkward after."
+     }
+    }
+   }
+  },
+  {
+   "id": "OFFICE_ROMANCE_PUBLIC",
+   "cat": "romance",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "dating",
+    "employed",
+    "f_officeRomance",
+    "!selfEmployed"
+   ],
+   "chainOnly": true,
+   "location": "office",
+   "activity": "work",
+   "who": "coworker",
+   "line": {
+    "ko": "(회사 단톡방에 우리 둘이 손잡고 걷는 사진이 올라왔다. '이거 누구예요?ㅋㅋ')",
+    "en": "(A photo of you two holding hands landed in the team chat. 'Who's this? lol')"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당당하게 인정한다",
+      "en": "Own it proudly"
+     },
+     "w": {
+      "PUBLIC": 0.8,
+      "AWKWARD": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "끝까지 아닌 척한다",
+      "en": "Deny it to the end"
+     },
+     "w": {
+      "AWKWARD": 0.6,
+      "PUBLIC": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "PUBLIC": {
+     "r": {
+      "ko": "팀장님이 제일 먼저 박수를 쳤다. 청첩장은 언제 주냐는 말까지.",
+      "en": "The manager clapped first. Someone even asked when the invitations were coming."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "secretDating"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "사내연애 공개",
+       "en": "Our office romance goes public"
+      },
+      "location": "office",
+      "actors": [
+       "me",
+       "partner",
+       "coworker"
+      ]
+     }
+    },
+    "AWKWARD": {
+     "r": {
+      "ko": "며칠 동안 탕비실에만 가면 대화가 뚝 끊겼다.",
+      "en": "For days, every conversation stopped when you entered the break room."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "secretDating"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "LONG_DISTANCE",
+   "cat": "romance",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "big": true,
+   "title": {
+    "ko": "장거리 연애",
+    "en": "Long distance"
+   },
+   "requires": [
+    "dating"
+   ],
+   "trigger": {
+    "signals": {
+     "YEOKMA": 0.72,
+     "JUPITER@H9": 0.48,
+     "JUPITER@H4": 0.32,
+     "URANUS>ASC:conjunction": 0.32,
+     "BRANCH_CLASH@day": 0.4
+    },
+    "mods": {
+     "relocation": 0.6,
+     "overseas": 0.6
+    }
+   },
+   "location": "airport",
+   "activity": "wait",
+   "who": "partner",
+   "line": {
+    "ko": "나… 이번에 해외로 발령이 났어. 2년이래.",
+    "en": "I… I'm being posted abroad. For two years."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "기다릴게",
+      "en": "I'll wait"
+     },
+     "w": {
+      "LDR": 0.9,
+      "END": 0.1
+     }
+    },
+    {
+     "t": {
+      "ko": "…우리 여기까지 하자",
+      "en": "…Let's end it here"
+     },
+     "w": {
+      "END": 0.8,
+      "LDR": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "LDR": {
+     "r": {
+      "ko": "공항에서 한참을 안고 있었다. 우리의 시차는 8시간.",
+      "en": "You held each other at the airport for a long time. Eight hours apart, now."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "longDistance",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "장거리 연애의 시작",
+       "en": "The start of long distance"
+      },
+      "location": "airport",
+      "actors": [
+       "me",
+       "partner"
+      ]
+     },
+     "chain": [
+      {
+       "to": "LDR_TEST",
+       "after": [
+        6,
+        18
+       ]
+      }
+     ]
+    },
+    "END": {
+     "r": {
+      "ko": "마지막으로 손을 잡았다. 그 사람은 게이트 너머로 사라졌다.",
+      "en": "You held hands one last time. They disappeared past the gate."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "LDR_TEST",
+   "cat": "romance",
+   "rarity": "common",
+   "tone": "romance",
+   "requires": [
+    "dating",
+    "f_longDistance"
+   ],
+   "chainOnly": true,
+   "who": "me",
+   "line": {
+    "ko": "({partner}의 답장이 점점 늦어진다. 시차 때문일까, 마음 때문일까.)",
+    "en": "({partner}'s replies come later and later. Is it the time zones, or is it something more?)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "비행기 표를 끊는다",
+      "en": "Book a flight"
+     },
+     "w": {
+      "STRONGER": 0.7,
+      "BREAK": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "솔직하게 이야기한다",
+      "en": "Talk honestly"
+     },
+     "w": {
+      "STRONGER": 0.5,
+      "BREAK": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "(모른 척 기다린다)",
+      "en": "(Pretend nothing's wrong and wait)"
+     },
+     "w": {
+      "STRONGER": 0.3,
+      "BREAK": 0.7
+     }
+    }
+   ],
+   "outcomes": {
+    "STRONGER": {
+     "r": {
+      "ko": "공항 게이트에서 그 사람이 달려왔다. 우린 괜찮을 거다.",
+      "en": "They came running at the arrival gate. You're going to be okay."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "longDistance"
+      }
+     ]
+    },
+    "BREAK": {
+     "r": {
+      "ko": "…거리를 이기지 못했다. 마지막 영상통화는 조용히 끝났다.",
+      "en": "…Distance won. The last video call ended quietly."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      },
+      {
+       "kind": "clearFlag",
+       "name": "longDistance"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "화면 너머의 이별",
+       "en": "A goodbye on a screen"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "APP_MATCH_CLASSMATE",
+   "cat": "romance",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "!partnered",
+    "age<=50"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.3,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2
+    },
+    "mods": {
+     "romance": 0.5,
+     "social": 0.3
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(소개팅 앱에서 매칭됐다. 프로필 사진을 보니… 고등학교 짝꿍이잖아?!)",
+    "en": "(A match on the dating app. The photo… it's your old high-school deskmate?!)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "반갑다고 메시지를 보낸다",
+      "en": "No way, hi!"
+     },
+     "w": {
+      "DATE": 0.45,
+      "FRIENDS": 0.45,
+      "CRINGE": 0.1
+     }
+    },
+    {
+     "t": {
+      "ko": "(조용히 매칭을 취소한다)",
+      "en": "(Quietly unmatch)"
+     },
+     "w": {
+      "NOTHING": 0.8,
+      "CRINGE": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "DATE": {
+     "r": {
+      "ko": "추억 얘기로 시작해서, 새벽까지 이야기했다. 그리고 만나기 시작했다.",
+      "en": "It started with old memories and went on till dawn. Then you started seeing each other."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ]
+    },
+    "FRIENDS": {
+     "r": {
+      "ko": "연애보다는 동창 모임이 하나 생겼다.",
+      "en": "Less a romance, more a class reunion."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    },
+    "CRINGE": {
+     "r": {
+      "ko": "…다음 날, 동창 단톡방에 '누구 앱 한다더라'는 소문이 돌았다.",
+      "en": "…The next day, the class group chat was buzzing about who's on the app."
+     }
+    },
+    "NOTHING": {
+     "r": {
+      "ko": "못 본 걸로 했다. 세상 참 좁다.",
+      "en": "You decided you never saw it. Small world."
+     }
+    }
+   }
+  },
+  {
+   "id": "EX_WANTS_BACK",
+   "cat": "romance",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "requires": [
+    "!partnered",
+    "hasEx"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.3,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2,
+     "HWAGAE": 0.3
+    },
+    "mods": {
+     "romance": 0.4
+    }
+   },
+   "location": "home",
+   "who": "ex",
+   "line": {
+    "ko": "…잘 지내? 나 요즘 네 생각이 많이 나.",
+    "en": "…How are you? I've been thinking about you a lot."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "다시 만나보자",
+      "en": "Let's try again"
+     },
+     "w": {
+      "REUNITE": 0.6,
+      "SAME": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "이미 끝난 일이야",
+      "en": "That's over"
+     },
+     "w": {
+      "CLOSED": 0.9,
+      "REUNITE": 0.1
+     }
+    }
+   ],
+   "outcomes": {
+    "REUNITE": {
+     "r": {
+      "ko": "다시 만났다. 이번엔, 다를 거라고 믿고 싶었다.",
+      "en": "You got back together. You wanted to believe this time would be different."
+     },
+     "effects": [
+      {
+       "kind": "startDatingEx"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시 시작된 우리",
+       "en": "Us, again"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "partner"
+      ]
+     }
+    },
+    "SAME": {
+     "r": {
+      "ko": "다시 만났다. …그리고 같은 이유로 또 싸우기 시작했다.",
+      "en": "You got back together. …And started fighting about the same things."
+     },
+     "effects": [
+      {
+       "kind": "startDatingEx"
+      }
+     ],
+     "chain": [
+      {
+       "to": "EX_SAME_PATTERN",
+       "after": [
+        3,
+        10
+       ],
+       "p": 0.8
+      }
+     ]
+    },
+    "CLOSED": {
+     "r": {
+      "ko": "답장하지 않았다. 마음이 조금 가벼워졌다.",
+      "en": "You didn't reply. Your heart felt a little lighter."
+     }
+    }
+   }
+  },
+  {
+   "id": "EX_SAME_PATTERN",
+   "cat": "romance",
+   "rarity": "common",
+   "tone": "romance",
+   "requires": [
+    "dating"
+   ],
+   "chainOnly": true,
+   "who": "partner",
+   "line": {
+    "ko": "우리… 결국 또 이렇게 되네.",
+    "en": "Us… ending up like this again."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "이번엔 진짜 끝내자",
+      "en": "This time, let's really end it"
+     },
+     "w": {
+      "END": 0.9,
+      "STAY": 0.1
+     }
+    },
+    {
+     "t": {
+      "ko": "한 번만 더 노력해보자",
+      "en": "Let's try once more"
+     },
+     "w": {
+      "STAY": 0.5,
+      "END": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "END": {
+     "r": {
+      "ko": "같은 사람과 두 번 헤어지는 건, 생각보다 덜 아팠다.",
+      "en": "Breaking up with the same person twice hurt less than you thought."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      }
+     ]
+    },
+    "STAY": {
+     "r": {
+      "ko": "이번엔 서로 조금씩 양보했다. 아주 조금씩.",
+      "en": "This time you both gave a little. Just a little."
+     }
+    }
+   }
+  },
+  {
+   "id": "DUMPED_FOR_SOMEONE",
+   "cat": "romance",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "환승이별",
+    "en": "Left for someone new"
+   },
+   "requires": [
+    "dating"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.8,
+     "HARM@day": 0.5,
+     "PUNISHMENT@day": 0.4,
+     "URANUS>VENUS:hard": 0.7,
+     "group:GYEOB_JAE": 0.5,
+     "SATURN>VENUS:hard": 0.4
+    },
+    "mods": {
+     "volatility": 0.5,
+     "stability": -0.4
+    }
+   },
+   "location": "cafe",
+   "activity": "drink_coffee",
+   "who": "partner",
+   "line": {
+    "ko": "미안해… 나 다른 사람이 생겼어.",
+    "en": "I'm sorry… there's someone else."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(아무 말도 못 한다)",
+      "en": "(You can't say a word)"
+     },
+     "w": {
+      "DUMPED": 1
+     }
+    },
+    {
+     "t": {
+      "ko": "그 사람 누군데?",
+      "en": "Who is it?"
+     },
+     "w": {
+      "DUMPED": 0.85,
+      "SCENE": 0.15
+     }
+    }
+   ],
+   "outcomes": {
+    "DUMPED": {
+     "r": {
+      "ko": "…그렇게 끝났다. 일주일 뒤, 그 사람의 인스타에 새 연인과의 사진이 올라왔다.",
+      "en": "…And that was it. A week later, their Instagram showed the new person."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "환승이별 당한 날",
+       "en": "The day I was left for someone new"
+      },
+      "location": "street",
+      "actors": [
+       "me"
+      ]
+     },
+     "chain": [
+      {
+       "to": "REBOUND_REAL",
+       "after": [
+        2,
+        10
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "SCENE": {
+     "r": {
+      "ko": "카페 한가운데서 목소리가 커졌다. 모두가 쳐다봤다.",
+      "en": "Voices rose in the middle of the café. Everyone stared."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      }
+     ],
+     "chain": [
+      {
+       "to": "REBOUND_REAL",
+       "after": [
+        2,
+        10
+       ],
+       "p": 0.5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "REBOUND_REAL",
+   "cat": "romance",
+   "rarity": "common",
+   "tone": "romance",
+   "requires": [
+    "!partnered"
+   ],
+   "chainOnly": true,
+   "location": "restaurant",
+   "activity": "eat",
+   "who": "me",
+   "line": {
+    "ko": "(헤어지고 홧김에 나간 소개팅. 근데… 이 사람, 생각보다 너무 좋다.)",
+    "en": "(A rebound blind date you went on out of spite. But… this person is really good.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "천천히 가보자",
+      "en": "Let's take it slow"
+     },
+     "w": {
+      "REAL": 0.7,
+      "TOO_SOON": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "지금은 아닌 것 같아",
+      "en": "Not now"
+     },
+     "w": {
+      "TOO_SOON": 0.8,
+      "REAL": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "REAL": {
+     "r": {
+      "ko": "리바운드라고 생각했는데, 진짜가 돼버렸다.",
+      "en": "You thought it was a rebound. It turned out to be the real thing."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "리바운드가 진짜가 된 날",
+       "en": "When the rebound became real"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "partner"
+      ]
+     }
+    },
+    "TOO_SOON": {
+     "r": {
+      "ko": "좋은 사람이었다. 다만, 아직은 아니었다.",
+      "en": "A good person. It just wasn't time yet."
+     }
+    }
+   }
+  },
+  {
+   "id": "GHOSTED",
+   "cat": "romance",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "dating",
+    "partnerYears<=1"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.48,
+     "HARM@day": 0.3,
+     "PUNISHMENT@day": 0.24,
+     "URANUS>VENUS:hard": 0.42,
+     "group:GYEOB_JAE": 0.3,
+     "SATURN>VENUS:hard": 0.24
+    },
+    "mods": {
+     "volatility": 0.4
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "({partner}에게서 사흘째 답장이 없다. 전화도 꺼져 있다.)",
+    "en": "(No reply from {partner} for three days. Their phone is off.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "계속 연락해본다",
+      "en": "Keep trying"
+     },
+     "w": {
+      "GHOSTED": 0.75,
+      "EXPLAIN": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "나도 연락을 끊는다",
+      "en": "Go silent too"
+     },
+     "w": {
+      "GHOSTED": 0.9,
+      "EXPLAIN": 0.1
+     }
+    }
+   ],
+   "outcomes": {
+    "GHOSTED": {
+     "r": {
+      "ko": "…그렇게 끝이었다. 이유도 모른 채.",
+      "en": "…That was the end. You never found out why."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "읽지 않은 메시지",
+       "en": "Unread messages"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ]
+     }
+    },
+    "EXPLAIN": {
+     "r": {
+      "ko": "일주일 뒤 연락이 왔다. 많이 아팠다고 했다. 미안하다고.",
+      "en": "A week later they called. They'd been really sick. They were sorry."
+     }
+    }
+   }
+  },
+  {
+   "id": "AWKWARD_PROPOSAL",
+   "cat": "romance",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "big": true,
+   "title": {
+    "ko": "공개 프러포즈",
+    "en": "A public proposal"
+   },
+   "requires": [
+    "dating",
+    "partnerYears>=1",
+    "!engaged"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.6,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2
+    },
+    "mods": {
+     "marriage": 0.8
+    }
+   },
+   "location": "restaurant",
+   "activity": "date",
+   "who": "partner",
+   "line": {
+    "ko": "(식당 조명이 모두 꺼지고, 풍선 사이로 {partner}이(가) 무릎을 꿇었다. 모든 손님이 쳐다본다.)",
+    "en": "(The restaurant lights went out, and {partner} knelt among the balloons. Every diner is watching.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(얼굴이 빨개진 채) …응",
+      "en": "(Face burning) …Yes"
+     },
+     "w": {
+      "YES": 0.9,
+      "HURT": 0.1
+     }
+    },
+    {
+     "t": {
+      "ko": "일단 나가서 얘기하자",
+      "en": "Let's talk outside first"
+     },
+     "w": {
+      "HURT": 0.6,
+      "YES": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "YES": {
+     "r": {
+      "ko": "박수가 터졌다. 창피해서 죽는 줄 알았지만, 반지는 예뻤다.",
+      "en": "Applause everywhere. You nearly died of embarrassment, but the ring was beautiful."
+     },
+     "effects": [
+      {
+       "kind": "engage"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "모두가 박수 친 프러포즈",
+       "en": "The proposal everyone applauded"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "partner",
+       "guest",
+       "guest"
+      ],
+      "priority": 8
+     }
+    },
+    "HURT": {
+     "r": {
+      "ko": "{partner}의 표정이 굳었다. 그날은 조용히 집에 왔다.",
+      "en": "{partner}'s face fell. You went home in silence."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PROPOSAL_REJECTED",
+   "cat": "romance",
+   "rarity": "uncommon",
+   "tone": "romance",
+   "big": true,
+   "title": {
+    "ko": "거절",
+    "en": "Not yet"
+   },
+   "requires": [
+    "dating",
+    "partnerYears>=2",
+    "!engaged"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.4,
+     "HARM@day": 0.25,
+     "PUNISHMENT@day": 0.2,
+     "URANUS>VENUS:hard": 0.35,
+     "group:GYEOB_JAE": 0.25,
+     "SATURN>VENUS:hard": 0.2,
+     "SATURN@H7": 0.4
+    },
+    "mods": {
+     "marriage": -0.5
+    }
+   },
+   "location": "park",
+   "activity": "walk",
+   "who": "me",
+   "line": {
+    "ko": "(반지를 꺼냈다. {partner}의 눈이 흔들렸다.) …미안해. 아직은 아니야.",
+    "en": "(You took out the ring. {partner}'s eyes wavered.) …I'm sorry. Not yet."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "기다릴게",
+      "en": "I'll wait"
+     },
+     "w": {
+      "WAIT": 0.7,
+      "END": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "그럼 우리는 뭐야?",
+      "en": "Then what are we?"
+     },
+     "w": {
+      "END": 0.6,
+      "WAIT": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "WAIT": {
+     "r": {
+      "ko": "반지는 다시 주머니에 들어갔다. 우리는 조금 더 걸었다.",
+      "en": "The ring went back in your pocket. You walked on a little longer."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "proposalDelayed",
+       "value": true
+      }
+     ]
+    },
+    "END": {
+     "r": {
+      "ko": "…대답 대신, 우리는 서로를 오래 바라봤다. 그게 대답이었다.",
+      "en": "…Instead of an answer, you looked at each other for a long time. That was the answer."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "거절당한 반지",
+       "en": "The ring that was turned down"
+      },
+      "location": "park",
+      "actors": [
+       "me"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "AGE_GAP_OPPOSED",
+   "cat": "romance",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "dating",
+    "momAlive",
+    "partnerAgeGap>=6"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.64,
+     "BRANCH_CLASH@month": 0.48,
+     "PUNISHMENT@month": 0.32,
+     "group:GYEOB_JAE": 0.24,
+     "SATURN>MOON:hard": 0.4
+    },
+    "mods": {
+     "family": 0.4
+    }
+   },
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "mom",
+   "line": {
+    "ko": "나이 차이가 그렇게 많이 나는데… 엄마는 반대야.",
+    "en": "With an age gap that big… I'm against it."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "설득해볼게요",
+      "en": "Let me convince you"
+     },
+     "w": {
+      "ACCEPT": 0.5,
+      "STANDOFF": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "제 인생이에요",
+      "en": "It's my life"
+     },
+     "w": {
+      "STANDOFF": 0.6,
+      "COLD": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(마음이 흔들린다)",
+      "en": "(Your resolve wavers)"
+     },
+     "w": {
+      "BREAK": 0.5,
+      "STANDOFF": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "ACCEPT": {
+     "r": {
+      "ko": "엄마가 한숨을 쉬며 말했다. …그럼 밥이나 한번 데려와.",
+      "en": "Mom sighed. …Fine, bring them over for dinner."
+     },
+     "lean": {
+      "traits": {
+       "emotionalExpression": 0.4
+      }
+     }
+    },
+    "STANDOFF": {
+     "r": {
+      "ko": "그날 이후, 엄마는 그 사람 이야기만 나오면 말을 돌렸다.",
+      "en": "Since then, Mom changes the subject whenever they come up."
+     }
+    },
+    "COLD": {
+     "r": {
+      "ko": "한동안 본가에 가지 않았다.",
+      "en": "You stayed away from home for a while."
+     },
+     "effects": [
+      {
+       "kind": "familySupport",
+       "delta": -0.2
+      }
+     ]
+    },
+    "BREAK": {
+     "r": {
+      "ko": "…결국 헤어졌다. 엄마는 아무 말도 하지 않았다.",
+      "en": "…You broke up in the end. Mom didn't say a word."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "FRIENDS_PARTNER",
+   "cat": "romance",
+   "rarity": "rare",
+   "tone": "dark",
+   "requires": [
+    "hasFriend",
+    "!married"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.3,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2,
+     "BRANCH_CLASH@day": 0.4,
+     "HARM@day": 0.25,
+     "PUNISHMENT@day": 0.2,
+     "URANUS>VENUS:hard": 0.35,
+     "group:GYEOB_JAE": 0.25,
+     "SATURN>VENUS:hard": 0.2
+    },
+    "mods": {
+     "romance": 0.5,
+     "risk": 0.4
+    }
+   },
+   "location": "cafe",
+   "who": "me",
+   "line": {
+    "ko": "({friend}의 연인과 단둘이 남게 됐다. 이상하게… 자꾸 눈이 간다.)",
+    "en": "(You ended up alone with {friend}'s partner. Somehow… you can't stop looking.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "선을 긋는다",
+      "en": "Draw the line"
+     },
+     "w": {
+      "LINE": 0.85,
+      "TEMPT": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "(연락처를 교환한다)",
+      "en": "(Exchange numbers)"
+     },
+     "w": {
+      "AFFAIR": 0.5,
+      "GUILT": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "LINE": {
+     "r": {
+      "ko": "마음을 접었다. {friend}에게는 평생 말하지 않을 비밀.",
+      "en": "You let it go. A secret you'll never tell {friend}."
+     }
+    },
+    "TEMPT": {
+     "r": {
+      "ko": "그날 밤, 보내지 않을 메시지를 몇 번이나 썼다 지웠다.",
+      "en": "That night you wrote and deleted a message you'd never send."
+     }
+    },
+    "AFFAIR": {
+     "r": {
+      "ko": "…선을 넘었다. 이 비밀은 오래가지 못할 것이다.",
+      "en": "…You crossed the line. This secret won't last."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "guilty",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "FRIEND_FINDS_OUT",
+       "after": [
+        2,
+        8
+       ],
+       "p": 0.8
+      }
+     ],
+     "lean": {
+      "traits": {
+       "riskTolerance": 0.6,
+       "novelty": 0.4
+      }
+     }
+    },
+    "GUILT": {
+     "r": {
+      "ko": "…그날 이후 {friend}의 얼굴을 똑바로 볼 수 없었다.",
+      "en": "…After that you couldn't look {friend} in the eye."
+     }
+    }
+   }
+  },
+  {
+   "id": "FRIEND_FINDS_OUT",
+   "cat": "romance",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "들통",
+    "en": "Found out"
+   },
+   "requires": [
+    "hasFriend",
+    "f_guilty"
+   ],
+   "chainOnly": true,
+   "location": "street",
+   "who": "friend",
+   "line": {
+    "ko": "…다 알아. 어떻게 나한테 그럴 수 있어?",
+    "en": "…I know everything. How could you do this to me?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "무릎 꿇고 사과한다",
+      "en": "Get on your knees and apologize"
+     },
+     "w": {
+      "LOST": 0.8,
+      "FORGIVEN": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "(아무 말도 못 한다)",
+      "en": "(You can't say anything)"
+     },
+     "w": {
+      "LOST": 0.95,
+      "FORGIVEN": 0.05
+     }
+    }
+   ],
+   "outcomes": {
+    "LOST": {
+     "r": {
+      "ko": "{friend}은(는) 연락처에서 나를 지웠다. 십 년 우정이 그렇게 끝났다.",
+      "en": "{friend} deleted your number. Ten years of friendship, gone."
+     },
+     "effects": [
+      {
+       "kind": "loseFriend"
+      },
+      {
+       "kind": "clearFlag",
+       "name": "guilty"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "잃어버린 친구",
+       "en": "A friend I lost"
+      },
+      "location": "street",
+      "actors": [
+       "me"
+      ]
+     }
+    },
+    "FORGIVEN": {
+     "r": {
+      "ko": "{friend}은(는) 한참을 울다가 말했다. …다시는 그러지 마.",
+      "en": "{friend} cried for a long time, then said: …Never again."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "guilty"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "REBOUND_STANDALONE",
+   "cat": "romance",
+   "rarity": "common",
+   "tone": "romance",
+   "requires": [
+    "!partnered",
+    "recentlyBrokeUp",
+    "hasFriend"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.3,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2,
+     "group:BI_GYEON": 0.3,
+     "SIX_HARMONY@month": 0.15,
+     "JUPITER@H11": 0.3
+    }
+   },
+   "location": "restaurant",
+   "activity": "eat",
+   "who": "friend",
+   "line": {
+    "ko": "야, 헤어진 지 한 달 됐잖아. 오늘 소개팅 하나 잡아놨어. 무조건 나와.",
+    "en": "Hey, it's been a month since the breakup. I set you up tonight. You're coming."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…그래, 나가볼게",
+      "en": "…Fine, I'll go"
+     },
+     "w": {
+      "REAL": 0.5,
+      "TOO_SOON": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "아직은 싫어",
+      "en": "Not yet"
+     },
+     "w": {
+      "TOO_SOON": 1
+     }
+    }
+   ],
+   "outcomes": {
+    "REAL": {
+     "r": {
+      "ko": "리바운드일 줄 알았는데, 생각보다 오래 웃었다.",
+      "en": "You thought it'd be a rebound. You laughed more than you expected to."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ]
+    },
+    "TOO_SOON": {
+     "r": {
+      "ko": "집에 와서 혼자 {f:ramen}을(를) 끓였다. 아직은 이게 편하다.",
+      "en": "You came home and made {f:ramen} alone. This is easier, for now."
+     }
+    }
+   }
+  },
+  {
+   "id": "SECRET_DATING_EXPOSED",
+   "cat": "romance",
+   "rarity": "common",
+   "tone": "light",
+   "requires": [
+    "dating",
+    "hasFriend"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.27,
+     "STEM_COMBINATION@day": 0.18,
+     "SIX_HARMONY@day": 0.15,
+     "JUPITER@H5": 0.12,
+     "JUPITER@H7": 0.12,
+     "SR:SUN@H5": 0.12,
+     "SR:SUN@H7": 0.12
+    },
+    "mods": {
+     "social": 0.4
+    }
+   },
+   "location": "cafe",
+   "who": "friend",
+   "line": {
+    "ko": "야, 너 연애하지? 인스타 스토리에 손 나왔던데?",
+    "en": "Hey, you're dating someone, right? A hand showed up in your story."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…들켰네",
+      "en": "…Busted"
+     },
+     "w": {
+      "PUBLIC": 0.9,
+      "TEASE": 0.1
+     }
+    },
+    {
+     "t": {
+      "ko": "무슨 소리야",
+      "en": "What are you talking about?"
+     },
+     "w": {
+      "DENY": 0.6,
+      "PUBLIC": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "PUBLIC": {
+     "r": {
+      "ko": "그날 밤 친구들 단톡방이 불타올랐다. 다음 주에 {partner}을(를) 소개하기로 했다.",
+      "en": "The group chat exploded. You agreed to introduce {partner} next week."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "secretDating"
+      }
+     ]
+    },
+    "TEASE": {
+     "r": {
+      "ko": "{friend}은(는) 한 시간 내내 놀렸다. 그래도 싫지는 않았다.",
+      "en": "{friend} teased you for an hour. You didn't mind."
+     }
+    },
+    "DENY": {
+     "r": {
+      "ko": "…손 모양으로 들켰다. 친구들은 셜록이었다.",
+      "en": "…They identified the hand anyway. Your friends are detectives."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "secretDating"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "LOVE_TRIANGLE",
+   "cat": "romance",
+   "rarity": "rare",
+   "tone": "romance",
+   "big": true,
+   "title": {
+    "ko": "삼각관계",
+    "en": "A love triangle"
+   },
+   "requires": [
+    "!partnered",
+    "hasCrushFriend"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.54,
+     "STEM_COMBINATION@day": 0.36,
+     "SIX_HARMONY@day": 0.3,
+     "JUPITER@H5": 0.24,
+     "JUPITER@H7": 0.24,
+     "SR:SUN@H5": 0.24,
+     "SR:SUN@H7": 0.24,
+     "group:GYEOB_JAE": 0.42,
+     "group:BI_GYEON": 0.18,
+     "BRANCH_CLASH@month": 0.24
+    },
+    "mods": {
+     "romance": 0.5,
+     "social": 0.4
+    }
+   },
+   "location": "park",
+   "who": "me",
+   "line": {
+    "ko": "(가장 친한 두 친구가, 같은 주에 나한테 고백했다.)",
+    "en": "(Your two closest friends both confessed to you. In the same week.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "{crush}을(를) 선택한다",
+      "en": "Choose {crush}"
+     },
+     "w": {
+      "PICK": 0.7,
+      "MESS": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "둘 다 거절한다",
+      "en": "Turn them both down"
+     },
+     "w": {
+      "NEITHER": 0.8,
+      "MESS": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "PICK": {
+     "r": {
+      "ko": "한 사람과는 연인이 됐고, 다른 한 사람과는 멀어졌다.",
+      "en": "One became your partner. The other drifted away."
+     },
+     "effects": [
+      {
+       "kind": "startDatingFriend"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "둘 중 하나",
+       "en": "One of two"
+      },
+      "location": "park",
+      "actors": [
+       "me",
+       "partner"
+      ]
+     }
+    },
+    "NEITHER": {
+     "r": {
+      "ko": "셋이서 다시 예전처럼 지내기까지, 1년이 걸렸다.",
+      "en": "It took a year for the three of you to feel normal again."
+     }
+    },
+    "MESS": {
+     "r": {
+      "ko": "…결국 셋 다 조금씩 상처를 입었다.",
+      "en": "…In the end, all three of you got a little hurt."
+     },
+     "effects": [
+      {
+       "kind": "loseFriend"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PARTNERS_EX_AROUND",
+   "cat": "romance",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "partnered"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.4,
+     "HARM@day": 0.25,
+     "PUNISHMENT@day": 0.2,
+     "URANUS>VENUS:hard": 0.35,
+     "group:GYEOB_JAE": 0.25,
+     "SATURN>VENUS:hard": 0.2
+    },
+    "mods": {
+     "volatility": 0.3
+    }
+   },
+   "location": "cafe",
+   "who": "me",
+   "line": {
+    "ko": "(요즘 {partner}의 전 애인이 자꾸 연락해온다. 오늘은 집 앞까지 찾아왔다고 한다.)",
+    "en": "({partner}'s ex keeps contacting them. Today they even showed up at the door.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "믿는다고 말한다",
+      "en": "Say you trust them"
+     },
+     "w": {
+      "TRUST": 0.6,
+      "TENSION": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "그 사람을 직접 만나 담판 짓는다",
+      "en": "Meet the ex and settle it"
+     },
+     "w": {
+      "SHOWDOWN": 0.6,
+      "TENSION": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(서운함을 참는다)",
+      "en": "(Swallow the hurt)"
+     },
+     "w": {
+      "TENSION": 0.6,
+      "TRUST": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "TRUST": {
+     "r": {
+      "ko": "{partner}이(가) 그 사람 번호를 내 앞에서 차단했다.",
+      "en": "{partner} blocked the number right in front of you."
+     }
+    },
+    "SHOWDOWN": {
+     "r": {
+      "ko": "카페에서 마주 앉았다. 생각보다 짧게, 깔끔하게 끝났다.",
+      "en": "You sat across from each other at a café. It ended faster and cleaner than expected."
+     }
+    },
+    "TENSION": {
+     "r": {
+      "ko": "며칠 동안 우리 사이에 찬바람이 불었다.",
+      "en": "A cold wind blew between you for days."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SAME_SAJU",
+   "cat": "romance",
+   "rarity": "legendary",
+   "tone": "romance",
+   "big": true,
+   "title": {
+    "ko": "같은 사주",
+    "en": "The same saju"
+   },
+   "requires": [
+    "!partnered"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.54,
+     "STEM_COMBINATION@day": 0.36,
+     "SIX_HARMONY@day": 0.3,
+     "JUPITER@H5": 0.24,
+     "JUPITER@H7": 0.24,
+     "SR:SUN@H5": 0.24,
+     "SR:SUN@H7": 0.24,
+     "HWAGAE": 0.54,
+     "group:PYEON_IN": 0.36,
+     "CHEONEUL_GWIIN": 0.18
+    }
+   },
+   "location": "cafe",
+   "who": "fortune",
+   "line": {
+    "ko": "(철학관에서 만난 사람과 생년월일시가 똑같다. 선생님이 웃었다.) 두 사람, 거울 같구먼.",
+    "en": "(At the saju parlor, you met someone born the exact same minute as you. The reader laughed.) You two are mirrors."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "신기하다며 연락처를 주고받는다",
+      "en": "Laugh and swap numbers"
+     },
+     "w": {
+      "SOULMATE": 0.5,
+      "RIVAL": 0.2,
+      "FRIENDS": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(소름이 돋아서 먼저 나온다)",
+      "en": "(Get chills and leave first)"
+     },
+     "w": {
+      "FRIENDS": 0.3,
+      "NOTHING": 0.7
+     }
+    }
+   ],
+   "outcomes": {
+    "SOULMATE": {
+     "r": {
+      "ko": "말하지 않아도 아는 사람. 그런 사람이 정말 있었다.",
+      "en": "Someone who understands without words. They really exist."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "같은 사주, 같은 마음",
+       "en": "Same saju, same heart"
+      },
+      "location": "cafe",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 8
+     }
+    },
+    "RIVAL": {
+     "r": {
+      "ko": "너무 닮아서였을까. 만날 때마다 부딪혔다.",
+      "en": "Too alike, maybe. You clashed every time you met."
+     }
+    },
+    "FRIENDS": {
+     "r": {
+      "ko": "평생 가는 친구가 생겼다. 생일 파티는 늘 같이.",
+      "en": "A lifelong friend. Every birthday, together."
+     },
+     "effects": [
+      {
+       "kind": "newFriend"
+      }
+     ]
+    },
+    "NOTHING": {
+     "r": {
+      "ko": "가끔 그 사람이 생각난다. 지금 이 순간에도 나랑 같은 걸 하고 있을까.",
+      "en": "Sometimes you wonder if they're doing the same thing as you, right now."
+     }
+    }
+   }
+  }
+ ]
+}

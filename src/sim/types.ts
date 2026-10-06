@@ -1,0 +1,129 @@
+/**
+ * Simulation state. Saju (and later Astrology/MBTI) never write to this
+ * directly — they only produce modifiers. State changes come exclusively
+ * from resolved player/NPC choices and the life tick.
+ */
+import type { GameDate } from "../core/gameDate";
+import type { BirthData } from "../saju/calendar/fourPillars";
+import type { SajuChart } from "../saju/chart";
+import type { WorldState } from "../world/types";
+
+export const EDUCATION_LEVELS = ["NONE", "HIGH_SCHOOL", "BACHELOR", "MASTER", "PHD"] as const;
+export type EducationLevel = (typeof EDUCATION_LEVELS)[number];
+export const educationRank = (e: EducationLevel) => EDUCATION_LEVELS.indexOf(e);
+
+export type RelationshipStatus = "SINGLE" | "DATING" | "MARRIED" | "DIVORCED";
+
+/** Personality placeholder (0..1). MBTI will later feed these + its own modifier source. */
+export interface Traits {
+  riskTolerance: number;
+  novelty: number;
+  sociability: number;
+  ambition: number;
+  /** Full MBTI-derived persona (planning, emotionalExpression, …) when MBTI is known. */
+  persona?: import("../mbti/mbti").Persona;
+}
+
+export interface Residence {
+  country: string;
+  city: string;
+}
+
+export interface Enrollment {
+  program: EducationLevel;
+  untilMonth: number;
+  abroad: boolean;
+}
+
+export interface Memory {
+  date: GameDate;
+  age: number;
+  text: string;
+  tags: string[];
+}
+
+/** Shared by the player and NPCs. */
+export interface Character {
+  id: string;
+  name: string;
+  birth: BirthData;
+  /** Natal chart — computed once at creation. */
+  chart: SajuChart;
+}
+
+export interface Npc extends Character {
+  role: "PARTNER" | "EX" | "FRIEND" | "MENTOR" | "ACQUAINTANCE";
+  metAt: GameDate;
+}
+
+export type SiblingRel = "OLDER_SISTER" | "OLDER_BROTHER" | "YOUNGER_SISTER" | "YOUNGER_BROTHER";
+export type GrandparentRel = "MAT_GRANDMA" | "MAT_GRANDPA" | "PAT_GRANDMA" | "PAT_GRANDPA";
+
+export interface Sibling {
+  id: string;
+  rel: SiblingRel;
+  name: string;
+  sex: "MALE" | "FEMALE";
+  birthYear: number;
+  alive: boolean;
+  married?: boolean;
+  kids?: number;
+  spriteSeed: number;
+}
+
+export interface LifeState extends Character {
+  date: GameDate;
+  /** Months since birth (the simulation's monotonic clock). */
+  monthIndex: number;
+  age: number;
+  alive: boolean;
+
+  traits: Traits;
+  /** Money in thousands. Can go negative (debt). */
+  money: number;
+  debt: number;
+  /** 0..1 how much the family can help financially. */
+  familySupport: number;
+  /** 0..1 caretaking/financial responsibilities toward family. */
+  familyObligation: number;
+
+  education: EducationLevel;
+  enrollment?: Enrollment;
+  /** cid increments whenever the job changes/ends — facts like 'promoted' are tied to one cid. */
+  career: { employed: boolean; field?: string; level: number; abroad: boolean; cid?: number };
+  /** Family (for messages/events that need them alive). Siblings and grandparents come from the game setup. */
+  family?: {
+    mom: { alive: boolean; birthYear: number; name?: string };
+    dad: { alive: boolean; birthYear: number; name?: string };
+    siblings?: Sibling[];
+    grandparents?: Array<{ id: string; rel: GrandparentRel; birthYear: number; alive: boolean }>;
+  };
+  /** Month index at death, if dead. */
+  diedAtMonth?: number;
+  /** Children (born in-game). */
+  kids?: Array<{ id: string; name: string; sex: "MALE" | "FEMALE"; bornYear: number; bornMonth: number; spriteSeed: number }>;
+  /** Pets. */
+  pets?: Array<{ id: string; name: string; species: "DOG" | "CAT"; adoptedYear: number; ageAtAdoption: number; alive: boolean; spriteSeed: number }>;
+  /** Engagement in progress (between proposal and wedding). */
+  engaged?: boolean;
+  /** Story/destiny state (game mode). */
+  story?: import("../story/types").StoryState;
+
+  homeCountry: string;
+  location: Residence;
+
+  relationship: { status: RelationshipStatus; partnerId?: string; sinceMonth?: number; longDistance?: boolean };
+  socialCircle: number;
+  npcs: Npc[];
+
+  memories: Memory[];
+  /** Opportunity history: template id → month indexes it was offered / taken. */
+  history: Record<string, { offered: number[]; taken: number[] }>;
+  flags: Record<string, number | boolean | string>;
+  /** Living world (locations, NPCs, encounters, memories). Present when the world layer is enabled. */
+  world?: WorldState;
+}
+
+export function isAbroad(s: LifeState): boolean {
+  return s.location.country !== s.homeCountry;
+}

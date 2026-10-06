@@ -1,0 +1,5317 @@
+{
+ "_doc": "Multi-day life arcs. Each step happens on its own played day 'after' [min,max] months after the previous step, at 'location'. Choices map to outcomes; outcome effects + a memory card for the 시간이 흐른다 screen. A choice may 'roll' among outcomes (bent by 궁합 via 'compat' when the partner is the destined person). 'alt' + 'altBy' pick another speaker/line by cause or by who can still speak. 'title' heads the big popup. A step with chain: true is followed by the next step right away, the same day (a parent's last night → funeral → the empty days), as one sequence.",
+ "arcs": {
+  "DATING": {
+   "steps": {
+    "FIRST_DATE": {
+     "title": {
+      "ko": "첫 데이트",
+      "en": "First date"
+     },
+     "after": [
+      1,
+      2
+     ],
+     "location": "restaurant",
+     "activity": "date",
+     "who": "partner",
+     "line": {
+      "ko": "(첫 데이트. 괜히 옷을 세 번이나 갈아입었다.)",
+      "en": "(First date. You changed outfits three times.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "솔직하게 설렌다고 말한다",
+        "en": "Admit you're nervous"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "장난스럽게 분위기를 띄운다",
+        "en": "Keep it playful"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "조용히 이야기를 듣는다",
+        "en": "Just listen"
+       },
+       "outcome": "GOOD"
+      }
+     ],
+     "outcomes": {
+      "GOOD": {
+       "r": {
+        "ko": "헤어질 때, 둘 다 한참을 뒤돌아봤다.",
+        "en": "When you parted, you both kept looking back."
+       },
+       "effects": [],
+       "card": "FIRST_DATE"
+      },
+      "AWKWARD": {
+       "r": {
+        "ko": "조금 어색했다. 그래도 헤어질 때 다음 약속을 잡았다.",
+        "en": "A little awkward. But you made plans to meet again before saying goodbye."
+       },
+       "effects": []
+      }
+     },
+     "byMbti": [
+      {
+       "me": "E",
+       "them": "I",
+       "line": {
+        "ko": "(첫 데이트. {partner}은(는) 말수가 적다. 내가 떠들고, {partner}은(는) 웃기만 한다.)",
+        "en": "(First date. {partner} doesn't say much. You talk; {partner} just smiles.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "질문을 던져 {partner}이(가) 이야기하게 한다",
+          "en": "Ask questions so {partner} can talk"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "조용한 전시회로 장소를 옮긴다",
+          "en": "Suggest somewhere quiet, like a gallery"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(계속 혼자 떠든다)",
+          "en": "(Keep talking anyway)"
+         },
+         "roll": {
+          "GOOD": 0.4,
+          "AWKWARD": 0.6
+         }
+        }
+       ]
+      },
+      {
+       "me": "I",
+       "them": "E",
+       "line": {
+        "ko": "(첫 데이트. {partner}이(가) 쉬지 않고 이야기한다. 듣는 건 좋은데, 조금 벅차다.)",
+        "en": "(First date. {partner} talks nonstop. You like listening. It's just… a lot.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "맞장구치며 듣는다",
+          "en": "Listen and nod along"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "용기 내서 내 얘기도 꺼낸다",
+          "en": "Work up the nerve to share something too"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(지쳐서 일찍 들어간다)",
+          "en": "(Worn out. Head home early)"
+         },
+         "roll": {
+          "GOOD": 0.3,
+          "AWKWARD": 0.7
+         }
+        }
+       ]
+      },
+      {
+       "me": "E",
+       "them": "E",
+       "line": {
+        "ko": "(첫 데이트. 둘 다 말이 많아서 식당이 문 닫을 때까지 앉아 있었다.)",
+        "en": "(First date. You both talk so much you stay until the restaurant closes.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "2차 가자!",
+          "en": "Round two!"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "{f:karaoke} 가자!",
+          "en": "Karaoke!"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(내일 일찍 일어나야 하는데…)",
+          "en": "(Early start tomorrow, though…)"
+         },
+         "roll": {
+          "GOOD": 0.6,
+          "AWKWARD": 0.4
+         }
+        }
+       ]
+      },
+      {
+       "me": "I",
+       "them": "I",
+       "line": {
+        "ko": "(첫 데이트. 침묵이 길었는데, 이상하게 불편하지 않았다.)",
+        "en": "(First date. Long silences, and strangely, they're not uncomfortable.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "걷자고 한다",
+          "en": "Suggest a walk"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "이어폰 한쪽을 건네 좋아하는 노래를 들려준다",
+          "en": "Share one earbud and play your favorite song"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(그냥 조용히 밥만 먹는다)",
+          "en": "(Just eat quietly)"
+         },
+         "roll": {
+          "GOOD": 0.5,
+          "AWKWARD": 0.5
+         }
+        }
+       ]
+      },
+      {
+       "me": "J",
+       "them": "P",
+       "line": {
+        "ko": "(첫 데이트 코스를 분 단위로 짜 왔다. {partner}은(는) 30분 늦었다.)",
+        "en": "(You planned the date down to the minute. {partner} is thirty minutes late.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "괜찮아, 계획은 바꾸면 되지",
+          "en": "It's fine. Plans change"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(속으로 한숨을 쉰다)",
+          "en": "(Sigh inwardly)"
+         },
+         "roll": {
+          "GOOD": 0.4,
+          "AWKWARD": 0.6
+         }
+        },
+        {
+         "t": {
+          "ko": "늦은 이유부터 묻는다",
+          "en": "Ask why they're late first"
+         },
+         "roll": {
+          "GOOD": 0.5,
+          "AWKWARD": 0.5
+         }
+        }
+       ]
+      },
+      {
+       "me": "P",
+       "them": "J",
+       "line": {
+        "ko": "({partner}이(가) 데이트 코스를 표로 정리해 왔다. 나는 아무 생각 없이 나왔다.)",
+        "en": "({partner} made a spreadsheet of the date plan. You showed up with no plan at all.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "완벽하다! 그대로 따라간다",
+          "en": "Perfect! Follow the plan"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "끌리는 골목으로 슬쩍 샌다",
+          "en": "Wander off down an interesting alley"
+         },
+         "roll": {
+          "GOOD": 0.6,
+          "AWKWARD": 0.4
+         }
+        },
+        {
+         "t": {
+          "ko": "다음엔 내가 짤게",
+          "en": "Next time I'll plan it"
+         },
+         "outcome": "GOOD"
+        }
+       ]
+      },
+      {
+       "me": "T",
+       "them": "F",
+       "line": {
+        "ko": "(영화를 보고 나오는데 {partner}의 눈이 빨갛다. 뭐라고 해야 하지?)",
+        "en": "(Walking out of the movie, {partner}'s eyes are red. What do you say?)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "그 장면, 나도 좋았어",
+          "en": "I loved that scene too"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "근데 그건 설정 오류 아니야?",
+          "en": "Wasn't that a plot hole, though?"
+         },
+         "roll": {
+          "GOOD": 0.3,
+          "AWKWARD": 0.7
+         }
+        },
+        {
+         "t": {
+          "ko": "(말없이 휴지를 건넨다)",
+          "en": "(Silently hand them a tissue)"
+         },
+         "outcome": "GOOD"
+        }
+       ]
+      },
+      {
+       "me": "F",
+       "them": "F",
+       "line": {
+        "ko": "(영화를 보다가 둘 다 울었다. 휴지 한 통을 나눠 썼다.)",
+        "en": "(You both cried during the movie and shared one pack of tissues.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(웃으면서 같이 운다)",
+          "en": "(Laugh and cry together)"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "영화 얘기로 새벽까지 떠든다",
+          "en": "Talk about the movie until dawn"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "다음엔 코미디 보자",
+          "en": "Comedy next time"
+         },
+         "outcome": "GOOD"
+        }
+       ]
+      }
+     ]
+    },
+    "PROPOSAL": {
+     "title": {
+      "ko": "사랑의 서약",
+      "en": "A Vow of Love"
+     },
+     "after": [
+      14,
+      24
+     ],
+     "location": "park",
+     "activity": "propose",
+     "who": "partner",
+     "line": {
+      "ko": "…우리 만난 지 꽤 됐잖아. 우리, 결혼할까?",
+      "en": "…We've been together a while. Should we get married?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "응, 결혼하자",
+        "en": "Yes, let's get married"
+       },
+       "outcome": "ENGAGED"
+      },
+      {
+       "t": {
+        "ko": "조금만 더 생각해볼래",
+        "en": "Let me think a little more"
+       },
+       "outcome": "NOT_YET"
+      },
+      {
+       "t": {
+        "ko": "…우린 여기까지인 것 같아",
+        "en": "…I think this is where we end"
+       },
+       "outcome": "BREAKUP"
+      }
+     ],
+     "outcomes": {
+      "ENGAGED": {
+       "r": {
+        "ko": "반지를 받았다. 손이 떨렸다.",
+        "en": "You got the ring. Your hands were shaking."
+       },
+       "effects": [
+        {
+         "kind": "engage"
+        }
+       ],
+       "card": "PROPOSAL"
+      },
+      "NOT_YET": {
+       "r": {
+        "ko": "…그래. 그런데 난 오래 기다리진 못할 것 같아.",
+        "en": "…Okay. But I can't wait forever."
+       },
+       "effects": [
+        {
+         "kind": "arcStepAgain",
+         "after": [
+          10,
+          14
+         ]
+        }
+       ],
+       "who": "partner"
+      },
+      "BREAKUP": {
+       "r": {
+        "ko": "그날, 우리는 헤어졌다.",
+        "en": "That day, we broke up."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        }
+       ],
+       "card": "BREAKUP",
+       "scene": [
+        "street"
+       ]
+      },
+      "REFUSED_STAY": {
+       "r": {
+        "ko": "{partner}은(는) 한참 말이 없다가, 반지를 다시 주머니에 넣었다. \"…알겠어. 그래도 난 안 가. 언젠가 네가 웃으면서 '응' 할 때까지.\" 그날도 우리는 손을 잡고 집에 갔다.",
+        "en": "{partner} was quiet for a long time, then slipped the ring back into a pocket. \"…Okay. I'm not going anywhere, though. Not until you say yes with a smile.\" We still walked home hand in hand that night."
+       },
+       "who": "partner",
+       "effects": []
+      },
+      "WAIT_ME": {
+       "r": {
+        "ko": "(반지는 주머니 속에서 다음을 기다리기로 했다.)",
+        "en": "(The ring stays in your pocket, waiting for another day.)"
+       },
+       "effects": [
+        {
+         "kind": "arcStepAgain",
+         "after": [
+          6,
+          10
+         ]
+        }
+       ]
+      }
+     },
+     "byMbti": [
+      {
+       "me": "J",
+       "them": "P",
+       "who": "me",
+       "line": {
+        "ko": "(반지를 산 지 석 달. 계획은 완벽하다. 오늘이 그날이다.)",
+        "en": "(Three months since you bought the ring. The plan is perfect. Today's the day.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "무릎을 꿇는다",
+          "en": "Get down on one knee"
+         },
+         "roll": {
+          "ENGAGED": 0.8,
+          "NOT_YET": 0.2
+         },
+         "compat": {
+          "ENGAGED": 1,
+          "NOT_YET": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "준비한 편지를 읽는다",
+          "en": "Read the letter you wrote"
+         },
+         "roll": {
+          "ENGAGED": 0.75,
+          "NOT_YET": 0.25
+         },
+         "compat": {
+          "ENGAGED": 1,
+          "NOT_YET": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(반지를 다시 주머니에 넣는다)",
+          "en": "(Put the ring back in your pocket)"
+         },
+         "outcome": "WAIT_ME"
+        }
+       ],
+       "outcomes": {
+        "NOT_YET": {
+         "r": {
+          "ko": "{partner}은(는) 한참 반지를 보다가 말했다. '…조금만, 기다려 줄래?'",
+          "en": "{partner} looked at the ring for a long time. \"…Could you wait, just a little?\""
+         }
+        },
+        "ENGAGED": {
+         "r": {
+          "ko": "{partner}이(가) 반지를 끼고 울다가 웃었다. 계획대로였다. 거의.",
+          "en": "{partner} put on the ring, cried, then laughed. It went to plan. Almost."
+         }
+        }
+       }
+      },
+      {
+       "them": "JF",
+       "line": {
+        "ko": "({partner}이(가) 한 달 동안 준비한 게 티가 났다. 벽에는 우리 사진, 바닥엔 초. 떨리는 목소리.) …나랑 결혼해 줄래?",
+        "en": "({partner} clearly spent a month preparing: your photos on the wall, candles on the floor, a shaking voice.) …Will you marry me?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(울면서 고개를 끄덕인다)",
+          "en": "(Nod, crying)"
+         },
+         "outcome": "ENGAGED"
+        },
+        {
+         "t": {
+          "ko": "…조금만 시간을 줘",
+          "en": "…Give me a little time"
+         },
+         "outcome": "NOT_YET"
+        },
+        {
+         "t": {
+          "ko": "…미안해",
+          "en": "…I'm sorry"
+         },
+         "outcome": "BREAKUP"
+        }
+       ]
+      },
+      {
+       "them": "JT",
+       "line": {
+        "ko": "({partner}이(가) 노트북을 열었다. 집, 돈, 5년 계획이 정리돼 있다.) 다 계산해 봤어. 우리, 결혼하자.",
+        "en": "({partner} opens a laptop: housing, money, a five-year plan.) I ran the numbers. Let's get married."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(웃음이 터진다) 응, 하자",
+          "en": "(Burst out laughing) Yes, let's"
+         },
+         "outcome": "ENGAGED"
+        },
+        {
+         "t": {
+          "ko": "계획표 말고 마음을 듣고 싶어",
+          "en": "I want to hear your heart, not a spreadsheet"
+         },
+         "outcome": "NOT_YET"
+        },
+        {
+         "t": {
+          "ko": "…우린 여기까지인 것 같아",
+          "en": "…I think this is where we end"
+         },
+         "outcome": "BREAKUP"
+        }
+       ]
+      },
+      {
+       "them": "P",
+       "line": {
+        "ko": "({f:ramen}을(를) 먹다가 {partner}이(가) 갑자기 말했다.) …우리 그냥, 결혼할까?",
+        "en": "(Halfway through a bowl of {f:ramen}, {partner} suddenly says:) …Should we just get married?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "…지금 {f:ramen} 먹다가?! 응!",
+          "en": "…Over {f:ramen}?! Yes!"
+         },
+         "outcome": "ENGAGED"
+        },
+        {
+         "t": {
+          "ko": "진심이야? 다시 제대로 물어봐",
+          "en": "Are you serious? Ask me properly"
+         },
+         "outcome": "NOT_YET"
+        },
+        {
+         "t": {
+          "ko": "…장난이지?",
+          "en": "…You're joking, right?"
+         },
+         "roll": {
+          "NOT_YET": 0.6,
+          "BREAKUP": 0.4
+         }
+        }
+       ]
+      }
+     ]
+    },
+    "LAST_CHANCE": {
+     "title": {
+      "ko": "결정의 시간",
+      "en": "Time to decide"
+     },
+     "after": [
+      10,
+      14
+     ],
+     "location": "home",
+     "who": "partner",
+     "line": {
+      "ko": "이제는 정해야 할 것 같아. 결혼하든지, 헤어지든지.",
+      "en": "We need to decide now. Marry, or break up."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "결혼하자",
+        "en": "Let's get married"
+       },
+       "outcome": "ENGAGED"
+      },
+      {
+       "t": {
+        "ko": "헤어지자",
+        "en": "Let's break up"
+       },
+       "outcome": "BREAKUP"
+      },
+      {
+       "t": {
+        "ko": "결혼 없이 함께 살자",
+        "en": "Let's live together without marrying"
+       },
+       "outcome": "LONGTERM"
+      }
+     ],
+     "outcomes": {
+      "ENGAGED": {
+       "r": {
+        "ko": "결국 우리는 약속했다.",
+        "en": "In the end, we promised each other."
+       },
+       "effects": [
+        {
+         "kind": "engage"
+        }
+       ],
+       "card": "PROPOSAL"
+      },
+      "BREAKUP": {
+       "r": {
+        "ko": "…서로의 행복을 빌어주기로 했다.",
+        "en": "…You wished each other well and said goodbye."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        }
+       ],
+       "card": "BREAKUP",
+       "scene": [
+        "street"
+       ]
+      },
+      "LONGTERM": {
+       "r": {
+        "ko": "결혼식은 없지만, 우리는 한 집에 산다.",
+        "en": "No wedding, but you share one home."
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "longterm",
+         "value": true
+        }
+       ],
+       "card": "NEW_HOME"
+      }
+     },
+     "byMbti": [
+      {
+       "them": "J",
+       "line": {
+        "ko": "({partner}이(가) 달력을 내밀었다.) 올해 안에 정하자. 결혼하든지, 각자의 길을 가든지.",
+        "en": "({partner} slides a calendar across the table.) Let's decide this year. Marry, or go our separate ways."
+       }
+      },
+      {
+       "them": "P",
+       "line": {
+        "ko": "우린 지금도 좋잖아. 결혼… 꼭 해야 해? …근데 네가 원하면, 생각해 볼게.",
+        "en": "We're good as we are, right? Do we have to get married? …But if you want to, I'll think about it."
+       }
+      }
+     ]
+    },
+    "FIRST_FIGHT": {
+     "title": {
+      "ko": "첫 싸움",
+      "en": "Our first fight"
+     },
+     "after": [
+      4,
+      8
+     ],
+     "location": "home",
+     "who": "partner",
+     "line": {
+      "ko": "(약속을 잊은 {partner}. 처음으로 목소리가 높아졌다.)",
+      "en": "({partner} forgot your plans. For the first time, voices rise.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "솔직하게 서운했다고 말한다",
+        "en": "Say honestly that it hurt"
+       },
+       "roll": {
+        "MAKEUP": 0.75,
+        "COLD": 0.25
+       },
+       "compat": {
+        "MAKEUP": 1,
+        "COLD": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "(괜찮은 척한다)",
+        "en": "(Pretend it's fine)"
+       },
+       "roll": {
+        "MAKEUP": 0.4,
+        "COLD": 0.6
+       },
+       "compat": {
+        "MAKEUP": 1,
+        "COLD": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "먼저 안아준다",
+        "en": "Hug them first"
+       },
+       "roll": {
+        "MAKEUP": 0.8,
+        "COLD": 0.2
+       },
+       "compat": {
+        "MAKEUP": 1,
+        "COLD": -1
+       }
+      }
+     ],
+     "outcomes": {
+      "MAKEUP": {
+       "r": {
+        "ko": "다 싸우고 나니 배가 고팠다. 같이 {f:street}을(를) 먹었다. 조금 더 가까워진 기분이었다.",
+        "en": "After the fight you were both hungry. You shared {f:street} and felt a little closer."
+       },
+       "effects": []
+      },
+      "COLD": {
+       "r": {
+        "ko": "그날은 각자 집에 갔다. 사과는 이틀 뒤에야 왔다.",
+        "en": "You went home separately. The apology came two days later."
+       },
+       "effects": []
+      }
+     },
+     "byMbti": [
+      {
+       "me": "T",
+       "them": "F",
+       "line": {
+        "ko": "({partner}이(가) 서운하다고 했다. 나는 해결책부터 말했다. 그게 더 서운했단다.)",
+        "en": "({partner} said they were hurt. You jumped straight to solutions. That hurt more, apparently.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "해결 말고, 그냥 들을게",
+          "en": "No fixing. I'll just listen"
+         },
+         "roll": {
+          "MAKEUP": 0.8,
+          "COLD": 0.2
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(논리적으로 차근차근 설명한다)",
+          "en": "(Explain it logically, step by step)"
+         },
+         "roll": {
+          "MAKEUP": 0.3,
+          "COLD": 0.7
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "말없이 안아준다",
+          "en": "Hold them, no words"
+         },
+         "roll": {
+          "MAKEUP": 0.75,
+          "COLD": 0.25
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      },
+      {
+       "me": "F",
+       "them": "T",
+       "line": {
+        "ko": "(속상하다고 했더니 {partner}이(가) 해결 방법 다섯 가지를 말해줬다.)",
+        "en": "(You said you were upset. {partner} gave you five ways to fix it.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "해결 말고 공감이 필요해",
+          "en": "I need you to feel it with me, not fix it"
+         },
+         "roll": {
+          "MAKEUP": 0.7,
+          "COLD": 0.3
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(그래, 네 말이 맞지…)",
+          "en": "(Fine, you're right…)"
+         },
+         "roll": {
+          "MAKEUP": 0.35,
+          "COLD": 0.65
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(결국 울음이 터진다)",
+          "en": "(End up crying)"
+         },
+         "roll": {
+          "MAKEUP": 0.6,
+          "COLD": 0.4
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      },
+      {
+       "me": "T",
+       "them": "T",
+       "line": {
+        "ko": "(여행 일정을 두고 토론이 붙었다. 둘 다 근거를 가져왔다. 둘 다 지지 않는다.)",
+        "en": "(A debate over the trip itinerary. You both came with evidence. Neither backs down.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "가위바위보로 정하자",
+          "en": "Settle it with rock-paper-scissors"
+         },
+         "roll": {
+          "MAKEUP": 0.8,
+          "COLD": 0.2
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(끝까지 논리로 이긴다)",
+          "en": "(Win it with logic, to the end)"
+         },
+         "roll": {
+          "MAKEUP": 0.35,
+          "COLD": 0.65
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "네 계획대로 하자",
+          "en": "Let's do it your way"
+         },
+         "roll": {
+          "MAKEUP": 0.7,
+          "COLD": 0.3
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      },
+      {
+       "me": "F",
+       "them": "F",
+       "line": {
+        "ko": "(서로 눈치만 보다가, 말하지 못한 서운함이 사흘째 쌓였다.)",
+        "en": "(You're both walking on eggshells. Three days of unspoken hurt, piling up.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "편지를 써서 건넨다",
+          "en": "Write them a letter"
+         },
+         "roll": {
+          "MAKEUP": 0.8,
+          "COLD": 0.2
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(먼저 말해주길 기다린다)",
+          "en": "(Wait for them to bring it up)"
+         },
+         "roll": {
+          "MAKEUP": 0.35,
+          "COLD": 0.65
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "우리 얘기 좀 해",
+          "en": "We need to talk"
+         },
+         "roll": {
+          "MAKEUP": 0.7,
+          "COLD": 0.3
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      },
+      {
+       "me": "J",
+       "them": "P",
+       "line": {
+        "ko": "({partner}이(가) 약속 시간에 또 늦었다. 이번이 네 번째다.)",
+        "en": "({partner} is late again. Fourth time.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "다음부터는 미리 연락만 해줘",
+          "en": "Just text me ahead next time"
+         },
+         "roll": {
+          "MAKEUP": 0.75,
+          "COLD": 0.25
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(시계를 보며 한숨 쉰다)",
+          "en": "(Look at your watch and sigh)"
+         },
+         "roll": {
+          "MAKEUP": 0.35,
+          "COLD": 0.65
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "그냥 웃어넘긴다",
+          "en": "Laugh it off"
+         },
+         "roll": {
+          "MAKEUP": 0.6,
+          "COLD": 0.4
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      },
+      {
+       "me": "P",
+       "them": "J",
+       "line": {
+        "ko": "주말 계획, 아직도 안 정했어? …나 이런 거 진짜 힘들어.",
+        "en": "You still haven't decided on the weekend plan? …This is really hard for me."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "지금 바로 같이 정하자",
+          "en": "Let's decide it together, right now"
+         },
+         "roll": {
+          "MAKEUP": 0.8,
+          "COLD": 0.2
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "그때 가서 정하면 안 돼?",
+          "en": "Can't we just decide when we get there?"
+         },
+         "roll": {
+          "MAKEUP": 0.3,
+          "COLD": 0.7
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "이번엔 네가 다 정해",
+          "en": "You plan it all this time"
+         },
+         "roll": {
+          "MAKEUP": 0.65,
+          "COLD": 0.35
+         },
+         "compat": {
+          "MAKEUP": 1,
+          "COLD": -1
+         }
+        }
+       ]
+      }
+     ],
+     "variants": [
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "(길 한복판에서 목소리가 커졌다. 지나가던 사람들이 쳐다본다.)",
+        "en": "(Voices rise in the middle of the street. People turn to look.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "우리 나중에 얘기하자 (손을 잡는다)",
+          "en": "Let's talk later (take their hand)"
+         }
+        },
+        {
+         "t": {
+          "ko": "(입을 꾹 다문다)",
+          "en": "(Clam up)"
+         }
+        },
+        {
+         "t": {
+          "ko": "미안해 (내가 먼저 말한다)",
+          "en": "I'm sorry (say it first)"
+         }
+        }
+       ],
+       "location": "street"
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "(새벽 두 시. 서운한 말이 {f:app}(으)로 길게 왔다. 읽고 나니 잠이 달아났다.)",
+        "en": "(2 a.m. A long, hurt message arrives. You're wide awake now.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "전화를 걸어 솔직하게 말한다",
+          "en": "Call and talk honestly"
+         }
+        },
+        {
+         "t": {
+          "ko": "(그래, 한 마디만 보낸다)",
+          "en": "(Send just one word: ok)"
+         }
+        },
+        {
+         "t": {
+          "ko": "지금 그 집 앞으로 간다",
+          "en": "Go to their place right now"
+         }
+        }
+       ],
+       "location": "home"
+      },
+      {
+       "element": "METAL",
+       "line": {
+        "ko": "(약속 시간 40분 지각. 연락도 없었다. {partner}이(가) 숨을 몰아쉬며 들어왔다.)",
+        "en": "(Forty minutes late, no message. {partner} rushes in, out of breath.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "화난 이유를 차분히 말한다",
+          "en": "Calmly explain why you're upset"
+         }
+        },
+        {
+         "t": {
+          "ko": "(아무렇지 않은 척 메뉴판만 본다)",
+          "en": "(Act fine and study the menu)"
+         }
+        },
+        {
+         "t": {
+          "ko": "물부터 건네준다",
+          "en": "Hand them a glass of water first"
+         }
+        }
+       ],
+       "location": "cafe"
+      },
+      {
+       "element": "EARTH",
+       "line": {
+        "ko": "(집에서 같이 저녁을 먹다가, 사소한 말 한마디에 분위기가 얼어붙었다.)",
+        "en": "(Over dinner at home, one small comment freezes the room.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "숟가락을 내려놓고 마주 본다",
+          "en": "Put the spoon down and face them"
+         }
+        },
+        {
+         "t": {
+          "ko": "(묵묵히 밥만 먹는다)",
+          "en": "(Keep eating in silence)"
+         }
+        },
+        {
+         "t": {
+          "ko": "{f:sides}을(를) {partner} 앞으로 밀어 준다",
+          "en": "Slide the {f:sides} toward {partner}"
+         }
+        }
+       ],
+       "location": "home"
+      }
+     ]
+    },
+    "MEET_FRIENDS": {
+     "title": {
+      "ko": "친구들에게 소개",
+      "en": "Meeting the friends"
+     },
+     "after": [
+      3,
+      6
+     ],
+     "location": "restaurant",
+     "who": "partner",
+     "line": {
+      "ko": "(처음으로 {partner}을(를) 친구들에게 소개하는 날.)",
+      "en": "(The first time you introduce {partner} to your friends.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "자랑스럽게 소개한다",
+        "en": "Introduce them proudly"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "옆에서 계속 챙긴다",
+        "en": "Stay by their side all night"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "(친구들이 알아서 하겠지)",
+        "en": "(Your friends will handle it)"
+       },
+       "roll": {
+        "GOOD": 0.6,
+        "AWKWARD": 0.4
+       }
+      }
+     ],
+     "outcomes": {
+      "GOOD": {
+       "r": {
+        "ko": "집에 가는 길, {partner}이(가) 말했다. '네 친구들 좋다. 너 같아.'",
+        "en": "On the way home {partner} said, \"I like your friends. They're like you.\""
+       },
+       "effects": []
+      },
+      "AWKWARD": {
+       "r": {
+        "ko": "{partner}은(는) 끝까지 웃고 있었지만, 조금 지쳐 보였다.",
+        "en": "{partner} kept smiling to the end, but looked a little worn out."
+       },
+       "effects": []
+      }
+     },
+     "byMbti": [
+      {
+       "them": "I",
+       "line": {
+        "ko": "(내 친구들 모임에 {partner}을(를) 데려갔다. {partner}은(는) 구석에서 조용히 웃고만 있다.)",
+        "en": "(You bring {partner} to your friends' get-together. {partner} just smiles quietly in the corner.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "옆에 앉아 대화에 끌어들인다",
+          "en": "Sit beside them and draw them in"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "일찍 둘만 빠져나온다",
+          "en": "Slip out early, just the two of you"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(친구들과 신나게 논다)",
+          "en": "(Have a blast with your friends)"
+         },
+         "roll": {
+          "GOOD": 0.3,
+          "AWKWARD": 0.7
+         }
+        }
+       ]
+      },
+      {
+       "them": "E",
+       "line": {
+        "ko": "(한 시간 만에 {partner}이(가) 내 친구들이랑 형, 언니 하면서 친해졌다. 나보다 더 친해 보인다.)",
+        "en": "(Within an hour, {partner} is on first-name terms with all your friends. Closer than you, it seems.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(뿌듯하게 지켜본다)",
+          "en": "(Watch, proud)"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "야, 내 친구거든?",
+          "en": "Hey, those are MY friends"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(살짝 질투가 난다)",
+          "en": "(Feel a little jealous)"
+         },
+         "roll": {
+          "GOOD": 0.6,
+          "AWKWARD": 0.4
+         }
+        }
+       ]
+      },
+      {
+       "me": "I",
+       "them": "E",
+       "line": {
+        "ko": "({partner}이(가) 자기 친구 열 명을 불렀다. 나는 이름 외우느라 정신이 없다.)",
+        "en": "({partner} invited ten friends. You're frantically memorizing names.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "이름표를 만들어 달라고 농담한다",
+          "en": "Joke that you need name tags"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "한 명과 깊게 이야기한다",
+          "en": "Have one real conversation with one person"
+         },
+         "outcome": "GOOD"
+        },
+        {
+         "t": {
+          "ko": "(화장실에서 숨을 고른다)",
+          "en": "(Catch your breath in the bathroom)"
+         },
+         "roll": {
+          "GOOD": 0.4,
+          "AWKWARD": 0.6
+         }
+        }
+       ]
+      }
+     ],
+     "variants": [
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "(친구들이 갑자기 {f:karaoke}(으)로 2차를 가자고 했다. {partner}이(가) 마이크를 넘겨받았다.)",
+        "en": "(Your friends drag everyone to {f:karaoke}. Someone hands {partner} the mic.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "같이 듀엣으로 부른다",
+          "en": "Jump in for a duet"
+         }
+        },
+        {
+         "t": {
+          "ko": "옆에서 탬버린으로 응원한다",
+          "en": "Cheer them on with a tambourine"
+         }
+        },
+        {
+         "t": {
+          "ko": "(친구들 반응을 지켜본다)",
+          "en": "(Watch how your friends react)"
+         }
+        }
+       ],
+       "location": "street",
+       "outcomes": {
+        "GOOD": {
+         "r": {
+          "ko": "{partner}의 노래가 끝나자 친구들이 기립 박수를 쳤다. 단톡방 프사가 {partner}의 노래 영상으로 바뀌었다.",
+          "en": "When {partner} finished, your friends gave a standing ovation. The clip went straight to the group chat."
+         }
+        },
+        "AWKWARD": {
+         "r": {
+          "ko": "{partner}은(는) 열심히 불렀지만, 다들 각자 휴대폰만 봤다.",
+          "en": "{partner} sang their heart out, but everyone was on their phones."
+         }
+        }
+       }
+      },
+      {
+       "element": "EARTH",
+       "line": {
+        "ko": "(친구들을 집으로 초대했다. {partner}이(가) 앞치마를 두르고 부엌에 섰다.)",
+        "en": "(You invited friends over. {partner} put on an apron and took over the kitchen.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "같이 요리하며 소개한다",
+          "en": "Cook together while you introduce them"
+         }
+        },
+        {
+         "t": {
+          "ko": "친구들 앞에 음식을 하나씩 날라 준다",
+          "en": "Carry each dish out to your friends"
+         }
+        },
+        {
+         "t": {
+          "ko": "(친구들과 거실에 앉아 기다린다)",
+          "en": "(Wait in the living room with your friends)"
+         }
+        }
+       ],
+       "location": "home",
+       "outcomes": {
+        "GOOD": {
+         "r": {
+          "ko": "친구 하나가 조용히 말했다. '야, 이 사람 놓치지 마.'",
+          "en": "One friend whispered: \"Don't you dare let this one go.\""
+         }
+        },
+        "AWKWARD": {
+         "r": {
+          "ko": "음식은 맛있었지만 {partner}은(는) 거의 부엌에만 있었다.",
+          "en": "The food was great, but {partner} barely left the kitchen."
+         }
+        }
+       }
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "(친한 친구 한 명에게만 먼저 소개하기로 했다. 셋이 조용한 카페에 앉았다.)",
+        "en": "(You decided to introduce them to your closest friend first. The three of you sit in a quiet café.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "둘의 공통점을 먼저 꺼낸다",
+          "en": "Bring up what the two have in common"
+         }
+        },
+        {
+         "t": {
+          "ko": "{partner}의 손을 잡고 소개한다",
+          "en": "Hold {partner}'s hand while introducing them"
+         }
+        },
+        {
+         "t": {
+          "ko": "(둘이 알아서 친해지게 둔다)",
+          "en": "(Let them get to know each other on their own)"
+         }
+        }
+       ],
+       "location": "cafe"
+      },
+      {
+       "element": "WOOD",
+       "line": {
+        "ko": "(친구들과 {f:river} 피크닉. {partner}이(가) 돗자리를 펴고 친구들에게 간식을 나눠 준다.)",
+        "en": "(A riverside picnic with friends. {partner} spreads the mat and hands out snacks.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "친구들에게 {partner} 자랑을 한다",
+          "en": "Brag about {partner} to your friends"
+         }
+        },
+        {
+         "t": {
+          "ko": "배드민턴 팀을 {partner}과(와) 같이 한다",
+          "en": "Team up with {partner} for badminton"
+         }
+        },
+        {
+         "t": {
+          "ko": "(친구들 틈에서 {partner}을(를) 지켜본다)",
+          "en": "(Watch {partner} from among your friends)"
+         }
+        }
+       ],
+       "location": "park"
+      }
+     ]
+    },
+    "FIRST_KISS": {
+     "title": {
+      "ko": "달빛 아래",
+      "en": "Under the Moon"
+     },
+     "after": [
+      1,
+      2
+     ],
+     "location": "park",
+     "activity": "date",
+     "who": "partner",
+     "line": {
+      "ko": "(데려다주는 길, 집 앞. 둘 다 '잘 가'라는 말을 세 번째 하고 있다.)",
+      "en": "(Walking home. At the door, you've both said 'good night' three times now.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(눈을 감는다)",
+        "en": "(Close your eyes)"
+       },
+       "roll": {
+        "KISS": 0.75,
+        "SHY": 0.25
+       }
+      },
+      {
+       "t": {
+        "ko": "(먼저 다가간다)",
+        "en": "(Lean in first)"
+       },
+       "roll": {
+        "KISS": 0.7,
+        "SHY": 0.3
+       }
+      },
+      {
+       "t": {
+        "ko": "…오늘은 여기까지. 잘 자",
+        "en": "…That's it for tonight. Sleep well."
+       },
+       "roll": {
+        "KISS": 0.25,
+        "SHY": 0.75
+       }
+      }
+     ],
+     "outcomes": {
+      "KISS": {
+       "r": {
+        "ko": "시간이 멈췄다. 정말로, 멈췄다.",
+        "en": "Time stopped. It really did."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Our first kiss.",
+         "tags": [
+          "love"
+         ]
+        }
+       ]
+      },
+      "SHY": {
+       "r": {
+        "ko": "코끝만 살짝 닿았다. 둘 다 웃음이 터져서, 그게 오늘의 전부였다. 그래도 좋았다.",
+        "en": "Your noses bumped. You both burst out laughing, and that was it for tonight. Still, it was perfect."
+       },
+       "effects": []
+      }
+     }
+    }
+   }
+  },
+  "ENGAGEMENT": {
+   "steps": {
+    "MEET_PARENTS": {
+     "title": {
+      "ko": "{f:familiesmeet}",
+      "en": "Meeting the parents"
+     },
+     "after": [
+      2,
+      4
+     ],
+     "location": "restaurant",
+     "activity": "meet_parents",
+     "who": "inlaw",
+     "line": {
+      "ko": "우리 애를 잘 부탁해요. …그런데 결혼 후에 어디서 살 생각이에요?",
+      "en": "Please take good care of our child. …Where do you plan to live after the wedding?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "정중하게 계획을 말씀드린다",
+        "en": "Politely explain your plans"
+       },
+       "outcome": "PROCEED"
+      },
+      {
+       "t": {
+        "ko": "솔직하게 속마음을 말한다",
+        "en": "Say honestly what you think"
+       },
+       "outcome": "PROCEED"
+      },
+      {
+       "t": {
+        "ko": "(…이 결혼은 아닌 것 같다) 파혼한다",
+        "en": "(…This isn't right) Call off the engagement"
+       },
+       "outcome": "CALL_OFF"
+      }
+     ],
+     "outcomes": {
+      "PROCEED": {
+       "r": {
+        "ko": "어색했지만, 마지막엔 모두 웃었다.",
+        "en": "It was awkward, but everyone laughed in the end."
+       },
+       "effects": [],
+       "card": "MEET_PARENTS"
+      },
+      "CALL_OFF": {
+       "r": {
+        "ko": "…{f:familiesmeet} 자리에서 파혼했다. 반지를 돌려주었다.",
+        "en": "…You broke off the engagement at the family meeting. You returned the ring."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        },
+        {
+         "kind": "endArc"
+        }
+       ],
+       "card": "CALL_OFF",
+       "scene": [
+        "street"
+       ]
+      }
+     },
+     "variants": [
+      {
+       "element": "METAL",
+       "line": {
+        "ko": "({f:familiesmeet} 자리. 아버님이 안경을 고쳐 쓰셨다.) 그래, 앞으로 계획은 어떻게 되나?",
+        "en": "(The families meet. {partner}'s father adjusts his glasses.) So, what are your plans from here?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "준비해 온 계획을 차근차근 말씀드린다",
+          "en": "Walk him through the plan you prepared"
+         }
+        },
+        {
+         "t": {
+          "ko": "솔직하게 아직 고민 중인 것까지 말씀드린다",
+          "en": "Honestly share what you're still figuring out"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…이 자리에서 결혼이 아니라는 걸 깨닫는다) 파혼한다",
+          "en": "(…Realize this marriage isn't right) Call it off"
+         }
+        }
+       ],
+       "location": "restaurant"
+      },
+      {
+       "element": "EARTH",
+       "line": {
+        "ko": "({f:familiesmeet} 자리. 어머님이 {f:sides}을(를) 내 쪽으로 밀어 주셨다.) 많이 먹어요. 우리 애가 맨날 자랑해서 궁금했어요.",
+        "en": "(The families meet. {partner}'s mother pushes a dish toward you.) Eat up. Our kid talks about you all the time."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "감사하다고 웃으며 맛있게 먹는다",
+          "en": "Thank her with a smile and dig in"
+         }
+        },
+        {
+         "t": {
+          "ko": "{partner} 어린 시절 이야기를 여쭤본다",
+          "en": "Ask about {partner} as a kid"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…모든 게 숨 막힌다) 파혼한다",
+          "en": "(…Everything feels suffocating) Call it off"
+         }
+        }
+       ],
+       "location": "restaurant"
+      },
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "({f:familiesmeet} 도중 양가 아버지가 같은 고향이라는 걸 알게 됐다. 분위기가 갑자기 뜨거워졌다.)",
+        "en": "(Halfway through, the two fathers find out they're from the same hometown. The room heats right up.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "같이 맞장구치며 분위기를 띄운다",
+          "en": "Join in and keep the energy going"
+         }
+        },
+        {
+         "t": {
+          "ko": "{partner}과(와) 눈빛으로 웃는다",
+          "en": "Share a laugh with {partner} across the table"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…이 결혼은 아닌 것 같다) 파혼한다",
+          "en": "(…This marriage isn't right) Call it off"
+         }
+        }
+       ],
+       "location": "restaurant"
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "({f:familiesmeet}이(가) 끝나 갈 무렵, 어머님이 조용히 물으셨다.) …우리 애, 정말 행복하게 해 줄 수 있어요?",
+        "en": "(As the meeting winds down, {partner}'s mother asks quietly:) …Can you really make our child happy?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "네. 매일 노력하겠습니다",
+          "en": "Yes. I'll work at it every day"
+         }
+        },
+        {
+         "t": {
+          "ko": "저도 많이 행복해요 (솔직하게)",
+          "en": "They make me very happy too (honestly)"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…대답하지 못한다) 파혼한다",
+          "en": "(…You can't answer) Call it off"
+         }
+        }
+       ],
+       "location": "restaurant"
+      }
+     ]
+    },
+    "WEDDING": {
+     "title": {
+      "ko": "결혼식",
+      "en": "The wedding"
+     },
+     "after": [
+      5,
+      9
+     ],
+     "location": "wedding_venue",
+     "activity": "wedding",
+     "who": "partner",
+     "line": {
+      "ko": "(드디어 결혼식 날. 문이 열리고, 저기 그 사람이 서 있다.)",
+      "en": "(The wedding day. The doors open, and there they are.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "서약한다",
+        "en": "Say your vows"
+       },
+       "outcome": "MARRY"
+      },
+      {
+       "t": {
+        "ko": "눈물이 멈추지 않는다",
+        "en": "You can't stop crying"
+       },
+       "outcome": "MARRY"
+      },
+      {
+       "t": {
+        "ko": "(…도망친다)",
+        "en": "(…Run away)"
+       },
+       "outcome": "CALL_OFF"
+      }
+     ],
+     "outcomes": {
+      "MARRY": {
+       "r": {
+        "ko": "부부가 되었습니다! 꽃잎이 흩날렸다.",
+        "en": "You're married! Petals filled the air."
+       },
+       "effects": [
+        {
+         "kind": "marry"
+        }
+       ],
+       "card": "WEDDING"
+      },
+      "CALL_OFF": {
+       "r": {
+        "ko": "…식장을 뛰쳐나왔다. 모두가 수군거렸다.",
+        "en": "…You ran out of the hall. Everyone whispered."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        }
+       ],
+       "card": "CALL_OFF",
+       "scene": [
+        "street"
+       ]
+      }
+     },
+     "variants": [
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "(드디어 결혼식 날. 입장 음악 대신 둘이 고른 신나는 노래가 흘러나왔다.)",
+        "en": "(Wedding day. Instead of a march, the upbeat song you two picked starts playing.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "박자에 맞춰 걸어 들어간다",
+          "en": "Walk in on the beat"
+         }
+        },
+        {
+         "t": {
+          "ko": "웃음과 눈물이 동시에 터진다",
+          "en": "Laugh and cry at the same time"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…문 앞에서 돌아선다)",
+          "en": "(…Turn around at the door)"
+         }
+        }
+       ]
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "(드디어 결혼식 날. 문이 열리기 직전, {partner}에게서 문자가 왔다.) '긴장돼? 나도. 3초 뒤에 보자.'",
+        "en": "(Wedding day. Just before the doors open, a text from {partner}:) \"Nervous? Me too. See you in three seconds.\""
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "문이 열리자 곧장 {partner}만 본다",
+          "en": "When the doors open, look only at {partner}"
+         }
+        },
+        {
+         "t": {
+          "ko": "눈물이 앞을 가린다",
+          "en": "Tears blur everything"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…휴대폰을 꺼 버린다)",
+          "en": "(…Turn the phone off)"
+         }
+        }
+       ]
+      },
+      {
+       "element": "EARTH",
+       "line": {
+        "ko": "(드디어 결혼식 날. 맨 앞줄에서 할머니가 손수건을 꼭 쥐고 계신다.)",
+        "en": "(Wedding day. In the front row, Grandma clutches a handkerchief.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "서약한다",
+          "en": "Say your vows"
+         }
+        },
+        {
+         "t": {
+          "ko": "할머니와 눈이 마주쳐 울컥한다",
+          "en": "Catch Grandma's eye and choke up"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…도망친다)",
+          "en": "(…Run)"
+         }
+        }
+       ]
+      },
+      {
+       "element": "METAL",
+       "line": {
+        "ko": "(드디어 결혼식 날. 밤새 다듬은 혼인 서약서를 손에 쥐었다.)",
+        "en": "(Wedding day. You hold the vows you rewrote all night.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "한 글자도 틀리지 않고 읽는다",
+          "en": "Read it word for word"
+         }
+        },
+        {
+         "t": {
+          "ko": "종이를 접고 즉석에서 말한다",
+          "en": "Fold the paper and speak from the heart"
+         }
+        },
+        {
+         "t": {
+          "ko": "(…종이를 내려놓고 식장을 나간다)",
+          "en": "(…Put the paper down and walk out)"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "DIVORCE": {
+   "steps": {
+    "COURT": {
+     "title": {
+      "ko": "법원",
+      "en": "The court"
+     },
+     "after": [
+      2,
+      4
+     ],
+     "location": "court",
+     "activity": "court_hearing",
+     "who": "judge",
+     "line": {
+      "ko": "협의 이혼 의사를 확인하겠습니다. 두 분, 이혼에 동의하십니까?",
+      "en": "I need to confirm that you both intend to divorce. Do you both agree?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "동의합니다",
+        "en": "I agree"
+       },
+       "outcome": "DIVORCED"
+      },
+      {
+       "t": {
+        "ko": "…한 번만 더 기회를 주세요",
+        "en": "…Please give us one more chance"
+       },
+       "outcome": "RECONCILE"
+      }
+     ],
+     "outcomes": {
+      "DIVORCED": {
+       "r": {
+        "ko": "서류에 도장을 찍었다. 법원 계단이 유난히 길었다.",
+        "en": "You stamped the papers. The courthouse stairs felt endless."
+       },
+       "effects": [
+        {
+         "kind": "breakUp",
+         "divorce": true
+        }
+       ],
+       "card": "DIVORCE"
+      },
+      "RECONCILE": {
+       "r": {
+        "ko": "숙려 기간 동안, 다시 이야기를 나눴다.",
+        "en": "During the waiting period, you started talking again."
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "reconciled",
+         "value": true
+        }
+       ]
+      }
+     }
+    }
+   }
+  },
+  "PREGNANCY": {
+   "steps": {
+    "CHECKUP": {
+     "title": {
+      "ko": "정기 검진",
+      "en": "The checkup"
+     },
+     "after": [
+      2,
+      3
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "doctor",
+     "line": {
+      "ko": "[의사] 초음파 보실게요. 편하게 누우세요.",
+      "en": "[Doctor] Let's do the ultrasound. Lie back and relax."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(두 손을 꼭 모은다)",
+        "en": "(Clasp your hands tight)"
+       },
+       "roll": {
+        "HEALTHY": 0.88,
+        "LOSS": 0.12
+       }
+      },
+      {
+       "t": {
+        "ko": "(화면을 뚫어지게 본다)",
+        "en": "(Stare at the screen)"
+       },
+       "roll": {
+        "HEALTHY": 0.88,
+        "LOSS": 0.12
+       }
+      }
+     ],
+     "outcomes": {
+      "HEALTHY": {
+       "r": {
+        "ko": "작은 심장 소리가 들렸다. 눈물이 났다.",
+        "en": "You heard a tiny heartbeat. Tears came."
+       },
+       "effects": []
+      },
+      "LOSS": {
+       "r": {
+        "ko": "…작은 심장 소리가 들리지 않았다. 우리는 한참을 말없이 앉아 있었다.",
+        "en": "…There was no heartbeat. You sat there in silence for a long time."
+       },
+       "effects": [
+        {
+         "kind": "endArc"
+        }
+       ],
+       "card": "PREGNANCY_LOSS",
+       "scene": [
+        "hospital"
+       ]
+      }
+     }
+    },
+    "BIRTH": {
+     "title": {
+      "ko": "출산",
+      "en": "The birth"
+     },
+     "after": [
+      5,
+      7
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "nurse",
+     "line": {
+      "ko": "축하합니다! 건강한 아기예요. 이름은 정하셨어요?",
+      "en": "Congratulations! A healthy baby. Have you chosen a name?"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "하늘",
+        "en": "Skye"
+       },
+       "outcome": "BORN"
+      },
+      {
+       "t": {
+        "ko": "서윤",
+        "en": "Audrey"
+       },
+       "outcome": "BORN"
+      },
+      {
+       "t": {
+        "ko": "도윤",
+        "en": "Liam"
+       },
+       "outcome": "BORN"
+      }
+     ],
+     "outcomes": {
+      "BORN": {
+       "r": {
+        "ko": "작은 손이 내 손가락을 꼭 잡았다.",
+        "en": "A tiny hand held your finger tight."
+       },
+       "effects": [
+        {
+         "kind": "addKid"
+        }
+       ],
+       "card": "BIRTH"
+      }
+     }
+    }
+   }
+  },
+  "RETIREMENT": {
+   "steps": {
+    "FAREWELL": {
+     "title": {
+      "ko": "정년퇴직",
+      "en": "Retirement"
+     },
+     "after": [
+      0,
+      0
+     ],
+     "location": "office",
+     "activity": "farewell",
+     "who": "coworker",
+     "line": {
+      "ko": "그동안 정말 수고 많으셨습니다! 저희 잊지 마세요.",
+      "en": "Thank you for everything! Don't forget us."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "고마웠다고 인사한다",
+        "en": "Say thank you"
+       },
+       "outcome": "RETIRED"
+      },
+      {
+       "t": {
+        "ko": "말없이 웃는다",
+        "en": "Smile without a word"
+       },
+       "outcome": "RETIRED"
+      }
+     ],
+     "outcomes": {
+      "RETIRED": {
+       "r": {
+        "ko": "정년퇴직했다. 사원증을 반납하며 사진을 한 장 찍었다.",
+        "en": "You retired. Before handing in your ID badge, you took one last photo with it."
+       },
+       "effects": [
+        {
+         "kind": "retire"
+        }
+       ],
+       "card": "RETIREMENT"
+      }
+     }
+    }
+   }
+  },
+  "PARENT_PASSING": {
+   "_doc": "A parent's passing is its own story, never a one-line notice: the last night at the hospital (their last words), the funeral, the empty days after. altBy 'parent' = arc.data.who (mom/dad); vars {parent} (엄마/아빠), {child} (딸/아들).",
+   "steps": {
+    "LAST_WORDS": {
+     "title": {
+      "ko": "마지막 밤",
+      "en": "The Last Night"
+     },
+     "after": [
+      0,
+      1
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "mom",
+     "line": {
+      "ko": "…왔어? 우리 {child}. 밥은… 먹고 왔고?",
+      "en": "…You came, my {child}. Did you… eat something?"
+     },
+     "altBy": "parent",
+     "alt": {
+      "mom": {
+       "who": "mom",
+       "line": {
+        "ko": "…왔어? 우리 {child}. 밥은… 먹고 왔고? (새벽에 걸려 온 병원 전화. 중환자실의 엄마가 힘겹게 웃었다.)",
+        "en": "…You came, my {child}. Did you… eat? (The hospital called before dawn. In the ICU, Mom forced a smile.)"
+       }
+      },
+      "dad": {
+       "who": "dad",
+       "line": {
+        "ko": "…바쁜데 뭐 하러 왔어. …그래도, 보고 싶었다. (새벽에 걸려 온 병원 전화. 아빠가 처음으로 먼저 손을 내밀었다.)",
+        "en": "…You're busy, why'd you come. …Still, I missed you. (The hospital called before dawn. For the first time, Dad reached for your hand first.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "{parent} {child}로 태어나서, 정말 행복했어",
+        "en": "I was so lucky to be your {child}."
+       },
+       "outcome": "THANKS"
+      },
+      {
+       "t": {
+        "ko": "(아무 말도 못 하고 손만 꼭 잡는다)",
+        "en": "(You can't say a word. You just hold on to their hand.)"
+       },
+       "outcome": "SILENT"
+      },
+      {
+       "t": {
+        "ko": "가지 마. 나 아직 해 준 것도 없잖아",
+        "en": "Don't go. I haven't done anything for you yet."
+       },
+       "outcome": "NOT_YET"
+      }
+     ],
+     "outcomes": {
+      "THANKS": {
+       "r": {
+        "ko": "{parent}가 아주 작게 웃었다. 그게 마지막 웃음이었다. 새벽 4시 12분, 모니터의 선이 평평해졌다.",
+        "en": "{parent} smiled, just barely. It was the last smile. At 4:12 a.m., the line on the monitor went flat."
+       },
+       "effects": [
+        {
+         "kind": "parentDies"
+        }
+       ]
+      },
+      "SILENT": {
+       "r": {
+        "ko": "따뜻하던 손이 천천히 식어 갔다. 끝내 그 말을 하지 못했다. …사랑한다는 말.",
+        "en": "The warm hand slowly went cold. You never said it. …That you loved them."
+       },
+       "effects": [
+        {
+         "kind": "parentDies"
+        }
+       ]
+      },
+      "NOT_YET": {
+       "r": {
+        "ko": "'…다 해 줬어. 너 하나면 충분했어.' {parent}의 마지막 말이었다.",
+        "en": "'…You gave me everything. You were enough.' Those were {parent}'s last words."
+       },
+       "effects": [
+        {
+         "kind": "parentDies"
+        }
+       ]
+      }
+     },
+     "chain": true,
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "다음 생에도 {parent} {child}로 태어날게",
+          "en": "Next life, I'll be your {child} again."
+         },
+         "outcome": "NEXT"
+        },
+        {
+         "t": {
+          "ko": "(어릴 때 불러 주던 자장가를 대신 불러 준다)",
+          "en": "(Sing them the lullaby they used to sing to you)"
+         },
+         "outcome": "SONG"
+        },
+        {
+         "t": {
+          "ko": "미안해. 자주 못 와서",
+          "en": "I'm sorry I didn't come more often."
+         },
+         "outcome": "SORRY"
+        }
+       ],
+       "outcomes": {
+        "NEXT": {
+         "r": {
+          "ko": "{parent}가 눈을 감은 채 고개를 끄덕였다. 약속이야. 그게 마지막 대답이었다.",
+          "en": "{parent} nodded, eyes closed. A promise. That was the last answer."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "SONG": {
+         "r": {
+          "ko": "두 번째 소절에서 {parent}의 숨이 고르게 잦아들었다. 목소리가 갈라져도 끝까지 불렀다.",
+          "en": "By the second verse, {parent}'s breathing slowed and settled. You sang to the end, even when your voice broke."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "SORRY": {
+         "r": {
+          "ko": "'…알아. 바빴잖아. 잘 살고 있으니까 그걸로 됐어.' 손등을 두 번 토닥이고 {parent}는 잠들었다. 다시 깨지 않았다.",
+          "en": "'…I know. You were busy. You're doing well, and that's enough.' Two pats on the back of your hand, and {parent} fell asleep. They didn't wake up."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(사진첩을 꺼내 함께 넘겨 본다)",
+          "en": "(Bring out the photo album and turn the pages together)"
+         },
+         "outcome": "ALBUM"
+        },
+        {
+         "t": {
+          "ko": "걱정 마. 나 잘 살게",
+          "en": "Don't worry. I'll be okay."
+         },
+         "outcome": "OKAY"
+        },
+        {
+         "t": {
+          "ko": "(아무도 모르게 휴대폰 녹음 버튼을 누른다)",
+          "en": "(Quietly press record on your phone)"
+         },
+         "outcome": "VOICE"
+        }
+       ],
+       "outcomes": {
+        "ALBUM": {
+         "r": {
+          "ko": "내 돌 사진에서 {parent}의 손가락이 멈췄다. '이때 네가 처음 걸었어.' 그 이야기를 끝으로, 조용히 떠났다.",
+          "en": "{parent}'s finger stopped on your baby photo. 'This is when you took your first steps.' After that story, they slipped away quietly."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "OKAY": {
+         "r": {
+          "ko": "'…그래. 넌 잘 살 거야. 내가 알아.' 그 믿음 하나를 남기고 {parent}가 떠났다.",
+          "en": "'…I know you will. I just know.' {parent} left you that one belief, and then was gone."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "VOICE": {
+         "r": {
+          "ko": "녹음된 건 4분 32초. 숨소리, 작은 웃음 한 번, 그리고 사랑한다는 말. 몇 년이 지나도 지우지 못했다.",
+          "en": "Four minutes and thirty-two seconds: breathing, one small laugh, and 'I love you.' Years later, you still couldn't delete it."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "고마워. 나 키워 줘서",
+          "en": "Thank you for raising me."
+         },
+         "outcome": "RAISED"
+        },
+        {
+         "t": {
+          "ko": "(침대 옆에 누워 어릴 때처럼 팔베개를 한다)",
+          "en": "(Lie down beside them, your head on their arm like when you were little)"
+         },
+         "outcome": "ARM"
+        },
+        {
+         "t": {
+          "ko": "아직 할 얘기 많단 말이야",
+          "en": "We still have so much to talk about."
+         },
+         "outcome": "MORE"
+        }
+       ],
+       "outcomes": {
+        "RAISED": {
+         "r": {
+          "ko": "{parent}가 고개를 저었다. '…네가 나를 키웠지.' 그 말을 이해하는 데 몇 년이 걸렸다.",
+          "en": "{parent} shook their head. '…You're the one who raised me.' It took you years to understand that."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "ARM": {
+         "r": {
+          "ko": "팔은 여전히 따뜻했다. 새벽녘, 그 온기가 천천히 식어 가는 걸 끝까지 느꼈다.",
+          "en": "Their arm was still warm. Toward dawn, you felt that warmth slowly fade, and you stayed until the very end."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        },
+        "MORE": {
+         "r": {
+          "ko": "'…다 들었어. 말 안 해도.' {parent}의 마지막 말이었다.",
+          "en": "'…I heard all of it. You didn't have to say a thing.' Those were {parent}'s last words."
+         },
+         "effects": [
+          {
+           "kind": "parentDies"
+          }
+         ]
+        }
+       }
+      }
+     ]
+    },
+    "FUNERAL": {
+     "title": {
+      "ko": "부고",
+      "en": "In Memoriam"
+     },
+     "after": [
+      0,
+      0
+     ],
+     "location": "funeral_hall",
+     "activity": "mourn",
+     "who": "me",
+     "line": {
+      "ko": "(사흘 뒤, 장례식장.) ({f:portrait} 속 {parent}가 웃고 있다. 조문객들이 오고, 또 갔다.)",
+      "en": "(Three days later, the funeral hall.) ({parent} smiles in the funeral portrait. Mourners come and go.)"
+     },
+     "altBy": "parent",
+     "alt": {
+      "mom": {
+       "who": "me",
+       "line": {
+        "ko": "(사흘 뒤, 장례식장.) ({f:portrait} 속 엄마가 웃고 있다. 작년 생일에 내가 찍어 드린 사진이다. 조문객들이 오고, 또 갔다.)",
+        "en": "(Three days later, the funeral hall.) (Mom smiles in the funeral portrait, the photo you took on her last birthday. Mourners come and go.)"
+       }
+      },
+      "dad": {
+       "who": "me",
+       "line": {
+        "ko": "(사흘 뒤, 장례식장.) ({f:portrait} 속 아빠는 어색하게 웃고 있다. 사진만 찍으면 늘 그러셨다. 조문객들이 오고, 또 갔다.)",
+        "en": "(Three days later, the funeral hall.) (Dad smiles awkwardly in the portrait, the way he always did in photos. Mourners come and go.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "끝까지 자리를 지킨다",
+        "en": "Stay by the altar to the end"
+       },
+       "outcome": "STAY"
+      },
+      {
+       "t": {
+        "ko": "(아무도 없는 비상계단에서 혼자 운다)",
+        "en": "(Cry alone in the empty stairwell)"
+       },
+       "outcome": "CRY"
+      }
+     ],
+     "outcomes": {
+      "STAY": {
+       "r": {
+        "ko": "사흘 밤을 꼬박 새웠다. {f:burialday} 아침, 하늘이 이상하리만치 맑았다.",
+        "en": "You stayed up three nights. On the morning of the procession, the sky was strangely clear."
+       },
+       "effects": [
+        {
+         "kind": "familyObligation",
+         "delta": 0.1
+        }
+       ],
+       "scene": [
+        "funeral_hall"
+       ]
+      },
+      "CRY": {
+       "r": {
+        "ko": "한참을 울고 나니, {parent} 목소리가 들리는 것 같았다. '울지 마, 우리 {child}.'",
+        "en": "After crying for a long time, you could almost hear {parent}'s voice. 'Don't cry, my {child}.'"
+       },
+       "effects": [],
+       "scene": [
+        "funeral_hall"
+       ]
+      }
+     },
+     "chain": true,
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(조문객 한 명 한 명에게 {parent} 이야기를 청해 듣는다)",
+          "en": "(Ask each guest for a story about {parent})"
+         },
+         "outcome": "STORIES"
+        },
+        {
+         "t": {
+          "ko": "({f:portraitfront}에서 {parent}에게 편지를 쓴다)",
+          "en": "(Write {parent} a letter in front of the portrait)"
+         },
+         "outcome": "LETTER"
+        }
+       ],
+       "outcomes": {
+        "STORIES": {
+         "r": {
+          "ko": "{parent}에게는 내가 모르는 얼굴이 많았다. 누군가에겐 은인이었고, 누군가에겐 첫 친구였다.",
+          "en": "{parent} had so many sides you never knew. A lifesaver to one person, a first friend to another."
+         },
+         "effects": [
+          {
+           "kind": "familyObligation",
+           "delta": 0.1
+          }
+         ]
+        },
+        "LETTER": {
+         "r": {
+          "ko": "마지막 한 줄을 쓰는 데 세 시간이 걸렸다. 다음에 또 만나.",
+          "en": "The last line took three hours to write: See you again."
+         },
+         "effects": []
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(밥 한술 못 뜨는 가족들 손에 숟가락을 쥐여 준다)",
+          "en": "(Put spoons in the hands of family members who can't eat)"
+         },
+         "outcome": "CARE"
+        },
+        {
+         "t": {
+          "ko": "({f:burialday}, 운구 행렬 맨 앞에 선다)",
+          "en": "(On the last morning, walk at the front of the procession)"
+         },
+         "outcome": "LEAD"
+        }
+       ],
+       "outcomes": {
+        "CARE": {
+         "r": {
+          "ko": "'{parent}가 보면 혼낼 거야. 먹자.' 그 말에 다들 울면서 밥을 먹었다.",
+          "en": "'{parent} would scold us for this. Eat.' Everyone ate, crying."
+         },
+         "effects": [
+          {
+           "kind": "familyObligation",
+           "delta": 0.15
+          }
+         ]
+        },
+        "LEAD": {
+         "r": {
+          "ko": "{f:portrait}이(가) 생각보다 무거웠다. 이 무게를 평생 기억하기로 했다.",
+          "en": "The portrait was heavier than you expected. You decided to remember that weight for the rest of your life."
+         },
+         "effects": [
+          {
+           "kind": "familyObligation",
+           "delta": 0.1
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "({f:wake} 구석에서 {parent}의 휴대폰 사진첩을 연다)",
+          "en": "(In a quiet corner, open the photos on {parent}'s phone)"
+         },
+         "outcome": "PHONE"
+        },
+        {
+         "t": {
+          "ko": "끝까지 웃으며 손님을 맞는다",
+          "en": "Greet every guest with a smile, to the end"
+         },
+         "outcome": "SMILE"
+        }
+       ],
+       "outcomes": {
+        "PHONE": {
+         "r": {
+          "ko": "사진 대부분이 내 뒷모습이었다. 몰래, 오래, 나를 찍고 있었다.",
+          "en": "Most of the photos were of you from behind. Quietly, for years, they'd been taking pictures of you."
+         },
+         "effects": []
+        },
+        "SMILE": {
+         "r": {
+          "ko": "{parent}가 늘 그랬으니까. 마지막 손님이 가고 나서야 무너졌다.",
+          "en": "Because that's what {parent} always did. You only fell apart after the last guest left."
+         },
+         "effects": [
+          {
+           "kind": "familyObligation",
+           "delta": 0.1
+          }
+         ]
+        }
+       }
+      }
+     ]
+    },
+    "AFTER": {
+     "title": {
+      "ko": "빈자리",
+      "en": "The Empty Seat"
+     },
+     "after": [
+      2,
+      4
+     ],
+     "location": "home",
+     "activity": "rest",
+     "who": "me",
+     "line": {
+      "ko": "(몇 달 뒤.) ({parent}가 없는 첫 {f:holiday}이(가) 다가온다.)",
+      "en": "(Months later.) (The first {f:holiday} without {parent} is coming.)"
+     },
+     "altBy": "parent",
+     "alt": {
+      "mom": {
+       "who": "me",
+       "line": {
+        "ko": "(몇 달 뒤.) (엄마 번호로 문자를 보냈다. '엄마, 보고 싶어.' …1이 사라지지 않는다.)",
+        "en": "(Months later.) (You texted Mom's number. 'Mom, I miss you.' …It stays unread.)"
+       }
+      },
+      "dad": {
+       "who": "me",
+       "line": {
+        "ko": "(몇 달 뒤.) (아빠 휴대폰을 정리하다 봤다. 내 번호는 '우리 {child} ♥'로 저장되어 있었다.)",
+        "en": "(Months later.) (Going through Dad's phone, you saw it: your number was saved as 'My {child} ♥'.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "{parent}가 해 주던 음식을 만들어 본다",
+        "en": "Try cooking what {parent} used to make"
+       },
+       "outcome": "COOK"
+      },
+      {
+       "t": {
+        "ko": "(휴대폰을 꼭 쥔 채 잠든다)",
+        "en": "(Fall asleep holding the phone)"
+       },
+       "outcome": "SLEEP"
+      }
+     ],
+     "outcomes": {
+      "COOK": {
+       "r": {
+        "ko": "그 맛이 아니었다. 그래도 끝까지 다 먹었다. 살아야 하니까.",
+        "en": "It didn't taste the same. You finished it anyway. You have to keep living."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Cooked what my parent used to make.",
+         "tags": [
+          "family"
+         ]
+        }
+       ]
+      },
+      "SLEEP": {
+       "r": {
+        "ko": "꿈에 {parent}가 나왔다. 아무 말 없이, 그냥 웃고 있었다.",
+        "en": "{parent} came to you in a dream. They didn't say a word. They just smiled."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "A dream of my parent.",
+         "tags": [
+          "family"
+         ]
+        }
+       ]
+      }
+     },
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(첫 기일에 {parent}가 좋아하던 꽃을 들고 간다)",
+          "en": "(Bring {parent}'s favorite flowers on the first anniversary)"
+         },
+         "outcome": "FLOWERS"
+        },
+        {
+         "t": {
+          "ko": "(괜찮은 척을 그만두고 친구에게 전화한다)",
+          "en": "(Stop pretending you're fine and call a friend)"
+         },
+         "outcome": "CALL"
+        }
+       ],
+       "outcomes": {
+        "FLOWERS": {
+         "r": {
+          "ko": "꽃을 놓고 한참 수다를 떨었다. 대답은 없었지만, 이상하게 다 들은 것 같았다.",
+          "en": "You set down the flowers and talked for a long time. No answer, but somehow it felt like they heard every word."
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "Flowers on the first anniversary.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        },
+        "CALL": {
+         "r": {
+          "ko": "'…나 사실 하나도 안 괜찮아.' 친구는 아무 말 없이 한 시간 동안 들어 주었다.",
+          "en": "'…I'm actually not okay at all.' Your friend just listened, without a word, for an hour."
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "The call where I stopped pretending.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "{parent}처럼 살아 보기로 한다",
+          "en": "Decide to live a little more like {parent}"
+         },
+         "outcome": "LIVE"
+        },
+        {
+         "t": {
+          "ko": "(유품 상자에서 내 어릴 적 그림을 찾는다)",
+          "en": "(Find your childhood drawings in their keepsake box)"
+         },
+         "outcome": "DRAWING"
+        }
+       ],
+       "outcomes": {
+        "LIVE": {
+         "r": {
+          "ko": "아침마다 창문을 열고 화분에 물을 준다. {parent}가 하던 대로. 그렇게 하루가 조금 덜 무너진다.",
+          "en": "Every morning you open the window and water the plants, the way {parent} did. The days fall apart a little less."
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "Living a little like my parent.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        },
+        "DRAWING": {
+         "r": {
+          "ko": "삐뚤빼뚤한 크레파스 그림 뒷면에 날짜와 한 줄. '오늘 우리 {child}가 나를 그려 줬다.'",
+          "en": "On the back of a crooked crayon drawing: a date and one line. 'Today my {child} drew a picture of me.'"
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "My old drawing, kept all these years.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "{parent} 번호를 지우지 않기로 한다",
+          "en": "Decide not to delete {parent}'s number"
+         },
+         "outcome": "KEEP"
+        },
+        {
+         "t": {
+          "ko": "(남겨진 가계부를 처음부터 읽는다)",
+          "en": "(Read the household ledger they left, from page one)"
+         },
+         "outcome": "LEDGER"
+        }
+       ],
+       "outcomes": {
+        "KEEP": {
+         "r": {
+          "ko": "가끔 그 번호로 오늘 있었던 일을 보낸다. 답장은 없지만, 하루를 정리하는 방법이 됐다.",
+          "en": "Sometimes you text that number about your day. There's never a reply, but it's become how you close out the day."
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "Texts to a number that never answers.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        },
+        "LEDGER": {
+         "r": {
+          "ko": "{f:cram}비, 운동화, 수학여행비. 빼곡한 숫자 사이에 내가 있었다.",
+          "en": "Tutoring fees, sneakers, a school trip. Between all those numbers, there you were."
+         },
+         "effects": [
+          {
+           "kind": "memory",
+           "text": "My life in my parent's ledger.",
+           "tags": [
+            "family"
+           ]
+          }
+         ]
+        }
+       }
+      }
+     ]
+    }
+   }
+  },
+  "PET_FAREWELL": {
+   "steps": {
+    "GOODBYE": {
+     "title": {
+      "ko": "무지개다리",
+      "en": "Over the rainbow bridge"
+     },
+     "after": [
+      0,
+      1
+     ],
+     "location": "home",
+     "who": "me",
+     "line": {
+      "ko": "({pet}가 요즘 잘 먹지 않는다. 오래 함께했다.)",
+      "en": "({pet} hasn't been eating. You've been together a long time.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "품에 안아준다",
+        "en": "Hold them close"
+       },
+       "outcome": "PASSED"
+      },
+      {
+       "t": {
+        "ko": "좋아하던 공원에 데려간다",
+        "en": "Take them to their favorite park"
+       },
+       "outcome": "PASSED"
+      }
+     ],
+     "outcomes": {
+      "PASSED": {
+       "r": {
+        "ko": "{pet}는 햇살 아래서 편안하게 잠들었다.",
+        "en": "{pet} fell asleep peacefully in the sun."
+       },
+       "effects": [
+        {
+         "kind": "petDies"
+        }
+       ],
+       "card": "PET_FAREWELL"
+      }
+     }
+    }
+   }
+  },
+  "ILLNESS": {
+   "steps": {
+    "TREATMENT": {
+     "title": {
+      "ko": "투병",
+      "en": "The fight"
+     },
+     "after": [
+      4,
+      7
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "doctor",
+     "line": {
+      "ko": "치료가 길어질 수 있어요. 가족분들의 도움이 필요합니다.",
+      "en": "Treatment may take a while. Family support will make a real difference."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "곁을 지킨다",
+        "en": "Stay by their side"
+       },
+       "outcome": "KEEP"
+      },
+      {
+       "t": {
+        "ko": "최선의 병원을 찾는다",
+        "en": "Find the best hospital"
+       },
+       "outcome": "KEEP"
+      }
+     ],
+     "outcomes": {
+      "KEEP": {
+       "r": {
+        "ko": "긴 겨울 같은 몇 달이었다.",
+        "en": "The months dragged on like a long winter."
+       },
+       "effects": [],
+       "card": "HOSPITAL"
+      }
+     }
+    },
+    "RESULT": {
+     "title": {
+      "ko": "검사 결과",
+      "en": "The results"
+     },
+     "after": [
+      5,
+      10
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "doctor",
+     "line": {
+      "ko": "검사 결과가 나왔습니다.",
+      "en": "The test results are in."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(떨리는 손으로 결과를 듣는다)",
+        "en": "(Listen with trembling hands)"
+       },
+       "outcome": "RESOLVE"
+      }
+     ],
+     "outcomes": {
+      "RESOLVE": {
+       "r": {
+        "ko": "",
+        "en": ""
+       },
+       "effects": [
+        {
+         "kind": "illnessResult"
+        }
+       ]
+      }
+     }
+    }
+   }
+  },
+  "PARTNER_PASSING": {
+   "steps": {
+    "CALL": {
+     "title": {
+      "ko": "병원에서 온 전화",
+      "en": "A call from the hospital"
+     },
+     "after": [
+      0,
+      0
+     ],
+     "location": "hospital",
+     "activity": "visit_patient",
+     "who": "doctor",
+     "line": {
+      "ko": "[병원] {partner} 님이 갑자기 쓰러지셨어요. 서둘러 와 주셔야 할 것 같습니다.",
+      "en": "[Hospital] {partner} suddenly collapsed. Please come quickly."
+     },
+     "altBy": "cause",
+     "alt": {
+      "accident": {
+       "who": "doctor",
+       "line": {
+        "ko": "[응급실] {partner} 님 보호자분 되시죠? 사고가 있었습니다. 지금 바로 와 주세요.",
+        "en": "[ER] Are you {partner}'s family? There's been an accident. Please come right away."
+       }
+      },
+      "sudden": {
+       "who": "doctor",
+       "line": {
+        "ko": "[병원] {partner} 님이 갑자기 쓰러지셨어요. 서둘러 와 주셔야 할 것 같습니다.",
+        "en": "[Hospital] {partner} suddenly collapsed. Please come quickly."
+       }
+      },
+      "old": {
+       "who": "me",
+       "line": {
+        "ko": "({partner}의 숨이 점점 약해지고 있다. 의사가 가족을 부르라고 했다.)",
+        "en": "({partner}'s breathing grows weaker. The doctor says to call the family.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "정신없이 달려간다",
+        "en": "Run there"
+       },
+       "outcome": "VIGIL"
+      },
+      {
+       "t": {
+        "ko": "(손이 떨려 아무것도 할 수 없다)",
+        "en": "(Your hands shake too much to do anything)"
+       },
+       "outcome": "VIGIL"
+      }
+     ],
+     "outcomes": {
+      "VIGIL": {
+       "r": {
+        "ko": "밤새 {partner}의 손을 놓지 않았다.",
+        "en": "You held {partner}'s hand all night."
+       },
+       "effects": [
+        {
+         "kind": "partnerCritical"
+        }
+       ]
+      }
+     },
+     "chain": true,
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(택시 안에서 {partner}에게 계속 문자를 보낸다)",
+          "en": "(Keep texting {partner} from the taxi)"
+         },
+         "outcome": "TEXTS"
+        },
+        {
+         "t": {
+          "ko": "(신발도 제대로 못 신고 뛰쳐나간다)",
+          "en": "(Run out the door, shoes barely on)"
+         },
+         "outcome": "RUN"
+        }
+       ],
+       "outcomes": {
+        "TEXTS": {
+         "r": {
+          "ko": "금방 갈게. 조금만 기다려. 사랑해. 읽음 표시는 끝내 뜨지 않았다. 그래도 밤새 곁을 지켰다.",
+          "en": "On my way. Hang on. I love you. None of them showed as read. You stayed by their side all night anyway."
+         },
+         "effects": [
+          {
+           "kind": "partnerCritical"
+          }
+         ]
+        },
+        "RUN": {
+         "r": {
+          "ko": "병원 복도가 끝없이 길었다. 도착했을 때 {partner}의 손은 아직 따뜻했다.",
+          "en": "The hospital hallway went on forever. When you got there, {partner}'s hand was still warm."
+         },
+         "effects": [
+          {
+           "kind": "partnerCritical"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(기도 같은 걸 해 본 적 없는데, 처음으로 기도한다)",
+          "en": "(You've never prayed before. You pray now.)"
+         },
+         "outcome": "PRAY"
+        },
+        {
+         "t": {
+          "ko": "(떨리는 손으로 보호자 서류부터 챙긴다)",
+          "en": "(With shaking hands, take care of the paperwork first)"
+         },
+         "outcome": "PAPERS"
+        }
+       ],
+       "outcomes": {
+        "PRAY": {
+         "r": {
+          "ko": "누구에게 하는 건지도 모르는 기도를 밤새 했다. 한 번만, 딱 한 번만.",
+          "en": "All night you prayed to no one in particular. Just once. Please, just this once."
+         },
+         "effects": [
+          {
+           "kind": "partnerCritical"
+          }
+         ]
+        },
+        "PAPERS": {
+         "r": {
+          "ko": "손은 떨렸지만 해야 할 일을 했다. {partner}이(가) 늘 나를 믿어 주던 방식으로.",
+          "en": "Your hands shook, but you did what had to be done. The way {partner} always trusted you to."
+         },
+         "effects": [
+          {
+           "kind": "partnerCritical"
+          }
+         ]
+        }
+       }
+      }
+     ]
+    },
+    "FAREWELL": {
+     "title": {
+      "ko": "이별",
+      "en": "Goodbye"
+     },
+     "after": [
+      0,
+      1
+     ],
+     "location": "funeral_hall",
+     "activity": "mourn",
+     "who": "me",
+     "line": {
+      "ko": "({f:portrait} 속 {partner}이(가) 웃고 있다.)",
+      "en": "({partner} smiles out of the memorial photo.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "마지막으로 이름을 불러본다",
+        "en": "Say their name one last time"
+       },
+       "outcome": "GOODBYE"
+      },
+      {
+       "t": {
+        "ko": "고마웠어. 정말로.",
+        "en": "Thank you. Truly."
+       },
+       "outcome": "GOODBYE"
+      }
+     ],
+     "outcomes": {
+      "GOODBYE": {
+       "r": {
+        "ko": "…{partner}은(는) 이제 없다. 그래도 함께한 날들은 여기 남아 있다.",
+        "en": "…{partner} is gone. But the days you shared are still here."
+       },
+       "effects": [
+        {
+         "kind": "partnerDies"
+        }
+       ],
+       "card": "PARTNER_FUNERAL",
+       "scene": [
+        "funeral_hall"
+       ]
+      }
+     },
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "({f:portraitfront}에서 우리가 처음 만난 날 이야기를 한다)",
+          "en": "(In front of the portrait, tell the story of the day you met)"
+         },
+         "outcome": "FIRST"
+        },
+        {
+         "t": {
+          "ko": "다음 생에도 나를 찾아와 줘",
+          "en": "Find me again in the next life."
+         },
+         "outcome": "NEXT"
+        }
+       ],
+       "outcomes": {
+        "FIRST": {
+         "r": {
+          "ko": "기억나? 그날 네가… 끝까지 이야기했다. {partner}이(가) 늘 웃던 대목에서, 나도 웃었다.",
+          "en": "Remember? That day, you… You told it all the way through. At the part where {partner} always laughed, you laughed too."
+         },
+         "effects": [
+          {
+           "kind": "partnerDies"
+          }
+         ],
+         "card": "PARTNER_FUNERAL"
+        },
+        "NEXT": {
+         "r": {
+          "ko": "향이 다 타들어 갈 때까지 그 자리에 서 있었다. 대답을 들은 것 같았다.",
+          "en": "You stood there until the incense burned all the way down. It felt like you'd heard an answer."
+         },
+         "effects": [
+          {
+           "kind": "partnerDies"
+          }
+         ],
+         "card": "PARTNER_FUNERAL"
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(우리 사진을 한 장씩 꺼내 {f:portrait} 옆에 놓는다)",
+          "en": "(Set your photos together, one by one, beside the portrait)"
+         },
+         "outcome": "PHOTOS"
+        },
+        {
+         "t": {
+          "ko": "(아무 말 없이 {f:portrait}을(를) 오래 바라본다)",
+          "en": "(Look at the portrait for a long time, without a word)"
+         },
+         "outcome": "LOOK"
+        }
+       ],
+       "outcomes": {
+        "PHOTOS": {
+         "r": {
+          "ko": "사진은 수백 장인데, 고마운 건 그보다 많았다.",
+          "en": "Hundreds of photos, and even more things to be thankful for."
+         },
+         "effects": [
+          {
+           "kind": "partnerDies"
+          }
+         ],
+         "card": "PARTNER_FUNERAL"
+        },
+        "LOOK": {
+         "r": {
+          "ko": "{partner}은(는) 사진 속에서도 나를 보고 웃고 있었다. 그 얼굴을 오래 외웠다.",
+          "en": "Even in the photo, {partner} was smiling at you. You memorized that face."
+         },
+         "effects": [
+          {
+           "kind": "partnerDies"
+          }
+         ],
+         "card": "PARTNER_FUNERAL"
+        }
+       }
+      }
+     ]
+    }
+   }
+  },
+  "AFFAIR": {
+   "steps": {
+    "DISCOVER": {
+     "title": {
+      "ko": "배신",
+      "en": "Betrayal"
+     },
+     "after": [
+      0,
+      0
+     ],
+     "location": "street",
+     "who": "me",
+     "line": {
+      "ko": "({partner}의 휴대폰에 낯선 이름의 메시지가 떴다. …그리고 오늘, 둘이 함께 있는 걸 봤다.)",
+      "en": "(A message from an unfamiliar name lit up {partner}'s phone. …And today, you saw them together.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "그 자리에서 따진다",
+        "en": "Confront them on the spot"
+       },
+       "roll": {
+        "SEPARATE": 0.65,
+        "RECONCILE": 0.2,
+        "DISTANCE": 0.15
+       },
+       "compat": {
+        "RECONCILE": 1,
+        "SEPARATE": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "모른 척한다",
+        "en": "Pretend you didn't see"
+       },
+       "roll": {
+        "DISTANCE": 0.75,
+        "SEPARATE": 0.1,
+        "RECONCILE": 0.15
+       },
+       "compat": {
+        "RECONCILE": 1,
+        "SEPARATE": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "대화로 풀어본다",
+        "en": "Try to talk it through"
+       },
+       "roll": {
+        "RECONCILE": 0.55,
+        "SEPARATE": 0.3,
+        "DISTANCE": 0.15
+       },
+       "compat": {
+        "RECONCILE": 1,
+        "SEPARATE": -1
+       }
+      }
+     ],
+     "outcomes": {
+      "RECONCILE": {
+       "r": {
+        "ko": "{partner}이(가) 무릎을 꿇었다. …딱 한 번만, 믿어보기로 했다.",
+        "en": "{partner} fell to their knees. …You decided to trust them, just once more."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "I forgave, once.",
+         "tags": [
+          "fate"
+         ]
+        }
+       ]
+      },
+      "SEPARATE": {
+       "r": {
+        "ko": "…더는 함께할 수 없었다.",
+        "en": "…You couldn't stay together anymore."
+       },
+       "effects": [
+        {
+         "kind": "separate"
+        }
+       ],
+       "card": "AFFAIR",
+       "scene": [
+        "street"
+       ]
+      },
+      "DISTANCE": {
+       "r": {
+        "ko": "아무 말도 하지 못했다. 그날 이후, 우리 사이엔 금이 갔다.",
+        "en": "You couldn't say a word. From that day on, something between you was cracked."
+       },
+       "effects": [
+        {
+         "kind": "setFlag",
+         "name": "distance",
+         "value": true
+        }
+       ]
+      }
+     }
+    }
+   }
+  },
+  "FAMILY_PASSING": {
+   "steps": {
+    "GOODBYE": {
+     "title": {
+      "ko": "부고",
+      "en": "Sad news"
+     },
+     "after": [
+      0,
+      0
+     ],
+     "location": "funeral_hall",
+     "activity": "mourn",
+     "who": "me",
+     "line": {
+      "ko": "({relative}께서 돌아가셨다는 연락을 받았다.)",
+      "en": "(You got word that {relative} passed away.)"
+     },
+     "altBy": "speaker",
+     "alt": {
+      "sibling": {
+       "who": "me",
+       "line": {
+        "ko": "({relative}의 부고를 받았다. 믿을 수가 없다.)",
+        "en": "(The news about {relative} came. You can't believe it.)"
+       }
+      },
+      "mom": {
+       "who": "mom",
+       "line": {
+        "ko": "[엄마] {relative}께서 돌아가셨대. …같이 가자.",
+        "en": "[Mom] {relative} passed away. …Let's go together."
+       }
+      },
+      "dad": {
+       "who": "dad",
+       "line": {
+        "ko": "[아빠] {relative}께서 돌아가셨다. 내려올 수 있겠니?",
+        "en": "[Dad] {relative} passed away. Can you come down?"
+       }
+      },
+      "me": {
+       "who": "me",
+       "line": {
+        "ko": "({relative}께서 돌아가셨다는 연락을 받았다.)",
+        "en": "(You got word that {relative} passed away.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "바로 내려간다",
+        "en": "Go right away"
+       },
+       "outcome": "GOODBYE"
+      },
+      {
+       "t": {
+        "ko": "(한참을 멍하니 있었다)",
+        "en": "(You sit there, numb, for a long time)"
+       },
+       "outcome": "GOODBYE"
+      }
+     ],
+     "outcomes": {
+      "GOODBYE": {
+       "r": {
+        "ko": "{f:respects}.",
+        "en": "{f:respects}."
+       },
+       "effects": [
+        {
+         "kind": "relativeDies"
+        }
+       ],
+       "scene": [
+        "funeral_hall"
+       ]
+      }
+     },
+     "choiceSets": [
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(어릴 때 {relative} 댁에서 보낸 여름을 떠올린다)",
+          "en": "(Remember the summers at {relative}'s place)"
+         },
+         "outcome": "SUMMER"
+        },
+        {
+         "t": {
+          "ko": "(가족 단톡방에 처음으로 긴 글을 쓴다)",
+          "en": "(Write a long message in the family group chat for the first time)"
+         },
+         "outcome": "CHAT"
+        }
+       ],
+       "outcomes": {
+        "SUMMER": {
+         "r": {
+          "ko": "평상, 수박, 모기향 냄새. 그 여름의 {relative}는 늘 웃고 계셨다. {f:respects}.",
+          "en": "The porch, the watermelon, the smell of bug spray. In those summers, {relative} was always smiling. {f:respects}."
+         },
+         "effects": [
+          {
+           "kind": "relativeDies"
+          }
+         ]
+        },
+        "CHAT": {
+         "r": {
+          "ko": "한참 동안 읽음 표시만 떴다. 그리고 하나둘, 각자의 기억을 꺼내 놓기 시작했다.",
+          "en": "For a long while, only read receipts. Then one by one, everyone started sharing a memory of their own."
+         },
+         "effects": [
+          {
+           "kind": "relativeDies"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "choices": [
+        {
+         "t": {
+          "ko": "(오랜만에 만난 사촌들과 밤을 새운다)",
+          "en": "(Stay up all night with cousins you haven't seen in years)"
+         },
+         "outcome": "COUSINS"
+        },
+        {
+         "t": {
+          "ko": "(못 드린 안부 전화를 떠올린다)",
+          "en": "(Think of all the calls you never made)"
+         },
+         "outcome": "CALLS"
+        }
+       ],
+       "outcomes": {
+        "COUSINS": {
+         "r": {
+          "ko": "어릴 때 이야기로 울다가 웃다가 했다. {relative}가 마지막으로 모아 준 자리 같았다.",
+          "en": "You cried and laughed over childhood stories. It felt like one last get-together {relative} had arranged."
+         },
+         "effects": [
+          {
+           "kind": "relativeDies"
+          }
+         ]
+        },
+        "CALLS": {
+         "r": {
+          "ko": "'다음 {f:holiday}에 찾아뵐게요.' 그 다음은 오지 않았다. 그날 밤, 미뤄 둔 안부 전화를 전부 걸었다.",
+          "en": "'I'll visit next {f:holiday}.' Next {f:holiday} never came. That night, you made every call you'd been putting off."
+         },
+         "effects": [
+          {
+           "kind": "relativeDies"
+          }
+         ]
+        }
+       }
+      }
+     ]
+    }
+   }
+  },
+  "LONG_DISTANCE": {
+   "steps": {
+    "CALL": {
+     "title": {
+      "ko": "장거리 연애",
+      "en": "Long distance"
+     },
+     "after": [
+      1,
+      2
+     ],
+     "location": "home",
+     "who": "partner",
+     "line": {
+      "ko": "(밤 10시. 영상통화 너머 {partner} 쪽은 {fatedTime}. 시차 {tzdiff}시간.) …화면 말고, 진짜로 보고 싶다.",
+      "en": "(10 p.m. On the video call, it's {fatedTime} where {partner} is. {tzdiff} hours apart.) …I want to see you for real, not on a screen."
+     },
+     "altBy": "distance",
+     "alt": {
+      "city": {
+       "who": "partner",
+       "line": {
+        "ko": "(금요일 밤 KTX. {partner}이(가) 사는 {fatedCity}까지 두 시간 반.) 역에 도착하면 전화해. 마중 나갈게.",
+        "en": "(Friday night train. Two and a half hours to {fatedCity}, where {partner} lives.) Call me when you get in. I'll meet you at the station."
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "매일 같은 시간에 통화하자",
+        "en": "Let's call at the same time every day"
+       },
+       "roll": {
+        "CLOSE": 0.75,
+        "STRAIN": 0.25
+       },
+       "compat": {
+        "CLOSE": 1,
+        "STRAIN": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "보고 싶다고 솔직하게 말한다",
+        "en": "Say you miss them, honestly"
+       },
+       "roll": {
+        "CLOSE": 0.65,
+        "STRAIN": 0.35
+       },
+       "compat": {
+        "CLOSE": 1,
+        "STRAIN": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "(괜찮은 척한다)",
+        "en": "(Pretend you're fine)"
+       },
+       "roll": {
+        "CLOSE": 0.35,
+        "STRAIN": 0.65
+       },
+       "compat": {
+        "CLOSE": 1,
+        "STRAIN": -1
+       }
+      }
+     ],
+     "outcomes": {
+      "CLOSE": {
+       "r": {
+        "ko": "화면 너머로도 온기가 전해졌다. 거리는 멀어도, 마음은 가까웠다.",
+        "en": "Even through a screen you could feel the warmth. Far apart, close at heart."
+       },
+       "effects": []
+      },
+      "STRAIN": {
+       "r": {
+        "ko": "통화가 끝나고 한참을 멍하니 앉아 있었다. 거리가 처음으로 무겁게 느껴졌다.",
+        "en": "After the call you sat staring for a long time. For the first time, the distance felt heavy."
+       },
+       "effects": []
+      }
+     }
+    },
+    "VISIT": {
+     "title": {
+      "ko": "만나러 가는 길",
+      "en": "On the way to you"
+     },
+     "after": [
+      3,
+      6
+     ],
+     "location": "airport",
+     "who": "partner",
+     "line": {
+      "ko": "({fatedCity} 공항 입국장. 사람들 사이로 {partner}이(가) 손을 흔든다.)",
+      "en": "({fatedCity} airport arrivals. Through the crowd, {partner} is waving.)"
+     },
+     "altBy": "distance",
+     "alt": {
+      "city": {
+       "who": "partner",
+       "location": "street",
+       "line": {
+        "ko": "({fatedCity}역 대합실. {partner}이(가) 꽃 한 송이를 들고 서 있다.)",
+        "en": "({fatedCity} station. {partner} is standing there with a single flower.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "달려가서 안긴다",
+        "en": "Run into their arms"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "어색하게 손을 흔든다",
+        "en": "Wave, a little awkward"
+       },
+       "outcome": "GOOD"
+      },
+      {
+       "t": {
+        "ko": "(울컥해서 아무 말도 못 한다)",
+        "en": "(Too choked up to say anything)"
+       },
+       "outcome": "GOOD"
+      }
+     ],
+     "outcomes": {
+      "GOOD": {
+       "r": {
+        "ko": "화면 속 얼굴이 아니라 진짜였다. 사흘은 너무 짧았다.",
+        "en": "Not a face on a screen. Really them. Three days was nowhere near enough."
+       },
+       "effects": [],
+       "card": "FLIGHT"
+      }
+     }
+    },
+    "DECIDE": {
+     "title": {
+      "ko": "누가 옮길까",
+      "en": "Who moves?"
+     },
+     "after": [
+      6,
+      10
+     ],
+     "location": "home",
+     "who": "partner",
+     "line": {
+      "ko": "우리 계속 이렇게 지낼 수는 없잖아. …둘 중 하나는 옮겨야 할 것 같아.",
+      "en": "We can't keep living like this. …One of us has to move."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "내가 {fatedCity}으로 갈게",
+        "en": "I'll come to {fatedCity}"
+       },
+       "roll": {
+        "I_MOVE": 0.75,
+        "STRAIN": 0.25
+       },
+       "compat": {
+        "I_MOVE": 1,
+        "STRAIN": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "네가 이쪽으로 와줄 수 있어?",
+        "en": "Could you move here?"
+       },
+       "roll": {
+        "THEY_MOVE": 0.6,
+        "STRAIN": 0.25,
+        "BREAKUP": 0.15
+       },
+       "compat": {
+        "THEY_MOVE": 1,
+        "BREAKUP": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "조금만 더 이대로 지내자",
+        "en": "Let's stay like this a bit longer"
+       },
+       "roll": {
+        "STAY": 0.6,
+        "BREAKUP": 0.4
+       },
+       "compat": {
+        "STAY": 1,
+        "BREAKUP": -1
+       }
+      }
+     ],
+     "outcomes": {
+      "I_MOVE": {
+       "r": {
+        "ko": "짐 두 개를 싸서 {fatedCity}으로 떠났다. 새 도시, 같은 사람.",
+        "en": "You packed two bags and left for {fatedCity}. A new city, the same person."
+       },
+       "effects": [
+        {
+         "kind": "moveToFated"
+        }
+       ],
+       "card": "MOVE_CITY"
+      },
+      "THEY_MOVE": {
+       "r": {
+        "ko": "{partner}이(가) 짐을 싸서 이쪽으로 왔다. 이제 시차를 계산하지 않아도 된다.",
+        "en": "{partner} packed up and moved here. No more counting time zones."
+       },
+       "effects": [
+        {
+         "kind": "fatedMovesHere"
+        }
+       ],
+       "card": "NEW_HOME"
+      },
+      "STAY": {
+       "r": {
+        "ko": "달력에 날짜를 지워가며 조금 더 버티기로 했다.",
+        "en": "You decided to hold on a little longer, crossing days off the calendar."
+       },
+       "effects": [
+        {
+         "kind": "arcRepeat",
+         "after": [
+          10,
+          14
+         ]
+        }
+       ]
+      },
+      "STRAIN": {
+       "r": {
+        "ko": "그날 통화는 싸움으로 끝났다. 서로 지쳐 있었다.",
+        "en": "That call ended in a fight. You were both worn out."
+       },
+       "effects": [
+        {
+         "kind": "arcRepeat",
+         "after": [
+          6,
+          10
+         ]
+        }
+       ]
+      },
+      "BREAKUP": {
+       "r": {
+        "ko": "…서로의 도시에서, 각자의 삶을 살기로 했다.",
+        "en": "…You decided to live your own lives, each in your own city."
+       },
+       "effects": [
+        {
+         "kind": "breakUp"
+        }
+       ],
+       "card": "BREAKUP"
+      }
+     }
+    }
+   }
+  },
+  "TALKING": {
+   "steps": {
+    "TEXTS": {
+     "title": {
+      "ko": "새벽 {f:app}",
+      "en": "2 a.m. texts"
+     },
+     "after": [
+      0,
+      1
+     ],
+     "location": "home",
+     "who": "fated",
+     "line": {
+      "ko": "(새벽 두 시. {fated}에게서 온 {f:app}.) 자? …아니 그냥, 뭐 하나 궁금해서.",
+      "en": "(2 a.m. A text from {fated}.) You up? …No reason. Just wondering what you're doing."
+     },
+     "altBy": "distance",
+     "alt": {
+      "abroad": {
+       "who": "fated",
+       "line": {
+        "ko": "(밤 열한 시. {fatedCity}은 지금 {fatedTime}. {fated}에게서 온 메시지.) 거기 몇 시야? …자기 전에 목소리 듣고 싶어서.",
+        "en": "(11 p.m. It's {fatedTime} in {fatedCity}. A message from {fated}.) What time is it there? …Wanted to hear your voice before you sleep."
+       }
+      },
+      "city": {
+       "who": "fated",
+       "line": {
+        "ko": "(밤 열한 시. {fatedCity}에 사는 {fated}에게서 온 메시지.) 오늘 하루 어땠어? …자기 전에 목소리 듣고 싶어서.",
+        "en": "(11 p.m. A message from {fated}, all the way in {fatedCity}.) How was your day? …Wanted to hear your voice before you sleep."
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "바로 전화를 건다",
+        "en": "Call right away"
+       },
+       "roll": {
+        "CLOSER": 0.8,
+        "FLAT": 0.2
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "안 자 ㅎㅎ (밤새 {f:app}한다)",
+        "en": "Not asleep lol (text all night)"
+       },
+       "roll": {
+        "CLOSER": 0.7,
+        "FLAT": 0.3
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "(읽고 아침에 답한다)",
+        "en": "(Read it, answer in the morning)"
+       },
+       "roll": {
+        "CLOSER": 0.25,
+        "FLAT": 0.75
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      }
+     ],
+     "outcomes": {
+      "CLOSER": {
+       "r": {
+        "ko": "정신 차려 보니 해가 뜨고 있었다. 무슨 얘기를 그렇게 했는지 기억도 안 난다.",
+        "en": "Suddenly the sun was coming up. You can't even remember what you talked about."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.15
+        }
+       ]
+      },
+      "FLAT": {
+       "r": {
+        "ko": "'ㅇㅇ 잘 자' — 짧은 답장이 왔다. 괜히 신경이 쓰였다.",
+        "en": "\"ok night.\" That was it. It bothered you more than it should have."
+       },
+       "effects": []
+      }
+     },
+     "variants": [
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "(밤 열한 시 반. {fated}에게서 사진 한 장이 왔다. 달이 엄청 크다.) 너네 동네에서도 보여?",
+        "en": "(11:30 p.m. {fated} sends a photo. The moon is huge.) Can you see it from your place too?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "창문 열고 같은 달을 찍어 보낸다",
+          "en": "Open the window and send back the same moon"
+         }
+        },
+        {
+         "t": {
+          "ko": "보여. 근데 네 사진이 더 예뻐",
+          "en": "I can. Your photo's prettier though"
+         }
+        },
+        {
+         "t": {
+          "ko": "(내일 아침에 봤어! 하고 답한다)",
+          "en": "(Reply in the morning: saw it!)"
+         }
+        }
+       ],
+       "location": "home"
+      },
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "(새벽 한 시. {fated}에게서 음성 메시지.) …지금 {f:ramen} 끓이는데, 너도 배고프지?",
+        "en": "(1 a.m. A voice message from {fated}.) …I'm making {f:ramen}. You hungry too?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "지금 나갈게 ({f:store} 앞으로 간다)",
+          "en": "Coming out now (head to the {f:store})"
+         }
+        },
+        {
+         "t": {
+          "ko": "같이 영상통화하며 {f:ramen} 먹는다",
+          "en": "Eat {f:ramen} together on a video call"
+         }
+        },
+        {
+         "t": {
+          "ko": "(배고픔을 참고 잔다)",
+          "en": "(Ignore the hunger and sleep)"
+         }
+        }
+       ],
+       "location": "home"
+      },
+      {
+       "element": "WOOD",
+       "line": {
+        "ko": "(자정 무렵 {fated}에게서 링크가 왔다.) 이 노래 들어 봐. 듣다가 네 생각나서.",
+        "en": "(Around midnight {fated} sends a link.) Listen to this song. It made me think of you."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "바로 듣고 전화를 건다",
+          "en": "Listen right away and call"
+         }
+        },
+        {
+         "t": {
+          "ko": "답장으로 노래 하나를 보낸다",
+          "en": "Send back a song of your own"
+         }
+        },
+        {
+         "t": {
+          "ko": "(저장해 두고 내일 듣는다)",
+          "en": "(Save it for tomorrow)"
+         }
+        }
+       ],
+       "location": "home"
+      },
+      {
+       "element": "METAL",
+       "line": {
+        "ko": "(밤 열두 시 정각. {fated}의 {f:app}.) 오늘 하루 중에 제일 좋았던 거 하나만 말해 줘.",
+        "en": "(Midnight exactly. {fated} texts.) Tell me the one best thing about your day."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "지금 이 {f:app}",
+          "en": "This text, right now"
+         }
+        },
+        {
+         "t": {
+          "ko": "길게 하루를 털어놓는다",
+          "en": "Tell them about your whole day"
+         }
+        },
+        {
+         "t": {
+          "ko": "(내일 정리해서 답한다)",
+          "en": "(Answer tomorrow, once you've thought it through)"
+         }
+        }
+       ],
+       "location": "home"
+      }
+     ]
+    },
+    "NOT_A_DATE": {
+     "title": {
+      "ko": "이거 데이트야?",
+      "en": "Is this a date?"
+     },
+     "after": [
+      1,
+      3
+     ],
+     "location": "cinema",
+     "who": "fated",
+     "line": {
+      "ko": "(둘이서만 영화를 봤다. 팝콘 통에서 손이 두 번 닿았다.) …우리 이거, 데이트야?",
+      "en": "(A movie, just the two of you. Your hands touched twice in the popcorn.) …Is this, like, a date?"
+     },
+     "altBy": "distance",
+     "alt": {
+      "abroad": {
+       "who": "fated",
+       "location": "home",
+       "line": {
+        "ko": "(시간을 맞춰 화면 두 개로 같은 영화를 틀었다. {fated}이(가) 먼저 웃음이 터졌다.) …이거 데이트 맞지?",
+        "en": "(Two screens, one movie, perfectly in sync. {fated} laughs first.) …This counts as a date, right?"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "응. 데이트야",
+        "en": "Yes. It's a date"
+       },
+       "roll": {
+        "CLOSER": 0.8,
+        "FLAT": 0.2
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "글쎄~ 너는 어떻게 생각하는데?",
+        "en": "Hmm, what do you think?"
+       },
+       "roll": {
+        "CLOSER": 0.6,
+        "FLAT": 0.4
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "에이, 친구끼리 무슨",
+        "en": "Come on, we're just friends"
+       },
+       "roll": {
+        "CLOSER": 0.15,
+        "FLAT": 0.85
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      }
+     ],
+     "outcomes": {
+      "CLOSER": {
+       "r": {
+        "ko": "{fated}이(가) 고개를 숙이고 웃었다. 귀가 빨갰다.",
+        "en": "{fated} looked down and smiled. Their ears had gone red."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.15
+        }
+       ]
+      },
+      "FLAT": {
+       "r": {
+        "ko": "'그치, 친구끼리.' 대답이 조금 늦게 왔다.",
+        "en": "\"Right. Friends.\" The answer came a beat too late."
+       },
+       "effects": []
+      }
+     },
+     "variants": [
+      {
+       "element": "WOOD",
+       "line": {
+        "ko": "(둘이서 공원을 한 바퀴 더 돌았다. 벌써 세 바퀴째다.) …우리 왜 계속 걷고 있지?",
+        "en": "(You've circled the park again. That's lap three.) …Why are we still walking?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "헤어지기 싫어서",
+          "en": "Because I don't want to say goodbye yet"
+         }
+        },
+        {
+         "t": {
+          "ko": "글쎄, 너는 왜 걷는데?",
+          "en": "I don't know. Why are you?"
+         }
+        },
+        {
+         "t": {
+          "ko": "운동하는 거지 뭐",
+          "en": "It's exercise, obviously"
+         }
+        }
+       ],
+       "location": "park"
+      },
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "(즉흥으로 들어간 소품 가게. {fated}이(가) 커플 키링을 집어 들었다.) …이거 우리 같지 않아?",
+        "en": "(A random gift shop. {fated} picks up a pair of matching keychains.) …Doesn't this look like us?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "응. 하나씩 하자",
+          "en": "Yeah. One each"
+         }
+        },
+        {
+         "t": {
+          "ko": "우리가 뭔데?",
+          "en": "And what are we, exactly?"
+         }
+        },
+        {
+         "t": {
+          "ko": "친구끼리도 하나?",
+          "en": "Do friends do that too?"
+         }
+        }
+       ],
+       "location": "street"
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "(문 닫을 때까지 카페에 앉아 있었다. 직원이 의자를 올리기 시작했다.) …우리 이렇게 오래 있던 거 처음이다.",
+        "en": "(You stayed at the café until closing. Staff started stacking chairs.) …We've never stayed this long before."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "너랑 있으면 시간이 빨리 가",
+          "en": "Time flies with you"
+         }
+        },
+        {
+         "t": {
+          "ko": "그러게. 왜 그럴까?",
+          "en": "Right. Wonder why?"
+         }
+        },
+        {
+         "t": {
+          "ko": "커피가 맛있어서 그래",
+          "en": "The coffee's just good"
+         }
+        }
+       ],
+       "location": "cafe"
+      },
+      {
+       "element": "EARTH",
+       "line": {
+        "ko": "(둘이서 {f:soup}집. {fated}이(가) 내 그릇에 고기를 슬쩍 옮겨 줬다.) …이런 건 친구한테도 해?",
+        "en": "(A soup place, just you two. {fated} slips some meat into your bowl.) …Do you do this for friends too?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "아니. 너한테만",
+          "en": "No. Only you"
+         }
+        },
+        {
+         "t": {
+          "ko": "너는 해?",
+          "en": "Do you?"
+         }
+        },
+        {
+         "t": {
+          "ko": "친구니까 하는 거지",
+          "en": "Sure, that's what friends do"
+         }
+        }
+       ],
+       "location": "diner"
+      }
+     ]
+    },
+    "JEALOUS": {
+     "title": {
+      "ko": "질투",
+      "en": "Jealous"
+     },
+     "after": [
+      1,
+      3
+     ],
+     "location": "cafe",
+     "who": "me",
+     "line": {
+      "ko": "({fated}에게 누군가 번호를 물어보는 걸 봤다. {fated}이(가) 곤란한 얼굴로 나를 쳐다봤다.)",
+      "en": "(You see someone asking {fated} for their number. {fated} glances at you, looking cornered.)"
+     },
+     "altBy": "distance",
+     "alt": {
+      "abroad": {
+       "who": "me",
+       "location": "instagram",
+       "line": {
+        "ko": "({fated}의 스토리에 낯선 사람과 찍은 사진이 올라왔다. 하트가 세 개.)",
+        "en": "({fated}'s story: a photo with someone you don't know. Three hearts.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "바로 영상통화를 건다",
+          "en": "Video-call them right away"
+         }
+        },
+        {
+         "t": {
+          "ko": "(못 본 척 스크롤을 내린다)",
+          "en": "(Scroll past like you didn't see)"
+         }
+        },
+        {
+         "t": {
+          "ko": "인기 많네? (장난스럽게 DM을 보낸다)",
+          "en": "Popular, huh? (a teasing DM)"
+         }
+        }
+       ]
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "가자 (다가가서 손을 잡는다)",
+        "en": "Let's go (walk over and take their hand)"
+       },
+       "roll": {
+        "CLOSER": 0.8,
+        "FLAT": 0.2
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "(모른 척하고 휴대폰만 본다)",
+        "en": "(Pretend not to notice)"
+       },
+       "roll": {
+        "CLOSER": 0.3,
+        "FLAT": 0.7
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      },
+      {
+       "t": {
+        "ko": "나중에 장난스럽게 묻는다",
+        "en": "Tease them about it later"
+       },
+       "roll": {
+        "CLOSER": 0.6,
+        "FLAT": 0.4
+       },
+       "compat": {
+        "CLOSER": 1
+       }
+      }
+     ],
+     "outcomes": {
+      "CLOSER": {
+       "r": {
+        "ko": "'…질투했어?' {fated}이(가) 웃었다. 부정하지 않았다.",
+        "en": "\"…Were you jealous?\" {fated} laughed. You didn't deny it."
+       },
+       "effects": [
+        {
+         "kind": "sparkFated",
+         "amount": 0.15
+        }
+       ]
+      },
+      "FLAT": {
+       "r": {
+        "ko": "그날 밤, 이상하게 잠이 오지 않았다.",
+        "en": "That night, somehow, you couldn't sleep."
+       },
+       "effects": []
+      }
+     },
+     "variants": [
+      {
+       "element": "FIRE",
+       "line": {
+        "ko": "({fated}이(가) 낯선 사람과 웃으며 이야기하고 있다. 꽤 오래.)",
+        "en": "({fated} is laughing with someone you don't know. For quite a while.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "다가가서 자연스럽게 옆에 선다",
+          "en": "Walk over and stand right beside them"
+         }
+        },
+        {
+         "t": {
+          "ko": "(멀리서 휴대폰만 본다)",
+          "en": "(Stare at your phone from a distance)"
+         }
+        },
+        {
+         "t": {
+          "ko": "그 사람 누구야? (나중에 웃으며 묻는다)",
+          "en": "Who was that? (later, with a grin)"
+         }
+        }
+       ],
+       "location": "street"
+      },
+      {
+       "element": "WATER",
+       "line": {
+        "ko": "({fated}의 휴대폰 화면에 하트 이모티콘이 잔뜩 붙은 메시지가 떴다. 보낸 사람 이름은 모르는 이름.)",
+        "en": "(A message full of heart emojis pops up on {fated}'s phone, from a name you don't know.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "신경 쓰여 (솔직하게)",
+          "en": "That bothers me (honestly)"
+         }
+        },
+        {
+         "t": {
+          "ko": "(못 본 척한다)",
+          "en": "(Pretend you didn't see)"
+         }
+        },
+        {
+         "t": {
+          "ko": "인기 많네? (장난친다)",
+          "en": "Popular, huh? (teasing)"
+         }
+        }
+       ],
+       "location": "cafe"
+      },
+      {
+       "element": "WOOD",
+       "line": {
+        "ko": "(공원에서 {fated}에게 예전 친구가 반갑게 달려와 안겼다.)",
+        "en": "(At the park, an old friend of {fated}'s runs up and hugs them.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "인사하며 {fated}의 손을 잡는다",
+          "en": "Say hi and take {fated}'s hand"
+         }
+        },
+        {
+         "t": {
+          "ko": "(한 발 뒤로 물러선다)",
+          "en": "(Step back)"
+         }
+        },
+        {
+         "t": {
+          "ko": "다음엔 나도 그렇게 반겨 줘 (웃는다)",
+          "en": "Greet me like that next time (laughing)"
+         }
+        }
+       ],
+       "location": "park"
+      },
+      {
+       "element": "METAL",
+       "line": {
+        "ko": "(모임 자리. 누군가 {fated}에게 '오늘 진짜 멋있다'며 계속 말을 건다.)",
+        "en": "(At a group dinner, someone keeps telling {fated} how great they look tonight.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "{fated} 옆자리로 옮겨 앉는다",
+          "en": "Move to the seat next to {fated}"
+         }
+        },
+        {
+         "t": {
+          "ko": "(물만 계속 마신다)",
+          "en": "(Keep sipping water)"
+         }
+        },
+        {
+         "t": {
+          "ko": "나도 오늘 멋있다고 생각했는데 (집에 가는 길에)",
+          "en": "I thought you looked great too, you know (on the way home)"
+         }
+        }
+       ],
+       "location": "restaurant"
+      }
+     ]
+    },
+    "CONFESS": {
+     "title": {
+      "ko": "마음을 건네다",
+      "en": "Saying It"
+     },
+     "after": [
+      1,
+      3
+     ],
+     "location": "park",
+     "who": "me",
+     "withFated": true,
+     "line": {
+      "ko": "(집에 가는 길. {fated}이(가) 걸음을 멈췄다. 이제는 말해야 할 것 같다.)",
+      "en": "(Walking home, {fated} stops. It feels like someone has to say it now.)"
+     },
+     "altBy": "distance",
+     "alt": {
+      "abroad": {
+       "who": "me",
+       "location": "airport",
+       "line": {
+        "ko": "({fatedCity}에서 온 {fated}과(와) 공항에서 헤어지기 직전. 탑승 안내 방송이 나온다.)",
+        "en": "(Saying goodbye to {fated} at the airport before their flight back to {fatedCity}. They're calling for boarding.)"
+       }
+      }
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "좋아해. 사귀자",
+        "en": "I like you. Be with me"
+       },
+       "roll": {
+        "START": 0.75,
+        "WAIT": 0.2,
+        "MISS": 0.05
+       },
+       "compat": {
+        "START": 1,
+        "MISS": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "{fated}이(가) 먼저 말하길 기다린다",
+        "en": "Wait for {fated} to say it first"
+       },
+       "roll": {
+        "START": 0.45,
+        "WAIT": 0.4,
+        "MISS": 0.15
+       },
+       "compat": {
+        "START": 1,
+        "MISS": -1
+       }
+      },
+      {
+       "t": {
+        "ko": "(오늘은 아닌 것 같다)",
+        "en": "(Not today)"
+       },
+       "roll": {
+        "START": 0.1,
+        "WAIT": 0.6,
+        "MISS": 0.3
+       },
+       "compat": {
+        "START": 1,
+        "MISS": -1
+       }
+      }
+     ],
+     "outcomes": {
+      "START": {
+       "r": {
+        "ko": "'…나도.' 그날부터 우리는 썸이 아니라 연인이 됐다.",
+        "en": "\"…Me too.\" From that day on, it wasn't the talking stage anymore. You were together."
+       },
+       "effects": [
+        {
+         "kind": "startDatingFated"
+        }
+       ],
+       "card": "START_DATING"
+      },
+      "WAIT": {
+       "r": {
+        "ko": "둘 다 끝내 말하지 못했다. 그래도 헤어지면서 한참을 손을 흔들었다.",
+        "en": "Neither of you said it. But you both kept waving for a long time."
+       },
+       "effects": [
+        {
+         "kind": "arcRepeat",
+         "after": [
+          2,
+          5
+         ]
+        }
+       ]
+      },
+      "MISS": {
+       "r": {
+        "ko": "…{fated}에게서 연락이 뜸해졌다. 타이밍을 놓친 걸까.",
+        "en": "…{fated} started texting less. Did you miss your moment?"
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "The one I never told.",
+         "tags": [
+          "fate"
+         ]
+        },
+        {
+         "kind": "fatedSecondChance"
+        }
+       ]
+      }
+     },
+     "byFate": {
+      "SPARK": {
+       "who": "me",
+       "location": "street",
+       "line": {
+        "ko": "(갑자기 소나기가 쏟아졌다. {fated}과(와) 처마 밑으로 뛰어들었다. 숨이 차서 웃다가, 눈이 마주쳤다. 웃음이 멈췄다.)",
+        "en": "(A sudden downpour. You and {fated} duck under an awning, laughing and out of breath. Then your eyes meet, and the laughing stops.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(생각보다 말이 먼저 나온다) 나 너 좋아해",
+          "en": "(The words come before the thought) I like you."
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(빗소리에 묻히게 작게) …좋아해",
+          "en": "(Quietly, under the rain) …I like you."
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "비 그치면 가자 (시선을 피한다)",
+          "en": "Let's go when it stops. (look away)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "빗소리 사이로 '…나도'가 들렸다. 비가 그칠 때까지 아무도 움직이지 않았다.",
+          "en": "Through the rain: '…Me too.' Neither of you moved until it stopped."
+         }
+        }
+       }
+      },
+      "DOHWA": {
+       "who": "fated",
+       "location": "park",
+       "line": {
+        "ko": "(헤어지려는데 {fated}이(가) 소매를 잡았다.) 잠깐만. 이거 내가 먼저 말하고 싶었어. …나 너 좋아해.",
+        "en": "(As you turn to leave, {fated} catches your sleeve.) Wait. I wanted to be the one to say it. …I like you."
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "…나도. 아까부터 말하고 싶었어",
+          "en": "…Me too. I've wanted to say it all night."
+         },
+         "roll": {
+          "START": 0.9,
+          "WAIT": 0.08,
+          "MISS": 0.02
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(대답 대신 손을 꼭 잡는다)",
+          "en": "(Squeeze their hand instead of answering)"
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.17,
+          "MISS": 0.03
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "…조금만 생각해 볼게",
+          "en": "…Let me think about it."
+         },
+         "roll": {
+          "START": 0.15,
+          "WAIT": 0.6,
+          "MISS": 0.25
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "{fated}이(가) 그제야 숨을 내쉬었다. '다행이다… 진짜 떨렸어.'",
+          "en": "{fated} finally breathed out. 'Thank god… I was shaking.'"
+         }
+        }
+       }
+      },
+      "YEOKMA": {
+       "who": "me",
+       "location": "street",
+       "line": {
+        "ko": "(막차가 저 멀리서 오고 있다. {fated}이(가) 버스에 오르면 오늘이 끝난다. 다음 주엔 둘 중 누군가 멀리 떠난다.)",
+        "en": "(The last bus is coming. Once {fated} gets on, tonight is over. And next week, one of you is leaving town.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(버스가 서기 전에) 가지 마. 좋아해",
+          "en": "(Before it stops) Don't go. I like you."
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(버스를 그냥 보낸다) 한 정거장만 같이 걷자",
+          "en": "(Let the bus go) Walk one more stop with me."
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "조심히 가 (손을 흔든다)",
+          "en": "Get home safe. (wave)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "버스는 우리를 두고 떠났다. 다음 버스까지 20분. 그 20분 동안 우리는 연인이 됐다.",
+          "en": "The bus left without you. Twenty minutes until the next one. Long enough to become a couple."
+         }
+        }
+       }
+      },
+      "HWAGAE": {
+       "who": "me",
+       "location": "library",
+       "line": {
+        "ko": "(말로는 도저히 못 할 것 같아서, 밤새 편지를 썼다. {fated}이(가) 빌려 간 책 사이에 끼워 둘 생각이다.)",
+        "en": "(You could never say it out loud, so you wrote a letter all night. You plan to slip it into the book {fated} borrowed.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(편지를 끼우고, 마지막 줄에 이름을 쓴다)",
+          "en": "(Slip it in and sign your name at the bottom)"
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(이름 없이 끼워 둔다)",
+          "en": "(Slip it in, unsigned)"
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(편지를 다시 가방에 넣는다)",
+          "en": "(Put the letter back in your bag)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "다음 날 아침, 답장이 왔다. 단 한 줄. '나도 같은 책을 읽고 있었어. 너를.'",
+          "en": "The next morning, a reply. One line: 'I've been reading the same book. You.'"
+         }
+        }
+       }
+      },
+      "GWIIN": {
+       "who": "me",
+       "location": "restaurant",
+       "line": {
+        "ko": "(친구들 모임. 갑자기 다들 약속이 생겼다며 하나둘 일어난다. 테이블엔 나와 {fated}만 남았다. 누가 봐도 작전이다.)",
+        "en": "(A group dinner. One by one, everyone suddenly 'remembers' somewhere to be. Only you and {fated} are left. Obviously a setup.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(웃음이 터진다) 우리 친구들, 연기 진짜 못한다. …근데 고마운 작전이네. 좋아해",
+          "en": "(Burst out laughing) Our friends can't act. …But I'm grateful. I like you."
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "이왕 이렇게 된 거, 2차 갈래?",
+          "en": "Since we're stuck here anyway… round two?"
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(어색하게 계산서를 집는다)",
+          "en": "(Awkwardly reach for the bill)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "그날 밤 단톡방이 터졌다. '드디어!!!' '축하해 ㅠㅠ' '내 작전이었다'",
+          "en": "The group chat exploded that night. 'FINALLY!!!' 'congrats 😭' 'my plan btw'"
+         }
+        }
+       }
+      },
+      "MOON": {
+       "who": "me",
+       "location": "home",
+       "line": {
+        "ko": "(늦은 밤, {fated}과(와) {f:ramen}을(를) 끓여 먹고 설거지를 하는데 이상하게 편하다. 이 사람이랑은 침묵도 대화 같다.)",
+        "en": "(Late night, washing up after {f:ramen} with {fated}. It's strangely easy. With this person, even silence feels like talking.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "우리… 그냥 사귈까? (그릇을 건네며)",
+          "en": "Should we… just be together? (handing over a bowl)"
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(어깨에 살짝 기댄다)",
+          "en": "(Lean lightly on their shoulder)"
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(이 편안함이 깨질까 봐 아무 말도 않는다)",
+          "en": "(Say nothing. You don't want to break the calm)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "'…그래. 우리 이미 사귀는 줄 알았는데.' 둘 다 웃었다. 너무 자연스러워서, 오히려 떨렸다.",
+          "en": "'…Sure. I thought we already were.' You both laughed. It was so natural it made your heart race."
+         }
+        }
+       }
+      },
+      "CLASH": {
+       "who": "fated",
+       "location": "street",
+       "line": {
+        "ko": "(사소한 일로 시작한 말다툼이 점점 커졌다. {fated}이(가) 소리쳤다.) 왜 나한테만 이렇게 신경 쓰이게 하는데! …아, 진짜. 좋아한다고, 너.",
+        "en": "(A small argument kept growing. {fated} shouts:) Why do you get under my skin like this?! …Ugh. I like you, okay?"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(화가 쏙 들어간다) …그걸 지금 말하면 어떡해. 나도야",
+          "en": "(The anger drains away) …You can't say that now. Me too."
+         },
+         "roll": {
+          "START": 0.9,
+          "WAIT": 0.08,
+          "MISS": 0.02
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "싸우다 말고 고백하는 게 어딨어! (웃음이 터진다)",
+          "en": "Who confesses in the middle of a fight?! (start laughing)"
+         },
+         "roll": {
+          "START": 0.7,
+          "WAIT": 0.25,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "…오늘은 그냥 각자 집에 가자",
+          "en": "…Let's just go home tonight."
+         },
+         "roll": {
+          "START": 0.08,
+          "WAIT": 0.5,
+          "MISS": 0.42
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "싸움은 거기서 끝났다. 무슨 일로 싸웠는지는 둘 다 기억이 안 난다.",
+          "en": "The fight ended right there. Neither of you remembers what it was about."
+         }
+        }
+       }
+      },
+      "DREAM": {
+       "who": "me",
+       "location": "beach",
+       "line": {
+        "ko": "(밤바다. 파도 소리, 하늘 가득한 별. 꿈인지 현실인지 모를 밤. {fated}이(가) 신발을 벗고 물가로 걸어간다.)",
+        "en": "(The sea at night. Waves, a sky full of stars. It barely feels real. {fated} kicks off their shoes and walks toward the water.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "(따라 걸어가 옆에 선다) 이 순간이 안 끝났으면 좋겠어. 너랑",
+          "en": "(Walk up beside them) I don't want this to end. With you."
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(모래에 손가락으로 마음을 쓴다)",
+          "en": "(Write it in the sand with a finger)"
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(멀리서 사진만 찍는다)",
+          "en": "(Just take a picture from afar)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "{fated}이(가) 대답 대신 내 손을 잡고 파도 속으로 한 걸음 들어갔다. 차가웠는데, 하나도 춥지 않았다.",
+          "en": "{fated} answered by taking your hand and stepping into the waves. Cold, and not cold at all."
+         }
+        }
+       }
+      },
+      "SURPRISE": {
+       "who": "me",
+       "location": "amusement_park",
+       "line": {
+        "ko": "(관람차가 꼭대기에서 덜컹 멈췄다. '잠시 점검 중입니다.' 좁은 칸에 {fated}과(와) 단둘이.)",
+        "en": "(The Ferris wheel jolts to a stop at the very top. 'Brief maintenance.' Just you and {fated} in a tiny car.)"
+       },
+       "choices": [
+        {
+         "t": {
+          "ko": "이건 운명이 말하라는 거야. 좋아해",
+          "en": "This is fate telling me to say it. I like you."
+         },
+         "roll": {
+          "START": 0.8,
+          "WAIT": 0.15,
+          "MISS": 0.05
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "(내려가면 말하자… 심장이 터질 것 같다)",
+          "en": "(Say it when we get down… your heart's pounding)"
+         },
+         "roll": {
+          "START": 0.5,
+          "WAIT": 0.38,
+          "MISS": 0.12
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        },
+        {
+         "t": {
+          "ko": "무섭다, 그치? (화제를 돌린다)",
+          "en": "Scary, right? (change the subject)"
+         },
+         "roll": {
+          "START": 0.12,
+          "WAIT": 0.58,
+          "MISS": 0.3
+         },
+         "compat": {
+          "START": 1,
+          "MISS": -1
+         }
+        }
+       ],
+       "outcomes": {
+        "START": {
+         "r": {
+          "ko": "관람차가 다시 움직였을 때, 우리는 손을 잡고 있었다. 직원이 문을 열며 웃었다.",
+          "en": "When the wheel started again, you were holding hands. The attendant grinned as they opened the door."
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "PARTING": {
+   "steps": {
+    "LAST_GOODBYE": {
+     "title": {
+      "ko": "안녕",
+      "en": "Goodbye"
+     },
+     "after": [
+      0,
+      1
+     ],
+     "location": "street",
+     "activity": "walk",
+     "who": "fated",
+     "line": {
+      "ko": "(헤어지는 길. {fated}이(가) 마지막으로 뒤돌아봤다.) …잘 지내.",
+      "en": "(The walk apart. {fated} turned back one last time.) …Take care."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "너도. 꼭 행복해야 돼",
+        "en": "You too. Promise me you'll be happy."
+       },
+       "outcome": "GOODBYE_WARM"
+      },
+      {
+       "t": {
+        "ko": "(끝내 뒤돌아보지 않는다)",
+        "en": "(Don't look back)"
+       },
+       "outcome": "GOODBYE_COLD"
+      },
+      {
+       "t": {
+        "ko": "…고마웠어. 진심으로",
+        "en": "…Thank you. I mean it."
+       },
+       "outcome": "GOODBYE_THANKS"
+      }
+     ],
+     "outcomes": {
+      "GOODBYE_WARM": {
+       "r": {
+        "ko": "멀어지는 뒷모습을 끝까지 봤다. 그게 우리의 마지막이었다.",
+        "en": "You watched them go until they were gone. That was the last of us."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Our goodbye.",
+         "tags": [
+          "love"
+         ]
+        }
+       ]
+      },
+      "GOODBYE_COLD": {
+       "r": {
+        "ko": "모퉁이를 돌고 나서야 주저앉아 울었다.",
+        "en": "Only after turning the corner did you sink down and cry."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Our goodbye.",
+         "tags": [
+          "love"
+         ]
+        }
+       ]
+      },
+      "GOODBYE_THANKS": {
+       "r": {
+        "ko": "'나도.' 짧은 대답이 오래오래 남았다.",
+        "en": "'Me too.' Two words that stayed with you for a long, long time."
+       },
+       "effects": [
+        {
+         "kind": "memory",
+         "text": "Our goodbye.",
+         "tags": [
+          "love"
+         ]
+        }
+       ]
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,77 @@
+{
+ "_doc": "Pacing. One played day = one 'run'. Numbers are inclusive ranges picked per day (seeded).",
+ "smallEventsPerDay": [
+  0,
+  1
+ ],
+ "messagesPerDay": [
+  0,
+  2
+ ],
+ "majorPerDay": 2,
+ "lineCooldownDays": 4,
+ "messageSenderMaxPerDay": 1,
+ "menuRepeatCooldownDays": 2,
+ "dayGapYears": [
+  {
+   "maxAge": 39,
+   "gap": [
+    1,
+    2
+   ]
+  },
+  {
+   "maxAge": 64,
+   "gap": [
+    2,
+    3
+   ]
+  },
+  {
+   "maxAge": 200,
+   "gap": [
+    3,
+    4
+   ]
+  }
+ ],
+ "startAge": 25,
+ "dayStartMinute": 420,
+ "dayEndMinute": 1380,
+ "moneyUnitWon": 1000000,
+ "tripCostUnits": {
+  "coast": 0.4,
+  "tokyo": 1.5,
+  "paris": 3.5
+ },
+ "mortality": {
+  "_doc": "Annual death chance = (base + a·e^(b·age)) × factor for the age band. Early deaths are rare on purpose (it's a game).",
+  "base": 0.0001,
+  "a": 2.2e-05,
+  "b": 0.1,
+  "bands": [
+   {
+    "maxAge": 49,
+    "factor": 0.1
+   },
+   {
+    "maxAge": 64,
+    "factor": 0.4
+   },
+   {
+    "maxAge": 200,
+    "factor": 1.0
+   }
+  ]
+ },
+ "senderCooldownDays": {
+  "friend": 3,
+  "mom": 2,
+  "dad": 3,
+  "partner": 1,
+  "work": 2,
+  "app": 4,
+  "ex": 10
+ },
+ "startYear": 2026
+}

@@ -1,0 +1,702 @@
+{
+ "_doc": "The mood line at the top of the play screen: never facts, never the time — a feeling that foreshadows. Picked each played day by priority: what's coming in your own story (fated turning points, arc steps), then pending life events, then your situation, then this year's 사주/점성술 signals. Lines may be limited to an MBTI letter ('mbti': 'E' / 'I' / 'F' / 'T' / 'N' / 'S' / 'J' / 'P'). {spouse} = 남편/아내/애인.",
+ "fated": {
+  "LOVE_MEETING": [
+   {
+    "ko": "(요즘 이상하게 누군가를 만날 것 같은 예감이 든다.)",
+    "en": "(Lately you have a strange feeling you're about to meet someone.)",
+    "when": [
+     "!partnered"
+    ]
+   },
+   {
+    "ko": "(요즘 괜히 옷에 신경이 쓰인다.)",
+    "en": "(Lately you care about what you wear, for no reason.)",
+    "when": [
+     "!partnered"
+    ]
+   },
+   {
+    "ko": "(올해는 뭔가 다를 것 같다. 사람 운이 들어온다고 했던가.)",
+    "en": "(This year feels different. Wasn't this supposed to be a year for meeting people?)",
+    "when": [
+     "!partnered"
+    ]
+   }
+  ],
+  "MARRIAGE": [
+   {
+    "ko": "(주변에서 하나둘 결혼 소식이 들려온다. 나는 어떻게 될까.)",
+    "en": "(One by one, friends are getting married. What about you?)",
+    "when": [
+     "!engaged",
+     "!married"
+    ]
+   },
+   {
+    "ko": "(요즘 부쩍 '평생'이라는 말이 마음에 걸린다.)",
+    "en": "(Lately the word \"forever\" keeps catching on something.)",
+    "when": [
+     "!engaged",
+     "!married"
+    ]
+   },
+   {
+    "ko": "(결혼기념일이 다가온다. 올해는 뭘 해줄까.)",
+    "en": "(Your anniversary is coming. What should you do this year?)",
+    "when": [
+     "married"
+    ]
+   }
+  ],
+  "RELATIONSHIP_CRISIS": [
+   {
+    "ko": "({spouse}이(가) 요즘 뭔가 쎄하다.)",
+    "en": "(Something about {spouse} feels off lately.)"
+   },
+   {
+    "ko": "(같이 있어도 요즘 이상하게 외롭다.)",
+    "en": "(Even together, you feel oddly lonely lately.)"
+   }
+  ],
+  "CAREER_TURN": [
+   {
+    "ko": "(회사 분위기가 어수선하다. 뭔가 바뀔 것 같다.)",
+    "en": "(Something's shifting at work. You can feel it.)"
+   },
+   {
+    "ko": "(요즘 이력서 파일을 자꾸 열어 보게 된다.)",
+    "en": "(You keep opening your résumé file lately.)"
+   }
+  ],
+  "MOVE": [
+   {
+    "ko": "(요즘 자꾸 해외로 나가고 싶다.)",
+    "en": "(Lately you keep wanting to go abroad.)"
+   },
+   {
+    "ko": "(이 동네가 요즘 좀 좁게 느껴진다.)",
+    "en": "(This neighborhood feels a little small lately.)"
+   },
+   {
+    "ko": "(부동산 앱을 켜 놓고 잠드는 날이 많다.)",
+    "en": "(Many nights you fall asleep with a real-estate app open.)"
+   }
+  ],
+  "FAMILY_LOSS": [
+   {
+    "ko": "(요즘 부모님 목소리가 자꾸 듣고 싶다.)",
+    "en": "(Lately you keep wanting to hear your parents' voices.)"
+   },
+   {
+    "ko": "(오래된 가족사진을 꺼내 봤다. 이유는 모르겠다.)",
+    "en": "(You took out an old family photo. You don't know why.)"
+   }
+  ],
+  "WEALTH": [
+   {
+    "ko": "(요즘 돈 들어올 꿈을 자주 꾼다.)",
+    "en": "(You keep dreaming about money lately.)"
+   },
+   {
+    "ko": "(통장 앱을 하루에 몇 번씩 연다.)",
+    "en": "(You open the bank app several times a day.)"
+   }
+  ],
+  "CHILD": [
+   {
+    "ko": "(요즘 길에서 아기들만 눈에 들어온다.)",
+    "en": "(Lately, all you notice on the street are babies.)",
+    "when": [
+     "partnered"
+    ]
+   }
+  ],
+  "PET": [
+   {
+    "ko": "(요즘 유기동물 입양 공고를 자꾸 넘겨 보게 된다.)",
+    "en": "(You keep scrolling through pet adoption posts lately.)"
+   }
+  ],
+  "EARLY_RETIREMENT": [
+   {
+    "ko": "(요즘 '그만두면 뭐 하지'를 자주 생각한다.)",
+    "en": "(Lately you often wonder: what would I do if I quit?)"
+   }
+  ],
+  "ILLNESS": [
+   {
+    "ko": "(요즘 몸이 예전 같지 않다.)",
+    "en": "(Your body doesn't feel like it used to.)"
+   },
+   {
+    "ko": "(괜히 건강검진 날짜를 확인해 봤다.)",
+    "en": "(You checked the date of your next checkup, just because.)"
+   }
+  ]
+ },
+ "arcs": {
+  "AFFAIR": [
+   {
+    "ko": "({spouse}이(가) 요즘 휴대폰을 엎어 둔다. 뭔가 쎄하다.)",
+    "en": "({spouse} keeps their phone face down lately. Something feels off.)"
+   },
+   {
+    "ko": "({spouse}의 야근이 부쩍 잦아졌다.)",
+    "en": "({spouse} has been working late a lot more lately.)"
+   }
+  ],
+  "DIVORCE": [
+   {
+    "ko": "(같은 집, 다른 방.)",
+    "en": "(Same house, different rooms.)"
+   }
+  ],
+  "PREGNANCY": [
+   {
+    "ko": "(요즘 작은 신발만 봐도 마음이 이상하다.)",
+    "en": "(Even tiny shoes make your heart do something strange lately.)"
+   }
+  ],
+  "ILLNESS": [
+   {
+    "ko": "(병원 냄새가 옷에 밴 것 같다.)",
+    "en": "(The hospital smell seems to have soaked into your clothes.)"
+   }
+  ],
+  "PARTNER_PASSING": [
+   {
+    "ko": "(요즘 {partner}의 얼굴빛이 좋지 않다.)",
+    "en": "({partner} hasn't looked well lately.)"
+   }
+  ],
+  "PARENT_PASSING": [
+   {
+    "ko": "(엄마 아빠 목소리가 요즘 부쩍 작아졌다.)",
+    "en": "(Lately, Mom and Dad sound frailer on the phone.)",
+    "when": [
+     "momAlive",
+     "dadAlive"
+    ]
+   },
+   {
+    "ko": "(엄마 목소리가 요즘 부쩍 작아졌다.)",
+    "en": "(Lately, Mom sounds frailer on the phone.)",
+    "when": [
+     "momAlive",
+     "!dadAlive"
+    ]
+   },
+   {
+    "ko": "(아빠 목소리가 요즘 부쩍 작아졌다.)",
+    "en": "(Lately, Dad sounds frailer on the phone.)",
+    "when": [
+     "dadAlive",
+     "!momAlive"
+    ]
+   }
+  ],
+  "PET_FAREWELL": [
+   {
+    "ko": "({pet}이(가) 요즘 부쩍 잠이 많아졌다.)",
+    "en": "({pet} sleeps a lot more lately.)"
+   }
+  ],
+  "LONG_DISTANCE": [
+   {
+    "ko": "(휴대폰 날씨 앱에 {fatedCity}을(를) 추가해 뒀다.)",
+    "en": "(You added {fatedCity} to your weather app.)"
+   },
+   {
+    "ko": "(자기 전 통화가 하루의 마지막 일과가 됐다.)",
+    "en": "(A call before bed has become the last thing you do every day.)"
+   }
+  ],
+  "TALKING": [
+   {
+    "ko": "({fated}의 답장을 자꾸 기다리게 된다.)",
+    "en": "(You keep waiting for {fated}'s reply.)"
+   },
+   {
+    "ko": "(이게 썸이 아니면 뭘까.)",
+    "en": "(If this isn't a talking stage, what is it?)"
+   }
+  ],
+  "DATING": [
+   {
+    "ko": "(요즘 {partner}이(가) 뭔가 숨기는 눈치다. 나쁜 쪽은 아닌 것 같다.)",
+    "en": "({partner} seems to be hiding something lately. Something good, you think.)"
+   },
+   {
+    "ko": "(요즘 {partner} 생각만 하면 웃음이 난다.)",
+    "en": "(Thinking about {partner} makes you smile lately.)"
+   }
+  ],
+  "ENGAGEMENT": [
+   {
+    "ko": "(결혼이라는 게 이렇게 정할 게 많은 일이었나.)",
+    "en": "(Who knew getting married meant this many decisions?)"
+   }
+  ],
+  "RETIREMENT": [
+   {
+    "ko": "(사원증을 볼 때마다 기분이 이상하다.)",
+    "en": "(Looking at your work badge feels strange lately.)"
+   }
+  ],
+  "FAMILY_PASSING": [
+   {
+    "ko": "(가족 단톡방이 조용하다. 너무 조용하다.)",
+    "en": "(The family group chat is quiet. Too quiet.)"
+   }
+  ]
+ },
+ "events": {
+  "betrayal": [
+   {
+    "ko": "(요즘 이상하게 사람을 믿기가 어렵다.)",
+    "en": "(Lately it's strangely hard to trust people.)"
+   }
+  ],
+  "money_down": [
+   {
+    "ko": "(통장을 볼 때마다 불안하다.)",
+    "en": "(Checking your balance makes you anxious.)"
+   }
+  ],
+  "money_up": [
+   {
+    "ko": "(뭔가 좋은 소식이 올 것 같은 예감.)",
+    "en": "(A feeling that good news is on its way.)"
+   }
+  ],
+  "health": [
+   {
+    "ko": "(요즘 자꾸 피곤하다. 그냥 나이 탓일까.)",
+    "en": "(You're tired all the time lately. Just age?)"
+   }
+  ],
+  "romance": [
+   {
+    "ko": "(요즘 거울을 자주 본다.)",
+    "en": "(You check the mirror a lot lately.)",
+    "when": [
+     "!partnered"
+    ]
+   }
+  ],
+  "family": [
+   {
+    "ko": "(요즘 가족 생각이 자주 난다.)",
+    "en": "(Family is on your mind a lot lately.)"
+   }
+  ],
+  "secrets": [
+   {
+    "ko": "(누군가 나에게 뭔가 숨기고 있는 것 같다.)",
+    "en": "(It feels like someone's hiding something from you.)"
+   }
+  ],
+  "career": [
+   {
+    "ko": "(요즘 일이 손에 잘 안 잡힌다.)",
+    "en": "(It's hard to focus on work lately.)"
+   }
+  ],
+  "dark": [
+   {
+    "ko": "(요즘 이상하게 불안하다. 조심해야 할 것 같다.)",
+    "en": "(An odd unease lately. Better be careful.)"
+   }
+  ],
+  "fate": [
+   {
+    "ko": "(요즘 이상한 우연이 자꾸 겹친다.)",
+    "en": "(Strange coincidences keep piling up lately.)"
+   }
+  ],
+  "friendship": [
+   {
+    "ko": "(오랜 친구들이 요즘 자꾸 생각난다.)",
+    "en": "(Old friends keep coming to mind lately.)"
+   }
+  ],
+  "partner": [
+   {
+    "ko": "({partner}의 일이 요즘 많이 힘든 것 같다.)",
+    "en": "({partner}'s work seems really hard on them lately.)"
+   }
+  ]
+ },
+ "state": [
+  {
+   "when": [
+    "broke"
+   ],
+   "lines": [
+    {
+     "ko": "(통장 잔고를 보면 한숨부터 나온다.)",
+     "en": "(One look at your balance and you sigh.)"
+    }
+   ]
+  },
+  {
+   "when": [
+    "recentlyBrokeUp"
+   ],
+   "lines": [
+    {
+     "ko": "(아직도 가끔 그 사람 생각이 난다.)",
+     "en": "(You still think about them sometimes.)"
+    }
+   ]
+  },
+  {
+   "when": [
+    "f_widowed",
+    "!partnered"
+   ],
+   "lines": [
+    {
+     "ko": "(아직도 가끔 두 사람 몫의 밥을 한다.)",
+     "en": "(Sometimes you still cook for two.)"
+    }
+   ]
+  },
+  {
+   "when": [
+    "single",
+    "age>=32"
+   ],
+   "lines": [
+    {
+     "ko": "(주변에서 다들 결혼한다. 나만 제자리인 것 같다.)",
+     "en": "(Everyone around you is getting married. You feel like you're standing still.)"
+    }
+   ]
+  },
+  {
+   "when": [
+    "married",
+    "partnerYears>=7"
+   ],
+   "lines": [
+    {
+     "ko": "(우리, 요즘 대화가 줄었다.)",
+     "en": "(We don't talk as much as we used to.)"
+    }
+   ]
+  },
+  {
+   "when": [
+    "recentlyLostJob"
+   ],
+   "lines": [
+    {
+     "ko": "(알람 없이 눈을 뜨는 아침이 아직 어색하다.)",
+     "en": "(Waking up without an alarm still feels wrong.)"
+    }
+   ]
+  },
+  {
+   "when": [
+    "recentlyPromoted"
+   ],
+   "lines": [
+    {
+     "ko": "(명함이 바뀌었다. 어깨가 조금 무거워졌다.)",
+     "en": "(New business card. Your shoulders feel a little heavier.)"
+    }
+   ]
+  }
+ ],
+ "signals": {
+  "DOHWA": [
+   {
+    "ko": "(요즘 이상하게 사람들이 나를 자꾸 쳐다본다.)",
+    "en": "(People keep looking at you lately, somehow.)",
+    "when": [
+     "!partnered"
+    ]
+   },
+   {
+    "ko": "(설레고 싶다. 누구라도.)",
+    "en": "(You want to feel butterflies. With anyone.)",
+    "when": [
+     "!partnered"
+    ]
+   },
+   {
+    "ko": "({spouse}이(가) 요즘 부쩍 예뻐 보인다. …아니, 원래 예뻤나.)",
+    "en": "({spouse} looks especially lovely lately. …Or were they always?)",
+    "when": [
+     "partnered"
+    ]
+   }
+  ],
+  "YEOKMA": [
+   {
+    "ko": "(가방을 싸서 어디론가 떠나고 싶다.)",
+    "en": "(You want to pack a bag and go somewhere.)",
+    "mbti": "I"
+   },
+   {
+    "ko": "(누구든 붙잡고 여행 가자고 하고 싶다.)",
+    "en": "(You want to grab someone, anyone, and go on a trip.)",
+    "mbti": "E"
+   },
+   {
+    "ko": "(요즘 자꾸 해외로 나가고 싶다.)",
+    "en": "(Lately you keep wanting to go abroad.)"
+   }
+  ],
+  "SAMJAE": [
+   {
+    "ko": "(요즘 되는 일이 없다. 삼재라 그런가.)",
+    "en": "(Nothing's going right lately. Is it a bad-luck year (samjae)?)"
+   },
+   {
+    "ko": "(올해는 조심해야 한다고 엄마가 그랬다.)",
+    "en": "(Mom said this is a year to be careful.)",
+    "when": [
+     "momAlive"
+    ]
+   }
+  ],
+  "CHEONEUL_GWIIN": [
+   {
+    "ko": "(요즘 도와주는 사람이 자꾸 나타난다.)",
+    "en": "(Helpful people keep turning up lately.)"
+   }
+  ],
+  "daeunShift": [
+   {
+    "ko": "(인생의 계절이 바뀌는 느낌이다.)",
+    "en": "(It feels like the season of your life is changing.)"
+   }
+  ],
+  "HWAGAE": [
+   {
+    "ko": "(요즘 혼자 있는 시간이 좋다. 뭔가를 깊이 파고들고 싶다.)",
+    "en": "(Lately you like being alone. You want to dig deep into something.)"
+   }
+  ],
+  "group:PYEON_JAE": [
+   {
+    "ko": "(한 방에 인생이 바뀌는 상상을 자주 한다.)",
+    "en": "(You often imagine one move changing your whole life.)"
+   }
+  ],
+  "group:JEONG_JAE": [
+   {
+    "ko": "(차곡차곡 모으는 재미가 생겼다.)",
+    "en": "(You've started to enjoy saving, bit by bit.)"
+   }
+  ],
+  "group:JEONG_GWAN": [
+   {
+    "ko": "(안정이 그립다. 제대로 자리 잡고 싶다.)",
+    "en": "(You crave stability. You want to settle properly.)"
+   }
+  ],
+  "group:CHIL_SAL": [
+   {
+    "ko": "(요즘 어깨가 무겁다. 누가 자꾸 나를 시험하는 것 같다.)",
+    "en": "(Your shoulders feel heavy. Like someone keeps testing you.)"
+   }
+  ],
+  "group:SANG_GWAN": [
+   {
+    "ko": "(요즘 참았던 말이 목까지 차오른다.)",
+    "en": "(Things you've held back are rising to your throat.)",
+    "mbti": "F"
+   },
+   {
+    "ko": "(요즘 틀린 걸 보면 참을 수가 없다.)",
+    "en": "(Lately you can't stand letting a mistake slide.)",
+    "mbti": "T"
+   }
+  ],
+  "group:SIK_SHIN": [
+   {
+    "ko": "(맛있는 거 먹고, 뭔가 만들고 싶다.)",
+    "en": "(You want to eat something good and make something.)"
+   }
+  ],
+  "group:GYEOB_JAE": [
+   {
+    "ko": "(요즘 경쟁자가 자꾸 눈에 밟힌다.)",
+    "en": "(You keep noticing rivals lately.)"
+   }
+  ],
+  "group:BI_GYEON": [
+   {
+    "ko": "(내 방식대로 하고 싶다. 누가 뭐라 해도.)",
+    "en": "(You want to do it your way, whatever anyone says.)"
+   }
+  ],
+  "group:JEONG_IN": [
+   {
+    "ko": "(요즘 뭔가 배우고 싶다.)",
+    "en": "(You want to learn something lately.)",
+    "mbti": "N"
+   },
+   {
+    "ko": "(요즘 자격증 공고를 자주 본다.)",
+    "en": "(You keep looking at certificate courses lately.)",
+    "mbti": "S"
+   }
+  ],
+  "group:PYEON_IN": [
+   {
+    "ko": "(요즘 자꾸 사주나 타로가 궁금하다.)",
+    "en": "(Lately you're curious about fortune-telling and tarot.)"
+   }
+  ],
+  "JUPITER@H5": [
+   {
+    "ko": "(올해는 연애 운이 좋다던데.)",
+    "en": "(They said this year is good for love.)",
+    "when": [
+     "!partnered"
+    ]
+   }
+  ],
+  "JUPITER@H7": [
+   {
+    "ko": "(좋은 사람이 들어올 해라고 했다.)",
+    "en": "(They said a good person would come into your life this year.)",
+    "when": [
+     "!partnered"
+    ]
+   },
+   {
+    "ko": "(요즘 {spouse}과(와) 함께라서 든든하다.)",
+    "en": "(Having {spouse} by your side feels steady lately.)",
+    "when": [
+     "partnered"
+    ]
+   }
+  ],
+  "JUPITER@H10": [
+   {
+    "ko": "(요즘 일에서 뭔가 잘 풀린다.)",
+    "en": "(Work has been going your way lately.)"
+   }
+  ],
+  "JUPITER@H2": [
+   {
+    "ko": "(요즘 돈 운이 따르는 것 같다.)",
+    "en": "(Money seems to be on your side lately.)"
+   }
+  ],
+  "JUPITER@H9": [
+   {
+    "ko": "(요즘 먼 곳이 자꾸 부른다.)",
+    "en": "(Faraway places keep calling you lately.)"
+   }
+  ],
+  "JUPITER@H4": [
+   {
+    "ko": "(집을 넓히고 싶다. 뿌리를 내리고 싶다.)",
+    "en": "(You want a bigger home. You want to put down roots.)"
+   }
+  ],
+  "SATURN@H7": [
+   {
+    "ko": "({spouse}과(와)의 관계가 요즘 숙제처럼 느껴진다.)",
+    "en": "(Things with {spouse} feel like homework lately.)",
+    "when": [
+     "partnered"
+    ]
+   },
+   {
+    "ko": "(요즘 사람 만나는 게 버겁다.)",
+    "en": "(Meeting people feels heavy lately.)",
+    "when": [
+     "!partnered"
+    ]
+   }
+  ],
+  "SATURN@H10": [
+   {
+    "ko": "(요즘 일이 무겁다. 책임이 자꾸 늘어난다.)",
+    "en": "(Work weighs on you. The responsibilities keep growing.)"
+   }
+  ],
+  "SATURN@H4": [
+   {
+    "ko": "(요즘 집이 편하지 않다.)",
+    "en": "(Home doesn't feel restful lately.)"
+   }
+  ],
+  "SATURN@H6": [
+   {
+    "ko": "(요즘 몸이 신호를 보낸다.)",
+    "en": "(Your body is sending you signals lately.)"
+   }
+  ],
+  "SATURN_RETURN": [
+   {
+    "ko": "(서른 즈음의 성장통인가. 다 다시 생각하게 된다.)",
+    "en": "(Growing pains around thirty? You're rethinking everything.)"
+   }
+  ],
+  "URANUS@H7": [
+   {
+    "ko": "(요즘 관계에 갑자기 바람이 분다.)",
+    "en": "(A sudden wind is blowing through your relationships.)"
+   }
+  ],
+  "URANUS@H10": [
+   {
+    "ko": "(다 뒤엎고 새로 시작하고 싶다.)",
+    "en": "(You want to flip everything over and start fresh.)"
+   }
+  ],
+  "URANUS@H4": [
+   {
+    "ko": "(이사 가고 싶다. 갑자기, 아주 멀리.)",
+    "en": "(You want to move. Suddenly, far away.)"
+   }
+  ],
+  "unfavorable": [
+   {
+    "ko": "(요즘 이상하게 일이 꼬인다.)",
+    "en": "(Things keep getting tangled lately.)"
+   },
+   {
+    "ko": "(오늘은 조심하자. 그냥 그런 기분이다.)",
+    "en": "(Be careful today. Just a feeling.)",
+    "mbti": "J"
+   }
+  ],
+  "favorable": [
+   {
+    "ko": "(요즘 이상하게 운이 좋다.)",
+    "en": "(You've been oddly lucky lately.)"
+   },
+   {
+    "ko": "(뭐든 해볼 만한 기분이다.)",
+    "en": "(You feel like trying anything.)",
+    "mbti": "P"
+   }
+  ]
+ },
+ "quiet": [
+  {
+   "ko": "(평범한 하루가 시작된다.)",
+   "en": "(An ordinary day begins.)"
+  },
+  {
+   "ko": "(오늘은 어떤 하루가 될까.)",
+   "en": "(What kind of day will it be?)",
+   "mbti": "N"
+  },
+  {
+   "ko": "(할 일부터 정리하자.)",
+   "en": "(First, the to-do list.)",
+   "mbti": "J"
+  }
+ ]
+}

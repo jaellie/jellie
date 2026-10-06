@@ -1,0 +1,634 @@
+{
+ "_doc": "NPC types. kind: STAFF = anchored to a location during its hours (persistent); REGULAR = persistent NPC with a schedule that includes the location (recurs); TRANSIENT = appears once and is forgotten unless a bond forms (or kept as a TEMPORARY travel NPC during a trip). 'pools' override defaultWeight per location; any location type not listed uses defaults.",
+ "types": [
+  {
+   "id": "art_student",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "barista",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "CAFE",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "bouquiniste",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "business_traveler",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "AIRPORT",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "class_member",
+   "kind": "REGULAR",
+   "defaultWeight": 20,
+   "originType": "GYM",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "classmate",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "CLASSMATE",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "client",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "PROFESSIONAL_NETWORKING",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "community_member",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "ONLINE_COMMUNITY",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "commuter",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "couple",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "RANDOM_ENCOUNTER",
+   "romanceEligible": false,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "coworker",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "COWORKER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "creator",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "SOCIAL_MEDIA",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "doctor",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": false,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "dog_owner",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "expat",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "LANGUAGE_EXCHANGE_APP",
+   "romanceEligible": true,
+   "foreignChance": 1.0
+  },
+  {
+   "id": "family",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "RANDOM_ENCOUNTER",
+   "romanceEligible": false,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "family_friend",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "FAMILY_CONNECTION",
+   "romanceEligible": false,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "foreign_student",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "LANGUAGE_EXCHANGE_APP",
+   "romanceEligible": true,
+   "foreignChance": 1.0
+  },
+  {
+   "id": "freelancer",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "friend",
+   "kind": "REGULAR",
+   "defaultWeight": 10,
+   "originType": "FRIEND",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "friend_of_friend",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "FRIEND_OF_FRIEND",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "gamer",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "ONLINE_COMMUNITY",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "group_diner",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "RANDOM_ENCOUNTER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "guest",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "FRIEND_OF_FRIEND",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "guide",
+   "kind": "STAFF",
+   "defaultWeight": 5,
+   "originType": "TRAVEL",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "hotel_staff",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "HOTEL",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "instructor",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "COOKING_CLASS",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "jogger",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "language_partner",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "LANGUAGE_EXCHANGE_APP",
+   "romanceEligible": true,
+   "foreignChance": 0.95
+  },
+  {
+   "id": "librarian",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "LIBRARY",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "local",
+   "kind": "TRANSIENT",
+   "defaultWeight": 25,
+   "originType": "RANDOM_ENCOUNTER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "manager",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "COWORKER",
+   "romanceEligible": false,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "match",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "DATING_APP",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "moviegoer",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "RANDOM_ENCOUNTER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "neighbor",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "NEIGHBOR",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "new_hire",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "COWORKER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "new_member",
+   "kind": "REGULAR",
+   "defaultWeight": 20,
+   "originType": "GYM",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "new_student",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "COOKING_CLASS",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "nurse",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": false,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "old_friend",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "OLD_FRIEND",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "owner",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": false,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "patient",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "RANDOM_ENCOUNTER",
+   "romanceEligible": false,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "personal_trainer",
+   "kind": "STAFF",
+   "defaultWeight": 6,
+   "originType": "PERSONAL_TRAINER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "photographer",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "TRAVEL",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "professor",
+   "kind": "STAFF",
+   "defaultWeight": 10,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": false,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "regular_customer",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "CAFE",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "regular_member",
+   "kind": "REGULAR",
+   "defaultWeight": 30,
+   "originType": "GYM",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "regular_reader",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "LIBRARY",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "regular_student",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "COOKING_CLASS",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "relative",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "FAMILY_CONNECTION",
+   "romanceEligible": false,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "researcher",
+   "kind": "REGULAR",
+   "defaultWeight": 10,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "server",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "shop_owner",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "staff",
+   "kind": "STAFF",
+   "defaultWeight": 10,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "stranger",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "RANDOM_ENCOUNTER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "street_vendor",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": false,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "student",
+   "kind": "REGULAR",
+   "defaultWeight": 50,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "student_surfer",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "SURFING",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "surf_instructor",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "SURFING",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "surfer",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "SURFING",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "temporary_traveler",
+   "kind": "TRANSIENT",
+   "defaultWeight": 15,
+   "originType": "TRAVEL",
+   "romanceEligible": true,
+   "foreignChance": 0.7
+  },
+  {
+   "id": "tour_guide",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "TRAVEL",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "tourist",
+   "kind": "TRANSIENT",
+   "defaultWeight": 40,
+   "originType": "TRAVEL",
+   "romanceEligible": true,
+   "foreignChance": 0.6
+  },
+  {
+   "id": "trainer",
+   "kind": "STAFF",
+   "defaultWeight": 10,
+   "originType": "GYM",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "traveler",
+   "kind": "TRANSIENT",
+   "defaultWeight": 20,
+   "originType": "TRAVEL",
+   "romanceEligible": true,
+   "foreignChance": 0.7
+  },
+  {
+   "id": "visitor",
+   "kind": "TRANSIENT",
+   "defaultWeight": 10,
+   "originType": "RANDOM_ENCOUNTER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "volunteer",
+   "kind": "REGULAR",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  },
+  {
+   "id": "waiter",
+   "kind": "STAFF",
+   "defaultWeight": 15,
+   "originType": "RECURRING_STRANGER",
+   "romanceEligible": true,
+   "foreignChance": 0.03
+  }
+ ],
+ "pools": [
+  {
+   "locationId": "gym",
+   "npcTypes": [
+    {
+     "type": "trainer",
+     "weight": 10
+    },
+    {
+     "type": "personal_trainer",
+     "weight": 6
+    },
+    {
+     "type": "regular_member",
+     "weight": 30
+    },
+    {
+     "type": "new_member",
+     "weight": 20
+    },
+    {
+     "type": "class_member",
+     "weight": 20
+    },
+    {
+     "type": "visitor",
+     "weight": 10
+    }
+   ]
+  },
+  {
+   "locationId": "university",
+   "npcTypes": [
+    {
+     "type": "student",
+     "weight": 50
+    },
+    {
+     "type": "professor",
+     "weight": 10
+    },
+    {
+     "type": "researcher",
+     "weight": 10
+    },
+    {
+     "type": "staff",
+     "weight": 10
+    },
+    {
+     "type": "visitor",
+     "weight": 10
+    },
+    {
+     "type": "friend",
+     "weight": 10
+    }
+   ]
+  },
+  {
+   "locationId": "paris_eiffel_tower",
+   "npcTypes": [
+    {
+     "type": "tourist",
+     "weight": 40
+    },
+    {
+     "type": "local",
+     "weight": 25
+    },
+    {
+     "type": "traveler",
+     "weight": 20
+    },
+    {
+     "type": "photographer",
+     "weight": 10
+    },
+    {
+     "type": "tour_guide",
+     "weight": 5
+    }
+   ]
+  }
+ ]
+}

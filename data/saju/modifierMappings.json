@@ -1,0 +1,78 @@
+{
+  "_doc": "Layer C balancing data: how Saju analysis becomes LifeModifiers (log-scale deltas; 0 = neutral, +0.25 ≈ ×1.28). Tune freely — no engine code changes needed. These are FICTIONAL GAME TENDENCIES, not predictions.",
+
+  "layerScales": { "natal": 1.0, "daeun": 0.6, "annual": 0.45, "monthly": 0.15, "synergy": 1.0 },
+
+  "tenGodGroups": {
+    "_doc": "Natal: applied × prominence, prominence = clamp((groupShare% − 20) / 20, −1, 2); negative prominence is scaled by negativeFactor. Transit pillars: applied × transitPartWeight per stem/branch belonging to the group.",
+    "negativeFactor": 0.4,
+    "transitPartWeight": { "stem": 0.5, "branch": 0.5 },
+    "mappings": {
+      "OFFICER":  { "career": 0.22, "stability": 0.10, "marriage": 0.06, "education": 0.04, "opportunity": 0.04 },
+      "RESOURCE": { "education": 0.25, "introspection": 0.06, "stability": 0.05, "family": 0.05, "career": 0.03 },
+      "WEALTH":   { "wealth": 0.22, "business": 0.15, "romance": 0.04, "risk": 0.04, "opportunity": 0.04 },
+      "OUTPUT":   { "creativity": 0.22, "communication": 0.18, "business": 0.06, "social": 0.06, "change": 0.04 },
+      "PEER":     { "social": 0.18, "risk": 0.06, "change": 0.05, "wealth": -0.05, "business": 0.03 }
+    }
+  },
+
+  "tenGodAccents": {
+    "_doc": "Small per-Ten-God flavour on top of group mappings, applied × clamp((share% − 10) / 10, −1, 2) for natal, and × transitPartWeight for transits.",
+    "mappings": {
+      "BI_GYEON":   { "stability": 0.02 },
+      "GYEOB_JAE":  { "risk": 0.05, "volatility": 0.03 },
+      "SIK_SHIN":   { "stability": 0.03, "social": 0.02 },
+      "SANG_GWAN":  { "change": 0.05, "volatility": 0.04, "creativity": 0.03 },
+      "JEONG_JAE":  { "stability": 0.04, "marriage": 0.03 },
+      "PYEON_JAE":  { "business": 0.05, "risk": 0.04, "travel": 0.02 },
+      "JEONG_GWAN": { "stability": 0.04, "marriage": 0.03 },
+      "CHIL_SAL":   { "risk": 0.05, "change": 0.04, "volatility": 0.03 },
+      "JEONG_IN":   { "education": 0.03, "family": 0.02 },
+      "PYEON_IN":   { "introspection": 0.05, "overseas": 0.02 }
+    }
+  },
+
+  "shinsal": {
+    "_doc": "Applied × shinsal strength (0..1). Natal presence and transit activation both use this table (transits × the layer scale).",
+    "YEOKMA":         { "mobility": 0.25, "travel": 0.20, "relocation": 0.18, "overseas": 0.15, "change": 0.10 },
+    "DOHWA":          { "social": 0.18, "romance": 0.22, "communication": 0.06, "creativity": 0.04 },
+    "HWAGAE":         { "introspection": 0.25, "creativity": 0.15, "education": 0.05, "social": -0.08 },
+    "CHEONEUL_GWIIN": { "opportunity": 0.14, "stability": 0.06, "social": 0.05 }
+  },
+
+  "dayMasterStrength": {
+    "STRONG":   { "risk": 0.06, "change": 0.04, "business": 0.03 },
+    "BALANCED": { "stability": 0.03 },
+    "WEAK":     { "stability": 0.02, "family": 0.04, "risk": -0.04 }
+  },
+
+  "favorability": {
+    "_doc": "Transit pillar parts whose element is favorable / unfavorable for this chart (see ElementBalance).",
+    "favorable":   { "opportunity": 0.10, "stability": 0.03 },
+    "unfavorable": { "opportunity": -0.06, "volatility": 0.08 }
+  },
+
+  "interactions": {
+    "_doc": "Applied per interaction. natalScale damps natal-internal interactions. 'dayPillarAccents' add on when the day pillar (self/spouse palace) is involved, 'yearPillarAccents' when the year pillar (family/roots) is.",
+    "natalScale": 0.4,
+    "types": {
+      "STEM_COMBINATION": { "romance": 0.05, "marriage": 0.05, "social": 0.04 },
+      "STEM_CLASH":       { "change": 0.06, "volatility": 0.06 },
+      "SIX_HARMONY":      { "stability": 0.05, "social": 0.05, "romance": 0.04 },
+      "THREE_HARMONY":    { "opportunity": 0.06, "social": 0.05 },
+      "HALF_HARMONY":     { "opportunity": 0.03, "social": 0.02 },
+      "BRANCH_CLASH":     { "change": 0.12, "mobility": 0.08, "relocation": 0.06, "volatility": 0.10, "stability": -0.10 },
+      "HARM":             { "stability": -0.04, "family": -0.03 },
+      "PUNISHMENT":       { "volatility": 0.07, "stability": -0.05 }
+    },
+    "dayPillarAccents": {
+      "STEM_COMBINATION": { "marriage": 0.08, "romance": 0.06 },
+      "SIX_HARMONY":      { "marriage": 0.08, "romance": 0.06 },
+      "BRANCH_CLASH":     { "relocation": 0.08, "change": 0.06, "marriage": -0.04 }
+    },
+    "yearPillarAccents": {
+      "BRANCH_CLASH":     { "relocation": 0.06, "family": -0.04, "overseas": 0.04 },
+      "SIX_HARMONY":      { "family": 0.05 }
+    }
+  }
+}

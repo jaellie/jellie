@@ -1,0 +1,1960 @@
+{
+ "_doc": "Life events: betrayal. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "CHEAT_WITH_SISTER",
+   "cat": "betrayal",
+   "rarity": "legendary",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "배신",
+    "en": "Betrayal"
+   },
+   "requires": [
+    "partnered",
+    "hasSister"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.8,
+     "HARM@day": 0.5,
+     "PUNISHMENT@day": 0.4,
+     "URANUS>VENUS:hard": 0.7,
+     "group:GYEOB_JAE": 0.5,
+     "SATURN>VENUS:hard": 0.4
+    },
+    "mods": {
+     "volatility": 0.6,
+     "stability": -0.5
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(늦은 밤, {partner}의 휴대폰에 뜬 이름… {sister}였다. 그리고 그 메시지는, 연인에게 보내는 말이었다.)",
+    "en": "(Late at night, a name lit up {partner}'s phone… {sister}. And the message was the kind lovers send.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "둘을 한자리에 부른다",
+      "en": "Call them both to the table"
+     },
+     "w": {
+      "SPLIT": 0.7,
+      "CHAOS": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "아무에게도 말하지 않고 떠난다",
+      "en": "Leave without telling anyone"
+     },
+     "w": {
+      "SPLIT": 0.6,
+      "SILENT": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "SPLIT": {
+     "r": {
+      "ko": "그날 두 사람을 동시에 잃었다.",
+      "en": "That day you lost them both at once."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      },
+      {
+       "kind": "setFlag",
+       "name": "siblingRift",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "가장 가까운 두 사람의 배신",
+       "en": "Betrayed by the two closest to me"
+      },
+      "location": "street",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     },
+     "chain": [
+      {
+       "to": "HOLIDAY_BLOWUP",
+       "after": [
+        6,
+        18
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "CHAOS": {
+     "r": {
+      "ko": "소리를 지르고, 물건이 날아다녔다. 가족 모두가 알게 됐다.",
+      "en": "There was shouting and things were thrown. The whole family found out."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      },
+      {
+       "kind": "setFlag",
+       "name": "siblingRift",
+       "value": true
+      },
+      {
+       "kind": "familySupport",
+       "delta": -0.2
+      }
+     ]
+    },
+    "SILENT": {
+     "r": {
+      "ko": "짐을 싸서 나왔다. 이유는 아무에게도 말하지 않았다.",
+      "en": "You packed and left. You told no one why."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      },
+      {
+       "kind": "setFlag",
+       "name": "siblingRift",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CHEAT_WITH_BESTIE",
+   "cat": "betrayal",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "배신",
+    "en": "Betrayal"
+   },
+   "requires": [
+    "partnered",
+    "hasFriend"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.8,
+     "HARM@day": 0.5,
+     "PUNISHMENT@day": 0.4,
+     "URANUS>VENUS:hard": 0.7,
+     "group:GYEOB_JAE": 0.5,
+     "SATURN>VENUS:hard": 0.4
+    },
+    "mods": {
+     "volatility": 0.6,
+     "stability": -0.5
+    }
+   },
+   "location": "street",
+   "activity": "walk",
+   "who": "me",
+   "line": {
+    "ko": "({partner}와(과) {friend}… 둘이 손을 잡고 걷는 걸 봤다.)",
+    "en": "(You saw {partner} and {friend}… walking hand in hand.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "그 자리에서 따진다",
+      "en": "Confront them right there"
+     },
+     "w": {
+      "DOUBLE": 0.8,
+      "DENIAL": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "조용히 돌아선다",
+      "en": "Quietly turn away"
+     },
+     "w": {
+      "DOUBLE": 0.9,
+      "DENIAL": 0.1
+     }
+    }
+   ],
+   "outcomes": {
+    "DOUBLE": {
+     "r": {
+      "ko": "연인과 가장 친한 친구를, 같은 날 잃었다.",
+      "en": "You lost your partner and your best friend on the same day."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      },
+      {
+       "kind": "loseFriend"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "같은 날 둘을 잃다",
+       "en": "Losing two people in one day"
+      },
+      "location": "street",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    },
+    "DENIAL": {
+     "r": {
+      "ko": "둘은 끝까지 아니라고 했다. …그 말을 믿을 수 없었다.",
+      "en": "They both swore it wasn't what it looked like. …You couldn't believe them."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CAUGHT_BY_LOCATION",
+   "cat": "betrayal",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "partnered"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.8,
+     "HARM@day": 0.5,
+     "PUNISHMENT@day": 0.4,
+     "URANUS>VENUS:hard": 0.7,
+     "group:GYEOB_JAE": 0.5,
+     "SATURN>VENUS:hard": 0.4
+    },
+    "mods": {
+     "volatility": 0.6,
+     "stability": -0.5
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(위치 공유 앱. '늦게까지 일한다'던 {partner}이(가) 모르는 동네에 찍혀 있다. 벌써 세 시간째.)",
+    "en": "(The location app. {partner}, supposedly 'busy till late,' is pinned in an unfamiliar neighborhood. For three hours now.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "캡처해서 보낸다",
+      "en": "Screenshot it and send it"
+     },
+     "w": {
+      "CAUGHT": 0.6,
+      "EXCUSE": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "직접 가본다",
+      "en": "Go there yourself"
+     },
+     "w": {
+      "CAUGHT": 0.75,
+      "INNOCENT": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "(못 본 걸로 한다)",
+      "en": "(Pretend you never saw it)"
+     },
+     "w": {
+      "DOUBT": 0.7,
+      "INNOCENT": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "CAUGHT": {
+     "r": {
+      "ko": "…양다리였다. 두 사람 모두에게 똑같은 말을 하고 있었다.",
+      "en": "…They were seeing someone else, saying the same sweet things to both of you."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "위치 공유가 알려준 것",
+       "en": "What the location app told me"
+      },
+      "location": "street",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    },
+    "EXCUSE": {
+     "r": {
+      "ko": "말도 안 되는 변명이 돌아왔다. 믿는 척했지만, 마음은 이미 떠났다.",
+      "en": "A ridiculous excuse came back. You pretended to believe it, but in your heart you'd already left."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    },
+    "INNOCENT": {
+     "r": {
+      "ko": "알고 보니 친구 이사를 도와주고 있었다. …괜히 미안해졌다.",
+      "en": "Turned out they were helping a friend move. …You felt a little guilty."
+     }
+    },
+    "DOUBT": {
+     "r": {
+      "ko": "그날 이후, 휴대폰 알림이 울릴 때마다 가슴이 철렁했다.",
+      "en": "After that, your heart dropped every time their phone buzzed."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "DM_EMOTIONAL_AFFAIR",
+   "cat": "betrayal",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "partnered"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.8,
+     "HARM@day": 0.5,
+     "PUNISHMENT@day": 0.4,
+     "URANUS>VENUS:hard": 0.7,
+     "group:GYEOB_JAE": 0.5,
+     "SATURN>VENUS:hard": 0.4
+    },
+    "mods": {
+     "volatility": 0.6,
+     "stability": -0.5
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "({partner}이(가) 몇 달째 누군가와 새벽까지 DM을 주고받았다. 몸은 아니어도… 마음은.)",
+    "en": "({partner} has been DMing someone until dawn for months. Not their body, maybe… but their heart.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "대화로 풀자",
+      "en": "Let's talk it through"
+     },
+     "w": {
+      "REPAIR": 0.6,
+      "SPLIT": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "그만 끝내자",
+      "en": "Let's end this"
+     },
+     "w": {
+      "SPLIT": 0.85,
+      "REPAIR": 0.15
+     }
+    }
+   ],
+   "outcomes": {
+    "REPAIR": {
+     "r": {
+      "ko": "{partner}이(가) 그 사람과의 대화방을 내 앞에서 나갔다. 신뢰는 천천히 돌아올 것이다.",
+      "en": "{partner} left that chat right in front of you. Trust will come back slowly."
+     },
+     "lean": {
+      "traits": {
+       "conflictAvoidance": -0.3
+      }
+     }
+    },
+    "SPLIT": {
+     "r": {
+      "ko": "마음이 떠난 사람을 붙잡을 수는 없었다.",
+      "en": "You can't hold on to a heart that's already gone."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "화면 속의 다른 사람",
+       "en": "Someone else on the screen"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    }
+   }
+  },
+  {
+   "id": "SECOND_FAMILY",
+   "cat": "betrayal",
+   "rarity": "legendary",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "두 집 살림",
+    "en": "A second family"
+   },
+   "requires": [
+    "married",
+    "partnerYears>=3"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.8,
+     "HARM@day": 0.5,
+     "PUNISHMENT@day": 0.4,
+     "URANUS>VENUS:hard": 0.7,
+     "group:GYEOB_JAE": 0.5,
+     "SATURN>VENUS:hard": 0.4
+    },
+    "mods": {
+     "volatility": 0.6,
+     "stability": -0.5
+    }
+   },
+   "location": "home",
+   "who": "stranger",
+   "line": {
+    "ko": "(초인종이 울렸다. 낯선 사람이 아이 손을 잡고 서 있었다.) 저… {partner} 씨 가족 되는 사람이에요.",
+    "en": "(The doorbell rang. A stranger stood there holding a child's hand.) Um… I'm {partner}'s family."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "이혼 소송을 준비한다",
+      "en": "Prepare for divorce"
+     },
+     "w": {
+      "DIVORCE": 0.9,
+      "NUMB": 0.1
+     }
+    },
+    {
+     "t": {
+      "ko": "(말없이 문을 닫는다)",
+      "en": "(Close the door without a word)"
+     },
+     "w": {
+      "NUMB": 0.6,
+      "DIVORCE": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "DIVORCE": {
+     "r": {
+      "ko": "십 년의 결혼이 거짓 위에 서 있었다. 변호사 사무실로 향했다.",
+      "en": "Ten years of marriage, built on a lie. You headed to a lawyer's office."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "두 집 살림이 드러난 날",
+       "en": "The day the second family came to light"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    },
+    "NUMB": {
+     "r": {
+      "ko": "한참을 현관에 서 있었다. 그리고, 모든 게 끝났다는 걸 알았다.",
+      "en": "You stood in the entryway for a long time. Then you knew it was over."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SECRET_CHILD",
+   "cat": "betrayal",
+   "rarity": "rare",
+   "tone": "revelation",
+   "big": true,
+   "title": {
+    "ko": "숨겨진 아이",
+    "en": "A hidden child"
+   },
+   "requires": [
+    "partnered",
+    "partnerYears>=1"
+   ],
+   "trigger": {
+    "signals": {
+     "HWAGAE": 0.3,
+     "group:PYEON_IN": 0.3,
+     "BRANCH_CLASH@year": 0.24,
+     "URANUS>MOON:hard": 0.36,
+     "URANUS>SUN:hard": 0.24,
+     "BRANCH_CLASH@day": 0.48,
+     "HARM@day": 0.3,
+     "PUNISHMENT@day": 0.24,
+     "URANUS>VENUS:hard": 0.42,
+     "group:GYEOB_JAE": 0.3,
+     "SATURN>VENUS:hard": 0.24
+    }
+   },
+   "location": "home",
+   "who": "partner",
+   "line": {
+    "ko": "…사실 나한테 아이가 있어. 예전 관계에서. 말 못 해서 미안해.",
+    "en": "…I have a child. From before. I'm sorry I didn't tell you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "왜 이제 말해",
+      "en": "Why tell me now?"
+     },
+     "w": {
+      "HURT": 0.5,
+      "SPLIT": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "아이를 만나보고 싶어",
+      "en": "I'd like to meet them"
+     },
+     "w": {
+      "EMBRACE": 0.75,
+      "HURT": 0.25
+     }
+    }
+   ],
+   "outcomes": {
+    "HURT": {
+     "r": {
+      "ko": "며칠 동안 말을 섞지 않았다. 그래도 헤어지지는 않았다.",
+      "en": "You didn't speak for days. But you didn't break up."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    },
+    "SPLIT": {
+     "r": {
+      "ko": "거짓말이 아이보다 더 아팠다.",
+      "en": "The lie hurt more than the child ever could."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ]
+    },
+    "EMBRACE": {
+     "r": {
+      "ko": "주말에 아이를 만났다. 수줍게 웃는 얼굴이 {partner}을(를) 꼭 닮았다.",
+      "en": "You met the child that weekend. The shy smile looked just like {partner}'s."
+     },
+     "card": {
+      "caption": {
+       "ko": "처음 만난 {partner}의 아이",
+       "en": "Meeting {partner}'s child"
+      },
+      "location": "park",
+      "actors": [
+       "me",
+       "partner",
+       "kid"
+      ]
+     },
+     "lean": {
+      "traits": {
+       "emotionalExpression": 0.4
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "PARTNER_ALREADY_MARRIED",
+   "cat": "betrayal",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "유부",
+    "en": "Already married"
+   },
+   "requires": [
+    "dating"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.8,
+     "HARM@day": 0.5,
+     "PUNISHMENT@day": 0.4,
+     "URANUS>VENUS:hard": 0.7,
+     "group:GYEOB_JAE": 0.5,
+     "SATURN>VENUS:hard": 0.4
+    },
+    "mods": {
+     "volatility": 0.6,
+     "stability": -0.5
+    }
+   },
+   "location": "home",
+   "who": "unknown",
+   "line": {
+    "ko": "당신, {partner}이(가) 결혼한 사람인 거 알고 만나요?",
+    "en": "Do you know {partner} is married?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "사실을 확인한다",
+      "en": "Find out the truth"
+     },
+     "w": {
+      "TRUE": 0.8,
+      "LIE": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "{partner}에게 직접 묻는다",
+      "en": "Ask {partner} directly"
+     },
+     "w": {
+      "TRUE": 0.75,
+      "LIE": 0.25
+     }
+    }
+   ],
+   "outcomes": {
+    "TRUE": {
+     "r": {
+      "ko": "…사실이었다. 나는 누군가의 결혼 생활 한가운데 있었다.",
+      "en": "…It was true. You'd been standing in the middle of someone's marriage."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "알고 보니 유부",
+       "en": "Turns out they were married"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    },
+    "LIE": {
+     "r": {
+      "ko": "악의적인 장난 문자였다. 그래도 마음에 작은 금이 갔다.",
+      "en": "A malicious prank text. Still, a hairline crack appeared."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ROMANCE_SCAM",
+   "cat": "betrayal",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "!partnered",
+    "age>=30"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.48,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "SAMJAE": 0.36,
+     "unfavorable": 0.3,
+     "BRANCH_CLASH@month": 0.18
+    },
+    "mods": {
+     "romance": 0.4
+    },
+    "traits": {
+     "planning": -0.4
+    }
+   },
+   "location": "home",
+   "who": "unknown",
+   "line": {
+    "ko": "(SNS로 알게 된 해외 파견 의사라는 사람. 매일 다정하던 그가, 오늘 급하게 돈을 부탁한다.) 통관비만 보내주면 바로 한국에 갈게요.",
+    "en": "(A 'doctor stationed abroad' you met on social media. Sweet every single day. And today, suddenly, asking for money.) Just cover the customs fee and I can fly out to see you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "보내준다",
+      "en": "Send it"
+     },
+     "w": {
+      "SCAMMED": 0.9,
+      "LUCKY": 0.1
+     }
+    },
+    {
+     "t": {
+      "ko": "영상통화부터 하자고 한다",
+      "en": "Ask for a video call first"
+     },
+     "w": {
+      "EXPOSED": 0.85,
+      "SCAMMED": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "바로 신고한다",
+      "en": "Report it right away"
+     },
+     "w": {
+      "EXPOSED": 1
+     }
+    }
+   ],
+   "outcomes": {
+    "SCAMMED": {
+     "r": {
+      "ko": "돈을 보낸 다음 날, 계정이 사라졌다. 사진은 남의 것이었다.",
+      "en": "The day after you sent it, the account vanished. The photos were someone else's."
+     },
+     "effects": [
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.3,
+       "min": 5
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "로맨스 스캠",
+       "en": "A romance scam"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     },
+     "lean": {
+      "traits": {
+       "planning": -0.6
+      }
+     }
+    },
+    "LUCKY": {
+     "r": {
+      "ko": "송금 직전, 은행 직원이 막아섰다. '이거 사기예요.'",
+      "en": "Right before the transfer, the bank teller stopped you. 'This is a scam.'"
+     }
+    },
+    "EXPOSED": {
+     "r": {
+      "ko": "영상통화라는 말에, 그 사람은 사라졌다.",
+      "en": "At the words 'video call,' they disappeared."
+     }
+    }
+   }
+  },
+  {
+   "id": "MARRIAGE_FRAUD",
+   "cat": "betrayal",
+   "rarity": "legendary",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "결혼사기",
+    "en": "Marriage fraud"
+   },
+   "requires": [
+    "dating"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.78,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "SAMJAE": 0.36,
+     "unfavorable": 0.3,
+     "BRANCH_CLASH@month": 0.18,
+     "BRANCH_CLASH@day": 0.48,
+     "HARM@day": 0.3,
+     "PUNISHMENT@day": 0.24,
+     "URANUS>VENUS:hard": 0.42,
+     "SATURN>VENUS:hard": 0.24
+    }
+   },
+   "location": "court",
+   "activity": "wait",
+   "who": "police",
+   "line": {
+    "ko": "[경찰] 혹시 {partner}이(가) 결혼 자금 명목으로 돈을 받아 갔나요? 같은 수법의 피해자가 세 분 더 계십니다.",
+    "en": "[Police] Did {partner} take money from you for 'wedding costs'? There are three other victims with the same story."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "고소한다",
+      "en": "Press charges"
+     },
+     "w": {
+      "CAUGHT": 0.6,
+      "GONE": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "(주저앉는다)",
+      "en": "(Collapse to the floor)"
+     },
+     "w": {
+      "GONE": 0.8,
+      "CAUGHT": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "CAUGHT": {
+     "r": {
+      "ko": "재판정에서 그 사람을 다시 봤다. 눈도 마주치지 않았다.",
+      "en": "You saw them again in court. They wouldn't meet your eyes."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      },
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.3,
+       "min": 5
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "결혼사기",
+       "en": "A marriage fraud"
+      },
+      "location": "court",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     },
+     "chain": [
+      {
+       "to": "LAWSUIT_WIN",
+       "after": [
+        12,
+        30
+       ],
+       "p": 0.5
+      }
+     ]
+    },
+    "GONE": {
+     "r": {
+      "ko": "돈도, 사람도 사라졌다. 남은 건 청첩장 시안뿐이었다.",
+      "en": "The money and the person were gone. All that was left was a draft of the wedding invitation."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      },
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.5,
+       "min": 10
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PARTNER_HIDDEN_DEBT",
+   "cat": "betrayal",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "partnered"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.78,
+     "URANUS@H2": 0.36,
+     "URANUS@H8": 0.3,
+     "SAMJAE": 0.36,
+     "unfavorable": 0.3,
+     "BRANCH_CLASH@month": 0.18,
+     "BRANCH_CLASH@day": 0.48,
+     "HARM@day": 0.3,
+     "PUNISHMENT@day": 0.24,
+     "URANUS>VENUS:hard": 0.42,
+     "SATURN>VENUS:hard": 0.24
+    }
+   },
+   "location": "home",
+   "who": "partner",
+   "line": {
+    "ko": "…나 빚이 좀 있어. 1억 정도. 계속 말하려고 했는데.",
+    "en": "…I have some debt. Around a hundred million won. I kept meaning to tell you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "같이 갚아나가자",
+      "en": "We'll pay it off together"
+     },
+     "w": {
+      "TOGETHER": 0.6,
+      "DRAIN": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "시간을 갖자",
+      "en": "Let's take some time"
+     },
+     "w": {
+      "SPLIT": 0.5,
+      "TOGETHER": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "TOGETHER": {
+     "r": {
+      "ko": "가계부를 같이 쓰기 시작했다. 빚도, 비밀도 이제 둘의 것.",
+      "en": "You started a shared budget. The debt and the secrets are yours to carry together now."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": 20
+      },
+      {
+       "kind": "familyObligation",
+       "delta": 0.1
+      }
+     ]
+    },
+    "DRAIN": {
+     "r": {
+      "ko": "갚아도 갚아도 새로운 빚이 나왔다.",
+      "en": "Every time you paid some off, new debt turned up."
+     },
+     "effects": [
+      {
+       "kind": "debt",
+       "amount": 50
+      }
+     ],
+     "chain": [
+      {
+       "to": "MONEY_FIGHTS",
+       "after": [
+        6,
+        18
+       ],
+       "p": 0.7
+      }
+     ]
+    },
+    "SPLIT": {
+     "r": {
+      "ko": "…결국 헤어졌다. 사랑만으로 해결할 수 없는 게 있었다.",
+      "en": "…You broke up. Some things love alone can't fix."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "MONEY_FIGHTS",
+   "cat": "betrayal",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "partnered"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "who": "partner",
+   "line": {
+    "ko": "또 카드값이야? 우리 이러다 진짜 망해.",
+    "en": "The card bill again? We're going to go under at this rate."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "같이 상담을 받아보자",
+      "en": "Let's see a counselor together"
+     },
+     "w": {
+      "REPAIR": 0.6,
+      "SPLIT": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "너 때문이잖아",
+      "en": "This is your fault"
+     },
+     "w": {
+      "SPLIT": 0.7,
+      "REPAIR": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "REPAIR": {
+     "r": {
+      "ko": "재무 상담사 앞에서 처음으로 서로의 통장을 다 열어봤다.",
+      "en": "In front of a financial counselor, you opened every account to each other for the first time."
+     }
+    },
+    "SPLIT": {
+     "r": {
+      "ko": "돈 이야기는 결국 마음 이야기였다. 우리는 끝났다.",
+      "en": "The fight about money was really about your hearts. You were done."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "FAKE_CREDENTIALS",
+   "cat": "betrayal",
+   "rarity": "rare",
+   "tone": "dark",
+   "requires": [
+    "partnered"
+   ],
+   "trigger": {
+    "signals": {
+     "HWAGAE": 0.3,
+     "group:PYEON_IN": 0.3,
+     "BRANCH_CLASH@year": 0.24,
+     "URANUS>MOON:hard": 0.36,
+     "URANUS>SUN:hard": 0.24,
+     "BRANCH_CLASH@day": 0.48,
+     "HARM@day": 0.3,
+     "PUNISHMENT@day": 0.24,
+     "URANUS>VENUS:hard": 0.42,
+     "group:GYEOB_JAE": 0.3,
+     "SATURN>VENUS:hard": 0.24
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(우연히 알게 됐다. {partner}이(가) 말한 대학도, 직장도… 전부 거짓이었다.)",
+    "en": "(You found out by accident. The university {partner} mentioned, the job… all lies.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "왜 그랬는지 묻는다",
+      "en": "Ask them why"
+     },
+     "w": {
+      "FORGIVE": 0.4,
+      "SPLIT": 0.6
+     }
+    },
+    {
+     "t": {
+      "ko": "끝낸다",
+      "en": "End it"
+     },
+     "w": {
+      "SPLIT": 0.9,
+      "FORGIVE": 0.1
+     }
+    }
+   ],
+   "outcomes": {
+    "FORGIVE": {
+     "r": {
+      "ko": "부끄러웠다고 했다. 내가 떠날까 봐. 우리는 처음부터 다시 서로를 소개했다.",
+      "en": "They said they'd been ashamed, afraid you'd leave. You introduced yourselves to each other all over again."
+     }
+    },
+    "SPLIT": {
+     "r": {
+      "ko": "그 사람의 이름 말고는, 진짜가 하나도 없었다.",
+      "en": "Apart from their name, nothing was real."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "거짓으로 쌓은 사람",
+       "en": "A person built of lies"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    }
+   }
+  },
+  {
+   "id": "PARTNER_ON_APP",
+   "cat": "betrayal",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "partnered"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.8,
+     "HARM@day": 0.5,
+     "PUNISHMENT@day": 0.4,
+     "URANUS>VENUS:hard": 0.7,
+     "group:GYEOB_JAE": 0.5,
+     "SATURN>VENUS:hard": 0.4
+    },
+    "mods": {
+     "volatility": 0.6,
+     "stability": -0.5
+    }
+   },
+   "location": "cafe",
+   "who": "me",
+   "line": {
+    "ko": "(친구 휴대폰으로 구경하던 소개팅 앱. 추천 목록에… {partner}의 프로필이 떴다. 오늘 접속.)",
+    "en": "(Browsing a dating app on a friend's phone. There in the suggestions… {partner}'s profile. Active today.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "캡처해서 들이민다",
+      "en": "Show them the screenshot"
+     },
+     "w": {
+      "EXCUSE": 0.3,
+      "SPLIT": 0.7
+     }
+    },
+    {
+     "t": {
+      "ko": "나도 모른 척한다",
+      "en": "Say nothing"
+     },
+     "w": {
+      "DOUBT": 0.7,
+      "SPLIT": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "EXCUSE": {
+     "r": {
+      "ko": "'예전에 깔아둔 거야.' …오늘 접속이라고 쓰여 있었는데.",
+      "en": "'I installed that ages ago.' …It said 'active today.'"
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    },
+    "SPLIT": {
+     "r": {
+      "ko": "변명을 듣다가 웃음이 났다. 그리고 끝냈다.",
+      "en": "Listening to the excuses, you started laughing. Then you ended it."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "앱 속의 그 사람",
+       "en": "Them, on the app"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    },
+    "DOUBT": {
+     "r": {
+      "ko": "그날 이후 우리 사이에 보이지 않는 벽이 생겼다.",
+      "en": "An invisible wall went up between you."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "YOU_CHEAT",
+   "cat": "betrayal",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "흔들림",
+    "en": "Tempted"
+   },
+   "requires": [
+    "partnered",
+    "age<=65"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.3,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2,
+     "BRANCH_CLASH@day": 0.4,
+     "HARM@day": 0.25,
+     "PUNISHMENT@day": 0.2,
+     "URANUS>VENUS:hard": 0.35,
+     "group:GYEOB_JAE": 0.25,
+     "SATURN>VENUS:hard": 0.2
+    },
+    "mods": {
+     "romance": 0.5,
+     "risk": 0.5
+    },
+    "traits": {
+     "novelty": 0.4,
+     "riskTolerance": 0.4
+    }
+   },
+   "location": "street",
+   "who": "me",
+   "line": {
+    "ko": "(요즘 자꾸 연락하던 사람과… 선을 넘을 뻔한 밤.)",
+    "en": "(A night when you almost crossed the line with someone you'd been texting.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "선을 넘지 않는다",
+      "en": "Don't cross it"
+     },
+     "w": {
+      "STOP": 0.85,
+      "CAUGHT": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "(마음이 가는 대로)",
+      "en": "(Follow your heart)"
+     },
+     "w": {
+      "CAUGHT": 0.55,
+      "SECRET": 0.45
+     }
+    }
+   ],
+   "outcomes": {
+    "STOP": {
+     "r": {
+      "ko": "집에 오는 길, {partner}에게 전화했다. 목소리가 듣고 싶었다.",
+      "en": "On the way home you called {partner}. You just wanted to hear their voice."
+     }
+    },
+    "CAUGHT": {
+     "r": {
+      "ko": "…들켰다. {partner}의 눈에서 무언가가 꺼지는 걸 봤다.",
+      "en": "…You got caught. You watched something go out in {partner}'s eyes."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "내가 무너뜨린 것",
+       "en": "What I broke"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     },
+     "lean": {
+      "traits": {
+       "planning": -0.4
+      }
+     }
+    },
+    "SECRET": {
+     "r": {
+      "ko": "아무도 몰랐다. 아직은.",
+      "en": "No one knew. Not yet."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "guilty",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "YOU_CHEAT_EXPOSED",
+       "after": [
+        3,
+        14
+       ],
+       "p": 0.6
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "YOU_CHEAT_EXPOSED",
+   "cat": "betrayal",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "들통",
+    "en": "Found out"
+   },
+   "requires": [
+    "partnered",
+    "f_guilty"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "who": "partner",
+   "line": {
+    "ko": "…이거, 설명해 봐. (휴대폰 화면에는 내가 지운 줄 알았던 메시지가 있었다.)",
+    "en": "…Explain this. (On the screen was a message you thought you'd deleted.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "무릎 꿇고 빈다",
+      "en": "Beg for forgiveness"
+     },
+     "w": {
+      "SPLIT": 0.7,
+      "SECOND": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "사실대로 다 말한다",
+      "en": "Tell the whole truth"
+     },
+     "w": {
+      "SPLIT": 0.6,
+      "SECOND": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "SPLIT": {
+     "r": {
+      "ko": "{partner}은(는) 짐을 쌌다. 문 닫히는 소리가 오래 남았다.",
+      "en": "{partner} packed a bag. The sound of the door closing stayed with you."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      },
+      {
+       "kind": "clearFlag",
+       "name": "guilty"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "내가 무너뜨린 것",
+       "en": "What I broke"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     }
+    },
+    "SECOND": {
+     "r": {
+      "ko": "…한 번. 딱 한 번만이라고 했다. 그 말의 무게를 평생 기억할 것이다.",
+      "en": "…Once. Just this once, they said. You'll carry the weight of that forever."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "guilty"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ONE_NIGHT_EX",
+   "cat": "betrayal",
+   "rarity": "rare",
+   "tone": "dark",
+   "requires": [
+    "partnered",
+    "hasEx"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.4,
+     "HARM@day": 0.25,
+     "PUNISHMENT@day": 0.2,
+     "URANUS>VENUS:hard": 0.35,
+     "group:GYEOB_JAE": 0.25,
+     "SATURN>VENUS:hard": 0.2
+    },
+    "mods": {
+     "romance": 0.4,
+     "risk": 0.4
+    }
+   },
+   "location": "street",
+   "who": "ex",
+   "line": {
+    "ko": "…오랜만이다. 한잔할래?",
+    "en": "…Long time no see. Want a drink?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "딱 한 잔만",
+      "en": "Just one"
+     },
+     "w": {
+      "MISTAKE": 0.45,
+      "TALK": 0.55
+     }
+    },
+    {
+     "t": {
+      "ko": "안 돼. 나 만나는 사람 있어",
+      "en": "No. I'm seeing someone"
+     },
+     "w": {
+      "REFUSE": 1
+     }
+    }
+   ],
+   "outcomes": {
+    "MISTAKE": {
+     "r": {
+      "ko": "…다음 날 아침, 지울 수 없는 실수가 남았다.",
+      "en": "…By morning, you'd made a mistake you can't undo."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "guilty",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "YOU_CHEAT_EXPOSED",
+       "after": [
+        2,
+        12
+       ],
+       "p": 0.5
+      }
+     ],
+     "lean": {
+      "traits": {
+       "riskTolerance": 0.5
+      }
+     }
+    },
+    "TALK": {
+     "r": {
+      "ko": "옛날 이야기만 하다 헤어졌다. 이상하게 후련했다.",
+      "en": "You only talked about the old days, then said goodbye. Strangely freeing."
+     }
+    },
+    "REFUSE": {
+     "r": {
+      "ko": "전화를 끊고 {partner}에게 사랑한다고 문자를 보냈다.",
+      "en": "You hung up and texted {partner} that you love them."
+     }
+    }
+   }
+  },
+  {
+   "id": "FRIEND_WITH_EX",
+   "cat": "betrayal",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "hasFriend",
+    "hasEx",
+    "!partnered"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.56,
+     "group:BI_GYEON": 0.24,
+     "BRANCH_CLASH@month": 0.32
+    }
+   },
+   "location": "cafe",
+   "who": "friend",
+   "line": {
+    "ko": "…있잖아, 나 {ex}랑 만나게 됐어. 너한테 먼저 말하고 싶었어.",
+    "en": "…So, I'm seeing {ex}. I wanted you to hear it from me first."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "축하해",
+      "en": "Congratulations"
+     },
+     "w": {
+      "GRACE": 0.7,
+      "HURT": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "어떻게 그럴 수 있어",
+      "en": "How could you?"
+     },
+     "w": {
+      "FALLOUT": 0.8,
+      "GRACE": 0.2
+     }
+    }
+   ],
+   "outcomes": {
+    "GRACE": {
+     "r": {
+      "ko": "쿨한 척 웃었다. 집에 와서 조금 울었다.",
+      "en": "You smiled like it was nothing. At home, you cried a little."
+     },
+     "lean": {
+      "traits": {
+       "conflictAvoidance": 0.5
+      }
+     }
+    },
+    "HURT": {
+     "r": {
+      "ko": "축하한다고 말했지만, 그 뒤로 {friend}을(를) 예전처럼 볼 수 없었다.",
+      "en": "You said congratulations, but you couldn't look at {friend} the same way again."
+     }
+    },
+    "FALLOUT": {
+     "r": {
+      "ko": "우정은 거기까지였다.",
+      "en": "That was the end of the friendship."
+     },
+     "effects": [
+      {
+       "kind": "loseFriend"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "PARTNER_VANISHES",
+   "cat": "betrayal",
+   "rarity": "legendary",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "사라진 사람",
+    "en": "Gone"
+   },
+   "requires": [
+    "partnered",
+    "money>=10"
+   ],
+   "trigger": {
+    "signals": {
+     "group:GYEOB_JAE": 0.91,
+     "URANUS@H2": 0.42,
+     "URANUS@H8": 0.35,
+     "SAMJAE": 0.42,
+     "unfavorable": 0.35,
+     "BRANCH_CLASH@month": 0.21,
+     "BRANCH_CLASH@day": 0.56,
+     "HARM@day": 0.35,
+     "PUNISHMENT@day": 0.28,
+     "URANUS>VENUS:hard": 0.49,
+     "SATURN>VENUS:hard": 0.28
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(퇴근하고 오니 집이 비어 있었다. {partner}의 짐도, 통장의 돈도.)",
+    "en": "(You came home to an empty place. {partner}'s things were gone. So was the money in your account.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "경찰에 신고한다",
+      "en": "Call the police"
+     },
+     "w": {
+      "REPORT": 0.8,
+      "GONE": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "(바닥에 주저앉는다)",
+      "en": "(Sink to the floor)"
+     },
+     "w": {
+      "GONE": 1
+     }
+    }
+   ],
+   "outcomes": {
+    "REPORT": {
+     "r": {
+      "ko": "수사가 시작됐다. 돈이 돌아올지는 아무도 모른다.",
+      "en": "An investigation began. No one knows if the money will come back."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      },
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.7,
+       "min": 10
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "텅 빈 집",
+       "en": "An empty home"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     },
+     "chain": [
+      {
+       "to": "LAWSUIT_WIN",
+       "after": [
+        12,
+        36
+       ],
+       "p": 0.35
+      }
+     ]
+    },
+    "GONE": {
+     "r": {
+      "ko": "사랑했던 사람이 가장 많이 가져갔다.",
+      "en": "The person you loved took the most."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      },
+      {
+       "kind": "loseMoneyTo",
+       "share": 0.8,
+       "min": 10
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "텅 빈 집",
+       "en": "An empty home"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 7
+     }
+    }
+   }
+  },
+  {
+   "id": "PARTNER_TRACKS_PHONE",
+   "cat": "betrayal",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "partnered"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.8,
+     "HARM@day": 0.5,
+     "PUNISHMENT@day": 0.4,
+     "URANUS>VENUS:hard": 0.7,
+     "group:GYEOB_JAE": 0.5,
+     "SATURN>VENUS:hard": 0.4
+    },
+    "mods": {
+     "volatility": 0.6,
+     "stability": -0.5
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(내 휴대폰에서 모르는 앱을 발견했다. 위치 추적 앱. 설치한 사람은… {partner}였다.)",
+    "en": "(You found an unfamiliar app on your phone. A tracker. The one who installed it… {partner}.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당장 따진다",
+      "en": "Confront them now"
+     },
+     "w": {
+      "APOLOGY": 0.4,
+      "CONTROL": 0.3,
+      "SPLIT": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "말없이 앱을 지우고 헤어진다",
+      "en": "Delete it and leave without a word"
+     },
+     "w": {
+      "SPLIT": 0.9,
+      "APOLOGY": 0.1
+     }
+    }
+   ],
+   "outcomes": {
+    "APOLOGY": {
+     "r": {
+      "ko": "불안해서 그랬다고 했다. 상담을 받기로 약속했다.",
+      "en": "They said they were anxious. They promised to get counseling."
+     }
+    },
+    "CONTROL": {
+     "r": {
+      "ko": "'사랑하니까 그런 거야.' …그 말이 가장 무서웠다.",
+      "en": "'I did it because I love you.' …That was the scariest part."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "CONTROL_ESCAPE",
+       "after": [
+        3,
+        12
+       ],
+       "p": 0.8
+      }
+     ]
+    },
+    "SPLIT": {
+     "r": {
+      "ko": "사랑과 통제는 다른 것이다. 번호를 바꿨다.",
+      "en": "Love and control aren't the same thing. You changed your number."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CONTROL_ESCAPE",
+   "cat": "betrayal",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "partnered"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(오늘도 {partner}이(가) 내 하루를 분 단위로 물었다. 숨이 막힌다.)",
+    "en": "(Again today, {partner} wanted a minute-by-minute account of your day. You can't breathe.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "친구 집으로 짐을 옮긴다",
+      "en": "Move your things to a friend's"
+     },
+     "w": {
+      "FREE": 0.9,
+      "PULLED": 0.1
+     }
+    },
+    {
+     "t": {
+      "ko": "한 번만 더 참아본다",
+      "en": "Try to bear it once more"
+     },
+     "w": {
+      "PULLED": 0.6,
+      "FREE": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "FREE": {
+     "r": {
+      "ko": "새 번호, 새 집. 처음으로 마음 편히 잠들었다.",
+      "en": "New number, new place. For the first time, you slept in peace."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시 숨 쉬는 날",
+       "en": "Breathing again"
+      },
+      "location": "park",
+      "actors": [
+       "me"
+      ]
+     }
+    },
+    "PULLED": {
+     "r": {
+      "ko": "…며칠은 괜찮았다. 며칠은.",
+      "en": "…It was fine for a few days. A few."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

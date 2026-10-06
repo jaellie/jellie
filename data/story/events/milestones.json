@@ -1,0 +1,697 @@
+{
+ "events": [
+  {
+   "id": "INVITE_FRIEND_WEDDING",
+   "cat": "milestone",
+   "rarity": "common",
+   "tone": "warm",
+   "big": true,
+   "title": {
+    "ko": "청첩장",
+    "en": "The invitation"
+   },
+   "requires": [],
+   "chainOnly": true,
+   "repeatable": true,
+   "cooldown": 0,
+   "trigger": {
+    "signals": {}
+   },
+   "location": "restaurant",
+   "who": "me",
+   "line": {
+    "ko": "(친구 {buddy}에게서 연락이 왔다.) 나 결혼해! 청첩장 모임 올 거지? 너는 꼭 와야 해.",
+    "en": "(A message from your friend {buddy}.) I'm getting married! You're coming to the invitation dinner, right? You have to."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당연히 가지! {f:weddingmoney}도 두둑하게",
+      "en": "Of course! And {f:weddingmoney}"
+     },
+     "w": {
+      "ATTEND": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "축사는 내가 할게",
+      "en": "I'll give the toast"
+     },
+     "w": {
+      "TOAST": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(그날 일이 있어서 {f:weddingmoney}만 보낸다)",
+      "en": "(Busy that day. Just send {f:weddingmoney})"
+     },
+     "w": {
+      "SEND": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "ATTEND": {
+     "r": {
+      "ko": "{buddy}은(는) 드레스 가봉 사진을 보여주며 한참을 웃었다. 결혼식 날, 제일 앞줄에서 박수를 쳤다.",
+      "en": "{buddy} laughed, showing you fitting photos. On the day, you clapped from the front row."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.3
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "{buddy}이(가) 결혼했다. 축하해!",
+       "en": "{buddy} got married. Congratulations!"
+      },
+      "location": "wedding_venue",
+      "actors": [
+       "me",
+       "guest",
+       "guest"
+      ],
+      "priority": 6
+     }
+    },
+    "TOAST": {
+     "r": {
+      "ko": "축사 중간에 목이 메었다. 하객들이 웃고, {buddy}은(는) 울었다.",
+      "en": "Your voice cracked halfway through the toast. The guests laughed. {buddy} cried."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.3
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "{buddy}이(가) 결혼했다. 내 축사에 다들 울었다.",
+       "en": "{buddy} got married. My toast made everyone cry."
+      },
+      "location": "wedding_venue",
+      "actors": [
+       "me",
+       "guest",
+       "guest"
+      ],
+      "priority": 7
+     }
+    },
+    "SEND": {
+     "r": {
+      "ko": "'고마워, 다음에 밥 한번 사줄게!' 답장은 왔지만, 조금 미안했다.",
+      "en": "\"Thanks! Dinner's on me sometime!\" came the reply. You still felt a little bad."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.1
+      }
+     ]
+    }
+   },
+   "activity": "eat",
+   "queuedBy": "engine",
+   "byAge": [
+    {
+     "min": 45,
+     "max": 59,
+     "line": {
+      "ko": "(친구 {buddy}에게서 연락이 왔다.) 나… 결혼해. 이 나이에 무슨 청첩장이냐고 웃지 마. 너는 꼭 와 줘.",
+      "en": "(A message from your friend {buddy}.) I'm… getting married. Don't laugh at a wedding invite at our age. You have to come."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "드디어! 당연히 가지",
+        "en": "Finally! Of course I'll be there"
+       }
+      },
+      {
+       "t": {
+        "ko": "축사는 내가 할게",
+        "en": "I'll give the toast"
+       }
+      },
+      {
+       "t": {
+        "ko": "(그날 일이 있어서 축하 선물만 보낸다)",
+        "en": "(Busy that day. Send a gift instead)"
+       }
+      }
+     ],
+     "outcomes": {
+      "ATTEND": {
+       "r": {
+        "ko": "늦게 만난 만큼 둘은 서로를 아꼈다. 맨 앞줄에서 제일 크게 박수를 쳤다.",
+        "en": "They'd found each other late, and it showed in how they treated each other. You clapped the loudest from the front row."
+       }
+      },
+      "TOAST": {
+       "r": {
+        "ko": "늦게 왔다는 건, 제대로 왔다는 뜻이다. 축사 한 줄에 {buddy}이(가) 울었다.",
+        "en": "Late just means it arrived right. One line of your toast, and {buddy} was in tears."
+       }
+      }
+     }
+    },
+    {
+     "min": 60,
+     "line": {
+      "ko": "(친구 {buddy}에게서 전화가 왔다.) 나 결혼한다. 이 나이에 무슨 결혼이냐 하겠지만… 남은 날들을 같이 걷고 싶은 사람이 생겼어.",
+      "en": "(A call from your friend {buddy}.) I'm getting married. I know, at our age… But I found someone I want to walk the rest of the way with."
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "잘했다. 진심으로 축하한다",
+        "en": "Good for you. I mean it, congratulations"
+       }
+      },
+      {
+       "t": {
+        "ko": "축사는 내가 할게. 우리 나이에만 할 수 있는 축사로",
+        "en": "I'll give the toast. The kind only people our age can give"
+       }
+      },
+      {
+       "t": {
+        "ko": "(무릎이 안 좋아 못 가고, 화분을 보낸다)",
+        "en": "(Your knees won't make the trip. Send a plant)"
+       }
+      }
+     ],
+     "outcomes": {
+      "ATTEND": {
+       "r": {
+        "ko": "작은 식당을 빌린 소박한 식이었다. {buddy}은(는) 스무 살처럼 웃었다.",
+        "en": "A small ceremony in a rented restaurant. {buddy} smiled like a twenty-year-old."
+       }
+      },
+      "TOAST": {
+       "r": {
+        "ko": "인생에 늦은 사랑은 없더라. 그 한마디에 하객 모두가 고개를 끄덕였다.",
+        "en": "Turns out there's no such thing as late love. Every guest nodded at that line."
+       }
+      },
+      "SEND": {
+       "r": {
+        "ko": "고맙다, 친구야. 화분 잘 키울게. 답장 끝에 하트가 세 개 붙어 있었다.",
+        "en": "Thank you, old friend. I'll take good care of it. The reply ended with three hearts."
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "INVITE_SIBLING_WEDDING",
+   "cat": "milestone",
+   "rarity": "common",
+   "tone": "warm",
+   "big": true,
+   "title": {
+    "ko": "가족의 결혼식",
+    "en": "A wedding in the family"
+   },
+   "requires": [],
+   "chainOnly": true,
+   "repeatable": true,
+   "cooldown": 0,
+   "trigger": {
+    "signals": {}
+   },
+   "location": "wedding_venue",
+   "who": "me",
+   "line": {
+    "ko": "({relative}이(가) 결혼한다. 청첩장을 받아 들고 한참을 들여다봤다.)",
+    "en": "({relative} is getting married. You held the invitation and stared at it for a long time.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "가족 대표로 축사를 맡는다",
+      "en": "Give the toast for the family"
+     },
+     "w": {
+      "TOAST": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "사진 찍어주는 역할을 자처한다",
+      "en": "Volunteer as the photographer"
+     },
+     "w": {
+      "PHOTO": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(조용히 박수만 친다)",
+      "en": "(Just clap quietly)"
+     },
+     "w": {
+      "QUIET": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "TOAST": {
+     "r": {
+      "ko": "'우리 {relative}, 행복해야 해.' 그 한마디에 식장이 조용해졌다.",
+      "en": "\"Be happy, {relative}.\" The hall went quiet at those words."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.5
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "{relative}이(가) 결혼했다. 행복해야 해.",
+       "en": "{relative} got married. Be happy."
+      },
+      "location": "wedding_venue",
+      "actors": [
+       "me",
+       "guest",
+       "guest"
+      ],
+      "priority": 7
+     }
+    },
+    "PHOTO": {
+     "r": {
+      "ko": "흔들린 사진이 절반이었지만, 제일 좋은 표정은 다 내가 찍었다.",
+      "en": "Half the photos were blurry, but you caught all the best faces."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.5
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "{relative}이(가) 결혼했다. 행복해야 해.",
+       "en": "{relative} got married. Be happy."
+      },
+      "location": "wedding_venue",
+      "actors": [
+       "me",
+       "guest",
+       "guest"
+      ],
+      "priority": 7
+     }
+    },
+    "QUIET": {
+     "r": {
+      "ko": "신부 입장 때, 괜히 코끝이 찡했다.",
+      "en": "When the procession started, your nose stung for no reason."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.5
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "{relative}이(가) 결혼했다. 행복해야 해.",
+       "en": "{relative} got married. Be happy."
+      },
+      "location": "wedding_venue",
+      "actors": [
+       "me",
+       "guest",
+       "guest"
+      ],
+      "priority": 6
+     }
+    }
+   },
+   "queuedBy": "engine",
+   "byAge": [
+    {
+     "min": 50,
+     "line": {
+      "ko": "({relative}이(가) 늦은 나이에 결혼한다. 청첩장을 받아 들고, 괜히 웃음이 났다.)",
+      "en": "({relative} is getting married, later in life. Holding the invitation, you couldn't stop smiling.)"
+     },
+     "outcomes": {
+      "QUIET": {
+       "r": {
+        "ko": "희끗한 머리 위로 꽃잎이 내려앉았다. 괜히 코끝이 찡했다.",
+        "en": "Petals settled on graying hair. Your nose stung for no reason."
+       }
+      },
+      "TOAST": {
+       "r": {
+        "ko": "우리 {relative}, 이제라도 행복해야 해. 그 한마디에 식장이 조용해졌다.",
+        "en": "Be happy, {relative}. Better late than never. The hall went quiet."
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "NEPHEW_BORN",
+   "cat": "milestone",
+   "rarity": "common",
+   "tone": "warm",
+   "big": true,
+   "title": {
+    "ko": "조카",
+    "en": "A new niece or nephew"
+   },
+   "requires": [],
+   "chainOnly": true,
+   "repeatable": true,
+   "cooldown": 0,
+   "trigger": {
+    "signals": {}
+   },
+   "location": "hospital",
+   "who": "me",
+   "line": {
+    "ko": "({relative}에게서 사진 한 장이 왔다. 쭈글쭈글한 작은 얼굴.) 너 이제 이모야! (고모야, 삼촌이야, 뭐든!)",
+    "en": "(A photo from {relative}: a tiny, wrinkly face.) Guess who's an aunt or uncle now!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "선물을 사 들고 병원으로 달려간다",
+      "en": "Rush to the hospital with a gift"
+     },
+     "w": {
+      "VISIT": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "이름 후보를 열 개 보낸다",
+      "en": "Send ten name ideas"
+     },
+     "w": {
+      "NAMES": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(사진만 몇 번이고 확대해 본다)",
+      "en": "(Zoom in on the photo again and again)"
+     },
+     "w": {
+      "PHOTO": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "VISIT": {
+     "r": {
+      "ko": "작은 손이 내 손가락을 꽉 잡았다. 조카 바보가 되는 데 3초 걸렸다.",
+      "en": "A tiny hand gripped your finger. It took three seconds to become a doting aunt/uncle."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.2
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "조카가 태어난 날",
+       "en": "The day my niece/nephew was born"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "baby"
+      ],
+      "priority": 6
+     }
+    },
+    "NAMES": {
+     "r": {
+      "ko": "하나도 채택되지 않았다. 그래도 '이모 센스 최고'라는 답장은 받았다.",
+      "en": "None were picked. But you got a \"you're the best\" in reply."
+     },
+     "effects": []
+    },
+    "PHOTO": {
+     "r": {
+      "ko": "잠금화면이 바뀌었다.",
+      "en": "Your lock screen changed."
+     },
+     "effects": []
+    }
+   },
+   "queuedBy": "engine"
+  },
+  {
+   "id": "FRIEND_PASSING_NEWS",
+   "cat": "milestone",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "부고",
+    "en": "Sad news"
+   },
+   "requires": [],
+   "chainOnly": true,
+   "repeatable": true,
+   "cooldown": 0,
+   "trigger": {
+    "signals": {}
+   },
+   "location": "funeral_hall",
+   "who": "me",
+   "line": {
+    "ko": "(부고 문자가 왔다. 친구 {buddy}이(가)… 믿을 수가 없다.)",
+    "en": "(A death notice. Your friend {buddy}… You can't believe it.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "바로 장례식장으로 간다",
+      "en": "Go straight to the funeral hall"
+     },
+     "w": {
+      "GO": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "({buddy}과(와) 주고받은 옛 메시지를 연다)",
+      "en": "(Open your old messages with {buddy})"
+     },
+     "w": {
+      "MEMORY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "GO": {
+     "r": {
+      "ko": "{f:portrait} 속 {buddy}은(는) 늘 그렇듯 웃고 있었다. {f:bow}.",
+      "en": "In the portrait, {buddy} was smiling as always. {f:bow}."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.1
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "보고 싶을 거야, {buddy}.",
+       "en": "I'll miss you, {buddy}."
+      },
+      "location": "funeral_hall",
+      "actors": [
+       "me",
+       "guest"
+      ],
+      "priority": 8
+     }
+    },
+    "MEMORY": {
+     "r": {
+      "ko": "마지막 메시지는 '다음에 밥 먹자'였다. 다음은 오지 않았다.",
+      "en": "The last message was \"Let's grab dinner sometime.\" Sometime never came."
+     },
+     "effects": [],
+     "card": {
+      "caption": {
+       "ko": "편히 쉬어, {buddy}.",
+       "en": "Rest easy, {buddy}."
+      },
+      "location": "funeral_hall",
+      "actors": [
+       "me",
+       "guest"
+      ],
+      "priority": 8
+     }
+    }
+   },
+   "queuedBy": "engine",
+   "choiceSets": [
+    {
+     "line": {
+      "ko": "(새벽에 단톡방이 울렸다. {buddy}의 부고였다. 지난달에도 통화했는데.)",
+      "en": "(The group chat buzzed at dawn. It was news of {buddy}'s death. You'd talked just last month.)"
+     },
+     "choices": [
+      {
+       "t": {
+        "ko": "(옛 친구들을 모아 함께 조문을 간다)",
+        "en": "(Round up the old crew and go pay respects together)"
+       },
+       "w": {
+        "CREW": 1.0
+       }
+      },
+      {
+       "t": {
+        "ko": "({buddy}이(가) 마지막으로 보낸 사진을 다시 본다)",
+        "en": "(Look at the last photo {buddy} sent you)"
+       },
+       "w": {
+        "PHOTO": 1.0
+       }
+      }
+     ],
+     "outcomes": {
+      "CREW": {
+       "r": {
+        "ko": "십 년 만에 다 모인 자리가 {buddy}의 장례식이었다. 우리 이제 자주 보자. 이번엔 다들 진심이었다.",
+        "en": "The first time the whole crew had been together in ten years was {buddy}'s funeral. Let's see each other more. This time, everyone meant it."
+       },
+       "effects": [
+        {
+         "kind": "money",
+         "amount": -0.1
+        }
+       ],
+       "card": {
+        "caption": {
+         "ko": "보고 싶을 거야, {buddy}.",
+         "en": "I'll miss you, {buddy}."
+        },
+        "location": "funeral_hall",
+        "actors": [
+         "me",
+         "guest"
+        ],
+        "priority": 8
+       }
+      },
+      "PHOTO": {
+       "r": {
+        "ko": "별것 아닌 점심 사진이었다. 맛있어 보이지? 그 평범함이 이렇게 아플 줄 몰랐다.",
+        "en": "Just a photo of an ordinary lunch. Looks good, right? You never knew something so ordinary could hurt this much."
+       },
+       "effects": [],
+       "card": {
+        "caption": {
+         "ko": "편히 쉬어, {buddy}.",
+         "en": "Rest easy, {buddy}."
+        },
+        "location": "funeral_hall",
+        "actors": [
+         "me",
+         "guest"
+        ],
+        "priority": 8
+       }
+      }
+     }
+    },
+    {
+     "choices": [
+      {
+       "t": {
+        "ko": "({buddy}의 가족에게 우리가 함께한 이야기를 들려준다)",
+        "en": "(Tell {buddy}'s family stories from your years together)"
+       },
+       "w": {
+        "FAMILY": 1.0
+       }
+      },
+      {
+       "t": {
+        "ko": "(같이 가자던 여행지를 혼자 다녀온다)",
+        "en": "(Take the trip you two always talked about, alone)"
+       },
+       "w": {
+        "TRIP": 1.0
+       }
+      }
+     ],
+     "outcomes": {
+      "FAMILY": {
+       "r": {
+        "ko": "{buddy}의 어머니가 내 손을 꼭 잡으셨다. 우리 애가 그렇게 웃고 다녔구나. 둘 다 한참 울었다.",
+        "en": "{buddy}'s mother held your hand tight. So that's how my kid laughed out there. You both cried for a long time."
+       },
+       "effects": [
+        {
+         "kind": "money",
+         "amount": -0.1
+        }
+       ],
+       "card": {
+        "caption": {
+         "ko": "보고 싶을 거야, {buddy}.",
+         "en": "I'll miss you, {buddy}."
+        },
+        "location": "funeral_hall",
+        "actors": [
+         "me",
+         "guest"
+        ],
+        "priority": 8
+       }
+      },
+      "TRIP": {
+       "r": {
+        "ko": "{buddy}이(가) 가고 싶다던 바다 앞에 혼자 섰다. 봐, 왔어. 파도가 대답처럼 밀려왔다.",
+        "en": "You stood alone at the beach {buddy} always wanted to see. Look, I made it. A wave rolled in like an answer."
+       },
+       "effects": [
+        {
+         "kind": "money",
+         "amount": -0.3
+        }
+       ],
+       "card": {
+        "caption": {
+         "ko": "{buddy}와(과) 가기로 했던 바다",
+         "en": "The beach {buddy} wanted to see"
+        },
+        "location": "funeral_hall",
+        "actors": [
+         "me",
+         "guest"
+        ],
+        "priority": 8
+       }
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

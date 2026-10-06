@@ -1,0 +1,17 @@
+{
+  "_doc": "Tropical zodiac. Index 0 = Aries at 0°. Reference data only.",
+  "signs": [
+    { "id": "ARIES",       "ko": "양자리",   "glyph": "♈", "element": "FIRE",  "modality": "CARDINAL", "ruler": "MARS" },
+    { "id": "TAURUS",      "ko": "황소자리", "glyph": "♉", "element": "EARTH", "modality": "FIXED",    "ruler": "VENUS" },
+    { "id": "GEMINI",      "ko": "쌍둥이자리", "glyph": "♊", "element": "AIR",   "modality": "MUTABLE",  "ruler": "MERCURY" },
+    { "id": "CANCER",      "ko": "게자리",   "glyph": "♋", "element": "WATER", "modality": "CARDINAL", "ruler": "MOON" },
+    { "id": "LEO",         "ko": "사자자리", "glyph": "♌", "element": "FIRE",  "modality": "FIXED",    "ruler": "SUN" },
+    { "id": "VIRGO",       "ko": "처녀자리", "glyph": "♍", "element": "EARTH", "modality": "MUTABLE",  "ruler": "MERCURY" },
+    { "id": "LIBRA",       "ko": "천칭자리", "glyph": "♎", "element": "AIR",   "modality": "CARDINAL", "ruler": "VENUS" },
+    { "id": "SCORPIO",     "ko": "전갈자리", "glyph": "♏", "element": "WATER", "modality": "FIXED",    "ruler": "MARS" },
+    { "id": "SAGITTARIUS", "ko": "사수자리", "glyph": "♐", "element": "FIRE",  "modality": "MUTABLE",  "ruler": "JUPITER" },
+    { "id": "CAPRICORN",   "ko": "염소자리", "glyph": "♑", "element": "EARTH", "modality": "CARDINAL", "ruler": "SATURN" },
+    { "id": "AQUARIUS",    "ko": "물병자리", "glyph": "♒", "element": "AIR",   "modality": "FIXED",    "ruler": "SATURN" },
+    { "id": "PISCES",      "ko": "물고기자리", "glyph": "♓", "element": "WATER", "modality": "MUTABLE",  "ruler": "JUPITER" }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+ "_doc": "Per-region weather odds by season (CLEAR/CLOUDY/RAIN/SNOW). Weather is deterministic per (date, region, seed).",
+ "regions": {
+  "default": {
+   "SPRING": {
+    "CLEAR": 0.55,
+    "CLOUDY": 0.25,
+    "RAIN": 0.2
+   },
+   "SUMMER": {
+    "CLEAR": 0.45,
+    "CLOUDY": 0.2,
+    "RAIN": 0.35
+   },
+   "AUTUMN": {
+    "CLEAR": 0.6,
+    "CLOUDY": 0.25,
+    "RAIN": 0.15
+   },
+   "WINTER": {
+    "CLEAR": 0.5,
+    "CLOUDY": 0.3,
+    "SNOW": 0.2
+   }
+  },
+  "paris": {
+   "SPRING": {
+    "CLEAR": 0.45,
+    "CLOUDY": 0.35,
+    "RAIN": 0.2
+   },
+   "SUMMER": {
+    "CLEAR": 0.6,
+    "CLOUDY": 0.25,
+    "RAIN": 0.15
+   },
+   "AUTUMN": {
+    "CLEAR": 0.35,
+    "CLOUDY": 0.4,
+    "RAIN": 0.25
+   },
+   "WINTER": {
+    "CLEAR": 0.3,
+    "CLOUDY": 0.45,
+    "RAIN": 0.2,
+    "SNOW": 0.05
+   }
+  },
+  "coast": {
+   "SPRING": {
+    "CLEAR": 0.6,
+    "CLOUDY": 0.25,
+    "RAIN": 0.15
+   },
+   "SUMMER": {
+    "CLEAR": 0.6,
+    "CLOUDY": 0.15,
+    "RAIN": 0.25
+   },
+   "AUTUMN": {
+    "CLEAR": 0.6,
+    "CLOUDY": 0.25,
+    "RAIN": 0.15
+   },
+   "WINTER": {
+    "CLEAR": 0.55,
+    "CLOUDY": 0.35,
+    "SNOW": 0.1
+   }
+  },
+  "online": {
+   "SPRING": {
+    "CLEAR": 1
+   },
+   "SUMMER": {
+    "CLEAR": 1
+   },
+   "AUTUMN": {
+    "CLEAR": 1
+   },
+   "WINTER": {
+    "CLEAR": 1
+   }
+  },
+  "business_city": {
+   "SPRING": {
+    "CLEAR": 0.55,
+    "CLOUDY": 0.25,
+    "RAIN": 0.2
+   },
+   "SUMMER": {
+    "CLEAR": 0.45,
+    "CLOUDY": 0.2,
+    "RAIN": 0.35
+   },
+   "AUTUMN": {
+    "CLEAR": 0.6,
+    "CLOUDY": 0.25,
+    "RAIN": 0.15
+   },
+   "WINTER": {
+    "CLEAR": 0.5,
+    "CLOUDY": 0.3,
+    "SNOW": 0.2
+   }
+  }
+ }
+}

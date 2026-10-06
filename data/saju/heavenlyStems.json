@@ -1,0 +1,15 @@
+{
+  "_doc": "The 10 Heavenly Stems (天干) in cycle order. Index 0 = 甲. Pure reference data, no gameplay meaning.",
+  "stems": [
+    { "id": "JIA",  "hanja": "甲", "ko": "갑", "element": "WOOD",  "yinYang": "YANG" },
+    { "id": "YI",   "hanja": "乙", "ko": "을", "element": "WOOD",  "yinYang": "YIN" },
+    { "id": "BING", "hanja": "丙", "ko": "병", "element": "FIRE",  "yinYang": "YANG" },
+    { "id": "DING", "hanja": "丁", "ko": "정", "element": "FIRE",  "yinYang": "YIN" },
+    { "id": "WU",   "hanja": "戊", "ko": "무", "element": "EARTH", "yinYang": "YANG" },
+    { "id": "JI",   "hanja": "己", "ko": "기", "element": "EARTH", "yinYang": "YIN" },
+    { "id": "GENG", "hanja": "庚", "ko": "경", "element": "METAL", "yinYang": "YANG" },
+    { "id": "XIN",  "hanja": "辛", "ko": "신", "element": "METAL", "yinYang": "YIN" },
+    { "id": "REN",  "hanja": "壬", "ko": "임", "element": "WATER", "yinYang": "YANG" },
+    { "id": "GUI",  "hanja": "癸", "ko": "계", "element": "WATER", "yinYang": "YIN" }
+  ]
+}

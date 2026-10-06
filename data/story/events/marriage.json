@@ -1,0 +1,2182 @@
+{
+ "_doc": "Life events: marriage. Format: src/story/lifeEvents.ts.",
+ "events": [
+  {
+   "id": "CALLED_OFF_WEEK_BEFORE",
+   "cat": "marriage",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "파혼",
+    "en": "Calling it off"
+   },
+   "requires": [
+    "engaged"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@day": 0.48,
+     "HARM@day": 0.3,
+     "PUNISHMENT@day": 0.24,
+     "URANUS>VENUS:hard": 0.42,
+     "group:GYEOB_JAE": 0.3,
+     "SATURN>VENUS:hard": 0.24,
+     "SATURN@H7": 0.4
+    }
+   },
+   "location": "home",
+   "who": "partner",
+   "line": {
+    "ko": "(결혼식을 일주일 앞둔 밤, {partner}이(가) 말했다.) …우리 결혼, 다시 생각해보면 안 될까?",
+    "en": "(A week before the wedding, {partner} said:) …Could we rethink the wedding?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "무슨 일인데. 다 말해줘",
+      "en": "What happened? Tell me everything"
+     },
+     "w": {
+      "POSTPONE": 0.55,
+      "CALLOFF": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "(식장 계약서를 내민다)",
+      "en": "(Push the venue contract across the table)"
+     },
+     "w": {
+      "CALLOFF": 0.6,
+      "POSTPONE": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "POSTPONE": {
+     "r": {
+      "ko": "겁이 났다고 했다. 식은 미루되, 우리는 미루지 않기로 했다.",
+      "en": "They said they got scared. You'd postpone the ceremony, but not each other."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "weddingPostponed",
+       "value": true
+      }
+     ]
+    },
+    "CALLOFF": {
+     "r": {
+      "ko": "청첩장은 이미 나가 있었다. 한 통씩 전화를 돌렸다.",
+      "en": "The invitations had already gone out. You called everyone, one by one."
+     },
+     "effects": [
+      {
+       "kind": "breakUp"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "일주일 전의 파혼",
+       "en": "Calling it off a week before"
+      },
+      "location": "home",
+      "actors": [
+       "me"
+      ],
+      "priority": 8
+     }
+    }
+   }
+  },
+  {
+   "id": "PARENTS_CLASH_BEFORE_WEDDING",
+   "cat": "marriage",
+   "rarity": "uncommon",
+   "tone": "light",
+   "requires": [
+    "engaged",
+    "momAlive"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.64,
+     "BRANCH_CLASH@month": 0.48,
+     "PUNISHMENT@month": 0.32,
+     "group:GYEOB_JAE": 0.24,
+     "SATURN>MOON:hard": 0.4
+    }
+   },
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "mom",
+   "line": {
+    "ko": "{f:weddinggifts}은(는) 얼마를 해야 하니? 저쪽 집에서 말이 좀 많던데…",
+    "en": "How much are we supposed to give for {f:weddinggifts}? Their family has a lot to say…"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "우리끼리 조용히 정할게요",
+      "en": "We'll decide it ourselves, quietly"
+     },
+     "w": {
+      "CALM": 0.6,
+      "CLASH": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "엄마 뜻대로 하세요",
+      "en": "Do whatever you think, Mom"
+     },
+     "w": {
+      "CLASH": 0.6,
+      "CALM": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "CALM": {
+     "r": {
+      "ko": "두 사람이 먼저 합의하자, 양쪽 집도 한발씩 물러섰다.",
+      "en": "Once the two of you agreed first, both families stepped back."
+     },
+     "lean": {
+      "traits": {
+       "conflictAvoidance": -0.3
+      }
+     }
+    },
+    "CLASH": {
+     "r": {
+      "ko": "양가 어머니의 통화가 한 시간째 이어지고 있다. 식이 무사히 열릴까.",
+      "en": "The two mothers have been on the phone for an hour. Will the wedding even happen?"
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "inlawTension",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SURPRISE_PREGNANT_DATING",
+   "cat": "marriage",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "두 줄",
+    "en": "Two lines"
+   },
+   "requires": [
+    "dating",
+    "age<=44",
+    "!pregnant",
+    "!engaged"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.45,
+     "STEM_COMBINATION@day": 0.3,
+     "SIX_HARMONY@day": 0.25,
+     "JUPITER@H5": 0.2,
+     "JUPITER@H7": 0.2,
+     "SR:SUN@H5": 0.2,
+     "SR:SUN@H7": 0.2,
+     "SIX_HARMONY@hour": 0.25,
+     "STEM_COMBINATION@hour": 0.25,
+     "HALF_HARMONY@hour": 0.15,
+     "BRANCH_CLASH@hour": 0.3
+    },
+    "mods": {
+     "marriage": 0.5
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(테스트기에 두 줄. 우리 사이에 아기가 생겼다.)",
+    "en": "(Two lines on the test. There's a baby coming.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "결혼하자",
+      "en": "Let's get married"
+     },
+     "w": {
+      "WEDDING": 0.85,
+      "PANIC": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "…생각할 시간이 필요해",
+      "en": "…I need time to think"
+     },
+     "w": {
+      "PANIC": 0.5,
+      "WEDDING": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "WEDDING": {
+     "r": {
+      "ko": "반지도, 계획도 없었지만 우리는 웃었다. 순서는 조금 바뀌었어도.",
+      "en": "No ring, no plan, but you both laughed. The order was a little mixed up, that's all."
+     },
+     "effects": [
+      {
+       "kind": "engage"
+      },
+      {
+       "kind": "arc",
+       "type": "PREGNANCY"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "속도위반",
+       "en": "Things happened a little out of order"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 8
+     }
+    },
+    "PANIC": {
+     "r": {
+      "ko": "밤새 둘이 아무 말 없이 앉아 있었다. 그래도 아기는 오고 있다.",
+      "en": "You sat together all night without speaking. Still, the baby is coming."
+     },
+     "effects": [
+      {
+       "kind": "arc",
+       "type": "PREGNANCY"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "MOTHER_IN_LAW",
+   "cat": "marriage",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "married",
+    "female"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.8,
+     "BRANCH_CLASH@month": 0.6,
+     "PUNISHMENT@month": 0.4,
+     "group:GYEOB_JAE": 0.3,
+     "SATURN>MOON:hard": 0.5
+    },
+    "mods": {
+     "family": 0.4
+    }
+   },
+   "location": "family_home",
+   "activity": "eat",
+   "who": "inlaw",
+   "line": {
+    "ko": "({f:holiday} 아침, 시어머니이(가) 부엌에서 한마디 하셨다.) 요즘 사람들은 도무지 어른을 몰라. 우리 {partner}이(가) 아깝지.",
+    "en": "({f:holiday} morning, your mother-in-law remarked in the kitchen:) Young people today have no respect. {partner} deserved better."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "웃어넘긴다",
+      "en": "Laugh it off"
+     },
+     "w": {
+      "ENDURE": 0.6,
+      "BLOWUP": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "{partner}에게 도움을 청한다",
+      "en": "Ask {partner} to step in"
+     },
+     "w": {
+      "SIDES": 0.55,
+      "FAILS": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "할 말은 한다",
+      "en": "Say what needs saying"
+     },
+     "w": {
+      "BLOWUP": 0.55,
+      "RESPECT": 0.45
+     }
+    }
+   ],
+   "outcomes": {
+    "ENDURE": {
+     "r": {
+      "ko": "속으로 백 번은 참았다. 돌아오는 차 안에서 한참 말이 없었다.",
+      "en": "You held it in a hundred times. The drive home was very quiet."
+     }
+    },
+    "SIDES": {
+     "r": {
+      "ko": "{partner}이(가) 조용히, 그러나 단호하게 내 편을 들었다.",
+      "en": "{partner} quietly but firmly took your side."
+     },
+     "lean": {
+      "traits": {
+       "socialInitiation": 0.3
+      }
+     }
+    },
+    "FAILS": {
+     "r": {
+      "ko": "{partner}은(는) 가운데서 눈치만 봤다. 그게 더 서운했다.",
+      "en": "{partner} just hovered in the middle. That hurt even more."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    },
+    "BLOWUP": {
+     "r": {
+      "ko": "{f:holiday} 상이 얼어붙었다. 그날 이후 전화가 뜸해졌다.",
+      "en": "The {f:holiday} table froze. The phone calls grew rare after that."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "inlawTension",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "MOVE_IN_WITH_INLAWS_FIGHT",
+       "after": [
+        12,
+        36
+       ],
+       "p": 0.3
+      }
+     ]
+    },
+    "RESPECT": {
+     "r": {
+      "ko": "시어머니이(가) 잠시 멈칫하더니, 나중에 전 한 접시를 따로 싸 주셨다.",
+      "en": "Your mother-in-law paused. Later, she packed up a container of food just for you."
+     }
+    }
+   }
+  },
+  {
+   "id": "FATHER_IN_LAW_CLASH",
+   "cat": "marriage",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "married",
+    "male"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.8,
+     "BRANCH_CLASH@month": 0.6,
+     "PUNISHMENT@month": 0.4,
+     "group:GYEOB_JAE": 0.3,
+     "SATURN>MOON:hard": 0.5
+    },
+    "mods": {
+     "family": 0.4
+    }
+   },
+   "location": "family_home",
+   "activity": "eat",
+   "who": "inlaw",
+   "line": {
+    "ko": "({f:holiday} 아침, 장모님이(가) 부엌에서 한마디 하셨다.) 요즘 사람들은 도무지 어른을 몰라. 우리 {partner}이(가) 아깝지.",
+    "en": "({f:holiday} morning, your mother-in-law remarked in the kitchen:) Young people today have no respect. {partner} deserved better."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "웃어넘긴다",
+      "en": "Laugh it off"
+     },
+     "w": {
+      "ENDURE": 0.6,
+      "BLOWUP": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "{partner}에게 도움을 청한다",
+      "en": "Ask {partner} to step in"
+     },
+     "w": {
+      "SIDES": 0.55,
+      "FAILS": 0.45
+     }
+    },
+    {
+     "t": {
+      "ko": "할 말은 한다",
+      "en": "Say what needs saying"
+     },
+     "w": {
+      "BLOWUP": 0.55,
+      "RESPECT": 0.45
+     }
+    }
+   ],
+   "outcomes": {
+    "ENDURE": {
+     "r": {
+      "ko": "속으로 백 번은 참았다. 돌아오는 차 안에서 한참 말이 없었다.",
+      "en": "You held it in a hundred times. The drive home was very quiet."
+     }
+    },
+    "SIDES": {
+     "r": {
+      "ko": "{partner}이(가) 조용히, 그러나 단호하게 내 편을 들었다.",
+      "en": "{partner} quietly but firmly took your side."
+     },
+     "lean": {
+      "traits": {
+       "socialInitiation": 0.3
+      }
+     }
+    },
+    "FAILS": {
+     "r": {
+      "ko": "{partner}은(는) 가운데서 눈치만 봤다. 그게 더 서운했다.",
+      "en": "{partner} just hovered in the middle. That hurt even more."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    },
+    "BLOWUP": {
+     "r": {
+      "ko": "{f:holiday} 상이 얼어붙었다. 그날 이후 전화가 뜸해졌다.",
+      "en": "The {f:holiday} table froze. The phone calls grew rare after that."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "inlawTension",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "MOVE_IN_WITH_INLAWS_FIGHT",
+       "after": [
+        12,
+        36
+       ],
+       "p": 0.3
+      }
+     ]
+    },
+    "RESPECT": {
+     "r": {
+      "ko": "장모님이(가) 잠시 멈칫하더니, 나중에 전 한 접시를 따로 싸 주셨다.",
+      "en": "Your mother-in-law paused. Later, she packed up a container of food just for you."
+     }
+    }
+   }
+  },
+  {
+   "id": "MARRIAGE_RUT",
+   "cat": "marriage",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "married",
+    "partnerYears>=5"
+   ],
+   "repeatable": true,
+   "cooldown": 96,
+   "trigger": {
+    "signals": {
+     "SATURN_RETURN": 0.5,
+     "SATURN@H7": 0.6,
+     "BRANCH_CLASH@day": 0.4
+    },
+    "mods": {
+     "stability": -0.3
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(같은 집, 다른 방. 오늘도 {partner}와(과) 나눈 말은 '밥 먹었어?' 한마디.)",
+    "en": "(Same house, different rooms. Today, again, the only thing you said to {partner} was 'Did you eat?')"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "둘만의 여행을 제안한다",
+      "en": "Suggest a trip for two"
+     },
+     "w": {
+      "SPARK": 0.6,
+      "FLAT": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "각자의 시간이 필요해",
+      "en": "We each need our own time"
+     },
+     "w": {
+      "SPACE": 0.7,
+      "DRIFT": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "(그냥 참는다)",
+      "en": "(Just put up with it)"
+     },
+     "w": {
+      "DRIFT": 0.6,
+      "FLAT": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "SPARK": {
+     "r": {
+      "ko": "바닷가 민박에서 오래된 농담에 둘 다 웃었다. 아직 우리가 있었다.",
+      "en": "At a seaside guesthouse, an old joke made you both laugh. You were still there."
+     },
+     "effects": [
+      {
+       "kind": "trip",
+       "scope": "DOMESTIC"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시 웃은 날",
+       "en": "The day we laughed again"
+      },
+      "location": "beach",
+      "actors": [
+       "me",
+       "partner"
+      ]
+     }
+    },
+    "SPACE": {
+     "r": {
+      "ko": "주말마다 각자 좋아하는 걸 하기로 했다. 저녁엔 그 얘기를 나눴다.",
+      "en": "Weekends became your own time. In the evenings, you told each other about them."
+     }
+    },
+    "FLAT": {
+     "r": {
+      "ko": "여행은 즐거웠다. 돌아오자 다시 같은 방, 다른 방.",
+      "en": "The trip was fun. Back home: same house, different rooms."
+     }
+    },
+    "DRIFT": {
+     "r": {
+      "ko": "…언제부터였을까. 우리는 같이 사는 타인이 됐다.",
+      "en": "…When did it start? You became strangers who share a home."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "RUT_CRISIS",
+       "after": [
+        6,
+        24
+       ],
+       "p": 0.6,
+       "lean": {
+        "mods": {
+         "marriage": -0.4
+        },
+        "signals": {
+         "BRANCH_CLASH@day": 0.4
+        },
+        "compat": -0.8
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "RUT_CRISIS",
+   "cat": "marriage",
+   "rarity": "common",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "권태기",
+    "en": "The long rut"
+   },
+   "requires": [
+    "married"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "who": "partner",
+   "line": {
+    "ko": "우리… 이대로 괜찮은 걸까? 솔직하게 말해줘.",
+    "en": "Are we… okay like this? Tell me honestly."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "부부 상담을 받아보자",
+      "en": "Let's see a couples counselor"
+     },
+     "w": {
+      "RECONNECT": 0.65,
+      "APART": 0.35
+     }
+    },
+    {
+     "t": {
+      "ko": "…모르겠어",
+      "en": "…I don't know"
+     },
+     "w": {
+      "APART": 0.6,
+      "RECONNECT": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "RECONNECT": {
+     "r": {
+      "ko": "상담실에서 처음으로, 서로의 이야기를 끝까지 들었다.",
+      "en": "In the counselor's office, for the first time in years, you listened to each other to the end."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "distance"
+      }
+     ],
+     "lean": {
+      "compat": 0.8
+     }
+    },
+    "APART": {
+     "r": {
+      "ko": "우리는 각자의 길을 가기로 했다. 미워하지는 않기로 했다.",
+      "en": "You decided to go your separate ways. And not to hate each other."
+     },
+     "effects": [
+      {
+       "kind": "separate"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "BLENDED_FAMILY",
+   "cat": "marriage",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "requires": [
+    "single",
+    "hasEx",
+    "age>=33"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.54,
+     "STEM_COMBINATION@day": 0.36,
+     "SIX_HARMONY@day": 0.3,
+     "JUPITER@H5": 0.24,
+     "JUPITER@H7": 0.24,
+     "SR:SUN@H5": 0.24,
+     "SR:SUN@H7": 0.24
+    },
+    "mods": {
+     "family": 0.4
+    }
+   },
+   "location": "amusement_park",
+   "activity": "ride",
+   "who": "stranger",
+   "line": {
+    "ko": "(아이 둘을 키우는 사람과 알게 됐다. 조심스럽게 말했다.) 저, 아이들이 있어요. 괜찮으세요?",
+    "en": "(You met someone raising two kids. They said carefully:) I have kids. Is that okay with you?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "아이들도 만나고 싶어요",
+      "en": "I'd love to meet them too"
+     },
+     "w": {
+      "BLEND": 0.65,
+      "SLOW": 0.35
+     }
+    },
+    {
+     "t": {
+      "ko": "천천히 알아가요",
+      "en": "Let's take it slow"
+     },
+     "w": {
+      "SLOW": 0.7,
+      "BLEND": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "BLEND": {
+     "r": {
+      "ko": "놀이공원에서 아이들이 내 손을 잡았다. 새로운 가족이 될 것 같았다.",
+      "en": "At the amusement park, the kids took your hands. It felt like a new family."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      },
+      {
+       "kind": "setFlag",
+       "name": "stepFamily",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "새로운 가족의 시작",
+       "en": "A new family begins"
+      },
+      "location": "amusement_park",
+      "actors": [
+       "me",
+       "partner",
+       "kid",
+       "kid"
+      ],
+      "priority": 7
+     }
+    },
+    "SLOW": {
+     "r": {
+      "ko": "주말마다 조금씩 만났다. 아이들은 아직 나를 '삼촌/이모'라고 부른다.",
+      "en": "You met a little every weekend. For now, the kids still keep a polite distance."
+     },
+     "effects": [
+      {
+       "kind": "startDatingNew"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SURPRISE_PREGNANCY",
+   "cat": "marriage",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "새 생명",
+    "en": "New life"
+   },
+   "requires": [
+    "married",
+    "age<=46",
+    "!pregnant"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.5,
+     "STEM_COMBINATION@hour": 0.5,
+     "HALF_HARMONY@hour": 0.3,
+     "BRANCH_CLASH@hour": 0.6,
+     "JUPITER@H5": 0.6
+    }
+   },
+   "location": "home",
+   "who": "me",
+   "line": {
+    "ko": "(테스트기에 선명한 두 줄. 계획에 없던… 아기다.)",
+    "en": "(Two clear lines. Unplanned… a baby.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(눈물이 난다) 우리 아기",
+      "en": "(Tears come) Our baby"
+     },
+     "w": {
+      "JOY": 0.85,
+      "SCARED": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "…어떡하지",
+      "en": "…What do we do?"
+     },
+     "w": {
+      "SCARED": 0.6,
+      "JOY": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "JOY": {
+     "r": {
+      "ko": "{partner}이(가) 소리 내 울었다. 우리는 부모가 된다.",
+      "en": "{partner} cried out loud. You're going to be parents."
+     },
+     "effects": [
+      {
+       "kind": "arc",
+       "type": "PREGNANCY"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "두 줄",
+       "en": "Two lines"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 8
+     }
+    },
+    "SCARED": {
+     "r": {
+      "ko": "겁이 났다. 그래도 {partner}의 손은 따뜻했다.",
+      "en": "You were scared. But {partner}'s hand was warm."
+     },
+     "effects": [
+      {
+       "kind": "arc",
+       "type": "PREGNANCY"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "TWINS_NEWS",
+   "cat": "marriage",
+   "rarity": "rare",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "쌍둥이",
+    "en": "Twins"
+   },
+   "requires": [
+    "pregnant"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.5,
+     "STEM_COMBINATION@hour": 0.5,
+     "HALF_HARMONY@hour": 0.3,
+     "BRANCH_CLASH@hour": 0.6,
+     "JUPITER@H5": 0.5
+    }
+   },
+   "location": "hospital",
+   "activity": "checkup",
+   "who": "doctor",
+   "line": {
+    "ko": "[의사] …어? 잠시만요. 심장 소리가 두 개네요.",
+    "en": "[Doctor] …Oh? Wait a moment. There are two heartbeats."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(기절할 뻔한다)",
+      "en": "(Nearly faint)"
+     },
+     "w": {
+      "TWINS": 1
+     }
+    },
+    {
+     "t": {
+      "ko": "…두, 두 개요?",
+      "en": "…T-two?"
+     },
+     "w": {
+      "TWINS": 1
+     }
+    }
+   ],
+   "outcomes": {
+    "TWINS": {
+     "r": {
+      "ko": "쌍둥이였다. 집에 오는 길 내내 웃다가, 울다가, 다시 웃었다.",
+      "en": "Twins. You laughed, cried, and laughed again the whole way home."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "twins",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "쌍둥이 소식",
+       "en": "Twins!"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 8
+     }
+    }
+   }
+  },
+  {
+   "id": "INFERTILITY",
+   "cat": "marriage",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "기다림",
+    "en": "The waiting"
+   },
+   "requires": [
+    "married",
+    "age>=30",
+    "age<=45",
+    "!hasKid",
+    "!pregnant"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>SUN:hard": 0.35,
+     "SATURN>MOON:hard": 0.3,
+     "SATURN@H6": 0.25,
+     "SATURN@H12": 0.2,
+     "unfavorable": 0.2,
+     "SAMJAE": 0.2,
+     "BRANCH_CLASH@hour": 0.6
+    }
+   },
+   "location": "hospital",
+   "activity": "checkup",
+   "who": "doctor",
+   "line": {
+    "ko": "[의사] 자연 임신은… 조금 어려울 수 있습니다.",
+    "en": "[Doctor] A natural pregnancy… may be difficult."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "시험관을 시작한다",
+      "en": "Start IVF"
+     },
+     "w": {
+      "IVF_OK": 0.4,
+      "IVF_LONG": 0.6
+     }
+    },
+    {
+     "t": {
+      "ko": "입양을 생각해본다",
+      "en": "Think about adoption"
+     },
+     "w": {
+      "ADOPT_PATH": 0.8,
+      "TWO": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "둘이서도 괜찮아",
+      "en": "The two of us is enough"
+     },
+     "w": {
+      "TWO": 0.9,
+      "ADOPT_PATH": 0.1
+     }
+    }
+   ],
+   "outcomes": {
+    "IVF_OK": {
+     "r": {
+      "ko": "세 번째 시도 만에, 작은 심장이 뛰었다.",
+      "en": "On the third try, a tiny heart started beating."
+     },
+     "effects": [
+      {
+       "kind": "arc",
+       "type": "PREGNANCY"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "기다림 끝의 두 줄",
+       "en": "Two lines, after the long wait"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 8
+     }
+    },
+    "IVF_LONG": {
+     "r": {
+      "ko": "주사와 기다림의 날들이 이어졌다. 우리는 서로를 더 꼭 붙잡았다.",
+      "en": "Days of injections and waiting. You held on to each other tighter."
+     },
+     "chain": [
+      {
+       "to": "IVF_AGAIN",
+       "after": [
+        8,
+        16
+       ],
+       "p": 0.8
+      }
+     ]
+    },
+    "ADOPT_PATH": {
+     "r": {
+      "ko": "입양 설명회에 다녀왔다. 우리 마음에 누군가가 들어올 자리가 생겼다.",
+      "en": "You attended an adoption info session. A space opened in your hearts for someone."
+     },
+     "chain": [
+      {
+       "to": "ADOPTION",
+       "after": [
+        6,
+        18
+       ],
+       "p": 0.85
+      }
+     ]
+    },
+    "TWO": {
+     "r": {
+      "ko": "둘이서 떠난 여행이 늘었다. 우리는 이것도 가족이라고 부른다.",
+      "en": "More trips for two. You call this a family too."
+     }
+    }
+   }
+  },
+  {
+   "id": "IVF_AGAIN",
+   "cat": "marriage",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "married",
+    "!pregnant"
+   ],
+   "chainOnly": true,
+   "location": "hospital",
+   "activity": "checkup",
+   "who": "doctor",
+   "line": {
+    "ko": "[의사] 이번 결과가 나왔습니다.",
+    "en": "[Doctor] This round's results are in."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(두 손을 꼭 잡는다)",
+      "en": "(Hold each other's hands tight)"
+     },
+     "w": {
+      "YES": 0.5,
+      "NO": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "YES": {
+     "r": {
+      "ko": "…양성이었다. 병원 복도에서 둘이 주저앉아 울었다.",
+      "en": "…Positive. You both sank down in the hospital hallway and cried."
+     },
+     "effects": [
+      {
+       "kind": "arc",
+       "type": "PREGNANCY"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "기다림 끝의 두 줄",
+       "en": "Two lines, after the long wait"
+      },
+      "location": "hospital",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 8
+     }
+    },
+    "NO": {
+     "r": {
+      "ko": "이번에도 아니었다. 그래도 우리는 여기까지 온 서로가 대견했다.",
+      "en": "Not this time either. Still, you were proud of how far you'd come together."
+     }
+    }
+   }
+  },
+  {
+   "id": "ADOPTION",
+   "cat": "marriage",
+   "rarity": "uncommon",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "입양",
+    "en": "Adoption"
+   },
+   "requires": [
+    "married",
+    "age>=30",
+    "age<=55"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.25,
+     "STEM_COMBINATION@hour": 0.25,
+     "HALF_HARMONY@hour": 0.15,
+     "BRANCH_CLASH@hour": 0.3,
+     "CHEONEUL_GWIIN": 0.4
+    },
+    "mods": {
+     "family": 0.5
+    }
+   },
+   "location": "home",
+   "who": "counselor",
+   "line": {
+    "ko": "[입양기관] 한 아이의 서류가 도착했어요. 사진을 보시겠어요?",
+    "en": "[Adoption agency] A child's file has arrived. Would you like to see the photo?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "만나러 간다",
+      "en": "Go meet them"
+     },
+     "w": {
+      "ADOPT": 0.9,
+      "WAIT": 0.1
+     }
+    },
+    {
+     "t": {
+      "ko": "아직 준비가 안 된 것 같아요",
+      "en": "We're not ready yet"
+     },
+     "w": {
+      "WAIT": 1
+     }
+    }
+   ],
+   "outcomes": {
+    "ADOPT": {
+     "r": {
+      "ko": "처음 만난 날, 아이가 내 손가락을 잡았다. 우리 가족이 됐다.",
+      "en": "The first day, the child grabbed your finger. You became a family."
+     },
+     "effects": [
+      {
+       "kind": "adoptKid"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "우리에게 온 아이",
+       "en": "The child who came to us"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "partner",
+       "kid"
+      ],
+      "priority": 9
+     }
+    },
+    "WAIT": {
+     "r": {
+      "ko": "아직은 아니었다. 언젠가, 준비가 되면.",
+      "en": "Not yet. Someday, when you're ready."
+     }
+    }
+   }
+  },
+  {
+   "id": "PARENTS_LATE_DIVORCE",
+   "cat": "marriage",
+   "rarity": "rare",
+   "tone": "revelation",
+   "big": true,
+   "title": {
+    "ko": "황혼이혼",
+    "en": "A late-life divorce"
+   },
+   "requires": [
+    "parentsTogether",
+    "age>=33"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.8,
+     "BRANCH_CLASH@month": 0.6,
+     "PUNISHMENT@month": 0.4,
+     "group:GYEOB_JAE": 0.3,
+     "SATURN>MOON:hard": 0.5
+    },
+    "mods": {
+     "family": 0.3
+    }
+   },
+   "location": "family_home",
+   "activity": "talk_family",
+   "who": "mom",
+   "line": {
+    "ko": "엄마 이제 내 인생 좀 살고 싶어. 아빠랑… 이혼하려고.",
+    "en": "I want to live my own life now. I'm going to… divorce your dad."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "엄마 편이야",
+      "en": "I'm on your side"
+     },
+     "w": {
+      "DIVORCE": 0.85,
+      "STAY": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "다시 한번 생각해봐",
+      "en": "Think it over once more"
+     },
+     "w": {
+      "STAY": 0.5,
+      "DIVORCE": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "DIVORCE": {
+     "r": {
+      "ko": "사십 년 만에 엄마는 혼자 여행을 떠났다. 처음 보는 얼굴로 웃고 있었다.",
+      "en": "After forty years, Mom went traveling alone. She was smiling like someone new."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "parentsDivorced",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "엄마의 두 번째 인생",
+       "en": "Mom's second life"
+      },
+      "location": "airport",
+      "actors": [
+       "me",
+       "relative"
+      ]
+     },
+     "chain": [
+      {
+       "to": "PARENTS_REUNITE",
+       "after": [
+        24,
+        72
+       ],
+       "p": 0.2
+      }
+     ]
+    },
+    "STAY": {
+     "r": {
+      "ko": "엄마는 조금 더 지켜보기로 했다. 아빠가 처음으로 설거지를 했다.",
+      "en": "Mom decided to wait and see. Dad did the dishes for the first time in his life."
+     }
+    }
+   }
+  },
+  {
+   "id": "PARENTS_REUNITE",
+   "cat": "marriage",
+   "rarity": "common",
+   "tone": "joy",
+   "requires": [
+    "f_parentsDivorced",
+    "momAlive",
+    "dadAlive"
+   ],
+   "chainOnly": true,
+   "location": "park",
+   "activity": "walk",
+   "who": "dad",
+   "line": {
+    "ko": "…너희 엄마랑 다시 합치기로 했다. 웃지 마라.",
+    "en": "…Your mom and I are getting back together. Don't laugh."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(웃음을 참는다)",
+      "en": "(Try not to laugh)"
+     },
+     "w": {
+      "REUNITE": 1
+     }
+    }
+   ],
+   "outcomes": {
+    "REUNITE": {
+     "r": {
+      "ko": "두 분이 손을 잡고 공원을 걸었다. 처음 만났을 때처럼.",
+      "en": "They walked in the park holding hands. Like when they first met."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "parentsDivorced"
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "다시 만난 엄마 아빠",
+       "en": "Mom and Dad, together again"
+      },
+      "location": "park",
+      "actors": [
+       "relative",
+       "relative"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "KID_PRODIGY",
+   "cat": "marriage",
+   "rarity": "rare",
+   "tone": "joy",
+   "requires": [
+    "hasKid",
+    "kidAge>=6",
+    "kidAge<=13"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.3,
+     "STEM_COMBINATION@hour": 0.3,
+     "HALF_HARMONY@hour": 0.18,
+     "BRANCH_CLASH@hour": 0.36,
+     "group:SIK_SHIN": 0.42,
+     "group:SANG_GWAN": 0.3,
+     "JUPITER@H5": 0.24,
+     "URANUS>SUN:conjunction": 0.24
+    }
+   },
+   "location": "home",
+   "who": "teacher",
+   "line": {
+    "ko": "[담임 선생님] {kid}이(가) 수학 경시대회에서… 전국 1등을 했어요.",
+    "en": "[Teacher] {kid} placed first in the national math olympiad."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "영재교육을 시킨다",
+      "en": "Enroll them in a gifted program"
+     },
+     "w": {
+      "GIFTED": 0.6,
+      "PRESSURE": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "평범하게 자라게 둔다",
+      "en": "Let them grow up normally"
+     },
+     "w": {
+      "HAPPY": 0.85,
+      "REGRET": 0.15
+     }
+    }
+   ],
+   "outcomes": {
+    "GIFTED": {
+     "r": {
+      "ko": "{kid}은(는) 반짝이는 눈으로 새 문제집을 펼쳤다.",
+      "en": "{kid} opened the new workbook with shining eyes."
+     },
+     "card": {
+      "caption": {
+       "ko": "우리 아이 전국 1등",
+       "en": "Our kid came first in the country"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "kid"
+      ]
+     }
+    },
+    "PRESSURE": {
+     "r": {
+      "ko": "어느 날 {kid}이(가) 말했다. '나 그냥 친구들이랑 놀고 싶어.'",
+      "en": "One day {kid} said, 'I just want to play with my friends.'"
+     }
+    },
+    "HAPPY": {
+     "r": {
+      "ko": "{kid}은(는) 수학만큼이나 축구를 좋아하는 아이로 자랐다.",
+      "en": "{kid} grew up loving soccer as much as math."
+     }
+    },
+    "REGRET": {
+     "r": {
+      "ko": "가끔 생각한다. 그때 밀어줬다면 어땠을까.",
+      "en": "Sometimes you wonder what would have happened if you'd pushed."
+     }
+    }
+   }
+  },
+  {
+   "id": "KID_DROPOUT",
+   "cat": "marriage",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "hasKid",
+    "kidAge>=15",
+    "kidAge<=19"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.5,
+     "STEM_COMBINATION@hour": 0.5,
+     "HALF_HARMONY@hour": 0.3,
+     "BRANCH_CLASH@hour": 0.6
+    }
+   },
+   "location": "home",
+   "who": "kid",
+   "line": {
+    "ko": "나 학교 그만둘래. 진짜로 하고 싶은 게 생겼어.",
+    "en": "I'm quitting school. I found something I really want to do."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "뭔데? 들어나 보자",
+      "en": "What is it? Let's hear it"
+     },
+     "w": {
+      "OWN_PATH": 0.65,
+      "REGRET": 0.35
+     }
+    },
+    {
+     "t": {
+      "ko": "절대 안 돼",
+      "en": "Absolutely not"
+     },
+     "w": {
+      "CLASH": 0.6,
+      "STAY": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "OWN_PATH": {
+     "r": {
+      "ko": "{kid}은(는) 요리사가 되겠다며 조리학원에 등록했다. 눈빛이 달라졌다.",
+      "en": "{kid} enrolled in culinary school to become a chef. Their eyes changed."
+     },
+     "card": {
+      "caption": {
+       "ko": "{kid}의 다른 길",
+       "en": "{kid}'s own path"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "kid"
+      ]
+     }
+    },
+    "REGRET": {
+     "r": {
+      "ko": "일 년 뒤, {kid}은(는) {f:ged} 책을 펼쳤다. 돌아가는 길도 길이었다.",
+      "en": "A year later, {kid} opened a {f:ged} prep book. The long way round is still a way."
+     }
+    },
+    "CLASH": {
+     "r": {
+      "ko": "{kid}은(는) 방문을 쾅 닫았다. 한 달 동안 말을 하지 않았다.",
+      "en": "{kid} slammed the door and didn't speak to you for a month."
+     },
+     "chain": [
+      {
+       "to": "TEEN_RUNAWAY",
+       "after": [
+        1,
+        8
+       ],
+       "p": 0.3
+      }
+     ]
+    },
+    "STAY": {
+     "r": {
+      "ko": "투덜대면서도 {kid}은(는) 졸업장을 받았다.",
+      "en": "Grumbling all the way, {kid} still got the diploma."
+     }
+    }
+   }
+  },
+  {
+   "id": "TEEN_RUNAWAY",
+   "cat": "marriage",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "사라진 아이",
+    "en": "Gone in the night"
+   },
+   "requires": [
+    "hasKid",
+    "kidAge>=14",
+    "kidAge<=18"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.5,
+     "STEM_COMBINATION@hour": 0.5,
+     "HALF_HARMONY@hour": 0.3,
+     "BRANCH_CLASH@hour": 0.8,
+     "SAMJAE": 0.4
+    }
+   },
+   "location": "street",
+   "who": "me",
+   "line": {
+    "ko": "(새벽 2시. {kid}의 방이 비어 있다. 전화도 받지 않는다.)",
+    "en": "(2 a.m. {kid}'s room is empty. No answer on the phone.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "경찰에 신고한다",
+      "en": "Call the police"
+     },
+     "w": {
+      "FOUND": 0.85,
+      "LONG": 0.15
+     }
+    },
+    {
+     "t": {
+      "ko": "친구들에게 연락을 돌린다",
+      "en": "Call around their friends"
+     },
+     "w": {
+      "FOUND": 0.75,
+      "LONG": 0.25
+     }
+    }
+   ],
+   "outcomes": {
+    "FOUND": {
+     "r": {
+      "ko": "{kid}은(는) 친구 집에 있었다. 그날 밤, 처음으로 서로의 이야기를 오래 들었다.",
+      "en": "{kid} was at a friend's. That night, for the first time, you listened to each other for a long time."
+     },
+     "card": {
+      "caption": {
+       "ko": "돌아온 {kid}",
+       "en": "{kid} came home"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "kid"
+      ],
+      "priority": 7
+     }
+    },
+    "LONG": {
+     "r": {
+      "ko": "사흘 만에 돌아왔다. 아무것도 묻지 않고 안아줬다.",
+      "en": "They came back after three days. You hugged them without asking anything."
+     }
+    }
+   }
+  },
+  {
+   "id": "KID_IDOL_TRAINEE",
+   "cat": "marriage",
+   "rarity": "rare",
+   "tone": "joy",
+   "requires": [
+    "hasKid",
+    "kidAge>=12",
+    "kidAge<=18"
+   ],
+   "trigger": {
+    "signals": {
+     "SIX_HARMONY@hour": 0.5,
+     "STEM_COMBINATION@hour": 0.5,
+     "HALF_HARMONY@hour": 0.3,
+     "BRANCH_CLASH@hour": 0.6,
+     "group:SIK_SHIN": 0.7,
+     "group:SANG_GWAN": 0.5,
+     "JUPITER@H5": 0.4,
+     "URANUS>SUN:conjunction": 0.4,
+     "DOHWA": 0.4
+    }
+   },
+   "location": "home",
+   "who": "kid",
+   "line": {
+    "ko": "나 {f:trainee}, 제발!",
+    "en": "{f:trainee}, please!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "해봐!",
+      "en": "Go for it!"
+     },
+     "w": {
+      "TRAINEE": 0.95,
+      "CLASH": 0.05
+     }
+    },
+    {
+     "t": {
+      "ko": "공부부터 해",
+      "en": "Study first"
+     },
+     "w": {
+      "CLASH": 0.55,
+      "AGREE": 0.45
+     }
+    }
+   ],
+   "outcomes": {
+    "TRAINEE": {
+     "r": {
+      "ko": "{kid}은(는) 새벽까지 연습실에 산다. 발목엔 늘 파스가 붙어 있다.",
+      "en": "{kid} lives in the practice room until dawn. There's always a pain patch on their ankle."
+     },
+     "chain": [
+      {
+       "to": "KID_DEBUT",
+       "after": [
+        24,
+        48
+       ],
+       "p": 0.3
+      },
+      {
+       "to": "KID_TRAINEE_QUITS",
+       "after": [
+        18,
+        40
+       ],
+       "p": 0.7
+      }
+     ]
+    },
+    "CLASH": {
+     "r": {
+      "ko": "{kid}은(는) 울면서 방으로 들어갔다. 꿈을 막은 부모가 된 것 같았다.",
+      "en": "{kid} went to their room in tears. You felt like the parent who blocked a dream."
+     }
+    },
+    "AGREE": {
+     "r": {
+      "ko": "성적을 지키는 조건으로 허락했다. {kid}은(는) 두 배로 바빠졌다.",
+      "en": "You agreed on the condition they keep their grades. {kid} got twice as busy."
+     },
+     "chain": [
+      {
+       "to": "KID_DEBUT",
+       "after": [
+        24,
+        48
+       ],
+       "p": 0.2
+      },
+      {
+       "to": "KID_TRAINEE_QUITS",
+       "after": [
+        18,
+        40
+       ],
+       "p": 0.8
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "KID_DEBUT",
+   "cat": "marriage",
+   "rarity": "common",
+   "tone": "joy",
+   "big": true,
+   "title": {
+    "ko": "데뷔",
+    "en": "Debut"
+   },
+   "requires": [
+    "hasKid"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "who": "kid",
+   "line": {
+    "ko": "우리 데뷔 확정이래!!! 다음 달에 음악방송 나가!",
+    "en": "We're debuting!!! Music show next month!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "(TV 앞에 온 가족이 모인다)",
+      "en": "(The whole family gathers in front of the TV)"
+     },
+     "w": {
+      "DEBUT": 1
+     }
+    }
+   ],
+   "outcomes": {
+    "DEBUT": {
+     "r": {
+      "ko": "3초 나왔다. 우리는 그 3초를 백 번 돌려봤다.",
+      "en": "They were on screen for three seconds. You replayed those three seconds a hundred times."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "kidFamous",
+       "value": true
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "{kid}의 데뷔 무대",
+       "en": "{kid}'s debut stage"
+      },
+      "location": "home",
+      "actors": [
+       "me",
+       "kid"
+      ],
+      "priority": 8
+     }
+    }
+   }
+  },
+  {
+   "id": "KID_TRAINEE_QUITS",
+   "cat": "marriage",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "hasKid"
+   ],
+   "chainOnly": true,
+   "location": "home",
+   "who": "kid",
+   "line": {
+    "ko": "…나 연습생 그만둘래. 나 여기까지인 것 같아.",
+    "en": "…I'm quitting as a trainee. I think this is as far as I go."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "수고했어. 정말로",
+      "en": "You did so well. Really"
+     },
+     "w": {
+      "PEACE": 1
+     }
+    },
+    {
+     "t": {
+      "ko": "조금만 더 해보면 안 돼?",
+      "en": "Can't you try a little longer?"
+     },
+     "w": {
+      "PEACE": 0.7,
+      "HURT": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "PEACE": {
+     "r": {
+      "ko": "{kid}이(가) 오랜만에 늦잠을 잤다. 그리고 다음 꿈을 찾기 시작했다.",
+      "en": "{kid} slept in for the first time in ages. Then started looking for the next dream."
+     }
+    },
+    "HURT": {
+     "r": {
+      "ko": "{kid}은(는) 대답 대신 짐을 풀었다.",
+      "en": "Instead of answering, {kid} unpacked their bags."
+     }
+    }
+   }
+  },
+  {
+   "id": "MOVE_IN_WITH_INLAWS",
+   "cat": "marriage",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "requires": [
+    "married",
+    "age>=35"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.48,
+     "BRANCH_CLASH@month": 0.36,
+     "PUNISHMENT@month": 0.24,
+     "group:GYEOB_JAE": 0.18,
+     "SATURN>MOON:hard": 0.3
+    },
+    "mods": {
+     "family": 0.6
+    }
+   },
+   "location": "family_home",
+   "activity": "help_family",
+   "who": "partner",
+   "line": {
+    "ko": "…부모님 건강이 안 좋으셔서. 우리가 들어가서 모시면 안 될까?",
+    "en": "…My parents aren't well. Could we move in and look after them?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "그러자",
+      "en": "Let's do it"
+     },
+     "w": {
+      "TOGETHER": 0.65,
+      "STRAIN": 0.35
+     }
+    },
+    {
+     "t": {
+      "ko": "근처로 이사 가는 건 어때?",
+      "en": "What about moving nearby instead?"
+     },
+     "w": {
+      "COMPROMISE": 0.7,
+      "FIGHT": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "TOGETHER": {
+     "r": {
+      "ko": "세 식구가 다섯 식구가 됐다. 저녁 식탁이 시끌벅적해졌다.",
+      "en": "Three became five. Dinner got noisy."
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": 0.2
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "두 세대가 한집에",
+       "en": "Two generations, one roof"
+      },
+      "location": "family_home",
+      "actors": [
+       "me",
+       "partner",
+       "inlaw",
+       "inlaw"
+      ]
+     }
+    },
+    "STRAIN": {
+     "r": {
+      "ko": "…누구의 집도 아닌 집이 됐다. 방문을 닫는 시간이 길어졌다.",
+      "en": "…It stopped feeling like anyone's home. Bedroom doors stayed shut longer."
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": 0.2
+      },
+      {
+       "kind": "setFlag",
+       "name": "inlawTension",
+       "value": true
+      }
+     ],
+     "chain": [
+      {
+       "to": "MOVE_IN_WITH_INLAWS_FIGHT",
+       "after": [
+        6,
+        24
+       ],
+       "p": 0.6
+      }
+     ]
+    },
+    "COMPROMISE": {
+     "r": {
+      "ko": "걸어서 5분 거리로 이사했다. {f:sides}이(가) 자주 문 앞에 놓여 있다.",
+      "en": "You moved five minutes away. {f:sides} often appear at your door."
+     }
+    },
+    "FIGHT": {
+     "r": {
+      "ko": "그날 우리는 처음으로 서로의 부모님 이야기로 크게 싸웠다.",
+      "en": "That day you had your first big fight about each other's parents."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "distance",
+       "value": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "MOVE_IN_WITH_INLAWS_FIGHT",
+   "cat": "marriage",
+   "rarity": "common",
+   "tone": "dark",
+   "requires": [
+    "married"
+   ],
+   "chainOnly": true,
+   "location": "family_home",
+   "activity": "eat",
+   "who": "inlaw",
+   "line": {
+    "ko": "(시댁/처가 식구들과의 저녁. 또 같은 이야기가 시작됐다.) …그래서 너희는 언제까지 그렇게 살 거니?",
+    "en": "(Dinner with the in-laws. The same topic again.) …So how long are you two going to live like this?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "오늘은 참지 않는다",
+      "en": "Not holding back today"
+     },
+     "w": {
+      "BLOWUP": 0.6,
+      "CLEAR": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "{partner}과(와) 눈빛을 교환한다",
+      "en": "Exchange a look with {partner}"
+     },
+     "w": {
+      "CLEAR": 0.6,
+      "BLOWUP": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "BLOWUP": {
+     "r": {
+      "ko": "숟가락 소리만 남은 식탁. 그날 밤 짐을 싸서 나왔다.",
+      "en": "Only the clink of spoons filled the silence. That night you packed and moved out."
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": -0.2
+      }
+     ]
+    },
+    "CLEAR": {
+     "r": {
+      "ko": "{partner}이(가) 처음으로 부모님께 선을 그었다. 공기가 달라졌다.",
+      "en": "{partner} drew a line with their parents for the first time. The air changed."
+     },
+     "effects": [
+      {
+       "kind": "clearFlag",
+       "name": "inlawTension"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "CUSTODY_BATTLE",
+   "cat": "marriage",
+   "rarity": "rare",
+   "tone": "dark",
+   "big": true,
+   "title": {
+    "ko": "양육권",
+    "en": "Custody"
+   },
+   "requires": [
+    "divorced",
+    "hasKid",
+    "kidAge<=17"
+   ],
+   "trigger": {
+    "signals": {
+     "BRANCH_CLASH@year": 0.4,
+     "BRANCH_CLASH@month": 0.3,
+     "PUNISHMENT@month": 0.2,
+     "group:GYEOB_JAE": 0.4,
+     "SATURN>MOON:hard": 0.25,
+     "BRANCH_CLASH@day": 0.4,
+     "HARM@day": 0.25,
+     "PUNISHMENT@day": 0.2,
+     "URANUS>VENUS:hard": 0.35,
+     "SATURN>VENUS:hard": 0.2
+    }
+   },
+   "location": "court",
+   "activity": "court_hearing",
+   "who": "lawyer",
+   "line": {
+    "ko": "[변호사] 상대측에서 양육권 소송을 제기했습니다.",
+    "en": "[Lawyer] The other side has filed for custody."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "끝까지 싸운다",
+      "en": "Fight to the end"
+     },
+     "w": {
+      "WIN": 0.5,
+      "LOSE": 0.5
+     }
+    },
+    {
+     "t": {
+      "ko": "{kid}의 의견을 먼저 듣는다",
+      "en": "Hear what {kid} wants first"
+     },
+     "w": {
+      "AGREE": 0.7,
+      "WIN": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "WIN": {
+     "r": {
+      "ko": "판결이 나던 날, {kid}이(가) 내 손을 꼭 잡았다.",
+      "en": "On the day of the verdict, {kid} held your hand tight."
+     },
+     "card": {
+      "caption": {
+       "ko": "양육권 판결",
+       "en": "The custody ruling"
+      },
+      "location": "court",
+      "actors": [
+       "me",
+       "kid"
+      ],
+      "priority": 8
+     }
+    },
+    "LOSE": {
+     "r": {
+      "ko": "주말마다 만나는 부모가 됐다. 일요일 저녁이 가장 길다.",
+      "en": "You became a weekend parent. Sunday evenings are the longest."
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "weekendParent",
+       "value": true
+      }
+     ]
+    },
+    "AGREE": {
+     "r": {
+      "ko": "{kid}이(가) 원하는 대로 공동양육을 하기로 했다. 법정보다 식탁에서 먼저 정했다.",
+      "en": "You agreed on shared custody, as {kid} wished. Decided at the kitchen table before the courtroom."
+     }
+    }
+   }
+  }
+ ]
+}

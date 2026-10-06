@@ -1,0 +1,3851 @@
+{
+ "_doc": "Small everyday events. 'where' = location types or ids where it can happen. The Director allows only 1–3 per day, respects cooldownDays/maxPerLife and never shows content whose requirements are false.",
+ "stories": [
+  {
+   "id": "umbrella",
+   "who": "stranger",
+   "where": [
+    "CITY"
+   ],
+   "requires": [],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(갑자기 비가 쏟아진다.)",
+    "en": "(It suddenly starts pouring.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "{f:store} 우산을 산다",
+      "en": "Buy a {f:store} umbrella"
+     },
+     "r": {
+      "ko": "(비닐우산 컬렉션이 또 늘었다.)",
+      "en": "(Another plastic umbrella for the collection.)"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "뛰어간다",
+      "en": "Make a run for it"
+     },
+     "r": {
+      "ko": "(흠뻑 젖었지만 왠지 상쾌하다.)",
+      "en": "(Soaked, but weirdly refreshed.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "street_cat",
+   "who": "me",
+   "where": [
+    "CITY",
+    "PARK"
+   ],
+   "requires": [],
+   "weight": 1,
+   "cooldownDays": 3,
+   "line": {
+    "ko": "(길고양이가 발목에 몸을 비빈다.)",
+    "en": "(A street cat rubs against your ankle.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "잠깐 쓰다듬는다",
+      "en": "Pet it for a bit"
+     },
+     "r": {
+      "ko": "(골골송을 들었다.)",
+      "en": "(It purred.)"
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "사진만 찍는다",
+      "en": "Just take a photo"
+     },
+     "r": {
+      "ko": "(잘 나왔다.)",
+      "en": "(Great shot.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "new_bakery",
+   "who": "me",
+   "where": [
+    "CITY"
+   ],
+   "requires": [],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(못 보던 빵집이 생겼다.)",
+    "en": "(A new bakery has opened.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "들어가 본다",
+      "en": "Go in"
+     },
+     "r": {
+      "ko": "(소금빵이 인생 빵이었다.)",
+      "en": "(The salt bread was life-changing.)"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "다음에",
+      "en": "Next time"
+     },
+     "r": {
+      "ko": "(냄새만 맡았다.)",
+      "en": "(Just enjoyed the smell.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "cafe_seat",
+   "who": "me",
+   "where": [
+    "CAFE"
+   ],
+   "requires": [],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(창가 자리가 비어 있다.)",
+    "en": "(The window seat is free.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "창가에 앉는다",
+      "en": "Take the window seat"
+     },
+     "r": {
+      "ko": "(햇살이 좋다.)",
+      "en": "(Lovely sunlight.)"
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "구석 자리로",
+      "en": "Take the corner"
+     },
+     "r": {
+      "ko": "(조용해서 좋다.)",
+      "en": "(Nice and quiet.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "cafe_new_menu",
+   "who": "barista",
+   "where": [
+    "CAFE"
+   ],
+   "requires": [],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "시즌 한정 메뉴 나왔어요. 드셔 보실래요?",
+    "en": "Seasonal menu just came out. Want to try it?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "그걸로 주세요",
+      "en": "I'll have that"
+     },
+     "r": {
+      "ko": "(생각보다 달다.)",
+      "en": "(Sweeter than expected.)"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.007
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "늘 먹던 걸로요",
+      "en": "The usual, please"
+     },
+     "r": {
+      "ko": "(역시 이게 제일이다.)",
+      "en": "(The usual is best.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "office_printer",
+   "who": "coworker",
+   "where": [
+    "WORKPLACE"
+   ],
+   "requires": [
+    "employed"
+   ],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "프린터가 또 고장났어요…",
+    "en": "The printer's broken again…"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "고쳐본다",
+      "en": "Try to fix it"
+     },
+     "r": {
+      "ko": "(용지 걸림을 해결했다. 영웅 대접.)",
+      "en": "(Cleared the jam. Hero status.)"
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.3
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "다른 층 가서 뽑는다",
+      "en": "Print on another floor"
+     },
+     "r": {
+      "ko": "(운동했다 치자.)",
+      "en": "(Counts as exercise.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "office_snack",
+   "who": "coworker",
+   "where": [
+    "WORKPLACE"
+   ],
+   "requires": [
+    "employed"
+   ],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "출장 다녀온 팀원이 간식을 돌린다.",
+    "en": "A teammate back from a trip is sharing snacks."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "감사히 받는다",
+      "en": "Take one, gratefully"
+     },
+     "r": {
+      "ko": "(맛있다.)",
+      "en": "(Delicious.)"
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "다이어트 중이라…",
+      "en": "I'm on a diet…"
+     },
+     "r": {
+      "ko": "(눈으로만 먹었다.)",
+      "en": "(Feasted with my eyes only.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "overtime_call",
+   "who": "boss",
+   "where": [
+    "WORKPLACE"
+   ],
+   "requires": [
+    "employed",
+    "!selfEmployed"
+   ],
+   "weight": 1,
+   "cooldownDays": 4,
+   "line": {
+    "ko": "오늘 좀 늦게까지 가능할까요?",
+    "en": "Could you stay a bit late today?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "네, 할게요",
+      "en": "Sure"
+     },
+     "r": {
+      "ko": "(야근했다. 팀장님이 고마워했다.)",
+      "en": "(Stayed late. The manager was grateful.)"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 0.05
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "오늘은 어렵습니다",
+      "en": "Not today"
+     },
+     "r": {
+      "ko": "(칼퇴했다.)",
+      "en": "(Left right on time.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "job_posting",
+   "who": "me",
+   "where": [
+    "CAFE",
+    "HOME"
+   ],
+   "requires": [
+    "jobless",
+    "age<65"
+   ],
+   "weight": 2,
+   "cooldownDays": 2,
+   "line": {
+    "ko": "(구직 사이트에 괜찮은 공고가 올라왔다.)",
+    "en": "(A promising job posting just went up.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "지원한다",
+      "en": "Apply"
+     },
+     "r": {
+      "ko": "(자기소개서를 세 번 고쳤다.)",
+      "en": "(Rewrote the cover letter three times.)"
+     },
+     "effects": [
+      {
+       "kind": "setFlag",
+       "name": "appliedJob",
+       "value": true
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "좀 더 쉰다",
+      "en": "Rest a bit more"
+     },
+     "r": {
+      "ko": "(조급해하지 않기로 했다.)",
+      "en": "(Decided not to rush.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "gym_machine",
+   "who": "stranger",
+   "where": [
+    "GYM"
+   ],
+   "requires": [],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "저기… 이 기구 다 쓰셨어요?",
+    "en": "Um… are you done with this machine?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "네, 쓰세요",
+      "en": "Yes, go ahead"
+     },
+     "r": {
+      "ko": "(고맙다며 웃었다.)",
+      "en": "(They smiled and thanked me.)"
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "한 세트만 더요",
+      "en": "One more set"
+     },
+     "r": {
+      "ko": "(마지막 세트는 늘 힘들다.)",
+      "en": "(The last set is always the hardest.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "home_cleaning",
+   "who": "me",
+   "where": [
+    "HOME"
+   ],
+   "requires": [],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(방이 좀 어질러져 있다.)",
+    "en": "(The room's a bit of a mess.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "대청소한다",
+      "en": "Deep clean"
+     },
+     "r": {
+      "ko": "(개운하다.)",
+      "en": "(Refreshing.)"
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "내일의 나에게",
+      "en": "Leave it for future me"
+     },
+     "r": {
+      "ko": "(내일의 나, 파이팅.)",
+      "en": "(Good luck, future me.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "home_delivery",
+   "who": "me",
+   "where": [
+    "HOME"
+   ],
+   "requires": [],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(배달 앱을 켰다. 뭘 먹지?)",
+    "en": "(Opened the delivery app. What to eat?)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "{f:delivery}",
+      "en": "{f:delivery}"
+     },
+     "r": {
+      "ko": "(역시 {f:delivery}.)",
+      "en": "({f:delivery} never fails.)"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.02
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "직접 해먹는다",
+      "en": "Cook myself"
+     },
+     "r": {
+      "ko": "(생각보다 맛있다.)",
+      "en": "(Better than expected.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "home_online_shop",
+   "who": "me",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "!broke"
+   ],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(장바구니에 넣어둔 게 할인 중이다.)",
+    "en": "(Something in your cart is on sale.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "산다",
+      "en": "Buy it"
+     },
+     "r": {
+      "ko": "(택배를 기다리는 재미.)",
+      "en": "(The joy of waiting for a package.)"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.05
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "참는다",
+      "en": "Resist"
+     },
+     "r": {
+      "ko": "(통장이 고마워한다.)",
+      "en": "(My bank account thanks me.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "treat_self",
+   "who": "me",
+   "where": [
+    "CITY",
+    "CAFE"
+   ],
+   "requires": [
+    "!broke"
+   ],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(요즘 고생했으니 나에게 작은 선물을 할까?)",
+    "en": "(You've worked hard lately. A small treat for yourself?)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "나에게 선물",
+      "en": "Treat myself"
+     },
+     "r": {
+      "ko": "(오늘만큼은.)",
+      "en": "(Just this once.)"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.1
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "참는다",
+      "en": "Hold back"
+     },
+     "r": {
+      "ko": "(마음만 받기로.)",
+      "en": "(It's the thought that counts.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "park_bench",
+   "who": "stranger",
+   "where": [
+    "PARK"
+   ],
+   "requires": [],
+   "weight": 1,
+   "cooldownDays": 6,
+   "line": {
+    "ko": "(벤치 옆자리 할머니가 귤을 건넨다.)",
+    "en": "(The grandma on the next bench offers you a tangerine.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "감사히 받는다",
+      "en": "Accept, gratefully"
+     },
+     "r": {
+      "ko": "(달다.)",
+      "en": "(Sweet.)"
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "사양한다",
+      "en": "Politely decline"
+     },
+     "r": {
+      "ko": "(웃으며 고개를 끄덕이셨다.)",
+      "en": "(She nodded with a smile.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "park_dog",
+   "who": "stranger",
+   "where": [
+    "PARK"
+   ],
+   "requires": [],
+   "weight": 1,
+   "cooldownDays": 3,
+   "line": {
+    "ko": "(산책 나온 강아지가 공을 물어 왔다.)",
+    "en": "(A dog on a walk brings you its ball.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "던져준다",
+      "en": "Throw it"
+     },
+     "r": {
+      "ko": "(주인이 웃으며 인사했다.)",
+      "en": "(The owner waved, laughing.)"
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "쓰다듬기만",
+      "en": "Just pet it"
+     },
+     "r": {
+      "ko": "(꼬리가 프로펠러다.)",
+      "en": "(Tail like a propeller.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "library_quiet",
+   "who": "me",
+   "where": [
+    "LIBRARY"
+   ],
+   "requires": [],
+   "weight": 1,
+   "cooldownDays": 3,
+   "line": {
+    "ko": "(옆자리 사람이 같은 책을 읽고 있다.)",
+    "en": "(The person next to you is reading the same book.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "눈인사한다",
+      "en": "Nod hello"
+     },
+     "r": {
+      "ko": "(살짝 웃어주었다.)",
+      "en": "(A small smile back.)"
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "모른 척",
+      "en": "Pretend not to notice"
+     },
+     "r": {
+      "ko": "(책에 집중했다.)",
+      "en": "(Focused on the book.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "class_partner",
+   "who": "instructor",
+   "where": [
+    "CLASS"
+   ],
+   "requires": [],
+   "weight": 1,
+   "cooldownDays": 3,
+   "line": {
+    "ko": "오늘은 둘씩 짝지어서 해볼게요!",
+    "en": "Let's work in pairs today!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "먼저 말 건다",
+      "en": "Speak up first"
+     },
+     "r": {
+      "ko": "(금방 친해졌다.)",
+      "en": "(Got along quickly.)"
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.4
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "기다린다",
+      "en": "Wait"
+     },
+     "r": {
+      "ko": "(남은 사람과 짝이 됐다.)",
+      "en": "(Paired with whoever was left.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "beach_shell",
+   "who": "me",
+   "where": [
+    "BEACH"
+   ],
+   "requires": [],
+   "weight": 1,
+   "cooldownDays": 8,
+   "line": {
+    "ko": "(모래 위에 예쁜 조개껍데기가 있다.)",
+    "en": "(A pretty shell lies in the sand.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "줍는다",
+      "en": "Pick it up"
+     },
+     "r": {
+      "ko": "(기념품이 생겼다.)",
+      "en": "(A little souvenir.)"
+     },
+     "effects": [
+      {
+       "kind": "memory",
+       "text": "Picked up a shell at the beach.",
+       "tags": [
+        "daily"
+       ]
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "그대로 둔다",
+      "en": "Leave it"
+     },
+     "r": {
+      "ko": "(바다에 돌려줬다.)",
+      "en": "(Left it for the sea.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "family_call",
+   "who": "mom",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "momAlive"
+   ],
+   "weight": 1,
+   "cooldownDays": 6,
+   "line": {
+    "ko": "이번 {f:holiday}엔 올 거지?",
+    "en": "You're coming for {f:holiday}, right?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당연하지",
+      "en": "Of course"
+     },
+     "r": {
+      "ko": "(엄마 목소리가 밝아졌다.)",
+      "en": "(Mom sounded happy.)"
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": 0.02
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "이번엔 어려울 것 같아",
+      "en": "Can't make it this time"
+     },
+     "r": {
+      "ko": "(…그래, 알겠다.)",
+      "en": "(…Oh. Okay.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "dad_help",
+   "who": "dad",
+   "where": [
+    "HOME",
+    "FAMILY_HOME"
+   ],
+   "requires": [
+    "dadAlive",
+    "age>=28"
+   ],
+   "weight": 1,
+   "cooldownDays": 8,
+   "line": {
+    "ko": "[아빠] 휴대폰 사진이 다 없어졌다. 어떻게 하냐",
+    "en": "[Dad] All the photos on my phone are gone. What do I do?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "영상통화로 알려드린다",
+      "en": "Walk him through it on video"
+     },
+     "r": {
+      "ko": "(클라우드에 다 있었다. 휴.)",
+      "en": "(All in the cloud. Phew.)"
+     },
+     "effects": [
+      {
+       "kind": "familyObligation",
+       "delta": 0.01
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "주말에 가서 봐드릴게요",
+      "en": "I'll look at it this weekend"
+     },
+     "r": {
+      "ko": "[아빠] 그래.",
+      "en": "[Dad] Okay."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "partner_surprise",
+   "who": "partner",
+   "where": [
+    "HOME",
+    "CITY",
+    "CAFE"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 6,
+   "line": {
+    "ko": "오늘 무슨 날인지 알아?",
+    "en": "Do you know what today is?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당연히 알지!",
+      "en": "Of course I do!"
+     },
+     "r": {
+      "ko": "(다행히 달력에 적어뒀다.)",
+      "en": "(Thank goodness for calendar reminders.)"
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "…혹시 기념일?",
+      "en": "…Is it our anniversary?"
+     },
+     "r": {
+      "ko": "(정답. 아슬아슬했다.)",
+      "en": "(Correct. That was close.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "partner_cook",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 5,
+   "line": {
+    "ko": "오늘 저녁은 내가 할게!",
+    "en": "I'll cook tonight!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "기대할게",
+      "en": "Can't wait"
+     },
+     "r": {
+      "ko": "(맛있었다. 진짜로.)",
+      "en": "(It was good. Really.)"
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "같이 하자",
+      "en": "Let's cook together"
+     },
+     "r": {
+      "ko": "(부엌이 난장판이 됐지만 즐거웠다.)",
+      "en": "(Messy kitchen, happy evening.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "friend_call",
+   "who": "friend",
+   "where": [
+    "HOME",
+    "CITY"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 4,
+   "line": {
+    "ko": "야, 지금 통화 돼?",
+    "en": "Hey, can you talk now?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "응, 무슨 일이야",
+      "en": "Sure, what's up"
+     },
+     "r": {
+      "ko": "(한 시간을 떠들었다.)",
+      "en": "(Talked for an hour.)"
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.3
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "나중에 걸게",
+      "en": "I'll call back later"
+     },
+     "r": {
+      "ko": "(나중에 꼭 걸어야지.)",
+      "en": "(Note to self: call back.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "found_money",
+   "who": "me",
+   "where": [
+    "CITY",
+    "PARK"
+   ],
+   "requires": [],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(주머니에서 잊고 있던 만 원이 나왔다.)",
+    "en": "(Found a forgotten ₩10,000 in your pocket.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "오늘 운 좋은 날",
+      "en": "Lucky day"
+     },
+     "r": {
+      "ko": "({f:street} 사 먹었다.)",
+      "en": "(Spent it on {f:street}.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "lost_item",
+   "who": "me",
+   "where": [
+    "CITY",
+    "CAFE",
+    "HOME"
+   ],
+   "requires": [],
+   "weight": 0.15,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(어? 이어폰 한쪽이 없어졌다!)",
+    "en": "(Huh? One of your earbuds is missing!)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "샅샅이 찾는다",
+      "en": "Search everywhere"
+     },
+     "r": {
+      "ko": "(가방 안주머니에 있었다.)",
+      "en": "(It was in the inner pocket.)"
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "그냥 새로 산다",
+      "en": "Just buy new ones"
+     },
+     "r": {
+      "ko": "(이번엔 잃어버리지 말자.)",
+      "en": "(Don't lose these.)"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.1
+      }
+     ]
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "volunteer_flyer",
+   "who": "me",
+   "where": [
+    "PARK",
+    "CITY"
+   ],
+   "requires": [],
+   "weight": 1,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(유기견 산책 봉사 전단지가 붙어 있다.)",
+    "en": "(A flyer for walking shelter dogs.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "신청한다",
+      "en": "Sign up"
+     },
+     "r": {
+      "ko": "(주말 루틴이 하나 생겼다.)",
+      "en": "(A new weekend routine.)"
+     },
+     "effects": [
+      {
+       "kind": "startHabit",
+       "locationId": "park",
+       "activityId": "volunteer",
+       "perMonth": 2
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "사진만 찍어둔다",
+      "en": "Just take a photo of it"
+     },
+     "r": {
+      "ko": "(언젠가…)",
+      "en": "(Someday…)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "gym_flyer",
+   "who": "me",
+   "where": [
+    "CITY"
+   ],
+   "requires": [
+    "!broke"
+   ],
+   "weight": 1,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(헬스장 오픈 할인 전단지를 받았다.)",
+    "en": "(Someone hands you a gym opening-sale flyer.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "등록한다",
+      "en": "Sign up"
+     },
+     "r": {
+      "ko": "(이번엔 꾸준히 해보자.)",
+      "en": "(This time, consistency.)"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.5
+      },
+      {
+       "kind": "startHabit",
+       "locationId": "gym",
+       "activityId": "workout",
+       "perMonth": 8
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "괜찮아요",
+      "en": "No thanks"
+     },
+     "r": {
+      "ko": "(다음 생에…)",
+      "en": "(Maybe in my next life…)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 2
+  },
+  {
+   "id": "cooking_flyer",
+   "who": "me",
+   "where": [
+    "CITY",
+    "CAFE"
+   ],
+   "requires": [
+    "!broke"
+   ],
+   "weight": 1,
+   "cooldownDays": 20,
+   "line": {
+    "ko": "(동네 요리교실 수강생 모집 공고를 봤다.)",
+    "en": "(A neighborhood cooking class is taking sign-ups.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "등록한다",
+      "en": "Sign up"
+     },
+     "r": {
+      "ko": "(앞치마를 샀다.)",
+      "en": "(Bought an apron.)"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -1
+      },
+      {
+       "kind": "startHabit",
+       "locationId": "cooking_class",
+       "activityId": "learn_recipe",
+       "perMonth": 4
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "다음에",
+      "en": "Next time"
+     },
+     "r": {
+      "ko": "(요리는 유튜브로…)",
+      "en": "(YouTube will teach me…)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "langx_ad",
+   "who": "me",
+   "where": [
+    "HOME",
+    "CAFE"
+   ],
+   "requires": [
+    "!partnered"
+   ],
+   "weight": 0.35,
+   "cooldownDays": 120,
+   "line": {
+    "ko": "(언어교환 앱 광고가 떴다.)",
+    "en": "(An ad for a language-exchange app pops up.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "설치해본다",
+      "en": "Install it"
+     },
+     "r": {
+      "ko": "(첫 채팅 상대가 생겼다.)",
+      "en": "(Matched with my first chat partner.)"
+     },
+     "effects": [
+      {
+       "kind": "startHabit",
+       "locationId": "language_exchange_app",
+       "activityId": "chat",
+       "perMonth": 6
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "넘긴다",
+      "en": "Skip"
+     },
+     "r": {
+      "ko": "(광고는 광고일 뿐.)",
+      "en": "(Just an ad.)"
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "retired_morning",
+   "who": "me",
+   "where": [
+    "PARK",
+    "HOME"
+   ],
+   "requires": [
+    "retired"
+   ],
+   "weight": 1,
+   "cooldownDays": 3,
+   "line": {
+    "ko": "(출근 안 하는 아침. 뭘 할까?)",
+    "en": "(A morning with no commute. What now?)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "산책한다",
+      "en": "Take a walk"
+     },
+     "r": {
+      "ko": "(동네가 새로워 보인다.)",
+      "en": "(The neighborhood looks brand new.)"
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "늦잠",
+      "en": "Sleep in"
+     },
+     "r": {
+      "ko": "(이게 은퇴의 맛.)",
+      "en": "(So this is retirement.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "abroad_homesick",
+   "who": "me",
+   "where": [
+    "HOME",
+    "CITY",
+    "CAFE"
+   ],
+   "requires": [
+    "abroad"
+   ],
+   "weight": 1,
+   "cooldownDays": 5,
+   "line": {
+    "ko": "({homeFood}이(가) 너무 먹고 싶다.)",
+    "en": "(You're really craving {homeFood}.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "{homeMarket}에 간다",
+      "en": "Go to {homeMarket}"
+     },
+     "r": {
+      "ko": "(고향 과자랑 {f:ramen}을(를) 한가득 샀다.)",
+      "en": "(Bought a bag full of snacks from home.)"
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.03
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "현지 음식에 적응한다",
+      "en": "Adapt to local food"
+     },
+     "r": {
+      "ko": "(의외로 맛있다.)",
+      "en": "(Surprisingly good.)"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_cook_fail",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(부엌에서 연기가 난다.) …저기, 오늘 저녁은 시켜 먹을까?",
+    "en": "(Smoke from the kitchen.) …Hey, should we just order in tonight?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "뭘 만들려고 했는데?",
+      "en": "What were you trying to make?"
+     },
+     "r": {
+      "ko": "'원래는… 파스타였어.' 둘 다 한참 웃었다.",
+      "en": "\"It was supposed to be… pasta.\" You both laughed for a while."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.1
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "같이 다시 만들자",
+      "en": "Let's make it again, together"
+     },
+     "r": {
+      "ko": "두 번째 파스타는 꽤 먹을 만했다.",
+      "en": "The second pasta was actually pretty good."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_movie_pick",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "오늘 영화 뭐 볼지 너가 골라. 대신 무서운 거 빼고.",
+    "en": "You pick the movie tonight. Just nothing scary."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "로맨스 코미디",
+      "en": "A rom-com"
+     },
+     "r": {
+      "ko": "{partner}이(가) 주인공보다 더 크게 웃었다.",
+      "en": "{partner} laughed louder than the lead actor."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "일부러 공포 영화",
+      "en": "A horror movie, on purpose"
+     },
+     "r": {
+      "ko": "{partner}이(가) 이불을 머리끝까지 덮었다. 그래도 끝까지 봤다.",
+      "en": "{partner} pulled the blanket over their head. Still watched to the end."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_old_photo",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(서랍 정리를 하다가 {partner}이(가) 옛날 사진을 찾았다.) 이거 너야? 머리 왜 이래?",
+    "en": "({partner} found an old photo while cleaning a drawer.) Is this you? What happened to your hair?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "그땐 그게 유행이었어",
+      "en": "It was in style back then"
+     },
+     "r": {
+      "ko": "{partner}이(가) 사진을 휴대폰 배경화면으로 해 버렸다.",
+      "en": "{partner} made it their phone wallpaper."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "사진을 빼앗는다",
+      "en": "Snatch the photo back"
+     },
+     "r": {
+      "ko": "쫓고 쫓기다 둘 다 소파에 쓰러졌다.",
+      "en": "A chase around the room ended with both of you collapsed on the sofa."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_rain_umbrella",
+   "who": "partner",
+   "where": [
+    "CITY",
+    "CAFE",
+    "PARK"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(갑자기 비가 쏟아진다. 우산은 하나뿐.)",
+    "en": "(It starts pouring. There's only one umbrella.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "같이 쓴다",
+      "en": "Share it"
+     },
+     "r": {
+      "ko": "둘 다 한쪽 어깨가 흠뻑 젖었다. 이상하게 기분이 좋았다.",
+      "en": "You each got one shoulder soaked. Somehow it felt nice."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "그냥 뛰자!",
+      "en": "Let's just run!"
+     },
+     "r": {
+      "ko": "{f:store} 앞까지 뛰었다. 숨이 차서 웃음이 멈추지 않았다.",
+      "en": "You ran to the {f:store}, out of breath and laughing."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_snore",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(새벽 세 시. {partner}의 코 고는 소리가 오늘따라 우렁차다.)",
+    "en": "(3 a.m. {partner}'s snoring is especially heroic tonight.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "녹음해 둔다",
+      "en": "Record it"
+     },
+     "r": {
+      "ko": "아침에 들려줬더니 절대 자기 아니라고 우겼다.",
+      "en": "Played it back in the morning. They swore it wasn't them."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "살짝 돌아눕힌다",
+      "en": "Gently roll them over"
+     },
+     "r": {
+      "ko": "조용해졌다. 잠결에 {partner}이(가) 내 손을 잡았다.",
+      "en": "Quiet again. Half asleep, {partner} reached for your hand."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_playlist",
+   "who": "partner",
+   "where": [
+    "CITY",
+    "CAFE",
+    "PARK"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "너 생각나서 플레이리스트 만들었어. 제목은 비밀.",
+    "en": "I made you a playlist. The title is a secret."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "제목 보여 줘",
+      "en": "Tell me the title"
+     },
+     "r": {
+      "ko": "제목은 '걸으면서 웃게 되는 노래'였다.",
+      "en": "It was called 'Songs that make you smile on a walk.'"
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "첫 곡부터 듣는다",
+      "en": "Play the first song"
+     },
+     "r": {
+      "ko": "첫 곡은 우리가 처음 같이 들었던 노래였다.",
+      "en": "The first song was the one you heard together the very first time."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_plant",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "우리 화분 하나 키워 볼래? 이름도 지어 주고.",
+    "en": "Want to raise a plant together? We'll name it too."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "초록이로 하자",
+      "en": "Let's call it Greenie"
+     },
+     "r": {
+      "ko": "초록이는 생각보다 잘 자랐다.",
+      "en": "Greenie grew better than expected."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "죽이면 어떡해…",
+      "en": "What if we kill it…"
+     },
+     "r": {
+      "ko": "선인장으로 타협했다. 이름은 '버티기'.",
+      "en": "You settled on a cactus named 'Hang In There'."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_matching",
+   "who": "partner",
+   "where": [
+    "CITY",
+    "CAFE",
+    "PARK"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(가게 앞에서 {partner}이(가) 커플 양말을 들고 있다.) 이거 어때?",
+    "en": "({partner} is holding matching socks in front of a shop.) What do you think?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "귀엽다, 사자",
+      "en": "Cute, let's get them"
+     },
+     "r": {
+      "ko": "다음 날 둘 다 그 양말을 신고 나왔다.",
+      "en": "Next day you both showed up wearing them."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.005
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "양말까지는 좀…",
+      "en": "The next day, you both showed up wearing them."
+     },
+     "r": {
+      "ko": "{partner}이(가) 몰래 사서 서랍에 넣어 뒀다.",
+      "en": "{partner} bought them anyway and hid them in your drawer."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_fight_small",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(설거지를 누가 할지로 말다툼이 시작됐다.)",
+    "en": "(An argument starts over whose turn it is to do the dishes.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "가위바위보로 정하자",
+      "en": "Rock paper scissors"
+     },
+     "r": {
+      "ko": "세 판 내리 졌다. 설거지하면서 {partner}이(가) 옆에서 노래를 불러 줬다.",
+      "en": "You lost three in a row. {partner} sang to you while you washed up."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "같이 하자",
+      "en": "Let's do it together"
+     },
+     "r": {
+      "ko": "하나는 닦고 하나는 헹궜다. 금방 끝났다.",
+      "en": "One washed, one rinsed. Done in no time."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_late_text",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(밤늦게 {partner}에게서 문자가 왔다.) 자? 그냥 목소리 듣고 싶어서.",
+    "en": "(A late-night text from {partner}.) Are you asleep? Just wanted to hear your voice."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "전화를 건다",
+      "en": "Call them"
+     },
+     "r": {
+      "ko": "별 얘기 없이 한 시간을 통화했다.",
+      "en": "You talked for an hour about nothing at all."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "나도 (답장을 보낸다)",
+      "en": "Me too (text back)"
+     },
+     "r": {
+      "ko": "하트 하나가 돌아왔다.",
+      "en": "They sent back a single heart."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_cafe_new",
+   "who": "partner",
+   "where": [
+    "CAFE"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "여기 새로 생긴 카페인데, 메뉴 서로 골라 주기 할래?",
+    "en": "This café just opened. Want to order for each other?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "좋아, 대신 이상한 거 고를 거야",
+      "en": "Sure, I'm picking something weird"
+     },
+     "r": {
+      "ko": "{partner}의 얼굴이 민트초코 라떼 앞에서 굳었다.",
+      "en": "{partner}'s face froze in front of a mint chocolate latte."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.007
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "평소 먹던 걸로 고른다",
+      "en": "Order their usual"
+     },
+     "r": {
+      "ko": "'역시 날 너무 잘 알아.' {partner}이(가) 웃었다.",
+      "en": "\"You know me too well.\" {partner} smiled."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.007
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p_walk_stars",
+   "who": "partner",
+   "where": [
+    "PARK",
+    "BEACH"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(밤 산책 중에 {partner}이(가) 하늘을 가리켰다.) 저 별 이름 알아?",
+    "en": "(On a night walk, {partner} points at the sky.) Do you know that star's name?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "아는 척한다",
+      "en": "Pretend you know"
+     },
+     "r": {
+      "ko": "즉석에서 지은 별 이름을 {partner}이(가) 진지하게 믿었다.",
+      "en": "{partner} completely believed the name you made up."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "앱으로 찾아본다",
+      "en": "Look it up on an app"
+     },
+     "r": {
+      "ko": "생각보다 훨씬 먼 별이었다. 둘 다 잠깐 조용해졌다.",
+      "en": "It was much farther than you thought. You both went quiet for a moment."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_sick_care",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(목소리가 잠긴 {partner}이(가) 이불 속에서 손만 내밀었다.) …죽 사다 줘.",
+    "en": "({partner}, voice gone, sticks a hand out from under the blanket.) …Bring me porridge."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "직접 끓여 준다",
+      "en": "Make it yourself"
+     },
+     "r": {
+      "ko": "조금 짰지만 {partner}은(는) 한 그릇을 다 비웠다.",
+      "en": "A little salty, but {partner} finished every bite."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "제일 맛있는 집에서 사 온다",
+      "en": "Buy it from the best place"
+     },
+     "r": {
+      "ko": "약까지 챙겨 왔더니 {partner}이(가) 감동받은 얼굴을 했다.",
+      "en": "You brought medicine too. {partner} looked genuinely touched."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p_game_night",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "오늘 보드게임 하자. 지는 사람이 내일 아침 차리기.",
+    "en": "Board game night. Loser makes breakfast tomorrow."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "진심으로 이긴다",
+      "en": "Play to win"
+     },
+     "r": {
+      "ko": "이겼다. 다음 날 아침, 토스트가 조금 탔다.",
+      "en": "You won. The next morning, the toast was a little burnt."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "살짝 져 준다",
+      "en": "Let them win"
+     },
+     "r": {
+      "ko": "{partner}이(가) 눈치챘다. '다음엔 봐주지 마.'",
+      "en": "{partner} noticed. \"Don't go easy on me next time.\""
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_haircut",
+   "who": "partner",
+   "where": [
+    "CITY",
+    "CAFE",
+    "PARK"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(머리를 자른 {partner}이(가) 나를 빤히 본다.) …뭐 달라진 거 없어?",
+    "en": "({partner}, with a fresh haircut, stares at you.) …Notice anything different?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "머리 잘랐네! 잘 어울려",
+      "en": "You cut your hair! It looks great"
+     },
+     "r": {
+      "ko": "{partner}이(가) 하루 종일 기분이 좋았다.",
+      "en": "{partner} was in a great mood all day."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "…살 빠졌어?",
+      "en": "…Did you lose weight?"
+     },
+     "r": {
+      "ko": "정답은 아니었지만 그것도 나쁘지 않은 대답이었다.",
+      "en": "Wrong answer, but not a bad one."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_dance_kitchen",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(라디오에서 옛날 노래가 나오자 {partner}이(가) 손을 내밀었다.)",
+    "en": "(An old song comes on the radio. {partner} holds out a hand.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "손을 잡고 춤춘다",
+      "en": "Take it and dance"
+     },
+     "r": {
+      "ko": "좁은 부엌에서 세 번 부딪혔다. 그래도 끝까지 췄다.",
+      "en": "You bumped into things three times in the tiny kitchen. You danced to the end anyway."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "부끄러워서 웃기만 한다",
+      "en": "Just laugh, embarrassed"
+     },
+     "r": {
+      "ko": "{partner}이(가) 혼자 추는 걸 보다가 결국 따라 췄다.",
+      "en": "You watched {partner} dance alone, then joined in."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_lost_key",
+   "who": "partner",
+   "where": [
+    "CITY",
+    "CAFE",
+    "PARK"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(현관 앞.) …열쇠 너한테 있지? 나 없는데.",
+    "en": "(At the front door.) …You have the keys, right? I don't."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "나도 없는데…",
+      "en": "I don't either…"
+     },
+     "r": {
+      "ko": "열쇠공을 기다리며 계단에 앉아 {f:store} 아이스크림을 먹었다.",
+      "en": "You sat on the stairs eating {f:store} ice cream while waiting for the locksmith."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "가방을 탈탈 턴다",
+      "en": "Empty your whole bag"
+     },
+     "r": {
+      "ko": "가방 맨 밑에서 나왔다. 영수증 스무 장과 함께.",
+      "en": "Found them at the very bottom, under twenty receipts."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_compliment",
+   "who": "partner",
+   "where": [
+    "CITY",
+    "CAFE",
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(아무 이유 없이 {partner}이(가) 말했다.) 너랑 있으면 그냥 편해.",
+    "en": "({partner} says, out of nowhere) I just feel at ease with you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "나도 그래",
+      "en": "Me too"
+     },
+     "r": {
+      "ko": "잠깐 둘 다 아무 말도 하지 않았다. 그게 좋았다.",
+      "en": "Neither of you said anything for a while. It was nice."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "갑자기 왜 그래?",
+      "en": "Where did that come from?"
+     },
+     "r": {
+      "ko": "'그냥. 말하고 싶었어.' {partner}이(가) 웃었다.",
+      "en": "\"Just felt like saying it.\" {partner} smiled."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_trip_plan",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "우리 다음 휴가 어디 갈까? 지도 펴 놨어.",
+    "en": "Where should we go on our next break? I've got the map out."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "바다!",
+      "en": "The sea!"
+     },
+     "r": {
+      "ko": "검색 기록이 숙소 사진으로 가득 찼다.",
+      "en": "The search history filled up with beach rentals."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "아무 데나 눈 감고 찍자",
+      "en": "Close your eyes and point"
+     },
+     "r": {
+      "ko": "손가락이 바다 한가운데를 찍었다. 다시 찍기로 했다.",
+      "en": "Your finger landed in the middle of the ocean. You agreed to try again."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_cat_street",
+   "who": "partner",
+   "where": [
+    "CITY",
+    "PARK"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(골목에서 고양이 한 마리가 {partner}를 졸졸 따라온다.)",
+    "en": "(A street cat keeps following {partner} down the alley.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "간식을 사다 준다",
+      "en": "Buy it a snack"
+     },
+     "r": {
+      "ko": "고양이는 간식만 먹고 쿨하게 떠났다.",
+      "en": "The cat ate the snack and left without a backward glance."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.003
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "사진을 찍는다",
+      "en": "Take a photo"
+     },
+     "r": {
+      "ko": "그날 찍은 사진 중에 제일 잘 나온 건 고양이와 {partner}이었다.",
+      "en": "Best photo of the day: {partner} and the cat."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_morning_coffee",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(눈을 떠 보니 머리맡에 커피가 있다. 메모도 하나.)",
+    "en": "(You wake up to coffee by the bed, and a note.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "메모를 읽는다",
+      "en": "Read the note"
+     },
+     "r": {
+      "ko": "'오늘도 잘 다녀와.' 글씨가 삐뚤빼뚤했다.",
+      "en": "\"Have a good day.\" The handwriting was wobbly."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "커피부터 마신다",
+      "en": "Coffee first"
+     },
+     "r": {
+      "ko": "설탕이 딱 내 취향만큼 들어 있었다.",
+      "en": "Exactly the amount of sugar you like."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_karaoke",
+   "who": "partner",
+   "where": [
+    "CITY"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "{f:karaoke} 가자! 오늘은 내가 너 18번 맞혀 볼게.",
+    "en": "Let's do {f:karaoke}! I bet I can guess your go-to song."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "맞혀 봐",
+      "en": "Go ahead and guess"
+     },
+     "r": {
+      "ko": "단번에 맞혔다. 조금 소름 돋았다.",
+      "en": "Got it on the first try. Slightly creepy."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "듀엣곡으로 하자",
+      "en": "Let's do a duet"
+     },
+     "r": {
+      "ko": "박자는 엉망이었지만 점수는 98점이 나왔다.",
+      "en": "Completely off beat, but the machine gave you a 98."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p_jealous_ex_photo",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 60,
+   "line": {
+    "ko": "(정리하던 {partner}이(가) 내 옛날 앨범을 펼쳤다.) 이 사람은 누구야?",
+    "en": "({partner} opens your old album while tidying up.) Who's this?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "솔직하게 말한다",
+      "en": "Tell the truth"
+     },
+     "r": {
+      "ko": "'그렇구나.' {partner}이(가) 앨범을 덮고 내 손을 잡았다.",
+      "en": "\"I see.\" {partner} closed the album and took your hand."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "그냥 친구야",
+      "en": "Just a friend"
+     },
+     "r": {
+      "ko": "{partner}이(가) 눈을 가늘게 떴지만 더 묻지 않았다.",
+      "en": "{partner} narrowed their eyes, but didn't ask more."
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  },
+  {
+   "id": "p_babysit",
+   "who": "partner",
+   "where": [
+    "CITY",
+    "CAFE",
+    "PARK"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 40,
+   "line": {
+    "ko": "(조카를 맡게 된 {partner}이(가) 다급하게 전화했다.) 도와줘. 지금 당장.",
+    "en": "({partner}, babysitting a niece, calls in a panic.) Help me. Right now."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "달려간다",
+      "en": "Rush over"
+     },
+     "r": {
+      "ko": "셋이 놀이터에서 해 질 때까지 놀았다.",
+      "en": "The three of you played at the playground until sunset."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "영상통화로 동화책을 읽어 준다",
+      "en": "Read a bedtime story over video"
+     },
+     "r": {
+      "ko": "아이보다 {partner}이(가) 먼저 잠들었다.",
+      "en": "{partner} fell asleep before the kid did."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_cooking_class",
+   "who": "partner",
+   "where": [
+    "CITY",
+    "CLASS"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "원데이 쿠킹 클래스 있대. 같이 갈래?",
+    "en": "There's a one-day cooking class. Want to go?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "가자",
+      "en": "Let's go"
+     },
+     "r": {
+      "ko": "둘이 만든 {f:makefood}은(는) 모양이 다 달랐다. 맛은 같았다.",
+      "en": "Your {f:makefood} all came out different shapes. They tasted the same."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.02
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "우리 집 부엌에서 하자",
+      "en": "Let's do it in our kitchen"
+     },
+     "r": {
+      "ko": "유튜브를 보며 따라 했다. 부엌은 전쟁터가 됐다.",
+      "en": "You followed a video. The kitchen became a war zone."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_sunrise",
+   "who": "partner",
+   "where": [
+    "BEACH",
+    "PARK"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "일출 보러 가자. 알람 다섯 시야.",
+    "en": "Let's watch the sunrise. Alarm's at five."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "일어난다",
+      "en": "Get up"
+     },
+     "r": {
+      "ko": "해가 뜨는 동안 {partner}의 어깨에 기대 있었다.",
+      "en": "You leaned on {partner}'s shoulder while the sun came up."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "오 분만…",
+      "en": "Five more minutes…"
+     },
+     "r": {
+      "ko": "결국 해가 다 뜬 뒤에 도착했다. 그래도 커피는 맛있었다.",
+      "en": "You got there after sunrise. The coffee was still good."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_wedding_video",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "married"
+   ],
+   "weight": 1,
+   "cooldownDays": 90,
+   "line": {
+    "ko": "(결혼식 영상을 다시 틀었다.) 너 여기서 울었지?",
+    "en": "(You rewatch the wedding video.) You cried here, didn't you?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "너도 울었잖아",
+      "en": "You cried too"
+     },
+     "r": {
+      "ko": "서로 아니라고 우기다가 결국 같이 또 울었다.",
+      "en": "You both denied it, then both cried again."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "빨리 감기를 누른다",
+      "en": "Hit fast forward"
+     },
+     "r": {
+      "ko": "{partner}이(가) 리모컨을 빼앗아 그 장면을 세 번 돌려 봤다.",
+      "en": "{partner} grabbed the remote and replayed that part three times."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_grocery",
+   "who": "partner",
+   "where": [
+    "CITY"
+   ],
+   "requires": [
+    "married"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(장 보러 왔다. 카트에 과자만 가득하다.)",
+    "en": "(Grocery run. The cart is somehow full of snacks.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "다 사자",
+      "en": "Buy it all"
+     },
+     "r": {
+      "ko": "그날 밤 과자 파티를 했다. 저녁은 잊어버렸다.",
+      "en": "Snack party that night. Dinner was forgotten."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "하나씩만 고르자",
+      "en": "One each"
+     },
+     "r": {
+      "ko": "{partner}은(는) 고민하다가 내 과자를 골랐다.",
+      "en": "{partner} thought hard, then picked your favorite."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.003
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p_furniture",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "married"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(조립 가구 설명서를 펼친 지 두 시간째.) …나사가 하나 남는데?",
+    "en": "(Two hours into the flat-pack instructions.) …Why is there a screw left over?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "못 본 척한다",
+      "en": "Pretend you didn't see it"
+     },
+     "r": {
+      "ko": "선반은 아직까지 잘 버티고 있다. 아마도.",
+      "en": "The shelf is still standing. Probably."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "처음부터 다시",
+      "en": "Start over"
+     },
+     "r": {
+      "ko": "두 번째는 한 시간 만에 끝났다. 하이파이브를 했다.",
+      "en": "Second try took an hour. High five."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "p_anniv_letter",
+   "who": "partner",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(책 사이에서 {partner}이(가) 예전에 쓴 쪽지가 떨어졌다.)",
+    "en": "(A note {partner} wrote long ago falls out of a book.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "소리 내서 읽는다",
+      "en": "Read it out loud"
+     },
+     "r": {
+      "ko": "{partner}이(가) 귀까지 빨개져서 쪽지를 빼앗았다.",
+      "en": "{partner} turned red to the ears and snatched it away."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "몰래 다시 넣어 둔다",
+      "en": "Quietly put it back"
+     },
+     "r": {
+      "ko": "가끔 꺼내 볼 생각이다.",
+      "en": "Now and then, you'll take it out and read it again."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "f_brunch",
+   "who": "friend",
+   "where": [
+    "CAFE",
+    "CITY"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "브런치 먹자! 나 할 얘기 엄청 많아.",
+    "en": "Brunch! I have so much to tell you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "무슨 일인데?",
+      "en": "What happened?"
+     },
+     "r": {
+      "ko": "세 시간 동안 이야기했는데 결론은 없었다. 그게 좋았다.",
+      "en": "Three hours of talking, nothing decided. It was great."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.15
+      },
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "나도 할 얘기 있어",
+      "en": "I have news too"
+     },
+     "r": {
+      "ko": "둘 다 동시에 말을 시작했다.",
+      "en": "You both started talking at the same time."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.15
+      },
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_move_help",
+   "who": "friend",
+   "where": [
+    "CITY"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 60,
+   "line": {
+    "ko": "(친구 {friend}의 이사 날.) 짐이 왜 이렇게 많냐…",
+    "en": "({friend}'s moving day.) Why do you own so much stuff…"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "끝까지 돕는다",
+      "en": "Help till the end"
+     },
+     "r": {
+      "ko": "마지막 상자를 옮기고 {f:movefood}을(를) 먹었다. 세상에서 제일 맛있었다.",
+      "en": "After the last box, {f:movefood} on the floor. Best meal ever."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "박스 하나 들고 사라진다",
+      "en": "Carry one box and vanish"
+     },
+     "r": {
+      "ko": "{friend}이(가) 단톡방에 내 사진을 올렸다. '배신자'.",
+      "en": "{friend} posted your photo in the group chat: 'Traitor.'"
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "f_quiz",
+   "who": "friend",
+   "where": [
+    "CITY",
+    "CAFE"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "방탈출 가자! 이번엔 꼭 시간 안에 나간다.",
+    "en": "Escape room! This time we're getting out in time."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "가자",
+      "en": "Let's go"
+     },
+     "r": {
+      "ko": "1분 남기고 탈출했다. 소리를 너무 질러서 목이 쉬었다.",
+      "en": "Escaped with a minute left. Screamed yourselves hoarse."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      },
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "공포 테마로 하자",
+      "en": "Make it the horror one"
+     },
+     "r": {
+      "ko": "{friend}이(가) 첫 방에서 포기를 외쳤다.",
+      "en": "{friend} begged to quit in the first room."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      },
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_breakup_call",
+   "who": "friend",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 90,
+   "line": {
+    "ko": "(새벽 한 시, {friend}에게 전화가 왔다. 울고 있다.)",
+    "en": "(1 a.m. {friend} is calling, crying.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "지금 갈게",
+      "en": "I'm coming over"
+     },
+     "r": {
+      "ko": "{f:store} 술과 휴지 한 통으로 밤을 새웠다.",
+      "en": "You stayed up all night with {f:store} drinks and a box of tissues."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.3
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "끝까지 들어 준다",
+      "en": "Just listen"
+     },
+     "r": {
+      "ko": "해가 뜰 때쯤 {friend}이(가) 웃었다. '고마워. 진짜로.'",
+      "en": "By sunrise {friend} was laughing. \"Thank you. Really.\""
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.25
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_old_school",
+   "who": "friend",
+   "where": [
+    "CITY",
+    "CAFE"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "야, 우리 학교 앞 {f:street}집 아직 있대!",
+    "en": "Hey, that {f:street} place by our old school is still open!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당장 가자",
+      "en": "Let's go now"
+     },
+     "r": {
+      "ko": "맛은 그대로였다. 우리만 조금 나이 들었다.",
+      "en": "It tasted exactly the same. Only you two had gotten older."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      },
+      {
+       "kind": "money",
+       "amount": -0.005
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "거기 사장님 아직 계셔?",
+      "en": "Is the old owner still there?"
+     },
+     "r": {
+      "ko": "사장님이 우리를 알아보셨다. {f:stallsoup}을(를) 더 주셨다.",
+      "en": "The owner recognized you and gave extra broth."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      },
+      {
+       "kind": "money",
+       "amount": -0.005
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_exercise",
+   "who": "friend",
+   "where": [
+    "PARK",
+    "GYM"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "같이 운동하자. 혼자 하니까 자꾸 빠져.",
+    "en": "Work out with me. I keep skipping on my own."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "좋아, 매주 하자",
+      "en": "Deal, every week"
+     },
+     "r": {
+      "ko": "3주째 되던 날, 둘 다 늦잠을 잤다. 서로 용서했다.",
+      "en": "Week three, you both overslept. You forgave each other."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.15
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "운동 후 {f:delivery} 조건으로",
+      "en": "Only if there's {f:delivery} after"
+     },
+     "r": {
+      "ko": "운동은 30분, {f:delivery}은(는) 두 시간이었다.",
+      "en": "Thirty minutes of exercise, two hours of {f:delivery}."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.15
+      },
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_secret",
+   "who": "friend",
+   "where": [
+    "CAFE",
+    "HOME"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 90,
+   "line": {
+    "ko": "…너한테만 말하는 건데, 나 사실 지금 일 그만둘까 고민 중이야.",
+    "en": "…I'm only telling you this, but I'm thinking about quitting my job."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "하고 싶은 거 해",
+      "en": "Do what you want"
+     },
+     "r": {
+      "ko": "{friend}의 얼굴이 조금 가벼워졌다.",
+      "en": "{friend} looked a little lighter."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "통장 잔고부터 보자",
+      "en": "Let's look at your savings first"
+     },
+     "r": {
+      "ko": "같이 엑셀을 켰다. 현실은 냉정했다. 그래도 계획이 생겼다.",
+      "en": "You opened a spreadsheet together. Reality was harsh, but now there's a plan."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_gift",
+   "who": "friend",
+   "where": [
+    "CITY",
+    "CAFE"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(만나자마자 {friend}이(가) 작은 봉투를 내밀었다.) 그냥. 지나가다 보여서.",
+    "en": "(The moment you meet, {friend} hands you a small envelope.) Just because. I saw it and thought of you."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "열어 본다",
+      "en": "Open it"
+     },
+     "r": {
+      "ko": "예전에 지나가듯 갖고 싶다고 했던 열쇠고리였다.",
+      "en": "The keychain you mentioned wanting once, in passing."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "다음엔 내가 살게",
+      "en": "My treat next time"
+     },
+     "r": {
+      "ko": "{friend}이(가) '약속했다'며 녹음했다.",
+      "en": "{friend} recorded you saying it. \"It's a promise.\""
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.15
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_concert",
+   "who": "friend",
+   "where": [
+    "CITY"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 45,
+   "line": {
+    "ko": "표 두 장 생겼어. 오늘 밤 공연, 갈래?",
+    "en": "I got two tickets. Concert tonight, you in?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당연하지",
+      "en": "Obviously"
+     },
+     "r": {
+      "ko": "목이 쉴 때까지 따라 불렀다.",
+      "en": "You sang along until your voice gave out."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.25
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "내일 일찍 일어나야 하는데…",
+      "en": "I have an early morning…"
+     },
+     "r": {
+      "ko": "결국 갔다. 다음 날 피곤했지만 후회는 없었다.",
+      "en": "You went anyway. Exhausted the next day, zero regrets."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_photo_booth",
+   "who": "friend",
+   "where": [
+    "CITY"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "인생네컷 찍자! 이번엔 콘셉트 정해서.",
+    "en": "Photo booth! This time with a theme."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "무표정 콘셉트",
+      "en": "Deadpan theme"
+     },
+     "r": {
+      "ko": "네 컷 내내 웃음을 참다가 마지막 컷에서 터졌다.",
+      "en": "You held it together for three shots and lost it on the fourth."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.15
+      },
+      {
+       "kind": "money",
+       "amount": -0.003
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "서로 머리띠 골라 주기",
+      "en": "Pick each other's headbands"
+     },
+     "r": {
+      "ko": "{friend}이(가) 고른 건 공룡 머리띠였다.",
+      "en": "{friend} picked you a dinosaur headband."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.15
+      },
+      {
+       "kind": "money",
+       "amount": -0.003
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_wrong_chat",
+   "who": "friend",
+   "where": [
+    "HOME",
+    "CITY"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "(단톡방에 {friend}의 메시지가 잘못 올라왔다.) '…아 이거 가족 단톡방에 보내려던 건데'",
+    "en": "({friend} posts in the group chat by mistake.) \"…oh no, that was meant for my family chat\""
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "캡처해 둔다",
+      "en": "Screenshot it"
+     },
+     "r": {
+      "ko": "{friend}이(가) 일주일 동안 커피를 사 줬다. 입막음 비용이었다.",
+      "en": "{friend} bought your coffee for a week. Hush money."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.1
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "못 본 척해 준다",
+      "en": "Pretend you didn't see"
+     },
+     "r": {
+      "ko": "{friend}이(가) 개인톡으로 '너만은 내 편'이라고 보냈다.",
+      "en": "{friend} texted you privately: \"You're the only one on my side.\""
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_birthday_surprise",
+   "who": "friend",
+   "where": [
+    "HOME",
+    "CITY"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 120,
+   "line": {
+    "ko": "(친구들이 몰래 {friend}의 깜짝 생일 파티를 준비 중이다.) 너는 케이크 담당!",
+    "en": "(Everyone's secretly planning a surprise party for {friend}.) You're on cake duty!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "직접 만든다",
+      "en": "Bake it yourself"
+     },
+     "r": {
+      "ko": "모양은 무너졌지만 {friend}이(가) 울었다. 좋은 쪽으로.",
+      "en": "It collapsed a bit, but {friend} cried. The good kind."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.25
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "제일 예쁜 걸로 산다",
+      "en": "Buy the prettiest one"
+     },
+     "r": {
+      "ko": "촛불을 끄기도 전에 {friend}이(가) 사진을 스무 장 찍었다.",
+      "en": "{friend} took twenty photos before blowing out the candles."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      },
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_advice_love",
+   "who": "friend",
+   "where": [
+    "CAFE"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "요즘 연애 어때? 솔직하게.",
+    "en": "How's your love life lately? Be honest."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "솔직하게 털어놓는다",
+      "en": "Tell the honest truth"
+     },
+     "r": {
+      "ko": "{friend}이(가) 끝까지 듣더니 딱 한마디 했다. '넌 행복해야 돼.'",
+      "en": "{friend} listened to the end, then said just one thing: \"You deserve to be happy.\""
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "너는?",
+      "en": "What about you?"
+     },
+     "r": {
+      "ko": "대화는 곧 {friend}의 이야기로 넘어갔다. 그것도 좋았다.",
+      "en": "The talk turned to {friend}'s life. That was nice too."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.15
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_road_trip",
+   "who": "friend",
+   "where": [
+    "CITY"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 60,
+   "line": {
+    "ko": "주말에 즉흥으로 바다 갈 사람!",
+    "en": "Spontaneous trip to the sea this weekend, who's in?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "나!",
+      "en": "Me!"
+     },
+     "r": {
+      "ko": "휴게소 호두과자가 여행의 하이라이트였다.",
+      "en": "The rest-stop walnut cakes were the highlight of the trip."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.25
+      },
+      {
+       "kind": "money",
+       "amount": -0.03
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "이번엔 패스…",
+      "en": "I'll pass this time…"
+     },
+     "r": {
+      "ko": "단톡방에 올라온 사진들을 보며 다음엔 꼭 가겠다고 다짐했다.",
+      "en": "Watching the photos roll into the group chat, you swore you'd go next time."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "f_pet_sit",
+   "who": "friend",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 90,
+   "line": {
+    "ko": "나 출장 가는 동안 우리 강아지 좀 봐 줄 수 있어?",
+    "en": "Can you watch my dog while I'm away for work?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "물론이지",
+      "en": "Of course"
+     },
+     "r": {
+      "ko": "사흘 만에 강아지가 나를 더 좋아하게 됐다. {friend}이(가) 서운해했다.",
+      "en": "In three days the dog liked you more. {friend} was a little hurt."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "산책은 몇 번 해?",
+      "en": "How many walks a day?"
+     },
+     "r": {
+      "ko": "대답은 '하루 세 번, 각 한 시간'이었다. 다리가 튼튼해졌다.",
+      "en": "\"Three a day, an hour each.\" Your legs got stronger."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_study_together",
+   "who": "friend",
+   "where": [
+    "LIBRARY",
+    "CAFE"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "같이 공부하자. 휴대폰은 압수.",
+    "en": "Let's study together. Phones confiscated."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "좋아",
+      "en": "Okay"
+     },
+     "r": {
+      "ko": "두 시간 동안 진짜로 공부했다. 둘 다 놀랐다.",
+      "en": "Two whole hours of actual studying. You were both shocked."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "10분만 쉬고",
+      "en": "After a ten-minute break"
+     },
+     "r": {
+      "ko": "10분이 한 시간이 됐다. 그래도 즐거웠다.",
+      "en": "Ten minutes became an hour. Still fun."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_lost_bet",
+   "who": "friend",
+   "where": [
+    "CITY",
+    "CAFE"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "내기에서 진 사람이 밥 사기로 했잖아. 기억하지?",
+    "en": "Loser buys dinner, remember the bet?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "…기억 안 나는데",
+      "en": "…I don't remember that"
+     },
+     "r": {
+      "ko": "{friend}이(가) 녹음 파일을 틀었다.",
+      "en": "{friend} played the voice recording."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.01
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "깔끔하게 산다",
+      "en": "Pay up gracefully"
+     },
+     "r": {
+      "ko": "{friend}이(가) 제일 비싼 메뉴를 시켰다.",
+      "en": "{friend} ordered the most expensive thing on the menu."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.015
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_thrift",
+   "who": "friend",
+   "where": [
+    "CITY"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "빈티지 가게 구경 가자. 득템하면 내가 아이스크림 쏜다.",
+    "en": "Let's hit the vintage shops. If you score something good, ice cream's on me."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "가자",
+      "en": "Let's go"
+     },
+     "r": {
+      "ko": "5천 원짜리 재킷을 건졌다. {friend}이(가) 약속을 지켰다.",
+      "en": "A jacket for five dollars. {friend} kept the promise."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.005
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "구경만 할 거야",
+      "en": "Just looking"
+     },
+     "r": {
+      "ko": "가게 세 곳을 돌고 둘 다 똑같은 모자를 샀다.",
+      "en": "Three shops later, you both bought the same hat."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -0.005
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "f_wedding_speech",
+   "who": "friend",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "hasFriend",
+    "age>=26"
+   ],
+   "weight": 1,
+   "cooldownDays": 180,
+   "line": {
+    "ko": "(친구 결혼식 축사를 부탁받았다. 원고가 아직 백지다.)",
+    "en": "(A friend asked you to give a wedding speech. The page is still blank.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "흑역사로 웃긴다",
+      "en": "Go with embarrassing stories"
+     },
+     "r": {
+      "ko": "하객들이 웃었다. 신랑 신부는 조금 덜 웃었다.",
+      "en": "The guests laughed. The couple, slightly less."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.2
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "진심으로 쓴다",
+      "en": "Write it from the heart"
+     },
+     "r": {
+      "ko": "읽다가 목이 메었다. 신부가 같이 울었다.",
+      "en": "Your voice cracked halfway. The bride cried with you."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.25
+      }
+     ]
+    }
+   ],
+   "maxPerLife": 2
+  },
+  {
+   "id": "f_reunion_call",
+   "who": "friend",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "hasFriend"
+   ],
+   "weight": 1,
+   "cooldownDays": 180,
+   "line": {
+    "ko": "(오랜만에 고등학교 단톡방이 울린다.) '다음 주에 다 같이 볼 사람?'",
+    "en": "(The old high school group chat lights up.) \"Anyone free to meet up next week?\""
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "참석!",
+      "en": "I'm in!"
+     },
+     "r": {
+      "ko": "10년 만에 만났는데 대화는 어제처럼 이어졌다.",
+      "en": "Ten years apart, and the conversation picked up like it was yesterday."
+     },
+     "effects": [
+      {
+       "kind": "social",
+       "delta": 0.25
+      }
+     ]
+    },
+    {
+     "t": {
+      "ko": "이모티콘만 보낸다",
+      "en": "Just send an emoji"
+     },
+     "r": {
+      "ko": "다음 날 단체 사진에 내 자리만 비어 있었다. 조금 아쉬웠다.",
+      "en": "The group photo had an empty spot where you'd have been. A little regret."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "m_partner_sleep",
+   "who": "me",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered",
+    "!apart"
+   ],
+   "weight": 1,
+   "cooldownDays": 10,
+   "line": {
+    "ko": "({partner}이(가) 소파에서 잠들었다. 텔레비전은 혼자 떠들고 있다.)",
+    "en": "({partner} fell asleep on the sofa. The TV keeps talking to itself.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "담요를 덮어 준다",
+      "en": "Cover them with a blanket"
+     },
+     "r": {
+      "ko": "잠결에 {partner}이(가) 웅얼거렸다. '고마워…'",
+      "en": "Half asleep, {partner} mumbled, \"Thanks…\""
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "옆에 같이 눕는다",
+      "en": "Lie down next to them"
+     },
+     "r": {
+      "ko": "눈을 떠 보니 둘 다 목이 뻐근했다. 그래도 좋았다.",
+      "en": "You both woke with stiff necks. Worth it."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "m_couple_budget",
+   "who": "me",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "married"
+   ],
+   "weight": 1,
+   "cooldownDays": 60,
+   "line": {
+    "ko": "(가계부를 펼쳤다. 이번 달 '기타' 항목이 이상하게 크다.)",
+    "en": "(You open the household budget. 'Miscellaneous' is suspiciously large this month.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "{partner}에게 물어본다",
+      "en": "Ask {partner}"
+     },
+     "r": {
+      "ko": "알고 보니 둘 다 서로 몰래 선물을 샀다.",
+      "en": "Turns out you'd both secretly bought each other gifts."
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "못 본 걸로 한다",
+      "en": "Pretend you didn't see it"
+     },
+     "r": {
+      "ko": "다음 달 '기타'는 더 커졌다.",
+      "en": "Next month, 'Miscellaneous' got even bigger."
+     },
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "m_partner_habit",
+   "who": "me",
+   "where": [
+    "HOME"
+   ],
+   "requires": [
+    "partnered",
+    "!apart"
+   ],
+   "weight": 1,
+   "cooldownDays": 90,
+   "line": {
+    "ko": "({partner}은(는) 치약을 꼭 가운데부터 짠다. 오늘도.)",
+    "en": "({partner} squeezes the toothpaste from the middle. Again.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "포스트잇을 붙인다",
+      "en": "Leave a sticky note"
+     },
+     "r": {
+      "ko": "다음 날 포스트잇에 답장이 붙어 있었다. '알았어 ♥'",
+      "en": "The next day, a reply was stuck to it: \"Got it ♥\""
+     },
+     "effects": []
+    },
+    {
+     "t": {
+      "ko": "그냥 받아들인다",
+      "en": "Accept it"
+     },
+     "r": {
+      "ko": "사랑은 치약을 포기하는 일이었다.",
+      "en": "Love, it turns out, means letting the toothpaste go."
+     },
+     "effects": []
+    }
+   ],
+   "maxPerLife": 1
+  }
+ ]
+}

@@ -1,0 +1,692 @@
+{
+ "events": [
+  {
+   "id": "PJ_NIGHT_SHIFT",
+   "cat": "partner",
+   "rarity": "common",
+   "tone": "warm",
+   "big": false,
+   "title": {
+    "ko": "엇갈리는 시간",
+    "en": "Opposite hours"
+   },
+   "requires": [
+    "fatedPartner",
+    "fatedJobNight"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN@H7": 0.4,
+     "BRANCH_CLASH@day": 0.3
+    },
+    "mods": {
+     "romance": 0.3
+    }
+   },
+   "location": "home",
+   "who": "partner",
+   "line": {
+    "ko": "({partner}의 {fatedJob} 야간 근무가 이어지고 있다. 같은 집에 살아도 얼굴 본 지 사흘째.) …미안, 오늘도 늦어.",
+    "en": "({partner}'s night shifts as a {fatedJob_en} keep going. Three days without really seeing each other.) …Sorry, late again tonight."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "새벽에 도시락을 싸서 찾아간다",
+      "en": "Bring them a late-night lunch box"
+     },
+     "w": {
+      "SWEET": 0.8,
+      "TIRED": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "냉장고에 쪽지를 붙여 둔다",
+      "en": "Leave a note on the fridge"
+     },
+     "w": {
+      "SWEET": 0.6,
+      "TIRED": 0.4
+     }
+    },
+    {
+     "t": {
+      "ko": "서운하다고 솔직하게 말한다",
+      "en": "Say honestly that you feel lonely"
+     },
+     "w": {
+      "TALK": 0.6,
+      "TIRED": 0.4
+     }
+    }
+   ],
+   "outcomes": {
+    "SWEET": {
+     "r": {
+      "ko": "다음 날 아침, 쪽지 밑에 삐뚤빼뚤한 답장이 붙어 있었다. '덕분에 버텼어.'",
+      "en": "The next morning there was a wobbly reply under your note: \"You got me through the night.\""
+     },
+     "effects": []
+    },
+    "TALK": {
+     "r": {
+      "ko": "{partner}은(는) 한참 말이 없다가, 쉬는 날을 전부 나에게 쓰겠다고 했다.",
+      "en": "{partner} was quiet for a long time, then promised you every day off."
+     },
+     "effects": []
+    },
+    "TIRED": {
+     "r": {
+      "ko": "둘 다 지쳐 있었다. 같은 집에서 다른 시간대를 사는 기분이었다.",
+      "en": "You were both worn out, living in the same home on opposite clocks."
+     },
+     "effects": []
+    }
+   },
+   "repeatable": true,
+   "cooldown": 48
+  },
+  {
+   "id": "PJ_AWAY_AGAIN",
+   "cat": "partner",
+   "rarity": "common",
+   "tone": "warm",
+   "big": false,
+   "title": {
+    "ko": "또 떠나는 사람",
+    "en": "Leaving again"
+   },
+   "requires": [
+    "fatedPartner",
+    "fatedJobAway"
+   ],
+   "trigger": {
+    "signals": {
+     "URANUS@H7": 0.3,
+     "YEOKMA": 0.5
+    },
+    "mods": {
+     "romance": 0.3
+    }
+   },
+   "location": "airport",
+   "who": "partner",
+   "line": {
+    "ko": "(현관에 {partner}의 캐리어가 또 서 있다. 이번 달에 집에 있는 날은 닷새뿐.) 다녀올게. 선물 사 올게.",
+    "en": "({partner}'s suitcase is by the door again. Five days home this month.) I'll be back. I'll bring you something."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "공항까지 배웅한다",
+      "en": "See them off at the airport"
+     },
+     "w": {
+      "SWEET": 0.8,
+      "LONELY": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "이번엔 언제 와? (달력을 꺼낸다)",
+      "en": "When are you back? (get out the calendar)"
+     },
+     "w": {
+      "SWEET": 0.5,
+      "LONELY": 0.5
+     }
+    }
+   ],
+   "outcomes": {
+    "SWEET": {
+     "r": {
+      "ko": "출국장 앞에서 {partner}이(가) 돌아서서 한 번 더 손을 흔들었다.",
+      "en": "At departures, {partner} turned around to wave one more time."
+     },
+     "effects": [],
+     "card": {
+      "caption": {
+       "ko": "또, 공항",
+       "en": "The airport, again"
+      },
+      "location": "airport",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 3
+     }
+    },
+    "LONELY": {
+     "r": {
+      "ko": "빈 집에 불을 켰다. 익숙해질 줄 알았는데, 아니었다.",
+      "en": "You turned on the lights in the empty house. You thought you'd get used to it. You didn't."
+     },
+     "effects": []
+    }
+   },
+   "repeatable": true,
+   "cooldown": 48
+  },
+  {
+   "id": "PJ_ZERO_MONTH",
+   "cat": "partner",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": false,
+   "title": {
+    "ko": "수입 0원",
+    "en": "A zero month"
+   },
+   "requires": [
+    "fatedPartner",
+    "fatedJobUnstable"
+   ],
+   "trigger": {
+    "signals": {
+     "group:PYEON_JAE": 0.4,
+     "unfavorable": 0.4
+    },
+    "mods": {
+     "wealth": -0.5
+    }
+   },
+   "location": "home",
+   "who": "partner",
+   "line": {
+    "ko": "({partner}이(가) 통장을 보여줬다. 이번 달 {fatedJob} 수입, 0원.) …나 이 일 계속해도 될까?",
+    "en": "({partner} shows you the bank app. This month's income as a {fatedJob_en}: zero.) …Should I even keep doing this?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "내가 버틸게. 계속해",
+      "en": "I'll hold us up. Keep going"
+     },
+     "w": {
+      "BELIEVE": 0.7,
+      "STRAIN": 0.3
+     }
+    },
+    {
+     "t": {
+      "ko": "당분간 다른 일도 같이 해보자",
+      "en": "Take on something else for a while too"
+     },
+     "w": {
+      "PRACTICAL": 0.7,
+      "STRAIN": 0.3
+     }
+    }
+   ],
+   "outcomes": {
+    "BELIEVE": {
+     "r": {
+      "ko": "{partner}은(는) 그날 밤 작업실 불을 새벽까지 켜 두었다.",
+      "en": "That night the light in {partner}'s workroom stayed on until dawn."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": -3
+      }
+     ]
+    },
+    "PRACTICAL": {
+     "r": {
+      "ko": "{partner}은(는) 아르바이트를 시작했다. 꿈은 주말로 옮겨졌다.",
+      "en": "{partner} took a part-time job. The dream moved to weekends."
+     },
+     "effects": []
+    },
+    "STRAIN": {
+     "r": {
+      "ko": "돈 이야기는 결국 싸움이 됐다. 둘 다 무서웠던 거다.",
+      "en": "Talking about money turned into a fight. You were both scared."
+     },
+     "effects": []
+    }
+   },
+   "repeatable": true,
+   "cooldown": 48
+  },
+  {
+   "id": "PJ_BREAKTHROUGH",
+   "cat": "partner",
+   "rarity": "uncommon",
+   "tone": "warm",
+   "big": true,
+   "title": {
+    "ko": "드디어",
+    "en": "Finally"
+   },
+   "requires": [
+    "fatedPartner",
+    "fatedJobUnstable"
+   ],
+   "trigger": {
+    "signals": {
+     "JUPITER@H10": 0.5,
+     "favorable": 0.5,
+     "group:JEONG_JAE": 0.4
+    },
+    "mods": {
+     "wealth": 0.5,
+     "opportunity": 0.5
+    }
+   },
+   "location": "restaurant",
+   "who": "partner",
+   "line": {
+    "ko": "({partner}에게서 전화가 왔다. 목소리가 떨린다.) 나… 됐어. 진짜 됐어!",
+    "en": "({partner} calls, voice shaking.) I… got it. I actually got it!"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "당장 달려간다",
+      "en": "Run to them right now"
+     },
+     "w": {
+      "JOY": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "(같이 소리 지른다)",
+      "en": "(Scream along with them)"
+     },
+     "w": {
+      "JOY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "JOY": {
+     "r": {
+      "ko": "그동안의 0원들이 한꺼번에 보상받는 기분이었다. {partner}이(가) 나를 안고 한참 울었다.",
+      "en": "All those zero months paid off at once. {partner} held you and cried for a long time."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 8
+      }
+     ],
+     "card": {
+      "caption": {
+       "ko": "{partner}의 날",
+       "en": "{partner}'s day"
+      },
+      "location": "restaurant",
+      "actors": [
+       "me",
+       "partner"
+      ],
+      "priority": 6
+     }
+    }
+   },
+   "repeatable": true,
+   "cooldown": 48
+  },
+  {
+   "id": "PJ_BAD_NIGHT",
+   "cat": "partner",
+   "rarity": "uncommon",
+   "tone": "dark",
+   "big": false,
+   "title": {
+    "ko": "새벽 세 시의 전화",
+    "en": "The 3 a.m. call"
+   },
+   "requires": [
+    "fatedPartner",
+    "fatedJobCare"
+   ],
+   "trigger": {
+    "signals": {
+     "SATURN>MOON:hard": 0.4,
+     "SATURN@H8": 0.3
+    },
+    "mods": {
+     "romance": 0.3
+    }
+   },
+   "location": "home",
+   "who": "partner",
+   "line": {
+    "ko": "(새벽 세 시. {partner}에게서 전화가 왔다.) …오늘 현장에서… 내가 뭘 더 할 수 있었을까. (목소리가 떨렸다.)",
+    "en": "(3 a.m. {partner} calls.) …Today, at work… what more could I have done? (Their voice is shaking.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "아무 말 없이 들어준다",
+      "en": "Just listen, without a word"
+     },
+     "w": {
+      "HOLD": 0.8,
+      "HEAVY": 0.2
+     }
+    },
+    {
+     "t": {
+      "ko": "지금 데리러 갈게",
+      "en": "I'm coming to get you"
+     },
+     "w": {
+      "HOLD": 0.9,
+      "HEAVY": 0.1
+     }
+    }
+   ],
+   "outcomes": {
+    "HOLD": {
+     "r": {
+      "ko": "해가 뜰 때까지 통화를 끊지 않았다. {partner}은(는) 마지막에 '고마워'라고만 했다.",
+      "en": "You stayed on the line until sunrise. At the end {partner} only said, \"Thank you.\""
+     },
+     "effects": []
+    },
+    "HEAVY": {
+     "r": {
+      "ko": "{partner}은(는) 며칠 동안 말이 없었다. 옆에 있어 주는 것밖에 할 수 없었다.",
+      "en": "{partner} barely spoke for days. All you could do was stay close."
+     },
+     "effects": []
+    }
+   },
+   "repeatable": true,
+   "cooldown": 48
+  },
+  {
+   "id": "PJ_RAISE",
+   "cat": "partner",
+   "rarity": "common",
+   "tone": "warm",
+   "big": false,
+   "title": {
+    "ko": "{partner}의 좋은 소식",
+    "en": "{partner}'s good news"
+   },
+   "requires": [
+    "fatedPartner",
+    "fatedJobRich"
+   ],
+   "trigger": {
+    "signals": {
+     "JUPITER@H2": 0.4,
+     "group:JEONG_JAE": 0.4
+    },
+    "mods": {
+     "wealth": 0.4
+    }
+   },
+   "location": "restaurant",
+   "who": "partner",
+   "line": {
+    "ko": "나 이번에 크게 인정받았어! …오늘 저녁은 내가 쏜다. 어디 가고 싶어?",
+    "en": "I just got a big raise. They finally noticed me! …Dinner's on me tonight. Where do you want to go?"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "제일 비싼 데!",
+      "en": "The fanciest place!"
+     },
+     "w": {
+      "FEAST": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "집에서 둘이 {f:delivery}",
+      "en": "{f:delivery} at home, just us"
+     },
+     "w": {
+      "COZY": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "FEAST": {
+     "r": {
+      "ko": "코스 요리 여섯 번째 접시에서 둘 다 웃음이 터졌다. 배가 불러서.",
+      "en": "By the sixth course you were both laughing, too full to go on."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 2
+      }
+     ]
+    },
+    "COZY": {
+     "r": {
+      "ko": "{f:delivery} 하나, 맥주 두 캔. 이 정도가 딱 좋았다.",
+      "en": "Some {f:delivery}, two beers. Exactly right."
+     },
+     "effects": [
+      {
+       "kind": "money",
+       "amount": 3
+      }
+     ]
+    }
+   },
+   "repeatable": true,
+   "cooldown": 48
+  },
+  {
+   "id": "PJ_TIMEZONE_FIGHT",
+   "cat": "partner",
+   "rarity": "common",
+   "tone": "warm",
+   "big": false,
+   "title": {
+    "ko": "시차",
+    "en": "Time zones"
+   },
+   "requires": [
+    "fatedPartner",
+    "fatedAbroad",
+    "dating"
+   ],
+   "trigger": {
+    "signals": {
+     "URANUS@H7": 0.3,
+     "BRANCH_CLASH@day": 0.3
+    },
+    "mods": {
+     "romance": 0.3
+    }
+   },
+   "location": "home",
+   "who": "partner",
+   "line": {
+    "ko": "(내가 일어났을 때 {partner}은(는) 잠들고, {partner}이(가) 일어나면 나는 한창 바쁠 시간이다. 오늘로 통화 못 한 지 닷새.) 우리 요즘 너무 엇갈리는 것 같아.",
+    "en": "(When you wake, {partner} is asleep. When they wake, you're in the middle of your day. Five days without a call.) We keep missing each other lately."
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "주말 하루는 무조건 영상통화 하자",
+      "en": "One full video-call day every weekend, no matter what"
+     },
+     "w": {
+      "FIX": 0.75,
+      "FIGHT": 0.25
+     }
+    },
+    {
+     "t": {
+      "ko": "(피곤해서 대답을 미룬다)",
+      "en": "(Too tired. Answer later)"
+     },
+     "w": {
+      "FIX": 0.3,
+      "FIGHT": 0.7
+     }
+    }
+   ],
+   "outcomes": {
+    "FIX": {
+     "r": {
+      "ko": "토요일 밤 10시 = {fatedCity} {fatedTime}. 둘만의 시간이 생겼다.",
+      "en": "Saturday, 10 p.m. here, {fatedTime} in {fatedCity}. A time that was only yours."
+     },
+     "effects": []
+    },
+    "FIGHT": {
+     "r": {
+      "ko": "'넌 괜찮아 보여서 다행이다.' 그 말이 오래 남았다.",
+      "en": "\"Glad it doesn't seem to bother you.\" That line stayed with you."
+     },
+     "effects": []
+    }
+   },
+   "repeatable": true,
+   "cooldown": 48
+  },
+  {
+   "id": "PJ_WORK_VISIT",
+   "cat": "partner",
+   "rarity": "common",
+   "tone": "warm",
+   "big": false,
+   "title": {
+    "ko": "깜짝 방문",
+    "en": "A surprise visit"
+   },
+   "requires": [
+    "fatedPartner",
+    "!fatedFar",
+    "!fatedJobTemp"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.3,
+     "JUPITER@H7": 0.3
+    },
+    "mods": {
+     "romance": 0.3
+    }
+   },
+   "location": "street",
+   "who": "partner",
+   "line": {
+    "ko": "({partner}이(가) 일하는 곳에 깜짝 찾아갔다. {fatedJob}인 {partner}은(는) 일할 때 전혀 다른 사람 같았다.)",
+    "en": "(You surprise {partner} at work. As a {fatedJob_en}, {partner} is like a different person on the job.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "멀리서 지켜보기만 한다",
+      "en": "Just watch from a distance"
+     },
+     "w": {
+      "PROUD": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "손을 흔든다",
+      "en": "Wave"
+     },
+     "w": {
+      "CAUGHT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "PROUD": {
+     "r": {
+      "ko": "괜히 뿌듯했다. 저 사람이 내 사람이다.",
+      "en": "You felt oddly proud. That's your person."
+     },
+     "effects": []
+    },
+    "CAUGHT": {
+     "r": {
+      "ko": "{partner}의 동료들이 휘파람을 불었다. {partner}은(는) 귀까지 빨개졌다.",
+      "en": "{partner}'s coworkers whistled. {partner} went red to the ears."
+     },
+     "effects": []
+    }
+   },
+   "repeatable": true,
+   "cooldown": 48
+  },
+  {
+   "id": "PJ_PARTTIME_VISIT",
+   "cat": "partner",
+   "rarity": "common",
+   "tone": "warm",
+   "big": false,
+   "title": {
+    "ko": "깜짝 방문",
+    "en": "A surprise visit"
+   },
+   "requires": [
+    "fatedPartner",
+    "!fatedFar",
+    "fatedJobTemp"
+   ],
+   "trigger": {
+    "signals": {
+     "DOHWA": 0.3,
+     "JUPITER@H7": 0.3
+    },
+    "mods": {
+     "romance": 0.3
+    }
+   },
+   "location": "street",
+   "who": "partner",
+   "line": {
+    "ko": "({partner}이(가) 아르바이트하는 곳에 깜짝 찾아갔다. 일하는 {partner}은(는) 평소와 전혀 다른 사람 같았다.)",
+    "en": "(You surprise {partner} at {partner}'s part-time job. {partner} is like a different person on the job.)"
+   },
+   "choices": [
+    {
+     "t": {
+      "ko": "멀리서 지켜보기만 한다",
+      "en": "Just watch from a distance"
+     },
+     "w": {
+      "PROUD": 1.0
+     }
+    },
+    {
+     "t": {
+      "ko": "손을 흔든다",
+      "en": "Wave"
+     },
+     "w": {
+      "CAUGHT": 1.0
+     }
+    }
+   ],
+   "outcomes": {
+    "PROUD": {
+     "r": {
+      "ko": "괜히 뿌듯했다. 저 사람이 내 사람이다.",
+      "en": "You felt oddly proud. That's your person."
+     },
+     "effects": []
+    },
+    "CAUGHT": {
+     "r": {
+      "ko": "{partner}의 동료들이 휘파람을 불었다. {partner}은(는) 귀까지 빨개졌다.",
+      "en": "{partner}'s coworkers whistled. {partner} went red to the ears."
+     },
+     "effects": []
+    }
+   },
+   "repeatable": true,
+   "cooldown": 48
+  }
+ ]
+}
