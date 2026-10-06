@@ -13,6 +13,7 @@ public abstract class World
     public bool OwnsCamera;
 
     // atmosphere
+    public const float AmbDim = 0.6f, SunDim = 0.7f;   // overall brightness (the first build was too bright)
     protected Color ambient = new Color(0.82f, 0.74f, 0.64f);
     protected Color fogColor = new Color(1f, 0.89f, 0.7f);
     protected float fogStart = 40f, fogEnd = 300f;
@@ -35,7 +36,7 @@ public abstract class World
     public void ApplyAtmosphere()
     {
         RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
-        RenderSettings.ambientLight = ambient;
+        RenderSettings.ambientLight = ambient * AmbDim;
         RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Linear;
         RenderSettings.fogColor = fogColor; RenderSettings.fogStartDistance = fogStart; RenderSettings.fogEndDistance = fogEnd;
         RenderSettings.sun = sun;
@@ -47,7 +48,7 @@ public abstract class World
     {
         var go = new GameObject("sun"); go.transform.SetParent(root.transform, false);
         var l = go.AddComponent<Light>();
-        l.type = LightType.Directional; l.color = Kit.C(hex); l.intensity = intensity;
+        l.type = LightType.Directional; l.color = Kit.C(hex); l.intensity = intensity * SunDim;
         l.shadows = LightShadows.Soft; l.shadowStrength = shadowStrength; l.shadowBias = 0.03f; l.shadowNormalBias = 0.4f;
         go.transform.rotation = Quaternion.Euler(euler);
         sun = l;
@@ -71,8 +72,17 @@ public abstract class World
         var m = new Material(sh);
         m.SetFloat("_SunSize", 0.05f); m.SetFloat("_SunSizeConvergence", 5f);
         m.SetFloat("_AtmosphereThickness", thickness);
-        m.SetColor("_SkyTint", Kit.C(tint)); m.SetColor("_GroundColor", Kit.C("#6C7C66")); m.SetFloat("_Exposure", exposure);
+        m.SetColor("_SkyTint", Kit.C(tint)); m.SetColor("_GroundColor", Kit.C("#6C7C66")); m.SetFloat("_Exposure", exposure * 0.8f);
         return m;
+    }
+
+    // the only things that still ask for E without hiding a letter: the way on (door, key, shoes, car, sign, envelope),
+    // the curtains (the sea view), the sofa (you sit to find the cushion note) and the memory shelf
+    static readonly HashSet<string> Essential = new HashSet<string> { "door", "key", "shoes", "curtains", "sofa", "shelf", "car", "homeSign", "letter" };
+
+    protected Interactable AddAuto(string id, Vector3 pos, float reach, System.Func<System.Collections.IEnumerator> use)
+    {
+        var it = Add(id, pos, reach, use); it.flavor = true; it.auto = true; return it;
     }
 
     protected Interactable Add(string id, Vector3 pos, float reach, System.Func<System.Collections.IEnumerator> use, string discover = null, System.Func<bool> enabled = null, float hintLift = 0.45f)
@@ -83,6 +93,7 @@ public abstract class World
             var s = Kit.GlowSprite(root.transform, pos + Vector3.up * 0.1f, 0.4f, "#FFE7B0", 0.7f, Kit.StarTex());
             s.SetActive(false); it.sparkle = s;
         }
+        if (discover == null && !Essential.Contains(id)) it.flavor = true;
         items.Add(it);
         return it;
     }

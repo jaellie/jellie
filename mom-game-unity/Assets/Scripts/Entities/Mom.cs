@@ -94,6 +94,26 @@ public class Mom : MonoBehaviour
         BuildAttachments(target);
         BuildBag();
         visual.transform.rotation = Quaternion.Euler(0f, heading + ModelYawOffset, 0f);
+        if (isActiveAndEnabled) StartCoroutine(FixAfterFrames(target, visual));
+    }
+
+    // The skinned mesh bounds are not reliable on the very first frame, so measure again once she is
+    // animating: rescale to the right height and put her feet on the ground.
+    System.Collections.IEnumerator FixAfterFrames(float target, GameObject vis)
+    {
+        for (int pass = 0; pass < 2; pass++)
+        {
+            yield return null; yield return null;
+            if (vis == null || vis != visual) yield break;
+            var rs = vis.GetComponentsInChildren<Renderer>();
+            if (rs.Length == 0) yield break;
+            Bounds b = rs[0].bounds; for (int i = 1; i < rs.Length; i++) b.Encapsulate(rs[i].bounds);
+            float h = b.size.y;
+            Debug.Log("[MomGame] " + vis.name + " height " + h.ToString("F2") + " m (target " + target.ToString("F2") + "), feet " + (b.min.y - transform.position.y).ToString("F2"));
+            if (h > 0.001f && Mathf.Abs(h - target) > target * 0.08f) { vis.transform.localScale *= target / h; continue; }
+            var lp = vis.transform.localPosition; lp.y += transform.position.y - b.min.y; vis.transform.localPosition = lp;
+            baseYCache = float.NaN;
+        }
     }
 
     void BuildFallback()

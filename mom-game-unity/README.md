@@ -12,7 +12,7 @@ black rubber shoes) → Ungcheon Beach at dusk → the birthday letter. 15 hidde
 Pipeline: Built-in Render Pipeline + Standard shader (everything is generated in code, so no URP asset needed).
 
 ## Controls
-W / S walk forward/back · A / D turn · E or Space use · Esc/E close cards · **F10** reset found letters
+W / S walk · A / D turn · E or Space use · hold **Alt** (or right mouse) + move mouse to look around · **F10** reset found letters
 
 ## Make it yours
 - **Photos**: drop `01.jpg … 09.jpg` into `Assets/Resources/Photos/` (names used in `Core/Content.cs`).

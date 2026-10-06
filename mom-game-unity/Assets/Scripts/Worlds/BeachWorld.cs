@@ -162,15 +162,15 @@ public class BeachWorld : World, IStandUp
         float el = Mathf.Lerp(7f, -3f, s);
         sun.transform.rotation = Quaternion.Euler(Mathf.Max(1.5f, el + 3f), 8f, 0f);
         sun.color = Ramp(RampHor, s * 0.75f);
-        sun.intensity = Mathf.Lerp(1.3f, 0.2f, SStep(s, 0.6f, 1f));
+        sun.intensity = SunDim * Mathf.Lerp(1.3f, 0.2f, SStep(s, 0.6f, 1f));
         ambient = Color.Lerp(new Color(0.82f, 0.6f, 0.5f), new Color(0.3f, 0.28f, 0.42f), SStep(s, 0.4f, 1f));
         fogColor = Ramp(RampHor, s);
-        RenderSettings.ambientLight = ambient; RenderSettings.fogColor = fogColor;
+        RenderSettings.ambientLight = ambient * AmbDim; RenderSettings.fogColor = fogColor;
         if (skyMat != null)
         {
             skyMat.SetFloat("_AtmosphereThickness", Mathf.Lerp(1.4f, 3.0f, Mathf.Clamp01(s * 1.4f)));
             skyMat.SetColor("_SkyTint", Color.Lerp(Kit.C("#B07A9A"), Kit.C("#4A3A7A"), s));
-            skyMat.SetFloat("_Exposure", Mathf.Lerp(1.1f, 0.55f, s));
+            skyMat.SetFloat("_Exposure", Mathf.Lerp(0.85f, 0.45f, s));
         }
         seaM.color = Ramp(RampSea, s);
         sandM.color = Color.Lerp(Kit.C("#F0D8AE"), fogColor, 0.15f) * Mathf.Lerp(1.05f, 0.8f, SStep(s, 0.6f, 1f));

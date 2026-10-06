@@ -200,7 +200,7 @@ public class MallWorld : World
         Kit.Solid(Kit.Box(r, new Vector3(0.8f, 0.9f, 1.8f), new Vector3(7.2f, 0f, 9f), "#F6EFE2", 0.03f));
         Rack(8.5f, 8f, new[] { "#BFD8D2", "#FFFFFF", "#F2D3A0", "#9CC5C0", "#E9A3AE", "#FFFFFF" });
         Kenney.Spawn("mart/character-employee", r, new Vector3(7.9f, 0f, 9.1f), 90f);
-        Add("zooc", new Vector3(8.5f, 1.1f, 7.3f), 1.3f, () => Chat("여기 신상 나왔네~ 구경만 해야지.", new Vector3(8.5f, 0f, 8f)));
+        AddAuto("zooc", new Vector3(8.5f, 1.1f, 7.3f), 1.3f, () => Chat("여기 신상 나왔네~ 구경만 해야지.", new Vector3(8.5f, 0f, 8f)));
     }
 
     // ───────────────────────── north row ─────────────────────────
@@ -220,7 +220,7 @@ public class MallWorld : World
         // 가방가게
         Kenney.Spawn("mart/shelf-bags", r, new Vector3(-11.2f, 0f, -10.3f), 0f, 1f, null, -1f, 1.8f, -1f, true);
         Kenney.Spawn("furn/table", r, new Vector3(-11.2f, 0f, -7f), 0f, 1f, null, 1.2f);
-        Add("bagshop", new Vector3(-11.2f, 1.1f, -7.5f), 1.4f, () => Chat("이 가방 예쁜데… 있는 것도 많은데 말야.", new Vector3(-11.2f, 0f, -9f)));
+        AddAuto("bagshop", new Vector3(-11.2f, 1.1f, -7.5f), 1.4f, () => Chat("이 가방 예쁜데… 있는 것도 많은데 말야.", new Vector3(-11.2f, 0f, -9f)));
         // 꽃집
         var fl = new[] { "#F4B6C2", "#FFE7A0", "#E9A3AE", "#FFFFFF", "#C9B6E4" };
         for (int i = 0; i < 5; i++)
@@ -246,7 +246,7 @@ public class MallWorld : World
         Kenney.Spawn("furn/stoolBar", r, new Vector3(-1.5f, 0f, -5.8f), 0f, 1f, null, -1f, 0.6f);
         Kenney.Spawn("furn/stoolBar", r, new Vector3(1.5f, 0f, -5.8f), 0f, 1f, null, -1f, 0.6f);
         Kenney.Spawn("mart/character-employee", r, new Vector3(0f, 0f, -10.4f), 0f);
-        Add("cafe", new Vector3(0f, 1.1f, -8.5f), 1.5f, () => Chat("커피 향 좋다…", new Vector3(0f, 0f, -9.5f)));
+        AddAuto("cafe", new Vector3(0f, 1.1f, -8.5f), 1.5f, () => Chat("커피 향 좋다…", new Vector3(0f, 0f, -9.5f)));
         // 포토부스
         var pb = Kit.Group(r, "photo-booth", new Vector3(5.6f, 0f, -9.4f));
         Kit.Solid(Kit.Box(pb, new Vector3(1.8f, 2.4f, 0.1f), new Vector3(0f, 0f, -0.9f), "#F2A6B8", 0.02f));
@@ -259,7 +259,7 @@ public class MallWorld : World
         Kenney.Spawn("mart/shelf-boxes", r, new Vector3(11.2f, 0f, -10.3f), 0f, 1f, null, -1f, 1.8f, -1f, true);
         Kenney.Spawn("furn/bench", r, new Vector3(11.2f, 0f, -7f), 0f, 1f, null, 1.4f, -1f, -1f, true);
         for (int i = 0; i < 4; i++) Kit.Box(r, new Vector3(0.09f, 0.07f, 0.24f), new Vector3(9.6f + i * 0.5f, 0.9f, -10.6f), new[] { "#E9B8C4", "#2A2E3A", "#7FC2D6", "#F2D3A0" }[i], 0.03f);
-        Add("shoeshop", new Vector3(11.2f, 1.1f, -8.2f), 1.5f, () => Chat("신발은… 지금 신은 게 제일 편해.", new Vector3(11.2f, 0f, -10f)));
+        AddAuto("shoeshop", new Vector3(11.2f, 1.1f, -8.2f), 1.5f, () => Chat("신발은… 지금 신은 게 제일 편해.", new Vector3(11.2f, 0f, -10f)));
     }
 
     IEnumerator Bouquet()

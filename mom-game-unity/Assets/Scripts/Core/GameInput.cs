@@ -26,6 +26,12 @@ public static class GameInput
     public static bool RightDown { get { return Down(KeyCode.D) || Down(KeyCode.RightArrow); } }
     public static bool UpDown { get { return Down(KeyCode.W) || Down(KeyCode.UpArrow); } }
     public static bool DownDown { get { return Down(KeyCode.S) || Down(KeyCode.DownArrow); } }
+    // hold Alt (or the right mouse button) and move the mouse to look around; let go and the view eases back
+    public static bool FreeLook { get { return Key(KeyCode.LeftAlt) || Key(KeyCode.RightAlt) || Key(KeyCode.Mouse1); } }
+    public static Vector2 MouseDelta
+    {
+        get { try { return new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")); } catch (System.Exception) { return Vector2.zero; } }
+    }
     public static bool ResetDown { get { return Down(KeyCode.F10); } }
 
     public static bool AnyDown

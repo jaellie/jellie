@@ -5,6 +5,7 @@ public partial class HomeWorld
 {
     Transform frontDoorLeaf, keyT;
     GameObject floorShoes, floorSlippers;
+    GameObject shoeGlow, keyGlow; bool shoesHinted;
     const float DOOR_X = 7.0f;
     static readonly Vector3 SHOES = new Vector3(6.85f, 0f, 5.25f);
     static readonly Vector3 KEYTRAY = new Vector3(7.66f, 0.95f, 5.45f);
@@ -54,6 +55,8 @@ public partial class HomeWorld
         floorSlippers.SetActive(false);
         Kit.Blocker(r, new Vector3(7.7f, 1f, 5.45f), new Vector3(0.42f, 2f, 1.55f));
 
+        shoeGlow = Kit.GlowSprite(r, SHOES + Vector3.up * 0.2f, 0.5f, "#FFE7B0", 0.8f, Kit.StarTex());
+        keyGlow = Kit.GlowSprite(r, KEYTRAY + Vector3.up * 0.1f, 0.4f, "#FFE7B0", 0.8f, Kit.StarTex());
         Add("door", new Vector3(DOOR_X, 1.3f, EZ1 - 0.35f), 0.95f, () => UseDoor());
         if (Content.MallOn)
             Add("key", new Vector3(7.35f, 1.05f, 5.45f), 0.95f, () => TakeKey());
@@ -114,6 +117,20 @@ public partial class HomeWorld
         {
             g.busy = false;
             yield return g.StartCoroutine(g.GoTo("past", Color.white, 2.0f));
+        }
+    }
+
+    void TickEntryHints()
+    {
+        float tw = 0.5f + 0.35f * Mathf.Sin(Time.time * 3f);
+        Vector3 d = g.mom.transform.position - SHOES; d.y = 0f;
+        float near = Mathf.Clamp01((6f - d.magnitude) / 3f);
+        if (shoeGlow != null) Kit.SetGlowAlpha(shoeGlow, Content.PastOn && floorShoes.activeSelf ? Mathf.Max(0.18f, near) * tw : 0f);
+        if (keyGlow != null) Kit.SetGlowAlpha(keyGlow, Content.MallOn ? Mathf.Max(0.18f, near) * tw : 0f);
+        if (!shoesHinted && sinceStart > 80f && !g.busy && !g.acting && !g.hud.CardOpen && Content.PastOn)
+        {
+            shoesHinted = true;
+            g.Say("현관에 검은 고무신이 있었는데… 아직 있을까?", 3.6f);
         }
     }
 }

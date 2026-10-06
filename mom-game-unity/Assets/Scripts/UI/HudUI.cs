@@ -256,6 +256,8 @@ public class HudUI : MonoBehaviour
             }
             var st = new GUIStyle(sCenter) { fontSize = 30 }; st.normal.textColor = new Color(0.42f, 0.3f, 0.24f, startAlpha * pulse);
             GUI.color = Color.white; GUI.Label(new Rect(0, vh * 0.86f, vw, 50), "화면을 한 번 눌러주세요", st);
+            var ct = new GUIStyle(sCenter) { fontSize = 20 }; ct.normal.textColor = new Color(0.42f, 0.3f, 0.24f, startAlpha * 0.85f);
+            GUI.Label(new Rect(0, vh * 0.93f, vw, 34), "W/S 걷기 · A/D 돌기 · E 사용 · Alt(또는 마우스 우클릭)를 누른 채 마우스: 둘러보기", ct);
         }
         GUI.color = oldC;
     }

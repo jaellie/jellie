@@ -11,6 +11,7 @@ public class ChaseCam : MonoBehaviour
     public bool ownedByWorld;          // a world (the drive) is moving the camera itself
 
     float chaseYaw, chaseDist = 2.3f, blend;
+    float lookYaw, lookPitch, lookAmt;   // free look (hold Alt / right mouse)
     Vector3 pos, look;
     bool inited;
 
@@ -27,24 +28,37 @@ public class ChaseCam : MonoBehaviour
         float k = 1f - Mathf.Exp(-dt * 5f);
         float dy = Mathf.DeltaAngle(chaseYaw, mom.heading);
         chaseYaw = (instant || !inited) ? mom.heading : chaseYaw + dy * k;
-        float h = chaseYaw * Mathf.Deg2Rad;
+        bool free = GameInput.FreeLook && !useOverride && !(GameController.I != null && GameController.I.hud != null && GameController.I.hud.CardOpen);
+        if (free)
+        {
+            Vector2 md = GameInput.MouseDelta;
+            lookYaw += md.x * 3.0f; lookPitch = Mathf.Clamp(lookPitch - md.y * 2.2f, -20f, 60f);
+        }
+        else
+        {
+            float kk = 1f - Mathf.Exp(-dt * 4f);
+            lookYaw = Mathf.Repeat(lookYaw + 180f, 360f) - 180f; lookYaw -= lookYaw * kk; lookPitch -= lookPitch * kk;
+        }
+        lookAmt = Mathf.MoveTowards(lookAmt, free ? 1f : 0f, dt * 4f);
+        float h = (chaseYaw + lookYaw) * Mathf.Deg2Rad;
+        float cp = Mathf.Cos(lookPitch * Mathf.Deg2Rad), sp = Mathf.Sin(lookPitch * Mathf.Deg2Rad);
         Vector3 fwd = new Vector3(Mathf.Sin(h), 0f, Mathf.Cos(h));
         Vector3 right = new Vector3(Mathf.Cos(h), 0f, -Mathf.Sin(h));
 
         // wall check from her head back toward the desired camera spot
         Vector3 head = focus + Vector3.up * 1.4f;
         float room = want;
-        Vector3 back = (-fwd * (want + 0.3f) + Vector3.up * (height - 1.4f)).normalized;
+        Vector3 back = (-fwd * cp * (want + 0.3f) + Vector3.up * (height - 1.4f + sp * (want + 0.3f))).normalized;
         float maxD = want + 0.3f;
         var hits = Physics.RaycastAll(head, back, maxD, ~0, QueryTriggerInteraction.Ignore);
         float best = maxD;
         foreach (var hit in hits) if (hit.collider.GetComponent<CamBlocker>() != null && hit.distance < best) best = hit.distance;
-        room = Mathf.Clamp(best - 0.28f, 0.45f, want);
+        room = Mathf.Clamp(best - 0.28f, 1.0f, want);
         chaseDist = (instant || !inited || room < chaseDist) ? room : chaseDist + (room - chaseDist) * (1f - Mathf.Exp(-dt * 2.5f));
 
         float sh = 0.22f * Mathf.Min(1f, chaseDist / 1.5f);
-        Vector3 tp = focus - fwd * chaseDist + right * sh + Vector3.up * height;
-        Vector3 tl = focus + fwd * 2.6f + right * sh * 0.4f + Vector3.up * (height * 0.7f);
+        Vector3 tp = focus - fwd * (chaseDist * cp) + right * sh + Vector3.up * Mathf.Max(0.3f, height + chaseDist * sp);
+        Vector3 tl = Vector3.Lerp(focus + fwd * 2.6f + right * sh * 0.4f + Vector3.up * (height * 0.7f), focus + Vector3.up * 1.1f, lookAmt);
         float f = (instant || !inited) ? 1f : 1f - Mathf.Exp(-dt * 12f);
         pos = inited ? Vector3.Lerp(pos, tp, f) : tp;
         look = inited ? Vector3.Lerp(look, tl, f) : tl;

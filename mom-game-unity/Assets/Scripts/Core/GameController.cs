@@ -247,6 +247,15 @@ public class GameController : MonoBehaviour
             if (interact && current != null) StartCoroutine(Use(current));
         }
 
+        // flavor lines that play by themselves when she walks up (no E needed)
+        if (canMove && !acting && !world.OwnsCamera)
+            foreach (var it in world.items)
+            {
+                if (!it.auto || it.autoDone) continue;
+                Vector3 d = it.pos - mom.transform.position; d.y = 0f;
+                if (d.magnitude < it.reach * 0.8f) { it.autoDone = true; StartCoroutine(Use(it)); break; }
+            }
+
         // faint twinkles on things that still hide a letter (within ~4 m)
         foreach (var it in world.items)
         {

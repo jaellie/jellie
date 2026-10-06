@@ -90,7 +90,7 @@ public partial class HomeWorld : World, IStandUp
         sun.transform.rotation = Quaternion.Euler(elev, yaw, 0f);
         sunDir = sun.transform.forward;
         sun.color = Ramp(RampSun, s * 0.8f);
-        sun.intensity = Mathf.Lerp(1.45f, 0.9f, s) * (s > 0.85f ? Mathf.Clamp01(1f - (s - 0.85f) * 5f) : 1f);
+        sun.intensity = SunDim * Mathf.Lerp(1.45f, 0.9f, s) * (s > 0.85f ? Mathf.Clamp01(1f - (s - 0.85f) * 5f) : 1f);
         ambient = Color.Lerp(new Color(0.86f, 0.78f, 0.68f), new Color(0.42f, 0.33f, 0.38f), Mathf.Clamp01(s * 1.1f));
         fogColor = Color.Lerp(Kit.C("#FFE3B8"), Kit.C("#6E4A7A"), s);
         float open = curtainAmount;
@@ -100,15 +100,15 @@ public partial class HomeWorld : World, IStandUp
         {
             skyMat.SetFloat("_AtmosphereThickness", Mathf.Lerp(1.0f, 2.3f, Mathf.Clamp01(s * 1.6f)));
             skyMat.SetColor("_SkyTint", Color.Lerp(Kit.C("#8FB6D9"), Kit.C("#9A6A9E"), s));
-            skyMat.SetFloat("_Exposure", Mathf.Lerp(1.15f, 0.8f, s));
+            skyMat.SetFloat("_Exposure", Mathf.Lerp(0.9f, 0.65f, s));
         }
         if (seaRend != null) seaRend.sharedMaterial.color = Color.Lerp(Kit.C("#4F8EA4"), Kit.C("#2A2A4A"), s);
         if (glowRend != null)
         {
-            Color c = Color.Lerp(sun.color, Color.white, 0.35f); c.a = Mathf.Lerp(0.12f, 0.5f, open) * (g.chase != null && g.chase.useOverride ? 0.25f : 1f);
+            Color c = Color.Lerp(sun.color, Color.white, 0.35f); c.a = Mathf.Lerp(0.08f, 0.28f, open) * (g.chase != null && g.chase.useOverride ? 0.25f : 1f);
             glowRend.sharedMaterial.SetColor("_TintColor", new Color(c.r, c.g, c.b, c.a) * 0.5f);
         }
-        if (world_active) { RenderSettings.ambientLight = ambient; RenderSettings.fogColor = fogColor; RenderSettings.sun = sun; }
+        if (world_active) { RenderSettings.ambientLight = ambient * AmbDim; RenderSettings.fogColor = fogColor; RenderSettings.sun = sun; }
     }
     bool world_active { get { return root != null && root.activeInHierarchy; } }
 

@@ -15,6 +15,8 @@ public class Interactable
     public GameObject sparkle;
     public float phase;
 
-    public bool Enabled { get { return enabled == null || enabled(); } }
+    public bool flavor;            // decoration only: no E prompt (the game has exactly 15 letters to find)
+    public bool auto, autoDone;    // flavor line that plays by itself when she walks up
+    public bool Enabled { get { return !flavor && (enabled == null || enabled()); } }
     public Vector3 HintPos { get { return pos + Vector3.up * hintLift; } }
 }

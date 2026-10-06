@@ -35,6 +35,7 @@ public partial class HomeWorld
     void TickFx(float dt)
     {
         fxTime += dt;
+        TickEntryHints();
         float t = fxTime;
         float s = Sunset;
         float a = Mathf.Lerp(0.1f, 0.18f, s) * Mathf.Lerp(0.3f, 1f, curtainAmount) * (g.chase != null && g.chase.useOverride ? 0.2f : 1f);
