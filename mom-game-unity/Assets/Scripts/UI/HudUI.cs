@@ -19,7 +19,7 @@ public class HudUI : MonoBehaviour
 
     // ── state ──
     float fadeA = 1f; Color fadeC = Color.black;
-    bool startVisible; float startAlpha = 1f; bool startDone;
+    Texture2D logoTex; bool startVisible; float startAlpha = 1f; bool startDone;
     Vector2 hintPx; bool hintOn;
     string bubbleText; float bubbleUntil; Vector2 bubblePx;
     int found, total; float popT = 99f; int popIdx = -1;
@@ -246,10 +246,16 @@ public class HudUI : MonoBehaviour
         if (fadeA > 0.002f) { GUI.color = new Color(fadeC.r, fadeC.g, fadeC.b, fadeA); GUI.DrawTexture(new Rect(-10, -10, vw + 20, vh + 20), white); }
         if (startVisible)
         {
-            GUI.color = new Color(0.06f, 0.04f, 0.04f, startAlpha); GUI.DrawTexture(new Rect(-10, -10, vw + 20, vh + 20), white);
+            GUI.color = new Color(0.984f, 0.965f, 0.91f, startAlpha); GUI.DrawTexture(new Rect(-10, -10, vw + 20, vh + 20), white);
+            if (logoTex == null) logoTex = Resources.Load<Texture2D>("logo");
             float pulse = 0.55f + 0.45f * Mathf.Sin(Time.time * 2.1f);
-            var st = new GUIStyle(sCenter) { fontSize = 34 }; st.normal.textColor = new Color(1f, 0.9f, 0.76f, startAlpha * pulse);
-            GUI.color = Color.white; GUI.Label(new Rect(0, vh * 0.42f, vw, 60), "화면을 한 번 눌러주세요", st);
+            if (logoTex != null)
+            {
+                float lh = vh * 0.78f, lw = lh * logoTex.width / logoTex.height;
+                GUI.color = new Color(1, 1, 1, startAlpha); GUI.DrawTexture(new Rect((vw - lw) / 2f, vh * 0.04f, lw, lh), logoTex, ScaleMode.ScaleToFit);
+            }
+            var st = new GUIStyle(sCenter) { fontSize = 30 }; st.normal.textColor = new Color(0.42f, 0.3f, 0.24f, startAlpha * pulse);
+            GUI.color = Color.white; GUI.Label(new Rect(0, vh * 0.86f, vw, 50), "화면을 한 번 눌러주세요", st);
         }
         GUI.color = oldC;
     }

@@ -19,6 +19,8 @@ PACKS = [  # key prefix, source folder, obj subdir, dest dir, name filter
     ('sub',   'kenney_city-kit-suburban_20', 'Models/OBJ format', 'Suburban', None),
     ('boat',  'kenney_watercraft-pack', 'Models/OBJ format', 'Watercraft', None),
     ('bld',   'kenney_modular-buildings', 'Models/OBJ format', 'Buildings', lambda n: n.startswith('building-sample-')),
+    ('car',   'kenney_car-kit', 'Models/OBJ format', 'Cars', lambda n: n in ('sedan', 'sedan-sports', 'suv', 'suv-luxury', 'hatchback-sports', 'taxi', 'van', 'delivery', 'truck')),
+    ('rd',    'kenney_city-kit-roads', 'Models/OBJ format', 'CityRoads', lambda n: n.startswith(('road-straight', 'road-bend', 'road-end', 'road-crossing', 'road-intersection', 'road-side', 'road-curve', 'road-square', 'light-', 'sign-', 'traffic-light', 'construction-cone', 'electricity-pole', 'tile-low')) and 'object' not in n),
     ('road',  'kenney_3d-road-tiles', 'Models', 'Roads', lambda n: n.replace('roadTile_', '') in ROADS),
 ]
 
@@ -74,6 +76,22 @@ for prefix, folder, sub, dest, flt in PACKS:
         for f in os.listdir(tdir):
             if f.lower().endswith('.png'): shutil.copy(os.path.join(tdir, f), os.path.join(dst_dir, 'Textures', f))
     print(dest, n_ok, 'models')
+
+# Dad's car is black: the sedan with its body-colour palette cell repainted charcoal
+from PIL import Image
+cdir_ = os.path.join(RES, 'Cars')
+im = Image.open(os.path.join(cdir_, 'Textures', 'colormap.png')).convert('RGBA')
+for y in range(128, 256):
+    f = (y - 128) / 128.0
+    c = (int(30 + 14 * f), int(30 + 14 * f), int(36 + 16 * f), 255)
+    for x in range(416, 448): im.putpixel((x, y), c)
+im.save(os.path.join(cdir_, 'Textures', 'colormap_black.png'))
+for ext in ('obj', 'mtl'):
+    txt = open(os.path.join(cdir_, 'sedan.' + ext), encoding='utf-8').read()
+    txt = txt.replace('colormap.png', 'colormap_black.png').replace('mtllib sedan.mtl', 'mtllib sedan-black.mtl')
+    open(os.path.join(cdir_, 'sedan-black.' + ext), 'w', encoding='utf-8').write(txt)
+m_ = trimesh.load(os.path.join(cdir_, 'sedan-black.obj'), force='mesh'); sz_ = m_.bounds[1] - m_.bounds[0]
+entries.append(('car/sedan-black', 'Kenney/Cars/sedan-black', sz_, 'colormap:#FFFFFF', 'Kenney/Cars/Textures/colormap_black'))
 
 # palette textures: the mtl asks for Textures/colormap.png; some packs only ship variation-a.png
 for _, _, _, dest, _ in PACKS:

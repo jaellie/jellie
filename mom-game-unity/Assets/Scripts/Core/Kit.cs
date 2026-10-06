@@ -337,7 +337,7 @@ public static class Kit
         go.transform.SetParent(p, false);
         go.transform.localPosition = pos;
         var tm = go.AddComponent<TextMesh>();
-        tm.text = text; tm.fontSize = 64; tm.characterSize = size * 0.04f; tm.anchor = anchor; tm.alignment = TextAlignment.Center;
+        tm.text = text; tm.fontSize = 64; tm.characterSize = size * 0.156f; tm.anchor = anchor; tm.alignment = TextAlignment.Center; // glyph height ~ size in meters
         tm.color = C(hex); tm.fontStyle = style;
         var f = GameFont.Get();
         if (f != null) { tm.font = f; go.GetComponent<MeshRenderer>().sharedMaterial = f.material; }
