@@ -46,6 +46,10 @@ def paint(variant):
     # head: keep Kenney's original face + hair (only skin tone changed above); add perm curls on the hair
     F = (xx < 640) & (yy < 490)
     face_box = (xx > 150) & (xx < 500) & (yy > 150) & (yy < 340)
+    # make the face symmetric: the left half (with the eye, brow and freckles) is mirrored onto the right
+    CX = 318
+    for x in range(CX, 485):
+        out[140:345, x] = out[140:345, 2 * CX - x]
     hair_mask = F & dark & ~face_box
     im = Image.fromarray(np.clip(out, 0, 255).astype('uint8'))
     d = ImageDraw.Draw(im, 'RGBA')
