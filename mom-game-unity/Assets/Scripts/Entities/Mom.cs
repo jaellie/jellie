@@ -4,7 +4,7 @@ using UnityEngine.Animations;
 using UnityEngine.Playables;
 
 // Mom: the cute Kenney "characterMedium" wearing a skin we painted (pink waist-length cardigan,
-// perm hair, closed-eye smile, black rubber shoes / lilac slippers). In The Past she becomes a
+// perm hair, Kenney's original face + denim skirt, light-brown shoes / lilac slippers). In The Past she becomes a
 // little girl (same model, smaller, pigtails). Idle + Run animations are blended into a walk.
 // Controls: A/D turn, W forward, S step back (the camera follows low behind her shoulder).
 public class Mom : MonoBehaviour
@@ -17,7 +17,7 @@ public class Mom : MonoBehaviour
     public CharacterController cc;
     public float heading;                     // degrees; forward = (sin h, 0, cos h)
     public bool child;
-    public bool shoesOn;                      // black rubber shoes (true) or lilac slippers (false)
+    public bool shoesOn;                      // light-brown shoes (true) or lilac slippers (false)
     public bool sitting;
     public Action OnStep;
 

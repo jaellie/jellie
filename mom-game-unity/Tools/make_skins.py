@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Paints Mom's / the little girl's skins on top of Kenney's skaterFemaleA skin (CC0) so the
-cute Kenney character wears her cardigan, perm hair and black rubber shoes.
+cute Kenney character wears her cardigan, perm hair and light-brown shoes (black rubber shoes only in The Past).
+The face is Kenney's original (only the skin tone is adjusted).
 Usage: python3 Tools/make_skins.py <skaterFemaleA.png> <out_dir>"""
 import sys, os, random
 import numpy as np
@@ -34,43 +35,32 @@ def paint(variant):
     CARD2 = hexc('#E4574F' if child else '#EBA4B3')   # bow-red / ribbed hem
     HAIR = hexc('#1E1A19')
     DENIM = hexc('#9C5B4B' if child else '#5B7DA8')
-    SHOE = {'shoes': hexc('#141414'), 'girl': hexc('#141414'), 'slippers': hexc('#C9B6E4')}[variant]
-    SHOE2 = {'shoes': hexc('#2B2B2E'), 'girl': hexc('#2B2B2E'), 'slippers': hexc('#F2EAF8')}[variant]
+    SHOE = {'shoes': hexc('#C4A484'), 'girl': hexc('#141414'), 'slippers': hexc('#C9B6E4')}[variant]
+    SHOE2 = {'shoes': hexc('#E0C9AD'), 'girl': hexc('#2B2B2E'), 'slippers': hexc('#F2EAF8')}[variant]
 
     # skin tone everywhere (keeps the shading of the original)
     k = (img.mean(axis=2) / BASE_SKIN.mean())[..., None]
     skin_new = np.clip(FAIR * k, 0, 255)
     out[skin] = skin_new[skin]
 
-    # head: hair colour, then redo the face
+    # head: keep Kenney's original face + hair (only skin tone changed above); add perm curls on the hair
     F = (xx < 640) & (yy < 490)
-    out[F & (dark | teal)] = HAIR
-    face_box = (xx > 205) & (xx < 440) & (yy > 168) & (yy < 335)
-    hairline = 200 + 34 * ((xx - 322) / 125.0) ** 2
-    below = yy > hairline
-    out[face_box & below] = np.clip(FAIR * 0.985, 0, 255)
-    out[face_box & ~below] = HAIR
-    hair_mask = F & (np.abs(out - HAIR).sum(axis=2) < 12)
+    face_box = (xx > 150) & (xx < 500) & (yy > 150) & (yy < 340)
+    hair_mask = F & dark & ~face_box
     im = Image.fromarray(np.clip(out, 0, 255).astype('uint8'))
     d = ImageDraw.Draw(im, 'RGBA')
-    if not child:  # lighter curls to suggest a perm
+    if not child:
         for _ in range(420):
             cx, cy = rnd.randint(0, 639), rnd.randint(0, 489)
             if hair_mask[cy, cx]:
                 rr = rnd.randint(8, 16)
                 d.ellipse((cx - rr, cy - rr, cx + rr, cy + rr), outline=(74, 62, 60, 190), width=3)
-    else:          # girl: straight bangs
-        d.rectangle((215, 150, 430, 214), fill=tuple(int(c) for c in HAIR) + (255,))
-        for x in range(225, 430, 22): d.line((x, 150, x - 2, 214), fill=(62, 52, 50, 255), width=2)
-    dk = (70, 42, 36, 255)                       # closed, smiling eyes + smile + rosy cheeks
-    for ex in (282, 362): d.arc((ex - 21, 220, ex + 21, 252), 200, 340, fill=dk, width=7)
-    d.arc((322 - 28, 246, 322 + 28, 288), 25, 155, fill=(186, 84, 92, 255), width=6)
-    for cx in (252, 392): d.ellipse((cx - 22, 252, cx + 22, 282), fill=(244, 140, 152, 120))
     out = np.array(im, float)
 
     # torso + arms: cardigan (or blouse)
     T = (xx < 640) & (yy >= 490)
     out[T & (dark | red | gray | white | teal)] = CARD
+    out[T & skin & (yy > 600) & (yy < 830) & (xx > 100) & (xx < 540)] = CARD
     hem = T & (yy > 955) & (xx > 150) & (xx < 495)
     out[hem] = CARD2
     cuffs = T & (yy > 640) & (yy < 835) & ((xx < 70) | (xx > 570))
@@ -88,7 +78,7 @@ def paint(variant):
     # legs: denim (hidden by the 3D skirt) down to the calf, skin below (white socks for the girl)
     L = (xx >= 610) & (yy >= 765)
     out[L & (dark | gray)] = DENIM
-    low = L & (yy > 945)
+    low = L & (yy > 880)
     out[low & (np.abs(out - DENIM).sum(axis=2) < 6)] = hexc('#FFFFFF') if child else FAIR
 
     # shoes (uppers on the pale-blue panels) and soles
