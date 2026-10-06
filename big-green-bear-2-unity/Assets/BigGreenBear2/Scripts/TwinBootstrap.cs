@@ -20,6 +20,7 @@ namespace BigGreenBear2
         GameUI ui;
         float camX;
         const float Speed = 4.2f, MinX = -4.5f, MaxX = 12f, PlayerZ = 3.4f;
+        const float CamOffset = 4.2f;      // camera sits this far left of the bear => he stands at the right edge, in the mirror's view
         bool started;
 
         static readonly Color BearGreen = new Color32(0x5E, 0x94, 0x6A, 255);
@@ -72,7 +73,7 @@ namespace BigGreenBear2
             mirror.Init(cam, player.GetComponentsInChildren<Renderer>(true), ghost, stage.flames.Count > 0 ? new[] { stage.flames[0] } : null);
             mirror.BindImage(ui.mirrorImage, GameUI.MirrorRect.width, GameUI.StageRect.width);
 
-            camX = player.transform.position.x - 1.8f;
+            camX = player.transform.position.x - CamOffset;
             PlaceCamera();
             ui.Say("The door is heavier than it looks.");
         }
@@ -116,7 +117,7 @@ namespace BigGreenBear2
         {
             if (theme == null) return;
             // the bear lives on the right side of the frame, next to the mirror
-            float target = player.transform.position.x - 1.8f;
+            float target = player.transform.position.x - CamOffset;
             camX = Mathf.Lerp(camX, target, 1f - Mathf.Exp(-3f * Time.deltaTime));
             PlaceCamera();
         }
