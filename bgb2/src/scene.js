@@ -1,7 +1,7 @@
 import { ROOMS, ROOM_INFO, CANDLE_BY_VISIT } from './data.js';
 import { bearSVG, niniSVG } from './bear.js';
 
-const W = 1600, STAGE_W = 960, FLOOR = 470;
+const W = 1600, STAGE_W = 960, FLOOR = 470, BEAR_SCREEN_X = 860;
 const PARALLAX = { bg: 0.6, mid: 1, char: 1, fg: 1.25, light: 1 };
 const el = (cls, css = {}, html = '') => {
   const d = document.createElement('div'); d.className = cls; d.innerHTML = html;
@@ -81,7 +81,7 @@ export class Game {
     this.roomId = roomId;
     this.main = buildRoom(this.stage, roomId, visit);
     this.mir = buildRoom(this.mirrorRoot, roomId, visit, { mirror: true });
-    this.px = this.mx = spawn === 'left' ? 220 : W - 220;
+    this.px = this.mx = spawn === 'left' ? 900 : W - 220;
     this.hooks.onEnter?.(roomId, visit);
     this.running = true;
   }
@@ -113,7 +113,7 @@ export class Game {
     const dir = (this.keys.has('arrowright') || this.keys.has('d')) - (this.keys.has('arrowleft') || this.keys.has('a'));
     this.px = Math.max(160, Math.min(W - 160, this.px + dir * 260 * dt));
     this.mx += (this.px - this.mx) * Math.min(1, dt / 0.4);       // reflection lags ~0.4s
-    this.cam = Math.max(0, Math.min(W - STAGE_W, this.px - STAGE_W / 2));
+    this.cam = Math.max(0, Math.min(W - STAGE_W, this.px - BEAR_SCREEN_X)); // bear lives on the right, next to the mirror
     for (const [rt, x, r] of [[this.main, this.px, this.stage], [this.mir, this.mx, this.mirrorRoot]]) {
       for (const k in PARALLAX) rt.layers[k].style.transform = `translateX(${-this.cam * PARALLAX[k]}px)`;
       rt.player.style.left = x + 'px';
