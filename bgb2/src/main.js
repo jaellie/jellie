@@ -26,8 +26,13 @@ const game = new Game($('#stage'), mirrorRoot, {
     $('#narration').textContent = ROOM_INFO[room].line;
   },
   onDoor(d) { go(d.to, d.from === 'right' ? 'right' : 'left'); },
-  onNear(d) { $('#keys').textContent = d ? 'E  open door' : '← → move · E interact · Tab case file'; },
+  onTalk() { say('Nini', 'var(--nini)', 'Bear! Bear! Is it true you have bells?'); },
+  onNear(d) { $('#keys').textContent = d ? (d.talk ? 'E  talk' : 'E  open door') : '← → move · E interact · Tab case file'; },
 });
+
+function say(who, color, text) {
+  $('#narration').innerHTML = `<b style="color:${color};display:block;font-size:13px">${who}</b>${text}`;
+}
 
 function go(room, spawn) {
   state.room = room; state.visits[room]++; save();

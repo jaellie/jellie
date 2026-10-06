@@ -1,5 +1,5 @@
 import { ROOMS, ROOM_INFO, CANDLE_BY_VISIT } from './data.js';
-import { bearSVG } from './bear.js';
+import { bearSVG, niniSVG } from './bear.js';
 
 const W = 1600, STAGE_W = 960, FLOOR = 470;
 const PARALLAX = { bg: 0.6, mid: 1, char: 1, fg: 1.25, light: 1 };
@@ -30,6 +30,8 @@ export function buildRoom(root, roomId, visit, { mirror = false } = {}) {
   layers.bg.append(el('wall', { left: 0, top: 0, width: W, height: 540, background: `hsl(${215 + idx * 3} 32% ${22 - idx}%)` }));
   [400, 1200].forEach((x, i) => layers.bg.append(el('win' + (i === 1 && idx % 2 ? ' lit' : ''), { left: x - 60, top: 70, width: 120, height: 200 })));
 
+  for (let i = 0; i < 40; i++) layers.bg.append(el('', { left: (i * i * 53 + i * 211) % W, top: (i * 97 + (i % 3) * 61) % 260, width: 3, height: 3, borderRadius: '50%', background: '#f2e8d4', opacity: .35 + (i % 4) * .12 }));
+
   // MID: architecture
   layers.mid.append(el('floor', { left: 0, top: FLOOR, width: W }));
   layers.mid.append(el('paper', { left: 760, top: 140, width: 80, height: 330, background: 'var(--muted)' }));
@@ -59,8 +61,11 @@ export function buildRoom(root, roomId, visit, { mirror = false } = {}) {
 
   // Player puppet (same for the mirror clone; flip + lag handled by container/loop)
   const player = el('bear cutout', { left: 200, top: FLOOR - 138 }, bearSVG('bear'));
+  // Nini waits at the entrance; talk with E
+  const nini = roomId === 'entrance' ? el('bear cutout', { left: 700, top: FLOOR - 98, width: 80, height: 110 }, niniSVG()) : null;
+  if (nini) { nini.style.marginLeft = '-40px'; layers.char.append(nini); }
   layers.char.append(player);
-  return { layers, player, doors, clockHands: root.querySelector('.sh') };
+  return { layers, player, doors, nini: nini ? 700 : null, clockHands: root.querySelector('.sh') };
 }
 
 export class Game {
@@ -85,6 +90,7 @@ export class Game {
     if (!this.running || !this.main) return;
     const d = this.main.doors.find(d => Math.abs(d.x - this.px) < 80);
     if (d) this.hooks.onDoor?.(d);
+    else if (this.main.nini && Math.abs(this.main.nini - this.px) < 110) this.hooks.onTalk?.('nini');
   }
 
   // The clock behaves mechanically: long rest, then stutter forward / slip back a hair / resume. Never supernatural.
@@ -116,6 +122,6 @@ export class Game {
     }
     // camera for the mirror shows the same world slice as the stage (it flips the right edge)
     const near = this.main.doors.find(d => Math.abs(d.x - this.px) < 80);
-    this.hooks.onNear?.(near);
+    this.hooks.onNear?.(near || (this.main.nini && Math.abs(this.main.nini - this.px) < 110 ? { talk: true } : null));
   }
 }
