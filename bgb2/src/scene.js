@@ -42,8 +42,8 @@ export function buildRoom(root, roomId, visit, { mirror = false } = {}) {
 
   // Doors (prev on the left, next on the right)
   const doors = [];
-  if (idx > 0) { layers.mid.append(el('door', { left: 40, top: FLOOR - 190, width: 100, height: 190 }, '<i class="knob"></i>')); doors.push({ x: 90, to: ROOMS[idx - 1], from: 'right' }); }
-  if (idx < ROOMS.length - 1) { layers.mid.append(el('door', { left: W - 140, top: FLOOR - 190, width: 100, height: 190 }, '<i class="knob"></i>')); doors.push({ x: W - 90, to: ROOMS[idx + 1], from: 'left' }); }
+  if (idx > 0) { layers.mid.append(el('door', { left: 40, top: FLOOR - 270, width: 120, height: 270 }, '<i class="knob"></i>')); doors.push({ x: 90, to: ROOMS[idx - 1], from: 'right' }); }
+  if (idx < ROOMS.length - 1) { layers.mid.append(el('door', { left: W - 140, top: FLOOR - 270, width: 120, height: 270 }, '<i class="knob"></i>')); doors.push({ x: W - 90, to: ROOMS[idx + 1], from: 'left' }); }
 
   // Candles: visit-based (section 11). Mirror gets exactly one discrepancy (extinguished / newly lit).
   const candles = CANDLE_BY_VISIT[Math.min(visit - 1, CANDLE_BY_VISIT.length - 1)];
@@ -60,12 +60,12 @@ export function buildRoom(root, roomId, visit, { mirror = false } = {}) {
   layers.light.append(el('cold', { left: 0, top: 0, width: W, height: 540 }));
 
   // Player puppet (same for the mirror clone; flip + lag handled by container/loop)
-  const player = el('bear cutout', { left: 200, top: FLOOR - 138 }, bearSVG('bear'));
+  const player = el('bear cutout', { left: 200, top: FLOOR - 228 }, bearSVG('bear'));
   // Nini waits at the entrance; talk with E
-  const nini = roomId === 'entrance' ? el('bear cutout', { left: 700, top: FLOOR - 98, width: 80, height: 110 }, niniSVG()) : null;
-  if (nini) { nini.style.marginLeft = '-40px'; layers.char.append(nini); }
+  const nini = roomId === 'entrance' ? el('bear cutout', { left: 640, top: FLOOR - 140, width: 110, height: 151 }, niniSVG()) : null;
+  if (nini) { nini.style.marginLeft = '-55px'; layers.char.append(nini); }
   layers.char.append(player);
-  return { layers, player, doors, nini: nini ? 700 : null, clockHands: root.querySelector('.sh') };
+  return { layers, player, doors, nini: nini ? 640 : null, clockHands: root.querySelector('.sh') };
 }
 
 export class Game {

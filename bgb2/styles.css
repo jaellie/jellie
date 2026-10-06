@@ -66,7 +66,7 @@ html,body{height:100%;background:var(--shadow);overflow:hidden;font-family:var(-
 .cold{background:radial-gradient(ellipse at 50% 0,#52657a33,#11192300 70%)}
 
 /* ===== CHARACTERS ===== */
-.bear{width:120px;height:150px;margin-left:-60px;transform-origin:50% 100%}
+.bear{width:190px;height:238px;margin-left:-95px;transform-origin:50% 100%}
 .bear.walk{animation:bob .45s steps(2) infinite}
 @keyframes bob{50%{transform:translateY(-4px) rotate(.6deg)}}
 .bear svg{width:100%;height:100%;overflow:visible}
