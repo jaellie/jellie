@@ -1,0 +1,81 @@
+/* Style experiments for Game 2 (characters stay Game 1 sprites). ?style=ink|gouache|blueprint|diorama   ([ ] cycles) */
+
+/* ================= INK — linocut / woodblock print ================= */
+[data-theme=ink] #canvas, [data-theme=ink]{--ink:#14213d;--inkp:#e9dfc6;--ink2:#2c4a7a}
+[data-theme=ink] #book{background:#e9dfc6;box-shadow:0 0 0 4px #14213d,0 0 0 9px #e9dfc6,0 0 0 12px #14213d}
+[data-theme=ink] #book::before{opacity:.9;mix-blend-mode:multiply}
+[data-theme=ink] #stage,[data-theme=ink] #mirror{outline:5px solid #14213d;background:#14213d}
+[data-theme=ink] .l-bg .wall{background:#14213d!important;filter:url(#rough);box-shadow:none}
+[data-theme=ink] .l-bg{background:radial-gradient(#2c4a7a 1.6px,transparent 2px) 0 0/12px 12px,#14213d}
+[data-theme=ink] .win{background:#e9dfc6;box-shadow:inset 0 0 0 6px #14213d,inset 0 0 0 10px #e9dfc6,6px 6px 0 #0a1224;filter:url(#rough)}
+[data-theme=ink] .win.lit{background:repeating-linear-gradient(90deg,#e9dfc6 0 6px,#14213d 6px 8px)}
+[data-theme=ink] .floor{background:repeating-linear-gradient(100deg,#e9dfc6 0 3px,#14213d 3px 12px);height:70px;box-shadow:0 -5px 0 #e9dfc6;filter:url(#rough);opacity:.9}
+[data-theme=ink] .paper{background:#e9dfc6!important;filter:url(#rough);box-shadow:8px 8px 0 #0a1224;outline:4px solid #14213d;outline-offset:-10px}
+[data-theme=ink] .clock{background:#e9dfc6;box-shadow:0 0 0 10px #14213d,0 0 0 14px #e9dfc6,10px 10px 0 #0a1224;filter:url(#rough)}
+[data-theme=ink] .candle{background:#e9dfc6;box-shadow:3px 3px 0 #0a1224}
+[data-theme=ink] .candle .flame{background:#e9dfc6;box-shadow:0 0 0 3px #14213d,0 0 0 6px #e9dfc6}
+[data-theme=ink] .glow{background:repeating-radial-gradient(#e9dfc666 0 3px,transparent 3px 10px);opacity:.55}
+[data-theme=ink] .fg{background:#0a1224;filter:url(#rough)}
+[data-theme=ink] .cold{background:none}
+[data-theme=ink] .bear img{filter:contrast(1.08) saturate(.9) drop-shadow(5px 5px 0 #0a1224)}
+[data-theme=ink] #strip{color:#14213d} [data-theme=ink] #header{color:#14213d;border-color:#14213d}
+[data-theme=ink] .tab{background:#14213d;border-radius:0;box-shadow:-4px 4px 0 #14213d88;outline:2px solid #e9dfc6;outline-offset:-5px}
+
+/* ================= GOUACHE — painted picture book ================= */
+[data-theme=gouache] #book{background:#f3e9d8;box-shadow:0 12px 30px #0007;border-radius:14px}
+[data-theme=gouache] #book::before{opacity:.35}
+[data-theme=gouache] #stage,[data-theme=gouache] #mirror{outline:0;border-radius:22px 6px 26px 8px;box-shadow:0 0 0 3px #f3e9d8,0 0 0 4px #3b3a37aa,0 6px 14px #0005;background:#2a3b5c}
+[data-theme=gouache] .l-bg{background:radial-gradient(ellipse at 30% 20%,#7a8fb8 0,transparent 55%),radial-gradient(ellipse at 80% 60%,#3e5784 0,transparent 60%),linear-gradient(#34476e,#1f2c49)}
+[data-theme=gouache] .l-bg .wall{background:linear-gradient(#5b6f98aa,#2c3d62cc)!important;filter:url(#paint);box-shadow:none;opacity:.9}
+[data-theme=gouache] .win{background:linear-gradient(#f2c98a,#7d6a8a);box-shadow:inset 0 0 0 7px #e6dcc6;filter:url(#paint)}
+[data-theme=gouache] .floor{background:linear-gradient(#26324f,#171f35);filter:url(#paint);box-shadow:none;height:80px}
+[data-theme=gouache] .paper{background:#8d9cba!important;filter:url(#paint);box-shadow:none;border-radius:6px}
+[data-theme=gouache] .clock{background:#f6eedb;box-shadow:0 0 0 9px #8d9cba,0 0 40px 10px #f2c98a66;filter:url(#paint)}
+[data-theme=gouache] .candle{filter:url(#paint);box-shadow:none}
+[data-theme=gouache] .glow{background:radial-gradient(#ffc27a99,#ffc27a00 70%)}
+[data-theme=gouache] .fg{background:#141c30;filter:url(#paint)}
+[data-theme=gouache] .cold{background:radial-gradient(ellipse at 50% 0,#9fb4e033,#0000 70%)}
+[data-theme=gouache] .bear img{filter:saturate(.95) drop-shadow(0 8px 10px #0006)}
+[data-theme=gouache] .tab{border-radius:14px 0 0 14px;background:#6f86b5}
+
+/* ================= BLUEPRINT — vintage drawing / mechanical plan ================= */
+[data-theme=blueprint] #book{background:#d6dde8;box-shadow:0 0 0 5px #0f2748,0 14px 30px #000a}
+[data-theme=blueprint] #book::before{opacity:.25}
+[data-theme=blueprint] #stage,[data-theme=blueprint] #mirror{outline:3px solid #0f2748;background:#0f3b73}
+[data-theme=blueprint] .l-bg{background:linear-gradient(#ffffff14 1px,transparent 1px) 0 0/40px 40px,linear-gradient(90deg,#ffffff14 1px,transparent 1px) 0 0/40px 40px,linear-gradient(#ffffff0a 1px,transparent 1px) 0 0/8px 8px,linear-gradient(90deg,#ffffff0a 1px,transparent 1px) 0 0/8px 8px,#0f3b73}
+[data-theme=blueprint] .l-bg .wall{background:none!important;filter:none;box-shadow:none}
+[data-theme=blueprint] .win{background:#ffffff10;border-radius:60px 60px 0 0;box-shadow:none;border:2px solid #e8f0ff;filter:none}
+[data-theme=blueprint] .win::after{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed #e8f0ff88}
+[data-theme=blueprint] .floor{background:repeating-linear-gradient(135deg,#e8f0ff55 0 1px,transparent 1px 9px);border-top:2px solid #e8f0ff;box-shadow:none;filter:none}
+[data-theme=blueprint] .paper{background:#ffffff0d!important;border:2px solid #e8f0ff;box-shadow:none;filter:none}
+[data-theme=blueprint] .clock{background:#ffffff12;box-shadow:0 0 0 2px #e8f0ff,0 0 0 10px #0f3b73,0 0 0 11px #e8f0ff88;filter:none}
+[data-theme=blueprint] .clock svg line{stroke:#e8f0ff!important} [data-theme=blueprint] .clock svg circle{fill:#e8f0ff}
+[data-theme=blueprint] .candle{background:none;border:2px solid #e8f0ff;box-shadow:none}
+[data-theme=blueprint] .candle .flame{background:#ffc27a;box-shadow:0 0 12px 3px #ffc27a88}
+[data-theme=blueprint] .glow{opacity:.5}
+[data-theme=blueprint] .fg{background:#071d3b;filter:none}
+[data-theme=blueprint] .cold{background:none}
+[data-theme=blueprint] .bear img{filter:drop-shadow(0 0 0 #0000) drop-shadow(4px 6px 0 #04142b)}
+[data-theme=blueprint] #strip,[data-theme=blueprint] #header{color:#0f2748;border-color:#0f2748}
+[data-theme=blueprint] .tab{background:#0f2748;border-radius:0;box-shadow:none;border:1px solid #d6dde8}
+
+/* ================= DIORAMA — stop-motion felt & wood miniature ================= */
+[data-theme=diorama] #canvas{background:radial-gradient(ellipse at 50% 30%,#3a2a1f,#140d09 80%)}
+[data-theme=diorama] #book{background:#6a4a33;box-shadow:inset 0 0 0 10px #50362a,inset 0 0 0 12px #8a6246,0 16px 30px #000b;border-radius:10px}
+[data-theme=diorama] #book::before{opacity:.6;mix-blend-mode:multiply;filter:url(#felt)}
+[data-theme=diorama] #header,[data-theme=diorama] #strip{color:#f1dfc4;border-color:#f1dfc455}
+[data-theme=diorama] #stage,[data-theme=diorama] #mirror{outline:0;box-shadow:0 0 0 6px #3a281d,inset 0 0 70px #000d,inset 0 40px 60px #0008;background:#1f2b45}
+[data-theme=diorama] .l-bg{background:linear-gradient(#2c3c61,#1b2640)}
+[data-theme=diorama] .l-bg .wall{background:#4a5f8a!important;filter:url(#felt);box-shadow:inset 0 -30px 40px #0006}
+[data-theme=diorama] .win{background:#ffcf8a;border-radius:70px 70px 6px 6px;box-shadow:inset 0 0 0 8px #8a6246,5px 8px 8px #0008;filter:none;outline:2px dashed #f1dfc4aa;outline-offset:-14px}
+[data-theme=diorama] .win.lit{background:linear-gradient(#ffcf8a,#c98a5a)}
+[data-theme=diorama] .floor{background:repeating-linear-gradient(90deg,#7a5238 0 70px,#6a4731 70px 72px),#7a5238;height:70px;box-shadow:0 -6px 0 #8a6246,0 -6px 14px #0008;filter:none}
+[data-theme=diorama] .paper{background:#b8c1cf!important;filter:url(#felt);border-radius:8px;box-shadow:4px 8px 10px #000a;outline:2px dashed #f1dfc4aa;outline-offset:-8px}
+[data-theme=diorama] .clock{background:#f1e6cf;box-shadow:0 0 0 10px #8a6246,0 0 0 13px #50362a,8px 12px 18px #000b;filter:none}
+[data-theme=diorama] .candle{background:#f1e6cf;box-shadow:3px 5px 6px #0009}
+[data-theme=diorama] .fg{background:#2b1d14;filter:url(#felt)}
+[data-theme=diorama] .cold{background:radial-gradient(ellipse at 50% 0,#9fb4e022,#0000 70%)}
+[data-theme=diorama] .l-light::after{content:"";position:absolute;inset:0;background:linear-gradient(#000a 0,transparent 18%,transparent 78%,#000a 100%);backdrop-filter:blur(1px)}
+[data-theme=diorama] .bear img{filter:drop-shadow(6px 12px 10px #000a) contrast(1.05)}
+[data-theme=diorama] .tab{background:#8a6246;color:#f1dfc4;border-radius:10px 0 0 10px;box-shadow:-3px 4px 0 #2b1d14}
+[data-theme=diorama] .tab:nth-child(even){background:#7a5238}

@@ -35,6 +35,7 @@ export function buildRoom(root, roomId, visit, { mirror = false } = {}) {
   // MID: architecture
   layers.mid.append(el('floor', { left: 0, top: FLOOR, width: W }));
   layers.mid.append(el('paper', { left: 760, top: 140, width: 80, height: 330, background: 'var(--muted)' }));
+  if (roomId === 'entrance') layers.mid.append(el('clock', { left: 590, top: 20, width: 230, height: 230 }, clockSVG(0)));
   if (roomId === 'mechanism') layers.mid.append(el('clock', { left: 620, top: 40, width: 360, height: 360 }, clockSVG(0)));
   if (roomId === 'archive') [180, 1300].forEach(x => layers.mid.append(el('paper', { left: x, top: 250, width: 140, height: 220, background: '#8a7a64' })));
   if (roomId === 'bell') layers.mid.append(el('paper', { left: 730, top: 80, width: 140, height: 160, background: 'var(--scarf)', borderRadius: '70px 70px 12px 12px' }));

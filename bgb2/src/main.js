@@ -7,6 +7,9 @@ import { sfx } from './audio.js';
 
 const $ = s => document.querySelector(s);
 const canvas = $('#canvas');
+const THEMES = ['paper', 'ink', 'gouache', 'blueprint', 'diorama'];
+const setTheme = t => { canvas.dataset.theme = THEMES.includes(t) ? t : 'paper'; };
+setTheme(new URLSearchParams(location.search).get('style'));
 
 function fit() {
   const s = Math.min(innerWidth / 1280, innerHeight / 720);
@@ -51,6 +54,7 @@ addEventListener('keydown', e => {
   if ($('#menu').hidden === false) return;
   if (e.key === 'Tab') { e.preventDefault(); $('#folder').hidden ? openFolder('PEOPLE') : closeFolder(); }
   if (e.key === 'Escape') closeFolder();
+  if (e.key === '[' || e.key === ']') setTheme(THEMES[(THEMES.indexOf(canvas.dataset.theme) + (e.key === ']' ? 1 : THEMES.length - 1)) % THEMES.length]);
 });
 
 /* ---------- menu ---------- */

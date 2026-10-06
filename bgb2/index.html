@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="themes.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -15,6 +16,9 @@
     <feColorMatrix values="0 0 0 0 .3  0 0 0 0 .27  0 0 0 0 .2  0 0 0 .22 0"/></filter>
   <filter id="cut"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="9"/>
     <feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+  <filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".06" numOctaves="3" seed="3"/><feDisplacementMap in="SourceGraphic" scale="7"/></filter>
+  <filter id="paint" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="3" seed="8"/><feDisplacementMap in="SourceGraphic" scale="14"/><feGaussianBlur stdDeviation=".7"/></filter>
+  <filter id="felt" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="5" result="n"/><feColorMatrix in="n" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 -.25" result="a"/><feComposite in="SourceGraphic" in2="a" operator="in" result="x"/><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="2" result="g"/><feColorMatrix in="g" values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .5 0" result="g2"/><feBlend in="x" in2="g2" mode="multiply"/></filter>
 </svg>
 
 <div id="canvas"><!-- 1280x720, scaled to fit -->
