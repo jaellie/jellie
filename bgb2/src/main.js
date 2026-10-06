@@ -68,8 +68,8 @@ $('#menu-art').innerHTML = `
   <div style="position:absolute;left:560px;top:30px;width:160px;height:310px;background:var(--env2);filter:url(#cut);box-shadow:4px 6px 0 #0006"></div>
   <div style="position:absolute;left:520px;top:20px;width:240px;height:240px;border-radius:50%;background:var(--cream);box-shadow:0 0 0 10px var(--shadow)"></div>
   <div style="position:absolute;left:540px;top:215px;width:200px;height:8px;background:var(--shadow)"></div>
-  <div class="bear cutout" style="left:430px;top:210px;filter:brightness(0) opacity(.85)">${bearSVG('bear')}</div>
-  <div class="bear cutout" style="left:858px;top:216px;filter:brightness(0) opacity(.85)">${bearSVG('bear')}</div>`;
+  <div class="bear" style="left:430px;top:210px;filter:brightness(0) opacity(.85)">${bearSVG('bear')}</div>
+  <div class="bear" style="left:858px;top:216px;filter:brightness(0) opacity(.85)">${bearSVG('bear')}</div>`;
 $('#menu-art .bear').style.cssText += ';position:absolute;transform:scale(1.8)';
 $('#menu-art .bear:last-child').style.cssText += ';position:absolute;transform:scale(1.8)';
 

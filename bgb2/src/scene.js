@@ -60,9 +60,9 @@ export function buildRoom(root, roomId, visit, { mirror = false } = {}) {
   layers.light.append(el('cold', { left: 0, top: 0, width: W, height: 540 }));
 
   // Player puppet (same for the mirror clone; flip + lag handled by container/loop)
-  const player = el('bear cutout', { left: 200, top: FLOOR - 228 }, bearSVG('bear'));
+  const player = el('bear', { left: 200, top: FLOOR - 228 }, bearSVG('bear'));
   // Nini waits at the entrance; talk with E
-  const nini = roomId === 'entrance' ? el('bear cutout', { left: 640, top: FLOOR - 140, width: 110, height: 151 }, niniSVG()) : null;
+  const nini = roomId === 'entrance' ? el('bear', { left: 640, top: FLOOR - 140, width: 110, height: 151 }, niniSVG()) : null;
   if (nini) { nini.style.marginLeft = '-55px'; layers.char.append(nini); }
   layers.char.append(player);
   return { layers, player, doors, nini: nini ? 640 : null, clockHands: root.querySelector('.sh') };

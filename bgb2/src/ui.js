@@ -23,7 +23,7 @@ export function openFolder(tab) {
 }
 export function closeFolder() { $('#folder').hidden = true; document.querySelectorAll('.tab').forEach(b => b.classList.remove('on')); }
 
-const portrait = (who, name) => `<div class="portrait"><div style="height:128px;overflow:hidden;background:var(--env2)"><div style="width:150px;margin:0 auto;transform:scale(1.15);transform-origin:50% 0">${bearSVG(who)}</div></div><div class="nm">${name}</div></div>`;
+const portrait = (who, name) => `<div class="portrait"><div style="height:128px;overflow:hidden;background:var(--env2)"><div style="width:130px;height:178px;margin:0 auto">${bearSVG(who)}</div></div><div class="nm">${name}</div></div>`;
 
 const cardHTML = (e, cls = '') => `<div class="card ${cls}" draggable="true" data-id="${e.id}"><b>${e.title}</b><i>${e.where}</i>${e.obs}</div>`;
 
