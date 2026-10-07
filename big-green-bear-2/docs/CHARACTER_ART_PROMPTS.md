@@ -45,14 +45,24 @@ glossy highlights, plastic, 3D render, thick or tapering outline, double outline
 CHARACTER: Big Green Bear.
 A big round plush bear: pear-shaped body, large round head, small round ears with a darker green inner recess. Sage-green fur (#5F8258) with soft fuzzy texture, a slightly lighter muzzle area (#7A9C6E), no cream belly. A thick hand-knitted mustard scarf (#C5A766) with a herringbone braid knit, wrapped around the neck; its tail hangs down the front on the RIGHT side of the image and ends in a ribbed cuff. Paws are simple rounded mitten shapes with one short curved line for the thumb. Small solid dot eyes, dark rounded-triangle nose. Height 2900 px.
 ```
-Delivered: neutral_nomouth, smile_openeyes, smile_closedeyes, sad_cry, cry_armsdown, grief_handsclasp, worried_handsclasp, surprised_blush, angry, think_handmouth, wave_right, hold_bell (green).
-Still needed (one pose line per generation; "RIGHT" = right side of the image, always Big Green Bear's active hand):
-- `bear_stand_guilty`: eyes looking down and to the side, lips pressed in a small flat line, shoulders slightly slumped, hands low in front. Must read as "keeping a secret", never evil.
-- `bear_stand_resolute`: calm serious face, eyes forward, small straight mouth, chest slightly lifted.
-- `bear_reach_right`: the arm on the RIGHT side of the image reaching forward and slightly up to pick something up, other arm relaxed.
-- `bear_scarf_adjust_right`: the paw on the RIGHT side of the image touching the scarf near the neck, small content smile.
-- `bear_door_right`: the arm on the RIGHT side of the image extended forward at chest height as if opening a door, body turned very slightly toward it.
-- `bear_walk_A`, `bear_walk_B`: two mid-step walking frames, relaxed neutral face, arms swinging slightly.
+Full pose list (generate ALL of them in the new style; "RIGHT" = right side of the image = Big Green Bear's active hand):
+1. `bear_stand_nomouth` (BASE, generate first): neutral standing, arms relaxed at the sides, eyes open as dots, NO mouth, no blush.
+2. `bear_stand_smile_closedeyes` (**Big Green Bear's tell**): eyes closed as happy upward arcs, gentle closed-mouth smile, arms relaxed.
+3. `bear_stand_smile_openeyes` (**Green's smile**, used mirrored): the same gentle smile but the dot eyes stay OPEN.
+4. `bear_stand_cry`: eyes with a small white highlight, inner brows raised, blue teardrops (#8EB8D9) on the lower lids, downturned mouth, arms hanging down.
+5. `bear_stand_grief`: eyes closed as downward arcs, small trembling wavy mouth, both paws clasped in front of the belly, no tears, light blush.
+6. `bear_stand_worried`: eyes open with a small highlight, brows raised inward, small downturned mouth, both paws clasped in front of the belly.
+7. `bear_stand_surprised`: eyes wide with a highlight, small round "o" mouth, light blush, arms slightly out from the body.
+8. `bear_stand_angry` (confrontation scenes only): brows lowered and angled, firm flat mouth, arms stiff at the sides. Still cute and round, never monstrous or scary.
+9. `bear_think_handmouth`: the paw on the RIGHT side of the image raised to the chin/mouth, eyes open and glancing slightly aside, head tilted a little, other arm relaxed.
+10. `bear_wave_right`: the arm on the RIGHT side of the image raised in a wave, palm toward the viewer showing the paw pads, gentle smile, eyes open.
+11. `bear_hold_bell`: the paw on the RIGHT side of the image holding a small jade-green bell (#7DB28E, darker #3F7054, with a loop) by its loop at chest height, soft curious face, small smile.
+12. `bear_stand_guilty`: eyes looking down and to the side, lips pressed into a small flat line, shoulders slightly slumped, paws low in front. Must read as "keeping a secret", never evil.
+13. `bear_stand_resolute`: calm serious face, eyes forward, small straight mouth, chest slightly lifted.
+14. `bear_reach_right`: the arm on the RIGHT side of the image reaching forward and slightly up to pick something up, other arm relaxed.
+15. `bear_scarf_adjust_right`: the paw on the RIGHT side of the image touching the scarf near the neck, small content smile.
+16. `bear_door_right`: the arm on the RIGHT side of the image extended forward at chest height as if opening a door, body turned very slightly toward it.
+17. `bear_walk_A`, 18. `bear_walk_B`: two mid-step walking frames, relaxed neutral face, arms swinging slightly.
 
 ---
 
@@ -61,16 +71,19 @@ Still needed (one pose line per generation; "RIGHT" = right side of the image, a
 CHARACTER: Nini.
 A small sheep girl, 55% of the bear's height (1600 px tall). A round head covered by a thick cap of cream-white curly wool (#EFE6CF) drawn as soft curl shapes without outlines, a smooth pale cream face (#F3E8D6), small solid dot eyes, a tiny pink triangular nose, two floppy ears with pink insides (#E8B4B0). She wears a mustard-yellow hooded raincoat (#D9A93F) with the hood resting on her shoulders, two dark brown round buttons, a short A-line cut, small white mitten hands, wool-covered legs and short brown boots (#8B6B4A). Standing, arms relaxed at her sides.
 ```
-Delivered: stand_neutral (small mouth), stand_happy_open. (Re-generate with the outline above, or keep with the outline added by `tools/add_outline.py`.)
-- `nini_stand_nomouth`: neutral base, NO mouth, soft blush.
-- `nini_stand_curious`: head tilted slightly, small round "o" mouth, eyes a bit larger.
-- `nini_stand_worried`: tiny frown, inner eyebrow lines raised.
-- `nini_stand_certain`: small firm closed mouth, steady eyes ("There were two Bears").
-- `nini_stand_scared`: mouth slightly open, shoulders raised, hands pulled in.
-- `nini_notebook_write`: holds a small notebook in one hand and writes with a pencil in the other, looking down, tiny smile.
-- `nini_notebook_hold`: notebook held against her chest with both hands, looking up.
-- `nini_point`: the arm on the RIGHT side of the image pointing to the side, mouth slightly open.
-- `nini_look_up`: head tilted back looking up, mouth slightly open.
+Full pose list (generate ALL of them with the outline from the STYLE LOCK):
+1. `nini_stand_nomouth` (BASE, generate first): neutral standing, arms relaxed, NO mouth, soft blush.
+2. `nini_stand_neutral`: same pose with a tiny closed mouth (a small "w" line).
+3. `nini_stand_happy_open`: bright open-mouth smile, eyes open.
+4. `nini_stand_curious`: head tilted slightly, small round "o" mouth, eyes a bit larger.
+5. `nini_stand_worried`: tiny downturned mouth, inner brow lines raised.
+6. `nini_stand_sad`: eyes with small highlights, small frown, shoulders drooping, no tears.
+7. `nini_stand_certain`: small firm closed mouth, steady eyes (she says "There were two Bears").
+8. `nini_stand_scared`: mouth slightly open, shoulders raised, mittens pulled in toward the chest.
+9. `nini_notebook_write`: holds a small notebook in one hand and writes with a pencil in the other, looking down, tiny smile.
+10. `nini_notebook_hold`: notebook held against her chest with both hands, looking up.
+11. `nini_point`: the arm on the RIGHT side of the image pointing to the side, mouth slightly open.
+12. `nini_look_up`: head tilted back looking up, mouth slightly open.
 
 ---
 
