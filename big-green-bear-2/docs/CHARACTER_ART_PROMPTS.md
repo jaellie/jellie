@@ -32,12 +32,18 @@ The character must be identical in every image: same proportions, same face shap
 
 ---
 
+## 0.5 Left / right convention (IMPORTANT — read before generating)
+- **"Right hand" / "left ear" always means the CHARACTER'S OWN right / left**, as in a real body facing the viewer.
+- On a front-facing character that means: own **right** = the **LEFT side of the image**, own **left** = the **RIGHT side of the image**.
+- In every prompt, also say the image side to avoid mix-ups, e.g. "waving with his right hand (the arm on the LEFT side of the image)".
+- Evidence text and in-game statements use the same convention (the character's own hand/ear).
+
 ## 0. Delivery spec (applies to every image)
 
 | Item | Requirement |
 |---|---|
 | Format | PNG, RGBA, true transparency |
-| Height | Bear **2360 px**. Others at their relative scale (Nini ≈ **1300 px**, Edward ≈ **2200 px**), so they can be dropped into the game without rescaling |
+| Height | Bear **2360 px**. Others at their relative scale (Nini ≈ **1300 px**, Edward ≈ **1900 px**), so they can be dropped into the game without rescaling |
 | Crop | Tight, feet on the bottom edge |
 | Naming | `<character>_<pose>_<expression>.png`, e.g. `nini_stand_worried.png` |
 | Mouth rule | Every character has a **`_nomouth` neutral base** (eyes visible, no mouth). Extra expressions are baked full images; small mouth/eye variants may be added as overlays |
@@ -103,15 +109,18 @@ Needed (`nini_<pose>_<expression>`):
 
 ---
 
-## 4. Edward  (the victim)
-Species and personality are **not defined yet** in the story files. Pick one before generating:
-**[SPECIES: ___]** Suggested: an old **badger** (or owl / hedgehog), an archivist and keeper of the old family records.
+## 4. Edward  (the victim) — HEDGEHOG
 ```
 [MASTER STYLE BLOCK]
-Edward: an elderly [SPECIES] archivist, about 90% of the bear's height, slightly stooped but dignified.
+Edward: an elderly hedgehog archivist, about 80% of the bear's height, round body, slightly stooped but dignified.
+Soft felted-looking quills on his back and head in muted gray-brown with cream tips (matte, not sharp, never menacing),
+a soft cream-gray face and belly area, small black bead eyes, a dark flat nose, tiny round ears.
 Round wire-rimmed glasses, a dark navy waistcoat over a cream shirt, a thin brass chain with a pocket watch, ink-stained cuffs.
-Faint fur-gray muzzle, tired kind eyes. Muted cold palette (navy, brass, cream) so he reads as part of the clock tower.
+Tired, kind eyes. Muted cold palette (navy, brass, cream) so he reads as part of the clock tower.
+Same plush-toy style, outline and lighting as the Big Green Bear reference.
 ```
+Delivered height: **1900 px** (80% of the bear's 2360).
+
 | File | Pose / expression |
 |---|---|
 | `edward_stand_nomouth` | Neutral base, hands clasped in front |
@@ -144,7 +153,7 @@ Prompt template: `[MASTER STYLE BLOCK] <name>: a <species>, <height % of bear>, 
 |---|---|
 | `overlay_mouths_sheet` | Same line weight/color as the characters: smile, wide smile, flat, small "o", wide open (talking), frown, trembling. On transparent, evenly spaced grid |
 | `overlay_eyes_sheet` | Open dot eyes, closed-happy arcs (the Bear smile), blink line, raised worried brows, wide eyes |
-| `overlay_ear_scar` | A tiny healed **scar nick** on one ear, subtle, same fur texture. **Which twin/which ear is TBD in the story bible** |
+| `overlay_ear_scar` | A tiny healed **scar nick** on the **LEFT ear (the character's own left = the RIGHT ear in the image)**, subtle, same fur texture. **Decided: left ear. Which twin has it: TBD in the story bible** |
 
 ---
 
