@@ -81,7 +81,8 @@ No separate prompts. Rules for any prompt that shows both:
 
 ---
 
-## 3. Nini
+## 3. Nini  (delivered: `nini_stand_neutral`, `nini_stand_happy_open` — the rest below is still needed)
+> Style note: the delivered Nini is softer and more painterly than the bear (no thick dark outline, pastel wool). To keep the cast consistent, ask for the bear's thin olive-brown outline on the remaining Nini images, or accept the soft look for all supporting characters. Decide once and keep it.
 ```
 [MASTER STYLE BLOCK]
 Nini: a small sheep girl, about 55% of the bear's height. Round soft cream-white wool face and fluffy wool tufts, small pink-lined floppy ears,

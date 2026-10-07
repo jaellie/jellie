@@ -45,6 +45,8 @@ def usage(p, n):
         'bear_cry_armsdown': 'Crying with tears, arms down (newer, thicker-outline family).',
         'bear_angry': 'Angry. Note: Green must not look scarier by default; use only for a confrontation beat.',
         'bear_surprised_blush': 'Surprised, small round mouth, light blush.',
+        'nini_stand_neutral': 'Nini base with a tiny closed mouth (no separate no-mouth base yet). Painterly style, no dark outline.',
+        'nini_stand_happy_open': 'Nini happy, open mouth.',
         'bear_sad_cry': 'Crying / sorrow. Neutral-safe for either twin when mirrored.',
         'bear_think_handmouth': 'Hand at mouth with the arm on the RIGHT side of the image = Big Green Bear. Flip for Green.',
         'prop_clock_face': 'Clock face. Hands share its canvas centre; 11:47 -> hour -353.5deg, minute -282deg (Unity Z).',
