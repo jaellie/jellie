@@ -1,0 +1,95 @@
+{
+  "_note": "Face anchors in pixels of each source PNG (origin top-left). Use for eye/mouth overlays and the mirror/flip. Measured by tools; mouth is derived from the baked smile.",
+  "bear_neutral_nomouth.png": {
+    "size": [
+      2004,
+      2360
+    ],
+    "eyeL": [
+      799,
+      530
+    ],
+    "eyeR": [
+      1185,
+      530
+    ],
+    "eyeRadius": 40,
+    "nose": [
+      991,
+      617
+    ],
+    "noseBox": [
+      905,
+      567,
+      1094,
+      667
+    ],
+    "mouthAnchor": [
+      998,
+      750
+    ],
+    "headCenterX": 992,
+    "scarfTail": "viewer-right"
+  },
+  "bear_smile_openeyes.png": {
+    "size": [
+      2060,
+      2376
+    ],
+    "eyeL": [
+      814,
+      546
+    ],
+    "eyeR": [
+      1239,
+      547
+    ],
+    "nose": [
+      1022,
+      638
+    ],
+    "mouthBox": [
+      840,
+      708,
+      1204,
+      810
+    ],
+    "mouthAnchor": [
+      1029,
+      773
+    ],
+    "scarfTail": "viewer-right",
+    "twinNote": "eyes OPEN while smiling = Green's tell"
+  },
+  "bear_sad_cry.png": {
+    "size": [
+      2060,
+      2376
+    ],
+    "eyeL": [
+      811,
+      509
+    ],
+    "eyeR": [
+      1226,
+      507
+    ],
+    "nose": [
+      1022,
+      670
+    ],
+    "mouthAnchor": [
+      1022,
+      790
+    ],
+    "scarfTail": "viewer-right"
+  },
+  "bear_think_handmouth.png": {
+    "size": [
+      1608,
+      2360
+    ],
+    "scarfTail": "viewer-right",
+    "twinNote": "raised arm is on viewer-right = the bear's own LEFT hand. Flip it if used for Big Green Bear (right-handed)."
+  }
+}

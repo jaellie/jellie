@@ -1,0 +1,156 @@
+# Character Art Prompts — Big Green Bear's Adventure II
+
+Use the 4 delivered Big Green Bear images (`Assets/Art/Characters/BigGreenBear/`) as the **style reference** for every prompt below.
+Paste **[MASTER STYLE BLOCK]** at the start of every generation, then the character block, then the pose/expression list.
+
+---
+
+## [MASTER STYLE BLOCK]  (paste first, every time)
+
+```
+Use the attached Big Green Bear images as the exact style reference. Match them precisely.
+
+STYLE
+Soft plush-toy character illustration for a 2D mystery game. Chunky, rounded, simple silhouette.
+Matte velvety fur texture with very subtle fuzzy edge shading and soft airbrushed volume (no gloss, no plastic look).
+A thin, dark olive-brown outline of constant weight, slightly hand-drawn, never thick.
+Muted, slightly desaturated colors with a gentle vintage warmth. Soft lighting from the upper left, very low contrast.
+Small black bead eyes with a tiny highlight only when the expression needs life; nose is a dark flat rounded shape.
+Cute and cozy at first glance, but with a quiet, slightly melancholy feel. NOT glossy 3D, NOT anime, NOT vector-flat, NOT realistic.
+
+CANVAS
+Transparent background (true alpha). Single character. Full body, standing, facing the viewer (front view), symmetrical stance,
+feet touching the bottom edge of the canvas, tight crop with ~2% margin. No ground shadow, no cast shadow, no props unless requested.
+No text, no watermark, no border, no background color.
+
+CONSISTENCY
+Same outline color and thickness, same fur texture, same lighting direction and same color saturation in every image of the set.
+The character must be identical in every image: same proportions, same face shape, same clothes. Only the pose/expression changes.
+```
+
+**Do NOT** (add to the negative prompt): cream belly patch, rosy blush stickers, thick black outlines, glossy highlights, 3D render, anime eyes, cel-shaded flat color, drop shadow, background.
+
+---
+
+## 0. Delivery spec (applies to every image)
+
+| Item | Requirement |
+|---|---|
+| Format | PNG, RGBA, true transparency |
+| Height | Bear **2360 px**. Others at their relative scale (Nini ≈ **1300 px**, Edward ≈ **2200 px**), so they can be dropped into the game without rescaling |
+| Crop | Tight, feet on the bottom edge |
+| Naming | `<character>_<pose>_<expression>.png`, e.g. `nini_stand_worried.png` |
+| Mouth rule | Every character has a **`_nomouth` neutral base** (eyes visible, no mouth). Extra expressions are baked full images; small mouth/eye variants may be added as overlays |
+| Metadata | Any is fine; I repair broken EXIF chunks on import |
+
+---
+
+## 1. Big Green Bear — STILL NEEDED
+Already delivered: `neutral_nomouth`, `smile_openeyes`, `sad_cry`, `think_handmouth`.
+Prompt prefix: `Big Green Bear: round green plush bear, knitted mustard scarf with the tail hanging on the viewer's right, small black bead eyes, dark nose, slightly lighter muzzle area, round ears with a darker inner recess. Same exact character as the reference.`
+
+Needed (same size/style as the delivered set):
+
+| File | Pose / expression | Why |
+|---|---|---|
+| `bear_stand_smile_closedeyes` | Gentle smile with **eyes closed** (happy curved lines). Body identical | **This is Big Green Bear's tell.** The delivered smile has open eyes = Green's tell |
+| `bear_stand_worried` | Eyebrows raised inward, small worried frown, eyes open | Witness chapters |
+| `bear_stand_surprised` | Eyes wide, small round "o" mouth | Power outage / discovery |
+| `bear_stand_guilty` | Eyes looking down and aside, lips pressed, slight shoulder slump | The lie he is hiding (must read as "keeping a secret", not evil) |
+| `bear_stand_resolute` | Calm serious face, eyes forward | Final deduction |
+| `bear_stand_grief` | Eyes closed, mouth small and trembling, no tears | Edward's death |
+| `bear_wave_right` | Waving with his **RIGHT** hand (the arm on the viewer's LEFT) | Right-handed signature |
+| `bear_reach_right` | Reaching forward with his RIGHT hand to pick something up | Right-handed signature |
+| `bear_scarf_adjust_right` | RIGHT hand adjusting the scarf near the neck | Right-handed signature |
+| `bear_door_right` | RIGHT arm extended forward as if opening a door | Right-handed signature |
+| `bear_hold_bell_right` | RIGHT hand holding a tiny **green bell** (round, small, soft green, with a little loop) | Green bell evidence |
+| `bear_walk_A`, `bear_walk_B` | Two mid-step walking frames, neutral face | Optional |
+
+> Handedness rule: the delivered `think_handmouth` raises the arm on the viewer's right = his LEFT hand. For Big Green Bear flip it; keep as-is for Green.
+> **Green needs no new art.** Green is the same image mirrored in-engine (scarf tail flips, left hand leads). His differences are behavior only.
+
+---
+
+## 2. Green (twin)
+No separate prompts. Rules for any prompt that shows both:
+- Same body, same colors, same scarf, same expression range. **Not** scarier, thinner, darker or angrier.
+- Green's tells are: mirrored image (scarf tail on viewer's left), left-handed gestures, eyes slightly **open** when smiling, a more upright stance.
+
+---
+
+## 3. Nini
+```
+[MASTER STYLE BLOCK]
+Nini: a small sheep girl, about 55% of the bear's height. Round soft cream-white wool face and fluffy wool tufts, small pink-lined floppy ears,
+tiny black bead eyes, small dark nose, pink cheek tint (light, painted in, not a sticker).
+She wears a bright mustard-yellow raincoat (#E8BC4A) with a hood pushed back around her head, two dark round buttons, small white mittens, and brown boots (#9C5442).
+A small notebook with a pencil is her signature prop.
+```
+Needed (`nini_<pose>_<expression>`):
+
+| File | Pose / expression |
+|---|---|
+| `nini_stand_nomouth` | Neutral base, no mouth, hands at sides |
+| `nini_stand_happy` | Bright smile, eyes open |
+| `nini_stand_curious` | Head slightly tilted, eyes wide, small "o" mouth |
+| `nini_stand_worried` | Raised inner eyebrows, small frown |
+| `nini_stand_certain` | Eyes steady, small firm mouth (she says "there were two Bears") |
+| `nini_stand_scared` | Wide eyes, mouth slightly open, shoulders up |
+| `nini_notebook_write` | Holding the notebook in one hand, writing with the pencil, looking down |
+| `nini_notebook_hold` | Notebook held against her chest, looking up |
+| `nini_point` | Pointing to the side with one arm |
+| `nini_look_up` | Looking up at something big (the clock), mouth open a little |
+
+---
+
+## 4. Edward  (the victim)
+Species and personality are **not defined yet** in the story files. Pick one before generating:
+**[SPECIES: ___]** Suggested: an old **badger** (or owl / hedgehog), an archivist and keeper of the old family records.
+```
+[MASTER STYLE BLOCK]
+Edward: an elderly [SPECIES] archivist, about 90% of the bear's height, slightly stooped but dignified.
+Round wire-rimmed glasses, a dark navy waistcoat over a cream shirt, a thin brass chain with a pocket watch, ink-stained cuffs.
+Faint fur-gray muzzle, tired kind eyes. Muted cold palette (navy, brass, cream) so he reads as part of the clock tower.
+```
+| File | Pose / expression |
+|---|---|
+| `edward_stand_nomouth` | Neutral base, hands clasped in front |
+| `edward_stand_calm` | Mild, knowing half-smile |
+| `edward_stand_grave` | Serious, brows lowered (the "don't trust anyone's face" line) |
+| `edward_adjust_glasses` | One hand pushing glasses up the nose |
+| `edward_check_watch` | Opening the pocket watch, looking down at it |
+| `edward_hold_documents` | Holding a bundle of old papers against his chest |
+| `edward_worried` | Eyes darting aside, tense mouth |
+| `edward_fallen` | **Not graphic.** Lying on his side, eyes closed, glasses beside him, calm and quiet (a tragic but gentle image for the discovery scene) |
+
+---
+
+## 5. Supporting cast — fill in, then generate
+Each witness needs a **`_nomouth` neutral + 4 expressions** (neutral, speaking, uncertain, certain). Provide one line per character before I generate:
+
+| Name | Species | Visual hook (clothes/prop) | Role |
+|---|---|---|---|
+| Clockkeeper | TBD | e.g. oilcan, apron, goggles on forehead | Witness |
+| Café owner | TBD | e.g. apron, teacup | Witness |
+| Night guard | TBD | e.g. lantern, cap | Statement ("same bear, I'd say") |
+| (others) | TBD | | |
+
+Prompt template: `[MASTER STYLE BLOCK] <name>: a <species>, <height % of bear>, <outfit>, <prop>, <personality read in one line>.`
+
+---
+
+## 6. Overlays (small, transparent, same scale as the base)
+| File | Content |
+|---|---|
+| `overlay_mouths_sheet` | Same line weight/color as the characters: smile, wide smile, flat, small "o", wide open (talking), frown, trembling. On transparent, evenly spaced grid |
+| `overlay_eyes_sheet` | Open dot eyes, closed-happy arcs (the Bear smile), blink line, raised worried brows, wide eyes |
+| `overlay_ear_scar` | A tiny healed **scar nick** on one ear, subtle, same fur texture. **Which twin/which ear is TBD in the story bible** |
+
+---
+
+## 7. Order of work (vertical slice first)
+1. Edward: `nomouth`, `grave`, `adjust_glasses`, `check_watch`, `fallen`
+2. Nini: `nomouth`, `happy`, `worried`, `certain`
+3. Bear: `smile_closedeyes`, `worried`, `surprised`, `hold_bell_right`
+4. Overlays (mouths / eyes)
+5. Everything else

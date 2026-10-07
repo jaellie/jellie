@@ -53,6 +53,11 @@ namespace BigGreenBear2.EditorTools
             ti.ReadTextureSettings(s);
             s.spriteMeshType = SpriteMeshType.FullRect;         // big soft-edged art: FullRect avoids tight-mesh artifacts
             s.spriteAlignment = (int)SpriteAlignment.Center;
+            if (assetPath.StartsWith("Assets/Art/Characters/"))
+            {
+                s.spriteAlignment = (int)SpriteAlignment.BottomCenter;   // feet on the ground line
+                ti.maxTextureSize = 4096;                                  // 2000px+ character art
+            }
             if (Pivots.TryGetValue(name, out var pivot))
             {
                 s.spriteAlignment = (int)SpriteAlignment.Custom;
