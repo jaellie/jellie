@@ -34,6 +34,11 @@ def usage(p, n):
     u = {
         'bear_neutral_nomouth': 'Big Green Bear base. NO mouth: overlay mouth/eye sprites. Scarf tail on viewer-right. Green = this image mirrored.',
         'bear_smile_openeyes': 'Smile with eyes OPEN (= Green\'s tell). Bear needs a closed-eye smile variant (missing).',
+        'bear_wave_right': 'Waving with the arm on the RIGHT side of the image = Big Green Bear. No mouth (use overlay).',
+        'bear_hold_bell': 'RIGHT-side hand holding a bell. NOTE: bell is brass, story says GREEN bell (TBD).',
+        'bear_frown_blush_walk': 'REVIEW: blush + drawn mouth, bigger scale, not in the matte set look.',
+        'bear_wave_right_v2_styledrift': 'REVIEW: thicker outline and glossy scarf = style drift.',
+        'bear_wave_left_mixedtell': 'REVIEW: waves with the LEFT-side arm while the scarf tail is on the RIGHT side = contradicts the twin rule.',
         'bear_sad_cry': 'Crying / sorrow. Neutral-safe for either twin when mirrored.',
         'bear_think_handmouth': 'Hand at mouth with the arm on the RIGHT side of the image = Big Green Bear. Flip for Green.',
         'prop_clock_face': 'Clock face. Hands share its canvas centre; 11:47 -> hour -353.5deg, minute -282deg (Unity Z).',

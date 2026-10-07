@@ -55,7 +55,7 @@ The character must be identical in every image: same proportions, same face shap
 ---
 
 ## 1. Big Green Bear — STILL NEEDED
-Already delivered: `neutral_nomouth`, `smile_openeyes`, `sad_cry`, `think_handmouth`.
+Already delivered: `neutral_nomouth`, `smile_openeyes`, `sad_cry`, `think_handmouth`, `wave_right`, `hold_bell` (see `docs/CANON_DECISIONS.md` for the green-vs-brass bell question).
 Prompt prefix: `Big Green Bear: round green plush bear, knitted mustard scarf with the tail hanging on the RIGHT side of the image, small black bead eyes, dark nose, slightly lighter muzzle area, round ears with a darker inner recess. Same exact character as the reference.`
 
 Needed (same size/style as the delivered set):
@@ -68,11 +68,9 @@ Needed (same size/style as the delivered set):
 | `bear_stand_guilty` | Eyes looking down and aside, lips pressed, slight shoulder slump | The lie he is hiding (must read as "keeping a secret", not evil) |
 | `bear_stand_resolute` | Calm serious face, eyes forward | Final deduction |
 | `bear_stand_grief` | Eyes closed, mouth small and trembling, no tears | Edward's death |
-| `bear_wave_right` | Waving with the arm on the **RIGHT side of the image** | Bear's hand signature |
 | `bear_reach_right` | Reaching forward with the arm on the **RIGHT side of the image** to pick something up | Bear's hand signature |
 | `bear_scarf_adjust_right` | The hand on the **RIGHT side of the image** adjusting the scarf near the neck | Bear's hand signature |
 | `bear_door_right` | The arm on the **RIGHT side of the image** extended forward as if opening a door | Bear's hand signature |
-| `bear_hold_bell_right` | The hand on the **RIGHT side of the image** holding a tiny **green bell** (round, small, soft green, with a little loop) | Green bell evidence |
 | `bear_walk_A`, `bear_walk_B` | Two mid-step walking frames, neutral face | Optional |
 
 > Hand rule: Big Green Bear's hand is always the one on the RIGHT side of the image; Green (mirrored in-engine) uses the LEFT side. The delivered `think_handmouth` already matches Bear.
@@ -156,9 +154,14 @@ Prompt template: `[MASTER STYLE BLOCK] <name>: a <species>, <height % of bear>, 
 |---|---|
 | `overlay_mouths_sheet` | Same line weight/color as the characters: smile, wide smile, flat, small "o", wide open (talking), frown, trembling. On transparent, evenly spaced grid |
 | `overlay_eyes_sheet` | Open dot eyes, closed-happy arcs (the Bear smile), blink line, raised worried brows, wide eyes |
-| `overlay_ear_scar` | A tiny healed **scar nick** on the ear on the **LEFT side of the image**, subtle, same fur texture. **Decided: left ear (screen side). Which twin has it: TBD in the story bible** |
+| `overlay_ear_scar` | A tiny healed **scar nick** on the ear on the **LEFT side of the image**, subtle, same fur texture. **Decided: the scar belongs to GREEN** (left ear, screen side) |
 
 ---
+
+## 6.5 Consistency notes from the delivered bear set
+- Keep **one scale**: the delivered images range from 2158 to 2431 px (normalized) for the same bear. Ask for the same body size in every pose (see `Assets/Data/Characters/bear_scale_normalization.json`).
+- Do **not** mix looks: blush stickers, thick outlines and glossy knit scarves appear in a few drafts (`_review/`). Stay with the matte-fur, thin-outline look of `neutral_nomouth`.
+- A pose must not contradict the twin rule: scarf tail on the RIGHT side of the image **and** the active hand on the RIGHT side for Big Green Bear.
 
 ## 7. Order of work (vertical slice first)
 1. Edward: `nomouth`, `grave`, `adjust_glasses`, `check_watch`, `fallen`

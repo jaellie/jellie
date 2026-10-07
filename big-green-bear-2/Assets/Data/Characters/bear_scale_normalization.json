@@ -1,0 +1,155 @@
+{
+  "bear_neutral_nomouth": {
+    "size": [
+      2004,
+      2360
+    ],
+    "eyeDist": 386,
+    "eyeL": [
+      799,
+      530
+    ],
+    "eyeR": [
+      1185,
+      530
+    ],
+    "scaleToNeutral": 1.0,
+    "normalizedHeightPx": 2360
+  },
+  "bear_smile_openeyes": {
+    "size": [
+      2060,
+      2376
+    ],
+    "eyeDist": 425,
+    "eyeL": [
+      814,
+      546
+    ],
+    "eyeR": [
+      1239,
+      547
+    ],
+    "scaleToNeutral": 0.908,
+    "normalizedHeightPx": 2158
+  },
+  "bear_sad_cry": {
+    "size": [
+      2060,
+      2376
+    ],
+    "eyeDist": 415,
+    "eyeL": [
+      811,
+      509
+    ],
+    "eyeR": [
+      1226,
+      507
+    ],
+    "scaleToNeutral": 0.93,
+    "normalizedHeightPx": 2210
+  },
+  "bear_think_handmouth": {
+    "size": [
+      1608,
+      2360
+    ],
+    "eyeDist": 376,
+    "eyeL": [
+      668,
+      529
+    ],
+    "eyeR": [
+      1044,
+      529
+    ],
+    "scaleToNeutral": 1.027,
+    "normalizedHeightPx": 2423
+  },
+  "bear_wave_right": {
+    "size": [
+      2256,
+      2740
+    ],
+    "eyeDist": 436,
+    "eyeL": [
+      776,
+      610
+    ],
+    "eyeR": [
+      1212,
+      612
+    ],
+    "scaleToNeutral": 0.885,
+    "normalizedHeightPx": 2426
+  },
+  "bear_hold_bell": {
+    "size": [
+      1864,
+      2740
+    ],
+    "eyeDist": 435,
+    "eyeL": [
+      772,
+      610
+    ],
+    "eyeR": [
+      1207,
+      612
+    ],
+    "scaleToNeutral": 0.887,
+    "normalizedHeightPx": 2431
+  },
+  "_review/bear_frown_blush_walk": {
+    "size": [
+      2811,
+      3318
+    ],
+    "eyeDist": 547,
+    "eyeL": [
+      1113,
+      742
+    ],
+    "eyeR": [
+      1660,
+      742
+    ],
+    "scaleToNeutral": 0.706,
+    "normalizedHeightPx": 2341
+  },
+  "_review/bear_wave_right_v2_styledrift": {
+    "size": [
+      2228,
+      2896
+    ],
+    "eyeDist": 484,
+    "eyeL": [
+      815,
+      701
+    ],
+    "eyeR": [
+      1299,
+      701
+    ],
+    "scaleToNeutral": 0.798,
+    "normalizedHeightPx": 2310
+  },
+  "_review/bear_wave_left_mixedtell": {
+    "size": [
+      1401,
+      1661
+    ],
+    "eyeDist": 274,
+    "eyeL": [
+      552,
+      370
+    ],
+    "eyeR": [
+      826,
+      370
+    ],
+    "scaleToNeutral": 1.409,
+    "normalizedHeightPx": 2340
+  }
+}
