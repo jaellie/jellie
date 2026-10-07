@@ -35,7 +35,7 @@ def usage(p, n):
         'bear_neutral_nomouth': 'Big Green Bear base. NO mouth: overlay mouth/eye sprites. Scarf tail on viewer-right. Green = this image mirrored.',
         'bear_smile_openeyes': 'Smile with eyes OPEN (= Green\'s tell). Bear needs a closed-eye smile variant (missing).',
         'bear_sad_cry': 'Crying / sorrow. Neutral-safe for either twin when mirrored.',
-        'bear_think_handmouth': 'Hand at mouth (bear\'s own LEFT hand; flip for right-handed Bear).',
+        'bear_think_handmouth': 'Hand at mouth with the arm on the RIGHT side of the image = Big Green Bear. Flip for Green.',
         'prop_clock_face': 'Clock face. Hands share its canvas centre; 11:47 -> hour -353.5deg, minute -282deg (Unity Z).',
         'prop_clock_hour_hand': 'Hour hand (points to 12 at rot 0, rotate clockwise).',
         'prop_clock_minute_hand': 'Minute hand (points to 12 at rot 0).',

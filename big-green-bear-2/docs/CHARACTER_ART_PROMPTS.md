@@ -33,10 +33,13 @@ The character must be identical in every image: same proportions, same face shap
 ---
 
 ## 0.5 Left / right convention (IMPORTANT — read before generating)
-- **"Right hand" / "left ear" always means the CHARACTER'S OWN right / left**, as in a real body facing the viewer.
-- On a front-facing character that means: own **right** = the **LEFT side of the image**, own **left** = the **RIGHT side of the image**.
-- In every prompt, also say the image side to avoid mix-ups, e.g. "waving with his right hand (the arm on the LEFT side of the image)".
-- Evidence text and in-game statements use the same convention (the character's own hand/ear).
+- **LEFT / RIGHT always means the side you SEE on the screen** (the viewer's left/right), never the character's own anatomy.
+  A player must be able to look at the picture and say "he uses the hand on the right".
+- "Big Green Bear uses his RIGHT hand" = the hand on the **RIGHT side of the image**. Green (the mirrored twin) uses the hand on the **LEFT side of the image**.
+- "Scar on the LEFT ear" = the ear on the **LEFT side of the image**.
+- Every character that appears in evidence art (photographs, documents) must be drawn **facing the viewer**, so left/right is unambiguous.
+- Write the image side in every prompt: "waving with the arm on the RIGHT side of the image".
+- The delivered `think_handmouth` raises the arm on the right side of the image = Big Green Bear's hand. No flip needed for Bear; flip it for Green.
 
 ## 0. Delivery spec (applies to every image)
 
@@ -53,7 +56,7 @@ The character must be identical in every image: same proportions, same face shap
 
 ## 1. Big Green Bear — STILL NEEDED
 Already delivered: `neutral_nomouth`, `smile_openeyes`, `sad_cry`, `think_handmouth`.
-Prompt prefix: `Big Green Bear: round green plush bear, knitted mustard scarf with the tail hanging on the viewer's right, small black bead eyes, dark nose, slightly lighter muzzle area, round ears with a darker inner recess. Same exact character as the reference.`
+Prompt prefix: `Big Green Bear: round green plush bear, knitted mustard scarf with the tail hanging on the RIGHT side of the image, small black bead eyes, dark nose, slightly lighter muzzle area, round ears with a darker inner recess. Same exact character as the reference.`
 
 Needed (same size/style as the delivered set):
 
@@ -65,14 +68,14 @@ Needed (same size/style as the delivered set):
 | `bear_stand_guilty` | Eyes looking down and aside, lips pressed, slight shoulder slump | The lie he is hiding (must read as "keeping a secret", not evil) |
 | `bear_stand_resolute` | Calm serious face, eyes forward | Final deduction |
 | `bear_stand_grief` | Eyes closed, mouth small and trembling, no tears | Edward's death |
-| `bear_wave_right` | Waving with his **RIGHT** hand (the arm on the viewer's LEFT) | Right-handed signature |
-| `bear_reach_right` | Reaching forward with his RIGHT hand to pick something up | Right-handed signature |
-| `bear_scarf_adjust_right` | RIGHT hand adjusting the scarf near the neck | Right-handed signature |
-| `bear_door_right` | RIGHT arm extended forward as if opening a door | Right-handed signature |
-| `bear_hold_bell_right` | RIGHT hand holding a tiny **green bell** (round, small, soft green, with a little loop) | Green bell evidence |
+| `bear_wave_right` | Waving with the arm on the **RIGHT side of the image** | Bear's hand signature |
+| `bear_reach_right` | Reaching forward with the arm on the **RIGHT side of the image** to pick something up | Bear's hand signature |
+| `bear_scarf_adjust_right` | The hand on the **RIGHT side of the image** adjusting the scarf near the neck | Bear's hand signature |
+| `bear_door_right` | The arm on the **RIGHT side of the image** extended forward as if opening a door | Bear's hand signature |
+| `bear_hold_bell_right` | The hand on the **RIGHT side of the image** holding a tiny **green bell** (round, small, soft green, with a little loop) | Green bell evidence |
 | `bear_walk_A`, `bear_walk_B` | Two mid-step walking frames, neutral face | Optional |
 
-> Handedness rule: the delivered `think_handmouth` raises the arm on the viewer's right = his LEFT hand. For Big Green Bear flip it; keep as-is for Green.
+> Hand rule: Big Green Bear's hand is always the one on the RIGHT side of the image; Green (mirrored in-engine) uses the LEFT side. The delivered `think_handmouth` already matches Bear.
 > **Green needs no new art.** Green is the same image mirrored in-engine (scarf tail flips, left hand leads). His differences are behavior only.
 
 ---
@@ -80,7 +83,7 @@ Needed (same size/style as the delivered set):
 ## 2. Green (twin)
 No separate prompts. Rules for any prompt that shows both:
 - Same body, same colors, same scarf, same expression range. **Not** scarier, thinner, darker or angrier.
-- Green's tells are: mirrored image (scarf tail on viewer's left), left-handed gestures, eyes slightly **open** when smiling, a more upright stance.
+- Green's tells are: mirrored image (scarf tail on the LEFT side of the image), gestures with the hand on the LEFT side of the image, eyes slightly **open** when smiling, a more upright stance.
 
 ---
 
@@ -153,7 +156,7 @@ Prompt template: `[MASTER STYLE BLOCK] <name>: a <species>, <height % of bear>, 
 |---|---|
 | `overlay_mouths_sheet` | Same line weight/color as the characters: smile, wide smile, flat, small "o", wide open (talking), frown, trembling. On transparent, evenly spaced grid |
 | `overlay_eyes_sheet` | Open dot eyes, closed-happy arcs (the Bear smile), blink line, raised worried brows, wide eyes |
-| `overlay_ear_scar` | A tiny healed **scar nick** on the **LEFT ear (the character's own left = the RIGHT ear in the image)**, subtle, same fur texture. **Decided: left ear. Which twin has it: TBD in the story bible** |
+| `overlay_ear_scar` | A tiny healed **scar nick** on the ear on the **LEFT side of the image**, subtle, same fur texture. **Decided: left ear (screen side). Which twin has it: TBD in the story bible** |
 
 ---
 

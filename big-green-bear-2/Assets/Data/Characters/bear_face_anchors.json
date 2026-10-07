@@ -1,5 +1,5 @@
 {
-  "_note": "Face anchors in pixels of each source PNG (origin top-left). Use for eye/mouth overlays and the mirror/flip. Measured by tools; mouth is derived from the baked smile.",
+  "_note": "Face anchors in pixels of each source PNG (origin top-left). Use for eye/mouth overlays and the mirror/flip. Measured by tools; mouth is derived from the baked smile. LEFT/RIGHT always means the side seen on screen.",
   "bear_neutral_nomouth.png": {
     "size": [
       2004,
@@ -90,6 +90,6 @@
       2360
     ],
     "scarfTail": "viewer-right",
-    "twinNote": "raised arm is on viewer-right = the bear's own LEFT hand. Flip it if used for Big Green Bear (right-handed)."
+    "twinNote": "raised arm is on the RIGHT side of the image = Big Green Bear's hand (screen-side convention). Flip for Green."
   }
 }
