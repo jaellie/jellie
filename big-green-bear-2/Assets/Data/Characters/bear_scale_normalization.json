@@ -1,4 +1,72 @@
 {
+  "bear_angry": {
+    "size": [
+      2652,
+      3252
+    ],
+    "eyeDist": 505,
+    "eyeL": [
+      1062,
+      688
+    ],
+    "eyeR": [
+      1567,
+      687
+    ],
+    "scaleToNeutral": 0.764,
+    "normalizedHeightPx": 2486
+  },
+  "bear_cry_armsdown": {
+    "size": [
+      2536,
+      2980
+    ],
+    "eyeDist": 507,
+    "eyeL": [
+      1003,
+      636
+    ],
+    "eyeR": [
+      1510,
+      640
+    ],
+    "scaleToNeutral": 0.761,
+    "normalizedHeightPx": 2269
+  },
+  "bear_grief_handsclasp": {
+    "size": [
+      1772,
+      2904
+    ],
+    "eyeDist": 421,
+    "eyeL": [
+      670,
+      560
+    ],
+    "eyeR": [
+      1091,
+      561
+    ],
+    "scaleToNeutral": 0.917,
+    "normalizedHeightPx": 2663
+  },
+  "bear_hold_bell": {
+    "size": [
+      1864,
+      2740
+    ],
+    "eyeDist": 435,
+    "eyeL": [
+      772,
+      609
+    ],
+    "eyeR": [
+      1207,
+      611
+    ],
+    "scaleToNeutral": 0.887,
+    "normalizedHeightPx": 2431
+  },
   "bear_neutral_nomouth": {
     "size": [
       2004,
@@ -15,6 +83,40 @@
     ],
     "scaleToNeutral": 1.0,
     "normalizedHeightPx": 2360
+  },
+  "bear_sad_cry": {
+    "size": [
+      2060,
+      2376
+    ],
+    "eyeDist": 414,
+    "eyeL": [
+      811,
+      510
+    ],
+    "eyeR": [
+      1225,
+      508
+    ],
+    "scaleToNeutral": 0.932,
+    "normalizedHeightPx": 2215
+  },
+  "bear_smile_closedeyes": {
+    "size": [
+      2416,
+      2904
+    ],
+    "eyeDist": 486,
+    "eyeL": [
+      962,
+      568
+    ],
+    "eyeR": [
+      1448,
+      568
+    ],
+    "scaleToNeutral": 0.794,
+    "normalizedHeightPx": 2306
   },
   "bear_smile_openeyes": {
     "size": [
@@ -33,22 +135,22 @@
     "scaleToNeutral": 0.908,
     "normalizedHeightPx": 2158
   },
-  "bear_sad_cry": {
+  "bear_surprised_blush": {
     "size": [
-      2060,
-      2376
+      2636,
+      3136
     ],
-    "eyeDist": 415,
+    "eyeDist": 533,
     "eyeL": [
-      811,
-      509
+      1044,
+      674
     ],
     "eyeR": [
-      1226,
-      507
+      1577,
+      674
     ],
-    "scaleToNeutral": 0.93,
-    "normalizedHeightPx": 2210
+    "scaleToNeutral": 0.724,
+    "normalizedHeightPx": 2271
   },
   "bear_think_handmouth": {
     "size": [
@@ -72,34 +174,34 @@
       2256,
       2740
     ],
-    "eyeDist": 436,
+    "eyeDist": 435,
     "eyeL": [
       776,
       610
     ],
     "eyeR": [
-      1212,
-      612
-    ],
-    "scaleToNeutral": 0.885,
-    "normalizedHeightPx": 2426
-  },
-  "bear_hold_bell": {
-    "size": [
-      1864,
-      2740
-    ],
-    "eyeDist": 435,
-    "eyeL": [
-      772,
-      610
-    ],
-    "eyeR": [
-      1207,
+      1211,
       612
     ],
     "scaleToNeutral": 0.887,
     "normalizedHeightPx": 2431
+  },
+  "bear_worried_handsclasp": {
+    "size": [
+      1772,
+      2904
+    ],
+    "eyeDist": 474,
+    "eyeL": [
+      641,
+      666
+    ],
+    "eyeR": [
+      1115,
+      665
+    ],
+    "scaleToNeutral": 0.814,
+    "normalizedHeightPx": 2365
   },
   "_review/bear_frown_blush_walk": {
     "size": [
@@ -118,23 +220,6 @@
     "scaleToNeutral": 0.706,
     "normalizedHeightPx": 2341
   },
-  "_review/bear_wave_right_v2_styledrift": {
-    "size": [
-      2228,
-      2896
-    ],
-    "eyeDist": 484,
-    "eyeL": [
-      815,
-      701
-    ],
-    "eyeR": [
-      1299,
-      701
-    ],
-    "scaleToNeutral": 0.798,
-    "normalizedHeightPx": 2310
-  },
   "_review/bear_wave_left_mixedtell": {
     "size": [
       1401,
@@ -151,5 +236,22 @@
     ],
     "scaleToNeutral": 1.409,
     "normalizedHeightPx": 2340
+  },
+  "_review/bear_wave_right_v2_styledrift": {
+    "size": [
+      2228,
+      2896
+    ],
+    "eyeDist": 484,
+    "eyeL": [
+      815,
+      701
+    ],
+    "eyeR": [
+      1299,
+      701
+    ],
+    "scaleToNeutral": 0.798,
+    "normalizedHeightPx": 2310
   }
 }

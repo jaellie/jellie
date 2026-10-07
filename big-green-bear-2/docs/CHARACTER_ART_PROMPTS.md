@@ -55,19 +55,15 @@ The character must be identical in every image: same proportions, same face shap
 ---
 
 ## 1. Big Green Bear — STILL NEEDED
-Already delivered: `neutral_nomouth`, `smile_openeyes`, `sad_cry`, `think_handmouth`, `wave_right`, `hold_bell` (see `docs/CANON_DECISIONS.md` for the green-vs-brass bell question).
+Already delivered: `neutral_nomouth`, `smile_openeyes`, `smile_closedeyes`, `sad_cry`, `cry_armsdown`, `grief_handsclasp`, `worried_handsclasp`, `surprised_blush`, `angry`, `think_handmouth`, `wave_right`, `hold_bell` (green).
 Prompt prefix: `Big Green Bear: round green plush bear, knitted mustard scarf with the tail hanging on the RIGHT side of the image, small black bead eyes, dark nose, slightly lighter muzzle area, round ears with a darker inner recess. Same exact character as the reference.`
 
 Needed (same size/style as the delivered set):
 
 | File | Pose / expression | Why |
 |---|---|---|
-| `bear_stand_smile_closedeyes` | Gentle smile with **eyes closed** (happy curved lines). Body identical | **This is Big Green Bear's tell.** The delivered smile has open eyes = Green's tell |
-| `bear_stand_worried` | Eyebrows raised inward, small worried frown, eyes open | Witness chapters |
-| `bear_stand_surprised` | Eyes wide, small round "o" mouth | Power outage / discovery |
 | `bear_stand_guilty` | Eyes looking down and aside, lips pressed, slight shoulder slump | The lie he is hiding (must read as "keeping a secret", not evil) |
 | `bear_stand_resolute` | Calm serious face, eyes forward | Final deduction |
-| `bear_stand_grief` | Eyes closed, mouth small and trembling, no tears | Edward's death |
 | `bear_reach_right` | Reaching forward with the arm on the **RIGHT side of the image** to pick something up | Bear's hand signature |
 | `bear_scarf_adjust_right` | The hand on the **RIGHT side of the image** adjusting the scarf near the neck | Bear's hand signature |
 | `bear_door_right` | The arm on the **RIGHT side of the image** extended forward as if opening a door | Bear's hand signature |
