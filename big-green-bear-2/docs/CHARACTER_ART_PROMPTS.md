@@ -9,7 +9,8 @@ outline ≈ 0.4 % of image height). Attach the delivered **bear images as style 
 1. Paste **A. STYLE LOCK** first, every time.
 2. Paste the character block (**B–D**), then ONE pose line from that character's list.
 3. For each character generate the **`_nomouth` neutral base first**, approve it, then attach it (plus a bear image) as reference for every other pose.
-4. After each image run the **checklist (G)**.
+4. **View rule:** every in-game pose is generated as `three_quarter_left` (the bear stands on the right and faces left toward the other character; Green is this sprite mirrored in-engine). Only `bear_front_neutral` (portrait / mirror scene) is a true front view. Attach `turnaround/bear_turn_three_quarter_left.png` as the view reference.
+5. After each image run the **checklist (G)**.
 
 ---
 
@@ -29,7 +30,7 @@ Eyes: small solid near-black dots (#1B1A16); a tiny white highlight only for sad
 Cheek blush: very soft, low opacity pink-brown (#B58A7C at 35%), only when the expression list asks for it.
 
 CANVAS
-Transparent background (true alpha, clean edges, no white fringe). One character per image. Full body, standing, front view, feet touching the bottom edge, tight crop with about 1.5% margin. No ground, no shadow, no props unless requested, no text, no watermark, no frame.
+Transparent background (true alpha, clean edges, no white fringe). One character per image. Full body, standing, VIEW per the character's rule below (default: three-quarter view turned toward the LEFT side of the image, about 35 degrees, like the attached turnaround reference), feet touching the bottom edge, tight crop with about 1.5% margin. No ground, no shadow, no props unless requested, no text, no watermark, no frame.
 
 SCALE
 Keep the same body size in every pose of the same character. Only the pose and the face change. Heights: Big Green Bear 2900 px, Nini 1600 px, Edward 2320 px.
@@ -46,9 +47,10 @@ hard-edged flat shadow shapes, glossy highlights, plastic, 3D render, fuzzy fur-
 ## B. Big Green Bear
 ```
 CHARACTER: Big Green Bear.
-A big round plush bear: pear-shaped body, large round head, small round ears with a darker green inner recess. Sage-green fur (#5F8258) with soft fuzzy texture, a slightly lighter muzzle area (#7A9C6E), no cream belly. A thick hand-knitted mustard scarf (#C5A766) with a herringbone braid knit, wrapped around the neck; its tail hangs down the front on the RIGHT side of the image and ends in a ribbed cuff. Paws are simple rounded mitten shapes with one short curved line for the thumb. Small solid dot eyes, dark rounded-triangle nose. Height 2900 px.
+A big round plush bear: pear-shaped body, large round head, small round ears with a darker green inner recess. Sage-green fur (#5F8258) with soft fuzzy texture, a slightly lighter muzzle area (#7A9C6E), no cream belly. A thick hand-knitted mustard scarf (#C5A766) with a herringbone braid knit, wrapped around the neck; its tail hangs down the chest on his OWN LEFT side (visible in the three-quarter-left view; image-right in a true front view) and ends in a ribbed cuff. Paws are simple rounded mitten shapes with one short curved line for the thumb. Small solid dot eyes, dark rounded-triangle nose. Height 2900 px.
 ```
-Full pose list (generate ALL of them in the new style; "RIGHT" = right side of the image = Big Green Bear's active hand):
+Full pose list (generate ALL of them in the new style; all in three-quarter-left view; below, "RIGHT"/active hand = the near-side arm on his OWN LEFT, the one on the same side as the scarf tail):
+0. `bear_front_neutral` (portrait/mirror scene, TRUE FRONT VIEW, generate with the front-view reference): neutral standing, arms relaxed, dot eyes, NO mouth, no blush. Scarf tail on the image-right chest.
 1. `bear_stand_nomouth` (BASE, generate first): neutral standing, arms relaxed at the sides, eyes open as dots, NO mouth, no blush.
 2. `bear_stand_smile_closedeyes` (**Big Green Bear's tell**): eyes closed as happy upward arcs, gentle closed-mouth smile, arms relaxed.
 3. `bear_stand_smile_openeyes` (**Green's smile**, used mirrored): the same gentle smile but the dot eyes stay OPEN.
