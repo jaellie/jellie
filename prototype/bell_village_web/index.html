@@ -38,10 +38,18 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #world .ground{left:0;top:644px}
 .actor{position:absolute;pointer-events:none;transform-origin:50% 100%}
 .actor img{position:static!important;display:block;width:100%;height:auto}
-.shadow{position:absolute;left:50%;bottom:-6px;width:80%;height:16px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(10,14,30,.55),transparent 70%)}
+/* Lighting: overlays are clipped to the sprite's own alpha, so outlines, colours and animation are untouched */
+.actor{isolation:isolate;--spr:none;--ll:0;--lr:0;--cool:.2}
+.actor:before,.actor:after{content:"";position:absolute;inset:0;pointer-events:none;-webkit-mask-image:var(--spr);mask-image:var(--spr);-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.actor:before{background:linear-gradient(180deg,rgba(78,104,170,calc(var(--cool)*.5)),rgba(44,64,132,var(--cool)));mix-blend-mode:multiply}
+.actor:after{background:linear-gradient(90deg,rgba(255,176,72,var(--ll)),rgba(255,176,72,0) 64%),linear-gradient(270deg,rgba(255,176,72,var(--lr)),rgba(255,176,72,0) 64%);mix-blend-mode:soft-light}
+#shadows{position:absolute;left:0;top:0}
+.cs{position:absolute;height:24px;pointer-events:none;transform-origin:50% 50%;background:radial-gradient(ellipse at 50% 50%,rgba(6,10,28,.62) 0%,rgba(6,10,28,.36) 42%,rgba(6,10,28,0) 72%);filter:blur(1.2px)}
 #fg{position:absolute;left:0;top:0;will-change:transform}
 #fg img{position:absolute;left:0;top:884px;display:block;pointer-events:none}
-.mark{position:absolute;width:78px;height:85px;margin-left:-39px;pointer-events:none;animation:bob 1.6s ease-in-out infinite}
+.mark{position:absolute;width:78px;height:85px;margin-left:-39px;pointer-events:none;animation:bob 1.6s ease-in-out infinite;opacity:0;scale:1;transition:opacity .25s ease,scale .25s ease}
+.mark.on{opacity:1}
+.mark.soft{opacity:.34;scale:.7}
 @keyframes bob{50%{transform:translateY(-8px)}}
 .glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,179,71,.34),transparent 65%);pointer-events:none;mix-blend-mode:screen}
 
@@ -64,12 +72,13 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .hudbtn:hover{transform:scale(1.07);filter:brightness(1.15)}
 .hudbtn:focus-visible,.choice:focus-visible,.tab:focus-visible,.pbtn:focus-visible{outline:3px solid #ffd27a;outline-offset:3px}
 .hudbtn .k{position:absolute;right:-6px;bottom:-8px;font:700 13px/1 var(--font-label);background:#1b2340;color:#ffe3a6;border:1px solid var(--brass);border-radius:4px;padding:3px 5px}
-#hint{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);width:fit-content;max-width:900px;padding:22px 52px;--s:1.25;display:none;align-items:center;justify-content:center;gap:14px;font:600 25px/1.1 var(--font-body);color:var(--ink);white-space:nowrap}
-#hint.on{display:flex}
-#hint kbd{font:700 21px/1 var(--font-label);background:var(--burgundy);color:#f6e3c0;border-radius:6px;padding:7px 11px;box-shadow:0 2px 0 #3d1219}
+#hint{position:absolute;left:50%;bottom:34px;translate:-50% 6px;scale:var(--hb,1);transform-origin:50% 100%;width:fit-content;max-width:720px;padding:17px 42px;--s:1;display:flex;align-items:center;justify-content:center;gap:11px;font:600 20px/1.1 var(--font-body);color:var(--ink);white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .25s ease,translate .25s ease,visibility 0s linear .25s}
+#hint.on{opacity:1;visibility:visible;translate:-50% 0;transition-delay:0s}
+#hint.instant,#hint.instant.on{transition:none}
+#hint kbd{font:700 17px/1 var(--font-label);background:var(--burgundy);color:#f6e3c0;border-radius:5px;padding:6px 9px;box-shadow:0 2px 0 #3d1219}
 
 /* Dialogue */
-#dlg{position:absolute;left:336px;bottom:36px;width:1247px;height:243px;display:none}
+#dlg{position:absolute;left:336px;bottom:36px;width:1247px;height:243px;display:none} /* left is set from the box width so the box stays centred */
 #dlg.on{display:block}
 #dlgbg{position:absolute;inset:0;--img:url(assets/dialogue_box_tall_portrait_ribbon.webp);--sl:410;--sr:100;--st:68;--sb:26;--s:1.15}
 #meas{position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font:400 30px/1.32 var(--font-body)}
@@ -79,10 +88,10 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #dlg .tx{position:absolute;left:236px;top:80px;right:130px;height:140px;font:400 30px/1.32 var(--font-body);color:var(--ink)}
 :lang(ko) #dlg .tx,#dlg .tx.ko{font-size:27px;line-height:1.5}
 #dlg .tx i{color:#6d4f2d}
-#choices{position:absolute;right:340px;bottom:300px;display:none;flex-direction:column;gap:12px;align-items:flex-end}
+#choices{position:absolute;left:50%;transform:translateX(-50%);bottom:300px;display:none;flex-direction:column;gap:12px;align-items:center}
 #choices.on{display:flex}
 .choice{width:fit-content;max-width:900px;min-height:76px;padding:16px 38px;--s:1.1;font:600 25px/1.25 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s;background-color:transparent}
-.choice:hover,.choice.sel{--img:url(assets/plaque_red_small.webp);color:#f6e3c0;transform:translateX(-8px)}
+.choice:hover,.choice.sel{--img:url(assets/plaque_red_small.webp);color:#f6e3c0;transform:translateY(-2px)}
 
 /* Case File */
 #cf{position:absolute;inset:0;background:rgba(6,9,20,.82);display:none;z-index:20}
@@ -179,6 +188,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
      <path d="M-6 346h244v-22H-6z" fill="#8d9bbd"/><path d="M-6 346h244v-9H-6z" fill="#a9b7d6"/>
    </svg>
    <div class="glow" style="left:2700px;top:700px;width:310px;height:330px"></div>
+   <div id="shadows"></div>
    <div id="actors"></div>
    <div id="marks"></div>
   </div>
@@ -320,7 +330,9 @@ const setf = f => { if (f) S.flags[f] = true; };
 const actors = $("actors"), marks = $("marks");
 function mkActor(cls, base, h, x){
   const d = document.createElement("div"); d.className = "actor " + cls;
-  d.innerHTML = '<div class="shadow"></div><img alt="" src="assets/'+base+'_front.webp">';
+  d.innerHTML = '<img alt="" src="assets/'+base+'_front.webp">';
+  d.style.setProperty("--spr", 'url("assets/'+base+'_front.webp")');
+  const sh = document.createElement("div"); sh.className = "cs"; $("shadows").appendChild(sh); d._sh = sh;
   d.dataset.base = base; d.style.height = h + "px"; d.style.top = (FEET - h) + "px"; d.style.left = x + "px";
   actors.appendChild(d); return d;
 }
@@ -328,7 +340,7 @@ const SPR = { big_green_bear:[157,277,175,274], nini:[128,247,161,248], clockkee
 function setActorSprite(el, dir, h){
   const base = el.dataset.base, img = el.querySelector("img");
   const s = {left:"left", right:"right", front:"front"}[dir] || "front";
-  const src = "assets/"+base+"_"+s+".webp"; if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+  const src = "assets/"+base+"_"+s+".webp"; if (img.getAttribute("src") !== src){ img.setAttribute("src", src); el.style.setProperty("--spr", 'url("'+src+'")'); }
   const k = SPR[base]; const nat = s === "front" ? k[3] : k[1]; const natW = s === "front" ? k[2] : k[0];
   const sc = h / k[3]; // scale so the FRONT sprite height equals h
   el.style.width = Math.round(natW * sc) + "px"; el.style.height = Math.round(nat * sc) + "px"; el.style.top = (FEET - Math.round(nat*sc)) + "px";
@@ -348,6 +360,37 @@ function place(){
   const cface = Math.abs(P.x - NPCX.ck) < 360 ? (P.x < NPCX.ck ? "right" : "left") : "front";
   setActorSprite(ck, cface, CK_H); ck.style.left = Math.round(NPCX.ck - parseFloat(ck.style.width)/2) + "px";
 }
+function applyLight(dt){
+  lightActor(bgb, P.x, dt, parseFloat(bgb.style.width)*.78);
+  lightActor(nini, NPCX.nini, dt, parseFloat(nini.style.width)*.9);
+  lightActor(ck, NPCX.ck, dt, parseFloat(ck.style.width)*.85);
+}
+
+/* ---------- lighting ---------- */
+// Lamp positions in world px (from the Ground layer art). Light reaches R px sideways.
+const LAMPS = [372, 1146, 1786, 2765, 3550], LAMP_R = 470, AMBER_MAX = .46, COOL_BASE = .27;
+const smooth = t => t*t*(3 - 2*t);
+function lampLight(x){ // returns {l, r, total}: warm light arriving on the left and right edge of a character at x
+  let l = 0, r = 0;
+  for (const lx of LAMPS){
+    const dx = lx - x, f = Math.max(0, 1 - Math.abs(dx)/LAMP_R); if (!f) continue;
+    const c = smooth(f), k = Math.max(-1, Math.min(1, dx/140)); // under the lamp the light splits to both edges, no popping
+    r += c * (.5 + .5*k); l += c * (.5 - .5*k);
+  }
+  return { l: Math.min(1, l), r: Math.min(1, r), total: Math.min(1, l + r) };
+}
+function lightActor(el, cx, dt, shW){
+  const t = lampLight(cx), L = el._L || (el._L = { l:0, r:0, cool:COOL_BASE, sx:0, sw:1 });
+  const a = Math.min(1, dt * 5);                      // eases over ~0.2 s, so there is no flicker even at run speed
+  L.l += (t.l - L.l)*a; L.r += (t.r - L.r)*a;
+  const total = Math.min(1, L.l + L.r);
+  L.cool += (COOL_BASE*(1 - .8*total) - L.cool)*a;
+  el.style.setProperty("--ll", (L.l*AMBER_MAX).toFixed(3)); el.style.setProperty("--lr", (L.r*AMBER_MAX).toFixed(3)); el.style.setProperty("--cool", L.cool.toFixed(3));
+  const sh = el._sh; L.sx += (((L.l - L.r) * 14) - L.sx)*a; L.sw += ((1 + .22*total) - L.sw)*a; // shadow leans away from the lamp
+  sh.style.width = Math.round(shW*1.0) + "px"; sh.style.left = Math.round(cx - shW/2 + L.sx) + "px"; sh.style.top = (FEET - 12) + "px";
+  sh.style.transform = "scaleX(" + L.sw.toFixed(3) + ")"; sh.style.opacity = (.95 - .12*total).toFixed(3);
+  return L;
+}
 
 /* ---------- interactables ---------- */
 const IA = [
@@ -357,7 +400,7 @@ const IA = [
   { id:"clock",  x:()=>2790,      label:UI.look,   top:560,            run:()=>inspect("clock") },
   { id:"door",   x:()=>2856,      label:UI.enter,  top:600,            run:()=>enterTower() }
 ];
-IA.forEach(i => { const m = document.createElement("img"); m.className = "mark"; m.src = "assets/bubble_exclaim.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; m.style.display = "none"; marks.appendChild(m); i.el = m; });
+IA.forEach(i => { const m = document.createElement("img"); m.className = "mark"; m.src = "assets/bubble_exclaim.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; marks.appendChild(m); i.el = m; });
 let near = null, peek = 0;
 
 /* ---------- UI plumbing ---------- */
@@ -374,6 +417,7 @@ function applyLang(){
   document.querySelector("#pause .eyebrow").textContent = tr(UI.paused);
   const E = tr(UI.end); $("eEy").textContent = E[0]; $("eH").textContent = E[1]; $("eP1").textContent = E[2]; $("eP2").textContent = E[3]; $("rot").textContent = tr(UI.rot);
   if (cur) renderDlg();
+  const ht = $("hintTx"); if (ht.dataset.k) ht.textContent = tr(IA.find(i=>i.id===ht.dataset.k).label);
 }
 function refreshHud(){}
 
@@ -393,7 +437,7 @@ function sizeDlg(text){
   const m = $("meas"); m.style.fontSize = lang==="ko" ? "27px" : "30px"; m.textContent = text;
   const w = Math.min(m.offsetWidth + 12, 925); // text width, one line, capped at the full text area
   const box = Math.max(760, 236 + w + 130);
-  $("dlg").style.width = Math.min(1247, box) + "px";
+  const bw = Math.min(1247, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px";
 }
 function showChoices(){
   const n = D[cur]; if (!n.ch) return; const box = $("choices"); box.innerHTML = "";
@@ -494,7 +538,8 @@ $("pResume").onclick = closePause; $("pLang").onclick = ()=>setLang(lang==="en"?
 $("pReset").onclick = ()=>{ try{ localStorage.removeItem(SAVE_KEY);}catch(e){} S = {x:300,flags:{},ev:[],notes:[],lang}; P.x = 300; closePause(); toast(lang==="ko"?"처음부터 다시 시작":"Restarted"); };
 
 /* ---------- input ---------- */
-function act(){ if (mode==="dlg") advance(); else if (mode==="play" && near) near.run(); }
+function hideHintNow(){ const h = $("hint"); h.classList.add("instant"); h.classList.remove("on"); }
+function act(){ if (mode==="dlg") advance(); else if (mode==="play" && near){ hideHintNow(); near.run(); } }
 window.addEventListener("keydown", e=>{
   const k = e.key;
   if (["ArrowLeft","ArrowRight","Tab"," "].includes(k)) e.preventDefault();
@@ -532,23 +577,27 @@ function frame(now){
   $("mid").style.transform = "translate3d("+(-cam*0.35).toFixed(2)+"px,0,0)";
   $("world").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("fg").style.transform = "translate3d("+(-cam*1.2).toFixed(2)+"px,0,0)";
-  place();
+  place(); applyLight(dt);
   // nearest interactable
   near = null; let best = 140;
   if (mode==="play"){ IA.forEach(i=>{ const d = Math.abs(P.x - i.x()); if (d < best){ best = d; near = i; } }); }
   if (peek > 0) peek -= dt;
-  IA.forEach(i=>{ i.el.style.display = (near===i || peek>0 && mode==="play") ? "block" : "none"; });
-  const hint = $("hint"); if (near && mode==="play"){ hint.classList.add("on"); $("hintTx").textContent = tr(near.label); } else hint.classList.remove("on");
+  const hint = $("hint"), showHint = !!(near && mode==="play");
+  IA.forEach(i=>{ const on = (near===i && mode==="play") || (peek>0 && mode==="play"); i.el.classList.toggle("on", on); i.el.classList.toggle("soft", near===i && showHint); });
+  if (showHint){ hint.classList.remove("instant"); if ($("hintTx").dataset.k !== near.id){ $("hintTx").dataset.k = near.id; $("hintTx").textContent = tr(near.label); } hint.classList.add("on"); }
+  else { if (mode!=="play") hint.classList.add("instant"); hint.classList.remove("on"); }
   requestAnimationFrame(frame);
 }
 
 /* ---------- fit ---------- */
-function fit(){ const s = Math.min(innerWidth/STAGE_W, innerHeight/STAGE_H); stage.style.transform = "scale("+s+")"; stage.style.left = ((innerWidth - STAGE_W*s)/2)+"px"; stage.style.top = ((innerHeight - STAGE_H*s)/2)+"px"; }
+function fit(){ const s = Math.min(innerWidth/STAGE_W, innerHeight/STAGE_H);
+  stage.style.setProperty("--hb", Math.min(1.7, Math.max(1, 14/(20*s))).toFixed(3)); /* keeps prompt text at least ~14 px on small screens */
+  stage.style.transform = "scale("+s+")"; stage.style.left = ((innerWidth - STAGE_W*s)/2)+"px"; stage.style.top = ((innerHeight - STAGE_H*s)/2)+"px"; }
 addEventListener("resize", fit);
 
 load(); P.x = S.x; cam = Math.max(0, Math.min(CAM_MAX, P.x - STAGE_W/2)); fit(); applyLang(); stage.focus();
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
-window.__bv = { P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; if(mode==="cf") renderCF();}, addEv };
+window.__bv = { lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; if(mode==="cf") renderCF();}, addEv };
 requestAnimationFrame(frame);
 })();
 </script>
