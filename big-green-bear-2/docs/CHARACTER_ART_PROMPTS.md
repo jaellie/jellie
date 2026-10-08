@@ -1,7 +1,9 @@
+> **MASTER STYLE (decided): clean soft-shaded flat look, as in `Assets/Art/Characters/BigGreenBear/turnaround/` (v2 sheet). Older fuzzy hand-painted poses are superseded; regenerate them with the new sheet as the style reference.**
+
 # Character Art Prompts v2 — Big Green Bear's Adventure II
 
-All values below were measured from the delivered bear sprites (outline #2E2C20, fur ≈ RGB 95,130,88, scarf ≈ RGB 197,167,102,
-outline ≈ 0.3 % of image height). Attach the delivered **bear images as style references** to every generation.
+All values below were measured from the delivered bear sprites (outline #122819 (dark green-black), fur ≈ RGB 95,130,88, scarf ≈ RGB 197,167,102,
+outline ≈ 0.4 % of image height). Attach the delivered **bear images as style references** to every generation.
 
 ## How to use
 1. Paste **A. STYLE LOCK** first, every time.
@@ -20,10 +22,10 @@ Soft plush storybook character illustration, like a hand-painted stuffed toy: si
 This is HAND-PAINTED, NOT cel-shaded: soft brush-blended shading and fine fur texture, never flat color blocks with hard-edged shadow shapes.
 
 OUTLINE (identical on every character in every image)
-One continuous dark olive-brown outline, color #2E2C20, a clean hand-inked line of UNIFORM weight, about 0.3% of the image height (about 9 px on a 2900 px tall image, about 7 px on a 2300 px tall image), rounded line ends, a very slight organic wobble, no tapering, no thick-and-thin variation, no double lines. The outline goes around the whole silhouette and around the main inner shapes (arms, ears, coat, scarf, boots, glasses). Fine details (fur, knit pattern, wool curls) have NO outline, only soft shading.
+One continuous dark olive-brown outline, color #122819 (dark green-black), a clean line of UNIFORM weight, about 0.4% of the image height (about 12 px on a 2900 px tall image, about 9 px on a 2300 px tall image), rounded line ends, a very slight organic wobble, no tapering, no thick-and-thin variation, no double lines. The outline goes around the whole silhouette and around the main inner shapes (arms, ears, coat, scarf, boots, glasses). Fine details (fur, knit pattern, wool curls) have NO outline, only soft shading.
 
 FACE
-Eyes: small solid near-black dots (#1B1A16); a tiny white highlight only for sad/tearful or surprised expressions. Nose: dark flat rounded shape (#2B2A24) with a very soft highlight. Mouth: a thin line in the same #2E2C20 and the same weight as the outline, drawn ONLY when the pose list asks for one. No eyelashes. No eyebrows unless requested. No teeth except open-mouth laughs.
+Eyes: small solid near-black dots (#1B1A16); a tiny white highlight only for sad/tearful or surprised expressions. Nose: dark flat rounded shape (#2B2A24) with a very soft highlight. Mouth: a thin line in the same #122819 and the same weight as the outline, drawn ONLY when the pose list asks for one. No eyelashes. No eyebrows unless requested. No teeth except open-mouth laughs.
 Cheek blush: very soft, low opacity pink-brown (#B58A7C at 35%), only when the expression list asks for it.
 
 CANVAS
@@ -36,7 +38,7 @@ LEFT / RIGHT
 Left and right always mean the side you see in the image, never the character's own anatomy.
 
 NEGATIVE
-cel shading, hard-edged flat shadow shapes, glossy highlights, plastic, 3D render, thick or tapering outline, double outline, colored outline, missing outline, gradient background, checkerboard, drop shadow, cast shadow, text, extra limbs, extra characters, cream belly patch, anime eyes, sparkles, blur
+hard-edged flat shadow shapes, glossy highlights, plastic, 3D render, fuzzy fur-hair texture, thick or tapering outline, double outline, colored outline, missing outline, gradient background, checkerboard, drop shadow, cast shadow, text, extra limbs, extra characters, cream belly patch, anime eyes, sparkles, blur
 ```
 
 ---
