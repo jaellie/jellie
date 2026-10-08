@@ -1,0 +1,533 @@
+<title>Bell Village</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,600;0,700;1,400&family=Alegreya+SC:wght@500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: one fixed 1920x1080 stage scaled to the window; parallax layers behind a walkable snow path, UI laid over it. */
+:root{
+  --night-0:#0b1230;      /* sky top */
+  --night-1:#1d2c55;      /* sky low */
+  --snow:#8fa2c6;         /* path highlight */
+  --snow-deep:#41517d;    /* path shadow */
+  --paper:#f2e3bd;        /* parchment */
+  --paper-deep:#dcc48f;   /* parchment shade */
+  --ink:#3a2a1c;          /* dark brown text on paper */
+  --brass:#b08d57;        /* trim */
+  --burgundy:#6e2a35;     /* ribbon */
+  --lamp:#ffb347;         /* lamp glow */
+  --font-body:"Alegreya","Noto Serif KR",Georgia,serif;
+  --font-label:"Alegreya SC","Noto Serif KR",Georgia,serif;
+  color-scheme:dark;
+}
+html,body{height:100%;margin:0;padding:0}
+body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none}
+#vp{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden;background:#0b1230;outline:none}
+.layer{position:absolute;left:0;top:0;will-change:transform}
+.layer img,#world img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
+#sky{position:absolute;inset:0;background:linear-gradient(#070b20 0%,var(--night-0) 18%,var(--night-1) 62%,#31416e 100%)}
+#far img{left:-150px;top:168px;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 34%,#000 80%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 34%,#000 80%,transparent 100%)}
+#mid img{left:0;top:55px}
+#clockface{position:absolute;left:1551px;top:396px;width:140px;height:140px;filter:drop-shadow(0 0 6px rgba(255,200,120,.55))}
+#path{position:absolute;left:0;right:0;top:928px;bottom:0;background:
+  radial-gradient(ellipse at 20% 0%,rgba(255,255,255,.16),transparent 55%),
+  linear-gradient(var(--snow) 0,#6d80a8 18%,var(--snow-deep) 62%,#2a355a 100%)}
+#path:before{content:"";position:absolute;left:0;right:0;top:-10px;height:16px;background:linear-gradient(transparent,rgba(143,162,198,.55))}
+#world{position:absolute;left:0;top:0;width:3812px;height:1080px;will-change:transform}
+#world .ground{left:0;top:644px}
+.actor{position:absolute;pointer-events:none;transform-origin:50% 100%}
+.actor img{position:static!important;display:block;width:100%;height:auto}
+.shadow{position:absolute;left:50%;bottom:-6px;width:80%;height:16px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(10,14,30,.55),transparent 70%)}
+#fg{position:absolute;left:0;top:0;will-change:transform}
+#fg img{position:absolute;left:0;top:884px;display:block;pointer-events:none}
+.mark{position:absolute;width:78px;height:85px;margin-left:-39px;pointer-events:none;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,179,71,.34),transparent 65%);pointer-events:none;mix-blend-mode:screen}
+
+/* HUD */
+.sprite{position:absolute;background-repeat:no-repeat;background-size:100% 100%}
+#caseplate{left:36px;top:30px;width:420px;height:95px;background-image:url(assets/panel_wide_title.webp)}
+#caseplate .l1{position:absolute;left:60px;top:18px;font:500 15px/1 var(--font-label);letter-spacing:.16em;color:#8a6a3e}
+#caseplate .l2{position:absolute;left:60px;top:36px;font:700 26px/1.1 var(--font-body);color:var(--ink)}
+#caseplate .l3{position:absolute;left:60px;top:66px;font:400 15px/1 var(--font-body);color:#6d5a40;font-style:italic}
+.hudbtn{position:absolute;width:76px;height:78px;border:0;padding:0;background-size:100% 100%;background-color:transparent;cursor:pointer;transition:transform .12s,filter .12s}
+.hudbtn:hover{transform:scale(1.07);filter:brightness(1.15)}
+.hudbtn:focus-visible,.choice:focus-visible,.tab:focus-visible,.pbtn:focus-visible{outline:3px solid #ffd27a;outline-offset:3px}
+.hudbtn .k{position:absolute;right:-6px;bottom:-8px;font:700 13px/1 var(--font-label);background:#1b2340;color:#ffe3a6;border:1px solid var(--brass);border-radius:4px;padding:3px 5px}
+#hint{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);width:420px;height:92px;background:url(assets/plaque_cream_small.webp) center/100% 100% no-repeat;display:none;align-items:center;justify-content:center;gap:14px;font:600 25px/1 var(--font-body);color:var(--ink);transition:opacity .15s}
+#hint.on{display:flex}
+#hint kbd{font:700 21px/1 var(--font-label);background:var(--burgundy);color:#f6e3c0;border-radius:6px;padding:7px 11px;box-shadow:0 2px 0 #3d1219}
+
+/* Dialogue */
+#dlg{position:absolute;left:336px;bottom:36px;width:1247px;height:243px;background:url(assets/dialogue_box_tall_portrait_ribbon.webp) 0 0/100% 100% no-repeat;display:none}
+#dlg.on{display:block}
+#dlg .por{position:absolute;left:40px;top:48px;width:164px;height:161px;overflow:hidden;border-radius:4px}
+#dlg .por img{width:164px;height:auto;display:block;filter:drop-shadow(0 2px 2px rgba(60,35,10,.4))}
+#dlg .nm{position:absolute;left:226px;top:14px;width:220px;height:42px;display:grid;place-items:center;font:700 25px/1 var(--font-label);letter-spacing:.06em;color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
+#dlg .tx{position:absolute;left:236px;top:80px;width:925px;height:140px;font:400 30px/1.32 var(--font-body);color:var(--ink)}
+:lang(ko) #dlg .tx,#dlg .tx.ko{font-size:27px;line-height:1.5}
+#dlg .tx i{color:#6d4f2d}
+#choices{position:absolute;right:340px;bottom:300px;display:none;flex-direction:column;gap:12px;align-items:flex-end}
+#choices.on{display:flex}
+.choice{width:640px;min-height:68px;padding:10px 40px;border:0;background:url(assets/plaque_cream_small.webp) 0 0/100% 100% no-repeat;font:600 25px/1.2 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s}
+.choice:hover,.choice.sel{background-image:url(assets/plaque_red_small.webp);color:#f6e3c0;transform:translateX(-8px)}
+
+/* Case File */
+#cf{position:absolute;inset:0;background:rgba(6,9,20,.82);display:none;z-index:20}
+#cf.on{display:block}
+#cfwrap{position:absolute;left:150px;top:70px;width:1620px;height:940px}
+#nav{position:absolute;left:0;top:70px;width:386px;height:735px;background:url(assets/nav_binder_6slots_COMPOSITE.webp) 0 0/100% 100% no-repeat}
+.tab{position:absolute;left:78px;width:230px;height:84px;border:0;background:transparent center/100% 100% no-repeat;font:700 25px/1 var(--font-label);letter-spacing:.05em;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:filter .12s}
+.tab:hover{filter:brightness(1.07)}
+.tab.cover{background-image:url(assets/plaque_cream_small.webp);background-color:#22314f;border-radius:12px}
+.tab.act{background-image:url(assets/plaque_red_small.webp);color:#f6e3c0}
+#page{position:absolute;left:392px;top:0;width:1228px;height:940px;border-radius:12px;border:5px solid var(--brass);background:radial-gradient(ellipse at 30% 10%,#f8ebc8,var(--paper) 55%,var(--paper-deep));box-shadow:inset 0 0 70px rgba(120,80,30,.32),0 20px 60px rgba(0,0,0,.6);color:var(--ink);overflow:hidden}
+#page h2{margin:0;font:700 44px/1.1 var(--font-body)}
+#page .eyebrow{font:500 18px/1 var(--font-label);letter-spacing:.2em;color:#8a6a3e}
+#pg{position:absolute;inset:44px 56px 40px 56px}
+#cfclose{position:absolute;right:-18px;top:-18px;width:78px;height:80px;border:0;background:url(assets/icon_close.webp) 0 0/100% 100%;cursor:pointer;z-index:3}
+.obj{display:flex;gap:16px;align-items:center;font:600 30px/1.25 var(--font-body);padding:12px 0;border-bottom:1px dashed rgba(120,80,30,.35)}
+.obj .bx{width:30px;height:30px;border:3px solid var(--brass);border-radius:5px;display:grid;place-items:center;font-size:24px;color:var(--burgundy);flex:none}
+.obj.done{color:#7b6648;text-decoration:line-through;text-decoration-color:rgba(110,42,53,.5)}
+.grid2{display:flex;gap:48px;align-items:flex-start}
+.evgrid{position:relative;width:520px;height:536px;background:url(assets/grid_3x3_panel_close.webp) 0 0/100% 100% no-repeat;flex:none}
+.evcell{position:absolute;width:138px;height:136px;display:grid;place-items:center;cursor:pointer;border:0;background:transparent}
+.evcell img,.evcell svg{max-width:92px;max-height:92px}
+.evcell.sel{outline:4px solid var(--burgundy);outline-offset:-4px;border-radius:8px}
+.evdesc{flex:1;min-width:0}
+.evdesc h3{margin:0 0 6px;font:700 38px/1.1 var(--font-body)}
+.evdesc p{font:400 28px/1.4 var(--font-body);margin:12px 0}
+.tag{display:inline-block;font:700 17px/1 var(--font-label);letter-spacing:.14em;border:2px solid var(--burgundy);color:var(--burgundy);border-radius:4px;padding:5px 8px;margin-right:8px}
+.people{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.person{display:flex;gap:20px;align-items:center;padding:16px;border:3px solid rgba(176,141,87,.75);border-radius:10px;background:rgba(255,248,225,.45);min-height:150px}
+.person .pt{width:110px;height:120px;overflow:hidden;border-radius:6px;background:#c8a96f;flex:none}
+.person .pt img{width:110px;display:block}
+.person.locked img{filter:grayscale(1) brightness(.35)}
+.person b{display:block;font:700 30px/1.1 var(--font-body)}
+.person span{font:400 22px/1.3 var(--font-body);color:#5a4630}
+.tl{position:relative;width:925px;height:319px;background:url(assets/timeline_strip_5slots.webp) 0 0/100% 100% no-repeat;margin:18px 0}
+.tlcard{position:absolute;width:112px;height:128px;top:70px;border:3px solid var(--brass);border-radius:6px;background:#fff6dc;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font:700 22px/1.1 var(--font-body);text-align:center;box-shadow:0 3px 8px rgba(60,35,10,.35)}
+.tlcard small{font:700 13px/1 var(--font-label);letter-spacing:.12em;color:var(--burgundy)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 14px}
+.legend span{font:500 20px/1.2 var(--font-body)}
+.notes li{font:400 29px/1.4 var(--font-body);margin:12px 0}
+.mapbox{position:relative;width:640px;height:666px;background:url(assets/map_parchment.webp) 0 0/100% 100% no-repeat;flex:none}
+.pin{position:absolute;width:20px;height:20px;border-radius:50%;margin:-10px 0 0 -10px;border:3px solid #fff3d6;box-shadow:0 0 0 3px var(--burgundy)}
+.pinlab{position:absolute;font:700 22px/1 var(--font-label);letter-spacing:.06em;color:var(--burgundy);background:rgba(255,246,220,.85);padding:4px 8px;border-radius:4px;white-space:nowrap;transform:translateY(-50%)}
+
+/* Pause / inspect / end card */
+.modal{position:absolute;inset:0;background:rgba(6,9,20,.74);display:none;z-index:30;place-items:center}
+.modal.on{display:grid}
+.card{width:760px;padding:44px 52px 40px;border-radius:12px;border:5px solid var(--brass);background:radial-gradient(ellipse at 30% 10%,#f8ebc8,var(--paper) 55%,var(--paper-deep));color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.6);text-align:center}
+.card h2{margin:6px 0 14px;font:700 46px/1.1 var(--font-body)}
+.card p{font:400 28px/1.4 var(--font-body);margin:10px 0}
+.card .eyebrow{font:500 18px/1 var(--font-label);letter-spacing:.2em;color:#8a6a3e}
+.pbtn{display:block;width:420px;height:92px;margin:14px auto 0;border:0;background:url(assets/plaque_cream_small.webp) 0 0/100% 100% no-repeat;font:700 28px/1 var(--font-body);color:var(--ink);cursor:pointer}
+.pbtn:hover{background-image:url(assets/plaque_red_small.webp);color:#f6e3c0}
+#fade{position:absolute;inset:0;background:#02030a;opacity:0;pointer-events:none;transition:opacity .7s;z-index:40}
+#fade.on{opacity:1;pointer-events:auto}
+#toast{position:absolute;left:50%;top:40px;transform:translate(-50%,-14px);background:#1b2340;border:2px solid var(--brass);color:#ffe3a6;padding:12px 24px;border-radius:8px;font:600 26px/1 var(--font-body);opacity:0;transition:.3s;z-index:25;pointer-events:none}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* touch controls live outside the stage */
+#touch{position:fixed;left:0;right:0;bottom:0;display:none;justify-content:space-between;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));z-index:50;pointer-events:none}
+#touch .g{display:flex;gap:12px;pointer-events:auto}
+#touch button{width:68px;height:68px;border-radius:50%;border:3px solid var(--brass);background:rgba(18,26,52,.82);color:#ffe3a6;font:700 24px/1 var(--font-label)}
+@media (pointer:coarse){#touch{display:flex}}
+#rot{position:fixed;left:16px;right:16px;top:calc(10px + env(safe-area-inset-top,0px));display:none;text-align:center;font:600 15px/1.3 var(--font-body);color:#ffe3a6;background:rgba(18,26,52,.88);border:1px solid var(--brass);border-radius:8px;padding:8px 12px;z-index:60;pointer-events:none}
+@media (orientation:portrait) and (max-width:700px){#rot{display:block}}
+@media (prefers-reduced-motion:reduce){.mark{animation:none}}
+</style>
+
+<div id="vp">
+ <div id="stage" tabindex="0" aria-label="Bell Village">
+  <div id="sky"></div>
+  <div class="layer" id="far"><img src="assets/far.webp" width="3230" height="492" alt=""></div>
+  <div class="layer" id="mid">
+   <img src="assets/mid.webp" width="2920" height="850" alt="">
+   <svg id="clockface" viewBox="-70 -70 140 140" aria-label="Tower clock stopped at 11:47"><use href="#clk" x="-70" y="-70" width="140" height="140"/></svg>
+  </div>
+  <div id="path"></div>
+  <div id="world">
+   <img class="ground" src="assets/ground.webp" width="3829" height="296" alt="">
+   <svg id="door" style="position:absolute;left:2740px;top:640px" width="232" height="346" viewBox="0 0 232 346" aria-label="Clocktower entrance">
+     <defs>
+       <linearGradient id="st" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a6a63"/><stop offset="1" stop-color="#4e4750"/></linearGradient>
+       <radialGradient id="wl" cx=".5" cy=".7" r=".7"><stop offset="0" stop-color="#ffd58a"/><stop offset=".6" stop-color="#e8903a"/><stop offset="1" stop-color="#7a3a1c"/></radialGradient>
+     </defs>
+     <path d="M8 346V70Q8 6 116 6T224 70V346Z" fill="url(#st)" stroke="#2a2430" stroke-width="5"/>
+     <g stroke="#2a2430" stroke-width="3" opacity=".55" fill="none"><path d="M14 90h34M60 90h40M130 90h40M180 90h40M8 130h50M92 130h46M150 130h60M20 170h46M100 170h30M160 170h50M8 210h36M70 210h54M146 210h70M24 250h40M96 250h50M170 250h40M8 290h60M96 290h40M160 290h56"/></g>
+     <path d="M40 346V112Q40 52 116 52T192 112V346Z" fill="#2a1d20" stroke="#201820" stroke-width="5"/>
+     <path d="M52 346V118Q52 66 116 66T180 118V346Z" fill="url(#wl)"/>
+     <path d="M116 66V346M84 74V346M148 74V346" stroke="#4a2a18" stroke-width="5" opacity=".55"/>
+     <circle cx="130" cy="214" r="6" fill="#d9b25c" stroke="#5a3a18" stroke-width="2"/>
+     <rect x="62" y="26" width="108" height="22" rx="4" fill="#3b2c24" stroke="#c9a05c" stroke-width="2.5"/>
+     <text x="116" y="43" text-anchor="middle" font-family="Alegreya SC,serif" font-size="15" font-weight="700" fill="#ffe3a6" letter-spacing="2">CLOCKTOWER</text>
+     <path d="M-6 346h244v-22H-6z" fill="#8d9bbd"/><path d="M-6 346h244v-9H-6z" fill="#a9b7d6"/>
+   </svg>
+   <div class="glow" style="left:2700px;top:700px;width:310px;height:330px"></div>
+   <div id="actors"></div>
+   <div id="marks"></div>
+  </div>
+  <div id="fg"><img src="assets/foreground.webp" width="4190" height="328" alt=""></div>
+
+  <!-- HUD -->
+  <div id="caseplate" class="sprite"><div class="l1">CASE C-01</div><div class="l2" id="hudTitle">The Death of Edward</div><div class="l3" id="hudLoc">Bell Village</div></div>
+  <button class="hudbtn" id="bCase" style="right:178px;top:26px;background-image:url(assets/icon_satchel.webp)" aria-label="Case File"><span class="k">Tab</span></button>
+  <button class="hudbtn" id="bLook" style="right:100px;top:26px;background-image:url(assets/icon_search.webp)" aria-label="Look around"><span class="k">Q</span></button>
+  <button class="hudbtn" id="bSet" style="right:22px;top:26px;background-image:url(assets/icon_settings.webp)" aria-label="Pause"><span class="k">Esc</span></button>
+  <div id="hint"><kbd>E</kbd><span id="hintTx"></span></div>
+  <div id="toast"></div>
+
+  <div id="choices"></div>
+  <div id="dlg"><div class="por"><img id="dPor" src="assets/nini_front.webp" alt=""></div><div class="nm" id="dNm"></div><div class="tx" id="dTx"></div></div>
+
+  <div id="cf">
+   <div id="cfwrap">
+    <div id="nav"></div>
+    <div id="page"><div id="pg"></div></div>
+    <button id="cfclose" aria-label="Close Case File"></button>
+   </div>
+  </div>
+
+  <div class="modal" id="inspect"><div class="card" id="inspectCard"></div></div>
+  <div class="modal" id="pause"><div class="card">
+    <div class="eyebrow">PAUSED</div><h2 id="pTitle">Bell Village</h2>
+    <button class="pbtn" id="pResume">Resume</button>
+    <button class="pbtn" id="pLang">Language: English</button>
+    <button class="pbtn" id="pReset">Restart</button>
+  </div></div>
+  <div class="modal" id="endcard"><div class="card">
+    <div class="eyebrow" id="eEy">CHAPTER 1</div><h2 id="eH">The Clock That Stopped</h2>
+    <p id="eP1">The door opens onto the winding room. That scene is the next one to build.</p>
+    <p id="eP2" style="font-size:23px;color:#6d5a40">Needs: Clocktower interior background, BGB walk frames, Clockkeeper portrait.</p>
+    <button class="pbtn" id="eBack">Back to the village</button>
+  </div></div>
+  <div id="fade"></div>
+ </div>
+</div>
+
+<div id="rot" aria-hidden="true"></div>
+<div id="touch"><div class="g"><button id="tL" aria-label="Left">&#9664;</button><button id="tR" aria-label="Right">&#9654;</button></div><div class="g"><button id="tC" aria-label="Case File">CF</button><button id="tE" aria-label="Interact">E</button></div></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <defs>
+  <radialGradient id="glass" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <!-- Clock face drawn in SVG over the blank disc: Roman numerals, hands at 11:47 (hour 353.5deg, minute 282deg) -->
+  <symbol id="clk" viewBox="-70 -70 140 140">
+   <circle r="52" fill="#fbe9bf" opacity=".92"/>
+   <circle r="52" fill="none" stroke="#c97a2e" stroke-width="3"/>
+   <g font-family="Alegreya SC,Georgia,serif" font-weight="700" font-size="9.5" fill="#4a2f1a" text-anchor="middle" dominant-baseline="central">
+    <text x="0" y="-36">XII</text><text x="18" y="-31">I</text><text x="31" y="-18">II</text><text x="36" y="0">III</text>
+    <text x="31" y="18">IIII</text><text x="18" y="31">V</text><text x="0" y="36">VI</text><text x="-18" y="31">VII</text>
+    <text x="-31" y="18">VIII</text><text x="-36" y="0">IX</text><text x="-31" y="-18">X</text><text x="-18" y="-31">XI</text>
+   </g>
+   <g stroke="#2b1a0e" stroke-linecap="round">
+    <line x1="0" y1="5" x2="0" y2="-25" stroke-width="4.2" transform="rotate(353.5)"/>
+    <line x1="0" y1="7" x2="0" y2="-41" stroke-width="2.6" transform="rotate(282)"/>
+   </g>
+   <circle r="4" fill="#2b1a0e"/><circle r="1.6" fill="#c97a2e"/>
+   <circle r="52" fill="url(#glass)"/>
+  </symbol>
+ </defs>
+</svg>
+
+<script>
+(() => {
+"use strict";
+const W = 3812, STAGE_W = 1920, STAGE_H = 1080, CAM_MAX = W - STAGE_W;
+const FEET = 985, BGB_H = 170, NINI_H = Math.round(BGB_H * 0.55), CK_H = 128;
+const $ = id => document.getElementById(id);
+const stage = $("stage"), vp = $("vp");
+
+/* ---------- text ---------- */
+let lang = "en";
+const tr = o => typeof o === "string" ? o : (o[lang] || o.en);
+const UI = {
+  talk: {en:"Talk to Nini", ko:"니니와 이야기한다"}, talkCk:{en:"Talk to the Clockkeeper", ko:"시계지기와 이야기한다"},
+  read:{en:"Read the signpost", ko:"표지판을 읽는다"}, look:{en:"Look up at the clock", ko:"시계를 올려다본다"}, enter:{en:"Enter the Clocktower", ko:"시계탑에 들어간다"},
+  resume:{en:"Resume", ko:"계속하기"}, restart:{en:"Restart", ko:"처음부터"}, langBtn:{en:"Language: English", ko:"언어: 한국어"}, paused:{en:"PAUSED", ko:"일시정지"},
+  tabs:{en:["Investigate","People","Evidence","Timeline","Notes","Map"], ko:["조사","인물","증거","타임라인","노트","지도"]},
+  got:{en:"Evidence added", ko:"증거 추가"}, newnote:{en:"Note added", ko:"노트 추가"},
+  case:{en:"The Death of Edward", ko:"에드워드의 죽음"}, loc:{en:"Bell Village", ko:"벨 마을"},
+  objHead:{en:"What to do", ko:"할 일"},
+  objs:{en:["Talk to Nini","Read the signpost","Look up at the tower clock","Talk to the Clockkeeper","Enter the Clocktower"], ko:["니니와 이야기하기","표지판 읽기","탑시계 올려다보기","시계지기와 이야기하기","시계탑에 들어가기"]},
+  evHead:{en:"Evidence", ko:"증거"}, tlHead:{en:"Timeline", ko:"타임라인"}, peopleHead:{en:"People", ko:"인물"}, notesHead:{en:"Notes", ko:"노트"}, mapHead:{en:"Map", ko:"지도"},
+  empty:{en:"Nothing here yet.", ko:"아직 아무것도 없다."},
+  unmet:{en:"Not met yet", ko:"아직 만나지 못함"}, close:{en:"Close", ko:"닫기"},
+  back:{en:"Back to the village", ko:"마을로 돌아가기"},
+  end:{en:["CHAPTER 1","The Clock That Stopped","The door opens onto the winding room. That scene is the next one to build.","Needs: Clocktower interior background, BGB walk frames, Clockkeeper portrait."], ko:["1장","멈춰 선 시계","문이 태엽실로 이어진다. 그 장면이 다음에 만들 장면이다.","필요: 시계탑 내부 배경, BGB 걷기 프레임, 시계지기 초상."]},
+  rot:{en:"Rotate your phone for a larger view", ko:"더 크게 보려면 폰을 가로로 돌리세요"},
+  legend:{en:["W Witness: when someone saw it","E Event: when it happened","C Clock: what a clock shows","D Death: estimated time of death"], ko:["W 목격: 누군가 본 시각","E 사건: 일어난 시각","C 시계: 시계가 가리키는 시각","D 사망: 추정 사망 시각"]},
+  tlNote:{en:"A stopped clock tells you when the clock stopped. It does not tell you when Edward died.", ko:"멈춘 시계는 시계가 멈춘 시각을 알려줄 뿐, 에드워드가 죽은 시각은 알려주지 않는다."},
+  here:{en:"You are here", ko:"현재 위치"}, tower:{en:"Clocktower", ko:"시계탑"}
+};
+const EV = {
+  notice: { id:"notice", name:{en:"Remembrance Bell notice",ko:"추모의 종 공고"}, icon:"paper",
+    desc:{en:"A notice pinned to the signpost: the Remembrance Bell rings at midnight, and everyone in Bell Village is asked to come to the Clocktower. Signed with an E.", ko:"표지판에 붙은 공고. 추모의 종이 자정에 울리며, 벨 마을 모두가 시계탑으로 모여 달라는 내용이다. 'E'라고 서명되어 있다."},
+    tag:"NOTICE", note:{en:"The midnight bell was a village ritual. Edward's notice asked everyone to attend.", ko:"자정의 종은 마을의 의식이었다. 에드워드의 공고는 모두에게 참석을 청하고 있었다."} },
+  clock: { id:"clock", name:{en:"The stopped clock",ko:"멈춰 선 시계"}, icon:"clock",
+    desc:{en:"The tower clock is frozen at 11:47. That is when the clock stopped. It does not say when Edward died.", ko:"탑시계가 11시 47분에 멈춰 있다. 시계가 멈춘 시각일 뿐, 에드워드가 죽은 시각은 아니다."},
+    tag:"CLOCK", note:{en:"The dial stopped at 11:47.", ko:"시계 문자판이 11시 47분에 멈췄다."} }
+};
+const NOTES = {
+  nini:{en:"Nini last saw Edward at nine. He was sealing two letters.", ko:"니니가 에드워드를 마지막으로 본 것은 아홉 시. 그는 편지 두 통을 봉하고 있었다."},
+  bear:{en:"The Clockkeeper saw a bear on the stairs around 11:40, before BGB arrived.", ko:"시계지기는 11시 40분쯤 계단을 오르는 곰을 보았다. BGB가 도착하기 전이다."},
+  watch:{en:"The Clockkeeper sets Edward's pocket watch to the tower clock every morning.", ko:"시계지기는 매일 아침 에드워드의 회중시계를 탑시계에 맞춘다."}
+};
+
+/* ---------- dialogue data ---------- */
+const D = {
+ n0:{sp:"nini", t:{en:"Edward never missed the midnight bell. Never.", ko:"에드워드 아저씨는 자정 종을 한 번도 놓친 적이 없어요. 한 번도요."}, next:"n1"},
+ n1:{sp:"nini", t:{en:"Everyone is standing at the tower and nobody will go in. They keep asking if it was an accident.", ko:"다들 탑 앞에 서 있기만 하고 아무도 안으로 들어가지 못해요. 사고였느냐고만 계속 물어요."},
+   ch:[{t:{en:"Tell me what you remember about last night.",ko:"어젯밤에 기억나는 걸 말해 줘."},go:"n2a"},{t:{en:"Has anyone said who was on the stairs?",ko:"계단에 누가 있었는지 말한 사람이 있어?"},go:"n2b"}]},
+ n2a:{sp:"nini", t:{en:"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.", ko:"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요."}, set:"nini.letters", note:"nini", next:"n3"},
+ n2b:{sp:"nini", t:{en:"The Clockkeeper says a bear in a scarf climbed the stairs at eleven forty. Before you got there.", ko:"시계지기 아저씨가 그러는데, 열한 시 사십 분쯤 목도리를 한 곰이 계단을 올라갔대요. 당신이 오기 전에요."},
+   ch:[{t:{en:"I was at the café until a quarter to twelve.",ko:"나는 열두 시 십오 분 전까지 카페에 있었어."},go:"n2c"},{t:{en:"(Say nothing.)",ko:"(말없이 있는다.)"},go:"n3"}]},
+ n2c:{sp:"nini", t:{en:"I know. The Café Owner told everyone. That's why they want you to look into it.", ko:"알아요. 카페 주인 아저씨가 다 말했어요. 그래서 다들 당신이 조사해 주길 바라는 거예요."}, next:"n3"},
+ n3:{sp:"nini", t:{en:"Please look at the clock. It stopped at eleven forty-seven, and nobody can tell me what that means.", ko:"시계를 봐 주세요. 열한 시 사십칠 분에 멈췄는데, 그게 무슨 뜻인지 아무도 말해 주지 못해요."}, set:"nini.done"},
+ n9:{sp:"nini", t:{en:"I'll stay here with the others. Tell me what you find.", ko:"저는 다른 분들과 여기 있을게요. 알아내시면 말해 주세요."}},
+ c0:{sp:"ck", t:{en:"Mm. Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.", ko:"음. 어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠."}, set:"ck.bear", note:"bear",
+   ch:[{t:{en:"Is the tower clock reliable?",ko:"이 탑시계는 믿을 만한가요?"},go:"c1"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]},
+ c1:{sp:"ck", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았죠."}, set:"ck.watch", note:"watch"},
+ c9:{sp:"ck", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보세요. 시계는 어디 안 갑니다."}}
+};
+const SP = { nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp"}, ck:{name:{en:"Clockkeeper",ko:"시계지기"}, img:"assets/clockkeeper_front.webp"} };
+
+/* ---------- state ---------- */
+const SAVE_KEY = "bgb2.bellvillage.proto.v1";
+let S = { x:300, flags:{}, ev:[], notes:[], lang:"en" };
+function load(){ try { const r = localStorage.getItem(SAVE_KEY); if (r) { const o = JSON.parse(r); if (o && typeof o.x === "number") S = Object.assign(S, o); } } catch(e){} lang = S.lang || "en"; }
+function save(){ S.lang = lang; try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} }
+const has = f => !!S.flags[f];
+const setf = f => { if (f) S.flags[f] = true; };
+
+/* ---------- actors ---------- */
+const actors = $("actors"), marks = $("marks");
+function mkActor(cls, base, h, x){
+  const d = document.createElement("div"); d.className = "actor " + cls;
+  d.innerHTML = '<div class="shadow"></div><img alt="" src="assets/'+base+'_front.webp">';
+  d.dataset.base = base; d.style.height = h + "px"; d.style.top = (FEET - h) + "px"; d.style.left = x + "px";
+  actors.appendChild(d); return d;
+}
+const SPR = { big_green_bear:[157,277,175,274], nini:[128,247,161,248], clockkeeper:[170,232,163,231] };
+function setActorSprite(el, dir, h){
+  const base = el.dataset.base, img = el.querySelector("img");
+  const s = {left:"left", right:"right", front:"front"}[dir] || "front";
+  const src = "assets/"+base+"_"+s+".webp"; if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+  const k = SPR[base]; const nat = s === "front" ? k[3] : k[1]; const natW = s === "front" ? k[2] : k[0];
+  const sc = h / k[3]; // scale so the FRONT sprite height equals h
+  el.style.width = Math.round(natW * sc) + "px"; el.style.height = Math.round(nat * sc) + "px"; el.style.top = (FEET - Math.round(nat*sc)) + "px";
+}
+const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
+const NPCX = { nini:1010, ck:2610 };
+const P = { x:S.x, dir:"front", walk:0, moving:false, face:"right" };
+function place(){
+  const sc = BGB_H/274; let dir = P.moving ? P.face : "front";
+  setActorSprite(bgb, dir, BGB_H);
+  const w = parseFloat(bgb.style.width); bgb.style.left = Math.round(P.x - w/2) + "px";
+  const bob = P.moving ? Math.abs(Math.sin(P.walk*2)) * -5 : Math.sin(performance.now()/900)*-1.2;
+  const rot = P.moving ? Math.sin(P.walk) * 1.4 : 0;
+  bgb.style.transform = "translateY("+bob.toFixed(1)+"px) rotate("+rot.toFixed(2)+"deg)";
+  const nface = Math.abs(P.x - NPCX.nini) < 360 ? (P.x < NPCX.nini ? "right" : "left") : "front";
+  setActorSprite(nini, nface, NINI_H); nini.style.left = Math.round(NPCX.nini - parseFloat(nini.style.width)/2) + "px";
+  const cface = Math.abs(P.x - NPCX.ck) < 360 ? (P.x < NPCX.ck ? "right" : "left") : "front";
+  setActorSprite(ck, cface, CK_H); ck.style.left = Math.round(NPCX.ck - parseFloat(ck.style.width)/2) + "px";
+}
+
+/* ---------- interactables ---------- */
+const IA = [
+  { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-50, run:()=>startDlg(has("nini.done")?"n9":"n0") },
+  { id:"sign",   x:()=>1345,      label:UI.read,   top:640,            run:()=>inspect("notice") },
+  { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-50,   run:()=>startDlg(has("ck.bear")?"c9":"c0") },
+  { id:"clock",  x:()=>2790,      label:UI.look,   top:560,            run:()=>inspect("clock") },
+  { id:"door",   x:()=>2856,      label:UI.enter,  top:600,            run:()=>enterTower() }
+];
+IA.forEach(i => { const m = document.createElement("img"); m.className = "mark"; m.src = "assets/bubble_exclaim.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; m.style.display = "none"; marks.appendChild(m); i.el = m; });
+let near = null, peek = 0;
+
+/* ---------- UI plumbing ---------- */
+let mode = "play"; // play | dlg | cf | modal
+const keys = new Set();
+function toast(msg){ const t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.h); toast.h = setTimeout(()=>t.classList.remove("on"), 1900); }
+function addEv(id){ if (S.ev.includes(id)) return; S.ev.push(id); addNote(EV[id].note); toast(tr(UI.got)+": "+tr(EV[id].name)); save(); refreshHud(); }
+function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSON.stringify(n); if (S.notes.some(x=>x.k===key)) return; S.notes.push({k:key, n}); }
+function setLang(l){ lang = l; save(); applyLang(); if (mode==="cf") renderCF(); }
+function applyLang(){
+  document.documentElement.lang = lang;
+  $("hudTitle").textContent = tr(UI.case); $("hudLoc").textContent = tr(UI.loc);
+  $("pResume").textContent = tr(UI.resume); $("pReset").textContent = tr(UI.restart); $("pLang").textContent = tr(UI.langBtn); $("eBack").textContent = tr(UI.back);
+  document.querySelector("#pause .eyebrow").textContent = tr(UI.paused);
+  const E = tr(UI.end); $("eEy").textContent = E[0]; $("eH").textContent = E[1]; $("eP1").textContent = E[2]; $("eP2").textContent = E[3]; $("rot").textContent = tr(UI.rot);
+  if (cur) renderDlg();
+}
+function refreshHud(){}
+
+/* dialogue */
+let cur = null, typing = null, full = "";
+function startDlg(id){ mode = "dlg"; cur = id; renderDlg(true); $("dlg").classList.add("on"); }
+function renderDlg(anim){
+  const n = D[cur]; if (!n) return; const sp = SP[n.sp];
+  $("dNm").textContent = tr(sp.name); $("dPor").src = sp.img;
+  full = tr(n.t); const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":""); clearInterval(typing);
+  $("choices").classList.remove("on"); $("choices").innerHTML = "";
+  if (!anim){ tx.textContent = full; showChoices(); return; }
+  let i = 0; tx.textContent = ""; typing = setInterval(()=>{ i += 1; tx.textContent = full.slice(0,i); if (i >= full.length){ clearInterval(typing); typing = null; showChoices(); } }, 22);
+}
+function showChoices(){
+  const n = D[cur]; if (!n.ch) return; const box = $("choices"); box.innerHTML = "";
+  n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice"; b.textContent = tr(c.t); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
+  box.classList.add("on"); box.firstChild.classList.add("sel");
+}
+function pick(i){ const n = D[cur]; const c = n.ch[i]; applyNode(n); goto(c.go); }
+function applyNode(n){ if (n.set) setf(n.set); if (n.note) addNote(NOTES[n.note]); save(); }
+function advance(){
+  if (typing){ clearInterval(typing); typing = null; $("dTx").textContent = full; showChoices(); return; }
+  const n = D[cur]; if (n.ch){ const sel = document.querySelector('#choices .choice.sel'); if (sel) sel.click(); return; }
+  applyNode(n); goto(n.next || null);
+}
+function goto(id){ if (!id){ endDlg(); return; } cur = id; renderDlg(true); }
+function endDlg(){ $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null; mode = "play"; clearInterval(typing); typing = null; save(); }
+
+/* inspect */
+function evIcon(e, size){
+  if (e.icon === "clock") return '<svg viewBox="-70 -70 140 140" width="'+size+'" height="'+size+'"><use href="#clk" x="-70" y="-70" width="140" height="140"/></svg>';
+  return '<img src="assets/paper_scrap.webp" alt="" style="height:'+size+'px">';
+}
+function inspect(id){
+  const e = EV[id]; mode = "modal"; const c = $("inspectCard");
+  c.innerHTML = '<div class="eyebrow">'+e.tag+'</div><h2>'+tr(e.name)+'</h2><div style="margin:8px 0">'+evIcon(e, id==="clock"?300:150)+'</div><p>'+tr(e.desc)+'</p><button class="pbtn" id="iClose">'+tr(UI.close)+'</button>';
+  $("inspect").classList.add("on"); $("iClose").focus();
+  $("iClose").onclick = ()=>{ $("inspect").classList.remove("on"); mode = "play"; addEv(id); stage.focus(); };
+}
+
+/* pause */
+function openPause(){ if (mode!=="play") return; mode = "modal"; $("pause").classList.add("on"); $("pResume").focus(); }
+function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.focus(); }
+
+/* enter tower */
+function enterTower(){
+  mode = "modal"; $("fade").classList.add("on");
+  setTimeout(()=>{ $("endcard").classList.add("on"); $("fade").classList.remove("on"); $("eBack").focus(); }, 800);
+}
+$("eBack").onclick = ()=>{ $("endcard").classList.remove("on"); P.x = 2640; mode = "play"; stage.focus(); };
+
+/* case file */
+let tab = 0, selEv = null;
+const SLOTS = [85,174,259,344,429,514];
+function renderNav(){
+  const nav = $("nav"); nav.innerHTML = ""; const labs = tr(UI.tabs);
+  const k = 386/309;
+  SLOTS.forEach((cy,i)=>{
+    const b = document.createElement("button"); b.className = "tab" + (i===tab ? " act" : (i===0 ? " cover" : ""));
+    b.style.top = Math.round(cy*k - 42) + "px"; b.style.left = (i===0?72:78) + "px"; b.textContent = labs[i];
+    if (i===0){ b.style.width = "274px"; b.style.height = "108px"; b.style.left = "74px"; b.style.top = Math.round(cy*k-54)+"px"; }
+    b.onclick = ()=>{ tab = i; renderCF(); }; nav.appendChild(b);
+  });
+}
+function renderCF(){
+  renderNav(); const pg = $("pg"); const labs = tr(UI.tabs);
+  let h = '<div class="eyebrow">CASE C-01 · '+tr(UI.loc)+'</div><h2>'+labs[tab]+'</h2><div style="height:18px"></div>';
+  if (tab===0){
+    h += '<div style="font:italic 400 28px/1.3 var(--font-body);color:#6d5a40;margin-bottom:14px">'+tr(UI.case)+'</div><div class="eyebrow" style="margin:10px 0 6px">'+tr(UI.objHead).toUpperCase()+'</div>';
+    const done = [has("nini.done")||has("nini.letters"), S.ev.includes("notice"), S.ev.includes("clock"), has("ck.bear"), false];
+    tr(UI.objs).forEach((o,i)=>{ h += '<div class="obj'+(done[i]?' done':'')+'"><div class="bx">'+(done[i]?'&#10003;':'')+'</div><div>'+o+'</div></div>'; });
+  } else if (tab===1){
+    h += '<div class="people">';
+    h += '<div class="person"><div class="pt"><img src="assets/nini_front.webp" alt=""></div><div><b>Nini</b><span>'+(lang==="ko"?"기록실 조수. 에드워드를 마지막으로 본 사람 중 하나.":"Archive assistant. One of the last to see Edward.")+'</span></div></div>';
+    const met = has("ck.bear");
+    h += '<div class="person'+(met?'':' locked')+'"><div class="pt"><img src="assets/clockkeeper_front.webp" alt=""></div><div><b>'+(met?tr(SP.ck.name):'?')+'</b><span>'+(met?(lang==="ko"?"밤 근무. 11시 40분쯤 계단을 오르는 곰을 보았다.":"Night shift. Saw a bear on the stairs around 11:40."):tr(UI.unmet))+'</span></div></div>';
+    h += '</div>';
+  } else if (tab===2){
+    h += '<div class="grid2"><div class="evgrid" id="evg"></div><div class="evdesc" id="evd"></div></div>';
+  } else if (tab===3){
+    h += '<div class="legend">'+tr(UI.legend).map(s=>'<span><span class="tag">'+s[0]+'</span>'+s.slice(2)+'</span>').join('')+'</div><div class="tl" id="tl"></div><p style="font:italic 400 28px/1.4 var(--font-body);color:#5a4630;max-width:900px">'+tr(UI.tlNote)+'</p>';
+  } else if (tab===4){
+    h += S.notes.length ? '<ul class="notes">'+S.notes.map(o=>'<li>'+tr(o.n)+'</li>').join('')+'</ul>' : '<p style="font:italic 400 28px var(--font-body)">'+tr(UI.empty)+'</p>';
+  } else {
+    h += '<div class="mapbox"><div class="pin" style="left:168px;top:372px;background:#c4453a"></div><div class="pinlab" style="left:194px;top:372px">'+tr(UI.here)+'</div><div class="pin" style="left:346px;top:300px;background:#d9a441"></div><div class="pinlab" style="left:372px;top:300px">'+tr(UI.tower)+'</div></div>';
+  }
+  pg.innerHTML = h;
+  if (tab===2) renderEvGrid(); if (tab===3) renderTl();
+}
+function renderEvGrid(){
+  const g = $("evg"); const cx = [31,141,253], cy = [60,176,288], k = 520/385;
+  S.ev.forEach((id,i)=>{ const b = document.createElement("button"); b.className = "evcell"+(selEv===id?" sel":""); const col=i%3,row=Math.floor(i/3);
+    b.style.left = Math.round((cx[col]-4)*k)+"px"; b.style.top = Math.round(cy[row]*k)+"px"; b.innerHTML = evIcon(EV[id], 86); b.title = tr(EV[id].name);
+    b.onclick = ()=>{ selEv = id; renderCF(); }; g.appendChild(b); });
+  if (!selEv && S.ev.length) selEv = S.ev[S.ev.length-1];
+  g.querySelectorAll('.evcell').forEach((c,i)=>c.classList.toggle('sel', S.ev[i]===selEv));
+  const d = $("evd"); const e = selEv && EV[selEv];
+  d.innerHTML = e ? '<span class="tag">'+e.tag+'</span><h3>'+tr(e.name)+'</h3><p>'+tr(e.desc)+'</p>' : '<p style="font:italic 400 28px/1.4 var(--font-body);color:#6d5a40">'+(S.ev.length? (lang==="ko"?"증거를 선택하면 설명이 나온다.":"Select an item to read about it.") : tr(UI.empty))+'</p>';
+}
+function renderTl(){
+  const t = $("tl"); const k = 925/661; const sx = [78,172,278,382,487];
+  if (S.ev.includes("clock")){ const c = document.createElement("div"); c.className = "tlcard"; c.style.left = Math.round((sx[2]-6)*k)+"px"; c.style.top = Math.round(46*k)+"px";
+    c.innerHTML = '<small>C · CLOCK</small>11:47<span style="font:400 15px/1.1 var(--font-body)">'+(lang==="ko"?"탑시계 멈춤":"Tower clock stopped")+'</span>'; t.appendChild(c); }
+}
+function openCF(){ if (mode!=="play") return; mode = "cf"; $("cf").classList.add("on"); renderCF(); }
+function closeCF(){ $("cf").classList.remove("on"); mode = "play"; stage.focus(); }
+$("cfclose").onclick = closeCF; $("bCase").onclick = openCF; $("bSet").onclick = openPause; $("tC").onclick = ()=> mode==="cf"?closeCF():openCF();
+$("bLook").onclick = ()=>{ peek = 3; };
+$("pResume").onclick = closePause; $("pLang").onclick = ()=>setLang(lang==="en"?"ko":"en");
+$("pReset").onclick = ()=>{ try{ localStorage.removeItem(SAVE_KEY);}catch(e){} S = {x:300,flags:{},ev:[],notes:[],lang}; P.x = 300; closePause(); toast(lang==="ko"?"처음부터 다시 시작":"Restarted"); };
+
+/* ---------- input ---------- */
+function act(){ if (mode==="dlg") advance(); else if (mode==="play" && near) near.run(); }
+window.addEventListener("keydown", e=>{
+  const k = e.key;
+  if (["ArrowLeft","ArrowRight","Tab"," "].includes(k)) e.preventDefault();
+  if (k==="Tab"){ if (mode==="cf") closeCF(); else openCF(); return; }
+  if (k==="Escape"){ if (mode==="cf") closeCF(); else if (mode==="modal" && $("pause").classList.contains("on")) closePause(); else if (mode==="modal" && $("inspect").classList.contains("on")) $("iClose").click(); else if (mode==="play") openPause(); return; }
+  if ((k==="e"||k==="E") && mode==="modal" && $("inspect").classList.contains("on")){ $("iClose").click(); return; }
+  if (k==="e"||k==="E"||k==="Enter"||k===" "){ if (e.target && e.target.tagName==="BUTTON" && mode!=="dlg") return; act(); return; }
+  if (k==="q"||k==="Q"){ peek = 3; return; }
+  if (mode==="dlg" && (k==="ArrowUp"||k==="ArrowDown"||k==="w"||k==="s")){
+    const bs = [...document.querySelectorAll("#choices .choice")]; if (!bs.length) return; let i = bs.findIndex(b=>b.classList.contains("sel")); bs.forEach(b=>b.classList.remove("sel"));
+    i = (i + ((k==="ArrowDown"||k==="s")?1:-1) + bs.length) % bs.length; bs[i].classList.add("sel"); return; }
+  if (mode==="dlg" && (k==="1"||k==="2")){ const bs = document.querySelectorAll("#choices .choice"); if (bs[+k-1]) bs[+k-1].click(); return; }
+  keys.add(k.toLowerCase());
+});
+window.addEventListener("keyup", e=>keys.delete(e.key.toLowerCase()));
+window.addEventListener("blur", ()=>keys.clear());
+$("dlg").addEventListener("click", ()=>{ if (mode==="dlg") advance(); });
+const hold = (id, key)=>{ const b = $(id); const on = e=>{ e.preventDefault(); keys.add(key); }, off = ()=>keys.delete(key); b.addEventListener("pointerdown", on); ["pointerup","pointerleave","pointercancel"].forEach(ev=>b.addEventListener(ev, off)); };
+hold("tL","arrowleft"); hold("tR","arrowright"); $("tE").addEventListener("pointerdown", e=>{ e.preventDefault(); act(); });
+
+/* ---------- loop ---------- */
+let cam = 0, last = performance.now();
+function frame(now){
+  const dt = Math.min(0.05, (now - last)/1000); last = now;
+  P.moving = false;
+  if (mode==="play"){
+    const l = keys.has("arrowleft")||keys.has("a"), r = keys.has("arrowright")||keys.has("d");
+    const run = keys.has("shift"); const sp = run ? 430 : 270;
+    if (l !== r){ P.x += (r?1:-1) * sp * dt; P.face = r ? "right" : "left"; P.moving = true; P.walk += dt * (run?11:8); }
+    P.x = Math.max(160, Math.min(W - 160, P.x));
+  }
+  const target = Math.max(0, Math.min(CAM_MAX, P.x - STAGE_W/2));
+  cam += (target - cam) * Math.min(1, dt * 4.5); if (Math.abs(target-cam)<.05) cam = target;
+  $("far").style.transform = "translate3d("+(-cam*0.1).toFixed(2)+"px,0,0)";
+  $("mid").style.transform = "translate3d("+(-cam*0.35).toFixed(2)+"px,0,0)";
+  $("world").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("fg").style.transform = "translate3d("+(-cam*1.2).toFixed(2)+"px,0,0)";
+  place();
+  // nearest interactable
+  near = null; let best = 140;
+  if (mode==="play"){ IA.forEach(i=>{ const d = Math.abs(P.x - i.x()); if (d < best){ best = d; near = i; } }); }
+  if (peek > 0) peek -= dt;
+  IA.forEach(i=>{ i.el.style.display = (near===i || peek>0 && mode==="play") ? "block" : "none"; });
+  const hint = $("hint"); if (near && mode==="play"){ hint.classList.add("on"); $("hintTx").textContent = tr(near.label); } else hint.classList.remove("on");
+  requestAnimationFrame(frame);
+}
+
+/* ---------- fit ---------- */
+function fit(){ const s = Math.min(innerWidth/STAGE_W, innerHeight/STAGE_H); stage.style.transform = "scale("+s+")"; stage.style.left = ((innerWidth - STAGE_W*s)/2)+"px"; stage.style.top = ((innerHeight - STAGE_H*s)/2)+"px"; }
+addEventListener("resize", fit);
+
+load(); P.x = S.x; cam = Math.max(0, Math.min(CAM_MAX, P.x - STAGE_W/2)); fit(); applyLang(); stage.focus();
+setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
+window.__bv = { P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; if(mode==="cf") renderCF();}, addEv };
+requestAnimationFrame(frame);
+})();
+</script>
