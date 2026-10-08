@@ -136,3 +136,32 @@ OVERLAY: [STYLE LOCK outline and face rules]. Isolated elements on a transparent
 | Café owner | ? | e.g. apron, teacup | ? |
 | Night guard | ? | e.g. cap, lantern | ? |
 Each needs: `_nomouth` base + speaking, uncertain, certain.
+
+---
+
+## I. Turnaround / model sheet (side, 3/4, back views)
+
+### Why and when
+Only needed if the game shows a character turning, walking sideways, or from behind (door, stairs, walking). The dialogue game itself works with front views.
+Generate **one view per request** (not one sheet with all views): single images keep the full resolution, the same body size and the same line weight.
+
+### Anatomy rule for rotated views (important)
+Left/right = the side seen on screen applies to FRONT views. When the body turns, anchor everything to the character's own body:
+- Big Green Bear: scarf tail hangs on his OWN LEFT chest side (this is the image-right side in the front view). His active hand is his OWN LEFT hand. The knot is at the front-left of the neck.
+- Green is the mirror: everything on his OWN RIGHT.
+- Facing the LEFT side of the image shows the character's own LEFT side to the viewer (tail visible). Facing the RIGHT side of the image shows the own RIGHT side (tail hidden behind the body, only the scarf wrap visible).
+
+### Prompts (after the STYLE LOCK and the character block; attach the approved front image as reference)
+```
+TURNAROUND VIEW. Same exact character as the attached front view: same body size, proportions, outline weight, fur and scarf texture and colors. Only the viewing angle changes. Plain flat magenta #FF00FF background. Neutral relaxed standing pose, arms down, NO mouth drawn, eyes as simple dots. Orthographic camera, no perspective distortion, full body from head to feet, feet on the bottom edge.
+VIEW: <one of the lines below>
+```
+- `side_left`: pure profile, the character faces the LEFT side of the image. His own left side faces the viewer: the knitted scarf tail hangs down his front-left chest and is fully visible. One ear visible, one dot eye, nose in profile.
+- `side_right`: pure profile, the character faces the RIGHT side of the image. His own right side faces the viewer; the scarf tail is hidden behind his body, only the neck wrap and knot are visible.
+- `three_quarter_left`: three-quarter view turned toward the LEFT side of the image (about 35 degrees from front). Scarf tail visible on the chest.
+- `three_quarter_right`: three-quarter view turned toward the RIGHT side of the image (about 35 degrees). Scarf tail partly visible.
+- `back`: seen from directly behind: back of the head with both ears, the scarf wrapped around the neck seen from behind (tail not visible), a small round tail nub, both back paws.
+For Nini and Edward replace the first sentence with their approved front image and keep their own colors; keep the same rule (own left / own right).
+
+### High resolution
+Ask for the largest size the tool offers, then upscale 2x with a free upscaler (for example Upscayl, open source), then run `tools/chroma_key.py`. Do not upscale before keying.
