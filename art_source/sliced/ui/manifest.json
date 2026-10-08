@@ -1,0 +1,729 @@
+{
+ "source": "ui_sheet_v2.webp",
+ "source_size": [
+  2000,
+  1248
+ ],
+ "resampled": false,
+ "note": "Automatic crops are CANDIDATES. Review _contact_sheet.png before use.",
+ "sprites": [
+  {
+   "name": "nav_binder_6slots_COMPOSITE",
+   "file": "nav_binder_6slots_COMPOSITE.png",
+   "src_bbox": [
+    87,
+    32,
+    396,
+    620
+   ],
+   "size": [
+    309,
+    588
+   ],
+   "opaque_ratio": 0.884,
+   "semi_ratio": 0.011,
+   "qa": []
+  },
+  {
+   "name": "panel_wide_title",
+   "file": "panel_wide_title.png",
+   "src_bbox": [
+    410,
+    46,
+    1026,
+    185
+   ],
+   "size": [
+    616,
+    139
+   ],
+   "opaque_ratio": 0.886,
+   "semi_ratio": 0.019,
+   "qa": []
+  },
+  {
+   "name": "btn_round_cream",
+   "file": "btn_round_cream.png",
+   "src_bbox": [
+    1050,
+    57,
+    1154,
+    161
+   ],
+   "size": [
+    104,
+    104
+   ],
+   "opaque_ratio": 0.621,
+   "semi_ratio": 0.049,
+   "qa": []
+  },
+  {
+   "name": "btn_round_dark",
+   "file": "btn_round_dark.png",
+   "src_bbox": [
+    1155,
+    57,
+    1257,
+    161
+   ],
+   "size": [
+    102,
+    104
+   ],
+   "opaque_ratio": 0.622,
+   "semi_ratio": 0.049,
+   "qa": []
+  },
+  {
+   "name": "btn_round_navy",
+   "file": "btn_round_navy.png",
+   "src_bbox": [
+    1260,
+    57,
+    1363,
+    161
+   ],
+   "size": [
+    103,
+    104
+   ],
+   "opaque_ratio": 0.617,
+   "semi_ratio": 0.049,
+   "qa": []
+  },
+  {
+   "name": "btn_round_red",
+   "file": "btn_round_red.png",
+   "src_bbox": [
+    1365,
+    57,
+    1468,
+    161
+   ],
+   "size": [
+    103,
+    104
+   ],
+   "opaque_ratio": 0.621,
+   "semi_ratio": 0.05,
+   "qa": []
+  },
+  {
+   "name": "icon_settings",
+   "file": "icon_settings.png",
+   "src_bbox": [
+    1475,
+    57,
+    1577,
+    161
+   ],
+   "size": [
+    102,
+    104
+   ],
+   "opaque_ratio": 0.617,
+   "semi_ratio": 0.049,
+   "qa": []
+  },
+  {
+   "name": "icon_close",
+   "file": "icon_close.png",
+   "src_bbox": [
+    1579,
+    57,
+    1681,
+    161
+   ],
+   "size": [
+    102,
+    104
+   ],
+   "opaque_ratio": 0.617,
+   "semi_ratio": 0.05,
+   "qa": []
+  },
+  {
+   "name": "icon_search",
+   "file": "icon_search.png",
+   "src_bbox": [
+    1684,
+    57,
+    1786,
+    161
+   ],
+   "size": [
+    102,
+    104
+   ],
+   "opaque_ratio": 0.623,
+   "semi_ratio": 0.05,
+   "qa": []
+  },
+  {
+   "name": "icon_satchel",
+   "file": "icon_satchel.png",
+   "src_bbox": [
+    1790,
+    57,
+    1894,
+    161
+   ],
+   "size": [
+    104,
+    104
+   ],
+   "opaque_ratio": 0.621,
+   "semi_ratio": 0.047,
+   "qa": []
+  },
+  {
+   "name": "dialogue_box_tall_portrait_ribbon",
+   "file": "dialogue_box_tall_portrait_ribbon.png",
+   "src_bbox": [
+    407,
+    183,
+    1491,
+    394
+   ],
+   "size": [
+    1084,
+    211
+   ],
+   "opaque_ratio": 0.805,
+   "semi_ratio": 0.013,
+   "qa": []
+  },
+  {
+   "name": "search_field_panel",
+   "file": "search_field_panel.png",
+   "src_bbox": [
+    1505,
+    186,
+    1897,
+    330
+   ],
+   "size": [
+    392,
+    144
+   ],
+   "opaque_ratio": 0.897,
+   "semi_ratio": 0.016,
+   "qa": []
+  },
+  {
+   "name": "plaque_red_wide",
+   "file": "plaque_red_wide.png",
+   "src_bbox": [
+    1516,
+    333,
+    1897,
+    428
+   ],
+   "size": [
+    381,
+    95
+   ],
+   "opaque_ratio": 0.842,
+   "semi_ratio": 0.03,
+   "qa": []
+  },
+  {
+   "name": "dialogue_box_short_portrait_ribbon",
+   "file": "dialogue_box_short_portrait_ribbon.png",
+   "src_bbox": [
+    405,
+    380,
+    1040,
+    598
+   ],
+   "size": [
+    635,
+    218
+   ],
+   "opaque_ratio": 0.795,
+   "semi_ratio": 0.018,
+   "qa": []
+  },
+  {
+   "name": "bubble_blank",
+   "file": "bubble_blank.png",
+   "src_bbox": [
+    1047,
+    425,
+    1178,
+    541
+   ],
+   "size": [
+    131,
+    116
+   ],
+   "opaque_ratio": 0.677,
+   "semi_ratio": 0.039,
+   "qa": []
+  },
+  {
+   "name": "bubble_blue",
+   "file": "bubble_blue.png",
+   "src_bbox": [
+    1182,
+    424,
+    1315,
+    540
+   ],
+   "size": [
+    133,
+    116
+   ],
+   "opaque_ratio": 0.687,
+   "semi_ratio": 0.037,
+   "qa": []
+  },
+  {
+   "name": "bubble_exclaim",
+   "file": "bubble_exclaim.png",
+   "src_bbox": [
+    1323,
+    420,
+    1401,
+    505
+   ],
+   "size": [
+    78,
+    85
+   ],
+   "opaque_ratio": 0.603,
+   "semi_ratio": 0.071,
+   "qa": []
+  },
+  {
+   "name": "bubble_dots",
+   "file": "bubble_dots.png",
+   "src_bbox": [
+    1410,
+    422,
+    1500,
+    505
+   ],
+   "size": [
+    90,
+    83
+   ],
+   "opaque_ratio": 0.623,
+   "semi_ratio": 0.05,
+   "qa": []
+  },
+  {
+   "name": "plaque_navy_wide",
+   "file": "plaque_navy_wide.png",
+   "src_bbox": [
+    1516,
+    428,
+    1897,
+    527
+   ],
+   "size": [
+    381,
+    99
+   ],
+   "opaque_ratio": 0.838,
+   "semi_ratio": 0.039,
+   "qa": []
+  },
+  {
+   "name": "bubble_question",
+   "file": "bubble_question.png",
+   "src_bbox": [
+    1365,
+    496,
+    1447,
+    579
+   ],
+   "size": [
+    82,
+    83
+   ],
+   "opaque_ratio": 0.612,
+   "semi_ratio": 0.077,
+   "qa": []
+  },
+  {
+   "name": "grid_3x3_panel_close",
+   "file": "grid_3x3_panel_close.png",
+   "src_bbox": [
+    1119,
+    575,
+    1504,
+    972
+   ],
+   "size": [
+    385,
+    397
+   ],
+   "opaque_ratio": 0.937,
+   "semi_ratio": 0.014,
+   "qa": []
+  },
+  {
+   "name": "map_parchment",
+   "file": "map_parchment.png",
+   "src_bbox": [
+    1506,
+    552,
+    1903,
+    965
+   ],
+   "size": [
+    397,
+    413
+   ],
+   "opaque_ratio": 0.916,
+   "semi_ratio": 0.011,
+   "qa": []
+  },
+  {
+   "name": "notebook_plus_tabbed_inventory_MERGED",
+   "file": "notebook_plus_tabbed_inventory_MERGED.png",
+   "src_bbox": [
+    93,
+    601,
+    1113,
+    989
+   ],
+   "size": [
+    1020,
+    388
+   ],
+   "opaque_ratio": 0.888,
+   "semi_ratio": 0.01,
+   "qa": []
+  },
+  {
+   "name": "timeline_strip_5slots",
+   "file": "timeline_strip_5slots.png",
+   "src_bbox": [
+    96,
+    985,
+    757,
+    1213
+   ],
+   "size": [
+    661,
+    228
+   ],
+   "opaque_ratio": 0.925,
+   "semi_ratio": 0.011,
+   "qa": []
+  },
+  {
+   "name": "photo_stack",
+   "file": "photo_stack.png",
+   "src_bbox": [
+    764,
+    978,
+    870,
+    1100
+   ],
+   "size": [
+    106,
+    122
+   ],
+   "opaque_ratio": 0.618,
+   "semi_ratio": 0.045,
+   "qa": []
+  },
+  {
+   "name": "photo_framed_blue",
+   "file": "photo_framed_blue.png",
+   "src_bbox": [
+    864,
+    981,
+    976,
+    1101
+   ],
+   "size": [
+    112,
+    120
+   ],
+   "opaque_ratio": 0.674,
+   "semi_ratio": 0.045,
+   "qa": []
+  },
+  {
+   "name": "paper_scrap",
+   "file": "paper_scrap.png",
+   "src_bbox": [
+    980,
+    986,
+    1083,
+    1099
+   ],
+   "size": [
+    103,
+    113
+   ],
+   "opaque_ratio": 0.761,
+   "semi_ratio": 0.038,
+   "qa": []
+  },
+  {
+   "name": "key_brass",
+   "file": "key_brass.png",
+   "src_bbox": [
+    1090,
+    978,
+    1159,
+    1101
+   ],
+   "size": [
+    69,
+    123
+   ],
+   "opaque_ratio": 0.352,
+   "semi_ratio": 0.106,
+   "qa": []
+  },
+  {
+   "name": "envelope_wax_seal",
+   "file": "envelope_wax_seal.png",
+   "src_bbox": [
+    1160,
+    989,
+    1304,
+    1097
+   ],
+   "size": [
+    144,
+    108
+   ],
+   "opaque_ratio": 0.813,
+   "semi_ratio": 0.035,
+   "qa": []
+  },
+  {
+   "name": "thumb_text_row",
+   "file": "thumb_text_row.png",
+   "src_bbox": [
+    1326,
+    981,
+    1703,
+    1134
+   ],
+   "size": [
+    377,
+    153
+   ],
+   "opaque_ratio": 0.891,
+   "semi_ratio": 0.018,
+   "qa": []
+  },
+  {
+   "name": "plaque_red_small",
+   "file": "plaque_red_small.png",
+   "src_bbox": [
+    1708,
+    980,
+    1901,
+    1054
+   ],
+   "size": [
+    193,
+    74
+   ],
+   "opaque_ratio": 0.766,
+   "semi_ratio": 0.051,
+   "qa": []
+  },
+  {
+   "name": "plaque_cream_small",
+   "file": "plaque_cream_small.png",
+   "src_bbox": [
+    1708,
+    1053,
+    1900,
+    1129
+   ],
+   "size": [
+    192,
+    76
+   ],
+   "opaque_ratio": 0.78,
+   "semi_ratio": 0.044,
+   "qa": []
+  },
+  {
+   "name": "slot_dark_a",
+   "file": "slot_dark_a.png",
+   "src_bbox": [
+    764,
+    1100,
+    877,
+    1215
+   ],
+   "size": [
+    113,
+    115
+   ],
+   "opaque_ratio": 0.79,
+   "semi_ratio": 0.041,
+   "qa": []
+  },
+  {
+   "name": "slots_dark_x2_MERGED",
+   "file": "slots_dark_x2_MERGED.png",
+   "src_bbox": [
+    870,
+    1100,
+    1089,
+    1215
+   ],
+   "size": [
+    219,
+    115
+   ],
+   "opaque_ratio": 0.823,
+   "semi_ratio": 0.036,
+   "qa": []
+  },
+  {
+   "name": "slot_dark_b",
+   "file": "slot_dark_b.png",
+   "src_bbox": [
+    1082,
+    1100,
+    1196,
+    1215
+   ],
+   "size": [
+    114,
+    115
+   ],
+   "opaque_ratio": 0.793,
+   "semi_ratio": 0.046,
+   "qa": []
+  },
+  {
+   "name": "slot_dark_c",
+   "file": "slot_dark_c.png",
+   "src_bbox": [
+    1189,
+    1100,
+    1304,
+    1215
+   ],
+   "size": [
+    115,
+    115
+   ],
+   "opaque_ratio": 0.794,
+   "semi_ratio": 0.037,
+   "qa": []
+  },
+  {
+   "name": "slider_handle",
+   "file": "slider_handle.png",
+   "src_bbox": [
+    1843,
+    1128,
+    1889,
+    1223
+   ],
+   "size": [
+    46,
+    95
+   ],
+   "opaque_ratio": 0.445,
+   "semi_ratio": 0.099,
+   "qa": [
+    "tiny"
+   ]
+  },
+  {
+   "name": "checkbox_checked",
+   "file": "checkbox_checked.png",
+   "src_bbox": [
+    1326,
+    1142,
+    1389,
+    1205
+   ],
+   "size": [
+    63,
+    63
+   ],
+   "opaque_ratio": 0.65,
+   "semi_ratio": 0.073,
+   "qa": []
+  },
+  {
+   "name": "checkbox_empty",
+   "file": "checkbox_empty.png",
+   "src_bbox": [
+    1393,
+    1145,
+    1451,
+    1203
+   ],
+   "size": [
+    58,
+    58
+   ],
+   "opaque_ratio": 0.625,
+   "semi_ratio": 0.081,
+   "qa": []
+  },
+  {
+   "name": "toggle_on",
+   "file": "toggle_on.png",
+   "src_bbox": [
+    1455,
+    1147,
+    1512,
+    1204
+   ],
+   "size": [
+    57,
+    57
+   ],
+   "opaque_ratio": 0.495,
+   "semi_ratio": 0.096,
+   "qa": []
+  },
+  {
+   "name": "toggle_off",
+   "file": "toggle_off.png",
+   "src_bbox": [
+    1513,
+    1147,
+    1568,
+    1203
+   ],
+   "size": [
+    55,
+    56
+   ],
+   "opaque_ratio": 0.496,
+   "semi_ratio": 0.097,
+   "qa": []
+  },
+  {
+   "name": "slider_track",
+   "file": "slider_track.png",
+   "src_bbox": [
+    1572,
+    1160,
+    1829,
+    1195
+   ],
+   "size": [
+    257,
+    35
+   ],
+   "opaque_ratio": 0.639,
+   "semi_ratio": 0.087,
+   "qa": [
+    "tiny"
+   ]
+  }
+ ]
+}
