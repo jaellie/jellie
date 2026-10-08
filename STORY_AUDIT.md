@@ -1,5 +1,7 @@
 # STORY AUDIT — final logic pass before locking the Story Bible
 
+> **v2 note:** §12 (clarification C1, BGB's responsibility) **supersedes** §1, §5, §8 and R3, R5, R6 wherever they differ. The earlier tables are kept for history.
+
 Covers your eight points. **Nothing here is locked.** Every patch needed to close a gap is listed in §9 as **R1–R12** for your approval, each with an alternative. I have not added any new twist.
 
 Legend: 🔒 you decided · 🟡 my proposal (needs your yes) · ⬜ undecided.
@@ -212,3 +214,96 @@ Alternative: Edward has a heart condition he has told nobody. I **don't** recomm
 ## 11. Verdict
 
 The mystery is **logically consistent once R1–R12 are answered.** The only changes are patches that follow from your decisions (no new twist). The biggest judgement calls are **R3** (how much to make the cold matter), **R1** (the errand), and **R11** (an adults' decision with a believable pressure).
+
+
+---
+
+## 12. Clarification C1: BGB's responsibility is established by his actions
+
+**Your instruction (🔒):** BGB's moral responsibility is shown by **what he does**, not by an unproven claim that his delay caused Edward's death. Green is responsible for the fall; BGB is responsible for deliberately delaying help and concealing evidence. The Healer cannot say whether immediate help would have saved Edward, so the story must never claim the delay medically caused the death.
+
+### 12.1 The sequence (replaces §1 rows 23:47 to 00:14)
+
+| Time | Event | What the player can later find |
+|---|---|---|
+| **23:47** | **Green causes Edward to fall** and flees by the chute **believing Edward dead** (R7). The tower clock stops. | EV-03, EV-25, EV-15 |
+| 23:48 | BGB arrives at the front door. | EV-08 + player-timed walk; Night Guard sees a slow bear at 23:46 (EV-29) |
+| 23:49 | BGB sees the open hatch, Green's **glove** and the **crumpled letter** on the gallery floor; hears Edward; climbs down. | |
+| **23:50** | **BGB discovers Edward alive.** Edward pleads (*"cold… please…"*) and says ambiguous words. **BGB knows Edward needs help now.** | EV-23 (BGB's withheld memory) |
+| **23:51** | **Instead of calling, BGB leaves Edward,** climbs to the gallery, **takes the glove and letter unread** (willful ignorance in action), and buttons them into his coat. | Missing from the scene (EV-29); found later (EV-31) |
+| **23:53** | **BGB bolts the chute from the inside.** (R13) | EV-28 |
+| **23:55** | BGB rings the **handbell.** **Five minutes after discovery.** | EV-07, Clockkeeper |
+| 23:56 | BGB goes back down to Edward. | |
+| 23:58 | Clockkeeper arrives; BGB is kneeling, **coat buttoned wrong over something.** | EV-20 |
+| 23:47 to ~00:08 | Edward's condition worsens: **injuries, blood loss, freezing cold** (wet clothing, about −4 °C). | EV-18, EV-26 |
+| **~00:08** | **Edward dies.** | |
+| 00:14 | Healer arrives; window **11:55 PM to 12:15 AM.** | EV-18 |
+| After | BGB hides the glove and letter at home (behind the photograph's backing) and **conceals** 11:48, Edward's words, the glove and Green. | EV-31 |
+
+**Edward is alone for about five minutes (23:51 to 23:56)** while BGB is upstairs concealing evidence. That makes the chapter title **"Five Missing Minutes"** literal.
+
+### 12.2 What the story must never claim
+- That the five minutes **caused** Edward's death.
+- That immediate help **would have** saved him.
+- That Green knew Edward was alive.
+
+**What it does show, as fact:** BGB knew Edward needed help, concealed evidence connecting Green **first,** and called **five minutes later.** That is a choice, and it is undeniable without a medical claim.
+
+### 12.3 Reveal order and the final question
+
+| Stage | Chapter | Player believes | Player discovers |
+|---|---|---|---|
+| 1 | Ch.6 Part B | "Green caused the fall; the case is nearly solved." | Footprints, the 11:40 bear, the Night Guard's log, Green's bare hand, **Green's own account** (he fled believing Edward dead). Case File stamp: **SUSPECT IDENTIFIED.** |
+| turn | Ch.6 end of Part B | "Edward died at the fall." | The Healer: Edward was **alive** after it. Green: *"Then who was with him?"* |
+| 2 | Ch.6 Part C | "Who was with Edward?" | The **five missing minutes** reconstructed from evidence; the **glove and letter behind the photograph** in BGB's own cottage. **The most emotionally significant revelation.** |
+| 3 | Ch.7 | "Who caused his death?" becomes **"Who had the opportunity to do the right thing, but chose not to?"** | The choice of what goes into the Final Record. |
+
+The refrain *"Who are you really protecting?"* stays as the series line over the credits.
+
+### 12.4 Evidence changes
+
+| ID | Change |
+|---|---|
+| EV-14 glove | **Not at the scene.** Found in BGB's hiding place. Not used for DD-06. |
+| EV-27 letter to "G." | **Not at the scene.** Found in the same place. |
+| **EV-28** chute bolted from inside | **New.** Footprints leave from the chute, yet it is bolted inside: someone bolted it after Green left. |
+| **EV-29** Night Guard's log | **New detail.** 23:35 bear, both hands gloved, paper in right hand; 23:46 a slow bear. Supports the right-hand clue and BGB's arrival. |
+| EV-19 snow-melt | **Now three puddle sites:** pit ladder, gallery by the hatch, chute door. |
+| EV-20 Clockkeeper 2 | BGB said he arrived "just as the bell rang"; coat buttoned wrong; bell rope swinging. |
+| EV-21 split | **EV-21** Green's account (Ch.6B); **EV-21b** his motive (Ch.7). |
+| EV-23 Edward's words | Adds the **plea** (R14). |
+| **EV-31** hiding place | **New.** Behind the photograph's backing; planted in the Prologue (*"Leave it."*). |
+
+### 12.5 Deduction changes
+
+| DD | New wording | Needs |
+|---|---|---|
+| DD-03 | 11:40 bear was right-handed, not BGB | Clockkeeper + EV-06 + **EV-29** + EV-16 |
+| DD-05 | **BGB found Edward alive at 11:50, hid evidence connecting Green, and did not call for help until 11:55.** | EV-08 + walk + EV-29 + EV-19 + EV-28 + EV-20 + EV-07 + **EV-31** + EV-23 |
+| DD-06 | Green caused the fall (and believed Edward dead) | EV-04 + EV-06 + EV-15 + EV-25 + EV-29 + EV-21 (**not** EV-14/27) |
+| **DD-11 (new)** | **No one can say whether help at 11:50 would have saved Edward.** | EV-18 + EV-26 + EV-24 |
+| **DD-12 (new)** | **Green is responsible for the fall; BGB for hiding evidence and delaying help.** | DD-06 + DD-05 + DD-11 |
+
+**Fairness check:** DD-06 now stands **without** the hidden items, so the player can honestly believe the case is solved at Part B. DD-05 is only solvable **afterward,** because it needs the Healer's "alive" finding and the melt trail, which give the player a reason to look again.
+
+### 12.6 Compatibility with approved items
+
+| Item | Result |
+|---|---|
+| **Q2** (BGB finds the glove, hears ambiguous words, avoids confirming) | **Compatible.** He takes the glove and letter **without examining or reading them:** willful ignorance in action. Please confirm this reading. |
+| **Q3** (BGB knows the swap; has concealed before; doesn't know Green's confrontation) | Compatible. Tonight's concealment is new, but he still doesn't know the confrontation or the register's full history. |
+| **Q4** (Healer: potentially survivable; might have improved; window 11:55 to 12:15) | Compatible, and **strengthened:** the Healer cannot establish more. |
+| **Q6** (never lie to the player; never false surprise) | Compatible. The Prologue plant is **silence** (*"Leave it."*). |
+| **R3** (timeline T3) | Kept. Now "cold = contributing factor" **and** "responsibility = actions." |
+| **R7** (Green believed Edward dead) | **Required** by step 1. |
+| Epilogue **11:48** | Kept. Reworded: *the minute BGB arrived and help became possible.* |
+| Chapter titles, structure, adults' decision flashback, endings E1 to E4 | Unchanged (E1 to E3 wording adjusted to "concealment and delay"). |
+
+### 12.7 New approvals
+
+| # | Question | Recommendation |
+|---|---|---|
+| **R13** | Concealment mechanics: items hidden **behind the photograph's backing**; BGB **bolts the chute**; Night Guard's log notes gloves and paper; Prologue plant *"Leave it."* | Yes to all four. |
+| **R14** | Edward's words include an explicit **plea** before the ambiguous ones | Yes. Alternative: injuries alone make it obvious. |
+| **R15** | Final-question UI: the Investigate question changes in Ch.6 Part C; a **Responsibility board**; **no "cause of death: delay" field** | Yes. |
+| **R16** | Optional: should there be a short **reconstruction** scene of 11:50 to 11:55? | **No.** Keep it as an evidence-driven reconstruction in the Case File, so it stays the player's own deduction and adds no third flashback. |

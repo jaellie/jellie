@@ -13,7 +13,9 @@ Automatic crops in `art_source/sliced/` are **candidates only** until a human re
 | **Post-flood home photograph** | Two cubs, scarred cub captioned "Green" | Evidence EV-01. |
 | **Edward's pocket watch** (evidence icon) | Running, **cracked crystal**, dented case | Evidence EV-24. |
 | **Edward's letter to Green** | Crumpled, addressed "G." | EV-27. |
-| **Green's right glove** | Wool glove, snow-damp | EV-14. |
+| **Green's right glove** | Wool glove, snow-damp | EV-14 (hidden behind the photograph's backing, EV-31). |
+| **Back of the photograph frame** | Backing board with a hidden glove and folded letter | EV-31; Prologue plant. |
+| **Responsibility board** | UI: two columns (Green: fall; BGB: concealment and delay), no cause-of-death field | R15. |
 
 Rule: **no mirrored sprites as final art.** Scarf tails and scar follow the per-view matrix in `STORY_BIBLE.md` §12.1.
 

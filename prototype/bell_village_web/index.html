@@ -44,43 +44,55 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 @keyframes bob{50%{transform:translateY(-8px)}}
 .glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,179,71,.34),transparent 65%);pointer-events:none;mix-blend-mode:screen}
 
+/* Nine-slice: corners and ends keep their drawn size, only the middle stretches to fit the text */
+.nine{border:1px solid transparent;box-sizing:border-box;
+  border-image-source:var(--img);
+  border-image-slice:var(--st,26) var(--sr,26) var(--sb,26) var(--sl,26) fill;
+  border-image-width:calc(var(--st,26)*var(--s,1)*1px) calc(var(--sr,26)*var(--s,1)*1px) calc(var(--sb,26)*var(--s,1)*1px) calc(var(--sl,26)*var(--s,1)*1px);
+  border-image-repeat:stretch}
+.cream{--img:url(assets/plaque_cream_small.webp)}
+.red{--img:url(assets/plaque_red_small.webp)}
+
 /* HUD */
 .sprite{position:absolute;background-repeat:no-repeat;background-size:100% 100%}
-#caseplate{left:36px;top:30px;width:420px;height:95px;background-image:url(assets/panel_wide_title.webp)}
-#caseplate .l1{position:absolute;left:60px;top:18px;font:500 15px/1 var(--font-label);letter-spacing:.16em;color:#8a6a3e}
-#caseplate .l2{position:absolute;left:60px;top:36px;font:700 26px/1.1 var(--font-body);color:var(--ink)}
-#caseplate .l3{position:absolute;left:60px;top:66px;font:400 15px/1 var(--font-body);color:#6d5a40;font-style:italic}
+#caseplate{position:absolute;left:36px;top:30px;width:fit-content;min-width:300px;padding:16px 46px 18px 46px;display:flex;flex-direction:column;gap:5px;--img:url(assets/panel_wide_title.webp);--sl:40;--sr:40;--st:34;--sb:34;--s:.72}
+#caseplate .l1{font:500 15px/1 var(--font-label);letter-spacing:.16em;color:#8a6a3e}
+#caseplate .l2{font:700 26px/1.1 var(--font-body);color:var(--ink);white-space:nowrap}
+#caseplate .l3{font:400 15px/1 var(--font-body);color:#6d5a40;font-style:italic}
 .hudbtn{position:absolute;width:76px;height:78px;border:0;padding:0;background-size:100% 100%;background-color:transparent;cursor:pointer;transition:transform .12s,filter .12s}
 .hudbtn:hover{transform:scale(1.07);filter:brightness(1.15)}
 .hudbtn:focus-visible,.choice:focus-visible,.tab:focus-visible,.pbtn:focus-visible{outline:3px solid #ffd27a;outline-offset:3px}
 .hudbtn .k{position:absolute;right:-6px;bottom:-8px;font:700 13px/1 var(--font-label);background:#1b2340;color:#ffe3a6;border:1px solid var(--brass);border-radius:4px;padding:3px 5px}
-#hint{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);width:420px;height:92px;background:url(assets/plaque_cream_small.webp) center/100% 100% no-repeat;display:none;align-items:center;justify-content:center;gap:14px;font:600 25px/1 var(--font-body);color:var(--ink);transition:opacity .15s}
+#hint{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);width:fit-content;max-width:900px;padding:22px 52px;--s:1.25;display:none;align-items:center;justify-content:center;gap:14px;font:600 25px/1.1 var(--font-body);color:var(--ink);white-space:nowrap}
 #hint.on{display:flex}
 #hint kbd{font:700 21px/1 var(--font-label);background:var(--burgundy);color:#f6e3c0;border-radius:6px;padding:7px 11px;box-shadow:0 2px 0 #3d1219}
 
 /* Dialogue */
-#dlg{position:absolute;left:336px;bottom:36px;width:1247px;height:243px;background:url(assets/dialogue_box_tall_portrait_ribbon.webp) 0 0/100% 100% no-repeat;display:none}
+#dlg{position:absolute;left:336px;bottom:36px;width:1247px;height:243px;display:none}
 #dlg.on{display:block}
+#dlgbg{position:absolute;inset:0;--img:url(assets/dialogue_box_tall_portrait_ribbon.webp);--sl:410;--sr:100;--st:68;--sb:26;--s:1.15}
+#meas{position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font:400 30px/1.32 var(--font-body)}
 #dlg .por{position:absolute;left:40px;top:48px;width:164px;height:161px;overflow:hidden;border-radius:4px}
 #dlg .por img{width:164px;height:auto;display:block;filter:drop-shadow(0 2px 2px rgba(60,35,10,.4))}
 #dlg .nm{position:absolute;left:226px;top:14px;width:220px;height:42px;display:grid;place-items:center;font:700 25px/1 var(--font-label);letter-spacing:.06em;color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
-#dlg .tx{position:absolute;left:236px;top:80px;width:925px;height:140px;font:400 30px/1.32 var(--font-body);color:var(--ink)}
+#dlg .tx{position:absolute;left:236px;top:80px;right:130px;height:140px;font:400 30px/1.32 var(--font-body);color:var(--ink)}
 :lang(ko) #dlg .tx,#dlg .tx.ko{font-size:27px;line-height:1.5}
 #dlg .tx i{color:#6d4f2d}
 #choices{position:absolute;right:340px;bottom:300px;display:none;flex-direction:column;gap:12px;align-items:flex-end}
 #choices.on{display:flex}
-.choice{width:640px;min-height:68px;padding:10px 40px;border:0;background:url(assets/plaque_cream_small.webp) 0 0/100% 100% no-repeat;font:600 25px/1.2 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s}
-.choice:hover,.choice.sel{background-image:url(assets/plaque_red_small.webp);color:#f6e3c0;transform:translateX(-8px)}
+.choice{width:fit-content;max-width:900px;min-height:76px;padding:16px 38px;--s:1.1;font:600 25px/1.25 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s;background-color:transparent}
+.choice:hover,.choice.sel{--img:url(assets/plaque_red_small.webp);color:#f6e3c0;transform:translateX(-8px)}
 
 /* Case File */
 #cf{position:absolute;inset:0;background:rgba(6,9,20,.82);display:none;z-index:20}
 #cf.on{display:block}
 #cfwrap{position:absolute;left:150px;top:70px;width:1620px;height:940px}
 #nav{position:absolute;left:0;top:70px;width:386px;height:735px;background:url(assets/nav_binder_6slots_COMPOSITE.webp) 0 0/100% 100% no-repeat}
-.tab{position:absolute;left:78px;width:230px;height:84px;border:0;background:transparent center/100% 100% no-repeat;font:700 25px/1 var(--font-label);letter-spacing:.05em;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:filter .12s}
+.tab{position:absolute;left:78px;width:230px;height:84px;background:transparent;font:700 25px/1 var(--font-label);letter-spacing:.05em;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:filter .12s;padding:0 18px;--s:1.1}
+.tab:not(.nine){border:0}
 .tab:hover{filter:brightness(1.07)}
-.tab.cover{background-image:url(assets/plaque_cream_small.webp);background-color:#22314f;border-radius:12px}
-.tab.act{background-image:url(assets/plaque_red_small.webp);color:#f6e3c0}
+.tab.cover{background-color:#22314f;border-radius:12px}
+.tab.act{color:#f6e3c0}
 #page{position:absolute;left:392px;top:0;width:1228px;height:940px;border-radius:12px;border:5px solid var(--brass);background:radial-gradient(ellipse at 30% 10%,#f8ebc8,var(--paper) 55%,var(--paper-deep));box-shadow:inset 0 0 70px rgba(120,80,30,.32),0 20px 60px rgba(0,0,0,.6);color:var(--ink);overflow:hidden}
 #page h2{margin:0;font:700 44px/1.1 var(--font-body)}
 #page .eyebrow{font:500 18px/1 var(--font-label);letter-spacing:.2em;color:#8a6a3e}
@@ -122,8 +134,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .card h2{margin:6px 0 14px;font:700 46px/1.1 var(--font-body)}
 .card p{font:400 28px/1.4 var(--font-body);margin:10px 0}
 .card .eyebrow{font:500 18px/1 var(--font-label);letter-spacing:.2em;color:#8a6a3e}
-.pbtn{display:block;width:420px;height:92px;margin:14px auto 0;border:0;background:url(assets/plaque_cream_small.webp) 0 0/100% 100% no-repeat;font:700 28px/1 var(--font-body);color:var(--ink);cursor:pointer}
-.pbtn:hover{background-image:url(assets/plaque_red_small.webp);color:#f6e3c0}
+.pbtn{display:block;width:fit-content;min-width:340px;margin:14px auto 0;padding:20px 58px;--s:1.25;background:transparent;font:700 28px/1.1 var(--font-body);color:var(--ink);cursor:pointer}
+.pbtn:hover{--img:url(assets/plaque_red_small.webp);color:#f6e3c0}
 #fade{position:absolute;inset:0;background:#02030a;opacity:0;pointer-events:none;transition:opacity .7s;z-index:40}
 #fade.on{opacity:1;pointer-events:auto}
 #toast{position:absolute;left:50%;top:40px;transform:translate(-50%,-14px);background:#1b2340;border:2px solid var(--brass);color:#ffe3a6;padding:12px 24px;border-radius:8px;font:600 26px/1 var(--font-body);opacity:0;transition:.3s;z-index:25;pointer-events:none}
@@ -172,15 +184,15 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
   <div id="fg"><img src="assets/foreground.webp" width="4190" height="328" alt=""></div>
 
   <!-- HUD -->
-  <div id="caseplate" class="sprite"><div class="l1">CASE C-01</div><div class="l2" id="hudTitle">The Death of Edward</div><div class="l3" id="hudLoc">Bell Village</div></div>
+  <div id="caseplate" class="nine"><div class="l1">CASE C-01</div><div class="l2" id="hudTitle">The Death of Edward</div><div class="l3" id="hudLoc">Bell Village</div></div>
   <button class="hudbtn" id="bCase" style="right:178px;top:26px;background-image:url(assets/icon_satchel.webp)" aria-label="Case File"><span class="k">Tab</span></button>
   <button class="hudbtn" id="bLook" style="right:100px;top:26px;background-image:url(assets/icon_search.webp)" aria-label="Look around"><span class="k">Q</span></button>
   <button class="hudbtn" id="bSet" style="right:22px;top:26px;background-image:url(assets/icon_settings.webp)" aria-label="Pause"><span class="k">Esc</span></button>
-  <div id="hint"><kbd>E</kbd><span id="hintTx"></span></div>
+  <div id="hint" class="nine cream"><kbd>E</kbd><span id="hintTx"></span></div>
   <div id="toast"></div>
 
   <div id="choices"></div>
-  <div id="dlg"><div class="por"><img id="dPor" src="assets/nini_front.webp" alt=""></div><div class="nm" id="dNm"></div><div class="tx" id="dTx"></div></div>
+  <div id="dlg"><div id="dlgbg" class="nine"></div><div class="por"><img id="dPor" src="assets/nini_front.webp" alt=""></div><div class="nm" id="dNm"></div><div class="tx" id="dTx"></div></div>
 
   <div id="cf">
    <div id="cfwrap">
@@ -193,17 +205,18 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
   <div class="modal" id="inspect"><div class="card" id="inspectCard"></div></div>
   <div class="modal" id="pause"><div class="card">
     <div class="eyebrow">PAUSED</div><h2 id="pTitle">Bell Village</h2>
-    <button class="pbtn" id="pResume">Resume</button>
-    <button class="pbtn" id="pLang">Language: English</button>
-    <button class="pbtn" id="pReset">Restart</button>
+    <button class="pbtn nine cream" id="pResume">Resume</button>
+    <button class="pbtn nine cream" id="pLang">Language: English</button>
+    <button class="pbtn nine cream" id="pReset">Restart</button>
   </div></div>
   <div class="modal" id="endcard"><div class="card">
     <div class="eyebrow" id="eEy">CHAPTER 1</div><h2 id="eH">The Clock That Stopped</h2>
     <p id="eP1">The door opens onto the winding room. That scene is the next one to build.</p>
     <p id="eP2" style="font-size:23px;color:#6d5a40">Needs: Clocktower interior background, BGB walk frames, Clockkeeper portrait.</p>
-    <button class="pbtn" id="eBack">Back to the village</button>
+    <button class="pbtn nine cream" id="eBack">Back to the village</button>
   </div></div>
   <div id="fade"></div>
+  <span id="meas"></span>
  </div>
 </div>
 
@@ -370,13 +383,20 @@ function renderDlg(anim){
   const n = D[cur]; if (!n) return; const sp = SP[n.sp];
   $("dNm").textContent = tr(sp.name); $("dPor").src = sp.img;
   full = tr(n.t); const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":""); clearInterval(typing);
+  sizeDlg(full);
   $("choices").classList.remove("on"); $("choices").innerHTML = "";
   if (!anim){ tx.textContent = full; showChoices(); return; }
   let i = 0; tx.textContent = ""; typing = setInterval(()=>{ i += 1; tx.textContent = full.slice(0,i); if (i >= full.length){ clearInterval(typing); typing = null; showChoices(); } }, 22);
 }
+function sizeDlg(text){
+  const m = $("meas"); m.style.fontSize = lang==="ko" ? "27px" : "30px"; m.textContent = text;
+  const w = Math.min(m.offsetWidth + 12, 925); // text width, one line, capped at the full text area
+  const box = Math.max(760, 236 + w + 130);
+  $("dlg").style.width = Math.min(1247, box) + "px";
+}
 function showChoices(){
   const n = D[cur]; if (!n.ch) return; const box = $("choices"); box.innerHTML = "";
-  n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice"; b.textContent = tr(c.t); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
+  n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice nine cream"; b.textContent = tr(c.t); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
   box.classList.add("on"); box.firstChild.classList.add("sel");
 }
 function pick(i){ const n = D[cur]; const c = n.ch[i]; applyNode(n); goto(c.go); }
@@ -396,7 +416,7 @@ function evIcon(e, size){
 }
 function inspect(id){
   const e = EV[id]; mode = "modal"; const c = $("inspectCard");
-  c.innerHTML = '<div class="eyebrow">'+e.tag+'</div><h2>'+tr(e.name)+'</h2><div style="margin:8px 0">'+evIcon(e, id==="clock"?300:150)+'</div><p>'+tr(e.desc)+'</p><button class="pbtn" id="iClose">'+tr(UI.close)+'</button>';
+  c.innerHTML = '<div class="eyebrow">'+e.tag+'</div><h2>'+tr(e.name)+'</h2><div style="margin:8px 0">'+evIcon(e, id==="clock"?300:150)+'</div><p>'+tr(e.desc)+'</p><button class="pbtn nine cream" id="iClose">'+tr(UI.close)+'</button>';
   $("inspect").classList.add("on"); $("iClose").focus();
   $("iClose").onclick = ()=>{ $("inspect").classList.remove("on"); mode = "play"; addEv(id); stage.focus(); };
 }
@@ -419,7 +439,7 @@ function renderNav(){
   const nav = $("nav"); nav.innerHTML = ""; const labs = tr(UI.tabs);
   const k = 386/309;
   SLOTS.forEach((cy,i)=>{
-    const b = document.createElement("button"); b.className = "tab" + (i===tab ? " act" : (i===0 ? " cover" : ""));
+    const b = document.createElement("button"); b.className = "tab" + (i===tab ? " nine red act" : (i===0 ? " nine cream cover" : ""));
     b.style.top = Math.round(cy*k - 42) + "px"; b.style.left = (i===0?72:78) + "px"; b.textContent = labs[i];
     if (i===0){ b.style.width = "274px"; b.style.height = "108px"; b.style.left = "74px"; b.style.top = Math.round(cy*k-54)+"px"; }
     b.onclick = ()=>{ tab = i; renderCF(); }; nav.appendChild(b);
