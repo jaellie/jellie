@@ -17,6 +17,7 @@ STYLE LOCK. Use the attached Big Green Bear images as the exact master style and
 
 LOOK
 Soft plush storybook character illustration, like a hand-painted stuffed toy: simple chunky rounded shapes, matte velvety fur with a very fine fuzzy texture, soft airbrushed shading (light from the upper left, low contrast), muted slightly desaturated colors with gentle vintage warmth. No gloss, no specular shine, no glitter, no 3D render look, no anime, no flat vector, no photorealism.
+This is HAND-PAINTED, NOT cel-shaded: soft brush-blended shading and fine fur texture, never flat color blocks with hard-edged shadow shapes.
 
 OUTLINE (identical on every character in every image)
 One continuous dark olive-brown outline, color #2E2C20, a clean hand-inked line of UNIFORM weight, about 0.3% of the image height (about 9 px on a 2900 px tall image, about 7 px on a 2300 px tall image), rounded line ends, a very slight organic wobble, no tapering, no thick-and-thin variation, no double lines. The outline goes around the whole silhouette and around the main inner shapes (arms, ears, coat, scarf, boots, glasses). Fine details (fur, knit pattern, wool curls) have NO outline, only soft shading.
@@ -35,7 +36,7 @@ LEFT / RIGHT
 Left and right always mean the side you see in the image, never the character's own anatomy.
 
 NEGATIVE
-glossy highlights, plastic, 3D render, thick or tapering outline, double outline, colored outline, missing outline, gradient background, checkerboard, drop shadow, cast shadow, text, extra limbs, extra characters, cream belly patch, anime eyes, sparkles, blur
+cel shading, hard-edged flat shadow shapes, glossy highlights, plastic, 3D render, thick or tapering outline, double outline, colored outline, missing outline, gradient background, checkerboard, drop shadow, cast shadow, text, extra limbs, extra characters, cream belly patch, anime eyes, sparkles, blur
 ```
 
 ---
