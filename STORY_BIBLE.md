@@ -38,7 +38,8 @@ Rules for anyone (human or Claude Code) implementing from this file:
 - Chapters 4–5 are the past; Ch.1–3 and 6–7 are the present (from your chapter-placement table).
 - Clue set for telling the twins apart: **handedness, scarf, ear scar, photographs, witness testimony** (+ movement speed, expression, object use). **No single clue may solve it.**
 - Nini: small fluffy white lamb, yellow raincoat, brown boots, ~55% of BGB's height.
-- Clockkeeper: cat with brass goggles, brown apron (from your mockup). Name ⬜.
+- Clockkeeper: cat with brass goggles, brown apron (mockup + character sheet). Name ⬜.
+- Character sheet (locked designs): **Edward** = hedgehog with round glasses, vest, red tie, pocket watch; **Café Owner** = golden spaniel in red apron; **Night Guard** = owl in blue cap and cape; **Mara** = badger in red shawl; **Green** = same as BGB plus torn marks on the left ear.
 
 ---
 
@@ -61,7 +62,7 @@ Because names were swapped, **we never say "BGB" or "Green" about the past witho
 | **Today called** 🔒 | **Green** (outcast, suspect) | **Big Green Bear** (beloved, playable) |
 | Handedness 🔒/🟡 | **Right** | **Left** |
 | Scarf knot 🟡 | Knot on the **right** shoulder | Knot on the **left** shoulder |
-| Ear scar 🟡 | Notch at the lower edge of the **right ear** (flood night, Ch.5) | None |
+| Ear scar 🟡 | Torn marks on the **left ear** (as drawn on his character sheet; flood night, Ch.5) | None |
 | Resting expression 🟡 | Guarded: brows low, mouth set | Open: soft, slow smile |
 | Movement 🟡 | Quicker, longer stride, light step | Slower, deliberate, "soft and slightly heavy" |
 | Role in flood 🟡 | Rescued his brother | Caused the failure, was rescued |
@@ -73,11 +74,12 @@ Because names were swapped, **we never say "BGB" or "Green" about the past witho
 
 | Character | Status | Notes |
 |---|---|---|
-| **Edward** | 🔒 victim · 🟡 role | Species/age/design ⬜ (not in assets). 🟡 Village **Archivist** and the twins' **guardian** (uncle/foster, ⬜). Universally called "a good person". |
+| **Edward** | 🔒 victim · 🔒 design | **Hedgehog** with round glasses, brown vest, red tie and a **pocket watch** (character sheet). 🟡 Village **Archivist** and the twins' **guardian** (uncle/foster, ⬜). Universally called "a good person". |
 | **Nini** | 🔒 design · 🟡 role | 🟡 Edward's young archive assistant; keeps notes; innocent; grieving. First NPC. Your asset poses (reading/writing/sleeping) fit this. |
 | **Clockkeeper** | 🔒 witness | Cat with goggles. 🟡 Works the night shift in the winding room. Honest but only saw the stairs, not faces. Name ⬜. |
-| **Café Keeper** | 🟡 | Witness #3. Species/name ⬜. Hosts BGB's alibi. |
-| **Lamplighter** | 🟡 | Witness #4. Species/name ⬜. Saw the bridge. |
+| **Café Owner** (카페 주인) | 🔒 design · 🟡 role | Dog (golden spaniel) in a red apron. Witness #3. Hosts BGB's alibi. Name ⬜. |
+| **Night Guard** (야간 경비원) | 🔒 design · 🟡 role | Owl in a blue guard cap and cape. Witness #4. Walks the bridge route; keeps a patrol log. Name ⬜. |
+| **Mara** (마라) | 🔒 design · 🟡 role | Old **badger** in a red embroidered shawl and floral apron. 🟡 Remembers the flood; first to voice the village's blame of Green; later the one who says the hero cub was right-handed (Testimonial clue, Ch.6). ⬜ confirm role. |
 | **Village Healer** | 🟡 | Gives the medical estimate in Ch.6. ⬜ |
 | **Constable** | ⬜ | Needed only to explain why BGB investigates. 🟡 Snowed in on the far road (never appears). |
 | **Flood casualty** | ⬜ | Someone was lost in the flood so the blame has weight. Decision D4. |
@@ -95,7 +97,7 @@ Because names were swapped, **we never say "BGB" or "Green" about the past witho
 | Afternoon | Edward ties each twin's scarf by hand with a **different knot side** so he can tell them apart: elder = right, younger = left. |
 | Evening | The twins (age ~7) sneak into the Clocktower to see the gears. The **younger** twin tinkers with the **warning-bell escapement** and jams it. He doesn't understand what it is. |
 | Night | Meltwater surge. **No warning bell rings.** The lower village floods. |
-| Night | The younger twin is trapped in the flooding tower stairwell. The **elder twin** goes in and **saves him**, tearing his right ear on debris (the scar). Nobody sees the rescue. |
+| Night | The younger twin is trapped in the flooding tower stairwell. The **elder twin** goes in and **saves him**, tearing his left ear on debris (the scar). Nobody sees the rescue. |
 | Dawn | Villagers find the **younger** twin, wrapped and carried by Edward. The elder is left behind, cold, unseen. |
 | Dawn+ | A villager (⬜ D4) died. The village demands to know why the bell failed. |
 | Days later | **Edward alters the register.** He writes that the cub who *saved the village* and was the "hero" was **Big Green Bear**, and the cub who *tampered with the bell* was **Green** — then **assigns each name to the wrong twin.** The younger (guilty) twin becomes the hero. The elder (hero) becomes the blamed outcast. Edward believes he is *protecting a child.* |
@@ -112,10 +114,10 @@ All times are **real** times. Clock on the tower reads 11:47 forever after.
 | 18:00 | Edward's **letter** arrives at BGB's mailbox: *come to the tower at midnight.* | BGB |
 | Earlier | Edward hand-delivers a letter to Green at the Old Mill. | Green |
 | 21:00 | **Nini** leaves the archive. Edward is alone, writing. She saw him seal **two letters** earlier. | Nini |
-| 23:15 | BGB sits in the **Café**, hesitating. | Café Keeper |
-| 23:35 | Green crosses **Lantern Bridge** hurrying toward the tower. Wearing his mustard scarf (same pattern as BGB's). | Lamplighter |
+| 23:15 | BGB sits in the **Café**, hesitating. | Café Owner |
+| 23:35 | Green crosses **Lantern Bridge** hurrying toward the tower. Wearing his mustard scarf (same pattern as BGB's). | Night Guard |
 | 23:38 | Green enters the tower. | — |
-| 23:42 | BGB leaves the Café (a 6-minute walk). | Café Keeper |
+| 23:42 | BGB leaves the Café (a 6-minute walk). | Café Owner |
 | **23:40** | **Clockkeeper sees a bear climbing the stairs, something in his right hand.** | Clockkeeper |
 | 23:41–23:46 | Bell loft. Edward tells Green he will **read the true Final Record at midnight and restore both names.** Green refuses: the truth would destroy BGB, whose life is built on the lie. Green demands the record. | Green, Edward |
 | **23:47** | Struggle on the gear hatch. **Edward falls** to the wheel pit. His body jams the escapement. **The clock stops.** | Green |
@@ -194,15 +196,15 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
 - **Goal:** Collect four statements and spot why they can't all be true.
 - **The four 🟡:**
   1. **Clockkeeper** — 11:40, a bear, scarf, right hand.
-  2. **Café Keeper** — BGB was in the café until "a little before quarter to"; *looked like he was waiting for someone.*
-  3. **Lamplighter** — saw "Big Green Bear" cross **Lantern Bridge at 11:35**, hurrying.
+  2. **Café Owner** — BGB was in the café until "a little before quarter to"; *looked like he was waiting for someone.*
+  3. **Night Guard** — saw "Big Green Bear" cross **Lantern Bridge at 11:35**, hurrying.
   4. **Nini** — last saw Edward at 21:00; he sealed **two** letters.
 - **Contradictions (player-discoverable):**
   - **C1:** Lantern Bridge 11:35 vs Café till ~11:42 — the same bear in two places.
   - **C2:** Clockkeeper's *right hand* vs the player's own observation that BGB uses his **left** (shown in animations and prompt icons, never stated).
   - **C3:** Nini's *two letters* vs only one known recipient.
-- **Red herrings:** Café Keeper owed Edward money. The Lamplighter hated the tower's noise. Nini's notebook has a torn page.
-- **Evidence:** EV-08 Café tab (arrival time), EV-09 Lamplighter's lamp-log, EV-10 Nini's notebook (torn page, "red ledger moved?"), EV-11 Statements (4).
+- **Red herrings:** Café Owner owed Edward money. The Night Guard resents the tower's late-night noise. Nini's notebook has a torn page.
+- **Evidence:** EV-08 Café tab (arrival time), EV-09 Night Guard's patrol log, EV-10 Nini's notebook (torn page, "red ledger moved?"), EV-11 Statements (4).
 - **Deductions:** DD-02 *Two bears can't be one* (needs C1 + C2).
 - **Withheld:** Why BGB looked "like he was waiting".
 - **Closing question:** *Is there another bear?*
@@ -211,9 +213,9 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
 - **Setting:** Archive (record room, locked), the village's quiet edge, **Old Mill** (Green). · **Playable:** Yes.
 - **Goal:** Find and confront the second bear.
 - **Beats:**
-  1. Villagers go quiet at a name: *"We don't talk about Green."* Several (Café Keeper, an old gardener ⬜) give a **biased** account: the bear who "let the bell fail."
+  1. Villagers go quiet at a name (**Mara**, the old badger who lived through the flood, is the first to speak, bitterly): *"We don't talk about Green."* Several (Café Owner, **Mara**) give a **biased** account: the bear who "let the bell fail."
   2. Nini gives BGB the **archive key.** In the record room: the **flood-year register** (EV-12). Edward's drawer: a **second photograph** (EV-13): the same two cubs, different pose.
-  3. Walk to the **Old Mill.** First meeting with **Green:** guarded, hood up (the **scar** hidden), scarf knot visible on the **right.** He is **right-handed** (lifts the kettle with his right). He denies being at the tower. He says: *"Ask yourself what you remember."* (Truth; the player will misread it as a taunt.)
+  3. Walk to the **Old Mill.** First meeting with **Green:** guarded; the **ear scar** is plainly visible in daylight (witnesses at night, at a distance, could not have seen it); scarf knot on the **right** (⬜ see art note). He is **right-handed** (lifts the kettle with his right). He denies being at the tower. He says: *"Ask yourself what you remember."* (Truth; the player will misread it as a taunt.)
   4. Back at the archive, BGB reaches for the photograph to compare…
 - **Evidence:** EV-12 Flood-year register (ink of two ages, unread yet), EV-13 Second photograph, EV-14 Right glove (found Ch.1 on a second search; linked here), EV-15 Rear-tower footprints (wide stride; Old Mill).
 - **Note:** EV-14 (the lost **right glove**) is found in the loft in Ch.1 only if the player searches *twice*. Here the player notices Green has **no right glove** — a link, not proof (gloves get lost).
@@ -239,7 +241,7 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
 ### CHAPTER 5 — A Good Person 🟡 *(PAST, playable)*
 - **Setting:** The flooding village, tower stairwell, dawn aftermath. · **Playable:** Yes.
 - **Beats:**
-  1. **The rescue (set piece).** Wade through the flooded stairwell; the younger brother is trapped. Light puzzle-traversal (no combat). The elder tears his **right ear** on a beam (the scar; shown, not explained).
+  1. **The rescue (set piece).** Wade through the flooded stairwell; the younger brother is trapped. Light puzzle-traversal (no combat). The elder tears his **left ear** on a beam (the scar; shown, not explained).
   2. Carry the brother out. Edward and villagers arrive. A villager (⬜) is lost to the water.
   3. Dawn. The village gathers; Edward, covered in mud, **carries the younger brother** while a crowd murmurs. **No one looks at the elder child.** He stands in the cold. A villager says, *"Edward's a good person. Thank goodness for Edward."*
   4. The elder watches Edward walk into the Archive. The door shuts. Fade.
@@ -255,7 +257,7 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
   - The player compares the twins using **Memories + present clues.** Key rule: **no single clue unlocks DD-04.** The board requires **three independent categories** (physical, documentary, testimonial). See §8.
   - Result: DD-04 *The names were swapped.* The kid the player controlled in Ch.4–5 was **the present-day Green.**
 - **Part B — The missing five minutes (Timeline).**
-  - The player arranges cards: Lamplighter 11:35, Clockkeeper 11:40, Café departure ~11:42, **fall 11:47**, BGB's arrival **11:48** (door-wear/snow-melt, Clockkeeper's second look), handbell **11:53**, Clockkeeper arrival 11:56, **Healer's estimate** ~midnight.
+  - The player arranges cards: Night Guard 11:35, Clockkeeper 11:40, Café departure ~11:42, **fall 11:47**, BGB's arrival **11:48** (door-wear/snow-melt, Clockkeeper's second look), handbell **11:53**, Clockkeeper arrival 11:56, **Healer's estimate** ~midnight.
   - Gap: **11:48–11:53.** DD-05 *BGB was in the tower for five minutes before the alarm.*
 - **Part C — The Healer.** *"Very likely survivable within ten minutes."* Not certain.
 - **Part D — The confrontation.** BGB's own coat: Edward's **letter** (EV-02). Nini (or the Clockkeeper) asks: *"Where were you between quarter to and midnight?"* The player chooses how BGB answers (§9). **The truth is not forced here** — it is left to Ch.7 — but the player now *knows.*
@@ -293,7 +295,7 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 | EV-06 | Stair footprints | Tower | 1 | One set up, wide stride | Not BGB's stride | * |
 | EV-07 | Handbell | Tower | 1 | Rung once, late | Alarm at 11:53 | |
 | EV-08 | Café record | Café | 2 | BGB seated 11:15–~11:42 | BGB's alibi for 11:40 | |
-| EV-09 | Lamp-log | Lamplighter | 2 | "B.G.B. crossed bridge 11:35" | A bear on the bridge | * |
+| EV-09 | Patrol log | Night Guard | 2 | "11:35 — B.G.B. crossed Lantern Bridge" | A bear on the bridge | * |
 | EV-10 | Nini's notebook | Nini | 2 | "Red ledger moved?" Torn page | Edward's hidden record | RH |
 | EV-11 | Four statements | Witnesses | 2 | See §2 | Contradictions C1–C3 | |
 | EV-12 | Flood-year register | Archive | 3 | Names in **two different inks**; the **flood hero entry** reads "Big Green Bear, age 7" in newer ink | Alteration | |
@@ -310,7 +312,7 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 | EV-22 | Edward's Final Record | Pendulum case | 7 | Corrected register + confession | The swap & why | |
 | EV-23 | Edward's last words | Memory (BGB) | 6/7 | "It's in the record… the clock…" | Where to look | |
 
-**Red herrings (summary):** Café Keeper's debt (EV-08 aside), Lamplighter's grudge, Nini's torn page (EV-10 — she tore it because it held a private poem), the missing right glove (EV-14 — Green *is* missing one, but so is the Lamplighter), mustard thread (EV-05 matches both scarves), village rumor (EV-17). All **resolve by the end**; none are cheats.
+**Red herrings (summary):** Café Owner's debt (EV-08 aside), Night Guard's grudge, Nini's torn page (EV-10 — she tore it because it held a private poem), the missing right glove (EV-14 — Green *is* missing one, but so is the Night Guard), mustard thread (EV-05 matches both scarves), village rumor (EV-17). All **resolve by the end**; none are cheats.
 
 ---
 
@@ -340,7 +342,7 @@ The swap (DD-04) is declared **only** when the player has linked ≥3 independen
 |---|---|---|---|
 | **Handedness** (child uses right) | Ch.4 flashback | Physical | **No** — right-handed bears are common. |
 | **Scarf knot side** (Edward ties right/left) | Ch.4 flashback (M-01) | Physical | **No** — scarves can be re-tied. |
-| **Ear scar** (right ear notch) | Ch.5 flashback (M-05); Green's hood in Ch.3 | Physical | **No** — could be from any accident. |
+| **Ear scar** (left ear) | Ch.5 flashback (M-05); visible on Green in Ch.3 | Physical | **No** — it proves the controlled child *became* the scarred bear, not which **name** he was born with. |
 | **Photograph caption vs knots** | Ch.3 (EV-13) | Photographic | **No** — captions can be wrong. |
 | **Register ink** | Ch.3 (EV-12) | Documentary | **No** — ink changes. |
 | **Clockkeeper's second statement** | Ch.6 | Testimonial | **No** — memory. |
@@ -348,7 +350,7 @@ The swap (DD-04) is declared **only** when the player has linked ≥3 independen
 
 **Red herring inside the clues 🟡:** BGB sometimes **adjusts his scarf with his right hand** when nervous (a habit), and the scarf is occasionally flipped by wind; a hasty player may mis-assign. Only combined evidence resolves it.
 
-**Why the reveal isn't "gotcha":** by Ch.5 the player has *seen* the child use the right hand, have a right-hand knot, and tear his right ear. By Ch.3 they have *seen* BGB use the left hand in play. The brain does the rest.
+**Why the reveal isn't "gotcha":** by Ch.5 the player has *seen* the child use the right hand, have a right-hand knot, and tear his left ear. By Ch.3 they have *seen* BGB use the left hand in play. The brain does the rest.
 
 ---
 
@@ -477,18 +479,20 @@ Typical player mistake: placing "E" at 11:47 and "D" at 11:47. The game gives co
 | **D6** | **Green fought to protect BGB** (not for revenge). | Yes — "everyone is protecting someone." | Green wanted the name back. |
 | **D7** | **Epilogue flashback shows Edward swapping the register.** | Yes — confirmation, not a first reveal. | Reveal earlier / cut. |
 | **D8** | **Four endings E1–E4.** | OK as drafted. | Trim to three. |
-| **D9** | **Witnesses #3 and #4 (Café Keeper, Lamplighter).** | OK as drafted (names/species yours). | Replace with your own cast. |
+| **D9** | **Witnesses #3 and #4 = Café Owner (dog) and Night Guard (owl); Mara (badger) as the flood-era elder.** | OK — roles are mine, designs are yours. | Re-assign roles. |
 | **D10** | **Optional echo:** the tower clock *also* stopped at 11:47 on the flood night. | Skip unless you love it. | Include as a small recurring motif. |
 | **D11** | **Elder = "Big Green Bear" by birth name** (so "Big" = big brother). | Yes — ties the title to the twist. | Names unrelated to age. |
-| **D12** | **Edward's species/age/design, Clockkeeper name, Green's design.** | You decide. | ⬜ |
+| **D12** | **Names** for Edward's surname, Clockkeeper, Café Owner, Night Guard. | You decide. | ⬜ |
+| **D13** | **Art vs. clue:** the character sheet draws BGB's and Green's **scarves identically** (tails on the same side) and gives Green a **visible ear scar**. Keep the *knot-side* clue? | Redraw so the knot/tails sit on opposite shoulders (BGB left, Green right), keep scar. | Drop the knot clue; rely on hand + scar + documents. |
+| **D14** | **Edward's pocket watch** (in his design) as evidence: found stopped/cracked at **11:47**, which *supports* the fall time but not the death time. | Yes — a natural prop for DD-01. | Skip. |
 
 ---
 
 ## 15. What's still ⬜ (do not invent in code or art)
 
-- Edward's, the Clockkeeper's, Café Keeper's, Lamplighter's, Healer's **names and species.**
+- **Names** of Edward (surname), the Clockkeeper, Café Owner, Night Guard, Healer. (Species/designs are fixed by your character sheet.)
 - The **flood casualty** (D4) and the **age** of the twins' parents.
-- **Green's** exact design (hood, glove, clothing) — **no bear sprites exist in the asset pack yet.**
+- **Young twins** (23 years earlier), **Healer** and any extra villagers: no art exists yet. Green's **right glove** (EV-14) is not drawn on his sheet.
 - Exact **timer** for the Remembrance Bell ceremony.
 - The **Constable**.
 - Final **music/ambience** cues.
