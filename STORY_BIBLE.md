@@ -1,6 +1,6 @@
 # STORY BIBLE — Big Green Bear's Adventure 2: *The Other Side of the Truth*
 
-**Version:** 0.4 (adds clarification C1: BGB's responsibility; decisions through Q1–Q8 recorded · **not final**: see `STORY_AUDIT.md` R1–R12 awaiting approval) · **Village name:** Bell Village (벨 마을) — official, use everywhere.
+**Version:** 0.5 (approvals: Q2, R13 to R16 and the fair-play chain recorded; adds clarification C1: BGB's responsibility; decisions through Q1–Q8 recorded · **not final**: see `STORY_AUDIT.md` R1–R12 awaiting approval) · **Village name:** Bell Village (벨 마을) — official, use everywhere.
 **Theme question:** *Can protecting someone you love make you complicit in their wrongdoing?*
 **Series-2 refrain:** *"Who are you really protecting?"* (너는 정말 누구를 지키고 있는가?)
 
@@ -30,6 +30,12 @@ Rules for anyone (human or Claude Code) implementing from this file:
 | **Central moral** | *Green caused Edward to fall, but BGB had an opportunity to help him and chose to protect his brother first.* | 🔒 |
 | **C1: BGB's responsibility** | Established by **what BGB does**, not by a claim that his delay caused the death. **11:47** Green causes the fall and flees **believing Edward dead.** **11:50** BGB finds Edward alive and **knows he needs help now.** **Instead of calling, BGB first conceals evidence connecting Green.** He delays the alarm **11:50 to 11:55.** Edward deteriorates (injuries, blood loss, freezing cold) and dies about **12:08.** After the death BGB **conceals his own actions and Green's involvement.** **Green is responsible for the fall. BGB is responsible for deliberately delaying help and concealing evidence.** The Healer **cannot say** whether immediate help would have saved Edward, and **the game never claims the delay medically caused his death.** | 🔒 |
 | **Reveal order** | The player **first** discovers Green's involvement and believes the mystery is nearly solved. **Only afterward** do they reconstruct BGB's five missing minutes: **the game's most emotionally significant revelation.** The final question shifts from *"Who caused Edward's death?"* to *"Who had the opportunity to do the right thing, but chose not to?"* | 🔒 |
+| **Q2 (final)** | **Willful ignorance, approved.** BGB takes Green's glove and Edward's letter **without reading the letter or investigating what happened.** He suspects Green and **deliberately avoids confirming it.** **His ignorance never excuses him:** he **knows** Edward is alive, **knows** Edward needs immediate help, and **knows** he is hiding potentially important evidence. **The concealment is a conscious choice, even though he does not know the whole truth.** | 🔒 |
+| **R13** | **All four elements approved:** the hiding place behind the photograph, the chute bolt, the Night Guard's log detail, and the Prologue clue. Each must have a **clear causal purpose** and be **discoverable or logically connectable.** The hiding place must be **physically plausible.** The Prologue clue must be **subtle** and must not reveal the twist. (Specified in §5.1.) | 🔒 |
+| **R14** | Edward first says **"Cold… please…"**, then the ambiguous words. It establishes that BGB clearly understood Edward needed help **before** he chose to conceal evidence. **Not overly explicit or melodramatic.** | 🔒 |
+| **R15** | The central question changes in Part C, with a **Responsibility Board.** The investigation **first** asks **who caused Edward's fall.** After the player identifies Green, the Board adds **separate** questions about BGB's actions: **physical responsibility for the fall, responsibility for delaying assistance, responsibility for concealing the truth.** It never implies BGB medically caused the death. (§13.1.) | 🔒 |
+| **R16** | **No flashback and no cutscene of 11:50 to 11:55.** The player reconstructs the five minutes from **evidence, contradictions, witness testimony and the Case File.** The final deduction must feel **earned, not explained.** | 🔒 |
+| **Fair-play chain** | Every essential conclusion about BGB's concealment and delay is supported by evidence the player holds **before the final accusation**, and **none depends solely on BGB's confession.** The player can establish six conclusions (§7.1). The final reveal also exposes **what the player overlooked while trusting BGB.** | 🔒 |
 | **Edward's injury and death** | Survives the fall at 11:47, seriously injured, cannot get himself to safety. **Cold, exposure and blood loss** worsen his condition. | 🔒 |
 | **D1 / Q3** | BGB **knows** the identities were swapped and **knowingly helped preserve the false identity into adulthood.** He has **previously concealed evidence or withheld testimony.** He does **not** know the full history of the falsified records, nor that Green confronted Edward, before he finds Edward. He did **not** cause the fall. | 🔒 |
 | **Q2** | BGB finds **Green's glove** and hears **ambiguous words** from Edward. He suspects Green and **deliberately avoids confirming it** (willful ignorance, not innocence). | 🔒 |
@@ -42,7 +48,7 @@ Rules for anyone (human or Claude Code) implementing from this file:
 | **Structure** | Present → playable Past (**player controls young Green**, identity not revealed at first) → Present, plus a **short non-playable** second flashback. | 🔒 |
 | **Art** | Faded scar, corrected scarves and the **pre-flood photograph** are **missing production assets.** No mirrored sprites as finals. | 🔒 |
 
-**Still open:** D2–D8, D11, D12 and the new patches **R1–R12** in `STORY_AUDIT.md`. Do not treat them as decided.
+**Still open:** D2–D8, D11, D12, patches **R1–R12** in `STORY_AUDIT.md` (except where C1 already integrates them), and the two small new proposals **R17, R18** (§14.3). Do not treat them as decided.
 **⚠ markers** flag text that conflicts with a decision or is waiting on an R-item.
 
 ---
@@ -154,16 +160,17 @@ Conditions: snowing; outside ≈ **−9 °C**; unheated stone tower ≈ **−4 �
 | 23:47–23:55 | Edward is **conscious**, soaked by meltwater in the pit, cannot move hip/legs, calls out; unheard. | Edward |
 | **23:48** | **BGB arrives.** He does **not** know Green was there (🔒 D1). | BGB |
 | 23:49 | BGB sees the open hatch and Green's **glove** and the **crumpled letter** on the gallery floor; hears Edward below; climbs down the fixed ladder. | BGB |
-| **23:50** | BGB reaches Edward: alive, conscious, **pleading** ("cold… please…"), then **ambiguous words** ("Green… the clock…"). BGB **knows Edward needs help now** and **suspects Green** (🔒 Q2). ⚠ R14: exact words. | BGB, Edward |
+| **23:50** | BGB reaches Edward: alive, conscious, shivering. Edward says, hoarsely, **"Cold… please…"** (🔒 R14) and, a moment later, **"…Green… the clock…"** (ambiguous). Nothing more, no speech. A strand of BGB's scarf ends up **caught in Edward's fist** (R17). **BGB understands Edward needs help now** and **suspects Green** (🔒 Q2). | BGB, Edward |
+| 23:51 | The **Night Guard,** on the plaza, hears faint calling from the tower, takes it for wind, and logs it (R17). | Night Guard |
 | **23:51** | **BGB leaves Edward,** climbs to the gallery and **takes the glove and the letter without reading or examining them** (willful ignorance in action), buttoning them into his coat. | BGB |
 | **23:53** | ⚠ **R13:** BGB **bolts the maintenance chute from the inside** (hiding Green's escape route). | BGB |
 | **23:50–23:55** | **The five missing minutes.** BGB does **not** call for help; he conceals evidence first. Edward lies alone below for about five minutes. | BGB |
 | **23:55** | BGB rings the **handbell.** Clockkeeper hears it on his way back. | BGB, Clockkeeper |
 | 23:56 | BGB goes back down to Edward. | BGB |
-| 23:58 | Clockkeeper arrives; finds BGB kneeling by Edward, **coat buttoned wrong over something,** bell rope still swinging. BGB says he "came as fast as he could." They cover Edward; they do not move him. Night Guard is sent for the Healer. | Clockkeeper, Night Guard |
+| 23:58 | Clockkeeper arrives; finds BGB kneeling by Edward, **coat buttoned wrong over something,** bell rope still swinging. BGB says he "came as fast as he could." They cover Edward; they do not move him. Night Guard is sent for the Healer. A strand of mustard wool is **caught in Edward's clenched fist** (R17). | Clockkeeper, Night Guard |
 | ~00:03 | Edward loses consciousness. | BGB, Clockkeeper |
 | **~00:08** | **Edward dies.** | BGB, Clockkeeper |
-| 00:14 | **Healer arrives.** Estimate **11:55 PM – 12:15 AM** (wide: the cold makes body-temperature estimates unreliable). | Healer |
+| 00:14 | **Healer arrives.** Edward's **voice is hoarse: he had been calling out for some time** (R17). Estimate **11:55 PM – 12:15 AM** (wide: the cold makes body-temperature estimates unreliable). | Healer |
 | After | BGB **hides the glove and the letter at home, behind the photograph's backing.** He tells no one about 11:48, Edward's words, the glove, or Green. | BGB |
 
 **Medical fairness (🔒 Q4, C1):** the Healer says the fall was **potentially survivable**, that **earlier help might have improved his chances**, and that **cold, wet clothing and blood loss made him worse.** He **cannot** say Edward would have lived, and **no one can say whether help at 11:50 would have saved him.** **The story never claims the five-minute delay caused the death.** BGB's responsibility rests on **what he chose to do** (hide evidence, then call), not on a medical outcome. **Hypothermia is a contributing factor, not the sole cause** (see `STORY_AUDIT.md` §4, R3).
@@ -208,7 +215,7 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
 ### PROLOGUE — The Photograph 🟡
 - **Setting:** BGB's cottage at dawn → snowy Bell Village → foot of the Clocktower. · **Playable:** Yes (tutorial: walk, interact, parallax).
 - **Beats:**
-  1. ⚠ **R2:** BGB sits awake at dawn beside a worn framed **photograph of two cubs.** His thumb rests over one cub's ear, as if out of habit. (Faces readable; scarf knots and ear faintly visible but unremarked.) ⚠ **R13 (plant):** the player may **examine the back of the frame.** BGB says only: *"Leave it."* Silence, not a lie. (The glove and Edward's letter to "G." are hidden behind the backing.)
+  1. ⚠ **R2:** BGB sits awake at dawn beside a worn framed **photograph of two cubs.** His thumb rests over one cub's ear, as if out of habit. (Faces readable; scarf knots and ear faintly visible but unremarked.) 🔒 **R13 plant (kept subtle):** the frame is an old, **deep keepsake frame** (Edward's gift) that **leans** on the shelf instead of hanging, a little thicker than a photograph needs. If the player examines it, BGB reads the front and **does not turn it over:** *"Leave it."* To a first-time player this reads as grief, the same as the thumb on the ear. It is **silence, never a lie.**
   2. **Nini** knocks, shaken. ⚠ BGB already knows Edward is dead (he was there); the village is gathering because the **Clockkeeper saw a scarf-wearing bear on the stairs at 11:40, before BGB's official arrival.** BGB's true café alibi clears him. (A false surprise here would break 🔒 Q6.)
   3. Walk through the village (cozy but muted: shutters closed, no bell). Short talk with Nini on the way (first dialogue choice, §9).
   4. BGB looks up at the **tower clock: 11:47.** Nobody wants to go in.
@@ -223,7 +230,7 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
 - **Setting:** Clocktower interior (your mockup room: stairs, gears, red rope barrier, **hatch in the floor**, telescope, Clockkeeper). · **Playable:** Yes.
 - **Goal:** Establish what happened in the tower.
 - **Beats:** Meet **Clockkeeper**; investigate hotspots (stairs, hatch, gears, clock face, workbench). The Clockkeeper mentions in passing that **he sets Edward's pocket watch to the tower clock every morning** (🔒 Q8, planted here so the running watch is a trusted time base later). Clockkeeper's testimony (🔒 from your mockup): *"Last night, around 11:40. I saw a bear climbing these stairs. He was carrying something in his right hand."*
-- **Evidence:** EV-03 Stopped clock (11:47). EV-04 Gear hatch (weak latch, left unlatched after the 22:00 winding). EV-05 Mustard wool thread on railing. EV-06 Snow footprints on the stairs (one set up, wide-spaced). EV-07 Emergency handbell. **EV-28 The maintenance chute door is bolted from the inside,** although wide-stride footprints lead away from it outside (EV-15). The gallery floor holds **no glove and no letter.**
+- **Evidence:** EV-03 Stopped clock (11:47). EV-04 Gear hatch (weak latch, left unlatched after the 22:00 winding). EV-06 Snow footprints on the stairs (one set up, wide-spaced). EV-07 Emergency handbell. **EV-28 The maintenance chute door is bolted from the inside,** although wide-stride footprints lead away from it outside (EV-15). The gallery floor holds **no glove and no letter.**
 - **Deductions:** DD-01 *The clock stopped at 11:47 — that is not necessarily when Edward died* (starts as an open question; completed in Ch.6).
 - **Reveals:** Edward fell *inside* the tower, not outside. There is exactly one bear on the stairs before BGB.
 - **Withheld:** Nobody mentions two scarves.
@@ -291,28 +298,23 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
 ### CHAPTER 6 — Five Missing Minutes 🟡
 - **Setting:** Archive → the Old Mill → Clocktower → BGB's own cottage → Healer's house. · **Playable:** Yes.
 - **Opening:** BGB holds the photograph. He says, quietly: **"He always looked out for me."** (🔒) The player now has the **Memories.**
-- **Part A — Who is who (Identity Board).**
-  - The player compares the twins using **Memories + present clues.** **No single clue unlocks DD-04;** three independent categories are required (§8).
-  - Result: DD-04 *The names were swapped.* The kid the player controlled in Ch.4–5 was **the present-day Green.**
-- **Part B — Green (the case looks solved).** 🟡 C1 reveal order
-  - The player already holds, **without the hidden items:** stair footprints (EV-06), rear chute footprints (EV-15), pendulum damage (EV-25), the Clockkeeper's 11:40 bear with something in his right hand, the Night Guard's log (both hands gloved, a paper in the right hand at 23:35), and Green's bare right hand (Ch.3).
-  - At the Old Mill Green admits he was there, the struggle at the open hatch, Edward's fall, and that he **fled believing Edward dead** (EV-21). **DD-06 *Green caused the fall.***
-  - The Case File stamps the case **SUSPECT IDENTIFIED.** The Investigate tab's question, *Who caused Edward's death?*, reads as answered. **The player should feel the mystery is nearly solved.**
+- **Part A — Who is who (Identity Board).** The player compares the twins using **Memories + present clues.** **No single clue unlocks DD-04;** three independent categories are required (§8). Result: DD-04 *The names were swapped.* The kid the player controlled in Ch.4–5 was **the present-day Green.**
+- **Part B — Green (the case looks solved).** 🔒 reveal order, R15
+  - The Investigate tab asks one question: **"Who caused Edward's fall?"** The **Responsibility Board** shows **one** column: *The fall.*
+  - The player holds, **without the hidden items:** stair footprints (EV-06), chute footprints (EV-15), pendulum damage (EV-25), the Clockkeeper's 11:40 bear, the Night Guard's log (both hands gloved, a paper in the right hand at 23:35), Green's bare right hand (Ch.3).
+  - At the Old Mill Green admits he was there, the struggle at the open hatch, Edward's fall, and that he **fled believing Edward dead** (EV-21). **DD-06 *Green caused the fall.*** The *Fall* column takes Green's name. The Case File stamps **SUSPECT IDENTIFIED.** **The player should feel the mystery is nearly solved.**
   - **The turn:** the player tells Green what the Healer found: Edward was **alive** after the fall. Green: *"Alive? Then who was with him?"*
-- **Part C — The five missing minutes (the central revelation).** 🟡 C1
-  - The Investigate tab's question changes to **"Who was with Edward before the Clockkeeper?"** The Healer (🔒 Q4) says he cannot tell whether help would have saved him; Edward's **running watch** is the time base.
-  - The player reconstructs 11:48 to 11:58 on the Timeline from evidence:
-    - **Arrival 11:48:** Café Owner (BGB left ~11:42) + the **player-timed 6-minute walk** + Night Guard's **slow bear on the plaza at 11:46** (R10).
-    - **Clockkeeper's second statement:** BGB said he arrived "just as the bell rang"; found kneeling with his **coat buttoned wrong over something**; handbell heard at **11:55**.
-    - **Snow-melt trail:** puddles at the pit ladder, at the gallery by the hatch, **and at the chute door.** Someone walked between them while Edward lay below.
-    - **The chute is bolted from inside** though Green's tracks leave from it (EV-28).
-    - **No glove, no letter at the scene,** though the Night Guard's log says Green wore both gloves and carried a paper, and Nini saw **two** letters sealed.
-  - The player is led to **BGB's own cottage** and examines the **back of the photograph**: **the glove and Edward's letter to "G."** (EV-31). *The player has been steering the one who hid them.*
-  - **Edward's last words** (EV-23, BGB's withheld memory) unlock: *"Cold… please… help…"* then *"Green… the clock…"* The player now knows **BGB knew Edward needed help.**
-  - The Timeline completes: **11:50 BGB finds Edward alive · 11:51 takes the glove and letter, unread · 11:53 bolts the chute · 11:55 rings the bell.**
-  - The **Responsibility board:** **Green: caused the fall.** **BGB: hid evidence, delayed the alarm.** There is **no "cause of death: delay" option;** DD-11 requires the player to record that **no one can say whether help would have saved him.**
-- **Part D — The confrontation.** Nini or the Clockkeeper asks BGB where he was between a quarter to twelve and midnight. The player chooses how BGB answers (§9). The truth is not forced here, but the player now *knows.*
-- **Deductions:** DD-04, DD-06 (Part B), DD-05, DD-10, DD-11, DD-12 (Part C), DD-01 completed.
+- **Part C — The five missing minutes (the central revelation).** 🔒 R15, R16
+  - **Two new columns appear on the Board,** both with an empty name slot: ***Delayed help*** and ***Hid the truth.*** The Investigate question becomes **"Who was with Edward before the Clockkeeper?"**
+  - **No cutscene.** The player works through six conclusions, each tied to evidence (§7.1): **(1)** BGB found Edward alive, **(2)** Edward asked for help, **(3)** BGB saw the urgency, **(4)** BGB concealed the glove and letter, **(5)** BGB delayed the alarm, **(6)** BGB then concealed his own involvement.
+  - **Where the clues sit:** the Café Owner and a **player-timed 6-minute walk** (arrival 11:48); the Night Guard's log (the **slow bear** at 11:46, **calling heard at 11:51**, **gloves and paper** at 23:35); the Clockkeeper's second statement; the **melt trail** to the chute; the **chute bolted from inside**; the **absent glove and letter**; the **mustard wool in Edward's fist**; the Healer's **hoarse-voice** finding.
+  - **The turn inward:** the player is led to **BGB's own cottage** and the **photograph's backing** (EV-31): the glove and Edward's letter to "G." **The player has been steering the one who hid them.**
+  - **"What I overlooked."** The **Notes** tab opens a re-read page that lists, in third person, the **moments the player passed over while trusting BGB** (§7.2). It is composed from the player's own earlier choices. It states only true things.
+  - **Edward's last words** (EV-23, BGB's withheld memory) now **unlock as a Notes entry,** not a scene. They confirm what the evidence already showed.
+  - The Timeline completes by the player placing cards: **11:50 BGB finds Edward alive · 11:51 takes the glove and letter, unread · 11:53 bolts the chute · 11:55 rings the bell.**
+  - The Board's three columns each take the correct names (§13.1). **Cause of death stays *Undetermined;* no field allows "the delay."**
+- **Part D — The confrontation.** Nini or the Clockkeeper asks BGB where he was between a quarter to twelve and midnight. The player chooses how BGB answers (§9). The truth is not forced here; the player now *knows.*
+- **Deductions:** DD-04, DD-06 (Part B); DD-05 (with its six conclusions), DD-10, DD-11, DD-12 (Part C); DD-01 completed.
 - **Closing question:** *Who had the chance to help, and didn't?*
 
 ### CHAPTER 7 — The Truth We Choose 🟡
@@ -334,6 +336,15 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
 
 ---
 
+### 5.1 The four R13 elements: purpose, plausibility, discovery (🔒)
+
+| Element | Causal purpose (why it exists) | Physically plausible because | How the player finds or connects it | Why it is not an early spoiler |
+|---|---|---|---|---|
+| **Hiding place behind the photograph** | BGB **keeps without destroying:** he cannot burn Edward's last letter or his brother's glove. He chooses the one object only he handles. As the trusted investigator, nobody will search his home. | A deep **keepsake frame** (Edward's gift) with a **hinged backing board and two turn-buttons** and a **3 cm cavity.** One wool glove, flattened, plus a letter folded in thirds fit about 2.5 cm. It **leans on the shelf** rather than hangs because of the weight. He hid them after getting home, about 1 a.m. | Prologue: the frame leans and won't be turned over. Part C: the **missing items** prove someone took them; the **"What I overlooked"** page lists the frame; the cottage opens; the player turns it over. | In the Prologue *"Leave it."* reads as grief, like the thumb on the ear. The extra weight and depth read as sentiment. |
+| **Chute bolt** | BGB **removes the sign of a second person leaving by the back,** so the scene reads as a lone accident and Green's route stays hidden (23:53). | The chute door has an **inside bolt** for winter. Green fled through it unbolted; BGB found it ajar in the draught and bolted it. | Ch.1: it is bolted **inside** while footprints lead **away** outside, a contradiction. Part C: a **melt puddle at the chute door;** the Clockkeeper: *"I never went near the back."* Only BGB was inside in those minutes. | In Ch.1 it is just a puzzle (*who bolted it after someone left?*). It points at no one. |
+| **Night Guard's log detail** | An **independent record** that lets the player prove what existed at the scene (gloves, paper), when BGB arrived (slow bear 23:46), and that Edward called (23:51), **without BGB's testimony.** | The Night Guard patrols the plaza and bridge nightly and logs time and temperature. He is not inside the tower. | Collected in Ch.2; **re-read** in Part C: items logged, then absent. | It reads as a routine log in Ch.2. |
+| **Prologue clue** | **Fairness:** plants the hiding place so the later discovery is earned. | As in the first row. | Prologue examine action; the **Notes** re-read links back. | Silent and optional; no line states anything false. |
+
 ## 6. Evidence master list 🟡
 
 Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` = red herring. `*` = ambiguous alone.
@@ -344,7 +355,7 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 | EV-02 | Edward's letter to BGB | BGB's coat | P/6 | "Come to the tower at midnight." | BGB's reason to be there | * |
 | EV-03 | Stopped clock | Tower | 1 | Dial frozen at 11:47; **bent pendulum rod, sheared crutch pin** (see EV-25) | Time of fall, not death | |
 | EV-04 | Gear hatch | Tower | 1 | Weak latch, **left unlatched after the 22:00 winding** (Clockkeeper's log), fresh scrape | Fall site; RH: Clockkeeper's carelessness | RH |
-| EV-05 | Mustard thread | Tower rail | 1 | Matches both scarves | Either twin | * |
+| EV-05 | Mustard wool | **In Edward's clenched fist** (found by the Healer, Ch.6) 🟡 R17 | 6 | A strand of mustard knit, snow-damp. Edward **grasped a scarf end** while down in the pit. | Someone close enough to be held was **in the pit** (Green stayed above) | * |
 | EV-06 | Stair footprints | Tower | 1 | One set up, wide stride | Not BGB's stride | * |
 | EV-07 | Handbell | Tower | 1 | Rung once; Clockkeeper heard it | Alarm at **11:55** | |
 | EV-08 | Café record | Café | 2 | BGB seated 11:15–~11:42 | BGB's alibi for 11:40 | |
@@ -358,20 +369,20 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 | EV-16 | Green's statement | Old Mill | 3 | "Ask yourself what you remember." | The swap | |
 | EV-17 | Villager rumors | Village | 3 | Biased: "He let the bell fail." | Blame story | RH |
 | M-01…M-07 | **Memories** | Past | 4–5 | Knots, right hand, bell jam, scar, abandonment | Identity | |
-| EV-18 | Healer's report | Healer | 6 | Pelvic/hip fracture, rib fractures, internal bleeding; **cold and wet worsened shock**; fall potentially survivable; **earlier help might have improved chances**; window **11:55 PM – 12:15 AM** | Weight of the five minutes, **never certainty** | |
+| EV-18 | Healer's report | Healer | 6 | Pelvic/hip fracture, rib fractures, internal bleeding; **cold and wet worsened shock**; fall potentially survivable; **earlier help might have improved chances**; **alive for at least fifteen minutes after the fall;** **voice hoarse: he had been calling out** (R17); window **11:55 PM – 12:15 AM.** **Cannot say help would have saved him.** | Weight of the five minutes, **never certainty;** Edward was alive and calling | |
 | EV-19 | Snow-melt trail | Tower | 6 | **Arrival ~11:48:** puddles at the **pit ladder,** at the **gallery by the hatch,** and at the **chute door** | BGB moved between them while Edward lay below | |
 | EV-20 | Clockkeeper (second statement) | Tower | 6 | BGB said he arrived "just as the bell rang"; found kneeling, **coat buttoned wrong over something**; handbell heard at 11:55 | Concealment; the five minutes | |
 | EV-21 | Green's account (Ch.6B) | Old Mill | 6 | He was there; the struggle at the hatch; Edward fell; he **fled believing him dead** | Green caused the fall | |
 | EV-21b | Green's motive (Ch.7) | Mill / tower | 7 | He wanted to stop the truth to protect BGB | Green's reason | |
 | EV-22 | Edward's Final Record | Pendulum case | 7 | Corrected register + confession | The swap & why | |
-| EV-23 | Edward's last words | Memory (BGB) | 6 | "Cold… please… help…" then "Green… the clock…" (⚠ R14: exact words) | BGB **knew** Edward needed help; where to look | |
+| EV-23 | Edward's last words | BGB's withheld memory (Notes entry) | 6 | "Cold… please…" then "…Green… the clock…" Not a scene. It **confirms** what EV-05, EV-18 and EV-29 already showed. | BGB understood the urgency | |
 | **EV-24** | **Edward's pocket watch** ⚠ R4 | Wheel pit / Healer | 6 | 🟡 **Keeps running**, crystal **cracked**, case dented (landed on his left hip). 🔒 Synced to the tower clock every morning by the Clockkeeper (Q8; established in Ch.1). A reliable second time base. | Fall mechanism; time base for the timeline; **not** a time-of-death clock | |
 | **EV-25** | Pendulum damage 🟡 | Wheel pit | 1/6 | Bent rod, sheared crutch pin, **tuft of Edward's quills**, vest thread, blood smear | How the clock stopped; fall site | |
 | **EV-26** | Pit conditions 🟡 | Wheel pit; Night Guard's log | 6 | Meltwater puddle, ice-blocked drain, frost on the stones, **Edward's vest and trousers soaked**; log shows **−9 °C** | Exposure | |
 | **EV-27** | Edward's letter to Green 🟡 R5 | **BGB's hiding place (EV-31)** | 6 | Crumpled, in Edward's hand, addressed "G." Night Guard's log: Green carried a paper in his **right** hand | The "something in his right hand"; Nini's second letter; **BGB removed it** | * |
 | **EV-28** | Chute door bolted from inside 🟡 R13 | Tower | 1 | Bolted inside; Green's footprints lead **away** from it outside | Someone bolted it **after** Green left | * |
-| **EV-29** | Night Guard's patrol log 🟡 R13 | Night Guard | 2 | 23:35 bear, **both hands gloved, paper in right hand**; 23:46 a second bear on the plaza, **slow, unhurried**; −9 °C | Green's gloves/letter; BGB's arrival | |
-| **EV-31** | Hiding place 🟡 R13 | BGB's cottage, behind the photograph's backing | 6 | The glove and the letter to "G." | **BGB concealed evidence** | |
+| **EV-29** | Night Guard's patrol log (full) 🔒 R13 | Night Guard | 2 | **23:35** bear, **both hands gloved, paper in right hand**; **23:46** a second bear on the plaza, **slow, unhurried**; **23:51** "calling from the tower? wind?" (R17); −9 °C | Green's gloves and letter; BGB's arrival; Edward was **calling for help** | * |
+| **EV-31** | Hiding place 🔒 R13 | BGB's cottage: **behind the photograph's backing** | 6 | A deep keepsake frame with a hinged backing board and two brass turn-buttons; a **3 cm cavity** holds **one wool glove, flattened, and a letter folded in thirds.** It **leans on the shelf,** never hung. | **BGB concealed evidence** | |
 
 **Red herrings (summary):** Café Owner's debt (EV-08 aside), Night Guard's grudge, Nini's torn page (EV-10 — she tore it because it held a private poem), the missing right glove (EV-14 — Green *is* missing one, but so is the Night Guard), mustard thread (EV-05 matches both scarves), village rumor (EV-17). All **resolve by the end**; none are cheats.
 
@@ -385,7 +396,7 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 | DD-02 | **Two bears were involved.** | 2 | C1 (EV-08 vs EV-09) + C2 | *"One bear can't be in two places."* |
 | DD-03 | **The 11:40 bear was right-handed, not BGB.** | 3 | Clockkeeper + EV-06 + EV-29 (paper in his right hand) + EV-16 | *"That fits a stranger — or an old rumor."* |
 | DD-04 | **The twins' names were swapped.** | 6 | ≥3 of: **Physical** (M-01, M-02, M-05), **Documentary** (EV-12), **Photographic** (EV-13), **Testimonial** (EV-16, Clockkeeper 2) | *"Something fits, but not enough yet."* |
-| DD-05 | **BGB found Edward alive at 11:50, hid evidence connecting Green, and did not call for help until 11:55.** | 6 (Part C) | EV-08 + player-timed walk + EV-29 + EV-19 + EV-28 + EV-20 + EV-07 + **EV-31** + EV-23 | *"Check where the water drips."* |
+| DD-05 | **BGB found Edward alive at 11:50, hid evidence connecting Green, and did not call for help until 11:55.** *(A chain of six conclusions, §7.1.)* | 6 (Part C) | EV-08 + player-timed walk + EV-29 + EV-19 + EV-28 + EV-20 + EV-07 + EV-05 + EV-18 + **EV-31** (EV-23 only confirms) | *"Check where the water drips."* |
 | DD-06 | **Green caused the fall (and believed Edward dead).** | 6 (Part B) | EV-04 + EV-06 + EV-15 + EV-25 + EV-29 + EV-21 (**not** EV-14/EV-27) | *"He was there. But how?"* |
 | DD-07 | **Edward altered the register.** | 7 | EV-12 + M-04 + EV-22 | *"Someone with a steady hand and a key."* |
 | DD-08 | **Green fought to protect BGB.** | 7 | EV-21 + EV-22 | *"Look at why he did it."* |
@@ -397,6 +408,32 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 **Wrong deductions** show a gentle note, never lock progress. **Hidden info is never revealed** by a wrong guess.
 
 ---
+
+### 7.1 Fair-play chain: the six conclusions about BGB (🔒)
+
+Every row has **at least two independent sources,** and **none relies only on BGB's confession.** Everything is in the player's hands **before** the final accusation (Ch.7).
+
+| # | Conclusion | Evidence (all available by the end of Part C) | Independent of a confession? |
+|---|---|---|---|
+| **1** | **BGB found Edward alive.** | Edward was **alive when the Clockkeeper arrived at 11:58** (Healer: alive at least fifteen minutes after the fall), so he was alive at 11:50. **EV-05:** BGB's scarf wool in Edward's fist (the pit was not reachable from where Green stood). **EV-19** melt puddles at the pit ladder. | Yes |
+| **2** | **Edward asked for help.** | **EV-18:** hoarse voice, he had been calling out. **EV-29:** the Night Guard logged calling from the tower at 23:51. **EV-05:** he **held on** to a scarf. (EV-23 only confirms the words.) | Yes |
+| **3** | **BGB recognized the urgency.** | **EV-18:** injuries obvious to any bystander (bleeding, could not move, shaking with cold). **EV-07:** BGB himself **rang the alarm,** so he judged it urgent. **EV-05:** a man held his scarf. | Yes |
+| **4** | **BGB concealed the glove and the letter.** | **EV-29:** Green wore both gloves and carried a paper at 23:35. **EV-27 / EV-14 absent** from the scene. **Nini:** two letters sealed. **EV-20:** coat buttoned wrong over something. **EV-31:** both found behind the photograph. | Yes |
+| **5** | **BGB delayed the alarm** (11:50 to 11:55). | **Arrival 11:48:** EV-08 (left the café ~11:42) + the **player-timed 6-minute walk** + EV-29 (slow bear 23:46). **Alarm 11:55:** EV-07 + Clockkeeper. **EV-19** melt trail (pit, gallery, chute) fills the gap. **EV-28** the chute bolted from inside. | Yes |
+| **6** | **BGB then concealed his own involvement.** | **EV-20:** he said he arrived "just as the bell rang." That contradicts 1 and 5. His **EV-02** letter never shown (**Nini's two letters**). He told no one about Green. **EV-31** hidden at home. | Yes |
+
+### 7.2 "What I overlooked": the player's own re-read (🟡 R18)
+
+After the five minutes are reconstructed, the **Notes** tab adds a re-read page. Each line is **true,** third-person, and **links to the moment** the player passed over:
+
+1. The **photograph frame** that BGB would not turn over (Prologue).
+2. BGB's **café alibi:** true, and he left at **11:42** (Ch.2).
+3. **Nini's two letters,** and only one known recipient (Ch.2).
+4. The **Night Guard's log:** gloves, a paper, a slow bear, a call in the wind (Ch.2).
+5. The **chute bolted** from inside (Ch.1).
+6. BGB's own words to the Clockkeeper: *"I came as fast as I could."* (Ch.6)
+
+The reveal exposes **what the player did not look at because they trusted him.**
 
 ## 8. Fair-play matrix — the twin identity clues
 
@@ -517,6 +554,9 @@ Determined by **three variables:** what is recorded (R), whether the swap is tol
 12. **The story never states or implies the five-minute delay medically caused Edward's death.** BGB's responsibility is established by **what he did:** he found Edward alive, knew he needed help, **hid evidence first,** then called. The Healer cannot establish more.
 13. **Green is responsible for the fall only;** he believed Edward dead and fled. **BGB is not responsible for the fall.**
 14. **Reveal order:** the player discovers Green's involvement **before** BGB's five minutes. The five minutes is the final, most significant reveal.
+15. **BGB's partial ignorance never excuses him.** He knows Edward is alive and needs help, and he knows he is hiding evidence; the concealment is a **conscious choice.** (🔒 Q2)
+16. **No flashback, voice-over or cutscene of 11:50 to 11:55.** The player reconstructs it from evidence. (🔒 R16)
+17. **Edward's lines stay minimal:** "Cold… please…" then the ambiguous words. No speech. (🔒 R14)
 
 ---
 
@@ -552,6 +592,21 @@ Every card has a **type**, which the player must learn to separate:
 Typical player mistake: placing "E" at 11:47 and "D" at 11:47. The game gives contextual feedback: *"That's when it broke, not when he stopped."*
 
 ---
+
+### 13.1 The Responsibility Board (🔒 R15)
+
+A Case File board with **three columns.** Each column is a **separate question** with its own name slot and its own evidence. **Names are placed by the player;** wrong placements get feedback, never a block.
+
+| Column | Appears | Question | Correct entry | Basis |
+|---|---|---|---|---|
+| **1 The fall** | Part B | Who **physically caused** Edward's fall? | **Green** (and he fled believing Edward dead) | DD-06 |
+| **2 Delayed help** | After Green is identified (Part C) | Who **had the chance to help and waited?** | **BGB,** 11:50 to 11:55 | Conclusions 1 to 3, 5 |
+| **3 Hid the truth** | After Green is identified (Part C) | Who **concealed evidence and the truth?** | **BGB:** glove, letter, chute, testimony. *(Green's flight and silence are noted, not weighed the same.)* | Conclusions 4, 6 |
+
+- Under the board, **Cause of death** is fixed at ***Undetermined: injuries, blood loss and cold. No one can say whether help would have saved him.*** **There is no way to assign the delay as the cause** (DD-11).
+- Beside BGB's name: ***He did not know everything. He knew Edward needed help.*** (His partial ignorance never excuses him.)
+- Wrong pairings (e.g., BGB under *The fall,* Green under *Delayed help*) are rejected with: *"Look at what each of them did."* (DD-12)
+- The Board is **evidence-driven,** with **no narrator explaining it** and **no cutscene.**
 
 ## 14. Decisions
 
@@ -605,9 +660,12 @@ Typical player mistake: placing "E" at 11:47 and "D" at 11:47. The game gives co
 | **R10** | DD-05 rests on one witness | Night Guard logs a slow bear on the plaza at 23:46. |
 | **R11** | Why adults blame an innocent child | A villager died; the family demanded accountability; they chose the child they could afford to lose. |
 | **R12** | Does the elder twin overhear? | Not shown; only the consequence. |
-| **R13** | **C1 concealment mechanics:** (a) the items hidden **behind the photograph's backing**; (b) BGB **bolts the chute**; (c) Night Guard's log notes **gloves/paper**; (d) Prologue plant: *"Leave it."* | Yes to all four (they make the reveal fair and playable). |
-| **R14** | **Edward's words:** an explicit plea ("cold… please…") before the ambiguous words, so BGB's knowledge that Edward needed help is explicit | Yes. Alternative: injuries alone make it obvious. |
-| **R15** | **Final-question UI:** Investigate question changes at Ch.6 Part C; a **Responsibility board** (Green: fall; BGB: concealment + delay); **no "cause of death: delay" field** | Yes. |
+| **R13** | **🔒 Approved, all four elements** (hiding place, chute bolt, Night Guard's log, Prologue clue). Each has a causal purpose and a discovery path (§5.1). | Done. |
+| **R14** | **🔒 Approved.** "Cold… please…" first, then the ambiguous words. Minimal, not melodramatic. | Done. |
+| **R15** | **🔒 Approved.** Changing question + Responsibility Board (three separate columns; no "delay" as cause of death). | Done (§13.1). |
+| **R16** | **🔒 Approved.** No flashback of 11:50 to 11:55; the player reconstructs it. | Done. |
+| **R17** | 🟡 **Three corroborating clues** that Edward asked for help, independent of BGB: **(a)** the Healer finds his voice hoarse, he had been calling out; **(b)** the Night Guard's log notes calling at 23:51; **(c)** BGB's scarf wool caught in Edward's fist. | Yes. They make conclusions 1 to 3 independent of any confession. |
+| **R18** | 🟡 **"What I overlooked"** re-read page in Notes (§7.2), built from the player's own earlier moments, all true. | Yes. It delivers the "what the player overlooked" requirement. |
 
 ---
 

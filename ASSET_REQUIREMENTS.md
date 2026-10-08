@@ -25,3 +25,14 @@ Rule: **no mirrored sprites as final art.** Scarf tails and scar follow the per-
 - **Snow versions** of tiles/props (the current set is green summer).
 - UI: hotspot ring, 2-row choice popup, Identity Board art.
 - Audio: none provided.
+
+## Added by approvals R13 to R18
+| Asset | Needed | Notes |
+|---|---|---|
+| **Deep keepsake frame** (Prologue prop) | Thick wooden frame, **leaning** on a shelf, with a **hinged backing board and two brass turn-buttons** | Must read as sentimental in the Prologue. Its back is the hiding place (EV-31). |
+| **Frame back, open** | Backing board open, 3 cm cavity, **flattened glove and letter folded in thirds** | EV-31 reveal. |
+| **Mustard wool strand** | Small icon, snow-damp | EV-05 (in Edward's fist). |
+| **Night Guard's patrol log** | Page with time, temperature and short notes (gloves, paper, slow bear, calling) | EV-29. |
+| **Maintenance chute door** | Inside bolt, bolted state; melt puddle decal | EV-28, EV-19. |
+| **Responsibility Board** | Three columns (*The fall*, *Delayed help*, *Hid the truth*), name slots, fixed *Cause of death: Undetermined* strip | R15. No "delay" option. |
+| **"What I overlooked" page** | Notes page template with six linked lines | R18. |

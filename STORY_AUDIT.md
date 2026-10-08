@@ -307,3 +307,43 @@ The refrain *"Who are you really protecting?"* stays as the series line over the
 | **R14** | Edward's words include an explicit **plea** before the ambiguous ones | Yes. Alternative: injuries alone make it obvious. |
 | **R15** | Final-question UI: the Investigate question changes in Ch.6 Part C; a **Responsibility board**; **no "cause of death: delay" field** | Yes. |
 | **R16** | Optional: should there be a short **reconstruction** scene of 11:50 to 11:55? | **No.** Keep it as an evidence-driven reconstruction in the Case File, so it stays the player's own deduction and adds no third flashback. |
+
+---
+
+## 13. Approvals received and the fair-play chain (v3)
+
+**Approved (🔒):** Q2 (willful ignorance, never an excuse); **R13** (all four elements, with causal purpose and discoverability); **R14** (*"Cold… please…"* then the ambiguous words, minimal); **R15** (changing question and the Responsibility Board); **R16** (no flashback of 11:50 to 11:55).
+**Still open:** R1 to R12 (except where C1 already integrates them), D2 to D8, D11, D12, and two small new proposals **R17, R18** below.
+
+### 13.1 What I changed to satisfy "does not depend on BGB's confession"
+Your requirement exposed a gap: with only BGB's memory (EV-23), the facts that **Edward asked for help** and **BGB saw the urgency** would rest on a confession. I closed it with **three small corroborating clues** (no new twist):
+
+| # | Clue | Proves | Source |
+|---|---|---|---|
+| **R17a** | The Healer finds Edward's **voice hoarse: he had been calling out** | Edward asked for help | EV-18 |
+| **R17b** | The Night Guard's log notes **"calling from the tower? wind?" at 23:51** | Edward was calling while BGB was inside | EV-29 |
+| **R17c** | **BGB's scarf wool caught in Edward's fist** | Edward held on to someone in the pit; BGB was within reach | EV-05 (moved from the railing) |
+
+If you decline R17, conclusions 2 and 3 fall back on EV-23, which would be a confession. I do not recommend that.
+
+**R18:** a **"What I overlooked"** page in Notes (bible §7.2). It re-reads six moments the player passed over (the photograph frame, the café alibi, Nini's two letters, the Night Guard's log, the bolted chute, BGB's words to the Clockkeeper). All lines are true. It is how the reveal exposes what the player missed while trusting BGB.
+
+### 13.2 The six conclusions and their independence (bible §7.1)
+
+| Conclusion | Supporting evidence | Needs a confession? |
+|---|---|---|
+| 1 BGB found Edward alive | Alive at 11:58 (Healer) so alive at 11:50; EV-05; EV-19 | No |
+| 2 Edward asked for help | EV-18 hoarse; EV-29 call at 23:51; EV-05 | No |
+| 3 BGB saw the urgency | EV-18 obvious injuries; **BGB himself rang the alarm** (EV-07); EV-05 | No |
+| 4 BGB concealed glove and letter | EV-29 log vs absent items; Nini's two letters; EV-20; **EV-31** | No |
+| 5 BGB delayed the alarm | Arrival 11:48 (café + walk + EV-29) vs alarm 11:55; EV-19; EV-28 | No |
+| 6 BGB concealed his involvement | EV-20 contradiction; EV-02 never shown; EV-31 | No |
+
+### 13.3 The four R13 elements (bible §5.1)
+Each has a purpose, a physically plausible mechanism, a discovery path, and a reason it does not spoil the twist early. The hiding place is a **deep keepsake frame** (hinged backing, two turn-buttons, **3 cm cavity**) that **leans on the shelf** because of the weight. A flattened wool glove and a letter folded in thirds fit in about 2.5 cm.
+
+### 13.4 Ignorance is not an excuse
+The Responsibility Board carries the line *"He did not know everything. He knew Edward needed help."* BGB's concealment is a **conscious choice** (he knew Edward was alive, knew he needed help, knew he was hiding evidence). The game never says the delay caused Edward's death, and the Board fixes **cause of death** at *Undetermined*.
+
+### 13.5 No additional twists
+Nothing in this pass changes the swap, the adults' decision, the endings' structure, or the chapter order. R17 and R18 are **clues and presentation**, not plot events. Both need your yes or no.
