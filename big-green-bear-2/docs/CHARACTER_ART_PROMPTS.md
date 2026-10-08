@@ -10,7 +10,8 @@ outline ≈ 0.4 % of image height). Attach the delivered **bear images as style 
 2. Paste the character block (**B–D**), then ONE pose line from that character's list.
 3. For each character generate the **`_nomouth` neutral base first**, approve it, then attach it (plus a bear image) as reference for every other pose.
 4. **View rule:** every in-game pose is generated as `three_quarter_left` (the bear stands on the right and faces left toward the other character; Green is this sprite mirrored in-engine). Only `bear_front_neutral` (portrait / mirror scene) is a true front view. Attach `turnaround/bear_turn_three_quarter_left.png` as the view reference.
-5. After each image run the **checklist (G)**.
+5. **Facing rule for everyone:** the bear stands on the right and faces left (`three_quarter_left`). Every other character (Nini, Edward, Clockkeeper, Café owner, Night guard) stands on the LEFT of the screen and faces right: generate them as `three_quarter_right`, about 35 degrees, same camera as the bear sheet. Each also gets ONE true front view `<name>_front_neutral` for portraits and the mirror/board scenes. Attach `turnaround/bear_turn_three_quarter_right.png` as the camera/pose reference.
+6. After each image run the **checklist (G)**.
 
 ---
 
@@ -76,7 +77,8 @@ Full pose list (generate ALL of them in the new style; all in three-quarter-left
 CHARACTER: Nini.
 A small sheep girl, 55% of the bear's height (1600 px tall). A round head covered by a thick cap of cream-white curly wool (#EFE6CF) drawn as soft curl shapes without outlines, a smooth pale cream face (#F3E8D6), small solid dot eyes, a tiny pink triangular nose, two floppy ears with pink insides (#E8B4B0). She wears a mustard-yellow hooded raincoat (#D9A93F) with the hood resting on her shoulders, two dark brown round buttons, a short A-line cut, small white mitten hands, wool-covered legs and short brown boots (#8B6B4A). Standing, arms relaxed at her sides.
 ```
-Full pose list (generate ALL of them with the outline from the STYLE LOCK):
+Full pose list (generate ALL in three-quarter-right view, facing the bear; "toward" = toward the right side of the image):
+0. `nini_front_neutral` (portrait, TRUE FRONT VIEW): neutral standing, tiny closed mouth, soft blush.
 1. `nini_stand_nomouth` (BASE, generate first): neutral standing, arms relaxed, NO mouth, soft blush.
 2. `nini_stand_neutral`: same pose with a tiny closed mouth (a small "w" line).
 3. `nini_stand_happy_open`: bright open-mouth smile, eyes open.
@@ -87,7 +89,7 @@ Full pose list (generate ALL of them with the outline from the STYLE LOCK):
 8. `nini_stand_scared`: mouth slightly open, shoulders raised, mittens pulled in toward the chest.
 9. `nini_notebook_write`: holds a small notebook in one hand and writes with a pencil in the other, looking down, tiny smile.
 10. `nini_notebook_hold`: notebook held against her chest with both hands, looking up.
-11. `nini_point`: the arm on the RIGHT side of the image pointing to the side, mouth slightly open.
+11. `nini_point`: the arm toward the bear pointing to the side, mouth slightly open.
 12. `nini_look_up`: head tilted back looking up, mouth slightly open.
 
 ---
@@ -97,6 +99,8 @@ Full pose list (generate ALL of them with the outline from the STYLE LOCK):
 CHARACTER: Edward.
 An elderly hedgehog archivist, 80% of the bear's height (2320 px tall), round pear-shaped body, slightly stooped but dignified posture. Back and head covered with soft felted-looking quills in muted gray-brown (#7A6A58) with cream tips, never sharp or menacing; face and belly soft cream-gray (#D9CFBE); small solid dot eyes with tired kind eyelids; a dark rounded nose; tiny round ears. Round thin wire-rimmed glasses (brass #B08D57). A dark navy waistcoat (#243044) with small brass buttons over a cream shirt (#F2E8D4) with ink-stained cuffs, a thin brass chain with a pocket watch in the waistcoat pocket, short dark trousers, simple dark brown shoes (#4A3A2E).
 ```
+(all in three-quarter-right view, facing the bear)
+- `edward_front_neutral` (portrait, TRUE FRONT VIEW): neutral, hands clasped, no mouth.
 - `edward_stand_nomouth`: neutral base, NO mouth, hands clasped in front.
 - `edward_stand_calm`: mild knowing half-smile.
 - `edward_stand_grave`: serious, lowered brows, firm mouth (the line "Tonight, don't trust anyone's face").
@@ -109,8 +113,9 @@ An elderly hedgehog archivist, 80% of the bear's height (2320 px tall), round pe
 ---
 
 ## E. Green (twin) — no new prompts
-Green is the Big Green Bear set mirrored in-engine; his scar and left-hand habits are applied in code.
-- Scarf tail on the LEFT side of the image, gestures with the hand on the LEFT side of the image.
+Green is the Big Green Bear set mirrored in-engine (so he faces right, toward Nini and the others when he stands on the left); his scar and left-hand habits are applied in code.
+- In the front view the scarf tail is on the LEFT side of the image; in 3/4 he is simply the mirrored `three_quarter_left` sprite.
+- Gestures use the mirrored active hand (same pose list as the bear).
 - Never scarier, thinner, darker or angrier than the bear.
 Overlay needed: `overlay_ear_scar` (below).
 
@@ -125,17 +130,42 @@ OVERLAY: [STYLE LOCK outline and face rules]. Isolated elements on a transparent
 - Evidence props (later): key, pocket watch, old photograph (one child / two children), family record book.
 
 ## G. Checklist (reject the image if any item fails)
-- [ ] Outline is #2E2C20, uniform ~0.3 % height, closed, no double line
+- [ ] Outline is #122819, uniform ~0.4 % height, closed, no double line
 - [ ] Fur/scarf colors match the bear (fur ≈ #5F8258, scarf ≈ #C5A766) / the character's own palette
 - [ ] Transparent background, no white fringe, no shadow
 - [ ] Same body size as the character's other poses
-- [ ] Bear: scarf tail on the RIGHT side of the image; active hand on the RIGHT side of the image
+- [ ] View is correct: bear = three_quarter_left, everyone else = three_quarter_right (or the true front_neutral)
+- [ ] Bear: scarf tail on his OWN LEFT chest side; active hand = his own left, the one on the scarf side
 - [ ] Mouth only if the pose asks for it; blush only if the expression asks for it
 - [ ] No gloss, no cream belly, no extra elements
 
-## H. Supporting cast (fill in, then I write the prompts)
-| Name | Species | Look / prop | Height vs bear |
-|---|---|---|---|
+## H. Supporting cast (proposal, change anything you dislike)
+Heights are relative to the bear (2900 px). All three use the STYLE LOCK outline, the same flat soft-shaded look and three-quarter-right view.
+
+### H1. Clockkeeper: Tock, an old tortoise (65%, 1885 px)
+```
+CHARACTER: Clockkeeper.
+A very old tortoise who maintains the clock tower, 65% of the bear's height (1885 px tall), slow and sturdy. Soft olive-khaki skin (#8C9A62), a rounded domed shell in warm brown (#7A5A3C) with simple hexagon plate lines and a lighter rim, short strong legs, a wrinkled kind face with heavy tired eyelids, small solid dot eyes, a tiny beak-like mouth line only when requested. Brass goggles pushed up on the forehead (#B08D57), a worn dark brown leather apron (#5A4030) with a tool pocket holding a small oilcan and a screwdriver, a pair of small brass gears hanging from a string at the belt, rolled-up sleeves on a faded blue shirt (#5B7A9C). Stands upright on two legs, slightly hunched, arms relaxed.
+```
+- `clockkeeper_front_neutral` (TRUE FRONT), `clockkeeper_stand_nomouth` (BASE, 3/4 right, generate first), `clockkeeper_speaking`, `clockkeeper_uncertain` (eyes aside, goggles slipping), `clockkeeper_certain` (steady eyes, small firm mouth), `clockkeeper_oil_gear` (oilcan in one hand, looking at a gear), `clockkeeper_check_clock` (hand shading the eyes, looking up).
+
+### H2. Café owner: a plump fox (85%, 2465 px)
+```
+CHARACTER: Café owner.
+A warm, plump fox who runs the café next to the tower, 85% of the bear's height (2465 px tall), pear-shaped and cozy. Soft orange fur (#D98B4A) with a cream muzzle, chest and tail tip (#F3E8D6), dark brown socks-like paws (#4A3A2E), a big fluffy tail, small solid dot eyes with friendly lids, a dark rounded nose, pointed ears with dark inner tips. A burgundy apron (#6E2A35) with a cream stripe and a small white cup embroidered on the chest over a rolled-sleeve cream shirt (#F2E8D4), a tea towel over one shoulder. Standing, relaxed, welcoming.
+```
+- `cafe_front_neutral` (TRUE FRONT), `cafe_stand_nomouth` (BASE), `cafe_speaking`, `cafe_uncertain` (eyes aside, small frown, paw rubbing the other arm), `cafe_certain`, `cafe_hold_teacup` (tray with one steaming white teacup), `cafe_wipe_cup` (wiping a cup with the towel, looking at it).
+- Design note: gentle and likable, but with one slightly ambiguous glance pose (`cafe_uncertain`) so the player can suspect him.
+
+### H3. Night guard: a tall owl (105%, 3045 px)
+```
+CHARACTER: Night guard.
+A tall, calm barn owl who patrols the tower at night, 105% of the bear's height (3045 px tall), long rounded body with folded wings. Soft cream-white face disc and chest (#F0E6CF) with a gentle heart-shaped face outline, warm tan wings and back with tiny cream speckles (#B58B5A), small solid dot eyes (large and round but kind, never glowing), a small pale beak, feet with simple short toes. A dark navy peaked guard cap with a small brass badge (#243044 / #B08D57), a long navy coat with two brass buttons, a lantern (brass frame, warm yellow glass #E8C770, soft glow only inside the glass) hanging from one wing tip. Stands upright, wings folded at the sides.
+```
+- `guard_front_neutral` (TRUE FRONT), `guard_stand_nomouth` (BASE), `guard_speaking`, `guard_uncertain`, `guard_certain`, `guard_lantern_raise` (lifting the lantern forward, head tilted), `guard_salute` (touching the cap with one wing).
+- Each also needs the 4 core expressions above; same body size in every pose.
+
+---|---|---|---|
 | Clockkeeper | ? | e.g. goggles on forehead, oilcan, leather apron | ? |
 | Café owner | ? | e.g. apron, teacup | ? |
 | Night guard | ? | e.g. cap, lantern | ? |

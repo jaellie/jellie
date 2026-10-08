@@ -28,4 +28,4 @@ Anything not listed here is still TBD (see "Open").
 3. Relationship to Season 1 (before / after / separate).
 4. Physical explanation of the mirror "reflection that was not a reflection".
 5. Motive for the killing (identity concealment vs. old grudge vs. mix).
-6. Supporting cast species/props (Clockkeeper, Café owner, Night guard).
+6. Supporting cast: PROPOSED Clockkeeper = old tortoise (65%), Café owner = plump fox (85%), Night guard = tall barn owl (105%). Awaiting your OK; see CHARACTER_ART_PROMPTS.md section H.
