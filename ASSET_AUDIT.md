@@ -74,3 +74,49 @@ Not evaluated or used: the first (broken) ZIP, and the older curtain/clock mocku
 3. I build the **Investigate screen** from the UI pieces + the Clockkeeper and BGB front/profile stills as placeholder-but-real art in your mockup layout. Anything not yet drawn is marked as a placeholder in code and in `ASSET_REQUIREMENTS.md`.
 
 Nothing in Unity can be tested from this cloud session; each step will end with an exact checklist of what to click in the Editor.
+
+---
+
+# ASSET AUDIT v3 — Bell Village background layers (night / snow)
+
+Two files, both **6516×2172 RGBA**: (1) the **Mid** layer on its own; (2) one sheet holding **Far, Ground, Foreground** as three stacked strips. Originals untouched.
+Test composite (not production): `docs/previews/bell_village_layers_test_0.5x.jpg`. It stacks the four layers at 0.5× over a flat sky gradient, with BGB's front view at his current sheet size.
+
+## Layer check (matches your labels)
+| Layer | Your intent | Found | Strip size | Verdict |
+|---|---|---|---|---|
+| Far | Night sky + snowy mountains only | Sky, stars, moon, clouds, snowy peaks, distant pines and tiny village lights | 6430×953 | ✅ Content matches |
+| Mid | Whole Clocktower + Bell Village buildings | Tower, roofs, chimney smoke, lampposts, banners, background spires, pines | 6460×1860 | ✅ Content matches |
+| Ground | Snowy stone path + bridge | Stone terrace wall, stairs, arched bridge, lamps, signpost | 6350×460 | ⚠️ See G2 |
+| Foreground | Snowy bushes, branches, fence | Snowy bushes, dark shrubs, a fence, stump, a lamp bracket | 6420×471 | ✅ (very few branches) |
+
+## What passed
+- **Real alpha** on all layers; layers are cleanly separated in content (the sky is not baked into Mid, etc.).
+- Painted style, palette and lighting are **consistent with the characters and UI** and give strong depth.
+- The layered composite looks good at 0.5× scale.
+
+## What did NOT pass (measured)
+
+| # | Issue | Evidence | Impact |
+|---|---|---|---|
+| **G1** | **Real detail is ~1/3 of the pixel size.** | Downscaling to ⅓ and back changes the image by only 1.5–2.5 of 255 levels. The 6516 px width is an upscale of ≈2170 px of real content. | At 1:1 the art is visibly soft. At 0.5× it looks fine (≈1.5× magnification of real detail). **Do not use above ~0.6× without regenerating.** |
+| **G2** | **The "Ground" strip has no walkable surface.** | It is a raised wall/terrace with only a thin snow top. In the test, BGB stands on the wall top. | We need a separate **walk path** (flat snowy stone strip) or must treat the strip as scenery behind a path. |
+| **G3** | **Scale mismatch with the characters.** | At 0.5×: lamp ≈ 122 px, wall ≈ 100 px, vs BGB ≈ 275 px (his sheet size). BGB is 2.2× a lamp. | Pick a **unit scale** (below). |
+| **G4** | **Edges are transparent, not loopable.** | The first and last pixel columns are empty. The strips cannot repeat. | At 0.5× the whole world is only 3258 px wide, so the camera can travel just ~1340 px (≈10 s of walking). Too short for the slice. |
+| **G5** | **Far layer's top edge is a cloud-shaped cut-out.** | Its alpha follows a bumpy cloud outline. In the test, the cut-out shows as a lighter bumpy edge against the flat sky behind it. | Needs a **full-bleed sky gradient** under it, tonally matched, with the edge feathered. I can build this. |
+| **G6** | **The tower clock face is blank.** | The disc has no numerals or hands. | The 11:47 clock needs its own face + hand sprites, overlaid by the game. Story-critical. |
+| **G7** | **Dark fringe on cut edges.** | Semi-transparent edge pixels average dark navy/brown (≈ 32,38,66 / 56,43,46). | Invisible at night; shows as a dark outline on lighter backgrounds (e.g. a dawn/flashback grade). |
+| **G8** | **No Clocktower entrance on the gameplay plane.** | The tower is only in Mid (parallax 0.35). | "Walk to the Clocktower and enter" needs a door prop on the ground layer. |
+
+## Parallax feasibility
+- Mid (factor ~0.35) works well: the tower can be aligned so it is centred when the camera reaches the end of the level.
+- Foreground bushes should be thinned or placed lower, or they cover feet and UI (visible in the test).
+- Far layer (0.05–0.15) is fine as is once G5 is fixed.
+
+## Decisions needed
+1. **Unit scale (G3).**
+   - **A (recommended):** world art at **0.5×**; BGB shown at **~130–160 px** tall in village exteriors (storybook-small, crisp). Interiors keep large characters.
+   - **B:** world at 0.75×; BGB ~200 px. Slightly softer, bear a little oversized.
+   - **C:** keep BGB at 275 px; **regenerate** Ground/Foreground at **≥2× real detail** (≥ 4000 px of real content) and ~1.5× scale.
+2. **Level length (G4).** Either you regenerate **wider / tileable** strips, or we slice Ground/Foreground into **modular props** (wall segments, stairs, bridge, lamps, signpost, bushes, fence) and I assemble a level of any length. I recommend **modular**.
+3. **Walkable path (G2):** do you want a flat snowy path strip painted, or shall I use the earlier terrain tiles recoloured for snow?
