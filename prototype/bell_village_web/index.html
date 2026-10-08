@@ -23,7 +23,8 @@ html,body{height:100%;margin:0;padding:0}
 body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none}
 #vp{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden}
 #stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden;background:#0b1230;outline:none}
-.layer{position:absolute;left:0;top:0;will-change:transform}
+#stage img{max-width:none}
+.layer{position:absolute;left:0;top:0;width:0;height:0;will-change:transform}
 .layer img,#world img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
 #sky{position:absolute;inset:0;background:linear-gradient(#070b20 0%,var(--night-0) 18%,var(--night-1) 62%,#31416e 100%)}
 #far img{left:-150px;top:168px;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 34%,#000 80%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 34%,#000 80%,transparent 100%)}
