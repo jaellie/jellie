@@ -10,7 +10,7 @@ outline ≈ 0.4 % of image height). Attach the delivered **bear images as style 
 2. Paste the character block (**B–D**), then ONE pose line from that character's list.
 3. For each character generate the **`_nomouth` neutral base first**, approve it, then attach it (plus a bear image) as reference for every other pose.
 4. **View rule:** every in-game pose is generated as `three_quarter_left` (the bear stands on the right and faces left toward the other character; Green is this sprite mirrored in-engine). Only `bear_front_neutral` (portrait / mirror scene) is a true front view. Attach `turnaround/bear_turn_three_quarter_left.png` as the view reference.
-5. **Facing rule for everyone:** the bear stands on the right and faces left (`three_quarter_left`). Every other character (Nini, Edward, Clockkeeper, Café owner, Night guard) stands on the LEFT of the screen and faces right: generate them as `three_quarter_right`, about 35 degrees, same camera as the bear sheet. Each also gets ONE true front view `<name>_front_neutral` for portraits and the mirror/board scenes. Attach `turnaround/bear_turn_three_quarter_right.png` as the camera/pose reference.
+5. **Facing rule for everyone:** the bear stands on the right and faces left (`three_quarter_left`). Every other character (Nini, Edward, Clockkeeper (cat), Café owner (dog), Night guard (owl)) stands on the LEFT of the screen and faces right: generate them as `three_quarter_right`, about 35 degrees, same camera as the bear sheet. Each also gets ONE true front view `<name>_front_neutral` for portraits and the mirror/board scenes. Attach `turnaround/bear_turn_three_quarter_right.png` as the camera/pose reference.
 6. After each image run the **checklist (G)**.
 
 ---
@@ -142,19 +142,19 @@ OVERLAY: [STYLE LOCK outline and face rules]. Isolated elements on a transparent
 ## H. Supporting cast (proposal, change anything you dislike)
 Heights are relative to the bear (2900 px). All three use the STYLE LOCK outline, the same flat soft-shaded look and three-quarter-right view.
 
-### H1. Clockkeeper: Tock, an old tortoise (65%, 1885 px)
+### H1. Clockkeeper: an old gray cat (70%, 2030 px)
 ```
 CHARACTER: Clockkeeper.
-A very old tortoise who maintains the clock tower, 65% of the bear's height (1885 px tall), slow and sturdy. Soft olive-khaki skin (#8C9A62), a rounded domed shell in warm brown (#7A5A3C) with simple hexagon plate lines and a lighter rim, short strong legs, a wrinkled kind face with heavy tired eyelids, small solid dot eyes, a tiny beak-like mouth line only when requested. Brass goggles pushed up on the forehead (#B08D57), a worn dark brown leather apron (#5A4030) with a tool pocket holding a small oilcan and a screwdriver, a pair of small brass gears hanging from a string at the belt, rolled-up sleeves on a faded blue shirt (#5B7A9C). Stands upright on two legs, slightly hunched, arms relaxed.
+An old gray tabby cat who maintains the clock tower, 70% of the bear's height (2030 px tall), slim but sturdy, slightly hunched, calm and precise. Soft gray fur (#8E949B) with darker gray tabby stripes on the forehead, cheeks and tail (#5F656C), a cream muzzle and chest (#E8DFCC), small pointed ears with pink-gray insides, a long tail with a curl at the tip, small solid dot eyes with heavy tired eyelids, a tiny pink-brown nose, short whiskers drawn as a few thin lines. Brass goggles pushed up on the forehead (#B08D57), a worn dark brown leather apron (#5A4030) with a tool pocket holding a small oilcan and a screwdriver, rolled-up sleeves on a faded blue shirt (#5B7A9C), a small brass gear hanging from a string at the belt. Stands upright on two legs, arms relaxed.
 ```
-- `clockkeeper_front_neutral` (TRUE FRONT), `clockkeeper_stand_nomouth` (BASE, 3/4 right, generate first), `clockkeeper_speaking`, `clockkeeper_uncertain` (eyes aside, goggles slipping), `clockkeeper_certain` (steady eyes, small firm mouth), `clockkeeper_oil_gear` (oilcan in one hand, looking at a gear), `clockkeeper_check_clock` (hand shading the eyes, looking up).
+- `clockkeeper_front_neutral` (TRUE FRONT), `clockkeeper_stand_nomouth` (BASE, 3/4 right, generate first), `clockkeeper_speaking`, `clockkeeper_uncertain` (eyes aside, ears slightly back, goggles slipping), `clockkeeper_certain` (steady eyes, small firm mouth), `clockkeeper_oil_gear` (oilcan in one hand, looking at a gear), `clockkeeper_check_clock` (hand shading the eyes, looking up).
 
-### H2. Café owner: a plump fox (85%, 2465 px)
+### H2. Café owner: a golden dog (90%, 2610 px)
 ```
 CHARACTER: Café owner.
-A warm, plump fox who runs the café next to the tower, 85% of the bear's height (2465 px tall), pear-shaped and cozy. Soft orange fur (#D98B4A) with a cream muzzle, chest and tail tip (#F3E8D6), dark brown socks-like paws (#4A3A2E), a big fluffy tail, small solid dot eyes with friendly lids, a dark rounded nose, pointed ears with dark inner tips. A burgundy apron (#6E2A35) with a cream stripe and a small white cup embroidered on the chest over a rolled-sleeve cream shirt (#F2E8D4), a tea towel over one shoulder. Standing, relaxed, welcoming.
+A warm, plump golden retriever-type dog who runs the café next to the tower, 90% of the bear's height (2610 px tall), pear-shaped and cozy. Soft golden-tan fur (#D9A55F) with a cream muzzle and chest (#F3E8D6), floppy rounded ears in a slightly darker tan (#B9803F), a short wagging tail, small solid dot eyes with friendly lids, a dark rounded nose, no tongue unless the pose asks. A burgundy apron (#6E2A35) with a cream stripe and a small white cup embroidered on the chest over a rolled-sleeve cream shirt (#F2E8D4), a tea towel over one shoulder. Standing, relaxed, welcoming.
 ```
-- `cafe_front_neutral` (TRUE FRONT), `cafe_stand_nomouth` (BASE), `cafe_speaking`, `cafe_uncertain` (eyes aside, small frown, paw rubbing the other arm), `cafe_certain`, `cafe_hold_teacup` (tray with one steaming white teacup), `cafe_wipe_cup` (wiping a cup with the towel, looking at it).
+- `cafe_front_neutral` (TRUE FRONT), `cafe_stand_nomouth` (BASE), `cafe_speaking`, `cafe_uncertain` (eyes aside, ears drooping, paw rubbing the other arm), `cafe_certain`, `cafe_hold_teacup` (tray with one steaming white teacup), `cafe_wipe_cup` (wiping a cup with the towel, looking at it).
 - Design note: gentle and likable, but with one slightly ambiguous glance pose (`cafe_uncertain`) so the player can suspect him.
 
 ### H3. Night guard: a tall owl (105%, 3045 px)
