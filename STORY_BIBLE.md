@@ -1,6 +1,6 @@
 # STORY BIBLE — Big Green Bear's Adventure 2: *The Other Side of the Truth*
 
-**Version:** 0.1 (draft for approval) · **Village name:** Bell Village (벨 마을) — official, use everywhere.
+**Version:** 0.2 (locked: D1, D13, D14, scar, structure · everything else still draft) · **Village name:** Bell Village (벨 마을) — official, use everywhere.
 **Theme question:** *Can protecting someone you love make you complicit in their wrongdoing?*
 **Series-2 refrain:** *"Who are you really protecting?"* (너는 정말 누구를 지키고 있는가?)
 
@@ -19,6 +19,19 @@ Rules for anyone (human or Claude Code) implementing from this file:
 2. If a script line contradicts §3 (Ground Truth) or §12 (Hard Rules), the bible wins.
 3. Story content lives in data (ScriptableObjects / dialogue files), never hardcoded in controllers.
 
+### 0.1 Locked decisions log (v0.2)
+
+| ID | Decision | Status |
+|---|---|---|
+| **D13** | Keep the **scarf-knot clue.** Scarf tails hang on **opposite shoulders**: **BGB = his left shoulder, Green = his right shoulder.** Must be anatomically consistent in **all six views**, drawn per view (never mirrored). | 🔒 |
+| **Scar** | Green's ear scar is a **faded pinkish-grey, old, healed** scar. Not fresh, not red. Green must not look more sinister than BGB. | 🔒 |
+| **D14** | **Edward's pocket watch** is key evidence, **stopped at 11:52.** The tower clock stops at **11:47** from **mechanical damage during the fall.** The watch stops from a **separate physical impact.** **Neither time establishes the exact time of death.** The discrepancy is part of the timeline investigation. | 🔒 (the *cause* of the 11:52 impact is ⬜ Q1) |
+| **D1** | BGB **knows the twins' identities were switched** in childhood, but **not the full circumstances or everyone involved.** He does **not** initially know Green confronted Edward that night. He did **not** cause Edward's fall. He **later finds Edward alive and delays seeking help while trying to protect Green.** | 🔒 (details ⬜ Q2, Q3) |
+| **Structure** | Present → **playable Past** → Present. First flashback: **player controls young Green**, identity not revealed at first. Second flashback: **short, non-playable**, shows the moral consequences of protecting someone. | 🔒 |
+
+**Not resolved yet:** D2–D8, D10–D12 (see §14). Do not treat them as decided.
+**⚠ markers** in this file flag text written under v0.1 that may conflict with a locked decision. They stay until you answer §14A.
+
 ---
 
 ## 1. Canon at a glance (🔒)
@@ -32,6 +45,8 @@ Rules for anyone (human or Claude Code) implementing from this file:
 - **11:47** = Edward's fall and the clock's mechanical failure. **Not** automatically the time of death.
 - **Epilogue: "The Final Record", 11:48.**
 - BGB found Edward and **delayed rescue**; Green is responsible for the **fall**. Neither fact clears the other.
+- **BGB knows about the swap** (he does not know the full story). Scarf tails: **BGB left shoulder, Green right shoulder.** Green's scar: **faded pinkish-grey, healed.**
+- **Edward's pocket watch stopped at 11:52**; the tower clock stopped at **11:47**. Neither is the time of death.
 - The 11:40 sighting: Clockkeeper saw **a bear climbing the stairs, carrying something in the right hand.**
 - Photograph transition into the flashback; caption **"23 YEARS EARLIER · BELL VILLAGE"**; BGB later says **"He always looked out for me."**
 - Chapter list: Prologue The Photograph · 1 The Clock That Stopped · 2 Four Witnesses · 3 The Other Bear · 4 The Name That Was Stolen · 5 A Good Person · 6 Five Missing Minutes · 7 The Truth We Choose · Epilogue The Final Record.
@@ -61,8 +76,8 @@ Because names were swapped, **we never say "BGB" or "Green" about the past witho
 | Birth name 🟡 | Big Green Bear | Green |
 | **Today called** 🔒 | **Green** (outcast, suspect) | **Big Green Bear** (beloved, playable) |
 | Handedness 🔒/🟡 | **Right** | **Left** |
-| Scarf knot 🟡 | Knot on the **right** shoulder | Knot on the **left** shoulder |
-| Ear scar 🟡 | Torn marks on the **left ear** (as drawn on his character sheet; flood night, Ch.5) | None |
+| Scarf 🔒 | Knot and tails on his **right** shoulder | Knot and tails on his **left** shoulder |
+| Ear scar 🔒 | **Left ear:** faded **pinkish-grey healed scar** (flood night, Ch.5). Subtle; not sinister. | None |
 | Resting expression 🟡 | Guarded: brows low, mouth set | Open: soft, slow smile |
 | Movement 🟡 | Quicker, longer stride, light step | Slower, deliberate, "soft and slightly heavy" |
 | Role in flood 🟡 | Rescued his brother | Caused the failure, was rescued |
@@ -117,18 +132,19 @@ All times are **real** times. Clock on the tower reads 11:47 forever after.
 | 23:15 | BGB sits in the **Café**, hesitating. | Café Owner |
 | 23:35 | Green crosses **Lantern Bridge** hurrying toward the tower. Wearing his mustard scarf (same pattern as BGB's). | Night Guard |
 | 23:38 | Green enters the tower. | — |
-| 23:42 | BGB leaves the Café (a 6-minute walk). | Café Owner |
 | **23:40** | **Clockkeeper sees a bear climbing the stairs, something in his right hand.** | Clockkeeper |
+| 23:42 | BGB leaves the Café (a 6-minute walk). | Café Owner |
 | 23:41–23:46 | Bell loft. Edward tells Green he will **read the true Final Record at midnight and restore both names.** Green refuses: the truth would destroy BGB, whose life is built on the lie. Green demands the record. | Green, Edward |
-| **23:47** | Struggle on the gear hatch. **Edward falls** to the wheel pit. His body jams the escapement. **The clock stops.** | Green |
+| **23:47** | Struggle on the gear hatch. **Edward falls** to the wheel pit and **damages the clock mechanism** (⚠ v0.1 said his body jammed it; D14 says *mechanical damage*). **The tower clock stops at 11:47.** | Green, Edward |
 | 23:47 | Green panics and flees by the **maintenance chute** (he knows it from childhood). Leaves wide-stride footprints at the rear of the tower, heading to the Old Mill. Loses **one right glove** in the loft. | Green |
-| **23:48** | **BGB arrives.** He hears the gears seize. He finds Edward **alive** in the wheel pit. | BGB, Edward |
-| 23:48–23:53 | **The five missing minutes.** Edward whispers: *"It's in the record… the clock… tell them—."* BGB understands that Green was here and what Edward intended. He **does not call for help.** He tells himself he is giving Green time to get away. | BGB |
+| **23:48** | **BGB arrives.** He finds Edward **alive** in the wheel pit. He does **not** yet know Green was here (🔒 D1). | BGB, Edward |
+| 23:48–23:53 | **The five missing minutes.** BGB **learns Green was involved** (⬜ Q2: from Edward's words, the glove, or both). He **does not call for help,** trying to protect Green. ⚠ v0.1 had BGB understanding *what Edward intended*; under D1 he does not know the full circumstances. | BGB |
+| **23:52** | **Edward's pocket watch stops at 11:52** from a **separate impact** (⬜ Q1: cause). Edward is still alive and moving. | BGB (⬜ Q1) |
 | 23:53 | BGB rings the **emergency handbell**. | Clockkeeper (hears), BGB |
 | 23:56 | Clockkeeper reaches the loft; finds BGB kneeling by Edward. | Clockkeeper |
 | ~00:00–00:05 | **Edward dies.** Healer's estimate: ± 10 min. | Healer |
 
-**Medical fairness 🟡:** The Healer says the fall alone was "very likely survivable if he'd been reached within ten minutes." *Likely*, not certain. The player decides how much weight the five minutes carries.
+**Medical fairness 🟡 ⚠:** v0.1 had the Healer say the fall alone was "very likely survivable within ten minutes." With a **second impact at 11:52**, that is no longer clean: the Healer can only say *the fall* was survivable and cannot say what the *second blow* did (⬜ Q4). Neither 11:47 nor 11:52 is the time of death.
 
 **Edward's hidden Final Record 🟡:** A corrected register + a handwritten confession, hidden inside the **pendulum case** of the Clocktower's clock. Only found by deduction (Ch.7).
 
@@ -257,7 +273,7 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
   - The player compares the twins using **Memories + present clues.** Key rule: **no single clue unlocks DD-04.** The board requires **three independent categories** (physical, documentary, testimonial). See §8.
   - Result: DD-04 *The names were swapped.* The kid the player controlled in Ch.4–5 was **the present-day Green.**
 - **Part B — The missing five minutes (Timeline).**
-  - The player arranges cards: Night Guard 11:35, Clockkeeper 11:40, Café departure ~11:42, **fall 11:47**, BGB's arrival **11:48** (door-wear/snow-melt, Clockkeeper's second look), handbell **11:53**, Clockkeeper arrival 11:56, **Healer's estimate** ~midnight.
+  - The player arranges cards: **Pocket watch 11:52**, Night Guard 11:35, Clockkeeper 11:40, Café departure ~11:42, **fall 11:47**, BGB's arrival **11:48** (door-wear/snow-melt, Clockkeeper's second look), handbell **11:53**, Clockkeeper arrival 11:56, **Healer's estimate** ~midnight.
   - Gap: **11:48–11:53.** DD-05 *BGB was in the tower for five minutes before the alarm.*
 - **Part C — The Healer.** *"Very likely survivable within ten minutes."* Not certain.
 - **Part D — The confrontation.** BGB's own coat: Edward's **letter** (EV-02). Nini (or the Clockkeeper) asks: *"Where were you between quarter to and midnight?"* The player chooses how BGB answers (§9). **The truth is not forced here** — it is left to Ch.7 — but the player now *knows.*
@@ -287,7 +303,7 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 
 | ID | Name | Where | Ch | What it shows | Points to | Flag |
 |---|---|---|---|---|---|---|
-| EV-01 | Home photograph | BGB's cottage | P | Two cubs; one ear covered by thumb-wear | The twins | |
+| EV-01 | Home photograph (**post-flood**) | BGB's cottage | P | Two cubs; the **scarred** cub is captioned "Green"; BGB's thumb is worn over that ear | The twins | |
 | EV-02 | Edward's letter to BGB | BGB's coat | P/6 | "Come to the tower at midnight." | BGB's reason to be there | * |
 | EV-03 | Stopped escapement | Tower | 1 | Jammed at 11:47 | Time of fall, not death | |
 | EV-04 | Gear hatch | Tower | 1 | Broken latch, fresh scrape | Fall site | |
@@ -299,7 +315,7 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 | EV-10 | Nini's notebook | Nini | 2 | "Red ledger moved?" Torn page | Edward's hidden record | RH |
 | EV-11 | Four statements | Witnesses | 2 | See §2 | Contradictions C1–C3 | |
 | EV-12 | Flood-year register | Archive | 3 | Names in **two different inks**; the **flood hero entry** reads "Big Green Bear, age 7" in newer ink | Alteration | |
-| EV-13 | Second photograph | Edward's drawer | 3 | Cubs again; **caption order ≠ visible scarf-knot order** | Swap | * |
+| EV-13 | Second photograph (**pre-flood**) | Edward's drawer | 3 | Same cubs, **no scar**, captioned with **birth names**; **knot sides** visible (right = captioned "Big Green Bear") | Swap | * |
 | EV-14 | Right glove | Tower loft (second search) | 1/3 | Wool, right-hand, snow-damp | Green (he's missing one) | * RH |
 | EV-15 | Rear footprints | Tower rear | 3 | Wide stride toward Old Mill | Green fled by the chute | * |
 | EV-16 | Green's statement | Old Mill | 3 | "Ask yourself what you remember." | The swap | |
@@ -310,7 +326,8 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 | EV-20 | Clockkeeper (second statement) | Tower | 6 | "Two sets at the door, an hour apart" | Two arrivals | |
 | EV-21 | Green's testimony | Mill | 7 | His account of 11:41–11:47 | Fall cause + motive | |
 | EV-22 | Edward's Final Record | Pendulum case | 7 | Corrected register + confession | The swap & why | |
-| EV-23 | Edward's last words | Memory (BGB) | 6/7 | "It's in the record… the clock…" | Where to look | |
+| EV-23 | Edward's last words | Memory (BGB) | 6/7 | "It's in the record… the clock…" (⬜ Q2: exact words) | Where to look | |
+| **EV-24** | **Edward's pocket watch** 🔒 | Wheel pit / Healer | 6 | Stopped at **11:52**, case dented. Edward's watch is set to the tower clock every morning by the Clockkeeper (⚠ 🟡 my addition, so the watch is a fair second clock). | Second impact; Edward alive at 11:52 | * |
 
 **Red herrings (summary):** Café Owner's debt (EV-08 aside), Night Guard's grudge, Nini's torn page (EV-10 — she tore it because it held a private poem), the missing right glove (EV-14 — Green *is* missing one, but so is the Night Guard), mustard thread (EV-05 matches both scarves), village rumor (EV-17). All **resolve by the end**; none are cheats.
 
@@ -328,6 +345,7 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 | DD-06 | **Green caused the fall.** | 6–7 | EV-04 + EV-14 + EV-15 + EV-21 | *"He was there. But how?"* |
 | DD-07 | **Edward altered the register.** | 7 | EV-12 + M-04 + EV-22 | *"Someone with a steady hand and a key."* |
 | DD-08 | **Green fought to protect BGB.** | 7 | EV-21 + EV-22 | *"Look at why he did it."* |
+| DD-10 | **Two clocks, two times: 11:47 (tower, mechanical) and 11:52 (watch, impact). Edward was alive at 11:52 and neither time is his death.** | 6 | EV-03 + EV-24 + EV-07 + EV-18 | *"The watch stopped when it was struck, not when he did."* |
 | DD-09 | **Edward hid the truth in the clock.** | 7 | EV-23 + EV-10 | *"What clock is he talking about?"* |
 
 **Wrong deductions** show a gentle note, never lock progress. **Hidden info is never revealed** by a wrong guess.
@@ -452,6 +470,23 @@ Determined by **three variables:** what is recorded (R), whether the swap is tol
 
 ---
 
+### 12.1 Scarf and scar — view matrix (🔒 D13 + scar) for the art pass
+
+Tails hang from the shoulder down the **front** of the chest. Draw each view separately; **never mirror.** "Left/right" = the **character's** left/right.
+
+| View | BGB (tails on **his left**) | Green (tails on **his right**) | Green's scar (**left ear**) |
+|---|---|---|---|
+| 1 Left profile (we see his left side) | Tails **visible** | Tails **hidden** (far side); band only | **Visible** |
+| 2 Left ¾ | Tails **visible** | Tail tip may peek | **Visible** |
+| 3 Front | Tails on the **viewer's right** | Tails on the **viewer's left** | On the **viewer's right** ear |
+| 4 Back | Scarf band only | Scarf band only | On the **viewer's left** ear |
+| 5 Right ¾ | Tail tip may peek | Tails **visible** | May peek (far ear) |
+| 6 Right profile (we see his right side) | Tails **hidden**; band only | Tails **visible** | **Hidden** |
+
+Scar style: old, healed, **pinkish-grey**, a few thin raised lines; no red, no crust. Same ear shape and size as BGB's.
+
+---
+
 ## 13. Timeline-card model (for the Timeline tab) 🟡
 
 Every card has a **type**, which the player must learn to separate:
@@ -462,29 +497,56 @@ Every card has a **type**, which the player must learn to separate:
 | **E** Event | When it *happened* | "Edward falls at 11:47" |
 | **C** Clock | What the clock *displays* | "Clock stops at 11:47" |
 | **D** Death | Estimated time of death | "Healer: ~00:00–00:05" |
+| **P** Pocket watch 🔒 | When Edward's watch *stopped* | "Watch stops at 11:52" |
 
 Typical player mistake: placing "E" at 11:47 and "D" at 11:47. The game gives contextual feedback: *"That's when it broke, not when he stopped."*
 
 ---
 
-## 14. Open decisions for you (please answer — 🟡 → 🔒)
+## 14. Decisions
 
-| # | Decision | My recommendation | Alternative |
-|---|---|---|---|
-| **D1** | **Does BGB *know* he's the younger twin and about the swap?** | **Yes.** It makes the five minutes a *choice*, and "the name that was stolen" painful. | He's half-aware / suppressed: easier twist, weaker moral weight. |
-| **D2** | **Edward = the twins' guardian and the one who did the swap.** | Yes — mirrors BGB's choice perfectly. | Another adult swapped; Edward only knew. |
-| **D3** | **The flood cause: the younger twin jammed the warning bell.** | Yes. A child's curiosity, not malice. | Natural failure; the blame is invented. |
-| **D4** | **Is there a flood casualty (who)?** | One villager, ⬜ unnamed, so blame has weight. | No death; the loss is homes and trust only. |
-| **D5** | **Green caused the fall in a struggle (not a deliberate murder).** | Yes — fits "responsible for the fall." | Deliberate; or BGB unwittingly caused it. |
-| **D6** | **Green fought to protect BGB** (not for revenge). | Yes — "everyone is protecting someone." | Green wanted the name back. |
-| **D7** | **Epilogue flashback shows Edward swapping the register.** | Yes — confirmation, not a first reveal. | Reveal earlier / cut. |
-| **D8** | **Four endings E1–E4.** | OK as drafted. | Trim to three. |
-| **D9** | **Witnesses #3 and #4 = Café Owner (dog) and Night Guard (owl); Mara (badger) as the flood-era elder.** | OK — roles are mine, designs are yours. | Re-assign roles. |
-| **D10** | **Optional echo:** the tower clock *also* stopped at 11:47 on the flood night. | Skip unless you love it. | Include as a small recurring motif. |
-| **D11** | **Elder = "Big Green Bear" by birth name** (so "Big" = big brother). | Yes — ties the title to the twist. | Names unrelated to age. |
-| **D12** | **Names** for Edward's surname, Clockkeeper, Café Owner, Night Guard. | You decide. | ⬜ |
-| **D13** | **Art vs. clue:** the character sheet draws BGB's and Green's **scarves identically** (tails on the same side) and gives Green a **visible ear scar**. Keep the *knot-side* clue? | Redraw so the knot/tails sit on opposite shoulders (BGB left, Green right), keep scar. | Drop the knot clue; rely on hand + scar + documents. |
-| **D14** | **Edward's pocket watch** (in his design) as evidence: found stopped/cracked at **11:47**, which *supports* the fall time but not the death time. | Yes — a natural prop for DD-01. | Skip. |
+**Legend:** 🔒 locked by you · ⬜ open (my recommendation shown; **not decided**).
+
+| # | Decision | Status | My recommendation | Alternative | Interaction with locked decisions |
+|---|---|---|---|---|---|
+| **D1** | BGB's knowledge of the swap | 🔒 *partly* | (locked) | | Details in Q2, Q3. |
+| **D2** | **Edward = the twins' guardian and the one who did the swap** | ⬜ | Yes: mirrors BGB's choice. | Another adult swapped; Edward only knew. | If Edward *told* BGB at age 7, BGB knows Edward was involved. D1 says BGB doesn't know "everyone involved," so see Q3. |
+| **D3** | **Flood cause: the younger twin jammed the warning bell** | ⬜ | Yes, a child's curiosity. BGB only half-remembers it and was told the bell failure was "Green's fault." | Natural failure; blame invented. | D1: BGB doesn't know the full circumstances, so this works *only if* he doesn't know his tampering caused the failure. Needs Q3. |
+| **D4** | **Flood casualty** | ⬜ | One unnamed villager, so blame has weight. | No death. | None. |
+| **D5** | **Green caused the fall in a struggle (not deliberate murder)** | ⬜ | Yes. | Deliberate. | D1 now **rules out** the alternative "BGB unwittingly caused it." |
+| **D6** | **Green fought to protect BGB** | ⬜ | Yes. | Green wanted his name back. | BGB doesn't know Green confronted Edward (D1), so Green's motive reaches the player only through Green (Ch.7) and Edward's Final Record. |
+| **D7** | **Epilogue flashback shows Edward swapping the register** | ⬜ | Yes, and extend it to show the **consequence** (see Q7). | Reveal earlier. | Your structure lock requires it to show *moral consequences*, not only the act. |
+| **D8** | **Four endings E1–E4** | ⬜ | OK as drafted. | Trim to three. | E1 must now require BGB to confess the **delay**, not "the swap" (he already knew it). Reword in the next pass. |
+| **D9** | **Roles: Café Owner (dog), Night Guard (owl), Mara (badger)** | ⬜ | OK. Designs are yours; roles are mine. | Re-assign. | None. |
+| **D10** | **The tower clock also stopped at 11:47 on the flood night** | ⬜ | **Skip.** The 11:47 / 11:52 contrast is now richer without it. | Include as a motif. | A third "stopped time" would blur the two-clock puzzle. |
+| **D11** | **Elder = "Big Green Bear" by birth name** | ⬜ | Yes: ties title to twist. | Names unrelated to age. | None. |
+| **D12** | **Names** (Edward's surname, Clockkeeper, Café Owner, Night Guard) | ⬜ | You decide. | | None. |
+| **D13** | Scarves | 🔒 | BGB tails on his **left** shoulder, Green on his **right**; drawn per view (§12.1). | | |
+| **D14** | Pocket watch | 🔒 | Stops at **11:52** (separate impact). | | |
+
+### 14A. New open questions raised by your locked decisions
+
+| # | Question | Recommendation | Alternative(s) | Contradiction / risk if unanswered |
+|---|---|---|---|---|
+| **Q1** | **What caused the 11:52 impact on the watch?** | **A: Edward himself.** Still alive, he drags himself toward the pendulum case; the watch strikes the iron frame. BGB hears the thud, which jolts him into ringing the handbell at 11:53. This also points the player to the hiding place (DD-09) and proves Edward was alive and moving inside the five-minute gap. | **B:** a counterweight slips from the damaged mechanism (blameless, muddies whether the delay mattered). **C:** BGB moves him (conflicts with your intent that he is passive). | With A: "Why didn't BGB take the record?" Answer: he didn't know what Edward was reaching for (consistent with D1). With B: the five minutes lose moral weight. |
+| **Q2** | **How does BGB learn Green was there, and what exactly does Edward say?** | Edward says something that can be read two ways ("Green… was here. Don't… the record.") **and** BGB sees the right glove / scuffed hatch. BGB doesn't learn that Green *pushed* him; he fears it and chooses not to know. | Edward names Green outright; or only physical evidence (no words). | If Edward clearly blames or clears Green, BGB's delay becomes either obviously malicious or obviously noble. Ambiguity keeps it complicit but human. |
+| **Q3** | **Exactly what does BGB know about the swap (D1), and who else is "involved"?** | He knows: (a) the names were exchanged at seven; (b) Edward told him to answer to "Big Green Bear" from then on "to keep you safe." He **doesn't** know: the register was falsified, that Edward planned to undo it, that his own tampering caused the bell failure, or that **Mara** (Edward's assistant then) witnessed it. | BGB knows nothing beyond "we swapped"; or BGB knows everything except Green's confrontation. | Conflict with the prior draft: the old Ch.6 "identity reveal" now reveals *to the player only*; BGB's behavior in Ch.1–5 must never read as surprised (see Q6). |
+| **Q4** | **What does the Healer say?** | "The fall alone: survivable if reached quickly. The second blow: I can't tell what it did. He could have died any time between ~11:55 and 00:15." | Clear "he'd have lived." | A clear verdict removes the ambiguity you want; neither time may fix the death time. |
+| **Q5** | **Why doesn't anyone name Green in Ch.1–2?** | The village's story: "the Green boy was sent away after the flood." Most residents arrived later. Green lives beyond the ridge as a hooded hermit people avoid; only Mara and a few elders connect him to BGB. | Everyone knows; the Ch.3 "discovery" becomes a confrontation instead. | If everyone knows, the Clockkeeper's "a bear" would immediately mean Green and Ch.2's contradictions collapse. |
+| **Q6** | **Fairness with a protagonist who knows the swap.** | Keep the **Narrator Rule:** narration never lies; BGB is reticent, never falsely ignorant. In Ch.3 his reaction to Green is wary and personal, **not surprised**; the *player* learns they are twins. | BGB narrates the whole game in first person (no, this makes withholding a lie). | If BGB acts surprised by anything he knows, the twist feels like a cheat. |
+| **Q7** | **What does the Epilogue flashback show as "moral consequences"?** | Edward writes the swap at dawn **then** cut to the elder twin walking out of Bell Village alone, scarf over his shoulder, past a crowd praising the younger one. Edward watches from the window and does not stop him. | Edward alone only; or a longer sequence. | If it shows only the act, the "consequence" half of your brief is missing. |
+| **Q8** | **Is the pocket watch a fair second clock?** | Yes: the Clockkeeper sets Edward's watch to the tower clock every morning (my 🟡 addition, EV-24). Without it, a player can't decide which time to trust. | Leave it unreliable on purpose. | Without a stated reliability, DD-10 becomes a guess. |
+
+### 14B. Logical issues found in v0.1 text because of your decisions
+
+1. **Tower clock stopped by Edward's body "jamming the escapement"** conflicts with D14's **mechanical damage during the fall.** Reworded in §3.2; exact mechanism ⬜.
+2. **BGB "understands what Edward intended"** conflicts with D1. Reworded; Q2 decides how he learns.
+3. **BGB arrives knowing Green is the suspect** (old Ch.2–3 flow) conflicts with D1 (he doesn't know Green confronted Edward). The Ch.2–3 scripts must show BGB *suspecting* Green, not *knowing*.
+4. **Healer "very likely survivable"** conflicts with the 11:52 second impact. Q4.
+5. **EV-01 / EV-13 photographs** were inconsistent with the scar: the scar appears at the flood, so **EV-01 (home photo) is now post-flood** and shows it, and **EV-13 is the pre-flood photo** without it, with birth-name captions. Fixed above.
+6. **Old DD-01** ("11:47 is not the death time") is now too weak. **DD-10** adds the 11:52 watch.
+7. **Timeline cards** needed a 5th type **P (Pocket watch)** so players can't treat 11:52 as a witness time. Added in §13.
+8. **The character sheet's right-facing BGB view appears to be a mirrored copy of the left view** (scarf tails visible in both profiles). Under D13 this must be redrawn per view (§12.1).
 
 ---
 
