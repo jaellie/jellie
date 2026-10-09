@@ -141,6 +141,14 @@ const OLIVER = [
 "- Brass aviator goggles (#B08D57, lenses tinted #8FB4C8) worn on a brown leather cap with ear flaps. Cream collared shirt (#EFE3C8), brown leather apron (#6B4A32) with two tool pockets and small brass buttons. Matter-of-fact, honest expression."
 ].join("\n");
 
+const SCARF = [
+"SCARF CONSTRUCTION (identical in every view, do not change between views):",
+"- Mustard-yellow chunky braided knit scarf (#D9A441, shadow #A87A24), wrapped exactly TWO times around the neck as two stacked rolls, sitting just under the chin.",
+"- ONE loose knot at the base of the neck, resting on ONE shoulder only (the shoulder given in the view list). TWO equal tails hang straight down from that knot in front of the chest, each as long as one third of the body height, ending in short fringe (about 8 fringe strands).",
+"- There is no second knot and no tail on the other shoulder. The band always passes behind the neck at the same height.",
+"- DRAW THE SCARF AGAIN IN EACH VIEW from that shoulder's real position. Never copy or flip another view."
+].join("\n");
+const SCARF_TWINS = "MANDATORY CHECK before you finish: in the FRONT view (view 3) the tails are on the VIEWER'S LEFT for Green and on the VIEWER'S RIGHT for Big Green Bear. In the BACK view (view 4) it is the opposite: the tails are on the VIEWER'S RIGHT for Green and on the VIEWER'S LEFT for Big Green Bear. If any view breaks this, redraw that view.";
 const LEFTRIGHT = "LEFT/RIGHT RULE: left and right always mean the CHARACTER's own left and right. Every facing direction is drawn BY HAND. NEVER mirror or flip a drawing to make the other direction, because that would swap which hand and which shoulder carry the clue.";
 
 /* ============ prompt builder ============ */
@@ -187,23 +195,23 @@ const SECTIONS = [
  P("Green: redrawn turnaround (faded scar, scarf on his RIGHT shoulder)", {
    goal:"Replace Green's current sheet. The scarf side and the scar are story clues.",
    refs:[REF_CHAR + " (Big Green Bear and Green rows, for body shape and colours)"],
-   blocks:[GREEN, LEFTRIGHT],
+   blocks:[GREEN, SCARF, LEFTRIGHT],
    subject:"Character turnaround of Green: SIX views, each drawn separately.",
    layout:["ONE row, 6 cells of 400 x 640 px (sheet 2400 x 640 px), same scale, same feet baseline y = 600, neutral standing pose, arms relaxed.","Order: 1 left profile, 2 left three-quarter, 3 front, 4 back, 5 right three-quarter, 6 right profile."],
-   details:["Scarf tails: view 1 (we see his left side): the knot is hidden on the far side, only the scarf band and a hint of the tail tip are visible. View 3 front: tails hang on the VIEWER'S LEFT (his right). View 6 (we see his right side): knot and both tails clearly visible.","Scar on the LEFT ear: visible in views 1 and 2, on the viewer's RIGHT ear in view 3, on the viewer's LEFT ear in view 4, partly visible in view 5, hidden in view 6.","Expression: a gentle, slightly guarded resting mouth, calm eyes."],
-   include:["same fur colours as BGB","thin faded pinkish-grey scar lines, subtle"], exclude:["red or bloody scar","mirrored views","a darker, scarier face","any hood or extra clothing"],
-   tech:["Sheet 2400x640 px, transparent."]},
+   details:["VIEW DIRECTIONS (fixed): view 1 faces the LEFT edge of the image (we see HIS LEFT side). View 2 is turned 45 degrees toward the LEFT edge (we see his left side, three-quarter). View 3 faces the viewer. View 4 shows his back. View 5 is turned 45 degrees toward the RIGHT edge (we see his RIGHT side, three-quarter). View 6 faces the RIGHT edge (we see HIS RIGHT side).","GREEN'S SCARF = knot and both tails on HIS RIGHT shoulder, view by view: View 1: HIDDEN on the far side, only the band shows, plus a tiny tail tip peeking behind the neck. View 2: knot hidden, at most the tail tips peek out beyond the chest. View 3 (front): knot and both tails on the VIEWER'S LEFT side of his chest. View 4 (back): the band crosses the nape, the two tail ends hang down on the VIEWER'S RIGHT side of his back. View 5: knot and both tails CLEARLY VISIBLE on the near shoulder, hanging down the side of his chest. View 6: knot and both tails CLEARLY VISIBLE hanging beside his body.","Scar on the LEFT ear: visible in views 1 and 2, on the viewer's RIGHT ear in view 3, on the viewer's LEFT ear in view 4, partly visible in view 5, hidden in view 6.","Expression: a gentle, slightly guarded resting mouth, calm eyes."],
+   include:["same fur colours as BGB","thin faded pinkish-grey scar lines, subtle", SCARF_TWINS], exclude:["red or bloody scar","mirrored views","a darker, scarier face","any hood or extra clothing","tails on his left shoulder","a checkerboard pattern drawn into the picture"],
+   tech:["Sheet 2400x640 px, a REAL transparent background (alpha channel), not a drawn checkerboard."]},
    {size:"2400x640", tags:["no mirroring"]}),
 
  P("Big Green Bear: redrawn turnaround (scarf on his LEFT shoulder)", {
    goal:"Replace BGB's current sheet so the scarf side is correct and consistent in every view.",
    refs:[REF_CHAR + " (Big Green Bear row)"],
-   blocks:[BGB, LEFTRIGHT],
+   blocks:[BGB, SCARF, LEFTRIGHT],
    subject:"Character turnaround of Big Green Bear: SIX views, each drawn separately.",
    layout:["ONE row, 6 cells of 400 x 640 px (sheet 2400 x 640 px), same scale and baseline, neutral standing pose.","Order: left profile, left three-quarter, front, back, right three-quarter, right profile."],
-   details:["Scarf tails: left profile and left three-quarter: knot and tails clearly visible on his LEFT shoulder. Front: tails on the VIEWER'S RIGHT. Back: only the scarf band and a bit of the tail ends. Right views: tails hidden or only the tips peeking.","No scar on either ear. LEFT-handed: in the front view his left arm is on the viewer's right."],
-   include:["anatomically consistent scarf in all 6 views"], exclude:["mirrored copies","scars","a different scarf colour"],
-   tech:["Sheet 2400x640 px, transparent."]},
+   details:["VIEW DIRECTIONS (fixed): view 1 faces the LEFT edge of the image (we see HIS LEFT side). View 2 is turned 45 degrees toward the LEFT edge (we see his left side, three-quarter). View 3 faces the viewer. View 4 shows his back. View 5 is turned 45 degrees toward the RIGHT edge (we see his RIGHT side, three-quarter). View 6 faces the RIGHT edge (we see HIS RIGHT side).","BIG GREEN BEAR'S SCARF = knot and both tails on HIS LEFT shoulder, view by view: View 1: knot and both tails CLEARLY VISIBLE hanging beside his body. View 2: knot and both tails CLEARLY VISIBLE on the near shoulder, hanging down the side of his chest. View 3 (front): knot and both tails on the VIEWER'S RIGHT side of his chest. View 4 (back): the band crosses the nape, the two tail ends hang down on the VIEWER'S LEFT side of his back, clearly visible. View 5: HIDDEN, only the band shows plus a tiny tail tip peeking behind the neck. View 6: HIDDEN, only the band shows plus a tiny tail tip.","No scar on either ear. LEFT-handed: in the front view his left arm is on the viewer's right."],
+   include:["anatomically consistent scarf in all 6 views", SCARF_TWINS], exclude:["mirrored copies","scars","a different scarf colour","tails on his right shoulder","a checkerboard pattern drawn into the picture"],
+   tech:["Sheet 2400x640 px, a REAL transparent background (alpha channel), not a drawn checkerboard."]},
    {size:"2400x640", tags:["no mirroring"]}),
 
  P("Big Green Bear: torn-tail scarf variant (6 views)", {
