@@ -1,0 +1,146 @@
+{
+ "source": "clocktower_props_v1.png",
+ "resampled": false,
+ "sprites": [
+  {
+   "name": "door_open_unbarred",
+   "file": "door_open_unbarred.png",
+   "size": [
+    954,
+    1389
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 0
+  },
+  {
+   "name": "door_barred",
+   "file": "door_barred.png",
+   "size": [
+    947,
+    1386
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 0
+  },
+  {
+   "name": "pendulum_straight",
+   "file": "pendulum_straight.png",
+   "size": [
+    467,
+    1508
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 1570
+  },
+  {
+   "name": "pendulum_bent",
+   "file": "pendulum_bent.png",
+   "size": [
+    509,
+    1514
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 0
+  },
+  {
+   "name": "handbell_resting",
+   "file": "handbell_resting.png",
+   "size": [
+    599,
+    1147
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 0
+  },
+  {
+   "name": "handbell_ringing",
+   "file": "handbell_ringing.png",
+   "size": [
+    608,
+    567
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 5288
+  },
+  {
+   "name": "puddle_1",
+   "file": "puddle_1.png",
+   "size": [
+    1103,
+    407
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 0
+  },
+  {
+   "name": "puddle_2",
+   "file": "puddle_2.png",
+   "size": [
+    1205,
+    357
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 8062
+  },
+  {
+   "name": "puddle_3",
+   "file": "puddle_3.png",
+   "size": [
+    916,
+    348
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 9862
+  },
+  {
+   "name": "pocketwatch_front_cracked",
+   "file": "pocketwatch_front_cracked.png",
+   "size": [
+    942,
+    843
+   ],
+   "dropped_caption_bands": 1,
+   "specks_removed_px": 173
+  },
+  {
+   "name": "pocketwatch_back",
+   "file": "pocketwatch_back.png",
+   "size": [
+    709,
+    803
+   ],
+   "dropped_caption_bands": 1,
+   "specks_removed_px": 1809
+  },
+  {
+   "name": "gloves",
+   "file": "gloves.png",
+   "size": [
+    890,
+    724
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 1206
+  },
+  {
+   "name": "letter_sealed",
+   "file": "letter_sealed.png",
+   "size": [
+    878,
+    625
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 328
+  },
+  {
+   "name": "photo_frame_back",
+   "file": "photo_frame_back.png",
+   "size": [
+    877,
+    1008
+   ],
+   "dropped_caption_bands": 0,
+   "specks_removed_px": 125
+  }
+ ]
+}
