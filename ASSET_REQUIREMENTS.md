@@ -15,7 +15,7 @@ Whole clocktower shaft and village Mid without the tower · Hotspot magnifier ri
 ## B. Needed soon after
 | # | Asset | Notes |
 |---|---|---|
-| 6 | **Edward's archive room** (Chapter 3) | Same 4-layer split as the interior set; record shelves, a locked drawer, the flood-year register on a stand. |
+| 6 | **Edward's archive room: Foreground only** (Mid wall and Ground are done; the window shows the village Far layer) | Dark framing strip with a chair back, a crate of ledgers, a rope barrier. |
 | 7 | **Hazel's café interior** (Chapter 2) | Same split; counter, a table where BGB sat, window onto the plaza. |
 | 8 | **Evidence icons still missing** (about 10) | Post-flood photograph (home), pre-flood photograph, mustard wool strand, register/ledger, lantern, Nini's notebook (torn page), café receipt, Rowan's patrol log, Healer's report, footprints. |
 | 9 | **Identity Board** | Corkboard, red string, pins, polaroid frames (the UI sheet has none). |
