@@ -64,9 +64,16 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .red{--img:url(assets/plaque_red_small.webp)}
 
 /* Clocktower interior scene */
-#vsc,#tsc{position:absolute;inset:0}
-#tsc{display:none;background:#140f14}
-#tsc.on{display:block}
+#vsc,#tsc,#asc{position:absolute;inset:0}
+#tsc,#asc{display:none;background:#140f14}
+#tsc.on,#asc.on{display:block}
+#afar img{left:-300px;top:150px;width:3715px;height:566px}
+#aworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
+#aworld img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
+#aleft,#aright{position:absolute;top:0;height:1080px;width:700px;background:linear-gradient(90deg,#120d0b,#2a1a12)}
+#aright{background:linear-gradient(270deg,#120d0b,#2a1a12)}
+#afg{position:absolute;left:0;top:0;will-change:transform}
+#afg img{position:absolute;left:0;top:614px;display:block;pointer-events:none}
 #tfar img{left:-120px;top:0}
 #tworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
 #tworld img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
@@ -203,6 +210,17 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
   </div>
   <div id="fg"><img src="assets/foreground.webp" width="4190" height="328" alt=""></div>
   </div>
+  <div id="asc">
+   <div class="layer" id="afar"><img src="assets/far.webp" alt=""></div>
+   <div id="aworld">
+    <div id="aleft" style="left:-570px"></div><div id="aright" style="left:2290px"></div>
+    <img src="assets/a_mid.webp" style="left:48px;top:-13px" width="2304" height="923" alt="">
+    <div id="abase" style="position:absolute;left:-600px;top:930px;width:3600px;height:160px;background:linear-gradient(#2a1c15,#150e0c 45%,#0d0809)"></div>
+    <img src="assets/a_ground.webp" style="left:0;top:518px" width="2401" height="595" alt="">
+    <div id="amarks"></div>
+   </div>
+   <div id="afg" class="layer"><img src="assets/a_fg.webp" width="2400" height="466" alt=""></div>
+  </div>
   <div id="tsc">
    <div class="layer" id="tfar"><img src="assets/t_far.webp" width="3118" height="1134" alt=""></div>
    <div id="tworld">
@@ -325,7 +343,7 @@ function labelSide(){ const labs = tr(UI.tabs); document.querySelectorAll("#side
 let lang = "en";
 const tr = o => typeof o === "string" ? o : (o[lang] || o.en);
 const UI = {
-  leave:{en:"Leave the Clocktower", ko:"시계탑을 나간다"}, lHatch:{en:"Examine the hatch", ko:"해치를 살핀다"}, lPend:{en:"Examine the pendulum", ko:"추 막대를 살핀다"}, lBell:{en:"Examine the handbell", ko:"손종을 살핀다"}, lChute:{en:"Examine the back door", ko:"뒷문을 살핀다"}, lMelt:{en:"Look at the puddles", ko:"물 자국을 살핀다"}, lClk:{en:"Examine the clock", ko:"시계를 살핀다"}, locT:{en:"Clocktower", ko:"시계탑"},
+  leave:{en:"Leave the Clocktower", ko:"시계탑을 나간다"}, leaveA:{en:"Leave the archive", ko:"기록실을 나간다"}, lReg:{en:"Examine the register", ko:"장부를 살핀다"}, lDraw:{en:"Try the drawers", ko:"서랍을 열어 본다"}, locA:{en:"Archive", ko:"기록실"}, lHatch:{en:"Examine the hatch", ko:"해치를 살핀다"}, lPend:{en:"Examine the pendulum", ko:"추 막대를 살핀다"}, lBell:{en:"Examine the handbell", ko:"손종을 살핀다"}, lChute:{en:"Examine the back door", ko:"뒷문을 살핀다"}, lMelt:{en:"Look at the puddles", ko:"물 자국을 살핀다"}, lClk:{en:"Examine the clock", ko:"시계를 살핀다"}, locT:{en:"Clocktower", ko:"시계탑"},
   talk: {en:"Talk to Nini", ko:"니니와 이야기한다"}, talkCk:{en:"Talk to the Clockkeeper", ko:"시계지기와 이야기한다"},
   read:{en:"Read the signpost", ko:"표지판을 읽는다"}, look:{en:"Look up at the clock", ko:"시계를 올려다본다"}, enter:{en:"Enter the Clocktower", ko:"시계탑에 들어간다"},
   resume:{en:"Resume", ko:"계속하기"}, restart:{en:"Restart", ko:"처음부터"}, langBtn:{en:"Language: English", ko:"언어: 한국어"}, paused:{en:"PAUSED", ko:"일시정지"},
@@ -363,6 +381,12 @@ const EV = {
   chute: { id:"chute", name:{en:"The back door",ko:"뒷문"}, img:"p_door_barred", tag:"DOOR",
     desc:{en:"A small maintenance door at the back, bolted from the inside. Outside in the snow, boot prints lead away from it.", ko:"뒤쪽의 작은 정비용 문이다. 안쪽에서 빗장이 걸려 있다. 바깥 눈 위에는 이 문에서 멀어지는 발자국이 있다."},
     note:{en:"The back door is bolted from the inside, yet boot prints lead away from it outside.", ko:"뒷문은 안쪽에서 빗장이 걸려 있는데, 바깥에는 이 문에서 멀어지는 발자국이 있다."} },
+  register: { id:"register", name:{en:"The flood-year register",ko:"홍수 연도 장부"}, tag:"ARCHIVE",
+    desc:{en:"A large register lies open on the reading stand. The entries for the flood year are written in two inks: an older brown, and a newer, darker one. Seals and signatures crowd the foot of the page.", ko:"큰 장부가 독서대 위에 펼쳐져 있다. 홍수가 난 해의 항목은 두 가지 잉크로 쓰여 있다. 오래된 갈색과, 더 새롭고 짙은 색이다. 쪽 아래에는 인장과 서명이 빽빽하다."},
+    note:{en:"The flood-year entries in the register use two different inks.", ko:"장부의 홍수 연도 항목은 서로 다른 두 가지 잉크로 쓰여 있다."} },
+  drawers: { id:"drawers", name:{en:"The locked drawers",ko:"잠긴 서랍장"}, tag:"ARCHIVE",
+    desc:{en:"A cabinet of small brass-handled drawers, every one locked. Nini keeps the key.", ko:"놋쇠 손잡이가 달린 작은 서랍이 줄지어 있고, 모두 잠겨 있다. 열쇠는 니니가 가지고 있다."},
+    note:{en:"Edward's drawers are locked. Nini keeps the key.", ko:"에드워드의 서랍은 잠겨 있다. 열쇠는 니니가 가지고 있다."} },
   melt: { id:"melt", name:{en:"Puddles of meltwater",ko:"눈 녹은 물 자국"}, img:"p_puddle_2", tag:"TRACES",
     desc:{en:"Meltwater has pooled in three places: by the ladder, beside the hatch, and at the back door.", ko:"눈 녹은 물이 세 곳에 고여 있다. 사다리 옆, 해치 곁, 그리고 뒷문 앞이다."},
     note:{en:"Meltwater has pooled by the ladder, by the hatch and at the back door.", ko:"눈 녹은 물이 사다리 옆, 해치 곁, 뒷문 앞에 고여 있다."} }
@@ -448,7 +472,7 @@ function applyLight(dt){
 
 /* ---------- lighting ---------- */
 // Lamp positions in world px (from the Ground layer art). Light reaches R px sideways.
-const LAMPS_V = [372, 1146, 1786, 2765, 3550], LAMPS_T = [121, 442, 813, 981, 1763]; let LAMPS = LAMPS_V; const LAMP_R = 470, AMBER_MAX = .46, COOL_BASE = .27;
+const LAMPS_V = [372, 1146, 1786, 2765, 3550], LAMPS_T = [121, 442, 813, 981, 1763], LAMPS_A = [150, 480, 2210]; let LAMPS = LAMPS_V; const LAMP_R = 470, AMBER_MAX = .46, COOL_BASE = .27;
 const smooth = t => t*t*(3 - 2*t);
 function lampLight(x){ // returns {l, r, total}: warm light arriving on the left and right edge of a character at x
   let l = 0, r = 0;
@@ -491,8 +515,13 @@ const IA_T = [
   { id:"melt",  x:()=>1485, label:UI.lMelt,  top:530, run:()=>inspect("melt") },
   { id:"chute", x:()=>2168, label:UI.lChute, top:540, run:()=>inspect("chute") }
 ];
+const IA_A = [
+  { id:"exit",  x:()=>170,  label:UI.leaveA, top:540, run:()=>setScene("village", 2640) },
+  { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, run:()=>inspect("register") },
+  { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect("drawers") }
+];
 function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; }); }
-mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks"));
+mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks"));
 IA = IA_V;
 let near = null, peek = 0;
 
@@ -505,7 +534,7 @@ function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSO
 function setLang(l){ lang = l; save(); applyLang(); if (mode==="cf") renderCF(); }
 function applyLang(){
   document.documentElement.lang = lang; buildSide(); labelSide();
-  $("hudTitle").textContent = tr(UI.case); $("hudLoc").textContent = tr(S.scene==="tower" ? UI.locT : UI.loc);
+  $("hudTitle").textContent = tr(UI.case); $("hudLoc").textContent = tr(S.scene==="tower" ? UI.locT : S.scene==="archive" ? UI.locA : UI.loc);
   $("pResume").textContent = tr(UI.resume); $("pReset").textContent = tr(UI.restart); $("pLang").textContent = tr(UI.langBtn); $("eBack").textContent = tr(UI.back);
   document.querySelector("#pause .eyebrow").textContent = tr(UI.paused);
   const E = tr(UI.end); $("eEy").textContent = E[0]; $("eH").textContent = E[1]; $("eP1").textContent = E[2]; $("eP2").textContent = E[3]; $("rot").textContent = tr(UI.rot);
@@ -570,16 +599,16 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 function setSceneNow(name, x){
-  S.scene = name; const T = name === "tower";
-  $("vsc").style.display = T ? "none" : "block"; $("tsc").classList.toggle("on", T);
-  const host = T ? $("tworld") : $("world");
-  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else host.appendChild(marks);
-  if (T){ W = 2400; CAM_MIN = -330; CAM_MAX = W - STAGE_W; P_MIN = 150; FEET = FEET_T; NPCX = NPCX_T; LAMPS = LAMPS_T; IA = IA_T; }
+  S.scene = name; const T = name === "tower", A = name === "archive", IN = T || A;
+  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A);
+  const host = T ? $("tworld") : A ? $("aworld") : $("world");
+  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else host.appendChild(marks);
+  if (IN){ W = 2400; CAM_MIN = -330; CAM_MAX = W - STAGE_W; P_MIN = 150; FEET = FEET_T; LAMPS = A ? LAMPS_A : LAMPS_T; IA = A ? IA_A : IA_T; NPCX = A ? { nini:-9999, ck:-9999 } : NPCX_T; }
   else  { W = 3812; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = IA_V; }
-  nini.style.display = T ? "none" : ""; nini._sh.style.display = T ? "none" : "";
+  nini.style.display = IN ? "none" : ""; nini._sh.style.display = IN ? "none" : "";
+  ck.style.display = A ? "none" : ""; ck._sh.style.display = A ? "none" : "";
   P.x = x; cam = Math.max(CAM_MIN, Math.min(CAM_MAX, P.x - STAGE_W/2)); near = null;
-  $("hudLoc").textContent = tr(T ? UI.locT : UI.loc);
-  const e = tr(T ? {en:"CASE C-01",ko:"CASE C-01"} : {en:"CASE C-01",ko:"CASE C-01"});
+  $("hudLoc").textContent = tr(T ? UI.locT : A ? UI.locA : UI.loc);
   save();
 }
 function setScene(name, x){
@@ -658,6 +687,7 @@ window.addEventListener("keydown", e=>{
   if (k==="Escape"){ if (mode==="cf") closeCF(); else if (mode==="modal" && $("pause").classList.contains("on")) closePause(); else if (mode==="modal" && $("inspect").classList.contains("on")) $("iClose").click(); else if (mode==="play") openPause(); return; }
   if ((k==="e"||k==="E") && mode==="modal" && $("inspect").classList.contains("on")){ $("iClose").click(); return; }
   if (k==="e"||k==="E"||k==="Enter"||k===" "){ if (e.target && e.target.tagName==="BUTTON" && mode!=="dlg") return; act(); return; }
+  if (k==="9" && mode==="play" && S.scene==="village"){ setScene("archive", 170); return; }   /* temporary entrance until the Chapter 3 key scene exists */
   if (k==="q"||k==="Q"){ peek = 3; return; }
   if (mode==="dlg" && (k==="ArrowUp"||k==="ArrowDown"||k==="w"||k==="s")){
     const bs = [...document.querySelectorAll("#choices .choice")]; if (!bs.length) return; let i = bs.findIndex(b=>b.classList.contains("sel")); bs.forEach(b=>b.classList.remove("sel"));
@@ -691,6 +721,9 @@ function frame(now){
   $("tfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
   $("tworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("tfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("afar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
+  $("aworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("afg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   place(); applyLight(dt);
   // nearest interactable
   near = null; let best = 140;
@@ -709,7 +742,7 @@ function fit(){ const s = Math.min(innerWidth/STAGE_W, innerHeight/STAGE_H);
   stage.style.transform = "scale("+s+")"; stage.style.left = ((innerWidth - STAGE_W*s)/2)+"px"; stage.style.top = ((innerHeight - STAGE_H*s)/2)+"px"; }
 addEventListener("resize", fit);
 
-load(); cam = 0; setSceneNow(S.scene === "tower" ? "tower" : "village", S.x); fit(); applyLang(); stage.focus();
+load(); cam = 0; setSceneNow(S.scene === "tower" ? "tower" : S.scene === "archive" ? "archive" : "village", S.x); fit(); applyLang(); stage.focus();
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
 window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; if(mode==="cf") renderCF();}, addEv };
 requestAnimationFrame(frame);
