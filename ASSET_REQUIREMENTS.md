@@ -40,3 +40,6 @@ Whole clocktower shaft and village Mid without the tower · "What I overlooked" 
 ## E. Not needed for now
 - **Walk and idle animation frames for BGB, Nini and Oliver:** decided against. The game uses a springy "tong-tong" hop in code (squash and stretch) with separate still sprites for left, right and front. Nini and Oliver breathe gently in code.
 - **Snow variants of the green tiles and props:** the village and interior are painted whole, so the tile sheets are unused. Only needed if you want a modular, longer level.
+
+## Added for Chapters 2 and 3 (prompts are in the library, section F)
+Rowan (Night Guard, owl) sprites + portraits · Mara (badger) sprites + portraits · Green portraits · BGB notebook-in-left-hand poses · Green kettle-in-right-hand poses · Lantern Bridge guard-post prop · Old Mill exterior (4 layers, daylight).
