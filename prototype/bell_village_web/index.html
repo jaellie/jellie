@@ -4,6 +4,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,600;0,700;1,400&family=Alegreya+SC:wght@500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
 <style>
+/* Korean text uses Pretendard (SIL OFL 1.1), subset to the 2,350 KS X 1001 syllables; Latin letters keep Alegreya */
+@font-face{font-family:"Pretendard";font-weight:400;font-display:swap;src:url(assets/fonts/pretendard-400.woff2) format("woff2");unicode-range:U+AC00-D7A3,U+1100-11FF,U+3130-318F}
+@font-face{font-family:"Pretendard";font-weight:600;font-display:swap;src:url(assets/fonts/pretendard-600.woff2) format("woff2");unicode-range:U+AC00-D7A3,U+1100-11FF,U+3130-318F}
+@font-face{font-family:"Pretendard";font-weight:700;font-display:swap;src:url(assets/fonts/pretendard-700.woff2) format("woff2");unicode-range:U+AC00-D7A3,U+1100-11FF,U+3130-318F}
+html[lang="ko"] *{letter-spacing:-0.01em !important}   /* Korean tracking -1% */
 /* Layout: one fixed 1920x1080 stage scaled to the window; parallax layers behind a walkable snow path, UI laid over it. */
 :root{
   --night-0:#0b1230;      /* sky top */
@@ -16,8 +21,8 @@
   --brass:#b08d57;        /* trim */
   --burgundy:#6e2a35;     /* ribbon */
   --lamp:#ffb347;         /* lamp glow */
-  --font-body:"Alegreya","Noto Serif KR",Georgia,serif;
-  --font-label:"Alegreya SC","Noto Serif KR",Georgia,serif;
+  --font-body:"Alegreya","Pretendard","Noto Serif KR",Georgia,serif;
+  --font-label:"Alegreya SC","Pretendard","Noto Serif KR",Georgia,serif;
   color-scheme:dark;
 }
 html,body{height:100%;margin:0;padding:0}
@@ -141,7 +146,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #meas{position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font:400 36.5px/1.32 var(--font-body)}
 #dlg .por{position:absolute;left:49px;top:59px;width:200px;height:196px;overflow:hidden;border-radius:5px}
 #dlg .por img{transition:opacity .15s;width:200px;height:auto;display:block;filter:drop-shadow(0 2px 2px rgba(60,35,10,.4))}
-#dlg .nm{position:absolute;left:275px;top:17px;width:267px;height:51px;transform:rotate(-3.2deg);transform-origin:50% 50%;display:grid;place-items:center;font:700 31px/1 var(--font-label);letter-spacing:.06em;color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
+#dlg .nm{position:absolute;left:275px;top:17px;width:267px;height:51px;box-sizing:border-box;padding-top:12px;transform:rotate(-3.2deg);transform-origin:50% 50%;display:grid;place-items:center;font:700 31px/1 var(--font-label);letter-spacing:.06em;color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
 #dlg .tx{position:absolute;left:316px;top:116px;right:196px;height:150px;font:400 36.5px/1.32 var(--font-body);color:var(--ink)}
 :lang(ko) #dlg .tx,#dlg .tx.ko{font-size:33px;line-height:1.5}
 #dlg .tx i{color:#6d4f2d}
