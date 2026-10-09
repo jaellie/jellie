@@ -67,6 +67,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 /* Clocktower interior scene */
 #vsc,#tsc,#asc{position:absolute;inset:0}
 #tsc,#asc{display:none;background:#140f14}
+#asc,#csc{background:linear-gradient(#070b20 0%,var(--night-0) 18%,var(--night-1) 62%,#31416e 100%)}
+#afar img,#cfar img{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 30%,#000 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 30%,#000 100%)}
 #tsc.on,#asc.on{display:block}
 #afar img{left:-300px;top:150px;width:3715px;height:896px}
 #aworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
@@ -75,7 +77,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #aright{background:linear-gradient(270deg,#120d0b,#2a1a12)}
 #afg{position:absolute;left:0;top:0;will-change:transform}
 #afg img{position:absolute;left:-420px;top:614px;display:block;pointer-events:none}
-#csc{position:absolute;inset:0;display:none;background:#140f14}
+#csc{position:absolute;inset:0;display:none}
 #csc.on{display:block}
 #cfar img{left:-300px;top:150px;width:3715px;height:896px}
 #cworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
@@ -242,7 +244,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
    <div class="layer" id="afar"><img src="assets/a_far.webp" alt=""></div>
    <div id="aworld">
     <div id="aleft" style="left:-570px"></div><div id="aright" style="left:2290px"></div>
-    <img src="assets/a_mid_x.webp" style="left:-372px;top:-13px" width="2864" height="923" alt="">
+    <img src="assets/a_back.webp" style="left:-372px;top:-13px" width="2864" height="983" alt=""><img src="assets/a_mid_x.webp" style="left:-372px;top:-13px" width="2864" height="923" alt="">
     <div id="abase" style="position:absolute;left:-600px;top:930px;width:3600px;height:160px;background:linear-gradient(#2a1c15,#150e0c 45%,#0d0809)"></div>
     <img src="assets/a_ground_x.webp" style="left:-420px;top:518px" width="2961" height="595" alt="">
     <div id="amarks"></div>
@@ -253,7 +255,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
    <div class="layer" id="cfar"><img src="assets/a_far.webp" alt=""></div>
    <div id="cworld">
     <div id="cleft" style="left:-570px"></div><div id="cright" style="left:2290px"></div>
-    <img src="assets/c_mid_x.webp" style="left:-280px;top:-100px" width="2860" height="990" alt="">
+    <img src="assets/c_back.webp" style="left:-280px;top:-100px" width="2860" height="1050" alt=""><img src="assets/c_mid_x.webp" style="left:-280px;top:-100px" width="2860" height="990" alt="">
     <div id="cbase" style="position:absolute;left:-600px;top:930px;width:3600px;height:160px;background:linear-gradient(#2a1c15,#150e0c 45%,#0d0809)"></div>
     <img src="assets/c_ground_x.webp" style="left:-280px;top:632px" width="2962" height="459" alt="">
     <div id="cmarks"></div>
