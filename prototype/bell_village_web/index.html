@@ -461,6 +461,12 @@ EV.notebook = { id:"notebook", name:{en:"Nini's notebook",ko:"니니의 공책"}
 EV.patrol = { id:"patrol", name:{en:"Night Guard's patrol log",ko:"야간 경비의 순찰 일지"}, img:"ev_patrol_log", tag:"LOG",
   desc:{en:"The Night Guard's logbook, hung on the lamp post by Lantern Bridge. 11:35: \"B.G.B. crossed Lantern Bridge, hurrying. Both hands gloved, a paper in the right hand.\" 11:46: \"A bear on the Archive steps, walking slowly toward the tower.\" 11:51: \"Someone calling out, toward the tower. The wind took it.\"", ko:"랜턴 다리 가로등에 걸린 야간 경비의 일지. 11:35 \"B.G.B.가 랜턴 다리를 서둘러 건넘. 양손에 장갑, 오른손에 종이 한 장.\" 11:46 \"기록실 계단에 곰 한 마리, 탑 쪽으로 천천히 걸어감.\" 11:51 \"탑 쪽에서 누군가 부르는 소리. 바람에 묻힘.\""},
   note:{en:"Night Guard's log: 11:35 a bear crossed Lantern Bridge (gloves, a paper); 11:46 a slow bear toward the tower; 11:51 a call in the wind.", ko:"경비 일지: 11:35 곰이 랜턴 다리를 건넘(장갑, 종이), 11:46 탑 쪽으로 천천히 걷는 곰, 11:51 바람 속의 부르는 소리."} };
+EV.key = { id:"key", name:{en:"Edward's drawer key",ko:"에드워드의 서랍 열쇠"}, img:"key_brass", tag:"KEY",
+  desc:{en:"A small brass key on a loop of red thread. Nini has kept it since Edward's death, and she gave it to you.", ko:"붉은 실에 꿰인 작은 놋쇠 열쇠. 니니가 에드워드가 죽은 뒤로 간직해 왔고, 당신에게 건넸다."},
+  note:{en:"Nini gave you the key to Edward's locked drawers in the archive.", ko:"니니가 기록실에 있는 에드워드의 잠긴 서랍 열쇠를 건넸다."} };
+EV.photo2 = { id:"photo2", name:{en:"The second photograph",ko:"두 번째 사진"}, img:"ev_photo_pre_flood", tag:"PHOTO",
+  desc:{en:"A photograph from Edward's drawer: the same two cubs, both ears whole, their scarf knots clearly visible. On the back, in Edward's hand: \"Big Green Bear (right) and Green.\"", ko:"에드워드의 서랍에서 나온 사진. 같은 두 아기 곰, 두 귀 모두 멀쩡하고 목도리 매듭이 또렷하다. 뒷면에 에드워드의 글씨: \"큰 초록 곰(오른쪽)과 그린.\""},
+  note:{en:"Edward's drawer holds a second photograph of the cubs. Both ears whole; the caption names them.", ko:"에드워드의 서랍에 아기 곰들의 또 다른 사진이 있다. 두 귀 모두 멀쩡하고, 뒷면에 이름이 적혀 있다."} };
 EV.boots = { id:"boots", name:{en:"Footprints on the stairs",ko:"계단의 발자국"}, img:"ev_boot_prints", tag:"TRACES",
   desc:{en:"Snow tracked onto the tower stairs. One set of prints leads up, spaced wide apart.", ko:"탑 계단에 눈이 묻어 있다. 올라가는 발자국이 한 줄, 간격이 넓다."},
   note:{en:"One set of prints leads up the tower stairs, spaced wide apart.", ko:"탑 계단 위로 올라가는 발자국이 한 줄 있다. 간격이 넓다."} };
@@ -493,6 +499,8 @@ const D = {
  c1:{sp:"ck", ex:"thinking", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았죠."}, set:"ck.watch", note:"watch"},
  c9:{sp:"ck", ex:"neutral", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보세요. 시계는 어디 안 갑니다."}}
 };
+D.nk0 = {sp:"nini", ex:"worried", t:{en:"Another bear. You think there was another bear on those stairs?", ko:"다른 곰이요. 그날 계단에 다른 곰이 있었다고 생각하세요?"}, next:"nk1"};
+D.nk1 = {sp:"nini", ex:"thinking", t:{en:"Edward kept his drawers locked and I have kept the key since. If there is an answer, it may be in there. Please, take it.", ko:"에드워드 아저씨는 서랍을 늘 잠가 두셨고, 열쇠는 제가 계속 가지고 있었어요. 답이 있다면 거기 있을지도 몰라요. 가져가세요."}, ev:"key", set:"nini.key", next:null};
 D.h0 = {sp:"hz", t:{en:"Detective. Terrible business. The whole café has talked of nothing else since the bell.", ko:"탐정님. 끔찍한 일이에요. 종이 울린 뒤로 우리 카페는 그 얘기뿐이에요."},
    ch:[{t:{en:"About last night.",ko:"어젯밤 일에 대해서요."},go:"h1"},{t:{en:"Did you know Edward well?",ko:"에드워드 씨를 잘 아셨나요?"},go:"h2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
 D.h1 = {sp:"hz", t:{en:"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.", ko:"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠."}, note:"hz", set:"hz.stmt", next:"h1b"};
@@ -589,7 +597,7 @@ function lightActor(el, cx, dt, shW){
 
 /* ---------- interactables ---------- */
 let IA = [
-  { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-150, run:()=>startDlg(has("nini.done")?"n9":"n0") },
+  { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-150, run:()=>startDlg(has("dd02") && !has("nini.key") ? "nk0" : has("nini.done")?"n9":"n0") },
   { id:"sign",   x:()=>1345,      label:UI.read,   top:640,            run:()=>inspect("notice") },
   { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>inspect("patrol") },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(has("ck.bear")?"c9":"c0") },
@@ -611,7 +619,7 @@ const IA_T = [
 const IA_A = [
   { id:"exit",  x:()=>410,  label:UI.leaveA, top:540, run:()=>setScene("village", 2640) },
   { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, run:()=>inspect("register") },
-  { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect("drawers") }
+  { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect(has("nini.key") ? "photo2" : "drawers") }
 ];
 const IA_C = [
   { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 900) },
