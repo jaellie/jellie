@@ -41,7 +41,7 @@ Not evaluated or used: the first (broken) ZIP, and the older curtain/clock mocku
 | **Green** | Same body and scarf as BGB, plus **torn red marks on the left ear** | See conflict C2. |
 | **Café Owner** | Golden spaniel, red apron | New; used as Witness #3. |
 | **Night Guard** | Owl, blue guard cap and cape | New; used as Witness #4 (replaces my "Lamplighter"). |
-| **Mara** | Old badger, red embroidered shawl, floral apron | New; proposed as the flood-era elder. |
+| **Molly** | Old badger, red embroidered shawl, floral apron | New; proposed as the flood-era elder. |
 
 ### Technical issues
 1. **Size:** each figure is only ~140–170 px wide and ~260–280 px tall. At 1080p that's roughly the size of a character in your mockup, which is fine for exploration, but **portraits and close-ups will be soft.** Recommend re-exporting at 2× (≈550 px tall) later.

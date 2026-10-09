@@ -185,14 +185,14 @@ Alternative: Edward has a heart condition he has told nobody. I **don't** recomm
 | **R8** | **Why now (Edward)** | See §7. | Nini's two-ink discovery + the Remembrance Bell + conscience. | A secret illness. |
 | **R9** | **Elders' knowledge (Q5)** | Must be consistent. | Three tiers (below). | Everyone old knows the whole truth. |
 | **R10** | **DD-05 rests on one witness.** | Weak deduction. | **Night Guard** logs a slow bear crossing the plaza at 23:46. | Rely on the player-timed walk alone. |
-| **R11** | **Second flashback logic (Q7).** Why would adults pin the blame on an innocent child? | Needs a believable pressure. | **D4 = yes**: the flood killed one villager; the family demanded the child who "tampered with the bell" be sent away. The adults, who knew it was an accident by the other twin, **chose the child they could afford to lose.** Edward leads; **Mara** and the council are complicit. (This **modifies D2:** a group decision, not Edward alone.) | The adults act without a death (weaker pressure). |
+| **R11** | **Second flashback logic (Q7).** Why would adults pin the blame on an innocent child? | Needs a believable pressure. | **D4 = yes**: the flood killed one villager; the family demanded the child who "tampered with the bell" be sent away. The adults, who knew it was an accident by the other twin, **chose the child they could afford to lose.** Edward leads; **Molly** and the council are complicit. (This **modifies D2:** a group decision, not Edward alone.) | The adults act without a death (weaker pressure). |
 | **R12** | **Does the elder twin overhear the decision?** | Changes the emotional beat. | **Not shown** (consequence only): he is seen leaving with a bundle while the notice is pinned. | He overhears. |
 
 ### R9 detail: who knows what about the swap (🟡)
 
 | Tier | Who | Knows | Why they are silent |
 |---|---|---|---|
-| **A: in the room** | Edward (dead), **Mara**, the former mayor ⬜, the former healer ⬜ | The swap and the real story | Guilt; they signed the register; Mara has kept the pact for 23 years |
+| **A: in the room** | Edward (dead), **Molly**, the former mayor ⬜, the former healer ⬜ | The swap and the real story | Guilt; they signed the register; Molly has kept the pact for 23 years |
 | **B: lived through the flood** | Older residents | The **official** story: "the Green boy let the bell fail and was sent to relatives." They also know the hermit at the Old Mill is **Green** | Shame at having sent a child away; nobody had the heart to evict him when he returned; the village never speaks of it |
 | **C: arrived later** | Clockkeeper, Café Owner, Night Guard, Nini | "Green was sent away as a child." The hermit is just "the hermit": hooded, rarely seen, avoided | They have no reason to connect him to BGB |
 
@@ -355,16 +355,16 @@ Nothing in this pass changes the swap, the adults' decision, the endings' struct
 **Result: no remaining logical contradictions.** Everything below was checked against `STORY_BIBLE.md` v1.0.
 
 ### 14.1 Approvals applied
-R1 to R10, R12, R17, R18, D3 to D6, D8, D11: as recommended. **R11 and D2: modified** (collective decision; Edward not the sole instigator). **D12:** Edward Bell, Oliver, Hazel, Rowan. D7 unchanged.
+R1 to R10, R12, R17, R18, D3 to D6, D8, D11: as recommended. **R11 and D2: modified** (collective decision; Edward not the sole instigator). **D12:** Edward Bell, Oliver, Hazel, Tommy. D7 unchanged.
 
 ### 14.2 The D3 to D2 chain (the item you flagged as critical)
 Closed in bible §3.1a (nine steps). In one paragraph: the younger twin's **scarf end** jams the warning release; no bell, the lower village floods, a **boatman drowns**; the elder rings the **handbell** and saves the upper village, so the **hero by name** is *Big Green Bear*; the crowd sees **one child carried out** and **assumes he is the hero;** the inquest finds the scarf end and only Edward can say it is the **carried child's;** the **Bell Ordinance** requires the culprit to be put outside the walls; the Healer says the carried child **would die** in winter exile. Telling the truth would banish the sick child, so the five adults let the **public mistake stand and exchange the names to match it,** which still gives the Ordinance a name. A swap is **necessary** because the register already said *hero = Big Green Bear* and *scarf = Green's;* only exchanging names makes the paper agree with what the village already believes.
 
 ### 14.3 Edward
-Age 38 then, 61 now. **Clerk of the Bell Council, no vote;** no entry valid without his hand. He consented, wrote the forged entries, testified, promised the elder it was temporary, and kept silent 23 years. **Not the instigator** (the Mayor demanded a culprit, the Bell-warden feared blame, the Healer gave the medical argument, Mara proposed letting the mistake stand). **Present motive:** he reads the Flood Entry aloud every year at the Remembrance Bell; this is the 23rd; Nini finds the two inks; he writes the Final Record **naming himself first** and does **not** hide behind the council. **Why he waited:** a promise, the sick child's recovery, cowardice.
+Age 38 then, 61 now. **Clerk of the Bell Council, no vote;** no entry valid without his hand. He consented, wrote the forged entries, testified, promised the elder it was temporary, and kept silent 23 years. **Not the instigator** (the Mayor demanded a culprit, the Bell-warden feared blame, the Healer gave the medical argument, Molly proposed letting the mistake stand). **Present motive:** he reads the Flood Entry aloud every year at the Remembrance Bell; this is the 23rd; Nini finds the two inks; he writes the Final Record **naming himself first** and does **not** hide behind the council. **Why he waited:** a promise, the sick child's recovery, cowardice.
 
 ### 14.4 R10 verification (11:46 sighting versus 11:50 discovery)
-Café 11:42, plaza 11:46, tower door 11:48, hatch 11:49, Edward 11:50. Rowan sees a slow bear on the plaza at 11:46, then loses him behind the buttress; he does **not** see the door or the time of entry. Oliver is already away to the east. **Consistent.**
+Café 11:42, plaza 11:46, tower door 11:48, hatch 11:49, Edward 11:50. Tommy sees a slow bear on the plaza at 11:46, then loses him behind the buttress; he does **not** see the door or the time of entry. Oliver is already away to the east. **Consistent.**
 
 ### 14.5 R17 independence
 Three mechanisms (medical, third-party log, physical), each showing Edward appealed for help and that BGB could not have missed it (bible §7.1a). One small detail was needed to **time** the grip: **R19** (Hazel straightens BGB's left scarf tail at 11:42; it is torn short at 11:58). Veto allowed; if vetoed, clue (c) loses its timing but (a) and (b) stand.

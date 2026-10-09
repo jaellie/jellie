@@ -34,7 +34,7 @@ Whole clocktower shaft and village Mid without the tower · "What I overlooked" 
 | **Flashback Bell Village** | Same layers, warmer and cozier, plus a version with rising water. |
 | **Flood water, rain, flooded stairwell** | Effects and a stairwell background for Chapter 5. |
 | **Register page, two inks** | Newer ink over older on the hero entry; seals and signatures. |
-| **Council-room Epilogue stills** | Lamplit room; Mayor, Bell-warden, Healer (new unnamed designs), Mara, Edward; open Register, pen, seals. Under two minutes. |
+| **Council-room Epilogue stills** | Lamplit room; Mayor, Bell-warden, Healer (new unnamed designs), Molly, Edward; open Register, pen, seals. Under two minutes. |
 | **Ending art E1 to E4** | One key image each. |
 
 ## E. Not needed for now
@@ -42,4 +42,4 @@ Whole clocktower shaft and village Mid without the tower · "What I overlooked" 
 - **Snow variants of the green tiles and props:** the village and interior are painted whole, so the tile sheets are unused. Only needed if you want a modular, longer level.
 
 ## Added for Chapters 2 and 3 (prompts are in the library, section F)
-Hazel's Café exterior + Archive exterior (one sprite each, door included) · Rowan (Night Guard, owl) sprites + portraits · Mara (badger) sprites + portraits · Green portraits · BGB notebook-in-left-hand poses · Green kettle-in-right-hand poses · Lantern Bridge guard-post prop · Old Mill exterior (4 layers, daylight).
+Hazel's Café exterior + Archive exterior (one sprite each, door included) · Tommy (Night Guard, owl) sprites + portraits · Molly (badger) sprites + portraits · Green portraits · BGB notebook-in-left-hand poses · Green kettle-in-right-hand poses · Lantern Bridge guard-post prop · Old Mill exterior (4 layers, daylight).

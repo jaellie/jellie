@@ -1,6 +1,6 @@
 # STORY BIBLE — Big Green Bear's Adventure 2: *The Other Side of the Truth*
 
-**Version:** 1.0 FINAL (story locked; see §14 and `STORY_AUDIT.md` §14) · **Village name:** Bell Village (벨 마을), official · **Names:** Edward Bell (에드워드 벨) · Clockkeeper = **Oliver** (올리버) · Café Owner = **Hazel** (헤이즐) · Night Guard = **Rowan** (로언). Prose below still says Clockkeeper / Café Owner / Night Guard for readability.
+**Version:** 1.0 FINAL (story locked; see §14 and `STORY_AUDIT.md` §14) · **Village name:** Bell Village (벨 마을), official · **Names:** Edward Bell (에드워드 벨) · Clockkeeper = **Oliver** (올리버) · Café Owner = **Hazel** (헤이즐) · Night Guard = **Tommy** (토미). Prose below still says Clockkeeper / Café Owner / Night Guard for readability.
 **Theme question:** *Can protecting someone you love make you complicit in their wrongdoing?*
 **Series-2 refrain:** *"Who are you really protecting?"* (너는 정말 누구를 지키고 있는가?)
 
@@ -48,7 +48,7 @@ Rules for anyone (human or Claude Code) implementing from this file:
 | **Structure** | Present → playable Past (**player controls young Green**, identity not revealed at first) → Present, plus a **short non-playable** second flashback. | 🔒 |
 | **Art** | Faded scar, corrected scarves and the **pre-flood photograph** are **missing production assets.** No mirrored sprites as finals. | 🔒 |
 
-**Open items:** none that block the story. Two **minor clue details** added to meet your independence rule are flagged for your veto (**R19** Hazel's scarf tail and the torn tail, **R20** Rowan's patrol limits), and cosmetic ⬜ (unnamed minor figures, the twins' parents) stay unnamed. See §14.
+**Open items:** none that block the story. Two **minor clue details** added to meet your independence rule are flagged for your veto (**R19** Hazel's scarf tail and the torn tail, **R20** Tommy's patrol limits), and cosmetic ⬜ (unnamed minor figures, the twins' parents) stay unnamed. See §14.
 (All ⚠ markers have been resolved in v1.0.)
 
 ---
@@ -74,7 +74,7 @@ Rules for anyone (human or Claude Code) implementing from this file:
 - Clue set for telling the twins apart: **handedness, scarf, ear scar, photographs, witness testimony** (+ movement speed, expression, object use). **No single clue may solve it.**
 - Nini: small fluffy white lamb, yellow raincoat, brown boots, ~55% of BGB's height.
 - Clockkeeper: cat with brass goggles, brown apron (mockup + character sheet). Name ⬜.
-- Character sheet (locked designs): **Edward** = hedgehog with round glasses, vest, red tie, pocket watch; **Café Owner** = golden spaniel in red apron; **Night Guard** = owl in blue cap and cape; **Mara** = badger in red shawl; **Green** = same as BGB plus torn marks on the left ear.
+- Character sheet (locked designs): **Edward** = hedgehog with round glasses, vest, red tie, pocket watch; **Café Owner** = golden spaniel in red apron; **Night Guard** = owl in blue cap and cape; **Molly** = badger in red shawl; **Green** = same as BGB plus torn marks on the left ear.
 
 ---
 
@@ -113,8 +113,8 @@ Because names were swapped, **we never say "BGB" or "Green" about the past witho
 | **Nini** | 🔒 design · 🟡 role | 🟡 Edward's young archive assistant; keeps notes; innocent; grieving. First NPC. Your asset poses (reading/writing/sleeping) fit this. |
 | **Oliver** (올리버), the Clockkeeper (시계지기) | 🔒 witness | Cat with goggles. Night shift in the winding room. Honest, saw only the back of the bear on the stairs. 🔒 Winds the clock each evening and **sets Edward's pocket watch by it each morning.** Arrived in Bell Village after the flood (Tier C). |
 | **Hazel** (헤이즐), Café Owner (카페 주인) | 🔒 design · 🟡 role | Dog (golden spaniel) in a red apron. Witness #3. Hosts BGB's alibi. 🟡 Straightened BGB's scarf tail as he left at 11:42 (R19). Arrived after the flood (Tier C). |
-| **Rowan** (로언), Night Guard (야간 경비원) | 🔒 design · 🟡 role | Owl in a blue guard cap and cape. Witness #4. Patrols the plaza and bridge loop nightly and keeps a log; never enters the tower. Arrived after the flood (Tier C). |
-| **Mara** (마라) | 🔒 design · 🟡 role | Old **badger** in a red embroidered shawl and floral apron. 🟡 Remembers the flood; first to voice the village's blame of Green; later the one who says the hero cub was right-handed (Testimonial clue, Ch.6). ⬜ confirm role. |
+| **Tommy** (토미), Night Guard (야간 경비원) | 🔒 design · 🟡 role | Owl in a blue guard cap and cape. Witness #4. Patrols the plaza and bridge loop nightly and keeps a log; never enters the tower. Arrived after the flood (Tier C). |
+| **Molly** (몰리) | 🔒 design · 🟡 role | Old **badger** in a red embroidered shawl and floral apron. 🟡 Remembers the flood; first to voice the village's blame of Green; later the one who says the hero cub was right-handed (Testimonial clue, Ch.6). ⬜ confirm role. |
 | **Village Healer** | 🟡 | Gives the medical estimate in Ch.6. Name ⬜ (unnamed, not needed). The **Healer at the time of the flood** (a different person, deceased) sat in the closed council meeting (§3.1a). |
 | **Constable** | ⬜ | Needed only to explain why BGB investigates. 🟡 Snowed in on the far road (never appears). |
 | **Flood casualty** | 🔒 D4 | One villager, a **boatman** (unnamed, ⬜), drowned in the lower streets. His family still lives in Bell Village and still attends the Remembrance Bell. |
@@ -135,7 +135,7 @@ Because names were swapped, **we never say "BGB" or "Green" about the past witho
 | Night | The younger twin is trapped in the flooding stairwell. The **elder twin** pulls him out (tearing his left ear on debris: the scar), then **rings the emergency handbell,** which wakes the **upper** village and saves many. Nobody sees him do either. |
 | Dawn (Day 1) | Edward finds the twins at the tower door. He **carries the younger twin, half-drowned and shaking,** to the Healer. The villagers see **one cub carried out and one cub standing alone.** Edward tells the crowd: *"My Big Green Bear rang the bell."* (True: the elder is *Big Green Bear* by birth.) The crowd **assumes the carried cub is the hero.** |
 | Day 3 | **Council inquest.** The Bell-warden reports the jam: **a child's scarf end** in the release. Edward, asked whose scarf it is, can only answer truthfully: **Green's** (the younger's; the left knot). The boatman's family demands that **the child who silenced the bell** be dealt with under the **Bell Ordinance** (an old law: whoever silences the warning is put **outside the walls,** with no exception for age). |
-| Day 3, night | **Closed meeting** of the **Mayor, the Bell-warden, the Healer, Mara and Edward** (clerk, no vote). See §3.1a for who said and decided what. Result: the village's public mistake stands (*the carried cub is the hero*), the **names are exchanged to fit it,** and the blame lands on the other child. Edward writes the entries in the **Register,** the Mayor and Bell-warden seal them, and the Healer, Mara and Edward sign as witnesses. |
+| Day 3, night | **Closed meeting** of the **Mayor, the Bell-warden, the Healer, Molly and Edward** (clerk, no vote). See §3.1a for who said and decided what. Result: the village's public mistake stands (*the carried cub is the hero*), the **names are exchanged to fit it,** and the blame lands on the other child. Edward writes the entries in the **Register,** the Mayor and Bell-warden seal them, and the Healer, Molly and Edward sign as witnesses. |
 | Day 4 | Edward tells the elder twin what is to happen and **promises it is temporary** (*"until the village calms; I will put it right"*). The elder (now named **Green**) accepts **for his brother.** He is placed at the **Old Mill.** |
 | After | The younger twin grows up as **Big Green Bear:** Edward's ward, the village's hero. Edward tells him only: *"You are Big Green Bear now. Don't speak of it. It keeps you safe."* |
 
@@ -162,13 +162,13 @@ Because names were swapped, **we never say "BGB" or "Green" about the past witho
 | **The Mayor** (deceased) | Presides; holds the Ordinance | **Demands a named culprit** (the boatman's family, the Ordinance) and says *"the village only knows the names."* | Instigated the need for a scapegoat; sealed the entries. |
 | **The Bell-warden** (deceased) | Keeper of the mechanism | Reported the jam; **feared the blame would fall on the wardens**; sealed the entries. | Self-interest and cowardice. |
 | **The Healer** (deceased) | Physician | Said the younger **would die in exile;** the elder **would not.** | Gave the medical argument for choosing the elder. |
-| **Mara** (alive) | Council member (then the village midwife) | Said **"Then let them go on believing it."** (kept the mistake standing). | Proposed the idea that made the swap possible; signed; has kept silent 23 years. |
+| **Molly** (alive) | Council member (then the village midwife) | Said **"Then let them go on believing it."** (kept the mistake standing). | Proposed the idea that made the swap possible; signed; has kept silent 23 years. |
 | **Edward** (deceased now) | Clerk; **no vote** | **Consented, wrote the false entries, testified,** told the elder to accept, **promised to put it right,** and **did not for 23 years.** | He **could have refused:** no entry is valid without his hand. He alone knew the truth and the twins. He chose the sick child he had raised. He is **not** the instigator, but he is **the one who made it possible** and **the one who lied for longest.** |
 
 **Edward's present motive and why he does not hide behind the others (🔒 R8, 🟡 detail):**
 1. **Every year** the Archivist reads the **Flood Entry** aloud at the **Remembrance Bell** at midnight. This is the **23rd.** Edward has read the false entry **22 times.**
 2. This year **Nini** finds the Register entries in **two inks** and asks him about it.
-3. He cannot read it a 23rd time. He prepares **The Final Record:** the corrected Register and a handwritten confession that **names himself first,** then the council (including Mara, still living), and states who really did what. He means to resign as Archivist and hand Nini the keys.
+3. He cannot read it a 23rd time. He prepares **The Final Record:** the corrected Register and a handwritten confession that **names himself first,** then the council (including Molly, still living), and states who really did what. He means to resign as Archivist and hand Nini the keys.
 4. **Why he did not act earlier:** he **promised** the council and the Healer; the sick child recovered and became beloved; the elder had returned as a hermit; *"when he is grown"* became a lie he stopped examining. **Cowardice, not malice.**
 5. He sends **one letter to each twin,** meaning to **tell them first** at the tower, then read at midnight. He hides the Record in the **pendulum case** in case he is stopped.
 6. **He does not blame the others in the Record.** He names them; he takes the first line.
@@ -189,7 +189,7 @@ Conditions: snowing; outside ≈ **−9 °C**; unheated stone tower ≈ **−4 �
 | **23:40** | **Clockkeeper sees a bear climbing the stairs, something in his right hand** (Edward's letter to Green; he sees the back only). | Clockkeeper |
 | 23:41 | **R1:** Edward sends the Clockkeeper to the chapel store for the ceremonial bell-rope ("take your time, I'm expecting company"). | Clockkeeper |
 | 23:42 | Oliver leaves by the **front door** for the chapel store, to the **east** (≈ 15 min round trip). **BGB leaves the café,** coming from the **west.** **Hazel straightens the left tail of his scarf** as he goes (🟡 R19). | Oliver; Hazel |
-| 23:46 | **Rowan,** on the plaza, logs *"a second bear, slow, unhurried, heading for the tower,"* then loses him **behind the buttress** (🔒 R10). He does **not** see the door. | Rowan |
+| 23:46 | **Tommy,** on the plaza, logs *"a second bear, slow, unhurried, heading for the tower,"* then loses him **behind the buttress** (🔒 R10). He does **not** see the door. | Tommy |
 | 23:43–23:46 | On the gallery beside the open hatch, Edward tells Green he will **read the true record at midnight.** Green demands it; Edward refuses. | Green, Edward |
 | **23:47** | Struggle. **Edward falls ≈ 3.5 m through the hatch** onto the going-train platform, **striking the pendulum rod and crutch.** **The tower clock stops at 11:47.** | Green, Edward |
 | 23:47 | Green looks down, sees Edward motionless, **believes him dead** (R7). He flees by the **maintenance chute**, dropping his **right glove** and the **crumpled letter.** | Green |
@@ -197,13 +197,13 @@ Conditions: snowing; outside ≈ **−9 °C**; unheated stone tower ≈ **−4 �
 | **23:48** | **BGB arrives** at the front door (café door 11:42 to plaza 11:46 to tower door 11:48 is **6 minutes at an unhurried walk**). He does **not** know Green was there (🔒 D1). | BGB |
 | 23:49 | BGB sees the open hatch and Green's **glove** and the **crumpled letter** on the gallery floor; hears Edward below; climbs down the fixed ladder. | BGB |
 | **23:50** | BGB reaches Edward: alive, conscious, shivering. Edward says, hoarsely, **"Cold… please…"** (🔒 R14) and, a moment later, **"…Green… the clock…"** (ambiguous). Nothing more, no speech. Edward's fingers **close on the left tail of BGB's scarf** and hold. **BGB understands Edward needs help now** and **suspects Green** (🔒 Q2). | BGB, Edward |
-| 23:51 | **Rowan,** on the plaza, hears **faint calling from the tower,** takes it for wind, does not go in (he never enters the tower), and logs *"calling? wind?"* (R17b). | Rowan |
+| 23:51 | **Tommy,** on the plaza, hears **faint calling from the tower,** takes it for wind, does not go in (he never enters the tower), and logs *"calling? wind?"* (R17b). | Tommy |
 | **23:51** | **BGB leaves Edward.** He rises and the scarf tail **parts** (🟡 R19: a hand's width stays in Edward's fist). He climbs to the gallery and **takes the glove and the letter without reading or examining them** (willful ignorance in action), buttoning them into his coat. | BGB |
 | **23:53** | **R13:** BGB **bolts the maintenance chute from the inside** (hiding Green's escape route). | BGB |
 | **23:50–23:55** | **The five missing minutes.** BGB does **not** call for help; he conceals evidence first. Edward lies alone below for about five minutes. | BGB |
 | **23:55** | BGB rings the **handbell.** Clockkeeper hears it on his way back. | BGB, Clockkeeper |
 | 23:56 | BGB goes back down to Edward. | BGB |
-| 23:58 | Oliver arrives; finds BGB kneeling by Edward, **coat buttoned wrong over something,** the **left tail of his scarf torn short,** bell rope still swinging. BGB says he "came as fast as he could." They cover Edward; they do not move him. Rowan is sent for the Healer. A strand of mustard wool is **already in Edward's clenched fist** (R17c). | Oliver, Rowan |
+| 23:58 | Oliver arrives; finds BGB kneeling by Edward, **coat buttoned wrong over something,** the **left tail of his scarf torn short,** bell rope still swinging. BGB says he "came as fast as he could." They cover Edward; they do not move him. Tommy is sent for the Healer. A strand of mustard wool is **already in Edward's clenched fist** (R17c). | Oliver, Tommy |
 | ~00:03 | Edward loses consciousness. | BGB, Clockkeeper |
 | **~00:08** | **Edward dies.** | BGB, Clockkeeper |
 | 00:14 | **Healer arrives.** Edward's **voice is hoarse: he had been calling out for some time** (R17). Estimate **11:55 PM – 12:15 AM** (wide: the cold makes body-temperature estimates unreliable). | Healer |
@@ -294,7 +294,7 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
 - **Setting:** Archive (record room, locked), the village's quiet edge, **Old Mill** (Green). · **Playable:** Yes.
 - **Goal:** Find and confront the second bear.
 - **Beats:**
-  1. Villagers go quiet at a name (**Mara**, the old badger who lived through the flood, is the first to speak, bitterly): *"We don't talk about Green."* Several (Café Owner, **Mara**) give a **biased** account: the bear who "let the bell fail."
+  1. Villagers go quiet at a name (**Molly**, the old badger who lived through the flood, is the first to speak, bitterly): *"We don't talk about Green."* Several (Café Owner, **Molly**) give a **biased** account: the bear who "let the bell fail."
   2. Nini gives BGB the **archive key.** In the record room: the **flood-year register** (EV-12). Edward's drawer: a **second photograph** (EV-13): the same two cubs, different pose.
   3. Walk to the **Old Mill.** First meeting with **Green:** guarded; the **ear scar** is plainly visible in daylight (witnesses at night, at a distance, could not have seen it); scarf knot on the **right** (⬜ see art note). He is **right-handed** (lifts the kettle with his right). He denies being at the tower. He says: *"Ask yourself what you remember."* (Truth; the player will misread it as a taunt.)
   4. Back at the archive, BGB reaches for the photograph to compare…
@@ -365,7 +365,7 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
 
 ### EPILOGUE — The Final Record 🟡
 - **Short, non-playable past scene, < 2 minutes (🔒 Q7), painted stills with minimal motion, no spoken exposition.**
-  - **The adults decide** (🔒 D2, R11, R12). A lamplit council room, **Day 3 at night:** the **Mayor, the Bell-warden, the Healer, Mara and Edward** around the open Register, the boatman's family's demand audible through the door. The Healer shakes his head at one name; Mara says something short; heads nod. **Edward is handed the pen. He hesitates, then writes.** The names are crossed out and **written in the wrong order.** The Mayor and Bell-warden press their seals; three hands sign. *Compassion, signed by committee.*
+  - **The adults decide** (🔒 D2, R11, R12). A lamplit council room, **Day 3 at night:** the **Mayor, the Bell-warden, the Healer, Molly and Edward** around the open Register, the boatman's family's demand audible through the door. The Healer shakes his head at one name; Molly says something short; heads nod. **Edward is handed the pen. He hesitates, then writes.** The names are crossed out and **written in the wrong order.** The Mayor and Bell-warden press their seals; three hands sign. *Compassion, signed by committee.*
   - **Consequences, not explanation:** the notice goes up on the village board; the villagers cheer the carried cub; the **elder twin** is seen leaving with a bundle, his scarf tails on the **right** shoulder, past the notice (he is not shown overhearing). Edward watches from the Archive window and does not stop him. Closing image: the Register, ink still wet.
   - Closing image: the register, ink still wet.
 - **Return to present:** the tower. **The hands move to 11:48**, the minute BGB arrived and help became possible. The ending (§11) plays.
@@ -398,7 +398,7 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 | EV-09 | Patrol log | Night Guard | 2 | "11:35 — B.G.B. crossed Lantern Bridge" | A bear on the bridge | * |
 | EV-10 | Nini's notebook | Nini | 2 | "Red ledger moved?" Torn page | Edward's hidden record | RH |
 | EV-11 | Four statements | Witnesses | 2 | See §2 | Contradictions C1–C3 | |
-| EV-12 | Flood-year register | Archive | 3 | Names in **two different inks;** the hero entry reads "Big Green Bear, age 7" in newer ink; the entry carries the **seals of the Mayor and Bell-warden** and the **signatures of the Healer, Mara and Edward** | Alteration, and **who** | |
+| EV-12 | Flood-year register | Archive | 3 | Names in **two different inks;** the hero entry reads "Big Green Bear, age 7" in newer ink; the entry carries the **seals of the Mayor and Bell-warden** and the **signatures of the Healer, Molly and Edward** | Alteration, and **who** | |
 | EV-13 | Second photograph (**pre-flood**) | Edward's drawer | 3 | Same cubs, **no scar**, captioned with **birth names**; **knot sides** visible (right = captioned "Big Green Bear") | Swap | * |
 | EV-14 | Right glove | **BGB's hiding place (EV-31)** | 6 | Wool, right-hand, snow-damp. Night Guard's log: Green wore **both** gloves at 23:35. | Green was there; **BGB removed it** | * |
 | EV-15 | Rear footprints | Tower rear | 3 | Wide stride toward Old Mill | Green fled by the chute | * |
@@ -417,7 +417,7 @@ Fields: **ID · Name · Where · Chapter · Shows · Points to · Flag**. `RH` =
 | **EV-26** | Pit conditions 🟡 | Wheel pit; Night Guard's log | 6 | Meltwater puddle, ice-blocked drain, frost on the stones, **Edward's vest and trousers soaked**; log shows **−9 °C** | Exposure | |
 | **EV-27** | Edward's letter to Green 🟡 R5 | **BGB's hiding place (EV-31)** | 6 | Crumpled, in Edward's hand, addressed "G." Night Guard's log: Green carried a paper in his **right** hand | The "something in his right hand"; Nini's second letter; **BGB removed it** | * |
 | **EV-28** | Chute door bolted from inside 🟡 R13 | Tower | 1 | Bolted inside; Green's footprints lead **away** from it outside | Someone bolted it **after** Green left | * |
-| **EV-29** | Rowan's patrol log (R10, R17b) 🔒 | Rowan | 2 | **23:35** bear, both hands gloved, paper in right hand, hurrying; **23:46** second bear on the plaza, **slow, unhurried, heading for the tower, lost behind the buttress** (does not see the door); **23:51** *"calling? wind?"*; −9 °C | Green's gloves and letter; BGB's arrival (consistent with the 6-minute walk); Edward calling | * |
+| **EV-29** | Tommy's patrol log (R10, R17b) 🔒 | Tommy | 2 | **23:35** bear, both hands gloved, paper in right hand, hurrying; **23:46** second bear on the plaza, **slow, unhurried, heading for the tower, lost behind the buttress** (does not see the door); **23:51** *"calling? wind?"*; −9 °C | Green's gloves and letter; BGB's arrival (consistent with the 6-minute walk); Edward calling | * |
 | **EV-31** | Hiding place 🔒 R13 | BGB's cottage: **behind the photograph's backing** | 6 | A deep keepsake frame with a hinged backing board and two brass turn-buttons; a **3 cm cavity** holds **one wool glove, flattened, and a letter folded in thirds.** It **leans on the shelf,** never hung. | **BGB concealed evidence** | |
 
 **Red herrings (summary):** Café Owner's debt (EV-08 aside), Night Guard's grudge, Nini's torn page (EV-10 — she tore it because it held a private poem), the missing right glove (EV-14 — Green *is* missing one, but so is the Night Guard), mustard thread (EV-05 matches both scarves), village rumor (EV-17). All **resolve by the end**; none are cheats.
@@ -465,7 +465,7 @@ Each clue stands **alone** (its own source, its own mechanism) and each, **by it
 | Clue | Source | Mechanism | What it proves **alone** | Why BGB **must have perceived** it |
 |---|---|---|---|---|
 | **R17a** Hoarse voice | **The Healer** (medical finding, 00:14) | Throat strain from sustained shouting; Edward was alive and conscious for **at least eight minutes** before 11:55 (fell 11:47) | Edward **called for help for minutes** | The pit is **3.5 m below the gallery and about 12 m from the door;** BGB stood **at the foot of the ladder** from 11:50. |
-| **R17b** Calling heard outside | **Rowan** (log, 23:51) | Third-party record by clock time, **made before anyone knew it mattered** | Edward was calling **while BGB was inside** (11:48 to 11:55, EV-19, EV-08, EV-29) | A call that **carried across a 40 m plaza through stone** was heard by someone **standing beside Edward.** |
+| **R17b** Calling heard outside | **Tommy** (log, 23:51) | Third-party record by clock time, **made before anyone knew it mattered** | Edward was calling **while BGB was inside** (11:48 to 11:55, EV-19, EV-08, EV-29) | A call that **carried across a 40 m plaza through stone** was heard by someone **standing beside Edward.** |
 | **R17c** Wool in the fist | **Oliver** (found at 11:58) + **Hazel** (tail whole at 11:42) | Physical: Edward **gripped** a scarf tail that **parted** | Edward **reached for someone and held on;** the tail parted **when that person stood up** | A grip on **your scarf** is felt; Green **never went down** (EV-21), Oliver wears **no scarf,** and BGB is the **only** wearer present before 11:58. |
 
 **Fairness notes:** (1) Each clue is **found by the player** in Chapters 2 and 6 before the accusation. (2) The torn tail is **visible** on BGB's sprite from Chapter 6 (art item, `ASSET_REQUIREMENTS.md`). (3) **R19 is a clue detail, not a plot change:** if you decline it, clue (c) still shows Edward gripped a scarf, but the *timing* ("it parted when BGB stood up") is lost and the story leans on (a) and (b).
@@ -673,8 +673,8 @@ A Case File board with **three columns.** Each column is a **separate question**
 | **R7** | Green did not see Edward alive | ✅ He believed him dead. |
 | **R8** | Why Edward reveals now | ✅ Nini's two-ink discovery + the 23rd Remembrance Bell; details in §3.1a. |
 | **R9** | Elders' knowledge | ✅ Three tiers (§R9 in `STORY_AUDIT.md` §9); the council members who sat in the room are Tier A. |
-| **R10** | Rowan's 11:46 sighting | ✅ **Verified against BGB's route** (§14.3). |
-| **R11** | Adults' decision | ✏️ **Collective.** A villager drowned; the village demanded a culprit; the **Mayor, Bell-warden, Healer, Mara and Edward** together shifted the blame and altered the identity record. Edward's role and responsibility fixed in §3.1a. |
+| **R10** | Tommy's 11:46 sighting | ✅ **Verified against BGB's route** (§14.3). |
+| **R11** | Adults' decision | ✏️ **Collective.** A villager drowned; the village demanded a culprit; the **Mayor, Bell-warden, Healer, Molly and Edward** together shifted the blame and altered the identity record. Edward's role and responsibility fixed in §3.1a. |
 | **R12** | The elder does not overhear | ✅ Only the consequence is shown. |
 | **R17** | Three corroborating clues | ✅ Each independent (§7.1a). |
 | **R18** | "What I overlooked" page | ✅ |
@@ -686,7 +686,7 @@ A Case File board with **three columns.** Each column is a **separate question**
 | **D7** | Epilogue flashback | ✅ Unchanged: under two minutes, non-playable, the adults' decision and its consequence. |
 | **D8** | Four endings E1 to E4 | ✅ E1 now also has Edward's Record **name the council and himself.** |
 | **D11** | Elder's birth name is "Big Green Bear" | ✅ |
-| **D12** | Names | ✅ **Edward Bell (에드워드 벨), Oliver (올리버), Hazel (헤이즐), Rowan (로언).** |
+| **D12** | Names | ✅ **Edward Bell (에드워드 벨), Oliver (올리버), Hazel (헤이즐), Tommy (토미).** *(Night Guard renamed from Rowan, and the old badger from Mara, on the user's request: easier Korean names. Old Mill = 낡은 방앗간.)* |
 | **R13 to R16** | Concealment mechanics; "Cold… please…"; Responsibility Board; no flashback of 11:50 to 11:55 | ✅ Earlier approvals, unchanged. |
 
 ### 14.2 Invariants you required, and where each is enforced (🔒)
@@ -708,12 +708,12 @@ A Case File board with **three columns.** Each column is a **separate question**
 
 | Check | Result |
 |---|---|
-| **R10 versus BGB's route** | Café door 11:42 to plaza midpoint 11:46 (4 min) to tower door 11:48 (2 min) to hatch 11:49 to Edward 11:50. Rowan's 11:46 sighting is on that path; he loses sight behind the buttress and **does not see the door,** so he gives **no false arrival time.** Oliver left east at 11:42; no crossing. **No contradiction.** |
-| **Rowan at 11:51** | He hears calling and does not enter (he never enters the tower); BGB is inside. Consistent. |
+| **R10 versus BGB's route** | Café door 11:42 to plaza midpoint 11:46 (4 min) to tower door 11:48 (2 min) to hatch 11:49 to Edward 11:50. Tommy's 11:46 sighting is on that path; he loses sight behind the buttress and **does not see the door,** so he gives **no false arrival time.** Oliver left east at 11:42; no crossing. **No contradiction.** |
+| **Tommy at 11:51** | He hears calling and does not enter (he never enters the tower); BGB is inside. Consistent. |
 | **D3 to D2 causal chain** | Closed in §3.1a, steps 1 to 9: jam, harm, handbell, public mistake, scarf evidence, Ordinance, rejected truth, impossibility of an open alternative, swap. |
 | **Why a swap and not just blaming the true culprit's twin** | The record already said *hero = Big Green Bear, scarf = Green's,* and the crowd already believed *the carried child is the hero.* Only exchanging the names makes the record match the village's belief and still satisfy the Ordinance. |
 | **Edward's past and present** | He was the clerk who made the forgery possible and lied for 23 years; he now names **himself first** in the Record. He does not blame the others. |
-| **Who knows what (R9)** | Edward (dead), Mara (alive), Mayor, Bell-warden, Healer (all deceased) knew. Tier B know the official story; Tier C (Oliver, Hazel, Rowan, Nini) arrived later. |
+| **Who knows what (R9)** | Edward (dead), Molly (alive), Mayor, Bell-warden, Healer (all deceased) knew. Tier B know the official story; Tier C (Oliver, Hazel, Tommy, Nini) arrived later. |
 | **BGB's knowledge (D1, Q3)** | Knows the swap and his own scarf tearing; not the council, the Ordinance, or the forgery's details. Never falsely surprised. |
 
 ### 14.4 Minor details added to meet your independence rule (veto allowed, not blocking)
@@ -721,13 +721,13 @@ A Case File board with **three columns.** Each column is a **separate question**
 | # | Detail | If vetoed |
 |---|---|---|
 | **R19** | Hazel straightens the **left** tail of BGB's scarf at 11:42; it is **torn short** at 11:58 (Oliver) and a strand is in Edward's fist. | R17c still shows Edward gripped a scarf, but its timing is lost. |
-| **R20** | Rowan is a **third-party, low-visibility witness:** he never enters the tower and sees neither door. | None needed; it only constrains his testimony. |
+| **R20** | Tommy is a **third-party, low-visibility witness:** he never enters the tower and sees neither door. | None needed; it only constrains his testimony. |
 
 ---
 
 ## 15. What's still ⬜ (do not invent in code or art)
 
-- **Names:** settled (Edward Bell, Oliver, Hazel, Rowan). The Healer and the 23-years-ago council members (Mayor, Bell-warden, Healer) are **intentionally unnamed.**
+- **Names:** settled (Edward Bell, Oliver, Hazel, Tommy). The Healer and the 23-years-ago council members (Mayor, Bell-warden, Healer) are **intentionally unnamed.**
 - The twins' parents (fate and age): **not needed,** left blank.
 - **Young twins** (23 years earlier), **Healer** and any extra villagers: no art exists yet. Green's **right glove** (EV-14) is not drawn on his sheet.
 - Exact **timer** for the Remembrance Bell ceremony.
@@ -743,7 +743,9 @@ A Case File board with **three columns.** Each column is a **separate question**
 | Bell Village | 벨 마을 |
 | Clockkeeper (Oliver) | 시계지기 (올리버) |
 | Café Owner (Hazel) | 카페 주인 (헤이즐) |
-| Night Guard (Rowan) | 야간 경비원 (로언) |
+| Night Guard (Tommy) | 야간 경비원 (토미) |
+| Old Badger (Molly) | 몰리 할머니 |
+| The Old Mill | 낡은 방앗간 |
 | Edward Bell | 에드워드 벨 |
 | Bell Ordinance | 종 조례 |
 | Bell-warden | 종지기 감독관 |
