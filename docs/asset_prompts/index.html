@@ -84,193 +84,496 @@ input[type=checkbox]{width:20px;height:20px;accent-color:var(--ok)}
 <script>
 (() => {
 "use strict";
-const PNG = "Output as a PNG with a TRANSPARENT background (clean alpha channel): the background outside the painted objects must be fully transparent. No green screen, no white or coloured background, no baked drop shadow, no glow halo, no blur, sharp edges.";
-const STYLE = "Hand-painted storybook illustration, clean slightly rough dark-brown ink outlines, soft painterly shading, warm amber lantern light from the left, cool blue night shadows, cozy winter night in Bell Village, same painting style as the existing Bell Village and Clocktower artwork. No text, no letters, no numbers, no UI, no watermark. Real fine detail at the requested size, not an upscaled low-resolution image.";
-const CHAR = "Cute round storybook animal characters in the same style as the existing character turnaround sheet. Do not redesign the characters. Keep the same proportions, outline weight and colours.";
+/* ============ SHARED BLOCKS (pasted into every prompt, so each prompt works on its own) ============ */
+const STYLE = [
+"STYLE (apply to everything):",
+"- Hand-painted 2D storybook illustration with the feel of a premium picture book, gently mysterious, cozy. NOT pixel art, NOT 3D render, NOT photorealistic, NOT flat vector, NOT anime cel-shading, NOT glossy plastic.",
+"- Linework: slightly rough, hand-inked, dark warm-brown outlines (about #2A1A12), consistent weight (about 3 px at 1080p scale, about 6 px at 4K), a little thicker on the outer silhouette, thinner on interior details. Outlines are closed and clean, never broken or doubled.",
+"- Painting: soft painterly shading with visible but subtle brush texture. Two to three tones per surface, blended softly. No airbrushed gradients, no shiny highlights, no plastic or metallic gloss except small brass glints.",
+"- Light: ONE consistent direction. Warm amber lantern light (#FFB048 at the brightest edges, #E8903A in mid-tones) from the upper left. Cool blue-violet shadows (#3A4F8A, deepest #111923). A thin amber rim light on the left edges of characters and props.",
+"- Palette: warm, friendly, moderate saturation. No neon. No pure black and no pure white. Snow is blue-white: highlights #DCE6F5, mid #8FA2C6, shadow #41517D. Parchment cream #F2E8D4, brass #B08D57, burgundy #6E2A35, red ink #A8483F, graphite #3B3A37, navy #243044.",
+"- Mood: a cozy winter night that quietly turns mysterious. No bloom, no lens flare, no glow halo, no heavy vignette.",
+"- Detail: real fine detail at the requested pixel size (not an upscaled small image). Crisp edges."
+].join("\n");
 
-// kind: "png" gets the transparent line appended; "audio" does not
-const P = (title, body, o={}) => ({title, body, kind:o.kind||"png", note:o.note||"", size:o.size||"", tags:o.tags||[]});
+const PNG = [
+"TRANSPARENT PNG (REQUIRED):",
+"- Output as a PNG with a TRANSPARENT background and a clean alpha channel. Everything outside the painted objects must be fully transparent (alpha 0).",
+"- Do NOT use a green screen, a white background, a black background, a coloured background, a gradient, or a checkerboard pattern drawn into the picture.",
+"- No baked drop shadow on the ground, no glow halo around edges, no blur, no soft semi-transparent fringe. Edges are sharp and clean.",
+"- Keep at least 12 px of empty transparent margin around every object so it can be cut out safely."
+].join("\n");
 
+const NEG = "NEGATIVE PROMPT (things to avoid): text, letters, numbers, logo, watermark, signature, UI, frame border, photo, 3D, pixel art, anime, vector flat, blurry, low resolution, jpeg artifacts, extra limbs, extra fingers, deformed face, mirrored duplicate, green background, white background, colored background, drop shadow, glow, lens flare, bloom, people, humans (unless asked).";
+
+const BGB = [
+"BIG GREEN BEAR (BGB), do not redesign:",
+"- Large, rounded, soft pear-shaped bear with a chubby belly, short stubby arms and legs, a big round head. Slow, gentle, slightly heavy body language.",
+"- Soft sage-green fur: base #7C9B63, shadow #5E7B4A, highlight #9DBB84. Small rounded ears with a slightly lighter inner ear. Small black bead eyes set wide apart. Dark brown rounded nose (#3B2A22) and a tiny mouth line.",
+"- Mustard-yellow knitted scarf: base #D9A441, shadow #A87A24, visible chunky knit ribs, worn loosely around the neck. The knot and the two hanging tails are on HIS LEFT shoulder. (Left and right always mean the character's own left and right.)",
+"- He is LEFT-handed. No clothes other than the scarf. No scars. Calm, open expression with a slow, soft smile."
+].join("\n");
+
+const GREEN = [
+"GREEN (twin brother of Big Green Bear), do not make him look scarier than BGB:",
+"- Identical body, face shape, size and sage-green fur colours as Big Green Bear. Same small black eyes and dark nose. A slightly more guarded resting mouth, but still gentle eyes. He must look like the same family, not a villain.",
+"- Same mustard knitted scarf, but the knot and the two tails are on HIS RIGHT shoulder. He is RIGHT-handed.",
+"- Old, healed scar on his LEFT ear: three or four thin raised lines in a faded pinkish-grey (#B9A3A0). Not red, no scab, no blood, not fresh."
+].join("\n");
+
+const NINI = [
+"NINI, do not redesign:",
+"- Small fluffy white lamb, about 55% of Big Green Bear's height. Round head covered in cloud-like cream-white wool (#F7F1E3, shadow #D8CDB6). Small floppy ears with pink insides. Round black eyes, tiny pink nose, gentle round face.",
+"- Yellow raincoat (#F2C230, shadow #C9992A) with a hood and two dark round buttons. Brown boots (#6B4528). Short legs. Innocent, earnest expression."
+].join("\n");
+
+const OLIVER = [
+"OLIVER (the Clockkeeper), do not redesign:",
+"- Adult cat, slimmer than the bear, about 75% of Big Green Bear's height. Tabby coat in warm grey-brown (#9A8672) with a white muzzle, chest and paws, pink nose, whiskers, a long striped tail.",
+"- Brass aviator goggles (#B08D57, lenses tinted #8FB4C8) worn on a brown leather cap with ear flaps. Cream collared shirt (#EFE3C8), brown leather apron (#6B4A32) with two tool pockets and small brass buttons. Matter-of-fact, honest expression."
+].join("\n");
+
+const LEFTRIGHT = "LEFT/RIGHT RULE: left and right always mean the CHARACTER's own left and right. Every facing direction is drawn BY HAND. NEVER mirror or flip a drawing to make the other direction, because that would swap which hand and which shoulder carry the clue.";
+
+/* ============ prompt builder ============ */
+// o: {goal, refs, subject, layout, details[], include[], exclude[], tech, extra[]}
+function D(o){
+  const L = [];
+  const sec = (h, v) => { if (!v || (Array.isArray(v) && !v.length)) return; L.push(h); L.push(Array.isArray(v) ? v.map(x => "- " + x).join("\n") : v); L.push(""); };
+  sec("GOAL:", o.goal);
+  sec("REFERENCE IMAGES TO ATTACH (so the result matches the game):", o.refs);
+  sec("SUBJECT:", o.subject);
+  sec("COMPOSITION AND LAYOUT:", o.layout);
+  sec("CHARACTER AND OBJECT DETAILS:", o.details);
+  sec("MUST INCLUDE:", o.include);
+  sec("MUST NOT INCLUDE:", o.exclude);
+  sec("TECHNICAL:", o.tech);
+  (o.blocks || []).forEach(b => { L.push(b); L.push(""); });
+  L.push(STYLE); L.push("");
+  if (o.kind !== "audio") { L.push(PNG); L.push(""); L.push(NEG); }
+  return L.join("\n").trim();
+}
+const P = (title, o, meta={}) => ({title, body: D(o), kind: meta.kind || "png", note: meta.note || "", size: meta.size || "", tags: meta.tags || []});
+const REF_CHAR = "the character turnaround sheet (the row of this character), so the design matches";
+const REF_LIGHT = "any Bell Village night layer (for colour and lighting)";
+
+/* ============ A. NEXT MILESTONE ============ */
 const SECTIONS = [
- {id:"a", name:"A. Next milestone", sub:"Needed for the next playable step.", items:[
-  P("1. Clocktower entrance door and steps (exterior prop)",
-`${STYLE}
-A single prop, straight side view: the entrance of a stone clocktower. A tall closed wooden door with iron hinges set in a pointed stone arch, two to three snow-covered stone steps in front, a small iron lantern bracket on the right wall with a warm lit lantern, a little snow on the arch. NO clock, NO text, NO people. Door about 230 px wide and 346 px tall at 1080p scale. Size 1200x1800.
-${PNG}`, {size:"1200x1800", note:"Optional second image: the same door open, warm light spilling out."}),
-  P("2a. BGB walk cycle: facing RIGHT (separate drawing)",
-`${STYLE}
-${CHAR}
-Sprite sheet of Big Green Bear (large soft sage-green bear, mustard knitted scarf with the tails on his LEFT shoulder, small black eyes, dark rounded nose), facing RIGHT in side view. 8 walk-cycle frames in one row, evenly spaced, same scale and the same foot baseline in every frame, gentle slightly heavy steps, no exaggerated bouncing. Each frame about 400 px wide, 640 px tall. He is LEFT-handed: the left arm swings naturally and is the one that will later carry objects. Draw every frame by hand; this is NOT a mirrored copy of a left-facing sheet.
-${PNG}`, {size:"3200x640", tags:["no mirroring"]}),
-  P("2b. BGB walk cycle: facing LEFT (separate drawing)",
-`${STYLE}
-${CHAR}
-Sprite sheet of Big Green Bear facing LEFT in side view, 8 walk-cycle frames in one row, same scale, same foot baseline, gentle slightly heavy steps. Mustard knitted scarf with the tails on his LEFT shoulder (the shoulder nearest to the viewer when he faces left). LEFT-handed. This must be a fresh drawing, NOT a mirrored copy of the right-facing sheet, so the scarf tails and the hand stay anatomically correct. Each frame about 400x640 px.
-${PNG}`, {size:"3200x640", tags:["no mirroring"]}),
-  P("2c. BGB idle (front, 4 frames)",
-`${STYLE}
-${CHAR}
-Sprite sheet of Big Green Bear, FRONT view, idle breathing, 4 frames in a row, tiny movement only (chest rise, scarf sway, a slow blink in one frame), same scale and feet baseline. Mustard scarf tails on his LEFT shoulder (the viewer's right). Each frame about 400x640 px.
-${PNG}`, {size:"1600x640"}),
-  P("3a. Nini idle (front, 4 frames)",
-`${STYLE}
-${CHAR}
-Sprite sheet of Nini, small fluffy white lamb in a yellow raincoat and brown boots, about 55% of Big Green Bear's height, FRONT view, idle, 4 frames in a row: slow breathing, a small ear twitch, a blink. Same scale and feet baseline in every frame. Each frame about 220x350 px.
-${PNG}`, {size:"880x350"}),
-  P("3b. Oliver (Clockkeeper) idle (front, 4 frames)",
-`${STYLE}
-${CHAR}
-Sprite sheet of Oliver, a tabby-and-white cat with brass goggles on a leather cap, a brown apron over a cream shirt and tool pockets, FRONT view, idle, 4 frames in a row: tail sway, a slow blink, a small adjustment of the goggles. Same scale and feet baseline. Each frame about 300x440 px (about 75% of Big Green Bear's height).
-${PNG}`, {size:"1200x440"}),
-  P("4a. Portraits: Big Green Bear (4 expressions)",
-`${STYLE}
-${CHAR}
-Four square bust portraits of Big Green Bear in one row for a dialogue box, shoulders and scarf visible: neutral (soft calm look), worried (eyebrows raised inward, small frown), surprised (round wide eyes, mouth slightly open), thinking (eyes glancing up-left, one paw near the chin). Mustard scarf tails on his LEFT shoulder (the viewer's right). Each 400x400 px.
-${PNG}`, {size:"1600x400"}),
-  P("4b. Portraits: Nini (4 expressions)",
-`${STYLE}
-${CHAR}
-Four square bust portraits of Nini (white lamb, yellow raincoat hood down) in one row: neutral, worried (eyes glistening, small frown), surprised (round wide eyes, mouth a small O), thinking (looks up and aside, a hoof near the cheek). Each 400x400 px.
-${PNG}`, {size:"1600x400"}),
-  P("4c. Portraits: Oliver (4 expressions)",
-`${STYLE}
-${CHAR}
-Four square bust portraits of Oliver (cat with brass goggles pushed up on the cap, brown apron) in one row: neutral (steady, matter-of-fact), worried (ears slightly back), surprised (goggles slipping, wide eyes), thinking (looks up, one paw on the chin). Each 400x400 px.
-${PNG}`, {size:"1600x400"}),
-  P("5. Hotspot magnifier ring",
-`${STYLE}
-A round "look closer" hotspot marker for a point-and-click scene: a thin brass magnifying-glass ring with a clear dark-navy centre that is slightly transparent, a tiny handle at the lower right, subtle warm highlight on the rim. One icon, centred. Size 256x256.
-${PNG}`, {size:"256x256"})
- ]},
- {id:"b", name:"B. Soon after", sub:"Rooms, evidence, boards, stamps and sound.", items:[]},
- {id:"c", name:"C. Story-lock fixes", sub:"Changes forced by the final story. Never mirror a sprite to make the other twin.", items:[
-  P("Green: redrawn turnaround (faded scar, scarf on his RIGHT shoulder)",
-`${STYLE}
-${CHAR}
-Character turnaround sheet of GREEN, the twin brother of Big Green Bear: same body, face and sage-green colour as Big Green Bear but he is RIGHT-handed. SIX views in one row, each drawn separately (left profile, left three-quarter, front, back, right three-quarter, right profile). Mustard knitted scarf with the knot and tails on his RIGHT shoulder in every view where they would be visible (hidden on the far side in the left profile). Old, healed scar on his LEFT ear: a few thin raised lines in a faded pinkish-grey, NOT red, no scab, no blood. He must NOT look more sinister than Big Green Bear: same gentle eyes, a slightly guarded resting mouth. Each view about 400x640 px.
-${PNG}`, {size:"2400x640", tags:["no mirroring"]}),
-  P("Big Green Bear: redrawn turnaround (scarf on his LEFT shoulder)",
-`${STYLE}
-${CHAR}
-Character turnaround sheet of Big Green Bear, SIX views in one row, each drawn separately (left profile, left three-quarter, front, back, right three-quarter, right profile). Mustard knitted scarf with the knot and tails on his LEFT shoulder in every view where visible (hidden in the right profile). LEFT-handed. No scar on his ears. Soft, open, slow-smile expression. Anatomically consistent in all six views, NOT mirrored copies. Each view about 400x640 px.
-${PNG}`, {size:"2400x640", tags:["no mirroring"]}),
-  P("Big Green Bear: torn-tail scarf variant (6 views)",
-`${STYLE}
-${CHAR}
-Same Big Green Bear turnaround as the redrawn sheet (SIX separate views, scarf tails on his LEFT shoulder, left-handed) but the LEFT scarf tail is torn short by about a hand's width, with a ragged frayed end of mustard wool. Everything else unchanged. Each view about 400x640 px.
-${PNG}`, {size:"2400x640", tags:["no mirroring"]}),
-  P("Keepsake photo frame (front, leaning on a shelf)",
-`${STYLE}
-A single prop: a thick, deep wooden keepsake photo frame, slightly heavier than a photograph needs, standing and leaning back on a shelf, with a small stand strut visible at the lower back edge, brass corner caps, holding a worn photograph of two small bear cubs (just soft shapes, no faces needed). Looks sentimental, gently worn. NO hidden compartment visible from the front. Size 1000x1200.
-${PNG}`, {size:"1000x1200"}),
-  P("Photograph: post-flood (home copy)",
-`${STYLE}
-A single worn paper photograph with a white border, slightly curled corners, sepia-warm tone: two small bear cubs side by side, one with a thin faded healed scar on the left ear, scarves with knots on opposite shoulders. A handwritten caption strip below is left EMPTY (no letters). Size 900x1100.
-${PNG}`, {size:"900x1100"}),
-  P("Photograph: pre-flood (in Edward's drawer)",
-`${STYLE}
-A single paper photograph, older and more faded than the other one: the same two small bear cubs before the flood, NO scar on either ear, scarves tied with the knots clearly visible on opposite shoulders (one on the cub's right, the other on his left). Empty caption strip (no letters). Size 900x1100.
-${PNG}`, {size:"900x1100"})
- ]},
- {id:"d", name:"D. Later", sub:"Chapters 4 and up.", items:[
-  P("Young twin bears: walk sets for both (age 7)",
-`${STYLE}
-${CHAR}
-Two sprite sheets of the SAME two bear cubs at age seven (younger and smaller than Big Green Bear, softer round proportions, big heads), each with matching frames: 8-frame walk facing LEFT and 8-frame walk facing RIGHT, each drawn separately (no mirroring), plus a 4-frame front idle. Cub A: scarf knot and tails on his RIGHT shoulder, right-handed. Cub B: scarf on his LEFT shoulder, left-handed. Same mustard scarves, no names, no scars. Each frame about 260x420 px.
-${PNG}`, {size:"2080x420 per row", tags:["no mirroring"]}),
-  P("Flashback Bell Village (4 layers, warm daylight to dusk)",
-`${STYLE}
-The same village layout as the night version but twenty-three years earlier, warm late-afternoon light, a cosier look, fewer chimneys, no red banners. Make four SEPARATE transparent layers: Far (sky and mountains only), Mid (whole clocktower with an empty dial, no hands, village buildings), Ground (low walkable cobblestone path and arched bridge), Foreground (bushes and a short fence). 3840 px wide each.
-${PNG}`, {size:"3840 wide x4"}),
-  P("Flood water and rain overlays",
-`${STYLE}
-Three separate effect overlays: (1) a wide strip of dark, muddy meltwater surface with soft ripples and floating snow, 3840x420; (2) falling heavy rain streaks in a seamless tile, 1024x1024; (3) a splash and foam strip for the water edge, 3840x160. Soft and painterly, no photorealism.
-${PNG}`, {size:"see prompt"}),
-  P("Flooded tower stairwell (background)",
-`${STYLE}
-Inside the tower stairwell during the flood, side view: stone steps rising to the right, dark water filling the lower half, a wooden railing, a single lantern floating, cold blue and dim amber light, dramatic but gentle. Make it a single layer with a flat walkable edge on the steps. 3840x1400.
-${PNG}`, {size:"3840x1400"}),
-  P("Flood-year register page (two inks)",
-`${STYLE}
-One open page of an old hand-written register: aged cream paper, rows of neat brown ink handwriting in unreadable squiggles (no real letters), ONE entry crossed out and rewritten in a visibly newer, darker ink above it, a red wax seal and a green wax seal at the bottom, and a cluster of five small signatures. Top-down view. Size 1600x2000.
-${PNG}`, {size:"1600x2000"}),
-  P("Epilogue still 1: the council room (the adults decide)",
-`${STYLE}
-A lamplit council room at night, wide shot: five adult animals around a table with an open register: a stern Mayor, a nervous Bell-warden, an old Healer, Mara (old badger in a red embroidered shawl), and Edward (hedgehog with round glasses, vest, red tie) holding a pen, hesitating. A quill, wax seals, one candle. Warm light turning cold at the edges. No text. Painted still. Size 3840x2160.
-${PNG}`, {size:"3840x2160", note:"A full scene: the painted area fills the frame; anything outside the painted shapes stays transparent."}),
-  P("Epilogue still 2: the consequence (the elder leaves)",
-`${STYLE}
-A small bear cub with his scarf tails on his RIGHT shoulder walking away alone along a snowy lane at dawn with a small bundle, past a village notice board, while villagers cheer a carried cub in the background and a hedgehog in round glasses watches from an archive window. Melancholy. No text. Painted still. Size 3840x2160.
-${PNG}`, {size:"3840x2160"}),
-  P("Ending art E1: The Final Record",
-`${STYLE}
-The tower clock restarted at 11:48, warm dawn light through the winding room, Nini writing in a large record book at a desk, two bear brothers standing side by side behind her, one scarf tail on each of their opposite shoulders. Hopeful but sober. No text. Painted still, 3840x2160.
-${PNG}`, {size:"3840x2160"}),
-  P("Ending art E2: The Hero's Silence",
-`${STYLE}
-The repaired clocktower at night with the bell ringing, the village calm and cozy, one lone bear in a hood walking back to a distant mill, and a faint dark stain on the stair inside a doorway. Quietly unsettling. No text. Painted still, 3840x2160.
-${PNG}`, {size:"3840x2160"}),
-  P("Ending art E3: The Wrong Bear",
-`${STYLE}
-A bear in a mustard scarf being led away in the snow by village guards at dusk, villagers watching in silence, Big Green Bear standing apart with his scarf tail torn, looking down. Dark and heavy. No text. Painted still, 3840x2160.
-${PNG}`, {size:"3840x2160"}),
-  P("Ending art E4: The Burned Page",
-`${STYLE}
-A fireplace at night with a rolled record page burning, a bear's hand in a mustard knitted sleeve, a small lamb in a yellow raincoat in the doorway holding one saved corner of paper. Ambiguous and quiet. No text. Painted still, 3840x2160.
-${PNG}`, {size:"3840x2160"})
- ]}
+{id:"a", name:"A. Next milestone", sub:"Needed for the next playable step.", items:[
+ P("1. Clocktower entrance door and steps (exterior prop)", {
+   goal:"One standalone prop the player can walk up to: the main entrance of the clocktower. It will be placed in front of the village layers, so it must look like part of the tower base.",
+   refs:["The Bell Village Mid layer (the tower base must match its stone and snow)", REF_LIGHT],
+   subject:"Straight side-on (orthographic) view of the base of a medieval stone clocktower entrance.",
+   layout:["Centred, whole prop visible, about 1200 px wide by 1800 px tall; the ground line is the bottom edge of the bottom step.","A tall pointed stone arch (cut blocks of grey-brown stone, #8B7F78 lit, #4E4750 in shadow), a heavy closed wooden double door inside it (about 230 px wide by 346 px tall at 1080p scale), two to three wide stone steps in front, a small wooden sign plate above the arch left EMPTY (no text)."],
+   details:["Door: vertical dark-brown planks (#4A2A18 base, #7A4A28 lit edges), iron straps and hinges (#2A2430), a round brass ring handle (#D9B25C) at the right door half. A thin warm line of light under the door suggests a lit room inside.","Stone arch: visible block joints, small chips and moss-free cracks, a thick cap of snow on top of the arch and on every step edge (blue-white, soft rounded).","Right wall: one iron lantern bracket with a LIT lantern, warm amber glow only inside the lantern glass (no halo outside).","A little snow drift against the left bottom corner."],
+   include:["Door slightly weathered, snow on steps, lantern lit","Clean flat bottom edge on the lowest step","Stone and wood textures painted, not photographic"],
+   exclude:["any clock face or hands","any text or letters","characters or footprints","a ground plane or sky behind the prop"],
+   tech:["Size 1200x1800 px, single image, prop centred."]},
+   {size:"1200x1800", note:"Optional second image: the same door standing open, warm light spilling onto the steps."}),
+
+ P("2a. BGB walk cycle: facing RIGHT (hand-drawn, not a mirror)", {
+   goal:"A side-view walk cycle for the player character, facing to the RIGHT, to be played at about 8 frames per second.",
+   refs:[REF_CHAR + " (Big Green Bear, side and three-quarter views)"],
+   blocks:[BGB, LEFTRIGHT],
+   subject:"Big Green Bear in full side view facing RIGHT, walking at a calm pace.",
+   layout:["ONE row of 8 frames, left to right, each frame in its own equal 400 x 640 px cell (sheet 3200 x 640 px).","Every frame uses the SAME scale and the SAME foot baseline: the lowest foot sole touches y = 600 in every frame. Feet never float.","Character centred horizontally in each cell with the same centre of mass; at least 20 px empty margin on each side."],
+   details:["Frame 1 contact (right foot forward, left foot back); 2 down (body lowest, knees soft); 3 passing (legs together, body slightly rising); 4 up (highest, front paw lifting); 5 contact (left foot forward); 6 down; 7 passing; 8 up. Frame 8 flows into frame 1.","Slightly heavy, soft movement: the body bobs only about 12 px up and down, the belly sways slightly behind the step, the scarf tails swing a little in the opposite direction of the step, the head stays level.","Facing RIGHT, the viewer sees the bear's RIGHT side. So the knot and the two scarf tails on his LEFT shoulder are on the FAR side: mostly hidden behind the neck, only the tail tips peek out behind the chest and swing slightly. His RIGHT arm is nearest the camera and swings opposite to the leading leg; his left arm is partly visible behind the body. Keep this consistent in all 8 frames."],
+   include:["8 distinct frames with smooth arcs","Scarf knit pattern visible on the neck band","Same colours as the turnaround sheet"],
+   exclude:["mirroring or copying the left-facing sheet","bouncy cartoon squash and stretch","extra props or items in the paws","a ground line or shadow"],
+   tech:["Sheet 3200x640 px, 8 cells of 400x640, transparent."]},
+   {size:"3200x640", tags:["no mirroring"]}),
+
+ P("2b. BGB walk cycle: facing LEFT (hand-drawn, not a mirror)", {
+   goal:"The matching walk cycle facing LEFT. It must be its own drawing so the scarf tails stay on his left shoulder.",
+   refs:[REF_CHAR + " (Big Green Bear, left profile and left three-quarter)", "the finished right-facing walk sheet, for timing and scale (but do NOT mirror it)"],
+   blocks:[BGB, LEFTRIGHT],
+   subject:"Big Green Bear in full side view facing LEFT, walking at a calm pace.",
+   layout:["ONE row of 8 frames, each in its own 400 x 640 px cell (sheet 3200 x 640 px), same scale and same foot baseline (y = 600) as the right-facing sheet.","Frame order and timing identical to the right-facing sheet: contact, down, passing, up, contact, down, passing, up."],
+   details:["Facing LEFT the viewer sees the bear's LEFT side, so the knot and the two scarf tails on his LEFT shoulder are clearly visible, hanging down the front of his chest and swinging gently with each step.","His LEFT arm is nearest the camera. It swings opposite to the leading leg, relaxed, paw loosely closed.","Same soft, slightly heavy movement: about 12 px body bob, belly sway, head level."],
+   include:["scarf tails fully visible and swinging","consistent knit pattern and colours"],
+   exclude:["a mirrored copy of the right-facing sheet","tails on the wrong shoulder","bouncy squash and stretch"],
+   tech:["Sheet 3200x640 px, 8 cells, transparent."]},
+   {size:"3200x640", tags:["no mirroring"]}),
+
+ P("2c. BGB idle: front view, 4 frames", {
+   goal:"A calm idle loop for when the player stands still (front view).",
+   refs:[REF_CHAR + " (Big Green Bear front view)"],
+   blocks:[BGB],
+   subject:"Big Green Bear facing the viewer, standing relaxed, arms at his sides.",
+   layout:["ONE row of 4 frames in 400 x 640 px cells (sheet 1600 x 640 px), same scale, feet baseline y = 600 in all frames.","Scarf: knot and tails on HIS LEFT shoulder, which appears on the VIEWER'S RIGHT in this front view."],
+   details:["Frame 1 neutral; frame 2 chest rises about 6 px, scarf tails sway 2 px; frame 3 chest highest, a slow blink (eyes as thin curved lines); frame 4 chest lowers, eyes open. Loops back to frame 1.","Movement is tiny: only breathing, a blink and a gentle scarf sway. Feet do not move."],
+   include:["identical outline and colour in all 4 frames"], exclude:["waving, large gestures","mirroring a previous image"],
+   tech:["Sheet 1600x640 px, transparent."]},
+   {size:"1600x640"}),
+
+ P("3a. Nini idle: front view, 4 frames", {
+   goal:"Idle loop for the first NPC.",
+   refs:[REF_CHAR + " (Nini front view)"],
+   blocks:[NINI],
+   subject:"Nini standing, facing the viewer, hands clasped lightly in front of the raincoat, holding a small notebook against her chest.",
+   layout:["ONE row of 4 frames in 220 x 350 px cells (sheet 880 x 350 px), same scale, feet baseline y = 335.","Height is 55% of Big Green Bear's height when both are placed at their natural scale."],
+   details:["Frame 1 neutral; frame 2 slow breath in, one ear twitches slightly; frame 3 slow blink; frame 4 breath out, ear back. Loops.","Tiny movements only: a worried but earnest look."],
+   include:["same colours and proportions as the sheet","notebook is a small brown cloth cover with a ribbon"], exclude:["large gestures","a different raincoat style"],
+   tech:["Sheet 880x350 px, transparent."]},
+   {size:"880x350"}),
+
+ P("3b. Oliver (Clockkeeper) idle: front view, 4 frames", {
+   goal:"Idle loop for the Clockkeeper NPC.",
+   refs:[REF_CHAR + " (Clockkeeper front view)"],
+   blocks:[OLIVER],
+   subject:"Oliver standing in front view, one paw resting on a tool pocket, the other hanging loosely.",
+   layout:["ONE row of 4 frames in 300 x 440 px cells (sheet 1200 x 440 px), same scale, feet baseline y = 420."],
+   details:["Frame 1 neutral; frame 2 tail tip swings to the left, ears turn slightly; frame 3 slow blink; frame 4 a small push of the goggles up with one paw, then back. Loops cleanly.","Keep the apron pockets, buttons and goggle straps identical in every frame."],
+   include:["tabby striping consistent across frames"], exclude:["holding objects that cover the face","different clothes"],
+   tech:["Sheet 1200x440 px, transparent."]},
+   {size:"1200x440"}),
+
+ P("4a. Portraits: Big Green Bear, 4 expressions", {
+   goal:"Dialogue-box portraits. They sit in a 200 x 196 px frame, so faces must read clearly when small.",
+   refs:[REF_CHAR + " (Big Green Bear)"],
+   blocks:[BGB],
+   subject:"Four bust portraits (head, shoulders, the scarf), facing the viewer in a slight three-quarter turn toward the LEFT of the picture.",
+   layout:["ONE row of 4 squares, each 400 x 400 px (sheet 1600 x 400 px). Head fills about 70% of the square, centred, scarf visible at the bottom.","Order: neutral, worried, surprised, thinking."],
+   details:["Neutral: soft calm look, gentle slow smile.","Worried: eyebrows raised toward the middle, small downturned mouth, ears slightly lowered.","Surprised: wide round eyes with tiny pupils, small open mouth, ears up.","Thinking: eyes glancing up and to the left, mouth a small flat line, his LEFT paw raised near his chin."],
+   include:["identical outline weight and colours in all 4","scarf knit pattern visible"], exclude:["background","text","different art style from the sheet"],
+   tech:["Sheet 1600x400 px, transparent."]},
+   {size:"1600x400"}),
+
+ P("4b. Portraits: Nini, 4 expressions", {
+   goal:"Dialogue-box portraits for Nini.",
+   refs:[REF_CHAR + " (Nini)"],
+   blocks:[NINI],
+   subject:"Four bust portraits of Nini, hood down, facing the viewer in a slight three-quarter turn.",
+   layout:["ONE row of 4 squares, each 400 x 400 px (sheet 1600 x 400 px). Order: neutral, worried, surprised, thinking."],
+   details:["Neutral: soft, attentive look.","Worried: eyes glistening, small frown, ears drooping.","Surprised: very round eyes, mouth a small O, ears up.","Thinking: looks up and aside, one hoof under her chin."],
+   include:["wool texture painted with soft curls","yellow collar and a bit of both buttons visible"], exclude:["background","text"],
+   tech:["Sheet 1600x400 px, transparent."]},
+   {size:"1600x400"}),
+
+ P("4c. Portraits: Oliver, 4 expressions", {
+   goal:"Dialogue-box portraits for the Clockkeeper.",
+   refs:[REF_CHAR + " (Clockkeeper)"],
+   blocks:[OLIVER],
+   subject:"Four bust portraits of Oliver, goggles pushed up on the cap, facing the viewer in a slight three-quarter turn.",
+   layout:["ONE row of 4 squares, each 400 x 400 px (sheet 1600 x 400 px). Order: neutral, worried, surprised, thinking."],
+   details:["Neutral: steady, matter-of-fact.","Worried: ears slightly back, brow tight.","Surprised: goggles slipping on the cap, wide eyes, whiskers forward.","Thinking: eyes up and aside, one paw on his chin."],
+   include:["tabby face markings consistent","collar and the top of the apron visible"], exclude:["background","text"],
+   tech:["Sheet 1600x400 px, transparent."]},
+   {size:"1600x400"}),
+
+ P("5. Hotspot magnifier ring", {
+   goal:"A small marker that shows 'you can look closer here' on scene objects.",
+   refs:["the round brass icon buttons on the UI sheet (match the brass colour and rim thickness)"],
+   subject:"A round magnifying-glass ring seen straight on.",
+   layout:["Single icon centred on a 256 x 256 px canvas, ring diameter about 200 px, a short brass handle at the lower right at 45 degrees."],
+   details:["Rim: brass (#B08D57, lit #E0C27E, shadow #6E5530), slightly rough hand-inked outline.","Glass: clear, filled with a deep navy (#243044) at about 35% opacity, one small warm highlight arc at the upper left of the glass.","Subtle small rivets on the rim."],
+   include:["thin elegant look, readable at 64 px"], exclude:["glow","text","shadow under the icon"],
+   tech:["256x256 px, transparent."]},
+   {size:"256x256"})
+]},
+
+/* ============ B. SOON AFTER ============ */
+{id:"b", name:"B. Soon after", sub:"Rooms, evidence, boards, stamps and sound.", items:[]},
+
+/* ============ C. STORY-LOCK FIXES ============ */
+{id:"c", name:"C. Story-lock fixes", sub:"Changes forced by the final story. Never mirror a sprite to make the other twin.", items:[
+ P("Green: redrawn turnaround (faded scar, scarf on his RIGHT shoulder)", {
+   goal:"Replace Green's current sheet. The scarf side and the scar are story clues.",
+   refs:[REF_CHAR + " (Big Green Bear and Green rows, for body shape and colours)"],
+   blocks:[GREEN, LEFTRIGHT],
+   subject:"Character turnaround of Green: SIX views, each drawn separately.",
+   layout:["ONE row, 6 cells of 400 x 640 px (sheet 2400 x 640 px), same scale, same feet baseline y = 600, neutral standing pose, arms relaxed.","Order: 1 left profile, 2 left three-quarter, 3 front, 4 back, 5 right three-quarter, 6 right profile."],
+   details:["Scarf tails: view 1 (we see his left side): the knot is hidden on the far side, only the scarf band and a hint of the tail tip are visible. View 3 front: tails hang on the VIEWER'S LEFT (his right). View 6 (we see his right side): knot and both tails clearly visible.","Scar on the LEFT ear: visible in views 1 and 2, on the viewer's RIGHT ear in view 3, on the viewer's LEFT ear in view 4, partly visible in view 5, hidden in view 6.","Expression: a gentle, slightly guarded resting mouth, calm eyes."],
+   include:["same fur colours as BGB","thin faded pinkish-grey scar lines, subtle"], exclude:["red or bloody scar","mirrored views","a darker, scarier face","any hood or extra clothing"],
+   tech:["Sheet 2400x640 px, transparent."]},
+   {size:"2400x640", tags:["no mirroring"]}),
+
+ P("Big Green Bear: redrawn turnaround (scarf on his LEFT shoulder)", {
+   goal:"Replace BGB's current sheet so the scarf side is correct and consistent in every view.",
+   refs:[REF_CHAR + " (Big Green Bear row)"],
+   blocks:[BGB, LEFTRIGHT],
+   subject:"Character turnaround of Big Green Bear: SIX views, each drawn separately.",
+   layout:["ONE row, 6 cells of 400 x 640 px (sheet 2400 x 640 px), same scale and baseline, neutral standing pose.","Order: left profile, left three-quarter, front, back, right three-quarter, right profile."],
+   details:["Scarf tails: left profile and left three-quarter: knot and tails clearly visible on his LEFT shoulder. Front: tails on the VIEWER'S RIGHT. Back: only the scarf band and a bit of the tail ends. Right views: tails hidden or only the tips peeking.","No scar on either ear. LEFT-handed: in the front view his left arm is on the viewer's right."],
+   include:["anatomically consistent scarf in all 6 views"], exclude:["mirrored copies","scars","a different scarf colour"],
+   tech:["Sheet 2400x640 px, transparent."]},
+   {size:"2400x640", tags:["no mirroring"]}),
+
+ P("Big Green Bear: torn-tail scarf variant (6 views)", {
+   goal:"Variant used from Chapter 6, after a scarf tail tore while he stood up from beside Edward.",
+   refs:["the redrawn Big Green Bear turnaround (use exactly the same drawings)"],
+   blocks:[BGB, LEFTRIGHT],
+   subject:"The same six views as the redrawn Big Green Bear sheet.",
+   layout:["ONE row, 6 cells of 400 x 640 px (sheet 2400 x 640 px), identical poses and baselines to the original sheet."],
+   details:["Only change: the LEFT scarf tail is torn short by about a hand's width. The torn end is ragged with loose mustard wool strands and unravelled knit ribs. The right tail stays whole.","Everything else is pixel-identical to the redrawn sheet."],
+   include:["ragged end with 4 to 6 loose strands"], exclude:["any other change","blood or damage on the bear","mirroring"],
+   tech:["Sheet 2400x640 px, transparent."]},
+   {size:"2400x640", tags:["no mirroring"]}),
+
+ P("Keepsake photo frame (front, leaning on a shelf)", {
+   goal:"A sentimental prop in BGB's cottage (Prologue). It looks like grief, not like a secret.",
+   refs:[REF_LIGHT, "the existing 'photo frame back' prop (the back side of this same frame)"],
+   subject:"A thick, deep wooden photo frame seen from the front, standing and leaning back slightly on a shelf.",
+   layout:["Centred on a 1000 x 1200 px canvas, slightly tilted back, a small strut visible at the lower back edge."],
+   details:["Dark walnut wood (#4A2A18, lit edges #7A4A28) a little deeper and heavier than a normal frame, brass corner caps (#B08D57), worn edges.","Inside: a worn old photograph of two small bear cubs standing close together, rendered only as soft simple shapes (no detailed faces), warm sepia tint.","Gentle wear and a few small scratches, a thin line of dust on the top edge."],
+   include:["a plain smooth front glass reflection hint (small)"], exclude:["any visible hidden compartment","text","a hanging hook (it leans, it is never hung)"],
+   tech:["Size 1000x1200 px, transparent."]},
+   {size:"1000x1200"}),
+
+ P("Photograph: post-flood (BGB's home copy)", {
+   goal:"The photograph BGB keeps. The scar tells the player which cub is captioned 'Green'.",
+   refs:[REF_CHAR + " (BGB and Green, for the cubs' look)"],
+   subject:"A single worn paper photograph, portrait orientation, with a white border and slightly curled corners.",
+   layout:["Size 900 x 1100 px, the photograph fills about 90% of the canvas, slight tilt of 2 degrees."],
+   details:["Two small bear cubs (age seven, softer and rounder than adults) standing side by side outdoors in daylight, scarves tied with the knot on OPPOSITE shoulders, one cub with a thin faded healed scar on the LEFT ear.","Sepia-warm, faded, slightly out of focus painterly look. An empty caption strip under the picture, left blank (no letters).","Creases: one vertical fold line, small stains, thumb-worn corner at the lower right."],
+   include:["scarf knots clearly visible on opposite shoulders"], exclude:["any text or caption letters","modern photo look"],
+   tech:["Size 900x1100 px, transparent outside the photograph."]},
+   {size:"900x1100"}),
+
+ P("Photograph: pre-flood (in Edward's drawer)", {
+   goal:"The older photograph taken BEFORE the flood. It proves who was who: no scar, birth-name captions will be added in the game.",
+   refs:[REF_CHAR + " (BGB and Green)"],
+   subject:"A single paper photograph, older and more faded than the post-flood one.",
+   layout:["Size 900 x 1100 px, photograph fills about 90%, slight tilt of -2 degrees."],
+   details:["The same two cubs standing close, BOTH ears clean (no scar). One cub's scarf knot is on his RIGHT shoulder, the other cub's knot is on his LEFT shoulder, both clearly visible.","Heavier fade, yellowed edges, a water stain in one corner, empty caption strip (no letters)."],
+   include:["knots clearly legible as a clue"], exclude:["any scar","text"],
+   tech:["Size 900x1100 px, transparent outside the photograph."]},
+   {size:"900x1100"})
+]},
+
+/* ============ D. LATER ============ */
+{id:"d", name:"D. Later", sub:"Chapters 4 and up.", items:[
+ P("Young twin bears (age 7): two matching walk sets", {
+   goal:"The playable cub (the future Green) and his brother for the Chapter 4 and 5 flashback. They must NOT be named or labelled.",
+   refs:[REF_CHAR + " (BGB and Green, shrunk to child proportions)"],
+   blocks:[LEFTRIGHT],
+   subject:"Two bear cubs, age seven: rounder, smaller, bigger head relative to the body, shorter limbs than the adults. Same sage-green fur and mustard scarves.",
+   layout:["For EACH cub: Row 1: 8-frame walk facing LEFT. Row 2: 8-frame walk facing RIGHT (drawn separately, not mirrored). Row 3: 4-frame front idle. Cells 260 x 420 px, feet baseline y = 400, same scale for both cubs.","Cub A (the playable one): knot and tails on his RIGHT shoulder, RIGHT-handed. Cub B (his younger brother): knot and tails on his LEFT shoulder, LEFT-handed. Cub B is slightly smaller and softer.","Total two sheets of 2080 x 1260 px."],
+   details:["Walk timing like the adult cycle but lighter and quicker, small arms swinging.","No scars on either cub (the scar happens during the story)."],
+   include:["scarf sides correct per cub in all frames"], exclude:["mirroring","any names or labels","adult proportions"],
+   tech:["Two sheets of 2080x1260 px, transparent."]},
+   {size:"2 sheets 2080x1260", tags:["no mirroring"]}),
+
+ P("Flashback Bell Village: 4 layers (23 years earlier)", {
+   goal:"The same village from the day before the flood, cosier, for the playable flashback.",
+   refs:["the four Bell Village night layers (use the same layout and tower position)"],
+   subject:"The same four-layer setup as the night village, but warm late-afternoon sunlight turning to dusk.",
+   layout:["FOUR separate transparent images, each 3840 px wide: Far (sky and mountains only, 3840x1100), Mid (whole clocktower with an EMPTY dial, no hands, plus village buildings, 3840x1800), Ground (low walkable cobblestone path and the arched bridge, 3840x520), Foreground (bushes and a short fence, 3840x420).","The clocktower must be in the same horizontal position as in the night Mid layer."],
+   details:["Light: warm golden-hour from the left (#FFC878), long soft shadows, sky going from pale peach to dusty blue (#6C86B8), a few small clouds.","Village: smaller, cosier look, fewer chimneys, no red banners, bunting strings, clean walls, no snow on the ground except a thin patch on the mountains (spring thaw), wet shining roofs.","Ground: damp cobblestones with small puddles of meltwater at the path edges."],
+   include:["spring thaw feeling","same tower silhouette"], exclude:["snow-laden roofs","night lighting","clock hands","characters"],
+   tech:["Four files, 3840 px wide, transparent where noted."]},
+   {size:"3840 wide x4"}),
+
+ P("Flood water, rain and foam overlays", {
+   goal:"Effects for the flood chapter, drawn as layers the game can scroll and fade.",
+   subject:"Three separate painted effect sheets.",
+   layout:["1) Muddy meltwater surface: a wide strip 3840 x 420 px, seamless left to right, dark brown-blue (#2E3A55 to #4B4A52), soft ripples, floating chunks of snow and twigs, top edge a gentle wavy line.","2) Heavy rain: a seamless tile 1024 x 1024 px of slanted rain streaks (pale blue-grey, 40% opacity on transparent), 3 to 5 px wide, angle 12 degrees.","3) Splash and foam strip: 3840 x 160 px, white-cream foam along a wavy line, small droplets above it."],
+   details:["Painterly, soft, with the same ink-and-brush feel as the rest of the game. No photoreal water."],
+   include:["seamless edges on 1 and 2"], exclude:["any buildings or characters","glare or sparkles"],
+   tech:["Three images; each transparent."]},
+   {size:"see prompt"}),
+
+ P("Flooded tower stairwell (background)", {
+   goal:"The Chapter 5 rescue set piece: the stairwell with rising water.",
+   refs:["the Clocktower interior set (stone, wood and brass style)"],
+   subject:"Side view inside a stone tower stairwell during the flood.",
+   layout:["One layer 3840 x 1400 px. Stone steps rise from the left to the right at about 30 degrees, a wooden handrail along the steps, dark water filling the lower third and lapping at the steps, a flat walkable step edge the character can stand on."],
+   details:["Light: cold blue (#3A4F8A) moonlight from a small high window at the upper right, one small lantern floating in the water giving a warm amber (#FFB048) pool of light.","Stone wet and dark, streaks of water on the walls, loose planks floating."],
+   include:["dramatic but gentle storybook mood"], exclude:["characters","text","gore"],
+   tech:["Size 3840x1400 px, transparent."]},
+   {size:"3840x1400"}),
+
+ P("Flood-year register page with two inks", {
+   goal:"The page where the player sees newer ink over older ink. Used as an evidence close-up.",
+   subject:"One open page of an old hand-written register, seen straight from above.",
+   layout:["Size 1600 x 2000 px; the page fills the canvas with slightly curled corners and a hint of the binding at the left edge."],
+   details:["Aged cream paper (#F2E8D4 with tea stains), 16 lines of neat dark-brown ink handwriting drawn as unreadable squiggles (no real letters).","Lines 7 and 8: the original entry crossed out with one neat line and REWRITTEN directly above it in a visibly newer, darker, bluer-black ink.","At the bottom: a red wax seal and a green wax seal, and a cluster of five small signatures (squiggles)."],
+   include:["clear colour difference between the two inks"], exclude:["any readable letters or numbers"],
+   tech:["Size 1600x2000 px, transparent outside the page."]},
+   {size:"1600x2000"}),
+
+ P("Epilogue still 1: the council room (the adults decide)", {
+   goal:"Short non-playable flashback (under two minutes), shot 1 of 2. It shows a collective decision, not a villain.",
+   refs:["Edward and Mara on the character sheet (use the same designs)"],
+   subject:"A lamplit council room at night, wide shot.",
+   layout:["3840 x 2160 px. A round wooden table in the centre with an open register, five adult animals around it, a candle and an inkpot on the table, wax seals. The door at the left is slightly open with warm light showing a crowd's silhouettes outside."],
+   details:["Five adults: the MAYOR (stout, stern old goat with a chain of office), the BELL-WARDEN (thin, nervous fox in a long coat with a bell badge), the HEALER (old tortoise with round spectacles and a satchel), MARA (old badger, red embroidered shawl #9C2F2F, floral apron), EDWARD (hedgehog age 38 with dark quills, round wire glasses, brown vest, red tie) holding a quill and hesitating over the page. These three new designs are suggestions; change species if you prefer.","Faces serious, not cruel. The Healer shakes his head slowly, Mara has one paw raised mid-sentence.","Light: one warm lamp, the edges of the picture cooling into blue."],
+   include:["a quill hovering over two crossed-out names"], exclude:["any readable text","the twins","gore"],
+   tech:["Size 3840x2160 px. Transparent outside the painted room if the room has a clear edge."]},
+   {size:"3840x2160", note:"A full painted scene. Keep the transparent PNG line for consistency; the room fills the frame."}),
+
+ P("Epilogue still 2: the consequence (the elder leaves)", {
+   goal:"Shot 2 of 2: the cost of the decision, shown without words.",
+   refs:["the redrawn Green turnaround (the cub is the elder twin, age seven)"],
+   blocks:[LEFTRIGHT],
+   subject:"A snowy village lane at dawn, wide shot.",
+   layout:["3840 x 2160 px. In the foreground right to left: a small bear cub (scarf tails on his RIGHT shoulder, a small cloth bundle on a stick) walking away alone toward the left; he passes a wooden notice board with an unreadable posted paper. In the background centre-right: villagers cheering around another cub being carried. At the upper right: a hedgehog with round glasses at an archive window, watching, one paw on the glass."],
+   details:["Cold blue dawn light with a single warm window glow at the archive.","The cub's back is to us three-quarter, shoulders low but steady. No tears shown, just the posture."],
+   include:["notice paper with only grey scribble lines"], exclude:["any readable text","a face looking at the camera"],
+   tech:["Size 3840x2160 px."]},
+   {size:"3840x2160"}),
+
+ P("Ending art E1: The Final Record", {
+   goal:"The honest ending: restart of the clock, names restored.",
+   refs:["the Clocktower interior set, Nini, Big Green Bear and Green sheets"],
+   blocks:[LEFTRIGHT],
+   subject:"The winding room at sunrise, wide shot.",
+   layout:["3840 x 2160 px. The clock dial with hands at 11:48 in the upper right (hands drawn here for the ending). Nini at a desk in the left foreground writing in a large record book. Two bear brothers standing side by side behind her, their scarf tails on OPPOSITE shoulders (BGB's on his left, Green's on his right)."],
+   details:["Warm sunrise (#FFC878) through the windows, dust motes, the first calm in the room.","Expressions: tired, relieved, sober. Green's scar visible and subtle."],
+   include:["a small open pocket watch on the desk, still running"], exclude:["text on the book","celebration or confetti"],
+   tech:["Size 3840x2160 px."]},
+   {size:"3840x2160"}),
+
+ P("Ending art E2: The Hero's Silence", {
+   goal:"The cover-up ending: calm surface, quiet unease.",
+   subject:"The village at night after the clocktower has been repaired.",
+   layout:["3840 x 2160 px. The clocktower in the centre with a glowing dial, bells ringing (drawn as small curved motion lines), snowy roofs, calm lit windows. At the far right a hooded bear walking back toward a distant mill with a single lamp. In an open doorway of the tower at the lower left, on the inside stair, one dark stain on a wooden step."],
+   details:["The village looks cozy, but the colours are slightly cooler and emptier than the opening scene.","The stain is subtle, like old ink, not gore."],
+   include:["a tiny red ribbon tied to a lamp post as a memorial"], exclude:["bright celebration","text"],
+   tech:["Size 3840x2160 px."]},
+   {size:"3840x2160"}),
+
+ P("Ending art E3: The Wrong Bear", {
+   goal:"The scapegoat ending.",
+   refs:["the Green and Big Green Bear sheets"],
+   blocks:[LEFTRIGHT],
+   subject:"A snowy village square at dusk.",
+   layout:["3840 x 2160 px. Foreground left: Green (scarf tails on his RIGHT shoulder, faded scar) being led away by two uniformed guards (a fox and a heron). Villagers form a silent line along the right. In the lower right foreground Big Green Bear stands apart, his LEFT scarf tail torn short, looking down."],
+   details:["Heavy, dim blue light, a single warm lantern behind the guards.","Faces: quiet, ashamed, not angry."],
+   include:["BGB's torn left tail clearly visible"], exclude:["violence","text"],
+   tech:["Size 3840x2160 px."]},
+   {size:"3840x2160"}),
+
+ P("Ending art E4: The Burned Page", {
+   goal:"The ambiguous ending.",
+   refs:["Big Green Bear and Nini sheets"],
+   subject:"A small room with a fireplace at night.",
+   layout:["3840 x 2160 px. Centre: a stone fireplace with a rolled record page curling in the flames. A bear's hand in a mustard knitted sleeve is just pulling back from the fire at the right. At the left, in the open doorway, Nini in her yellow raincoat clutches one saved burnt corner of paper to her chest."],
+   details:["Light: orange firelight on faces, deep blue shadows in the corners.","Expression: Nini is silent and wide-eyed, not crying."],
+   include:["falling embers, the saved corner with scribbles only"], exclude:["text","any readable writing"],
+   tech:["Size 3840x2160 px."]},
+   {size:"3840x2160"})
+]}
 ];
 
-// ---- Section B (generated: room layers share one template)
-function roomLayers(room, mid, ground, fg, far){
+/* ============ B. generated: rooms (4 layers each) ============ */
+function roomLayers(room, spec){
+  const common = ["Same painting style, line weight and lighting as the Clocktower interior set.", "Four layers of the same room will be made separately, so keep this layer exactly to its own content."];
   return [
-    P(room+": Far (window view)", `${STYLE}\nOnly the view seen through the ${room.toLowerCase()} windows: ${far}. NO window frames, NO walls, NO foreground. 3840x1100.\n${PNG}`, {size:"3840x1100"}),
-    P(room+": Mid (back wall)", `${STYLE}\nThe back wall of the ${room.toLowerCase()}, straight side view: ${mid}. Window openings left as EMPTY TRANSPARENT holes. NO floor, NO characters. Ends cleanly at the bottom edge. 3840x1800.\n${PNG}`, {size:"3840x1800"}),
-    P(room+": Ground (floor)", `${STYLE}\nOnly the walkable floor strip of the ${room.toLowerCase()}, straight side view: ${ground}. Keep the middle 700 px plain and empty. Matte, not shiny or wet. Clean flat top edge. 3840x520.\n${PNG}`, {size:"3840x520"}),
-    P(room+": Foreground", `${STYLE}\nA dark, low-contrast foreground strip for the ${room.toLowerCase()}: ${fg}. Keep the middle 60% low and sparse so characters' feet stay visible. 3840x420.\n${PNG}`, {size:"3840x420"})
+   P(room + ": Far (view through the windows)", {
+     goal:"The outdoor view seen through this room's windows. It sits behind everything else.",
+     refs:["the Clocktower interior 'far' layer (match scale and colour)"],
+     subject:spec.far,
+     layout:["One wide image 3840 x 1100 px, left and right edges tile seamlessly. Full-bleed painted sky and landscape; everything outside the painted view is transparent (nothing is outside, it is a full rectangle)."],
+     details:common.concat(["Night sky deep navy to #3A4F8A near the horizon, stars, soft cloud shapes lit peach from below."]),
+     exclude:["window frames","walls","any interior","text"], tech:["3840x1100 px."]},
+     {size:"3840x1100"}),
+   P(room + ": Mid (back wall)", {
+     goal:"The main wall behind the characters.",
+     refs:["the Clocktower interior 'mid' layer (match stone, wood and brass style)"],
+     subject:spec.mid,
+     layout:["One image 3840 x 1800 px, straight side-on (orthographic), the wall ends cleanly along the bottom edge where the floor layer will overlap it by about 90 px.","Window openings are EMPTY TRANSPARENT HOLES with arched stone frames, so the Far layer shows through."],
+     details:common.concat(spec.midDetails),
+     exclude:["floor","characters","any readable text","clock hands (if a clock appears)"], tech:["3840x1800 px."]},
+     {size:"3840x1800"}),
+   P(room + ": Ground (floor strip)", {
+     goal:"The walkable floor the characters stand on.",
+     refs:["the Clocktower interior 'ground' layer"],
+     subject:spec.ground,
+     layout:["One horizontal strip 3840 x 520 px. The top edge is a clean straight line the characters can stand on. The CENTRE 700 px stays plain and empty (planks only) so interaction props can be placed there. Props only at the left and right ends."],
+     details:common.concat(["Floor is matte, dry, slightly worn. NOT wet, NOT mirror-like (puddles are a separate clue prop)."]),
+     exclude:["tall walls","characters","puddles","hatches"], tech:["3840x520 px."]},
+     {size:"3840x520"}),
+   P(room + ": Foreground", {
+     goal:"A dark framing strip in front of the characters' feet that adds depth.",
+     refs:["the Clocktower interior 'foreground' layer"],
+     subject:spec.fg,
+     layout:["One strip 3840 x 420 px. Darker and lower in contrast than the other layers (it is shown slightly transparent). The middle 60% stays low and sparse so feet remain visible; heavier objects only at the left and right edges."],
+     details:common,
+     exclude:["characters","text","bright highlights"], tech:["3840x420 px."]},
+     {size:"3840x420"})
   ];
 }
 SECTIONS[1].items = [
-  ...roomLayers("Edward's archive room",
-    "tall wooden shelves of ledgers and rolled papers, a locked drawer cabinet, a reading stand with an open flood-year register, a tall arched window, a rolling ladder, a hanging lamp with warm light",
-    "wooden plank floor with a worn red runner rug, a small desk at the left and a stool at the right, a few scattered papers",
-    "dark silhouettes of a stacked crate of ledgers and a chair back at the corners, a thin rope barrier, a few paper scraps",
-    "snowy night sky and a distant clocktower silhouette over the village roofs"),
-  ...roomLayers("Hazel's café",
-    "a cosy cafe back wall with a counter and shelves of cups, a tall window onto the plaza, a chalkboard with no writing, hanging copper pots, warm lamps",
-    "wooden floor with a small round table and two chairs at the left (the table where Big Green Bear sat) and a stool at the counter on the right",
-    "dark silhouettes of a coat rack and a stack of chairs at the corners, a potted plant, a few cups",
-    "a snowy plaza at night seen through the window, a lamp post and the clocktower in the distance"),
-  P("Evidence icons: sheet of 10",
-`${STYLE}
-A sheet of ten separate small evidence icons on one canvas, evenly spaced with clear gaps, each painted as a single object with a soft outline: (1) a worn photograph of two cubs after the flood, (2) an older photograph before the flood, (3) a strand of mustard knitted wool, (4) a closed flood-year register with a ribbon, (5) a small brass lantern, (6) a notebook with a torn page, (7) a cafe receipt, (8) a patrol log page with columns, (9) a doctor's folded report, (10) a set of boot prints in snow. Each about 256x256 px, no labels. Total 1536x1024.
-${PNG}`, {size:"1536x1024"}),
-  P("Identity Board",
-`${STYLE}
-A detective's investigation corkboard, front view, framed in dark navy pinstripe fabric with brass corners: cork surface, two empty polaroid-style frames at the top (to hold the two bears' portraits), five blank index cards with paper clips, several brass and red pushpins, a loose red string with pins ready to connect cards, small masking-tape strips. All cards and frames EMPTY (no text or pictures). Size 2400x1500.
-${PNG}`, {size:"2400x1500"}),
-  P("Responsibility Board",
-`${STYLE}
-An investigation board panel with THREE equal vertical columns on cream paper in a navy pinstripe frame with brass corners, a blank header ribbon over each column and an empty name card slot in each, plus a wide strip along the bottom with a red ink stamp-style blank plate. All EMPTY (no text). Size 2400x1400.
-${PNG}`, {size:"2400x1400"}),
-  P("Stamps: 5 red ink stamps",
-`${STYLE}
-A sheet of five separate red-ink rubber stamp impressions on a transparent background, slightly rough and worn, each in a rounded rectangular border with a double line, angled slightly differently: the words SOLVED, CONTRADICTION, UNKNOWN, SUSPECT IDENTIFIED, UNDETERMINED. Colour #A8483F. Each about 700x260 px. (This is the one place where lettering is allowed.)
-${PNG}`, {size:"1536x1024", note:"Overrides the no-text rule on purpose."}),
-  P("\"What I overlooked\" page template",
-`${STYLE}
-One blank notebook page in parchment style, slight paper curl, a hand-drawn double rule at the top for a heading and SIX evenly spaced empty rows, each with a small round pushpin icon on the left to link back to a scene, pencil margin marks. Empty of any text. Size 1600x2000.
-${PNG}`, {size:"1600x2000"}),
-  P("AUDIO 1: wind and night ambience loop",
-`A seamless 60-second loop of a quiet winter night in a snowy village: soft low wind, a distant creak of wood, very faint snow settling, no melody, no voices, no sudden sounds. Calm and slightly lonely. WAV, stereo, 44.1 kHz.`, {kind:"audio"}),
-  P("AUDIO 2: footsteps on snow and on stone",
-`Two short sets of 6 variations each of soft, slightly heavy footsteps of a large bear: (a) on packed snow (crunch), (b) on stone and wooden floorboards. Each 0.3 to 0.5 seconds, dry, no reverb, no music. WAV, mono, 44.1 kHz.`, {kind:"audio"}),
-  P("AUDIO 3: clock tick, bell and handbell",
-`Three sounds: (a) a heavy old clock tick, a 10-second loop, wooden and slow; (b) a deep bronze tower bell chime, single strike with long natural decay; (c) a small brass handbell rung three times. No music. WAV, stereo, 44.1 kHz.`, {kind:"audio"}),
-  P("AUDIO 4: UI sounds",
-`A set of five soft paper-and-wood interface sounds, each under 0.4 seconds: click, open the case file (folder flap), close, collect evidence (a gentle chime), stamp. No music. WAV, stereo.`, {kind:"audio"}),
-  P("AUDIO 5: main theme (calm piano or music box)",
-`A gentle, slightly melancholic 2-minute theme for a cozy snowy mystery: solo piano with a soft music-box counter-melody, slow tempo about 70 BPM, minor key with warm resolution, loops cleanly, no drums, no vocals. Mix quiet enough to sit under dialogue. WAV, stereo, 44.1 kHz.`, {kind:"audio"})
+  ...roomLayers("Edward's archive room", {
+    far:"Only the snowy night village seen through arched windows: rooftops, the clocktower silhouette, falling snow, a few lit windows.",
+    mid:"The back wall of an archive: tall wooden shelves packed with ledgers and rolled papers, a locked drawer cabinet with brass pulls, a reading stand with a large open register, a tall arched window with stone frame, a rolling library ladder on a rail, a hanging brass lamp with warm light, a framed old map with no readable labels.",
+    midDetails:["Wood: dark walnut (#4A2A18) with lit edges (#7A4A28). Stone: warm grey. Paper: cream (#F2E8D4).","Warm lamp light from the upper left and a cooler window light on the right."],
+    ground:"A wooden plank floor with a worn red runner rug at the left, a small writing desk with a stool at the left end, a stack of boxes and a tall stool at the right end, a few papers on the floor.",
+    fg:"Dark silhouettes: the back of a chair and a stacked crate of ledgers at the left corner, a tied bundle of papers at the right corner, a thin rope barrier between posts."}),
+  ...roomLayers("Hazel's café", {
+    far:"Only the snowy plaza at night seen through the café window: a lamp post, the clocktower in the distance, soft snowfall.",
+    mid:"The back wall of a cosy café: a wooden counter with a brass coffee machine, shelves of cups and jars, hanging copper pots, a tall window onto the plaza, an empty chalkboard (no writing), warm lamps, a small clock without readable numbers.",
+    midDetails:["Palette warmer than the archive: honey wood (#8A5A32), cream plaster, red accents (#A8483F).","Steam rising softly from the coffee machine."],
+    ground:"A wooden floor with a small round table and two chairs at the left end (the table where Big Green Bear sat), a stool at the counter on the right end, a floor mat by the door.",
+    fg:"Dark silhouettes: a coat rack with a scarf and hat at the left corner, a stack of chairs at the right corner, a potted plant, a few cups on a tray."}),
+  P("Evidence icons: sheet of 10", {
+    goal:"Icons for the Evidence tab and for the investigation grid.",
+    refs:["the 'evidence grid' panel on the UI sheet (icons must read at 90 px)"],
+    subject:"Ten separate icons on one sheet, each painted as a single object with a soft ink outline.",
+    layout:["Sheet 1536 x 1024 px, 5 columns by 2 rows, each icon about 256 x 256 px centred in a 300 x 480 cell, with clear transparent gaps. No labels.","Row 1: 1) a worn photograph of two cubs after the flood (scar visible on one), 2) an older, more faded photograph before the flood, 3) a strand of mustard knitted wool with a ragged end, 4) a closed flood-year register with a ribbon and a brass corner, 5) a small brass lantern with a lit flame.","Row 2: 6) a small notebook with a torn page, 7) a cafe receipt strip with unreadable lines, 8) a patrol log page with columns and unreadable scribbles, 9) a doctor's folded report with a wax seal, 10) a set of boot prints in snow."],
+    details:["All icons share one light direction (upper left, amber) and the same outline weight.","Props must use the same colours as the existing props (cream paper #F2E8D4, brass #B08D57, mustard #D9A441)."],
+    include:["each icon readable at small size"], exclude:["text","labels","shadows under the icons"],
+    tech:["Sheet 1536x1024 px, transparent."]},
+    {size:"1536x1024"}),
+  P("Identity Board (corkboard)", {
+    goal:"The screen where the player compares the twins by combining independent clues.",
+    refs:["the navy leather binder on the UI sheet (same navy pinstripe fabric and brass corners)"],
+    subject:"A detective investigation corkboard seen straight on.",
+    layout:["Size 2400 x 1500 px. Outer frame: dark navy pinstripe fabric (#243044) with brass corner plates (#B08D57) and brass rivets.","Inside: cork surface (#B98B5A with darker flecks). Two empty polaroid-style photo frames at the top left and top right (each about 420 x 520 px) with white borders for the two bears' portraits. Five empty index cards of different sizes below, held with paper clips and pins. Several brass and red pushpins. One loose length of red string with a pin at each end, left free. A few strips of masking tape."],
+    details:["All cards and frames are EMPTY: no pictures, no text.","Soft shadows under cards are painted (as part of the cards), not a drop shadow on the background."],
+    include:["pin heads with small highlights","cork texture painted"], exclude:["any text","any characters"],
+    tech:["Size 2400x1500 px, transparent outside the frame."]},
+    {size:"2400x1500"}),
+  P("Responsibility Board", {
+    goal:"The board that separates three questions: the fall, the delay in help, and hiding the truth. There must be no 'cause of death: delay' option.",
+    refs:["the cream panels and brass details of the UI sheet"],
+    subject:"A board panel with three equal vertical columns.",
+    layout:["Size 2400 x 1400 px. Navy pinstripe frame with brass corners. Inside: cream parchment with THREE equal columns separated by thin brass-dotted dividers. Over each column a blank burgundy ribbon header. Under each ribbon an empty name card slot (a recessed paper rectangle with a small pin).","Along the bottom a wide fixed strip: a recessed brass-edged plate with a red ink stamp-style blank rectangle where 'cause of death: undetermined' will be shown by the game."],
+    details:["All empty: no text anywhere. Same parchment paper texture as the dialogue box on the UI sheet."],
+    include:["small brass pins at the top of each slot"], exclude:["text","characters"],
+    tech:["Size 2400x1400 px, transparent outside the frame."]},
+    {size:"2400x1400"}),
+  P("Stamps: five red-ink rubber stamps", {
+    goal:"Case-file stamps used on boards and evidence.",
+    refs:["the red ink colour #A8483F from the UI sheet"],
+    subject:"Five separate rubber-stamp impressions on one sheet.",
+    layout:["Sheet 1536 x 1024 px with clear gaps. Each stamp about 700 x 260 px inside a rounded rectangle with a double-line border, each tilted a different small angle (-6, 4, -3, 7, -5 degrees).","The five words, in a bold slab or old typewriter capital face: SOLVED, CONTRADICTION, UNKNOWN, SUSPECT IDENTIFIED, UNDETERMINED."],
+    details:["Colour #A8483F at about 90% strength with worn, uneven ink coverage, small gaps and speckles in the letters and border, as a real rubber stamp. Slight ink bleed at the edges (inside the shape only).","THIS is the one prompt where text is required: spell the words exactly."],
+    include:["exact spelling"], exclude:["any other text","backgrounds"],
+    tech:["Sheet 1536x1024 px, transparent."]},
+    {size:"1536x1024", note:"The only prompt where lettering is allowed. The negative prompt's 'text' rule does not apply here."}),
+  P("'What I overlooked' notebook page", {
+    goal:"A Notes-tab page that lists six moments the player passed over while trusting BGB.",
+    refs:["the open notebook on the UI sheet (match paper and binding)"],
+    subject:"One blank notebook page seen straight on.",
+    layout:["Size 1600 x 2000 px. Parchment page with slight curl, a hand-drawn double rule at the top for a heading, then SIX evenly spaced empty rows, each with a small round pushpin icon on the left (to link to a scene) and a faint pencil underline.","Pencil margin marks, a coffee ring, a small paper clip at the upper right."],
+    details:["Everything is empty of text."], include:["clear space for one line of text per row (about 1100 px wide)"], exclude:["text"],
+    tech:["Size 1600x2000 px, transparent outside the page."]},
+    {size:"1600x2000"}),
+
+  /* ---- audio ---- */
+  P("AUDIO 1: wind and night ambience (loop)", {kind:"audio",
+    goal:"The base ambience for every outdoor scene.",
+    subject:"A quiet winter night in a snowy village.",
+    details:["Duration 60 seconds, seamless loop (the last second crossfades into the first).","Layers: very soft low wind (no whistling), a distant creak of wood, faint snow settling, a very distant single owl once around 35 seconds.","No melody, no voices, no sudden sounds, calm and slightly lonely."],
+    tech:["WAV, stereo, 44.1 kHz, 24-bit, peak around -6 dB."]}, {kind:"audio"}),
+  P("AUDIO 2: footsteps on snow and on stone or wood", {kind:"audio",
+    goal:"Footsteps for a large, soft, slightly heavy bear.",
+    details:["Two sets, each with 6 different variations: (a) packed snow (a soft crunch); (b) stone and wooden floorboards (soft thud and a small creak).","Each clip 0.3 to 0.5 seconds, dry, no reverb, no music, no breathing.","Name them snow_01..06 and wood_01..06."],
+    tech:["WAV, mono, 44.1 kHz."]}, {kind:"audio"}),
+  P("AUDIO 3: clock tick, tower bell and handbell", {kind:"audio",
+    goal:"The sounds of the story's central objects.",
+    details:["(a) a heavy old tower clock tick: 10-second seamless loop, slow (about 1 tick per second), wooden and slightly hollow.","(b) a deep bronze tower bell: a single strike with a long natural decay of about 8 seconds, no reverb added.","(c) a small brass handbell rung three times, bright and urgent, about 3 seconds.","No music."],
+    tech:["WAV, stereo, 44.1 kHz."]}, {kind:"audio"}),
+  P("AUDIO 4: interface sounds", {kind:"audio",
+    goal:"Soft paper-and-wood interface sounds for the case file.",
+    details:["Five sounds, each under 0.4 seconds: click, open the case file (a folder flap), close, collect evidence (a gentle two-note chime), stamp (a soft rubber thump).","No music, no beeps."],
+    tech:["WAV, stereo, 44.1 kHz."]}, {kind:"audio"}),
+  P("AUDIO 5: main theme (calm piano or music box)", {kind:"audio",
+    goal:"The title and investigation theme.",
+    details:["Duration about 2 minutes, loops cleanly.","Solo piano with a soft music-box counter-melody, slow tempo about 70 BPM, a minor key with a warm resolution, a quiet, slightly melancholic and cozy feeling.","No drums, no vocals. The mix sits quietly under dialogue."],
+    tech:["WAV, stereo, 44.1 kHz, 24-bit."]}, {kind:"audio"})
 ];
 
 // ---- render
