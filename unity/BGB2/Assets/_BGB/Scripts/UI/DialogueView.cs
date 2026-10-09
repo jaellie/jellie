@@ -42,7 +42,7 @@ namespace BGB2
             index = i;
             var n = def.nodes[i];
             var sp = speakers.Find(s => s.id == n.speakerId);
-            if (sp != null) { speakerName.text = sp.displayName.Get(); if (portrait != null) portrait.sprite = sp.portrait; }
+            if (sp != null) { speakerName.text = sp.displayName.Get(); if (portrait != null) portrait.sprite = sp.For(n.expression); }
             ClearChoices();
             fullText = n.text.Get();
             if (typing != null) StopCoroutine(typing);

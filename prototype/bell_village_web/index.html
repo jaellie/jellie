@@ -104,7 +104,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #dlgbg{position:absolute;inset:0;--img:url(assets/dialogue_box_tall_portrait_ribbon.webp);--sl:410;--sr:100;--st:68;--sb:26;border-image-width:95px 140px 36px 574px}
 #meas{position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font:400 36.5px/1.32 var(--font-body)}
 #dlg .por{position:absolute;left:49px;top:59px;width:200px;height:196px;overflow:hidden;border-radius:5px}
-#dlg .por img{width:200px;height:auto;display:block;filter:drop-shadow(0 2px 2px rgba(60,35,10,.4))}
+#dlg .por img{transition:opacity .15s;width:200px;height:auto;display:block;filter:drop-shadow(0 2px 2px rgba(60,35,10,.4))}
 #dlg .nm{position:absolute;left:275px;top:17px;width:267px;height:51px;display:grid;place-items:center;font:700 31px/1 var(--font-label);letter-spacing:.06em;color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
 #dlg .tx{position:absolute;left:287px;top:97px;right:158px;height:170px;font:400 36.5px/1.32 var(--font-body);color:var(--ink)}
 :lang(ko) #dlg .tx,#dlg .tx.ko{font-size:33px;line-height:1.5}
@@ -373,21 +373,22 @@ const NOTES = {
 
 /* ---------- dialogue data ---------- */
 const D = {
- n0:{sp:"nini", t:{en:"Edward never missed the midnight bell. Never.", ko:"에드워드 아저씨는 자정 종을 한 번도 놓친 적이 없어요. 한 번도요."}, next:"n1"},
- n1:{sp:"nini", t:{en:"Everyone is standing at the tower and nobody will go in. They keep asking if it was an accident.", ko:"다들 탑 앞에 서 있기만 하고 아무도 안으로 들어가지 못해요. 사고였느냐고만 계속 물어요."},
+ n0:{sp:"nini", ex:"worried", t:{en:"Edward never missed the midnight bell. Never.", ko:"에드워드 아저씨는 자정 종을 한 번도 놓친 적이 없어요. 한 번도요."}, next:"n1"},
+ n1:{sp:"nini", ex:"worried", t:{en:"Everyone is standing at the tower and nobody will go in. They keep asking if it was an accident.", ko:"다들 탑 앞에 서 있기만 하고 아무도 안으로 들어가지 못해요. 사고였느냐고만 계속 물어요."},
    ch:[{t:{en:"Tell me what you remember about last night.",ko:"어젯밤에 기억나는 걸 말해 줘."},go:"n2a"},{t:{en:"Has anyone said who was on the stairs?",ko:"계단에 누가 있었는지 말한 사람이 있어?"},go:"n2b"}]},
- n2a:{sp:"nini", t:{en:"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.", ko:"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요."}, set:"nini.letters", note:"nini", next:"n3"},
- n2b:{sp:"nini", t:{en:"Oliver says a bear in a scarf climbed the stairs at eleven forty. Before you got there.", ko:"올리버 아저씨가 그러는데, 열한 시 사십 분쯤 목도리를 한 곰이 계단을 올라갔대요. 당신이 오기 전에요."},
+ n2a:{sp:"nini", ex:"thinking", t:{en:"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.", ko:"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요."}, set:"nini.letters", note:"nini", next:"n3"},
+ n2b:{sp:"nini", ex:"neutral", t:{en:"Oliver says a bear in a scarf climbed the stairs at eleven forty. Before you got there.", ko:"올리버 아저씨가 그러는데, 열한 시 사십 분쯤 목도리를 한 곰이 계단을 올라갔대요. 당신이 오기 전에요."},
    ch:[{t:{en:"I was at the café until a quarter to twelve.",ko:"나는 열두 시 십오 분 전까지 카페에 있었어."},go:"n2c"},{t:{en:"(Say nothing.)",ko:"(말없이 있는다.)"},go:"n3"}]},
- n2c:{sp:"nini", t:{en:"I know. Hazel told everyone. That's why they want you to look into it.", ko:"알아요. 헤이즐 아주머니가 다 말했어요. 그래서 다들 당신이 조사해 주길 바라는 거예요."}, next:"n3"},
- n3:{sp:"nini", t:{en:"Please look at the clock. It stopped at eleven forty-seven, and nobody can tell me what that means.", ko:"시계를 봐 주세요. 열한 시 사십칠 분에 멈췄는데, 그게 무슨 뜻인지 아무도 말해 주지 못해요."}, set:"nini.done"},
- n9:{sp:"nini", t:{en:"I'll stay here with the others. Tell me what you find.", ko:"저는 다른 분들과 여기 있을게요. 알아내시면 말해 주세요."}},
+ n2c:{sp:"nini", ex:"neutral", t:{en:"I know. Hazel told everyone. That's why they want you to look into it.", ko:"알아요. 헤이즐 아주머니가 다 말했어요. 그래서 다들 당신이 조사해 주길 바라는 거예요."}, next:"n3"},
+ n3:{sp:"nini", ex:"worried", t:{en:"Please look at the clock. It stopped at eleven forty-seven, and nobody can tell me what that means.", ko:"시계를 봐 주세요. 열한 시 사십칠 분에 멈췄는데, 그게 무슨 뜻인지 아무도 말해 주지 못해요."}, set:"nini.done"},
+ n9:{sp:"nini", ex:"neutral", t:{en:"I'll stay here with the others. Tell me what you find.", ko:"저는 다른 분들과 여기 있을게요. 알아내시면 말해 주세요."}},
  c0:{sp:"ck", t:{en:"Mm. Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.", ko:"음. 어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠."}, set:"ck.bear", note:"bear",
    ch:[{t:{en:"Is the tower clock reliable?",ko:"이 탑시계는 믿을 만한가요?"},go:"c1"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]},
  c1:{sp:"ck", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았죠."}, set:"ck.watch", note:"watch"},
  c9:{sp:"ck", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보세요. 시계는 어디 안 갑니다."}}
 };
-const SP = { nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp"} };
+const SP = { nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp"} };
+const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
 const SAVE_KEY = "bgb2.bellvillage.proto.v1";
@@ -516,7 +517,11 @@ let cur = null, typing = null, full = "";
 function startDlg(id){ mode = "dlg"; cur = id; renderDlg(true); $("dlg").classList.add("on"); }
 function renderDlg(anim){
   const n = D[cur]; if (!n) return; const sp = SP[n.sp];
-  $("dNm").textContent = tr(sp.name); $("dPor").src = sp.img;
+  $("dNm").textContent = tr(sp.name);
+  const ex = EXPR.includes(n.ex) ? n.ex : "neutral"; // each line picks its expression; speakers without portraits keep the still
+  const portrait = sp.por ? sp.por + ex + ".webp" : sp.img;
+  if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
+  $("dPor").onload = () => { $("dPor").style.opacity = 1; };
   full = tr(n.t); const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":""); clearInterval(typing);
   sizeDlg(full);
   $("choices").classList.remove("on"); $("choices").innerHTML = "";

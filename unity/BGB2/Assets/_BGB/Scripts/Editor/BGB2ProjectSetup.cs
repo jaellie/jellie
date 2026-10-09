@@ -60,6 +60,7 @@ namespace BGB2.EditorTools
                 string name = Path.GetFileNameWithoutExtension(path);
                 bool background = path.Contains("/Backgrounds/");
                 bool character = path.Contains("/Characters/");
+                bool portrait = path.Contains("/Portraits/");
 
                 imp.textureType = TextureImporterType.Sprite;
                 imp.spriteImportMode = SpriteImportMode.Single;
@@ -67,7 +68,7 @@ namespace BGB2.EditorTools
                 imp.mipmapEnabled = false;
                 imp.filterMode = FilterMode.Bilinear;          // hand-painted art: no point filtering
                 imp.alphaIsTransparency = true;
-                imp.maxTextureSize = background ? 8192 : 2048;
+                imp.maxTextureSize = background ? 8192 : (portrait ? 1024 : 2048);
                 imp.textureCompression = background ? TextureImporterCompression.Compressed : TextureImporterCompression.CompressedHQ;
 
                 var settings = new TextureImporterSettings();

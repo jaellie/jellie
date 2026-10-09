@@ -25,6 +25,7 @@ namespace BGB2.EditorTools
         static Sprite Spr(string path) => AssetDatabase.LoadAssetAtPath<Sprite>(path);
         static Sprite Ui(string n) => Spr(Root + "/Art/UI/" + n + ".png");
         static Sprite Chr(string n) => Spr(Root + "/Art/Characters/" + n + ".png");
+        static Sprite Por(string n) => Spr(Root + "/Art/Portraits/" + n + ".png");
 
         static TMP_FontAsset fontAsset;
         static Material litMat, unlitMat;
@@ -217,8 +218,8 @@ namespace BGB2.EditorTools
             return e;
         }
 
-        static DialogueNode N(string sp, string en, string ko, int next = -1, string flag = null, params DialogueChoice[] ch)
-            => new DialogueNode { speakerId = sp, text = new LocalizedText(en, ko), next = next, setFlag = flag, choices = ch };
+        static DialogueNode N(string sp, string en, string ko, int next = -1, string flag = null, Expression ex = Expression.Neutral, params DialogueChoice[] ch)
+            => new DialogueNode { speakerId = sp, text = new LocalizedText(en, ko), next = next, setFlag = flag, expression = ex, choices = ch };
         static DialogueChoice C(string en, string ko, int next) => new DialogueChoice { text = new LocalizedText(en, ko), nextNode = next };
 
         static DialogueDefinition MakeNiniDialogue()
@@ -226,14 +227,14 @@ namespace BGB2.EditorTools
             var d = LoadOrCreate<DialogueDefinition>(Root + "/ScriptableObjects/Dialogue/DLG_Nini_Intro.asset");
             d.nodes = new[]
             {
-                N("nini", "Edward never missed the midnight bell. Never.", "에드워드 아저씨는 자정 종을 한 번도 놓친 적이 없어요. 한 번도요.", 1),
-                N("nini", "Everyone is standing at the tower and nobody will go in. They keep asking if it was an accident.", "다들 탑 앞에 서 있기만 하고 아무도 안으로 들어가지 못해요. 사고였느냐고만 계속 물어요.", -1, null,
+                N("nini", "Edward never missed the midnight bell. Never.", "에드워드 아저씨는 자정 종을 한 번도 놓친 적이 없어요. 한 번도요.", 1, null, Expression.Worried),
+                N("nini", "Everyone is standing at the tower and nobody will go in. They keep asking if it was an accident.", "다들 탑 앞에 서 있기만 하고 아무도 안으로 들어가지 못해요. 사고였느냐고만 계속 물어요.", -1, null, Expression.Worried,
                     C("Tell me what you remember about last night.", "어젯밤에 기억나는 걸 말해 줘.", 2), C("Has anyone said who was on the stairs?", "계단에 누가 있었는지 말한 사람이 있어?", 4)),
-                N("nini", "I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.", "저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요.", 3, "nini.letters"),
-                N("nini", "Please look at the clock. It stopped at eleven forty-seven, and nobody can tell me what that means.", "시계를 봐 주세요. 열한 시 사십칠 분에 멈췄는데, 그게 무슨 뜻인지 아무도 말해 주지 못해요.", -1, "nini.done"),
-                N("nini", "Oliver says a bear in a scarf climbed the stairs at eleven forty. Before you got there.", "올리버 아저씨가 그러는데, 열한 시 사십 분쯤 목도리를 한 곰이 계단을 올라갔대요. 당신이 오기 전에요.", -1, null,
+                N("nini", "I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.", "저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요.", 3, "nini.letters", Expression.Thinking),
+                N("nini", "Please look at the clock. It stopped at eleven forty-seven, and nobody can tell me what that means.", "시계를 봐 주세요. 열한 시 사십칠 분에 멈췄는데, 그게 무슨 뜻인지 아무도 말해 주지 못해요.", -1, "nini.done", Expression.Worried),
+                N("nini", "Oliver says a bear in a scarf climbed the stairs at eleven forty. Before you got there.", "올리버 아저씨가 그러는데, 열한 시 사십 분쯤 목도리를 한 곰이 계단을 올라갔대요. 당신이 오기 전에요.", -1, null, Expression.Neutral,
                     C("I was at the café until a quarter to twelve.", "나는 열두 시 십오 분 전까지 카페에 있었어.", 5), C("(Say nothing.)", "(말없이 있는다.)", 3)),
-                N("nini", "I know. Hazel told everyone. That's why they want you to look into it.", "알아요. 헤이즐 아주머니가 다 말했어요. 그래서 다들 당신이 조사해 주길 바라는 거예요.", 3),
+                N("nini", "I know. Hazel told everyone. That's why they want you to look into it.", "알아요. 헤이즐 아주머니가 다 말했어요. 그래서 다들 당신이 조사해 주길 바라는 거예요.", 3, null, Expression.Neutral),
             };
             EditorUtility.SetDirty(d);
             return d;
@@ -244,7 +245,7 @@ namespace BGB2.EditorTools
             var d = LoadOrCreate<DialogueDefinition>(Root + "/ScriptableObjects/Dialogue/DLG_Oliver_Stairs.asset");
             d.nodes = new[]
             {
-                N("oliver", "Mm. Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.", "음. 어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠.", -1, "oliver.bear",
+                N("oliver", "Mm. Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.", "음. 어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠.", -1, "oliver.bear", Expression.Neutral,
                     C("Is the tower clock reliable?", "이 탑시계는 믿을 만한가요?", 1), C("Thank you.", "고맙습니다.", -1)),
                 N("oliver", "Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", "음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았죠.", -1),
             };
@@ -353,7 +354,7 @@ namespace BGB2.EditorTools
             dv.root = dlgRoot; dv.box = box.rectTransform; dv.portrait = portrait; dv.speakerName = nameT; dv.body = bodyT; dv.choiceHost = chRt; dv.choiceTemplate = tBtn;
             dv.speakers = new List<Speaker>
             {
-                new Speaker { id = "nini", displayName = new LocalizedText("Nini", "니니"), portrait = Chr("nini__3_front") },
+                new Speaker { id = "nini", displayName = new LocalizedText("Nini", "니니"), portrait = Chr("nini__3_front"), neutral = Por("nini_neutral"), worried = Por("nini_worried"), surprised = Por("nini_surprised"), thinking = Por("nini_thinking") },
                 new Speaker { id = "oliver", displayName = new LocalizedText("Oliver", "올리버"), portrait = Chr("clockkeeper__3_front") },
             };
             dlgRoot.SetActive(false);

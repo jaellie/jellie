@@ -11,7 +11,7 @@ Clocktower entrance door and steps (exterior) · Clocktower hatch (cut from the 
 | # | Asset | Spec |
 |---|---|---|
 | 1 | **Whole tower shaft** (door to clock recess, eye-level, one tall sprite; replaces the lone door AND the small background tower) | 2400x3600 px, empty dark-navy round recess (560 px) where the game draws the 11:47 clock; same door as the supplied image. |
-| 2 | **Portraits** for BGB, Nini, Oliver | 3 to 4 expressions each: neutral, worried, surprised, thinking. Square, about 400 px. |
+| 2 | **Portraits: Oliver only** (BGB and Nini are done) | 3 to 4 expressions each: neutral, worried, surprised, thinking. Square, about 400 px. |
 | 3 | **Hotspot ring** | Round magnifier ring for "look closer" points (transparent). |
 
 ## B. Needed soon after
