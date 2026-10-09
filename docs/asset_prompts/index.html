@@ -48,6 +48,13 @@ h2 small{font:500 15px/1 var(--font-label);letter-spacing:.14em;color:var(--bras
 .tag{font:500 13px/1 var(--font-label);letter-spacing:.12em;padding:5px 8px;border:1px solid var(--line);border-radius:5px;color:var(--muted)}
 .tag.png{border-color:var(--accent);color:var(--accent)}
 .note{margin:0 0 10px;color:var(--muted);font-size:16px}
+details.pv{margin:0 0 10px}
+details.pv>summary{cursor:pointer;list-style:none;padding:8px 0;color:var(--accent);font:600 16px/1.2 var(--font-label);letter-spacing:.06em;display:flex;align-items:center;gap:8px}
+details.pv>summary::-webkit-details-marker{display:none}
+details.pv>summary:before{content:"\25B8";display:inline-block;transition:transform .15s}
+details.pv[open]>summary:before{transform:rotate(90deg)}
+details.pv>summary:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.peek{margin:0 0 6px;color:var(--muted);font-size:16px;line-height:1.45}
 pre{margin:0 0 10px;padding:14px 16px;background:var(--code);color:var(--code-ink);border:1px solid var(--line);border-radius:8px;font:400 13.5px/1.55 var(--font-mono);white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 button{font:700 16px/1 var(--font-label);letter-spacing:.05em;padding:10px 16px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
@@ -73,6 +80,7 @@ input[type=checkbox]{width:20px;height:20px;accent-color:var(--ok)}
     <p class="rule"><b>Sheets:</b> every prompt with several items on one image also carries the spacing rule: at least 10 px (aim for 24 px) of transparent gap between items, nothing touching or overlapping. <b>Audio prompts</b> are the only ones without the PNG line, because they are not images. Tip: make the <b>Mid layer first</b> and attach it as a reference for the other layers so colours and lighting match.</p>
     <div class="toolbar">
       <button id="copyAll" class="ghost" type="button">Copy shared style + PNG + spacing block</button>
+      <button id="toggleAll" class="ghost" type="button">Expand all</button>
       <button id="resetDone" class="ghost" type="button">Clear done marks</button>
       <span class="count" id="count"></span>
     </div>
@@ -489,6 +497,9 @@ const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;
 const full = it => it.kind === "png" ? it.body : it.body;
 const total = SECTIONS.reduce((n,s)=>n+s.items.length,0);
 
+const wc = it => it.body.split(/\s+/).length;
+const peek = it => { const m = it.body.match(/GOAL:\n([^\n]*)/); const t = m ? m[1].replace(/^- /,"") : it.body.split("\n")[0]; return t.length > 220 ? t.slice(0,217) + "..." : t; };
+let openAll = false;
 function copy(text, btn){
   const ok = () => { const t = btn.textContent; btn.textContent = "Copied"; setTimeout(()=>btn.textContent = t, 1400); };
   const fallback = () => { const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); ok(); }catch(e){ btn.textContent = "Select and copy manually"; } ta.remove(); };
@@ -506,7 +517,7 @@ function render(){
       const c = document.createElement("div"); c.className = "card" + (done[key] ? " done" : "");
       const tags = (it.kind === "png" ? '<span class="tag png">TRANSPARENT PNG</span>' : '<span class="tag">AUDIO</span>')
         + (it.size ? `<span class="tag">${esc(it.size)}</span>` : "") + it.tags.map(t => `<span class="tag">${esc(t)}</span>`).join("");
-      c.innerHTML = `<div class="head"><h3>${esc(it.title)}</h3></div><div class="tags">${tags}</div>` + (it.note ? `<p class="note">${esc(it.note)}</p>` : "") + `<pre>${esc(full(it))}</pre>`
+      c.innerHTML = `<div class="head"><h3>${esc(it.title)}</h3></div><div class="tags">${tags}</div>` + (it.note ? `<p class="note">${esc(it.note)}</p>` : "") + `<p class="peek">${esc(peek(it))}</p><details class="pv"${openAll ? " open" : ""}><summary>Show full prompt (${wc(it)} words)</summary><pre>${esc(full(it))}</pre></details>`
         + `<div class="row"><button type="button">Copy prompt</button><label class="chk"><input type="checkbox" ${done[key] ? "checked" : ""}> Made</label></div>`;
       c.querySelector("button").addEventListener("click", e => copy(full(it), e.currentTarget));
       c.querySelector("input").addEventListener("change", e => { if (e.target.checked) done[key] = 1; else delete done[key]; saveDone(); c.classList.toggle("done", e.target.checked); count(); });
@@ -518,6 +529,7 @@ function render(){
 }
 function count(){ $("count").textContent = Object.keys(done).length + " of " + total + " made"; }
 $("copyAll").addEventListener("click", e => copy(STYLE + "\n\n" + PNG + "\n\n" + GAP, e.currentTarget));
+$("toggleAll").addEventListener("click", e => { openAll = !openAll; document.querySelectorAll("details.pv").forEach(d => d.open = openAll); e.currentTarget.textContent = openAll ? "Collapse all" : "Expand all"; });
 $("resetDone").addEventListener("click", () => { done = {}; saveDone(); render(); });
 render();
 })();
