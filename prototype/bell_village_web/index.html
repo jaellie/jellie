@@ -575,7 +575,7 @@ let IA = [
 ];
 const IA_V = IA.slice();
 const IA_T = [
-  { id:"exit",  x:()=>170,  label:UI.leave,  top:530, run:()=>setScene("village", 2640) },
+  { id:"exit",  x:()=>445,  label:UI.leave,  top:530, run:()=>setScene("village", 2640) },
   { id:"ck",    x:()=>NPCX_T.ck, label:UI.talkCk, top:FEET_T-CK_H-150, run:()=>startDlg(has("ck.bear")?"c9":"c0") },
   { id:"bell",  x:()=>897,  label:UI.lBell,  top:500, run:()=>inspect("handbell") },
   { id:"boots", x:()=>640,  label:UI.lBoots, top:640, run:()=>inspect("boots") },
@@ -586,12 +586,12 @@ const IA_T = [
   { id:"chute", x:()=>2168, label:UI.lChute, top:540, run:()=>inspect("chute") }
 ];
 const IA_A = [
-  { id:"exit",  x:()=>170,  label:UI.leaveA, top:540, run:()=>setScene("village", 2640) },
+  { id:"exit",  x:()=>410,  label:UI.leaveA, top:540, run:()=>setScene("village", 2640) },
   { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, run:()=>inspect("register") },
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect("drawers") }
 ];
 const IA_C = [
-  { id:"exit",  x:()=>150,  label:UI.leaveC, top:540, run:()=>setScene("village", 900) },
+  { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 900) },
   { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(has("hz.done")?"h9":"h0") }
 ];
 function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"||i.id==="hz"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; }); }
@@ -672,12 +672,14 @@ function openPause(){ if (mode!=="play") return; mode = "modal"; $("pause").clas
 function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.focus(); }
 
 /* enter tower */
+/* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
+const ROOM = { cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
 function setSceneNow(name, x){
   S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", IN = T || A || C;
   $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C);
   const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : $("world");
   host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else host.appendChild(marks);
-  if (IN){ W = 2400; CAM_MIN = C ? -280 : -330; CAM_MAX = W - STAGE_W; P_MIN = 150; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : LAMPS_T; IA = A ? IA_A : C ? IA_C : IA_T; NPCX = A ? NPCX_A : C ? NPCX_C : NPCX_T; }
+  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : LAMPS_T; IA = A ? IA_A : C ? IA_C : IA_T; NPCX = A ? NPCX_A : C ? NPCX_C : NPCX_T; }
   else  { W = 3812; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = IA_V; }
   nini.style.display = IN ? "none" : ""; nini._sh.style.display = IN ? "none" : "";
   ck.style.display = (A || C) ? "none" : ""; ck._sh.style.display = (A || C) ? "none" : "";
@@ -840,8 +842,8 @@ window.addEventListener("keydown", e=>{
   if (k==="Escape"){ if (mode==="cf") closeCF(); else if (mode==="modal" && $("pause").classList.contains("on")) closePause(); else if (mode==="modal" && $("inspect").classList.contains("on")) $("iClose").click(); else if (mode==="play") openPause(); return; }
   if ((k==="e"||k==="E") && mode==="modal" && $("inspect").classList.contains("on")){ $("iClose").click(); return; }
   if (k==="e"||k==="E"||k==="Enter"||k===" "){ if (e.target && e.target.tagName==="BUTTON" && mode!=="dlg") return; act(); return; }
-  if (k==="9" && mode==="play" && S.scene==="village"){ setScene("archive", 170); return; }   /* temporary entrance until the Chapter 3 key scene exists */
-  if (k==="8" && mode==="play" && S.scene==="village"){ setScene("cafe", 170); return; }   /* temporary entrance until the Chapter 2 key scene exists */
+  if (k==="9" && mode==="play" && S.scene==="village"){ setScene("archive", 430); return; }   /* temporary entrance until the Chapter 3 key scene exists */
+  if (k==="8" && mode==="play" && S.scene==="village"){ setScene("cafe", 500); return; }   /* temporary entrance until the Chapter 2 key scene exists */
   if (k==="q"||k==="Q"){ peek = 3; return; }
   if (mode==="dlg" && (k==="ArrowUp"||k==="ArrowDown"||k==="w"||k==="s")){
     const bs = [...document.querySelectorAll("#choices .choice")]; if (!bs.length) return; let i = bs.findIndex(b=>b.classList.contains("sel")); bs.forEach(b=>b.classList.remove("sel"));
@@ -854,7 +856,7 @@ window.addEventListener("blur", ()=>keys.clear());
 $("dlg").addEventListener("click", ()=>{ if (mode==="dlg") advance(); });
 const hold = (id, key)=>{ const b = $(id); const on = e=>{ e.preventDefault(); keys.add(key); }, off = ()=>keys.delete(key); b.addEventListener("pointerdown", on); ["pointerup","pointerleave","pointercancel"].forEach(ev=>b.addEventListener(ev, off)); };
 const tmpGo = (id, sc, x) => $(id).addEventListener("pointerdown", e=>{ e.preventDefault(); if (mode==="play" && S.scene==="village") setScene(sc, x); });
-tmpGo("t8","cafe",170); tmpGo("t9","archive",170); /* temporary entrances, same as keys 8 and 9 */
+tmpGo("t8","cafe",500); tmpGo("t9","archive",430); /* temporary entrances, same as keys 8 and 9 */
 hold("tL","arrowleft"); hold("tR","arrowright"); $("tE").addEventListener("pointerdown", e=>{ e.preventDefault(); act(); });
 
 /* ---------- loop ---------- */
@@ -901,7 +903,7 @@ function fit(){
   let s = vw/vh > STAGE_W0/STAGE_H ? vh/STAGE_H : vw/STAGE_W0;            /* wide screens: fit the height and show MORE of the scene sideways (no side bars) */
   STAGE_W = vw/vh > STAGE_W0/STAGE_H ? Math.min(STAGE_WMAX, Math.max(STAGE_W0, Math.floor(vw/s))) : STAGE_W0;
   stage.style.width = STAGE_W + "px"; $("cfwrap").style.left = Math.round((STAGE_W - 1620)/2) + "px";
-  CAM_MAX = W - STAGE_W;
+  CAM_MAX = Math.max(CAM_MIN, W - STAGE_W);
   stage.style.setProperty("--hb", Math.min(1.7, Math.max(1, 14/(20*s))).toFixed(3)); /* keeps prompt text at least ~14 px on small screens */
   stage.style.transform = "scale("+s+")"; stage.style.left = ((vw - STAGE_W*s)/2)+"px"; stage.style.top = ((vh - STAGE_H*s)/2)+"px"; }
 addEventListener("resize", fit);
