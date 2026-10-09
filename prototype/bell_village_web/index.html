@@ -62,12 +62,20 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .cream{--img:url(assets/plaque_cream_small.webp)}
 .red{--img:url(assets/plaque_red_small.webp)}
 
+/* Persistent category panel (left), as in the mockup */
+#side{position:absolute;left:12px;top:182px;width:294px;height:559px;background:url(assets/nav_binder_6slots_COMPOSITE.webp) 0 0/100% 100% no-repeat;z-index:5}
+.sbtn{position:absolute;left:65px;width:188px;height:68px;border:0;padding:0 12px;background:transparent;display:flex;align-items:center;justify-content:flex-start;gap:12px;font:700 22px/1 var(--font-label);letter-spacing:.04em;color:var(--ink);cursor:pointer;border-radius:10px;transition:filter .12s,transform .12s}
+.sbtn svg{width:28px;height:28px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.sbtn:hover{filter:brightness(1.08);transform:translateX(3px)}
+.sbtn.first{left:60px;width:200px;height:74px;color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
+.sbtn:focus-visible{outline:3px solid #ffd27a;outline-offset:2px}
+
 /* HUD */
 .sprite{position:absolute;background-repeat:no-repeat;background-size:100% 100%}
-#caseplate{position:absolute;left:36px;top:30px;width:fit-content;min-width:300px;padding:16px 46px 18px 46px;display:flex;flex-direction:column;gap:5px;--img:url(assets/panel_wide_title.webp);--sl:40;--sr:40;--st:34;--sb:34;--s:.72}
-#caseplate .l1{font:500 15px/1 var(--font-label);letter-spacing:.16em;color:#8a6a3e}
-#caseplate .l2{font:700 26px/1.1 var(--font-body);color:var(--ink);white-space:nowrap}
-#caseplate .l3{font:400 15px/1 var(--font-body);color:#6d5a40;font-style:italic}
+#caseplate{position:absolute;left:26px;top:20px;width:fit-content;min-width:430px;padding:22px 64px 24px 64px;display:flex;flex-direction:column;gap:7px;--img:url(assets/panel_wide_title.webp);--sl:40;--sr:40;--st:34;--sb:34;--s:.98;z-index:6}
+#caseplate .l1{font:500 20px/1 var(--font-label);letter-spacing:.16em;color:#8a6a3e}
+#caseplate .l2{font:700 37px/1.1 var(--font-body);color:var(--ink);white-space:nowrap}
+#caseplate .l3{font:400 21px/1 var(--font-body);color:#6d5a40;font-style:italic}
 .hudbtn{position:absolute;width:76px;height:78px;border:0;padding:0;background-size:100% 100%;background-color:transparent;cursor:pointer;transition:transform .12s,filter .12s}
 .hudbtn:hover{transform:scale(1.07);filter:brightness(1.15)}
 .hudbtn:focus-visible,.choice:focus-visible,.tab:focus-visible,.pbtn:focus-visible{outline:3px solid #ffd27a;outline-offset:3px}
@@ -78,19 +86,19 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #hint kbd{font:700 17px/1 var(--font-label);background:var(--burgundy);color:#f6e3c0;border-radius:5px;padding:6px 9px;box-shadow:0 2px 0 #3d1219}
 
 /* Dialogue */
-#dlg{position:absolute;left:336px;bottom:36px;width:1247px;height:243px;display:none} /* left is set from the box width so the box stays centred */
+#dlg{position:absolute;left:200px;bottom:34px;width:1520px;height:296px;display:none;z-index:8} /* sized in whole pixels (1.4x the sprite) so the nine-slice has no seams; left is set from the width so the box stays centred */
 #dlg.on{display:block}
-#dlgbg{position:absolute;inset:0;--img:url(assets/dialogue_box_tall_portrait_ribbon.webp);--sl:410;--sr:100;--st:68;--sb:26;--s:1.15}
-#meas{position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font:400 30px/1.32 var(--font-body)}
-#dlg .por{position:absolute;left:40px;top:48px;width:164px;height:161px;overflow:hidden;border-radius:4px}
-#dlg .por img{width:164px;height:auto;display:block;filter:drop-shadow(0 2px 2px rgba(60,35,10,.4))}
-#dlg .nm{position:absolute;left:226px;top:14px;width:220px;height:42px;display:grid;place-items:center;font:700 25px/1 var(--font-label);letter-spacing:.06em;color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
-#dlg .tx{position:absolute;left:236px;top:80px;right:130px;height:140px;font:400 30px/1.32 var(--font-body);color:var(--ink)}
-:lang(ko) #dlg .tx,#dlg .tx.ko{font-size:27px;line-height:1.5}
+#dlgbg{position:absolute;inset:0;--img:url(assets/dialogue_box_tall_portrait_ribbon.webp);--sl:410;--sr:100;--st:68;--sb:26;border-image-width:95px 140px 36px 574px}
+#meas{position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font:400 36.5px/1.32 var(--font-body)}
+#dlg .por{position:absolute;left:49px;top:59px;width:200px;height:196px;overflow:hidden;border-radius:5px}
+#dlg .por img{width:200px;height:auto;display:block;filter:drop-shadow(0 2px 2px rgba(60,35,10,.4))}
+#dlg .nm{position:absolute;left:275px;top:17px;width:267px;height:51px;display:grid;place-items:center;font:700 31px/1 var(--font-label);letter-spacing:.06em;color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
+#dlg .tx{position:absolute;left:287px;top:97px;right:158px;height:170px;font:400 36.5px/1.32 var(--font-body);color:var(--ink)}
+:lang(ko) #dlg .tx,#dlg .tx.ko{font-size:33px;line-height:1.5}
 #dlg .tx i{color:#6d4f2d}
-#choices{position:absolute;left:50%;transform:translateX(-50%);bottom:300px;display:none;flex-direction:column;gap:12px;align-items:center}
+#choices{position:absolute;left:50%;transform:translateX(-50%);bottom:352px;z-index:8;display:none;flex-direction:column;gap:12px;align-items:center}
 #choices.on{display:flex}
-.choice{width:fit-content;max-width:900px;min-height:76px;padding:16px 38px;--s:1.1;font:600 25px/1.25 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s;background-color:transparent}
+.choice{width:fit-content;max-width:1100px;min-height:92px;padding:20px 48px;--s:1.3;font:600 31px/1.25 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s;background-color:transparent}
 .choice:hover,.choice.sel{--img:url(assets/plaque_red_small.webp);color:#f6e3c0;transform:translateY(-2px)}
 
 /* Case File */
@@ -199,6 +207,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
   <button class="hudbtn" id="bCase" style="right:178px;top:26px;background-image:url(assets/icon_satchel.webp)" aria-label="Case File"><span class="k">Tab</span></button>
   <button class="hudbtn" id="bLook" style="right:100px;top:26px;background-image:url(assets/icon_search.webp)" aria-label="Look around"><span class="k">Q</span></button>
   <button class="hudbtn" id="bSet" style="right:22px;top:26px;background-image:url(assets/icon_settings.webp)" aria-label="Pause"><span class="k">Esc</span></button>
+  <div id="side" role="navigation" aria-label="Case File categories"></div>
   <div id="hint" class="nine cream"><kbd>E</kbd><span id="hintTx"></span></div>
   <div id="toast"></div>
 
@@ -264,6 +273,28 @@ const FEET = 985, BGB_H = 170, NINI_H = Math.round(BGB_H * 0.55), CK_H = 128;
 const $ = id => document.getElementById(id);
 const stage = $("stage"), vp = $("vp");
 
+/* ---------- persistent category panel ---------- */
+const ICONS = [
+  '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l5.5 5.5"/>',
+  '<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M16 14.5c3 0 5.5 1.7 5.5 5"/>',
+  '<path d="M3 7.5h6.5l2 2.5H21v9.5H3z"/>',
+  '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.5l3.5 2"/>',
+  '<path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 19h4"/>',
+  '<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>'
+];
+const SLOT_CY = [85,174,259,344,429,514], SK = 294/309;
+function buildSide(){
+  const side = $("side"); if (side.dataset.built) return; side.dataset.built = "1";
+  ICONS.forEach((ic,i)=>{
+    const b = document.createElement("button"); b.className = "sbtn" + (i===0 ? " first" : ""); b.dataset.i = i;
+    b.style.top = Math.round((SLOT_CY[i] - (i===0 ? 37 : 34))*SK) + "px";
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">'+ic+'</svg><span></span>';
+    b.addEventListener("click", ()=>{ if (mode==="play") { tab = i; openCF(); } });
+    side.appendChild(b);
+  });
+}
+function labelSide(){ const labs = tr(UI.tabs); document.querySelectorAll("#side .sbtn").forEach((b,i)=>{ b.querySelector("span").textContent = labs[i]; }); }
+
 /* ---------- text ---------- */
 let lang = "en";
 const tr = o => typeof o === "string" ? o : (o[lang] || o.en);
@@ -320,7 +351,7 @@ const SP = { nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp"}, 
 
 /* ---------- state ---------- */
 const SAVE_KEY = "bgb2.bellvillage.proto.v1";
-let S = { x:300, flags:{}, ev:[], notes:[], lang:"en" };
+let S = { x:520, flags:{}, ev:[], notes:[], lang:"en" };
 function load(){ try { const r = localStorage.getItem(SAVE_KEY); if (r) { const o = JSON.parse(r); if (o && typeof o.x === "number") S = Object.assign(S, o); } } catch(e){} lang = S.lang || "en"; }
 function save(){ S.lang = lang; try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} }
 const has = f => !!S.flags[f];
@@ -411,7 +442,7 @@ function addEv(id){ if (S.ev.includes(id)) return; S.ev.push(id); addNote(EV[id]
 function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSON.stringify(n); if (S.notes.some(x=>x.k===key)) return; S.notes.push({k:key, n}); }
 function setLang(l){ lang = l; save(); applyLang(); if (mode==="cf") renderCF(); }
 function applyLang(){
-  document.documentElement.lang = lang;
+  document.documentElement.lang = lang; buildSide(); labelSide();
   $("hudTitle").textContent = tr(UI.case); $("hudLoc").textContent = tr(UI.loc);
   $("pResume").textContent = tr(UI.resume); $("pReset").textContent = tr(UI.restart); $("pLang").textContent = tr(UI.langBtn); $("eBack").textContent = tr(UI.back);
   document.querySelector("#pause .eyebrow").textContent = tr(UI.paused);
@@ -434,10 +465,10 @@ function renderDlg(anim){
   let i = 0; tx.textContent = ""; typing = setInterval(()=>{ i += 1; tx.textContent = full.slice(0,i); if (i >= full.length){ clearInterval(typing); typing = null; showChoices(); } }, 22);
 }
 function sizeDlg(text){
-  const m = $("meas"); m.style.fontSize = lang==="ko" ? "27px" : "30px"; m.textContent = text;
-  const w = Math.min(m.offsetWidth + 12, 925); // text width, one line, capped at the full text area
-  const box = Math.max(760, 236 + w + 130);
-  const bw = Math.min(1247, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px";
+  const m = $("meas"); m.style.fontSize = lang==="ko" ? "33px" : "36.5px"; m.textContent = text;
+  const w = Math.min(m.offsetWidth + 14, 1075); // text width, one line, capped at the full text area
+  const box = Math.max(820, 287 + w + 158);
+  const bw = Math.min(1520, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px";
 }
 function showChoices(){
   const n = D[cur]; if (!n.ch) return; const box = $("choices"); box.innerHTML = "";
@@ -535,7 +566,7 @@ function closeCF(){ $("cf").classList.remove("on"); mode = "play"; stage.focus()
 $("cfclose").onclick = closeCF; $("bCase").onclick = openCF; $("bSet").onclick = openPause; $("tC").onclick = ()=> mode==="cf"?closeCF():openCF();
 $("bLook").onclick = ()=>{ peek = 3; };
 $("pResume").onclick = closePause; $("pLang").onclick = ()=>setLang(lang==="en"?"ko":"en");
-$("pReset").onclick = ()=>{ try{ localStorage.removeItem(SAVE_KEY);}catch(e){} S = {x:300,flags:{},ev:[],notes:[],lang}; P.x = 300; closePause(); toast(lang==="ko"?"처음부터 다시 시작":"Restarted"); };
+$("pReset").onclick = ()=>{ try{ localStorage.removeItem(SAVE_KEY);}catch(e){} S = {x:520,flags:{},ev:[],notes:[],lang}; P.x = 520; closePause(); toast(lang==="ko"?"처음부터 다시 시작":"Restarted"); };
 
 /* ---------- input ---------- */
 function hideHintNow(){ const h = $("hint"); h.classList.add("instant"); h.classList.remove("on"); }
@@ -569,7 +600,7 @@ function frame(now){
     const l = keys.has("arrowleft")||keys.has("a"), r = keys.has("arrowright")||keys.has("d");
     const run = keys.has("shift"); const sp = run ? 430 : 270;
     if (l !== r){ P.x += (r?1:-1) * sp * dt; P.face = r ? "right" : "left"; P.moving = true; P.walk += dt * (run?11:8); }
-    P.x = Math.max(160, Math.min(W - 160, P.x));
+    P.x = Math.max(470, Math.min(W - 160, P.x));
   }
   const target = Math.max(0, Math.min(CAM_MAX, P.x - STAGE_W/2));
   cam += (target - cam) * Math.min(1, dt * 4.5); if (Math.abs(target-cam)<.05) cam = target;
