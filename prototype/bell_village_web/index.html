@@ -73,14 +73,14 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #aleft,#aright{position:absolute;top:0;height:1080px;width:700px;background:linear-gradient(90deg,#120d0b,#2a1a12)}
 #aright{background:linear-gradient(270deg,#120d0b,#2a1a12)}
 #afg{position:absolute;left:0;top:0;will-change:transform}
-#afg img{position:absolute;left:0;top:614px;display:block;pointer-events:none}
+#afg img{position:absolute;left:-420px;top:614px;display:block;pointer-events:none}
 #tfar img{left:-120px;top:0}
 #tworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
 #tworld img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
 #tleft,#tright{position:absolute;top:0;height:1080px;width:700px;background:linear-gradient(90deg,#1a1210,#2b1d18)}
 #tright{background:linear-gradient(270deg,#1a1210,#2b1d18)}
 #tfg{position:absolute;left:0;top:0;will-change:transform}
-#tfg img{position:absolute;left:0;top:662px;display:block;pointer-events:none}
+#tfg img{position:absolute;left:-420px;top:662px;display:block;pointer-events:none}
 #tfg,#tfar{pointer-events:none}
 
 /* Persistent category panel (left), as in the mockup */
@@ -214,18 +214,18 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
    <div class="layer" id="afar"><img src="assets/far.webp" alt=""></div>
    <div id="aworld">
     <div id="aleft" style="left:-570px"></div><div id="aright" style="left:2290px"></div>
-    <img src="assets/a_mid.webp" style="left:48px;top:-13px" width="2304" height="923" alt="">
+    <img src="assets/a_mid_x.webp" style="left:-372px;top:-13px" width="2864" height="923" alt="">
     <div id="abase" style="position:absolute;left:-600px;top:930px;width:3600px;height:160px;background:linear-gradient(#2a1c15,#150e0c 45%,#0d0809)"></div>
-    <img src="assets/a_ground.webp" style="left:0;top:518px" width="2401" height="595" alt="">
+    <img src="assets/a_ground_x.webp" style="left:-420px;top:518px" width="2961" height="595" alt="">
     <div id="amarks"></div>
    </div>
-   <div id="afg" class="layer"><img src="assets/a_fg.webp" width="2400" height="466" alt=""></div>
+   <div id="afg" class="layer"><img src="assets/a_fg_x.webp" width="2960" height="466" alt=""></div>
   </div>
   <div id="tsc">
    <div class="layer" id="tfar"><img src="assets/t_far.webp" width="3118" height="1134" alt=""></div>
    <div id="tworld">
     <div id="tleft" style="left:-570px"></div><div id="tright" style="left:2280px"></div>
-    <img src="assets/t_mid.webp" style="left:75px;top:-50px" width="2249" height="968" alt="">
+    <img src="assets/t_mid_x.webp" style="left:-345px;top:-50px" width="2809" height="968" alt="">
     <svg id="thands" style="position:absolute;left:1321px;top:213px" width="380" height="380" viewBox="-190 -190 380 380" aria-label="Tower clock stopped at 11:47">
       <g stroke="#2b1a0e" stroke-linecap="round"><line x1="0" y1="14" x2="0" y2="-168" stroke-width="7" transform="rotate(282)"/><line x1="0" y1="18" x2="0" y2="-112" stroke-width="11" transform="rotate(353.5)"/></g>
       <circle r="13" fill="#2b1a0e"/><circle r="5" fill="#c97a2e"/>
@@ -234,14 +234,14 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
     <img id="tbell" src="assets/p_handbell_resting.webp" style="left:846px;top:533px;width:102px" alt="">
     <img id="tpend" src="assets/p_pendulum_bent.webp" style="left:1620px;top:626px;width:87px" alt="">
     <div id="tbase" style="position:absolute;left:-600px;top:930px;width:3600px;height:160px;background:linear-gradient(#2a1c15,#150e0c 45%,#0d0809)"></div>
-    <img src="assets/t_ground.webp" style="left:0;top:548px" width="2402" height="442" alt="">
+    <img src="assets/t_ground_x.webp" style="left:-420px;top:548px" width="2962" height="442" alt="">
     <img id="thatch" src="assets/p_hatch_open.webp" style="left:1030px;top:803px;width:360px" alt="">
     <img id="tp1" src="assets/p_puddle_1.webp" style="left:1010px;top:920px;width:230px;opacity:.95" alt="">
     <img id="tp2" src="assets/p_puddle_2.webp" style="left:1375px;top:855px;width:215px;opacity:.95" alt="">
     <img id="tp3" src="assets/p_puddle_3.webp" style="left:2000px;top:825px;width:195px;opacity:.95" alt="">
     <div id="tmarks"></div>
    </div>
-   <div id="tfg" class="layer"><img src="assets/t_fg.webp" width="2398" height="426" alt=""></div>
+   <div id="tfg" class="layer"><img src="assets/t_fg_x.webp" width="2958" height="426" alt=""></div>
   </div>
 
   <!-- HUD -->
