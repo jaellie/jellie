@@ -8,9 +8,7 @@
    "size": [
     954,
     1389
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 0
+   ]
   },
   {
    "name": "door_barred",
@@ -18,9 +16,7 @@
    "size": [
     947,
     1386
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 0
+   ]
   },
   {
    "name": "pendulum_straight",
@@ -28,9 +24,7 @@
    "size": [
     467,
     1508
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 1570
+   ]
   },
   {
    "name": "pendulum_bent",
@@ -38,9 +32,7 @@
    "size": [
     509,
     1514
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 0
+   ]
   },
   {
    "name": "handbell_resting",
@@ -48,9 +40,7 @@
    "size": [
     599,
     1147
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 0
+   ]
   },
   {
    "name": "handbell_ringing",
@@ -58,9 +48,7 @@
    "size": [
     608,
     567
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 5288
+   ]
   },
   {
    "name": "puddle_1",
@@ -68,29 +56,23 @@
    "size": [
     1103,
     407
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 0
+   ]
   },
   {
    "name": "puddle_2",
    "file": "puddle_2.png",
    "size": [
-    1205,
+    1219,
     357
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 8062
+   ]
   },
   {
    "name": "puddle_3",
    "file": "puddle_3.png",
    "size": [
     916,
-    348
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 9862
+    374
+   ]
   },
   {
    "name": "pocketwatch_front_cracked",
@@ -98,9 +80,7 @@
    "size": [
     942,
     843
-   ],
-   "dropped_caption_bands": 1,
-   "specks_removed_px": 173
+   ]
   },
   {
    "name": "pocketwatch_back",
@@ -108,9 +88,7 @@
    "size": [
     709,
     803
-   ],
-   "dropped_caption_bands": 1,
-   "specks_removed_px": 1809
+   ]
   },
   {
    "name": "gloves",
@@ -118,9 +96,7 @@
    "size": [
     890,
     724
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 1206
+   ]
   },
   {
    "name": "letter_sealed",
@@ -128,9 +104,7 @@
    "size": [
     878,
     625
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 328
+   ]
   },
   {
    "name": "photo_frame_back",
@@ -138,9 +112,7 @@
    "size": [
     877,
     1008
-   ],
-   "dropped_caption_bands": 0,
-   "specks_removed_px": 125
+   ]
   }
  ]
 }
