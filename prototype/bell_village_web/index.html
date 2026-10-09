@@ -415,6 +415,7 @@ const tr = o => typeof o === "string" ? o : (o[lang] || o.en);
 const UI = {
   leave:{en:"Leave the Clocktower", ko:"시계탑을 나간다"}, leaveA:{en:"Leave the archive", ko:"기록실을 나간다"}, lReg:{en:"Examine the register", ko:"장부를 살핀다"}, lDraw:{en:"Try the drawers", ko:"서랍을 열어 본다"}, locA:{en:"Archive", ko:"기록실"}, lHatch:{en:"Examine the hatch", ko:"해치를 살핀다"}, lPend:{en:"Examine the pendulum", ko:"추 막대를 살핀다"}, lBell:{en:"Examine the handbell", ko:"손종을 살핀다"}, lChute:{en:"Examine the back door", ko:"뒷문을 살핀다"}, lMelt:{en:"Look at the puddles", ko:"물 자국을 살핀다"}, lClk:{en:"Examine the clock", ko:"시계를 살핀다"}, locT:{en:"Clocktower", ko:"시계탑"},
   enterA:{en:"Enter the archive", ko:"기록실에 들어간다"}, enterC:{en:"Enter Hazel's café", ko:"헤이즐의 카페에 들어간다"},
+  askBear:{en:"Who was the bear on the stairs?", ko:"계단의 곰은 누구인가?"}, askStop:{en:"The clock stopped at 11:47. That is not necessarily when Edward died.", ko:"시계는 11시 47분에 멈췄다. 그것이 에드워드가 죽은 시각이라는 뜻은 아니다."},
   lPost:{en:"Read the guard's logbook", ko:"경비의 일지를 읽는다"}, conHead:{en:"Contradictions and deductions", ko:"모순과 추리"}, askNext:{en:"Is there another bear?", ko:"다른 곰이 있는가?"},
   leaveC:{en:"Leave the café", ko:"카페를 나간다"}, talkHz:{en:"Talk to Hazel", ko:"헤이즐과 이야기한다"}, locC:{en:"Hazel's Café", ko:"헤이즐의 카페"}, lBoots:{en:"Look at the prints on the stairs", ko:"계단의 발자국을 살핀다"},
   subBoard:{en:"Responsibility Board", ko:"책임 보드"}, subId:{en:"Identity Board", ko:"신원 보드"}, subOver:{en:"What I overlooked", ko:"내가 놓친 것"}, subBack:{en:"Back", ko:"돌아가기"},
@@ -479,6 +480,12 @@ EV.key = { id:"key", name:{en:"Edward's drawer key",ko:"에드워드의 서랍 �
 EV.photo2 = { id:"photo2", name:{en:"The second photograph",ko:"두 번째 사진"}, img:"ev_photo_pre_flood", tag:"PHOTO",
   desc:{en:"A photograph from Edward's drawer: the same two cubs, both ears whole, their scarf knots clearly visible. On the back, in Edward's hand: \"Big Green Bear (right) and Green.\"", ko:"에드워드의 서랍에서 나온 사진. 같은 두 아기 곰, 두 귀 모두 멀쩡하고 목도리 매듭이 또렷하다. 뒷면에 에드워드의 글씨: \"큰 초록 곰(오른쪽)과 그린.\""},
   note:{en:"Edward's drawer holds a second photograph of the cubs. Both ears whole; the caption names them.", ko:"에드워드의 서랍에 아기 곰들의 또 다른 사진이 있다. 두 귀 모두 멀쩡하고, 뒷면에 이름이 적혀 있다."} };
+EV.stmt_ck = { id:"stmt_ck", name:{en:"Statement: Oliver",ko:"진술: 올리버"}, tag:"STATEMENT", note:null,
+  desc:{en:"The Clockkeeper: \"Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.\"", ko:"시계지기: \"어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠.\""} };
+EV.stmt_hz = { id:"stmt_hz", name:{en:"Statement: Hazel",ko:"진술: 헤이즐"}, tag:"STATEMENT", note:null,
+  desc:{en:"The café owner: \"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.\"", ko:"카페 주인: \"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠.\""} };
+EV.stmt_nini = { id:"stmt_nini", name:{en:"Statement: Nini",ko:"진술: 니니"}, tag:"STATEMENT", note:null,
+  desc:{en:"Nini: \"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.\"", ko:"니니: \"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요.\""} };
 EV.boots = { id:"boots", name:{en:"Footprints on the stairs",ko:"계단의 발자국"}, img:"ev_boot_prints", tag:"TRACES",
   desc:{en:"Snow tracked onto the tower stairs. One set of prints leads up, spaced wide apart.", ko:"탑 계단에 눈이 묻어 있다. 올라가는 발자국이 한 줄, 간격이 넓다."},
   note:{en:"One set of prints leads up the tower stairs, spaced wide apart.", ko:"탑 계단 위로 올라가는 발자국이 한 줄 있다. 간격이 넓다."} };
@@ -498,14 +505,14 @@ const D = {
  n0:{sp:"nini", ex:"worried", t:{en:"Edward never missed the midnight bell. Never.", ko:"에드워드 아저씨는 자정 종을 한 번도 놓친 적이 없어요. 한 번도요."}, next:"n1"},
  n1:{sp:"nini", ex:"worried", t:{en:"Everyone is standing at the tower and nobody will go in. They keep asking if it was an accident.", ko:"다들 탑 앞에 서 있기만 하고 아무도 안으로 들어가지 못해요. 사고였느냐고만 계속 물어요."},
    ch:[{t:{en:"Tell me what you remember about last night.",ko:"어젯밤에 기억나는 걸 말해 줘."},go:"n2a"},{t:{en:"Has anyone said who was on the stairs?",ko:"계단에 누가 있었는지 말한 사람이 있어?"},go:"n2b"}]},
- n2a:{sp:"nini", ex:"thinking", t:{en:"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.", ko:"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요."}, set:"nini.letters", note:"nini", next:"n2d"},
+ n2a:{sp:"nini", ex:"thinking", t:{en:"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.", ko:"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요."}, set:"nini.letters", note:"nini", ev:"stmt_nini", next:"n2d"},
  n2d:{sp:"nini", ex:"worried", ev:"notebook", t:{en:"This is my notebook. A page is torn out, and on the one beneath I wrote: 'Red ledger moved?' Please keep it.", ko:"이건 제 공책이에요. 한 장이 뜯겨 있고, 그 아래 장에 '붉은 장부 옮겨졌나?'라고 적어 뒀어요. 가지고 계세요."}, next:"n3"},
  n2b:{sp:"nini", ex:"neutral", t:{en:"Oliver says a bear in a scarf climbed the stairs at eleven forty. Before you got there.", ko:"올리버 아저씨가 그러는데, 열한 시 사십 분쯤 목도리를 한 곰이 계단을 올라갔대요. 아저씨가 오기 전에요."},
    ch:[{t:{en:"I was at the café until a quarter to twelve.",ko:"나는 열두 시 십오 분 전까지 카페에 있었어."},go:"n2c"},{t:{en:"(Say nothing.)",ko:"(말없이 있는다.)"},go:"n3"}]},
  n2c:{sp:"nini", ex:"neutral", t:{en:"I know. Hazel told everyone. That's why they want you to look into it.", ko:"알아요. 헤이즐 아주머니가 다 말했어요. 그래서 다들 아저씨가 조사해 주길 바라는 거예요."}, next:"n3"},
  n3:{sp:"nini", ex:"worried", t:{en:"Please look at the clock. It stopped at eleven forty-seven, and nobody can tell me what that means.", ko:"아저씨, 시계를 봐 주세요. 열한 시 사십칠 분에 멈췄는데, 그게 무슨 뜻인지 아무도 말해 주지 못해요."}, set:"nini.done"},
  n9:{sp:"nini", ex:"neutral", t:{en:"I'll stay here with the others. Tell me what you find.", ko:"저는 다른 분들과 여기 있을게요. 아저씨가 알아내시면 말해 주세요."}},
- c0:{sp:"ck", ex:"neutral", t:{en:"Mm. Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.", ko:"음. 어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠."}, set:"ck.bear", note:"bear",
+ c0:{sp:"ck", ex:"neutral", t:{en:"Mm. Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.", ko:"음. 어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠."}, set:"ck.bear", note:"bear", ev:"stmt_ck",
    ch:[{t:{en:"Is the tower clock reliable?",ko:"이 탑시계는 믿을 만한가요?"},go:"c1"},{t:{en:"(Glance at your own hands.)",ko:"(자신의 손을 내려다본다.)"},go:"c2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]},
  c2:{sp:"bgb", ex:"thinking", t:{en:"My notebook is in my left hand, the way it always is.", ko:"공책은 늘 그렇듯 왼손에 들려 있다."}, set:"c2", note:"hand", next:null},
  c1:{sp:"ck", ex:"thinking", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았죠."}, set:"ck.watch", note:"watch"},
@@ -515,7 +522,7 @@ D.nk0 = {sp:"nini", ex:"worried", t:{en:"Another bear. You think there was anoth
 D.nk1 = {sp:"nini", ex:"thinking", t:{en:"Edward kept his drawers locked and I have kept the key since. If there is an answer, it may be in there. Please, take it.", ko:"에드워드 아저씨는 서랍을 늘 잠가 두셨고, 열쇠는 제가 계속 가지고 있었어요. 답이 있다면 거기 있을지도 몰라요. 아저씨가 가져가세요."}, ev:"key", set:"nini.key", next:null};
 D.h0 = {sp:"hz", t:{en:"Mr. Big Green Bear. Terrible business. The whole café has talked of nothing else since the bell.", ko:"빅그린베어 씨. 끔찍한 일이에요. 종이 울린 뒤로 우리 카페는 그 얘기뿐이에요."},
    ch:[{t:{en:"About last night.",ko:"어젯밤 일에 대해서요."},go:"h1"},{t:{en:"Did you know Edward well?",ko:"에드워드 씨를 잘 아셨나요?"},go:"h2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
-D.h1 = {sp:"hz", t:{en:"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.", ko:"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠."}, note:"hz", set:"hz.stmt", next:"h1b"};
+D.h1 = {sp:"hz", t:{en:"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.", ko:"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠."}, note:"hz", set:"hz.stmt", ev:"stmt_hz", next:"h1b"};
 D.h1b = {sp:"hz", t:{en:"You settled your tab at eleven forty-two. I wrote the time on the receipt myself. Here, keep it.", ko:"열한 시 사십이 분에 계산하셨어요. 시각은 제가 직접 영수증에 적었죠. 자, 가지고 계세요."}, ev:"receipt", set:"hz.done", next:null};
 D.h2 = {sp:"hz", t:{en:"He lent me money for the roof last winter. I paid back half. It's no secret, so don't go writing it down as one.", ko:"작년 겨울에 지붕 고치라고 돈을 빌려줬어요. 절반은 갚았고요. 비밀도 아니니 무슨 비밀인 양 적지는 마세요."}, set:"hz.owed", next:"h0"};
 D.h9 = {sp:"hz", t:{en:"Take your time. The kettle's always on.", ko:"천천히 하세요. 주전자는 늘 불 위에 있답니다."}};
@@ -664,6 +671,9 @@ const CON = [
 const DD02 = { en:"Two bears cannot be one: the bear on the bridge and the bear in the café were different, and the bear with the right hand was not you.", ko:"곰은 한 마리일 수 없다. 다리 위의 곰과 카페의 곰은 달랐고, 오른손에 물건을 든 곰은 당신이 아니다." };
 function checkDeduce(){
   CON.forEach(c=>{ if (c.on() && !S.flags["con."+c.id]){ S.flags["con."+c.id] = true; addNote(c.t); toast((lang==="ko"?"모순 발견":"Contradiction found")); } });
+  const tw = ["hatch","pendulum","handbell","chute","melt","boots"].filter(x=>S.ev.includes(x)).length;
+  if (S.ev.includes("clock") && S.ev.includes("pendulum") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
+  if (has("ck.bear") && S.ev.includes("clock") && tw >= 3 && !S.flags.q1){ S.flags.q1 = true; toast((lang==="ko"?"질문":"Question")+": "+tr(UI.askBear)); }
   if (S.flags["con.c1"] && S.flags["con.c2"] && !S.flags.dd02){ S.flags.dd02 = true; addNote(DD02); toast((lang==="ko"?"추리 완성":"Deduction")+": "+(lang==="ko"?"곰은 한 마리일 수 없다":"Two bears cannot be one")); }
 }
 function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSON.stringify(n); if (S.notes.some(x=>x.k===key)) return; S.notes.push({k:key, n}); }
@@ -785,7 +795,7 @@ function renderCF(){
   } else if (tab===3){
     h += '<div class="legend">'+tr(UI.legend).map(s=>'<span><span class="tag">'+s[0]+'</span>'+s.slice(2)+'</span>').join('')+'</div><div class="tl" id="tl"></div><p style="font:italic 400 28px/1.4 var(--font-body);color:#5a4630;max-width:900px">'+tr(UI.tlNote)+'</p>';
   } else if (tab===4){
-    h += '<div style="display:flex;gap:28px;align-items:flex-start"><div style="flex:1;min-width:0;max-height:770px;overflow-y:auto;padding-right:8px">'+(S.notes.length ? '<ul class="notes">'+S.notes.map(o=>'<li>'+tr(o.n)+'</li>').join('')+'</ul>' : '<p style="font:italic 400 28px var(--font-body)">'+tr(UI.empty)+'</p>')+conBlock()+'</div>'
+    h += '<div style="display:flex;gap:28px;align-items:flex-start"><div style="flex:1;min-width:0;max-height:770px;overflow-y:auto;padding-right:8px">'+qBlock()+(S.notes.length ? '<ul class="notes">'+S.notes.map(o=>'<li>'+tr(o.n)+'</li>').join('')+'</ul>' : '<p style="font:italic 400 28px var(--font-body)">'+tr(UI.empty)+'</p>')+conBlock()+'</div>'
       + '<div style="flex:none;width:540px">'+pageOver(540)+'<div class="pvnote" style="width:540px;font-size:19px">'+(PV ? '' : (lang==="ko"?"이후 챕터에서 채워진다. ":"Fills in later. "))+'<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div></div></div>';
   } else {
     h += '<div class="mapbox"><div class="pin" style="left:168px;top:372px;background:#c4453a"></div><div class="pinlab" style="left:194px;top:372px">'+tr(UI.here)+'</div><div class="pin" style="left:346px;top:300px;background:#d9a441"></div><div class="pinlab" style="left:372px;top:300px">'+tr(UI.tower)+'</div></div>';
@@ -829,19 +839,20 @@ function boardId(){
   h += box("ctr",160,400,255,50,W,H,'<b style="margin:0">BGB</b>');
   h += box("",1090,130,275,275,W,H,PV ? '<div style="display:grid;place-items:center;height:100%;background:#2a2f4a;color:#c9c2a8;font:italic 600 22px/1.3 var(--font-body);text-align:center;padding:12px">'+(K?"(초상화 아직 없음)":"(portrait not drawn yet)")+'</div>' : '<div style="display:grid;place-items:center;height:100%;background:#2a2f4a;color:#c9c2a8;font:700 90px var(--font-body)">?</div>');
   h += box("ctr",1085,405,285,50,W,H,'<b style="margin:0">'+(PV?'GREEN':'?')+'</b>');
-  if (PV){
-    h += '<img class="stamp" src="assets/stamp_unknown.webp" alt="" style="left:'+(1120/W*100)+'%;top:'+(330/H*100)+'%;width:'+(230/W*100)+'%;transform:rotate(-8deg)">';
-    h += box("ctr",640,238,250,260,W,H,'<img src="assets/ev_keepsake_frame.webp" alt="" style="max-width:100%;max-height:100%;object-fit:contain">');
-    const C = K ? [
-      ["손잡이","신체","회상 속 아이는 오른손을 쓴다. BGB는 왼손잡이다."],["목도리 매듭","신체","에드워드는 아이의 목도리를 오른쪽에 묶는다."],
-      ["귀의 흉터","신체","왼쪽 귀의 희미한 흉터."],["설명","사진","설명과 매듭이 어긋난다."],["장부 잉크","문서","이름이 더 진한 새 잉크로 덧쓰였다."]] : [
-      ["Handedness","Physical","In the memory the child uses his right hand. BGB is left-handed."],["Scarf knot","Physical","Edward ties the child's scarf on the right side."],
-      ["Ear scar","Physical","A faded scar on the left ear."],["Caption","Photo","Caption and knots disagree."],["Register ink","Document","Names re-inked in a newer, darker ink."]];
-    const R = [[140,600,245,150],[447,545,138,210],[645,560,255,165],[962,598,118,112],[1142,578,255,160]];
-    C.forEach((c,i)=>{ const r = R[i]; h += box("",r[0],r[1],r[2],r[3],W,H,'<b>'+c[0]+'</b><span style="font-size:'+(i===1||i===3?17:19)+'px">'+c[2]+'</span>','padding:0 4px'); });
-  } else {
-    h += box("ctr",640,300,250,120,W,H,'<span style="font:italic 600 24px/1.25 var(--font-body);color:#f6e3c0;text-shadow:0 1px 2px rgba(0,0,0,.6)">'+(K?"단서가 모이면 여기에 붙는다.":"Clues will be pinned here.")+'</span>');
-  }
+  if (PV) h += '<img class="stamp" src="assets/stamp_unknown.webp" alt="" style="left:'+(1120/W*100)+'%;top:'+(330/H*100)+'%;width:'+(230/W*100)+'%;transform:rotate(-8deg)">';
+  if (PV) h += box("ctr",640,238,250,260,W,H,'<img src="assets/ev_keepsake_frame.webp" alt="" style="max-width:100%;max-height:100%;object-fit:contain">');
+  /* clue cards: each is pinned only when the player holds the clue; the preview shows the finished board */
+  const C = [
+    { on:has("c2"),                 t:K?["손잡이","신체"]:["Handedness","Physical"], d:K?["BGB는 왼손을 쓴다.","회상 속 아이는 오른손을 쓴다. BGB는 왼손잡이다."]:["BGB uses his left hand.","In the memory the child uses his right hand. BGB is left-handed."] },
+    { on:false,                     t:K?["목도리 매듭","신체"]:["Scarf knot","Physical"], d:K?["","에드워드는 아이의 목도리를 오른쪽에 묶는다."]:["","Edward ties the child's scarf on the right side."] },
+    { on:false,                     t:K?["귀의 흉터","신체"]:["Ear scar","Physical"], d:K?["","왼쪽 귀의 희미한 흉터."]:["","A faded scar on the left ear."] },
+    { on:S.ev.includes("photo2"),   t:K?["설명","사진"]:["Caption","Photo"], d:K?["뒷면에 이름. 매듭과 맞을까?","설명과 매듭이 어긋난다."]:["Names on the back. Knots agree?","Caption and knots disagree."] },
+    { on:S.ev.includes("register"), t:K?["장부 잉크","문서"]:["Register ink","Document"], d:K?["홍수 연도 항목에 잉크가 두 종류다.","이름이 더 진한 새 잉크로 덧쓰였다."]:["The flood-year entries use two inks.","Names re-inked in a newer, darker ink."] }
+  ];
+  const R = [[140,600,245,150],[447,545,138,210],[645,560,255,165],[962,598,118,112],[1142,578,255,160]];
+  let shown = 0;
+  C.forEach((c,i)=>{ if (!(PV || c.on)) return; shown++; const r = R[i]; h += box("",r[0],r[1],r[2],r[3],W,H,'<b>'+c.t[0]+'</b><span style="font-size:'+(i===1||i===3?17:19)+'px">'+(PV ? c.d[1] : c.d[0])+'</span>','padding:0 4px'); });
+  if (!PV && !shown) h += box("ctr",640,300,250,120,W,H,'<span style="font:italic 600 24px/1.25 var(--font-body);color:#f6e3c0;text-shadow:0 1px 2px rgba(0,0,0,.6)">'+(K?"단서가 모이면 여기에 붙는다.":"Clues will be pinned here.")+'</span>');
   return h + '</div>';
 }
 function boardResp(){
@@ -880,11 +891,15 @@ function pageOver(wpx){
   else h += box("",205,Y[0]-76,485,72,W,H,'<span style="font:italic 600 '+(20*f).toFixed(1)+'px/1.2 var(--font-body);color:#6d5a40">'+(K?"아직 다시 읽을 것이 없다.":"Nothing to re-read yet.")+'</span>','justify-content:flex-end');
   return h + '</div>';
 }
+function qBlock(){
+  const q = S.flags.dd02 ? UI.askNext : S.flags.q1 ? UI.askBear : null; if (!q) return '';
+  return '<div class="eyebrow" style="margin:0 0 4px">'+(lang==="ko"?"지금의 질문":"THE QUESTION")+'</div><div style="font:italic 700 32px/1.2 var(--font-body);color:#6e2a35;margin:0 0 14px">'+tr(q)+'</div>';
+}
 function conBlock(){
   const f = CON.filter(c=>S.flags["con."+c.id]); if (!f.length) return '';
   let h = '<div class="eyebrow" style="margin:18px 0 8px">'+tr(UI.conHead).toUpperCase()+'</div>';
   f.forEach(c=>{ h += '<div class="con"><img src="assets/stamp_contradiction.webp" alt=""><span>'+tr(c.t)+'</span></div>'; });
-  if (S.flags.dd02) h += '<div class="con"><img src="assets/stamp_solved.webp" alt=""><span>'+tr(DD02)+'</span></div><div style="font:italic 700 30px var(--font-body);color:#6e2a35;margin:10px 0">'+tr(UI.askNext)+'</div>';
+  if (S.flags.dd02) h += '<div class="con"><img src="assets/stamp_solved.webp" alt=""><span>'+tr(DD02)+'</span></div>';
   return h;
 }
 function renderEvGrid(){
