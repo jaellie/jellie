@@ -5,12 +5,11 @@ Done items are removed. Originals live in `art_source/originals/`; slices in `ar
 ## Already made (do not redo)
 UI sheet · 8 character turnarounds (6 views) · Bell Village night layers (Far, Mid, Ground, Foreground) · Clocktower interior 4 layers ·
 Clocktower props (2 doors, 2 pendulums, 2 handbells, 3 puddles, pocket watch front/back, gloves, sealed letter, frame back) ·
-Clocktower hatch (cut from the first interior kit) · 11:47 clock face and hands (drawn in code) · choice popup (built from the plaques).
+Clocktower entrance door and steps (exterior) · Clocktower hatch (cut from the first interior kit) · 11:47 clock face and hands (drawn in code) · choice popup (built from the plaques).
 
 ## A. Must have for the next playable milestone
 | # | Asset | Spec |
 |---|---|---|
-| 1 | **Clocktower entrance door + steps** (exterior prop) | Closed door in a stone arch with 2 to 3 steps, snow on top, lantern beside it; transparent PNG. (Currently a code-drawn placeholder.) Optional: open-door variant. |
 | 2 | **BGB walk and idle** | Idle 2 to 4 frames, walk 6 to 8 frames, **left and right drawn separately (no mirroring)**, plus front idle. Same scale and pivot (feet centre) as the sheet. |
 | 3 | **Nini idle** and **Oliver idle** | 2 to 4 frames each, front, to match BGB. |
 | 4 | **Portraits** for BGB, Nini, Oliver | 3 to 4 expressions each: neutral, worried, surprised, thinking. Square, about 400 px. |
