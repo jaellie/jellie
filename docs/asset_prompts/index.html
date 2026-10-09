@@ -160,6 +160,17 @@ const REF_LIGHT = "any Bell Village night layer (for colour and lighting)";
 /* ============ A. NEXT MILESTONE ============ */
 const SECTIONS = [
 {id:"a", name:"A. Next milestone", sub:"Needed for the next playable step.", items:[
+ P("0. Clocktower tower base (replaces the lone door), eye-level view", {
+   goal:"The whole lower part of the clocktower as ONE gameplay-layer sprite, seen exactly as Big Green Bear sees it standing in front of it. The door is part of the wall, not a separate prop. It replaces the current freestanding door porch.",
+   refs:["the existing entrance door image (use the SAME door, hinges, ring handle, stone arch and lantern)", "the Bell Village Mid layer (the tower's stone colour, snow and the shape of the tower above this base)", REF_LIGHT],
+   subject:"The ground floor of a medieval stone clocktower, straight-on orthographic view at eye level (camera at the height of the door handle, no looking up, no perspective convergence).",
+   layout:["Single image 1400 x 1800 px, centred. The bottom edge is the lowest step (a clean flat line the characters stand on). The door is at the centre.","Lower part: a wide stone plinth with TWO sturdy corner buttresses (each about 330 px wide) rising to about 600 px height, snow on every ledge.","Middle: the main wall with the pointed arch door (door about 300 px wide and 640 px tall in this image), two or three wide snow-covered steps in front, the iron lantern bracket with a lit lantern on the right wall, one small arched window on each side of the door with warm light inside.","Top: the buttresses end in sloped stone shoulders (a stone string-course ledge with a cap of snow) that narrow the base to a clean neck 460 px wide, centred. The neck's top edge is a straight, snow-capped stone ledge. Above it nothing is drawn: the rest of the tower is already in the village background and will continue behind this ledge."],
+   details:["Door: dark-brown planks (#4A2A18, lit #7A4A28), black iron hinges (#2A2430) with scroll ends, a round brass ring handle (#D9B25C), a thin warm line of light under the door.","Stone: warm grey-brown blocks (#8B7F78 lit, #4E4750 shadow), visible joints and chips, no moss. Snow: blue-white caps on the ledges, steps, buttress tops and window sills.","Windows: small pointed arches with dark-brown wooden shutters half open and amber light inside (glow stays inside the glass).","Light: warm lantern light from the right wall also warms the nearby stones; overall light from the upper left as in the rest of the game."],
+   include:["door and arch drawn exactly like the supplied door image","a visible small step-up threshold","stone and wood textures painted, not photographic"],
+   exclude:["any clock face or hands","any text or sign lettering","characters, footprints or a ground plane","a sky or background behind the building","the upper tower (spire, bells): it already exists in the background"],
+   tech:["Size 1400x1800 px, one image, transparent.","The neck at the top must be exactly 460 px wide and horizontally centred so it can join the existing tower."]},
+   {size:"1400x1800", note:"Replaces the freestanding door. Attach the door image and the Mid layer as references."}),
+ 
  P("1a. Portraits: Big Green Bear, 4 expressions", {
    goal:"Dialogue-box portraits. They sit in a 200 x 196 px frame, so faces must read clearly when small.",
    refs:[REF_CHAR + " (Big Green Bear)"],

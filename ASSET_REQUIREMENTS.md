@@ -10,6 +10,7 @@ Clocktower entrance door and steps (exterior) · Clocktower hatch (cut from the 
 ## A. Must have for the next playable milestone
 | # | Asset | Spec |
 |---|---|---|
+| 1 | **Tower base sprite** (eye-level, door included; replaces the lone door) | Whole ground floor of the tower, 1400x1800 px, a 460 px wide snow-capped neck at the top that joins the tower already in the background. |
 | 2 | **Portraits** for BGB, Nini, Oliver | 3 to 4 expressions each: neutral, worried, surprised, thinking. Square, about 400 px. |
 | 3 | **Hotspot ring** | Round magnifier ring for "look closer" points (transparent). |
 
