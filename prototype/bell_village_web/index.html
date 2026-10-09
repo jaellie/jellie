@@ -168,8 +168,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .grid2{display:flex;gap:48px;align-items:flex-start}
 .evgrid{position:relative;width:520px;height:536px;background:url(assets/grid_3x3_panel_close.webp) 0 0/100% 100% no-repeat;flex:none}
 .evcell{position:absolute;width:138px;height:136px;display:grid;place-items:center;cursor:pointer;border:0;background:transparent}
-.evcell img,.evcell svg{max-width:92px;max-height:92px}
-.evcell.sel{outline:4px solid var(--burgundy);outline-offset:-4px;border-radius:8px}
+.evcell img,.evcell svg{max-width:calc(100% - 16px);max-height:calc(100% - 16px)}
+.evcell.sel{outline:4px solid var(--burgundy);outline-offset:-4px;border-radius:12px}
 .evdesc{flex:1;min-width:0}
 .evdesc h3{margin:0 0 6px;font:700 38px/1.1 var(--font-body)}
 .evdesc p{font:400 28px/1.4 var(--font-body);margin:12px 0}
@@ -792,11 +792,12 @@ function pageOver(){
   return h + '</div>';
 }
 function renderEvGrid(){
-  const g = $("evg"); const cx = [31,141,253], cy = [60,176,288], k = 520/385;
+  const g = $("evg"); const CX = [[30,133],[141,244],[251,355]], CY = [[76,178],[186,287],[294,364]], k = 520/385; /* slot rectangles measured from grid_3x3_panel_close.webp (385x397) */
   const pages = Math.max(1, Math.ceil(S.ev.length/9)); evPage = Math.min(evPage, pages-1);
   if (selEv && S.ev.includes(selEv)) evPage = Math.floor(S.ev.indexOf(selEv)/9);
   S.ev.slice(evPage*9, evPage*9+9).forEach((id,i)=>{ const b = document.createElement("button"); b.className = "evcell"+(selEv===id?" sel":""); const col=i%3,row=Math.floor(i/3);
-    b.style.left = Math.round((cx[col]-4)*k)+"px"; b.style.top = Math.round(cy[row]*k)+"px"; b.innerHTML = evIcon(EV[id], 86); b.title = tr(EV[id].name);
+    const rw = Math.round((CX[col][1]-CX[col][0])*k), rh = Math.round((CY[row][1]-CY[row][0])*k);
+    b.style.cssText = "left:"+Math.round(CX[col][0]*k)+"px;top:"+Math.round(CY[row][0]*k)+"px;width:"+rw+"px;height:"+rh+"px"; b.innerHTML = evIcon(EV[id], Math.min(96, rh-16)); b.title = tr(EV[id].name);
     b.onclick = ()=>{ selEv = id; renderCF(); }; g.appendChild(b); });
   if (!selEv && S.ev.length) selEv = S.ev[S.ev.length-1];
   if (pages > 1){ const pgr = document.createElement("div"); pgr.className = "pager"; pgr.style.cssText = "position:absolute;left:0;top:548px";
