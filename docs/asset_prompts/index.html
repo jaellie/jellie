@@ -170,6 +170,17 @@ const SECTIONS = [
    exclude:["any clock numerals, ticks or hands","any text or sign lettering","characters, footprints or a ground","sky or any background","a perspective view looking up"],
    tech:["Size 2400x3600 px, one image, transparent.","The recess centre must be exactly horizontally centred, at about 78% of the image height from the bottom, with a 560 px diameter, so the game can place the clock over it."]},
    {size:"2400x3600", note:"Attach the current door image and the Mid layer. After this, the game hides the small background tower and draws the 11:47 clock over the recess."}),
+ P("0b. Bell Village Mid layer WITHOUT the tower (village only, for the entrance scene)", {
+   goal:"A second version of the village Mid layer with NO clocktower, because the tall tower sprite (prompt 0) is placed in front of it at the entrance. The existing Mid layer (with its small tower) stays in use for every scene where the tower is only seen in the distance.",
+   refs:["the existing Bell Village Mid layer (same buildings, trees, lamp posts, banners, snow and smoke: copy it, then remove the tower)", "any Bell Village night layer (colour and lighting)"],
+   subject:"The same wide row of Bell Village rooftops and trees, but with the clocktower area filled by more village instead.",
+   layout:["One image 3840 x 1800 px, same horizontal layout and ground line as the existing Mid layer. Where the tower stood (right of centre, about 62% to 82% of the width), draw an open gap of plain snow-covered pine trees and two low houses, so the tall tower sprite can stand there without clashing with anything.","Keep chimney smoke, glowing windows, lamp posts and red banners exactly as before."],
+   details:["Same palette and lighting as the existing Mid layer: snow-laden steep roofs (#DCE6F5 lit, #8FA2C6 mid, #41517D shadow), warm amber window light, dark blue pines.","The bottom edge ends cleanly along the roofs and tree trunks."],
+   include:["a calm gap area behind where the tower sprite will stand"],
+   exclude:["any clocktower, spire, clock face or bells","ground path, bridge, foreground bushes","sky or mountains behind (leave transparent)","text"],
+   tech:["Size 3840x1800 px, transparent."]},
+   {size:"3840x1800", note:"Attach the existing Mid layer as the reference and ask for the same image with the tower removed."}),
+ 
  P("1. Portraits: Oliver, 4 expressions", {
    goal:"Dialogue-box portraits for the Clockkeeper.",
    refs:[REF_CHAR + " (Clockkeeper)"],
