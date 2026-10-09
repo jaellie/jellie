@@ -408,15 +408,15 @@ SECTIONS[1].items = [
     midDetails:["Palette warmer than the archive: honey wood (#8A5A32), cream plaster, red accents (#A8483F).","Steam rising softly from the coffee machine."],
     ground:"A wooden floor with a small round table and two chairs at the left end (the table where Big Green Bear sat), a stool at the counter on the right end, a floor mat by the door.",
     fg:"Dark silhouettes: a coat rack with a scarf and hat at the left corner, a stack of chairs at the right corner, a potted plant, a few cups on a tray."}),
-  P("Evidence icons: sheet of 10", {
-    goal:"Icons for the Evidence tab and for the investigation grid.",
+  P("Evidence icons: sheet of 10 (laid out like a table)", {
+    goal:"Icons for the Evidence tab and the investigation grid. IMPORTANT: they must come out as ten fully separate icons that never overlap, so the sheet is laid out like a TABLE.",
     refs:["the 'evidence grid' panel on the UI sheet (icons must read at 90 px)"],
-    subject:"Ten separate icons on one sheet, each painted as a single object with a soft ink outline.",
-    layout:["Sheet 1536 x 1024 px, 5 columns by 2 rows, each icon about 256 x 256 px centred in a 300 x 480 cell, with at least 10 px (aim for 24 px) of transparent gap between every icon, no icon touching or overlapping another. No labels.","Row 1: 1) a worn photograph of two cubs after the flood (scar visible on one), 2) an older, more faded photograph before the flood, 3) a strand of mustard knitted wool with a ragged end, 4) a closed flood-year register with a ribbon and a brass corner, 5) a small brass lantern with a lit flame.","Row 2: 6) a small notebook with a torn page, 7) a cafe receipt strip with unreadable lines, 8) a patrol log page with columns and unreadable scribbles, 9) a doctor's folded report with a wax seal, 10) a set of boot prints in snow."],
-    details:["All icons share one light direction (upper left, amber) and the same outline weight.","Props must use the same colours as the existing props (cream paper #F2E8D4, brass #B08D57, mustard #D9A441)."],
-    include:["each icon readable at small size"], exclude:["text","labels","shadows under the icons"],
-    tech:["Sheet 1536x1024 px, transparent."]},
-    {size:"1536x1024"}),
+    subject:"A table-style contact sheet of ten separate icons on a TRANSPARENT background.",
+    layout:["Think of an invisible table with 5 columns and 2 rows. Canvas 1536 x 1024 px. Each table cell is exactly 307 x 512 px.","Each icon is centred inside ITS OWN cell. An icon is never larger than 220 x 220 px, so there are at least 43 px of empty transparent space between the icon and the cell edge on every side, and at least 86 px between any two neighbouring icons. NO icon touches, overlaps or leans into another icon or another cell.","Do NOT draw the table lines, borders or any background; the cells are only an invisible guide.","Row 1 (left to right): 1) a worn photograph of two cubs after the flood (one cub with a thin faded pinkish-grey healed scar on his LEFT EAR, no cross or mark on his forehead), 2) an older, more faded photograph of the same cubs before the flood (no scar), 3) a strand of mustard knitted wool with a ragged end, 4) a closed flood-year register with a ribbon and a brass corner, 5) a small brass lantern with a lit flame.","Row 2 (left to right): 6) a small notebook with a torn page, 7) a cafe receipt strip with unreadable lines, 8) a patrol log page with columns and unreadable scribbles, 9) a doctor's folded report tied with a ribbon and a wax seal, 10) a set of boot prints in snow."],
+    details:["All icons share one light direction (upper left, amber) and the same outline weight.","Colours match the existing props: cream paper #F2E8D4, brass #B08D57, mustard #D9A441.","Each icon is a single clean object with a sharp outline. NO glow, NO halo, NO coloured aura and NO shadow around any icon (the lantern flame stays inside its glass)."],
+    include:["ten icons in the order above","each readable at small size"], exclude:["text or labels","table lines","shadows or glows between icons","any scar drawn on a forehead"],
+    tech:["Sheet 1536x1024 px, transparent. If the generator still overlaps icons, generate them in two images of five (one row each) or one icon per image at 512 x 512 px."]},
+    {size:"1536x1024", tags:["table layout"]}),
   P("Identity Board (corkboard)", {
     goal:"The screen where the player compares the twins by combining independent clues.",
     refs:["the navy leather binder on the UI sheet (same navy pinstripe fabric and brass corners)"],
