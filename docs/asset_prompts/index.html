@@ -160,39 +160,7 @@ const REF_LIGHT = "any Bell Village night layer (for colour and lighting)";
 /* ============ A. NEXT MILESTONE ============ */
 const SECTIONS = [
 {id:"a", name:"A. Next milestone", sub:"Needed for the next playable step.", items:[
- P("0. Whole Clocktower shaft: door to clock dial, one tall sprite (replaces the door and the background tower)", {
-   goal:"The ENTIRE clocktower body in front of the player as ONE tall gameplay-layer sprite, from the steps up to the empty round clock recess and the roofline. The door is part of the wall. It replaces both the freestanding door porch AND the small tower in the background layer. The clock face and hands are added by the game, so the dial recess must be empty.",
-   refs:["the existing entrance door and tower-base image (use the SAME door, arch, hinges, ring handle, side shutters, lantern and stone style)", "the top of the tower in the Bell Village Mid layer (the clock level, the roof and the spire: reuse their stone colour, snow and shape)", "any Bell Village night layer (colour and lighting)"],
-   subject:"A medieval stone clocktower seen straight-on at eye level (orthographic, no looking up, no perspective convergence), from the entrance steps all the way up to the roof and spire.",
-   layout:["ONE image, 2400 px wide by 3600 px tall, tower centred. The bottom edge is the lowest step (clean flat line the characters stand on).","BOTTOM THIRD (0 to 1200 px from the bottom): the entrance base exactly as in the supplied door image: two buttresses, steps, pointed arch door (about 300 px wide, 640 px tall at 1080p scale), lantern on the right, two small shuttered windows with amber light. Width about 1400 px.","MIDDLE: the body rises and tapers gently from 1400 px wide to about 1000 px wide at the clock level. Plain stone wall with a string-course ledge (snow on top) every 500 px, one narrow pointed window with a warm light on each of two levels, small buttress steps that blend into the wall.","CLOCK LEVEL (at about 2500 to 3000 px from the bottom): an EMPTY round recess about 560 px in diameter, ringed by a thick carved stone and brass-banded frame (frame colour brass #B08D57 and stone), the recess filled with plain flat dark navy (#1B2238) so the game can place its own dial and hands over it. NO numerals, NO ticks, NO hands, NO clock face.","TOP: a steep dark-blue slate roof (#2F3F6B lit, #1B2238 shadow) with four small dormer windows with warm light, snow on the ridges, a thin iron spire and weathervane on top. The spire tip is at the very top of the image.","The whole silhouette must look like the same tower as the small one in the Mid layer, just larger and seen at eye level."],
-   details:["Stone: warm grey-brown blocks (#8B7F78 lit, #4E4750 shadow) with visible joints and chips; no moss. Snow: blue-white caps on every ledge, step, sill and roof ridge.","Door and lantern exactly as supplied: dark-brown planks, black scroll hinges, brass ring handle, a thin warm line of light under the door. Lantern glow stays inside the glass.","Light from the upper left (warm), lantern warmth on the right wall, cool blue shadows on the right side of the shaft."],
-   include:["empty dark-navy round recess at the clock level","door, arch and lantern identical to the supplied image","a clean flat bottom edge","stone and wood painted, not photographic"],
-   exclude:["any clock numerals, ticks or hands","any text or sign lettering","characters, footprints or a ground","sky or any background","a perspective view looking up"],
-   tech:["Size 2400x3600 px, one image, transparent.","The recess centre must be exactly horizontally centred, at about 78% of the image height from the bottom, with a 560 px diameter, so the game can place the clock over it."]},
-   {size:"2400x3600", note:"Attach the current door image and the Mid layer. After this, the game hides the small background tower and draws the 11:47 clock over the recess."}),
- P("0b. Bell Village Mid layer WITHOUT the tower (village only, for the entrance scene)", {
-   goal:"A second version of the village Mid layer with NO clocktower, because the tall tower sprite (prompt 0) is placed in front of it at the entrance. The existing Mid layer (with its small tower) stays in use for every scene where the tower is only seen in the distance.",
-   refs:["the existing Bell Village Mid layer (same buildings, trees, lamp posts, banners, snow and smoke: copy it, then remove the tower)", "any Bell Village night layer (colour and lighting)"],
-   subject:"The same wide row of Bell Village rooftops and trees, but with the clocktower area filled by more village instead.",
-   layout:["One image 3840 x 1800 px, same horizontal layout and ground line as the existing Mid layer. Where the tower stood (right of centre, about 62% to 82% of the width), draw an open gap of plain snow-covered pine trees and two low houses, so the tall tower sprite can stand there without clashing with anything.","Keep chimney smoke, glowing windows, lamp posts and red banners exactly as before."],
-   details:["Same palette and lighting as the existing Mid layer: snow-laden steep roofs (#DCE6F5 lit, #8FA2C6 mid, #41517D shadow), warm amber window light, dark blue pines.","The bottom edge ends cleanly along the roofs and tree trunks."],
-   include:["a calm gap area behind where the tower sprite will stand"],
-   exclude:["any clocktower, spire, clock face or bells","ground path, bridge, foreground bushes","sky or mountains behind (leave transparent)","text"],
-   tech:["Size 3840x1800 px, transparent."]},
-   {size:"3840x1800", note:"Attach the existing Mid layer as the reference and ask for the same image with the tower removed."}),
- 
- P("1. Portraits: Oliver, 4 expressions", {
-   goal:"Dialogue-box portraits for the Clockkeeper.",
-   refs:[REF_CHAR + " (Clockkeeper)"],
-   blocks:[OLIVER],
-   subject:"Four bust portraits of Oliver, goggles pushed up on the cap, facing the viewer in a slight three-quarter turn.",
-   layout:["ONE row of 4 squares, each 400 x 400 px (sheet 1600 x 400 px). Order: neutral, worried, surprised, thinking."],
-   details:["Neutral: steady, matter-of-fact.","Worried: ears slightly back, brow tight.","Surprised: goggles slipping on the cap, wide eyes, whiskers forward.","Thinking: eyes up and aside, one paw on his chin."],
-   include:["tabby face markings consistent","collar and the top of the apron visible"], exclude:["background","text"],
-   tech:["Sheet 1600x400 px, transparent."]},
-   {size:"1600x400"}),
-
- P("2. Hotspot magnifier ring", {
+ P("1. Hotspot magnifier ring", {
    goal:"A small marker that shows 'you can look closer here' on scene objects.",
    refs:["the round brass icon buttons on the UI sheet (match the brass colour and rim thickness)"],
    subject:"A round magnifying-glass ring seen straight on.",

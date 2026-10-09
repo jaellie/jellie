@@ -67,9 +67,16 @@ namespace BGB2.EditorTools
             // ---- parallax layers (unlit: the painting keeps its own light)
             var layers = new GameObject("Layers").transform;
             Layer(layers, cam.transform, "Far",        "village_far",        0.5f,  -150f, 168f, 0.10f, -40);
-            Layer(layers, cam.transform, "Mid",        "village_mid",        0.45f,    0f,  55f, 0.35f, -30);
+            Layer(layers, cam.transform, "Mid",        "village_mid_no_tower", 0.5318f, 0f, 298f, 0.35f, -30);
             Layer(layers, cam.transform, "Ground",     "village_ground",     0.6f,     0f, 644f, 1.00f, -20);
             Layer(layers, cam.transform, "Foreground", "village_foreground", 0.65f,    0f, 884f, 1.20f,  30);
+
+            // ---- the whole clocktower shaft stands on the gameplay plane (the clock hands at 11:47 are a TODO in Unity: draw them over the dial recess)
+            var tower = new GameObject("ClocktowerShaft");
+            tower.transform.position = W(2607f, 35f);
+            tower.transform.localScale = Vector3.one * 0.2117f;
+            var tsr = tower.AddComponent<SpriteRenderer>();
+            tsr.sprite = Spr(Root + "/Art/Props/clocktower_full_shaft.png"); tsr.sharedMaterial = unlitMat; tsr.sortingOrder = -10;
 
             // ---- lamps (positions from the Ground layer art)
             var lamps = new List<Transform>();
@@ -100,7 +107,7 @@ namespace BGB2.EditorTools
             list.Add(Interact("Nini", 1010f, 220f * 0.55f, "Talk to Nini", "니니와 이야기한다", niniDlg, null));
             list.Add(Interact("Signpost", 1345f, 120f, "Read the signpost", "표지판을 읽는다", null, notice, 640f));
             list.Add(Interact("Oliver", 2610f, 165f, "Talk to the Clockkeeper", "시계지기와 이야기한다", oliverDlg, null));
-            list.Add(Interact("Clock", 2790f, 120f, "Look up at the clock", "시계를 올려다본다", null, clock, 560f));
+            list.Add(Interact("Clock", 2735f, 120f, "Look up at the clock", "시계를 올려다본다", null, clock, 560f));
             var door = Interact("ClocktowerDoor", 2856f, 120f, "Enter the Clocktower", "시계탑에 들어간다", null, null, 600f);
             door.loadScene = "Clocktower";
             list.Add(door);
@@ -355,7 +362,7 @@ namespace BGB2.EditorTools
             dv.speakers = new List<Speaker>
             {
                 new Speaker { id = "nini", displayName = new LocalizedText("Nini", "니니"), portrait = Chr("nini__3_front"), neutral = Por("nini_neutral"), worried = Por("nini_worried"), surprised = Por("nini_surprised"), thinking = Por("nini_thinking") },
-                new Speaker { id = "oliver", displayName = new LocalizedText("Oliver", "올리버"), portrait = Chr("clockkeeper__3_front") },
+                new Speaker { id = "oliver", displayName = new LocalizedText("Oliver", "올리버"), portrait = Chr("clockkeeper__3_front"), neutral = Por("oliver_neutral"), worried = Por("oliver_worried"), surprised = Por("oliver_surprised"), thinking = Por("oliver_thinking") },
             };
             dlgRoot.SetActive(false);
             screen.dialogue = dv;

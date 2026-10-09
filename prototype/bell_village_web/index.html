@@ -28,7 +28,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .layer img,#world img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
 #sky{position:absolute;inset:0;background:linear-gradient(#070b20 0%,var(--night-0) 18%,var(--night-1) 62%,#31416e 100%)}
 #far img{left:-150px;top:168px;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 34%,#000 80%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 34%,#000 80%,transparent 100%)}
-#mid img{left:0;top:55px}
+#mid img{left:0;top:298px}
 #clockface{position:absolute;left:1551px;top:396px;width:140px;height:140px;filter:drop-shadow(0 0 6px rgba(255,200,120,.55))}
 #path{position:absolute;left:0;right:0;top:928px;bottom:0;background:
   radial-gradient(ellipse at 20% 0%,rgba(255,255,255,.16),transparent 55%),
@@ -187,13 +187,14 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
   <div id="sky"></div>
   <div class="layer" id="far"><img src="assets/far.webp" width="3230" height="492" alt=""></div>
   <div class="layer" id="mid">
-   <img src="assets/mid.webp" width="2920" height="850" alt="">
-   <svg id="clockface" viewBox="-70 -70 140 140" aria-label="Tower clock stopped at 11:47"><use href="#clk" x="-70" y="-70" width="140" height="140"/></svg>
+   <img src="assets/mid_nt.webp" width="2920" height="607" alt="">
+
   </div>
   <div id="path"></div>
   <div id="world">
    <img class="ground" src="assets/ground.webp" width="3829" height="296" alt="">
-   <img id="door" src="assets/p_entrance_door.webp" alt="Clocktower entrance" style="position:absolute;left:2640px;top:383px;width:428px;height:auto">
+   <img id="door" src="assets/p_tower_shaft.webp" alt="Clocktower" style="position:absolute;left:2607px;top:35px;width:499px;height:960px">
+   <svg id="vhands" style="position:absolute;left:2796px;top:337px" width="120" height="120" viewBox="-60 -60 120 120" aria-label="Tower clock stopped at 11:47"><g stroke="#2b1a0e" stroke-linecap="round"><line x1="0" y1="3" x2="0" y2="-24" stroke-width="2.2" transform="rotate(282)"/><line x1="0" y1="4" x2="0" y2="-16" stroke-width="3.4" transform="rotate(353.5)"/></g><circle r="3.6" fill="#2b1a0e"/><circle r="1.4" fill="#c97a2e"/></svg>
    <div class="glow" style="left:2700px;top:700px;width:310px;height:330px"></div>
    <div id="shadows"></div>
    <div id="actors"></div>
@@ -382,12 +383,12 @@ const D = {
  n2c:{sp:"nini", ex:"neutral", t:{en:"I know. Hazel told everyone. That's why they want you to look into it.", ko:"알아요. 헤이즐 아주머니가 다 말했어요. 그래서 다들 당신이 조사해 주길 바라는 거예요."}, next:"n3"},
  n3:{sp:"nini", ex:"worried", t:{en:"Please look at the clock. It stopped at eleven forty-seven, and nobody can tell me what that means.", ko:"시계를 봐 주세요. 열한 시 사십칠 분에 멈췄는데, 그게 무슨 뜻인지 아무도 말해 주지 못해요."}, set:"nini.done"},
  n9:{sp:"nini", ex:"neutral", t:{en:"I'll stay here with the others. Tell me what you find.", ko:"저는 다른 분들과 여기 있을게요. 알아내시면 말해 주세요."}},
- c0:{sp:"ck", t:{en:"Mm. Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.", ko:"음. 어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠."}, set:"ck.bear", note:"bear",
+ c0:{sp:"ck", ex:"neutral", t:{en:"Mm. Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.", ko:"음. 어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠."}, set:"ck.bear", note:"bear",
    ch:[{t:{en:"Is the tower clock reliable?",ko:"이 탑시계는 믿을 만한가요?"},go:"c1"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]},
- c1:{sp:"ck", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았죠."}, set:"ck.watch", note:"watch"},
- c9:{sp:"ck", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보세요. 시계는 어디 안 갑니다."}}
+ c1:{sp:"ck", ex:"thinking", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았죠."}, set:"ck.watch", note:"watch"},
+ c9:{sp:"ck", ex:"neutral", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보세요. 시계는 어디 안 갑니다."}}
 };
-const SP = { nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp"} };
+const SP = { nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
 const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
@@ -475,7 +476,7 @@ let IA = [
   { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-150, run:()=>startDlg(has("nini.done")?"n9":"n0") },
   { id:"sign",   x:()=>1345,      label:UI.read,   top:640,            run:()=>inspect("notice") },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(has("ck.bear")?"c9":"c0") },
-  { id:"clock",  x:()=>2790,      label:UI.look,   top:560,            run:()=>inspect("clock") },
+  { id:"clock",  x:()=>2735,      label:UI.look,   top:560,            run:()=>inspect("clock") },
   { id:"door",   x:()=>2856,      label:UI.enter,  top:600,            run:()=>enterTower() }
 ];
 const IA_V = IA.slice();

@@ -5,14 +5,12 @@ Done items are removed. Originals live in `art_source/originals/`; slices in `ar
 ## Already made (do not redo)
 UI sheet · 8 character turnarounds (6 views) · Bell Village night layers (Far, Mid, Ground, Foreground) · Clocktower interior 4 layers ·
 Clocktower props (2 doors, 2 pendulums, 2 handbells, 3 puddles, pocket watch front/back, gloves, sealed letter, frame back) ·
-Clocktower entrance door and steps (exterior) · Clocktower hatch (cut from the first interior kit) · 11:47 clock face and hands (drawn in code) · choice popup (built from the plaques).
+Whole clocktower shaft and village Mid without the tower · Portraits (BGB, Nini, Oliver) · Clocktower entrance door and steps (exterior) · Clocktower hatch (cut from the first interior kit) · 11:47 clock face and hands (drawn in code) · choice popup (built from the plaques).
 
 ## A. Must have for the next playable milestone
 | # | Asset | Spec |
 |---|---|---|
-| 1 | **Whole tower shaft** (door to clock recess, eye-level, one tall sprite; replaces the lone door AND the small background tower) | 2400x3600 px, empty dark-navy round recess (560 px) where the game draws the 11:47 clock; same door as the supplied image. |
-| 1b | **Village Mid layer without the tower** (for the entrance scene only; the current Mid stays for scenes where the tower is distant) | 3840x1800, same layout, open gap where the tower stood. |
-| 2 | **Portraits: Oliver only** (BGB and Nini are done) | 3 to 4 expressions each: neutral, worried, surprised, thinking. Square, about 400 px. |
+| 2 | **Portraits:** all three done (BGB, Nini, Oliver) | 3 to 4 expressions each: neutral, worried, surprised, thinking. Square, about 400 px. |
 | 3 | **Hotspot ring** | Round magnifier ring for "look closer" points (transparent). |
 
 ## B. Needed soon after
