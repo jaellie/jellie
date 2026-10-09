@@ -347,3 +347,34 @@ The Responsibility Board carries the line *"He did not know everything. He knew 
 
 ### 13.5 No additional twists
 Nothing in this pass changes the swap, the adults' decision, the endings' structure, or the chapter order. R17 and R18 are **clues and presentation**, not plot events. Both need your yes or no.
+
+---
+
+## 14. FINAL AUDIT (v1.0): story locked
+
+**Result: no remaining logical contradictions.** Everything below was checked against `STORY_BIBLE.md` v1.0.
+
+### 14.1 Approvals applied
+R1 to R10, R12, R17, R18, D3 to D6, D8, D11: as recommended. **R11 and D2: modified** (collective decision; Edward not the sole instigator). **D12:** Edward Bell, Oliver, Hazel, Rowan. D7 unchanged.
+
+### 14.2 The D3 to D2 chain (the item you flagged as critical)
+Closed in bible §3.1a (nine steps). In one paragraph: the younger twin's **scarf end** jams the warning release; no bell, the lower village floods, a **boatman drowns**; the elder rings the **handbell** and saves the upper village, so the **hero by name** is *Big Green Bear*; the crowd sees **one child carried out** and **assumes he is the hero;** the inquest finds the scarf end and only Edward can say it is the **carried child's;** the **Bell Ordinance** requires the culprit to be put outside the walls; the Healer says the carried child **would die** in winter exile. Telling the truth would banish the sick child, so the five adults let the **public mistake stand and exchange the names to match it,** which still gives the Ordinance a name. A swap is **necessary** because the register already said *hero = Big Green Bear* and *scarf = Green's;* only exchanging names makes the paper agree with what the village already believes.
+
+### 14.3 Edward
+Age 38 then, 61 now. **Clerk of the Bell Council, no vote;** no entry valid without his hand. He consented, wrote the forged entries, testified, promised the elder it was temporary, and kept silent 23 years. **Not the instigator** (the Mayor demanded a culprit, the Bell-warden feared blame, the Healer gave the medical argument, Mara proposed letting the mistake stand). **Present motive:** he reads the Flood Entry aloud every year at the Remembrance Bell; this is the 23rd; Nini finds the two inks; he writes the Final Record **naming himself first** and does **not** hide behind the council. **Why he waited:** a promise, the sick child's recovery, cowardice.
+
+### 14.4 R10 verification (11:46 sighting versus 11:50 discovery)
+Café 11:42, plaza 11:46, tower door 11:48, hatch 11:49, Edward 11:50. Rowan sees a slow bear on the plaza at 11:46, then loses him behind the buttress; he does **not** see the door or the time of entry. Oliver is already away to the east. **Consistent.**
+
+### 14.5 R17 independence
+Three mechanisms (medical, third-party log, physical), each showing Edward appealed for help and that BGB could not have missed it (bible §7.1a). One small detail was needed to **time** the grip: **R19** (Hazel straightens BGB's left scarf tail at 11:42; it is torn short at 11:58). Veto allowed; if vetoed, clue (c) loses its timing but (a) and (b) stand.
+
+### 14.6 The ten invariants
+All ten hold (bible §14.2 maps each to its section).
+
+### 14.7 Deductions supported by available evidence
+All twelve deductions have independent sources before the accusation. DD-07 now requires the **council's seals and signatures** (EV-12), not Edward's hand alone.
+
+### 14.8 Non-blocking items (not contradictions)
+- Unnamed on purpose: the Mayor, the Bell-warden, the Healer then and now, the boatman, the twins' parents, the Constable.
+- **Art still missing** (`ASSET_REQUIREMENTS.md`): Green's scar, corrected scarves in all six views, the pre-flood photograph, BGB's torn-tail variant, young twins, the council-room scene for the Epilogue.

@@ -36,3 +36,10 @@ Rule: **no mirrored sprites as final art.** Scarf tails and scar follow the per-
 | **Maintenance chute door** | Inside bolt, bolted state; melt puddle decal | EV-28, EV-19. |
 | **Responsibility Board** | Three columns (*The fall*, *Delayed help*, *Hid the truth*), name slots, fixed *Cause of death: Undetermined* strip | R15. No "delay" option. |
 | **"What I overlooked" page** | Notes page template with six linked lines | R18. |
+
+## Added by the final story lock (v1.0)
+| Asset | Needed | Notes |
+|---|---|---|
+| **BGB scarf, torn-tail variant** | Left tail torn short by about a hand's width, all six views | Visible from Chapter 6 (R19). |
+| **Council-room Epilogue stills** | Lamplit room, five figures (Mayor, Bell-warden, Healer, Mara, Edward), open Register, pen, seals | Under two minutes, non-playable; the Mayor, Bell-warden and Healer are new unnamed designs. |
+| **Boatman's family** (optional, off-screen voices only) | None | Heard through the door in the Epilogue. |
