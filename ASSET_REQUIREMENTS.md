@@ -1,45 +1,51 @@
-# ASSET REQUIREMENTS — production assets still missing
+# ASSET REQUIREMENTS: what is still left to make
 
-Source art is preserved untouched in `art_source/originals/` (checksums in `art_source/MANIFEST.sha256`).
-Automatic crops in `art_source/sliced/` are **candidates only** until a human reviews them (`tools/slice_sheet.py`, `_contact_sheet.png`).
+Done items are removed. Originals live in `art_source/originals/`; slices in `art_source/sliced/`.
 
-## Missing because of story decisions (🔒 you flagged these)
-| Asset | Needed | Notes |
+## Already made (do not redo)
+UI sheet · 8 character turnarounds (6 views) · Bell Village night layers (Far, Mid, Ground, Foreground) · Clocktower interior 4 layers ·
+Clocktower props (2 doors, 2 pendulums, 2 handbells, 3 puddles, pocket watch front/back, gloves, sealed letter, frame back) ·
+Clocktower hatch (cut from the first interior kit) · 11:47 clock face and hands (drawn in code) · choice popup (built from the plaques).
+
+## A. Must have for the next playable milestone
+| # | Asset | Spec |
 |---|---|---|
-| **Green's scar** | Faded **pinkish-grey healed** scar on the **left ear**, all views where visible | Current sheet shows red marks. Green must not look more sinister than BGB. |
-| **BGB scarf redraw** | Tails/knot on **his left shoulder**, all **6 views, drawn per view** | Current right-facing views look mirror-derived (tails visible on both sides). |
-| **Green scarf redraw** | Tails/knot on **his right shoulder**, all **6 views, drawn per view** | Currently drawn identically to BGB's. |
-| **Pre-flood photograph** | Two cubs, **no scar**, **birth-name captions**, scarf knots visible (right/left) | Evidence EV-13. |
-| **Post-flood home photograph** | Two cubs, scarred cub captioned "Green" | Evidence EV-01. |
-| **Edward's pocket watch** (evidence icon) | Running, **cracked crystal**, dented case | Evidence EV-24. |
-| **Edward's letter to Green** | Crumpled, addressed "G." | EV-27. |
-| **Green's right glove** | Wool glove, snow-damp | EV-14 (hidden behind the photograph's backing, EV-31). |
-| **Back of the photograph frame** | Backing board with a hidden glove and folded letter | EV-31; Prologue plant. |
-| **Responsibility board** | UI: two columns (Green: fall; BGB: concealment and delay), no cause-of-death field | R15. |
+| 1 | **Clocktower entrance door + steps** (exterior prop) | Closed door in a stone arch with 2 to 3 steps, snow on top, lantern beside it; transparent PNG. (Currently a code-drawn placeholder.) Optional: open-door variant. |
+| 2 | **BGB walk and idle** | Idle 2 to 4 frames, walk 6 to 8 frames, **left and right drawn separately (no mirroring)**, plus front idle. Same scale and pivot (feet centre) as the sheet. |
+| 3 | **Nini idle** and **Oliver idle** | 2 to 4 frames each, front, to match BGB. |
+| 4 | **Portraits** for BGB, Nini, Oliver | 3 to 4 expressions each: neutral, worried, surprised, thinking. Square, about 400 px. |
+| 5 | **Hotspot ring** | Round magnifier ring for "look closer" points (transparent). |
 
-Rule: **no mirrored sprites as final art.** Scarf tails and scar follow the per-view matrix in `STORY_BIBLE.md` §12.1.
-
-## Missing for the vertical slice (from the asset audits)
-- Bell Village layers: walkable **path**, **Clocktower entrance door** on the gameplay plane, **clock face with hands (11:47)**, full-bleed **sky gradient**, wider/modular ground pieces.
-- **BGB, Nini, Clockkeeper:** idle and walk frames; **portraits with 3–4 expressions.**
-- **Snow versions** of tiles/props (the current set is green summer).
-- UI: hotspot ring, 2-row choice popup, Identity Board art.
-- Audio: none provided.
-
-## Added by approvals R13 to R18
-| Asset | Needed | Notes |
+## B. Needed soon after
+| # | Asset | Notes |
 |---|---|---|
-| **Deep keepsake frame** (Prologue prop) | Thick wooden frame, **leaning** on a shelf, with a **hinged backing board and two brass turn-buttons** | Must read as sentimental in the Prologue. Its back is the hiding place (EV-31). |
-| **Frame back, open** | Backing board open, 3 cm cavity, **flattened glove and letter folded in thirds** | EV-31 reveal. |
-| **Mustard wool strand** | Small icon, snow-damp | EV-05 (in Edward's fist). |
-| **Night Guard's patrol log** | Page with time, temperature and short notes (gloves, paper, slow bear, calling) | EV-29. |
-| **Maintenance chute door** | Inside bolt, bolted state; melt puddle decal | EV-28, EV-19. |
-| **Responsibility Board** | Three columns (*The fall*, *Delayed help*, *Hid the truth*), name slots, fixed *Cause of death: Undetermined* strip | R15. No "delay" option. |
-| **"What I overlooked" page** | Notes page template with six linked lines | R18. |
+| 6 | **Edward's archive room** (Chapter 3) | Same 4-layer split as the interior set; record shelves, a locked drawer, the flood-year register on a stand. |
+| 7 | **Hazel's café interior** (Chapter 2) | Same split; counter, a table where BGB sat, window onto the plaza. |
+| 8 | **Evidence icons still missing** (about 10) | Post-flood photograph (home), pre-flood photograph, mustard wool strand, register/ledger, lantern, Nini's notebook (torn page), café receipt, Rowan's patrol log, Healer's report, footprints. |
+| 9 | **Identity Board** | Corkboard, red string, pins, polaroid frames (the UI sheet has none). |
+| 10 | **Responsibility Board** | Three columns (*The fall, Delayed help, Hid the truth*), name slots, a fixed strip *Cause of death: Undetermined*. No "delay" option. |
+| 11 | **Stamps** (parchment style) | SOLVED, CONTRADICTION, UNKNOWN, SUSPECT IDENTIFIED, UNDETERMINED. |
+| 12 | **"What I overlooked" page** | Notes page template with six linked lines. |
+| 13 | **Audio** | Wind and night ambience loop; footsteps on snow and on stone; clock tick; bell chime; handbell; UI click; a calm piano or music-box theme. |
 
-## Added by the final story lock (v1.0)
-| Asset | Needed | Notes |
-|---|---|---|
-| **BGB scarf, torn-tail variant** | Left tail torn short by about a hand's width, all six views | Visible from Chapter 6 (R19). |
-| **Council-room Epilogue stills** | Lamplit room, five figures (Mayor, Bell-warden, Healer, Mara, Edward), open Register, pen, seals | Under two minutes, non-playable; the Mayor, Bell-warden and Healer are new unnamed designs. |
-| **Boatman's family** (optional, off-screen voices only) | None | Heard through the door in the Epilogue. |
+## C. Story-lock art flags (from the final story)
+| Asset | Spec |
+|---|---|
+| **Green's scar** | Faded pinkish-grey healed scar, left ear, all views where visible (current sheet shows red marks). |
+| **Scarves redrawn, both twins, 6 views each, per view (no mirroring)** | BGB tails on his **left** shoulder; Green on his **right**. |
+| **BGB scarf, torn-tail variant** | Left tail torn short by a hand's width, 6 views (visible from Chapter 6). |
+| **Keepsake photo frame (front)** | Thick, deep frame leaning on a shelf (Prologue). The back and the hidden cavity with glove and letter are separate pieces (frame back already exists). |
+| **Pre-flood and post-flood photographs** | Pre-flood: two cubs, no scar, birth-name captions, knots visible. Post-flood: scarred cub captioned "Green". |
+
+## D. Later (Chapters 4 and up)
+| Asset | Notes |
+|---|---|
+| **Young twin bears** | Two sprites with matching walk sets; the playable one is the future Green and must not be named. |
+| **Flashback Bell Village** | Same layers, warmer and cozier, plus a version with rising water. |
+| **Flood water, rain, flooded stairwell** | Effects and a stairwell background for Chapter 5. |
+| **Register page, two inks** | Newer ink over older on the hero entry; seals and signatures. |
+| **Council-room Epilogue stills** | Lamplit room; Mayor, Bell-warden, Healer (new unnamed designs), Mara, Edward; open Register, pen, seals. Under two minutes. |
+| **Ending art E1 to E4** | One key image each. |
+
+## E. Not needed for now
+- **Snow variants of the green tiles and props:** the village and interior are painted whole, so the tile sheets are unused. Only needed if you want a modular, longer level.
