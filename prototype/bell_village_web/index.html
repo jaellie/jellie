@@ -821,7 +821,7 @@ function peopleStrip(){
   P.forEach(x=>{ h += '<button class="ptile'+(x.id===selPerson?' sel':'')+(x.on?'':' locked')+'" data-p="'+x.id+'"'+(x.on?'':' disabled')+'><span class="pf"><img src="'+x.img+'" alt=""></span><b>'+(x.on?tr(x.name):'?')+'</b></button>'; });
   for (let i=P.length;i<6;i++) h += '<span class="ptile locked ghost"><span class="pf"></span><b>?</b></span>';
   const cur = P.find(x=>x.id===selPerson);
-  return h + '</div><div class="pcap"><b>'+tr(cur.name)+'</b> &mdash; '+cur.d+'</div>';
+  return h + '</div><div class="pcap"><b>'+tr(cur.name)+'</b>: '+cur.d+'</div>';
 }
 const px = (x,y,w,h,W,H) => 'left:'+(x/W*100).toFixed(2)+'%;top:'+(y/H*100).toFixed(2)+'%;width:'+(w/W*100).toFixed(2)+'%;height:'+(h/H*100).toFixed(2)+'%';
 const box = (cls,x,y,w,h,W,H,inner,st) => '<div class="ov '+cls+'" style="'+px(x,y,w,h,W,H)+(st||'')+'">'+inner+'</div>';
@@ -873,7 +873,7 @@ function boardResp(){
     if (PV) h += box("",[130,590,1048][i],492,330,150,W,H,'<span style="font-size:'+(i===1?18:20)+'px">'+basis[i]+'</span>','padding:0 8px');
     else h += box("",130,492,330,150,W,H,'<span style="font:italic 500 22px/1.3 var(--font-body);color:#6d5a40">'+(K?"가진 증거로 이름을 정하자. 틀려도 막히지 않는다.":"Place a name once the evidence supports it.")+'</span>','padding:0 8px');
   }
-  h += box("ctr",175,700,970,70,W,H,'<span style="font:700 22px/1.2 var(--font-body)"><b style="display:inline;color:#6e2a35;font-size:20px;letter-spacing:.1em">'+(K?"사인 ":"CAUSE OF DEATH ")+'</b>'+(PV ? (K?"미확정 — 부상, 출혈, 추위. 도움이 있었다면 살 수 있었는지는 아무도 말할 수 없다.":"UNDETERMINED: injuries, blood loss and cold. No one can say whether help would have saved him.") : (K?"아직 밝혀지지 않았다.":"not yet established.")) + '</span>');
+  h += box("ctr",175,700,970,70,W,H,'<span style="font:700 22px/1.2 var(--font-body)"><b style="display:inline;color:#6e2a35;font-size:20px;letter-spacing:.1em">'+(K?"사인 ":"CAUSE OF DEATH ")+'</b>'+(PV ? (K?"미확정: 부상, 출혈, 추위. 도움이 있었다면 살 수 있었는지는 아무도 말할 수 없다.":"UNDETERMINED: injuries, blood loss and cold. No one can say whether help would have saved him.") : (K?"아직 밝혀지지 않았다.":"not yet established.")) + '</span>');
   if (PV){
     h += '<img class="stamp" src="assets/stamp_suspect_identified.webp" alt="" style="left:'+(170/W*100)+'%;top:'+(560/H*100)+'%;width:'+(230/W*100)+'%;transform:rotate(-7deg)">';
     h += '<img class="stamp" src="assets/stamp_undetermined.webp" alt="" style="left:'+(1150/W*100)+'%;top:'+(690/H*100)+'%;width:'+(200/W*100)+'%;transform:rotate(5deg)">';

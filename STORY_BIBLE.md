@@ -241,6 +241,8 @@ And the **mirror to the Ch.5 rescue:** the elder saved the younger in the flood;
 
 **Narrator Rule 🟡:** Game narration, Notes-tab text, and system messages **never state a falsehood.** BGB's *spoken* lines may be evasive, but never a lie the player can't later see as an omission. The unreliable part of BGB is what he **doesn't say**, never what the game **tells** the player. (This is what keeps the twist fair.)
 
+**Text style rule 🔒:** no em dashes in player-facing text, in English or Korean (use a comma, a colon, a period or a new sentence). This applies to dialogue, notes, popups, labels and endings. (Design notes in this document may still use them.)
+
 ---
 
 ## 5. Chapter-by-chapter
