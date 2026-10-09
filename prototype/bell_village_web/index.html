@@ -56,6 +56,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .mark{position:absolute;width:118px;height:129px;margin-left:-59px;filter:brightness(1.12) contrast(1.15) drop-shadow(0 3px 5px rgba(0,0,0,.55));pointer-events:none;animation:bob 1.6s ease-in-out infinite;opacity:0;scale:1;transition:opacity .25s ease,scale .25s ease}
 .mark.look{width:120px;height:auto;margin-left:-60px;filter:brightness(1.1) drop-shadow(0 0 3px rgba(18,10,6,.95)) drop-shadow(0 4px 6px rgba(0,0,0,.6))}
 .mark.on{opacity:1}
+#stage img.mark.on{pointer-events:auto;cursor:pointer}
 .mark.soft{opacity:.78;scale:.82}
 @keyframes bob{50%{transform:translateY(-8px)}}
 .glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,179,71,.34),transparent 65%);pointer-events:none;mix-blend-mode:screen}
@@ -152,10 +153,11 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #dlg .tx{position:absolute;left:316px;top:116px;right:196px;height:150px;font:400 36.5px/1.32 var(--font-body);color:var(--ink)}
 :lang(ko) #dlg .tx,#dlg .tx.ko{font-size:33px;line-height:1.5}
 #dlg .tx i{color:#6d4f2d}
-#choices{position:absolute;left:50%;transform:translateX(-50%);bottom:352px;z-index:8;display:none;flex-direction:column;gap:12px;align-items:center}
+#choices{position:absolute;left:500px;bottom:352px;z-index:8;display:none;flex-direction:column;gap:12px;align-items:flex-start}   /* left is set from the dialogue box so every answer starts at the same x */
 #choices.on{display:flex}
 .choice{width:fit-content;max-width:1100px;min-height:92px;padding:20px 48px;--s:1.3;font:600 31px/1.25 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s;background-color:transparent}
 .choice:hover,.choice.sel{--img:url(assets/plaque_red_small.webp);color:#f6e3c0;transform:translateY(-2px)}
+.choice{--img:url(assets/plaque_cream_small.webp)}
 
 /* Case File */
 #cf{position:absolute;inset:0;background:rgba(6,9,20,.82);display:none;z-index:20}
@@ -220,8 +222,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .pbtn:hover{--img:url(assets/plaque_red_small.webp);color:#f6e3c0}
 #fade{position:absolute;inset:0;background:#02030a;opacity:0;pointer-events:none;transition:opacity .7s;z-index:40}
 #fade.on{opacity:1;pointer-events:auto}
-#toast{position:absolute;left:50%;top:40px;transform:translate(-50%,-14px);background:#1b2340;border:2px solid var(--brass);color:#ffe3a6;padding:12px 24px;border-radius:8px;font:600 26px/1 var(--font-body);opacity:0;transition:.3s;z-index:25;pointer-events:none}
-#toast.on{opacity:1;transform:translate(-50%,0)}
+#toast{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.92);background:#fff3d0;border:5px solid var(--burgundy);outline:3px solid var(--brass);outline-offset:-11px;color:#4a1a22;padding:26px 56px;border-radius:14px;font:700 38px/1.2 var(--font-body);text-align:center;max-width:1300px;box-shadow:0 12px 40px rgba(0,0,0,.55),0 0 0 9999px rgba(6,9,20,.18);opacity:0;transition:opacity .25s,transform .25s;z-index:45;pointer-events:none}
+#toast.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
 
 /* touch controls live outside the stage */
 #touch{position:fixed;left:0;right:0;bottom:0;display:none;justify-content:space-between;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));z-index:50;pointer-events:none}
@@ -615,10 +617,10 @@ const IA_C = [
   { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 900) },
   { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(has("hz.done")?"h9":"h0") }
 ];
-function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"||i.id==="hz"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; }); }
+function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"||i.id==="hz"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
 mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks"));
 IA = IA_V;
-let near = null, peek = 0;
+let near = null, peek = 0, autoGo = null;
 
 /* ---------- UI plumbing ---------- */
 let mode = "play"; // play | dlg | cf | modal
@@ -672,18 +674,19 @@ function sizeDlg(text){
   const m = $("meas"); m.style.fontSize = lang==="ko" ? "33px" : "36.5px"; m.textContent = text;
   const w = Math.min(m.offsetWidth + 14, 1008); // text width, one line, capped at the full text area
   const box = Math.max(820, 316 + w + 196);
-  const bw = Math.min(1520, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px";
+  const bw = Math.min(1520, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px"; $("choices").style.left = Math.round((STAGE_W - bw)/2 + 300) + "px";
 }
 function showChoices(){
   const n = D[cur]; if (!n.ch) return; const box = $("choices"); box.innerHTML = "";
   n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice nine cream"; b.textContent = tr(c.t); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
-  box.classList.add("on"); box.firstChild.classList.add("sel");
+  box.classList.add("on");   /* both answers start cream; the one you pick turns burgundy */
 }
-function pick(i){ const n = D[cur]; const c = n.ch[i]; applyNode(n); goto(c.go); }
+function pick(i){ const n = D[cur]; const c = n.ch[i]; const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
+  setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
 function applyNode(n){ if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(){
   if (typing){ clearInterval(typing); typing = null; $("dTx").textContent = full; showChoices(); return; }
-  const n = D[cur]; if (n.ch){ const sel = document.querySelector('#choices .choice.sel'); if (sel) sel.click(); return; }
+  const n = D[cur]; if (n.ch){ const bs = [...document.querySelectorAll('#choices .choice')]; const sel = document.querySelector('#choices .choice.sel'); if (sel) sel.click(); else if (bs[0]) bs[0].classList.add('sel'); return; }
   applyNode(n); goto(n.next || null);
 }
 function goto(id){ if (!id){ endDlg(); return; } cur = id; renderDlg(true); }
@@ -889,7 +892,7 @@ function renderTl(){
 function openCF(){ if (mode!=="play") return; mode = "cf"; $("cf").classList.add("on"); renderCF(); }
 function closeCF(){ $("cf").classList.remove("on"); mode = "play"; stage.focus(); }
 $("cfclose").onclick = closeCF; $("bCase").onclick = openCF; $("bSet").onclick = openPause; $("tC").onclick = ()=> mode==="cf"?closeCF():openCF();
-$("bLook").onclick = ()=>{ peek = 3; };
+$("bLook").onclick = ()=>{ peek = 6; };
 $("pResume").onclick = closePause; $("pLang").onclick = ()=>setLang(lang==="en"?"ko":"en");
 $("pReset").onclick = ()=>{ try{ localStorage.removeItem(SAVE_KEY);}catch(e){} S = {x:520,flags:{},ev:[],notes:[],lang,scene:"village"}; setSceneNow("village", 520); closePause(); toast(lang==="ko"?"처음부터 다시 시작":"Restarted"); };
 
@@ -924,10 +927,12 @@ hold("tL","arrowleft"); hold("tR","arrowright"); $("tE").addEventListener("point
 let cam = 0, last = performance.now();
 function frame(now){
   const dt = Math.min(0.05, (now - last)/1000); last = now;
-  P.moving = false;
+  P.moving = false; if (mode!=="play") autoGo = null;
   if (mode==="play"){
-    const l = keys.has("arrowleft")||keys.has("a"), r = keys.has("arrowright")||keys.has("d");
-    const run = keys.has("shift"); const sp = run ? 430 : 270;
+    let l = keys.has("arrowleft")||keys.has("a"), r = keys.has("arrowright")||keys.has("d");
+    if ((l || r) && autoGo) autoGo = null;                                   /* manual input cancels the tap-to-walk */
+    if (autoGo){ const dx = autoGo.x() - P.x; if (Math.abs(dx) < 26){ const it = autoGo; autoGo = null; hideHintNow(); it.run(); l = r = false; } else { r = dx > 0; l = !r; } }
+    const run = keys.has("shift") || !!autoGo; const sp = run ? 430 : 270;
     if (l !== r){ P.x += (r?1:-1) * sp * dt; P.face = r ? "right" : "left"; P.moving = true; P.walk += dt * (run?11:8); }
     P.x = Math.max(P_MIN, Math.min(W - 160, P.x));
   }
