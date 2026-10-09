@@ -119,8 +119,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #tfg,#tfar{pointer-events:none}
 
 /* Persistent category panel (left), as in the mockup */
-#side{position:absolute;left:12px;top:182px;width:294px;height:559px;background:url(assets/nav_binder_6slots_COMPOSITE.webp) 0 0/100% 100% no-repeat;z-index:5}
-.sbtn{position:absolute;left:62px;width:202px;height:74px;padding:0 16px 0 20px;--s:.97;background-color:transparent;display:flex;align-items:center;justify-content:flex-start;gap:9px;font:700 20px/1 var(--font-label);letter-spacing:.02em;white-space:nowrap;color:var(--ink);cursor:pointer;border-radius:12px;transition:filter .12s,transform .12s}
+#side{position:absolute;left:12px;top:182px;width:294px;height:570px;background:url(assets/nav_binder_v2.webp) 0 0/100% 100% no-repeat;z-index:5}
+.sbtn{position:absolute;left:61px;width:197px;height:72px;padding:0 16px 0 20px;--s:.97;background-color:transparent;display:flex;align-items:center;justify-content:flex-start;gap:9px;font:700 20px/1 var(--font-label);letter-spacing:.02em;white-space:nowrap;color:var(--ink);cursor:pointer;border-radius:12px;transition:filter .12s,transform .12s}
 .sbtn svg{width:25px;height:25px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .sbtn:hover{filter:brightness(1.08);transform:translateX(3px)}
 .sbtn.first{color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
@@ -161,8 +161,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #cf{position:absolute;inset:0;background:rgba(6,9,20,.82);display:none;z-index:20}
 #cf.on{display:block}
 #cfwrap{position:absolute;left:150px;top:70px;width:1620px;height:940px}
-#nav{position:absolute;left:0;top:70px;width:386px;height:735px;background:url(assets/nav_binder_6slots_COMPOSITE.webp) 0 0/100% 100% no-repeat}
-.tab{position:absolute;left:81px;width:265px;height:97px;background-color:transparent;border-radius:14px;font:700 26px/1 var(--font-label);letter-spacing:.05em;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:filter .12s;padding:0 24px;--s:1.25}
+#nav{position:absolute;left:0;top:70px;width:386px;height:748px;background:url(assets/nav_binder_v2.webp) 0 0/100% 100% no-repeat}
+.tab{position:absolute;left:80px;width:259px;height:95px;background-color:transparent;border-radius:14px;font:700 26px/1 var(--font-label);letter-spacing:.05em;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:filter .12s;padding:0 24px;--s:1.25}
 .tab:not(.nine){border:0}
 .tab:hover{filter:brightness(1.07)}
 .tab.act{color:#f6e3c0}
@@ -199,7 +199,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .person.locked img{filter:grayscale(1) brightness(.35)}
 .person b{display:block;font:700 30px/1.1 var(--font-body)}
 .person span{font:400 22px/1.3 var(--font-body);color:#5a4630}
-.tl{position:relative;width:925px;height:319px;background:url(assets/timeline_strip_5slots.webp) 0 0/100% 100% no-repeat;margin:18px 0}
+.tl{position:relative;width:925px;height:320px;background:url(assets/timeline_strip_v2.webp) 0 0/100% 100% no-repeat;margin:18px 0}
 .tlcard{position:absolute;width:112px;height:128px;top:70px;border:3px solid var(--brass);border-radius:6px;background:#fff6dc;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font:700 22px/1.1 var(--font-body);text-align:center;box-shadow:0 3px 8px rgba(60,35,10,.35)}
 .tlcard small{font:700 13px/1 var(--font-label);letter-spacing:.12em;color:var(--burgundy)}
 .legend{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 14px}
@@ -383,12 +383,12 @@ const ICONS = [
   '<path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 19h4"/>',
   '<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>'
 ];
-const SLOT_CY = [85,174,259,344,429,514], SK = 294/309;
+const PLY = [113,330,543,757,968,1180], SK = 294/746;   /* plaque tops in nav_binder_v2.webp (746x1445); the plaques are painted into the art */
 function buildSide(){
   const side = $("side"); if (side.dataset.built) return; side.dataset.built = "1";
   ICONS.forEach((ic,i)=>{
-    const b = document.createElement("button"); b.className = "sbtn nine " + (i===0 ? "red first" : "cream"); b.dataset.i = i;
-    b.style.top = Math.round((SLOT_CY[i] - 39)*SK) + "px";
+    const b = document.createElement("button"); b.className = "sbtn " + (i===0 ? "nine red first" : ""); b.dataset.i = i;
+    b.style.top = Math.round(PLY[i]*SK) + "px";
     b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">'+ic+'</svg><span></span>';
     b.addEventListener("click", ()=>{ if (mode==="play") { tab = i; openCF(); } });
     side.appendChild(b);
@@ -736,10 +736,10 @@ let tab = 0, selEv = null, sub = false, PV = false, evPage = 0;
 const SLOTS = [85,174,259,344,429,514];
 function renderNav(){
   const nav = $("nav"); nav.innerHTML = ""; const labs = tr(UI.tabs);
-  const k = 386/309;
-  SLOTS.forEach((cy,i)=>{
-    const b = document.createElement("button"); b.className = "tab nine " + (i===tab ? "red act" : "cream");
-    b.style.top = Math.round((cy-39)*k) + "px"; b.textContent = labs[i];
+  const k = 386/746;
+  PLY.forEach((py,i)=>{
+    const b = document.createElement("button"); b.className = "tab" + (i===tab ? " nine red act" : "");
+    b.style.top = Math.round(py*k) + "px"; b.textContent = labs[i];
     b.onclick = ()=>{ tab = i; sub = false; renderCF(); }; nav.appendChild(b);
   });
 }
@@ -875,14 +875,14 @@ function renderEvGrid(){
   d.innerHTML = e ? '<span class="tag">'+e.tag+'</span><h3>'+tr(e.name)+'</h3><p>'+tr(e.desc)+'</p>' : '<p style="font:italic 400 28px/1.4 var(--font-body);color:#6d5a40">'+(S.ev.length? (lang==="ko"?"증거를 선택하면 설명이 나온다.":"Select an item to read about it.") : tr(UI.empty))+'</p>';
 }
 function renderTl(){
-  const t = $("tl"); const k = 925/661; const SL = [[78,163],[172,268],[277,372],[381,477],[487,581]], sx = SL.map(x=>x[0]); const K = lang==="ko"; /* slot rectangles measured from timeline_strip_5slots.webp (661x228), top 49, bottom 143 */
+  const t = $("tl"); const k = 925/1628; const SL = [[173,403],[432,667],[695,926],[954,1189],[1218,1445]], sx = SL.map(x=>x[0]); const K = lang==="ko"; /* slot rectangles measured from timeline_strip_v2.webp (1628x563), top 142, bottom 367 */
   const items = [
     { slot:0, tag:"W", time:"11:35", on:S.ev.includes("patrol"), txt:K?"다리 위의 곰":"Bear on the bridge" },
     { slot:1, tag:"W", time:"11:40", on:has("ck.bear"), txt:K?"계단의 곰":"Bear on the stairs" },
     { slot:2, tag:"E", time:"11:42", on:S.ev.includes("receipt"), txt:K?"카페 계산":"Tab settled at the café" },
     { slot:3, tag:"C", time:"11:47", on:S.ev.includes("clock"), txt:K?"탑시계 멈춤":"Tower clock stopped" }
   ];
-  items.filter(i=>i.on).forEach(i=>{ const c = document.createElement("div"); c.className = "tlcard"; const sl = SL[i.slot]; c.style.cssText = "left:"+Math.round(sl[0]*k)+"px;top:"+Math.round(49*k)+"px;width:"+Math.round((sl[1]-sl[0])*k)+"px;height:"+Math.round(94*k)+"px;box-sizing:border-box;padding:4px";
+  items.filter(i=>i.on).forEach(i=>{ const c = document.createElement("div"); c.className = "tlcard"; const sl = SL[i.slot]; c.style.cssText = "left:"+Math.round(sl[0]*k)+"px;top:"+Math.round(142*k)+"px;width:"+Math.round((sl[1]-sl[0])*k)+"px;height:"+Math.round(225*k)+"px;box-sizing:border-box;padding:4px";
     c.innerHTML = '<small>'+i.tag+' · '+({W:"WITNESS",E:"EVENT",C:"CLOCK"}[i.tag])+'</small>'+i.time+'<span style="font:400 15px/1.1 var(--font-body)">'+i.txt+'</span>'; t.appendChild(c); });
   if (S.flags["con.c1"]){ const m = document.createElement("img"); m.src = "assets/stamp_contradiction.webp"; m.alt = ""; m.style.cssText = "position:absolute;width:210px;left:"+Math.round((sx[0]+12)*k)+"px;top:-6px;transform:rotate(-6deg);pointer-events:none"; t.appendChild(m); }
 }
