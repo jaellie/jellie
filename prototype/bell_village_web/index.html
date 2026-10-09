@@ -85,6 +85,19 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #afg{position:absolute;left:0;top:0;will-change:transform}
 #afg img{position:absolute;left:-420px;top:614px;display:block;pointer-events:none}
 #csc{position:absolute;inset:0;display:none}
+/* Prologue cottage: PLACEHOLDER art (flat colours) until the real room layers exist */
+#psc{position:absolute;inset:0;display:none;background:#1c2540}
+#psc.on{display:block}
+#pworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
+#pwall{position:absolute;left:0;top:0;width:2400px;height:900px;background:linear-gradient(#2c3552,#3a3550 70%,#4a3a46)}
+#pfloor{position:absolute;left:0;top:890px;width:2400px;height:190px;background:linear-gradient(#4a3426,#2a1c14)}
+#pwin{position:absolute;left:380px;top:170px;width:360px;height:420px;background:linear-gradient(#e8b98a,#9fb0d6);border:14px solid #4a3426;border-radius:180px 180px 8px 8px}
+#pwin i{position:absolute;left:50%;top:0;bottom:0;width:10px;margin-left:-5px;background:#4a3426}
+#pshelf{position:absolute;left:1050px;top:700px;width:520px;height:26px;background:#5a3f2c;border-radius:4px;box-shadow:0 8px 0 #2a1c14}
+#pframe{position:absolute;left:1180px;top:476px;width:240px;height:auto;display:block;pointer-events:none}
+#pdoor{position:absolute;left:1900px;top:420px;width:260px;height:470px;background:#5a3f2c;border:12px solid #3a281c;border-radius:130px 130px 0 0}
+#pdoor b{position:absolute;right:30px;top:250px;width:18px;height:18px;border-radius:50%;background:#d9b25c}
+#pmarks img{position:absolute}
 #csc.on{display:block}
 #cfar img{left:-300px;top:150px;width:3715px;height:896px}
 #cworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
@@ -277,6 +290,16 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
    </div>
    <div id="afg" class="layer"><img src="assets/a_fg_x.webp" width="2960" height="466" alt=""></div>
   </div>
+  <div id="psc">
+   <div id="pworld">
+    <div id="pwall"></div><div id="pfloor"></div>
+    <div id="pwin"><i></i></div>
+    <div id="pshelf"></div>
+    <img id="pframe" src="assets/ev_keepsake_frame.webp" alt="Photograph frame">
+    <div id="pdoor"><b></b></div>
+    <div id="pmarks"></div>
+   </div>
+  </div>
   <div id="csc">
    <div class="layer" id="cfar"><img src="assets/a_far.webp" alt=""></div>
    <div id="cworld">
@@ -413,6 +436,7 @@ const tr = o => typeof o === "string" ? o : (o[lang] || o.en);
 const UI = {
   leave:{en:"Leave the Clocktower", ko:"시계탑을 나간다"}, leaveA:{en:"Leave the archive", ko:"기록실을 나간다"}, lReg:{en:"Examine the register", ko:"장부를 살핀다"}, lDraw:{en:"Try the drawers", ko:"서랍을 열어 본다"}, locA:{en:"Archive", ko:"기록실"}, lHatch:{en:"Examine the hatch", ko:"해치를 살핀다"}, lPend:{en:"Examine the pendulum", ko:"추 막대를 살핀다"}, lBell:{en:"Examine the handbell", ko:"손종을 살핀다"}, lChute:{en:"Examine the back door", ko:"뒷문을 살핀다"}, lMelt:{en:"Look at the puddles", ko:"물 자국을 살핀다"}, lClk:{en:"Examine the clock", ko:"시계를 살핀다"}, locT:{en:"Clocktower", ko:"시계탑"},
   enterA:{en:"Enter the archive", ko:"기록실에 들어간다"}, enterC:{en:"Enter Hazel's café", ko:"헤이즐의 카페에 들어간다"},
+  locP:{en:"BGB's cottage", ko:"BGB의 오두막"}, lFrame:{en:"Look at the photograph", ko:"사진을 본다"}, lDoor:{en:"Open the door", ko:"문을 연다"}, lDoorNo:{en:"Someone is knocking", ko:"누군가 문을 두드린다"},
   askBear:{en:"Who was the bear on the stairs?", ko:"계단의 곰은 누구인가?"}, askStop:{en:"The clock stopped at 11:47. That is not necessarily when Edward died.", ko:"시계는 11시 47분에 멈췄다. 그것이 에드워드가 죽은 시각이라는 뜻은 아니다."},
   lPost:{en:"Read the guard's logbook", ko:"경비의 일지를 읽는다"}, conHead:{en:"Contradictions and deductions", ko:"모순과 추리"}, askNext:{en:"Is there another bear?", ko:"다른 곰이 있는가?"},
   leaveC:{en:"Leave the café", ko:"카페를 나간다"}, talkHz:{en:"Talk to Hazel", ko:"헤이즐과 이야기한다"}, locC:{en:"Hazel's Café", ko:"헤이즐의 카페"}, lBoots:{en:"Look at the prints on the stairs", ko:"계단의 발자국을 살핀다"},
@@ -484,6 +508,9 @@ EV.stmt_hz = { id:"stmt_hz", name:{en:"Statement: Hazel",ko:"진술: 헤이즐"}
   desc:{en:"The café owner: \"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.\"", ko:"카페 주인: \"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠.\""} };
 EV.stmt_nini = { id:"stmt_nini", name:{en:"Statement: Nini",ko:"진술: 니니"}, tag:"STATEMENT", note:null,
   desc:{en:"Nini: \"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.\"", ko:"니니: \"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요.\""} };
+EV.photo_home = { id:"photo_home", name:{en:"The photograph (home copy)",ko:"사진(집에 둔 것)"}, img:"ev_photo_post_flood", tag:"PHOTO",
+  desc:{en:"A worn photograph of two small cubs in scarves, standing close. The frame is old and deep, and it leans on the shelf instead of hanging.", ko:"목도리를 두른 두 아기 곰이 나란히 선 낡은 사진. 액자는 오래되고 깊어서, 걸려 있지 않고 선반에 기대어 서 있다."},
+  note:{en:"BGB keeps a worn photograph of two cubs on his shelf.", ko:"BGB는 선반에 두 아기 곰이 찍힌 낡은 사진을 두고 있다."} };
 EV.boots = { id:"boots", name:{en:"Footprints on the stairs",ko:"계단의 발자국"}, img:"ev_boot_prints", tag:"TRACES",
   desc:{en:"Snow tracked onto the tower stairs. One set of prints leads up, spaced wide apart.", ko:"탑 계단에 눈이 묻어 있다. 올라가는 발자국이 한 줄, 간격이 넓다."},
   note:{en:"One set of prints leads up the tower stairs, spaced wide apart.", ko:"탑 계단 위로 올라가는 발자국이 한 줄 있다. 간격이 넓다."} };
@@ -516,6 +543,14 @@ const D = {
  c1:{sp:"ck", ex:"thinking", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았죠."}, set:"ck.watch", note:"watch"},
  c9:{sp:"ck", ex:"neutral", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보세요. 시계는 어디 안 갑니다."}}
 };
+D.p_f0 = {sp:"bgb", ex:"thinking", t:{en:"He always looked out for me.", ko:"그분은 늘 나를 챙겨 주셨다."}, ev:"photo_home", next:"p_f1"};
+D.p_f1 = {sp:"bgb", ex:"worried", t:{en:"Leave it.", ko:"그냥 두자."}, set:"pro.frame", next:null};
+D.p_f9 = {sp:"bgb", ex:"neutral", t:{en:"Not now.", ko:"지금은 아니야."}};
+D.p_n0 = {sp:"nini", ex:"worried", t:{en:"It's me, Nini. Edward is gone, and everyone is gathering at the tower.", ko:"저예요, 니니. 에드워드 아저씨가 돌아가셨어요. 다들 탑 앞에 모여 있어요."}, next:"p_n1"};
+D.p_n1 = {sp:"bgb", ex:"worried", t:{en:"I'm coming.", ko:"지금 나갈게."}, next:"p_n2"};
+D.p_n2 = {sp:"nini", ex:"thinking", t:{en:"Oliver says he saw a bear in a scarf on the tower stairs at eleven forty. People are whispering.", ko:"올리버 아저씨가 열한 시 사십 분에 목도리를 한 곰이 탑 계단에 있었다고 해요. 사람들이 수군거려요."}, next:"p_n3"};
+D.p_n3 = {sp:"bgb", ex:"neutral", t:{en:"I was at Hazel's café until a little before a quarter to twelve. Ask her.", ko:"난 열두 시 십오 분 전이 조금 못 되도록 헤이즐의 카페에 있었어. 물어봐."}, next:"p_n4"};
+D.p_n4 = {sp:"nini", ex:"worried", t:{en:"I will. The Constable is snowed in, so everyone wants you to look into it. Please come to the tower.", ko:"그럴게요. 경찰관은 눈에 갇혀 못 오니까, 다들 아저씨가 조사해 주길 바라요. 탑으로 와 주세요."}, set:"pro.done", next:null};
 D.nk0 = {sp:"nini", ex:"worried", t:{en:"Another bear. You think there was another bear on those stairs?", ko:"아저씨, 다른 곰이요. 그날 계단에 다른 곰이 있었다고 생각하세요?"}, next:"nk1"};
 D.nk1 = {sp:"nini", ex:"thinking", t:{en:"Edward kept his drawers locked and I have kept the key since. If there is an answer, it may be in there. Please, take it.", ko:"에드워드 아저씨는 서랍을 늘 잠가 두셨고, 열쇠는 제가 계속 가지고 있었어요. 답이 있다면 거기 있을지도 몰라요. 아저씨가 가져가세요."}, ev:"key", set:"nini.key", next:null};
 D.h0 = {sp:"hz", t:{en:"Mr. Big Green Bear. Terrible business. The whole café has talked of nothing else since the bell.", ko:"빅그린베어 씨. 끔찍한 일이에요. 종이 울린 뒤로 우리 카페는 그 얘기뿐이에요."},
@@ -529,7 +564,7 @@ const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
 const SAVE_KEY = "bgb2.bellvillage.proto.v1";
-let S = { x:520, flags:{}, ev:[], notes:[], lang:"en", scene:"village" };
+let S = { x:700, flags:{}, ev:[], notes:[], lang:"en", scene:"cottage" };   /* a new game starts in the prologue */
 function load(){ try { const r = localStorage.getItem(SAVE_KEY); if (r) { const o = JSON.parse(r); if (o && typeof o.x === "number") S = Object.assign(S, o); } } catch(e){} lang = S.lang || "en"; }
 function save(){ S.lang = lang; try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} }
 const has = f => !!S.flags[f];
@@ -643,12 +678,17 @@ const IA_A = [
   { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, run:()=>inspect("register") },
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect(has("nini.key") ? "photo2" : "drawers") }
 ];
+const IA_P = [
+  { id:"frame", x:()=>1300, label:UI.lFrame, top:430, run:()=>startDlg(has("pro.frame") ? "p_f9" : "p_f0") },
+  { id:"pdoor", x:()=>2030, label:UI.lDoor,  top:330, run:()=>{ if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
+];
+let PRO_GO = false;
 const IA_C = [
   { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 5200) },
   { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(has("hz.done")?"h9":"h0") }
 ];
 function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"||i.id==="hz"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
-mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks"));
+mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks"));
 IA = IA_V;
 let near = null, peek = 0, autoGo = null;
 
@@ -678,7 +718,7 @@ function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSO
 function setLang(l){ lang = l; save(); applyLang(); if (mode==="cf") renderCF(); }
 function applyLang(){
   document.documentElement.lang = lang; buildSide(); labelSide();
-  $("hudTitle").textContent = tr(UI.case); $("hudLoc").textContent = tr(S.scene==="tower" ? UI.locT : S.scene==="archive" ? UI.locA : S.scene==="cafe" ? UI.locC : UI.loc);
+  $("hudTitle").textContent = tr(UI.case); $("hudLoc").textContent = locOf(S.scene);
   $("pResume").textContent = tr(UI.resume); $("pReset").textContent = tr(UI.restart); $("pLang").textContent = tr(UI.langBtn); $("eBack").textContent = tr(UI.back);
   document.querySelector("#pause .eyebrow").textContent = tr(UI.paused);
   const E = tr(UI.end); $("eEy").textContent = E[0]; $("eH").textContent = E[1]; $("eP1").textContent = E[2]; $("eP2").textContent = E[3]; $("rot").textContent = tr(UI.rot);
@@ -723,7 +763,9 @@ function advance(){
   applyNode(n); goto(n.next || null);
 }
 function goto(id){ if (!id){ endDlg(); return; } cur = id; renderDlg(true); }
-function endDlg(){ $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null; mode = "play"; clearInterval(typing); typing = null; save(); }
+function endDlg(){ const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>setScene("village", 700), 50); }
+ endDlg0(); }
+function endDlg0(){ $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null; mode = "play"; clearInterval(typing); typing = null; save(); }
 
 /* inspect */
 function evIcon(e, size){
@@ -744,20 +786,21 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 /* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
-const ROOM = { cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+const ROOM = { cottage:{min:0,end:2400}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+function locOf(n){ return tr(n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
-  S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", IN = T || A || C;
-  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C);
-  const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : $("world");
-  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else host.appendChild(marks);
-  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : LAMPS_T; IA = A ? IA_A : C ? IA_C : IA_T; NPCX = A ? NPCX_A : C ? NPCX_C : NPCX_T; }
+  S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage", IN = T || A || C || PR;
+  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR);
+  const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : PR ? $("pworld") : $("world");
+  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else if (PR) host.appendChild($("pmarks")); else host.appendChild(marks);
+  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : PR ? [] : LAMPS_T; IA = A ? IA_A : C ? IA_C : PR ? IA_P : IA_T; NPCX = (A || PR) ? NPCX_A : C ? NPCX_C : NPCX_T; }
   else  { W = VILLAGE_W; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = IA_V; }
   nini.style.display = IN ? "none" : ""; nini._sh.style.display = IN ? "none" : "";
-  ck.style.display = (A || C) ? "none" : ""; ck._sh.style.display = (A || C) ? "none" : "";
+  ck.style.display = (A || C || PR) ? "none" : ""; ck._sh.style.display = (A || C || PR) ? "none" : "";
   hz.style.display = C ? "" : "none"; hz._sh.style.display = C ? "" : "none";
   $("t8").classList.toggle("hide", IN); $("t9").classList.toggle("hide", IN);
   P.x = x; cam = Math.max(CAM_MIN, Math.min(CAM_MAX, P.x - STAGE_W/2)); near = null;
-  $("hudLoc").textContent = tr(T ? UI.locT : A ? UI.locA : C ? UI.locC : UI.loc);
+  $("hudLoc").textContent = locOf(name);
   save();
 }
 function setScene(name, x){
@@ -932,7 +975,7 @@ function closeCF(){ $("cf").classList.remove("on"); mode = "play"; stage.focus()
 $("cfclose").onclick = closeCF; $("bCase").onclick = openCF; $("bSet").onclick = openPause; $("tC").onclick = ()=> mode==="cf"?closeCF():openCF();
 $("bLook").onclick = ()=>{ peek = 6; };
 $("pResume").onclick = closePause; $("pLang").onclick = ()=>setLang(lang==="en"?"ko":"en");
-$("pReset").onclick = ()=>{ try{ localStorage.removeItem(SAVE_KEY);}catch(e){} S = {x:520,flags:{},ev:[],notes:[],lang,scene:"village"}; setSceneNow("village", 520); closePause(); toast(lang==="ko"?"처음부터 다시 시작":"Restarted"); };
+$("pReset").onclick = ()=>{ try{ localStorage.removeItem(SAVE_KEY);}catch(e){} S = {x:700,flags:{},ev:[],notes:[],lang,scene:"cottage"}; setSceneNow("cottage", 700); closePause(); toast(lang==="ko"?"처음부터 다시 시작":"Restarted"); };
 
 /* ---------- input ---------- */
 function hideHintNow(){ const h = $("hint"); h.classList.add("instant"); h.classList.remove("on"); }
@@ -986,6 +1029,7 @@ function frame(now){
   $("afar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
   $("aworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("afg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("pworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("cfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
   $("cworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("cfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
@@ -1012,7 +1056,7 @@ function fit(){
   stage.style.transform = "scale("+s+")"; stage.style.left = ((vw - STAGE_W*s)/2)+"px"; stage.style.top = ((vh - STAGE_H*s)/2)+"px"; }
 addEventListener("resize", fit);
 
-load(); cam = 0; fit(); setSceneNow(["tower","archive","cafe"].includes(S.scene) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus();
+load(); cam = 0; fit(); setSceneNow(["tower","archive","cafe","cottage"].includes(S.scene) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus();
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
 window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV };
 requestAnimationFrame(frame);
