@@ -500,19 +500,19 @@ const D = {
    ch:[{t:{en:"Tell me what you remember about last night.",ko:"어젯밤에 기억나는 걸 말해 줘."},go:"n2a"},{t:{en:"Has anyone said who was on the stairs?",ko:"계단에 누가 있었는지 말한 사람이 있어?"},go:"n2b"}]},
  n2a:{sp:"nini", ex:"thinking", t:{en:"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.", ko:"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요."}, set:"nini.letters", note:"nini", next:"n2d"},
  n2d:{sp:"nini", ex:"worried", ev:"notebook", t:{en:"This is my notebook. A page is torn out, and on the one beneath I wrote: 'Red ledger moved?' Please keep it.", ko:"이건 제 공책이에요. 한 장이 뜯겨 있고, 그 아래 장에 '붉은 장부 옮겨졌나?'라고 적어 뒀어요. 가지고 계세요."}, next:"n3"},
- n2b:{sp:"nini", ex:"neutral", t:{en:"Oliver says a bear in a scarf climbed the stairs at eleven forty. Before you got there.", ko:"올리버 아저씨가 그러는데, 열한 시 사십 분쯤 목도리를 한 곰이 계단을 올라갔대요. 당신이 오기 전에요."},
+ n2b:{sp:"nini", ex:"neutral", t:{en:"Oliver says a bear in a scarf climbed the stairs at eleven forty. Before you got there.", ko:"올리버 아저씨가 그러는데, 열한 시 사십 분쯤 목도리를 한 곰이 계단을 올라갔대요. 아저씨가 오기 전에요."},
    ch:[{t:{en:"I was at the café until a quarter to twelve.",ko:"나는 열두 시 십오 분 전까지 카페에 있었어."},go:"n2c"},{t:{en:"(Say nothing.)",ko:"(말없이 있는다.)"},go:"n3"}]},
- n2c:{sp:"nini", ex:"neutral", t:{en:"I know. Hazel told everyone. That's why they want you to look into it.", ko:"알아요. 헤이즐 아주머니가 다 말했어요. 그래서 다들 당신이 조사해 주길 바라는 거예요."}, next:"n3"},
- n3:{sp:"nini", ex:"worried", t:{en:"Please look at the clock. It stopped at eleven forty-seven, and nobody can tell me what that means.", ko:"시계를 봐 주세요. 열한 시 사십칠 분에 멈췄는데, 그게 무슨 뜻인지 아무도 말해 주지 못해요."}, set:"nini.done"},
- n9:{sp:"nini", ex:"neutral", t:{en:"I'll stay here with the others. Tell me what you find.", ko:"저는 다른 분들과 여기 있을게요. 알아내시면 말해 주세요."}},
+ n2c:{sp:"nini", ex:"neutral", t:{en:"I know. Hazel told everyone. That's why they want you to look into it.", ko:"알아요. 헤이즐 아주머니가 다 말했어요. 그래서 다들 아저씨가 조사해 주길 바라는 거예요."}, next:"n3"},
+ n3:{sp:"nini", ex:"worried", t:{en:"Please look at the clock. It stopped at eleven forty-seven, and nobody can tell me what that means.", ko:"아저씨, 시계를 봐 주세요. 열한 시 사십칠 분에 멈췄는데, 그게 무슨 뜻인지 아무도 말해 주지 못해요."}, set:"nini.done"},
+ n9:{sp:"nini", ex:"neutral", t:{en:"I'll stay here with the others. Tell me what you find.", ko:"저는 다른 분들과 여기 있을게요. 아저씨가 알아내시면 말해 주세요."}},
  c0:{sp:"ck", ex:"neutral", t:{en:"Mm. Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.", ko:"음. 어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠."}, set:"ck.bear", note:"bear",
    ch:[{t:{en:"Is the tower clock reliable?",ko:"이 탑시계는 믿을 만한가요?"},go:"c1"},{t:{en:"(Glance at your own hands.)",ko:"(자신의 손을 내려다본다.)"},go:"c2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]},
  c2:{sp:"bgb", ex:"thinking", t:{en:"My notebook is in my left hand, the way it always is.", ko:"공책은 늘 그렇듯 왼손에 들려 있다."}, set:"c2", note:"hand", next:null},
  c1:{sp:"ck", ex:"thinking", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았죠."}, set:"ck.watch", note:"watch"},
  c9:{sp:"ck", ex:"neutral", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보세요. 시계는 어디 안 갑니다."}}
 };
-D.nk0 = {sp:"nini", ex:"worried", t:{en:"Another bear. You think there was another bear on those stairs?", ko:"다른 곰이요. 그날 계단에 다른 곰이 있었다고 생각하세요?"}, next:"nk1"};
-D.nk1 = {sp:"nini", ex:"thinking", t:{en:"Edward kept his drawers locked and I have kept the key since. If there is an answer, it may be in there. Please, take it.", ko:"에드워드 아저씨는 서랍을 늘 잠가 두셨고, 열쇠는 제가 계속 가지고 있었어요. 답이 있다면 거기 있을지도 몰라요. 가져가세요."}, ev:"key", set:"nini.key", next:null};
+D.nk0 = {sp:"nini", ex:"worried", t:{en:"Another bear. You think there was another bear on those stairs?", ko:"아저씨, 다른 곰이요. 그날 계단에 다른 곰이 있었다고 생각하세요?"}, next:"nk1"};
+D.nk1 = {sp:"nini", ex:"thinking", t:{en:"Edward kept his drawers locked and I have kept the key since. If there is an answer, it may be in there. Please, take it.", ko:"에드워드 아저씨는 서랍을 늘 잠가 두셨고, 열쇠는 제가 계속 가지고 있었어요. 답이 있다면 거기 있을지도 몰라요. 아저씨가 가져가세요."}, ev:"key", set:"nini.key", next:null};
 D.h0 = {sp:"hz", t:{en:"Mr. Big Green Bear. Terrible business. The whole café has talked of nothing else since the bell.", ko:"빅그린베어 씨. 끔찍한 일이에요. 종이 울린 뒤로 우리 카페는 그 얘기뿐이에요."},
    ch:[{t:{en:"About last night.",ko:"어젯밤 일에 대해서요."},go:"h1"},{t:{en:"Did you know Edward well?",ko:"에드워드 씨를 잘 아셨나요?"},go:"h2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
 D.h1 = {sp:"hz", t:{en:"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.", ko:"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠."}, note:"hz", set:"hz.stmt", next:"h1b"};
