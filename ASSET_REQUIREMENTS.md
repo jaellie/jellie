@@ -5,7 +5,7 @@ Done items are removed. Originals live in `art_source/originals/`; slices in `ar
 ## Already made (do not redo)
 UI sheet · 8 character turnarounds (6 views) · Bell Village night layers (Far, Mid, Ground, Foreground) · Clocktower interior 4 layers ·
 Clocktower props (2 doors, 2 pendulums, 2 handbells, 3 puddles, pocket watch front/back, gloves, sealed letter, frame back) ·
-Whole clocktower shaft and village Mid without the tower · Responsibility Board · Stamps (5) · Hazel's café (3 layers) · Identity Board · Evidence icons (10) · Edward's archive room (4 layers, window shows the village Far) · Hotspot magnifier ring · Portraits (BGB, Nini, Oliver) · Clocktower entrance door and steps (exterior) · Clocktower hatch (cut from the first interior kit) · 11:47 clock face and hands (drawn in code) · choice popup (built from the plaques).
+Whole clocktower shaft and village Mid without the tower · "What I overlooked" page · Responsibility Board · Stamps (5) · Hazel's café (3 layers) · Identity Board · Evidence icons (10) · Edward's archive room (4 layers, window shows the village Far) · Hotspot magnifier ring · Portraits (BGB, Nini, Oliver) · Clocktower entrance door and steps (exterior) · Clocktower hatch (cut from the first interior kit) · 11:47 clock face and hands (drawn in code) · choice popup (built from the plaques).
 
 ## A. Must have for the next playable milestone
 | # | Asset | Spec |
