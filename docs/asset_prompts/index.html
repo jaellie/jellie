@@ -70,9 +70,9 @@ input[type=checkbox]{width:20px;height:20px;accent-color:var(--ok)}
   <header class="top">
     <h1>BGB2 Asset Prompts</h1>
     <p class="lead">Every image prompt below already ends with the transparent PNG line, so you can copy it as is. The list matches <code>ASSET_REQUIREMENTS.md</code> in the repo: only what is still left to make.</p>
-    <p class="rule"><b>Audio prompts</b> are the only ones without the PNG line, because they are not images. Tip: make the <b>Mid layer first</b> and attach it as a reference for the other layers so colours and lighting match.</p>
+    <p class="rule"><b>Sheets:</b> every prompt with several items on one image also carries the spacing rule: at least 10 px (aim for 24 px) of transparent gap between items, nothing touching or overlapping. <b>Audio prompts</b> are the only ones without the PNG line, because they are not images. Tip: make the <b>Mid layer first</b> and attach it as a reference for the other layers so colours and lighting match.</p>
     <div class="toolbar">
-      <button id="copyAll" class="ghost" type="button">Copy shared style block</button>
+      <button id="copyAll" class="ghost" type="button">Copy shared style + PNG + spacing block</button>
       <button id="resetDone" class="ghost" type="button">Clear done marks</button>
       <span class="count" id="count"></span>
     </div>
@@ -476,7 +476,7 @@ const GAP = [
 "- Each item also keeps at least 12 px of transparent margin from the edge of the sheet.",
 "- Items sit on a clean grid in the stated order so they can be cut out automatically. Nothing is drawn in the gaps (no shadows, glow, ground lines or labels)."
 ].join("\n");
-const SHEET_RE = /icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits/i;
+const SHEET_RE = /icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits|Identity Board|Responsibility Board|notebook page/i;
 SECTIONS.forEach(sec => sec.items.forEach(it => { if (it.kind === "png" && SHEET_RE.test(it.title) && !it.body.includes("SHEET SPACING")) it.body = it.body.replace("\n\nSTYLE (apply to everything):", "\n\n" + GAP + "\n\nSTYLE (apply to everything):"); }));
 
 // ---- render
@@ -517,7 +517,7 @@ function render(){
   count();
 }
 function count(){ $("count").textContent = Object.keys(done).length + " of " + total + " made"; }
-$("copyAll").addEventListener("click", e => copy(STYLE + "\n\n" + PNG, e.currentTarget));
+$("copyAll").addEventListener("click", e => copy(STYLE + "\n\n" + PNG + "\n\n" + GAP, e.currentTarget));
 $("resetDone").addEventListener("click", () => { done = {}; saveDone(); render(); });
 render();
 })();
