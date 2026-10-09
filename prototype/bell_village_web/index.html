@@ -183,6 +183,15 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .evdesc h3{margin:0 0 6px;font:700 38px/1.1 var(--font-body)}
 .evdesc p{font:400 28px/1.4 var(--font-body);margin:12px 0}
 .tag{display:inline-block;font:700 17px/1 var(--font-label);letter-spacing:.14em;border:2px solid var(--burgundy);color:var(--burgundy);border-radius:4px;padding:5px 8px;margin-right:8px}
+.pstrip{display:flex;gap:10px}
+.ptile{width:92px;border:3px solid rgba(176,141,87,.75);border-radius:10px;background:rgba(255,248,225,.45);padding:5px 4px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font:inherit;color:var(--ink)}
+.ptile .pf{width:78px;height:78px;overflow:hidden;border-radius:6px;background:#c8a96f;display:block}
+.ptile .pf img{width:78px;height:78px;object-fit:cover;object-position:top;display:block}
+.ptile b{font:700 18px/1.1 var(--font-body)}
+.ptile.sel{outline:4px solid var(--burgundy);outline-offset:-4px}
+.ptile.locked{opacity:.55;cursor:default}.ptile.locked img{filter:grayscale(1) brightness(.4)}
+.pcap{font:400 22px/1.3 var(--font-body);color:#4a3a28;margin:8px 0 10px;min-height:30px}
+.idwrap{position:relative;margin:0 auto}
 .people{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .person{display:flex;gap:20px;align-items:center;padding:16px;border:3px solid rgba(176,141,87,.75);border-radius:10px;background:rgba(255,248,225,.45);min-height:150px}
 .person .pt{width:110px;height:120px;overflow:hidden;border-radius:6px;background:#c8a96f;flex:none}
@@ -742,11 +751,7 @@ function renderCF(){
   if (tab===0){
     h += boardResp() + '<div class="pvnote">'+(PV ? '' : (lang==="ko"?"이후 챕터에서 열이 하나씩 열린다. ":"More columns open in later chapters. ")) + '<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>';
   } else if (tab===1){
-    h += '<div class="people">';
-    h += '<div class="person"><div class="pt"><img src="assets/nini_front.webp" alt=""></div><div><b>Nini</b><span>'+(lang==="ko"?"기록실 조수. 에드워드를 마지막으로 본 사람 중 하나.":"Archive assistant. One of the last to see Edward.")+'</span></div></div>';
-    const met = has("ck.bear");
-    h += '<div class="person'+(met?'':' locked')+'"><div class="pt"><img src="assets/clockkeeper_front.webp" alt=""></div><div><b>'+(met?tr(SP.ck.name):'?')+'</b><span>'+(met?(lang==="ko"?"밤 근무. 11시 40분쯤 계단을 오르는 곰을 보았다.":"Night shift. Saw a bear on the stairs around 11:40."):tr(UI.unmet))+'</span></div></div>';
-    h += '</div>';
+    h += peopleStrip() + '<div class="idwrap" style="width:'+Math.round(1100*ID_Z)+'px;height:'+Math.round(634*ID_Z)+'px"><div style="width:1100px;transform:scale('+ID_Z+');transform-origin:0 0">'+boardId()+'</div></div><div class="pvnote" style="width:100%;margin-top:6px;font-size:19px">'+(PV ? '' : (lang==="ko"?"이후 챕터에서 채워진다. ":"Fills in later. "))+'<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>';
   } else if (tab===2){
     h += '<div class="grid2"><div class="evgrid" id="evg"></div><div class="evdesc" id="evd"></div></div>';
   } else if (tab===3){
@@ -759,11 +764,27 @@ function renderCF(){
   }
   pg.innerHTML = h;
   if (SUBS[tab]) $("subBtn").onclick = ()=>{ sub = true; renderCF(); };
-  if (tab===0 || tab===4) $("pvBtn").onclick = ()=>{ PV = !PV; renderCF(); };
+  document.querySelectorAll(".ptile[data-p]").forEach(b=>{ b.onclick = ()=>{ selPerson = b.dataset.p; renderCF(); }; });
+  if (tab===0 || tab===1 || tab===4) $("pvBtn").onclick = ()=>{ PV = !PV; renderCF(); };
   if (tab===2) renderEvGrid(); if (tab===3) renderTl();
 }
 /* ---------- boards (art: board_identity / board_resp / page_overlooked) ---------- */
-const SUBS = { 1:{k:"subId"} };
+const SUBS = {};
+const ID_Z = 0.74; let selPerson = "nini";
+function peopleStrip(){
+  const K = lang==="ko";
+  const P = [
+    { id:"nini", on:true, name:SP.nini.name, img:"assets/por_nini_neutral.webp", d:K?"기록실 조수. 에드워드를 마지막으로 본 사람 중 하나.":"Archive assistant. One of the last to see Edward." },
+    { id:"ck", on:has("ck.bear"), name:SP.ck.name, img:"assets/por_oliver_neutral.webp", d:K?"밤 근무. 11시 40분쯤 계단을 오르는 곰을 보았다.":"Night shift. Saw a bear on the stairs around 11:40." },
+    { id:"hz", on:has("hz.stmt"), name:SP.hz.name, img:"assets/cafe_owner_front.webp", d:K?"카페 주인. BGB가 12시 15분 전이 조금 못 되도록 있었다고 말했다.":"Café owner. Says BGB stayed until a little before a quarter to twelve." }
+  ];
+  if (!P.find(x=>x.id===selPerson && x.on)) selPerson = "nini";
+  let h = '<div class="pstrip">';
+  P.forEach(x=>{ h += '<button class="ptile'+(x.id===selPerson?' sel':'')+(x.on?'':' locked')+'" data-p="'+x.id+'"'+(x.on?'':' disabled')+'><span class="pf"><img src="'+x.img+'" alt=""></span><b>'+(x.on?tr(x.name):'?')+'</b></button>'; });
+  for (let i=P.length;i<6;i++) h += '<span class="ptile locked ghost"><span class="pf"></span><b>?</b></span>';
+  const cur = P.find(x=>x.id===selPerson);
+  return h + '</div><div class="pcap"><b>'+tr(cur.name)+'</b> &mdash; '+cur.d+'</div>';
+}
 const px = (x,y,w,h,W,H) => 'left:'+(x/W*100).toFixed(2)+'%;top:'+(y/H*100).toFixed(2)+'%;width:'+(w/W*100).toFixed(2)+'%;height:'+(h/H*100).toFixed(2)+'%';
 const box = (cls,x,y,w,h,W,H,inner,st) => '<div class="ov '+cls+'" style="'+px(x,y,w,h,W,H)+(st||'')+'">'+inner+'</div>';
 function subView(t){
