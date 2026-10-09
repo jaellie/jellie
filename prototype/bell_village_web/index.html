@@ -230,9 +230,9 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
     <div id="tbase" style="position:absolute;left:-600px;top:930px;width:3600px;height:160px;background:linear-gradient(#2a1c15,#150e0c 45%,#0d0809)"></div>
     <img src="assets/t_ground.webp" style="left:0;top:548px" width="2402" height="442" alt="">
     <img id="thatch" src="assets/p_hatch_open.webp" style="left:1030px;top:803px;width:360px" alt="">
-    <img id="tp1" src="assets/p_puddle_1.webp" style="left:1060px;top:932px;width:140px;opacity:.9" alt="">
-    <img id="tp2" src="assets/p_puddle_2.webp" style="left:1420px;top:865px;width:130px;opacity:.9" alt="">
-    <img id="tp3" src="assets/p_puddle_3.webp" style="left:2040px;top:835px;width:120px;opacity:.9" alt="">
+    <img id="tp1" src="assets/p_puddle_1.webp" style="left:1010px;top:920px;width:230px;opacity:.95" alt="">
+    <img id="tp2" src="assets/p_puddle_2.webp" style="left:1375px;top:855px;width:215px;opacity:.95" alt="">
+    <img id="tp3" src="assets/p_puddle_3.webp" style="left:2000px;top:825px;width:195px;opacity:.95" alt="">
     <div id="tmarks"></div>
    </div>
    <div id="tfg" class="layer"><img src="assets/t_fg.webp" width="2398" height="426" alt=""></div>
@@ -479,21 +479,21 @@ function lightActor(el, cx, dt, shW){
 
 /* ---------- interactables ---------- */
 let IA = [
-  { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-50, run:()=>startDlg(has("nini.done")?"n9":"n0") },
+  { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-150, run:()=>startDlg(has("nini.done")?"n9":"n0") },
   { id:"sign",   x:()=>1345,      label:UI.read,   top:640,            run:()=>inspect("notice") },
-  { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-50,   run:()=>startDlg(has("ck.bear")?"c9":"c0") },
+  { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(has("ck.bear")?"c9":"c0") },
   { id:"clock",  x:()=>2790,      label:UI.look,   top:560,            run:()=>inspect("clock") },
   { id:"door",   x:()=>2856,      label:UI.enter,  top:600,            run:()=>enterTower() }
 ];
 const IA_V = IA.slice();
 const IA_T = [
-  { id:"exit",  x:()=>170,  label:UI.leave,  top:550, run:()=>setScene("village", 2640) },
-  { id:"ck",    x:()=>NPCX_T.ck, label:UI.talkCk, top:FEET_T-CK_H-50, run:()=>startDlg(has("ck.bear")?"c9":"c0") },
+  { id:"exit",  x:()=>170,  label:UI.leave,  top:530, run:()=>setScene("village", 2640) },
+  { id:"ck",    x:()=>NPCX_T.ck, label:UI.talkCk, top:FEET_T-CK_H-150, run:()=>startDlg(has("ck.bear")?"c9":"c0") },
   { id:"bell",  x:()=>897,  label:UI.lBell,  top:500, run:()=>inspect("handbell") },
-  { id:"hatch", x:()=>1210, label:UI.lHatch, top:710, run:()=>inspect("hatch") },
+  { id:"hatch", x:()=>1210, label:UI.lHatch, top:530, run:()=>inspect("hatch") },
   { id:"clock", x:()=>1511, label:UI.lClk,   top:560, run:()=>inspect("clock") },
   { id:"pend",  x:()=>1663, label:UI.lPend,  top:560, run:()=>inspect("pendulum") },
-  { id:"melt",  x:()=>1485, label:UI.lMelt,  top:800, run:()=>inspect("melt") },
+  { id:"melt",  x:()=>1485, label:UI.lMelt,  top:530, run:()=>inspect("melt") },
   { id:"chute", x:()=>2168, label:UI.lChute, top:540, run:()=>inspect("chute") }
 ];
 function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); m.className = "mark"; m.src = "assets/bubble_exclaim.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; }); }
