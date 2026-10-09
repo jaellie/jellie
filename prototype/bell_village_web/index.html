@@ -64,10 +64,10 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 
 /* Persistent category panel (left), as in the mockup */
 #side{position:absolute;left:12px;top:182px;width:294px;height:559px;background:url(assets/nav_binder_6slots_COMPOSITE.webp) 0 0/100% 100% no-repeat;z-index:5}
-.sbtn{position:absolute;left:65px;width:188px;height:68px;border:0;padding:0 12px;background:transparent;display:flex;align-items:center;justify-content:flex-start;gap:12px;font:700 22px/1 var(--font-label);letter-spacing:.04em;color:var(--ink);cursor:pointer;border-radius:10px;transition:filter .12s,transform .12s}
-.sbtn svg{width:28px;height:28px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.sbtn{position:absolute;left:62px;width:202px;height:74px;padding:0 16px 0 20px;--s:.97;background-color:#22314f;display:flex;align-items:center;justify-content:flex-start;gap:9px;font:700 20px/1 var(--font-label);letter-spacing:.02em;white-space:nowrap;color:var(--ink);cursor:pointer;border-radius:12px;transition:filter .12s,transform .12s}
+.sbtn svg{width:25px;height:25px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .sbtn:hover{filter:brightness(1.08);transform:translateX(3px)}
-.sbtn.first{left:60px;width:200px;height:74px;color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
+.sbtn.first{color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
 .sbtn:focus-visible{outline:3px solid #ffd27a;outline-offset:2px}
 
 /* HUD */
@@ -106,10 +106,9 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #cf.on{display:block}
 #cfwrap{position:absolute;left:150px;top:70px;width:1620px;height:940px}
 #nav{position:absolute;left:0;top:70px;width:386px;height:735px;background:url(assets/nav_binder_6slots_COMPOSITE.webp) 0 0/100% 100% no-repeat}
-.tab{position:absolute;left:78px;width:230px;height:84px;background:transparent;font:700 25px/1 var(--font-label);letter-spacing:.05em;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:filter .12s;padding:0 18px;--s:1.1}
+.tab{position:absolute;left:81px;width:265px;height:97px;background-color:#22314f;border-radius:14px;font:700 26px/1 var(--font-label);letter-spacing:.05em;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:filter .12s;padding:0 24px;--s:1.25}
 .tab:not(.nine){border:0}
 .tab:hover{filter:brightness(1.07)}
-.tab.cover{background-color:#22314f;border-radius:12px}
 .tab.act{color:#f6e3c0}
 #page{position:absolute;left:392px;top:0;width:1228px;height:940px;border-radius:12px;border:5px solid var(--brass);background:radial-gradient(ellipse at 30% 10%,#f8ebc8,var(--paper) 55%,var(--paper-deep));box-shadow:inset 0 0 70px rgba(120,80,30,.32),0 20px 60px rgba(0,0,0,.6);color:var(--ink);overflow:hidden}
 #page h2{margin:0;font:700 44px/1.1 var(--font-body)}
@@ -269,7 +268,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 (() => {
 "use strict";
 const W = 3812, STAGE_W = 1920, STAGE_H = 1080, CAM_MAX = W - STAGE_W;
-const FEET = 985, BGB_H = 170, NINI_H = Math.round(BGB_H * 0.55), CK_H = 128;
+const FEET = 985, BGB_H = 220, NINI_H = Math.round(BGB_H * 0.55), CK_H = 165;
 const $ = id => document.getElementById(id);
 const stage = $("stage"), vp = $("vp");
 
@@ -286,8 +285,8 @@ const SLOT_CY = [85,174,259,344,429,514], SK = 294/309;
 function buildSide(){
   const side = $("side"); if (side.dataset.built) return; side.dataset.built = "1";
   ICONS.forEach((ic,i)=>{
-    const b = document.createElement("button"); b.className = "sbtn" + (i===0 ? " first" : ""); b.dataset.i = i;
-    b.style.top = Math.round((SLOT_CY[i] - (i===0 ? 37 : 34))*SK) + "px";
+    const b = document.createElement("button"); b.className = "sbtn nine " + (i===0 ? "red first" : "cream"); b.dataset.i = i;
+    b.style.top = Math.round((SLOT_CY[i] - 39)*SK) + "px";
     b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">'+ic+'</svg><span></span>';
     b.addEventListener("click", ()=>{ if (mode==="play") { tab = i; openCF(); } });
     side.appendChild(b);
@@ -515,15 +514,14 @@ function renderNav(){
   const nav = $("nav"); nav.innerHTML = ""; const labs = tr(UI.tabs);
   const k = 386/309;
   SLOTS.forEach((cy,i)=>{
-    const b = document.createElement("button"); b.className = "tab" + (i===tab ? " nine red act" : (i===0 ? " nine cream cover" : ""));
-    b.style.top = Math.round(cy*k - 42) + "px"; b.style.left = (i===0?72:78) + "px"; b.textContent = labs[i];
-    if (i===0){ b.style.width = "274px"; b.style.height = "108px"; b.style.left = "74px"; b.style.top = Math.round(cy*k-54)+"px"; }
+    const b = document.createElement("button"); b.className = "tab nine " + (i===tab ? "red act" : "cream");
+    b.style.top = Math.round((cy-39)*k) + "px"; b.textContent = labs[i];
     b.onclick = ()=>{ tab = i; renderCF(); }; nav.appendChild(b);
   });
 }
 function renderCF(){
   renderNav(); const pg = $("pg"); const labs = tr(UI.tabs);
-  let h = '<div class="eyebrow">CASE C-01 · '+tr(UI.loc)+'</div><h2>'+labs[tab]+'</h2><div style="height:18px"></div>';
+  let h = '<div class="eyebrow">CASE C-01 &middot; '+tr(UI.loc)+'</div><h2>'+labs[tab]+'</h2><div style="height:18px"></div>';
   if (tab===0){
     h += '<div style="font:italic 400 28px/1.3 var(--font-body);color:#6d5a40;margin-bottom:14px">'+tr(UI.case)+'</div><div class="eyebrow" style="margin:10px 0 6px">'+tr(UI.objHead).toUpperCase()+'</div>';
     const done = [has("nini.done")||has("nini.letters"), S.ev.includes("notice"), S.ev.includes("clock"), has("ck.bear"), false];
