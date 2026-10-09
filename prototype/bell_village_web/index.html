@@ -72,7 +72,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #tleft,#tright{position:absolute;top:0;height:1080px;width:700px;background:linear-gradient(90deg,#1a1210,#2b1d18)}
 #tright{background:linear-gradient(270deg,#1a1210,#2b1d18)}
 #tfg{position:absolute;left:0;top:0;will-change:transform}
-#tfg img{position:absolute;left:0;top:752px;display:block;pointer-events:none}
+#tfg img{position:absolute;left:0;top:662px;display:block;pointer-events:none}
 #tfg,#tfar{pointer-events:none}
 
 /* Persistent category panel (left), as in the mockup */
@@ -227,11 +227,12 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
     <img id="tchute" src="assets/p_door_barred.webp" style="left:2104px;top:661px;width:128px;height:auto" alt="">
     <img id="tbell" src="assets/p_handbell_resting.webp" style="left:846px;top:533px;width:102px" alt="">
     <img id="tpend" src="assets/p_pendulum_bent.webp" style="left:1620px;top:626px;width:87px" alt="">
-    <img src="assets/t_ground.webp" style="left:0;top:638px" width="2402" height="442" alt="">
-    <img id="thatch" src="assets/p_hatch_open.webp" style="left:1030px;top:893px;width:360px" alt="">
-    <img id="tp1" src="assets/p_puddle_1.webp" style="left:1060px;top:1022px;width:140px;opacity:.9" alt="">
-    <img id="tp2" src="assets/p_puddle_2.webp" style="left:1420px;top:955px;width:130px;opacity:.9" alt="">
-    <img id="tp3" src="assets/p_puddle_3.webp" style="left:2040px;top:925px;width:120px;opacity:.9" alt="">
+    <div id="tbase" style="position:absolute;left:-600px;top:930px;width:3600px;height:160px;background:linear-gradient(#2a1c15,#150e0c 45%,#0d0809)"></div>
+    <img src="assets/t_ground.webp" style="left:0;top:548px" width="2402" height="442" alt="">
+    <img id="thatch" src="assets/p_hatch_open.webp" style="left:1030px;top:803px;width:360px" alt="">
+    <img id="tp1" src="assets/p_puddle_1.webp" style="left:1060px;top:932px;width:140px;opacity:.9" alt="">
+    <img id="tp2" src="assets/p_puddle_2.webp" style="left:1420px;top:865px;width:130px;opacity:.9" alt="">
+    <img id="tp3" src="assets/p_puddle_3.webp" style="left:2040px;top:835px;width:120px;opacity:.9" alt="">
     <div id="tmarks"></div>
    </div>
    <div id="tfg" class="layer"><img src="assets/t_fg.webp" width="2398" height="426" alt=""></div>
@@ -305,7 +306,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 "use strict";
 const STAGE_W = 1920, STAGE_H = 1080;
 let W = 3812, CAM_MIN = 0, CAM_MAX = W - STAGE_W, P_MIN = 470;
-let FEET = 985; const FEET_V = 985, FEET_T = 980;
+let FEET = 985; const FEET_V = 985, FEET_T = 890;
 const  BGB_H = 220, NINI_H = Math.round(BGB_H * 0.55), CK_H = 165;
 const $ = id => document.getElementById(id);
 const stage = $("stage"), vp = $("vp");
@@ -486,13 +487,13 @@ let IA = [
 ];
 const IA_V = IA.slice();
 const IA_T = [
-  { id:"exit",  x:()=>170,  label:UI.leave,  top:640, run:()=>setScene("village", 2640) },
+  { id:"exit",  x:()=>170,  label:UI.leave,  top:550, run:()=>setScene("village", 2640) },
   { id:"ck",    x:()=>NPCX_T.ck, label:UI.talkCk, top:FEET_T-CK_H-50, run:()=>startDlg(has("ck.bear")?"c9":"c0") },
   { id:"bell",  x:()=>897,  label:UI.lBell,  top:500, run:()=>inspect("handbell") },
-  { id:"hatch", x:()=>1210, label:UI.lHatch, top:800, run:()=>inspect("hatch") },
+  { id:"hatch", x:()=>1210, label:UI.lHatch, top:710, run:()=>inspect("hatch") },
   { id:"clock", x:()=>1511, label:UI.lClk,   top:560, run:()=>inspect("clock") },
   { id:"pend",  x:()=>1663, label:UI.lPend,  top:560, run:()=>inspect("pendulum") },
-  { id:"melt",  x:()=>1485, label:UI.lMelt,  top:890, run:()=>inspect("melt") },
+  { id:"melt",  x:()=>1485, label:UI.lMelt,  top:800, run:()=>inspect("melt") },
   { id:"chute", x:()=>2168, label:UI.lChute, top:540, run:()=>inspect("chute") }
 ];
 function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); m.className = "mark"; m.src = "assets/bubble_exclaim.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; }); }
