@@ -402,24 +402,6 @@ function roomLayers(room, spec){
   ];
 }
 SECTIONS[1].items = [
-  P("Responsibility Board", {
-    goal:"The board that separates three questions: the fall, the delay in help, and hiding the truth. There must be no 'cause of death: delay' option.",
-    refs:["the cream panels and brass details of the UI sheet"],
-    subject:"A board panel with three equal vertical columns.",
-    layout:["Size 2400 x 1400 px. Navy pinstripe frame with brass corners. Inside: cream parchment with THREE equal columns separated by thin brass-dotted dividers. Over each column a blank burgundy ribbon header. Under each ribbon an empty name card slot (a recessed paper rectangle with a small pin).","Along the bottom a wide fixed strip: a recessed brass-edged plate with a red ink stamp-style blank rectangle where 'cause of death: undetermined' will be shown by the game."],
-    details:["All empty: no text anywhere. Same parchment paper texture as the dialogue box on the UI sheet."],
-    include:["small brass pins at the top of each slot"], exclude:["text","characters"],
-    tech:["Size 2400x1400 px, transparent outside the frame."]},
-    {size:"2400x1400"}),
-  P("Stamps: five red-ink rubber stamps", {
-    goal:"Case-file stamps used on boards and evidence.",
-    refs:["the red ink colour #A8483F from the UI sheet"],
-    subject:"Five separate rubber-stamp impressions on one sheet.",
-    layout:["Sheet 1536 x 1024 px with clear gaps. Each stamp about 700 x 260 px inside a rounded rectangle with a double-line border, each tilted a different small angle (-6, 4, -3, 7, -5 degrees).","The five words, in a bold slab or old typewriter capital face: SOLVED, CONTRADICTION, UNKNOWN, SUSPECT IDENTIFIED, UNDETERMINED."],
-    details:["Colour #A8483F at about 90% strength with worn, uneven ink coverage, small gaps and speckles in the letters and border, as a real rubber stamp. Slight ink bleed at the edges (inside the shape only).","THIS is the one prompt where text is required: spell the words exactly."],
-    include:["exact spelling"], exclude:["any other text","backgrounds"],
-    tech:["Sheet 1536x1024 px, transparent."]},
-    {size:"1536x1024", note:"The only prompt where lettering is allowed. The negative prompt's 'text' rule does not apply here."}),
   P("'What I overlooked' notebook page", {
     goal:"A Notes-tab page that lists six moments the player passed over while trusting BGB.",
     refs:["the open notebook on the UI sheet (match paper and binding)"],
