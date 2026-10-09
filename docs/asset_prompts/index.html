@@ -176,15 +176,7 @@ const REF_LIGHT = "any Bell Village night layer (for colour and lighting)";
 /* ============ A. NEXT MILESTONE ============ */
 const SECTIONS = [
 {id:"a", name:"A. Next milestone", sub:"Needed for the next playable step.", items:[
- P("1. Hotspot magnifier ring", {
-   goal:"A small marker that shows 'you can look closer here' on scene objects.",
-   refs:["the round brass icon buttons on the UI sheet (match the brass colour and rim thickness)"],
-   subject:"A round magnifying-glass ring seen straight on.",
-   layout:["Single icon centred on a 256 x 256 px canvas, ring diameter about 200 px, a short brass handle at the lower right at 45 degrees."],
-   details:["Rim: brass (#B08D57, lit #E0C27E, shadow #6E5530), slightly rough hand-inked outline.","Glass: clear, filled with a deep navy (#243044) at about 35% opacity, one small warm highlight arc at the upper left of the glass.","Subtle small rivets on the rim."],
-   include:["thin elegant look, readable at 64 px"], exclude:["glow","text","shadow under the icon"],
-   tech:["256x256 px, transparent."]},
-   {size:"256x256"})
+ 
 ]},
 
 /* ============ B. SOON AFTER ============ */
@@ -225,15 +217,7 @@ const SECTIONS = [
    tech:["Sheet 2400x640 px, transparent."]},
    {size:"2400x640", tags:["no mirroring"]}),
 
- P("Keepsake photo frame (front, leaning on a shelf)", {
-   goal:"A sentimental prop in BGB's cottage (Prologue). It looks like grief, not like a secret.",
-   refs:[REF_LIGHT, "the existing 'photo frame back' prop (the back side of this same frame)"],
-   subject:"A thick, deep wooden photo frame seen from the front, standing and leaning back slightly on a shelf.",
-   layout:["Centred on a 1000 x 1200 px canvas, slightly tilted back, a small strut visible at the lower back edge."],
-   details:["Dark walnut wood (#4A2A18, lit edges #7A4A28) a little deeper and heavier than a normal frame, brass corner caps (#B08D57), worn edges.","Inside: a worn old photograph of two small bear cubs standing close together, rendered only as soft simple shapes (no detailed faces), warm sepia tint.","Gentle wear and a few small scratches, a thin line of dust on the top edge."],
-   include:["a plain smooth front glass reflection hint (small)"], exclude:["any visible hidden compartment","text","a hanging hook (it leans, it is never hung)"],
-   tech:["Size 1000x1200 px, transparent."]},
-   {size:"1000x1200"}),
+ ,
 
  P("Photograph: post-flood (BGB's home copy)", {
    goal:"The photograph BGB keeps. The scar tells the player which cub is captioned 'Green'.",
@@ -368,6 +352,142 @@ const SECTIONS = [
    include:["falling embers, the saved corner with scribbles only"], exclude:["text","any readable writing"],
    tech:["Size 3840x2160 px."]},
    {size:"3840x2160"})
+]},
+{id:"e", name:"E. Archive: already made", sub:"Finished art, kept so you can regenerate or tweak it later. Not counted as to-do.", items:[
+P("✔ 'What I overlooked' notebook page", {
+    goal:"A Notes-tab page that lists six moments the player passed over while trusting BGB.",
+    refs:["the open notebook on the UI sheet (match paper and binding)"],
+    subject:"One blank notebook page seen straight on.",
+    layout:["Size 1600 x 2000 px. Parchment page with slight curl, a hand-drawn double rule at the top for a heading, then SIX evenly spaced empty rows, each with a small round pushpin icon on the left (to link to a scene) and a faint pencil underline.","Pencil margin marks, a coffee ring, a small paper clip at the upper right."],
+    details:["Everything is empty of text."], include:["clear space for one line of text per row (about 1100 px wide)"], exclude:["text"],
+    tech:["Size 1600x2000 px, transparent outside the page."]},
+    {size:"1600x2000"}),
+
+P("✔ Responsibility Board", {
+    goal:"The board that separates three questions: the fall, the delay in help, and hiding the truth. There must be no 'cause of death: delay' option.",
+    refs:["the cream panels and brass details of the UI sheet"],
+    subject:"A board panel with three equal vertical columns.",
+    layout:["Size 2400 x 1400 px. Navy pinstripe frame with brass corners. Inside: cream parchment with THREE equal columns separated by thin brass-dotted dividers. Over each column a blank burgundy ribbon header. Under each ribbon an empty name card slot (a recessed paper rectangle with a small pin).","Along the bottom a wide fixed strip: a recessed brass-edged plate with a red ink stamp-style blank rectangle where 'cause of death: undetermined' will be shown by the game."],
+    details:["All empty: no text anywhere. Same parchment paper texture as the dialogue box on the UI sheet."],
+    include:["small brass pins at the top of each slot"], exclude:["text","characters"],
+    tech:["Size 2400x1400 px, transparent outside the frame."]},
+    {size:"2400x1400"}),
+
+P("✔ Stamps: five red-ink rubber stamps", {
+    goal:"Case-file stamps used on boards and evidence.",
+    refs:["the red ink colour #A8483F from the UI sheet"],
+    subject:"Five separate rubber-stamp impressions on one sheet.",
+    layout:["Sheet 1536 x 1024 px with clear gaps. Each stamp about 700 x 260 px inside a rounded rectangle with a double-line border, each tilted a different small angle (-6, 4, -3, 7, -5 degrees).","The five words, in a bold slab or old typewriter capital face: SOLVED, CONTRADICTION, UNKNOWN, SUSPECT IDENTIFIED, UNDETERMINED."],
+    details:["Colour #A8483F at about 90% strength with worn, uneven ink coverage, small gaps and speckles in the letters and border, as a real rubber stamp. Slight ink bleed at the edges (inside the shape only).","THIS is the one prompt where text is required: spell the words exactly."],
+    include:["exact spelling"], exclude:["any other text","backgrounds"],
+    tech:["Sheet 1536x1024 px, transparent."]},
+    {size:"1536x1024", note:"The only prompt where lettering is allowed. The negative prompt's 'text' rule does not apply here."}),
+
+P("✔ Evidence icons: sheet of 10 (laid out like a table)", {
+    goal:"Icons for the Evidence tab and the investigation grid. IMPORTANT: they must come out as ten fully separate icons that never overlap, so the sheet is laid out like a TABLE.",
+    refs:["the 'evidence grid' panel on the UI sheet (icons must read at 90 px)"],
+    subject:"A table-style contact sheet of ten separate icons on a TRANSPARENT background.",
+    layout:["Think of an invisible table with 5 columns and 2 rows. Canvas 1536 x 1024 px. Each table cell is exactly 307 x 512 px.","Each icon is centred inside ITS OWN cell. An icon is never larger than 220 x 220 px, so there are at least 43 px of empty transparent space between the icon and the cell edge on every side, and at least 86 px between any two neighbouring icons. NO icon touches, overlaps or leans into another icon or another cell.","Do NOT draw the table lines, borders or any background; the cells are only an invisible guide.","Row 1 (left to right): 1) a worn photograph of two cubs after the flood (one cub with a thin faded pinkish-grey healed scar on his LEFT EAR, no cross or mark on his forehead), 2) an older, more faded photograph of the same cubs before the flood (no scar), 3) a strand of mustard knitted wool with a ragged end, 4) a closed flood-year register with a ribbon and a brass corner, 5) a small brass lantern with a lit flame.","Row 2 (left to right): 6) a small notebook with a torn page, 7) a cafe receipt strip with unreadable lines, 8) a patrol log page with columns and unreadable scribbles, 9) a doctor's folded report tied with a ribbon and a wax seal, 10) a set of boot prints in snow."],
+    details:["All icons share one light direction (upper left, amber) and the same outline weight.","Colours match the existing props: cream paper #F2E8D4, brass #B08D57, mustard #D9A441.","Each icon is a single clean object with a sharp outline. NO glow, NO halo, NO coloured aura and NO shadow around any icon (the lantern flame stays inside its glass)."],
+    include:["ten icons in the order above","each readable at small size"], exclude:["text or labels","table lines","shadows or glows between icons","any scar drawn on a forehead"],
+    tech:["Sheet 1536x1024 px, transparent. If the generator still overlaps icons, generate them in two images of five (one row each) or one icon per image at 512 x 512 px."]},
+    {size:"1536x1024", tags:["table layout"]}),
+
+P("✔ Identity Board (corkboard)", {
+    goal:"The screen where the player compares the twins by combining independent clues.",
+    refs:["the navy leather binder on the UI sheet (same navy pinstripe fabric and brass corners)"],
+    subject:"A detective investigation corkboard seen straight on.",
+    layout:["Size 2400 x 1500 px. Outer frame: dark navy pinstripe fabric (#243044) with brass corner plates (#B08D57) and brass rivets.","Inside: cork surface (#B98B5A with darker flecks). Two empty polaroid-style photo frames at the top left and top right (each about 420 x 520 px) with white borders for the two bears' portraits. Five empty index cards of different sizes below, held with paper clips and pins. Several brass and red pushpins. One loose length of red string with a pin at each end, left free. A few strips of masking tape."],
+    details:["All cards and frames are EMPTY: no pictures, no text.","Soft shadows under cards are painted (as part of the cards), not a drop shadow on the background."],
+    include:["pin heads with small highlights","cork texture painted"], exclude:["any text","any characters"],
+    tech:["Size 2400x1500 px, transparent outside the frame."]},
+    {size:"2400x1500"}),
+
+P("✔ 0. Whole Clocktower shaft: door to clock dial, one tall sprite (replaces the door and the background tower)", {
+   goal:"The ENTIRE clocktower body in front of the player as ONE tall gameplay-layer sprite, from the steps up to the empty round clock recess and the roofline. The door is part of the wall. It replaces both the freestanding door porch AND the small tower in the background layer. The clock face and hands are added by the game, so the dial recess must be empty.",
+   refs:["the existing entrance door and tower-base image (use the SAME door, arch, hinges, ring handle, side shutters, lantern and stone style)", "the top of the tower in the Bell Village Mid layer (the clock level, the roof and the spire: reuse their stone colour, snow and shape)", "any Bell Village night layer (colour and lighting)"],
+   subject:"A medieval stone clocktower seen straight-on at eye level (orthographic, no looking up, no perspective convergence), from the entrance steps all the way up to the roof and spire.",
+   layout:["ONE image, 2400 px wide by 3600 px tall, tower centred. The bottom edge is the lowest step (clean flat line the characters stand on).","BOTTOM THIRD (0 to 1200 px from the bottom): the entrance base exactly as in the supplied door image: two buttresses, steps, pointed arch door (about 300 px wide, 640 px tall at 1080p scale), lantern on the right, two small shuttered windows with amber light. Width about 1400 px.","MIDDLE: the body rises and tapers gently from 1400 px wide to about 1000 px wide at the clock level. Plain stone wall with a string-course ledge (snow on top) every 500 px, one narrow pointed window with a warm light on each of two levels, small buttress steps that blend into the wall.","CLOCK LEVEL (at about 2500 to 3000 px from the bottom): an EMPTY round recess about 560 px in diameter, ringed by a thick carved stone and brass-banded frame (frame colour brass #B08D57 and stone), the recess filled with plain flat dark navy (#1B2238) so the game can place its own dial and hands over it. NO numerals, NO ticks, NO hands, NO clock face.","TOP: a steep dark-blue slate roof (#2F3F6B lit, #1B2238 shadow) with four small dormer windows with warm light, snow on the ridges, a thin iron spire and weathervane on top. The spire tip is at the very top of the image.","The whole silhouette must look like the same tower as the small one in the Mid layer, just larger and seen at eye level."],
+   details:["Stone: warm grey-brown blocks (#8B7F78 lit, #4E4750 shadow) with visible joints and chips; no moss. Snow: blue-white caps on every ledge, step, sill and roof ridge.","Door and lantern exactly as supplied: dark-brown planks, black scroll hinges, brass ring handle, a thin warm line of light under the door. Lantern glow stays inside the glass.","Light from the upper left (warm), lantern warmth on the right wall, cool blue shadows on the right side of the shaft."],
+   include:["empty dark-navy round recess at the clock level","door, arch and lantern identical to the supplied image","a clean flat bottom edge","stone and wood painted, not photographic"],
+   exclude:["any clock numerals, ticks or hands","any text or sign lettering","characters, footprints or a ground","sky or any background","a perspective view looking up"],
+   tech:["Size 2400x3600 px, one image, transparent.","The recess centre must be exactly horizontally centred, at about 78% of the image height from the bottom, with a 560 px diameter, so the game can place the clock over it."]},
+   {size:"2400x3600", note:"Attach the current door image and the Mid layer. After this, the game hides the small background tower and draws the 11:47 clock over the recess."}),
+
+P("✔ 0b. Bell Village Mid layer WITHOUT the tower (village only, for the entrance scene)", {
+   goal:"A second version of the village Mid layer with NO clocktower, because the tall tower sprite (prompt 0) is placed in front of it at the entrance. The existing Mid layer (with its small tower) stays in use for every scene where the tower is only seen in the distance.",
+   refs:["the existing Bell Village Mid layer (same buildings, trees, lamp posts, banners, snow and smoke: copy it, then remove the tower)", "any Bell Village night layer (colour and lighting)"],
+   subject:"The same wide row of Bell Village rooftops and trees, but with the clocktower area filled by more village instead.",
+   layout:["One image 3840 x 1800 px, same horizontal layout and ground line as the existing Mid layer. Where the tower stood (right of centre, about 62% to 82% of the width), draw an open gap of plain snow-covered pine trees and two low houses, so the tall tower sprite can stand there without clashing with anything.","Keep chimney smoke, glowing windows, lamp posts and red banners exactly as before."],
+   details:["Same palette and lighting as the existing Mid layer: snow-laden steep roofs (#DCE6F5 lit, #8FA2C6 mid, #41517D shadow), warm amber window light, dark blue pines.","The bottom edge ends cleanly along the roofs and tree trunks."],
+   include:["a calm gap area behind where the tower sprite will stand"],
+   exclude:["any clocktower, spire, clock face or bells","ground path, bridge, foreground bushes","sky or mountains behind (leave transparent)","text"],
+   tech:["Size 3840x1800 px, transparent."]},
+   {size:"3840x1800", note:"Attach the existing Mid layer as the reference and ask for the same image with the tower removed."}),
+
+P("✔ 1a. Portraits: Big Green Bear, 4 expressions", {
+   goal:"Dialogue-box portraits. They sit in a 200 x 196 px frame, so faces must read clearly when small.",
+   refs:[REF_CHAR + " (Big Green Bear)"],
+   blocks:[BGB],
+   subject:"Four bust portraits (head, shoulders, the scarf), facing the viewer in a slight three-quarter turn toward the LEFT of the picture.",
+   layout:["ONE row of 4 squares, each 400 x 400 px (sheet 1600 x 400 px). Head fills about 70% of the square, centred, scarf visible at the bottom.","Order: neutral, worried, surprised, thinking."],
+   details:["Neutral: soft calm look, gentle slow smile.","Worried: eyebrows raised toward the middle, small downturned mouth, ears slightly lowered.","Surprised: wide round eyes with tiny pupils, small open mouth, ears up.","Thinking: eyes glancing up and to the left, mouth a small flat line, his LEFT paw raised near his chin."],
+   include:["identical outline weight and colours in all 4","scarf knit pattern visible"], exclude:["background","text","different art style from the sheet"],
+   tech:["Sheet 1600x400 px, transparent."]},
+   {size:"1600x400"}),
+
+P("✔ 1b. Portraits: Nini, 4 expressions", {
+   goal:"Dialogue-box portraits for Nini.",
+   refs:[REF_CHAR + " (Nini)"],
+   blocks:[NINI],
+   subject:"Four bust portraits of Nini, hood down, facing the viewer in a slight three-quarter turn.",
+   layout:["ONE row of 4 squares, each 400 x 400 px (sheet 1600 x 400 px). Order: neutral, worried, surprised, thinking."],
+   details:["Neutral: soft, attentive look.","Worried: eyes glistening, small frown, ears drooping.","Surprised: very round eyes, mouth a small O, ears up.","Thinking: looks up and aside, one hoof under her chin."],
+   include:["wool texture painted with soft curls","yellow collar and a bit of both buttons visible"], exclude:["background","text"],
+   tech:["Sheet 1600x400 px, transparent."]},
+   {size:"1600x400"}),
+
+P("✔ 1. Portraits: Oliver, 4 expressions", {
+   goal:"Dialogue-box portraits for the Clockkeeper.",
+   refs:[REF_CHAR + " (Clockkeeper)"],
+   blocks:[OLIVER],
+   subject:"Four bust portraits of Oliver, goggles pushed up on the cap, facing the viewer in a slight three-quarter turn.",
+   layout:["ONE row of 4 squares, each 400 x 400 px (sheet 1600 x 400 px). Order: neutral, worried, surprised, thinking."],
+   details:["Neutral: steady, matter-of-fact.","Worried: ears slightly back, brow tight.","Surprised: goggles slipping on the cap, wide eyes, whiskers forward.","Thinking: eyes up and aside, one paw on his chin."],
+   include:["tabby face markings consistent","collar and the top of the apron visible"], exclude:["background","text"],
+   tech:["Sheet 1600x400 px, transparent."]},
+   {size:"1600x400"}),
+
+P("✔ 1. Clocktower entrance door and steps (exterior prop)", {
+   goal:"One standalone prop the player can walk up to: the main entrance of the clocktower. It will be placed in front of the village layers, so it must look like part of the tower base.",
+   refs:["The Bell Village Mid layer (the tower base must match its stone and snow)", REF_LIGHT],
+   subject:"Straight side-on (orthographic) view of the base of a medieval stone clocktower entrance.",
+   layout:["Centred, whole prop visible, about 1200 px wide by 1800 px tall; the ground line is the bottom edge of the bottom step.","A tall pointed stone arch (cut blocks of grey-brown stone, #8B7F78 lit, #4E4750 in shadow), a heavy closed wooden double door inside it (about 230 px wide by 346 px tall at 1080p scale), two to three wide stone steps in front, a small wooden sign plate above the arch left EMPTY (no text)."],
+   details:["Door: vertical dark-brown planks (#4A2A18 base, #7A4A28 lit edges), iron straps and hinges (#2A2430), a round brass ring handle (#D9B25C) at the right door half. A thin warm line of light under the door suggests a lit room inside.","Stone arch: visible block joints, small chips and moss-free cracks, a thick cap of snow on top of the arch and on every step edge (blue-white, soft rounded).","Right wall: one iron lantern bracket with a LIT lantern, warm amber glow only inside the lantern glass (no halo outside).","A little snow drift against the left bottom corner."],
+   include:["Door slightly weathered, snow on steps, lantern lit","Clean flat bottom edge on the lowest step","Stone and wood textures painted, not photographic"],
+   exclude:["any clock face or hands","any text or letters","characters or footprints","a ground plane or sky behind the prop"],
+   tech:["Size 1200x1800 px, single image, prop centred."]},
+   {size:"1200x1800", note:"Optional second image: the same door standing open, warm light spilling onto the steps."}),
+
+P("✔ 1. Hotspot magnifier ring", {
+   goal:"A small marker that shows 'you can look closer here' on scene objects.",
+   refs:["the round brass icon buttons on the UI sheet (match the brass colour and rim thickness)"],
+   subject:"A round magnifying-glass ring seen straight on.",
+   layout:["Single icon centred on a 256 x 256 px canvas, ring diameter about 200 px, a short brass handle at the lower right at 45 degrees."],
+   details:["Rim: brass (#B08D57, lit #E0C27E, shadow #6E5530), slightly rough hand-inked outline.","Glass: clear, filled with a deep navy (#243044) at about 35% opacity, one small warm highlight arc at the upper left of the glass.","Subtle small rivets on the rim."],
+   include:["thin elegant look, readable at 64 px"], exclude:["glow","text","shadow under the icon"],
+   tech:["256x256 px, transparent."]},
+   {size:"256x256"}),
+
+P("✔ Keepsake photo frame (front, leaning on a shelf)", {
+   goal:"A sentimental prop in BGB's cottage (Prologue). It looks like grief, not like a secret.",
+   refs:[REF_LIGHT, "the existing 'photo frame back' prop (the back side of this same frame)"],
+   subject:"A thick, deep wooden photo frame seen from the front, standing and leaning back slightly on a shelf.",
+   layout:["Centred on a 1000 x 1200 px canvas, slightly tilted back, a small strut visible at the lower back edge."],
+   details:["Dark walnut wood (#4A2A18, lit edges #7A4A28) a little deeper and heavier than a normal frame, brass corner caps (#B08D57), worn edges.","Inside: a worn old photograph of two small bear cubs standing close together, rendered only as soft simple shapes (no detailed faces), warm sepia tint.","Gentle wear and a few small scratches, a thin line of dust on the top edge."],
+   include:["a plain smooth front glass reflection hint (small)"], exclude:["any visible hidden compartment","text","a hanging hook (it leans, it is never hung)"],
+   tech:["Size 1000x1200 px, transparent."]},
+   {size:"1000x1200"})
 ]}
 ];
 
@@ -444,14 +564,14 @@ const SHEET_RE = /icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portr
 SECTIONS.forEach(sec => sec.items.forEach(it => { if (it.kind === "png" && SHEET_RE.test(it.title) && !it.body.includes("SHEET SPACING")) it.body = it.body.replace("\n\nSTYLE (apply to everything):", "\n\n" + GAP + "\n\nSTYLE (apply to everything):"); }));
 
 // ---- render
-const doneKey = "bgb2.prompts.done.v1";
+const doneKey = "bgb2.prompts.done.v2";
 let done = {};
 try { done = JSON.parse(localStorage.getItem(doneKey) || "{}"); } catch(e){}
 const saveDone = () => { try { localStorage.setItem(doneKey, JSON.stringify(done)); } catch(e){} };
 const $ = id => document.getElementById(id);
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const full = it => it.kind === "png" ? it.body : it.body;
-const total = SECTIONS.reduce((n,s)=>n+s.items.length,0);
+const archN = (SECTIONS.find(s=>s.id==="e")||{items:[]}).items.length, total = SECTIONS.reduce((n,s)=>n+s.items.length,0) - archN;
 
 const wc = it => it.body.split(/\s+/).length;
 const peek = it => { const m = it.body.match(/GOAL:\n([^\n]*)/); const t = m ? m[1].replace(/^- /,"") : it.body.split("\n")[0]; return t.length > 220 ? t.slice(0,217) + "..." : t; };
@@ -469,8 +589,8 @@ function render(){
     const s = document.createElement("section"); s.id = sec.id;
     s.innerHTML = `<h2>${esc(sec.name)} <small>${sec.items.length} PROMPTS</small></h2><p class="sub">${esc(sec.sub)}</p>`;
     sec.items.forEach((it,i) => {
-      const key = sec.id + "." + i;
-      const c = document.createElement("div"); c.className = "card" + (done[key] ? " done" : "");
+      const key = "t:" + it.title.replace(/^\u2714 /,""); /* stable key: survives re-ordering and removed prompts */
+      const c = document.createElement("div"); c.className = "card" + (done[key] || sec.id === "e" ? " done" : "");
       const tags = (it.kind === "png" ? '<span class="tag png">TRANSPARENT PNG</span>' : '<span class="tag">AUDIO</span>')
         + (it.size ? `<span class="tag">${esc(it.size)}</span>` : "") + it.tags.map(t => `<span class="tag">${esc(t)}</span>`).join("");
       c.innerHTML = `<div class="head"><h3>${esc(it.title)}</h3></div><div class="tags">${tags}</div>` + (it.note ? `<p class="note">${esc(it.note)}</p>` : "") + `<p class="peek">${esc(peek(it))}</p><details class="pv"${openAll ? " open" : ""}><summary>Show full prompt (${wc(it)} words)</summary><pre>${esc(full(it))}</pre></details>`
@@ -483,7 +603,7 @@ function render(){
   });
   count();
 }
-function count(){ $("count").textContent = Object.keys(done).length + " of " + total + " made"; }
+function count(){ $("count").textContent = Object.keys(done).length + " of " + total + " made, " + archN + " archived"; }
 $("copyAll").addEventListener("click", e => copy(STYLE + "\n\n" + PNG + "\n\n" + GAP, e.currentTarget));
 $("toggleAll").addEventListener("click", e => { openAll = !openAll; document.querySelectorAll("details.pv").forEach(d => d.open = openAll); e.currentTarget.textContent = openAll ? "Collapse all" : "Expand all"; });
 $("resetDone").addEventListener("click", () => { done = {}; saveDone(); render(); });

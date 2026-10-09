@@ -168,7 +168,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .obj .bx{width:30px;height:30px;border:3px solid var(--brass);border-radius:5px;display:grid;place-items:center;font-size:24px;color:var(--burgundy);flex:none}
 .obj.done{color:#7b6648;text-decoration:line-through;text-decoration-color:rgba(110,42,53,.5)}
 .grid2{display:flex;gap:48px;align-items:flex-start}
-.evgrid{position:relative;width:520px;height:536px;background:url(assets/grid_3x3_panel_close.webp) 0 0/100% 100% no-repeat;flex:none}
+.evgrid{position:relative;width:520px;height:548px;background:url(assets/grid_3x3_equal.webp) 0 0/100% 100% no-repeat;flex:none}
 .evcell{position:absolute;width:138px;height:136px;display:grid;place-items:center;cursor:pointer;border:0;background:transparent}
 .evcell img,.evcell svg{max-width:calc(100% - 16px);max-height:calc(100% - 16px)}
 .evcell.sel{outline:4px solid var(--burgundy);outline-offset:-4px;border-radius:12px}
@@ -721,22 +721,24 @@ function renderCF(){
   } else if (tab===3){
     h += '<div class="legend">'+tr(UI.legend).map(s=>'<span><span class="tag">'+s[0]+'</span>'+s.slice(2)+'</span>').join('')+'</div><div class="tl" id="tl"></div><p style="font:italic 400 28px/1.4 var(--font-body);color:#5a4630;max-width:900px">'+tr(UI.tlNote)+'</p>';
   } else if (tab===4){
-    h += S.notes.length ? '<ul class="notes">'+S.notes.map(o=>'<li>'+tr(o.n)+'</li>').join('')+'</ul>' : '<p style="font:italic 400 28px var(--font-body)">'+tr(UI.empty)+'</p>';
+    h += '<div style="display:flex;gap:28px;align-items:flex-start"><div style="flex:1;min-width:0;max-height:770px;overflow-y:auto;padding-right:8px">'+(S.notes.length ? '<ul class="notes">'+S.notes.map(o=>'<li>'+tr(o.n)+'</li>').join('')+'</ul>' : '<p style="font:italic 400 28px var(--font-body)">'+tr(UI.empty)+'</p>')+'</div>'
+      + '<div style="flex:none;width:540px">'+pageOver(540)+'<div class="pvnote" style="width:540px;font-size:19px">'+(PV ? '' : (lang==="ko"?"이후 챕터에서 채워진다. ":"Fills in later. "))+'<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div></div></div>';
   } else {
     h += '<div class="mapbox"><div class="pin" style="left:168px;top:372px;background:#c4453a"></div><div class="pinlab" style="left:194px;top:372px">'+tr(UI.here)+'</div><div class="pin" style="left:346px;top:300px;background:#d9a441"></div><div class="pinlab" style="left:372px;top:300px">'+tr(UI.tower)+'</div></div>';
   }
   pg.innerHTML = h;
   if (SUBS[tab]) $("subBtn").onclick = ()=>{ sub = true; renderCF(); };
+  if (tab===4) $("pvBtn").onclick = ()=>{ PV = !PV; renderCF(); };
   if (tab===2) renderEvGrid(); if (tab===3) renderTl();
 }
 /* ---------- boards (art: board_identity / board_resp / page_overlooked) ---------- */
-const SUBS = { 0:{k:"subBoard"}, 1:{k:"subId"}, 4:{k:"subOver"} };
+const SUBS = { 0:{k:"subBoard"}, 1:{k:"subId"} };
 const px = (x,y,w,h,W,H) => 'left:'+(x/W*100).toFixed(2)+'%;top:'+(y/H*100).toFixed(2)+'%;width:'+(w/W*100).toFixed(2)+'%;height:'+(h/H*100).toFixed(2)+'%';
 const box = (cls,x,y,w,h,W,H,inner,st) => '<div class="ov '+cls+'" style="'+px(x,y,w,h,W,H)+(st||'')+'">'+inner+'</div>';
 function subView(t){
   const back = '<button class="subbtn nine cream" id="subBtn">&lsaquo; '+tr(UI.subBack)+'</button>';
   const pvb = '<div class="pvnote">'+(PV ? '' : (lang==="ko"?"이 화면은 이후 챕터에서 채워진다.":"This fills in during later chapters.")) + '<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>';
-  return back + (t===1 ? boardId() : t===0 ? boardResp() : pageOver()) + pvb;
+  return back + (t===1 ? boardId() : boardResp()) + pvb;
 }
 function wireSub(){ $("subBtn").onclick = ()=>{ sub = false; renderCF(); }; $("pvBtn").onclick = ()=>{ PV = !PV; renderCF(); }; }
 function boardId(){
@@ -785,19 +787,19 @@ function boardResp(){
   }
   return h + '</div>';
 }
-function pageOver(){
-  const W = 802, H = 1000, K = lang==="ko";
+function pageOver(wpx){
+  const W = 802, H = 1000, K = lang==="ko", f = (wpx||626)/626;
   const L = K ? ["BGB가 뒤집어 보지 않으려 했던 사진 액자.","BGB의 카페 알리바이는 사실이었지만, 그는 11시 42분에 떠났다.","니니의 편지 두 통, 그중 수신자를 아는 건 한 통뿐.","순찰 기록: 장갑, 종이 한 장, 느린 곰, 바람 속의 부름.","안쪽에서 빗장이 걸린 뒷문.","BGB가 시계지기에게: \"최대한 빨리 왔어요.\""] : [
     "The photograph frame BGB would not turn over.","BGB's café alibi was true, but he left at 11:42.","Nini's two letters, and only one known recipient.","The Night Guard's log: gloves, a paper, a slow bear, a call in the wind.","The back door, bolted from the inside.","BGB to the Clockkeeper: \"I came as fast as I could.\""];
   const Y = [288,400,513,632,745,859];
-  let h = '<div class="bd" style="width:'+Math.round(780*W/H)+'px"><img class="base" src="assets/page_overlooked.webp" alt="">';
-  h += box("ctr",175,98,480,72,W,H,'<b style="margin:0;font-size:25px;color:#4a2f10">'+tr(UI.subOver).toUpperCase()+'</b>');
-  if (PV) L.forEach((t,i)=>{ h += box("",205,Y[i]-76,485,72,W,H,'<span style="font:600 21px/1.18 var(--font-body)">'+t+'</span>','justify-content:flex-end'); });
-  else h += box("",205,Y[0]-76,485,72,W,H,'<span style="font:italic 600 22px/1.2 var(--font-body);color:#6d5a40">'+(K?"아직 다시 읽을 것이 없다.":"Nothing to re-read yet.")+'</span>','justify-content:flex-end');
+  let h = '<div class="bd" style="width:'+(wpx||Math.round(780*W/H))+'px"><img class="base" src="assets/page_overlooked.webp" alt="">';
+  h += box("ctr",175,98,480,72,W,H,'<b style="margin:0;font-size:'+Math.round(25*f)+'px;color:#4a2f10">'+tr(UI.subOver).toUpperCase()+'</b>');
+  if (PV) L.forEach((t,i)=>{ h += box("",205,Y[i]-76,485,72,W,H,'<span style="font:600 '+(19*f).toFixed(1)+'px/1.15 var(--font-body)">'+t+'</span>','justify-content:flex-end'); });
+  else h += box("",205,Y[0]-76,485,72,W,H,'<span style="font:italic 600 '+(20*f).toFixed(1)+'px/1.2 var(--font-body);color:#6d5a40">'+(K?"아직 다시 읽을 것이 없다.":"Nothing to re-read yet.")+'</span>','justify-content:flex-end');
   return h + '</div>';
 }
 function renderEvGrid(){
-  const g = $("evg"); const CX = [[30,133],[141,244],[251,355]], CY = [[76,178],[186,287],[294,364]], k = 520/385; /* slot rectangles measured from grid_3x3_panel_close.webp (385x397) */
+  const g = $("evg"); const CX = [[60,318],[340,597],[618,876]], CY = [[95,348],[372,617],[642,888]], k = 520/940; /* slot rectangles measured from grid_3x3_equal.webp (940x990): nine equal slots */
   const pages = Math.max(1, Math.ceil(S.ev.length/9)); evPage = Math.min(evPage, pages-1);
   if (selEv && S.ev.includes(selEv)) evPage = Math.floor(S.ev.indexOf(selEv)/9);
   S.ev.slice(evPage*9, evPage*9+9).forEach((id,i)=>{ const b = document.createElement("button"); b.className = "evcell"+(selEv===id?" sel":""); const col=i%3,row=Math.floor(i/3);
@@ -805,7 +807,7 @@ function renderEvGrid(){
     b.style.cssText = "left:"+Math.round(CX[col][0]*k)+"px;top:"+Math.round(CY[row][0]*k)+"px;width:"+rw+"px;height:"+rh+"px"; b.innerHTML = evIcon(EV[id], Math.min(96, rh-16)); b.title = tr(EV[id].name);
     b.onclick = ()=>{ selEv = id; renderCF(); }; g.appendChild(b); });
   if (!selEv && S.ev.length) selEv = S.ev[S.ev.length-1];
-  if (pages > 1){ const pgr = document.createElement("div"); pgr.className = "pager"; pgr.style.cssText = "position:absolute;left:0;top:548px";
+  if (pages > 1){ const pgr = document.createElement("div"); pgr.className = "pager"; pgr.style.cssText = "position:absolute;left:0;top:560px";
     pgr.innerHTML = '<button id="pvP"'+(evPage?'':' disabled')+'>&lsaquo;</button><span>'+tr(UI.page)+' '+(evPage+1)+' / '+pages+'</span><button id="pvN"'+(evPage<pages-1?'':' disabled')+'>&rsaquo;</button>';
     g.appendChild(pgr); pgr.querySelector("#pvP").onclick = ()=>{ evPage--; selEv = S.ev[evPage*9]; renderCF(); }; pgr.querySelector("#pvN").onclick = ()=>{ evPage++; selEv = S.ev[evPage*9]; renderCF(); }; }
   const d = $("evd"); const e = selEv && EV[selEv];
