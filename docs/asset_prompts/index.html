@@ -1,0 +1,318 @@
+<title>BGB2 Asset Prompts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;600;700&family=Alegreya+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: sticky section index on the left (top strip on phones), prompt cards stacked on the right, each with a copy button and a done checkbox. */
+:root{
+  --bg:#f3ead6;          /* parchment */
+  --panel:#fbf5e6;       /* card */
+  --ink:#33241a;         /* brown ink */
+  --muted:#7a6650;       /* secondary text */
+  --line:#d4c3a0;        /* rules */
+  --accent:#6e2a35;      /* burgundy */
+  --brass:#b08d57;       /* trim */
+  --code:#fffdf6;        /* prompt box */
+  --code-ink:#2b2118;
+  --ok:#2f6b46;
+  --font-body:"Alegreya","Noto Serif KR",Georgia,serif;
+  --font-label:"Alegreya SC","Noto Serif KR",Georgia,serif;
+  --font-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121827;--panel:#1a2236;--ink:#efe3c8;--muted:#a99d84;--line:#2f3a56;--accent:#e08a96;--brass:#c9a56a;--code:#0e1422;--code-ink:#f1e6cc;--ok:#6fc08f;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121827;--panel:#1a2236;--ink:#efe3c8;--muted:#a99d84;--line:#2f3a56;--accent:#e08a96;--brass:#c9a56a;--code:#0e1422;--code-ink:#f1e6cc;--ok:#6fc08f;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:18px;line-height:1.5;padding-inline:16px}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 80px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:36px}
+header.top{grid-column:1/-1}
+h1{font:700 40px/1.1 var(--font-body);margin:0 0 8px;text-wrap:balance}
+.lead{max-width:70ch;color:var(--muted);margin:0 0 4px}
+.rule{margin:18px 0 0;padding:12px 16px;border-left:4px solid var(--accent);background:var(--panel);border-radius:0 8px 8px 0}
+.rule b{color:var(--accent)}
+nav{position:sticky;top:16px;align-self:start;display:flex;flex-direction:column;gap:6px}
+nav a{display:flex;justify-content:space-between;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);text-decoration:none;font:600 16px/1.2 var(--font-label);letter-spacing:.04em}
+nav a:hover,nav a:focus-visible{border-color:var(--accent);outline:none}
+nav a span{color:var(--muted);font-variant-numeric:tabular-nums}
+main{min-width:0}
+section{margin-bottom:44px}
+h2{font:700 28px/1.15 var(--font-body);margin:0 0 4px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+h2 small{font:500 15px/1 var(--font-label);letter-spacing:.14em;color:var(--brass)}
+.sub{margin:0 0 16px;color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.card.done{opacity:.62}
+.head{display:flex;align-items:flex-start;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.head h3{margin:0;font:700 21px/1.25 var(--font-body);min-width:0}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
+.tag{font:500 13px/1 var(--font-label);letter-spacing:.12em;padding:5px 8px;border:1px solid var(--line);border-radius:5px;color:var(--muted)}
+.tag.png{border-color:var(--accent);color:var(--accent)}
+.note{margin:0 0 10px;color:var(--muted);font-size:16px}
+pre{margin:0 0 10px;padding:14px 16px;background:var(--code);color:var(--code-ink);border:1px solid var(--line);border-radius:8px;font:400 13.5px/1.55 var(--font-mono);white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+button{font:700 16px/1 var(--font-label);letter-spacing:.05em;padding:10px 16px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) button{color:#1b1220}}
+:root[data-theme="dark"] button{color:#1b1220}
+button.ghost{background:transparent;color:var(--accent)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+label.chk{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:16px;cursor:pointer}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--ok)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 0}
+.count{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
+@media (max-width:860px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:18px}
+  nav{position:static;flex-direction:row;flex-wrap:wrap}
+  h1{font-size:32px}
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>BGB2 Asset Prompts</h1>
+    <p class="lead">Every image prompt below already ends with the transparent PNG line, so you can copy it as is. The list matches <code>ASSET_REQUIREMENTS.md</code> in the repo: only what is still left to make.</p>
+    <p class="rule"><b>Audio prompts</b> are the only ones without the PNG line, because they are not images. Tip: make the <b>Mid layer first</b> and attach it as a reference for the other layers so colours and lighting match.</p>
+    <div class="toolbar">
+      <button id="copyAll" class="ghost" type="button">Copy shared style block</button>
+      <button id="resetDone" class="ghost" type="button">Clear done marks</button>
+      <span class="count" id="count"></span>
+    </div>
+  </header>
+  <nav id="nav" aria-label="Sections"></nav>
+  <main id="main"></main>
+</div>
+
+<script>
+(() => {
+"use strict";
+const PNG = "Output as a PNG with a TRANSPARENT background (clean alpha channel): the background outside the painted objects must be fully transparent. No green screen, no white or coloured background, no baked drop shadow, no glow halo, no blur, sharp edges.";
+const STYLE = "Hand-painted storybook illustration, clean slightly rough dark-brown ink outlines, soft painterly shading, warm amber lantern light from the left, cool blue night shadows, cozy winter night in Bell Village, same painting style as the existing Bell Village and Clocktower artwork. No text, no letters, no numbers, no UI, no watermark. Real fine detail at the requested size, not an upscaled low-resolution image.";
+const CHAR = "Cute round storybook animal characters in the same style as the existing character turnaround sheet. Do not redesign the characters. Keep the same proportions, outline weight and colours.";
+
+// kind: "png" gets the transparent line appended; "audio" does not
+const P = (title, body, o={}) => ({title, body, kind:o.kind||"png", note:o.note||"", size:o.size||"", tags:o.tags||[]});
+
+const SECTIONS = [
+ {id:"a", name:"A. Next milestone", sub:"Needed for the next playable step.", items:[
+  P("1. Clocktower entrance door and steps (exterior prop)",
+`${STYLE}
+A single prop, straight side view: the entrance of a stone clocktower. A tall closed wooden door with iron hinges set in a pointed stone arch, two to three snow-covered stone steps in front, a small iron lantern bracket on the right wall with a warm lit lantern, a little snow on the arch. NO clock, NO text, NO people. Door about 230 px wide and 346 px tall at 1080p scale. Size 1200x1800.
+${PNG}`, {size:"1200x1800", note:"Optional second image: the same door open, warm light spilling out."}),
+  P("2a. BGB walk cycle: facing RIGHT (separate drawing)",
+`${STYLE}
+${CHAR}
+Sprite sheet of Big Green Bear (large soft sage-green bear, mustard knitted scarf with the tails on his LEFT shoulder, small black eyes, dark rounded nose), facing RIGHT in side view. 8 walk-cycle frames in one row, evenly spaced, same scale and the same foot baseline in every frame, gentle slightly heavy steps, no exaggerated bouncing. Each frame about 400 px wide, 640 px tall. He is LEFT-handed: the left arm swings naturally and is the one that will later carry objects. Draw every frame by hand; this is NOT a mirrored copy of a left-facing sheet.
+${PNG}`, {size:"3200x640", tags:["no mirroring"]}),
+  P("2b. BGB walk cycle: facing LEFT (separate drawing)",
+`${STYLE}
+${CHAR}
+Sprite sheet of Big Green Bear facing LEFT in side view, 8 walk-cycle frames in one row, same scale, same foot baseline, gentle slightly heavy steps. Mustard knitted scarf with the tails on his LEFT shoulder (the shoulder nearest to the viewer when he faces left). LEFT-handed. This must be a fresh drawing, NOT a mirrored copy of the right-facing sheet, so the scarf tails and the hand stay anatomically correct. Each frame about 400x640 px.
+${PNG}`, {size:"3200x640", tags:["no mirroring"]}),
+  P("2c. BGB idle (front, 4 frames)",
+`${STYLE}
+${CHAR}
+Sprite sheet of Big Green Bear, FRONT view, idle breathing, 4 frames in a row, tiny movement only (chest rise, scarf sway, a slow blink in one frame), same scale and feet baseline. Mustard scarf tails on his LEFT shoulder (the viewer's right). Each frame about 400x640 px.
+${PNG}`, {size:"1600x640"}),
+  P("3a. Nini idle (front, 4 frames)",
+`${STYLE}
+${CHAR}
+Sprite sheet of Nini, small fluffy white lamb in a yellow raincoat and brown boots, about 55% of Big Green Bear's height, FRONT view, idle, 4 frames in a row: slow breathing, a small ear twitch, a blink. Same scale and feet baseline in every frame. Each frame about 220x350 px.
+${PNG}`, {size:"880x350"}),
+  P("3b. Oliver (Clockkeeper) idle (front, 4 frames)",
+`${STYLE}
+${CHAR}
+Sprite sheet of Oliver, a tabby-and-white cat with brass goggles on a leather cap, a brown apron over a cream shirt and tool pockets, FRONT view, idle, 4 frames in a row: tail sway, a slow blink, a small adjustment of the goggles. Same scale and feet baseline. Each frame about 300x440 px (about 75% of Big Green Bear's height).
+${PNG}`, {size:"1200x440"}),
+  P("4a. Portraits: Big Green Bear (4 expressions)",
+`${STYLE}
+${CHAR}
+Four square bust portraits of Big Green Bear in one row for a dialogue box, shoulders and scarf visible: neutral (soft calm look), worried (eyebrows raised inward, small frown), surprised (round wide eyes, mouth slightly open), thinking (eyes glancing up-left, one paw near the chin). Mustard scarf tails on his LEFT shoulder (the viewer's right). Each 400x400 px.
+${PNG}`, {size:"1600x400"}),
+  P("4b. Portraits: Nini (4 expressions)",
+`${STYLE}
+${CHAR}
+Four square bust portraits of Nini (white lamb, yellow raincoat hood down) in one row: neutral, worried (eyes glistening, small frown), surprised (round wide eyes, mouth a small O), thinking (looks up and aside, a hoof near the cheek). Each 400x400 px.
+${PNG}`, {size:"1600x400"}),
+  P("4c. Portraits: Oliver (4 expressions)",
+`${STYLE}
+${CHAR}
+Four square bust portraits of Oliver (cat with brass goggles pushed up on the cap, brown apron) in one row: neutral (steady, matter-of-fact), worried (ears slightly back), surprised (goggles slipping, wide eyes), thinking (looks up, one paw on the chin). Each 400x400 px.
+${PNG}`, {size:"1600x400"}),
+  P("5. Hotspot magnifier ring",
+`${STYLE}
+A round "look closer" hotspot marker for a point-and-click scene: a thin brass magnifying-glass ring with a clear dark-navy centre that is slightly transparent, a tiny handle at the lower right, subtle warm highlight on the rim. One icon, centred. Size 256x256.
+${PNG}`, {size:"256x256"})
+ ]},
+ {id:"b", name:"B. Soon after", sub:"Rooms, evidence, boards, stamps and sound.", items:[]},
+ {id:"c", name:"C. Story-lock fixes", sub:"Changes forced by the final story. Never mirror a sprite to make the other twin.", items:[
+  P("Green: redrawn turnaround (faded scar, scarf on his RIGHT shoulder)",
+`${STYLE}
+${CHAR}
+Character turnaround sheet of GREEN, the twin brother of Big Green Bear: same body, face and sage-green colour as Big Green Bear but he is RIGHT-handed. SIX views in one row, each drawn separately (left profile, left three-quarter, front, back, right three-quarter, right profile). Mustard knitted scarf with the knot and tails on his RIGHT shoulder in every view where they would be visible (hidden on the far side in the left profile). Old, healed scar on his LEFT ear: a few thin raised lines in a faded pinkish-grey, NOT red, no scab, no blood. He must NOT look more sinister than Big Green Bear: same gentle eyes, a slightly guarded resting mouth. Each view about 400x640 px.
+${PNG}`, {size:"2400x640", tags:["no mirroring"]}),
+  P("Big Green Bear: redrawn turnaround (scarf on his LEFT shoulder)",
+`${STYLE}
+${CHAR}
+Character turnaround sheet of Big Green Bear, SIX views in one row, each drawn separately (left profile, left three-quarter, front, back, right three-quarter, right profile). Mustard knitted scarf with the knot and tails on his LEFT shoulder in every view where visible (hidden in the right profile). LEFT-handed. No scar on his ears. Soft, open, slow-smile expression. Anatomically consistent in all six views, NOT mirrored copies. Each view about 400x640 px.
+${PNG}`, {size:"2400x640", tags:["no mirroring"]}),
+  P("Big Green Bear: torn-tail scarf variant (6 views)",
+`${STYLE}
+${CHAR}
+Same Big Green Bear turnaround as the redrawn sheet (SIX separate views, scarf tails on his LEFT shoulder, left-handed) but the LEFT scarf tail is torn short by about a hand's width, with a ragged frayed end of mustard wool. Everything else unchanged. Each view about 400x640 px.
+${PNG}`, {size:"2400x640", tags:["no mirroring"]}),
+  P("Keepsake photo frame (front, leaning on a shelf)",
+`${STYLE}
+A single prop: a thick, deep wooden keepsake photo frame, slightly heavier than a photograph needs, standing and leaning back on a shelf, with a small stand strut visible at the lower back edge, brass corner caps, holding a worn photograph of two small bear cubs (just soft shapes, no faces needed). Looks sentimental, gently worn. NO hidden compartment visible from the front. Size 1000x1200.
+${PNG}`, {size:"1000x1200"}),
+  P("Photograph: post-flood (home copy)",
+`${STYLE}
+A single worn paper photograph with a white border, slightly curled corners, sepia-warm tone: two small bear cubs side by side, one with a thin faded healed scar on the left ear, scarves with knots on opposite shoulders. A handwritten caption strip below is left EMPTY (no letters). Size 900x1100.
+${PNG}`, {size:"900x1100"}),
+  P("Photograph: pre-flood (in Edward's drawer)",
+`${STYLE}
+A single paper photograph, older and more faded than the other one: the same two small bear cubs before the flood, NO scar on either ear, scarves tied with the knots clearly visible on opposite shoulders (one on the cub's right, the other on his left). Empty caption strip (no letters). Size 900x1100.
+${PNG}`, {size:"900x1100"})
+ ]},
+ {id:"d", name:"D. Later", sub:"Chapters 4 and up.", items:[
+  P("Young twin bears: walk sets for both (age 7)",
+`${STYLE}
+${CHAR}
+Two sprite sheets of the SAME two bear cubs at age seven (younger and smaller than Big Green Bear, softer round proportions, big heads), each with matching frames: 8-frame walk facing LEFT and 8-frame walk facing RIGHT, each drawn separately (no mirroring), plus a 4-frame front idle. Cub A: scarf knot and tails on his RIGHT shoulder, right-handed. Cub B: scarf on his LEFT shoulder, left-handed. Same mustard scarves, no names, no scars. Each frame about 260x420 px.
+${PNG}`, {size:"2080x420 per row", tags:["no mirroring"]}),
+  P("Flashback Bell Village (4 layers, warm daylight to dusk)",
+`${STYLE}
+The same village layout as the night version but twenty-three years earlier, warm late-afternoon light, a cosier look, fewer chimneys, no red banners. Make four SEPARATE transparent layers: Far (sky and mountains only), Mid (whole clocktower with an empty dial, no hands, village buildings), Ground (low walkable cobblestone path and arched bridge), Foreground (bushes and a short fence). 3840 px wide each.
+${PNG}`, {size:"3840 wide x4"}),
+  P("Flood water and rain overlays",
+`${STYLE}
+Three separate effect overlays: (1) a wide strip of dark, muddy meltwater surface with soft ripples and floating snow, 3840x420; (2) falling heavy rain streaks in a seamless tile, 1024x1024; (3) a splash and foam strip for the water edge, 3840x160. Soft and painterly, no photorealism.
+${PNG}`, {size:"see prompt"}),
+  P("Flooded tower stairwell (background)",
+`${STYLE}
+Inside the tower stairwell during the flood, side view: stone steps rising to the right, dark water filling the lower half, a wooden railing, a single lantern floating, cold blue and dim amber light, dramatic but gentle. Make it a single layer with a flat walkable edge on the steps. 3840x1400.
+${PNG}`, {size:"3840x1400"}),
+  P("Flood-year register page (two inks)",
+`${STYLE}
+One open page of an old hand-written register: aged cream paper, rows of neat brown ink handwriting in unreadable squiggles (no real letters), ONE entry crossed out and rewritten in a visibly newer, darker ink above it, a red wax seal and a green wax seal at the bottom, and a cluster of five small signatures. Top-down view. Size 1600x2000.
+${PNG}`, {size:"1600x2000"}),
+  P("Epilogue still 1: the council room (the adults decide)",
+`${STYLE}
+A lamplit council room at night, wide shot: five adult animals around a table with an open register: a stern Mayor, a nervous Bell-warden, an old Healer, Mara (old badger in a red embroidered shawl), and Edward (hedgehog with round glasses, vest, red tie) holding a pen, hesitating. A quill, wax seals, one candle. Warm light turning cold at the edges. No text. Painted still. Size 3840x2160.
+${PNG}`, {size:"3840x2160", note:"A full scene: the painted area fills the frame; anything outside the painted shapes stays transparent."}),
+  P("Epilogue still 2: the consequence (the elder leaves)",
+`${STYLE}
+A small bear cub with his scarf tails on his RIGHT shoulder walking away alone along a snowy lane at dawn with a small bundle, past a village notice board, while villagers cheer a carried cub in the background and a hedgehog in round glasses watches from an archive window. Melancholy. No text. Painted still. Size 3840x2160.
+${PNG}`, {size:"3840x2160"}),
+  P("Ending art E1: The Final Record",
+`${STYLE}
+The tower clock restarted at 11:48, warm dawn light through the winding room, Nini writing in a large record book at a desk, two bear brothers standing side by side behind her, one scarf tail on each of their opposite shoulders. Hopeful but sober. No text. Painted still, 3840x2160.
+${PNG}`, {size:"3840x2160"}),
+  P("Ending art E2: The Hero's Silence",
+`${STYLE}
+The repaired clocktower at night with the bell ringing, the village calm and cozy, one lone bear in a hood walking back to a distant mill, and a faint dark stain on the stair inside a doorway. Quietly unsettling. No text. Painted still, 3840x2160.
+${PNG}`, {size:"3840x2160"}),
+  P("Ending art E3: The Wrong Bear",
+`${STYLE}
+A bear in a mustard scarf being led away in the snow by village guards at dusk, villagers watching in silence, Big Green Bear standing apart with his scarf tail torn, looking down. Dark and heavy. No text. Painted still, 3840x2160.
+${PNG}`, {size:"3840x2160"}),
+  P("Ending art E4: The Burned Page",
+`${STYLE}
+A fireplace at night with a rolled record page burning, a bear's hand in a mustard knitted sleeve, a small lamb in a yellow raincoat in the doorway holding one saved corner of paper. Ambiguous and quiet. No text. Painted still, 3840x2160.
+${PNG}`, {size:"3840x2160"})
+ ]}
+];
+
+// ---- Section B (generated: room layers share one template)
+function roomLayers(room, mid, ground, fg, far){
+  return [
+    P(room+": Far (window view)", `${STYLE}\nOnly the view seen through the ${room.toLowerCase()} windows: ${far}. NO window frames, NO walls, NO foreground. 3840x1100.\n${PNG}`, {size:"3840x1100"}),
+    P(room+": Mid (back wall)", `${STYLE}\nThe back wall of the ${room.toLowerCase()}, straight side view: ${mid}. Window openings left as EMPTY TRANSPARENT holes. NO floor, NO characters. Ends cleanly at the bottom edge. 3840x1800.\n${PNG}`, {size:"3840x1800"}),
+    P(room+": Ground (floor)", `${STYLE}\nOnly the walkable floor strip of the ${room.toLowerCase()}, straight side view: ${ground}. Keep the middle 700 px plain and empty. Matte, not shiny or wet. Clean flat top edge. 3840x520.\n${PNG}`, {size:"3840x520"}),
+    P(room+": Foreground", `${STYLE}\nA dark, low-contrast foreground strip for the ${room.toLowerCase()}: ${fg}. Keep the middle 60% low and sparse so characters' feet stay visible. 3840x420.\n${PNG}`, {size:"3840x420"})
+  ];
+}
+SECTIONS[1].items = [
+  ...roomLayers("Edward's archive room",
+    "tall wooden shelves of ledgers and rolled papers, a locked drawer cabinet, a reading stand with an open flood-year register, a tall arched window, a rolling ladder, a hanging lamp with warm light",
+    "wooden plank floor with a worn red runner rug, a small desk at the left and a stool at the right, a few scattered papers",
+    "dark silhouettes of a stacked crate of ledgers and a chair back at the corners, a thin rope barrier, a few paper scraps",
+    "snowy night sky and a distant clocktower silhouette over the village roofs"),
+  ...roomLayers("Hazel's café",
+    "a cosy cafe back wall with a counter and shelves of cups, a tall window onto the plaza, a chalkboard with no writing, hanging copper pots, warm lamps",
+    "wooden floor with a small round table and two chairs at the left (the table where Big Green Bear sat) and a stool at the counter on the right",
+    "dark silhouettes of a coat rack and a stack of chairs at the corners, a potted plant, a few cups",
+    "a snowy plaza at night seen through the window, a lamp post and the clocktower in the distance"),
+  P("Evidence icons: sheet of 10",
+`${STYLE}
+A sheet of ten separate small evidence icons on one canvas, evenly spaced with clear gaps, each painted as a single object with a soft outline: (1) a worn photograph of two cubs after the flood, (2) an older photograph before the flood, (3) a strand of mustard knitted wool, (4) a closed flood-year register with a ribbon, (5) a small brass lantern, (6) a notebook with a torn page, (7) a cafe receipt, (8) a patrol log page with columns, (9) a doctor's folded report, (10) a set of boot prints in snow. Each about 256x256 px, no labels. Total 1536x1024.
+${PNG}`, {size:"1536x1024"}),
+  P("Identity Board",
+`${STYLE}
+A detective's investigation corkboard, front view, framed in dark navy pinstripe fabric with brass corners: cork surface, two empty polaroid-style frames at the top (to hold the two bears' portraits), five blank index cards with paper clips, several brass and red pushpins, a loose red string with pins ready to connect cards, small masking-tape strips. All cards and frames EMPTY (no text or pictures). Size 2400x1500.
+${PNG}`, {size:"2400x1500"}),
+  P("Responsibility Board",
+`${STYLE}
+An investigation board panel with THREE equal vertical columns on cream paper in a navy pinstripe frame with brass corners, a blank header ribbon over each column and an empty name card slot in each, plus a wide strip along the bottom with a red ink stamp-style blank plate. All EMPTY (no text). Size 2400x1400.
+${PNG}`, {size:"2400x1400"}),
+  P("Stamps: 5 red ink stamps",
+`${STYLE}
+A sheet of five separate red-ink rubber stamp impressions on a transparent background, slightly rough and worn, each in a rounded rectangular border with a double line, angled slightly differently: the words SOLVED, CONTRADICTION, UNKNOWN, SUSPECT IDENTIFIED, UNDETERMINED. Colour #A8483F. Each about 700x260 px. (This is the one place where lettering is allowed.)
+${PNG}`, {size:"1536x1024", note:"Overrides the no-text rule on purpose."}),
+  P("\"What I overlooked\" page template",
+`${STYLE}
+One blank notebook page in parchment style, slight paper curl, a hand-drawn double rule at the top for a heading and SIX evenly spaced empty rows, each with a small round pushpin icon on the left to link back to a scene, pencil margin marks. Empty of any text. Size 1600x2000.
+${PNG}`, {size:"1600x2000"}),
+  P("AUDIO 1: wind and night ambience loop",
+`A seamless 60-second loop of a quiet winter night in a snowy village: soft low wind, a distant creak of wood, very faint snow settling, no melody, no voices, no sudden sounds. Calm and slightly lonely. WAV, stereo, 44.1 kHz.`, {kind:"audio"}),
+  P("AUDIO 2: footsteps on snow and on stone",
+`Two short sets of 6 variations each of soft, slightly heavy footsteps of a large bear: (a) on packed snow (crunch), (b) on stone and wooden floorboards. Each 0.3 to 0.5 seconds, dry, no reverb, no music. WAV, mono, 44.1 kHz.`, {kind:"audio"}),
+  P("AUDIO 3: clock tick, bell and handbell",
+`Three sounds: (a) a heavy old clock tick, a 10-second loop, wooden and slow; (b) a deep bronze tower bell chime, single strike with long natural decay; (c) a small brass handbell rung three times. No music. WAV, stereo, 44.1 kHz.`, {kind:"audio"}),
+  P("AUDIO 4: UI sounds",
+`A set of five soft paper-and-wood interface sounds, each under 0.4 seconds: click, open the case file (folder flap), close, collect evidence (a gentle chime), stamp. No music. WAV, stereo.`, {kind:"audio"}),
+  P("AUDIO 5: main theme (calm piano or music box)",
+`A gentle, slightly melancholic 2-minute theme for a cozy snowy mystery: solo piano with a soft music-box counter-melody, slow tempo about 70 BPM, minor key with warm resolution, loops cleanly, no drums, no vocals. Mix quiet enough to sit under dialogue. WAV, stereo, 44.1 kHz.`, {kind:"audio"})
+];
+
+// ---- render
+const doneKey = "bgb2.prompts.done.v1";
+let done = {};
+try { done = JSON.parse(localStorage.getItem(doneKey) || "{}"); } catch(e){}
+const saveDone = () => { try { localStorage.setItem(doneKey, JSON.stringify(done)); } catch(e){} };
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const full = it => it.kind === "png" ? it.body : it.body;
+const total = SECTIONS.reduce((n,s)=>n+s.items.length,0);
+
+function copy(text, btn){
+  const ok = () => { const t = btn.textContent; btn.textContent = "Copied"; setTimeout(()=>btn.textContent = t, 1400); };
+  const fallback = () => { const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); ok(); }catch(e){ btn.textContent = "Select and copy manually"; } ta.remove(); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
+}
+
+function render(){
+  const nav = $("nav"), main = $("main"); nav.innerHTML = ""; main.innerHTML = "";
+  SECTIONS.forEach(sec => {
+    const a = document.createElement("a"); a.href = "#" + sec.id; a.innerHTML = esc(sec.name) + "<span>" + sec.items.length + "</span>"; nav.appendChild(a);
+    const s = document.createElement("section"); s.id = sec.id;
+    s.innerHTML = `<h2>${esc(sec.name)} <small>${sec.items.length} PROMPTS</small></h2><p class="sub">${esc(sec.sub)}</p>`;
+    sec.items.forEach((it,i) => {
+      const key = sec.id + "." + i;
+      const c = document.createElement("div"); c.className = "card" + (done[key] ? " done" : "");
+      const tags = (it.kind === "png" ? '<span class="tag png">TRANSPARENT PNG</span>' : '<span class="tag">AUDIO</span>')
+        + (it.size ? `<span class="tag">${esc(it.size)}</span>` : "") + it.tags.map(t => `<span class="tag">${esc(t)}</span>`).join("");
+      c.innerHTML = `<div class="head"><h3>${esc(it.title)}</h3></div><div class="tags">${tags}</div>` + (it.note ? `<p class="note">${esc(it.note)}</p>` : "") + `<pre>${esc(full(it))}</pre>`
+        + `<div class="row"><button type="button">Copy prompt</button><label class="chk"><input type="checkbox" ${done[key] ? "checked" : ""}> Made</label></div>`;
+      c.querySelector("button").addEventListener("click", e => copy(full(it), e.currentTarget));
+      c.querySelector("input").addEventListener("change", e => { if (e.target.checked) done[key] = 1; else delete done[key]; saveDone(); c.classList.toggle("done", e.target.checked); count(); });
+      s.appendChild(c);
+    });
+    main.appendChild(s);
+  });
+  count();
+}
+function count(){ $("count").textContent = Object.keys(done).length + " of " + total + " made"; }
+$("copyAll").addEventListener("click", e => copy(STYLE + "\n\n" + PNG, e.currentTarget));
+$("resetDone").addEventListener("click", () => { done = {}; saveDone(); render(); });
+render();
+})();
+</script>
