@@ -1,0 +1,45 @@
+{
+ "source": "clocktower_interior_kit_v1.png",
+ "source_size": [
+  1617,
+  973
+ ],
+ "resampled": false,
+ "note": "Automatic crops are CANDIDATES. Review _contact_sheet.png before use.",
+ "sprites": [
+  {
+   "name": "wall",
+   "file": "wall.png",
+   "src_bbox": [
+    38,
+    1,
+    1597,
+    496
+   ],
+   "size": [
+    1559,
+    495
+   ],
+   "opaque_ratio": 0.668,
+   "semi_ratio": 0.049,
+   "qa": []
+  },
+  {
+   "name": "floor",
+   "file": "floor.png",
+   "src_bbox": [
+    2,
+    491,
+    1617,
+    960
+   ],
+   "size": [
+    1615,
+    469
+   ],
+   "opaque_ratio": 0.616,
+   "semi_ratio": 0.082,
+   "qa": []
+  }
+ ]
+}
