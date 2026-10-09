@@ -729,7 +729,8 @@ function refreshHud(){}
 
 /* dialogue */
 let cur = null, typing = null, full = "";
-function startDlg(id){ mode = "dlg"; cur = id; renderDlg(true); $("dlg").classList.add("on"); }
+let dlgLock = 0;   /* ignore clicks for a moment after a conversation opens, so a double tap cannot skip it */
+function startDlg(id){ dlgLock = performance.now() + 450; mode = "dlg"; cur = id; renderDlg(true); $("dlg").classList.add("on"); }
 function renderDlg(anim){
   const n = D[cur]; if (!n) return; const sp = SP[n.sp];
   $("dNm").textContent = tr(sp.name);
@@ -757,7 +758,9 @@ function showChoices(){
 function pick(i){ const n = D[cur]; const c = n.ch[i]; const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
   setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
 function applyNode(n){ if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
-function advance(){
+function advance(fromClick){
+  if (performance.now() < dlgLock) return;
+  if (fromClick && D[cur] && D[cur].ch && !typing) return;   /* a click never picks an answer; choose with the buttons, 1/2 or arrows + E */
   if (typing){ clearInterval(typing); typing = null; $("dTx").textContent = full; showChoices(); return; }
   const n = D[cur]; if (n.ch){ const bs = [...document.querySelectorAll('#choices .choice')]; const sel = document.querySelector('#choices .choice.sel'); if (sel) sel.click(); else if (bs[0]) bs[0].classList.add('sel'); return; }
   applyNode(n); goto(n.next || null);
@@ -998,7 +1001,7 @@ window.addEventListener("keydown", e=>{
 });
 window.addEventListener("keyup", e=>keys.delete(e.key.toLowerCase()));
 window.addEventListener("blur", ()=>keys.clear());
-$("dlg").addEventListener("click", ()=>{ if (mode==="dlg") advance(); });
+$("dlg").addEventListener("click", ()=>{ if (mode==="dlg") advance(true); });
 const hold = (id, key)=>{ const b = $(id); const on = e=>{ e.preventDefault(); keys.add(key); }, off = ()=>keys.delete(key); b.addEventListener("pointerdown", on); ["pointerup","pointerleave","pointercancel"].forEach(ev=>b.addEventListener(ev, off)); };
 const tmpGo = (id, sc, x) => $(id).addEventListener("pointerdown", e=>{ e.preventDefault(); if (mode==="play" && S.scene==="village") setScene(sc, x); });
 tmpGo("t8","cafe",500); tmpGo("t9","archive",430); /* temporary entrances, same as keys 8 and 9 */
