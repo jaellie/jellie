@@ -404,7 +404,7 @@ SECTIONS[1].items = [
     goal:"Icons for the Evidence tab and for the investigation grid.",
     refs:["the 'evidence grid' panel on the UI sheet (icons must read at 90 px)"],
     subject:"Ten separate icons on one sheet, each painted as a single object with a soft ink outline.",
-    layout:["Sheet 1536 x 1024 px, 5 columns by 2 rows, each icon about 256 x 256 px centred in a 300 x 480 cell, with clear transparent gaps. No labels.","Row 1: 1) a worn photograph of two cubs after the flood (scar visible on one), 2) an older, more faded photograph before the flood, 3) a strand of mustard knitted wool with a ragged end, 4) a closed flood-year register with a ribbon and a brass corner, 5) a small brass lantern with a lit flame.","Row 2: 6) a small notebook with a torn page, 7) a cafe receipt strip with unreadable lines, 8) a patrol log page with columns and unreadable scribbles, 9) a doctor's folded report with a wax seal, 10) a set of boot prints in snow."],
+    layout:["Sheet 1536 x 1024 px, 5 columns by 2 rows, each icon about 256 x 256 px centred in a 300 x 480 cell, with at least 10 px (aim for 24 px) of transparent gap between every icon, no icon touching or overlapping another. No labels.","Row 1: 1) a worn photograph of two cubs after the flood (scar visible on one), 2) an older, more faded photograph before the flood, 3) a strand of mustard knitted wool with a ragged end, 4) a closed flood-year register with a ribbon and a brass corner, 5) a small brass lantern with a lit flame.","Row 2: 6) a small notebook with a torn page, 7) a cafe receipt strip with unreadable lines, 8) a patrol log page with columns and unreadable scribbles, 9) a doctor's folded report with a wax seal, 10) a set of boot prints in snow."],
     details:["All icons share one light direction (upper left, amber) and the same outline weight.","Props must use the same colours as the existing props (cream paper #F2E8D4, brass #B08D57, mustard #D9A441)."],
     include:["each icon readable at small size"], exclude:["text","labels","shadows under the icons"],
     tech:["Sheet 1536x1024 px, transparent."]},
@@ -468,6 +468,16 @@ SECTIONS[1].items = [
     details:["Duration about 2 minutes, loops cleanly.","Solo piano with a soft music-box counter-melody, slow tempo about 70 BPM, a minor key with a warm resolution, a quiet, slightly melancholic and cozy feeling.","No drums, no vocals. The mix sits quietly under dialogue."],
     tech:["WAV, stereo, 44.1 kHz, 24-bit."]}, {kind:"audio"})
 ];
+
+// ---- sheet rule: every multi-item sheet keeps a clear gap between items
+const GAP = [
+"SHEET SPACING (REQUIRED):",
+"- Every separate item or drawing on this sheet must have at least 10 px of fully transparent gap between it and its neighbours (aim for 24 px). No item may touch, overlap or cast anything onto another item.",
+"- Each item also keeps at least 12 px of transparent margin from the edge of the sheet.",
+"- Items sit on a clean grid in the stated order so they can be cut out automatically. Nothing is drawn in the gaps (no shadows, glow, ground lines or labels)."
+].join("\n");
+const SHEET_RE = /icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits/i;
+SECTIONS.forEach(sec => sec.items.forEach(it => { if (it.kind === "png" && SHEET_RE.test(it.title) && !it.body.includes("SHEET SPACING")) it.body = it.body.replace("\n\nSTYLE (apply to everything):", "\n\n" + GAP + "\n\nSTYLE (apply to everything):"); }));
 
 // ---- render
 const doneKey = "bgb2.prompts.done.v1";
