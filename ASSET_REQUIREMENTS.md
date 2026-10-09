@@ -10,10 +10,8 @@ Clocktower entrance door and steps (exterior) · Clocktower hatch (cut from the 
 ## A. Must have for the next playable milestone
 | # | Asset | Spec |
 |---|---|---|
-| 2 | **BGB walk and idle** | Idle 2 to 4 frames, walk 6 to 8 frames, **left and right drawn separately (no mirroring)**, plus front idle. Same scale and pivot (feet centre) as the sheet. |
-| 3 | **Nini idle** and **Oliver idle** | 2 to 4 frames each, front, to match BGB. |
-| 4 | **Portraits** for BGB, Nini, Oliver | 3 to 4 expressions each: neutral, worried, surprised, thinking. Square, about 400 px. |
-| 5 | **Hotspot ring** | Round magnifier ring for "look closer" points (transparent). |
+| 2 | **Portraits** for BGB, Nini, Oliver | 3 to 4 expressions each: neutral, worried, surprised, thinking. Square, about 400 px. |
+| 3 | **Hotspot ring** | Round magnifier ring for "look closer" points (transparent). |
 
 ## B. Needed soon after
 | # | Asset | Notes |
@@ -39,7 +37,7 @@ Clocktower entrance door and steps (exterior) · Clocktower hatch (cut from the 
 ## D. Later (Chapters 4 and up)
 | Asset | Notes |
 |---|---|
-| **Young twin bears** | Two sprites with matching walk sets; the playable one is the future Green and must not be named. |
+| **Young twin bears** | Three still poses each (front, left, right), no walk frames; the playable one is the future Green and must not be named. |
 | **Flashback Bell Village** | Same layers, warmer and cozier, plus a version with rising water. |
 | **Flood water, rain, flooded stairwell** | Effects and a stairwell background for Chapter 5. |
 | **Register page, two inks** | Newer ink over older on the hero entry; seals and signatures. |
@@ -47,4 +45,5 @@ Clocktower entrance door and steps (exterior) · Clocktower hatch (cut from the 
 | **Ending art E1 to E4** | One key image each. |
 
 ## E. Not needed for now
+- **Walk and idle animation frames for BGB, Nini and Oliver:** decided against. The game uses a springy "tong-tong" hop in code (squash and stretch) with separate still sprites for left, right and front. Nini and Oliver breathe gently in code.
 - **Snow variants of the green tiles and props:** the village and interior are painted whole, so the tile sheets are unused. Only needed if you want a modular, longer level.

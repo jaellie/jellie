@@ -160,75 +160,7 @@ const REF_LIGHT = "any Bell Village night layer (for colour and lighting)";
 /* ============ A. NEXT MILESTONE ============ */
 const SECTIONS = [
 {id:"a", name:"A. Next milestone", sub:"Needed for the next playable step.", items:[
- P("1. Clocktower entrance door and steps (exterior prop)", {
-   goal:"One standalone prop the player can walk up to: the main entrance of the clocktower. It will be placed in front of the village layers, so it must look like part of the tower base.",
-   refs:["The Bell Village Mid layer (the tower base must match its stone and snow)", REF_LIGHT],
-   subject:"Straight side-on (orthographic) view of the base of a medieval stone clocktower entrance.",
-   layout:["Centred, whole prop visible, about 1200 px wide by 1800 px tall; the ground line is the bottom edge of the bottom step.","A tall pointed stone arch (cut blocks of grey-brown stone, #8B7F78 lit, #4E4750 in shadow), a heavy closed wooden double door inside it (about 230 px wide by 346 px tall at 1080p scale), two to three wide stone steps in front, a small wooden sign plate above the arch left EMPTY (no text)."],
-   details:["Door: vertical dark-brown planks (#4A2A18 base, #7A4A28 lit edges), iron straps and hinges (#2A2430), a round brass ring handle (#D9B25C) at the right door half. A thin warm line of light under the door suggests a lit room inside.","Stone arch: visible block joints, small chips and moss-free cracks, a thick cap of snow on top of the arch and on every step edge (blue-white, soft rounded).","Right wall: one iron lantern bracket with a LIT lantern, warm amber glow only inside the lantern glass (no halo outside).","A little snow drift against the left bottom corner."],
-   include:["Door slightly weathered, snow on steps, lantern lit","Clean flat bottom edge on the lowest step","Stone and wood textures painted, not photographic"],
-   exclude:["any clock face or hands","any text or letters","characters or footprints","a ground plane or sky behind the prop"],
-   tech:["Size 1200x1800 px, single image, prop centred."]},
-   {size:"1200x1800", note:"Optional second image: the same door standing open, warm light spilling onto the steps."}),
-
- P("2a. BGB walk cycle: facing RIGHT (hand-drawn, not a mirror)", {
-   goal:"A side-view walk cycle for the player character, facing to the RIGHT, to be played at about 8 frames per second.",
-   refs:[REF_CHAR + " (Big Green Bear, side and three-quarter views)"],
-   blocks:[BGB, LEFTRIGHT],
-   subject:"Big Green Bear in full side view facing RIGHT, walking at a calm pace.",
-   layout:["ONE row of 8 frames, left to right, each frame in its own equal 400 x 640 px cell (sheet 3200 x 640 px).","Every frame uses the SAME scale and the SAME foot baseline: the lowest foot sole touches y = 600 in every frame. Feet never float.","Character centred horizontally in each cell with the same centre of mass; at least 20 px empty margin on each side."],
-   details:["Frame 1 contact (right foot forward, left foot back); 2 down (body lowest, knees soft); 3 passing (legs together, body slightly rising); 4 up (highest, front paw lifting); 5 contact (left foot forward); 6 down; 7 passing; 8 up. Frame 8 flows into frame 1.","Slightly heavy, soft movement: the body bobs only about 12 px up and down, the belly sways slightly behind the step, the scarf tails swing a little in the opposite direction of the step, the head stays level.","Facing RIGHT, the viewer sees the bear's RIGHT side. So the knot and the two scarf tails on his LEFT shoulder are on the FAR side: mostly hidden behind the neck, only the tail tips peek out behind the chest and swing slightly. His RIGHT arm is nearest the camera and swings opposite to the leading leg; his left arm is partly visible behind the body. Keep this consistent in all 8 frames."],
-   include:["8 distinct frames with smooth arcs","Scarf knit pattern visible on the neck band","Same colours as the turnaround sheet"],
-   exclude:["mirroring or copying the left-facing sheet","bouncy cartoon squash and stretch","extra props or items in the paws","a ground line or shadow"],
-   tech:["Sheet 3200x640 px, 8 cells of 400x640, transparent."]},
-   {size:"3200x640", tags:["no mirroring"]}),
-
- P("2b. BGB walk cycle: facing LEFT (hand-drawn, not a mirror)", {
-   goal:"The matching walk cycle facing LEFT. It must be its own drawing so the scarf tails stay on his left shoulder.",
-   refs:[REF_CHAR + " (Big Green Bear, left profile and left three-quarter)", "the finished right-facing walk sheet, for timing and scale (but do NOT mirror it)"],
-   blocks:[BGB, LEFTRIGHT],
-   subject:"Big Green Bear in full side view facing LEFT, walking at a calm pace.",
-   layout:["ONE row of 8 frames, each in its own 400 x 640 px cell (sheet 3200 x 640 px), same scale and same foot baseline (y = 600) as the right-facing sheet.","Frame order and timing identical to the right-facing sheet: contact, down, passing, up, contact, down, passing, up."],
-   details:["Facing LEFT the viewer sees the bear's LEFT side, so the knot and the two scarf tails on his LEFT shoulder are clearly visible, hanging down the front of his chest and swinging gently with each step.","His LEFT arm is nearest the camera. It swings opposite to the leading leg, relaxed, paw loosely closed.","Same soft, slightly heavy movement: about 12 px body bob, belly sway, head level."],
-   include:["scarf tails fully visible and swinging","consistent knit pattern and colours"],
-   exclude:["a mirrored copy of the right-facing sheet","tails on the wrong shoulder","bouncy squash and stretch"],
-   tech:["Sheet 3200x640 px, 8 cells, transparent."]},
-   {size:"3200x640", tags:["no mirroring"]}),
-
- P("2c. BGB idle: front view, 4 frames", {
-   goal:"A calm idle loop for when the player stands still (front view).",
-   refs:[REF_CHAR + " (Big Green Bear front view)"],
-   blocks:[BGB],
-   subject:"Big Green Bear facing the viewer, standing relaxed, arms at his sides.",
-   layout:["ONE row of 4 frames in 400 x 640 px cells (sheet 1600 x 640 px), same scale, feet baseline y = 600 in all frames.","Scarf: knot and tails on HIS LEFT shoulder, which appears on the VIEWER'S RIGHT in this front view."],
-   details:["Frame 1 neutral; frame 2 chest rises about 6 px, scarf tails sway 2 px; frame 3 chest highest, a slow blink (eyes as thin curved lines); frame 4 chest lowers, eyes open. Loops back to frame 1.","Movement is tiny: only breathing, a blink and a gentle scarf sway. Feet do not move."],
-   include:["identical outline and colour in all 4 frames"], exclude:["waving, large gestures","mirroring a previous image"],
-   tech:["Sheet 1600x640 px, transparent."]},
-   {size:"1600x640"}),
-
- P("3a. Nini idle: front view, 4 frames", {
-   goal:"Idle loop for the first NPC.",
-   refs:[REF_CHAR + " (Nini front view)"],
-   blocks:[NINI],
-   subject:"Nini standing, facing the viewer, hands clasped lightly in front of the raincoat, holding a small notebook against her chest.",
-   layout:["ONE row of 4 frames in 220 x 350 px cells (sheet 880 x 350 px), same scale, feet baseline y = 335.","Height is 55% of Big Green Bear's height when both are placed at their natural scale."],
-   details:["Frame 1 neutral; frame 2 slow breath in, one ear twitches slightly; frame 3 slow blink; frame 4 breath out, ear back. Loops.","Tiny movements only: a worried but earnest look."],
-   include:["same colours and proportions as the sheet","notebook is a small brown cloth cover with a ribbon"], exclude:["large gestures","a different raincoat style"],
-   tech:["Sheet 880x350 px, transparent."]},
-   {size:"880x350"}),
-
- P("3b. Oliver (Clockkeeper) idle: front view, 4 frames", {
-   goal:"Idle loop for the Clockkeeper NPC.",
-   refs:[REF_CHAR + " (Clockkeeper front view)"],
-   blocks:[OLIVER],
-   subject:"Oliver standing in front view, one paw resting on a tool pocket, the other hanging loosely.",
-   layout:["ONE row of 4 frames in 300 x 440 px cells (sheet 1200 x 440 px), same scale, feet baseline y = 420."],
-   details:["Frame 1 neutral; frame 2 tail tip swings to the left, ears turn slightly; frame 3 slow blink; frame 4 a small push of the goggles up with one paw, then back. Loops cleanly.","Keep the apron pockets, buttons and goggle straps identical in every frame."],
-   include:["tabby striping consistent across frames"], exclude:["holding objects that cover the face","different clothes"],
-   tech:["Sheet 1200x440 px, transparent."]},
-   {size:"1200x440"}),
-
- P("4a. Portraits: Big Green Bear, 4 expressions", {
+ P("1a. Portraits: Big Green Bear, 4 expressions", {
    goal:"Dialogue-box portraits. They sit in a 200 x 196 px frame, so faces must read clearly when small.",
    refs:[REF_CHAR + " (Big Green Bear)"],
    blocks:[BGB],
@@ -239,7 +171,7 @@ const SECTIONS = [
    tech:["Sheet 1600x400 px, transparent."]},
    {size:"1600x400"}),
 
- P("4b. Portraits: Nini, 4 expressions", {
+ P("1b. Portraits: Nini, 4 expressions", {
    goal:"Dialogue-box portraits for Nini.",
    refs:[REF_CHAR + " (Nini)"],
    blocks:[NINI],
@@ -250,7 +182,7 @@ const SECTIONS = [
    tech:["Sheet 1600x400 px, transparent."]},
    {size:"1600x400"}),
 
- P("4c. Portraits: Oliver, 4 expressions", {
+ P("1c. Portraits: Oliver, 4 expressions", {
    goal:"Dialogue-box portraits for the Clockkeeper.",
    refs:[REF_CHAR + " (Clockkeeper)"],
    blocks:[OLIVER],
@@ -261,7 +193,7 @@ const SECTIONS = [
    tech:["Sheet 1600x400 px, transparent."]},
    {size:"1600x400"}),
 
- P("5. Hotspot magnifier ring", {
+ P("2. Hotspot magnifier ring", {
    goal:"A small marker that shows 'you can look closer here' on scene objects.",
    refs:["the round brass icon buttons on the UI sheet (match the brass colour and rim thickness)"],
    subject:"A round magnifying-glass ring seen straight on.",
@@ -343,16 +275,16 @@ const SECTIONS = [
 
 /* ============ D. LATER ============ */
 {id:"d", name:"D. Later", sub:"Chapters 4 and up.", items:[
- P("Young twin bears (age 7): two matching walk sets", {
-   goal:"The playable cub (the future Green) and his brother for the Chapter 4 and 5 flashback. They must NOT be named or labelled.",
+ P("Young twin bears (age 7): three still poses each", {
+   goal:"The playable cub (the future Green) and his brother for the Chapter 4 and 5 flashback. They must NOT be named or labelled. The game moves them with a springy hop in code, so only still poses are needed (no walk frames).",
    refs:[REF_CHAR + " (BGB and Green, shrunk to child proportions)"],
    blocks:[LEFTRIGHT],
    subject:"Two bear cubs, age seven: rounder, smaller, bigger head relative to the body, shorter limbs than the adults. Same sage-green fur and mustard scarves.",
-   layout:["For EACH cub: Row 1: 8-frame walk facing LEFT. Row 2: 8-frame walk facing RIGHT (drawn separately, not mirrored). Row 3: 4-frame front idle. Cells 260 x 420 px, feet baseline y = 400, same scale for both cubs.","Cub A (the playable one): knot and tails on his RIGHT shoulder, RIGHT-handed. Cub B (his younger brother): knot and tails on his LEFT shoulder, LEFT-handed. Cub B is slightly smaller and softer.","Total two sheets of 2080 x 1260 px."],
-   details:["Walk timing like the adult cycle but lighter and quicker, small arms swinging.","No scars on either cub (the scar happens during the story)."],
-   include:["scarf sides correct per cub in all frames"], exclude:["mirroring","any names or labels","adult proportions"],
-   tech:["Two sheets of 2080x1260 px, transparent."]},
-   {size:"2 sheets 2080x1260", tags:["no mirroring"]}),
+   layout:["For EACH cub: ONE row of 3 separate drawings: front, facing LEFT (side), facing RIGHT (side). Cells 260 x 420 px, feet baseline y = 400, same scale for both cubs. (Two sheets of 780 x 420 px.)","Cub A (the playable one): knot and tails on his RIGHT shoulder, RIGHT-handed. Cub B (his younger brother): knot and tails on his LEFT shoulder, LEFT-handed. Cub B is slightly smaller and softer.","Facing LEFT the viewer sees the cub's LEFT side; facing RIGHT the viewer sees his RIGHT side, so a scarf on the far shoulder is mostly hidden."],
+   details:["Neutral standing pose, arms relaxed, a calm curious look.","No scars on either cub (the scar happens during the story)."],
+   include:["scarf sides correct per cub in every view"], exclude:["mirroring","any names or labels","adult proportions"],
+   tech:["Two sheets of 780x420 px, transparent."]},
+   {size:"2 sheets 780x420", tags:["no mirroring"]}),
 
  P("Flashback Bell Village: 4 layers (23 years earlier)", {
    goal:"The same village from the day before the flood, cosier, for the playable flashback.",

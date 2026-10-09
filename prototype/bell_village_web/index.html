@@ -423,9 +423,15 @@ function place(){
   const sc = BGB_H/274; let dir = P.moving ? P.face : "front";
   setActorSprite(bgb, dir, BGB_H);
   const w = parseFloat(bgb.style.width); bgb.style.left = Math.round(P.x - w/2) + "px";
-  const bob = P.moving ? Math.abs(Math.sin(P.walk*2)) * -5 : Math.sin(performance.now()/900)*-1.2;
-  const rot = P.moving ? Math.sin(P.walk) * 1.4 : 0;
-  bgb.style.transform = "translateY("+bob.toFixed(1)+"px) rotate("+rot.toFixed(2)+"deg)";
+  // "tong-tong" walk: a springy hop with squash on landing and stretch at the top (no walk frames needed)
+  const hop = Math.abs(Math.sin(P.walk*2)), tt = performance.now();
+  const bob = P.moving ? -hop * 13 : 0;
+  const rot = P.moving ? Math.sin(P.walk) * 2.2 : 0;
+  const sy = P.moving ? 0.955 + 0.075*hop : 1 + 0.008*Math.sin(tt/700);
+  const sx = P.moving ? 1.045 - 0.055*hop : 1 - 0.004*Math.sin(tt/700);
+  bgb.style.transform = "translateY("+bob.toFixed(1)+"px) rotate("+rot.toFixed(2)+"deg) scale("+sx.toFixed(3)+","+sy.toFixed(3)+")";
+  nini.style.transform = "scale("+(1-0.005*Math.sin(tt/800+1)).toFixed(3)+","+(1+0.012*Math.sin(tt/800+1)).toFixed(3)+")";
+  ck.style.transform = "scale("+(1-0.005*Math.sin(tt/900+2)).toFixed(3)+","+(1+0.012*Math.sin(tt/900+2)).toFixed(3)+")";
   const nface = Math.abs(P.x - NPCX.nini) < 360 ? (P.x < NPCX.nini ? "right" : "left") : "front";
   setActorSprite(nini, nface, NINI_H); nini.style.left = Math.round(NPCX.nini - parseFloat(nini.style.width)/2) + "px";
   const cface = Math.abs(P.x - NPCX.ck) < 360 ? (P.x < NPCX.ck ? "right" : "left") : "front";

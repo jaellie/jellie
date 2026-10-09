@@ -15,11 +15,12 @@ namespace BGB2
 
         float velocity;
         float walkPhase;
-        Vector3 baseLocalPos;
+        Vector3 baseLocalPos, baseScale;
+        public float hopHeight = 0.13f;     // the springy "tong-tong" walk (no walk frames needed)
 
         public static bool InputLocked;   // set while dialogue, Case File or popups are open
 
-        void Awake() { baseLocalPos = body != null ? body.transform.localPosition : Vector3.zero; }
+        void Awake() { if (body != null) { baseLocalPos = body.transform.localPosition; baseScale = body.transform.localScale; } }
 
         void Update()
         {
@@ -41,8 +42,13 @@ namespace BGB2
             {
                 body.sprite = !moving ? front : (velocity > 0f ? right : left);
                 walkPhase += Mathf.Abs(velocity) * Time.deltaTime * 2.2f;
-                float bob = moving ? Mathf.Abs(Mathf.Sin(walkPhase)) * 0.05f : 0f;      // gentle, not bouncy
-                body.transform.localPosition = baseLocalPos + new Vector3(0f, bob, 0f);
+                float hop = moving ? Mathf.Abs(Mathf.Sin(walkPhase * 2f)) : 0f;
+                body.transform.localPosition = baseLocalPos + new Vector3(0f, hop * hopHeight, 0f);
+                // squash on landing, stretch at the top
+                float sy = moving ? 0.955f + 0.075f * hop : 1f + 0.008f * Mathf.Sin(Time.time * 1.4f);
+                float sx = moving ? 1.045f - 0.055f * hop : 1f;
+                body.transform.localScale = new Vector3(baseScale.x * sx, baseScale.y * sy, baseScale.z);
+                body.transform.localRotation = Quaternion.Euler(0f, 0f, moving ? Mathf.Sin(walkPhase) * 2.2f : 0f);
             }
         }
     }
