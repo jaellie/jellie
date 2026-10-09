@@ -402,30 +402,6 @@ function roomLayers(room, spec){
   ];
 }
 SECTIONS[1].items = [
-  ...roomLayers("Hazel's café", {
-    far:"Only the snowy plaza at night seen through the café window: a lamp post, the clocktower in the distance, soft snowfall.",
-    mid:"The back wall of a cosy café: a wooden counter with a brass coffee machine, shelves of cups and jars, hanging copper pots, a tall window onto the plaza, an empty chalkboard (no writing), warm lamps, a small clock without readable numbers.",
-    midDetails:["Palette warmer than the archive: honey wood (#8A5A32), cream plaster, red accents (#A8483F).","Steam rising softly from the coffee machine."],
-    ground:"A wooden floor with a small round table and two chairs at the left end (the table where Big Green Bear sat), a stool at the counter on the right end, a floor mat by the door.",
-    fg:"Dark silhouettes: a coat rack with a scarf and hat at the left corner, a stack of chairs at the right corner, a potted plant, a few cups on a tray."}),
-  P("Evidence icons: sheet of 10 (laid out like a table)", {
-    goal:"Icons for the Evidence tab and the investigation grid. IMPORTANT: they must come out as ten fully separate icons that never overlap, so the sheet is laid out like a TABLE.",
-    refs:["the 'evidence grid' panel on the UI sheet (icons must read at 90 px)"],
-    subject:"A table-style contact sheet of ten separate icons on a TRANSPARENT background.",
-    layout:["Think of an invisible table with 5 columns and 2 rows. Canvas 1536 x 1024 px. Each table cell is exactly 307 x 512 px.","Each icon is centred inside ITS OWN cell. An icon is never larger than 220 x 220 px, so there are at least 43 px of empty transparent space between the icon and the cell edge on every side, and at least 86 px between any two neighbouring icons. NO icon touches, overlaps or leans into another icon or another cell.","Do NOT draw the table lines, borders or any background; the cells are only an invisible guide.","Row 1 (left to right): 1) a worn photograph of two cubs after the flood (one cub with a thin faded pinkish-grey healed scar on his LEFT EAR, no cross or mark on his forehead), 2) an older, more faded photograph of the same cubs before the flood (no scar), 3) a strand of mustard knitted wool with a ragged end, 4) a closed flood-year register with a ribbon and a brass corner, 5) a small brass lantern with a lit flame.","Row 2 (left to right): 6) a small notebook with a torn page, 7) a cafe receipt strip with unreadable lines, 8) a patrol log page with columns and unreadable scribbles, 9) a doctor's folded report tied with a ribbon and a wax seal, 10) a set of boot prints in snow."],
-    details:["All icons share one light direction (upper left, amber) and the same outline weight.","Colours match the existing props: cream paper #F2E8D4, brass #B08D57, mustard #D9A441.","Each icon is a single clean object with a sharp outline. NO glow, NO halo, NO coloured aura and NO shadow around any icon (the lantern flame stays inside its glass)."],
-    include:["ten icons in the order above","each readable at small size"], exclude:["text or labels","table lines","shadows or glows between icons","any scar drawn on a forehead"],
-    tech:["Sheet 1536x1024 px, transparent. If the generator still overlaps icons, generate them in two images of five (one row each) or one icon per image at 512 x 512 px."]},
-    {size:"1536x1024", tags:["table layout"]}),
-  P("Identity Board (corkboard)", {
-    goal:"The screen where the player compares the twins by combining independent clues.",
-    refs:["the navy leather binder on the UI sheet (same navy pinstripe fabric and brass corners)"],
-    subject:"A detective investigation corkboard seen straight on.",
-    layout:["Size 2400 x 1500 px. Outer frame: dark navy pinstripe fabric (#243044) with brass corner plates (#B08D57) and brass rivets.","Inside: cork surface (#B98B5A with darker flecks). Two empty polaroid-style photo frames at the top left and top right (each about 420 x 520 px) with white borders for the two bears' portraits. Five empty index cards of different sizes below, held with paper clips and pins. Several brass and red pushpins. One loose length of red string with a pin at each end, left free. A few strips of masking tape."],
-    details:["All cards and frames are EMPTY: no pictures, no text.","Soft shadows under cards are painted (as part of the cards), not a drop shadow on the background."],
-    include:["pin heads with small highlights","cork texture painted"], exclude:["any text","any characters"],
-    tech:["Size 2400x1500 px, transparent outside the frame."]},
-    {size:"2400x1500"}),
   P("Responsibility Board", {
     goal:"The board that separates three questions: the fall, the delay in help, and hiding the truth. There must be no 'cause of death: delay' option.",
     refs:["the cream panels and brass details of the UI sheet"],
