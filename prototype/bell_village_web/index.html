@@ -255,7 +255,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
    <div class="layer" id="cfar"><img src="assets/a_far.webp" alt=""></div>
    <div id="cworld">
     <div id="cleft" style="left:-570px"></div><div id="cright" style="left:2290px"></div>
-    <img src="assets/c_back.webp" style="left:-280px;top:-100px" width="2860" height="1050" alt=""><img src="assets/c_mid_x.webp" style="left:-280px;top:-100px" width="2860" height="990" alt="">
+    <img src="assets/c_back.webp" style="left:-280px;top:-100px" width="2860" height="1077" alt=""><img src="assets/c_mid_x.webp" style="left:-280px;top:-100px" width="2860" height="1015" alt=""> <!-- Mid stretched 2.5% vertically so the wall overlaps the floor (opaque wall bottom at y 886, floor starts at 876) -->
     <div id="cbase" style="position:absolute;left:-600px;top:930px;width:3600px;height:160px;background:linear-gradient(#2a1c15,#150e0c 45%,#0d0809)"></div>
     <img src="assets/c_ground_x.webp" style="left:-280px;top:632px" width="2962" height="459" alt="">
     <div id="cmarks"></div>
@@ -707,9 +707,7 @@ function renderCF(){
   if (sub && SUBS[tab]){ pg.innerHTML = h + subView(tab); wireSub(); return; }
   if (SUBS[tab]) h += '<button class="subbtn nine cream" id="subBtn">'+tr(UI[SUBS[tab].k])+' &rsaquo;</button>';
   if (tab===0){
-    h += '<div style="font:italic 400 28px/1.3 var(--font-body);color:#6d5a40;margin-bottom:14px">'+tr(UI.case)+'</div><div class="eyebrow" style="margin:10px 0 6px">'+tr(UI.objHead).toUpperCase()+'</div>';
-    const done = [has("nini.done")||has("nini.letters"), S.ev.includes("notice"), S.ev.includes("clock"), has("ck.bear"), S.scene==="tower"||S.ev.length>2, ["hatch","pendulum","handbell","chute","melt"].filter(x=>S.ev.includes(x)).length>=3];
-    tr(UI.objs).forEach((o,i)=>{ h += '<div class="obj'+(done[i]?' done':'')+'"><div class="bx">'+(done[i]?'&#10003;':'')+'</div><div>'+o+'</div></div>'; });
+    h += boardResp() + '<div class="pvnote">'+(PV ? '' : (lang==="ko"?"이후 챕터에서 열이 하나씩 열린다. ":"More columns open in later chapters. ")) + '<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>';
   } else if (tab===1){
     h += '<div class="people">';
     h += '<div class="person"><div class="pt"><img src="assets/nini_front.webp" alt=""></div><div><b>Nini</b><span>'+(lang==="ko"?"기록실 조수. 에드워드를 마지막으로 본 사람 중 하나.":"Archive assistant. One of the last to see Edward.")+'</span></div></div>';
@@ -728,17 +726,17 @@ function renderCF(){
   }
   pg.innerHTML = h;
   if (SUBS[tab]) $("subBtn").onclick = ()=>{ sub = true; renderCF(); };
-  if (tab===4) $("pvBtn").onclick = ()=>{ PV = !PV; renderCF(); };
+  if (tab===0 || tab===4) $("pvBtn").onclick = ()=>{ PV = !PV; renderCF(); };
   if (tab===2) renderEvGrid(); if (tab===3) renderTl();
 }
 /* ---------- boards (art: board_identity / board_resp / page_overlooked) ---------- */
-const SUBS = { 0:{k:"subBoard"}, 1:{k:"subId"} };
+const SUBS = { 1:{k:"subId"} };
 const px = (x,y,w,h,W,H) => 'left:'+(x/W*100).toFixed(2)+'%;top:'+(y/H*100).toFixed(2)+'%;width:'+(w/W*100).toFixed(2)+'%;height:'+(h/H*100).toFixed(2)+'%';
 const box = (cls,x,y,w,h,W,H,inner,st) => '<div class="ov '+cls+'" style="'+px(x,y,w,h,W,H)+(st||'')+'">'+inner+'</div>';
 function subView(t){
   const back = '<button class="subbtn nine cream" id="subBtn">&lsaquo; '+tr(UI.subBack)+'</button>';
   const pvb = '<div class="pvnote">'+(PV ? '' : (lang==="ko"?"이 화면은 이후 챕터에서 채워진다.":"This fills in during later chapters.")) + '<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>';
-  return back + (t===1 ? boardId() : boardResp()) + pvb;
+  return back + boardId() + pvb;
 }
 function wireSub(){ $("subBtn").onclick = ()=>{ sub = false; renderCF(); }; $("pvBtn").onclick = ()=>{ PV = !PV; renderCF(); }; }
 function boardId(){
@@ -760,25 +758,27 @@ function boardId(){
     const R = [[140,600,245,150],[447,545,138,210],[645,560,255,165],[962,598,118,112],[1142,578,255,160]];
     C.forEach((c,i)=>{ const r = R[i]; h += box("",r[0],r[1],r[2],r[3],W,H,'<b>'+c[0]+'</b><span style="font-size:'+(i===1||i===3?17:19)+'px">'+c[2]+'</span>','padding:0 4px'); });
   } else {
-    h += box("veil",300,560,900,150,W,H,K?"비교할 단서가 아직 없다. 기억과 현재의 단서를 모으면 여기에 붙는다.":"Nothing to compare yet. Memories and present-day clues will be pinned here.");
+    h += box("ctr",640,300,250,120,W,H,'<span style="font:italic 600 24px/1.25 var(--font-body);color:#f6e3c0;text-shadow:0 1px 2px rgba(0,0,0,.6)">'+(K?"단서가 모이면 여기에 붙는다.":"Clues will be pinned here.")+'</span>');
   }
   return h + '</div>';
 }
 function boardResp(){
   const W = 1500, H = 857, K = lang==="ko";
-  let h = '<div class="bd"><img class="base" src="assets/board_resp.webp" alt="">';
+  /* base = board with the three columns erased; each column is its own sprite (resp_col1..3) that is simply added when unlocked */
+  let h = '<div class="bd"><img class="base" src="assets/board_resp_empty.webp" alt="">';
+  const SPR = [[69,100,434],[537,100,429],[997,100,449]], SH = 416;
   const rib = K ? ["추락","도움의 지연","진실 은폐"] : ["THE FALL","DELAYED HELP","HID THE TRUTH"], X = [125,585,1045];
   const q = K ? ["누가 에드워드를 떨어뜨렸는가?","도움이 필요한 사람 곁에서, 누가 기다렸는가?","누가 증거와 진실을 숨겼는가?"] : ["Who caused Edward's fall?","Who had the chance to help, and waited?","Who concealed evidence and the truth?"];
   const names = ["Green","BGB","BGB"];
   const basis = PV ? (K ? ["달아날 때 에드워드가 죽었다고 믿었다.","11:50 살아 있는 에드워드를 발견, 11:55 종을 울렸다. 그는 모든 걸 알지는 못했다. 하지만 에드워드에게 도움이 필요하다는 건 알았다.","장갑, 편지, 뒷문 빗장, 그리고 자신의 진술."] : ["Fled believing Edward dead.","Found Edward alive at 11:50; the bell rang at 11:55. He did not know everything. He knew Edward needed help.","The glove, the letter, the chute bolt, his own account."]) : ["","",""];
   for (let i=0;i<3;i++){
+    if (!(PV || i===0)) continue;                         /* locked column: no sprite, nothing drawn */
+    h += '<img class="stamp" src="assets/resp_col'+(i+1)+'.webp" alt="" style="left:'+(SPR[i][0]/W*100).toFixed(2)+'%;top:'+(SPR[i][1]/H*100).toFixed(2)+'%;width:'+(SPR[i][2]/W*100).toFixed(2)+'%;filter:none">';
     h += box("rib",X[i]+30,128,300,64,W,H,rib[i]);
-    const open = PV || i===0;
     const label = PV ? '<b style="font-size:46px;margin:0;text-align:center">'+names[i]+'</b>' : '<span style="display:block;text-align:center;font:italic 700 26px/1.25 var(--font-body);padding:0 10px">'+q[i]+'</span>';
-    h += box("ctr",[118,576,1034][i],268,[345,345,345][i],212,W,H,open ? label : '');
-    if (!open) h += box("veil",[105,562,1020][i],254,372,246,W,H, K?"아직 묻지 않은 질문":"Not asked yet");
-    if (PV) h += box("",[130,590,1048][i],492,[330,330,330][i],150,W,H,'<span style="font-size:'+(i===1?18:20)+'px">'+basis[i]+'</span>','padding:0 8px');
-    else if (i===0) h += box("",130,492,330,150,W,H,'<span style="font:italic 500 22px/1.3 var(--font-body);color:#6d5a40">'+(K?"가진 증거로 이름을 정하자. 틀려도 막히지 않는다.":"Place a name once the evidence supports it.")+'</span>','padding:0 8px');
+    h += box("ctr",[118,576,1034][i],268,345,212,W,H,label);
+    if (PV) h += box("",[130,590,1048][i],492,330,150,W,H,'<span style="font-size:'+(i===1?18:20)+'px">'+basis[i]+'</span>','padding:0 8px');
+    else h += box("",130,492,330,150,W,H,'<span style="font:italic 500 22px/1.3 var(--font-body);color:#6d5a40">'+(K?"가진 증거로 이름을 정하자. 틀려도 막히지 않는다.":"Place a name once the evidence supports it.")+'</span>','padding:0 8px');
   }
   h += box("ctr",175,700,970,70,W,H,'<span style="font:700 22px/1.2 var(--font-body)"><b style="display:inline;color:#6e2a35;font-size:20px;letter-spacing:.1em">'+(K?"사인 ":"CAUSE OF DEATH ")+'</b>'+(PV ? (K?"미확정 — 부상, 출혈, 추위. 도움이 있었다면 살 수 있었는지는 아무도 말할 수 없다.":"UNDETERMINED: injuries, blood loss and cold. No one can say whether help would have saved him.") : (K?"아직 밝혀지지 않았다.":"not yet established.")) + '</span>');
   if (PV){
