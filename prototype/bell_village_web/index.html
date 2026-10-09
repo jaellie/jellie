@@ -351,7 +351,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 <script>
 (() => {
 "use strict";
-const STAGE_W = 1920, STAGE_H = 1080;
+let STAGE_W = 1920; const STAGE_H = 1080, STAGE_W0 = 1920, STAGE_WMAX = 2520;
 let W = 3812, CAM_MIN = 0, CAM_MAX = W - STAGE_W, P_MIN = 470;
 let FEET = 985; const FEET_V = 985, FEET_T = 890;
 const  BGB_H = 220, NINI_H = Math.round(BGB_H * 0.55), CK_H = 165;
@@ -889,12 +889,17 @@ function frame(now){
 }
 
 /* ---------- fit ---------- */
-function fit(){ const s = Math.min(innerWidth/STAGE_W, innerHeight/STAGE_H);
+function fit(){
+  const vw = innerWidth, vh = innerHeight;
+  let s = vw/vh > STAGE_W0/STAGE_H ? vh/STAGE_H : vw/STAGE_W0;            /* wide screens: fit the height and show MORE of the scene sideways (no side bars) */
+  STAGE_W = vw/vh > STAGE_W0/STAGE_H ? Math.min(STAGE_WMAX, Math.max(STAGE_W0, Math.floor(vw/s))) : STAGE_W0;
+  stage.style.width = STAGE_W + "px"; $("cfwrap").style.left = Math.round((STAGE_W - 1620)/2) + "px";
+  CAM_MAX = W - STAGE_W;
   stage.style.setProperty("--hb", Math.min(1.7, Math.max(1, 14/(20*s))).toFixed(3)); /* keeps prompt text at least ~14 px on small screens */
-  stage.style.transform = "scale("+s+")"; stage.style.left = ((innerWidth - STAGE_W*s)/2)+"px"; stage.style.top = ((innerHeight - STAGE_H*s)/2)+"px"; }
+  stage.style.transform = "scale("+s+")"; stage.style.left = ((vw - STAGE_W*s)/2)+"px"; stage.style.top = ((vh - STAGE_H*s)/2)+"px"; }
 addEventListener("resize", fit);
 
-load(); cam = 0; setSceneNow(["tower","archive","cafe"].includes(S.scene) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus();
+load(); cam = 0; fit(); setSceneNow(["tower","archive","cafe"].includes(S.scene) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus();
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
 window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV };
 requestAnimationFrame(frame);
