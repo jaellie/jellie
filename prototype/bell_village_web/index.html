@@ -59,6 +59,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #stage img.mark.on{pointer-events:auto;cursor:pointer}
 .mark.soft{opacity:.78;scale:.82}
 @keyframes bob{50%{transform:translateY(-8px)}}
+.shopsign{position:absolute;text-align:center;font:700 22px/1 var(--font-label);letter-spacing:.14em;color:#f6e3c0;background:#6e2a35;border:3px solid var(--brass);border-radius:6px;padding:8px 6px;box-shadow:0 3px 8px rgba(0,0,0,.5)}
 .glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,179,71,.34),transparent 65%);pointer-events:none;mix-blend-mode:screen}
 
 /* Nine-slice: corners and ends keep their drawn size, only the middle stretches to fit the text */
@@ -245,11 +246,19 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
   <div class="layer" id="far"><img src="assets/far.webp" width="3230" height="492" alt=""></div>
   <div class="layer" id="mid">
    <img src="assets/mid_nt.webp" width="2920" height="607" alt="">
+   <img src="assets/mid_nt.webp" width="2920" height="607" alt="" style="left:2900px">
 
   </div>
   <div id="path"></div>
   <div id="world">
    <img class="ground" src="assets/ground.webp" width="3829" height="296" alt="">
+   <img class="ground" src="assets/ground.webp" width="3829" height="296" alt="" style="left:3800px">
+   <img src="assets/p_entrance_door.webp" alt="Archive" style="position:absolute;left:4095px;top:675px;width:210px;height:298px">
+   <div class="shopsign" style="left:4080px;top:640px;width:240px">ARCHIVE</div>
+   <div class="glow" style="left:4040px;top:760px;width:320px;height:260px"></div>
+   <img src="assets/p_entrance_door.webp" alt="Cafe" style="position:absolute;left:5095px;top:675px;width:210px;height:298px">
+   <div class="shopsign" style="left:5080px;top:640px;width:240px">HAZEL'S CAFÉ</div>
+   <div class="glow" style="left:5040px;top:760px;width:320px;height:260px"></div>
    <img id="door" src="assets/p_tower_shaft.webp" alt="Clocktower" style="position:absolute;left:2607px;top:35px;width:499px;height:960px">
    <svg id="vhands" style="position:absolute;left:2796px;top:337px" width="120" height="120" viewBox="-60 -60 120 120" aria-label="Tower clock stopped at 11:47"><g stroke="#2b1a0e" stroke-linecap="round"><line x1="0" y1="3" x2="0" y2="-24" stroke-width="2.2" transform="rotate(282)"/><line x1="0" y1="4" x2="0" y2="-16" stroke-width="3.4" transform="rotate(353.5)"/></g><circle r="3.6" fill="#2b1a0e"/><circle r="1.4" fill="#c97a2e"/></svg>
    <div class="glow" style="left:2700px;top:700px;width:310px;height:330px"></div>
@@ -257,7 +266,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
    <div id="actors"></div>
    <div id="marks"></div>
   </div>
-  <div id="fg"><img src="assets/foreground.webp" width="4190" height="328" alt=""></div>
+  <div id="fg"><img src="assets/foreground.webp" width="4190" height="328" alt=""><img src="assets/foreground.webp" width="4190" height="328" alt="" style="left:4180px"></div>
   </div>
   <div id="asc">
    <div class="layer" id="afar"><img src="assets/a_far.webp" alt=""></div>
@@ -371,7 +380,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 (() => {
 "use strict";
 let STAGE_W = 1920; const STAGE_H = 1080, STAGE_W0 = 1920, STAGE_WMAX = 2520;
-let W = 3812, CAM_MIN = 0, CAM_MAX = W - STAGE_W, P_MIN = 470;
+const VILLAGE_W = 6400;   /* temporary: the village is stretched by repeating its layers until the seamless street is painted */
+let W = VILLAGE_W, CAM_MIN = 0, CAM_MAX = W - STAGE_W, P_MIN = 470;
 let FEET = 985; const FEET_V = 985, FEET_T = 890;
 const  BGB_H = 220, NINI_H = Math.round(BGB_H * 0.55), CK_H = 165;
 const $ = id => document.getElementById(id);
@@ -404,6 +414,7 @@ let lang = "en";
 const tr = o => typeof o === "string" ? o : (o[lang] || o.en);
 const UI = {
   leave:{en:"Leave the Clocktower", ko:"시계탑을 나간다"}, leaveA:{en:"Leave the archive", ko:"기록실을 나간다"}, lReg:{en:"Examine the register", ko:"장부를 살핀다"}, lDraw:{en:"Try the drawers", ko:"서랍을 열어 본다"}, locA:{en:"Archive", ko:"기록실"}, lHatch:{en:"Examine the hatch", ko:"해치를 살핀다"}, lPend:{en:"Examine the pendulum", ko:"추 막대를 살핀다"}, lBell:{en:"Examine the handbell", ko:"손종을 살핀다"}, lChute:{en:"Examine the back door", ko:"뒷문을 살핀다"}, lMelt:{en:"Look at the puddles", ko:"물 자국을 살핀다"}, lClk:{en:"Examine the clock", ko:"시계를 살핀다"}, locT:{en:"Clocktower", ko:"시계탑"},
+  enterA:{en:"Enter the archive", ko:"기록실에 들어간다"}, enterC:{en:"Enter Hazel's café", ko:"헤이즐의 카페에 들어간다"},
   lPost:{en:"Read the guard's logbook", ko:"경비의 일지를 읽는다"}, conHead:{en:"Contradictions and deductions", ko:"모순과 추리"}, askNext:{en:"Is there another bear?", ko:"다른 곰이 있는가?"},
   leaveC:{en:"Leave the café", ko:"카페를 나간다"}, talkHz:{en:"Talk to Hazel", ko:"헤이즐과 이야기한다"}, locC:{en:"Hazel's Café", ko:"헤이즐의 카페"}, lBoots:{en:"Look at the prints on the stairs", ko:"계단의 발자국을 살핀다"},
   subBoard:{en:"Responsibility Board", ko:"책임 보드"}, subId:{en:"Identity Board", ko:"신원 보드"}, subOver:{en:"What I overlooked", ko:"내가 놓친 것"}, subBack:{en:"Back", ko:"돌아가기"},
@@ -575,7 +586,7 @@ function applyLight(dt){
 
 /* ---------- lighting ---------- */
 // Lamp positions in world px (from the Ground layer art). Light reaches R px sideways.
-const LAMPS_V = [372, 1146, 1786, 2765, 3550], LAMPS_T = [121, 442, 813, 981, 1763], LAMPS_A = [150, 480, 2210], LAMPS_C = [60, 230, 594, 940, 1480, 2250]; let LAMPS = LAMPS_V; const LAMP_R = 470, AMBER_MAX = .46, COOL_BASE = .27;
+const LAMPS_V = [372, 1146, 1786, 2765, 3550, 4172, 4946, 5586], LAMPS_T = [121, 442, 813, 981, 1763], LAMPS_A = [150, 480, 2210], LAMPS_C = [60, 230, 594, 940, 1480, 2250]; let LAMPS = LAMPS_V; const LAMP_R = 470, AMBER_MAX = .46, COOL_BASE = .27;
 const smooth = t => t*t*(3 - 2*t);
 function lampLight(x){ // returns {l, r, total}: warm light arriving on the left and right edge of a character at x
   let l = 0, r = 0;
@@ -603,6 +614,8 @@ function lightActor(el, cx, dt, shW){
 let IA = [
   { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-150, run:()=>startDlg(has("dd02") && !has("nini.key") ? "nk0" : has("nini.done")?"n9":"n0") },
   { id:"sign",   x:()=>1345,      label:UI.read,   top:640,            run:()=>inspect("notice") },
+  { id:"enterA", x:()=>4200, label:UI.enterA, top:560, run:()=>setScene("archive", 430) },
+  { id:"enterC", x:()=>5200, label:UI.enterC, top:560, run:()=>setScene("cafe", 500) },
   { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>inspect("patrol") },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(has("ck.bear")?"c9":"c0") },
   { id:"clock",  x:()=>2735,      label:UI.look,   top:560,            run:()=>inspect("clock") },
@@ -621,12 +634,12 @@ const IA_T = [
   { id:"chute", x:()=>2168, label:UI.lChute, top:540, run:()=>inspect("chute") }
 ];
 const IA_A = [
-  { id:"exit",  x:()=>410,  label:UI.leaveA, top:540, run:()=>setScene("village", 2640) },
+  { id:"exit",  x:()=>410,  label:UI.leaveA, top:540, run:()=>setScene("village", 4200) },
   { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, run:()=>inspect("register") },
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect(has("nini.key") ? "photo2" : "drawers") }
 ];
 const IA_C = [
-  { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 900) },
+  { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 5200) },
   { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(has("hz.done")?"h9":"h0") }
 ];
 function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"||i.id==="hz"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
@@ -730,7 +743,7 @@ function setSceneNow(name, x){
   const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : $("world");
   host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else host.appendChild(marks);
   if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : LAMPS_T; IA = A ? IA_A : C ? IA_C : IA_T; NPCX = A ? NPCX_A : C ? NPCX_C : NPCX_T; }
-  else  { W = 3812; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = IA_V; }
+  else  { W = VILLAGE_W; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = IA_V; }
   nini.style.display = IN ? "none" : ""; nini._sh.style.display = IN ? "none" : "";
   ck.style.display = (A || C) ? "none" : ""; ck._sh.style.display = (A || C) ? "none" : "";
   hz.style.display = C ? "" : "none"; hz._sh.style.display = C ? "" : "none";
