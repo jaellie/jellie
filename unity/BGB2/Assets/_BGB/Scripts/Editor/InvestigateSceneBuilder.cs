@@ -208,7 +208,8 @@ namespace BGB2.EditorTools
             float y = markerYPx >= 0f ? markerYPx : FeetY - headHeightPx - 85f;
             m.transform.position = W(xPx, y);
             var sr = m.AddComponent<SpriteRenderer>();
-            sr.sprite = Ui("bubble_exclaim"); sr.sharedMaterial = unlitMat; sr.sortingOrder = 40;
+            bool npc = name == "Nini" || name == "Oliver";   // "!" for people, the magnifier ring for things to examine
+            sr.sprite = Ui(npc ? "bubble_exclaim" : "hotspot_ring"); sr.sharedMaterial = unlitMat; sr.sortingOrder = 40;
             var mk = m.AddComponent<ExclamationMarker>(); mk.sprite = sr;
             return i;
         }

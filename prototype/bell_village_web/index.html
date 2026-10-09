@@ -48,6 +48,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #fg{position:absolute;left:0;top:0;will-change:transform}
 #fg img{position:absolute;left:0;top:884px;display:block;pointer-events:none}
 .mark{position:absolute;width:118px;height:129px;margin-left:-59px;filter:brightness(1.12) contrast(1.15) drop-shadow(0 3px 5px rgba(0,0,0,.55));pointer-events:none;animation:bob 1.6s ease-in-out infinite;opacity:0;scale:1;transition:opacity .25s ease,scale .25s ease}
+.mark.look{width:120px;height:auto;margin-left:-60px;filter:brightness(1.1) drop-shadow(0 0 3px rgba(18,10,6,.95)) drop-shadow(0 4px 6px rgba(0,0,0,.6))}
 .mark.on{opacity:1}
 .mark.soft{opacity:.78;scale:.82}
 @keyframes bob{50%{transform:translateY(-8px)}}
@@ -490,7 +491,7 @@ const IA_T = [
   { id:"melt",  x:()=>1485, label:UI.lMelt,  top:530, run:()=>inspect("melt") },
   { id:"chute", x:()=>2168, label:UI.lChute, top:540, run:()=>inspect("chute") }
 ];
-function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); m.className = "mark"; m.src = "assets/bubble_exclaim.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; }); }
+function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; }); }
 mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks"));
 IA = IA_V;
 let near = null, peek = 0;
