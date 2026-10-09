@@ -42,4 +42,4 @@ Whole clocktower shaft and village Mid without the tower · "What I overlooked" 
 - **Snow variants of the green tiles and props:** the village and interior are painted whole, so the tile sheets are unused. Only needed if you want a modular, longer level.
 
 ## Added for Chapters 2 and 3 (prompts are in the library, section F)
-Rowan (Night Guard, owl) sprites + portraits · Mara (badger) sprites + portraits · Green portraits · BGB notebook-in-left-hand poses · Green kettle-in-right-hand poses · Lantern Bridge guard-post prop · Old Mill exterior (4 layers, daylight).
+Hazel's Café exterior + Archive exterior (one sprite each, door included) · Rowan (Night Guard, owl) sprites + portraits · Mara (badger) sprites + portraits · Green portraits · BGB notebook-in-left-hand poses · Green kettle-in-right-hand poses · Lantern Bridge guard-post prop · Old Mill exterior (4 layers, daylight).
