@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Bell Village</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,7 +75,32 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #aright{background:linear-gradient(270deg,#120d0b,#2a1a12)}
 #afg{position:absolute;left:0;top:0;will-change:transform}
 #afg img{position:absolute;left:-420px;top:614px;display:block;pointer-events:none}
+#csc{position:absolute;inset:0;display:none;background:#140f14}
+#csc.on{display:block}
+#cfar img{left:-300px;top:150px;width:3715px;height:896px}
+#cworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
+#cworld img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
+#cleft,#cright{position:absolute;top:0;height:1080px;width:700px;background:linear-gradient(90deg,#120d0b,#2a1a12)}
+#cright{background:linear-gradient(270deg,#120d0b,#2a1a12)}
+#cfg{position:absolute;left:0;top:0;will-change:transform}
+#cfg img{position:absolute;left:-280px;top:536px;display:block;pointer-events:none}
 #tfar img{left:-120px;top:0}
+.subbtn{position:absolute;right:0;top:0;font:700 22px/1.1 var(--font-label);letter-spacing:.04em;color:var(--ink);padding:0 22px;height:56px;cursor:pointer;background-color:#22314f;border-radius:10px;--s:1}
+.pager{display:flex;gap:14px;align-items:center;margin-top:10px;font:600 24px var(--font-body)}
+.pager button{width:48px;height:42px;border-radius:8px;border:2px solid var(--brass);background:#f1dfb4;font:700 24px var(--font-body);color:var(--ink);cursor:pointer}
+.pager button:disabled{opacity:.35;cursor:default}
+.bd{position:relative;width:1100px;margin:0 auto}
+.bd>img.base{display:block;width:100%;height:auto}
+.bd .ov{position:absolute;overflow:hidden;display:flex;flex-direction:column;justify-content:center;font-family:var(--font-body);color:#3a2a18;line-height:1.15}
+.bd .ov b{font:700 21px/1.1 var(--font-label);letter-spacing:.06em;color:#6e2a35;display:block;margin-bottom:4px}
+.bd .ov i{font-style:italic}
+.bd .ctr{text-align:center;align-items:center}
+.bd .rib{color:#f6e3c0;font:700 24px/1 var(--font-label);letter-spacing:.14em;text-align:center;align-items:center;text-shadow:0 2px 2px rgba(0,0,0,.5)}
+.bd .veil{background:rgba(40,28,22,.72);border-radius:10px;color:#f1dfb4;text-align:center;align-items:center;font:italic 600 24px/1.25 var(--font-body);padding:0 20px}
+.bd .stamp{position:absolute;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.bd .ph{width:100%;height:100%;object-fit:cover;display:block}
+.pvnote{font:italic 500 22px/1.3 var(--font-body);color:#6d5a40;margin:10px auto 0;width:1100px;text-align:center}
+.pvbtn{display:inline-block;margin-left:10px;font:700 20px var(--font-label);border:2px solid var(--burgundy);color:var(--burgundy);background:transparent;border-radius:6px;padding:6px 12px;cursor:pointer}
 #tworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
 #tworld img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
 #tleft,#tright{position:absolute;top:0;height:1080px;width:700px;background:linear-gradient(90deg,#1a1210,#2b1d18)}
@@ -221,6 +247,17 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
    </div>
    <div id="afg" class="layer"><img src="assets/a_fg_x.webp" width="2960" height="466" alt=""></div>
   </div>
+  <div id="csc">
+   <div class="layer" id="cfar"><img src="assets/a_far.webp" alt=""></div>
+   <div id="cworld">
+    <div id="cleft" style="left:-570px"></div><div id="cright" style="left:2290px"></div>
+    <img src="assets/c_mid_x.webp" style="left:-280px;top:-100px" width="2860" height="990" alt="">
+    <div id="cbase" style="position:absolute;left:-600px;top:930px;width:3600px;height:160px;background:linear-gradient(#2a1c15,#150e0c 45%,#0d0809)"></div>
+    <img src="assets/c_ground_x.webp" style="left:-280px;top:632px" width="2962" height="459" alt="">
+    <div id="cmarks"></div>
+   </div>
+   <div id="cfg" class="layer"><img src="assets/c_fg_x.webp" width="2960" height="544" alt=""></div>
+  </div>
   <div id="tsc">
    <div class="layer" id="tfar"><img src="assets/t_far.webp" width="3118" height="1134" alt=""></div>
    <div id="tworld">
@@ -344,6 +381,10 @@ let lang = "en";
 const tr = o => typeof o === "string" ? o : (o[lang] || o.en);
 const UI = {
   leave:{en:"Leave the Clocktower", ko:"시계탑을 나간다"}, leaveA:{en:"Leave the archive", ko:"기록실을 나간다"}, lReg:{en:"Examine the register", ko:"장부를 살핀다"}, lDraw:{en:"Try the drawers", ko:"서랍을 열어 본다"}, locA:{en:"Archive", ko:"기록실"}, lHatch:{en:"Examine the hatch", ko:"해치를 살핀다"}, lPend:{en:"Examine the pendulum", ko:"추 막대를 살핀다"}, lBell:{en:"Examine the handbell", ko:"손종을 살핀다"}, lChute:{en:"Examine the back door", ko:"뒷문을 살핀다"}, lMelt:{en:"Look at the puddles", ko:"물 자국을 살핀다"}, lClk:{en:"Examine the clock", ko:"시계를 살핀다"}, locT:{en:"Clocktower", ko:"시계탑"},
+  leaveC:{en:"Leave the café", ko:"카페를 나간다"}, talkHz:{en:"Talk to Hazel", ko:"헤이즐과 이야기한다"}, locC:{en:"Hazel's Café", ko:"헤이즐의 카페"}, lBoots:{en:"Look at the prints on the stairs", ko:"계단의 발자국을 살핀다"},
+  subBoard:{en:"Responsibility Board", ko:"책임 보드"}, subId:{en:"Identity Board", ko:"신원 보드"}, subOver:{en:"What I overlooked", ko:"내가 놓친 것"}, subBack:{en:"Back", ko:"돌아가기"},
+  pv:{en:"Preview: show the finished board (contains spoilers)", ko:"미리보기: 완성된 보드 보기 (스포일러 포함)"}, pvOff:{en:"Hide preview", ko:"미리보기 끄기"},
+  page:{en:"Page", ko:"쪽"},
   talk: {en:"Talk to Nini", ko:"니니와 이야기한다"}, talkCk:{en:"Talk to the Clockkeeper", ko:"시계지기와 이야기한다"},
   read:{en:"Read the signpost", ko:"표지판을 읽는다"}, look:{en:"Look up at the clock", ko:"시계를 올려다본다"}, enter:{en:"Enter the Clocktower", ko:"시계탑에 들어간다"},
   resume:{en:"Resume", ko:"계속하기"}, restart:{en:"Restart", ko:"처음부터"}, langBtn:{en:"Language: English", ko:"언어: 한국어"}, paused:{en:"PAUSED", ko:"일시정지"},
@@ -381,7 +422,7 @@ const EV = {
   chute: { id:"chute", name:{en:"The back door",ko:"뒷문"}, img:"p_door_barred", tag:"DOOR",
     desc:{en:"A small maintenance door at the back, bolted from the inside. Outside in the snow, boot prints lead away from it.", ko:"뒤쪽의 작은 정비용 문이다. 안쪽에서 빗장이 걸려 있다. 바깥 눈 위에는 이 문에서 멀어지는 발자국이 있다."},
     note:{en:"The back door is bolted from the inside, yet boot prints lead away from it outside.", ko:"뒷문은 안쪽에서 빗장이 걸려 있는데, 바깥에는 이 문에서 멀어지는 발자국이 있다."} },
-  register: { id:"register", name:{en:"The flood-year register",ko:"홍수 연도 장부"}, tag:"ARCHIVE",
+  register: { id:"register", name:{en:"The flood-year register",ko:"홍수 연도 장부"}, img:"ev_register", tag:"ARCHIVE",
     desc:{en:"A large register lies open on the reading stand. The entries for the flood year are written in two inks: an older brown, and a newer, darker one. Seals and signatures crowd the foot of the page.", ko:"큰 장부가 독서대 위에 펼쳐져 있다. 홍수가 난 해의 항목은 두 가지 잉크로 쓰여 있다. 오래된 갈색과, 더 새롭고 짙은 색이다. 쪽 아래에는 인장과 서명이 빽빽하다."},
     note:{en:"The flood-year entries in the register use two different inks.", ko:"장부의 홍수 연도 항목은 서로 다른 두 가지 잉크로 쓰여 있다."} },
   drawers: { id:"drawers", name:{en:"The locked drawers",ko:"잠긴 서랍장"}, tag:"ARCHIVE",
@@ -391,6 +432,15 @@ const EV = {
     desc:{en:"Meltwater has pooled in three places: by the ladder, beside the hatch, and at the back door.", ko:"눈 녹은 물이 세 곳에 고여 있다. 사다리 옆, 해치 곁, 그리고 뒷문 앞이다."},
     note:{en:"Meltwater has pooled by the ladder, by the hatch and at the back door.", ko:"눈 녹은 물이 사다리 옆, 해치 곁, 뒷문 앞에 고여 있다."} }
 };
+EV.notebook = { id:"notebook", name:{en:"Nini's notebook",ko:"니니의 공책"}, img:"ev_notebook_torn", tag:"NOTEBOOK",
+  desc:{en:"Nini's notebook. A page has been torn out, and the page beneath it carries a faint note: \"Red ledger moved?\"", ko:"니니의 공책. 한 장이 뜯겨 나갔고, 그 아래 장에 희미한 메모가 남아 있다. \"붉은 장부 옮겨졌나?\""},
+  note:{en:"Nini's notebook has a torn page. Below it: \"Red ledger moved?\"", ko:"니니의 공책에는 뜯긴 장이 있다. 그 아래: \"붉은 장부 옮겨졌나?\""} };
+EV.boots = { id:"boots", name:{en:"Footprints on the stairs",ko:"계단의 발자국"}, img:"ev_boot_prints", tag:"TRACES",
+  desc:{en:"Snow tracked onto the tower stairs. One set of prints leads up, spaced wide apart.", ko:"탑 계단에 눈이 묻어 있다. 올라가는 발자국이 한 줄, 간격이 넓다."},
+  note:{en:"One set of prints leads up the tower stairs, spaced wide apart.", ko:"탑 계단 위로 올라가는 발자국이 한 줄 있다. 간격이 넓다."} };
+EV.receipt = { id:"receipt", name:{en:"Café receipt",ko:"카페 영수증"}, img:"ev_receipt", tag:"CAFÉ",
+  desc:{en:"A receipt from Hazel's Café, settled at 11:42. Hazel wrote the time on it herself.", ko:"헤이즐의 카페 영수증. 11시 42분에 계산되었고, 헤이즐이 직접 시각을 적어 두었다."},
+  note:{en:"The café receipt is stamped 11:42.", ko:"카페 영수증에는 11시 42분이 적혀 있다."} };
 const NOTES = {
   nini:{en:"Nini last saw Edward at nine. He was sealing two letters.", ko:"니니가 에드워드를 마지막으로 본 것은 아홉 시. 그는 편지 두 통을 봉하고 있었다."},
   bear:{en:"The Clockkeeper saw a bear on the stairs around 11:40, before BGB arrived.", ko:"시계지기는 11시 40분쯤 계단을 오르는 곰을 보았다. BGB가 도착하기 전이다."},
@@ -402,7 +452,8 @@ const D = {
  n0:{sp:"nini", ex:"worried", t:{en:"Edward never missed the midnight bell. Never.", ko:"에드워드 아저씨는 자정 종을 한 번도 놓친 적이 없어요. 한 번도요."}, next:"n1"},
  n1:{sp:"nini", ex:"worried", t:{en:"Everyone is standing at the tower and nobody will go in. They keep asking if it was an accident.", ko:"다들 탑 앞에 서 있기만 하고 아무도 안으로 들어가지 못해요. 사고였느냐고만 계속 물어요."},
    ch:[{t:{en:"Tell me what you remember about last night.",ko:"어젯밤에 기억나는 걸 말해 줘."},go:"n2a"},{t:{en:"Has anyone said who was on the stairs?",ko:"계단에 누가 있었는지 말한 사람이 있어?"},go:"n2b"}]},
- n2a:{sp:"nini", ex:"thinking", t:{en:"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.", ko:"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요."}, set:"nini.letters", note:"nini", next:"n3"},
+ n2a:{sp:"nini", ex:"thinking", t:{en:"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.", ko:"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요."}, set:"nini.letters", note:"nini", next:"n2d"},
+ n2d:{sp:"nini", ex:"worried", ev:"notebook", t:{en:"This is my notebook. A page is torn out, and on the one beneath I wrote: 'Red ledger moved?' Please keep it.", ko:"이건 제 공책이에요. 한 장이 뜯겨 있고, 그 아래 장에 '붉은 장부 옮겨졌나?'라고 적어 뒀어요. 가지고 계세요."}, next:"n3"},
  n2b:{sp:"nini", ex:"neutral", t:{en:"Oliver says a bear in a scarf climbed the stairs at eleven forty. Before you got there.", ko:"올리버 아저씨가 그러는데, 열한 시 사십 분쯤 목도리를 한 곰이 계단을 올라갔대요. 당신이 오기 전에요."},
    ch:[{t:{en:"I was at the café until a quarter to twelve.",ko:"나는 열두 시 십오 분 전까지 카페에 있었어."},go:"n2c"},{t:{en:"(Say nothing.)",ko:"(말없이 있는다.)"},go:"n3"}]},
  n2c:{sp:"nini", ex:"neutral", t:{en:"I know. Hazel told everyone. That's why they want you to look into it.", ko:"알아요. 헤이즐 아주머니가 다 말했어요. 그래서 다들 당신이 조사해 주길 바라는 거예요."}, next:"n3"},
@@ -413,7 +464,11 @@ const D = {
  c1:{sp:"ck", ex:"thinking", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았죠."}, set:"ck.watch", note:"watch"},
  c9:{sp:"ck", ex:"neutral", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보세요. 시계는 어디 안 갑니다."}}
 };
-const SP = { nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
+D.h0 = {sp:"hz", t:{en:"Detective. Terrible business. The whole café has talked of nothing else since the bell.", ko:"탐정님. 끔찍한 일이에요. 종이 울린 뒤로 우리 카페는 그 얘기뿐이에요."},
+   ch:[{t:{en:"About last night.",ko:"어젯밤 일에 대해서요."},go:"h1"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
+D.h1 = {sp:"hz", t:{en:"You settled your tab at eleven forty-two. I wrote the time on the receipt myself. Here, keep it.", ko:"열한 시 사십이 분에 계산하셨어요. 시각은 제가 직접 영수증에 적었죠. 자, 가지고 계세요."}, ev:"receipt", set:"hz.done", next:null};
+D.h9 = {sp:"hz", t:{en:"Take your time. The kettle's always on.", ko:"천천히 하세요. 주전자는 늘 불 위에 있답니다."}};
+const SP = { hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
 const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
@@ -434,7 +489,7 @@ function mkActor(cls, base, h, x){
   d.dataset.base = base; d.style.height = h + "px"; d.style.top = (FEET - h) + "px"; d.style.left = x + "px";
   actors.appendChild(d); return d;
 }
-const SPR = { big_green_bear:[157,277,175,274], nini:[128,247,161,248], clockkeeper:[170,232,163,231] };
+const SPR = { big_green_bear:[157,277,175,274], nini:[128,247,161,248], clockkeeper:[170,232,163,231], cafe_owner:[169,198,159,199] };
 function setActorSprite(el, dir, h){
   const base = el.dataset.base, img = el.querySelector("img");
   const s = {left:"left", right:"right", front:"front"}[dir] || "front";
@@ -443,8 +498,9 @@ function setActorSprite(el, dir, h){
   const sc = h / k[3]; // scale so the FRONT sprite height equals h
   el.style.width = Math.round(natW * sc) + "px"; el.style.height = Math.round(nat * sc) + "px"; el.style.top = (FEET - Math.round(nat*sc)) + "px";
 }
-const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
-let NPCX = { nini:1010, ck:2610 }; const NPCX_V = { nini:1010, ck:2610 }, NPCX_T = { nini:-9999, ck:830 };
+const HZ_H = 175;
+const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
+let NPCX = { nini:1010, ck:2610, hz:-9999 }; const NPCX_V = { nini:1010, ck:2610, hz:-9999 }, NPCX_T = { nini:-9999, ck:830, hz:-9999 }, NPCX_A = { nini:-9999, ck:-9999, hz:-9999 }, NPCX_C = { nini:-9999, ck:-9999, hz:1050 };
 const P = { x:S.x, dir:"front", walk:0, moving:false, face:"right" };
 function place(){
   const sc = BGB_H/274; let dir = P.moving ? P.face : "front";
@@ -463,16 +519,20 @@ function place(){
   setActorSprite(nini, nface, NINI_H); nini.style.left = Math.round(NPCX.nini - parseFloat(nini.style.width)/2) + "px";
   const cface = Math.abs(P.x - NPCX.ck) < 360 ? (P.x < NPCX.ck ? "right" : "left") : "front";
   setActorSprite(ck, cface, CK_H); ck.style.left = Math.round(NPCX.ck - parseFloat(ck.style.width)/2) + "px";
+  hz.style.transform = "scale("+(1-0.005*Math.sin(tt/850+3)).toFixed(3)+","+(1+0.012*Math.sin(tt/850+3)).toFixed(3)+")";
+  const hface = Math.abs(P.x - NPCX.hz) < 360 ? (P.x < NPCX.hz ? "right" : "left") : "front";
+  setActorSprite(hz, hface, HZ_H); hz.style.left = Math.round(NPCX.hz - parseFloat(hz.style.width)/2) + "px";
 }
 function applyLight(dt){
   lightActor(bgb, P.x, dt, parseFloat(bgb.style.width)*.78);
   lightActor(nini, NPCX.nini, dt, parseFloat(nini.style.width)*.9);
   lightActor(ck, NPCX.ck, dt, parseFloat(ck.style.width)*.85);
+  lightActor(hz, NPCX.hz, dt, parseFloat(hz.style.width)*.9);
 }
 
 /* ---------- lighting ---------- */
 // Lamp positions in world px (from the Ground layer art). Light reaches R px sideways.
-const LAMPS_V = [372, 1146, 1786, 2765, 3550], LAMPS_T = [121, 442, 813, 981, 1763], LAMPS_A = [150, 480, 2210]; let LAMPS = LAMPS_V; const LAMP_R = 470, AMBER_MAX = .46, COOL_BASE = .27;
+const LAMPS_V = [372, 1146, 1786, 2765, 3550], LAMPS_T = [121, 442, 813, 981, 1763], LAMPS_A = [150, 480, 2210], LAMPS_C = [60, 230, 594, 940, 1480, 2250]; let LAMPS = LAMPS_V; const LAMP_R = 470, AMBER_MAX = .46, COOL_BASE = .27;
 const smooth = t => t*t*(3 - 2*t);
 function lampLight(x){ // returns {l, r, total}: warm light arriving on the left and right edge of a character at x
   let l = 0, r = 0;
@@ -509,6 +569,7 @@ const IA_T = [
   { id:"exit",  x:()=>170,  label:UI.leave,  top:530, run:()=>setScene("village", 2640) },
   { id:"ck",    x:()=>NPCX_T.ck, label:UI.talkCk, top:FEET_T-CK_H-150, run:()=>startDlg(has("ck.bear")?"c9":"c0") },
   { id:"bell",  x:()=>897,  label:UI.lBell,  top:500, run:()=>inspect("handbell") },
+  { id:"boots", x:()=>640,  label:UI.lBoots, top:640, run:()=>inspect("boots") },
   { id:"hatch", x:()=>1210, label:UI.lHatch, top:530, run:()=>inspect("hatch") },
   { id:"clock", x:()=>1511, label:UI.lClk,   top:560, run:()=>inspect("clock") },
   { id:"pend",  x:()=>1663, label:UI.lPend,  top:560, run:()=>inspect("pendulum") },
@@ -520,8 +581,12 @@ const IA_A = [
   { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, run:()=>inspect("register") },
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect("drawers") }
 ];
-function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; }); }
-mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks"));
+const IA_C = [
+  { id:"exit",  x:()=>150,  label:UI.leaveC, top:540, run:()=>setScene("village", 900) },
+  { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(has("hz.done")?"h9":"h0") }
+];
+function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"||i.id==="hz"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; }); }
+mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks"));
 IA = IA_V;
 let near = null, peek = 0;
 
@@ -534,7 +599,7 @@ function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSO
 function setLang(l){ lang = l; save(); applyLang(); if (mode==="cf") renderCF(); }
 function applyLang(){
   document.documentElement.lang = lang; buildSide(); labelSide();
-  $("hudTitle").textContent = tr(UI.case); $("hudLoc").textContent = tr(S.scene==="tower" ? UI.locT : S.scene==="archive" ? UI.locA : UI.loc);
+  $("hudTitle").textContent = tr(UI.case); $("hudLoc").textContent = tr(S.scene==="tower" ? UI.locT : S.scene==="archive" ? UI.locA : S.scene==="cafe" ? UI.locC : UI.loc);
   $("pResume").textContent = tr(UI.resume); $("pReset").textContent = tr(UI.restart); $("pLang").textContent = tr(UI.langBtn); $("eBack").textContent = tr(UI.back);
   document.querySelector("#pause .eyebrow").textContent = tr(UI.paused);
   const E = tr(UI.end); $("eEy").textContent = E[0]; $("eH").textContent = E[1]; $("eP1").textContent = E[2]; $("eP2").textContent = E[3]; $("rot").textContent = tr(UI.rot);
@@ -571,7 +636,7 @@ function showChoices(){
   box.classList.add("on"); box.firstChild.classList.add("sel");
 }
 function pick(i){ const n = D[cur]; const c = n.ch[i]; applyNode(n); goto(c.go); }
-function applyNode(n){ if (n.set) setf(n.set); if (n.note) addNote(NOTES[n.note]); save(); }
+function applyNode(n){ if (n.set) setf(n.set); if (n.ev) addEv(n.ev); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(){
   if (typing){ clearInterval(typing); typing = null; $("dTx").textContent = full; showChoices(); return; }
   const n = D[cur]; if (n.ch){ const sel = document.querySelector('#choices .choice.sel'); if (sel) sel.click(); return; }
@@ -599,16 +664,17 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 function setSceneNow(name, x){
-  S.scene = name; const T = name === "tower", A = name === "archive", IN = T || A;
-  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A);
-  const host = T ? $("tworld") : A ? $("aworld") : $("world");
-  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else host.appendChild(marks);
-  if (IN){ W = 2400; CAM_MIN = -330; CAM_MAX = W - STAGE_W; P_MIN = 150; FEET = FEET_T; LAMPS = A ? LAMPS_A : LAMPS_T; IA = A ? IA_A : IA_T; NPCX = A ? { nini:-9999, ck:-9999 } : NPCX_T; }
+  S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", IN = T || A || C;
+  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C);
+  const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : $("world");
+  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else host.appendChild(marks);
+  if (IN){ W = 2400; CAM_MIN = C ? -280 : -330; CAM_MAX = W - STAGE_W; P_MIN = 150; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : LAMPS_T; IA = A ? IA_A : C ? IA_C : IA_T; NPCX = A ? NPCX_A : C ? NPCX_C : NPCX_T; }
   else  { W = 3812; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = IA_V; }
   nini.style.display = IN ? "none" : ""; nini._sh.style.display = IN ? "none" : "";
-  ck.style.display = A ? "none" : ""; ck._sh.style.display = A ? "none" : "";
+  ck.style.display = (A || C) ? "none" : ""; ck._sh.style.display = (A || C) ? "none" : "";
+  hz.style.display = C ? "" : "none"; hz._sh.style.display = C ? "" : "none";
   P.x = x; cam = Math.max(CAM_MIN, Math.min(CAM_MAX, P.x - STAGE_W/2)); near = null;
-  $("hudLoc").textContent = tr(T ? UI.locT : A ? UI.locA : UI.loc);
+  $("hudLoc").textContent = tr(T ? UI.locT : A ? UI.locA : C ? UI.locC : UI.loc);
   save();
 }
 function setScene(name, x){
@@ -619,7 +685,7 @@ function enterTower(){ setScene("tower", 470); }
 $("eBack").onclick = ()=>{ $("endcard").classList.remove("on"); P.x = 2640; mode = "play"; stage.focus(); };
 
 /* case file */
-let tab = 0, selEv = null;
+let tab = 0, selEv = null, sub = false, PV = false, evPage = 0;
 const SLOTS = [85,174,259,344,429,514];
 function renderNav(){
   const nav = $("nav"); nav.innerHTML = ""; const labs = tr(UI.tabs);
@@ -627,12 +693,14 @@ function renderNav(){
   SLOTS.forEach((cy,i)=>{
     const b = document.createElement("button"); b.className = "tab nine " + (i===tab ? "red act" : "cream");
     b.style.top = Math.round((cy-39)*k) + "px"; b.textContent = labs[i];
-    b.onclick = ()=>{ tab = i; renderCF(); }; nav.appendChild(b);
+    b.onclick = ()=>{ tab = i; sub = false; renderCF(); }; nav.appendChild(b);
   });
 }
 function renderCF(){
   renderNav(); const pg = $("pg"); const labs = tr(UI.tabs);
   let h = '<div class="eyebrow">CASE C-01 &middot; '+tr(UI.loc)+'</div><h2>'+labs[tab]+'</h2><div style="height:18px"></div>';
+  if (sub && SUBS[tab]){ pg.innerHTML = h + subView(tab); wireSub(); return; }
+  if (SUBS[tab]) h += '<button class="subbtn nine cream" id="subBtn">'+tr(UI[SUBS[tab].k])+' &rsaquo;</button>';
   if (tab===0){
     h += '<div style="font:italic 400 28px/1.3 var(--font-body);color:#6d5a40;margin-bottom:14px">'+tr(UI.case)+'</div><div class="eyebrow" style="margin:10px 0 6px">'+tr(UI.objHead).toUpperCase()+'</div>';
     const done = [has("nini.done")||has("nini.letters"), S.ev.includes("notice"), S.ev.includes("clock"), has("ck.bear"), S.scene==="tower"||S.ev.length>2, ["hatch","pendulum","handbell","chute","melt"].filter(x=>S.ev.includes(x)).length>=3];
@@ -653,15 +721,87 @@ function renderCF(){
     h += '<div class="mapbox"><div class="pin" style="left:168px;top:372px;background:#c4453a"></div><div class="pinlab" style="left:194px;top:372px">'+tr(UI.here)+'</div><div class="pin" style="left:346px;top:300px;background:#d9a441"></div><div class="pinlab" style="left:372px;top:300px">'+tr(UI.tower)+'</div></div>';
   }
   pg.innerHTML = h;
+  if (SUBS[tab]) $("subBtn").onclick = ()=>{ sub = true; renderCF(); };
   if (tab===2) renderEvGrid(); if (tab===3) renderTl();
+}
+/* ---------- boards (art: board_identity / board_resp / page_overlooked) ---------- */
+const SUBS = { 0:{k:"subBoard"}, 1:{k:"subId"}, 4:{k:"subOver"} };
+const px = (x,y,w,h,W,H) => 'left:'+(x/W*100).toFixed(2)+'%;top:'+(y/H*100).toFixed(2)+'%;width:'+(w/W*100).toFixed(2)+'%;height:'+(h/H*100).toFixed(2)+'%';
+const box = (cls,x,y,w,h,W,H,inner,st) => '<div class="ov '+cls+'" style="'+px(x,y,w,h,W,H)+(st||'')+'">'+inner+'</div>';
+function subView(t){
+  const back = '<button class="subbtn nine cream" id="subBtn">&lsaquo; '+tr(UI.subBack)+'</button>';
+  const pvb = '<div class="pvnote">'+(PV ? '' : (lang==="ko"?"이 화면은 이후 챕터에서 채워진다.":"This fills in during later chapters.")) + '<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>';
+  return back + (t===1 ? boardId() : t===0 ? boardResp() : pageOver()) + pvb;
+}
+function wireSub(){ $("subBtn").onclick = ()=>{ sub = false; renderCF(); }; $("pvBtn").onclick = ()=>{ PV = !PV; renderCF(); }; }
+function boardId(){
+  const W = 1500, H = 865, K = lang==="ko";
+  let h = '<div class="bd"><img class="base" src="assets/board_identity.webp" alt="">';
+  h += box("ctr",590,8,315,56,W,H,'<b style="margin:0;color:#4a2f10;font-size:17px;letter-spacing:.02em;white-space:nowrap">'+tr(UI.subId).toUpperCase()+'</b>');
+  h += box("",155,128,265,272,W,H,'<img class="ph" src="assets/por_bgb_neutral.webp" alt="">');
+  h += box("ctr",160,400,255,50,W,H,'<b style="margin:0">BGB</b>');
+  h += box("",1090,130,275,275,W,H,PV ? '<div style="display:grid;place-items:center;height:100%;background:#2a2f4a;color:#c9c2a8;font:italic 600 22px/1.3 var(--font-body);text-align:center;padding:12px">'+(K?"(초상화 아직 없음)":"(portrait not drawn yet)")+'</div>' : '<div style="display:grid;place-items:center;height:100%;background:#2a2f4a;color:#c9c2a8;font:700 90px var(--font-body)">?</div>');
+  h += box("ctr",1085,405,285,50,W,H,'<b style="margin:0">'+(PV?'GREEN':'?')+'</b>');
+  if (PV){
+    h += '<img class="stamp" src="assets/stamp_unknown.webp" alt="" style="left:'+(1120/W*100)+'%;top:'+(330/H*100)+'%;width:'+(230/W*100)+'%;transform:rotate(-8deg)">';
+    h += box("ctr",640,238,250,260,W,H,'<img src="assets/ev_keepsake_frame.webp" alt="" style="max-width:100%;max-height:100%;object-fit:contain">');
+    const C = K ? [
+      ["손잡이","신체","회상 속 아이는 오른손을 쓴다. BGB는 왼손잡이다."],["목도리 매듭","신체","에드워드는 아이의 목도리를 오른쪽에 묶는다."],
+      ["귀의 흉터","신체","왼쪽 귀의 희미한 흉터."],["설명","사진","설명과 매듭이 어긋난다."],["장부 잉크","문서","이름이 더 진한 새 잉크로 덧쓰였다."]] : [
+      ["Handedness","Physical","In the memory the child uses his right hand. BGB is left-handed."],["Scarf knot","Physical","Edward ties the child's scarf on the right side."],
+      ["Ear scar","Physical","A faded scar on the left ear."],["Caption","Photo","Caption and knots disagree."],["Register ink","Document","Names re-inked in a newer, darker ink."]];
+    const R = [[140,600,245,150],[447,545,138,210],[645,560,255,165],[962,598,118,112],[1142,578,255,160]];
+    C.forEach((c,i)=>{ const r = R[i]; h += box("",r[0],r[1],r[2],r[3],W,H,'<b>'+c[0]+'</b><span style="font-size:'+(i===1||i===3?17:19)+'px">'+c[2]+'</span>','padding:0 4px'); });
+  } else {
+    h += box("veil",300,560,900,150,W,H,K?"비교할 단서가 아직 없다. 기억과 현재의 단서를 모으면 여기에 붙는다.":"Nothing to compare yet. Memories and present-day clues will be pinned here.");
+  }
+  return h + '</div>';
+}
+function boardResp(){
+  const W = 1500, H = 857, K = lang==="ko";
+  let h = '<div class="bd"><img class="base" src="assets/board_resp.webp" alt="">';
+  const rib = K ? ["추락","도움의 지연","진실 은폐"] : ["THE FALL","DELAYED HELP","HID THE TRUTH"], X = [125,585,1045];
+  const q = K ? ["누가 에드워드를 떨어뜨렸는가?","도움이 필요한 사람 곁에서, 누가 기다렸는가?","누가 증거와 진실을 숨겼는가?"] : ["Who caused Edward's fall?","Who had the chance to help, and waited?","Who concealed evidence and the truth?"];
+  const names = ["Green","BGB","BGB"];
+  const basis = PV ? (K ? ["달아날 때 에드워드가 죽었다고 믿었다.","11:50 살아 있는 에드워드를 발견, 11:55 종을 울렸다. 그는 모든 걸 알지는 못했다. 하지만 에드워드에게 도움이 필요하다는 건 알았다.","장갑, 편지, 뒷문 빗장, 그리고 자신의 진술."] : ["Fled believing Edward dead.","Found Edward alive at 11:50; the bell rang at 11:55. He did not know everything. He knew Edward needed help.","The glove, the letter, the chute bolt, his own account."]) : ["","",""];
+  for (let i=0;i<3;i++){
+    h += box("rib",X[i]+30,128,300,64,W,H,rib[i]);
+    const open = PV || i===0;
+    const label = PV ? '<b style="font-size:46px;margin:0;text-align:center">'+names[i]+'</b>' : '<span style="display:block;text-align:center;font:italic 700 26px/1.25 var(--font-body);padding:0 10px">'+q[i]+'</span>';
+    h += box("ctr",[118,576,1034][i],268,[345,345,345][i],212,W,H,open ? label : '');
+    if (!open) h += box("veil",[105,562,1020][i],254,372,246,W,H, K?"아직 묻지 않은 질문":"Not asked yet");
+    if (PV) h += box("",[130,590,1048][i],492,[330,330,330][i],150,W,H,'<span style="font-size:'+(i===1?18:20)+'px">'+basis[i]+'</span>','padding:0 8px');
+    else if (i===0) h += box("",130,492,330,150,W,H,'<span style="font:italic 500 22px/1.3 var(--font-body);color:#6d5a40">'+(K?"가진 증거로 이름을 정하자. 틀려도 막히지 않는다.":"Place a name once the evidence supports it.")+'</span>','padding:0 8px');
+  }
+  h += box("ctr",175,700,970,70,W,H,'<span style="font:700 22px/1.2 var(--font-body)"><b style="display:inline;color:#6e2a35;font-size:20px;letter-spacing:.1em">'+(K?"사인 ":"CAUSE OF DEATH ")+'</b>'+(PV ? (K?"미확정 — 부상, 출혈, 추위. 도움이 있었다면 살 수 있었는지는 아무도 말할 수 없다.":"UNDETERMINED: injuries, blood loss and cold. No one can say whether help would have saved him.") : (K?"아직 밝혀지지 않았다.":"not yet established.")) + '</span>');
+  if (PV){
+    h += '<img class="stamp" src="assets/stamp_suspect_identified.webp" alt="" style="left:'+(170/W*100)+'%;top:'+(560/H*100)+'%;width:'+(230/W*100)+'%;transform:rotate(-7deg)">';
+    h += '<img class="stamp" src="assets/stamp_undetermined.webp" alt="" style="left:'+(1150/W*100)+'%;top:'+(690/H*100)+'%;width:'+(200/W*100)+'%;transform:rotate(5deg)">';
+  }
+  return h + '</div>';
+}
+function pageOver(){
+  const W = 802, H = 1000, K = lang==="ko";
+  const L = K ? ["BGB가 뒤집어 보지 않으려 했던 사진 액자.","BGB의 카페 알리바이는 사실이었지만, 그는 11시 42분에 떠났다.","니니의 편지 두 통, 그중 수신자를 아는 건 한 통뿐.","순찰 기록: 장갑, 종이 한 장, 느린 곰, 바람 속의 부름.","안쪽에서 빗장이 걸린 뒷문.","BGB가 시계지기에게: \"최대한 빨리 왔어요.\""] : [
+    "The photograph frame BGB would not turn over.","BGB's café alibi was true, but he left at 11:42.","Nini's two letters, and only one known recipient.","The Night Guard's log: gloves, a paper, a slow bear, a call in the wind.","The back door, bolted from the inside.","BGB to the Clockkeeper: \"I came as fast as I could.\""];
+  const Y = [288,400,513,632,745,859];
+  let h = '<div class="bd" style="width:'+Math.round(780*W/H)+'px"><img class="base" src="assets/page_overlooked.webp" alt="">';
+  h += box("ctr",175,98,480,72,W,H,'<b style="margin:0;font-size:25px;color:#4a2f10">'+tr(UI.subOver).toUpperCase()+'</b>');
+  if (PV) L.forEach((t,i)=>{ h += box("",205,Y[i]-76,485,72,W,H,'<span style="font:600 21px/1.18 var(--font-body)">'+t+'</span>','justify-content:flex-end'); });
+  else h += box("",205,Y[0]-76,485,72,W,H,'<span style="font:italic 600 22px/1.2 var(--font-body);color:#6d5a40">'+(K?"아직 다시 읽을 것이 없다.":"Nothing to re-read yet.")+'</span>','justify-content:flex-end');
+  return h + '</div>';
 }
 function renderEvGrid(){
   const g = $("evg"); const cx = [31,141,253], cy = [60,176,288], k = 520/385;
-  S.ev.forEach((id,i)=>{ const b = document.createElement("button"); b.className = "evcell"+(selEv===id?" sel":""); const col=i%3,row=Math.floor(i/3);
+  const pages = Math.max(1, Math.ceil(S.ev.length/9)); evPage = Math.min(evPage, pages-1);
+  if (selEv && S.ev.includes(selEv)) evPage = Math.floor(S.ev.indexOf(selEv)/9);
+  S.ev.slice(evPage*9, evPage*9+9).forEach((id,i)=>{ const b = document.createElement("button"); b.className = "evcell"+(selEv===id?" sel":""); const col=i%3,row=Math.floor(i/3);
     b.style.left = Math.round((cx[col]-4)*k)+"px"; b.style.top = Math.round(cy[row]*k)+"px"; b.innerHTML = evIcon(EV[id], 86); b.title = tr(EV[id].name);
     b.onclick = ()=>{ selEv = id; renderCF(); }; g.appendChild(b); });
   if (!selEv && S.ev.length) selEv = S.ev[S.ev.length-1];
-  g.querySelectorAll('.evcell').forEach((c,i)=>c.classList.toggle('sel', S.ev[i]===selEv));
+  if (pages > 1){ const pgr = document.createElement("div"); pgr.className = "pager"; pgr.style.cssText = "position:absolute;left:0;top:548px";
+    pgr.innerHTML = '<button id="pvP"'+(evPage?'':' disabled')+'>&lsaquo;</button><span>'+tr(UI.page)+' '+(evPage+1)+' / '+pages+'</span><button id="pvN"'+(evPage<pages-1?'':' disabled')+'>&rsaquo;</button>';
+    g.appendChild(pgr); pgr.querySelector("#pvP").onclick = ()=>{ evPage--; selEv = S.ev[evPage*9]; renderCF(); }; pgr.querySelector("#pvN").onclick = ()=>{ evPage++; selEv = S.ev[evPage*9]; renderCF(); }; }
   const d = $("evd"); const e = selEv && EV[selEv];
   d.innerHTML = e ? '<span class="tag">'+e.tag+'</span><h3>'+tr(e.name)+'</h3><p>'+tr(e.desc)+'</p>' : '<p style="font:italic 400 28px/1.4 var(--font-body);color:#6d5a40">'+(S.ev.length? (lang==="ko"?"증거를 선택하면 설명이 나온다.":"Select an item to read about it.") : tr(UI.empty))+'</p>';
 }
@@ -688,6 +828,7 @@ window.addEventListener("keydown", e=>{
   if ((k==="e"||k==="E") && mode==="modal" && $("inspect").classList.contains("on")){ $("iClose").click(); return; }
   if (k==="e"||k==="E"||k==="Enter"||k===" "){ if (e.target && e.target.tagName==="BUTTON" && mode!=="dlg") return; act(); return; }
   if (k==="9" && mode==="play" && S.scene==="village"){ setScene("archive", 170); return; }   /* temporary entrance until the Chapter 3 key scene exists */
+  if (k==="8" && mode==="play" && S.scene==="village"){ setScene("cafe", 170); return; }   /* temporary entrance until the Chapter 2 key scene exists */
   if (k==="q"||k==="Q"){ peek = 3; return; }
   if (mode==="dlg" && (k==="ArrowUp"||k==="ArrowDown"||k==="w"||k==="s")){
     const bs = [...document.querySelectorAll("#choices .choice")]; if (!bs.length) return; let i = bs.findIndex(b=>b.classList.contains("sel")); bs.forEach(b=>b.classList.remove("sel"));
@@ -724,6 +865,9 @@ function frame(now){
   $("afar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
   $("aworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("afg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("cfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
+  $("cworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("cfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   place(); applyLight(dt);
   // nearest interactable
   near = null; let best = 140;
@@ -742,9 +886,9 @@ function fit(){ const s = Math.min(innerWidth/STAGE_W, innerHeight/STAGE_H);
   stage.style.transform = "scale("+s+")"; stage.style.left = ((innerWidth - STAGE_W*s)/2)+"px"; stage.style.top = ((innerHeight - STAGE_H*s)/2)+"px"; }
 addEventListener("resize", fit);
 
-load(); cam = 0; setSceneNow(S.scene === "tower" ? "tower" : S.scene === "archive" ? "archive" : "village", S.x); fit(); applyLang(); stage.focus();
+load(); cam = 0; setSceneNow(["tower","archive","cafe"].includes(S.scene) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus();
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
-window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; if(mode==="cf") renderCF();}, addEv };
+window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV };
 requestAnimationFrame(frame);
 })();
 </script>
