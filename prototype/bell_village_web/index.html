@@ -875,14 +875,14 @@ function renderEvGrid(){
   d.innerHTML = e ? '<span class="tag">'+e.tag+'</span><h3>'+tr(e.name)+'</h3><p>'+tr(e.desc)+'</p>' : '<p style="font:italic 400 28px/1.4 var(--font-body);color:#6d5a40">'+(S.ev.length? (lang==="ko"?"증거를 선택하면 설명이 나온다.":"Select an item to read about it.") : tr(UI.empty))+'</p>';
 }
 function renderTl(){
-  const t = $("tl"); const k = 925/661; const sx = [78,172,278,382,487]; const K = lang==="ko";
+  const t = $("tl"); const k = 925/661; const SL = [[78,163],[172,268],[277,372],[381,477],[487,581]], sx = SL.map(x=>x[0]); const K = lang==="ko"; /* slot rectangles measured from timeline_strip_5slots.webp (661x228), top 49, bottom 143 */
   const items = [
     { slot:0, tag:"W", time:"11:35", on:S.ev.includes("patrol"), txt:K?"다리 위의 곰":"Bear on the bridge" },
     { slot:1, tag:"W", time:"11:40", on:has("ck.bear"), txt:K?"계단의 곰":"Bear on the stairs" },
     { slot:2, tag:"E", time:"11:42", on:S.ev.includes("receipt"), txt:K?"카페 계산":"Tab settled at the café" },
     { slot:3, tag:"C", time:"11:47", on:S.ev.includes("clock"), txt:K?"탑시계 멈춤":"Tower clock stopped" }
   ];
-  items.filter(i=>i.on).forEach(i=>{ const c = document.createElement("div"); c.className = "tlcard"; c.style.left = Math.round((sx[i.slot]-6)*k)+"px"; c.style.top = Math.round(46*k)+"px";
+  items.filter(i=>i.on).forEach(i=>{ const c = document.createElement("div"); c.className = "tlcard"; const sl = SL[i.slot]; c.style.cssText = "left:"+Math.round(sl[0]*k)+"px;top:"+Math.round(49*k)+"px;width:"+Math.round((sl[1]-sl[0])*k)+"px;height:"+Math.round(94*k)+"px;box-sizing:border-box;padding:4px";
     c.innerHTML = '<small>'+i.tag+' · '+({W:"WITNESS",E:"EVENT",C:"CLOCK"}[i.tag])+'</small>'+i.time+'<span style="font:400 15px/1.1 var(--font-body)">'+i.txt+'</span>'; t.appendChild(c); });
   if (S.flags["con.c1"]){ const m = document.createElement("img"); m.src = "assets/stamp_contradiction.webp"; m.alt = ""; m.style.cssText = "position:absolute;width:210px;left:"+Math.round((sx[0]+12)*k)+"px;top:-6px;transform:rotate(-6deg);pointer-events:none"; t.appendChild(m); }
 }
