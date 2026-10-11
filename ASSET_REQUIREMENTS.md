@@ -53,3 +53,7 @@ Playable now with placeholders: the flashback uses the real flashback village ar
 
 ## Chapter 5 placeholder build (current state)
 Playable now: the flooded stairwell scene uses the real flood art (stairwell, animated water and foam, rain). The brother and the two villagers are black silhouettes; Edward is the front sprite. Needed: the young twins (sprites), villager sprites (the dawn uses the same flashback village in a cold grey grade) (Molly's design is reused for one silhouette).
+
+## Chapter 6 (placeholder build)
+Playable now: Identity Board comparison (DD-04), Green's account at the Old Mill, the Healer's house (reuses the cottage room with a silhouette), second statements (Oliver, Tommy, Hazel's timed walk), the hidden frame backing at BGB's cottage, six conclusions, the three-column Responsibility Board with name placement, "What I overlooked", and Nini's question. The cottage and the Healer's house entrances in the village are drawn in code.
+Needed to replace them: Healer's house layers (section H), the Healer portrait and sprite, BGB's torn left scarf tail (visible from Chapter 6), the village house exteriors for the cottage and the Healer. Not built yet: the Timeline cards 11:50 to 11:55 (the reconstruction is in Notes for now) and Molly's right-handed testimony.

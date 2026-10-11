@@ -135,6 +135,21 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #mwheel{position:absolute;right:-220px;top:140px;width:300px;height:300px;border-radius:50%;border:26px solid #4a2a18;background:#c9d3e0}
 #mdoor{position:absolute;left:260px;top:250px;width:150px;height:270px;background:#4a2a18;border-radius:75px 75px 0 0}
 #mmarks img{position:absolute}
+.hgate{position:absolute;top:640px;width:230px;height:345px;pointer-events:none}
+.hgate .hw{position:absolute;left:0;right:0;bottom:0;top:70px;background:#6b5a4b;border:6px solid #3a281c;border-radius:6px;box-shadow:inset 0 14px 0 #f1f5fa}
+.hgate .hr{position:absolute;left:-14px;right:-14px;top:18px;height:70px;background:#f1f5fa;border:6px solid #3a281c;border-bottom:0;clip-path:polygon(0 100%,50% 0,100% 100%)}
+.hgate .hd{position:absolute;left:78px;width:74px;bottom:0;height:150px;background:#4a2a18;border:5px solid #2e190d;border-radius:37px 37px 0 0}
+.hgate .hf{position:absolute;left:24px;top:150px;width:46px;height:56px;background:#e8b98a;border:5px solid #3a281c}
+.hgate .ms{position:absolute;left:-10px;right:-10px;top:-6px;text-align:center;font:600 18px/1.2 Pretendard,serif;color:#f3e6c8;background:#4a2a18;border:3px solid #2e190d;border-radius:6px;padding:3px 0}
+#psc.hl #pwall{background:linear-gradient(#3b4a48,#46524a 70%,#4a463e)}
+#psc.hl #pframe,#psc.hl #pbook{display:none}
+.kcon{display:flex;align-items:center;gap:14px;margin:8px 0;padding:10px 14px;border:2px solid #b89868;border-radius:10px;background:rgba(243,230,200,.55);font:600 24px/1.25 var(--font-body)}
+.kcon.ok{background:rgba(110,42,53,.12);border-color:#6e2a35}
+.kcon span{flex:1}
+.kcon button,.rname,.chip{font:700 20px/1 var(--font-body);color:#f6e3c0;background:#6e2a35;border:0;border-radius:8px;padding:10px 16px;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.chip{background:#f3e6c8;color:#4a2f10;border:2px solid #8a6a3a}
+.rname{background:transparent;color:#6e2a35;border:2px dashed #6e2a35;font-size:24px;padding:12px 18px}
 #millgate{position:absolute;left:6040px;top:640px;width:220px;height:345px;pointer-events:none}
 #millgate .mp{position:absolute;bottom:0;width:46px;height:300px;background:linear-gradient(90deg,#6f6a66,#8d867f 60%,#5e5954);border-radius:6px 6px 0 0;box-shadow:inset 0 -14px 0 #f1f5fa}
 #millgate .mp.l{left:0}#millgate .mp.r{right:0}
@@ -341,6 +356,8 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
    <img id="door" src="assets/p_tower_shaft.webp" alt="Clocktower" style="position:absolute;left:2607px;top:35px;width:499px;height:960px">
    <svg id="vhands" style="position:absolute;left:2796px;top:337px" width="120" height="120" viewBox="-60 -60 120 120" aria-label="Tower clock stopped at 11:47"><g stroke="#2b1a0e" stroke-linecap="round"><line x1="0" y1="3" x2="0" y2="-24" stroke-width="2.2" transform="rotate(282)"/><line x1="0" y1="4" x2="0" y2="-16" stroke-width="3.4" transform="rotate(353.5)"/></g><circle r="3.6" fill="#2b1a0e"/><circle r="1.4" fill="#c97a2e"/></svg>
    <div class="glow" style="left:2700px;top:700px;width:310px;height:330px"></div>
+   <div class="hgate" style="left:1445px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">빅그베의 오두막</b></div>
+   <div class="hgate" style="left:3265px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">치료사의 집</b></div>
    <div id="millgate"><i class="mp l"></i><i class="mp r"></i><i class="ma"></i><i class="md"></i><b class="ms">낡은 방앗간 · Old Mill</b></div>
    <div id="shadows"></div>
    <div id="actors"></div>
@@ -366,7 +383,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
     <div id="pshelf"></div><div id="pbook"></div><div id="pstove"><i></i></div>
     <img id="pframe" src="assets/ev_keepsake_frame.webp" alt="Photograph frame">
     <div id="pdoor"><b></b></div>
-    <div id="pmarks"></div>
+    <div id="pmarks"></div><div id="hmarks"></div>
    </div>
   </div>
   <div id="fsc">
@@ -456,7 +473,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
     <button class="pbtn nine cream" id="pReset">Restart</button>
     <div id="pCodeRow"><input id="pCode" type="text" maxlength="16" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Code"><button id="pCodeGo" type="button">OK</button></div>
     <div id="pDir"><div class="dirhead" id="dirHead">DIRECTOR MODE</div>
-     <button class="pbtn nine cream dirb" data-skip="2"></button><button class="pbtn nine cream dirb" data-skip="3"></button><button class="pbtn nine cream dirb" data-skip="4"></button><button class="pbtn nine cream dirb" data-skip="5"></button>
+     <button class="pbtn nine cream dirb" data-skip="2"></button><button class="pbtn nine cream dirb" data-skip="3"></button><button class="pbtn nine cream dirb" data-skip="4"></button><button class="pbtn nine cream dirb" data-skip="5"></button><button class="pbtn nine cream dirb" data-skip="6"></button><button class="pbtn nine cream dirb" data-skip="66"></button>
     </div>
   </div></div>
   <div id="flv"></div><div id="flcap"></div><div id="rain"></div>
@@ -816,7 +833,7 @@ function place(){
   if (S.flash){ const tgt = P.x + (P.face === "right" ? -100 : 100); BRX += (tgt - BRX) * 0.06; NPCX.br = S.scene === "tower" ? 1560 : (S.scene === "flood" && !has("f5.free")) ? 1750 : (S.flash === 5 && S.scene === "past") ? 1520 : Math.round(BRX); } else NPCX.br = -9999;
   setActorSprite(ed, "front", S.scene==="past" ? 125 : ED_H); ed.style.left = Math.round(NPCX.ed - parseFloat(ed.style.width)/2) + "px";
   setActorSprite(br, "front", S.scene==="past" ? 90 : BR_H); br.style.left = Math.round(NPCX.br - parseFloat(br.style.width)/2) + "px";
-  setActorSprite(mo, "front", S.flash ? 100 : MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
+  setActorSprite(mo, "front", S.flash ? 100 : S.scene === "healer" ? 175 : MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
   setActorSprite(gr, "front", S.flash ? 110 : GR_H); gr.style.left = Math.round(NPCX.gr - parseFloat(gr.style.width)/2) + "px";
   setActorSprite(tm, npcFace("tm", NPCX.tm), TM_H); tm.style.left = Math.round(NPCX.tm - parseFloat(tm.style.width)/2) + "px";
 }
@@ -858,36 +875,197 @@ function lightActor(el, cx, dt, shW){
   return L;
 }
 
+/* ---------- Chapter 6: Five Missing Minutes (placeholder art; every fact below is in STORY_BIBLE section 5 and 7) ---------- */
+Object.assign(UI, {
+  toHome:{en:"Go home", ko:"집으로 들어간다"}, toHeal:{en:"Enter the Healer's house", ko:"치료사의 집으로 들어간다"}, talkHl:{en:"Talk to the Healer", ko:"치료사와 이야기한다"},
+  locH:{en:"The Healer's house", ko:"치료사의 집"}, leaveH:{en:"Leave", ko:"나간다"}, lPit:{en:"Look into the wheel pit", ko:"바퀴 구덩이를 살핀다"},
+  askFall:{en:"Who caused Edward's fall?", ko:"누가 에드워드를 떨어뜨렸는가?"}, askWith:{en:"Who was with Edward before the Clockkeeper?", ko:"시계지기보다 먼저 에드워드 곁에 있던 사람은 누구인가?"},
+  concl:{en:"Conclusions", ko:"결론"}, confirm:{en:"Confirm", ko:"확정"}, compare:{en:"Compare the clues", ko:"단서를 맞춰 본다"}, pickWho:{en:"Whose name goes here?", ko:"누구의 이름을 적을까?"}, noName:{en:"Choose a name", ko:"이름을 정한다"}
+});
+SP.hl = {name:{en:"Healer", ko:"치료사"}, img:"assets/tommy_front.webp", sil:true};
+
+EV.acct_gr = { id:"acct_gr", name:{en:"Green's account",ko:"Green의 진술: 그날 밤"}, tag:"STATEMENT",
+  desc:{en:"Green says he was at the tower. Edward would not hand over the record, they struggled beside the open hatch, and Edward fell through it. Green says he believed Edward was dead and fled by the back door.", ko:"Green은 그날 밤 탑에 있었다고 말한다. 에드워드가 기록을 내주지 않았고, 열린 해치 옆에서 몸싸움이 벌어졌고, 에드워드가 그 아래로 떨어졌다고 한다. Green은 에드워드가 죽었다고 믿고 뒷문으로 달아났다고 말한다."},
+  note:{en:"Green says he was at the tower. They struggled by the open hatch and Edward fell. He says he fled believing Edward was dead.", ko:"Green은 탑에 있었다고 말한다. 열린 해치 옆에서 몸싸움이 있었고 에드워드가 떨어졌다. 그는 에드워드가 죽었다고 믿고 달아났다고 말한다."} };
+EV.report = { id:"report", name:{en:"The Healer's report",ko:"치료사의 소견"}, img:"ev_doctor_report", tag:"REPORT",
+  desc:{en:"A broken hip and pelvis, broken ribs, bleeding inside. Cold and wet clothes made the shock worse. Edward lived at least fifteen minutes after the fall, and his voice was hoarse, as if he had been calling out for some time. The fall was potentially survivable, and earlier help might have improved his chances. The Healer cannot say help would have saved him. Estimated window: 11:55 PM to 12:15 AM, and the cold makes that unreliable.", ko:"고관절과 골반이 부러졌고 갈비뼈도 여러 대 나갔으며 속에서 출혈이 있었다. 추위와 젖은 옷이 쇼크를 더 심하게 만들었다. 에드워드는 추락한 뒤에도 최소 십오 분은 살아 있었고, 목소리가 쉬어 있었다. 한동안 소리쳐 불렀다는 뜻이다. 그 추락은 살아남을 가능성이 있었고, 더 일찍 도움을 받았다면 나아졌을 수도 있다. 치료사는 도움이 있었다면 살았을 거라고 말할 수 없다고 한다. 추정 시간대는 밤 11시 55분에서 0시 15분이고, 추위 때문에 정확하지 않다."},
+  note:{en:"The Healer: Edward lived at least fifteen minutes after the fall and his voice was hoarse from calling out. Earlier help might have improved his chances. No one can say it would have saved him.", ko:"치료사: 에드워드는 추락한 뒤에도 최소 십오 분은 살아 있었고, 소리쳐 불러서 목이 쉬어 있었다. 더 일찍 도움을 받았다면 나아졌을 수도 있다. 도움이 있었다면 살았을 거라고는 아무도 말할 수 없다."} };
+EV.watch = { id:"watch", name:{en:"Edward's pocket watch",ko:"에드워드의 회중시계"}, tag:"WATCH",
+  desc:{en:"The watch kept running. The crystal is cracked and the case is dented where Edward landed on his left hip. Oliver sets it by the tower clock every morning, so it keeps true time. It shows when things happened. It does not show when he died.", ko:"시계는 멈추지 않고 계속 갔다. 유리가 갈라졌고, 에드워드가 왼쪽 고관절로 떨어진 자리가 찌그러졌다. 올리버가 매일 아침 탑시계에 맞춰 놓기 때문에 시각이 정확하다. 일이 벌어진 때는 알려 주지만, 그가 죽은 때를 알려 주지는 않는다."},
+  note:{en:"Edward's pocket watch kept running, cracked and dented. It is set by the tower clock every morning, so it keeps true time.", ko:"에드워드의 회중시계는 유리가 갈라지고 찌그러진 채로 계속 갔다. 매일 아침 탑시계에 맞추기 때문에 시각이 정확하다."} };
+EV.pit = { id:"pit", name:{en:"The wheel pit",ko:"바퀴 구덩이"}, tag:"PIT",
+  desc:{en:"Meltwater has pooled on the stones, the drain is choked with ice, and there is frost on the floor. Edward's vest and trousers were soaked through when he was found. Tommy's log puts the night at minus nine degrees.", ko:"돌바닥에 눈 녹은 물이 고였고, 배수구는 얼음으로 막혀 있고, 바닥에는 서리가 끼어 있다. 에드워드가 발견되었을 때 조끼와 바지가 흠뻑 젖어 있었다. 토미의 일지에는 그날 밤이 영하 9도였다고 적혀 있다."},
+  note:{en:"The pit below the hatch was wet and frozen: meltwater, an ice-blocked drain, frost. Edward's clothes were soaked.", ko:"해치 아래 구덩이는 젖고 얼어 있었다. 눈 녹은 물, 얼음으로 막힌 배수구, 서리. 에드워드의 옷은 흠뻑 젖어 있었다."} };
+EV.stmt_ck2 = { id:"stmt_ck2", name:{en:"Statement: Oliver, again",ko:"진술: 올리버의 두 번째 증언"}, tag:"STATEMENT",
+  desc:{en:"BGB told Oliver he came \"just as the bell rang\" and \"as fast as I could.\" Oliver found him kneeling by Edward, coat buttoned wrong over something, the left tail of his scarf torn short. He heard the handbell at five to midnight on his way back.", ko:"빅그베는 올리버에게 \"종이 울리자마자\", \"최대한 빨리 왔어요\"라고 말했다. 올리버가 왔을 때 빅그베는 에드워드 곁에 무릎을 꿇고 있었고, 외투 단추는 무언가를 가린 채 엇갈려 있었고, 왼쪽 목도리 끝은 짧게 찢겨 있었다. 올리버는 돌아오는 길에 자정 오 분 전에 손종 소리를 들었다."},
+  note:{en:"Oliver: BGB said he came just as the bell rang. He was kneeling by Edward, his coat buttoned wrong over something, his left scarf tail torn short. The handbell rang at five to midnight.", ko:"올리버: 빅그베는 종이 울리자마자 왔다고 했다. 그는 에드워드 곁에 무릎을 꿇고 있었고, 외투 단추가 무언가를 가린 채 엇갈려 있었고, 왼쪽 목도리 끝이 짧게 찢겨 있었다. 손종은 자정 오 분 전에 울렸다."} };
+EV.wool = { id:"wool", name:{en:"Mustard wool in Edward's fist",ko:"에드워드의 주먹 속 겨자색 털실"}, img:"ev_wool_strand", tag:"WOOL",
+  desc:{en:"A hand's width of mustard knit, snow-damp, was clenched in Edward's fingers when Oliver arrived, before anyone covered him. It matches BGB's torn left scarf tail. Hazel had straightened that tail whole at 11:42.", ko:"올리버가 도착했을 때, 아무도 에드워드를 덮기 전에, 그의 손가락 사이에 눈에 젖은 겨자색 털실 한 뼘이 쥐어져 있었다. 빅그베의 찢어진 왼쪽 목도리 끝과 같은 털실이다. 그 끝은 11시 42분에 헤이즐이 멀쩡하게 정리해 준 것이다."},
+  note:{en:"A hand's width of mustard wool was clenched in Edward's fist. BGB's left scarf tail is torn short.", ko:"에드워드의 주먹 속에 겨자색 털실 한 뼘이 쥐어져 있었다. 빅그베의 왼쪽 목도리 끝은 짧게 찢겨 있다."} };
+EV.patrol2 = { id:"patrol2", name:{en:"Tommy's log, later entries",ko:"토미의 일지, 밤 늦은 기록"}, img:"ev_patrol_log", tag:"LOG",
+  desc:{en:"23:46, a second bear on the plaza, slow and unhurried, heading for the tower, lost behind the buttress. 23:51, \"calling? wind?\" Tommy never enters the tower. The night was minus nine.", ko:"23시 46분, 광장의 두 번째 곰. 느리고 서두르지 않으며 탑으로 향하다 버팀벽 뒤에서 사라졌다. 23시 51분, \"부르는 소리? 바람?\" 토미는 탑에 들어가지 않는다. 그날 밤은 영하 9도였다."},
+  note:{en:"Tommy's log: at 11:46 a second bear, slow and unhurried, walked toward the tower. At 11:51 he wrote \"calling? wind?\"", ko:"토미의 일지: 11시 46분에 느리고 서두르지 않는 두 번째 곰이 탑으로 갔다. 11시 51분에는 \"부르는 소리? 바람?\"이라고 적었다."} };
+EV.walk = { id:"walk", name:{en:"The walk from the café",ko:"카페에서 탑까지의 걸음"}, tag:"TIME",
+  desc:{en:"Walking slowly, the way BGB does: café door 11:42, plaza 11:46, tower door 11:48. Six minutes. Hazel adds that she had just straightened his left scarf tail, and that it was whole.", ko:"빅그베처럼 천천히 걸으면 카페 문 11시 42분, 광장 11시 46분, 탑 문 11시 48분이다. 육 분이 걸린다. 헤이즐은 방금 그의 왼쪽 목도리 끝을 정리해 주었고 그때는 멀쩡했다고 덧붙인다."},
+  note:{en:"From the café door to the tower door is six minutes at an easy walk: 11:42 to 11:48. Hazel says his left scarf tail was whole when he left.", ko:"카페 문에서 탑 문까지는 천천히 걸어 육 분이다. 11시 42분에서 11시 48분. 헤이즐은 그가 나갈 때 왼쪽 목도리 끝이 멀쩡했다고 한다."} };
+EV.hide = { id:"hide", name:{en:"Behind the photograph",ko:"사진 뒤의 틈"}, img:"ev_keepsake_frame", tag:"HIDING PLACE",
+  desc:{en:"The keepsake frame has a hinged backing board with two brass turn-buttons. Behind it is a cavity about three centimeters deep. It leans on BGB's shelf and has never hung on the wall.", ko:"기념 액자의 뒷판은 경첩이 달려 있고 놋쇠 단추 두 개로 잠긴다. 그 뒤에는 깊이 3센티미터쯤의 틈이 있다. 액자는 빅그베의 선반에 기대어 놓여 있을 뿐 벽에 걸린 적이 없다."},
+  note:{en:"BGB's photograph frame has a hidden cavity behind its backing board.", ko:"빅그베의 사진 액자에는 뒷판 뒤에 숨겨진 틈이 있다."} };
+EV.glove = { id:"glove", name:{en:"A right glove",ko:"오른손 장갑 한 짝"}, tag:"GLOVE",
+  desc:{en:"A wool glove for the right hand, flattened and snow-damp. Tommy's log says the bear at 11:35 wore both gloves.", ko:"오른손용 털장갑 한 짝이 납작하게 눌려 있고 눈에 젖어 있다. 토미의 일지에는 11시 35분의 곰이 장갑을 양손에 끼고 있었다고 적혀 있다."},
+  note:{en:"A right glove was hidden behind the photograph. Green had worn both gloves at 11:35.", ko:"오른손 장갑 한 짝이 사진 뒤에 숨겨져 있었다. Green은 11시 35분에 장갑을 양손에 끼고 있었다."} };
+EV.letter = { id:"letter", name:{en:"A letter addressed to \"G.\"",ko:"\"G\"에게 쓴 편지"}, tag:"LETTER",
+  desc:{en:"A letter folded in thirds, crumpled, in Edward's hand and addressed to \"G.\" Tommy's log says the bear at 11:35 carried a paper in his right hand. BGB has not read it.", ko:"세 번 접혀 구겨진 편지로, 에드워드의 글씨이고 받는 사람은 \"G\"다. 토미의 일지에는 11시 35분의 곰이 오른손에 종이 한 장을 들고 있었다고 적혀 있다. 빅그베는 이것을 읽지 않았다."},
+  note:{en:"A crumpled letter in Edward's hand, addressed to \"G.\", was hidden behind the photograph.", ko:"에드워드의 글씨로 \"G\"에게 쓴 구겨진 편지가 사진 뒤에 숨겨져 있었다."} };
+
+Object.assign(NOTES, {
+  n_dd04:{en:"The names were swapped. The boy you played in the memories, with the scarred ear and the right hand, is the Green of today.", ko:"이름이 뒤바뀌었다. 기억 속에서 조종한, 귀에 흉터가 있고 오른손을 쓰는 아이는 지금의 Green이다."},
+  n_dd06:{en:"Green caused the fall. He fled believing Edward was dead.", ko:"Green이 에드워드를 떨어뜨렸다. 그는 에드워드가 죽었다고 믿고 달아났다."},
+  n_turn:{en:"The Healer says Edward was alive for at least fifteen minutes. Green asks: then who was with him?", ko:"치료사는 에드워드가 최소 십오 분은 살아 있었다고 한다. Green이 묻는다. 그럼 누가 곁에 있었지?"},
+  n_nogl:{en:"No glove and no letter were found at the tower. Someone took them.", ko:"탑에서는 장갑도 편지도 발견되지 않았다. 누군가 가져갔다."},
+  n_k1:{en:"11:50. BGB found Edward alive.", ko:"11시 50분. 빅그베는 살아 있는 에드워드를 발견했다."},
+  n_k2:{en:"Edward asked for help. He called out, and he held on to a scarf.", ko:"에드워드는 도움을 청했다. 그는 소리쳐 불렀고, 목도리를 붙잡았다."},
+  n_k3:{en:"BGB saw that Edward needed help at once.", ko:"빅그베는 에드워드에게 곧바로 도움이 필요하다는 것을 알아보았다."},
+  n_k4:{en:"11:51. BGB took the glove and the letter, unread, and buttoned them into his coat. 11:53, he bolted the back door from the inside.", ko:"11시 51분. 빅그베는 장갑과 편지를 읽지 않은 채 외투 속에 단추로 잠가 넣었다. 11시 53분, 뒷문에 안쪽에서 빗장을 걸었다."},
+  n_k5:{en:"11:55. BGB rang the handbell. For about five minutes he did not call for help.", ko:"11시 55분. 빅그베가 손종을 울렸다. 약 오 분 동안 그는 도움을 부르지 않았다."},
+  n_k6:{en:"BGB then hid his own part in it. He told Oliver he came just as the bell rang.", ko:"빅그베는 그 뒤로 자신이 한 일을 숨겼다. 올리버에게는 종이 울리자마자 왔다고 말했다."},
+  n_dd05:{en:"BGB found Edward alive at 11:50, hid the glove and the letter that pointed to Green, and did not raise the alarm until 11:55.", ko:"빅그베는 11시 50분에 살아 있는 에드워드를 발견했고, Green을 가리키는 장갑과 편지를 숨겼고, 11시 55분까지 경보를 울리지 않았다."},
+  n_last:{en:"Edward's last words, as BGB remembers them: \"Cold... please...\" and then, \"...Green... the clock...\" BGB heard both.", ko:"빅그베가 기억하는 에드워드의 마지막 말: \"추워... 제발...\" 그리고 \"...Green... 시계...\" 빅그베는 두 마디를 모두 들었다."},
+  n_dd10:{en:"Edward lay injured, wet and cold. The stopped tower clock and the running watch together show that no clock fixes his time of death.", ko:"에드워드는 다치고 젖고 추운 채로 누워 있었다. 멈춘 탑시계와 계속 간 회중시계를 함께 보면, 어떤 시계도 그가 죽은 시각을 정해 주지 못한다."},
+  n_dd11:{en:"No one can say whether help at 11:50 would have saved Edward.", ko:"11시 50분에 도움이 있었다면 에드워드가 살았을지는 아무도 말할 수 없다."},
+  n_dd01:{en:"11:47 is when the clock broke, not when Edward died.", ko:"11시 47분은 시계가 고장 난 때이지, 에드워드가 죽은 때가 아니다."},
+  n_dd12:{en:"Green is responsible for the fall. BGB is responsible for hiding evidence and delaying help.", ko:"추락에 대한 책임은 Green에게 있다. 증거를 숨기고 도움을 늦춘 책임은 빅그베에게 있다."}
+});
+
+/* dialogue */
+Object.assign(D, {
+  c6_comp: {sp:"bgb", ex:"thinking", t:{en:"The two photographs have told me everything they can.", ko:"두 장의 사진은 말해 줄 수 있는 건 다 말해 줬어."}},
+  c6_wait: {sp:"bgb", ex:"thinking", t:{en:"Green watches me and says nothing. I should work out who is who first. The Identity Board is under People.", ko:"Green은 나를 보기만 하고 아무 말도 하지 않는다. 먼저 누가 누구인지 정리해야 해. 신원 보드는 사람 탭에 있어."}},
+  g6_0: {sp:"bgb", ex:"neutral", t:{en:"Green. Your boot prints lead from the tower's back door to this mill. Tell me what happened up there.", ko:"Green. 탑 뒷문에서 이 방앗간까지 네 발자국이 이어져 있어. 거기서 무슨 일이 있었는지 말해 줘."}, next:"g6_1"},
+  g6_1: {sp:"gr", ex:"neutral", t:{en:"Edward said he would read the true record at midnight. I demanded to see it. He refused.", ko:"에드워드는 자정에 진짜 기록을 읽겠다고 했어. 나는 보여 달라고 했고, 그는 거절했지."}, next:"g6_2"},
+  g6_2: {sp:"gr", ex:"neutral", t:{en:"We struggled beside the open hatch. Then he was gone through it.", ko:"열린 해치 옆에서 몸싸움이 났어. 그러다 에드워드가 그 아래로 사라졌지."}, next:"g6_3"},
+  g6_3: {sp:"gr", ex:"neutral", t:{en:"I looked down. He did not move. I thought he was dead. So I ran, out the back door and through the snow, to here.", ko:"내려다봤어. 움직이지 않더군. 죽었다고 생각했어. 그래서 달아났지. 뒷문으로 나가 눈길을 걸어 여기까지."}, ev:"acct_gr", set:"gr.admit", next:"g6_4"},
+  g6_4: {sp:"bgb", ex:"worried", t:{en:"So Green was there, and Edward fell because of him.", ko:"그러니까 Green은 거기 있었고, 에드워드는 Green 때문에 떨어졌어."}, next:null},
+  g6_h: {sp:"bgb", ex:"thinking", t:{en:"Green has told me what he knows. The Healer examined Edward that night. I should ask what was found.", ko:"Green은 아는 대로 말했어. 그날 밤 에드워드를 살핀 건 치료사야. 무엇을 찾았는지 물어봐야 해."}},
+  g6_t0: {sp:"bgb", ex:"neutral", t:{en:"The Healer says Edward was alive after the fall, for at least fifteen minutes.", ko:"치료사가 그러더라. 에드워드는 추락한 뒤에도 최소 십오 분은 살아 있었대."}, next:"g6_t1"},
+  g6_t1: {sp:"gr", ex:"worried", t:{en:"Alive? Then who was with him?", ko:"살아 있었다고? 그럼 누가 곁에 있었지?"}, set:"c6.turn", note:"n_turn", next:"g6_t2"},
+  g6_t2: {sp:"bgb", ex:"thinking", t:{en:"Who was with Edward before Oliver came?", ko:"올리버가 오기 전에 에드워드 곁에 있던 사람은 누구지?"}, next:null},
+  g6_9: {sp:"gr", ex:"neutral", t:{en:"Find out who was with him. I will be here.", ko:"누가 곁에 있었는지 알아내. 나는 여기 있을 테니."}},
+  hl0: {sp:"bgb", ex:"neutral", t:{en:"Excuse me. I came about Edward.", ko:"실례합니다. 에드워드 일로 왔어요."}, next:"hl1"},
+  hl1: {sp:"hl", t:{en:"A broken hip and pelvis, broken ribs, and bleeding inside. The cold and his wet clothes made the shock worse.", ko:"고관절과 골반이 부러졌고 갈비뼈도 여러 대 나갔습니다. 속에서 출혈도 있었습니다. 추위와 젖은 옷이 쇼크를 더 심하게 만들었습니다."}, next:"hl2"},
+  hl2: {sp:"hl", t:{en:"He lived at least fifteen minutes after the fall. His voice was hoarse. He had been calling out for some time.", ko:"추락한 뒤에도 최소 십오 분은 살아 있었습니다. 목소리가 쉬어 있었어요. 한동안 소리쳐 불렀다는 뜻입니다."}, next:"hl3"},
+  hl3: {sp:"hl", t:{en:"The fall was potentially survivable, and earlier help might have improved his chances. I cannot tell you he would have lived. No one can. My estimate for the end is between five to midnight and a quarter past, and the cold makes that window wide.", ko:"그 정도 추락이라면 살아남을 가능성도 있었습니다. 더 일찍 도움을 받았다면 나아졌을 수도 있고요. 하지만 살았을 거라고는 말할 수 없습니다. 아무도 말할 수 없습니다. 끝난 시각은 자정 오 분 전에서 십오 분 뒤 사이로 짐작합니다. 추위 때문에 그 폭이 넓습니다."}, ev:"report", next:"hl4"},
+  hl4: {sp:"hl", t:{en:"And this was in his vest. His pocket watch. It never stopped running, though the glass is cracked.", ko:"그리고 이건 조끼 안에 있던 회중시계입니다. 유리는 갈라졌지만 한 번도 멈추지 않았습니다."}, ev:"watch", set:"c6.hl", next:null},
+  hl9: {sp:"hl", t:{en:"That is all I found. I wish I had more to give you.", ko:"제가 찾은 건 그게 전부입니다. 더 드릴 수 있으면 좋았을 텐데요."}},
+  ck6_0: {sp:"bgb", ex:"neutral", t:{en:"Oliver, please tell me again what you saw when you came back.", ko:"올리버, 돌아왔을 때 보신 걸 다시 말씀해 주세요."}, next:"ck6_1"},
+  ck6_1: {sp:"ck", ex:"neutral", t:{en:"You were kneeling by Edward. Your coat was buttoned wrong, as if over something. The left tail of your scarf was torn short.", ko:"당신은 에드워드 곁에 무릎을 꿇고 있었습니다. 외투 단추가 엇갈려 있었습니다. 무언가를 가린 것처럼요. 왼쪽 목도리 끝은 짧게 찢겨 있었고요."}, next:"ck6_2"},
+  ck6_2: {sp:"ck", ex:"neutral", t:{en:"You told me you came as fast as you could, just as the bell rang. But I heard the handbell at five to midnight, on my way back.", ko:"종이 울리자마자 최대한 빨리 왔다고 하셨습니다. 하지만 저는 돌아오는 길에 자정 오 분 전에 손종 소리를 들었습니다."}, ev:"stmt_ck2", next:"ck6_3"},
+  ck6_3: {sp:"ck", ex:"worried", t:{en:"And Edward's fist was already closed. There was a strand of yellow wool in it.", ko:"그리고 에드워드의 주먹은 이미 쥐어져 있었습니다. 그 안에 노란 털실 한 가닥이 있었습니다."}, ev:"wool", next:"ck6_4"},
+  ck6_4: {sp:"bgb", ex:"worried", t:{en:"...", ko:"..."}, next:null},
+  ck6_9: {sp:"ck", ex:"neutral", t:{en:"That is everything I saw.", ko:"제가 본 건 그게 전부입니다."}},
+  tm6_0: {sp:"tm", t:{en:"My log again. Eleven forty-six, a second bear on the plaza, slow and unhurried, heading for the tower. I lost him behind the buttress.", ko:"일지를 다시 보겠습니다. 11시 46분, 광장에 두 번째 곰이 있었습니다. 느리고 서두르지 않았고 탑으로 향했습니다. 버팀벽 뒤에서 놓쳤습니다."}, next:"tm6_1"},
+  tm6_1: {sp:"tm", t:{en:"At eleven fifty-one I wrote \"calling? wind?\" I took it for wind. I do not enter the tower.", ko:"11시 51분에는 \"부르는 소리? 바람?\"이라고 적었습니다. 바람 소리라고 생각했습니다. 저는 탑에 들어가지 않습니다."}, ev:"patrol2", next:null},
+  tm6_9: {sp:"tm", t:{en:"That is all my log says.", ko:"제 일지에는 그게 전부입니다."}},
+  h6_0: {sp:"bgb", ex:"neutral", t:{en:"Hazel, do you remember how I left that night?", ko:"헤이즐, 그날 밤 제가 어떻게 나갔는지 기억해요?"}, next:"h6_1"},
+  h6_1: {sp:"hz", t:{en:"You left at eleven forty-two. I straightened your left scarf tail at the door myself. It was whole.", ko:"열한 시 사십이 분에 나가셨죠. 문 앞에서 제가 직접 왼쪽 목도리 끝을 정리해 드렸어요. 멀쩡했어요."}, next:"h6_2"},
+  h6_2: {sp:"bgb", ex:"thinking", t:{en:"And from your door to the Clocktower, at an easy walk?", ko:"그럼 가게 문에서 시계탑까지 천천히 걸으면요?"}, next:"h6_3"},
+  h6_3: {sp:"hz", t:{en:"Walk it yourself and count. I'll wait here.", ko:"직접 걸어 보고 세어 보세요. 저는 여기서 기다릴게요."}, next:"h6_4"},
+  h6_4: {sp:"bgb", ex:"thinking", t:{en:"(He walks it slowly, counting. Café door, 11:42. Plaza, 11:46. Tower door, 11:48.)", ko:"(천천히 걸으며 센다. 카페 문 11시 42분. 광장 11시 46분. 탑 문 11시 48분.)"}, fx:"walk", ev:"walk", next:null},
+  h6_9: {sp:"hz", t:{en:"Six minutes, like you counted. Is there anything else?", ko:"세어 보신 대로 육 분이에요. 더 필요한 게 있으세요?"}},
+  p6_f0: {sp:"bgb", ex:"thinking", t:{en:"I turn the frame over. Two brass buttons hold the backing. I know what is behind it.", ko:"액자를 뒤집는다. 놋쇠 단추 두 개가 뒷판을 누르고 있다. 그 뒤에 뭐가 있는지 나는 안다."}, next:"p6_f1"},
+  p6_f1: {sp:"bgb", ex:"worried", t:{en:"A cavity, three centimeters deep.", ko:"깊이 3센티미터쯤의 틈이다."}, ev:"hide", next:"p6_f2"},
+  p6_f2: {sp:"bgb", ex:"worried", t:{en:"One glove, flattened. A right-hand glove.", ko:"눌린 장갑 한 짝. 오른손용이다."}, ev:"glove", next:"p6_f3"},
+  p6_f3: {sp:"bgb", ex:"worried", t:{en:"A letter folded in thirds, in Edward's hand. \"G.\" I never read it.", ko:"세 번 접힌 편지, 에드워드의 글씨다. \"G\". 나는 읽지 않았다."}, ev:"letter", set:"c6.hid", next:null},
+  p6_f9: {sp:"bgb", ex:"worried", t:{en:"I have seen what is behind it.", ko:"뒤에 뭐가 있는지는 이미 봤어."}},
+  c6_pit0: {sp:"bgb", ex:"thinking", t:{en:"Nothing new down there yet.", ko:"아래에는 아직 새로운 게 없어."}},
+  c6_n0: {sp:"nini", ex:"worried", t:{en:"Mr. Bear. Where were you between a quarter to twelve and midnight, that night?", ko:"아저씨. 그날 밤 열두 시 십오 분 전부터 자정 사이에 어디 계셨어요?"},
+    ch:[{t:{en:"At Hazel's café, until a little before eleven forty-two.",ko:"헤이즐의 카페에 있었어. 11시 42분 조금 전까지."},go:"c6_n1"},{t:{en:"At the tower. Edward was alive when I found him.",ko:"탑에 있었어. 내가 발견했을 때 에드워드는 살아 있었어."},go:"c6_n2"},{t:{en:"I don't want to answer.",ko:"대답하고 싶지 않아."},go:"c6_n3"}]},
+  c6_n1: {sp:"nini", ex:"worried", t:{en:"Hazel says that too. But that is not the whole night, is it?", ko:"헤이즐도 그렇게 말해요. 그런데 그게 밤 전체는 아니잖아요."}, set:"c6.fin", next:null},
+  c6_n2: {sp:"nini", ex:"worried", t:{en:"...You were with him.", ko:"...아저씨가 곁에 있었군요."}, set:"c6.fin", next:null},
+  c6_n3: {sp:"nini", ex:"neutral", t:{en:"Then I'll wait. I am not going anywhere.", ko:"그럼 기다릴게요. 저는 어디에도 안 가요."}, set:"c6.fin", next:null}
+});
+
+/* the six conclusions, each tied to evidence the player already holds (bible 7.1) */
+const KCON = [
+  { id:"k1", need:["wool","report","melt"], t:{en:"BGB found Edward alive.", ko:"빅그베는 살아 있는 에드워드를 발견했다."} },
+  { id:"k2", need:["report","patrol2","wool"], t:{en:"Edward asked for help.", ko:"에드워드는 도움을 청했다."} },
+  { id:"k3", need:["report","handbell","wool"], t:{en:"BGB saw that Edward needed help at once.", ko:"빅그베는 에드워드에게 곧바로 도움이 필요하다는 것을 알아보았다."} },
+  { id:"k4", need:["patrol","glove","letter","stmt_ck2"], t:{en:"BGB hid the glove and the letter.", ko:"빅그베는 장갑과 편지를 숨겼다."} },
+  { id:"k5", need:["receipt","walk","patrol2","handbell","chute"], t:{en:"BGB waited about five minutes before ringing the bell.", ko:"빅그베는 종을 울리기까지 약 오 분을 기다렸다."} },
+  { id:"k6", need:["stmt_ck2","hide"], t:{en:"BGB then hid his own part in it.", ko:"빅그베는 그 뒤로 자신이 한 일을 숨겼다."} }
+];
+const EV_WHERE = {
+  wool:{en:"ask Oliver in the tower", ko:"시계탑의 올리버에게 물어보면"}, stmt_ck2:{en:"ask Oliver in the tower", ko:"시계탑의 올리버에게 물어보면"}, melt:{en:"look around the tower", ko:"시계탑을 살펴보면"},
+  report:{en:"visit the Healer's house", ko:"치료사의 집에 가 보면"}, watch:{en:"visit the Healer's house", ko:"치료사의 집에 가 보면"}, patrol2:{en:"ask Tommy about his log", ko:"토미에게 일지에 대해 물어보면"},
+  walk:{en:"ask Hazel at the café", ko:"카페의 헤이즐에게 물어보면"}, receipt:{en:"ask Hazel at the café", ko:"카페의 헤이즐에게 물어보면"}, handbell:{en:"look around the tower", ko:"시계탑을 살펴보면"}, chute:{en:"look around the tower", ko:"시계탑을 살펴보면"},
+  patrol:{en:"read Tommy's logbook", ko:"토미의 일지를 읽어 보면"}, glove:{en:"look at the photograph at home", ko:"집의 사진을 살펴보면"}, letter:{en:"look at the photograph at home", ko:"집의 사진을 살펴보면"}, hide:{en:"look at the photograph at home", ko:"집의 사진을 살펴보면"}
+};
+const missing = ids => ids.filter(e=>!S.ev.includes(e));
+function whereHint(ids){ const m = missing(ids)[0]; return m ? EV_WHERE[m] : null; }
+function confirmK(id){
+  const k = KCON.find(x=>x.id===id); if (!k || has("c6."+id)) return;
+  const m = missing(k.need);
+  if (m.length){ const w = EV_WHERE[m[0]]; toast(lang==="ko" ? "아직 근거가 모자라다. "+w.ko+" 단서를 찾을 수 있을 것 같다." : "Not enough yet. You might find a clue if you "+w.en+"."); return; }
+  setf("c6."+id); addNote(NOTES["n_"+id]); toast((lang==="ko"?"결론 확정: ":"Concluded: ")+tr(k.t)); checkDeduce(); save(); renderCF();
+}
+function doCompare(){
+  if (has("dd04")) return;
+  const n = [has("c6.on"), S.ev.includes("register"), S.ev.includes("photo2"), S.ev.includes("stmt_gr") || S.ev.includes("stmt_ck2")].filter(Boolean).length;
+  if (n >= 3){ setf("dd04"); addNote(NOTES.n_dd04); toast((lang==="ko"?"추리 완성: ":"Deduction: ")+(lang==="ko"?"이름이 뒤바뀌었다":"The names were swapped")); checkDeduce(); save(); }
+  else toast(lang==="ko"?"맞는 데가 있지만, 아직 충분하지 않다.":"Something fits, but not enough yet.");
+  renderCF();
+}
+const WHO = [["Green","Green"],["bgb","BGB"],["ck","Oliver"],["hz","Hazel"],["tm","Tommy"],["nini","Nini"]];
+const WHOKO = {Green:"Green", BGB:"빅그베", Oliver:"올리버", Hazel:"헤이즐", Tommy:"토미", Nini:"니니"};
+const COLNEED = [["dd06"], ["c6.k1","c6.k2","c6.k3","c6.k5"], ["c6.k4","c6.k6"]];
+const COLOK = ["Green","BGB","BGB"];
+function placeName(col, name){
+  S.pick = -1;
+  if (!COLNEED[col].every(f=>has(f))){ toast(lang==="ko"?"아직 근거가 모자라다. 가진 증거로 먼저 결론을 세우자.":"Not enough evidence yet. Build your conclusions first."); renderCF(); return; }
+  if (name !== COLOK[col]){ toast(lang==="ko"?"각자가 한 일을 살펴보자.":"Look at what each of them did."); renderCF(); return; }
+  S.resp = S.resp || [null,null,null]; S.resp[col] = name;
+  toast(lang==="ko"?"이름을 적었다: "+WHOKO[name]:"Name placed: "+name);
+  if (S.resp.every(Boolean) && !has("dd12")){ setf("dd12"); addNote(NOTES.n_dd12); setf("c6.d"); setTimeout(()=>toast(lang==="ko"?"니니가 마을에서 빅그베를 찾고 있다.":"Nini is looking for BGB in the village."), 2100); }
+  save(); renderCF();
+}
+function showEnd6(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"6장 끝":"END OF CHAPTER 6"; $("eH").textContent = k?"사라진 5분":"Five Missing Minutes";
+  $("eP1").textContent = k?"누가 도울 수 있었고, 하지 않았는가. 증거는 모두 사건 파일에 있다.":"Who had the chance to help, and didn't? The evidence is all in the Case File.";
+  $("eP2").textContent = k?"7장 \"우리가 고르는 진실\"은 아직 만들지 않았습니다.":"Chapter 7, The Truth We Choose, is not built yet.";
+  $("eNext").style.display = "none"; $("eBack").textContent = k?"계속 둘러보기":"Keep exploring"; $("endcard").classList.add("on"); }
+
 /* ---------- interactables ---------- */
 let IA = [
-  { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-150, run:()=>startDlg(has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done")?"n9":"n0") },
+  { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-150, run:()=>startDlg(niniNode()) },
   { id:"sign",   x:()=>1345,      label:UI.read,   top:640,            run:()=>inspect("notice") },
   { id:"enterA", x:()=>4200, label:UI.enterA, top:560, run:()=>tryEnter("archive", 430, ch2Gate) },
   { id:"enterC", x:()=>5200, label:UI.enterC, top:560, run:()=>tryEnter("cafe", 500, ch1Gate) },
   { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? "mo9" : "mo0") },
+  { id:"home",   x:()=>1560,      label:UI.toHome, top:600,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 700); } },
+  { id:"heal",   x:()=>3380,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 470); } },
   { id:"mill",   x:()=>6150,      label:UI.toMill, top:600,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
-  { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } startDlg(has("tm.stmt") ? "tm9" : "tm0"); } },
+  { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } startDlg(tmNode()); } },
   { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
-  { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(has("ck.bear")?"c9":"c0") },
+  { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(ckNode()) },
   { id:"clock",  x:()=>2735,      label:UI.look,   top:560,            run:()=>inspect("clock") },
   { id:"door",   x:()=>2856,      label:UI.enter,  top:600,            run:()=>enterTower() }
 ];
 const IA_V = IA.slice();
 const IA_T = [
   { id:"exit",  x:()=>445,  label:UI.leave,  top:530, run:()=>setScene("village", 2640) },
-  { id:"ck",    x:()=>NPCX_T.ck, label:UI.talkCk, top:FEET_T-CK_H-150, run:()=>startDlg(has("ck.bear")?"c9":"c0") },
+  { id:"ck",    x:()=>NPCX_T.ck, label:UI.talkCk, top:FEET_T-CK_H-150, run:()=>startDlg(ckNode()) },
   { id:"bell",  x:()=>897,  label:UI.lBell,  top:500, run:()=>inspect("handbell") },
   { id:"boots", x:()=>640,  label:UI.lBoots, top:640, run:()=>inspect("boots") },
   { id:"hatch", x:()=>1210, label:UI.lHatch, top:530, run:()=>inspect("hatch") },
   { id:"clock", x:()=>1511, label:UI.lClk,   top:560, run:()=>inspect("clock") },
   { id:"pend",  x:()=>1663, label:UI.lPend,  top:560, run:()=>inspect("pendulum") },
   { id:"melt",  x:()=>1485, label:UI.lMelt,  top:530, run:()=>inspect("melt") },
-  { id:"chute", x:()=>2168, label:UI.lChute, top:540, run:()=>inspect("chute") }
+  { id:"chute", x:()=>2168, label:UI.lChute, top:540, run:()=>inspect("chute") },
+  { id:"pit",   x:()=>1345, label:UI.lPit,   top:640, when:()=>has("c6.turn"), run:()=>inspect("pit") }
 ];
 const IA_A = [
   { id:"exit",  x:()=>410,  label:UI.leaveA, top:540, run:()=>setScene("village", 4200) },
   { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, run:()=>inspect("register") },
-  { id:"comp",  x:()=>1500, label:UI.lComp,  top:540, run:()=>{ if (!has("gr.done")){ startDlg("m_no"); return; } showEnd(); } },
+  { id:"comp",  x:()=>1500, label:UI.lComp,  top:540, run:()=>{ if (has("c6.on")){ startDlg("c6_comp"); return; } if (!has("gr.done")){ startDlg("m_no"); return; } showEnd(); } },
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect(has("nini.key") ? "photo2" : "drawers") }
 ];
 const IA_FL = [
@@ -910,26 +1088,30 @@ const IA_FT = [
   { id:"fexit",  x:()=>445,  label:UI.leaveF, top:530, run:()=>setScene("past", 1700) },
   { id:"flever", x:()=>1500, label:UI.lLever, top:520, run:()=>{ if (has("f4.end")){ startDlg("fl9"); return; } startDlg("fl0"); } }
 ];
+const IA_H = [
+  { id:"hexit", x:()=>2030, label:UI.leaveH, top:330, run:()=>setScene("village", 3380) },
+  { id:"hl",    x:()=>1300, label:UI.talkHl, top:FEET_T-175-150, run:()=>startDlg(has("c6.hl") ? "hl9" : "hl0") }
+];
 const IA_M = [
   { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 6050) },
   { id:"bag",  x:()=>1160, label:UI.lBag, top:640, run:()=>inspect("bread") },
-  { id:"gr",   x:()=>NPCX_M.gr, label:UI.talkGr, top:FEET_T-GR_H-150, run:()=>startDlg(has("gr.done") ? "gr9" : "gr0") }
+  { id:"gr",   x:()=>NPCX_M.gr, label:UI.talkGr, top:FEET_T-GR_H-150, run:()=>startDlg(grNode()) }
 ];
 const IA_P = [
   { id:"pwin",   x:()=>560,  label:UI.lWin,    top:330, run:()=>startDlg("p_w") },
   { id:"pbook",  x:()=>895,  label:UI.lBook,   top:420, run:()=>startDlg("p_b") },
   { id:"pstove", x:()=>1700, label:UI.lStove,  top:480, run:()=>startDlg("p_s") },
   { id:"pkettle",x:()=>1730, label:UI.lKettle, top:420, run:()=>startDlg("p_k") },
-  { id:"frame", x:()=>1300, label:UI.lFrame, top:430, run:()=>startDlg(has("pro.frame") ? "p_f9" : "p_f0") },
-  { id:"pdoor", x:()=>2030, label:UI.lDoor,  top:330, run:()=>{ if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
+  { id:"frame", x:()=>1300, label:UI.lFrame, top:430, run:()=>startDlg(has("c6.k3") ? (has("c6.hid") ? "p6_f9" : "p6_f0") : has("pro.frame") ? "p_f9" : "p_f0") },
+  { id:"pdoor", x:()=>2030, label:UI.lDoor,  top:330, run:()=>{ if (has("c6.on")){ setScene("village", 1560); return; } if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
 ];
 let PRO_GO = false;
 const IA_C = [
   { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 5200) },
-  { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(has("hz.done")?"h9":"h0") }
+  { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(hzNode()) }
 ];
-function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = ["nini","ck","hz","tm","mo","gr","v1","v2","fded","fbrother"].includes(i.id); m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
-mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks")); mkMarks(IA_M, $("mmarks")); mkMarks(IA_F, $("ymarks")); mkMarks(IA_D, $("ymarks")); mkMarks(IA_FL, $("fmarks")); mkMarks(IA_FT, $("tmarks"));
+function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = ["nini","ck","hz","tm","mo","gr","hl","v1","v2","fded","fbrother"].includes(i.id); m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
+mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks")); mkMarks(IA_H, $("hmarks")); mkMarks(IA_M, $("mmarks")); mkMarks(IA_F, $("ymarks")); mkMarks(IA_D, $("ymarks")); mkMarks(IA_FL, $("fmarks")); mkMarks(IA_FT, $("tmarks"));
 IA = IA_V;
 let near = null, peek = 0, autoGo = null;
 
@@ -955,6 +1137,13 @@ function checkDeduce(){
   const tw = ["hatch","pendulum","handbell","chute","melt","boots"].filter(x=>S.ev.includes(x)).length;
   if (S.ev.includes("clock") && S.ev.includes("pendulum") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
   if (has("ck.bear") && S.ev.includes("clock") && tw >= 3 && !S.flags.q1){ S.flags.q1 = true; if (!S.flags["ch.2"]){ S.flags["ch.2"] = true; setTimeout(()=>whenPlay(()=>chapterIntro(2)), 3500); } toast((lang==="ko"?"질문":"Question")+": "+tr(UI.askBear)); }
+  const hv = ids => ids.every(e=>S.ev.includes(e));
+  if (has("gr.admit") && hv(["hatch","boots","chute","pendulum","patrol","acct_gr"]) && !has("dd06")){ setf("dd06"); addNote(NOTES.n_dd06); toast((lang==="ko"?"추리 완성: ":"Deduction: ")+(lang==="ko"?"Green이 에드워드를 떨어뜨렸다":"Green caused the fall")); }
+  if (has("c6.turn") && !has("c6.nogl")){ setf("c6.nogl"); addNote(NOTES.n_nogl); }
+  if (hv(["clock","pendulum","watch","report"]) && !has("dd01b")){ setf("dd01b"); addNote(NOTES.n_dd01); }
+  if (hv(["pit","report","clock","watch"]) && !has("dd10")){ setf("dd10"); addNote(NOTES.n_dd10); }
+  if (hv(["pit","report","watch"]) && !has("dd11")){ setf("dd11"); addNote(NOTES.n_dd11); }
+  if (typeof KCON !== "undefined" && KCON.every(k=>has("c6."+k.id)) && !has("dd05")){ setf("dd05"); addNote(NOTES.n_dd05); addNote(NOTES.n_last); toast((lang==="ko"?"추리 완성: ":"Deduction: ")+(lang==="ko"?"사라진 5분":"The five missing minutes")); }
   if (S.flags["con.c1"] && S.flags["con.c2"] && !S.flags.dd02){ S.flags.dd02 = true; if (!S.flags["ch.3"] && S.flags["ch.2"]){ S.flags["ch.3"] = true; setTimeout(()=>whenPlay(()=>chapterIntro(3)), 3500); } addNote(DD02); toast((lang==="ko"?"추리 완성":"Deduction")+": "+(lang==="ko"?"곰은 한 마리일 수 없다":"Two bears cannot be one")); }
 }
 function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSON.stringify(n); if (S.notes.some(x=>x.k===key)) return; S.notes.push({k:key, n}); }
@@ -1000,7 +1189,7 @@ function showChoices(){
 }
 function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
   setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
-function applyNode(n){ if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
+function applyNode(n){ if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(fromClick){
   if (performance.now() < dlgLock) return;
   if (fromClick && D[cur] && D[cur].ch && !typing) return;   /* a click never picks an answer; choose with the buttons, 1/2 or arrows + E */
@@ -1009,7 +1198,7 @@ function advance(fromClick){
   applyNode(n); goto(n.next || null);
 }
 function goto(id){ if (!id){ endDlg(); return; } cur = id; renderDlg(true); }
-const CHT = {1:["멈춘 시계","The Clock That Stopped"],2:["네 명의 증인","Four Witnesses"],3:["다른 곰","The Other Bear"],4:["훔쳐 간 이름","The Name That Was Stolen"],5:["좋은 사람","A Good Person"]};
+const CHT = {1:["멈춘 시계","The Clock That Stopped"],2:["네 명의 증인","Four Witnesses"],3:["다른 곰","The Other Bear"],4:["훔쳐 간 이름","The Name That Was Stolen"],5:["좋은 사람","A Good Person"],6:["사라진 5분","Five Missing Minutes"]};
 /* chapter title card: fade to black, scene change while black, title, fade back in */
 function chapterIntro(n, mid, done){
   const k = lang==="ko"; mode = "modal"; hideHintNow(); $("fade").classList.add("on");
@@ -1017,6 +1206,20 @@ function chapterIntro(n, mid, done){
     setTimeout(()=>{ $("chcard").classList.remove("on"); setTimeout(()=>{ $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (done) done(); }, 900); }, 2600); }, 800);
 }
 function whenPlay(fn){ const t = setInterval(()=>{ if (mode === "play"){ clearInterval(t); fn(); } }, 400); }
+/* Chapter 6 routing: which line a person or object gives now */
+const ckNode = () => has("c6.turn") && !has("stmt_ck2") ? "ck6_0" : has("c6.turn") ? "ck6_9" : has("ck.bear") ? "c9" : "c0";
+const grNode = () => !has("c6.on") ? (has("gr.done") ? "gr9" : "gr0") : !has("dd04") ? "c6_wait" : !has("gr.admit") ? "g6_0" : !has("c6.hl") ? "g6_h" : !has("c6.turn") ? "g6_t0" : "g6_9";
+const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : has("hz.done") ? "h9" : "h0";
+const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : has("tm.stmt") ? "tm9" : "tm0";
+const niniNode = () => has("c6.d") && !has("c6.fin") ? "c6_n0" : has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done") ? "n9" : "n0";
+const homeGate = () => !has("c6.on") ? "home0" : !has("c6.turn") ? "home1" : (!has("c6.k3") ? "homeK" : null);
+const healGate = () => !has("c6.on") ? "heal0" : !has("dd06") ? "heal1" : null;
+
+function gateMsg6(k){
+  if (k === "homeK"){ const w = whereHint(["report","wool","patrol2","handbell"]) || {en:"look at the photograph",ko:"사진을 살펴보면"};
+    D.gate = {sp:"bgb", ex:"thinking", t:{en:"I can't go in there yet. Whether Edward asked for help might be answered if I "+w.en+".", ko:"아직 이곳은 들어갈 수 없다. 에드워드가 도움을 청했는지에 대해 "+w.ko+" 힌트를 찾을 수 있을 것 같다."}}; startDlg("gate"); return; }
+  gateMsg(k);
+}
 /* progression gates: say what to do next instead of just refusing */
 const GATE_T = {
   ck:   {ko:"아직 이곳은 들어갈 수 없다. 계단의 곰에 대해 시계지기 올리버와 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Clockkeeper Oliver about the bear on the stairs."},
@@ -1027,10 +1230,17 @@ const GATE_T = {
   nini: {ko:"아직 이곳은 들어갈 수 없다. 낡은 방앗간의 열쇠에 대해 니니와 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Nini about the key to the Old Mill."}
 };
 function gateMsg(k){ D.gate = {sp:"bgb", ex:"thinking", t:GATE_T[k]}; startDlg("gate"); }
+Object.assign(GATE_T, {
+  home0:{ko:"아직 이곳은 들어갈 수 없다. 에드워드의 일에 대해 시계지기 올리버와 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Clockkeeper Oliver about what happened to Edward."},
+  home1:{ko:"아직 이곳은 들어갈 수 없다. 에드워드가 쓰러진 순간에 대해 Green과 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Green about the moment Edward fell."},
+  heal0:{ko:"아직 이곳은 들어갈 수 없다. 에드워드의 마지막 모습에 대해 시계지기 올리버와 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Clockkeeper Oliver about Edward's last moments."},
+  heal1:{ko:"아직 이곳은 들어갈 수 없다. 에드워드가 쓰러진 순간에 대해 Green과 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Green about the moment Edward fell."}
+});
 const ch1Gate = () => !S.flags.q1 ? (has("ck.bear") ? "tower" : "ck") : null;
 const ch2Gate = () => ch1Gate() || (!has("dd02") ? (!S.ev.includes("receipt") ? "rcpt" : !S.ev.includes("patrol") ? "logb" : "hand") : null);
 function tryEnter(sc, x, gate){ const g = gate(); if (g){ gateMsg(g); return false; } setScene(sc, x); return true; }
-function endDlg(){ const f5 = S.flash === 5 && has("f5.end") && !has("f5.shown"); if (f5){ setf("f5.shown"); setTimeout(()=>{ toast(lang==="ko"?"종이 한 번, 느리게 울린다. 그날 밤 울리지 않았던 종이다.":"A single slow bell tone, the one that never rang that night."); setTimeout(()=>showEnd5(), 2400); }, 900); }
+function endDlg(){ if (cur === "pf_end") setTimeout(()=>toast(lang==="ko"?"신원 보드가 열렸다. 사람 탭에서 단서를 맞춰 보자.":"The Identity Board is open. Compare the clues under People."), 700);
+  if (has("c6.fin") && !has("c6.shown")){ setf("c6.shown"); setTimeout(()=>showEnd6(), 1800); } const f5 = S.flash === 5 && has("f5.end") && !has("f5.shown"); if (f5){ setf("f5.shown"); setTimeout(()=>{ toast(lang==="ko"?"종이 한 번, 느리게 울린다. 그날 밤 울리지 않았던 종이다.":"A single slow bell tone, the one that never rang that night."); setTimeout(()=>showEnd5(), 2400); }, 900); }
   const fin = S.flash && S.flash !== 5 && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); setTimeout(()=>showEnd4(), 1800); $("rain").classList.add("on"); }
   const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>chapterIntro(1, ()=>setSceneNow("village", 700)), 50); }
  endDlg0(); }
@@ -1055,20 +1265,20 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 /* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
-const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2400}, mill:{min:0,end:3000}, past:{min:0,end:2632}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
-function locOf(n){ return tr(n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
+const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2400}, mill:{min:0,end:3000}, past:{min:0,end:2632}, healer:{min:0,end:2400}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+function locOf(n){ return tr(n==="healer" ? UI.locH : n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
-  S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage", MI = name === "mill", FLD = name === "flood", PST = name === "past", IN = PST || T || A || C || PR || MI || FLD;
-  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR); $("msc").classList.toggle("on", MI); $("fsc").classList.toggle("on", FLD); $("ysc").classList.toggle("on", PST);
+  S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage" || name === "healer", MI = name === "mill", FLD = name === "flood", PST = name === "past", HL = name === "healer", IN = PST || HL || T || A || C || PR || MI || FLD;
+  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR); $("psc").classList.toggle("hl", HL); $("pmarks").style.display = HL ? "none" : ""; $("hmarks").style.display = HL ? "" : "none"; $("msc").classList.toggle("on", MI); $("fsc").classList.toggle("on", FLD); $("ysc").classList.toggle("on", PST);
   const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : PR ? $("pworld") : MI ? $("mworld") : FLD ? $("fworld") : PST ? $("yworld") : $("world");
-  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else if (PR) host.appendChild($("pmarks")); else if (MI) host.appendChild($("mmarks")); else if (FLD) host.appendChild($("fmarks")); else if (PST) host.appendChild($("ymarks")); else host.appendChild(marks);
-  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : (PR || MI || FLD) ? [] : LAMPS_T; IA = A ? IA_A : C ? IA_C : PR ? IA_P : MI ? IA_M : FLD ? IA_FL : (S.flash && T) ? IA_FT : IA_T; NPCX = (A || PR || FLD) ? NPCX_A : C ? NPCX_C : MI ? NPCX_M : NPCX_T; if (FLD) FEET = 930; if (PST){ FEET = FEET_V; NPCX = NPCX_V; LAMPS = []; IA = S.flash === 5 ? IA_D : IA_F; } }
+  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else if (PR) { host.appendChild($("pmarks")); host.appendChild($("hmarks")); } else if (MI) host.appendChild($("mmarks")); else if (FLD) host.appendChild($("fmarks")); else if (PST) host.appendChild($("ymarks")); else host.appendChild(marks);
+  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : (PR || MI || FLD) ? [] : LAMPS_T; IA = A ? IA_A : C ? IA_C : HL ? IA_H : PR ? IA_P : MI ? IA_M : FLD ? IA_FL : (S.flash && T) ? IA_FT : IA_T; NPCX = (A || PR || FLD) ? NPCX_A : C ? NPCX_C : MI ? NPCX_M : NPCX_T; if (FLD) FEET = 930; if (PST){ FEET = FEET_V; NPCX = NPCX_V; LAMPS = []; IA = S.flash === 5 ? IA_D : IA_F; } }
   else  { W = VILLAGE_W; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = S.flash === 5 ? IA_D : S.flash ? IA_F : IA_V; }
   nini.style.display = IN ? "none" : ""; nini._sh.style.display = IN ? "none" : "";
   ck.style.display = (A || C || PR || MI || FLD) ? "none" : ""; ck._sh.style.display = (A || C || PR || MI || FLD) ? "none" : "";
   hz.style.display = C ? "" : "none"; hz._sh.style.display = C ? "" : "none";
   tm.style.display = IN ? "none" : ""; tm._sh.style.display = IN ? "none" : "";
-  mo.style.display = IN ? "none" : ""; mo._sh.style.display = IN ? "none" : "";
+  mo.style.display = (IN && !HL) ? "none" : ""; mo._sh.style.display = (IN && !HL) ? "none" : ""; if (HL) NPCX.mo = 1300;
   const FL = !!S.flash; $("stage").classList.toggle("flash", S.flash === 4 || S.flash === true); $("stage").classList.toggle("flash5", S.flash === 5); PH = FL ? (PST ? 105 : KID_H) : 220;
   if (FL){ [nini,ck,hz,tm,mo,gr].forEach(a=>{ a.style.display = "none"; a._sh.style.display = "none"; });
     NPCX.ed = PST ? (S.flash === 5 ? 1450 : 1000) : -9999; BRX = x + 100; } else NPCX.ed = -9999;
@@ -1098,15 +1308,17 @@ function startFlash5(){
 }
 function showEnd5(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"5장 끝":"END OF CHAPTER 5"; $("eH").textContent = k?"좋은 사람":"A Good Person";
   $("eP1").textContent = k?"아이는 추위 속에 홀로 서 있다. 아무도 그를 보지 않았다.":"The child stands alone in the cold. Nobody looked at him.";
-  $("eP2").textContent = k?"다음은 6장 5분의 공백입니다. 6장은 아직 만들지 않았습니다.":"Next is Chapter 6, Five Missing Minutes. It is not built yet.";
+  $("eP2").textContent = k?"이어서 6장, 사라진 5분입니다.":"Chapter 6, Five Missing Minutes, follows.";
   $("eNext").style.display = "none"; $("eBack").textContent = k?"현재로 돌아가기":"Back to the present"; $("endcard").classList.add("on"); }
 function startFlash(){
   S.ret = { scene:S.scene, x:Math.round(P.x) }; S.flash = true; S.flags["f4.ed"] = false; S.flags["f4.gate"] = false; S.flags["f4.lever"] = false; S.flags["f4.end"] = false; S.flags["f4.shown"] = false;
   $("endcard").classList.remove("on");
   chapterIntro(4, ()=>setSceneNow("past", 650), ()=>{ const c = $("flcap"); c.textContent = tr(UI.capF); c.classList.add("on"); setTimeout(()=>c.classList.remove("on"), 3600); });
 }
-function endFlash(){ const r = S.ret || { scene:"archive", x:1500 }; const from5 = S.flash === 5; S.flash = false; $("endcard").classList.remove("on"); mode = "modal"; $("fade").classList.add("on");
-  setTimeout(()=>{ setSceneNow(r.scene, r.x); $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (from5) setTimeout(()=>startDlg("pf_end"), 700); }, 800); }
+function endFlash(){ const r = S.ret || { scene:"archive", x:1500 }; const from5 = S.flash === 5; S.flash = false; $("endcard").classList.remove("on");
+  if (from5){ setf("c6.on"); chapterIntro(6, ()=>setSceneNow(r.scene, r.x), ()=>startDlg("pf_end")); return; }
+  mode = "modal"; $("fade").classList.add("on");
+  setTimeout(()=>{ setSceneNow(r.scene, r.x); $("fade").classList.remove("on"); mode = "play"; stage.focus(); }, 800); }
 function showEnd4(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"4장 끝":"END OF CHAPTER 4"; $("eH").textContent = k?"훔쳐 간 이름":"The Name That Was Stolen";
   $("eP1").textContent = k?"종은 울리지 않는다. 물이 차오르기 시작한다.":"The bell does not ring. The water begins to rise.";
   $("eP2").textContent = k?"이어서 5장, 홍수의 밤을 플레이할 수 있습니다.":"You can continue straight into Chapter 5, the flood night.";
@@ -1132,12 +1344,12 @@ function renderNav(){
 function renderCF(){
   renderNav(); const pg = $("pg"); const labs = tr(UI.tabs);
   let h = '<div class="eyebrow">CASE C-01 &middot; '+tr(UI.loc)+'</div><h2>'+labs[tab]+'</h2><div style="height:18px"></div>';
-  if (sub && SUBS[tab]){ pg.innerHTML = h + subView(tab); wireSub(); return; }
+  if (sub && SUBS[tab]){ pg.innerHTML = h + subView(tab); wireSub(); wireCh6(); return; }
   if (SUBS[tab]) h += '<button class="subbtn nine cream" id="subBtn">'+tr(UI[SUBS[tab].k])+' &rsaquo;</button>';
   if (tab===0){
-    h += boardResp() + '<div class="pvnote">'+(PV ? '' : (lang==="ko"?"이후 챕터에서 열이 하나씩 열린다. ":"More columns open in later chapters. ")) + '<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>';
+    h += boardResp() + pickRow() + '<div class="pvnote">'+((PV||has("c6.turn")) ? '' : (lang==="ko"?"이후 챕터에서 열이 하나씩 열린다. ":"More columns open in later chapters. ")) + '<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>' + conclPanel();
   } else if (tab===1){
-    h += peopleStrip() + '<div class="idwrap" style="width:'+Math.round(1100*ID_Z)+'px;height:'+Math.round(634*ID_Z)+'px"><div style="width:1100px;transform:scale('+ID_Z+');transform-origin:0 0">'+boardId()+'</div></div><div class="pvnote" style="width:100%;margin-top:6px;font-size:19px">'+(PV ? '' : (lang==="ko"?"이후 챕터에서 채워진다. ":"Fills in later. "))+'<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>';
+    h += peopleStrip() + '<div class="idwrap" style="width:'+Math.round(1100*ID_Z)+'px;height:'+Math.round(634*ID_Z)+'px"><div style="width:1100px;transform:scale('+ID_Z+');transform-origin:0 0">'+boardId()+'</div></div>'+cmpBlock()+'<div class="pvnote" style="width:100%;margin-top:6px;font-size:19px">'+((PV||has("c6.on")) ? '' : (lang==="ko"?"이후 챕터에서 채워진다. ":"Fills in later. "))+'<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>';
   } else if (tab===2){
     h += '<div class="grid2"><div class="evgrid" id="evg"></div><div class="evdesc" id="evd"></div></div>';
   } else if (tab===3){
@@ -1150,6 +1362,7 @@ function renderCF(){
   }
   pg.innerHTML = h;
   if (SUBS[tab]) $("subBtn").onclick = ()=>{ sub = true; renderCF(); };
+  wireCh6();
   document.querySelectorAll(".ptile[data-p]").forEach(b=>{ b.onclick = ()=>{ selPerson = b.dataset.p; renderCF(); }; });
   if (tab===0 || tab===1 || tab===4) $("pvBtn").onclick = ()=>{ PV = !PV; renderCF(); };
   if (tab===2) renderEvGrid(); if (tab===3) renderTl();
@@ -1177,7 +1390,7 @@ const box = (cls,x,y,w,h,W,H,inner,st) => '<div class="ov '+cls+'" style="'+px(x
 function subView(t){
   const back = '<button class="subbtn nine cream" id="subBtn">&lsaquo; '+tr(UI.subBack)+'</button>';
   const pvb = '<div class="pvnote">'+(PV ? '' : (lang==="ko"?"이 화면은 이후 챕터에서 채워진다.":"This fills in during later chapters.")) + '<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>';
-  return back + boardId() + pvb;
+  return back + boardId() + cmpBlock() + pvb;
 }
 function wireSub(){ $("subBtn").onclick = ()=>{ sub = false; renderCF(); }; $("pvBtn").onclick = ()=>{ PV = !PV; renderCF(); }; }
 function boardId(){
@@ -1186,21 +1399,21 @@ function boardId(){
   h += box("ctr",590,8,315,56,W,H,'<b style="margin:0;color:#4a2f10;font-size:17px;letter-spacing:.02em;white-space:nowrap">'+tr(UI.subId).toUpperCase()+'</b>');
   h += box("",155,128,265,272,W,H,'<img class="ph" src="assets/por_bgb_neutral.webp" alt="">');
   h += box("ctr",160,400,255,50,W,H,'<b style="margin:0">'+(K?"빅그베":"BGB")+'</b>');
-  h += box("",1090,130,275,275,W,H,PV ? '<div style="display:grid;place-items:center;height:100%;background:#2a2f4a;color:#c9c2a8;font:italic 600 22px/1.3 var(--font-body);text-align:center;padding:12px">'+(K?"(초상화 아직 없음)":"(portrait not drawn yet)")+'</div>' : '<div style="display:grid;place-items:center;height:100%;background:#2a2f4a;color:#c9c2a8;font:700 90px var(--font-body)">?</div>');
-  h += box("ctr",1085,405,285,50,W,H,'<b style="margin:0">'+(PV?'GREEN':'?')+'</b>');
+  h += box("",1090,130,275,275,W,H,(PV||has("dd04")) ? '<div style="display:grid;place-items:center;height:100%;background:#2a2f4a;color:#c9c2a8;font:italic 600 22px/1.3 var(--font-body);text-align:center;padding:12px">'+(K?"(초상화 아직 없음)":"(portrait not drawn yet)")+'</div>' : '<div style="display:grid;place-items:center;height:100%;background:#2a2f4a;color:#c9c2a8;font:700 90px var(--font-body)">?</div>');
+  h += box("ctr",1085,405,285,50,W,H,'<b style="margin:0">'+((PV||has("dd04"))?'GREEN':'?')+'</b>');
   if (PV) h += '<img class="stamp" src="assets/stamp_unknown.webp" alt="" style="left:'+(1120/W*100)+'%;top:'+(330/H*100)+'%;width:'+(230/W*100)+'%;transform:rotate(-8deg)">';
   if (PV) h += box("ctr",640,238,250,260,W,H,'<img src="assets/ev_keepsake_frame.webp" alt="" style="max-width:100%;max-height:100%;object-fit:contain">');
   /* clue cards: each is pinned only when the player holds the clue; the preview shows the finished board */
   const C = [
-    { on:has("c2"),                 t:K?["손잡이","신체"]:["Handedness","Physical"], d:K?["빅그베는 왼손을 쓴다.","회상 속 아이는 오른손을 쓴다. 빅그베는 왼손잡이다."]:["BGB uses his left hand.","In the memory the child uses his right hand. BGB is left-handed."] },
-    { on:false,                     t:K?["목도리 매듭","신체"]:["Scarf knot","Physical"], d:K?["","에드워드는 아이의 목도리를 오른쪽에 묶는다."]:["","Edward ties the child's scarf on the right side."] },
-    { on:false,                     t:K?["귀의 흉터","신체"]:["Ear scar","Physical"], d:K?["","왼쪽 귀의 희미한 흉터."]:["","A faded scar on the left ear."] },
+    { on:has("c2"), mem:1,                 t:K?["손잡이","신체"]:["Handedness","Physical"], d:K?["빅그베는 왼손을 쓴다.","회상 속 아이는 오른손을 쓴다. 빅그베는 왼손잡이다."]:["BGB uses his left hand.","In the memory the child uses his right hand. BGB is left-handed."] },
+    { on:has("c6.on"), mem:1,                     t:K?["목도리 매듭","신체"]:["Scarf knot","Physical"], d:K?["","에드워드는 아이의 목도리를 오른쪽에 묶는다."]:["","Edward ties the child's scarf on the right side."] },
+    { on:has("c6.on"), mem:1,                     t:K?["귀의 흉터","신체"]:["Ear scar","Physical"], d:K?["","왼쪽 귀의 희미한 흉터."]:["","A faded scar on the left ear."] },
     { on:S.ev.includes("photo2"),   t:K?["설명","사진"]:["Caption","Photo"], d:K?["뒷면에 이름. 매듭과 맞을까?","설명과 매듭이 어긋난다."]:["Names on the back. Knots agree?","Caption and knots disagree."] },
     { on:S.ev.includes("register"), t:K?["장부 잉크","문서"]:["Register ink","Document"], d:K?["홍수 연도 항목에 잉크가 두 종류다.","이름이 더 진한 새 잉크로 덧쓰였다."]:["The flood-year entries use two inks.","Names re-inked in a newer, darker ink."] }
   ];
   const R = [[140,600,245,150],[447,545,138,210],[645,560,255,165],[962,598,118,112],[1142,578,255,160]];
   let shown = 0;
-  C.forEach((c,i)=>{ if (!(PV || c.on)) return; shown++; const r = R[i]; h += box("",r[0],r[1],r[2],r[3],W,H,'<b>'+c.t[0]+'</b><span style="font-size:'+(i===1||i===3?17:19)+'px">'+(PV ? c.d[1] : c.d[0])+'</span>','padding:0 4px'); });
+  C.forEach((c,i)=>{ if (!(PV || c.on)) return; shown++; const r = R[i]; h += box("",r[0],r[1],r[2],r[3],W,H,'<b>'+c.t[0]+'</b><span style="font-size:'+(i===1||i===3?17:19)+'px">'+((PV || (c.mem && has("c6.on"))) ? c.d[1] : c.d[0])+'</span>','padding:0 4px'); });
   if (!PV && !shown) h += box("ctr",640,300,250,120,W,H,'<span style="font:italic 600 24px/1.25 var(--font-body);color:#f6e3c0;text-shadow:0 1px 2px rgba(0,0,0,.6)">'+(K?"단서가 모이면 여기에 붙는다.":"Clues will be pinned here.")+'</span>');
   return h + '</div>';
 }
@@ -1208,26 +1421,50 @@ function boardResp(){
   const W = 1500, H = 857, K = lang==="ko";
   /* base = board with the three columns erased; each column is its own sprite (resp_col1..3) that is simply added when unlocked */
   let h = '<div class="bd"><img class="base" src="assets/board_resp_empty.webp" alt="">';
-  const SPR = [[69,100,434],[537,100,429],[997,100,449]], SH = 416;
+  const SPR = [[69,100,434],[537,100,429],[997,100,449]];
   const rib = K ? ["추락","도움의 지연","진실 은폐"] : ["THE FALL","DELAYED HELP","HID THE TRUTH"], X = [125,585,1045];
   const q = K ? ["누가 에드워드를 떨어뜨렸는가?","도움이 필요한 사람 곁에서, 누가 기다렸는가?","누가 증거와 진실을 숨겼는가?"] : ["Who caused Edward's fall?","Who had the chance to help, and waited?","Who concealed evidence and the truth?"];
   const names = ["Green",K?"빅그베":"BGB",K?"빅그베":"BGB"];
-  const basis = PV ? (K ? ["달아날 때 에드워드가 죽었다고 믿었다.","11:50 살아 있는 에드워드를 발견, 11:55 종을 울렸다. 그는 모든 걸 알지는 못했다. 하지만 에드워드에게 도움이 필요하다는 건 알았다.","장갑, 편지, 뒷문 빗장, 그리고 자신의 진술."] : ["Fled believing Edward dead.","Found Edward alive at 11:50; the bell rang at 11:55. He did not know everything. He knew Edward needed help.","The glove, the letter, the chute bolt, his own account."]) : ["","",""];
+  S.resp = S.resp || [null,null,null];
+  const basis = (K ? ["달아날 때 에드워드가 죽었다고 믿었다.","11:50 살아 있는 에드워드를 발견, 11:55 종을 울렸다. 그는 모든 걸 알지는 못했다. 하지만 에드워드에게 도움이 필요하다는 건 알았다.","장갑, 편지, 뒷문 빗장, 그리고 자신의 진술."] : ["Fled believing Edward dead.","Found Edward alive at 11:50; the bell rang at 11:55. He did not know everything. He knew Edward needed help.","The glove, the letter, the chute bolt, his own account."]);
+  const open = i => PV || i===0 || has("c6.turn");
   for (let i=0;i<3;i++){
-    if (!(PV || i===0)) continue;                         /* locked column: no sprite, nothing drawn */
+    if (!open(i)) continue;                               /* locked column: no sprite, nothing drawn */
+    const placed = PV || S.resp[i];
     h += '<img class="stamp" src="assets/resp_col'+(i+1)+'.webp" alt="" style="left:'+(SPR[i][0]/W*100).toFixed(2)+'%;top:'+(SPR[i][1]/H*100).toFixed(2)+'%;width:'+(SPR[i][2]/W*100).toFixed(2)+'%;filter:none">';
     h += box("rib",X[i]+30,128,300,64,W,H,rib[i]);
-    const label = PV ? '<b style="font-size:46px;margin:0;text-align:center">'+names[i]+'</b>' : '<span style="display:block;text-align:center;font:italic 700 26px/1.25 var(--font-body);padding:0 10px">'+q[i]+'</span>';
+    const nm = PV ? names[i] : (S.resp[i] ? (K ? WHOKO[S.resp[i]] : S.resp[i]) : "");
+    const label = placed ? '<b style="font-size:46px;margin:0;text-align:center">'+nm+'</b>' : '<div style="text-align:center"><span style="display:block;font:italic 700 24px/1.25 var(--font-body);padding:0 10px 8px">'+q[i]+'</span><button class="rname" data-col="'+i+'" type="button">'+tr(UI.noName)+'</button></div>';
     h += box("ctr",[118,576,1034][i],268,345,212,W,H,label);
-    if (PV) h += box("",[130,590,1048][i],492,330,150,W,H,'<span style="font-size:'+(i===1?18:20)+'px">'+basis[i]+'</span>','padding:0 8px');
-    else h += box("",130,492,330,150,W,H,'<span style="font:italic 500 22px/1.3 var(--font-body);color:#6d5a40">'+(K?"가진 증거로 이름을 정하자. 틀려도 막히지 않는다.":"Place a name once the evidence supports it.")+'</span>','padding:0 8px');
+    if (placed) h += box("",[130,590,1048][i],492,330,150,W,H,'<span style="font-size:'+(i===1?18:20)+'px">'+basis[i]+'</span>','padding:0 8px');
+    else h += box("",[130,590,1048][i],492,330,150,W,H,'<span style="font:italic 500 22px/1.3 var(--font-body);color:#6d5a40">'+(K?"가진 증거로 이름을 정하자. 틀려도 막히지 않는다.":"Place a name once the evidence supports it.")+'</span>','padding:0 8px');
   }
-  h += box("ctr",175,700,970,70,W,H,'<span style="font:700 22px/1.2 var(--font-body)"><b style="display:inline;color:#6e2a35;font-size:20px;letter-spacing:.1em">'+(K?"사인 ":"CAUSE OF DEATH ")+'</b>'+(PV ? (K?"미확정: 부상, 출혈, 추위. 도움이 있었다면 살 수 있었는지는 아무도 말할 수 없다.":"UNDETERMINED: injuries, blood loss and cold. No one can say whether help would have saved him.") : (K?"아직 밝혀지지 않았다.":"not yet established.")) + '</span>');
-  if (PV){
-    h += '<img class="stamp" src="assets/stamp_suspect_identified.webp" alt="" style="left:'+(170/W*100)+'%;top:'+(560/H*100)+'%;width:'+(230/W*100)+'%;transform:rotate(-7deg)">';
-    h += '<img class="stamp" src="assets/stamp_undetermined.webp" alt="" style="left:'+(1150/W*100)+'%;top:'+(690/H*100)+'%;width:'+(200/W*100)+'%;transform:rotate(5deg)">';
-  }
+  h += box("ctr",175,700,970,70,W,H,'<span style="font:700 22px/1.2 var(--font-body)"><b style="display:inline;color:#6e2a35;font-size:20px;letter-spacing:.1em">'+(K?"사인 ":"CAUSE OF DEATH ")+'</b>'+((PV || has("dd11")) ? (K?"미확정: 부상, 출혈, 추위. 도움이 있었다면 살 수 있었는지는 아무도 말할 수 없다.":"UNDETERMINED: injuries, blood loss and cold. No one can say whether help would have saved him.") : (K?"아직 밝혀지지 않았다.":"not yet established.")) + '</span>');
+  if (PV || has("dd06")) h += '<img class="stamp" src="assets/stamp_suspect_identified.webp" alt="" style="left:'+(170/W*100)+'%;top:'+(560/H*100)+'%;width:'+(230/W*100)+'%;transform:rotate(-7deg)">';
+  if (PV || has("dd11")) h += '<img class="stamp" src="assets/stamp_undetermined.webp" alt="" style="left:'+(1150/W*100)+'%;top:'+(690/H*100)+'%;width:'+(200/W*100)+'%;transform:rotate(5deg)">';
   return h + '</div>';
+}
+function pickRow(){
+  if (!(S.pick >= 0)) return '';
+  const K = lang==="ko", t = K ? ["추락","도움의 지연","진실 은폐"][S.pick] : ["The fall","Delayed help","Hid the truth"][S.pick];
+  return '<div class="eyebrow" style="margin:14px 0 0">'+t+': '+tr(UI.pickWho)+'</div><div class="chips">'+WHO.map(w=>'<button class="chip" type="button" data-w="'+w[1]+'">'+(K?WHOKO[w[1]]:w[1])+'</button>').join('')+'</div>';
+}
+function conclPanel(){
+  if (!has("c6.turn")) return '';
+  let h = '<div class="eyebrow" style="margin:18px 0 6px">'+tr(UI.concl).toUpperCase()+'</div>';
+  KCON.forEach(k=>{ const ok = has("c6."+k.id); h += '<div class="kcon'+(ok?' ok':'')+'"><span>'+tr(k.t)+'</span>'+(ok ? '<b style="color:#6e2a35">&#10003;</b>' : '<button type="button" data-k="'+k.id+'">'+tr(UI.confirm)+'</button>')+'</div>'; });
+  return h;
+}
+function cmpBlock(){
+  if (!has("c6.on")) return '';
+  if (has("dd04")) return '<div class="con" style="margin:8px 0"><img src="assets/stamp_solved.webp" alt=""><span>'+tr(NOTES.n_dd04)+'</span></div>';
+  return '<div style="margin:10px 0"><button class="pvbtn cmpbtn" type="button">'+tr(UI.compare)+'</button></div>';
+}
+function wireCh6(){
+  document.querySelectorAll(".rname").forEach(b=>{ b.onclick = ()=>{ S.pick = +b.dataset.col; renderCF(); }; });
+  document.querySelectorAll(".chip").forEach(b=>{ b.onclick = ()=>placeName(S.pick, b.dataset.w); });
+  document.querySelectorAll("[data-k]").forEach(b=>{ b.onclick = ()=>confirmK(b.dataset.k); });
+  document.querySelectorAll(".cmpbtn").forEach(b=>{ b.onclick = doCompare; });
 }
 function pageOver(wpx){
   const W = 802, H = 1000, K = lang==="ko", f = (wpx||626)/626;
@@ -1236,12 +1473,12 @@ function pageOver(wpx){
   const Y = [288,400,513,632,745,859];
   let h = '<div class="bd" style="width:'+(wpx||Math.round(780*W/H))+'px"><img class="base" src="assets/page_overlooked.webp" alt="">';
   h += box("ctr",175,98,480,72,W,H,'<b style="margin:0;font-size:'+Math.round(25*f)+'px;color:#4a2f10">'+tr(UI.subOver).toUpperCase()+'</b>');
-  if (PV) L.forEach((t,i)=>{ h += box("",205,Y[i]-76,485,72,W,H,'<span style="font:600 '+(19*f).toFixed(1)+'px/1.15 var(--font-body)">'+t+'</span>','justify-content:flex-end'); });
+  if (PV || has("dd05")) L.forEach((t,i)=>{ h += box("",205,Y[i]-76,485,72,W,H,'<span style="font:600 '+(19*f).toFixed(1)+'px/1.15 var(--font-body)">'+t+'</span>','justify-content:flex-end'); });
   else h += box("",205,Y[0]-76,485,72,W,H,'<span style="font:italic 600 '+(20*f).toFixed(1)+'px/1.2 var(--font-body);color:#6d5a40">'+(K?"아직 다시 읽을 것이 없다.":"Nothing to re-read yet.")+'</span>','justify-content:flex-end');
   return h + '</div>';
 }
 function qBlock(){
-  const q = S.flags.dd02 ? UI.askNext : S.flags.q1 ? UI.askBear : null; if (!q) return '';
+  const q = has("c6.turn") ? UI.askWith : has("c6.on") ? UI.askFall : S.flags.dd02 ? UI.askNext : S.flags.q1 ? UI.askBear : null; if (!q) return '';
   return '<div class="eyebrow" style="margin:0 0 4px">'+(lang==="ko"?"지금의 질문":"THE QUESTION")+'</div><div style="font:italic 700 32px/1.2 var(--font-body);color:#6e2a35;margin:0 0 14px">'+tr(q)+'</div>';
 }
 function conBlock(){
@@ -1301,11 +1538,16 @@ function skipTo(n){
   if (n === 2){ setSceneNow("village", 2700); toast(lang==="ko"?"연출 모드: 2장 시작 (1장 완료)":"Director: start of Chapter 2 (Chapter 1 done)"); }
   else if (n === 3){ setSceneNow("village", 4100); toast(lang==="ko"?"연출 모드: 3장 시작 (2장 완료)":"Director: start of Chapter 3 (Chapter 2 done)"); }
   else if (n === 4){ setSceneNow("mill", 1400); showEnd(); }
+  else if (n === 6 || n === 66){
+    qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown","f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown","c6.on"]); S.ret = { scene:"archive", x:1500 };
+    if (n === 66){ qFlags(["dd04","gr.admit","c6.hl","c6.turn"]); qEv(["acct_gr","report","watch"]); checkDeduce(); setSceneNow("village", 1400); toast(lang==="ko"?"연출 모드: 6장 결론 파트":"Director: Chapter 6 conclusions"); }
+    else { setSceneNow("archive", 1500); chapterIntro(6, null, ()=>startDlg("pf_end")); }
+  }
   else if (n === 5){ S.ret = { scene:"mill", x:1400 }; SKIP_STEPS[4](); qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown"]); NEXTK = 5; setSceneNow("mill", 1400); startFlash5(); }
 }
 function setDirUi(){
   const on = !!S.dir, k = lang==="ko"; $("pDir").classList.toggle("on", on); $("dirHead").textContent = k ? "연출 모드" : "DIRECTOR MODE";
-  const L = {2:k?"2장으로 건너뛰기":"Skip to Chapter 2", 3:k?"3장으로 건너뛰기":"Skip to Chapter 3", 4:k?"3장 끝, 4장으로":"Skip to Chapter 4", 5:k?"5장 홍수의 밤으로":"Skip to Chapter 5"};
+  const L = {2:k?"2장으로 건너뛰기":"Skip to Chapter 2", 3:k?"3장으로 건너뛰기":"Skip to Chapter 3", 4:k?"3장 끝, 4장으로":"Skip to Chapter 4", 5:k?"5장 홍수의 밤으로":"Skip to Chapter 5", 6:k?"6장 시작으로":"Skip to Chapter 6", 66:k?"6장 결론 파트로":"Skip to Ch.6 conclusions"};
   document.querySelectorAll(".dirb").forEach(b=>{ b.textContent = L[b.dataset.skip]; });
   $("pCode").placeholder = k ? "코드" : "Code";
 }
@@ -1386,7 +1628,7 @@ function frame(now){
   place(); applyLight(dt);
   // nearest interactable
   near = null; let best = 140;
-  if (mode==="play"){ IA.forEach(i=>{ const d = Math.abs(P.x - i.x()); if (d < best){ best = d; near = i; } }); }
+  if (mode==="play"){ IA.forEach(i=>{ if (i.when && !i.when()) return; const d = Math.abs(P.x - i.x()); if (d < best){ best = d; near = i; } }); }
   if (peek > 0) peek -= dt;
   const hint = $("hint"), showHint = !!(near && mode==="play");
   IA.forEach(i=>{ const on = (near===i && mode==="play") || (peek>0 && mode==="play"); i.el.classList.toggle("on", on); i.el.classList.toggle("soft", near===i && showHint); });
@@ -1410,5 +1652,44 @@ load(); cam = 0; fit(); setSceneNow((["tower","archive","cafe","cottage","mill"]
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
 window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4 };
 requestAnimationFrame(frame);
+  if (typeof nineAll === "function") requestAnimationFrame(nineAll);
 })();
+
+/* ---------- seamless nine-slice ----------
+   CSS border-image resamples each of the nine tiles separately, so on fractional scales (phones, high-DPI, the scaled stage) faint lines show at the slice
+   boundaries. Instead each .nine element is composited once on a canvas at its exact physical pixel size, with whole-pixel tile edges and the centre
+   drawn underneath the edges, and used as a plain background. */
+const NINE_IMG = {}, NINE_RO = new ResizeObserver(es=>es.forEach(e=>nineDraw(e.target))), NINE_SEEN = new WeakSet();
+function nineSrc(el){ const m = /url\(["']?([^"')]+)["']?\)/.exec(getComputedStyle(el).getPropertyValue("--img")); return m ? m[1] : null; }
+function nineDraw(el){
+  if (!el.isConnected || !el.offsetWidth || !el.offsetHeight) return;
+  const src = nineSrc(el); if (!src) return;
+  let im = NINE_IMG[src];
+  if (!im){ im = NINE_IMG[src] = new Image(); im.src = src; im.onload = ()=>document.querySelectorAll(".nine").forEach(nineDraw); }
+  if (!im.complete || !im.naturalWidth) return;
+  const cs = getComputedStyle(el), r = el.getBoundingClientRect(), k = r.width / el.offsetWidth || 1, d = (window.devicePixelRatio || 1) * k;
+  const num = v => v.split(/\s+/).filter(x=>x!=="fill").map(parseFloat);
+  const sl = num(cs.borderImageSlice), bw = num(cs.borderImageWidth);
+  const S4 = [sl[0], sl[1] ?? sl[0], sl[2] ?? sl[0], sl[3] ?? sl[1] ?? sl[0]], B4 = [bw[0], bw[1] ?? bw[0], bw[2] ?? bw[0], bw[3] ?? bw[1] ?? bw[0]];
+  const Wp = Math.max(2, Math.round(el.offsetWidth * d)), Hp = Math.max(2, Math.round(el.offsetHeight * d));
+  const t = Math.round(B4[0]*d), rr = Math.round(B4[1]*d), b = Math.round(B4[2]*d), l = Math.round(B4[3]*d);
+  const key = [src, Wp, Hp, t, rr, b, l].join("|"); if (el._nk === key) return; el._nk = key;
+  const cv = document.createElement("canvas"); cv.width = Wp; cv.height = Hp; const c = cv.getContext("2d"); c.imageSmoothingEnabled = true; c.imageSmoothingQuality = "high";
+  const iw = im.naturalWidth, ih = im.naturalHeight, st = S4[0], sr = S4[1], sb = S4[2], sL = S4[3];
+  const cw = iw - sL - sr, ch = ih - st - sb;
+  c.drawImage(im, sL, st, cw, ch, l - 1, t - 1, Wp - l - rr + 2, Hp - t - b + 2);                                   /* centre first, bleeding under the edges */
+  c.drawImage(im, sL, 0, cw, st, l - 1, 0, Wp - l - rr + 2, t + 1);                                                   /* top */
+  c.drawImage(im, sL, ih - sb, cw, sb, l - 1, Hp - b - 1, Wp - l - rr + 2, b + 1);                                    /* bottom */
+  c.drawImage(im, 0, st, sL, ch, 0, t - 1, l + 1, Hp - t - b + 2);                                                    /* left */
+  c.drawImage(im, iw - sr, st, sr, ch, Wp - rr - 1, t - 1, rr + 1, Hp - t - b + 2);                                   /* right */
+  c.drawImage(im, 0, 0, sL, st, 0, 0, l, t); c.drawImage(im, iw - sr, 0, sr, st, Wp - rr, 0, rr, t);                  /* corners */
+  c.drawImage(im, 0, ih - sb, sL, sb, 0, Hp - b, l, b); c.drawImage(im, iw - sr, ih - sb, sr, sb, Wp - rr, Hp - b, rr, b);
+  cv.toBlob(bl=>{ if (!bl) return; const u = URL.createObjectURL(bl), old = el._nu; el._nu = u; el.style.backgroundImage = 'url("'+u+'")'; el.style.backgroundSize = "100% 100%"; el.style.backgroundRepeat = "no-repeat"; el.style.backgroundOrigin = "border-box"; el.style.backgroundClip = "border-box"; el.style.borderImageSource = "none"; if (old) setTimeout(()=>URL.revokeObjectURL(old), 400); });
+}
+function nineAdd(el){ if (NINE_SEEN.has(el)) return; NINE_SEEN.add(el); NINE_RO.observe(el); nineDraw(el); }
+function nineAll(){ document.querySelectorAll(".nine").forEach(e=>{ nineAdd(e); e._nk = null; nineDraw(e); }); }
+let nineQ = 0; const nineLater = el => { cancelAnimationFrame(nineQ); nineQ = requestAnimationFrame(()=>{ document.querySelectorAll(".nine").forEach(e=>nineDraw(e)); }); };
+new MutationObserver(ms=>{ let any = false; ms.forEach(m=>{ if (m.type === "childList") m.addedNodes.forEach(n=>{ if (n.nodeType === 1){ if (n.matches(".nine")) nineAdd(n); n.querySelectorAll && n.querySelectorAll(".nine").forEach(nineAdd); } }); else any = true; }); if (any) nineLater(); }).observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:["class"] });
+["pointerover","pointerout","focusin","focusout"].forEach(ev=>document.addEventListener(ev, ()=>nineLater(), true));
+nineAll();
 </script>
