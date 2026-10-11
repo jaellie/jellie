@@ -1441,7 +1441,7 @@ function renderDlg(anim){
 function sizeDlg(text){
   const m = $("meas"); m.style.fontSize = lang==="ko" ? "33px" : "36.5px"; m.textContent = text;
   const w = Math.min(m.offsetWidth + 14, 1008); // text width, one line, capped at the full text area
-  const box = Math.max(820, 316 + w + 196);
+  const box = 1520;   /* always the art's natural width: a narrower box had to squash or crop the middle of the art, which showed as a blurred band */
   const bw = Math.min(1520, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px"; $("choices").style.left = Math.round((STAGE_W - bw)/2 + 300) + "px";
 }
 function showChoices(){
@@ -1955,11 +1955,16 @@ function nineDraw(el){
   const cv = document.createElement("canvas"); cv.width = Wp; cv.height = Hp; const c = cv.getContext("2d"); c.imageSmoothingEnabled = true; c.imageSmoothingQuality = "high";
   const iw = im.naturalWidth, ih = im.naturalHeight, st = S4[0], sr = S4[1], sb = S4[2], sL = S4[3];
   const cw = iw - sL - sr, ch = ih - st - sb;
-  c.drawImage(im, sL, st, cw, ch, l - 1, t - 1, Wp - l - rr + 2, Hp - t - b + 2);                                   /* centre first, bleeding under the edges */
-  c.drawImage(im, sL, 0, cw, st, l - 1, 0, Wp - l - rr + 2, t + 1);                                                   /* top */
-  c.drawImage(im, sL, ih - sb, cw, sb, l - 1, Hp - b - 1, Wp - l - rr + 2, b + 1);                                    /* bottom */
-  c.drawImage(im, 0, st, sL, ch, 0, t - 1, l + 1, Hp - t - b + 2);                                                    /* left */
-  c.drawImage(im, iw - sr, st, sr, ch, Wp - rr - 1, t - 1, rr + 1, Hp - t - b + 2);                                   /* right */
+  /* when the box is narrower than the art's centre at its natural scale, crop the centre instead of squashing it (squashing showed as a blurred band) */
+  const hs = sL ? l / sL : (sr ? rr / sr : 1), vs = st ? t / st : (sb ? b / sb : 1);
+  const dw = Wp - l - rr, dh = Hp - t - b;
+  const cwE = Math.min(cw, Math.max(1, dw / hs)), chE = Math.min(ch, Math.max(1, dh / vs));
+  const cx = sL + (cw - cwE) / 2, cy = st + (ch - chE) / 2;
+  c.drawImage(im, cx, cy, cwE, chE, l - 1, t - 1, dw + 2, dh + 2);                                                    /* centre first, bleeding under the edges */
+  c.drawImage(im, cx, 0, cwE, st, l - 1, 0, dw + 2, t + 1);                                                           /* top */
+  c.drawImage(im, cx, ih - sb, cwE, sb, l - 1, Hp - b - 1, dw + 2, b + 1);                                            /* bottom */
+  c.drawImage(im, 0, cy, sL, chE, 0, t - 1, l + 1, dh + 2);                                                           /* left */
+  c.drawImage(im, iw - sr, cy, sr, chE, Wp - rr - 1, t - 1, rr + 1, dh + 2);                                          /* right */
   c.drawImage(im, 0, 0, sL, st, 0, 0, l, t); c.drawImage(im, iw - sr, 0, sr, st, Wp - rr, 0, rr, t);                  /* corners */
   c.drawImage(im, 0, ih - sb, sL, sb, 0, Hp - b, l, b); c.drawImage(im, iw - sr, ih - sb, sr, sb, Wp - rr, Hp - b, rr, b);
   cv.toBlob(bl=>{ if (!bl || el._nk !== key) return; const u = URL.createObjectURL(bl), old = el._nu; el._nu = u; el.style.backgroundImage = 'url("'+u+'")'; el.style.backgroundSize = "100% 100%"; el.style.backgroundRepeat = "no-repeat"; el.style.backgroundOrigin = "border-box"; el.style.backgroundClip = "border-box"; el.style.borderImageSource = "none"; if (old) setTimeout(()=>URL.revokeObjectURL(old), 400); });
