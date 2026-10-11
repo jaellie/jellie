@@ -98,6 +98,18 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #pdoor{position:absolute;left:1900px;top:420px;width:260px;height:470px;background:#5a3f2c;border:12px solid #3a281c;border-radius:130px 130px 0 0}
 #pdoor b{position:absolute;right:30px;top:250px;width:18px;height:18px;border-radius:50%;background:#d9b25c}
 #pmarks img{position:absolute}
+/* Old Mill: PLACEHOLDER art (flat daylight colours) until the real layers exist */
+#msc{position:absolute;inset:0;display:none;background:linear-gradient(#bfd0e0,#e8e4d8 62%)}
+#msc.on{display:block}
+#mworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
+#mhill{position:absolute;left:0;top:520px;width:2400px;height:420px;background:linear-gradient(#a9b9cf,#c9d3e0)}
+#mfloor{position:absolute;left:0;top:890px;width:2400px;height:190px;background:linear-gradient(#dce6f2,#9fb2cf)}
+#mmill{position:absolute;left:900px;top:380px;width:700px;height:520px;background:#7a6f66;border:10px solid #4a2a18}
+#mroof{position:absolute;left:-40px;top:-120px;width:780px;height:120px;background:#dce6f2;border:10px solid #4a2a18;border-bottom:0;clip-path:polygon(8% 100%,50% 0,92% 100%)}
+#mwheel{position:absolute;right:-220px;top:140px;width:300px;height:300px;border-radius:50%;border:26px solid #4a2a18;background:#c9d3e0}
+#mdoor{position:absolute;left:260px;top:250px;width:150px;height:270px;background:#4a2a18;border-radius:75px 75px 0 0}
+#mmarks img{position:absolute}
+#stage .silh,#dlg .por img.silh{filter:brightness(.16) contrast(1.2)}
 #csc.on{display:block}
 #cfar img{left:-300px;top:150px;width:3715px;height:896px}
 #cworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
@@ -300,6 +312,13 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
     <div id="pmarks"></div>
    </div>
   </div>
+  <div id="msc">
+   <div id="mworld">
+    <div id="mhill"></div><div id="mfloor"></div>
+    <div id="mmill"><div id="mroof"></div><div id="mwheel"></div><div id="mdoor"></div></div>
+    <div id="mmarks"></div>
+   </div>
+  </div>
   <div id="csc">
    <div class="layer" id="cfar"><img src="assets/a_far.webp" alt=""></div>
    <div id="cworld">
@@ -438,6 +457,7 @@ const UI = {
   enterA:{en:"Enter the archive", ko:"기록실에 들어간다"}, enterC:{en:"Enter Hazel's café", ko:"헤이즐의 카페에 들어간다"},
   locP:{en:"BGB's cottage", ko:"BGB의 오두막"}, lFrame:{en:"Look at the photograph", ko:"사진을 본다"}, lDoor:{en:"Open the door", ko:"문을 연다"}, lDoorNo:{en:"Someone is knocking", ko:"누군가 문을 두드린다"},
   askBear:{en:"Who was the bear on the stairs?", ko:"계단의 곰은 누구인가?"}, askStop:{en:"The clock stopped at 11:47. That is not necessarily when Edward died.", ko:"시계는 11시 47분에 멈췄다. 그것이 에드워드가 죽은 시각이라는 뜻은 아니다."},
+  locM:{en:"The Old Mill", ko:"낡은 방앗간"}, talkMo:{en:"Talk to Molly", ko:"몰리 할머니와 이야기한다"}, talkGr:{en:"Talk to Green", ko:"Green과 이야기한다"}, toMill:{en:"Walk to the Old Mill", ko:"낡은 방앗간으로 간다"}, leaveM:{en:"Walk back to the village", ko:"마을로 돌아간다"}, lComp:{en:"Compare the photographs", ko:"사진을 맞춰 본다"},
   talkTm:{en:"Talk to Tommy", ko:"토미와 이야기한다"},
   lPost:{en:"Read the guard's logbook", ko:"경비의 일지를 읽는다"}, conHead:{en:"Contradictions and deductions", ko:"모순과 추리"}, askNext:{en:"Is there another bear?", ko:"다른 곰이 있는가?"},
   leaveC:{en:"Leave the café", ko:"카페를 나간다"}, talkHz:{en:"Talk to Hazel", ko:"헤이즐과 이야기한다"}, locC:{en:"Hazel's Café", ko:"헤이즐의 카페"}, lBoots:{en:"Look at the prints on the stairs", ko:"계단의 발자국을 살핀다"},
@@ -514,6 +534,8 @@ EV.photo_home = { id:"photo_home", name:{en:"The photograph (home copy)",ko:"사
   note:{en:"BGB keeps a worn photograph of two cubs on his shelf.", ko:"BGB는 선반에 두 아기 곰이 찍힌 낡은 사진을 두고 있다."} };
 EV.stmt_tm = { id:"stmt_tm", name:{en:"Statement: Tommy",ko:"진술: 토미"}, tag:"STATEMENT", note:null,
   desc:{en:"The night guard: \"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.\"", ko:"야간 경비: \"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 뒀죠. 뒷모습만 봤습니다.\""} };
+EV.stmt_gr = { id:"stmt_gr", name:{en:"Statement: Green",ko:"진술: Green"}, tag:"STATEMENT", note:null,
+  desc:{en:"Green, at the Old Mill: \"I was at home all night, chipping ice off the wheel. I was not at the tower. Ask yourself what you remember.\"", ko:"방앗간의 Green: \"밤새 집에서 물레바퀴의 얼음을 깼어. 탑에는 가지 않았어. 네 기억을 떠올려 봐.\""} };
 EV.boots = { id:"boots", name:{en:"Footprints on the stairs",ko:"계단의 발자국"}, img:"ev_boot_prints", tag:"TRACES",
   desc:{en:"Snow tracked onto the tower stairs. One set of prints leads up, spaced wide apart.", ko:"탑 계단에 눈이 묻어 있다. 올라가는 발자국이 한 줄, 간격이 넓다."},
   note:{en:"One set of prints leads up the tower stairs, spaced wide apart.", ko:"탑 계단 위로 올라가는 발자국이 한 줄 있다. 간격이 넓다."} };
@@ -521,6 +543,8 @@ EV.receipt = { id:"receipt", name:{en:"Café receipt",ko:"카페 영수증"}, im
   desc:{en:"A receipt from Hazel's Café, settled at 11:42. Hazel wrote the time on it herself.", ko:"헤이즐의 카페 영수증. 11시 42분에 계산되었고, 헤이즐이 직접 시각을 적어 두었다."},
   note:{en:"The café receipt is stamped 11:42.", ko:"카페 영수증에는 11시 42분이 적혀 있다."} };
 const NOTES = {
+  mo:{en:"Molly says the village does not talk about Green. In her telling he is the one who let the bell fail.", ko:"몰리 할머니는 마을이 Green 이야기를 하지 않는다고 했다. 그녀의 말로는 종이 울리지 않게 한 쪽은 Green이다."},
+  gr:{en:"Green lives alone at the Old Mill. A faded scar marks his left ear. He lifts the kettle with his right hand, and that hand is bare in the cold.", ko:"Green은 낡은 방앗간에서 혼자 산다. 왼쪽 귀에 희미한 흉터가 있다. 주전자는 오른손으로 들고, 그 손은 추위 속에서 맨손이다."},
   hz:{en:"Hazel: BGB stayed at the café until a little before a quarter to twelve. He looked like he was waiting for someone.", ko:"헤이즐: BGB는 열두 시 십오 분 전이 조금 못 되도록 카페에 있었다. 누군가를 기다리는 것 같았다."},
   hand:{en:"Your own hand: you hold things in your LEFT hand.", ko:"당신의 손: 당신은 물건을 왼손으로 든다."},
   nini:{en:"Nini last saw Edward at nine. He was sealing two letters.", ko:"니니가 에드워드를 마지막으로 본 것은 아홉 시. 그는 편지 두 통을 봉하고 있었다."},
@@ -556,6 +580,19 @@ D.p_n3 = {sp:"bgb", ex:"neutral", t:{en:"I was at Hazel's café until a little b
 D.p_n4 = {sp:"nini", ex:"worried", t:{en:"I will. The Constable is snowed in, so everyone wants you to look into it. Please come to the tower.", ko:"그럴게요. 경찰관은 눈에 갇혀 못 오니까, 다들 아저씨가 조사해 주길 바라요. 탑으로 와 주세요."}, set:"pro.done", next:null};
 D.nk0 = {sp:"nini", ex:"worried", t:{en:"Another bear. You think there was another bear on those stairs?", ko:"아저씨, 다른 곰이요. 그날 계단에 다른 곰이 있었다고 생각하세요?"}, next:"nk1"};
 D.nk1 = {sp:"nini", ex:"thinking", t:{en:"Edward kept his drawers locked and I have kept the key since. If there is an answer, it may be in there. Please, take it.", ko:"에드워드 아저씨는 서랍을 늘 잠가 두셨고, 열쇠는 제가 계속 가지고 있었어요. 답이 있다면 거기 있을지도 몰라요. 아저씨가 가져가세요."}, ev:"key", set:"nini.key", next:null};
+D.mo0 = {sp:"mo", t:{en:"So you have heard there was a second bear on those stairs.", ko:"그래, 그날 계단에 곰이 한 마리 더 있었다는 얘기를 들었구먼."},
+   ch:[{t:{en:"Tell me about Green.",ko:"Green에 대해 말씀해 주세요."},go:"mo1"},{t:{en:"Who told you?",ko:"누가 말했나요?"},go:"mo2"},{t:{en:"(Leave.)",ko:"(자리를 뜬다.)"},go:null}]};
+D.mo1 = {sp:"mo", t:{en:"We don't talk about Green. He is the one who let the bell fail, the night the river took the boatman. The village has not forgiven it.", ko:"Green 얘기는 안 해. 강이 뱃사공을 데려간 그날 밤, 종이 울리지 않게 만든 건 그 아이야. 마을은 아직도 용서하지 않았어."}, note:"mo", set:"mo.green", next:"mo0"};
+D.mo2 = {sp:"mo", t:{en:"Nobody. A village this small hears every stair creak. Go to the Old Mill if you must. Take a coat.", ko:"아무도 아냐. 이렇게 작은 마을은 계단 삐걱대는 소리까지 다 들리거든. 가 봐야겠다면 방앗간으로 가. 외투는 챙기고."}, set:"mo.told", next:"mo0"};
+D.mo9 = {sp:"mo", t:{en:"The Old Mill is past the last houses. I have said what I will say.", ko:"방앗간은 마지막 집들을 지나면 있어. 할 말은 다 했네."}};
+D.m_no = {sp:"bgb", ex:"thinking", t:{en:"I should look into the other bear first.", ko:"다른 곰에 대해 먼저 알아보자."}};
+D.gr0 = {sp:"gr", t:{en:"You. I did not think you would come yourself.", ko:"너로군. 직접 올 줄은 몰랐는데."},
+   ch:[{t:{en:"Where were you last night?",ko:"어젯밤에 어디 있었어?"},go:"gr2"},{t:{en:"Edward is dead.",ko:"에드워드가 죽었어."},go:"gr3"},{t:{en:"Your hand is bare in this cold.",ko:"이 추위에 손이 맨손이네."},go:"gr4"},{t:{en:"(Leave.)",ko:"(자리를 뜬다.)"},go:"gr5"}]};
+D.gr2 = {sp:"gr", ex:"neutral", t:{en:"At home. The wheel froze solid, so I spent the night chipping ice. I was not at the tower.", ko:"집에 있었어. 물레바퀴가 꽁꽁 얼어서 밤새 얼음을 깼지. 탑에는 가지 않았어."}, set:"gr.denied", next:"gr0"};
+D.gr3 = {sp:"gr", ex:"neutral", t:{en:"I know. The whole valley heard the handbell. Say what you came to say.", ko:"알아. 계곡 전체가 손종 소리를 들었으니까. 하려던 말이나 해."}, set:"gr.knew", next:"gr0"};
+D.gr4 = {sp:"gr", ex:"neutral", t:{en:"Cold does not ask permission. Hold the kettle for me, it keeps the fingers honest.", ko:"추위는 허락을 구하지 않아. 주전자 좀 들어 줘. 손가락이 정직해지거든."}, note:"gr", set:"gr.hand", next:"gr0"};
+D.gr5 = {sp:"gr", ex:"neutral", t:{en:"Ask yourself what you remember.", ko:"네 기억을 떠올려 봐."}, ev:"stmt_gr", set:"gr.done", next:null};
+D.gr9 = {sp:"gr", ex:"neutral", t:{en:"I have said it already. Ask yourself what you remember.", ko:"이미 말했어. 네 기억을 떠올려 봐."}};
 D.tm0 = {sp:"tm", t:{en:"Evening, Mr. Big Green Bear. I walk this bridge loop every night and keep the log.", ko:"안녕하세요, 빅그린베어 씨. 저는 밤마다 이 다리 둘레를 돌며 일지를 씁니다."},
    ch:[{t:{en:"What did you see last night?",ko:"어젯밤에 뭘 보셨나요?"},go:"tm1"},{t:{en:"Do you mind the tower at night?",ko:"밤에 탑이 거슬리진 않으세요?"},go:"tm2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
 D.tm1 = {sp:"tm", t:{en:"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.", ko:"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 뒀죠. 뒷모습만 봤습니다."}, ev:"stmt_tm", set:"tm.stmt", next:null};
@@ -567,7 +604,7 @@ D.h1 = {sp:"hz", t:{en:"You were here until a little before a quarter to twelve.
 D.h1b = {sp:"hz", t:{en:"You settled your tab at eleven forty-two. I wrote the time on the receipt myself. Here, keep it.", ko:"열한 시 사십이 분에 계산하셨어요. 시각은 제가 직접 영수증에 적었죠. 자, 가지고 계세요."}, ev:"receipt", set:"hz.done", next:null};
 D.h2 = {sp:"hz", t:{en:"He lent me money for the roof last winter. I paid back half. It's no secret, so don't go writing it down as one.", ko:"작년 겨울에 지붕 고치라고 돈을 빌려줬어요. 절반은 갚았고요. 비밀도 아니니 무슨 비밀인 양 적지는 마세요."}, set:"hz.owed", next:"h0"};
 D.h9 = {sp:"hz", t:{en:"Take your time. The kettle's always on.", ko:"천천히 하세요. 주전자는 늘 불 위에 있답니다."}};
-const SP = { tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp"}, bgb:{name:{en:"BGB",ko:"BGB"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
+const SP = { mo:{name:{en:"Molly",ko:"몰리"}, img:"assets/nini_front.webp", sil:true}, gr:{name:{en:"Green",ko:"Green"}, img:"assets/big_green_bear_front.webp", sil:true}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp"}, bgb:{name:{en:"BGB",ko:"BGB"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
 const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
@@ -597,14 +634,15 @@ function setActorSprite(el, dir, h){
   const sc = h / k[3]; // scale so the FRONT sprite height equals h
   el.style.width = Math.round(natW * sc) + "px"; el.style.height = Math.round(nat * sc) + "px"; el.style.top = (FEET - Math.round(nat*sc)) + "px";
 }
-const HZ_H = 175, TM_H = 190;
-const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), tm = mkActor("tm","tommy",TM_H,1930), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
-let NPCX = { nini:1010, ck:2610, hz:-9999, tm:1930 }; const NPCX_V = { nini:1010, ck:2610, hz:-9999, tm:1930 }, NPCX_T = { nini:-9999, ck:830, hz:-9999, tm:-9999 }, NPCX_A = { nini:-9999, ck:-9999, hz:-9999, tm:-9999 }, NPCX_C = { nini:-9999, ck:-9999, hz:1050, tm:-9999 };
+const HZ_H = 175, TM_H = 190, MO_H = 150, GR_H = 215;
+const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), tm = mkActor("tm","tommy",TM_H,1930), mo = mkActor("mo","nini",MO_H,-9999), gr = mkActor("gr","big_green_bear",GR_H,-9999), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
+let NPCX = { nini:1010, ck:2610, hz:-9999, tm:1930, mo:-9999, gr:-9999 }; const NPCX_V = { nini:1010, ck:2610, hz:-9999, tm:1930, mo:3300, gr:-9999 }, NPCX_T = { nini:-9999, ck:830, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_A = { nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_C = { nini:-9999, ck:-9999, hz:1050, tm:-9999, mo:-9999, gr:-9999 }, NPCX_M = { nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:1500 };
 const P = { x:S.x, dir:"front", walk:0, moving:false, face:"right" };
 /* NPCs stand facing front; once BGB comes within 300 px they turn and keep looking at him until he walks beyond 380 px (the gap stops flicker) */
-const FACING = { nini:false, ck:false, hz:false, tm:false };
+const FACING = { nini:false, ck:false, hz:false, tm:false, mo:false, gr:false };
 function npcFace(key, nx){ const d = Math.abs(P.x - nx); if (!FACING[key] && d < 300) FACING[key] = true; else if (FACING[key] && d > 380) FACING[key] = false; return FACING[key] ? (P.x < nx ? "left" : "right") : "front"; }   /* BGB is on the left -> face left, toward him */
 function place(){
+  if (S.scene === "village") NPCX.mo = has("dd02") ? 3300 : -9999;   /* Molly appears once the second bear is a possibility */
   const sc = BGB_H/274; let dir = P.moving ? P.face : "front";
   setActorSprite(bgb, dir, BGB_H);
   const w = parseFloat(bgb.style.width); bgb.style.left = Math.round(P.x - w/2) + "px";
@@ -625,6 +663,9 @@ function place(){
   const hface = npcFace("hz", NPCX.hz);
   setActorSprite(hz, hface, HZ_H); hz.style.left = Math.round(NPCX.hz - parseFloat(hz.style.width)/2) + "px";
   tm.style.transform = "scale("+(1-0.005*Math.sin(tt/950+4)).toFixed(3)+","+(1+0.012*Math.sin(tt/950+4)).toFixed(3)+")";
+  mo.classList.add("silh"); gr.classList.add("silh");
+  setActorSprite(mo, "front", MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
+  setActorSprite(gr, "front", GR_H); gr.style.left = Math.round(NPCX.gr - parseFloat(gr.style.width)/2) + "px";
   setActorSprite(tm, npcFace("tm", NPCX.tm), TM_H); tm.style.left = Math.round(NPCX.tm - parseFloat(tm.style.width)/2) + "px";
 }
 function applyLight(dt){
@@ -633,6 +674,8 @@ function applyLight(dt){
   lightActor(ck, NPCX.ck, dt, parseFloat(ck.style.width)*.85);
   lightActor(hz, NPCX.hz, dt, parseFloat(hz.style.width)*.9);
   lightActor(tm, NPCX.tm, dt, parseFloat(tm.style.width)*.9);
+  lightActor(mo, NPCX.mo, dt, parseFloat(mo.style.width)*.9);
+  lightActor(gr, NPCX.gr, dt, parseFloat(gr.style.width)*.9);
 }
 
 /* ---------- lighting ---------- */
@@ -667,6 +710,8 @@ let IA = [
   { id:"sign",   x:()=>1345,      label:UI.read,   top:640,            run:()=>inspect("notice") },
   { id:"enterA", x:()=>4200, label:UI.enterA, top:560, run:()=>setScene("archive", 430) },
   { id:"enterC", x:()=>5200, label:UI.enterC, top:560, run:()=>setScene("cafe", 500) },
+  { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? "mo9" : "mo0") },
+  { id:"mill",   x:()=>6150,      label:UI.toMill, top:600,            run:()=>{ if (!has("nini.key")){ startDlg("m_no"); return; } setScene("mill", 520); } },
   { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>startDlg(has("tm.stmt") ? "tm9" : "tm0") },
   { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>inspect("patrol") },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(has("ck.bear")?"c9":"c0") },
@@ -688,7 +733,12 @@ const IA_T = [
 const IA_A = [
   { id:"exit",  x:()=>410,  label:UI.leaveA, top:540, run:()=>setScene("village", 4200) },
   { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, run:()=>inspect("register") },
+  { id:"comp",  x:()=>1500, label:UI.lComp,  top:540, run:()=>{ if (!has("gr.done")){ startDlg("m_no"); return; } showEnd(); } },
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect(has("nini.key") ? "photo2" : "drawers") }
+];
+const IA_M = [
+  { id:"exit", x:()=>380, label:UI.leaveM, top:600, run:()=>setScene("village", 6050) },
+  { id:"gr",   x:()=>NPCX_M.gr, label:UI.talkGr, top:FEET_T-GR_H-150, run:()=>startDlg(has("gr.done") ? "gr9" : "gr0") }
 ];
 const IA_P = [
   { id:"frame", x:()=>1300, label:UI.lFrame, top:430, run:()=>startDlg(has("pro.frame") ? "p_f9" : "p_f0") },
@@ -699,8 +749,8 @@ const IA_C = [
   { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 5200) },
   { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(has("hz.done")?"h9":"h0") }
 ];
-function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"||i.id==="hz"||i.id==="tm"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
-mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks"));
+function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"||i.id==="hz"||i.id==="tm"||i.id==="mo"||i.id==="gr"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
+mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks")); mkMarks(IA_M, $("mmarks"));
 IA = IA_V;
 let near = null, peek = 0, autoGo = null;
 
@@ -718,9 +768,11 @@ const CON = [
   { id:"c3", on:()=>has("nini.letters"),
     t:{en:"Nini saw Edward seal two letters. Only one of them has an addressee you know of.", ko:"니니는 에드워드가 편지 두 통을 봉하는 것을 보았다. 수신자를 아는 것은 그중 한 통뿐이다."} }
 ];
+const DD03 = { en:"The bear on the stairs was right-handed and wore a mustard scarf. It was not you. (Probable, not proven.)", ko:"계단의 곰은 오른손잡이였고 겨자색 목도리를 하고 있었다. 당신이 아니다. (유력하지만 확정은 아니다.)" };
 const DD02 = { en:"Two bears cannot be one: the bear on the bridge and the bear in the café were different, and the bear with the right hand was not you.", ko:"곰은 한 마리일 수 없다. 다리 위의 곰과 카페의 곰은 달랐고, 오른손에 물건을 든 곰은 당신이 아니다." };
 function checkDeduce(){
   CON.forEach(c=>{ if (c.on() && !S.flags["con."+c.id]){ S.flags["con."+c.id] = true; addNote(c.t); toast((lang==="ko"?"모순 발견":"Contradiction found")); } });
+  if (has("gr.hand") && has("ck.bear") && !S.flags.dd03){ S.flags.dd03 = true; addNote(DD03); toast((lang==="ko"?"추리":"Deduction")+": "+(lang==="ko"?"계단의 곰은 당신이 아니다":"The stair bear was not you")); }
   const tw = ["hatch","pendulum","handbell","chute","melt","boots"].filter(x=>S.ev.includes(x)).length;
   if (S.ev.includes("clock") && S.ev.includes("pendulum") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
   if (has("ck.bear") && S.ev.includes("clock") && tw >= 3 && !S.flags.q1){ S.flags.q1 = true; toast((lang==="ko"?"질문":"Question")+": "+tr(UI.askBear)); }
@@ -747,7 +799,7 @@ function renderDlg(anim){
   const n = D[cur]; if (!n) return; const sp = SP[n.sp];
   $("dNm").textContent = tr(sp.name);
   const ex = EXPR.includes(n.ex) ? n.ex : "neutral"; // each line picks its expression; speakers without portraits keep the still
-  const portrait = sp.por ? sp.por + ex + ".webp" : sp.img;
+  const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil);   /* silhouette until the real portrait exists */
   if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
   $("dPor").onload = () => { $("dPor").style.opacity = 1; };
   full = tr(n.t); const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":""); clearInterval(typing);
@@ -801,19 +853,21 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 /* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
-const ROOM = { cottage:{min:0,end:2400}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
-function locOf(n){ return tr(n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
+const ROOM = { cottage:{min:0,end:2400}, mill:{min:0,end:2400}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+function locOf(n){ return tr(n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
-  S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage", IN = T || A || C || PR;
-  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR);
-  const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : PR ? $("pworld") : $("world");
-  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else if (PR) host.appendChild($("pmarks")); else host.appendChild(marks);
-  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : PR ? [] : LAMPS_T; IA = A ? IA_A : C ? IA_C : PR ? IA_P : IA_T; NPCX = (A || PR) ? NPCX_A : C ? NPCX_C : NPCX_T; }
+  S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage", MI = name === "mill", IN = T || A || C || PR || MI;
+  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR); $("msc").classList.toggle("on", MI);
+  const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : PR ? $("pworld") : MI ? $("mworld") : $("world");
+  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else if (PR) host.appendChild($("pmarks")); else if (MI) host.appendChild($("mmarks")); else host.appendChild(marks);
+  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : (PR || MI) ? [] : LAMPS_T; IA = A ? IA_A : C ? IA_C : PR ? IA_P : MI ? IA_M : IA_T; NPCX = (A || PR) ? NPCX_A : C ? NPCX_C : MI ? NPCX_M : NPCX_T; }
   else  { W = VILLAGE_W; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = IA_V; }
   nini.style.display = IN ? "none" : ""; nini._sh.style.display = IN ? "none" : "";
-  ck.style.display = (A || C || PR) ? "none" : ""; ck._sh.style.display = (A || C || PR) ? "none" : "";
+  ck.style.display = (A || C || PR || MI) ? "none" : ""; ck._sh.style.display = (A || C || PR || MI) ? "none" : "";
   hz.style.display = C ? "" : "none"; hz._sh.style.display = C ? "" : "none";
   tm.style.display = IN ? "none" : ""; tm._sh.style.display = IN ? "none" : "";
+  mo.style.display = IN ? "none" : ""; mo._sh.style.display = IN ? "none" : "";
+  gr.style.display = MI ? "" : "none"; gr._sh.style.display = MI ? "" : "none";
   $("t8").classList.toggle("hide", IN); $("t9").classList.toggle("hide", IN);
   P.x = x; cam = Math.max(CAM_MIN, Math.min(CAM_MAX, P.x - STAGE_W/2)); near = null;
   $("hudLoc").textContent = locOf(name);
@@ -824,7 +878,10 @@ function setScene(name, x){
   setTimeout(()=>{ setSceneNow(name, x); $("fade").classList.remove("on"); mode = "play"; stage.focus(); }, 750);
 }
 function enterTower(){ setScene("tower", 470); }
-$("eBack").onclick = ()=>{ $("endcard").classList.remove("on"); P.x = 2640; mode = "play"; stage.focus(); };
+function showEnd(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"3장 끝":"END OF CHAPTER 3"; $("eH").textContent = k?"다른 곰":"The Other Bear";
+  $("eP1").textContent = k?"두 장의 사진을 맞춰 보려는 순간, 사진 속 기억이 BGB의 눈앞으로 밀려온다.":"As BGB lines the two photographs up, the memory inside them pulls at him.";
+  $("eP2").textContent = k?"다음은 4장, 23년 전의 이야기입니다. 필요한 그림: 과거의 마을, 어린 쌍둥이.":"Next is Chapter 4, 23 years earlier. Needs: the flashback village and the young twins."; $("endcard").classList.add("on"); }
+$("eBack").onclick = ()=>{ $("endcard").classList.remove("on"); mode = "play"; stage.focus(); };
 
 /* case file */
 let tab = 0, selEv = null, sub = false, PV = false, evPage = 0;
@@ -1046,6 +1103,7 @@ function frame(now){
   $("afar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
   $("aworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("afg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("mworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("pworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("cfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
   $("cworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
@@ -1073,7 +1131,7 @@ function fit(){
   stage.style.transform = "scale("+s+")"; stage.style.left = ((vw - STAGE_W*s)/2)+"px"; stage.style.top = ((vh - STAGE_H*s)/2)+"px"; }
 addEventListener("resize", fit);
 
-load(); cam = 0; fit(); setSceneNow(["tower","archive","cafe","cottage"].includes(S.scene) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus();
+load(); cam = 0; fit(); setSceneNow(["tower","archive","cafe","cottage","mill"].includes(S.scene) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus();
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
 window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV };
 requestAnimationFrame(frame);

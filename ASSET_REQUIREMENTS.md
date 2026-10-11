@@ -43,3 +43,7 @@ Whole clocktower shaft and village Mid without the tower · "What I overlooked" 
 
 ## Added for Chapters 2 and 3 (prompts are in the library, section F)
 Hazel's Café exterior + Archive exterior (one sprite each, door included) · Tommy (Night Guard, otter) portraits (sprites done) · Molly (badger) sprites + portraits · Green portraits · BGB notebook-in-left-hand poses · Green kettle-in-right-hand poses · Lantern Bridge guard-post prop · Old Mill exterior (4 layers, daylight).
+
+## Backgrounds still to make (as of the Chapter 3 build)
+Prologue: BGB's cottage (4 layers, prompts in section H) · Chapter 3, 6, 7: Old Mill exterior, daylight (4 layers, section F) · Chapter 6: the Healer's house (4 layers, section H) · Chapter 4: flashback Bell Village (4 layers, warm day to dusk, section D) · Chapter 5: flooded tower stairwell and flood overlays (section D) · Epilogue: council room still, plus ending stills E1 to E4 (section D). Optional: a dusk version of the village for the Chapter 7 gathering (can be done by tinting in code), a window "Far" for the café and archive that shows the village roofs.
+Placeholders in the game now: the cottage and the Old Mill are flat-colour boxes; Molly and Green are black silhouettes until their sprites and portraits arrive.

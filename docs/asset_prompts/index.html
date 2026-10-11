@@ -697,6 +697,21 @@ function roomLayers(room, spec){
      {size:"3840x420"})
   ];
 }
+SECTIONS.push({id:"h", name:"H. Rooms still missing (4 layers each)", sub:"The prologue cottage and the Healer's house. Same layer set as the café and archive: Far (window view), Mid (wall), Ground (floor) and Foreground.", items:[].concat(
+ roomLayers("BGB's cottage at dawn (Prologue)", {
+   far:"The view through the cottage window at dawn: the snowy village roofs far below in the cold blue light, a thin line of peach at the horizon, a few chimney smokes, the Clocktower as a small dark shape far away. Calm and a little lonely.",
+   mid:"The back wall of a small, tidy one-room cottage seen straight on: a wooden shelf along the wall, a framed window on the left with a plain curtain, a small stove with a kettle on the right, a hat peg with a scarf hook, a narrow door at the far right. Plain plaster and old timber. Nothing grand, everything cared for.",
+   midDetails:["Colours: cold blue dawn light from the window (#8FA2C6) against a faint warm glow from the stove (#FFB347), timber #4A2A18, plaster #CFC3AE.","A clear, empty shelf space at about 35% of the wall length from the left, where a deep photograph frame will be placed later by the game (draw the shelf only, leave the space empty).","The door at the right edge is plain and closed, slightly worn."],
+   ground:"Worn wooden floorboards with a small round rag rug, a boot mat by the door and a bit of tracked-in snow near the door.",
+   fg:"A dark foreground strip of a chair back, a basket of firewood and a hanging coat at the very edges, so the middle stays open."}),
+ roomLayers("The Healer's house (Chapter 6)", {
+   far:"The view through the Healer's window at night: the lit roofs of the village, a quiet snowy lane, two or three lantern lights, tiny snowflakes, deep navy sky fading to #3A4F8A near the horizon.",
+   mid:"The back wall of a village healer's front room seen straight on: tall shelves of labelled-looking jars and herb bundles (no readable text), a hanging scale, a wooden examination table with a folded blanket, a framed anatomy chart drawn as simple pictures without text, a small stove with a steaming pot, a door to the back room on the right.",
+   midDetails:["Colours: warm lamp light (#FFB347) on herb green (#5A7A52), glass jars with amber and green liquids, dark timber (#4A2A18), clean cream linen (#EFE3C8).","Calm, clean, a little clinical but cosy. A clear free space in front of the table for the characters to stand."],
+   ground:"Scrubbed wooden floorboards, a woven rug by the table, a dropped herb sprig, no dirt.",
+   fg:"A dark foreground strip with the corner of a bed with a folded blanket at the left edge and a stool with a basin at the right edge, so the middle stays open."})
+)});
+
 SECTIONS[1].items = [
   P("AUDIO 1: wind and night ambience (loop)", {kind:"audio",
     goal:"The base ambience for every outdoor scene.",
