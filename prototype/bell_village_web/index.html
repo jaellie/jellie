@@ -101,7 +101,9 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 /* Old Mill: PLACEHOLDER art (flat daylight colours) until the real layers exist */
 #msc{position:absolute;inset:0;display:none;background:linear-gradient(#bfd0e0,#e8e4d8 62%)}
 #msc.on{display:block}
-#mworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
+#mworld{position:absolute;left:0;top:0;width:3000px;height:1080px;will-change:transform}
+#mworld img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
+#mfar img{left:-120px;top:0}
 #mhill{position:absolute;left:0;top:520px;width:2400px;height:420px;background:linear-gradient(#a9b9cf,#c9d3e0)}
 #mfloor{position:absolute;left:0;top:890px;width:2400px;height:190px;background:linear-gradient(#dce6f2,#9fb2cf)}
 #mmill{position:absolute;left:900px;top:380px;width:700px;height:520px;background:#7a6f66;border:10px solid #4a2a18}
@@ -315,11 +317,13 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
    </div>
   </div>
   <div id="msc">
+   <div class="layer" id="mfar"><img src="assets/m_far.webp" alt=""></div>
    <div id="mworld">
-    <div id="mhill"></div><div id="mfloor"></div>
-    <div id="mmill"><div id="mroof"></div><div id="mwheel"></div><div id="mdoor"></div></div>
+    <img src="assets/m_mid.webp" style="left:0;top:-191px" width="3023" height="1417" alt="">
+    <img src="assets/m_ground.webp" style="left:-100px;top:787px" width="3221" height="319" alt="">
     <div id="mmarks"></div>
    </div>
+   <div id="mfg" class="layer"><img src="assets/m_fg.webp" width="2997" height="999" alt="" style="left:0;top:81px"></div>
   </div>
   <div id="csc">
    <div class="layer" id="cfar"><img src="assets/a_far.webp" alt=""></div>
@@ -638,7 +642,7 @@ function setActorSprite(el, dir, h){
 }
 const HZ_H = 175, TM_H = 190, MO_H = 150, GR_H = 215;
 const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), tm = mkActor("tm","tommy",TM_H,1930), mo = mkActor("mo","nini",MO_H,-9999), gr = mkActor("gr","big_green_bear",GR_H,-9999), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
-let NPCX = { nini:1010, ck:2610, hz:-9999, tm:1930, mo:-9999, gr:-9999 }; const NPCX_V = { nini:1010, ck:2610, hz:-9999, tm:1930, mo:3300, gr:-9999 }, NPCX_T = { nini:-9999, ck:830, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_A = { nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_C = { nini:-9999, ck:-9999, hz:1050, tm:-9999, mo:-9999, gr:-9999 }, NPCX_M = { nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:1500 };
+let NPCX = { nini:1010, ck:2610, hz:-9999, tm:1930, mo:-9999, gr:-9999 }; const NPCX_V = { nini:1010, ck:2610, hz:-9999, tm:1930, mo:3300, gr:-9999 }, NPCX_T = { nini:-9999, ck:830, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_A = { nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_C = { nini:-9999, ck:-9999, hz:1050, tm:-9999, mo:-9999, gr:-9999 }, NPCX_M = { nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:1650 };
 const P = { x:S.x, dir:"front", walk:0, moving:false, face:"right" };
 /* NPCs stand facing front; once BGB comes within 300 px they turn and keep looking at him until he walks beyond 380 px (the gap stops flicker) */
 const FACING = { nini:false, ck:false, hz:false, tm:false, mo:false, gr:false };
@@ -739,7 +743,7 @@ const IA_A = [
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect(has("nini.key") ? "photo2" : "drawers") }
 ];
 const IA_M = [
-  { id:"exit", x:()=>380, label:UI.leaveM, top:600, run:()=>setScene("village", 6050) },
+  { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 6050) },
   { id:"gr",   x:()=>NPCX_M.gr, label:UI.talkGr, top:FEET_T-GR_H-150, run:()=>startDlg(has("gr.done") ? "gr9" : "gr0") }
 ];
 const IA_P = [
@@ -855,7 +859,7 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 /* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
-const ROOM = { cottage:{min:0,end:2400}, mill:{min:0,end:2400}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+const ROOM = { cottage:{min:0,end:2400}, mill:{min:0,end:3000}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
 function locOf(n){ return tr(n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
   S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage", MI = name === "mill", IN = T || A || C || PR || MI;
@@ -1105,6 +1109,8 @@ function frame(now){
   $("afar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
   $("aworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("afg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("mfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
+  $("mfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("mworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("pworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("cfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
