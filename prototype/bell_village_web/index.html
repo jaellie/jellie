@@ -1227,7 +1227,7 @@ let IA = [
   { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 1900); } },
   { id:"heal",   x:()=>2405,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 1900); } },
   { id:"mill",   x:()=>4890,      label:UI.toMill, top:600,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
-  { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } startDlg(tmNode()); } },
+  { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ if (ch1Gate()){ startDlg(talk("tm")); return; } startDlg(tmNode()); } },
   { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(ckNode()) },
   { id:"clock",  x:()=>2735,      label:UI.look,   top:560,            run:()=>inspect("clock") },
@@ -1406,7 +1406,7 @@ function refreshHud(){}
 /* dialogue */
 let cur = null, typing = null, full = "";
 let dlgLock = 0;   /* ignore clicks for a moment after a conversation opens, so a double tap cannot skip it */
-function startDlg(id){ dlgLock = performance.now() + 450; mode = "dlg"; cur = id; renderDlg(true); $("dlg").classList.add("on"); }
+function startDlg(id){ menuFollow = null; dlgLock = performance.now() + 450; mode = "dlg"; cur = id; renderDlg(true); $("dlg").classList.add("on"); }
 /* long lines are cut into pages at sentence ends (Enter turns the page), so no line runs past two rows and no word is split */
 function splitPages(text){
   const ROW = lang==="ko" ? 29 : 52, rows = t => Math.max(1, Math.ceil(t.length / ROW));
@@ -1451,7 +1451,7 @@ function showChoices(){
   n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice nine cream"; b.textContent = tr(c.t); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
   box.classList.add("on");   /* both answers start cream; the one you pick turns burgundy */
 }
-function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
+function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.go) menuFollow = (cur === "followUp") ? menuFollow : (n.ch.some(x=>!x.go) ? cur : null); else menuFollow = null; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
   setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
 function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); setTimeout(()=>showEndE(en), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(fromClick){
@@ -1462,7 +1462,29 @@ function advance(fromClick){
   const n = D[cur]; if (n.ch){ const bs = [...document.querySelectorAll('#choices .choice')]; const sel = document.querySelector('#choices .choice.sel'); if (sel) sel.click(); else if (bs[0]) bs[0].classList.add('sel'); return; }
   applyNode(n); goto(n.next || null);
 }
-function goto(id){ if (!id){ endDlg(); return; } cur = id; renderDlg(true); }
+function goto(id){ if (menuFollow && (!id || id === menuFollow)){ followUp(); return; } if (!id){ endDlg(); return; } cur = id; renderDlg(true); }
+/* after an answer the person asks whether there is more, and the same questions come back (no repeated greeting) */
+let menuFollow = null, fuN = 0;
+const FOLLOW = {
+  ck:[{en:"Mm. Is there anything else you wish to ask?",ko:"음. 더 물어보실 것이 있습니까?"},{en:"Mm. Anything more?",ko:"음. 더 하실 말씀이 있습니까?"}],
+  hz:[{en:"Is there anything else you'd like to ask?",ko:"더 궁금한 게 있으세요?"},{en:"Anything else on your mind?",ko:"더 얘기할 게 있으신가요?"}],
+  tm:[{en:"Is there anything more you need?",ko:"더 필요하신 것이 있습니까?"},{en:"Anything else you would like to know?",ko:"더 물어보실 것이 있습니까?"}],
+  nini:[{en:"Is there anything else you want to ask?",ko:"더 물어볼 게 있어요?"},{en:"Anything else, Mr. Bear?",ko:"더 얘기할 게 있으세요, 아저씨?"}],
+  mo:[{en:"Anything else you want from an old woman?",ko:"늙은이한테 더 들을 게 있나?"}],
+  gr:[{en:"Is that all you came to ask?",ko:"물어볼 건 그게 다야?"}],
+  hl:[{en:"Is there anything else you would like to ask?",ko:"더 물으실 것이 있습니까?"}],
+  def:[{en:"Anything else?",ko:"더 있어?"}]
+};
+function followUp(){ const m = D[menuFollow]; const L = FOLLOW[m.sp] || FOLLOW.def; D.followUp = {sp:m.sp, ex:"neutral", t:L[fuN++ % L.length], ch:m.ch}; cur = "followUp"; renderDlg(true); }
+/* a person with nothing to say about the case just greets you */
+const SMALL = {
+  tm:[{en:"Evening. Snow again tonight.",ko:"안녕하십니까. 오늘도 눈이 많이 옵니다."},{en:"A cold night for a walk. I'll keep watch on the bridge.",ko:"추운 밤입니다. 다리는 제가 지키겠습니다."},{en:"Mind the ice on the bridge.",ko:"다리 위 얼음을 조심하십시오."}],
+  hz:[{en:"Hello again. The kettle's on if you need it.",ko:"또 오셨네요. 주전자는 늘 불 위에 있어요."},{en:"Snowing hard again, isn't it?",ko:"오늘도 눈이 많이 오네요."},{en:"Come by any time. I'll keep a cup warm.",ko:"언제든 들르세요. 차는 따뜻하게 준비해 둘게요."}],
+  ck:[{en:"Mm. More snow tonight.",ko:"음. 오늘도 눈이 많이 옵니다."},{en:"Mm. The wind is up in the louvres again.",ko:"음. 바람이 또 덧문 사이로 웁니다."}],
+  nini:[{en:"Hello, Mr. Bear! Mind the ice.",ko:"안녕하세요, 아저씨! 얼음 조심하세요."},{en:"Brr, it's so cold today!",ko:"으, 오늘도 정말 추워요!"}],
+  mo:[{en:"Hmph. Another snowy day.",ko:"흥, 오늘도 눈이 많이 왔군."},{en:"Tsk. You'll catch your death out here.",ko:"쯧쯧. 이런 데 서 있다간 얼어 죽겠다."}]
+};
+function talk(id){ const L = SMALL[id]; D["st_"+id] = {sp:id, ex:"neutral", t:L[fuN++ % L.length]}; return "st_"+id; }
 const CHT = {1:["멈춘 시계","The Clock That Stopped"],2:["네 명의 증인","Four Witnesses"],3:["다른 곰","The Other Bear"],4:["훔쳐 간 이름","The Name That Was Stolen"],5:["좋은 사람","A Good Person"],6:["사라진 5분","Five Missing Minutes"],7:["우리가 고르는 진실","The Truth We Choose"]};
 /* chapter title card: fade to black, scene change while black, title, fade back in */
 function chapterIntro(n, mid, done){
@@ -1472,11 +1494,11 @@ function chapterIntro(n, mid, done){
 }
 function whenPlay(fn){ const t = setInterval(()=>{ if (mode === "play"){ clearInterval(t); fn(); } }, 400); }
 /* Chapter 6 routing: which line a person or object gives now */
-const ckNode = () => has("c6.turn") && !has("stmt_ck2") ? "ck6_0" : has("c6.turn") ? "ck6_9" : has("ck.bear") ? "c9" : "c0";
+const ckNode = () => has("c6.turn") && !has("stmt_ck2") ? "ck6_0" : has("c6.turn") ? "ck6_9" : !has("ck.bear") ? "c0" : (!has("c2") || !has("ck.watch")) ? "c9" : talk("ck");
 const grNode = () => has("c7.green") ? "g7_9" : has("c7.on") ? "g7_0" : !has("c6.on") ? (has("gr.done") ? "gr9" : "gr0") : !has("dd04") ? "c6_wait" : !has("gr.admit") ? "g6_0" : !has("c6.hl") ? "g6_h" : !has("c6.turn") ? "g6_t0" : "g6_9";
-const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : has("hz.done") ? "h9" : "h0";
-const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : has("tm.stmt") ? "tm9" : "tm0";
-const niniNode = () => has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done") ? "n9" : "n0";
+const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : has("hz.done") && has("hz.pm") ? talk("hz") : "h0";
+const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : has("tm.stmt") && has("tm.pm") ? talk("tm") : "tm0";
+const niniNode = () => has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done") ? talk("nini") : "n0";
 const homeGate = () => !has("c6.on") ? "home0" : !has("c6.turn") ? "home1" : (!has("c6.k3") ? "homeK" : null);
 const healGate = () => !has("c6.on") ? "heal0" : !has("dd06") ? "heal1" : null;
 
@@ -1857,7 +1879,7 @@ window.addEventListener("keydown", e=>{
   if (mode==="dlg" && (k==="ArrowUp"||k==="ArrowDown"||k==="w"||k==="s")){
     const bs = [...document.querySelectorAll("#choices .choice")]; if (!bs.length) return; let i = bs.findIndex(b=>b.classList.contains("sel")); bs.forEach(b=>b.classList.remove("sel"));
     i = (i + ((k==="ArrowDown"||k==="s")?1:-1) + bs.length) % bs.length; bs[i].classList.add("sel"); return; }
-  if (mode==="dlg" && (k==="1"||k==="2")){ const bs = document.querySelectorAll("#choices .choice"); if (bs[+k-1]) bs[+k-1].click(); return; }
+  if (mode==="dlg" && /^[1-4]$/.test(k)){ const bs = document.querySelectorAll("#choices .choice"); if (bs[+k-1]) bs[+k-1].click(); return; }
   keys.add(k.toLowerCase());
 });
 window.addEventListener("keyup", e=>keys.delete(e.key.toLowerCase()));
