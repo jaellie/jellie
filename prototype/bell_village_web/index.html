@@ -477,11 +477,18 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
     </div>
   </div></div>
   <div id="flv"></div><div id="flcap"></div><div id="rain"></div>
+  <div class="modal" id="credits"><div class="card" style="text-align:center">
+    <div class="eyebrow" id="crEy">THANK YOU</div><h2 id="crH">Special Thanks</h2>
+    <ol id="crL" style="text-align:left;display:inline-block;margin:10px 0 6px;padding-left:34px;font:600 30px/1.7 var(--font-body)"></ol>
+    <p id="crP" style="font-size:23px;color:#6d5a40;margin:8px 0 0"></p>
+    <button class="pbtn nine cream" id="crBack">Back</button>
+  </div></div>
   <div class="modal" id="endcard"><div class="card">
     <div class="eyebrow" id="eEy">CHAPTER 1</div><h2 id="eH">The Clock That Stopped</h2>
     <p id="eP1">The door opens onto the winding room. That scene is the next one to build.</p>
     <p id="eP2" style="font-size:23px;color:#6d5a40">Needs: Clocktower interior background, BGB walk frames, Oliver portrait.</p>
     <button class="pbtn nine cream" id="eNext" style="display:none"></button>
+    <button class="pbtn nine cream" id="eCred" style="display:none">Credits</button>
     <button class="pbtn nine cream" id="eBack">Back to the village</button>
   </div></div>
   <div id="fade"></div><div id="chcard"><div class="ce" id="chE"></div><div class="cl"></div><div class="ct" id="chT"></div></div>
@@ -756,7 +763,22 @@ D.fd_v2 = {sp:"kid", t:{en:"\"Look how gently he carries the brave one.\"", ko:"
 D.fd_ed = {sp:"ed", t:{en:"Hold on, little one. I have you.", ko:"조금만 참으렴, 아가야. 내가 안고 있다."}, note:"m6", set:"f5.ed", next:null};
 D.fd_arch = {sp:"kid", t:{en:"Edward carries his brother into the Archive. The door shuts. Nobody looks at the child left standing in the cold.", ko:"에드워드가 동생을 안고 기록실로 들어간다. 문이 닫힌다. 추위 속에 남은 아이를 보는 사람은 없다."}, set:"f5.end", next:null};
 D.fd_no = {sp:"kid", t:{en:"He is not ready to look away yet.", ko:"아직 눈을 뗄 수가 없다."}};
-D.pf_end = {sp:"bgb", ex:"thinking", t:{en:"He always looked out for me.", ko:"그분은 늘 나를 챙겨 주셨어."}};
+D.pf_end = {sp:"bgb", ex:"thinking", t:{en:"He always looked out for me.", ko:"그분은 늘 나를 챙겨 주셨어."}, next:"ci6_0"};
+/* Chapter openings: BGB's own thoughts, a short recap and one pointer to what to do next */
+Object.assign(D, {
+  ci1_0: {sp:"bgb", ex:"thinking", t:{en:"Edward is dead. The tower clock stopped at 11:47, and the village just stands outside, afraid to go in.", ko:"에드워드가 죽었다. 탑시계는 11시 47분에 멈췄고, 마을 사람들은 무서워서 안에 들어가지도 못하고 서 있어."}, next:"ci1_1"},
+  ci1_1: {sp:"bgb", ex:"neutral", t:{en:"I should start with the tower itself. Look around inside, and talk to Oliver. The door is to the right.", ko:"먼저 시계탑 안부터 살펴보자. 이것저것 조사하고, 올리버하고도 이야기해 봐야 해. 문은 오른쪽에 있어."}, next:null},
+  ci2_0: {sp:"bgb", ex:"thinking", t:{en:"The clock broke when Edward fell, and a bear climbed those stairs around 11:40. That is all the tower can tell me.", ko:"시계는 에드워드가 떨어질 때 고장 났고, 11시 40분쯤 어떤 곰이 그 계단을 올랐어. 탑이 알려 줄 수 있는 건 거기까지야."}, next:"ci2_1"},
+  ci2_1: {sp:"bgb", ex:"neutral", t:{en:"Now I need people's stories. Hazel's café, Tommy's logbook, Nini and Oliver. Then I can compare them.", ko:"이제는 사람들의 이야기가 필요해. 헤이즐의 카페, 토미의 일지, 니니와 올리버. 그걸 맞춰 보면 돼."}, next:null},
+  ci3_0: {sp:"bgb", ex:"thinking", t:{en:"One bear cannot be in two places. The bear on the bridge and the bear in the café were different, and the one with the right hand was not me.", ko:"곰은 한 마리일 수 없어. 다리 위의 곰과 카페의 곰은 달랐고, 오른손에 물건을 든 곰은 내가 아니야."}, next:"ci3_1"},
+  ci3_1: {sp:"bgb", ex:"neutral", t:{en:"So who is the other bear? Talk to Nini about the drawer key, then try the Archive and the Old Mill.", ko:"그럼 다른 곰은 누구지? 니니에게 서랍 열쇠 이야기를 듣고, 기록관과 낡은 방앗간을 확인해 보자."}, next:null},
+  ci4_0: {sp:"bgb", ex:"thinking", t:{en:"Two photographs that disagree, and a memory pulling at me from inside them.", ko:"서로 어긋나는 두 장의 사진, 그리고 그 안에서 나를 끌어당기는 기억."}, next:"ci4_1"},
+  ci4_1: {sp:"bgb", ex:"neutral", t:{en:"I will follow it. Talk to Edward, look around the village, and make my way to the tower.", ko:"따라가 보자. 에드워드와 이야기하고, 마을을 둘러보고, 탑까지 가 보는 거야."}, next:null},
+  ci5_0: {sp:"bgb", ex:"thinking", t:{en:"The bell never rang. The water began to rise.", ko:"종은 울리지 않았고, 물이 차오르기 시작했어."}, next:"ci5_1"},
+  ci5_1: {sp:"bgb", ex:"worried", t:{en:"First help whoever is trapped, then ring the handbell, then climb the stairs beside it.", ko:"먼저 갇힌 사람을 도와야 해. 그다음 손종을 울리고, 그 옆의 계단으로 올라가자."}, next:null},
+  ci6_0: {sp:"bgb", ex:"thinking", t:{en:"The knots, the right hand, the torn ear. I saw all of it, and I cannot unsee it.", ko:"매듭, 오른손, 찢어진 귀. 다 봤어. 이제 모르는 척할 수 없어."}, next:"ci6_1"},
+  ci6_1: {sp:"bgb", ex:"neutral", t:{en:"Compare the clues on the Identity Board under People. After that, I have to see Green at the Old Mill.", ko:"사람 탭의 신원 보드에서 단서를 맞춰 보자. 그다음엔 낡은 방앗간의 Green을 만나야 해."}, next:null}
+});
 D.tm0 = {sp:"tm", t:{en:"Evening, Mr. Big Green Bear. I walk this bridge loop every night and keep the log.", ko:"안녕하세요, 빅그린베어 씨. 저는 밤마다 이 다리 둘레를 돌며 일지를 씁니다."},
    ch:[{t:{en:"What did you see last night?",ko:"어젯밤에 뭘 보셨나요?"},go:"tm1"},{t:{en:"Do you mind the tower at night?",ko:"밤에 탑이 거슬리진 않으세요?"},go:"tm2"},{t:{en:"Anything earlier in your watch?",ko:"근무 초반에 본 건 없나요?"},go:"tm3"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
 D.tm1 = {sp:"tm", t:{en:"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.", ko:"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 두었습니다. 뒷모습만 봤습니다."}, ev:"stmt_tm", set:"tm.stmt", next:null};
@@ -1028,10 +1050,15 @@ function placeName(col, name){
   if (S.resp.every(Boolean) && !has("dd12")){ setf("dd12"); addNote(NOTES.n_dd12); setf("c6.d"); setTimeout(()=>toast(lang==="ko"?"니니가 마을에서 빅그베를 찾고 있다.":"Nini is looking for BGB in the village."), 2100); }
   save(); renderCF();
 }
+function showCredits(){ const k = lang==="ko"; $("endcard").classList.remove("on");
+  $("crEy").textContent = k ? "감사의 말" : "THANK YOU"; $("crH").textContent = k ? "함께해 준 사람들" : "Special Thanks";
+  $("crL").innerHTML = k ? "<li>빅그베 아이디어를 주신 sy</li><li>영어 번역을 도와준 tommy</li>" : "<li>sy, for the idea of Big Green Bear</li><li>tommy, for help with the English translation</li>";
+  $("crP").textContent = k ? "플레이해 주셔서 감사합니다." : "Thank you for playing."; $("crBack").textContent = k ? "돌아가기" : "Back"; $("credits").classList.add("on"); }
+$("eCred").onclick = showCredits; $("crBack").onclick = ()=>{ $("credits").classList.remove("on"); $("endcard").classList.add("on"); };
 function showEnd6(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"6장 끝":"END OF CHAPTER 6"; $("eH").textContent = k?"사라진 5분":"Five Missing Minutes";
   $("eP1").textContent = k?"누가 도울 수 있었고, 하지 않았는가. 증거는 모두 사건 파일에 있다.":"Who had the chance to help, and didn't? The evidence is all in the Case File.";
   $("eP2").textContent = k?"7장 \"우리가 고르는 진실\"은 아직 만들지 않았습니다.":"Chapter 7, The Truth We Choose, is not built yet.";
-  $("eNext").style.display = "none"; $("eBack").textContent = k?"계속 둘러보기":"Keep exploring"; $("endcard").classList.add("on"); }
+  $("eNext").style.display = "none"; $("eCred").style.display = ""; $("eCred").textContent = k?"감사의 말":"Credits"; $("eBack").textContent = k?"계속 둘러보기":"Keep exploring"; $("endcard").classList.add("on"); }
 
 /* ---------- interactables ---------- */
 let IA = [
@@ -1203,7 +1230,7 @@ const CHT = {1:["멈춘 시계","The Clock That Stopped"],2:["네 명의 증인"
 function chapterIntro(n, mid, done){
   const k = lang==="ko"; mode = "modal"; hideHintNow(); $("fade").classList.add("on");
   setTimeout(()=>{ if (mid) mid(); $("chE").textContent = k ? n+"장" : "CHAPTER "+n; $("chT").textContent = CHT[n][k?0:1]; $("chcard").classList.add("on");
-    setTimeout(()=>{ $("chcard").classList.remove("on"); setTimeout(()=>{ $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (done) done(); }, 900); }, 2600); }, 800);
+    setTimeout(()=>{ $("chcard").classList.remove("on"); setTimeout(()=>{ $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (done) done(); if (n !== 6 && D["ci"+n+"_0"]) setTimeout(()=>{ if (mode === "play") startDlg("ci"+n+"_0"); }, 700); }, 900); }, 2600); }, 800);
 }
 function whenPlay(fn){ const t = setInterval(()=>{ if (mode === "play"){ clearInterval(t); fn(); } }, 400); }
 /* Chapter 6 routing: which line a person or object gives now */
@@ -1239,7 +1266,7 @@ Object.assign(GATE_T, {
 const ch1Gate = () => !S.flags.q1 ? (has("ck.bear") ? "tower" : "ck") : null;
 const ch2Gate = () => ch1Gate() || (!has("dd02") ? (!S.ev.includes("receipt") ? "rcpt" : !S.ev.includes("patrol") ? "logb" : "hand") : null);
 function tryEnter(sc, x, gate){ const g = gate(); if (g){ gateMsg(g); return false; } setScene(sc, x); return true; }
-function endDlg(){ if (cur === "pf_end") setTimeout(()=>toast(lang==="ko"?"신원 보드가 열렸다. 사람 탭에서 단서를 맞춰 보자.":"The Identity Board is open. Compare the clues under People."), 700);
+function endDlg(){ if (cur === "ci6_1") setTimeout(()=>toast(lang==="ko"?"신원 보드가 열렸다. 사람 탭에서 단서를 맞춰 보자.":"The Identity Board is open. Compare the clues under People."), 700);
   if (has("c6.fin") && !has("c6.shown")){ setf("c6.shown"); setTimeout(()=>showEnd6(), 1800); } const f5 = S.flash === 5 && has("f5.end") && !has("f5.shown"); if (f5){ setf("f5.shown"); setTimeout(()=>{ toast(lang==="ko"?"종이 한 번, 느리게 울린다. 그날 밤 울리지 않았던 종이다.":"A single slow bell tone, the one that never rang that night."); setTimeout(()=>showEnd5(), 2400); }, 900); }
   const fin = S.flash && S.flash !== 5 && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); setTimeout(()=>showEnd4(), 1800); $("rain").classList.add("on"); }
   const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>chapterIntro(1, ()=>setSceneNow("village", 700)), 50); }
@@ -1306,7 +1333,7 @@ function startFlash5(){
   $("endcard").classList.remove("on");
   chapterIntro(5, ()=>{ setSceneNow("flood", 420); $("rain").classList.add("on"); }, ()=>{ const c = $("flcap"); c.textContent = tr(UI.locFl); c.classList.add("on"); setTimeout(()=>c.classList.remove("on"), 3000); });
 }
-function showEnd5(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"5장 끝":"END OF CHAPTER 5"; $("eH").textContent = k?"좋은 사람":"A Good Person";
+function showEnd5(){ $("eCred").style.display = "none"; const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"5장 끝":"END OF CHAPTER 5"; $("eH").textContent = k?"좋은 사람":"A Good Person";
   $("eP1").textContent = k?"아이는 추위 속에 홀로 서 있다. 아무도 그를 보지 않았다.":"The child stands alone in the cold. Nobody looked at him.";
   $("eP2").textContent = k?"이어서 6장, 사라진 5분입니다.":"Chapter 6, Five Missing Minutes, follows.";
   $("eNext").style.display = "none"; $("eBack").textContent = k?"현재로 돌아가기":"Back to the present"; $("endcard").classList.add("on"); }
@@ -1319,11 +1346,11 @@ function endFlash(){ const r = S.ret || { scene:"archive", x:1500 }; const from5
   if (from5){ setf("c6.on"); chapterIntro(6, ()=>setSceneNow(r.scene, r.x), ()=>startDlg("pf_end")); return; }
   mode = "modal"; $("fade").classList.add("on");
   setTimeout(()=>{ setSceneNow(r.scene, r.x); $("fade").classList.remove("on"); mode = "play"; stage.focus(); }, 800); }
-function showEnd4(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"4장 끝":"END OF CHAPTER 4"; $("eH").textContent = k?"훔쳐 간 이름":"The Name That Was Stolen";
+function showEnd4(){ $("eCred").style.display = "none"; const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"4장 끝":"END OF CHAPTER 4"; $("eH").textContent = k?"훔쳐 간 이름":"The Name That Was Stolen";
   $("eP1").textContent = k?"종은 울리지 않는다. 물이 차오르기 시작한다.":"The bell does not ring. The water begins to rise.";
   $("eP2").textContent = k?"이어서 5장, 홍수의 밤을 플레이할 수 있습니다.":"You can continue straight into Chapter 5, the flood night.";
   NEXTK = 5; const nx = $("eNext"); nx.style.display = ""; nx.textContent = k?"홍수의 밤으로":"Into the flood night"; $("eBack").textContent = k?"현재로 돌아가기":"Back to the present"; $("endcard").classList.add("on"); }
-function showEnd(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"3장 끝":"END OF CHAPTER 3"; $("eH").textContent = k?"다른 곰":"The Other Bear";
+function showEnd(){ $("eCred").style.display = "none"; const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"3장 끝":"END OF CHAPTER 3"; $("eH").textContent = k?"다른 곰":"The Other Bear";
   $("eP1").textContent = k?"두 장의 사진을 맞춰 보려는 순간, 사진 속 기억이 빅그베의 눈앞으로 밀려온다.":"As BGB lines the two photographs up, the memory inside them pulls at him.";
   $("eP2").textContent = k?"사진 속으로 들어갈 수 있습니다. 4장은 임시 그림으로 먼저 만들었습니다.":"You can step into the photograph. Chapter 4 is built with placeholder art."; NEXTK = 4; const nx = $("eNext"); nx.style.display = ""; nx.textContent = k?"사진 속으로":"Step into the photograph"; $("eBack").textContent = tr(UI.back); $("endcard").classList.add("on"); }
 $("eBack").onclick = ()=>{ if (S.flash){ endFlash(); return; } $("endcard").classList.remove("on"); mode = "play"; stage.focus(); };
@@ -1535,8 +1562,8 @@ function skipTo(n){
   $("pause").classList.remove("on"); mode = "play"; $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null;
   if (n >= 2) SKIP_STEPS[Math.min(n,4)]();
   checkDeduce(); save(); refreshHud();
-  if (n === 2){ setSceneNow("village", 2700); toast(lang==="ko"?"연출 모드: 2장 시작 (1장 완료)":"Director: start of Chapter 2 (Chapter 1 done)"); }
-  else if (n === 3){ setSceneNow("village", 4100); toast(lang==="ko"?"연출 모드: 3장 시작 (2장 완료)":"Director: start of Chapter 3 (Chapter 2 done)"); }
+  if (n === 2) chapterIntro(2, ()=>setSceneNow("village", 2700));
+  else if (n === 3) chapterIntro(3, ()=>setSceneNow("village", 4100));
   else if (n === 4){ setSceneNow("mill", 1400); showEnd(); }
   else if (n === 6 || n === 66){
     qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown","f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown","c6.on"]); S.ret = { scene:"archive", x:1500 };
