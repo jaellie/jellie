@@ -365,7 +365,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
    <div class="hgate" style="left:440px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">빅그베의 오두막</b></div>
    <img src="assets/b_healer.webp" alt="Healer's house" style="position:absolute;left:2060px;top:520px;width:520px;height:507px">
    <img src="assets/b_guard_post.webp" alt="Patrol post" style="position:absolute;left:1648px;top:630px;width:246px;height:auto">
-   <img src="assets/b_mill.webp" alt="Old Mill" style="position:absolute;left:4560px;top:378px;width:700px;height:auto">
+   <img src="assets/b_mill.webp" alt="Old Mill" style="position:absolute;left:4960px;top:378px;width:700px;height:auto">
    <div id="shadows"></div>
    <div id="actors"></div>
    <div id="marks"></div>
@@ -544,7 +544,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 (() => {
 "use strict";
 let STAGE_W = 1920; const STAGE_H = 1080, STAGE_W0 = 1920, STAGE_WMAX = 2520;
-const VILLAGE_W = 5300;   /* temporary: the village is stretched by repeating its layers until the seamless street is painted */
+const VILLAGE_W = 5700;   /* temporary: the village is stretched by repeating its layers until the seamless street is painted */
 let W = VILLAGE_W, CAM_MIN = 0, CAM_MAX = W - STAGE_W, P_MIN = 470;
 let FEET = 985; const FEET_V = 985, FEET_T = 890;
 const  BGB_H = 220, NINI_H = Math.round(BGB_H * 0.55), CK_H = 165;
@@ -1244,7 +1244,7 @@ let IA = [
   { id:"gather", x:()=>2700, label:UI.toGather, top:640, when:()=>has("c7.rec"), run:()=>startGather() },
   { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 1850); } },
   { id:"heal",   x:()=>2320,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 1850); } },
-  { id:"mill",   x:()=>4902,      label:UI.toMill, top:690,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
+  { id:"mill",   x:()=>5302,      label:UI.toMill, top:690,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
   { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ if (ch1Gate()){ startDlg(talk("tm")); return; } startDlg(tmNode()); } },
   { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(ckNode()) },
@@ -1296,7 +1296,7 @@ const IA_H = [
   { id:"hl",    x:()=>1450, label:UI.talkHl, top:FEET_T-175-150, run:()=>startDlg(has("c6.hl") ? "hl9" : "hl0") }
 ];
 const IA_M = [
-  { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 4850) },
+  { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 5250) },
   { id:"bag",  x:()=>1160, label:UI.lBag, top:640, run:()=>inspect("bread") },
   { id:"gr",   x:()=>NPCX_M.gr, label:UI.talkGr, top:FEET_T-GR_H-150, run:()=>startDlg(grNode()) }
 ];
