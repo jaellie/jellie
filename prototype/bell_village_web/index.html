@@ -145,6 +145,10 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .hgate .ms{position:absolute;left:-10px;right:-10px;top:-6px;text-align:center;font:600 18px/1.2 Pretendard,serif;color:#f3e6c8;background:#4a2a18;border:3px solid #2e190d;border-radius:6px;padding:3px 0}
 #psc.hl #pwall{background:linear-gradient(#3b4a48,#46524a 70%,#4a463e)}
 #psc.hl #pframe,#psc.hl #pbook{display:none}
+#present .card{width:880px;max-width:92%}
+#prL{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0;max-height:300px;overflow-y:auto}
+#prN{min-height:30px;font:italic 600 24px/1.2 var(--font-body);color:#6e2a35;margin:0}
+#stage.dusk #vsc{filter:sepia(.32) saturate(1.25) brightness(1.3) hue-rotate(-14deg)}
 .kcon{display:flex;align-items:center;gap:14px;margin:8px 0;padding:10px 14px;border:2px solid #b89868;border-radius:10px;background:rgba(243,230,200,.55);font:600 24px/1.25 var(--font-body)}
 .kcon.ok{background:rgba(110,42,53,.12);border-color:#6e2a35}
 .kcon span{flex:1}
@@ -475,10 +479,13 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
     <button class="pbtn nine cream" id="pReset">Restart</button>
     <div id="pCodeRow"><input id="pCode" type="text" maxlength="16" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Code"><button id="pCodeGo" type="button">OK</button></div>
     <div id="pDir"><div class="dirhead" id="dirHead">DIRECTOR MODE</div>
-     <button class="pbtn nine cream dirb" data-skip="2"></button><button class="pbtn nine cream dirb" data-skip="3"></button><button class="pbtn nine cream dirb" data-skip="4"></button><button class="pbtn nine cream dirb" data-skip="5"></button><button class="pbtn nine cream dirb" data-skip="6"></button><button class="pbtn nine cream dirb" data-skip="66"></button>
+     <button class="pbtn nine cream dirb" data-skip="2"></button><button class="pbtn nine cream dirb" data-skip="3"></button><button class="pbtn nine cream dirb" data-skip="4"></button><button class="pbtn nine cream dirb" data-skip="5"></button><button class="pbtn nine cream dirb" data-skip="6"></button><button class="pbtn nine cream dirb" data-skip="66"></button><button class="pbtn nine cream dirb" data-skip="7"></button><button class="pbtn nine cream dirb" data-skip="77"></button>
     </div>
   </div></div>
   <div id="flv"></div><div id="flcap"></div><div id="rain"></div>
+  <div class="modal" id="present"><div class="card" style="text-align:center">
+    <div class="eyebrow" id="prEy">PRESENT EVIDENCE</div><h2 id="prQ" style="font-size:34px"></h2><div id="prL"></div><p id="prN"></p>
+  </div></div>
   <div class="modal" id="credits"><div class="card" style="text-align:center">
     <div class="eyebrow" id="crEy">THANK YOU</div><h2 id="crH">Special Thanks</h2>
     <ol id="crL" style="text-align:left;display:inline-block;margin:10px 0 6px;padding-left:34px;font:600 30px/1.7 var(--font-body)"></ol>
@@ -832,7 +839,7 @@ let BRX = 0;
 const FACING = { nini:false, ck:false, hz:false, tm:false, mo:false, gr:false };
 function npcFace(key, nx){ const d = Math.abs(P.x - nx); if (!FACING[key] && d < 300) FACING[key] = true; else if (FACING[key] && d > 380) FACING[key] = false; return FACING[key] ? (P.x < nx ? "left" : "right") : "front"; }   /* BGB is on the left -> face left, toward him */
 function place(){
-  if (S.scene === "village" && !S.flash) NPCX.mo = has("dd02") ? 3300 : -9999;   /* Molly appears once the second bear is a possibility */
+  if (S.scene === "village" && !S.flash) NPCX.mo = has("c7.gather") ? 3040 : has("dd02") ? 3300 : -9999;   /* Molly appears once the second bear is a possibility */
   let dir = P.moving ? P.face : "front";
   setActorSprite(bgb, dir, PH);
   const w = parseFloat(bgb.style.width); bgb.style.left = Math.round(P.x - w/2) + "px";
@@ -1059,8 +1066,134 @@ function showCredits(){ const k = lang==="ko"; $("endcard").classList.remove("on
 $("eCred").onclick = showCredits; $("crBack").onclick = ()=>{ $("credits").classList.remove("on"); $("endcard").classList.add("on"); };
 function showEnd6(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"6장 끝":"END OF CHAPTER 6"; $("eH").textContent = k?"사라진 5분":"Five Missing Minutes";
   $("eP1").textContent = k?"누가 도울 수 있었고, 하지 않았는가. 증거는 모두 사건 파일에 있다.":"Who had the chance to help, and didn't? The evidence is all in the Case File.";
-  $("eP2").textContent = k?"7장 \"우리가 고르는 진실\"은 아직 만들지 않았습니다.":"Chapter 7, The Truth We Choose, is not built yet.";
-  $("eNext").style.display = "none"; $("eCred").style.display = ""; $("eCred").textContent = k?"감사의 말":"Credits"; $("eBack").textContent = k?"계속 둘러보기":"Keep exploring"; $("endcard").classList.add("on"); }
+  $("eP2").textContent = k?"이어서 7장 \"우리가 고르는 진실\"이 시작됩니다.":"Chapter 7, The Truth We Choose, follows.";
+  NEXTK = 7; $("eNext").style.display = ""; $("eNext").textContent = k?"7장으로":"On to Chapter 7"; $("eCred").style.display = "none"; $("eBack").textContent = k?"계속 둘러보기":"Keep exploring"; $("endcard").classList.add("on"); }
+
+/* ---------- Chapter 7: The Truth We Choose (placeholder art; facts from STORY_BIBLE sections 3.1a, 5, 7 and 11) ---------- */
+Object.assign(UI, {
+  toGather:{en:"Join the gathering", ko:"광장의 모임에 간다"}, lCase:{en:"Open the pendulum case", ko:"추 상자를 연다"},
+  presentH:{en:"Show the village what proves it.", ko:"무엇이 그것을 증명하는지 보여 주자."}, presentOk:{en:"Present", ko:"제시한다"},
+  askRecord:{en:"Where did Edward hide the truth?", ko:"에드워드는 진실을 어디에 숨겼는가?"}, askChoose:{en:"What goes into the Final Record?", ko:"마지막 기록에는 무엇을 적을 것인가?"}
+});
+SP.edv = {name:{en:"Edward (his written voice)", ko:"에드워드 (적어 둔 목소리)"}, img:"assets/edward_front.webp", sil:true};
+
+EV.motive = { id:"motive", name:{en:"Green's reason",ko:"Green의 이유"}, tag:"STATEMENT",
+  desc:{en:"Green says Edward meant to read the true record aloud at midnight, in front of everyone. Green went to stop him, to protect his brother. \"You think I wanted the name back? He'd have taken your life apart.\"", ko:"Green은 에드워드가 자정에 모두가 보는 앞에서 진짜 기록을 읽으려 했다고 말한다. Green은 동생을 지키려고 그를 막으러 갔다. \"내가 이름을 되찾고 싶어서 그랬다고 생각해? 그 사람이 네 삶을 통째로 흔들어 놓았을 거야.\""},
+  note:{en:"Green says he went to stop Edward from reading the true record, to protect his brother.", ko:"Green은 에드워드가 진짜 기록을 읽는 것을 막아 동생을 지키려고 갔다고 말한다."} };
+EV.record = { id:"record", name:{en:"Edward's Final Record",ko:"에드워드의 마지막 기록"}, tag:"RECORD",
+  desc:{en:"The corrected register and a handwritten confession, hidden in the pendulum case. Edward names himself first, then the Mayor, the Bell-warden, the Healer of that time and Molly. He states the swap and who did what, and hands Nini the keys.", ko:"추 상자 속에 숨겨 둔 바로잡은 장부와 손으로 쓴 고백이다. 에드워드는 자기 이름을 가장 먼저 적고, 이어 시장, 종지기 어른, 그때의 치료사, 몰리를 적었다. 이름이 바뀐 일과 누가 무엇을 했는지를 밝히고, 열쇠를 니니에게 넘긴다."},
+  note:{en:"Edward's Final Record: the corrected register and his confession, naming himself first, then the council.", ko:"에드워드의 마지막 기록: 바로잡은 장부와 고백. 자기 이름을 가장 먼저 적고 이어 회의 사람들을 적었다."} };
+Object.assign(NOTES, {
+  n_dd07:{en:"The register was altered by a group, with Edward's hand: two inks, council seals, five signatures, and the Final Record confirms it.", ko:"장부는 여럿이 함께, 에드워드의 손으로 고쳐졌다. 두 가지 잉크, 회의의 봉인, 다섯 사람의 서명이 있고, 마지막 기록이 그것을 확인한다."},
+  n_dd08:{en:"Green fought to protect BGB, not to take back his name.", ko:"Green은 이름을 되찾으려는 게 아니라 빅그베를 지키려고 싸웠다."},
+  n_dd09:{en:"Edward hid the truth in the clock: the pendulum case.", ko:"에드워드는 진실을 시계 속에 숨겼다. 추 상자다."}
+});
+
+Object.assign(D, {
+  ci7_0: {sp:"bgb", ex:"thinking", t:{en:"Green fell on Edward, and I hid the glove and waited five minutes. We were each protecting someone, and nobody asked who was paying.", ko:"Green은 에드워드를 떨어뜨렸고, 나는 장갑을 숨기고 오 분을 기다렸어. 우리는 저마다 누군가를 지키고 있었고, 아무도 그 값을 누가 치르는지는 묻지 않았어."}, next:"ci7_1"},
+  ci7_1: {sp:"bgb", ex:"neutral", t:{en:"I owe Green the truth first. Then I have to find what Edward left behind, and decide what the village will be told.", ko:"Green에게 먼저 사실대로 말해야 해. 그다음엔 에드워드가 남긴 걸 찾고, 마을에 무엇을 알릴지 정해야 해."}, next:null},
+  g7_0: {sp:"bgb", ex:"worried", t:{en:"Green. I was with Edward before Oliver came. He was alive.", ko:"Green. 올리버가 오기 전에 내가 에드워드 곁에 있었어. 살아 있었어."}, next:"g7_1"},
+  g7_1: {sp:"gr", ex:"worried", t:{en:"Alive. I ran because I thought he was dead.", ko:"살아 있었다고. 나는 죽은 줄 알고 달아났는데."}, next:"g7_2"},
+  g7_2: {sp:"bgb", ex:"worried", t:{en:"I took your glove and your letter from the gallery. I hid them behind the photograph. I never read it.", ko:"난간 위에 있던 네 장갑이랑 편지를 내가 가져갔어. 사진 뒤에 숨겼어. 읽지는 않았어."}, next:"g7_3"},
+  g7_3: {sp:"gr", ex:"neutral", t:{en:"You hid them for me. Of course you did. We have always done this to each other.", ko:"나를 위해 숨긴 거로군. 그래, 그랬겠지. 우리는 늘 서로에게 이래 왔어."}, next:"g7_4"},
+  g7_4: {sp:"bgb", ex:"thinking", t:{en:"Why did you go to the tower, Green? Why did you fight him?", ko:"왜 탑에 갔어, Green? 왜 그 사람이랑 싸웠어?"}, next:"g7_5"},
+  g7_5: {sp:"gr", ex:"neutral", t:{en:"Edward told me he would read the true record at midnight, in front of everyone. The names, the council, all of it.", ko:"에드워드가 자정에 모두가 보는 앞에서 진짜 기록을 읽겠다고 했어. 이름도, 회의도, 전부."}, next:"g7_6"},
+  g7_6: {sp:"gr", ex:"worried", t:{en:"You think I wanted the name back? He'd have taken your life apart.", ko:"내가 이름을 되찾고 싶어서 그랬다고 생각해? 그 사람이 네 삶을 통째로 흔들어 놓았을 거야."}, next:"g7_7"},
+  g7_7: {sp:"gr", ex:"neutral", t:{en:"I wanted to stop him. I did not mean for him to fall.", ko:"나는 그 사람을 막고 싶었을 뿐이야. 떨어뜨릴 생각은 없었어."}, ev:"motive", set:"c7.green", next:"g7_8"},
+  g7_8: {sp:"bgb", ex:"thinking", t:{en:"Edward's last words were about a clock. Not the one that stopped, maybe. I should look at what I already know.", ko:"에드워드의 마지막 말은 시계에 대한 거였어. 멈춘 그 시계가 아닐지도 몰라. 내가 이미 아는 것들을 다시 맞춰 보자."}, next:null},
+  g7_9: {sp:"gr", ex:"neutral", t:{en:"Go and find what he left. I will be here.", ko:"가서 그 사람이 남긴 걸 찾아. 나는 여기 있을게."}},
+  rec0: {sp:"bgb", ex:"thinking", t:{en:"Behind the pendulum there is a narrow case. Inside, a folded register and pages in Edward's hand.", ko:"추 뒤에 좁은 상자가 있다. 안에는 접힌 장부와 에드워드의 글씨로 쓴 종이들이 있다."}, ev:"record", next:"r0"},
+  r0: {sp:"edv", t:{en:"My name is Edward Bell, Archivist and Clerk of the Bell Council. I am the first name on this page, and I am the first to blame.", ko:"나는 벨 의회의 서기이자 기록관인 에드워드 벨이다. 이 종이의 첫 이름은 내 것이고, 책임도 내가 가장 먼저 진다."}, next:"r1"},
+  r1: {sp:"edv", t:{en:"Twenty-three years ago a child's scarf jammed the warning bell, and the river took a boatman. On the third night the Mayor, the Bell-warden, the Healer of that time, Molly and I sat behind a closed door.", ko:"이십삼 년 전, 아이의 목도리가 경보 종을 막았고 강이 뱃사공 한 사람을 데려갔다. 사흘째 밤, 시장과 종지기 어른, 그때의 치료사, 몰리, 그리고 나는 닫힌 문 뒤에 앉아 있었다."}, next:"r2"},
+  r2: {sp:"edv", t:{en:"The village wanted a name for the silence of the bell. Only I knew whose scarf it was: the younger boy's, the sick one, who would not survive being put outside the walls.", ko:"마을은 종이 울리지 않은 일에 이름을 붙이길 원했다. 그 목도리가 누구 것인지는 나만 알았다. 몸이 약한 동생의 것이었고, 그 아이는 성벽 밖에서 살아남지 못할 것이었다."}, next:"r3"},
+  r3: {sp:"edv", t:{en:"So we exchanged their names. The cub the crowd called a hero became Big Green Bear, and the other became Green. I wrote the entries. No entry is valid without my hand. I could have refused, and I did not.", ko:"그래서 우리는 두 아이의 이름을 맞바꿨다. 군중이 영웅이라 부른 아이는 빅그린베어가 되었고, 다른 아이는 Green이 되었다. 장부는 내가 썼다. 내 손이 없으면 어떤 기록도 효력이 없다. 나는 거절할 수 있었지만 하지 않았다."}, next:"r4"},
+  r4: {sp:"edv", t:{en:"I promised the elder it was only until the village calmed. I promised to put it right. I did not, for twenty-three years.", ko:"나는 큰아이에게 마을이 가라앉을 때까지만이라고 약속했다. 바로잡겠다고 약속했다. 이십삼 년 동안 그러지 않았다."}, next:"r5"},
+  r5: {sp:"edv", t:{en:"The Mayor demanded a culprit. The Bell-warden feared for the wardens. The Healer said the younger would die in exile. Molly said, \"Then let them go on believing it.\" I consented, and I wrote. Their names are here, and mine is first.", ko:"시장은 죄를 질 사람을 요구했다. 종지기 어른은 종지기들이 책임질까 두려워했다. 치료사는 동생이 추방되면 죽는다고 했다. 몰리는 \"그럼 그대로 믿게 두자\"고 했다. 나는 동의했고, 썼다. 이름은 여기에 적었고, 내 이름이 첫째다."}, next:"r6"},
+  r6: {sp:"edv", t:{en:"Nini, the keys are yours. Read the true entry at midnight. Forgive an old coward. E.", ko:"니니, 열쇠는 이제 네 것이다. 자정에 진짜 기록을 읽어라. 늙은 겁쟁이를 용서해라. E."}, set:"c7.rec", next:"rec1"},
+  rec1: {sp:"bgb", ex:"worried", t:{en:"He wanted to tell us both first, here at the tower, and read it aloud at midnight. That is what the two letters were for.", ko:"그분은 우리 둘에게 먼저 이 탑에서 말하고, 자정에 모두 앞에서 읽으려 했어. 편지 두 통은 그래서 쓴 거였어."}, next:"rec2"},
+  rec2: {sp:"bgb", ex:"thinking", t:{en:"Tonight, before the Remembrance Bell, the village gathers at the tower plaza. I have to bring this there.", ko:"오늘 밤 추모의 종이 울리기 전에 마을 사람들이 탑 광장에 모여. 이걸 들고 거기로 가야 해."}, next:null},
+  rec9: {sp:"bgb", ex:"thinking", t:{en:"The case is empty now. Everything Edward left is in the Record.", ko:"상자는 비어 있어. 에드워드가 남긴 건 이제 다 기록에 있어."}},
+  c7_nocase: {sp:"bgb", ex:"thinking", t:{en:"There is nothing more to find here yet.", ko:"여기서는 아직 더 찾을 게 없어."}},
+  acc_open: {sp:"nini", ex:"worried", t:{en:"Everyone is here. Edward's Record says what it says, but the village will want to know how you know. Show us, Mr. Bear.", ko:"모두 모였어요. 에드워드 아저씨의 기록에 쓰인 대로이지만, 마을은 아저씨가 어떻게 아는지 알고 싶어 할 거예요. 보여 주세요, 아저씨."}, next:null},
+  acc_q1: {sp:"nini", ex:"neutral", t:{en:"First. Who caused Edward's fall? Show us what proves it.", ko:"먼저요. 누가 에드워드 아저씨를 떨어뜨렸나요? 무엇이 증명하는지 보여 주세요."}, next:null},
+  acc_q2: {sp:"nini", ex:"neutral", t:{en:"Who was with Edward before Oliver arrived? Show us.", ko:"올리버 씨가 오기 전에 누가 에드워드 아저씨 곁에 있었나요? 보여 주세요."}, next:null},
+  acc_q3: {sp:"nini", ex:"neutral", t:{en:"Why were there no glove and no letter at the tower?", ko:"탑에 장갑도 편지도 없었던 건 왜인가요?"}, next:null},
+  acc_q4: {sp:"nini", ex:"worried", t:{en:"How long was Edward alone before the bell?", ko:"종이 울리기 전까지 에드워드 아저씨는 얼마나 혼자였나요?"}, next:null},
+  acc_q5: {sp:"nini", ex:"worried", t:{en:"And why did any of this begin? What is wrong with the register?", ko:"그리고 이 모든 일은 왜 시작됐나요? 장부에 무슨 문제가 있나요?"}, next:null},
+  acc_r1a: {sp:"nini", ex:"worried", t:{en:"Then Green was at the tower.", ko:"그럼 Green 씨가 탑에 있었군요."}, next:"acc_r1b"},
+  acc_r1b: {sp:"gr", ex:"neutral", t:{en:"I was. I caused the fall. I thought he was dead, and I ran.", ko:"있었어. 떨어뜨린 건 나야. 죽은 줄 알고 달아났어."}, set:"c7.p1", next:null},
+  acc_r2a: {sp:"ck", ex:"worried", t:{en:"I found you kneeling by him, Mr. Bear, with yellow wool already in his fist.", ko:"제가 왔을 때 당신이 그의 곁에 무릎을 꿇고 있었습니다. 그의 주먹에는 이미 노란 털실이 쥐어져 있었어요."}, next:"acc_r2b"},
+  acc_r2b: {sp:"bgb", ex:"worried", t:{en:"It was me. He was alive, and I was with him.", ko:"나였어요. 그는 살아 있었고, 내가 곁에 있었어요."}, set:"c7.p2", next:null},
+  acc_r3a: {sp:"bgb", ex:"worried", t:{en:"I took them. Green's glove and Edward's letter. I hid them behind the photograph at home.", ko:"내가 가져갔어요. Green의 장갑과 에드워드의 편지를요. 집의 사진 뒤에 숨겼어요."}, set:"c7.p3", next:null},
+  acc_r4a: {sp:"tm", t:{en:"At eleven fifty-one I wrote \"calling? wind?\" I took it for wind.", ko:"11시 51분에 \"부르는 소리? 바람?\"이라고 적었습니다. 바람 소리라고 생각했습니다."}, next:"acc_r4b"},
+  acc_r4b: {sp:"bgb", ex:"worried", t:{en:"About five minutes. I rang the handbell at eleven fifty-five.", ko:"오 분쯤이요. 11시 55분에 손종을 울렸어요."}, next:"acc_r4c"},
+  acc_r4c: {sp:"ck", ex:"neutral", t:{en:"The Healer says no one can tell whether five minutes would have changed anything. We will not write what no one can know.", ko:"치료사는 오 분이 무언가를 바꿨을지 아무도 말할 수 없다고 합니다. 아무도 알 수 없는 일을 적지는 않겠습니다."}, set:"c7.p4", next:null},
+  acc_r5a: {sp:"nini", ex:"worried", t:{en:"Edward writes that the council exchanged the twins' names, and that he wrote it down.", ko:"에드워드 아저씨는 회의가 두 아이의 이름을 맞바꿨고, 자신이 그걸 적었다고 써 놓았어요."}, next:"acc_r5b"},
+  acc_r5b: {sp:"mo", t:{en:"I said it. \"Then let them go on believing it.\" I have kept quiet for twenty-three years.", ko:"내가 말했어. \"그럼 그대로 믿게 두자\"고. 이십삼 년 동안 입을 다물고 있었지."}, set:"c7.p5", next:null},
+  cc0: {sp:"nini", ex:"worried", t:{en:"Now the Record. Mr. Bear, what goes into it?", ko:"이제 기록이에요. 아저씨, 무엇을 적을까요?"},
+    ch:[{t:{en:"Everything. What each of us did, and the swap.",ko:"전부 적어 줘. 우리가 각자 한 일과 이름이 바뀐 일까지."},go:"e1_go"},{t:{en:"Record it as an accident.",ko:"사고로 적어 줘."},go:"e2_0"},{t:{en:"Green did it. Only Green.",ko:"Green이 했어. Green 혼자."},go:"e3_0"},{t:{en:"Burn it.",ko:"태워 버려."},go:"e4_0"}]},
+  e1_go: {sp:"bgb", ex:"neutral", t:{en:"I want all of it in the Record.", ko:"전부 기록에 남기고 싶어."}, fx:"e1check", next:"e1_0"},
+  e1_no: {sp:"nini", ex:"worried", t:{en:"We cannot write what we cannot show. There is still something we have not shown. Look through the Case File again.", ko:"보여 줄 수 없는 건 적을 수 없어요. 아직 보여 주지 못한 게 있어요. 사건 파일을 다시 살펴봐요."}, next:null},
+  e1_0: {sp:"bgb", ex:"worried", t:{en:"I found Edward alive at eleven fifty. I hid the glove and the letter, and I waited five minutes before I rang the bell.", ko:"11시 50분에 살아 있는 에드워드를 발견했어요. 장갑과 편지를 숨겼고, 종을 울리기까지 오 분을 기다렸어요."}, next:"e1_1"},
+  e1_1: {sp:"gr", ex:"neutral", t:{en:"I caused the fall. I believed he was dead, and I ran.", ko:"떨어뜨린 건 나야. 죽은 줄 알고 달아났어."}, next:"e1_2"},
+  e1_2: {sp:"nini", ex:"worried", t:{en:"The names were exchanged twenty-three years ago. I will write them back as they were.", ko:"이름은 이십삼 년 전에 바뀌었어요. 제가 원래대로 되돌려 적을게요."}, next:"e1_3"},
+  e1_3: {sp:"nini", ex:"neutral", t:{en:"The Record will say what each of you did. It will also say that no one can know whether help at eleven fifty would have saved him.", ko:"기록에는 두 분이 각자 한 일을 적을 거예요. 그리고 11시 50분에 도움이 있었다면 살았을지는 아무도 알 수 없다는 것도 적을 거예요."}, fx:"end1", next:null},
+  e2_0: {sp:"bgb", ex:"neutral", t:{en:"Record it as an accident. Let him be remembered as the man who kept the bell.", ko:"사고로 적어 줘. 그분은 종을 지킨 사람으로 기억되게 해 줘."}, next:"e2_1"},
+  e2_1: {sp:"nini", ex:"worried", t:{en:"...If that is what you ask, Mr. Bear.", ko:"...아저씨가 그렇게 원하신다면요."}, fx:"end2", next:null},
+  e3_0: {sp:"bgb", ex:"worried", t:{en:"Green did it. Write his name, and only his.", ko:"Green이 했어. 그의 이름만 적어 줘."}, next:"e3_1"},
+  e3_1: {sp:"gr", ex:"neutral", t:{en:"...I see. Then it is as the village always said.", ko:"...그렇군. 그럼 마을이 늘 말하던 그대로네."}, fx:"end3", next:null},
+  e4_0: {sp:"bgb", ex:"worried", t:{en:"Burn it. All of it.", ko:"태워 버려. 전부."}, next:"e4_1"},
+  e4_1: {sp:"nini", ex:"worried", t:{en:"...Mr. Bear.", ko:"...아저씨."}, fx:"end4", next:null}
+});
+
+const ACC = [
+  { id:"p1", q:"acc_q1", ok:["acct_gr","boots","chute","hatch","pendulum","patrol"], resp:"acc_r1a" },
+  { id:"p2", q:"acc_q2", ok:["wool","report","stmt_ck2","melt"], resp:"acc_r2a" },
+  { id:"p3", q:"acc_q3", ok:["glove","letter","hide","patrol"], resp:"acc_r3a" },
+  { id:"p4", q:"acc_q4", ok:["walk","handbell","patrol2","receipt","melt"], resp:"acc_r4a" },
+  { id:"p5", q:"acc_q5", ok:["register","photo2","record"], resp:"acc_r5a" }
+];
+let accCur = null;
+function nextAcc(){
+  const st = ACC.find(a=>!has("c7."+a.id));
+  if (!st){ startDlg("cc0"); return; }
+  accCur = st; D.accQ = D[st.q]; startDlg(st.q);
+}
+function openPresent(){
+  if (!accCur) return; const K = lang==="ko"; mode = "modal";
+  $("prEy").textContent = K ? "증거 제시" : "PRESENT EVIDENCE"; $("prQ").textContent = tr(D[accCur.q].t); $("prN").textContent = "";
+  $("prL").innerHTML = S.ev.map(id=>'<button class="chip" type="button" data-e="'+id+'">'+tr(EV[id].name)+'</button>').join("");
+  $("present").classList.add("on");
+  document.querySelectorAll("#prL .chip").forEach(b=>{ b.onclick = ()=>{
+    const id = b.dataset.e;
+    if (accCur.ok.includes(id)){ $("present").classList.remove("on"); const st = accCur; accCur = null; mode = "play"; startDlg(st.resp); }
+    else $("prN").textContent = K ? "그건 질문의 답이 아니에요. 다시 살펴봐요." : "That does not answer it. Look again.";
+  }; });
+}
+const e1Ready = () => ["dd04","dd05","dd06","dd07","dd08","dd09","dd10","dd11","dd12"].every(f=>has(f));
+function confirm7(){
+  if (has("dd09")) return;
+  if (!S.ev.includes("notebook") || !has("dd05")){ toast(lang==="ko"?"무슨 시계를 말하는 걸까?":"What clock is he talking about?"); return; }
+  setf("dd09"); addNote(NOTES.n_dd09); toast((lang==="ko"?"추리 완성: ":"Deduction: ")+(lang==="ko"?"진실은 시계 속에 있다":"The truth is in the clock")); checkDeduce(); save(); renderCF();
+}
+function startGather(){
+  if (has("c7.gather") && !has("c7.done")){ nextAcc(); return; }
+  setf("c7.gather"); mode = "modal"; hideHintNow(); $("fade").classList.add("on");
+  setTimeout(()=>{ setSceneNow("village", 2700); $("fade").classList.remove("on"); mode = "play"; stage.focus(); setTimeout(()=>{ startDlg("acc_open"); accAfterOpen = true; }, 500); }, 850);
+}
+let accAfterOpen = false;
+const ENDINGS = {
+  1:{ ko:["결말 E1","마지막 기록"], en:["ENDING E1","The Final Record"], p1:{ko:"이름이 제자리로 돌아간다. 기록에는 두 사람이 각자 한 일이 적히고, 아무도 알 수 없는 일은 알 수 없다고 적힌다.",en:"The names go back where they belong. The Record states what each of them did, and says plainly what no one can know."}, p2:{ko:"탑시계는 11시 48분에 다시 움직인다. 니니가 기록을 쓴다. 사진 속 두 아이의 이름이 바르게 적힌다.",en:"The tower clock is restarted at 11:48. Nini writes the Record. In the photograph, the two cubs carry the right names."} },
+  2:{ ko:["결말 E2","영웅의 침묵"], en:["ENDING E2","The Hero's Silence"], p1:{ko:"마을은 조용히 애도한다. Green은 방앗간으로 돌아간다.",en:"The village mourns calmly. Green goes back to the Mill."}, p2:{ko:"시계는 고쳐지고 종은 울린다. 계단의 얼룩만은 남는다. 사진은 그대로 선반에 기대어 있다.",en:"The clock is repaired and the bell rings. Only a stain on the stair stays. The photograph still leans on the shelf."} },
+  3:{ ko:["결말 E3","틀린 곰"], en:["ENDING E3","The Wrong Bear"], p1:{ko:"Green은 끌려간다. 장부는 마을에 유리하게 고쳐진다.",en:"Green is taken away. The register is corrected in the village's favor."}, p2:{ko:"마지막 장면은 빅그베의 목도리 매듭이다.",en:"The last frame is the knot of BGB's scarf."} },
+  4:{ ko:["결말 E4","불탄 페이지"], en:["ENDING E4","The Burned Page"], p1:{ko:"진실은 사라진다. 이름은 바뀐 채로 남는다.",en:"The truth is lost. The names stay exchanged."}, p2:{ko:"니니는 한 장만 몰래 간직한다.",en:"Nini keeps a single page."} }
+};
+function showEndE(n){ const k = lang==="ko", E = ENDINGS[n]; mode = "modal"; setf("c7.done"); setf("end"+n);
+  $("eEy").textContent = E[k?"ko":"en"][0]; $("eH").textContent = E[k?"ko":"en"][1]; $("eP1").textContent = E.p1[k?"ko":"en"]; $("eP2").textContent = E.p2[k?"ko":"en"];
+  NEXTK = 77; const nx = $("eNext"); nx.style.display = ""; nx.textContent = k?"다른 선택을 해 본다":"Choose differently";
+  $("eCred").style.display = ""; $("eCred").textContent = k?"감사의 말":"Credits"; $("eBack").textContent = k?"계속 둘러보기":"Keep exploring"; $("endcard").classList.add("on"); save(); }
+function replayChoice(){ $("endcard").classList.remove("on"); S.flags["c7.done"] = false; mode = "play"; startDlg("cc0"); }
+function startCh7(){ setf("c7.on"); $("endcard").classList.remove("on"); chapterIntro(7, ()=>setSceneNow("mill", 1400)); }
 
 /* ---------- interactables ---------- */
 let IA = [
@@ -1069,6 +1202,7 @@ let IA = [
   { id:"enterA", x:()=>4200, label:UI.enterA, top:560, run:()=>tryEnter("archive", 430, ch2Gate) },
   { id:"enterC", x:()=>5200, label:UI.enterC, top:560, run:()=>tryEnter("cafe", 500, ch1Gate) },
   { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? "mo9" : "mo0") },
+  { id:"gather", x:()=>2700, label:UI.toGather, top:640, when:()=>has("c7.rec"), run:()=>startGather() },
   { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 700); } },
   { id:"heal",   x:()=>2405,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 470); } },
   { id:"mill",   x:()=>6150,      label:UI.toMill, top:600,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
@@ -1089,6 +1223,7 @@ const IA_T = [
   { id:"pend",  x:()=>1663, label:UI.lPend,  top:560, run:()=>inspect("pendulum") },
   { id:"melt",  x:()=>1485, label:UI.lMelt,  top:530, run:()=>inspect("melt") },
   { id:"chute", x:()=>2168, label:UI.lChute, top:540, run:()=>inspect("chute") },
+  { id:"pcase", x:()=>1740, label:UI.lCase, top:560, when:()=>has("dd09"), run:()=>startDlg(has("c7.rec") ? "rec9" : "rec0") },
   { id:"pit",   x:()=>1345, label:UI.lPit,   top:640, when:()=>has("c6.turn"), run:()=>inspect("pit") }
 ];
 const IA_A = [
@@ -1168,6 +1303,8 @@ function checkDeduce(){
   if (has("ck.bear") && S.ev.includes("clock") && tw >= 3 && !S.flags.q1){ S.flags.q1 = true; if (!S.flags["ch.2"]){ S.flags["ch.2"] = true; setTimeout(()=>whenPlay(()=>chapterIntro(2)), 3500); } toast((lang==="ko"?"질문":"Question")+": "+tr(UI.askBear)); }
   const hv = ids => ids.every(e=>S.ev.includes(e));
   if (has("gr.admit") && hv(["hatch","boots","chute","pendulum","patrol","acct_gr"]) && !has("dd06")){ setf("dd06"); addNote(NOTES.n_dd06); toast((lang==="ko"?"추리 완성: ":"Deduction: ")+(lang==="ko"?"Green이 에드워드를 떨어뜨렸다":"Green caused the fall")); }
+  if (hv(["register","record"]) && has("f4.ed") && !has("dd07")){ setf("dd07"); addNote(NOTES.n_dd07); }
+  if (hv(["motive","record","acct_gr"]) && !has("dd08")){ setf("dd08"); addNote(NOTES.n_dd08); }
   if (has("c6.turn") && !has("c6.nogl")){ setf("c6.nogl"); addNote(NOTES.n_nogl); }
   if (hv(["clock","pendulum","watch","report"]) && !has("dd01b")){ setf("dd01b"); addNote(NOTES.n_dd01); }
   if (hv(["pit","report","clock","watch"]) && !has("dd10")){ setf("dd10"); addNote(NOTES.n_dd10); }
@@ -1238,7 +1375,7 @@ function showChoices(){
 }
 function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
   setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
-function applyNode(n){ if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
+function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); setTimeout(()=>showEndE(en), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(fromClick){
   if (performance.now() < dlgLock) return;
   if (fromClick && D[cur] && D[cur].ch && !typing && pgi >= pgs.length - 1) return;   /* a click never picks an answer; choose with the buttons, 1/2 or arrows + E */
@@ -1248,7 +1385,7 @@ function advance(fromClick){
   applyNode(n); goto(n.next || null);
 }
 function goto(id){ if (!id){ endDlg(); return; } cur = id; renderDlg(true); }
-const CHT = {1:["멈춘 시계","The Clock That Stopped"],2:["네 명의 증인","Four Witnesses"],3:["다른 곰","The Other Bear"],4:["훔쳐 간 이름","The Name That Was Stolen"],5:["좋은 사람","A Good Person"],6:["사라진 5분","Five Missing Minutes"]};
+const CHT = {1:["멈춘 시계","The Clock That Stopped"],2:["네 명의 증인","Four Witnesses"],3:["다른 곰","The Other Bear"],4:["훔쳐 간 이름","The Name That Was Stolen"],5:["좋은 사람","A Good Person"],6:["사라진 5분","Five Missing Minutes"],7:["우리가 고르는 진실","The Truth We Choose"]};
 /* chapter title card: fade to black, scene change while black, title, fade back in */
 function chapterIntro(n, mid, done){
   const k = lang==="ko"; mode = "modal"; hideHintNow(); $("fade").classList.add("on");
@@ -1258,7 +1395,7 @@ function chapterIntro(n, mid, done){
 function whenPlay(fn){ const t = setInterval(()=>{ if (mode === "play"){ clearInterval(t); fn(); } }, 400); }
 /* Chapter 6 routing: which line a person or object gives now */
 const ckNode = () => has("c6.turn") && !has("stmt_ck2") ? "ck6_0" : has("c6.turn") ? "ck6_9" : has("ck.bear") ? "c9" : "c0";
-const grNode = () => !has("c6.on") ? (has("gr.done") ? "gr9" : "gr0") : !has("dd04") ? "c6_wait" : !has("gr.admit") ? "g6_0" : !has("c6.hl") ? "g6_h" : !has("c6.turn") ? "g6_t0" : "g6_9";
+const grNode = () => has("c7.green") ? "g7_9" : has("c7.on") ? "g7_0" : !has("c6.on") ? (has("gr.done") ? "gr9" : "gr0") : !has("dd04") ? "c6_wait" : !has("gr.admit") ? "g6_0" : !has("c6.hl") ? "g6_h" : !has("c6.turn") ? "g6_t0" : "g6_9";
 const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : has("hz.done") ? "h9" : "h0";
 const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : has("tm.stmt") ? "tm9" : "tm0";
 const niniNode = () => has("c6.d") && !has("c6.fin") ? "c6_n0" : has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done") ? "n9" : "n0";
@@ -1289,7 +1426,9 @@ Object.assign(GATE_T, {
 const ch1Gate = () => !S.flags.q1 ? (has("ck.bear") ? "tower" : "ck") : null;
 const ch2Gate = () => ch1Gate() || (!has("dd02") ? (!S.ev.includes("receipt") ? "rcpt" : !S.ev.includes("patrol") ? "logb" : "hand") : null);
 function tryEnter(sc, x, gate){ const g = gate(); if (g){ gateMsg(g); return false; } setScene(sc, x); return true; }
-function endDlg(){ if (cur === "ci6_1") setTimeout(()=>toast(lang==="ko"?"신원 보드가 열렸다. 사람 탭에서 단서를 맞춰 보자.":"The Identity Board is open. Compare the clues under People."), 700);
+function endDlg(){ if (accAfterOpen){ accAfterOpen = false; setTimeout(nextAcc, 350); }
+  if (ACC.some(a=>a.q===cur)){ accCur = ACC.find(a=>a.q===cur); setTimeout(openPresent, 350); }
+  if (/^acc_r\d[a-c]$/.test(cur||"") && has("c7.gather")) setTimeout(nextAcc, 600); if (cur === "ci6_1") setTimeout(()=>toast(lang==="ko"?"신원 보드가 열렸다. 사람 탭에서 단서를 맞춰 보자.":"The Identity Board is open. Compare the clues under People."), 700);
   if (has("c6.fin") && !has("c6.shown")){ setf("c6.shown"); setTimeout(()=>showEnd6(), 1800); } const f5 = S.flash === 5 && has("f5.end") && !has("f5.shown"); if (f5){ setf("f5.shown"); setTimeout(()=>{ toast(lang==="ko"?"종이 한 번, 느리게 울린다. 그날 밤 울리지 않았던 종이다.":"A single slow bell tone, the one that never rang that night."); setTimeout(()=>showEnd5(), 2400); }, 900); }
   const fin = S.flash && S.flash !== 5 && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); setTimeout(()=>showEnd4(), 1800); $("rain").classList.add("on"); }
   const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>chapterIntro(1, ()=>setSceneNow("village", 700)), 50); }
@@ -1332,13 +1471,15 @@ function setSceneNow(name, x){
   const FL = !!S.flash; $("stage").classList.toggle("flash", S.flash === 4 || S.flash === true); $("stage").classList.toggle("flash5", S.flash === 5); PH = FL ? (PST ? 105 : KID_H) : 220;
   if (FL){ [nini,ck,hz,tm,mo,gr].forEach(a=>{ a.style.display = "none"; a._sh.style.display = "none"; });
     NPCX.ed = PST ? (S.flash === 5 ? 1450 : 1000) : -9999; BRX = x + 100; } else NPCX.ed = -9999;
+  const GA = has("c7.gather") && name === "village" && !S.flash; $("stage").classList.toggle("dusk", GA);
+  if (GA){ Object.assign(NPCX_V, { nini:2450, tm:2760, mo:3040 }); hz.style.display = ""; hz._sh.style.display = ""; gr.style.display = ""; gr._sh.style.display = ""; NPCX.hz = 2870; NPCX.gr = 3170; nini.style.display = ""; nini._sh.style.display = ""; mo.style.display = ""; mo._sh.style.display = ""; }
   const DAWN = S.flash === 5 && PST; if (DAWN){ NPCX.mo = 1100; NPCX.gr = 1230; mo.style.display = ""; mo._sh.style.display = ""; gr.style.display = ""; gr._sh.style.display = ""; }
   ed.style.display = (FL && PST) ? "" : "none"; ed._sh.style.display = (FL && PST) ? "" : "none";
   br.style.display = FL ? "" : "none"; br._sh.style.display = FL ? "" : "none";
   if (!FL) $("rain").classList.remove("on");
   if (S.flash === 5) $("rain").classList.toggle("on", FLD);   /* flood night: rain; the dawn after: dry and cold */
   else if (FL && S.flags["f4.end"]) $("rain").classList.add("on");
-  gr.style.display = MI ? "" : "none"; gr._sh.style.display = MI ? "" : "none";
+  gr.style.display = (MI || GA) ? "" : "none"; gr._sh.style.display = (MI || GA) ? "" : "none";
   $("t8").classList.toggle("hide", IN || !!S.flash); $("t9").classList.toggle("hide", IN || !!S.flash);
   P.x = x; cam = Math.max(CAM_MIN, Math.min(CAM_MAX, P.x - STAGE_W/2)); near = null;
   $("hudLoc").textContent = S.flash ? tr(UI.locF) : locOf(name);
@@ -1377,7 +1518,7 @@ function showEnd(){ $("eCred").style.display = "none"; const k = lang==="ko"; mo
   $("eP1").textContent = k?"두 장의 사진을 맞춰 보려는 순간, 사진 속 기억이 빅그베의 눈앞으로 밀려온다.":"As BGB lines the two photographs up, the memory inside them pulls at him.";
   $("eP2").textContent = k?"사진 속으로 들어갈 수 있습니다. 4장은 임시 그림으로 먼저 만들었습니다.":"You can step into the photograph. Chapter 4 is built with placeholder art."; NEXTK = 4; const nx = $("eNext"); nx.style.display = ""; nx.textContent = k?"사진 속으로":"Step into the photograph"; $("eBack").textContent = tr(UI.back); $("endcard").classList.add("on"); }
 $("eBack").onclick = ()=>{ if (S.flash){ endFlash(); return; } $("endcard").classList.remove("on"); mode = "play"; stage.focus(); };
-$("eNext").onclick = ()=>{ if (NEXTK === 5) startFlash5(); else startFlash(); };
+$("eNext").onclick = ()=>{ if (NEXTK === 77) replayChoice(); else if (NEXTK === 7) startCh7(); else if (NEXTK === 5) startFlash5(); else startFlash(); };
 
 /* case file */
 let tab = 0, selEv = null, sub = false, PV = false, evPage = 0;
@@ -1503,6 +1644,7 @@ function conclPanel(){
   if (!has("c6.turn")) return '';
   let h = '<div class="eyebrow" style="margin:18px 0 6px">'+tr(UI.concl).toUpperCase()+'</div>';
   KCON.forEach(k=>{ const ok = has("c6."+k.id); h += '<div class="kcon'+(ok?' ok':'')+'"><span>'+tr(k.t)+'</span>'+(ok ? '<b style="color:#6e2a35">&#10003;</b>' : '<button type="button" data-k="'+k.id+'">'+tr(UI.confirm)+'</button>')+'</div>'; });
+  if (has("c7.green")){ const ok = has("dd09"); h += '<div class="kcon'+(ok?' ok':'')+'"><span>'+(lang==="ko"?"에드워드는 진실을 시계 속에 숨겼다.":"Edward hid the truth in the clock.")+'</span>'+(ok ? '<b style="color:#6e2a35">&#10003;</b>' : '<button type="button" data-k7="1">'+tr(UI.confirm)+'</button>')+'</div>'; }
   return h;
 }
 function cmpBlock(){
@@ -1513,6 +1655,7 @@ function cmpBlock(){
 function wireCh6(){
   document.querySelectorAll(".rname").forEach(b=>{ b.onclick = ()=>{ S.pick = +b.dataset.col; renderCF(); }; });
   document.querySelectorAll(".chip").forEach(b=>{ b.onclick = ()=>placeName(S.pick, b.dataset.w); });
+  document.querySelectorAll("[data-k7]").forEach(b=>{ b.onclick = confirm7; });
   document.querySelectorAll("[data-k]").forEach(b=>{ b.onclick = ()=>confirmK(b.dataset.k); });
   document.querySelectorAll(".cmpbtn").forEach(b=>{ b.onclick = doCompare; });
 }
@@ -1528,7 +1671,7 @@ function pageOver(wpx){
   return h + '</div>';
 }
 function qBlock(){
-  const q = has("c6.turn") ? UI.askWith : has("c6.on") ? UI.askFall : S.flags.dd02 ? UI.askNext : S.flags.q1 ? UI.askBear : null; if (!q) return '';
+  const q = has("c7.rec") ? UI.askChoose : has("c7.green") ? UI.askRecord : has("c6.turn") ? UI.askWith : has("c6.on") ? UI.askFall : S.flags.dd02 ? UI.askNext : S.flags.q1 ? UI.askBear : null; if (!q) return '';
   return '<div class="eyebrow" style="margin:0 0 4px">'+(lang==="ko"?"지금의 질문":"THE QUESTION")+'</div><div style="font:italic 700 32px/1.2 var(--font-body);color:#6e2a35;margin:0 0 14px">'+tr(q)+'</div>';
 }
 function conBlock(){
@@ -1588,6 +1731,12 @@ function skipTo(n){
   if (n === 2) chapterIntro(2, ()=>setSceneNow("village", 2700));
   else if (n === 3) chapterIntro(3, ()=>setSceneNow("village", 4100));
   else if (n === 4){ setSceneNow("mill", 1400); showEnd(); }
+  else if (n === 7 || n === 77){
+    qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown","f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown","c6.on","dd04","gr.admit","c6.hl","c6.turn","c6.hid","c6.k1","c6.k2","c6.k3","c6.k4","c6.k5","c6.k6","dd05","dd12","c6.d","c6.fin","c6.shown"]);
+    S.resp = ["Green","BGB","BGB"]; qEv(["acct_gr","report","watch","pit","stmt_ck2","wool","patrol2","walk","hide","glove","letter"]); checkDeduce();
+    if (n === 7){ setSceneNow("mill", 1400); startCh7(); }
+    else { qFlags(["c7.on","c7.green","dd09","c7.rec"]); qEv(["motive","record"]); checkDeduce(); setSceneNow("village", 2500); toast(lang==="ko"?"연출 모드: 7장 마을 모임":"Director: Chapter 7 gathering"); }
+  }
   else if (n === 6 || n === 66){
     qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown","f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown","c6.on"]); S.ret = { scene:"archive", x:1500 };
     if (n === 66){ qFlags(["dd04","gr.admit","c6.hl","c6.turn"]); qEv(["acct_gr","report","watch"]); checkDeduce(); setSceneNow("village", 1400); toast(lang==="ko"?"연출 모드: 6장 결론 파트":"Director: Chapter 6 conclusions"); }
@@ -1597,7 +1746,7 @@ function skipTo(n){
 }
 function setDirUi(){
   const on = !!S.dir, k = lang==="ko"; $("pDir").classList.toggle("on", on); $("dirHead").textContent = k ? "연출 모드" : "DIRECTOR MODE";
-  const L = {2:k?"2장으로 건너뛰기":"Skip to Chapter 2", 3:k?"3장으로 건너뛰기":"Skip to Chapter 3", 4:k?"3장 끝, 4장으로":"Skip to Chapter 4", 5:k?"5장 홍수의 밤으로":"Skip to Chapter 5", 6:k?"6장 시작으로":"Skip to Chapter 6", 66:k?"6장 결론 파트로":"Skip to Ch.6 conclusions"};
+  const L = {2:k?"2장으로 건너뛰기":"Skip to Chapter 2", 3:k?"3장으로 건너뛰기":"Skip to Chapter 3", 4:k?"3장 끝, 4장으로":"Skip to Chapter 4", 5:k?"5장 홍수의 밤으로":"Skip to Chapter 5", 6:k?"6장 시작으로":"Skip to Chapter 6", 66:k?"6장 결론 파트로":"Skip to Ch.6 conclusions", 7:k?"7장 시작으로":"Skip to Chapter 7", 77:k?"7장 마을 모임으로":"Skip to Ch.7 gathering"};
   document.querySelectorAll(".dirb").forEach(b=>{ b.textContent = L[b.dataset.skip]; });
   $("pCode").placeholder = k ? "코드" : "Code";
 }
