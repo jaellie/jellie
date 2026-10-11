@@ -94,7 +94,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #psc:not(.hl) #rmC,#psc:not(.hl) #pfgC,#psc.hl #rmH,#psc.hl #pfgH{display:block}
 #psc.hl #pframe{display:none}
 #psc .rm img,#psc #pfg img{position:absolute;display:block;pointer-events:none;-webkit-user-drag:none}
-#pframe{position:absolute;left:1220px;bottom:728px;width:247px;height:auto;display:block;pointer-events:none}
+#pframe{position:absolute;left:1088px;bottom:675px;width:220px;height:auto;display:block;pointer-events:none}
 #pfg{position:absolute;left:0;top:0;will-change:transform}
 #pfar img{position:absolute;left:-120px;top:0;display:block;pointer-events:none}
 #pworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
@@ -386,8 +386,8 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
   <div id="psc">
    <div class="layer" id="pfar"><img src="assets/m_far.webp" alt=""></div>
    <div id="pworld">
-    <div id="rmC" class="rm">
-     <img src="assets/k_mid.webp" style="left:0;top:-127px;width:2435px;height:1142px" alt=""><img src="assets/k_mid.webp" style="left:-2435px;top:-127px;width:2435px;height:1142px;transform:scaleX(-1)" alt=""><img src="assets/k_mid.webp" style="left:2435px;top:-127px;width:2435px;height:1142px;transform:scaleX(-1)" alt="">
+    <div id="rmC" class="rm"><div style="position:absolute;left:-2171px;top:-60px;width:6513px;height:210px;background:linear-gradient(#2b190e 0,#3a2314 60%,#4a2f1b)"></div>
+     <img src="assets/k_mid.webp" style="left:0;top:-18px;width:2171px;height:1019px" alt=""><img src="assets/k_mid.webp" style="left:-2171px;top:-18px;width:2171px;height:1019px;transform:scaleX(-1)" alt=""><img src="assets/k_mid.webp" style="left:2171px;top:-18px;width:2171px;height:1019px;transform:scaleX(-1)" alt="">
      <img src="assets/k_ground.webp" style="left:0;top:405px;width:2172px;height:724px" alt=""><img src="assets/k_ground.webp" style="left:-2172px;top:405px;width:2172px;height:724px;transform:scaleX(-1)" alt=""><img src="assets/k_ground.webp" style="left:2172px;top:405px;width:2172px;height:724px;transform:scaleX(-1)" alt="">
     </div>
     <div id="rmH" class="rm">
@@ -1242,7 +1242,7 @@ let IA = [
   { id:"enterC", x:()=>4451, label:UI.enterC, top:560, run:()=>tryEnter("cafe", 500, ch1Gate) },
   { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? "mo9" : "mo0") },
   { id:"gather", x:()=>2700, label:UI.toGather, top:640, when:()=>has("c7.rec"), run:()=>startGather() },
-  { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 2100); } },
+  { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 1850); } },
   { id:"heal",   x:()=>2320,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 1850); } },
   { id:"mill",   x:()=>4902,      label:UI.toMill, top:690,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
   { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ if (ch1Gate()){ startDlg(talk("tm")); return; } startDlg(tmNode()); } },
@@ -1301,12 +1301,12 @@ const IA_M = [
   { id:"gr",   x:()=>NPCX_M.gr, label:UI.talkGr, top:FEET_T-GR_H-150, run:()=>startDlg(grNode()) }
 ];
 const IA_P = [
-  { id:"pwin",   x:()=>398,  label:UI.lWin,    top:295, run:()=>startDlg("p_w") },
-  { id:"pbook",  x:()=>863,  label:UI.lBook,   top:455, run:()=>startDlg("p_b") },
-  { id:"pstove", x:()=>1716, label:UI.lStove,  top:610, run:()=>startDlg("p_s") },
-  { id:"pkettle",x:()=>1777, label:UI.lKettle, top:460, run:()=>startDlg("p_k") },
-  { id:"frame", x:()=>1343, label:UI.lFrame, top:215, run:()=>startDlg((has("c6.on") && !homeGate()) ? (has("c6.hid") ? "p6_f9" : "p6_f0") : has("pro.frame") ? "p_f9" : "p_f0") },
-  { id:"pdoor", x:()=>2194, label:UI.lDoor,  top:430, run:()=>{ if (has("c6.on")){ setScene("village", 640); return; } if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
+  { id:"pwin",   x:()=>355,  label:UI.lWin,    top:300, run:()=>startDlg("p_w") },
+  { id:"pbook",  x:()=>770,  label:UI.lBook,   top:470, run:()=>startDlg("p_b") },
+  { id:"pstove", x:()=>1530, label:UI.lStove,  top:580, run:()=>startDlg("p_s") },
+  { id:"pkettle",x:()=>1585, label:UI.lKettle, top:470, run:()=>startDlg("p_k") },
+  { id:"frame", x:()=>1198, label:UI.lFrame, top:290, run:()=>startDlg((has("c6.on") && !homeGate()) ? (has("c6.hid") ? "p6_f9" : "p6_f0") : has("pro.frame") ? "p_f9" : "p_f0") },
+  { id:"pdoor", x:()=>1957, label:UI.lDoor,  top:430, run:()=>{ if (has("c6.on")){ setScene("village", 640); return; } if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
 ];
 let PRO_GO = false;
 const IA_C = [
@@ -1599,7 +1599,7 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 /* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
-const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2300}, mill:{min:0,end:3000}, past:{min:0,end:2632}, healer:{min:0,end:2171}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2171}, mill:{min:0,end:3000}, past:{min:0,end:2632}, healer:{min:0,end:2171}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
 function locOf(n){ return tr(n==="healer" ? UI.locH : n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
   S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage" || name === "healer", MI = name === "mill", FLD = name === "flood", PST = name === "past", HL = name === "healer", IN = PST || HL || T || A || C || PR || MI || FLD;
