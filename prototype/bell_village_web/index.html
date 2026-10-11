@@ -1314,7 +1314,7 @@ function nextHint(){
     return L("이야기가 이어질 거야. 잠시 기다리자.","The story will go on. Wait a moment.");
   }
   if (!has("pro.done")) return !has("pro.frame") ? L("선반 위의 사진부터 보자.","Look at the photograph on the shelf first.") : L("이제 오른쪽 문으로 나가자.","Now out through the door on the right.");
-  if (has("c7.done")) return L("이야기는 끝났어. 마을을 둘러봐도 좋아.","The story is over. Feel free to look around the village.");
+  if (has("c7.done")) return L("한 가지 결말을 봤어. 다른 선택을 해 보고 싶으면 마을 광장의 니니에게 말을 걸어 봐.","I have seen one ending. To choose differently, talk to Nini in the village plaza.");
   if (has("c7.rec")) return L("마을 사람들이 시계탑 앞 광장에 모여 있어. 그리로 가자.","The village is gathering at the tower plaza. Let's go there.");
   if (has("dd09")) return L("시계탑 안, 추 옆의 상자를 열어 보자.","Open the case next to the pendulum in the tower.");
   if (has("c7.green")) return L("에드워드의 마지막 말, '시계'. 사건 파일 조사 탭에서 결론을 확정해 보자.","Edward's last word was 'clock'. Confirm the conclusion in the Case File, under Investigate.");
@@ -1474,7 +1474,7 @@ const ckNode = () => has("c6.turn") && !has("stmt_ck2") ? "ck6_0" : has("c6.turn
 const grNode = () => has("c7.green") ? "g7_9" : has("c7.on") ? "g7_0" : !has("c6.on") ? (has("gr.done") ? "gr9" : "gr0") : !has("dd04") ? "c6_wait" : !has("gr.admit") ? "g6_0" : !has("c6.hl") ? "g6_h" : !has("c6.turn") ? "g6_t0" : "g6_9";
 const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : has("hz.done") ? "h9" : "h0";
 const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : has("tm.stmt") ? "tm9" : "tm0";
-const niniNode = () => has("c6.d") && !has("c6.fin") ? "c6_n0" : has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done") ? "n9" : "n0";
+const niniNode = () => has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done") ? "n9" : "n0";
 const homeGate = () => !has("c6.on") ? "home0" : !has("c6.turn") ? "home1" : (!has("c6.k3") ? "homeK" : null);
 const healGate = () => !has("c6.on") ? "heal0" : !has("dd06") ? "heal1" : null;
 
