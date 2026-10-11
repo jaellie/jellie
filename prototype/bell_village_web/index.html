@@ -1931,6 +1931,9 @@ setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
 window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4 };
 requestAnimationFrame(frame);
   if (typeof nineAll === "function") requestAnimationFrame(nineAll);
+  /* layers with will-change keep the raster scale they were first painted at, so after a resize or rotation they look soft; drop and restore the hint to re-paint them sharp */
+  const WC = document.querySelectorAll(".layer,#world,#fg,#aworld,#afg,#pworld,#fworld,#mworld,#yworld,#cworld,#cfg,#tworld,#tfg");
+  WC.forEach(e=>{ e.style.willChange = "auto"; }); requestAnimationFrame(()=>requestAnimationFrame(()=>WC.forEach(e=>{ e.style.willChange = ""; })));
 })();
 
 /* ---------- seamless nine-slice ----------
