@@ -38,7 +38,7 @@ Final question: **"How far is a person who knew the truth and stayed silent resp
 ### 2.3 How the player reaches 11:52 (fair clues)
 No single clue proves it. The player must combine:
 1. Damage on Edward's pocket watch (stopped at 11:52).
-2. A **sound witness** (a thud or a voice heard around 11:52). PROPOSED: Night guard or Café owner.
+2. A **sound witness** (a thud or a voice heard around 11:52). PROPOSED: Night guard (Tommy) or Café owner.
 3. **Facility records** (power log shows the blackout at 11:47, not later).
 Wrong inference: "the stopped clock is the time of death." The game lets players believe that first.
 
@@ -110,7 +110,7 @@ The old Chapter 1 showed Edward lying dead right after the 11:47 blackout. That 
 Rule: positions are fixed once confirmed. Each witness truthfully saw "the bear" or heard something; none lies.
 | Witness | Where at 11:47 to 11:52 | What they truthfully report |
 |---|---|---|
-| Night guard (owl) | OPEN | OPEN |
+| Night guard, **Tommy** (otter) | OPEN | OPEN |
 | Café owner (dog) | OPEN | OPEN |
 | Clockkeeper (cat) | OPEN | OPEN |
 | Nini (sheep) | OPEN | "There were two Bears." |

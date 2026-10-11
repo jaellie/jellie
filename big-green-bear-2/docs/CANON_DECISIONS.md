@@ -35,5 +35,5 @@ Anything not listed here is still TBD (see "Open").
 3. Relationship to Season 1 (before / after / separate).
 4. Physical explanation of the mirror "reflection that was not a reflection".
 5. ~~Motive~~ RESOLVED (C).
-6. Supporting cast: Clockkeeper = old gray cat (70%), Café owner = golden dog (90%), Night guard = tall barn owl (105%). Species chosen by Claude, approved by the user as long as instantly recognizable.
+6. Supporting cast: Clockkeeper = old gray cat (70%), Café owner = golden dog (90%), Night guard = **Tommy, an otter (95%)**, changed from owl by the author. Species chosen by Claude, approved by the user as long as instantly recognizable.
 7. Witness positions 11:47-11:52, delay length, when BGB learned the swap, see STORY_BIBLE.md section 8.

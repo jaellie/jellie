@@ -10,7 +10,7 @@ outline ≈ 0.4 % of image height). Attach the delivered **bear images as style 
 2. Paste the character block (**B–D**), then ONE pose line from that character's list.
 3. For each character generate the **`_nomouth` neutral base first**, approve it, then attach it (plus a bear image) as reference for every other pose.
 4. **View rule:** every in-game pose is generated as `three_quarter_left` (the bear stands on the right and faces left toward the other character; Green is this sprite mirrored in-engine). Only `bear_front_neutral` (portrait / mirror scene) is a true front view. Attach `turnaround/bear_turn_three_quarter_left.png` as the view reference.
-5. **Facing rule for everyone:** the bear stands on the right and faces left (`three_quarter_left`). Every other character (Nini, Edward, Clockkeeper (cat), Café owner (dog), Night guard (owl)) stands on the LEFT of the screen and faces right: generate them as `three_quarter_right`, about 35 degrees, same camera as the bear sheet. Each also gets ONE true front view `<name>_front_neutral` for portraits and the mirror/board scenes. Attach `turnaround/bear_turn_three_quarter_right.png` as the camera/pose reference.
+5. **Facing rule for everyone:** the bear stands on the right and faces left (`three_quarter_left`). Every other character (Nini, Edward, Clockkeeper (cat), Café owner (dog), Night guard Tommy (otter)) stands on the LEFT of the screen and faces right: generate them as `three_quarter_right`, about 35 degrees, same camera as the bear sheet. Each also gets ONE true front view `<name>_front_neutral` for portraits and the mirror/board scenes. Attach `turnaround/bear_turn_three_quarter_right.png` as the camera/pose reference.
 6. After each image run the **checklist (G)**.
 
 ---
@@ -163,19 +163,14 @@ A warm, plump golden retriever-type dog who runs the café next to the tower, 90
 - `cafe_front_neutral` (TRUE FRONT), `cafe_stand_nomouth` (BASE), `cafe_speaking`, `cafe_uncertain` (eyes aside, ears drooping, paw rubbing the other arm), `cafe_certain`, `cafe_hold_teacup` (tray with one steaming white teacup), `cafe_wipe_cup` (wiping a cup with the towel, looking at it).
 - Design note: gentle and likable, but with one slightly ambiguous glance pose (`cafe_uncertain`) so the player can suspect him.
 
-### H3. Night guard: a tall owl (105%, 3045 px)
+### H3. Night guard: Tommy, an otter (95%, 2755 px)
 ```
-CHARACTER: Night guard.
-A tall, calm barn owl who patrols the tower at night, 105% of the bear's height (3045 px tall), long rounded body with folded wings. Soft cream-white face disc and chest (#F0E6CF) with a gentle heart-shaped face outline, warm tan wings and back with tiny cream speckles (#B58B5A), small solid dot eyes (large and round but kind, never glowing), a small pale beak, feet with simple short toes. A dark navy peaked guard cap with a small brass badge (#243044 / #B08D57), a long navy coat with two brass buttons, a lantern (brass frame, warm yellow glass #E8C770, soft glow only inside the glass) hanging from one wing tip. Stands upright, wings folded at the sides.
+CHARACTER: Tommy, the Night guard.
+A sleek, friendly young otter who patrols the clock tower at night, 95% of the bear's height (2755 px tall), long slim pear-shaped body that stands upright, thick rounded tail held low behind him. Smooth warm brown fur (#7A5A3C) with a lighter cream-tan muzzle, chin and chest (#E3D2B0), small round ears, whiskers drawn as a few thin lines, small solid dot eyes (round and kind, never glowing), a dark rounded nose, small webbed paws with simple finger lines. A dark navy peaked guard cap with a small brass badge (#243044 / #B08D57), a long navy coat with two brass buttons and a reflective cream armband, and a lantern (brass frame, warm yellow glass #E8C770, soft glow only inside the glass) hanging from one paw. Stands upright, relaxed, alert.
 ```
-- `guard_front_neutral` (TRUE FRONT), `guard_stand_nomouth` (BASE), `guard_speaking`, `guard_uncertain`, `guard_certain`, `guard_lantern_raise` (lifting the lantern forward, head tilted), `guard_salute` (touching the cap with one wing).
+- `guard_front_neutral` (TRUE FRONT), `guard_stand_nomouth` (BASE, 3/4 right, generate first), `guard_speaking`, `guard_uncertain`, `guard_certain`, `guard_lantern_raise` (lifting the lantern forward, head tilted), `guard_salute` (touching the cap with one paw).
 - Each also needs the 4 core expressions above; same body size in every pose.
 
----|---|---|---|
-| Clockkeeper | ? | e.g. goggles on forehead, oilcan, leather apron | ? |
-| Café owner | ? | e.g. apron, teacup | ? |
-| Night guard | ? | e.g. cap, lantern | ? |
-Each needs: `_nomouth` base + speaking, uncertain, certain.
 
 ---
 
