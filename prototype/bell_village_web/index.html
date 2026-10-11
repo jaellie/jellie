@@ -135,6 +135,12 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #mwheel{position:absolute;right:-220px;top:140px;width:300px;height:300px;border-radius:50%;border:26px solid #4a2a18;background:#c9d3e0}
 #mdoor{position:absolute;left:260px;top:250px;width:150px;height:270px;background:#4a2a18;border-radius:75px 75px 0 0}
 #mmarks img{position:absolute}
+#millgate{position:absolute;left:6040px;top:640px;width:220px;height:345px;pointer-events:none}
+#millgate .mp{position:absolute;bottom:0;width:46px;height:300px;background:linear-gradient(90deg,#6f6a66,#8d867f 60%,#5e5954);border-radius:6px 6px 0 0;box-shadow:inset 0 -14px 0 #f1f5fa}
+#millgate .mp.l{left:0}#millgate .mp.r{right:0}
+#millgate .ma{position:absolute;left:0;right:0;top:20px;height:70px;background:#7a7068;border-radius:110px 110px 0 0;box-shadow:inset 0 14px 0 #f1f5fa}
+#millgate .md{position:absolute;left:46px;right:46px;bottom:0;top:62px;background:#4a2a18;border-radius:60px 60px 0 0;box-shadow:inset 0 0 0 6px #3a2012}
+#millgate .ms{position:absolute;left:-10px;right:-10px;top:-4px;text-align:center;font:600 18px/1.2 Pretendard,serif;color:#f3e6c8;background:#4a2a18;border:3px solid #2e190d;border-radius:6px;padding:3px 0}
 #ysc{position:absolute;inset:0;display:none;background:linear-gradient(#5f78b6 0,#5f78b6 8%,#d9b79a 30%,#d9b79a)}
 #ysc.on{display:block}
 #yworld{position:absolute;left:0;top:0;width:2632px;height:1080px;will-change:transform}
@@ -327,6 +333,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
    <img id="door" src="assets/p_tower_shaft.webp" alt="Clocktower" style="position:absolute;left:2607px;top:35px;width:499px;height:960px">
    <svg id="vhands" style="position:absolute;left:2796px;top:337px" width="120" height="120" viewBox="-60 -60 120 120" aria-label="Tower clock stopped at 11:47"><g stroke="#2b1a0e" stroke-linecap="round"><line x1="0" y1="3" x2="0" y2="-24" stroke-width="2.2" transform="rotate(282)"/><line x1="0" y1="4" x2="0" y2="-16" stroke-width="3.4" transform="rotate(353.5)"/></g><circle r="3.6" fill="#2b1a0e"/><circle r="1.4" fill="#c97a2e"/></svg>
    <div class="glow" style="left:2700px;top:700px;width:310px;height:330px"></div>
+   <div id="millgate"><i class="mp l"></i><i class="mp r"></i><i class="ma"></i><i class="md"></i><b class="ms">낡은 방앗간 · Old Mill</b></div>
    <div id="shadows"></div>
    <div id="actors"></div>
    <div id="marks"></div>
@@ -843,12 +850,12 @@ function lightActor(el, cx, dt, shW){
 let IA = [
   { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-150, run:()=>startDlg(has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done")?"n9":"n0") },
   { id:"sign",   x:()=>1345,      label:UI.read,   top:640,            run:()=>inspect("notice") },
-  { id:"enterA", x:()=>4200, label:UI.enterA, top:560, run:()=>setScene("archive", 430) },
-  { id:"enterC", x:()=>5200, label:UI.enterC, top:560, run:()=>setScene("cafe", 500) },
+  { id:"enterA", x:()=>4200, label:UI.enterA, top:560, run:()=>tryEnter("archive", 430, ch2Gate) },
+  { id:"enterC", x:()=>5200, label:UI.enterC, top:560, run:()=>tryEnter("cafe", 500, ch1Gate) },
   { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? "mo9" : "mo0") },
-  { id:"mill",   x:()=>6150,      label:UI.toMill, top:600,            run:()=>{ if (!has("nini.key")){ startDlg("m_no"); return; } setScene("mill", 520); } },
-  { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>startDlg(has("tm.stmt") ? "tm9" : "tm0") },
-  { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>inspect("patrol") },
+  { id:"mill",   x:()=>6150,      label:UI.toMill, top:600,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
+  { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } startDlg(has("tm.stmt") ? "tm9" : "tm0"); } },
+  { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(has("ck.bear")?"c9":"c0") },
   { id:"clock",  x:()=>2735,      label:UI.look,   top:560,            run:()=>inspect("clock") },
   { id:"door",   x:()=>2856,      label:UI.enter,  top:600,            run:()=>enterTower() }
@@ -936,7 +943,7 @@ function checkDeduce(){
   const tw = ["hatch","pendulum","handbell","chute","melt","boots"].filter(x=>S.ev.includes(x)).length;
   if (S.ev.includes("clock") && S.ev.includes("pendulum") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
   if (has("ck.bear") && S.ev.includes("clock") && tw >= 3 && !S.flags.q1){ S.flags.q1 = true; if (!S.flags["ch.2"]){ S.flags["ch.2"] = true; setTimeout(()=>whenPlay(()=>chapterIntro(2)), 3500); } toast((lang==="ko"?"질문":"Question")+": "+tr(UI.askBear)); }
-  if (S.flags["con.c1"] && S.flags["con.c2"] && !S.flags.dd02){ S.flags.dd02 = true; if (!S.flags["ch.3"]){ S.flags["ch.3"] = true; setTimeout(()=>whenPlay(()=>chapterIntro(3)), 3500); } addNote(DD02); toast((lang==="ko"?"추리 완성":"Deduction")+": "+(lang==="ko"?"곰은 한 마리일 수 없다":"Two bears cannot be one")); }
+  if (S.flags["con.c1"] && S.flags["con.c2"] && !S.flags.dd02){ S.flags.dd02 = true; if (!S.flags["ch.3"] && S.flags["ch.2"]){ S.flags["ch.3"] = true; setTimeout(()=>whenPlay(()=>chapterIntro(3)), 3500); } addNote(DD02); toast((lang==="ko"?"추리 완성":"Deduction")+": "+(lang==="ko"?"곰은 한 마리일 수 없다":"Two bears cannot be one")); }
 }
 function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSON.stringify(n); if (S.notes.some(x=>x.k===key)) return; S.notes.push({k:key, n}); }
 function setLang(l){ lang = l; save(); applyLang(); if (mode==="cf") renderCF(); }
@@ -998,6 +1005,19 @@ function chapterIntro(n, mid, done){
     setTimeout(()=>{ $("chcard").classList.remove("on"); setTimeout(()=>{ $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (done) done(); }, 900); }, 2600); }, 800);
 }
 function whenPlay(fn){ const t = setInterval(()=>{ if (mode === "play"){ clearInterval(t); fn(); } }, 400); }
+/* progression gates: say what to do next instead of just refusing */
+const GATE_T = {
+  ck:   {ko:"아직 이곳은 들어갈 수 없다. 계단의 곰에 대해 시계지기 올리버와 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Clockkeeper Oliver about the bear on the stairs."},
+  tower:{ko:"아직 이곳은 들어갈 수 없다. 계단의 곰에 대해 시계탑으로 가 보면 단서를 더 찾을 수 있을 것 같다.", en:"I can't go in there yet. Going back to the clock tower might turn up more clues about the bear on the stairs."},
+  rcpt: {ko:"아직 이곳은 들어갈 수 없다. 곰이 한 마리였는지에 대해 헤이즐의 카페로 가 보면 힌트를 찾을 수 있을 것 같다.", en:"I can't go in there yet. Whether there was only one bear might be answered at Hazel's café."},
+  logb: {ko:"아직 이곳은 들어갈 수 없다. 다리를 건넌 곰에 대해 마을의 순찰 초소로 가 보면 힌트를 찾을 수 있을 것 같다.", en:"I can't go in there yet. The patrol post in the village might tell me about the bear on the bridge."},
+  hand: {ko:"아직 이곳은 들어갈 수 없다. 오른손에 든 물건에 대해 시계지기 올리버와 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Clockkeeper Oliver about what the bear carried in his right hand."},
+  nini: {ko:"아직 이곳은 들어갈 수 없다. 낡은 방앗간의 열쇠에 대해 니니와 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Nini about the key to the Old Mill."}
+};
+function gateMsg(k){ D.gate = {sp:"bgb", ex:"thinking", t:GATE_T[k]}; startDlg("gate"); }
+const ch1Gate = () => !S.flags.q1 ? (has("ck.bear") ? "tower" : "ck") : null;
+const ch2Gate = () => ch1Gate() || (!has("dd02") ? (!S.ev.includes("receipt") ? "rcpt" : !S.ev.includes("patrol") ? "logb" : "hand") : null);
+function tryEnter(sc, x, gate){ const g = gate(); if (g){ gateMsg(g); return false; } setScene(sc, x); return true; }
 function endDlg(){ const f5 = S.flash === 5 && has("f5.end") && !has("f5.shown"); if (f5){ setf("f5.shown"); setTimeout(()=>{ toast(lang==="ko"?"종이 한 번, 느리게 울린다. 그날 밤 울리지 않았던 종이다.":"A single slow bell tone, the one that never rang that night."); setTimeout(()=>showEnd5(), 2400); }, 900); }
   const fin = S.flash && S.flash !== 5 && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); setTimeout(()=>showEnd4(), 1800); $("rain").classList.add("on"); }
   const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>chapterIntro(1, ()=>setSceneNow("village", 700)), 50); }
@@ -1265,8 +1285,8 @@ window.addEventListener("keydown", e=>{
   if (k==="Escape"){ if (mode==="cf") closeCF(); else if (mode==="modal" && $("pause").classList.contains("on")) closePause(); else if (mode==="modal" && $("inspect").classList.contains("on")) $("iClose").click(); else if (mode==="play") openPause(); return; }
   if ((k==="e"||k==="E") && mode==="modal" && $("inspect").classList.contains("on")){ $("iClose").click(); return; }
   if (k==="e"||k==="E"||k==="Enter"||k===" "){ if (e.target && e.target.tagName==="BUTTON" && mode!=="dlg") return; act(); return; }
-  if (k==="9" && mode==="play" && S.scene==="village" && !S.flash){ setScene("archive", 430); return; }   /* temporary entrance until the Chapter 3 key scene exists */
-  if (k==="8" && mode==="play" && S.scene==="village" && !S.flash){ setScene("cafe", 500); return; }   /* temporary entrance until the Chapter 2 key scene exists */
+  if (k==="9" && mode==="play" && S.scene==="village" && !S.flash){ tryEnter("archive", 430, ch2Gate); return; }   /* temporary entrance until the Chapter 3 key scene exists */
+  if (k==="8" && mode==="play" && S.scene==="village" && !S.flash){ tryEnter("cafe", 500, ch1Gate); return; }   /* temporary entrance until the Chapter 2 key scene exists */
   if (k==="q"||k==="Q"){ peek = 3; return; }
   if (mode==="dlg" && (k==="ArrowUp"||k==="ArrowDown"||k==="w"||k==="s")){
     const bs = [...document.querySelectorAll("#choices .choice")]; if (!bs.length) return; let i = bs.findIndex(b=>b.classList.contains("sel")); bs.forEach(b=>b.classList.remove("sel"));
@@ -1278,7 +1298,7 @@ window.addEventListener("keyup", e=>keys.delete(e.key.toLowerCase()));
 window.addEventListener("blur", ()=>keys.clear());
 $("dlg").addEventListener("click", ()=>{ if (mode==="dlg") advance(true); });
 const hold = (id, key)=>{ const b = $(id); const on = e=>{ e.preventDefault(); keys.add(key); }, off = ()=>keys.delete(key); b.addEventListener("pointerdown", on); ["pointerup","pointerleave","pointercancel"].forEach(ev=>b.addEventListener(ev, off)); };
-const tmpGo = (id, sc, x) => $(id).addEventListener("pointerdown", e=>{ e.preventDefault(); if (mode==="play" && S.scene==="village") setScene(sc, x); });
+const tmpGo = (id, sc, x) => $(id).addEventListener("pointerdown", e=>{ e.preventDefault(); if (mode==="play" && S.scene==="village") tryEnter(sc, x, sc==="cafe" ? ch1Gate : ch2Gate); });
 tmpGo("t8","cafe",500); tmpGo("t9","archive",430); /* temporary entrances, same as keys 8 and 9 */
 hold("tL","arrowleft"); hold("tR","arrowright"); $("tE").addEventListener("pointerdown", e=>{ e.preventDefault(); act(); });
 
