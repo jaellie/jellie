@@ -447,6 +447,16 @@ const SECTIONS = [
    tech:["Size 1800x1800 px, one image, transparent."]},
    {size:"1800x1800", note:"Optional second image: the same building with the doors standing open and warm light spilling onto the steps."}),
 
+ P("Small props: broken flowerpot, bread bag, tea tin (3 items)", {
+   goal:"Three small examinable props. The broken flowerpot is on the floor of Hazel's Café entrance (an accident the player can tidy). The paper bread bag and the tea tin are evidence on the Old Mill table, both stamped with Hazel's Café mark.",
+   refs:["the Hazel's Café exterior (the red and cream awning, the teacup sign: copy the teacup mark)", "the existing small props such as the brass key and the sealed letter (match the outline, brass and paper colours)"],
+   subject:"Three separate small objects seen straight on, each drawn on its own.",
+   layout:["ONE row of 3 separate drawings on a sheet 1200 x 400 px, cells 400 x 400 px, each object centred and fitting in 320 x 320 px, with at least 40 px of transparent gap between them.","(1) A terracotta flowerpot broken into five or six shards lying on the floor with a spill of dark soil and a few green leaves of a small plant. (2) A folded brown paper bread bag, creased from being carried, with a small red teacup stamp on the front (a picture only) and the top rolled over twice. (3) A small round tea tin in dark red with a brass lid, a cream label showing the same teacup stamp (a picture only)."],
+   details:["Outline dark warm-brown (#2A1A12), about 6 px at this size. Terracotta #B5653A with lit edge #D98A56 and shadow #7A3F22. Paper bag #C9A777 with shadow #9C7E55. Tin red #8E2F34 with brass #B08D57.","Soft painterly shading, light from the upper left, no gloss.","The pot shards are clearly separate pieces, not a pile of dust."],
+   include:["the teacup stamp identical on bag and tin","the bag looks used, not new"], exclude:["any text or letters","a drop shadow or ground line","a flat vector or 3D look","objects touching each other"],
+   tech:["Sheet 1200x400 px, a REAL transparent background (alpha channel), not a drawn checkerboard."]},
+   {size:"1200x400", tags:["sheet"]}),
+
  P("Lantern Bridge guard post (logbook prop)", {
    goal:"The prop where the Night Guard's patrol log hangs. It replaces the plain lamp post I am using as a stand-in.",
    refs:[REF_LIGHT + " (match the lamp post and snow)"],
@@ -707,8 +717,8 @@ function roomLayers(room, spec){
 SECTIONS.push({id:"h", name:"H. Rooms still missing (4 layers each)", sub:"The prologue cottage and the Healer's house. Same layer set as the café and archive: Far (window view), Mid (wall), Ground (floor) and Foreground.", items:[].concat(
  roomLayers("BGB's cottage at dawn (Prologue)", {
    far:"The view through the cottage window at dawn: the snowy village roofs far below in the cold blue light, a thin line of peach at the horizon, a few chimney smokes, the Clocktower as a small dark shape far away. Calm and a little lonely.",
-   mid:"The back wall of a small, tidy one-room cottage seen straight on: a wooden shelf along the wall, a framed window on the left with a plain curtain, a small stove with a kettle on the right, a hat peg with a scarf hook, a narrow door at the far right. Plain plaster and old timber. Nothing grand, everything cared for.",
-   midDetails:["Colours: cold blue dawn light from the window (#8FA2C6) against a faint warm glow from the stove (#FFB347), timber #4A2A18, plaster #CFC3AE.","A clear, empty shelf space at about 35% of the wall length from the left, where a deep photograph frame will be placed later by the game (draw the shelf only, leave the space empty).","The door at the right edge is plain and closed, slightly worn."],
+   mid:"The back wall of a small, tidy one-room cottage seen straight on: a wooden shelf along the wall, a framed window on the left with a plain curtain, a small bookshelf of worn storybooks to the right of the window, an empty shelf for the photograph frame, a small iron stove with a kettle standing on top at the right, a hat peg with a scarf hook, a narrow door at the far right. Plain plaster and old timber. Nothing grand, everything cared for.",
+   midDetails:["Colours: cold blue dawn light from the window (#8FA2C6) against a faint warm glow from the stove (#FFB347), timber #4A2A18, plaster #CFC3AE.","A clear, empty shelf space at about 35% of the wall length from the left, where a deep photograph frame will be placed later by the game (draw the shelf only, leave the space empty).","The door at the right edge is plain and closed, slightly worn.","The player can examine four things: the window, the bookshelf, the stove and the kettle. Keep each one clearly separate with at least 120 px of plain wall between them, and make the kettle a distinct object on the stove (cold, no steam)."],
    ground:"Worn wooden floorboards with a small round rag rug, a boot mat by the door and a bit of tracked-in snow near the door.",
    fg:"A dark foreground strip of a chair back, a basket of firewood and a hanging coat at the very edges, so the middle stays open."}),
  roomLayers("The Healer's house (Chapter 6)", {
@@ -750,7 +760,7 @@ const GAP = [
 "- Each item also keeps at least 12 px of transparent margin from the edge of the sheet.",
 "- Items sit on a clean grid in the stated order so they can be cut out automatically. Nothing is drawn in the gaps (no shadows, glow, ground lines or labels)."
 ].join("\n");
-const SHEET_RE = /Icon pack|poses|portraits|holding|lifting|icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits|Identity Board|Responsibility Board|notebook page/i;
+const SHEET_RE = /Small props|Icon pack|poses|portraits|holding|lifting|icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits|Identity Board|Responsibility Board|notebook page/i;
 SECTIONS.forEach(sec => sec.items.forEach(it => { if (it.kind === "png" && SHEET_RE.test(it.title) && !it.body.includes("SHEET SPACING")) it.body = it.body.replace("\n\nSTYLE (apply to everything):", "\n\n" + GAP + "\n\nSTYLE (apply to everything):"); }));
 
 // ---- render

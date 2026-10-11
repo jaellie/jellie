@@ -226,6 +226,27 @@ And the **mirror to the Ch.5 rescue:** the elder saved the younger in the flood;
 
 ---
 
+### 3.4 R21: Nini's greeting yesterday (🟡 conditionally approved by the user; nothing here changes §3.1 to §3.3)
+
+**Day D afternoon** (the day of Edward's death, before the night table in §3.2). Separate from the night route.
+| Time | Event | Who knows |
+|---|---|---|
+| 16:15 | BGB orders tea at Hazel's Café, window table. | Hazel |
+| ~16:15 | Green leaves the Old Mill for his weekly dusk walk to the village edge. | Green |
+| ~16:40 | Someone buys bread at the café **back door** (hat low, few words). Hazel did **not** ask who and her recognition is ⬜ **undecided**. | Hazel |
+| 16:50 | **Nini** sees a bear in a mustard scarf from the back, 40 m away, carrying a sack, going down the back lane behind the Clocktower toward the Mill road. She waves and calls "Mr. Bear!"; he does not turn. She takes him for BGB. | Nini |
+| 16:55 | Hazel brings BGB a refill at the window table. From her counter she sees that table. | Hazel |
+| 17:00 | Tommy's watch begins. 🟡 | Tommy |
+| 17:08 | Tommy logs "a bear with a sack on the back lane, toward the Mill road" (no name). | Tommy |
+| 17:32 | BGB pays. | Hazel |
+
+**Evidence:** EV-32 Nini's greeting (statement, Prologue). EV-33 café bread bag and tea tin (Old Mill, Ch.3). EV-34 afternoon tab 16:15 / 16:55 / 17:32 (Hazel, Ch.2). EV-09 gains the 17:08 line.
+**Independence:** BGB's whereabouts at 16:50 rests on Hazel's counter view and her written tab, never on BGB's word.
+**Retrieval:** Prologue plant (Nini, BGB answers "I must have missed it", no reaction) → Ch.2 Hazel and Tommy → Ch.3 the bread bag at the Old Mill, and Nini adds that the bear walked faster than BGB (she does not know it was Green) → Ch.6 Identity Board (testimonial category only; no single clue decides DD-04).
+**Rules:** Nini's account proves **that someone who looked like BGB was elsewhere**, not who he was or what he did. It never counts as accusation evidence.
+
+---
+
 ## 4. The reveals ladder (what the player knows, and when)
 
 | Stage | Player believes | Truth revealed |

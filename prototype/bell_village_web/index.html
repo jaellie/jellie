@@ -93,6 +93,9 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #pfloor{position:absolute;left:0;top:890px;width:2400px;height:190px;background:linear-gradient(#4a3426,#2a1c14)}
 #pwin{position:absolute;left:380px;top:170px;width:360px;height:420px;background:linear-gradient(#e8b98a,#9fb0d6);border:14px solid #4a3426;border-radius:180px 180px 8px 8px}
 #pwin i{position:absolute;left:50%;top:0;bottom:0;width:10px;margin-left:-5px;background:#4a3426}
+#pbook{position:absolute;left:810px;top:420px;width:170px;height:470px;background:#5a3f2c;border:8px solid #3a281c;border-radius:6px;background-image:repeating-linear-gradient(#5a3f2c 0 72px,#3a281c 72px 80px)}
+#pstove{position:absolute;left:1640px;top:560px;width:180px;height:330px;background:#3a3238;border:8px solid #251e22;border-radius:10px}
+#pstove i{position:absolute;left:30px;top:-48px;width:90px;height:50px;background:#7a6f66;border-radius:12px 12px 4px 4px}
 #pshelf{position:absolute;left:1050px;top:700px;width:520px;height:26px;background:#5a3f2c;border-radius:4px;box-shadow:0 8px 0 #2a1c14}
 #pframe{position:absolute;left:1180px;top:476px;width:240px;height:auto;display:block;pointer-events:none}
 #pdoor{position:absolute;left:1900px;top:420px;width:260px;height:470px;background:#5a3f2c;border:12px solid #3a281c;border-radius:130px 130px 0 0}
@@ -310,7 +313,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
    <div id="pworld">
     <div id="pwall"></div><div id="pfloor"></div>
     <div id="pwin"><i></i></div>
-    <div id="pshelf"></div>
+    <div id="pshelf"></div><div id="pbook"></div><div id="pstove"><i></i></div>
     <img id="pframe" src="assets/ev_keepsake_frame.webp" alt="Photograph frame">
     <div id="pdoor"><b></b></div>
     <div id="pmarks"></div>
@@ -464,6 +467,7 @@ const UI = {
   locP:{en:"BGB's cottage", ko:"빅그베의 오두막"}, lFrame:{en:"Look at the photograph", ko:"사진을 본다"}, lDoor:{en:"Open the door", ko:"문을 연다"}, lDoorNo:{en:"Someone is knocking", ko:"누군가 문을 두드린다"},
   askBear:{en:"Who was the bear on the stairs?", ko:"계단의 곰은 누구인가?"}, askStop:{en:"The clock stopped at 11:47. That is not necessarily when Edward died.", ko:"시계는 11시 47분에 멈췄다. 그것이 에드워드가 죽은 시각이라는 뜻은 아니다."},
   locM:{en:"The Old Mill", ko:"낡은 방앗간"}, talkMo:{en:"Talk to Molly", ko:"몰리 할머니와 이야기한다"}, talkGr:{en:"Talk to Green", ko:"Green과 이야기한다"}, toMill:{en:"Walk to the Old Mill", ko:"낡은 방앗간으로 간다"}, leaveM:{en:"Walk back to the village", ko:"마을로 돌아간다"}, lComp:{en:"Compare the photographs", ko:"사진을 맞춰 본다"},
+  lBag:{en:"Look at the bag on the table", ko:"탁자 위 봉투를 살핀다"}, lWin:{en:"Look out the window", ko:"창밖을 본다"}, lBook:{en:"Look at the books", ko:"책들을 살핀다"}, lStove:{en:"Look at the stove", ko:"난로를 살핀다"}, lKettle:{en:"Look at the kettle", ko:"주전자를 살핀다"},
   talkTm:{en:"Talk to Tommy", ko:"토미와 이야기한다"},
   lPost:{en:"Read Tommy's logbook", ko:"토미의 일지를 읽는다"}, conHead:{en:"Contradictions and deductions", ko:"모순과 추리"}, askNext:{en:"Is there another bear?", ko:"다른 곰이 있는가?"},
   leaveC:{en:"Leave the café", ko:"카페를 나간다"}, talkHz:{en:"Talk to Hazel", ko:"헤이즐과 이야기한다"}, locC:{en:"Hazel's Café", ko:"헤이즐의 카페"}, lBoots:{en:"Look at the prints on the stairs", ko:"계단의 발자국을 살핀다"},
@@ -521,8 +525,8 @@ EV.notebook = { id:"notebook", name:{en:"Nini's notebook",ko:"니니의 공책"}
   desc:{en:"Nini's notebook. A page has been torn out, and the page beneath it carries a faint note: \"Red ledger moved?\"", ko:"니니의 공책. 한 장이 뜯겨 나갔고, 그 아래 장에 희미한 메모가 남아 있다. \"붉은 장부 옮겨졌나?\""},
   note:{en:"Nini's notebook has a torn page. Below it: \"Red ledger moved?\"", ko:"니니의 공책에는 뜯긴 장이 있다. 그 아래: \"붉은 장부 옮겨졌나?\""} };
 EV.patrol = { id:"patrol", name:{en:"Night Guard Tommy's patrol log",ko:"야간 경비 토미의 순찰 일지"}, img:"ev_patrol_log", tag:"LOG",
-  desc:{en:"Night Guard Tommy's logbook, hung on the lamp post by Lantern Bridge. 11:35: \"B.G.B. crossed Lantern Bridge, hurrying. Both hands gloved, a paper in the right hand.\" 11:46: \"A bear on the Archive steps, walking slowly toward the tower.\" 11:51: \"Someone calling out, toward the tower. The wind took it.\"", ko:"랜턴 다리 가로등에 걸린 야간 경비 토미의 일지. 11:35 \"B.G.B.가 랜턴 다리를 서둘러 건넘. 양손에 장갑, 오른손에 종이 한 장.\" 11:46 \"기록실 계단에 곰 한 마리, 탑 쪽으로 천천히 걸어감.\" 11:51 \"탑 쪽에서 누군가 부르는 소리. 바람에 묻힘.\""},
-  note:{en:"Night Guard Tommy's log: 11:35 a bear crossed Lantern Bridge (gloves, a paper); 11:46 a slow bear toward the tower; 11:51 a call in the wind.", ko:"경비 일지: 11:35 곰이 랜턴 다리를 건넘(장갑, 종이), 11:46 탑 쪽으로 천천히 걷는 곰, 11:51 바람 속의 부르는 소리."} };
+  desc:{en:"Night Guard Tommy's logbook, hung on the lamp post by Lantern Bridge. 17:08: \"A bear with a sack on the back lane, heading toward the Mill road.\" 11:35: \"B.G.B. crossed Lantern Bridge, hurrying. Both hands gloved, a paper in the right hand.\" 11:46: \"A bear on the Archive steps, walking slowly toward the tower.\" 11:51: \"Someone calling out, toward the tower. The wind took it.\"", ko:"랜턴 다리 가로등에 걸린 야간 경비 토미의 일지. 17:08 \"뒷길에 자루를 든 곰, 방앗간 길 쪽으로.\" 11:35 \"B.G.B.가 랜턴 다리를 서둘러 건넘. 양손에 장갑, 오른손에 종이 한 장.\" 11:46 \"기록실 계단에 곰 한 마리, 탑 쪽으로 천천히 걸어감.\" 11:51 \"탑 쪽에서 누군가 부르는 소리. 바람에 묻힘.\""},
+  note:{en:"Night Guard Tommy's log: 17:08 a bear with a sack on the back lane; 11:35 a bear crossed Lantern Bridge (gloves, a paper); 11:46 a slow bear toward the tower; 11:51 a call in the wind.", ko:"경비 일지: 17:08 뒷길에 자루를 든 곰, 11:35 곰이 랜턴 다리를 건넘(장갑, 종이), 11:46 탑 쪽으로 천천히 걷는 곰, 11:51 바람 속의 부르는 소리."} };
 EV.key = { id:"key", name:{en:"Edward's drawer key",ko:"에드워드의 서랍 열쇠"}, img:"key_brass", tag:"KEY",
   desc:{en:"A small brass key on a loop of red thread. Nini has kept it since Edward's death, and she gave it to you.", ko:"붉은 실에 꿰인 작은 놋쇠 열쇠. 니니가 에드워드가 죽은 뒤로 간직해 왔고, 당신에게 건넸다."},
   note:{en:"Nini gave you the key to Edward's locked drawers in the archive.", ko:"니니가 기록실에 있는 에드워드의 잠긴 서랍 열쇠를 건넸다."} };
@@ -542,6 +546,15 @@ EV.stmt_tm = { id:"stmt_tm", name:{en:"Statement: Tommy",ko:"진술: 토미"}, t
   desc:{en:"Night Guard Tommy: \"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.\"", ko:"야간 경비 토미: \"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 두었습니다. 뒷모습만 봤습니다.\""} };
 EV.stmt_gr = { id:"stmt_gr", name:{en:"Statement: Green",ko:"진술: Green"}, tag:"STATEMENT", note:null,
   desc:{en:"Green, at the Old Mill: \"I was at home all night, chipping ice off the wheel. I was not at the tower. Ask yourself what you remember.\"", ko:"방앗간의 Green: \"밤새 집에서 물레바퀴의 얼음을 깼어. 탑에는 가지 않았어. 네 기억을 떠올려 봐.\""} };
+EV.greet = { id:"greet", name:{en:"Statement: Nini's greeting",ko:"진술: 니니의 인사"}, tag:"STATEMENT",
+  desc:{en:"Nini says that yesterday, around dusk, she waved at a bear on the back lane behind the Clocktower and called out to him, thinking he was you. He did not turn around.", ko:"니니는 어제 해 질 무렵 시계탑 뒤쪽 길에서 곰 한 마리를 당신인 줄 알고 손을 흔들며 불렀지만, 그 곰은 돌아보지 않았다고 한다."},
+  note:{en:"Nini says she waved at a bear on the lane behind the Clocktower yesterday at dusk and took him for BGB. He did not turn around.", ko:"니니는 어제 해 질 무렵 시계탑 뒤쪽 길에서 곰에게 손을 흔들었고, 그를 빅그베로 생각했다고 한다. 그 곰은 돌아보지 않았다."} };
+EV.tab_pm = { id:"tab_pm", name:{en:"Café tab (afternoon)",ko:"카페 계산서(오후)"}, img:"ev_receipt", tag:"CAFÉ",
+  desc:{en:"Hazel's afternoon tab for BGB: tea ordered 16:15, a refill brought to the window table at 16:55, paid 17:32. Hazel wrote the times herself.", ko:"헤이즐이 쓴 빅그베의 오후 계산서. 16:15 차 주문, 16:55 창가 자리에 리필, 17:32 계산. 시각은 헤이즐이 직접 적었다."},
+  note:{en:"Hazel's afternoon tab: tea at 16:15, a refill at 16:55, paid at 17:32.", ko:"헤이즐의 오후 계산서: 16:15 차, 16:55 리필, 17:32 계산."} };
+EV.bread = { id:"bread", name:{en:"Café bread bag and tea tin",ko:"카페 빵 봉투와 찻잎 통"}, tag:"TRACES",
+  desc:{en:"On the Old Mill table: a paper bread bag and a small tea tin, both stamped with the teacup mark of Hazel's Café. The bag is still creased from being carried.", ko:"낡은 방앗간 탁자 위에 헤이즐의 카페 찻잔 도장이 찍힌 빵 봉투와 작은 찻잎 통이 있다. 봉투에는 들고 다닌 주름이 남아 있다."},
+  note:{en:"The Old Mill table holds a bread bag and a tea tin stamped with Hazel's Café mark.", ko:"낡은 방앗간 탁자에 헤이즐의 카페 도장이 찍힌 빵 봉투와 찻잎 통이 있다."} };
 EV.boots = { id:"boots", name:{en:"Footprints on the stairs",ko:"계단의 발자국"}, img:"ev_boot_prints", tag:"TRACES",
   desc:{en:"Snow tracked onto the tower stairs. One set of prints leads up, spaced wide apart.", ko:"탑 계단에 눈이 묻어 있다. 올라가는 발자국이 한 줄, 간격이 넓다."},
   note:{en:"One set of prints leads up the tower stairs, spaced wide apart.", ko:"탑 계단 위로 올라가는 발자국이 한 줄 있다. 간격이 넓다."} };
@@ -549,6 +562,7 @@ EV.receipt = { id:"receipt", name:{en:"Café receipt",ko:"카페 영수증"}, im
   desc:{en:"A receipt from Hazel's Café, settled at 11:42. Hazel wrote the time on it herself.", ko:"헤이즐의 카페 영수증. 11시 42분에 계산되었고, 헤이즐이 직접 시각을 적어 두었다."},
   note:{en:"The café receipt is stamped 11:42.", ko:"카페 영수증에는 11시 42분이 적혀 있다."} };
 const NOTES = {
+  nw:{en:"Nini remembers that the bear on the back lane walked faster than BGB, as if he had somewhere to be.", ko:"니니는 뒷길의 곰이 빅그베보다 걸음이 빨랐고, 어디 급하게 가는 것 같았다고 기억한다."},
   mo:{en:"Molly says the village does not talk about Green. In her telling he is the one who let the bell fail.", ko:"몰리 할머니는 마을이 Green 이야기를 하지 않는다고 했다. 그녀의 말로는 종이 울리지 않게 한 쪽은 Green이다."},
   gr:{en:"Green lives alone at the Old Mill. A faded scar marks his left ear. He lifts the kettle with his right hand, and that hand is bare in the cold.", ko:"Green은 낡은 방앗간에서 혼자 산다. 왼쪽 귀에 희미한 흉터가 있다. 주전자는 오른손으로 들고, 그 손은 추위 속에서 맨손이다."},
   hz:{en:"Hazel: BGB stayed at the café until a little before a quarter to twelve. He looked like he was waiting for someone.", ko:"헤이즐: 빅그베는 열두 시 십오 분 전이 조금 못 되도록 카페에 있었다. 누군가를 기다리는 것 같았다."},
@@ -583,7 +597,7 @@ D.p_n0 = {sp:"nini", ex:"worried", t:{en:"It's me, Nini. Edward is gone, and eve
 D.p_n1 = {sp:"bgb", ex:"worried", t:{en:"I'm coming.", ko:"지금 나갈게."}, next:"p_n2"};
 D.p_n2 = {sp:"nini", ex:"thinking", t:{en:"Oliver says he saw a bear in a scarf on the tower stairs at eleven forty. People are whispering.", ko:"올리버 아저씨가 열한 시 사십 분에 목도리를 한 곰이 탑 계단에 있었다고 해요. 사람들이 수군거려요."}, next:"p_n3"};
 D.p_n3 = {sp:"bgb", ex:"neutral", t:{en:"I was at Hazel's café until a little before a quarter to twelve. Ask her.", ko:"난 열두 시 십오 분 전이 조금 못 되도록 헤이즐의 카페에 있었어. 물어봐."}, next:"p_n4"};
-D.p_n4 = {sp:"nini", ex:"worried", t:{en:"I will. The Constable is snowed in, so everyone wants you to look into it. Please come to the tower.", ko:"그럴게요. 경찰관은 눈에 갇혀 못 오니까, 다들 아저씨가 조사해 주길 바라요. 탑으로 와 주세요."}, set:"pro.done", next:null};
+D.p_n4 = {sp:"nini", ex:"worried", t:{en:"I will. The Constable is snowed in, so everyone wants you to look into it. Please come to the tower.", ko:"그럴게요. 경찰관은 눈에 갇혀 못 오니까, 다들 아저씨가 조사해 주길 바라요. 탑으로 와 주세요."}, next:"p_n5"};
 D.nk0 = {sp:"nini", ex:"worried", t:{en:"Another bear. You think there was another bear on those stairs?", ko:"아저씨, 다른 곰이요. 그날 계단에 다른 곰이 있었다고 생각하세요?"}, next:"nk1"};
 D.nk1 = {sp:"nini", ex:"thinking", t:{en:"Edward kept his drawers locked and I have kept the key since. If there is an answer, it may be in there. Please, take it.", ko:"에드워드 아저씨는 서랍을 늘 잠가 두셨고, 열쇠는 제가 계속 가지고 있었어요. 답이 있다면 거기 있을지도 몰라요. 아저씨가 가져가세요."}, ev:"key", set:"nini.key", next:null};
 D.mo0 = {sp:"mo", t:{en:"So you have heard there was a second bear on those stairs.", ko:"그래, 그날 계단에 곰이 한 마리 더 있었다는 얘기를 들었구먼."},
@@ -599,13 +613,30 @@ D.gr3 = {sp:"gr", ex:"neutral", t:{en:"I know. The whole valley heard the handbe
 D.gr4 = {sp:"gr", ex:"neutral", t:{en:"Cold does not ask permission. Hold the kettle for me, it keeps the fingers honest.", ko:"추위는 허락을 구하지 않아. 주전자 좀 들어 줘. 손가락이 정직해지거든."}, note:"gr", set:"gr.hand", next:"gr0"};
 D.gr5 = {sp:"gr", ex:"neutral", t:{en:"Ask yourself what you remember.", ko:"네 기억을 떠올려 봐."}, ev:"stmt_gr", set:"gr.done", next:null};
 D.gr9 = {sp:"gr", ex:"neutral", t:{en:"I have said it already. Ask yourself what you remember.", ko:"이미 말했어. 네 기억을 떠올려 봐."}};
+/* Prologue: Nini's greeting (R21). Short, cheerful, no reaction from BGB. */
+D.p_n5 = {sp:"nini", ex:"neutral", t:{en:"One more thing before you go, and I'm sorry to bring it up now. Mr. Bear, yesterday around dusk I waved at you on the lane behind the Clocktower. Why didn't you wave back?", ko:"가시기 전에 하나만요. 이런 때 죄송해요. 아저씨! 어제 해 질 무렵에 시계탑 뒤쪽 길에서 손 흔들었는데, 왜 안 받아주셨어요?"}, ev:"greet", set:"pro.greet", next:"p_n6"};
+D.p_n6 = {sp:"bgb", ex:"neutral", t:{en:"Yesterday? I'm sorry. I must have missed it.", ko:"어제? 미안해. 못 봤나 봐."}, next:"p_n7"};
+D.p_n7 = {sp:"nini", ex:"neutral", t:{en:"Next time you have to wave back!", ko:"다음엔 꼭 받아주셔야 해요!"}, next:"p_n8"};
+D.p_n8 = {sp:"bgb", ex:"neutral", t:{en:"Ha, I promise.", ko:"하하, 약속할게."}, next:"p_n9"};
+D.p_n9 = {sp:"nini", ex:"neutral", t:{en:"Then today I'll say it twice! Hello! Hello!", ko:"그럼 오늘은 두 번 인사할래요! 안녕하세요! 안녕하세요!"}, next:"p_n10"};
+D.p_n10 = {sp:"bgb", ex:"neutral", t:{en:"Hello! Hello!", ko:"안녕! 안녕!"}, set:"pro.done", next:null};
+/* Chapter 3: Nini remembers the walk (does not know it was Green) */
+D.nw0 = {sp:"nini", ex:"thinking", t:{en:"Mr. Bear, I thought of that bear from yesterday. He walked faster than you do, like he had somewhere to be.", ko:"아저씨, 어제 그 곰 생각이 났어요. 걸음이 아저씨보다 빨랐어요. 꼭 어디 급하게 가는 것처럼요."}, note:"nw", set:"nini.walk", next:null};
+/* Café, afternoon (R21): Hazel can place BGB at 16:55 from the counter */
+D.h3 = {sp:"hz", t:{en:"And yesterday afternoon you had tea at the window table. I brought you a refill at five to five. I can see that table from the counter, and my back-door bell rang while you were reading the paper.", ko:"어제 오후에도 창가 자리에서 차를 드셨죠. 다섯 시 오 분 전에 제가 리필을 가져다 드렸어요. 카운터에서 그 자리가 훤히 보이고, 뒷문 종이 울렸을 때도 신문을 보고 계셨고요."}, ev:"tab_pm", set:"hz.pm", next:"h4"};
+D.h4 = {sp:"hz", t:{en:"Someone did buy bread at the back door around twenty to five. Hat low, few words. I did not ask who. Customers have their reasons.", ko:"네 시 사십 분쯤 뒷문으로 빵을 사 간 손님이 있긴 했어요. 모자를 푹 눌러쓰고 말이 없었죠. 누구인지는 묻지 않았어요. 손님마다 사정이 있으니까요."}, set:"hz.bread", next:"h0"};
+D.tm3 = {sp:"tm", t:{en:"Last night my watch began at five. Right at the start, a bear with a sack went down the back lane toward the Mill road. I did not write a name.", ko:"어젯밤 근무는 다섯 시에 시작했습니다. 시작하자마자 자루를 든 곰이 뒷길로 방앗간 길 쪽으로 갔습니다. 이름은 적지 않았습니다."}, set:"tm.pm", next:"tm0"};
+D.p_w = {sp:"bgb", ex:"neutral", t:{en:"So much snow. It will wipe out every old footprint.", ko:"눈이 많이 오네. 오래된 발자국은 다 지워지겠어."}};
+D.p_b = {sp:"bgb", ex:"neutral", t:{en:"Old storybooks, worn soft from reading.", ko:"낡은 동화책이야. 하도 읽어서 부들부들해졌어."}};
+D.p_s = {sp:"bgb", ex:"neutral", t:{en:"The fire is nearly out.", ko:"불이 거의 꺼졌어."}};
+D.p_k = {sp:"bgb", ex:"worried", t:{en:"The kettle went cold long ago. I don't feel like tea.", ko:"주전자는 식은 지 오래야. 차 마실 기분이 아니야."}};
 D.tm0 = {sp:"tm", t:{en:"Evening, Mr. Big Green Bear. I walk this bridge loop every night and keep the log.", ko:"안녕하세요, 빅그린베어 씨. 저는 밤마다 이 다리 둘레를 돌며 일지를 씁니다."},
-   ch:[{t:{en:"What did you see last night?",ko:"어젯밤에 뭘 보셨나요?"},go:"tm1"},{t:{en:"Do you mind the tower at night?",ko:"밤에 탑이 거슬리진 않으세요?"},go:"tm2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
+   ch:[{t:{en:"What did you see last night?",ko:"어젯밤에 뭘 보셨나요?"},go:"tm1"},{t:{en:"Do you mind the tower at night?",ko:"밤에 탑이 거슬리진 않으세요?"},go:"tm2"},{t:{en:"Anything earlier in your watch?",ko:"근무 초반에 본 건 없나요?"},go:"tm3"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
 D.tm1 = {sp:"tm", t:{en:"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.", ko:"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 두었습니다. 뒷모습만 봤습니다."}, ev:"stmt_tm", set:"tm.stmt", next:null};
 D.tm2 = {sp:"tm", t:{en:"The winding and the bells keep me awake, I will say that. But I never go in. The tower is not my watch.", ko:"태엽 소리와 종소리가 잠을 설치게 하긴 합니다. 그래도 안에는 들어가지 않습니다. 탑은 제 순찰 구역이 아니니까요."}, next:"tm0"};
 D.tm9 = {sp:"tm", t:{en:"The times are in the log, hanging on the post. Take your time with it.", ko:"시각은 가로등 기둥에 걸린 일지에 있습니다. 천천히 보십시오."}};
 D.h0 = {sp:"hz", t:{en:"Mr. Big Green Bear. Terrible business. The whole café has talked of nothing else since the bell.", ko:"빅그린베어 씨. 끔찍한 일이에요. 종이 울린 뒤로 우리 카페는 그 얘기뿐이에요."},
-   ch:[{t:{en:"About last night.",ko:"어젯밤 일에 대해서요."},go:"h1"},{t:{en:"Did you know Edward well?",ko:"에드워드 씨를 잘 아셨나요?"},go:"h2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
+   ch:[{t:{en:"About last night.",ko:"어젯밤 일에 대해서요."},go:"h1"},{t:{en:"Did you know Edward well?",ko:"에드워드 씨를 잘 아셨나요?"},go:"h2"},{t:{en:"What about yesterday afternoon?",ko:"어제 오후는요?"},go:"h3"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
 D.h1 = {sp:"hz", t:{en:"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.", ko:"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠."}, note:"hz", set:"hz.stmt", ev:"stmt_hz", next:"h1b"};
 D.h1b = {sp:"hz", t:{en:"You settled your tab at eleven forty-two. I wrote the time on the receipt myself. Here, keep it.", ko:"열한 시 사십이 분에 계산하셨어요. 시각은 제가 직접 영수증에 적었죠. 자, 가지고 계세요."}, ev:"receipt", set:"hz.done", next:null};
 D.h2 = {sp:"hz", t:{en:"He lent me money for the roof last winter. I paid back half. It's no secret, so don't go writing it down as one.", ko:"작년 겨울에 지붕 고치라고 돈을 빌려줬어요. 절반은 갚았고요. 비밀도 아니니 무슨 비밀인 양 적지는 마세요."}, set:"hz.owed", next:"h0"};
@@ -712,7 +743,7 @@ function lightActor(el, cx, dt, shW){
 
 /* ---------- interactables ---------- */
 let IA = [
-  { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-150, run:()=>startDlg(has("dd02") && !has("nini.key") ? "nk0" : has("nini.done")?"n9":"n0") },
+  { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-150, run:()=>startDlg(has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done")?"n9":"n0") },
   { id:"sign",   x:()=>1345,      label:UI.read,   top:640,            run:()=>inspect("notice") },
   { id:"enterA", x:()=>4200, label:UI.enterA, top:560, run:()=>setScene("archive", 430) },
   { id:"enterC", x:()=>5200, label:UI.enterC, top:560, run:()=>setScene("cafe", 500) },
@@ -744,9 +775,14 @@ const IA_A = [
 ];
 const IA_M = [
   { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 6050) },
+  { id:"bag",  x:()=>1160, label:UI.lBag, top:640, run:()=>inspect("bread") },
   { id:"gr",   x:()=>NPCX_M.gr, label:UI.talkGr, top:FEET_T-GR_H-150, run:()=>startDlg(has("gr.done") ? "gr9" : "gr0") }
 ];
 const IA_P = [
+  { id:"pwin",   x:()=>560,  label:UI.lWin,    top:330, run:()=>startDlg("p_w") },
+  { id:"pbook",  x:()=>895,  label:UI.lBook,   top:420, run:()=>startDlg("p_b") },
+  { id:"pstove", x:()=>1700, label:UI.lStove,  top:480, run:()=>startDlg("p_s") },
+  { id:"pkettle",x:()=>1730, label:UI.lKettle, top:420, run:()=>startDlg("p_k") },
   { id:"frame", x:()=>1300, label:UI.lFrame, top:430, run:()=>startDlg(has("pro.frame") ? "p_f9" : "p_f0") },
   { id:"pdoor", x:()=>2030, label:UI.lDoor,  top:330, run:()=>{ if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
 ];
@@ -1040,15 +1076,17 @@ function renderEvGrid(){
 }
 function renderTl(){
   const t = $("tl"); const k = 925/1628; const SL = [[173,403],[432,667],[695,926],[954,1189],[1218,1445]], sx = SL.map(x=>x[0]); const K = lang==="ko"; /* slot rectangles measured from timeline_strip_v2.webp (1628x563), top 142, bottom 367 */
-  const items = [
-    { slot:0, tag:"W", time:"11:35", on:S.ev.includes("patrol"), txt:K?"다리 위의 곰":"Bear on the bridge" },
-    { slot:1, tag:"W", time:"11:40", on:has("ck.bear"), txt:K?"계단의 곰":"Bear on the stairs" },
-    { slot:2, tag:"E", time:"11:42", on:S.ev.includes("receipt"), txt:K?"카페 계산":"Tab settled at the café" },
-    { slot:3, tag:"C", time:"11:47", on:S.ev.includes("clock"), txt:K?"탑시계 멈춤":"Tower clock stopped" }
+  const base = [
+    { tag:"W", time:(has("pro.greet") ? "16:50" : "17:08"), on:has("pro.greet") || S.ev.includes("patrol"), txt:K?"뒷길의 곰":"Bear on the back lane" },
+    { tag:"W", time:"11:35", on:S.ev.includes("patrol"), txt:K?"다리 위의 곰":"Bear on the bridge" },
+    { tag:"W", time:"11:40", on:has("ck.bear"), txt:K?"계단의 곰":"Bear on the stairs" },
+    { tag:"E", time:"11:42", on:S.ev.includes("receipt"), txt:K?"카페 계산":"Tab settled at the café" },
+    { tag:"C", time:"11:47", on:S.ev.includes("clock"), txt:K?"탑시계 멈춤":"Tower clock stopped" }
   ];
+  const items = base.map((x,i)=>Object.assign({slot:i},x));   /* five fixed slots: 16:50 (afternoon) then the night events */
   items.filter(i=>i.on).forEach(i=>{ const c = document.createElement("div"); c.className = "tlcard"; const sl = SL[i.slot]; c.style.cssText = "left:"+Math.round(sl[0]*k)+"px;top:"+Math.round(142*k)+"px;width:"+Math.round((sl[1]-sl[0])*k)+"px;height:"+Math.round(225*k)+"px;box-sizing:border-box;padding:4px";
     c.innerHTML = '<small>'+i.tag+' · '+({W:"WITNESS",E:"EVENT",C:"CLOCK"}[i.tag])+'</small>'+i.time+'<span style="font:400 15px/1.1 var(--font-body)">'+i.txt+'</span>'; t.appendChild(c); });
-  if (S.flags["con.c1"]){ const m = document.createElement("img"); m.src = "assets/stamp_contradiction.webp"; m.alt = ""; m.style.cssText = "position:absolute;width:210px;left:"+Math.round((sx[0]+12)*k)+"px;top:-6px;transform:rotate(-6deg);pointer-events:none"; t.appendChild(m); }
+  if (S.flags["con.c1"]){ const m = document.createElement("img"); m.src = "assets/stamp_contradiction.webp"; m.alt = ""; m.style.cssText = "position:absolute;width:210px;left:"+Math.round((sx[1]+12)*k)+"px;top:-6px;transform:rotate(-6deg);pointer-events:none"; t.appendChild(m); }
 }
 function openCF(){ if (mode!=="play") return; mode = "cf"; $("cf").classList.add("on"); renderCF(); }
 function closeCF(){ $("cf").classList.remove("on"); mode = "play"; stage.focus(); }
