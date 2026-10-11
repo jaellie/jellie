@@ -61,3 +61,7 @@ Needed to replace them: Healer's house layers (section H), the Healer portrait a
 ## Chapter 7 (placeholder build)
 Playable now: Green's reason at the Old Mill, the "Edward hid the truth in the clock" deduction, the pendulum case with Edward's Final Record (read as his written voice), the village gathering at the tower plaza (warm dusk tint on the night village), five evidence presentations, the choice of what goes in the Record, and four ending cards (E1 to E4) with a credits screen. You can choose again after any ending.
 Needed to replace them: a real dusk version of the village (Chapter 7 gathering), Edward's written-voice portrait, the Final Record page art, ending stills E1 to E4 and the epilogue council room still (not built: non-playable past scene, section D), Molly and the Healer portraits.
+
+## Art integrated (latest delivery)
+In game now: BGB redrawn, Green v4, Molly, young twins (elder and younger), BGB torn-tail (used from Chapter 6), portraits of Molly, Tommy and Green, bread-bag and tea-tin props, Hazel's broken pot (sliced, not yet placed), patrol post, Healer's house exterior and interior (3 layers), BGB's cottage (3 layers), both photographs. Sliced pieces are in art_source/sliced/new_characters. Originals are in art_source/originals with hashes.
+Not yet placed: epilogue council still (assets/epi_council.webp, the non-playable epilogue is not built), Hazel's pot scene, bread props in the Old Mill. Still silhouettes: the Healer, villagers in the flashback, Edward side views.

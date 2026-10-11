@@ -88,20 +88,15 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #afg img{position:absolute;left:-420px;top:614px;display:block;pointer-events:none}
 #csc{position:absolute;inset:0;display:none}
 /* Prologue cottage: PLACEHOLDER art (flat colours) until the real room layers exist */
-#psc{position:absolute;inset:0;display:none;background:#1c2540}
+#psc{position:absolute;inset:0;display:none;background:linear-gradient(#0b1230,#1d2347 60%,#2a2230)}
 #psc.on{display:block}
+#psc .rm{display:none}
+#psc:not(.hl) #rmC,#psc:not(.hl) #pfgC,#psc.hl #rmH,#psc.hl #pfgH{display:block}
+#psc.hl #pframe{display:none}
+#psc .rm img,#psc #pfg img{position:absolute;display:block;pointer-events:none;-webkit-user-drag:none}
+#pframe{position:absolute;left:1088px;bottom:675px;width:220px;height:auto;display:block;pointer-events:none}
+#pfg{position:absolute;left:0;top:0;will-change:transform}
 #pworld{position:absolute;left:0;top:0;width:2400px;height:1080px;will-change:transform}
-#pwall{position:absolute;left:0;top:0;width:2400px;height:900px;background:linear-gradient(#2c3552,#3a3550 70%,#4a3a46)}
-#pfloor{position:absolute;left:0;top:890px;width:2400px;height:190px;background:linear-gradient(#4a3426,#2a1c14)}
-#pwin{position:absolute;left:380px;top:170px;width:360px;height:420px;background:linear-gradient(#e8b98a,#9fb0d6);border:14px solid #4a3426;border-radius:180px 180px 8px 8px}
-#pwin i{position:absolute;left:50%;top:0;bottom:0;width:10px;margin-left:-5px;background:#4a3426}
-#pbook{position:absolute;left:810px;top:420px;width:170px;height:470px;background:#5a3f2c;border:8px solid #3a281c;border-radius:6px;background-image:repeating-linear-gradient(#5a3f2c 0 72px,#3a281c 72px 80px)}
-#pstove{position:absolute;left:1640px;top:560px;width:180px;height:330px;background:#3a3238;border:8px solid #251e22;border-radius:10px}
-#pstove i{position:absolute;left:30px;top:-48px;width:90px;height:50px;background:#7a6f66;border-radius:12px 12px 4px 4px}
-#pshelf{position:absolute;left:1050px;top:700px;width:520px;height:26px;background:#5a3f2c;border-radius:4px;box-shadow:0 8px 0 #2a1c14}
-#pframe{position:absolute;left:1180px;top:476px;width:240px;height:auto;display:block;pointer-events:none}
-#pdoor{position:absolute;left:1900px;top:420px;width:260px;height:470px;background:#5a3f2c;border:12px solid #3a281c;border-radius:130px 130px 0 0}
-#pdoor b{position:absolute;right:30px;top:250px;width:18px;height:18px;border-radius:50%;background:#d9b25c}
 #pmarks img{position:absolute}
 /* Chapter 4 flashback: warm sepia grade, vignette, caption, rain, sepia rewind */
 #stage.flash #vsc,#stage.flash #tsc,#stage.flash5 #vsc{filter:sepia(.5) saturate(1.25) brightness(1.12) contrast(.95)}
@@ -143,8 +138,6 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .hgate .hd{position:absolute;left:78px;width:74px;bottom:0;height:150px;background:#4a2a18;border:5px solid #2e190d;border-radius:37px 37px 0 0}
 .hgate .hf{position:absolute;left:24px;top:150px;width:46px;height:56px;background:#e8b98a;border:5px solid #3a281c}
 .hgate .ms{position:absolute;left:-10px;right:-10px;top:-6px;text-align:center;font:600 18px/1.2 Pretendard,serif;color:#f3e6c8;background:#4a2a18;border:3px solid #2e190d;border-radius:6px;padding:3px 0}
-#psc.hl #pwall{background:linear-gradient(#3b4a48,#46524a 70%,#4a463e)}
-#psc.hl #pframe,#psc.hl #pbook{display:none}
 #goal{position:absolute;left:50%;top:124px;translate:-50% -12px;max-width:980px;width:max-content;padding:14px 32px;background:rgba(246,233,205,.96);border:2px solid #8a6a3a;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.4);font:600 29px/1.3 var(--font-body);color:#3a2412;text-align:center;opacity:0;pointer-events:none;transition:opacity .5s,translate .5s;z-index:9}
 #goal.on{opacity:1;translate:-50% 0}
 #goal b{display:block;font:700 15px/1 var(--font-label);letter-spacing:.18em;color:#6e2a35;margin-bottom:6px}
@@ -369,7 +362,8 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
    <svg id="vhands" style="position:absolute;left:2796px;top:337px" width="120" height="120" viewBox="-60 -60 120 120" aria-label="Tower clock stopped at 11:47"><g stroke="#2b1a0e" stroke-linecap="round"><line x1="0" y1="3" x2="0" y2="-24" stroke-width="2.2" transform="rotate(282)"/><line x1="0" y1="4" x2="0" y2="-16" stroke-width="3.4" transform="rotate(353.5)"/></g><circle r="3.6" fill="#2b1a0e"/><circle r="1.4" fill="#c97a2e"/></svg>
    <div class="glow" style="left:2700px;top:700px;width:310px;height:330px"></div>
    <div class="hgate" style="left:440px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">빅그베의 오두막</b></div>
-   <div class="hgate" style="left:2290px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">치료사의 집</b></div>
+   <img src="assets/b_healer.webp" alt="Healer's house" style="position:absolute;left:2060px;top:520px;width:520px;height:507px">
+   <img src="assets/b_guard_post.webp" alt="Patrol post" style="position:absolute;left:1648px;top:630px;width:246px;height:auto">
    <div id="millgate"><i class="mp l"></i><i class="mp r"></i><i class="ma"></i><i class="md"></i><b class="ms">낡은 방앗간 · Old Mill</b></div>
    <div id="shadows"></div>
    <div id="actors"></div>
@@ -390,12 +384,20 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
   </div>
   <div id="psc">
    <div id="pworld">
-    <div id="pwall"></div><div id="pfloor"></div>
-    <div id="pwin"><i></i></div>
-    <div id="pshelf"></div><div id="pbook"></div><div id="pstove"><i></i></div>
+    <div id="rmC" class="rm">
+     <img src="assets/k_mid.webp" style="left:0;top:-18px;width:2171px;height:1019px" alt=""><img src="assets/k_mid.webp" style="left:-2171px;top:-18px;width:2171px;height:1019px;transform:scaleX(-1)" alt=""><img src="assets/k_mid.webp" style="left:2171px;top:-18px;width:2171px;height:1019px;transform:scaleX(-1)" alt="">
+     <img src="assets/k_ground.webp" style="left:0;top:405px;width:2172px;height:724px" alt=""><img src="assets/k_ground.webp" style="left:-2172px;top:405px;width:2172px;height:724px;transform:scaleX(-1)" alt=""><img src="assets/k_ground.webp" style="left:2172px;top:405px;width:2172px;height:724px;transform:scaleX(-1)" alt="">
+    </div>
+    <div id="rmH" class="rm">
+     <img src="assets/h_mid.webp" style="left:0;top:-127px;width:2171px;height:1018px" alt=""><img src="assets/h_mid.webp" style="left:-2171px;top:-127px;width:2171px;height:1018px;transform:scaleX(-1)" alt=""><img src="assets/h_mid.webp" style="left:2171px;top:-127px;width:2171px;height:1018px;transform:scaleX(-1)" alt="">
+     <img src="assets/h_ground.webp" style="left:0;top:397px;width:2172px;height:724px" alt=""><img src="assets/h_ground.webp" style="left:-2172px;top:397px;width:2172px;height:724px;transform:scaleX(-1)" alt=""><img src="assets/h_ground.webp" style="left:2172px;top:397px;width:2172px;height:724px;transform:scaleX(-1)" alt="">
+    </div>
     <img id="pframe" src="assets/ev_keepsake_frame.webp" alt="Photograph frame">
-    <div id="pdoor"><b></b></div>
     <div id="pmarks"></div><div id="hmarks"></div>
+   </div>
+   <div id="pfg" class="layer">
+    <div id="pfgC" class="rm"><img src="assets/k_fg.webp" style="left:0;top:362px;width:2172px;height:724px" alt=""><img src="assets/k_fg.webp" style="left:-2172px;top:362px;width:2172px;height:724px;transform:scaleX(-1)" alt=""><img src="assets/k_fg.webp" style="left:2172px;top:362px;width:2172px;height:724px;transform:scaleX(-1)" alt=""></div>
+    <div id="pfgH" class="rm"><img src="assets/h_fg.webp" style="left:0;top:362px;width:2172px;height:724px" alt=""><img src="assets/h_fg.webp" style="left:-2172px;top:362px;width:2172px;height:724px;transform:scaleX(-1)" alt=""><img src="assets/h_fg.webp" style="left:2172px;top:362px;width:2172px;height:724px;transform:scaleX(-1)" alt=""></div>
    </div>
   </div>
   <div id="fsc">
@@ -712,14 +714,26 @@ const D = {
  c9:{sp:"ck", ex:"neutral", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보십시오. 시계는 어디 안 갑니다."},
    ch:[{t:{en:"Is the tower clock reliable?",ko:"이 탑시계는 믿을 만한가요?"},go:"c1"},{t:{en:"(Glance at your own hands.)",ko:"(자신의 손을 내려다본다.)"},go:"c2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]}
 };
-D.p_f0 = {sp:"bgb", ex:"thinking", t:{en:"He always looked out for me.", ko:"그분은 늘 나를 챙겨 주셨어."}, ev:"photo_home", next:"p_f1"};
-D.p_f1 = {sp:"bgb", ex:"worried", t:{en:"Leave it.", ko:"그냥 두자."}, set:"pro.frame", next:null};
-D.p_f9 = {sp:"bgb", ex:"neutral", t:{en:"Not now.", ko:"지금은 아니야."}};
-D.p_n0 = {sp:"nini", ex:"worried", t:{en:"It's me, Nini. Edward is gone, and everyone is gathering at the tower.", ko:"저예요, 니니. 에드워드 아저씨가 돌아가셨어요. 다들 탑 앞에 모여 있어요."}, next:"p_n1"};
-D.p_n1 = {sp:"bgb", ex:"worried", t:{en:"I'm coming.", ko:"지금 나갈게."}, next:"p_n2"};
-D.p_n2 = {sp:"nini", ex:"thinking", t:{en:"Oliver says he saw a bear in a scarf on the tower stairs at 11:40. People are whispering.", ko:"올리버 아저씨가 11시 40분에 목도리를 한 곰이 탑 계단에 있었다고 해요. 사람들이 수군거려요."}, next:"p_n3"};
-D.p_n3 = {sp:"bgb", ex:"neutral", t:{en:"I was at Hazel's café until a little before 11:45. Ask her.", ko:"난 12시 15분 전이 조금 못 되도록 헤이즐의 카페에 있었어. 물어봐."}, next:"p_n4"};
-D.p_n4 = {sp:"nini", ex:"worried", t:{en:"I will. The Constable is snowed in, so everyone wants you to look into it. Please come to the tower.", ko:"그럴게요. 경찰관은 눈에 갇혀 못 오니까, 다들 아저씨가 조사해 주길 바라요. 탑으로 와 주세요."}, next:"p_n5"};
+D.p_f0 = {sp:"bgb", ex:"thinking", t:{en:"He was always on my side.", ko:"그분은 항상 내 편이었는데."}, ev:"photo_home", next:"p_f1"};
+D.p_f1 = {sp:"bgb", ex:"worried", t:{en:"I'll leave it for now.", ko:"일단 그대로 두자."}, set:"pro.frame", next:null};
+D.p_f9 = {sp:"bgb", ex:"neutral", t:{en:"Now's not the time.", ko:"지금은 그럴 때가 아니야."}};
+D.p_n0 = {sp:"nini", ex:"worried", t:{en:"Big Green Bear! Are you in there?", ko:"빅그베 아저씨! 안에 계세요?"}, next:"p_n0a"};
+D.p_n0a = {sp:"bgb", ex:"neutral", t:{en:"Nini? What's wrong?", ko:"니니? 무슨 일이야?"}, next:"p_n0b"};
+D.p_n0b = {sp:"nini", ex:"worried", t:{en:"They say Edward passed away.", ko:"에드워드 아저씨가 돌아가셨대요."}, next:"p_n0c"};
+D.p_n0c = {sp:"nini", ex:"worried", t:{en:"Everyone's gathering outside the clock tower.", ko:"지금 다들 시계탑 앞에 모여 있어요."}, next:"p_n1"};
+D.p_n1 = {sp:"bgb", ex:"worried", t:{en:"...I know.", ko:"...알고 있어."}, next:"p_n1a"};
+D.p_n1a = {sp:"bgb", ex:"neutral", t:{en:"Hold on. I'll come with you.", ko:"잠깐만. 나도 갈게."}, next:"p_n2"};
+D.p_n2 = {sp:"nini", ex:"thinking", t:{en:"But there's something strange.", ko:"근데 아저씨, 이상한 얘기가 있어요."}, next:"p_n2a"};
+D.p_n2a = {sp:"bgb", ex:"neutral", t:{en:"What is it?", ko:"무슨 얘기?"}, next:"p_n2b"};
+D.p_n2b = {sp:"nini", ex:"thinking", t:{en:"Oliver says he saw a bear on the clock tower stairs around 11:40 last night.", ko:"올리버 아저씨가 어젯밤 11시 40분쯤에 시계탑 계단에서 곰을 봤대요."}, next:"p_n2c"};
+D.p_n2c = {sp:"nini", ex:"worried", t:{en:"He said the bear was wearing a scarf...", ko:"목도리를 하고 있었다는데..."}, next:"p_n2d"};
+D.p_n2d = {sp:"bgb", ex:"thinking", t:{en:"A scarf?", ko:"목도리?"}, next:"p_n2e"};
+D.p_n2e = {sp:"nini", ex:"worried", t:{en:"Yeah. That's why everyone's talking about you.", ko:"네. 그래서 사람들이 아저씨 얘기를 하고 있어요."}, next:"p_n3"};
+D.p_n3 = {sp:"bgb", ex:"neutral", t:{en:"I was at Hazel's café at the time.", ko:"나는 그 시간에 헤이즐의 카페에 있었어."}, next:"p_n3a"};
+D.p_n3a = {sp:"bgb", ex:"neutral", t:{en:"Until a little before 11:45. You can ask her.", ko:"11시 45분이 되기 조금 전까지. 헤이즐한테 물어봐도 돼."}, next:"p_n4"};
+D.p_n4 = {sp:"nini", ex:"neutral", t:{en:"Okay, I'll ask her.", ko:"네, 헤이즐 씨께 물어볼게요."}, next:"p_n4a"};
+D.p_n4a = {sp:"nini", ex:"worried", t:{en:"The Constable is snowed in and can't come.", ko:"경찰관님은 눈에 갇혀서 못 오신대요."}, next:"p_n4b"};
+D.p_n4b = {sp:"nini", ex:"worried", t:{en:"So everyone is hoping you'll look into it.", ko:"그래서 다들 아저씨가 알아봐 주시길 바라고 있어요."}, next:"p_n5"};
 D.nk0 = {sp:"nini", ex:"worried", t:{en:"Another bear. You think there was another bear on those stairs?", ko:"아저씨, 다른 곰이요. 그날 계단에 다른 곰이 있었다고 생각하세요?"}, next:"nk1"};
 D.nk1 = {sp:"nini", ex:"thinking", t:{en:"Edward kept his drawers locked and I have kept the key since. If there is an answer, it may be in there. Please, take it.", ko:"에드워드 아저씨는 서랍을 늘 잠가 두셨고, 열쇠는 제가 계속 가지고 있었어요. 답이 있다면 거기 있을지도 몰라요. 아저씨가 가져가세요."}, ev:"key", set:"nini.key", next:null};
 D.mo0 = {sp:"mo", t:{en:"So you have heard there was a second bear on those stairs.", ko:"그래, 그날 계단에 곰이 한 마리 더 있었다는 얘기를 들었구먼."},
@@ -806,7 +820,7 @@ D.h1 = {sp:"hz", t:{en:"You were here until a little before 11:45. You looked li
 D.h1b = {sp:"hz", t:{en:"You settled your tab at 11:42. I wrote the time on the receipt myself. Here, keep it.", ko:"11시 42분에 계산하셨어요. 시각은 제가 직접 영수증에 적었죠. 자, 가지고 계세요."}, ev:"receipt", set:"hz.done", next:null};
 D.h2 = {sp:"hz", t:{en:"He lent me money for the roof last winter. I paid back half. It's no secret, so don't go writing it down as one.", ko:"작년 겨울에 지붕 고치라고 돈을 빌려줬어요. 절반은 갚았고요. 비밀도 아니니 무슨 비밀인 양 적지는 마세요."}, set:"hz.owed", next:"h0"};
 D.h9 = {sp:"hz", t:{en:"Take your time. The kettle's always on.", ko:"천천히 하세요. 주전자는 늘 불 위에 있답니다."}};
-const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp"}, kid:{name:{en:"-",ko:"-"}, img:"assets/big_green_bear_front.webp", sil:true}, mo:{name:{en:"Molly",ko:"몰리"}, img:"assets/nini_front.webp", sil:true}, gr:{name:{en:"Green",ko:"Green"}, img:"assets/big_green_bear_front.webp", sil:true}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
+const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp"}, kid:{name:{en:"-",ko:"-"}, img:"assets/twin_elder_front.webp", sil:true}, mo:{name:{en:"Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"Green"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
 const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
@@ -827,18 +841,18 @@ function mkActor(cls, base, h, x){
   d.dataset.base = base; d.style.height = h + "px"; d.style.top = (FEET - h) + "px"; d.style.left = x + "px";
   actors.appendChild(d); return d;
 }
-const SPR = { big_green_bear:[157,277,175,274], nini:[128,247,161,248], clockkeeper:[170,232,163,231], cafe_owner:[169,198,159,199], tommy:[207,427,211,425], edward:[170,300,170,300] };
+const SPR = { big_green_bear:[299, 545, 337, 540, 305, 546], bgb_torn:[290, 551, 342, 546, 306, 553], green:[273, 548, 325, 540, 277, 546], twin_elder:[248, 498, 314, 496, 262, 499], twin_younger:[239, 453, 289, 442, 258, 456], molly:[347, 525, 355, 520, 342, 524], nini:[128,247,161,248], clockkeeper:[170,232,163,231], cafe_owner:[169,198,159,199], tommy:[207,427,211,425], edward:[170,300,170,300]  };
 function setActorSprite(el, dir, h){
   const base = el.dataset.base, img = el.querySelector("img");
   const s = {left:"left", right:"right", front:"front"}[dir] || "front";
   const src = "assets/"+base+"_"+s+".webp"; if (img.getAttribute("src") !== src){ img.setAttribute("src", src); el.style.setProperty("--spr", 'url("'+src+'")'); }
-  const k = SPR[base]; const nat = s === "front" ? k[3] : k[1]; const natW = s === "front" ? k[2] : k[0];
+  const k = SPR[base]; const R6 = s === "right" && k[5]; const nat = s === "front" ? k[3] : R6 ? k[5] : k[1]; const natW = s === "front" ? k[2] : R6 ? k[4] : k[0];
   const sc = h / k[3]; // scale so the FRONT sprite height equals h
   el.style.width = Math.round(natW * sc) + "px"; el.style.height = Math.round(nat * sc) + "px"; el.style.top = (FEET - Math.round(nat*sc)) + "px";
 }
 const HZ_H = 175, TM_H = 190, MO_H = 150, GR_H = 215, ED_H = 175, KID_H = 150, BR_H = 128;
 let PH = 220;   /* player height: a child in the flashback */
-const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), tm = mkActor("tm","tommy",TM_H,1930), mo = mkActor("mo","nini",MO_H,-9999), ed = mkActor("ed","edward",ED_H,-9999), br = mkActor("br","big_green_bear",BR_H,-9999), gr = mkActor("gr","big_green_bear",GR_H,-9999), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
+const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), tm = mkActor("tm","tommy",TM_H,1930), mo = mkActor("mo","molly",MO_H,-9999), ed = mkActor("ed","edward",ED_H,-9999), br = mkActor("br","twin_younger",BR_H,-9999), gr = mkActor("gr","green",GR_H,-9999), hl = mkActor("hl","nini",175,-9999), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
 let NPCX = { ed:-9999, br:-9999, nini:1010, ck:2610, hz:-9999, tm:1930, mo:-9999, gr:-9999 }; const NPCX_V = { ed:-9999, br:-9999, nini:1010, ck:2610, hz:-9999, tm:1930, mo:3200, gr:-9999 }, NPCX_T = { ed:-9999, br:-9999, nini:-9999, ck:830, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_A = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_C = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:1050, tm:-9999, mo:-9999, gr:-9999 }, NPCX_M = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:1650 };
 const P = { x:S.x, dir:"front", walk:0, moving:false, face:"right" };
 /* NPCs stand facing front; once BGB comes within 300 px they turn and keep looking at him until he walks beyond 380 px (the gap stops flicker) */
@@ -867,11 +881,13 @@ function place(){
   const hface = npcFace("hz", NPCX.hz);
   setActorSprite(hz, hface, HZ_H); hz.style.left = Math.round(NPCX.hz - parseFloat(hz.style.width)/2) + "px";
   tm.style.transform = "scale("+(1-0.005*Math.sin(tt/950+4)).toFixed(3)+","+(1+0.012*Math.sin(tt/950+4)).toFixed(3)+")";
-  mo.classList.add("silh"); gr.classList.add("silh"); br.classList.add("silh"); bgb.classList.toggle("silh", !!S.flash);
+  hl.classList.add("silh"); mo.classList.toggle("silh", !!S.flash); gr.classList.toggle("silh", !!S.flash);
+  bgb.dataset.base = S.flash ? "twin_elder" : has("c6.on") ? "bgb_torn" : "big_green_bear";
   if (S.flash){ const tgt = P.x + (P.face === "right" ? -100 : 100); BRX += (tgt - BRX) * 0.06; NPCX.br = S.scene === "tower" ? 1560 : (S.scene === "flood" && !has("f5.free")) ? 1750 : (S.flash === 5 && S.scene === "past") ? 1520 : Math.round(BRX); } else NPCX.br = -9999;
   setActorSprite(ed, "front", S.scene==="past" ? 125 : ED_H); ed.style.left = Math.round(NPCX.ed - parseFloat(ed.style.width)/2) + "px";
   setActorSprite(br, "front", S.scene==="past" ? 90 : BR_H); br.style.left = Math.round(NPCX.br - parseFloat(br.style.width)/2) + "px";
-  setActorSprite(mo, "front", S.flash ? 100 : S.scene === "healer" ? 175 : MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
+  setActorSprite(hl, "front", 175); hl.style.left = Math.round((NPCX.hl ?? -9999) - parseFloat(hl.style.width)/2) + "px";
+  setActorSprite(mo, "front", S.flash ? 100 : MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
   setActorSprite(gr, "front", S.flash ? 110 : GR_H); gr.style.left = Math.round(NPCX.gr - parseFloat(gr.style.width)/2) + "px";
   setActorSprite(tm, npcFace("tm", NPCX.tm), TM_H); tm.style.left = Math.round(NPCX.tm - parseFloat(tm.style.width)/2) + "px";
 }
@@ -1224,8 +1240,8 @@ let IA = [
   { id:"enterC", x:()=>4451, label:UI.enterC, top:560, run:()=>tryEnter("cafe", 500, ch1Gate) },
   { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? "mo9" : "mo0") },
   { id:"gather", x:()=>2700, label:UI.toGather, top:640, when:()=>has("c7.rec"), run:()=>startGather() },
-  { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 1900); } },
-  { id:"heal",   x:()=>2405,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 1900); } },
+  { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 1850); } },
+  { id:"heal",   x:()=>2320,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 1850); } },
   { id:"mill",   x:()=>4890,      label:UI.toMill, top:600,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
   { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ if (ch1Gate()){ startDlg(talk("tm")); return; } startDlg(tmNode()); } },
   { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
@@ -1274,8 +1290,8 @@ const IA_FT = [
   { id:"flever", x:()=>1500, label:UI.lLever, top:520, run:()=>{ if (has("f4.end")){ startDlg("fl9"); return; } startDlg("fl0"); } }
 ];
 const IA_H = [
-  { id:"hexit", x:()=>2030, label:UI.leaveH, top:330, run:()=>setScene("village", 2405) },
-  { id:"hl",    x:()=>1300, label:UI.talkHl, top:FEET_T-175-150, run:()=>startDlg(has("c6.hl") ? "hl9" : "hl0") }
+  { id:"hexit", x:()=>1943, label:UI.leaveH, top:430, run:()=>setScene("village", 2320) },
+  { id:"hl",    x:()=>1450, label:UI.talkHl, top:FEET_T-175-150, run:()=>startDlg(has("c6.hl") ? "hl9" : "hl0") }
 ];
 const IA_M = [
   { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 4850) },
@@ -1283,12 +1299,12 @@ const IA_M = [
   { id:"gr",   x:()=>NPCX_M.gr, label:UI.talkGr, top:FEET_T-GR_H-150, run:()=>startDlg(grNode()) }
 ];
 const IA_P = [
-  { id:"pwin",   x:()=>560,  label:UI.lWin,    top:330, run:()=>startDlg("p_w") },
-  { id:"pbook",  x:()=>895,  label:UI.lBook,   top:420, run:()=>startDlg("p_b") },
-  { id:"pstove", x:()=>1700, label:UI.lStove,  top:480, run:()=>startDlg("p_s") },
-  { id:"pkettle",x:()=>1730, label:UI.lKettle, top:420, run:()=>startDlg("p_k") },
-  { id:"frame", x:()=>1300, label:UI.lFrame, top:430, run:()=>startDlg((has("c6.on") && !homeGate()) ? (has("c6.hid") ? "p6_f9" : "p6_f0") : has("pro.frame") ? "p_f9" : "p_f0") },
-  { id:"pdoor", x:()=>2030, label:UI.lDoor,  top:330, run:()=>{ if (has("c6.on")){ setScene("village", 640); return; } if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
+  { id:"pwin",   x:()=>355,  label:UI.lWin,    top:300, run:()=>startDlg("p_w") },
+  { id:"pbook",  x:()=>770,  label:UI.lBook,   top:470, run:()=>startDlg("p_b") },
+  { id:"pstove", x:()=>1530, label:UI.lStove,  top:580, run:()=>startDlg("p_s") },
+  { id:"pkettle",x:()=>1585, label:UI.lKettle, top:470, run:()=>startDlg("p_k") },
+  { id:"frame", x:()=>1198, label:UI.lFrame, top:290, run:()=>startDlg((has("c6.on") && !homeGate()) ? (has("c6.hid") ? "p6_f9" : "p6_f0") : has("pro.frame") ? "p_f9" : "p_f0") },
+  { id:"pdoor", x:()=>1957, label:UI.lDoor,  top:430, run:()=>{ if (has("c6.on")){ setScene("village", 640); return; } if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
 ];
 let PRO_GO = false;
 const IA_C = [
@@ -1581,20 +1597,20 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 /* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
-const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2400}, mill:{min:0,end:3000}, past:{min:0,end:2632}, healer:{min:0,end:2400}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2171}, mill:{min:0,end:3000}, past:{min:0,end:2632}, healer:{min:0,end:2171}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
 function locOf(n){ return tr(n==="healer" ? UI.locH : n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
   S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage" || name === "healer", MI = name === "mill", FLD = name === "flood", PST = name === "past", HL = name === "healer", IN = PST || HL || T || A || C || PR || MI || FLD;
   $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR); $("psc").classList.toggle("hl", HL); $("pmarks").style.display = HL ? "none" : ""; $("hmarks").style.display = HL ? "" : "none"; $("msc").classList.toggle("on", MI); $("fsc").classList.toggle("on", FLD); $("ysc").classList.toggle("on", PST);
   const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : PR ? $("pworld") : MI ? $("mworld") : FLD ? $("fworld") : PST ? $("yworld") : $("world");
   host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else if (PR) { host.appendChild($("pmarks")); host.appendChild($("hmarks")); } else if (MI) host.appendChild($("mmarks")); else if (FLD) host.appendChild($("fmarks")); else if (PST) host.appendChild($("ymarks")); else host.appendChild(marks);
-  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : (PR || MI || FLD) ? [] : LAMPS_T; IA = A ? IA_A : C ? IA_C : HL ? IA_H : PR ? IA_P : MI ? IA_M : FLD ? IA_FL : (S.flash && T) ? IA_FT : IA_T; NPCX = (A || PR || FLD) ? NPCX_A : C ? NPCX_C : MI ? NPCX_M : NPCX_T; if (FLD) FEET = 930; if (PST){ FEET = FEET_V; NPCX = NPCX_V; LAMPS = []; IA = S.flash === 5 ? IA_D : IA_F; } }
+  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : (PR || MI || FLD) ? [] : LAMPS_T; IA = A ? IA_A : C ? IA_C : HL ? IA_H : PR ? IA_P : MI ? IA_M : FLD ? IA_FL : (S.flash && T) ? IA_FT : IA_T; NPCX = (A || PR || FLD) ? NPCX_A : C ? NPCX_C : MI ? NPCX_M : NPCX_T; if (FLD) FEET = 930; if (PR) FEET = HL ? 900 : 950; if (PST){ FEET = FEET_V; NPCX = NPCX_V; LAMPS = []; IA = S.flash === 5 ? IA_D : IA_F; } }
   else  { W = VILLAGE_W; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = S.flash === 5 ? IA_D : S.flash ? IA_F : IA_V; }
   nini.style.display = IN ? "none" : ""; nini._sh.style.display = IN ? "none" : "";
   ck.style.display = (A || C || PR || MI || FLD) ? "none" : ""; ck._sh.style.display = (A || C || PR || MI || FLD) ? "none" : "";
   hz.style.display = C ? "" : "none"; hz._sh.style.display = C ? "" : "none";
   tm.style.display = IN ? "none" : ""; tm._sh.style.display = IN ? "none" : "";
-  mo.style.display = (IN && !HL) ? "none" : ""; mo._sh.style.display = (IN && !HL) ? "none" : ""; if (HL) NPCX.mo = 1300;
+  mo.style.display = IN ? "none" : ""; mo._sh.style.display = IN ? "none" : ""; hl.style.display = HL ? "" : "none"; hl._sh.style.display = HL ? "" : "none"; if (HL) NPCX.hl = 1450;
   const FL = !!S.flash; $("stage").classList.toggle("flash", S.flash === 4 || S.flash === true); $("stage").classList.toggle("flash5", S.flash === 5); PH = FL ? (PST ? 105 : KID_H) : 220;
   if (FL){ [nini,ck,hz,tm,mo,gr].forEach(a=>{ a.style.display = "none"; a._sh.style.display = "none"; });
     NPCX.ed = PST ? (S.flash === 5 ? 1450 : 1000) : -9999; BRX = x + 100; } else NPCX.ed = -9999;
@@ -1948,12 +1964,13 @@ function frame(now){
   $("yfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("yworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("mworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("pfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("pworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("cfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
   $("cworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("cfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   place(); applyLight(dt);
-  { const ACT = { nini, ck, hz, tm, mo, gr, hl:mo, ed, fded:ed, v1:mo, v2:gr, fbrother:br };   /* the ! bubble sits 15 to 30 px above whoever it belongs to (it bobs 8 px) */
+  { const ACT = { nini, ck, hz, tm, mo, gr, hl, ed, fded:ed, v1:mo, v2:gr, fbrother:br };   /* the ! bubble sits 15 to 30 px above whoever it belongs to (it bobs 8 px) */
     IA.forEach(i=>{ const a = ACT[i.id]; if (i.el && a && a.style.display !== "none") i.el.style.top = Math.round(parseFloat(a.style.top) - 129 - 20) + "px"; }); }
   // nearest interactable
   near = null; let best = 140;
