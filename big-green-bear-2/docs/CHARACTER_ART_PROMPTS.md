@@ -1,3 +1,5 @@
+> **PHASE 2: dialogue poses.** Do these only after the character's turnaround sheet (see TURNAROUND_PROMPTS.md, the Turnarounds tab) is approved, and attach that sheet as the reference.
+
 > **MASTER STYLE (decided): clean soft-shaded flat look, as in `Assets/Art/Characters/BigGreenBear/turnaround/` (v2 sheet). Older fuzzy hand-painted poses are superseded; regenerate them with the new sheet as the style reference.**
 
 # Character Art Prompts v2 — Big Green Bear's Adventure II
@@ -28,7 +30,7 @@ Eyes: small solid near-black dots (#1B1A16); a tiny white highlight only for sad
 Cheek blush: very soft, low opacity pink-brown (#B58A7C at 35%), only when the expression list asks for it.
 
 CANVAS
-Background: perfectly flat solid magenta #FF00FF, no gradient, no shadow, no floor, no texture; the subject has no magenta or pink-purple near its edge (it is keyed out afterwards). One character per image. Full body, standing, VIEW per the character's rule below (default: three-quarter view turned toward the LEFT side of the image, about 35 degrees, like the attached turnaround reference), feet touching the bottom edge, tight crop with about 1.5% margin. No ground, no shadow, no props unless requested, no text, no watermark, no frame.
+Background: perfectly flat solid magenta #FF00FF, no gradient, no shadow, no floor, no texture; the subject has no magenta or pink-purple near its edge (it is keyed out afterwards). One character per image. Full body, standing, in the VIEW given at the end of the prompt, feet touching the bottom edge, tight crop with about 1.5% margin. No ground, no shadow, no props unless requested, no text, no watermark, no frame.
 
 SCALE
 Keep the same body size in every pose of the same character. Only the pose and the face change. Heights: Big Green Bear 2900 px, Nini 1600, Edward 2320, Clockkeeper 2030, Café owner 2610, Tommy 2755.
@@ -187,30 +189,3 @@ A sleek, friendly young otter who patrols the clock tower at night, 95% of the b
 
 
 ---
-
-## I. Turnaround / model sheet (side, 3/4, back views)
-
-### Why and when
-Only needed if the game shows a character turning, walking sideways, or from behind (door, stairs, walking). The dialogue game itself works with front views.
-Generate **one view per request** (not one sheet with all views): single images keep the full resolution, the same body size and the same line weight.
-
-### Anatomy rule for rotated views (important)
-Left/right = the side seen on screen applies to FRONT views. When the body turns, anchor everything to the character's own body:
-- Big Green Bear: scarf tail hangs on his OWN LEFT chest side (this is the image-right side in the front view). His active hand is his OWN LEFT hand. The knot is at the front-left of the neck.
-- Green is the mirror: everything on his OWN RIGHT.
-- Facing the LEFT side of the image shows the character's own LEFT side to the viewer (tail visible). Facing the RIGHT side of the image shows the own RIGHT side (tail hidden behind the body, only the scarf wrap visible).
-
-### Prompts (after the STYLE LOCK and the character block; attach the approved front image as reference)
-```
-TURNAROUND VIEW. Same exact character as the attached front view: same body size, proportions, outline weight, fur and scarf texture and colors. Only the viewing angle changes. Plain flat magenta #FF00FF background. Neutral relaxed standing pose, arms down, NO mouth drawn, eyes as simple dots. Orthographic camera, no perspective distortion, full body from head to feet, feet on the bottom edge.
-VIEW: <one of the lines below>
-```
-- `side_left`: pure profile, the character faces the LEFT side of the image. His own left side faces the viewer: the knitted scarf tail hangs down his front-left chest and is fully visible. One ear visible, one dot eye, nose in profile.
-- `side_right`: pure profile, the character faces the RIGHT side of the image. His own right side faces the viewer; the scarf tail is hidden behind his body, only the neck wrap and knot are visible.
-- `three_quarter_left`: three-quarter view turned toward the LEFT side of the image (about 35 degrees from front). Scarf tail visible on the chest.
-- `three_quarter_right`: three-quarter view turned toward the RIGHT side of the image (about 35 degrees). Scarf tail partly visible.
-- `back`: seen from directly behind: back of the head with both ears, the scarf wrapped around the neck seen from behind (tail not visible), a small round tail nub, both back paws.
-For Nini and Edward replace the first sentence with their approved front image and keep their own colors; keep the same rule (own left / own right).
-
-### High resolution
-Ask for the largest size the tool offers, then upscale 2x with a free upscaler (for example Upscayl, open source), then run `tools/chroma_key.py`. Do not upscale before keying.

@@ -184,6 +184,14 @@ $$('#pane-chars .sec').forEach(function(s){
     (function(n,char,view){addBtn(n,'Copy full prompt',function(){return STYLE+'\n\n'+char+'\n\nPOSE: '+liText(n)+'\n\nVIEW: '+view})})(n,char,view)
   })
 });
+var TB={bear:'chars-b-',nini:'chars-c-',edward:'chars-d-'};
+function charBlock(id){var n=id.replace('turn_','');
+  if(TB[n]){var s=$$('#pane-chars .sec').filter(function(x){return x.id.indexOf(TB[n])===0})[0];return s?$('pre',s).textContent.trim():''}
+  var h=$$('#pane-chars .sec').filter(function(x){return x.id.indexOf('chars-h-')===0})[0];if(!h)return '';
+  var pres=$$('.prompt pre',h),i={clockkeeper:0,cafe:1,tommy:2}[n];return pres[i]?pres[i].textContent.trim():''}
+var SHEET=firstPre('turn-2-','turn');
+$$('#pane-turn tr[data-ids]').forEach(function(tr){var id=tr.dataset.ids;
+  addBtn(tr.cells[0],'Copy full prompt',function(){return STYLE+'\n\n'+charBlock(id)+'\n\n'+SHEET+'\n\nASYMMETRIC DETAILS (keep on the same side of the character\'s OWN body in every view): '+tr.cells[2].textContent.trim()+'.'})});
 var RING=($$('#pane-stamp .prompt pre').filter(function(p){return p.textContent.indexOf('stamp_case_open_ko')>-1})[0]||{textContent:''}).textContent.trim();
 $$('#pane-stamp tr[data-ids]').forEach(function(tr){
   var id=tr.dataset.ids,c=tr.cells,en=c[1]?c[1].textContent.trim():'',ko=c[2]?c[2].textContent.trim():'',host=c[0];
