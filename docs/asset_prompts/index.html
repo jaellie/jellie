@@ -260,15 +260,35 @@ const SECTIONS = [
    tech:["Two sheets of 780x420 px, transparent."]},
    {size:"2 sheets 780x420", tags:["no mirroring"]}),
 
- P("Flashback Bell Village: 4 layers (23 years earlier)", {
-   goal:"The same village from the day before the flood, cosier, for the playable flashback.",
-   refs:["the four Bell Village night layers (use the same layout and tower position)"],
-   subject:"The same four-layer setup as the night village, but warm late-afternoon sunlight turning to dusk.",
-   layout:["FOUR separate transparent images, each 3840 px wide: Far (sky and mountains only, 3840x1100), Mid (whole clocktower with an EMPTY dial, no hands, plus village buildings, 3840x1800), Ground (low walkable cobblestone path and the arched bridge, 3840x520), Foreground (bushes and a short fence, 3840x420).","The clocktower must be in the same horizontal position as in the night Mid layer."],
-   details:["Light: warm golden-hour from the left (#FFC878), long soft shadows, sky going from pale peach to dusty blue (#6C86B8), a few small clouds.","Village: smaller, cosier look, fewer chimneys, no red banners, bunting strings, clean walls, no snow on the ground except a thin patch on the mountains (spring thaw), wet shining roofs.","Ground: damp cobblestones with small puddles of meltwater at the path edges."],
-   include:["spring thaw feeling","same tower silhouette"], exclude:["snow-laden roofs","night lighting","clock hands","characters"],
-   tech:["Four files, 3840 px wide, transparent where noted."]},
-   {size:"3840 wide x4"}),
+ P("Flashback village: Far layer (sky and mountains only)", {
+   goal:"The sky and distant mountains behind the flashback village, the day before the flood. It must contain NO buildings of the village, so the Mid layer never overlaps it.",
+   refs:["the Bell Village night Far layer (same horizon height, mountain shapes and scale)"],
+   subject:"A warm late-afternoon sky over the same distant mountains, in early spring thaw.",
+   layout:["ONE wide image 3840 x 1100 px, the left and right edges tile seamlessly. Sky, a few small clouds and distant mountains only. The bottom edge fades into a soft misty valley at the same height as the night Far layer, so the Mid layer can stand on it."],
+   details:["Sky from pale peach near the horizon to dusty blue (#6C86B8) at the top, golden-hour light from the left (#FFC878), a few small soft clouds.","Mountains in soft blue-grey with only a thin patch of snow left on the peaks (spring thaw), dark green pine slopes below.","Painted with a gentle haze, no foreground objects."],
+   include:["the same mountain silhouette and horizon as the night Far layer","an empty horizon with no roofs, no tower and no chimneys"], exclude:["any village building, roof, tower or chimney","snow on the lower slopes","night lighting or stars","text","characters"],
+   tech:["3840x1100 px. This layer is a full-bleed painting (it needs no transparent areas)."]},
+   {size:"3840x1100"}),
+
+ P("Flashback village: Mid layer (clocktower and village, no sky)", {
+   goal:"The village buildings and the whole clocktower in front of the Far layer, the day before the flood, cosier. It must contain NO sky and NO mountains, so it never overlaps the Far layer.",
+   refs:["the Bell Village night Mid layer WITH the tower (same layout, same tower position, same building positions)", "the clocktower shaft image (same tower, but the clock dial must be empty)"],
+   subject:"The same village row and the whole clocktower, in warm late-afternoon light, a spring thaw.",
+   layout:["ONE image 3840 x 1800 px. Everything above the rooflines and between the buildings is FULLY TRANSPARENT (alpha 0), so the Far layer shows through. Nothing is painted behind the buildings.","The clocktower stands at exactly the same horizontal position as in the night Mid layer, with an EMPTY clock dial (no numerals, no hands). The bottom edge ends cleanly where the Ground layer will cover it."],
+   details:["Village: smaller, cosier look, fewer chimneys, no red banners, strings of small bunting, clean walls, wet shining roofs, no snow on the roofs (spring thaw), a little water dripping from the eaves.","Warm golden-hour light from the left (#FFC878) with long soft shadows to the right, cool blue shadows (#3A4F8A) only in the deepest corners.","Windows are dark or softly lit (daylight), no lantern glow."],
+   include:["spring thaw feeling","the same tower silhouette and position as the night version","clear transparent gaps between the rooftops"], exclude:["sky, clouds, mountains or any background","snow-laden roofs","night lighting","clock hands","characters"],
+   tech:["3840x1800 px, a REAL transparent background (alpha channel), not a drawn checkerboard."]},
+   {size:"3840x1800"}),
+
+ P("Flashback village: Ground and Foreground (2 images)", {
+   goal:"The walkable cobblestone path with the arched bridge, and the dark framing strip in front of the characters, for the flashback village.",
+   refs:["the Bell Village night Ground layer and Foreground layer (same layout and bridge position)"],
+   subject:"A damp cobblestone path with the arched bridge, and a foreground of small bushes and a short fence, in warm late-afternoon light.",
+   layout:["TWO separate transparent images, each 3840 px wide: Ground (3840 x 520 px: a low walkable cobblestone path and the arched bridge, the top edge a clean line the characters stand on) and Foreground (3840 x 420 px: bushes and a short wooden fence, darker and lower in contrast, with gaps so characters are never fully hidden).","The bridge sits at the same horizontal position as in the night Ground layer."],
+   details:["Ground: damp cobblestones with small puddles of meltwater at the path edges, no snow on the path, warm golden-hour light from the left (#FFC878).","Foreground: small spring-green shoots, wet leaves and a short grey-brown fence, soft and slightly blurred for depth."],
+   include:["spring thaw feeling","puddles reflecting the warm sky"], exclude:["snow on the path","night lighting","characters","text"],
+   tech:["Two files, 3840 px wide, a REAL transparent background (alpha channel), not a drawn checkerboard."]},
+   {size:"3840x520 + 3840x420", tags:["2 images"]}),
 
  P("✔ Flood water, rain and foam overlays", {
    goal:"Effects for the flood chapter, drawn as layers the game can scroll and fade.",
@@ -784,7 +804,7 @@ function copy(text, btn){
 
 /* ---- tabs: Background / Sprite / Audio / Done ---- */
 const TABS = [["background","Background"],["sprite","Sprite"],["audio","Audio"],["done","Done"]];
-const BG_RE = /: (Far|Mid|Ground|Foreground)\b|Flashback Bell Village|Flooded tower stairwell|Epilogue still|Ending art|Flood water/i;
+const BG_RE = /: (Far|Mid|Ground|Foreground)\b|Flashback village|Flashback Bell Village|Flooded tower stairwell|Epilogue still|Ending art|Flood water/i;
 const tabOf = (it, sec) => (sec.id === "e" || /^\u2714/.test(it.title)) ? "done" : it.kind === "audio" ? "audio" : BG_RE.test(it.title) ? "background" : "sprite";
 let curTab = "background"; try { curTab = localStorage.getItem("bgb2.prompts.tab") || "background"; } catch(e){}
 function renderTabs(){

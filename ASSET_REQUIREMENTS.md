@@ -47,3 +47,6 @@ Hazel's Café exterior + Archive exterior (one sprite each, door included) · To
 ## Backgrounds still to make (as of the Chapter 3 build)
 Prologue: BGB's cottage (4 layers, prompts in section H) · Chapter 6: the Healer's house (4 layers, section H) · Chapter 4: flashback Bell Village (4 layers, warm day to dusk, section D) · Epilogue: council room still, plus ending stills E1 to E4 (section D). Optional: a dusk version of the village for the Chapter 7 gathering (can be done by tinting in code), a window "Far" for the café and archive that shows the village roofs.
 Placeholders in the game now: the cottage and the Old Mill are flat-colour boxes; Molly and Green are black silhouettes until their sprites and portraits arrive.
+
+## Chapter 4 placeholder build (current state)
+Playable now with placeholders: the flashback uses the night village with a sepia grade, black silhouettes for the controlled child and his brother (no scarf side shown on purpose), and Edward from his new turnaround (front view only). Needed to replace them: flashback village layers (Far, Mid, Ground+Foreground prompts in the Background tab), the young twins (Sprite tab), Edward left and right views (already drawn, not yet sliced for the game).
