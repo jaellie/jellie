@@ -1287,7 +1287,7 @@ const IA_P = [
   { id:"pbook",  x:()=>895,  label:UI.lBook,   top:420, run:()=>startDlg("p_b") },
   { id:"pstove", x:()=>1700, label:UI.lStove,  top:480, run:()=>startDlg("p_s") },
   { id:"pkettle",x:()=>1730, label:UI.lKettle, top:420, run:()=>startDlg("p_k") },
-  { id:"frame", x:()=>1300, label:UI.lFrame, top:430, run:()=>startDlg(has("c6.k3") ? (has("c6.hid") ? "p6_f9" : "p6_f0") : has("pro.frame") ? "p_f9" : "p_f0") },
+  { id:"frame", x:()=>1300, label:UI.lFrame, top:430, run:()=>startDlg((has("c6.on") && !homeGate()) ? (has("c6.hid") ? "p6_f9" : "p6_f0") : has("pro.frame") ? "p_f9" : "p_f0") },
   { id:"pdoor", x:()=>2030, label:UI.lDoor,  top:330, run:()=>{ if (has("c6.on")){ setScene("village", 640); return; } if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
 ];
 let PRO_GO = false;
