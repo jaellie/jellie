@@ -64,6 +64,12 @@ button.ghost{background:transparent;color:var(--accent)}
 button:focus-visible,input:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
 label.chk{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:16px;cursor:pointer}
 input[type=checkbox]{width:20px;height:20px;accent-color:var(--ok)}
+.tabs{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--line,#8886);padding-bottom:10px}
+.tabs button{background:transparent;color:var(--accent)}
+.tabs button[aria-selected=true]{background:var(--accent);color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tabs button[aria-selected=true]{color:#1b1220}}
+:root[data-theme="dark"] .tabs button[aria-selected=true]{color:#1b1220}
+.tabs span{opacity:.75;margin-left:6px;font-variant-numeric:tabular-nums}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 0}
 .count{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
 @media (max-width:860px){
@@ -85,6 +91,7 @@ input[type=checkbox]{width:20px;height:20px;accent-color:var(--ok)}
       <span class="count" id="count"></span>
     </div>
   </header>
+  <div class="tabs" id="tabs" role="tablist"></div>
   <nav id="nav" aria-label="Sections"></nav>
   <main id="main"></main>
 </div>
@@ -418,7 +425,7 @@ const SECTIONS = [
    tech:["Sheet 800x640 px, transparent."]},
    {size:"800x640", tags:["no mirroring"]}),
 
- P("Hazel's Café: building exterior (one sprite, door included)", {
+ P("✔ Hazel's Café: building exterior (one sprite, door included)", {
    goal:"The whole café building in front of the player on the village street, like the clocktower sprite. Hazel's Café is entered through its door, so the door is part of the wall. It sits in the gameplay layer on the Ground.",
    refs:["the clocktower shaft image (match stone and snow style, line weight, lighting and door treatment)", "the café interior layers (match the warm amber lamps, the red and cream colours and the dark carved wood)", "any Bell Village night layer (colour and lighting)"],
    subject:"A cosy two-storey timber-and-stone café seen straight-on at eye level (orthographic, no looking up, no perspective convergence), warm light spilling from its windows.",
@@ -429,7 +436,7 @@ const SECTIONS = [
    tech:["Size 1800x1700 px, one image, transparent."]},
    {size:"1800x1700", note:"Optional second image: the same building with the door standing open and warm light spilling onto the steps."}),
 
- P("Archive: building exterior (one sprite, door included)", {
+ P("✔ Archive: building exterior (one sprite, door included)", {
    goal:"The whole record-house building in front of the player on the village street, like the clocktower sprite. The archive is entered through its door, so the door is part of the wall. It sits in the gameplay layer on the Ground.",
    refs:["the clocktower shaft image (match stone, snow, line weight, lighting and door treatment)", "the archive interior layers (match the pointed-arch windows, the red banners with gold fleurs-de-lis, the dark wood and the warm lamps)", "any Bell Village night layer (colour and lighting)"],
    subject:"A solid, old stone record-house seen straight-on at eye level (orthographic, no looking up, no perspective convergence), serious but welcoming, with warm light behind its tall windows.",
@@ -491,7 +498,7 @@ const SECTIONS = [
    {size:"3840x420"})
 ]},
 {id:"g", name:"G. Icon pack (matches the current game UI)", sub:"Two sheets. Sheet 1 is the round button icons (like the gear, search and close buttons). Sheet 2 is the loose painted objects (like the brass key and the magnifier ring), with no disc.", items:[
- P("Icon pack 1: round UI button icons (16)", {
+ P("✔ Icon pack 1: round UI button icons (16)", {
    goal:"Replace the cold, flat icon pack. These are the small round buttons in the game HUD and menus, so they must look like the existing gear, search, satchel and close buttons.",
    refs:["the existing round HUD buttons (icon_satchel, icon_search, icon_settings, icon_close): copy the disc, the rim and the pictogram style exactly"],
    subject:"A sheet of 16 round button icons. Each icon is a cream pictogram on a dark brown round disc inside a thick brass rim, the same as the supplied buttons.",
@@ -501,7 +508,7 @@ const SECTIONS = [
    tech:["Sheet 1536x1536 px, a REAL transparent background (alpha channel), not a drawn checkerboard."]},
    {size:"1536x1536", tags:["sheet"]}),
 
- P("Icon pack 2: loose painted object icons (16)", {
+ P("✔ Icon pack 2: loose painted object icons (16)", {
    goal:"Icons that stand alone without a disc, for map and place-change prompts, the evidence tab and the case file. They must look like the existing brass key and the magnifier ring: small painted objects.",
    refs:["the existing brass key prop and the brass magnifier ring (match the brass colours, the thick dark-brown outline and the soft painted shading)", "the paper speech bubble with the exclamation mark (match the parchment tone)"],
    subject:"A sheet of 16 small painted objects, each drawn on its own with no disc, no frame and no background.",
@@ -765,9 +772,21 @@ function copy(text, btn){
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
 }
 
+/* ---- tabs: Background / Sprite / Audio / Done ---- */
+const TABS = [["background","Background"],["sprite","Sprite"],["audio","Audio"],["done","Done"]];
+const BG_RE = /: (Far|Mid|Ground|Foreground)\b|Flashback Bell Village|Flooded tower stairwell|Epilogue still|Ending art|Flood water/i;
+const tabOf = (it, sec) => (sec.id === "e" || /^\u2714/.test(it.title)) ? "done" : it.kind === "audio" ? "audio" : BG_RE.test(it.title) ? "background" : "sprite";
+let curTab = "background"; try { curTab = localStorage.getItem("bgb2.prompts.tab") || "background"; } catch(e){}
+function renderTabs(){
+  const t = $("tabs"); t.innerHTML = "";
+  TABS.forEach(([id,label]) => { const n = SECTIONS.reduce((a,sec)=>a+sec.items.filter(it=>tabOf(it,sec)===id).length,0);
+    const b = document.createElement("button"); b.type = "button"; b.className = "ghost"; b.setAttribute("role","tab"); b.setAttribute("aria-selected", id===curTab ? "true" : "false"); b.innerHTML = esc(label) + "<span>" + n + "</span>";
+    b.addEventListener("click", () => { curTab = id; try{ localStorage.setItem("bgb2.prompts.tab", id); }catch(e){} render(); window.scrollTo(0,0); }); t.appendChild(b); });
+}
 function render(){
-  const nav = $("nav"), main = $("main"); nav.innerHTML = ""; main.innerHTML = "";
-  SECTIONS.forEach(sec => {
+  const nav = $("nav"), main = $("main"); nav.innerHTML = ""; main.innerHTML = ""; renderTabs();
+  SECTIONS.forEach(secAll => {
+    const sec = Object.assign({}, secAll, {items: secAll.items.filter(it => tabOf(it, secAll) === curTab)}); if (!sec.items.length) return;
     const a = document.createElement("a"); a.href = "#" + sec.id; a.innerHTML = esc(sec.name) + "<span>" + sec.items.length + "</span>"; nav.appendChild(a);
     const s = document.createElement("section"); s.id = sec.id;
     s.innerHTML = `<h2>${esc(sec.name)} <small>${sec.items.length} PROMPTS</small></h2><p class="sub">${esc(sec.sub)}</p>`;
