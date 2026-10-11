@@ -74,7 +74,7 @@ Rules for anyone (human or Claude Code) implementing from this file:
 - Clue set for telling the twins apart: **handedness, scarf, ear scar, photographs, witness testimony** (+ movement speed, expression, object use). **No single clue may solve it.**
 - Nini: small fluffy white lamb, yellow raincoat, brown boots, ~55% of BGB's height.
 - Clockkeeper: cat with brass goggles, brown apron (mockup + character sheet). Name ⬜.
-- Character sheet (locked designs): **Edward** = hedgehog with round glasses, vest, red tie, pocket watch; **Café Owner** = golden spaniel in red apron; **Night Guard** = owl in blue cap and cape; **Molly** = badger in red shawl; **Green** = same as BGB plus torn marks on the left ear.
+- Character sheet (locked designs): **Edward** = hedgehog with round glasses, vest, red tie, pocket watch; **Café Owner** = golden spaniel in red apron; **Night Guard** = otter in a navy cap, navy coat with a white armband, a navy scarf and a lantern; **Molly** = badger in red shawl; **Green** = same as BGB plus torn marks on the left ear.
 
 ---
 
@@ -113,7 +113,7 @@ Because names were swapped, **we never say "BGB" or "Green" about the past witho
 | **Nini** | 🔒 design · 🟡 role | 🟡 Edward's young archive assistant; keeps notes; innocent; grieving. First NPC. Your asset poses (reading/writing/sleeping) fit this. |
 | **Oliver** (올리버), the Clockkeeper (시계지기) | 🔒 witness | Cat with goggles. Night shift in the winding room. Honest, saw only the back of the bear on the stairs. 🔒 Winds the clock each evening and **sets Edward's pocket watch by it each morning.** Arrived in Bell Village after the flood (Tier C). |
 | **Hazel** (헤이즐), Café Owner (카페 주인) | 🔒 design · 🟡 role | Dog (golden spaniel) in a red apron. Witness #3. Hosts BGB's alibi. 🟡 Straightened BGB's scarf tail as he left at 11:42 (R19). Arrived after the flood (Tier C). |
-| **Tommy** (토미), Night Guard (야간 경비원) | 🔒 design · 🟡 role | Owl in a blue guard cap and cape. Witness #4. Patrols the plaza and bridge loop nightly and keeps a log; never enters the tower. Arrived after the flood (Tier C). |
+| **Tommy** (토미), Night Guard (야간 경비원) | 🔒 design · 🟡 role | Otter in a navy guard cap and coat (white armband), a navy scarf and a brass lantern. (Redrawn from an owl on the user's design; final.) Witness #4. Patrols the plaza and bridge loop nightly and keeps a log; never enters the tower. Arrived after the flood (Tier C). |
 | **Molly** (몰리) | 🔒 design · 🟡 role | Old **badger** in a red embroidered shawl and floral apron. 🟡 Remembers the flood; first to voice the village's blame of Green; later the one who says the hero cub was right-handed (Testimonial clue, Ch.6). ⬜ confirm role. |
 | **Village Healer** | 🟡 | Gives the medical estimate in Ch.6. Name ⬜ (unnamed, not needed). The **Healer at the time of the flood** (a different person, deceased) sat in the closed council meeting (§3.1a). |
 | **Constable** | ⬜ | Needed only to explain why BGB investigates. 🟡 Snowed in on the far road (never appears). |

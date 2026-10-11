@@ -40,7 +40,7 @@ Not evaluated or used: the first (broken) ZIP, and the older curtain/clock mocku
 | **Edward** | **Hedgehog**, round glasses, brown vest, red tie, pocket watch | New design; I've updated the story bible to match. |
 | **Green** | Same body and scarf as BGB, plus **torn red marks on the left ear** | See conflict C2. |
 | **Café Owner** | Golden spaniel, red apron | New; used as Witness #3. |
-| **Night Guard** | Owl, blue guard cap and cape | New; used as Witness #4 (replaces my "Lamplighter"). |
+| **Night Guard** | Otter, navy guard cap, coat, scarf and lantern | New; used as Witness #4 (replaces my "Lamplighter"). |
 | **Molly** | Old badger, red embroidered shawl, floral apron | New; proposed as the flood-era elder. |
 
 ### Technical issues

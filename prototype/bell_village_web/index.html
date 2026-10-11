@@ -438,6 +438,7 @@ const UI = {
   enterA:{en:"Enter the archive", ko:"기록실에 들어간다"}, enterC:{en:"Enter Hazel's café", ko:"헤이즐의 카페에 들어간다"},
   locP:{en:"BGB's cottage", ko:"BGB의 오두막"}, lFrame:{en:"Look at the photograph", ko:"사진을 본다"}, lDoor:{en:"Open the door", ko:"문을 연다"}, lDoorNo:{en:"Someone is knocking", ko:"누군가 문을 두드린다"},
   askBear:{en:"Who was the bear on the stairs?", ko:"계단의 곰은 누구인가?"}, askStop:{en:"The clock stopped at 11:47. That is not necessarily when Edward died.", ko:"시계는 11시 47분에 멈췄다. 그것이 에드워드가 죽은 시각이라는 뜻은 아니다."},
+  talkTm:{en:"Talk to Tommy", ko:"토미와 이야기한다"},
   lPost:{en:"Read the guard's logbook", ko:"경비의 일지를 읽는다"}, conHead:{en:"Contradictions and deductions", ko:"모순과 추리"}, askNext:{en:"Is there another bear?", ko:"다른 곰이 있는가?"},
   leaveC:{en:"Leave the café", ko:"카페를 나간다"}, talkHz:{en:"Talk to Hazel", ko:"헤이즐과 이야기한다"}, locC:{en:"Hazel's Café", ko:"헤이즐의 카페"}, lBoots:{en:"Look at the prints on the stairs", ko:"계단의 발자국을 살핀다"},
   subBoard:{en:"Responsibility Board", ko:"책임 보드"}, subId:{en:"Identity Board", ko:"신원 보드"}, subOver:{en:"What I overlooked", ko:"내가 놓친 것"}, subBack:{en:"Back", ko:"돌아가기"},
@@ -511,6 +512,8 @@ EV.stmt_nini = { id:"stmt_nini", name:{en:"Statement: Nini",ko:"진술: 니니"}
 EV.photo_home = { id:"photo_home", name:{en:"The photograph (home copy)",ko:"사진(집에 둔 것)"}, img:"ev_photo_post_flood", tag:"PHOTO",
   desc:{en:"A worn photograph of two small cubs in scarves, standing close. The frame is old and deep, and it leans on the shelf instead of hanging.", ko:"목도리를 두른 두 아기 곰이 나란히 선 낡은 사진. 액자는 오래되고 깊어서, 걸려 있지 않고 선반에 기대어 서 있다."},
   note:{en:"BGB keeps a worn photograph of two cubs on his shelf.", ko:"BGB는 선반에 두 아기 곰이 찍힌 낡은 사진을 두고 있다."} };
+EV.stmt_tm = { id:"stmt_tm", name:{en:"Statement: Tommy",ko:"진술: 토미"}, tag:"STATEMENT", note:null,
+  desc:{en:"The night guard: \"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.\"", ko:"야간 경비: \"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 뒀죠. 뒷모습만 봤습니다.\""} };
 EV.boots = { id:"boots", name:{en:"Footprints on the stairs",ko:"계단의 발자국"}, img:"ev_boot_prints", tag:"TRACES",
   desc:{en:"Snow tracked onto the tower stairs. One set of prints leads up, spaced wide apart.", ko:"탑 계단에 눈이 묻어 있다. 올라가는 발자국이 한 줄, 간격이 넓다."},
   note:{en:"One set of prints leads up the tower stairs, spaced wide apart.", ko:"탑 계단 위로 올라가는 발자국이 한 줄 있다. 간격이 넓다."} };
@@ -553,13 +556,18 @@ D.p_n3 = {sp:"bgb", ex:"neutral", t:{en:"I was at Hazel's café until a little b
 D.p_n4 = {sp:"nini", ex:"worried", t:{en:"I will. The Constable is snowed in, so everyone wants you to look into it. Please come to the tower.", ko:"그럴게요. 경찰관은 눈에 갇혀 못 오니까, 다들 아저씨가 조사해 주길 바라요. 탑으로 와 주세요."}, set:"pro.done", next:null};
 D.nk0 = {sp:"nini", ex:"worried", t:{en:"Another bear. You think there was another bear on those stairs?", ko:"아저씨, 다른 곰이요. 그날 계단에 다른 곰이 있었다고 생각하세요?"}, next:"nk1"};
 D.nk1 = {sp:"nini", ex:"thinking", t:{en:"Edward kept his drawers locked and I have kept the key since. If there is an answer, it may be in there. Please, take it.", ko:"에드워드 아저씨는 서랍을 늘 잠가 두셨고, 열쇠는 제가 계속 가지고 있었어요. 답이 있다면 거기 있을지도 몰라요. 아저씨가 가져가세요."}, ev:"key", set:"nini.key", next:null};
+D.tm0 = {sp:"tm", t:{en:"Evening, Mr. Big Green Bear. I walk this bridge loop every night and keep the log.", ko:"안녕하세요, 빅그린베어 씨. 저는 밤마다 이 다리 둘레를 돌며 일지를 씁니다."},
+   ch:[{t:{en:"What did you see last night?",ko:"어젯밤에 뭘 보셨나요?"},go:"tm1"},{t:{en:"Do you mind the tower at night?",ko:"밤에 탑이 거슬리진 않으세요?"},go:"tm2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
+D.tm1 = {sp:"tm", t:{en:"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.", ko:"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 뒀죠. 뒷모습만 봤습니다."}, ev:"stmt_tm", set:"tm.stmt", next:null};
+D.tm2 = {sp:"tm", t:{en:"The winding and the bells keep me awake, I will say that. But I never go in. The tower is not my watch.", ko:"태엽 소리와 종소리가 잠을 설치게 하긴 합니다. 그래도 안에는 들어가지 않습니다. 탑은 제 순찰 구역이 아니니까요."}, next:"tm0"};
+D.tm9 = {sp:"tm", t:{en:"The times are in the log, hanging on the post. Take your time with it.", ko:"시각은 가로등 기둥에 걸린 일지에 있습니다. 천천히 보세요."}};
 D.h0 = {sp:"hz", t:{en:"Mr. Big Green Bear. Terrible business. The whole café has talked of nothing else since the bell.", ko:"빅그린베어 씨. 끔찍한 일이에요. 종이 울린 뒤로 우리 카페는 그 얘기뿐이에요."},
    ch:[{t:{en:"About last night.",ko:"어젯밤 일에 대해서요."},go:"h1"},{t:{en:"Did you know Edward well?",ko:"에드워드 씨를 잘 아셨나요?"},go:"h2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
 D.h1 = {sp:"hz", t:{en:"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.", ko:"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠."}, note:"hz", set:"hz.stmt", ev:"stmt_hz", next:"h1b"};
 D.h1b = {sp:"hz", t:{en:"You settled your tab at eleven forty-two. I wrote the time on the receipt myself. Here, keep it.", ko:"열한 시 사십이 분에 계산하셨어요. 시각은 제가 직접 영수증에 적었죠. 자, 가지고 계세요."}, ev:"receipt", set:"hz.done", next:null};
 D.h2 = {sp:"hz", t:{en:"He lent me money for the roof last winter. I paid back half. It's no secret, so don't go writing it down as one.", ko:"작년 겨울에 지붕 고치라고 돈을 빌려줬어요. 절반은 갚았고요. 비밀도 아니니 무슨 비밀인 양 적지는 마세요."}, set:"hz.owed", next:"h0"};
 D.h9 = {sp:"hz", t:{en:"Take your time. The kettle's always on.", ko:"천천히 하세요. 주전자는 늘 불 위에 있답니다."}};
-const SP = { bgb:{name:{en:"BGB",ko:"BGB"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
+const SP = { tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp"}, bgb:{name:{en:"BGB",ko:"BGB"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
 const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
@@ -580,7 +588,7 @@ function mkActor(cls, base, h, x){
   d.dataset.base = base; d.style.height = h + "px"; d.style.top = (FEET - h) + "px"; d.style.left = x + "px";
   actors.appendChild(d); return d;
 }
-const SPR = { big_green_bear:[157,277,175,274], nini:[128,247,161,248], clockkeeper:[170,232,163,231], cafe_owner:[169,198,159,199] };
+const SPR = { big_green_bear:[157,277,175,274], nini:[128,247,161,248], clockkeeper:[170,232,163,231], cafe_owner:[169,198,159,199], tommy:[207,427,211,425] };
 function setActorSprite(el, dir, h){
   const base = el.dataset.base, img = el.querySelector("img");
   const s = {left:"left", right:"right", front:"front"}[dir] || "front";
@@ -589,12 +597,12 @@ function setActorSprite(el, dir, h){
   const sc = h / k[3]; // scale so the FRONT sprite height equals h
   el.style.width = Math.round(natW * sc) + "px"; el.style.height = Math.round(nat * sc) + "px"; el.style.top = (FEET - Math.round(nat*sc)) + "px";
 }
-const HZ_H = 175;
-const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
-let NPCX = { nini:1010, ck:2610, hz:-9999 }; const NPCX_V = { nini:1010, ck:2610, hz:-9999 }, NPCX_T = { nini:-9999, ck:830, hz:-9999 }, NPCX_A = { nini:-9999, ck:-9999, hz:-9999 }, NPCX_C = { nini:-9999, ck:-9999, hz:1050 };
+const HZ_H = 175, TM_H = 190;
+const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), tm = mkActor("tm","tommy",TM_H,1930), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
+let NPCX = { nini:1010, ck:2610, hz:-9999, tm:1930 }; const NPCX_V = { nini:1010, ck:2610, hz:-9999, tm:1930 }, NPCX_T = { nini:-9999, ck:830, hz:-9999, tm:-9999 }, NPCX_A = { nini:-9999, ck:-9999, hz:-9999, tm:-9999 }, NPCX_C = { nini:-9999, ck:-9999, hz:1050, tm:-9999 };
 const P = { x:S.x, dir:"front", walk:0, moving:false, face:"right" };
 /* NPCs stand facing front; once BGB comes within 300 px they turn and keep looking at him until he walks beyond 380 px (the gap stops flicker) */
-const FACING = { nini:false, ck:false, hz:false };
+const FACING = { nini:false, ck:false, hz:false, tm:false };
 function npcFace(key, nx){ const d = Math.abs(P.x - nx); if (!FACING[key] && d < 300) FACING[key] = true; else if (FACING[key] && d > 380) FACING[key] = false; return FACING[key] ? (P.x < nx ? "left" : "right") : "front"; }   /* BGB is on the left -> face left, toward him */
 function place(){
   const sc = BGB_H/274; let dir = P.moving ? P.face : "front";
@@ -616,12 +624,15 @@ function place(){
   hz.style.transform = "scale("+(1-0.005*Math.sin(tt/850+3)).toFixed(3)+","+(1+0.012*Math.sin(tt/850+3)).toFixed(3)+")";
   const hface = npcFace("hz", NPCX.hz);
   setActorSprite(hz, hface, HZ_H); hz.style.left = Math.round(NPCX.hz - parseFloat(hz.style.width)/2) + "px";
+  tm.style.transform = "scale("+(1-0.005*Math.sin(tt/950+4)).toFixed(3)+","+(1+0.012*Math.sin(tt/950+4)).toFixed(3)+")";
+  setActorSprite(tm, npcFace("tm", NPCX.tm), TM_H); tm.style.left = Math.round(NPCX.tm - parseFloat(tm.style.width)/2) + "px";
 }
 function applyLight(dt){
   lightActor(bgb, P.x, dt, parseFloat(bgb.style.width)*.78);
   lightActor(nini, NPCX.nini, dt, parseFloat(nini.style.width)*.9);
   lightActor(ck, NPCX.ck, dt, parseFloat(ck.style.width)*.85);
   lightActor(hz, NPCX.hz, dt, parseFloat(hz.style.width)*.9);
+  lightActor(tm, NPCX.tm, dt, parseFloat(tm.style.width)*.9);
 }
 
 /* ---------- lighting ---------- */
@@ -656,6 +667,7 @@ let IA = [
   { id:"sign",   x:()=>1345,      label:UI.read,   top:640,            run:()=>inspect("notice") },
   { id:"enterA", x:()=>4200, label:UI.enterA, top:560, run:()=>setScene("archive", 430) },
   { id:"enterC", x:()=>5200, label:UI.enterC, top:560, run:()=>setScene("cafe", 500) },
+  { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>startDlg(has("tm.stmt") ? "tm9" : "tm0") },
   { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>inspect("patrol") },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(has("ck.bear")?"c9":"c0") },
   { id:"clock",  x:()=>2735,      label:UI.look,   top:560,            run:()=>inspect("clock") },
@@ -687,7 +699,7 @@ const IA_C = [
   { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 5200) },
   { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(has("hz.done")?"h9":"h0") }
 ];
-function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"||i.id==="hz"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
+function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"||i.id==="hz"||i.id==="tm"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
 mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks"));
 IA = IA_V;
 let near = null, peek = 0, autoGo = null;
@@ -801,6 +813,7 @@ function setSceneNow(name, x){
   nini.style.display = IN ? "none" : ""; nini._sh.style.display = IN ? "none" : "";
   ck.style.display = (A || C || PR) ? "none" : ""; ck._sh.style.display = (A || C || PR) ? "none" : "";
   hz.style.display = C ? "" : "none"; hz._sh.style.display = C ? "" : "none";
+  tm.style.display = IN ? "none" : ""; tm._sh.style.display = IN ? "none" : "";
   $("t8").classList.toggle("hide", IN); $("t9").classList.toggle("hide", IN);
   P.x = x; cam = Math.max(CAM_MIN, Math.min(CAM_MAX, P.x - STAGE_W/2)); near = null;
   $("hudLoc").textContent = locOf(name);
@@ -858,6 +871,7 @@ function peopleStrip(){
   const P = [
     { id:"nini", on:true, name:SP.nini.name, img:"assets/por_nini_neutral.webp", d:K?"기록실 조수. 에드워드를 마지막으로 본 사람 중 하나.":"Archive assistant. One of the last to see Edward." },
     { id:"ck", on:has("ck.bear"), name:SP.ck.name, img:"assets/por_oliver_neutral.webp", d:K?"밤 근무. 11시 40분쯤 계단을 오르는 곰을 보았다.":"Night shift. Saw a bear on the stairs around 11:40." },
+    { id:"tm", on:has("tm.stmt"), name:SP.tm.name, img:"assets/tommy_front.webp", d:K?"야간 경비. 11시 35분에 겨자색 목도리를 한 곰이 다리를 건넜다고 했다.":"Night guard. Says a bear in a mustard scarf crossed the bridge at 11:35." },
     { id:"hz", on:has("hz.stmt"), name:SP.hz.name, img:"assets/cafe_owner_front.webp", d:K?"카페 주인. BGB가 12시 15분 전이 조금 못 되도록 있었다고 말했다.":"Café owner. Says BGB stayed until a little before a quarter to twelve." }
   ];
   if (!P.find(x=>x.id===selPerson && x.on)) selPerson = "nini";
