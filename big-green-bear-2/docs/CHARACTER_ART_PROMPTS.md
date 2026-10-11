@@ -10,7 +10,7 @@ outline ≈ 0.4 % of image height). Attach the delivered **bear images as style 
 2. Paste the character block (**B–D**), then ONE pose line from that character's list.
 3. For each character generate the **`_nomouth` neutral base first**, approve it, then attach it (plus a bear image) as reference for every other pose.
 4. **View rule:** every in-game pose is generated as `three_quarter_left` (the bear stands on the right and faces left toward the other character; Green is this sprite mirrored in-engine). Only `bear_front_neutral` (portrait / mirror scene) is a true front view. Attach `turnaround/bear_turn_three_quarter_left.png` as the view reference.
-5. **Facing rule for everyone:** the bear stands on the right and faces left (`three_quarter_left`). Every other character (Nini, Edward, Clockkeeper (cat), Café owner (dog), Night guard Tommy (otter)) stands on the LEFT of the screen and faces right: generate them as `three_quarter_right`, about 35 degrees, same camera as the bear sheet. Each also gets ONE true front view `<name>_front_neutral` for portraits and the mirror/board scenes. Attach `turnaround/bear_turn_three_quarter_right.png` as the camera/pose reference.
+5. **Facing rule for everyone:** the bear stands on the right and faces left (`three_quarter_left`). Every other character (Nini, Edward, Clockkeeper (cat), Café owner (dog), Night guard Tommy (otter) stands on the LEFT of the screen and faces right: generate them as `three_quarter_right`, about 35 degrees, same camera as the bear sheet. Each also gets ONE true front view `<name>_front_neutral` for portraits and the mirror/board scenes. Attach `turnaround/bear_turn_three_quarter_right.png` as the camera/pose reference.
 6. After each image run the **checklist (G)**.
 
 ---
@@ -68,7 +68,8 @@ Full pose list (generate ALL of them in the new style; all in three-quarter-left
 14. `bear_reach_right`: the arm on the RIGHT side of the image reaching forward and slightly up to pick something up, other arm relaxed.
 15. `bear_scarf_adjust_right`: the paw on the RIGHT side of the image touching the scarf near the neck, small content smile.
 16. `bear_door_right`: the arm on the RIGHT side of the image extended forward at chest height as if opening a door, body turned very slightly toward it.
-17. `bear_walk_A`, 18. `bear_walk_B`: two mid-step walking frames, relaxed neutral face, arms swinging slightly.
+17. `bear_walk_A`: first mid-step walking frame, relaxed neutral face, arms swinging slightly.
+18. `bear_walk_B`: second mid-step walking frame (opposite leg forward), relaxed neutral face, arms swinging slightly.
 
 ---
 

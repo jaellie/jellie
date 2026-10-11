@@ -17,6 +17,17 @@ def inline(t):
     t = re.sub(r"`([^`]+)`", r"<code>\1</code>", t)
     t = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", t)
     return t
+CODE_ID = re.compile(r"^[a-z][a-z0-9_{}]*_[a-z0-9_{}]*$|^[a-z]+$")
+def clean_id(x): return re.sub(r"[^A-Za-z0-9_-]", "-", x).strip("-")
+def li_ids(raw):
+    codes = re.findall(r"`([^`]+)`", raw)
+    if not codes or not raw.lstrip().startswith("`"): return []
+    first = codes[0]
+    if not CODE_ID.match(first) or first in ("back",) and False: return []
+    plain = re.sub(r"\([^)]*\)", "", raw)
+    if re.fullmatch(r"\s*(`[^`]+`[,\s]*)+\.?\s*", plain):
+        return [clean_id(c) for c in codes if CODE_ID.match(c)]
+    return [clean_id(first)]
 def slug(s): return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
 def render(md, pid):
     lines = md.split("\n"); out = []; i = 0; toc = []; open_sec = False; n = 0
@@ -33,16 +44,18 @@ def render(md, pid):
             while j < len(lines) and lines[j].startswith("|"):
                 rows.append([c.strip() for c in lines[j].strip().strip("|").split("|")]); j += 1
             t = "<div class='tbl'><table><thead><tr>" + "".join(f"<th>{inline(c)}</th>" for c in hdr) + "</tr></thead><tbody>"
-            for r in rows: t += "<tr>" + "".join(f"<td>{inline(c)}</td>" for c in r) + "</tr>"
+            for r in rows:
+                ids = li_ids(r[0]) if r else []
+                t += (f'<tr data-ids="{" ".join(ids)}">' if ids else "<tr>") + "".join(f"<td>{inline(c)}</td>" for c in r) + "</tr>"
             out.append(t + "</tbody></table></div>"); i = j; continue
         m = re.match(r"^(#{1,4}) (.*)", L)
         if m:
             lv = len(m.group(1)); title = m.group(2)
             if lv == 1: i += 1; continue
             if lv == 2:
-                if open_sec: out.append("</section>")
+                if open_sec: out.append("</div></section>")
                 sid = f"{pid}-{slug(title)}"; toc.append((sid, title)); n += 1
-                out.append(f'<section class="sec" id="{sid}" style="--i:{n}"><h2>{inline(title)}</h2>'); open_sec = True
+                out.append(f'<section class="sec" id="{sid}" style="--i:{n}"><h2><button class="tg" type="button" aria-expanded="false"><span class="chev" aria-hidden="true"></span><span class="tt">{inline(title)}</span><span class="pg"></span></button></h2><div class="bd">'); open_sec = True
             else: out.append(f"<h{lv}>{inline(title)}</h{lv}>")
             i += 1; continue
         if L.startswith(">"):
@@ -51,10 +64,13 @@ def render(md, pid):
             ordered = bool(re.match(r"^\s*\d+\.", L)); tag = "ol" if ordered else "ul"; items = []
             while i < len(lines) and re.match(r"^\s*([-*]|\d+\.) ", lines[i]):
                 items.append(re.sub(r"^\s*([-*]|\d+\.) ", "", lines[i])); i += 1
-            out.append(f"<{tag}>" + "".join(f"<li>{inline(x)}</li>" for x in items) + f"</{tag}>"); continue
+            def li(x):
+                ids = li_ids(x)
+                return (f'<li data-ids="{" ".join(ids)}">' if ids else "<li>") + inline(x) + "</li>"
+            out.append(f"<{tag}>" + "".join(li(x) for x in items) + f"</{tag}>"); continue
         if L.strip() in ("", "---"): i += 1; continue
         out.append(f"<p>{inline(L)}</p>"); i += 1
-    if open_sec: out.append("</section>")
+    if open_sec: out.append("</div></section>")
     return "\n".join(out), toc
 def bear_uri():
     p = os.path.join(ROOT, "Assets/Art/Characters/BigGreenBear/turnaround/bear_turn_three_quarter_left.png")
@@ -66,7 +82,7 @@ for pid, label, fn in DOCS:
     body, toc = render(open(os.path.join(ROOT, "docs", fn), encoding="utf-8").read(), pid)
     chips = "".join(f'<a href="#{s}">{esc(re.sub(r"^[A-Z0-9]+\. ", "", t))}</a>' for s, t in toc)
     nprompts = body.count('class="prompt"')
-    tabs.append(f'<button type="button" role="tab" data-p="{pid}">{label}<span>{nprompts}</span></button>')
+    tabs.append(f'<button type="button" role="tab" data-p="{pid}">{label}<span></span></button>')
     panes.append(f'<div class="pane" id="pane-{pid}" role="tabpanel"><nav class="chips">{chips}</nav>{body}</div>')
 tpl = open(os.path.join(ROOT, "tools", "prompt_book_template.html"), encoding="utf-8").read()
 out = tpl.replace("{{TABS}}", "".join(tabs)).replace("{{PANES}}", "\n".join(panes)).replace("{{BEAR}}", bear_uri())
