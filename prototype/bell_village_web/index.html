@@ -791,28 +791,76 @@ D.h3f = {sp:"hz", t:{en:"Around 4:40. They had their hat pulled low and barely s
 D.h3g = {sp:"bgb", ex:"thinking", t:{en:"You didn't recognize them?", ko:"누군지는 모르시고요?"}, next:"h3h"};
 D.h3h = {sp:"hz", t:{en:"No. I didn't ask, either. They just bought some bread and left.", ko:"네. 굳이 묻지도 않았어요. 빵만 사서 가셨으니까요."}, set:"hz.bread"};
 D.h4a = {sp:"hz", t:{en:"Come by anytime. There's always a warm cup of tea waiting for you.", ko:"언제든 들르세요. 따뜻한 차는 늘 준비되어 있으니까요."}};
+D.nk0 = {sp:"nini", ex:"worried", t:{en:"Mr. Bear! Did you find out anything?", ko:"빅그베 아저씨! 뭐 좀 알아내셨어요?"}, next:"nk1"};
+D.nk1 = {sp:"bgb", ex:"neutral", t:{en:"Not yet. I wanted to look through Edward's records.", ko:"아직. 에드워드 아저씨가 남긴 기록을 좀 살펴보려고."}, next:"nk2"};
+D.nk2 = {sp:"nini", ex:"neutral", t:{en:"Then take this!", ko:"그럼 이거 가져가세요!"}, next:"nk3"};
+D.nk3 = {sp:"bgb", ex:"surprised", t:{en:"A key?", ko:"열쇠네?"}, next:"nk4"};
+D.nk4 = {sp:"nini", ex:"neutral", t:{en:"Yes! It's the key to Edward's desk drawers. He left it with me.", ko:"네! 에드워드 아저씨 책상 서랍 열쇠예요. 저한테 맡겨 두셨거든요."}, ev:"key", set:"nini.key", next:"nk5"};
+D.nk5 = {sp:"nini", ex:"worried", t:{en:"Those drawers were always locked. I don't know what's inside.", ko:"그 서랍은 항상 잠겨 있었어요. 안에 뭐가 있는지는 저도 몰라요."}, next:"nk6"};
+D.nk6 = {sp:"bgb", ex:"neutral", t:{en:"Thanks, Nini.", ko:"고마워, 니니."}, next:"nk7"};
+D.nk7 = {sp:"nini", ex:"thinking", t:{en:"Oh, right! About when I saw you yesterday.", ko:"아, 맞다! 어제 아저씨를 봤을 때 말이에요."}, next:"nk8"};
+D.nk8 = {sp:"bgb", ex:"neutral", t:{en:"Yeah?", ko:"응?"}, next:"nk9"};
+D.nk9 = {sp:"nini", ex:"thinking", t:{en:"You were walking so fast. I thought you were in a hurry!", ko:"엄청 빨리 걸어가고 계셨어요. 어디 급하게 가시는 줄 알았어요!"}, next:"nk10"};
+D.nk10 = {sp:"bgb", ex:"neutral", t:{en:"I see.", ko:"그랬구나."}, next:"nk11"};
+D.nk11 = {sp:"nini", ex:"neutral", t:{en:"I guess that's why you didn't hear me say hello.", ko:"그래서 제 인사도 못 들으셨나 봐요."}, next:"nk12"};
+D.nk12 = {sp:"bgb", ex:"worried", t:{en:"Sorry, Nini.", ko:"미안해, 니니."}, next:"nk13"};
+D.nk13 = {sp:"nini", ex:"neutral", t:{en:"It's okay! You said hello today.", ko:"괜찮아요! 오늘은 인사해 주셨잖아요."}, note:"nw", set:"nini.walk"};
+D.mo0 = {sp:"mo", t:{en:"Out in this blizzard, are you? Did you at least wear a proper coat?", ko:"이 눈보라에 돌아다니고 있나? 외투는 제대로 입었고?"}, next:"mo0a"};
+D.mo0a = {sp:"bgb", ex:"neutral", t:{en:"Yes, Granny Molly. I just have a few questions.", ko:"네, 몰리 할머니. 잠깐 여쭤볼 게 있어서요."}, next:"mo0b"};
+D.mo0b = {sp:"mo", t:{en:"It's about Edward, isn't it? That's all anyone talks about.", ko:"에드워드 일이지? 다들 그 얘기뿐이더구먼."}, set:"mo.met",
+   ch:[{t:{en:"Did you see anyone suspicious last night?",ko:"어젯밤에 수상한 사람을 보셨나요?"},go:"mo1a"},{t:{en:"Do you know anything about the Old Mill?",ko:"오래된 방앗간에 대해 아세요?"},go:"mo2a"},{t:{en:"(Leave.)",ko:"(자리를 뜬다.)"},go:"mo3a",bye:true}]};
+D.mo9 = {sp:"mo", t:{en:"Anything else you want from an old woman?", ko:"늙은이한테 더 들을 게 있나?"},
+   ch:[{t:{en:"Did you see anyone suspicious last night?",ko:"어젯밤에 수상한 사람을 보셨나요?"},go:"mo1a"},{t:{en:"Do you know anything about the Old Mill?",ko:"오래된 방앗간에 대해 아세요?"},go:"mo2a"},{t:{en:"(Leave.)",ko:"(자리를 뜬다.)"},go:"mo3a",bye:true}]};
+D.mo1a = {sp:"mo", t:{en:"I didn't see anything myself. I only heard the village talking.", ko:"직접 본 건 없어. 다만 마을 사람들이 떠드는 소리는 들었지."}, next:"mo1a1"};
+D.mo1a1 = {sp:"bgb", ex:"neutral", t:{en:"What were they saying?", ko:"무슨 얘기였나요?"}, next:"mo1a2"};
+D.mo1a2 = {sp:"mo", t:{en:"Someone in a scarf was walking around near the clock tower.", ko:"목도리를 한 누군가가 시계탑 근처를 돌아다녔다더구나."}, next:"mo1a3"};
+D.mo1a3 = {sp:"mo", t:{en:"And they've started running their mouths again. Digging up old business.", ko:"사람들은 또 제멋대로 떠들기 시작했어. 예전 일까지 끄집어내면서."}, next:"mo1a4"};
+D.mo1a4 = {sp:"bgb", ex:"thinking", t:{en:"Old business?", ko:"예전 일이요?"}, next:"mo1a5"};
+D.mo1a5 = {sp:"mo", t:{en:"The night the river took the boatman.", ko:"강물이 뱃사공을 데려간 그날 밤 말이다."}, next:"mo1a6"};
+D.mo1a6 = {sp:"mo", t:{en:"The bell never rang that night, either. They said if only it had rung, he'd have lived.", ko:"그때도 종이 울리지 않았거든. 종만 울렸어도 살았을 거라고들 했지."}, next:"mo1a7"};
+D.mo1a7 = {sp:"bgb", ex:"worried", t:{en:"...", ko:"..."}, next:"mo1a8"};
+D.mo1a8 = {sp:"mo", t:{en:"You know how badly Green was treated over that.", ko:"그 일로 그린이 얼마나 욕을 먹었는지, 너도 알잖니."}, next:"mo1a9"};
+D.mo1a9 = {sp:"mo", t:{en:"Let's not talk about that boy. It was a long time ago.", ko:"그 애 얘기는 그만하자꾸나. 이미 오래전 일이야."}, note:"mo", set:"mo.green"};
+D.mo2a = {sp:"mo", t:{en:"The old mill at the edge of the village?", ko:"마을 끝에 있는 낡은 방앗간 말이냐?"}, next:"mo2a1"};
+D.mo2a1 = {sp:"bgb", ex:"neutral", t:{en:"Yes. Does anyone still go there?", ko:"네. 요즘도 누가 드나드나요?"}, next:"mo2a2"};
+D.mo2a2 = {sp:"mo", t:{en:"The lights are on there some nights. Are you thinking of going?", ko:"가끔 밤에 불이 켜져 있더구나. 그쪽으로 갈 생각이니?"}, next:"mo2a3"};
+D.mo2a3 = {sp:"bgb", ex:"neutral", t:{en:"I thought I'd go and see.", ko:"한번 가 보려고요."}, next:"mo2a4"};
+D.mo2a4 = {sp:"mo", t:{en:"Mind the snow. The road out there hasn't been cleared properly.", ko:"눈길 조심해. 그쪽은 길도 제대로 안 닦여 있으니까."}, set:"mo.told"};
+D.mo3a = {sp:"mo", t:{en:"The mill is just past the last house. Take care, dear.", ko:"마지막 집을 지나면 방앗간이 나올 거야. 조심해서 가렴."}};
+D.gr0 = {sp:"gr", t:{en:"You came after all.", ko:"결국 왔네."}, next:"gr0a"};
+D.gr0a = {sp:"bgb", ex:"worried", t:{en:"...", ko:"..."}, next:"gr0b"};
+D.gr0b = {sp:"gr", t:{en:"Shut the door. You're letting the cold in.", ko:"문 좀 닫아. 찬바람 들어오잖아."}, set:"gr.met",
+   ch:[{t:{en:"Where were you last night?",ko:"어젯밤 어디 있었어?"},go:"gr1a"},{t:{en:"Edward is dead.",ko:"에드워드 아저씨가 돌아가셨어."},go:"gr2a"},{t:{en:"Why are your hands like that?",ko:"손은 왜 그래?"},go:"gr3a"},{t:{en:"(Leave.)",ko:"(자리를 뜬다.)"},go:"gr4a"}]};
+D.grm = {sp:"gr", t:{en:"Is there anything else you wanted to ask?", ko:"아직도 물어볼 게 남았어?"},
+   ch:[{t:{en:"Where were you last night?",ko:"어젯밤 어디 있었어?"},go:"gr1a"},{t:{en:"Edward is dead.",ko:"에드워드 아저씨가 돌아가셨어."},go:"gr2a"},{t:{en:"Why are your hands like that?",ko:"손은 왜 그래?"},go:"gr3a"},{t:{en:"(Leave.)",ko:"(자리를 뜬다.)"},go:"gr4a"}]};
+D.gr1a = {sp:"gr", t:{en:"I was here. The wheel froze over, so I spent the night breaking ice.", ko:"여기 있었어. 물레바퀴가 얼어붙어서 밤새 얼음을 깼거든."}, next:"gr1a1"};
+D.gr1a1 = {sp:"bgb", ex:"thinking", t:{en:"And the clock tower?", ko:"시계탑에는?"}, next:"gr1a2"};
+D.gr1a2 = {sp:"gr", t:{en:"I didn't go.", ko:"안 갔어."}, next:"gr1a3"};
+D.gr1a3 = {sp:"gr", t:{en:"Anything else?", ko:"더 물어볼 거 있어?"}, set:"gr.denied"};
+D.gr2a = {sp:"gr", t:{en:"I know. We could hear the handbell all the way out here.", ko:"알아. 손종 소리가 여기까지 들렸으니까."}, next:"gr2a1"};
+D.gr2a1 = {sp:"bgb", ex:"worried", t:{en:"...", ko:"..."}, next:"gr2a2"};
+D.gr2a2 = {sp:"gr", t:{en:"Edward wasn't the kind of man to go like that.", ko:"에드워드 아저씨라면 그런 식으로 가실 분은 아니었는데."}, next:"gr2a3"};
+D.gr2a3 = {sp:"gr", t:{en:"So what did you come here to say?", ko:"그래서, 무슨 얘길 하러 온 거야?"}, set:"gr.knew"};
+D.gr3a = {sp:"bgb", ex:"worried", t:{en:"Your hands are badly chapped.", ko:"손이 많이 텄네."}, next:"gr3a1"};
+D.gr3a1 = {sp:"gr", t:{en:"It happens every winter. Why act surprised now?", ko:"겨울마다 이러잖아. 새삼스럽게."}, next:"gr3a2"};
+D.gr3a2 = {sp:"gr", t:{en:"Hand me that kettle over there.", ko:"거기 주전자 좀 건네줘."}, note:"gr", set:"gr.hand"};
+D.gr4a = {sp:"gr", t:{en:"Leaving already?", ko:"벌써 가게?"}, next:"gr4a1"};
+D.gr4a1 = {sp:"bgb", ex:"neutral", t:{en:"Yeah.", ko:"응."}, next:"gr4a2"};
+D.gr4a2 = {sp:"gr", t:{en:"BGB.", ko:"빅그베."}, next:"gr4a3"};
+D.gr4a3 = {sp:"bgb", ex:"neutral", t:{en:"What?", ko:"왜?"}, next:"gr4a4"};
+D.gr4a4 = {sp:"gr", t:{en:"Don't just listen to what other people say.", ko:"남들이 하는 얘기만 듣지 마."}, next:"gr4a5"};
+D.gr4a5 = {sp:"gr", t:{en:"You remember things too.", ko:"네가 기억하는 것도 있잖아."}, ev:"stmt_gr", set:"gr.done"};
+D.gr9 = {sp:"gr", t:{en:"Still have questions?", ko:"아직도 물어볼 게 남았어?"}, next:"gr91"};
+D.gr91 = {sp:"bgb", ex:"thinking", t:{en:"I was just thinking.", ko:"생각 좀 하고 있었어."}, next:"gr92"};
+D.gr92 = {sp:"gr", t:{en:"Then take your time.", ko:"그럼 천천히 생각해."}, next:"gr93"};
+D.gr93 = {sp:"gr", t:{en:"Just don't pick and choose only the things you want to remember.", ko:"대신 기억하고 싶은 것만 골라서 떠올리진 말고."}};
 D.p_w = {sp:"bgb", ex:"neutral", t:{en:"The snow's really piling up. Footprints won't last long out there.", ko:"눈이 꽤 쌓였네. 발자국도 금방 지워지겠어."}};
 D.p_b = {sp:"bgb", ex:"neutral", t:{en:"My old storybooks. I've lost count of how many times I've read them.", ko:"오래된 동화책들이야. 몇 번이나 읽었는지 모르겠네."}};
 D.p_s = {sp:"bgb", ex:"neutral", t:{en:"The fire's almost out.", ko:"불이 거의 다 꺼졌네."}};
 D.p_k = {sp:"bgb", ex:"worried", t:{en:"The kettle's gone cold. I'm not in the mood for tea.", ko:"주전자도 다 식었네. 지금은 차 마실 기분이 아니야."}};
-D.nk0 = {sp:"nini", ex:"worried", t:{en:"Another bear. You think there was another bear on those stairs?", ko:"아저씨, 다른 곰이요. 그날 계단에 다른 곰이 있었다고 생각하세요?"}, next:"nk1"};
-D.nk1 = {sp:"nini", ex:"thinking", t:{en:"Edward kept his drawers locked and I have kept the key since. If there is an answer, it may be in there. Please, take it.", ko:"에드워드 아저씨는 서랍을 늘 잠가 두셨고, 열쇠는 제가 계속 가지고 있었어요. 답이 있다면 거기 있을지도 몰라요. 아저씨가 가져가세요."}, ev:"key", set:"nini.key", next:null};
-D.mo0 = {sp:"mo", t:{en:"So you have heard there was a second bear on those stairs.", ko:"그래, 그날 계단에 곰이 한 마리 더 있었다는 얘기를 들었구먼."},
-   ch:[{t:{en:"Tell me about Green.",ko:"Green에 대해 말씀해 주세요."},go:"mo1"},{t:{en:"Who told you?",ko:"누가 말했나요?"},go:"mo2"},{t:{en:"(Leave.)",ko:"(자리를 뜬다.)"},go:null}]};
-D.mo1 = {sp:"mo", t:{en:"We don't talk about Green. He is the one who let the bell fail, the night the river took the boatman. The village has not forgiven it.", ko:"Green 얘기는 안 해. 강이 뱃사공을 데려간 그날 밤, 종이 울리지 않게 만든 건 그 아이야. 마을은 아직도 용서하지 않았어."}, note:"mo", set:"mo.green", next:"mo0"};
-D.mo2 = {sp:"mo", t:{en:"Nobody. A village this small hears every stair creak. Go to the Old Mill if you must. Take a coat.", ko:"아무도 아냐. 이렇게 작은 마을은 계단 삐걱대는 소리까지 다 들리거든. 가 봐야겠다면 방앗간으로 가. 외투는 챙기고."}, set:"mo.told", next:"mo0"};
-D.mo9 = {sp:"mo", t:{en:"The Old Mill is past the last houses. I have said what I will say.", ko:"방앗간은 마지막 집들을 지나면 있어. 할 말은 다 했네."}};
 D.m_no = {sp:"bgb", ex:"thinking", t:{en:"I should look into the other bear first.", ko:"다른 곰에 대해 먼저 알아보자."}};
-D.gr0 = {sp:"gr", t:{en:"You. I did not think you would come yourself.", ko:"너로군. 직접 올 줄은 몰랐는데."},
-   ch:[{t:{en:"Where were you last night?",ko:"어젯밤에 어디 있었어?"},go:"gr2"},{t:{en:"Edward is dead.",ko:"에드워드가 죽었어."},go:"gr3"},{t:{en:"Your hand is bare in this cold.",ko:"이 추위에 손이 맨손이네."},go:"gr4"},{t:{en:"(Leave.)",ko:"(자리를 뜬다.)"},go:"gr5"}]};
-D.gr2 = {sp:"gr", ex:"neutral", t:{en:"At home. The wheel froze solid, so I spent the night chipping ice. I was not at the tower.", ko:"집에 있었어. 물레바퀴가 꽁꽁 얼어서 밤새 얼음을 깼지. 탑에는 가지 않았어."}, set:"gr.denied", next:"gr0"};
-D.gr3 = {sp:"gr", ex:"neutral", t:{en:"I know. The whole valley heard the handbell. Say what you came to say.", ko:"알아. 계곡 전체가 손종 소리를 들었으니까. 하려던 말이나 해."}, set:"gr.knew", next:"gr0"};
-D.gr4 = {sp:"gr", ex:"neutral", t:{en:"Cold does not ask permission. Hold the kettle for me, it keeps the fingers honest.", ko:"추위는 허락을 구하지 않아. 주전자 좀 들어 줘. 손가락이 정직해지거든."}, note:"gr", set:"gr.hand", next:"gr0"};
-D.gr5 = {sp:"gr", ex:"neutral", t:{en:"Ask yourself what you remember.", ko:"네 기억을 떠올려 봐."}, ev:"stmt_gr", set:"gr.done", next:null};
-D.gr9 = {sp:"gr", ex:"neutral", t:{en:"I have said it already. Ask yourself what you remember.", ko:"이미 말했어. 네 기억을 떠올려 봐."}};
 /* Prologue: Nini's greeting (R21). Short, cheerful, no reaction from BGB. */
 /* Chapter 3: Nini remembers the walk (does not know it was Green) */
-D.nw0 = {sp:"nini", ex:"thinking", t:{en:"Mr. Bear, I thought of that bear from yesterday. He walked faster than you do, like he had somewhere to be.", ko:"아저씨, 어제 그 곰 생각이 났어요. 걸음이 아저씨보다 빨랐어요. 꼭 어디 급하게 가는 것처럼요."}, note:"nw", set:"nini.walk", next:null};
 /* Café, afternoon (R21): Hazel can place BGB at 16:55 from the counter */
 /* Chapter 4 (placeholder build): no twin is ever named; the controlled child's label is a plain hyphen */
 D.fe0 = {sp:"ed", t:{en:"Big brother, hold still. Let me see that scarf.", ko:"큰애야, 가만히 있어 보렴. 목도리 좀 보자."}, note:"m1", next:"fe1"};
@@ -848,8 +896,8 @@ Object.assign(D, {
   ci1_1: {sp:"bgb", ex:"neutral", t:{en:"I'll take a look inside. There must be something I haven't checked yet.", ko:"일단 안을 살펴보자. 아직 확인하지 못한 게 있을 거야."}, next:null},
   ci2_0: {sp:"bgb", ex:"thinking", t:{en:"That's about all I can learn from the clock tower.", ko:"시계탑에서 확인할 수 있는 건 여기까지인가."}, next:"ci2_1"},
   ci2_1: {sp:"bgb", ex:"neutral", t:{en:"I should talk to the others. See what they remember about last night.", ko:"이제 다른 사람들 얘기도 들어 봐야겠어. 어젯밤에 무슨 일이 있었는지."}, next:null},
-  ci3_0: {sp:"bgb", ex:"thinking", t:{en:"One bear cannot be in two places. The bear on the bridge and the bear in the café were different, and the one with the right hand was not me.", ko:"곰은 한 마리일 수 없어. 다리 위의 곰과 카페의 곰은 달랐고, 오른손에 물건을 든 곰은 내가 아니야."}, next:"ci3_1"},
-  ci3_1: {sp:"bgb", ex:"neutral", t:{en:"So who is the other bear? Talk to Nini about the drawer key, then try the Archive and the Old Mill.", ko:"그럼 다른 곰은 누구지? 니니에게 서랍 열쇠 이야기를 듣고, 기록관과 낡은 방앗간을 확인해 보자."}, next:null},
+  ci3_0: {sp:"bgb", ex:"thinking", t:{en:"The accounts don't quite agree. Not the times, not the places.", ko:"목격담이 조금씩 달라. 시간도, 장소도."}, next:"ci3_1"},
+  ci3_1: {sp:"bgb", ex:"neutral", t:{en:"I should check Edward's records. Nini said she had the key to his drawers.", ko:"에드워드 아저씨의 기록을 확인해 봐야겠어. 니니가 서랍 열쇠를 가지고 있다고 했지."}, next:null},
   ci4_0: {sp:"bgb", ex:"thinking", t:{en:"Two photographs that disagree, and a memory pulling at me from inside them.", ko:"서로 어긋나는 두 장의 사진, 그리고 그 안에서 나를 끌어당기는 기억."}, next:"ci4_1"},
   ci4_1: {sp:"bgb", ex:"neutral", t:{en:"I will follow it. Talk to Edward, look around the village, and make my way to the tower.", ko:"따라가 보자. 에드워드와 이야기하고, 마을을 둘러보고, 탑까지 가 보는 거야."}, next:null},
   ci5_0: {sp:"bgb", ex:"thinking", t:{en:"The bell never rang. The water began to rise.", ko:"종은 울리지 않았고, 물이 차오르기 시작했어."}, next:"ci5_1"},
@@ -1275,7 +1323,7 @@ let IA = [
   { id:"sign",   x:()=>1130,      label:UI.read,   top:640,            run:()=>inspect("notice") },
   { id:"enterA", x:()=>3155, label:UI.enterA, top:560, run:()=>tryEnter("archive", 430, ch2Gate) },
   { id:"enterC", x:()=>3901, label:UI.enterC, top:560, run:()=>tryEnter("cafe", 500, ch1Gate) },
-  { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? "mo9" : "mo0") },
+  { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? talk("mo") : has("mo.met") ? "mo9" : "mo0") },
   { id:"gather", x:()=>2150, label:UI.toGather, top:640, when:()=>has("c7.rec"), run:()=>startGather() },
   { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 1850); } },
   { id:"heal",   x:()=>1770,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 2030); } },
@@ -1365,8 +1413,10 @@ Object.assign(D, {
   ce2_0: {sp:"bgb", ex:"thinking", t:{en:"11:35, Lantern Bridge. 11:42, the café receipt.", ko:"11시 35분, 랜턴 다리. 11시 42분, 카페 영수증."}, next:"ce2_1"},
   ce2_1: {sp:"bgb", ex:"neutral", t:{en:"Tommy saw a scarf, and Hazel said I was at the café.", ko:"토미 씨는 목도리만 봤고, 헤이즐 씨는 내가 카페에 있었다고 했어."}, next:"ce2_2"},
   ce2_2: {sp:"bgb", ex:"worried", t:{en:"And there's that person who took the back lane in the afternoon. I should check the Archive and the Old Mill.", ko:"오후에 뒷길로 지나간 사람도 마음에 걸려. 기록관과 오래된 방앗간을 살펴봐야겠어."}, next:null},
-  ce3_0: {sp:"bgb", ex:"thinking", t:{en:"Two photographs, and the scarf knots do not agree. Green told me to ask myself what I remember.", ko:"사진 두 장, 그리고 서로 맞지 않는 목도리 매듭. Green은 내 기억을 떠올려 보라고 했어."}, next:"ce3_1"},
-  ce3_1: {sp:"bgb", ex:"worried", t:{en:"Something is pulling at me from inside the picture.", ko:"사진 속에서 뭔가가 나를 잡아당겨."}, next:null},
+  ce3_0: {sp:"bgb", ex:"thinking", t:{en:"The record from Edward's drawer, and two photographs.", ko:"에드워드 아저씨의 서랍에서 나온 기록과 사진 두 장."}, next:"ce3_1"},
+  ce3_1: {sp:"bgb", ex:"worried", t:{en:"The knots in the scarves don't match. A small difference, but I can't let it go.", ko:"사진 속 목도리 매듭이 서로 달라. 작은 차이지만 그냥 넘길 수는 없어."}, next:"ce3_2"},
+  ce3_2: {sp:"bgb", ex:"thinking", t:{en:"Green told me to look into what I remember.", ko:"그린은 기억을 떠올려 보라고 했지."}, next:"ce3_3"},
+  ce3_3: {sp:"bgb", ex:"worried", t:{en:"I need to go back to that day. From the beginning.", ko:"그날을 다시 떠올려 봐야겠어. 처음부터."}, next:null},
   ce4_0: {sp:"bgb", ex:"thinking", t:{en:"Edward told the two apart only by their knots. A scarf end jammed the lever, and the bell never rang.", ko:"에드워드는 두 아이를 매듭으로만 구분했어. 목도리 끝이 레버에 끼었고, 종은 울리지 않았어."}, next:"ce4_1"},
   ce4_1: {sp:"bgb", ex:"worried", t:{en:"And now the water is rising.", ko:"그리고 이제 물이 차오르기 시작해."}, next:null},
   ce5_0: {sp:"bgb", ex:"thinking", t:{en:"Someone rang the handbell, and nobody saw who. The crowd praised the child Edward carried.", ko:"누군가 손종을 울렸지만 아무도 그걸 보지 못했어. 사람들은 에드워드가 안고 나온 아이를 칭찬했어."}, next:"ce5_1"},
@@ -1578,7 +1628,7 @@ const SMALL = {
   mo:[{en:"Hmph. Another snowy day.",ko:"흥, 오늘도 눈이 많이 왔군."},{en:"Tsk. You'll catch your death out here.",ko:"쯧쯧. 이런 데 서 있다간 얼어 죽겠다."}]
 };
 function talk(id){ const L = SMALL[id]; D["st_"+id] = {sp:id, ex:"neutral", t:L[fuN++ % L.length]}; return "st_"+id; }
-const CHT = {1:["멈춘 시계","The Clock That Stopped"],2:["네 명의 증인","Four Witnesses"],3:["다른 곰","The Other Bear"],4:["훔쳐 간 이름","The Name That Was Stolen"],5:["좋은 사람","A Good Person"],6:["사라진 5분","Five Missing Minutes"],7:["우리가 고르는 진실","The Truth We Choose"]};
+const CHT = {1:["멈춘 시계","The Clock That Stopped"],2:["네 명의 증인","Four Witnesses"],3:["엇갈린 흔적","Crossed Traces"],4:["훔쳐 간 이름","The Name That Was Stolen"],5:["좋은 사람","A Good Person"],6:["사라진 5분","Five Missing Minutes"],7:["우리가 고르는 진실","The Truth We Choose"]};
 /* chapter title card: fade to black, scene change while black, title, fade back in */
 function chapterIntro(n, mid, done){
   const k = lang==="ko"; mode = "modal"; hideHintNow(); $("fade").classList.add("on");
@@ -1588,10 +1638,10 @@ function chapterIntro(n, mid, done){
 function whenPlay(fn){ const t = setInterval(()=>{ if (mode === "play"){ clearInterval(t); fn(); } }, 400); }
 /* Chapter 6 routing: which line a person or object gives now */
 const ckNode = () => has("c6.turn") && !has("stmt_ck2") ? "ck6_0" : has("c6.turn") ? "ck6_9" : !has("ck.bear") ? "c0" : (!has("c2") || !has("ck.watch")) ? "c9" : talk("ck");
-const grNode = () => has("c7.green") ? "g7_9" : has("c7.on") ? "g7_0" : !has("c6.on") ? (has("gr.done") ? "gr9" : "gr0") : !has("dd04") ? "c6_wait" : !has("gr.admit") ? "g6_0" : !has("c6.hl") ? "g6_h" : !has("c6.turn") ? "g6_t0" : "g6_9";
+const grNode = () => has("c7.green") ? "g7_9" : has("c7.on") ? "g7_0" : !has("c6.on") ? (has("gr.done") ? "gr9" : has("gr.met") ? "grm" : "gr0") : !has("dd04") ? "c6_wait" : !has("gr.admit") ? "g6_0" : !has("c6.hl") ? "g6_h" : !has("c6.turn") ? "g6_t0" : "g6_9";
 const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : has("hz.done") && has("hz.pm") ? talk("hz") : has("hz.met") ? "h9" : "h0";
 const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : has("tm.stmt") && has("tm.pm") ? talk("tm") : has("tm.met") ? "tm9" : "tm0";
-const niniNode = () => has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done") ? talk("nini") : "n0";
+const niniNode = () => has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done") ? talk("nini") : "n0";
 const homeGate = () => !has("c6.on") ? "home0" : !has("c6.turn") ? "home1" : (missing(["report","wool","patrol2","handbell","melt"]).length ? "homeK" : null);
 const healGate = () => !has("c6.on") ? "heal0" : !has("dd06") ? "heal1" : null;
 

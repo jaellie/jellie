@@ -317,7 +317,7 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
 - **Withheld:** Why BGB looked "like he was waiting".
 - **Closing question:** *Is there another bear?*
 
-### CHAPTER 3 — The Other Bear 🟡
+### CHAPTER 3 — Crossed Traces (엇갈린 흔적; user-renamed from "The Other Bear") 🟡
 - **Setting:** Archive (record room, locked), the village's quiet edge, **Old Mill** (Green). · **Playable:** Yes.
 - **Goal:** Find and confront the second bear.
 - **Beats:**
