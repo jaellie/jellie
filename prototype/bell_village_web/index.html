@@ -935,7 +935,11 @@ const EXPR = ["neutral","worried","surprised","thinking"];
 /* ---------- state ---------- */
 const SAVE_KEY = "bgb2.bellvillage.proto.v2";   /* v2: saves from before the prologue existed would skip it, so everyone restarts once */
 let S = { x:700, flags:{}, ev:[], notes:[], lang:"en", scene:"cottage" };   /* a new game starts in the prologue */
-function load(){ try { const r = localStorage.getItem(SAVE_KEY); if (r) { const o = JSON.parse(r); if (o && typeof o.x === "number") S = Object.assign(S, o); } } catch(e){} lang = S.lang || "en"; }
+function load(){ try { const r = localStorage.getItem(SAVE_KEY); if (r) { const o = JSON.parse(r); if (o && typeof o.x === "number") S = Object.assign(S, o); } } catch(e){} if (S.flags && (S.flags["c6.on"] || S.flags["c7.on"] || S.flags["gr.admit"]) && !S.flags["fin.on"]){   /* a save from the old Chapter 6/7: move it to the start of the new final chapter */
+    Object.keys(S.flags).forEach(k=>{ if (/^(c6|c7)\./.test(k) || /^dd(0[4-9]|1[0-2])$/.test(k) || k === "gr.admit") delete S.flags[k]; });
+    ["f4.end","f4.shown","f5.toPresent","f5.shown","f5.past","hz5.met","hz5.night","may.done","f5.done","fin.on"].forEach(k=>S.flags[k] = true);
+    S.flash = false; if (!["village","mill","cottage","healer","cafe","archive","tower"].includes(S.scene)){ S.scene = "village"; } S.scene = "village"; S.x = 4500; }
+  lang = S.lang || "en"; }
 function save(){ S.lang = lang; try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} }
 const has = f => !!S.flags[f];
 const setf = f => { if (f) S.flags[f] = true; };
