@@ -357,17 +357,17 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
   <div id="world">
    <img class="ground" src="assets/ground.webp" width="3829" height="296" alt="">
    <img class="ground" src="assets/ground.webp" width="3829" height="296" alt="" style="left:3800px">
-   <img src="assets/b_archive.webp" alt="Archive" style="position:absolute;left:3330px;top:265px;width:750px;height:750px">
-   <div class="glow" style="left:3579px;top:846px;width:255px;height:195px"></div>
-   <img src="assets/b_cafe.webp" alt="Hazel's Cafe" style="position:absolute;left:4140px;top:617px;width:525px;height:373px">
-   <div class="glow" style="left:4331px;top:840px;width:240px;height:172px"></div>
-   <img id="door" src="assets/p_tower_shaft.webp" alt="Clocktower" style="position:absolute;left:2607px;top:35px;width:499px;height:960px">
-   <svg id="vhands" style="position:absolute;left:2796px;top:337px" width="120" height="120" viewBox="-60 -60 120 120" aria-label="Tower clock stopped at 11:47"><g stroke="#2b1a0e" stroke-linecap="round"><line x1="0" y1="3" x2="0" y2="-24" stroke-width="2.2" transform="rotate(282)"/><line x1="0" y1="4" x2="0" y2="-16" stroke-width="3.4" transform="rotate(353.5)"/></g><circle r="3.6" fill="#2b1a0e"/><circle r="1.4" fill="#c97a2e"/></svg>
-   <div class="glow" style="left:2700px;top:700px;width:310px;height:330px"></div>
+   <img src="assets/b_archive.webp" alt="Archive" style="position:absolute;left:2780px;top:265px;width:750px;height:750px">
+   <div class="glow" style="left:3029px;top:846px;width:255px;height:195px"></div>
+   <img src="assets/b_cafe.webp" alt="Hazel's Cafe" style="position:absolute;left:3590px;top:617px;width:525px;height:373px">
+   <div class="glow" style="left:3781px;top:840px;width:240px;height:172px"></div>
+   <img id="door" src="assets/p_tower_shaft.webp" alt="Clocktower" style="position:absolute;left:2057px;top:35px;width:499px;height:960px">
+   <svg id="vhands" style="position:absolute;left:2246px;top:337px" width="120" height="120" viewBox="-60 -60 120 120" aria-label="Tower clock stopped at 11:47"><g stroke="#2b1a0e" stroke-linecap="round"><line x1="0" y1="3" x2="0" y2="-24" stroke-width="2.2" transform="rotate(282)"/><line x1="0" y1="4" x2="0" y2="-16" stroke-width="3.4" transform="rotate(353.5)"/></g><circle r="3.6" fill="#2b1a0e"/><circle r="1.4" fill="#c97a2e"/></svg>
+   <div class="glow" style="left:2150px;top:700px;width:310px;height:330px"></div>
    <div class="hgate" style="left:440px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">빅그베의 오두막</b></div>
-   <img src="assets/b_healer.webp" alt="Healer's house" style="position:absolute;left:2060px;top:520px;width:520px;height:507px">
-   <img src="assets/b_guard_post.webp" alt="Patrol post" style="position:absolute;left:1648px;top:630px;width:246px;height:auto">
-   <img src="assets/b_mill.webp" alt="Old Mill" style="position:absolute;left:4960px;top:378px;width:700px;height:auto">
+   <img src="assets/b_healer.webp" alt="Healer's house" style="position:absolute;left:1510px;top:520px;width:520px;height:507px">
+   <img src="assets/b_guard_post.webp" alt="Patrol post" style="position:absolute;left:1098px;top:630px;width:246px;height:auto">
+   <img src="assets/b_mill.webp" alt="Old Mill" style="position:absolute;left:4410px;top:378px;width:700px;height:auto">
    <div id="shadows"></div>
    <div id="actors"></div>
    <div id="marks"></div>
@@ -546,7 +546,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 (() => {
 "use strict";
 let STAGE_W = 1920; const STAGE_H = 1080, STAGE_W0 = 1920, STAGE_WMAX = 2520;
-const VILLAGE_W = 5700;   /* temporary: the village is stretched by repeating its layers until the seamless street is painted */
+const VILLAGE_W = 5150;   /* temporary: the village is stretched by repeating its layers until the seamless street is painted */
 let W = VILLAGE_W, CAM_MIN = 0, CAM_MAX = W - STAGE_W, P_MIN = 470;
 let FEET = 985; const FEET_V = 985, FEET_T = 890;
 const  BGB_H = 220, NINI_H = Math.round(BGB_H * 0.55), CK_H = 165;
@@ -857,14 +857,14 @@ function setActorSprite(el, dir, h){
 const HZ_H = 175, TM_H = 190, MO_H = 150, GR_H = 215, ED_H = 175, KID_H = 150, BR_H = 128;
 let PH = 220;   /* player height: a child in the flashback */
 const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), tm = mkActor("tm","tommy",TM_H,1930), mo = mkActor("mo","molly",MO_H,-9999), ed = mkActor("ed","edward",ED_H,-9999), br = mkActor("br","twin_younger",BR_H,-9999), gr = mkActor("gr","green",GR_H,-9999), hl = mkActor("hl","nini",175,-9999), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
-let NPCX = { ed:-9999, br:-9999, nini:1010, ck:2610, hz:-9999, tm:1930, mo:-9999, gr:-9999 }; const NPCX_V = { ed:-9999, br:-9999, nini:1010, ck:2610, hz:-9999, tm:1930, mo:3200, gr:-9999 }, NPCX_T = { ed:-9999, br:-9999, nini:-9999, ck:830, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_A = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_C = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:1050, tm:-9999, mo:-9999, gr:-9999 }, NPCX_M = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:1650 };
+let NPCX = { ed:-9999, br:-9999, nini:1010, ck:2060, hz:-9999, tm:1380, mo:-9999, gr:-9999 }; const NPCX_V = { ed:-9999, br:-9999, nini:1010, ck:2060, hz:-9999, tm:1380, mo:2650, gr:-9999 }, NPCX_T = { ed:-9999, br:-9999, nini:-9999, ck:830, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_A = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_C = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:1050, tm:-9999, mo:-9999, gr:-9999 }, NPCX_M = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:1650 };
 const P = { x:S.x, dir:"front", walk:0, moving:false, face:"right" };
 /* NPCs stand facing front; once BGB comes within 300 px they turn and keep looking at him until he walks beyond 380 px (the gap stops flicker) */
 let BRX = 0;
 const FACING = { nini:false, ck:false, hz:false, tm:false, mo:false, gr:false };
 function npcFace(key, nx){ const d = Math.abs(P.x - nx); if (!FACING[key] && d < 300) FACING[key] = true; else if (FACING[key] && d > 380) FACING[key] = false; return FACING[key] ? (P.x < nx ? "left" : "right") : "front"; }   /* BGB is on the left -> face left, toward him */
 function place(){
-  if (S.scene === "village" && !S.flash) NPCX.mo = has("c7.gather") ? 3040 : has("dd02") ? 3200 : -9999;   /* Molly appears once the second bear is a possibility */
+  if (S.scene === "village" && !S.flash) NPCX.mo = has("c7.gather") ? 2490 : has("dd02") ? 2650 : -9999;   /* Molly appears once the second bear is a possibility */
   let dir = P.moving ? P.face : "front";
   setActorSprite(bgb, dir, PH);
   const w = parseFloat(bgb.style.width); bgb.style.left = Math.round(P.x - w/2) + "px";
@@ -909,7 +909,7 @@ function applyLight(dt){
 
 /* ---------- lighting ---------- */
 // Lamp positions in world px (from the Ground layer art). Light reaches R px sideways.
-const LAMPS_V = [372, 1146, 1786, 2765, 3550, 4172, 4946, 5586], LAMPS_T = [121, 442, 813, 981, 1763], LAMPS_A = [150, 480, 2210], LAMPS_C = [60, 230, 594, 940, 1480, 2250]; let LAMPS = LAMPS_V; const LAMP_R = 470, AMBER_MAX = .46, COOL_BASE = .27;
+const LAMPS_V = [372, 1146, 1236, 2215, 3000, 3622, 4396, 5036], LAMPS_T = [121, 442, 813, 981, 1763], LAMPS_A = [150, 480, 2210], LAMPS_C = [60, 230, 594, 940, 1480, 2250]; let LAMPS = LAMPS_V; const LAMP_R = 470, AMBER_MAX = .46, COOL_BASE = .27;
 const smooth = t => t*t*(3 - 2*t);
 function lampLight(x){ // returns {l, r, total}: warm light arriving on the left and right edge of a character at x
   let l = 0, r = 0;
@@ -1220,7 +1220,7 @@ function confirm7(){
 function startGather(){
   if (has("c7.gather") && !has("c7.done")){ nextAcc(); return; }
   setf("c7.gather"); mode = "modal"; hideHintNow(); $("fade").classList.add("on");
-  setTimeout(()=>{ setSceneNow("village", 2700); $("fade").classList.remove("on"); mode = "play"; stage.focus(); setTimeout(()=>{ startDlg("acc_open"); accAfterOpen = true; }, 500); }, 850);
+  setTimeout(()=>{ setSceneNow("village", 2150); $("fade").classList.remove("on"); mode = "play"; stage.focus(); setTimeout(()=>{ startDlg("acc_open"); accAfterOpen = true; }, 500); }, 850);
 }
 let accAfterOpen = false;
 const ENDINGS = {
@@ -1239,16 +1239,16 @@ function startCh7(){ setf("c7.on"); $("endcard").classList.remove("on"); chapter
 /* ---------- interactables ---------- */
 let IA = [
   { id:"nini",   x:()=>NPCX.nini, label:UI.talk,   top:FEET-NINI_H-150, run:()=>startDlg(niniNode()) },
-  { id:"sign",   x:()=>1345,      label:UI.read,   top:640,            run:()=>inspect("notice") },
-  { id:"enterA", x:()=>3705, label:UI.enterA, top:560, run:()=>tryEnter("archive", 430, ch2Gate) },
-  { id:"enterC", x:()=>4451, label:UI.enterC, top:560, run:()=>tryEnter("cafe", 500, ch1Gate) },
+  { id:"sign",   x:()=>1130,      label:UI.read,   top:640,            run:()=>inspect("notice") },
+  { id:"enterA", x:()=>3155, label:UI.enterA, top:560, run:()=>tryEnter("archive", 430, ch2Gate) },
+  { id:"enterC", x:()=>3901, label:UI.enterC, top:560, run:()=>tryEnter("cafe", 500, ch1Gate) },
   { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? "mo9" : "mo0") },
-  { id:"gather", x:()=>2700, label:UI.toGather, top:640, when:()=>has("c7.rec"), run:()=>startGather() },
+  { id:"gather", x:()=>2150, label:UI.toGather, top:640, when:()=>has("c7.rec"), run:()=>startGather() },
   { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 1850); } },
-  { id:"heal",   x:()=>2320,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 2030); } },
-  { id:"mill",   x:()=>5302,      label:UI.toMill, top:690,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
+  { id:"heal",   x:()=>1770,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 2030); } },
+  { id:"mill",   x:()=>4752,      label:UI.toMill, top:690,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
   { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ if (ch1Gate()){ startDlg(talk("tm")); return; } startDlg(tmNode()); } },
-  { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
+  { id:"post",   x:()=>1236,      label:UI.lPost,  top:660,            run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(ckNode()) },
   { id:"clock",  x:()=>2735,      label:UI.look,   top:560,            run:()=>inspect("clock") },
   { id:"door",   x:()=>2856,      label:UI.enter,  top:600,            run:()=>enterTower() }
@@ -1268,7 +1268,7 @@ const IA_T = [
   { id:"pit",   x:()=>1345, label:UI.lPit,   top:640, when:()=>has("c6.turn"), run:()=>inspect("pit") }
 ];
 const IA_A = [
-  { id:"exit",  x:()=>410,  label:UI.leaveA, top:540, run:()=>setScene("village", 3705) },
+  { id:"exit",  x:()=>410,  label:UI.leaveA, top:540, run:()=>setScene("village", 3155) },
   { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, run:()=>inspect("register") },
   { id:"comp",  x:()=>1500, label:UI.lComp,  top:540, run:()=>{ if (has("c6.on")){ startDlg("c6_comp"); return; } if (!has("gr.done")){ startDlg("m_no"); return; } endMono("ce3_0", startFlash); } },
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect(has("nini.key") ? "photo2" : "drawers") }
@@ -1294,11 +1294,11 @@ const IA_FT = [
   { id:"flever", x:()=>1500, label:UI.lLever, top:520, run:()=>{ if (has("f4.end")){ startDlg("fl9"); return; } startDlg("fl0"); } }
 ];
 const IA_H = [
-  { id:"hexit", x:()=>2131, label:UI.leaveH, top:430, run:()=>setScene("village", 2320) },
+  { id:"hexit", x:()=>2131, label:UI.leaveH, top:430, run:()=>setScene("village", 1770) },
   { id:"hl",    x:()=>1591, label:UI.talkHl, top:FEET_T-175-150, run:()=>startDlg(has("c6.hl") ? "hl9" : "hl0") }
 ];
 const IA_M = [
-  { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 5250) },
+  { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 4700) },
   { id:"bag",  x:()=>1160, label:UI.lBag, top:640, run:()=>inspect("bread") },
   { id:"gr",   x:()=>NPCX_M.gr, label:UI.talkGr, top:FEET_T-GR_H-150, run:()=>startDlg(grNode()) }
 ];
@@ -1312,7 +1312,7 @@ const IA_P = [
 ];
 let PRO_GO = false;
 const IA_C = [
-  { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 4451) },
+  { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 3901) },
   { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(hzNode()) }
 ];
 function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = ["nini","ck","hz","tm","mo","gr","hl","v1","v2","fded","fbrother"].includes(i.id); m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
@@ -1622,7 +1622,7 @@ function setSceneNow(name, x){
   if (FL){ [nini,ck,hz,tm,mo,gr].forEach(a=>{ a.style.display = "none"; a._sh.style.display = "none"; });
     NPCX.ed = PST ? (S.flash === 5 ? 1450 : 1000) : -9999; BRX = x + 100; } else NPCX.ed = -9999;
   const GA = has("c7.gather") && name === "village" && !S.flash; $("stage").classList.toggle("dusk", GA);
-  if (GA){ Object.assign(NPCX_V, { nini:2450, tm:2760, mo:3040 }); hz.style.display = ""; hz._sh.style.display = ""; gr.style.display = ""; gr._sh.style.display = ""; NPCX.hz = 2870; NPCX.gr = 3170; nini.style.display = ""; nini._sh.style.display = ""; mo.style.display = ""; mo._sh.style.display = ""; }
+  if (GA){ Object.assign(NPCX_V, { nini:1900, tm:2210, mo:2490 }); hz.style.display = ""; hz._sh.style.display = ""; gr.style.display = ""; gr._sh.style.display = ""; NPCX.hz = 2320; NPCX.gr = 2620; nini.style.display = ""; nini._sh.style.display = ""; mo.style.display = ""; mo._sh.style.display = ""; }
   const DAWN = S.flash === 5 && PST; if (DAWN){ NPCX.mo = 1100; NPCX.gr = 1230; mo.style.display = ""; mo._sh.style.display = ""; gr.style.display = ""; gr._sh.style.display = ""; }
   ed.style.display = (FL && PST) ? "" : "none"; ed._sh.style.display = (FL && PST) ? "" : "none";
   br.style.display = FL ? "" : "none"; br._sh.style.display = FL ? "" : "none";
@@ -1878,14 +1878,14 @@ function skipTo(n){
   $("pause").classList.remove("on"); mode = "play"; $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null;
   if (n >= 2) SKIP_STEPS[Math.min(n,4)]();
   checkDeduce(); save(); refreshHud();
-  if (n === 2) chapterIntro(2, ()=>setSceneNow("village", 2700));
-  else if (n === 3) chapterIntro(3, ()=>setSceneNow("village", 3600));
+  if (n === 2) chapterIntro(2, ()=>setSceneNow("village", 2150));
+  else if (n === 3) chapterIntro(3, ()=>setSceneNow("village", 3050));
   else if (n === 4){ setSceneNow("mill", 1400); startFlash(); }
   else if (n === 7 || n === 77){
     qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown","f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown","c6.on","dd04","gr.admit","c6.hl","c6.turn","c6.hid","c6.k1","c6.k2","c6.k3","c6.k4","c6.k5","c6.k6","dd05","dd12","c6.d","c6.fin","c6.shown"]);
     S.resp = ["Green","BGB","BGB"]; qEv(["acct_gr","report","watch","pit","stmt_ck2","wool","patrol2","walk","hide","glove","letter"]); checkDeduce();
     if (n === 7){ setSceneNow("mill", 1400); startCh7(); }
-    else { qFlags(["c7.on","c7.green","dd09","c7.rec"]); qEv(["motive","record"]); checkDeduce(); setSceneNow("village", 2500); toast(lang==="ko"?"연출 모드: 7장 마을 모임":"Director: Chapter 7 gathering"); }
+    else { qFlags(["c7.on","c7.green","dd09","c7.rec"]); qEv(["motive","record"]); checkDeduce(); setSceneNow("village", 1950); toast(lang==="ko"?"연출 모드: 7장 마을 모임":"Director: Chapter 7 gathering"); }
   }
   else if (n === 6 || n === 66){
     qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown","f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown","c6.on"]); S.ret = { scene:"archive", x:1500 };
