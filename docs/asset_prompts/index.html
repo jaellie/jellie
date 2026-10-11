@@ -490,6 +490,27 @@ const SECTIONS = [
    tech:["3840x420 px."]},
    {size:"3840x420"})
 ]},
+{id:"g", name:"G. Icon pack (matches the current game UI)", sub:"Two sheets. Sheet 1 is the round button icons (like the gear, search and close buttons). Sheet 2 is the loose painted objects (like the brass key and the magnifier ring), with no disc.", items:[
+ P("Icon pack 1: round UI button icons (16)", {
+   goal:"Replace the cold, flat icon pack. These are the small round buttons in the game HUD and menus, so they must look like the existing gear, search, satchel and close buttons.",
+   refs:["the existing round HUD buttons (icon_satchel, icon_search, icon_settings, icon_close): copy the disc, the rim and the pictogram style exactly"],
+   subject:"A sheet of 16 round button icons. Each icon is a cream pictogram on a dark brown round disc inside a thick brass rim, the same as the supplied buttons.",
+   layout:["Sheet 1536 x 1536 px, a grid of 4 columns x 4 rows, each cell 320 x 320 px. Inside each cell the round button is 256 px across, centred, leaving at least 32 px of fully transparent gap to the next button and to the sheet edge.","Order, left to right then top to bottom: 1 settings gear, 2 sound on (speaker with two sound arcs), 3 sound off (speaker with a diagonal slash), 4 music (two joined eighth notes), 5 language globe (a globe with two curved meridians and one equator), 6 save (a folded letter with a down arrow), 7 load (a folded letter with an up arrow), 8 back arrow (a thick left arrow), 9 close (a thick X), 10 magnifier, 11 hand to interact (an open palm with four fingers and a thumb), 12 eye to observe, 13 speech bubble with three dots, 14 question mark, 15 check mark, 16 warning triangle with an exclamation mark."],
+   details:["Disc: dark brown (#4A3A2A at the centre, #3B2C20 at the edge) with a faint paper-like speckle, no gradient shine.","Rim: brass, about 14 px thick at this size, painted in three tones (light #E0C27E on the upper left, base #B08D57, shadow #6E5530 on the lower right), with a thin dark-brown outline (#2A1A12) on both the outer and inner edge.","Pictogram: warm cream (#F2E8D4, shadow #D9C9A6), a thick friendly shape with rounded ends and corners, stroke weight about 16 px at this size, drawn slightly hand-made and not perfectly geometric. Every pictogram sits inside the middle 60% of the disc. NO outline around the cream pictogram, only the soft paper tone.","The same pictogram weight, size and brass rim on all 16 buttons so they look like one family."],
+   include:["a hand-painted storybook look, the same as the supplied buttons","small brass glints only on the rim"], exclude:["any text or letters","a flat vector or glossy plastic look","neon or bright colours","a drop shadow under the buttons","different disc sizes","thin hairline strokes"],
+   tech:["Sheet 1536x1536 px, a REAL transparent background (alpha channel), not a drawn checkerboard."]},
+   {size:"1536x1536", tags:["sheet"]}),
+
+ P("Icon pack 2: loose painted object icons (16)", {
+   goal:"Icons that stand alone without a disc, for map and place-change prompts, the evidence tab and the case file. They must look like the existing brass key and the magnifier ring: small painted objects.",
+   refs:["the existing brass key prop and the brass magnifier ring (match the brass colours, the thick dark-brown outline and the soft painted shading)", "the paper speech bubble with the exclamation mark (match the parchment tone)"],
+   subject:"A sheet of 16 small painted objects, each drawn on its own with no disc, no frame and no background.",
+   layout:["Sheet 1536 x 1536 px, a grid of 4 columns x 4 rows, each cell 320 x 320 px. Each object fits inside a 240 x 240 px area, centred in its cell, leaving at least 40 px of fully transparent gap to the next object and to the sheet edge.","Order, left to right then top to bottom: 1 brass key (same shape as the supplied key but drawn upright and slightly smaller), 2 footprint (one bear footprint pressed into snow: an oval pad with four round toes, shown as a soft blue-white dent with a darker blue shadow edge), 3 pushpin (a red-headed pin with a short brass needle), 4 paper clip (brass, a single clip), 5 pocket-watch style clock (a round brass case with a cream face, two hands and a small crown on top), 6 hand mirror (round brass frame with a short handle and pale blue glass), 7 hand bell (brass bell with a short wooden handle), 8 folder (a cream paper folder with a small tab), 9 person (a simple bust silhouette in cream paper), 10 two people (two overlapping bust silhouettes in cream paper), 11 document (a page with a folded corner and four ruled lines, no readable text), 12 camera (a small old box camera with a round brass lens), 13 closed padlock (brass), 14 open padlock (brass, shackle raised), 15 rubbish bin (a small wicker or wooden bin with a lid), 16 star (a five-point brass star, slightly rounded)."],
+   details:["Outline: dark warm-brown (#2A1A12), about 6 px at this size, a little thicker on the outer silhouette, closed and clean.","Brass: #B08D57 base, #E0C27E lit edge, #6E5530 shadow. Cream paper: #F2E8D4 with #D9C9A6 shadow. Red: #A8483F. Burgundy: #6E2A35. Blue glass: #8FA2C6.","Painting: soft painterly shading, two to three tones per surface, light from the upper left, a small brass glint only on metal. No gloss, no shine, no glow.","All 16 have the same visual weight, the same outline thickness and about the same size, so they read as one family."],
+   include:["each object clearly recognisable at 64 px","the footprint reads as snow, not as a paint stamp"], exclude:["any text or letters","a disc, circle, frame or button shape around any object","a drop shadow, ground shadow or glow","a flat vector or 3D look","objects touching or overlapping each other"],
+   tech:["Sheet 1536x1536 px, a REAL transparent background (alpha channel), not a drawn checkerboard."]},
+   {size:"1536x1536", tags:["sheet"]})
+]},
 {id:"e", name:"E. Archive: already made", sub:"Finished art, kept so you can regenerate or tweak it later. Not counted as to-do.", items:[
 P("✔ 'What I overlooked' notebook page", {
     goal:"A Notes-tab page that lists six moments the player passed over while trusting BGB.",
@@ -707,7 +728,7 @@ const GAP = [
 "- Each item also keeps at least 12 px of transparent margin from the edge of the sheet.",
 "- Items sit on a clean grid in the stated order so they can be cut out automatically. Nothing is drawn in the gaps (no shadows, glow, ground lines or labels)."
 ].join("\n");
-const SHEET_RE = /poses|portraits|holding|lifting|icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits|Identity Board|Responsibility Board|notebook page/i;
+const SHEET_RE = /Icon pack|poses|portraits|holding|lifting|icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits|Identity Board|Responsibility Board|notebook page/i;
 SECTIONS.forEach(sec => sec.items.forEach(it => { if (it.kind === "png" && SHEET_RE.test(it.title) && !it.body.includes("SHEET SPACING")) it.body = it.body.replace("\n\nSTYLE (apply to everything):", "\n\n" + GAP + "\n\nSTYLE (apply to everything):"); }));
 
 // ---- render
