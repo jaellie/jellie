@@ -102,9 +102,9 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #pdoor b{position:absolute;right:30px;top:250px;width:18px;height:18px;border-radius:50%;background:#d9b25c}
 #pmarks img{position:absolute}
 /* Chapter 4 flashback: warm sepia grade, vignette, caption, rain, sepia rewind */
-#stage.flash #vsc,#stage.flash #tsc{filter:sepia(.5) saturate(1.25) brightness(1.12) contrast(.95)}
+#stage.flash #vsc,#stage.flash #tsc,#stage.flash5 #vsc{filter:sepia(.5) saturate(1.25) brightness(1.12) contrast(.95)}
 #flv{position:absolute;inset:0;pointer-events:none;z-index:6;opacity:0;transition:opacity 1s;background:radial-gradient(ellipse at center,transparent 55%,rgba(60,35,10,.55) 100%)}
-#stage.flash #flv{opacity:1}
+#stage.flash #flv,#stage.flash5 #flv{opacity:1}
 #flcap{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:44;pointer-events:none;opacity:0;transition:opacity 1.2s;font:700 42px/1.2 var(--font-label);letter-spacing:.16em;white-space:nowrap;color:#f6e3c0;text-shadow:0 3px 10px rgba(0,0,0,.7);text-align:center}
 #flcap.on{opacity:1}
 #rain{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;transition:opacity 2s;background:repeating-linear-gradient(105deg,rgba(200,215,240,.0) 0 14px,rgba(200,215,240,.28) 14px 16px);background-size:60px 60px;animation:rainmv .45s linear infinite}
@@ -113,6 +113,16 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #stage.rw #vsc,#stage.rw #tsc{animation:rwob 1.6s ease-in-out;filter:grayscale(1) sepia(.7) contrast(1.1)}
 @keyframes rwob{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px) skewX(1deg)}40%{transform:translateX(8px)}60%{transform:translateX(-5px) skewX(-1deg)}80%{transform:translateX(4px)}}
 /* Old Mill: PLACEHOLDER art (flat daylight colours) until the real layers exist */
+#fsc{position:absolute;inset:0;display:none;background:linear-gradient(#0a0f1e,#16213a 60%,#1e2a44)}
+#fsc.on{display:block}
+#fworld{position:absolute;left:0;top:0;width:2600px;height:1080px;will-change:transform}
+#fworld img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
+#fmarks img{position:absolute}
+#fwater{position:absolute;left:0;top:0;pointer-events:none}
+#fwater .fw{position:absolute;left:-200px;top:925px;width:3200px;height:200px;background:url(assets/flood_water.webp) 0 0/800px 100% repeat-x;opacity:.78;animation:wv 9s linear infinite}
+#fwater .ff{position:absolute;left:-200px;top:975px;width:3200px;height:110px;background:url(assets/flood_foam.webp) 0 0/800px 100% repeat-x;opacity:.9;animation:wv 6s linear infinite reverse}
+@keyframes wv{to{background-position:800px 0}}
+#stage.flash5 #vsc,#stage.flash5 #tsc{filter:grayscale(.45) sepia(.35) brightness(.95) contrast(1.02)}
 #msc{position:absolute;inset:0;display:none;background:linear-gradient(#bfd0e0,#e8e4d8 62%)}
 #msc.on{display:block}
 #mworld{position:absolute;left:0;top:0;width:3000px;height:1080px;will-change:transform}
@@ -330,6 +340,13 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
     <div id="pmarks"></div>
    </div>
   </div>
+  <div id="fsc">
+   <div id="fworld">
+    <img src="assets/flood_stairwell.webp" style="left:0;top:110px" width="2491" height="908" alt="">
+    <div id="fmarks"></div>
+   </div>
+   <div id="fwater" class="layer"><div class="fw"></div><div class="ff"></div></div>
+  </div>
   <div id="msc">
    <div class="layer" id="mfar"><img src="assets/m_far.webp" alt=""></div>
    <div id="mworld">
@@ -482,6 +499,7 @@ const UI = {
   locM:{en:"The Old Mill", ko:"낡은 방앗간"}, talkMo:{en:"Talk to Molly", ko:"몰리 할머니와 이야기한다"}, talkGr:{en:"Talk to Green", ko:"Green과 이야기한다"}, toMill:{en:"Walk to the Old Mill", ko:"낡은 방앗간으로 간다"}, leaveM:{en:"Walk back to the village", ko:"마을로 돌아간다"}, lComp:{en:"Compare the photographs", ko:"사진을 맞춰 본다"},
   lBag:{en:"Look at the bag on the table", ko:"탁자 위 봉투를 살핀다"}, lWin:{en:"Look out the window", ko:"창밖을 본다"}, lBook:{en:"Look at the books", ko:"책들을 살핀다"}, lStove:{en:"Look at the stove", ko:"난로를 살핀다"}, lKettle:{en:"Look at the kettle", ko:"주전자를 살핀다"},
   locF:{en:"Bell Village, 23 years earlier", ko:"벨 마을, 23년 전"}, capF:{en:"23 YEARS EARLIER \u00b7 BELL VILLAGE", ko:"23년 전 \u00b7 벨 마을"}, talkEd:{en:"Talk to Edward", ko:"에드워드에게 말한다"}, lGate:{en:"Open the gate", ko:"문을 연다"}, toTowerF:{en:"Slip into the Clocktower", ko:"시계탑에 몰래 들어간다"}, lLever:{en:"Watch the lever", ko:"레버를 지켜본다"}, leaveF:{en:"Go back outside", ko:"밖으로 나간다"}, rewind:{en:"That's not how it happened.", ko:"그렇게 된 게 아니야."}, mem:{en:"Memory", ko:"기억"},
+  locFl:{en:"The flooded stairwell", ko:"물에 잠긴 계단통"}, lBrother:{en:"Reach for your brother", ko:"동생에게 손을 뻗는다"}, lHandbell:{en:"Ring the handbell", ko:"손종을 울린다"}, lUp:{en:"Climb out", ko:"위로 올라간다"}, lWatchEd:{en:"Watch Edward", ko:"에드워드를 지켜본다"}, lVill:{en:"Listen", ko:"귀를 기울인다"},
   talkTm:{en:"Talk to Tommy", ko:"토미와 이야기한다"},
   lPost:{en:"Read Tommy's logbook", ko:"토미의 일지를 읽는다"}, conHead:{en:"Contradictions and deductions", ko:"모순과 추리"}, askNext:{en:"Is there another bear?", ko:"다른 곰이 있는가?"},
   leaveC:{en:"Leave the café", ko:"카페를 나간다"}, talkHz:{en:"Talk to Hazel", ko:"헤이즐과 이야기한다"}, locC:{en:"Hazel's Café", ko:"헤이즐의 카페"}, lBoots:{en:"Look at the prints on the stairs", ko:"계단의 발자국을 살핀다"},
@@ -576,6 +594,10 @@ EV.receipt = { id:"receipt", name:{en:"Café receipt",ko:"카페 영수증"}, im
   desc:{en:"A receipt from Hazel's Café, settled at 11:42. Hazel wrote the time on it herself.", ko:"헤이즐의 카페 영수증. 11시 42분에 계산되었고, 헤이즐이 직접 시각을 적어 두었다."},
   note:{en:"The café receipt is stamped 11:42.", ko:"카페 영수증에는 11시 42분이 적혀 있다."} };
 const NOTES = {
+  m5:{en:"Memory: a falling beam tears the child's left ear while he drags his brother free.", ko:"기억: 아이가 동생을 끌어낼 때 떨어진 들보가 왼쪽 귀를 찢는다."},
+  m5b:{en:"Memory: the child rings the emergency handbell. Up the hill, windows light up. Nobody sees him do it.", ko:"기억: 아이가 비상 손종을 울린다. 언덕 위 창문들에 불이 켜진다. 아무도 그를 보지 못했다."},
+  m6:{en:"Memory: Edward carries the younger child out and walks past the other without a glance.", ko:"기억: 에드워드는 동생을 안고 나가면서 다른 아이를 보지 않고 지나간다."},
+  m7:{en:"Memory: the crowd praises Edward and the carried child, and does not know there are two.", ko:"기억: 군중은 에드워드와 안겨 나온 아이를 칭찬하고, 아이가 둘이라는 것을 모른다."},
   m1:{en:"Memory: Edward ties a knot in each child's scarf by hand, on a different side for each.", ko:"기억: 에드워드는 두 아이의 목도리를 서로 다른 쪽으로 직접 묶어 준다."},
   m2:{en:"Memory: the child opens the gate with his right hand.", ko:"기억: 아이는 오른손으로 문을 연다."},
   m3:{en:"Memory: the younger brother wedges the river-warning lever with a torn end of his scarf.", ko:"기억: 동생이 목도리 끝이 찢어진 채로 강 경보 레버를 끼워 버린다."},
@@ -662,6 +684,20 @@ D.flrw = {sp:"kid", t:{en:"(He reaches out, but the moment slips away.)", ko:"(�
 D.fl1 = {sp:"kid", t:{en:"A thread of wool tears off and stays jammed in the lever. His brother laughs and does not know what he has done.", ko:"털실 한 가닥이 찢어져 레버에 끼인 채 남는다. 동생은 웃고, 자기가 무슨 짓을 했는지 모른다."}, note:"m3", set:"f4.lever", next:"fl2"};
 D.fl2 = {sp:"kid", t:{en:"Rain begins to patter on the tower roof.", ko:"탑 지붕 위로 빗방울이 떨어지기 시작한다."}, set:"f4.end", next:null};
 D.fl9 = {sp:"kid", t:{en:"The lever stays wedged. Far below, the river is rising.", ko:"레버는 끼인 채 그대로다. 저 아래에서 강물이 불어난다."}};
+/* Chapter 5 (placeholder build) */
+D.fb0 = {sp:"kid", t:{en:"His little brother is wedged behind a fallen beam, the water already at his chest.", ko:"동생이 쓰러진 들보 뒤에 끼어 있다. 물이 벌써 가슴까지 찼다."},
+   ch:[{t:{en:"Go back for Edward.",ko:"에드워드를 부르러 간다."},go:"fbrw"},{t:{en:"Pull him out.",ko:"끌어낸다."},go:"fb1"}]};
+D.fbrw = {sp:"kid", t:{en:"(He turns, but the moment slips away.)", ko:"(돌아서지만 장면이 흩어진다.)"}, next:"fb0"};
+D.fb1 = {sp:"kid", t:{en:"He grabs his brother and pulls. A beam swings down and tears his left ear, and he keeps pulling until the boy is free.", ko:"동생을 붙잡고 끌어당긴다. 들보가 휘어 내려와 왼쪽 귀를 찢지만 멈추지 않고, 동생을 끝내 빼낸다."}, note:"m5", set:"f5.free", next:null};
+D.fb_wait = {sp:"kid", t:{en:"His brother first.", ko:"동생이 먼저다."}};
+D.fb_bell = {sp:"kid", t:{en:"He rings the handbell as hard as he can. Far up the hill, lights come on in the windows.", ko:"있는 힘껏 손종을 울린다. 저 위 언덕의 창문마다 불이 켜진다."}, note:"m5b", set:"f5.bell", next:null};
+D.fb_up = {sp:"kid", t:{en:"Not yet. The bell has to ring first.", ko:"아직이다. 먼저 종을 울려야 한다."}};
+D.fd_v1 = {sp:"kid", t:{en:"\"Edward is a good person. Thank goodness for Edward.\"", ko:"\"에드워드는 좋은 사람이야. 에드워드가 있어서 다행이지.\""}, note:"m7", set:"f5.crowd", next:null};
+D.fd_v2 = {sp:"kid", t:{en:"\"Look how gently he carries the brave one.\"", ko:"\"용감한 아이를 얼마나 조심스레 안고 있는지 좀 봐.\""}, set:"f5.crowd", next:null};
+D.fd_ed = {sp:"ed", t:{en:"Hold on, little one. I have you.", ko:"조금만 참으렴, 아가야. 내가 안고 있다."}, note:"m6", set:"f5.ed", next:null};
+D.fd_arch = {sp:"kid", t:{en:"Edward carries his brother into the Archive. The door shuts. Nobody looks at the child left standing in the cold.", ko:"에드워드가 동생을 안고 기록실로 들어간다. 문이 닫힌다. 추위 속에 남은 아이를 보는 사람은 없다."}, set:"f5.end", next:null};
+D.fd_no = {sp:"kid", t:{en:"He is not ready to look away yet.", ko:"아직 눈을 뗄 수가 없다."}};
+D.pf_end = {sp:"bgb", ex:"thinking", t:{en:"He always looked out for me.", ko:"그분은 늘 나를 챙겨 주셨어."}};
 D.tm0 = {sp:"tm", t:{en:"Evening, Mr. Big Green Bear. I walk this bridge loop every night and keep the log.", ko:"안녕하세요, 빅그린베어 씨. 저는 밤마다 이 다리 둘레를 돌며 일지를 씁니다."},
    ch:[{t:{en:"What did you see last night?",ko:"어젯밤에 뭘 보셨나요?"},go:"tm1"},{t:{en:"Do you mind the tower at night?",ko:"밤에 탑이 거슬리진 않으세요?"},go:"tm2"},{t:{en:"Anything earlier in your watch?",ko:"근무 초반에 본 건 없나요?"},go:"tm3"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
 D.tm1 = {sp:"tm", t:{en:"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.", ko:"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 두었습니다. 뒷모습만 봤습니다."}, ev:"stmt_tm", set:"tm.stmt", next:null};
@@ -713,7 +749,7 @@ let BRX = 0;
 const FACING = { nini:false, ck:false, hz:false, tm:false, mo:false, gr:false };
 function npcFace(key, nx){ const d = Math.abs(P.x - nx); if (!FACING[key] && d < 300) FACING[key] = true; else if (FACING[key] && d > 380) FACING[key] = false; return FACING[key] ? (P.x < nx ? "left" : "right") : "front"; }   /* BGB is on the left -> face left, toward him */
 function place(){
-  if (S.scene === "village") NPCX.mo = has("dd02") ? 3300 : -9999;   /* Molly appears once the second bear is a possibility */
+  if (S.scene === "village" && !S.flash) NPCX.mo = has("dd02") ? 3300 : -9999;   /* Molly appears once the second bear is a possibility */
   let dir = P.moving ? P.face : "front";
   setActorSprite(bgb, dir, PH);
   const w = parseFloat(bgb.style.width); bgb.style.left = Math.round(P.x - w/2) + "px";
@@ -735,7 +771,7 @@ function place(){
   setActorSprite(hz, hface, HZ_H); hz.style.left = Math.round(NPCX.hz - parseFloat(hz.style.width)/2) + "px";
   tm.style.transform = "scale("+(1-0.005*Math.sin(tt/950+4)).toFixed(3)+","+(1+0.012*Math.sin(tt/950+4)).toFixed(3)+")";
   mo.classList.add("silh"); gr.classList.add("silh"); br.classList.add("silh"); bgb.classList.toggle("silh", !!S.flash);
-  if (S.flash){ const tgt = P.x + (P.face === "right" ? -100 : 100); BRX += (tgt - BRX) * 0.06; NPCX.br = S.scene === "tower" ? 1560 : Math.round(BRX); } else NPCX.br = -9999;
+  if (S.flash){ const tgt = P.x + (P.face === "right" ? -100 : 100); BRX += (tgt - BRX) * 0.06; NPCX.br = S.scene === "tower" ? 1560 : (S.scene === "flood" && !has("f5.free")) ? 1750 : (S.flash === 5 && S.scene === "village") ? 1860 : Math.round(BRX); } else NPCX.br = -9999;
   setActorSprite(ed, "front", ED_H); ed.style.left = Math.round(NPCX.ed - parseFloat(ed.style.width)/2) + "px";
   setActorSprite(br, "front", BR_H); br.style.left = Math.round(NPCX.br - parseFloat(br.style.width)/2) + "px";
   setActorSprite(mo, "front", MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
@@ -812,6 +848,17 @@ const IA_A = [
   { id:"comp",  x:()=>1500, label:UI.lComp,  top:540, run:()=>{ if (!has("gr.done")){ startDlg("m_no"); return; } showEnd(); } },
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect(has("nini.key") ? "photo2" : "drawers") }
 ];
+const IA_FL = [
+  { id:"fbrother", x:()=>1750, label:UI.lBrother, top:440, run:()=>startDlg(has("f5.free") ? "fb_wait" : "fb0") },
+  { id:"fbell",    x:()=>700,  label:UI.lHandbell, top:520, run:()=>startDlg(!has("f5.free") ? "fb_wait" : has("f5.bell") ? "fb_up" : "fb_bell") },
+  { id:"fup",      x:()=>2380, label:UI.lUp,       top:420, run:()=>{ if (!has("f5.free") || !has("f5.bell")){ startDlg("fb_up"); return; } setScene("village", 1000); } }
+];
+const IA_D = [
+  { id:"v1",   x:()=>1500, label:UI.lVill,    top:FEET-MO_H-150, run:()=>startDlg("fd_v1") },
+  { id:"v2",   x:()=>1650, label:UI.lVill,    top:FEET-GR_H-150, run:()=>startDlg("fd_v2") },
+  { id:"fded", x:()=>1800, label:UI.lWatchEd, top:FEET-ED_H-150, run:()=>startDlg("fd_ed") },
+  { id:"farch",x:()=>4200, label:UI.lWatchEd, top:560,           run:()=>{ if (!has("f5.ed")){ startDlg("fd_no"); return; } startDlg("fd_arch"); } }
+];
 const IA_F = [
   { id:"ed",   x:()=>1250, label:UI.talkEd,   top:FEET-ED_H-150, run:()=>startDlg(has("f4.ed") ? "fe9" : "fe0") },
   { id:"gate", x:()=>1750, label:UI.lGate,    top:640,           run:()=>startDlg(has("f4.gate") ? "fg9" : "fg0") },
@@ -839,8 +886,8 @@ const IA_C = [
   { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 5200) },
   { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(has("hz.done")?"h9":"h0") }
 ];
-function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = i.id==="nini"||i.id==="ck"||i.id==="hz"||i.id==="tm"||i.id==="mo"||i.id==="gr"; m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
-mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks")); mkMarks(IA_M, $("mmarks")); mkMarks(IA_F, marks); mkMarks(IA_FT, $("tmarks"));
+function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = ["nini","ck","hz","tm","mo","gr","v1","v2","fded","fbrother"].includes(i.id); m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
+mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks")); mkMarks(IA_M, $("mmarks")); mkMarks(IA_F, marks); mkMarks(IA_D, marks); mkMarks(IA_FL, $("fmarks")); mkMarks(IA_FT, $("tmarks"));
 IA = IA_V;
 let near = null, peek = 0, autoGo = null;
 
@@ -920,7 +967,8 @@ function advance(fromClick){
   applyNode(n); goto(n.next || null);
 }
 function goto(id){ if (!id){ endDlg(); return; } cur = id; renderDlg(true); }
-function endDlg(){ const fin = S.flash && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); setTimeout(()=>showEnd4(), 1800); $("rain").classList.add("on"); }
+function endDlg(){ const f5 = S.flash === 5 && has("f5.end") && !has("f5.shown"); if (f5){ setf("f5.shown"); setTimeout(()=>{ toast(lang==="ko"?"종이 한 번, 느리게 울린다. 그날 밤 울리지 않았던 종이다.":"A single slow bell tone, the one that never rang that night."); setTimeout(()=>showEnd5(), 2400); }, 900); }
+  const fin = S.flash && S.flash !== 5 && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); setTimeout(()=>showEnd4(), 1800); $("rain").classList.add("on"); }
   const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>setScene("village", 700), 50); }
  endDlg0(); }
 function endDlg0(){ $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null; mode = "play"; clearInterval(typing); typing = null; save(); }
@@ -944,27 +992,29 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 /* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
-const ROOM = { cottage:{min:0,end:2400}, mill:{min:0,end:3000}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
-function locOf(n){ return tr(n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
+const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2400}, mill:{min:0,end:3000}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+function locOf(n){ return tr(n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
-  S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage", MI = name === "mill", IN = T || A || C || PR || MI;
-  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR); $("msc").classList.toggle("on", MI);
-  const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : PR ? $("pworld") : MI ? $("mworld") : $("world");
-  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else if (PR) host.appendChild($("pmarks")); else if (MI) host.appendChild($("mmarks")); else host.appendChild(marks);
-  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : (PR || MI) ? [] : LAMPS_T; IA = A ? IA_A : C ? IA_C : PR ? IA_P : MI ? IA_M : (S.flash && T) ? IA_FT : IA_T; NPCX = (A || PR) ? NPCX_A : C ? NPCX_C : MI ? NPCX_M : NPCX_T; }
-  else  { W = VILLAGE_W; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = S.flash ? IA_F : IA_V; }
+  S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage", MI = name === "mill", FLD = name === "flood", IN = T || A || C || PR || MI || FLD;
+  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR); $("msc").classList.toggle("on", MI); $("fsc").classList.toggle("on", FLD);
+  const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : PR ? $("pworld") : MI ? $("mworld") : FLD ? $("fworld") : $("world");
+  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else if (PR) host.appendChild($("pmarks")); else if (MI) host.appendChild($("mmarks")); else if (FLD) host.appendChild($("fmarks")); else host.appendChild(marks);
+  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : (PR || MI || FLD) ? [] : LAMPS_T; IA = A ? IA_A : C ? IA_C : PR ? IA_P : MI ? IA_M : FLD ? IA_FL : (S.flash && T) ? IA_FT : IA_T; NPCX = (A || PR || FLD) ? NPCX_A : C ? NPCX_C : MI ? NPCX_M : NPCX_T; if (FLD) FEET = 930; }
+  else  { W = VILLAGE_W; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = S.flash === 5 ? IA_D : S.flash ? IA_F : IA_V; }
   nini.style.display = IN ? "none" : ""; nini._sh.style.display = IN ? "none" : "";
-  ck.style.display = (A || C || PR || MI) ? "none" : ""; ck._sh.style.display = (A || C || PR || MI) ? "none" : "";
+  ck.style.display = (A || C || PR || MI || FLD) ? "none" : ""; ck._sh.style.display = (A || C || PR || MI || FLD) ? "none" : "";
   hz.style.display = C ? "" : "none"; hz._sh.style.display = C ? "" : "none";
   tm.style.display = IN ? "none" : ""; tm._sh.style.display = IN ? "none" : "";
   mo.style.display = IN ? "none" : ""; mo._sh.style.display = IN ? "none" : "";
-  const FL = !!S.flash; $("stage").classList.toggle("flash", FL); PH = FL ? KID_H : 220;
+  const FL = !!S.flash; $("stage").classList.toggle("flash", S.flash === 4 || S.flash === true); $("stage").classList.toggle("flash5", S.flash === 5); PH = FL ? KID_H : 220;
   if (FL){ [nini,ck,hz,tm,mo,gr].forEach(a=>{ a.style.display = "none"; a._sh.style.display = "none"; });
-    NPCX.ed = (!IN) ? 1250 : -9999; BRX = x + 100; } else NPCX.ed = -9999;
+    NPCX.ed = (!IN) ? (S.flash === 5 ? 1800 : 1250) : -9999; BRX = x + 100; } else NPCX.ed = -9999;
+  const DAWN = S.flash === 5 && !IN; if (DAWN){ NPCX.mo = 1500; NPCX.gr = 1650; mo.style.display = ""; mo._sh.style.display = ""; gr.style.display = ""; gr._sh.style.display = ""; }
   ed.style.display = (FL && !IN) ? "" : "none"; ed._sh.style.display = (FL && !IN) ? "" : "none";
   br.style.display = FL ? "" : "none"; br._sh.style.display = FL ? "" : "none";
   if (!FL) $("rain").classList.remove("on");
-  if (FL && S.flags["f4.end"]) $("rain").classList.add("on");
+  if (S.flash === 5) $("rain").classList.toggle("on", FLD);   /* flood night: rain; the dawn after: dry and cold */
+  else if (FL && S.flags["f4.end"]) $("rain").classList.add("on");
   gr.style.display = MI ? "" : "none"; gr._sh.style.display = MI ? "" : "none";
   $("t8").classList.toggle("hide", IN || !!S.flash); $("t9").classList.toggle("hide", IN || !!S.flash);
   P.x = x; cam = Math.max(CAM_MIN, Math.min(CAM_MAX, P.x - STAGE_W/2)); near = null;
@@ -977,22 +1027,32 @@ function setScene(name, x){
 }
 function enterTower(){ setScene("tower", 470); }
 function rewindFx(){ const st = $("stage"); st.classList.add("rw"); toast(tr(UI.rewind)); setTimeout(()=>st.classList.remove("rw"), 1700); }
+let NEXTK = 4;
+function startFlash5(){
+  S.flash = 5; ["f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown"].forEach(k=>S.flags[k] = false);
+  $("endcard").classList.remove("on"); mode = "modal"; $("fade").classList.add("on");
+  setTimeout(()=>{ setSceneNow("flood", 420); $("rain").classList.add("on"); $("fade").classList.remove("on"); const c = $("flcap"); c.textContent = tr(UI.locFl); c.classList.add("on"); mode = "play"; setTimeout(()=>c.classList.remove("on"), 3000); stage.focus(); }, 800);
+}
+function showEnd5(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"5장 끝":"END OF CHAPTER 5"; $("eH").textContent = k?"좋은 사람":"A Good Person";
+  $("eP1").textContent = k?"아이는 추위 속에 홀로 서 있다. 아무도 그를 보지 않았다.":"The child stands alone in the cold. Nobody looked at him.";
+  $("eP2").textContent = k?"다음은 6장 5분의 공백입니다. 6장은 아직 만들지 않았습니다.":"Next is Chapter 6, Five Missing Minutes. It is not built yet.";
+  $("eNext").style.display = "none"; $("eBack").textContent = k?"현재로 돌아가기":"Back to the present"; $("endcard").classList.add("on"); }
 function startFlash(){
   S.ret = { scene:S.scene, x:Math.round(P.x) }; S.flash = true; S.flags["f4.ed"] = false; S.flags["f4.gate"] = false; S.flags["f4.lever"] = false; S.flags["f4.end"] = false; S.flags["f4.shown"] = false;
   $("endcard").classList.remove("on"); mode = "modal"; $("fade").classList.add("on");
   setTimeout(()=>{ setSceneNow("village", 700); $("fade").classList.remove("on"); const c = $("flcap"); c.textContent = tr(UI.capF); c.classList.add("on"); mode = "play"; setTimeout(()=>c.classList.remove("on"), 3600); stage.focus(); }, 800);
 }
-function endFlash(){ const r = S.ret || { scene:"archive", x:1500 }; S.flash = false; $("endcard").classList.remove("on"); mode = "modal"; $("fade").classList.add("on");
-  setTimeout(()=>{ setSceneNow(r.scene, r.x); $("fade").classList.remove("on"); mode = "play"; stage.focus(); }, 800); }
+function endFlash(){ const r = S.ret || { scene:"archive", x:1500 }; const from5 = S.flash === 5; S.flash = false; $("endcard").classList.remove("on"); mode = "modal"; $("fade").classList.add("on");
+  setTimeout(()=>{ setSceneNow(r.scene, r.x); $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (from5) setTimeout(()=>startDlg("pf_end"), 700); }, 800); }
 function showEnd4(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"4장 끝":"END OF CHAPTER 4"; $("eH").textContent = k?"훔쳐 간 이름":"The Name That Was Stolen";
   $("eP1").textContent = k?"종은 울리지 않는다. 물이 차오르기 시작한다.":"The bell does not ring. The water begins to rise.";
-  $("eP2").textContent = k?"다음은 5장, 홍수의 밤입니다. 필요한 그림: 어린 쌍둥이, 과거의 마을(홍수 그림은 준비됨).":"Next is Chapter 5, the flood night. Needs: the young twins and the flashback village (the flood art is ready).";
-  $("eNext").style.display = "none"; $("eBack").textContent = k?"현재로 돌아가기":"Back to the present"; $("endcard").classList.add("on"); }
+  $("eP2").textContent = k?"이어서 5장, 홍수의 밤을 플레이할 수 있습니다.":"You can continue straight into Chapter 5, the flood night.";
+  NEXTK = 5; const nx = $("eNext"); nx.style.display = ""; nx.textContent = k?"홍수의 밤으로":"Into the flood night"; $("eBack").textContent = k?"현재로 돌아가기":"Back to the present"; $("endcard").classList.add("on"); }
 function showEnd(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"3장 끝":"END OF CHAPTER 3"; $("eH").textContent = k?"다른 곰":"The Other Bear";
   $("eP1").textContent = k?"두 장의 사진을 맞춰 보려는 순간, 사진 속 기억이 빅그베의 눈앞으로 밀려온다.":"As BGB lines the two photographs up, the memory inside them pulls at him.";
-  $("eP2").textContent = k?"사진 속으로 들어갈 수 있습니다. 4장은 임시 그림으로 먼저 만들었습니다.":"You can step into the photograph. Chapter 4 is built with placeholder art."; const nx = $("eNext"); nx.style.display = ""; nx.textContent = k?"사진 속으로":"Step into the photograph"; $("eBack").textContent = tr(UI.back); $("endcard").classList.add("on"); }
+  $("eP2").textContent = k?"사진 속으로 들어갈 수 있습니다. 4장은 임시 그림으로 먼저 만들었습니다.":"You can step into the photograph. Chapter 4 is built with placeholder art."; NEXTK = 4; const nx = $("eNext"); nx.style.display = ""; nx.textContent = k?"사진 속으로":"Step into the photograph"; $("eBack").textContent = tr(UI.back); $("endcard").classList.add("on"); }
 $("eBack").onclick = ()=>{ if (S.flash){ endFlash(); return; } $("endcard").classList.remove("on"); mode = "play"; stage.focus(); };
-$("eNext").onclick = ()=>{ startFlash(); };
+$("eNext").onclick = ()=>{ if (NEXTK === 5) startFlash5(); else startFlash(); };
 
 /* case file */
 let tab = 0, selEv = null, sub = false, PV = false, evPage = 0;
@@ -1218,6 +1278,7 @@ function frame(now){
   $("afg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("mfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
   $("mfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("fworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("mworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("pworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("cfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
@@ -1248,7 +1309,7 @@ addEventListener("resize", fit);
 
 load(); cam = 0; fit(); setSceneNow(["tower","archive","cafe","cottage","mill"].includes(S.scene) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus();
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
-window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D };
+window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4 };
 requestAnimationFrame(frame);
 })();
 </script>
