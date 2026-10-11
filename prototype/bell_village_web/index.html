@@ -385,7 +385,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
   <div class="modal" id="endcard"><div class="card">
     <div class="eyebrow" id="eEy">CHAPTER 1</div><h2 id="eH">The Clock That Stopped</h2>
     <p id="eP1">The door opens onto the winding room. That scene is the next one to build.</p>
-    <p id="eP2" style="font-size:23px;color:#6d5a40">Needs: Clocktower interior background, BGB walk frames, Clockkeeper portrait.</p>
+    <p id="eP2" style="font-size:23px;color:#6d5a40">Needs: Clocktower interior background, BGB walk frames, Oliver portrait.</p>
     <button class="pbtn nine cream" id="eBack">Back to the village</button>
   </div></div>
   <div id="fade"></div>
@@ -461,24 +461,24 @@ const UI = {
   askBear:{en:"Who was the bear on the stairs?", ko:"계단의 곰은 누구인가?"}, askStop:{en:"The clock stopped at 11:47. That is not necessarily when Edward died.", ko:"시계는 11시 47분에 멈췄다. 그것이 에드워드가 죽은 시각이라는 뜻은 아니다."},
   locM:{en:"The Old Mill", ko:"낡은 방앗간"}, talkMo:{en:"Talk to Molly", ko:"몰리 할머니와 이야기한다"}, talkGr:{en:"Talk to Green", ko:"Green과 이야기한다"}, toMill:{en:"Walk to the Old Mill", ko:"낡은 방앗간으로 간다"}, leaveM:{en:"Walk back to the village", ko:"마을로 돌아간다"}, lComp:{en:"Compare the photographs", ko:"사진을 맞춰 본다"},
   talkTm:{en:"Talk to Tommy", ko:"토미와 이야기한다"},
-  lPost:{en:"Read the guard's logbook", ko:"경비의 일지를 읽는다"}, conHead:{en:"Contradictions and deductions", ko:"모순과 추리"}, askNext:{en:"Is there another bear?", ko:"다른 곰이 있는가?"},
+  lPost:{en:"Read Tommy's logbook", ko:"토미의 일지를 읽는다"}, conHead:{en:"Contradictions and deductions", ko:"모순과 추리"}, askNext:{en:"Is there another bear?", ko:"다른 곰이 있는가?"},
   leaveC:{en:"Leave the café", ko:"카페를 나간다"}, talkHz:{en:"Talk to Hazel", ko:"헤이즐과 이야기한다"}, locC:{en:"Hazel's Café", ko:"헤이즐의 카페"}, lBoots:{en:"Look at the prints on the stairs", ko:"계단의 발자국을 살핀다"},
   subBoard:{en:"Responsibility Board", ko:"책임 보드"}, subId:{en:"Identity Board", ko:"신원 보드"}, subOver:{en:"What I overlooked", ko:"내가 놓친 것"}, subBack:{en:"Back", ko:"돌아가기"},
   pv:{en:"Preview: show the finished board (contains spoilers)", ko:"미리보기: 완성된 보드 보기 (스포일러 포함)"}, pvOff:{en:"Hide preview", ko:"미리보기 끄기"},
   page:{en:"Page", ko:"쪽"},
-  talk: {en:"Talk to Nini", ko:"니니와 이야기한다"}, talkCk:{en:"Talk to the Clockkeeper", ko:"시계지기와 이야기한다"},
+  talk: {en:"Talk to Nini", ko:"니니와 이야기한다"}, talkCk:{en:"Talk to Oliver", ko:"올리버와 이야기한다"},
   read:{en:"Read the signpost", ko:"표지판을 읽는다"}, look:{en:"Look up at the clock", ko:"시계를 올려다본다"}, enter:{en:"Enter the Clocktower", ko:"시계탑에 들어간다"},
   resume:{en:"Resume", ko:"계속하기"}, restart:{en:"Restart", ko:"처음부터"}, langBtn:{en:"Language: English", ko:"언어: 한국어"}, paused:{en:"PAUSED", ko:"일시정지"},
   tabs:{en:["Investigate","People","Evidence","Timeline","Notes","Map"], ko:["조사","인물","증거","타임라인","노트","지도"]},
   got:{en:"Evidence added", ko:"증거 추가"}, newnote:{en:"Note added", ko:"노트 추가"},
   case:{en:"The Death of Edward", ko:"에드워드의 죽음"}, loc:{en:"Bell Village", ko:"벨 마을"},
   objHead:{en:"What to do", ko:"할 일"},
-  objs:{en:["Talk to Nini","Read the signpost","Look up at the tower clock","Talk to the Clockkeeper","Enter the Clocktower","Search the winding room"], ko:["니니와 이야기하기","표지판 읽기","탑시계 올려다보기","시계지기와 이야기하기","시계탑에 들어가기","태엽실 살펴보기"]},
+  objs:{en:["Talk to Nini","Read the signpost","Look up at the tower clock","Talk to Oliver","Enter the Clocktower","Search the winding room"], ko:["니니와 이야기하기","표지판 읽기","탑시계 올려다보기","올리버와 이야기하기","시계탑에 들어가기","태엽실 살펴보기"]},
   evHead:{en:"Evidence", ko:"증거"}, tlHead:{en:"Timeline", ko:"타임라인"}, peopleHead:{en:"People", ko:"인물"}, notesHead:{en:"Notes", ko:"노트"}, mapHead:{en:"Map", ko:"지도"},
   empty:{en:"Nothing here yet.", ko:"아직 아무것도 없다."},
   unmet:{en:"Not met yet", ko:"아직 만나지 못함"}, close:{en:"Close", ko:"닫기"},
   back:{en:"Back to the village", ko:"마을로 돌아가기"},
-  end:{en:["CHAPTER 1","The Clock That Stopped","The door opens onto the winding room. That scene is the next one to build.","Needs: Clocktower interior background, BGB walk frames, Clockkeeper portrait."], ko:["1장","멈춰 선 시계","문이 태엽실로 이어진다. 그 장면이 다음에 만들 장면이다.","필요: 시계탑 내부 배경, BGB 걷기 프레임, 시계지기 초상."]},
+  end:{en:["CHAPTER 1","The Clock That Stopped","The door opens onto the winding room. That scene is the next one to build.","Needs: Clocktower interior background, BGB walk frames, Oliver portrait."], ko:["1장","멈춰 선 시계","문이 태엽실로 이어진다. 그 장면이 다음에 만들 장면이다.","필요: 시계탑 내부 배경, BGB 걷기 프레임, 올리버 초상."]},
   rot:{en:"Rotate your phone for a larger view", ko:"더 크게 보려면 폰을 가로로 돌리세요"},
   legend:{en:["W Witness: when someone saw it","E Event: when it happened","C Clock: what a clock shows","D Death: estimated time of death"], ko:["W 목격: 누군가 본 시각","E 사건: 일어난 시각","C 시계: 시계가 가리키는 시각","D 사망: 추정 사망 시각"]},
   tlNote:{en:"A stopped clock tells you when the clock stopped. It does not tell you when Edward died.", ko:"멈춘 시계는 시계가 멈춘 시각을 알려줄 뿐, 에드워드가 죽은 시각은 알려주지 않는다."},
@@ -498,7 +498,7 @@ const EV = {
     desc:{en:"The pendulum rod is bent and the crutch pin is sheared. A few short quills are caught on the rod. Something heavy struck it, and the clock stopped at 11:47.", ko:"추 막대가 구부러졌고 크러치 핀이 부러져 있다. 막대에 짧은 가시 몇 가닥이 걸려 있다. 무언가 무거운 것이 부딪혔고, 시계는 11시 47분에 멈췄다."},
     note:{en:"A heavy blow bent the pendulum rod. That is what stopped the clock.", ko:"무거운 충격이 추 막대를 구부렸다. 그것이 시계를 멈춘 원인이다."} },
   handbell: { id:"handbell", name:{en:"The emergency handbell",ko:"비상 손종"}, img:"p_handbell_resting", tag:"BELL",
-    desc:{en:"An emergency handbell hangs by the stairs. The Clockkeeper heard it ring once that night. He does not say exactly when.", ko:"계단 옆에 비상 손종이 걸려 있다. 시계지기는 그날 밤 한 번 울리는 소리를 들었다. 정확한 시각은 말하지 않는다."},
+    desc:{en:"An emergency handbell hangs by the stairs. Clockkeeper Oliver heard it ring once that night. He does not say exactly when.", ko:"계단 옆에 비상 손종이 걸려 있다. 시계지기 올리버는 그날 밤 한 번 울리는 소리를 들었다. 정확한 시각은 말하지 않는다."},
     note:{en:"The handbell rang once. Nobody has said when.", ko:"손종이 한 번 울렸다. 언제인지는 아직 아무도 말하지 않았다."} },
   chute: { id:"chute", name:{en:"The back door",ko:"뒷문"}, img:"p_door_barred", tag:"DOOR",
     desc:{en:"A small maintenance door at the back, bolted from the inside. Outside in the snow, boot prints lead away from it.", ko:"뒤쪽의 작은 정비용 문이다. 안쪽에서 빗장이 걸려 있다. 바깥 눈 위에는 이 문에서 멀어지는 발자국이 있다."},
@@ -516,9 +516,9 @@ const EV = {
 EV.notebook = { id:"notebook", name:{en:"Nini's notebook",ko:"니니의 공책"}, img:"ev_notebook_torn", tag:"NOTEBOOK",
   desc:{en:"Nini's notebook. A page has been torn out, and the page beneath it carries a faint note: \"Red ledger moved?\"", ko:"니니의 공책. 한 장이 뜯겨 나갔고, 그 아래 장에 희미한 메모가 남아 있다. \"붉은 장부 옮겨졌나?\""},
   note:{en:"Nini's notebook has a torn page. Below it: \"Red ledger moved?\"", ko:"니니의 공책에는 뜯긴 장이 있다. 그 아래: \"붉은 장부 옮겨졌나?\""} };
-EV.patrol = { id:"patrol", name:{en:"Night Guard's patrol log",ko:"야간 경비의 순찰 일지"}, img:"ev_patrol_log", tag:"LOG",
-  desc:{en:"The Night Guard's logbook, hung on the lamp post by Lantern Bridge. 11:35: \"B.G.B. crossed Lantern Bridge, hurrying. Both hands gloved, a paper in the right hand.\" 11:46: \"A bear on the Archive steps, walking slowly toward the tower.\" 11:51: \"Someone calling out, toward the tower. The wind took it.\"", ko:"랜턴 다리 가로등에 걸린 야간 경비의 일지. 11:35 \"B.G.B.가 랜턴 다리를 서둘러 건넘. 양손에 장갑, 오른손에 종이 한 장.\" 11:46 \"기록실 계단에 곰 한 마리, 탑 쪽으로 천천히 걸어감.\" 11:51 \"탑 쪽에서 누군가 부르는 소리. 바람에 묻힘.\""},
-  note:{en:"Night Guard's log: 11:35 a bear crossed Lantern Bridge (gloves, a paper); 11:46 a slow bear toward the tower; 11:51 a call in the wind.", ko:"경비 일지: 11:35 곰이 랜턴 다리를 건넘(장갑, 종이), 11:46 탑 쪽으로 천천히 걷는 곰, 11:51 바람 속의 부르는 소리."} };
+EV.patrol = { id:"patrol", name:{en:"Night Guard Tommy's patrol log",ko:"야간 경비 토미의 순찰 일지"}, img:"ev_patrol_log", tag:"LOG",
+  desc:{en:"Night Guard Tommy's logbook, hung on the lamp post by Lantern Bridge. 11:35: \"B.G.B. crossed Lantern Bridge, hurrying. Both hands gloved, a paper in the right hand.\" 11:46: \"A bear on the Archive steps, walking slowly toward the tower.\" 11:51: \"Someone calling out, toward the tower. The wind took it.\"", ko:"랜턴 다리 가로등에 걸린 야간 경비 토미의 일지. 11:35 \"B.G.B.가 랜턴 다리를 서둘러 건넘. 양손에 장갑, 오른손에 종이 한 장.\" 11:46 \"기록실 계단에 곰 한 마리, 탑 쪽으로 천천히 걸어감.\" 11:51 \"탑 쪽에서 누군가 부르는 소리. 바람에 묻힘.\""},
+  note:{en:"Night Guard Tommy's log: 11:35 a bear crossed Lantern Bridge (gloves, a paper); 11:46 a slow bear toward the tower; 11:51 a call in the wind.", ko:"경비 일지: 11:35 곰이 랜턴 다리를 건넘(장갑, 종이), 11:46 탑 쪽으로 천천히 걷는 곰, 11:51 바람 속의 부르는 소리."} };
 EV.key = { id:"key", name:{en:"Edward's drawer key",ko:"에드워드의 서랍 열쇠"}, img:"key_brass", tag:"KEY",
   desc:{en:"A small brass key on a loop of red thread. Nini has kept it since Edward's death, and she gave it to you.", ko:"붉은 실에 꿰인 작은 놋쇠 열쇠. 니니가 에드워드가 죽은 뒤로 간직해 왔고, 당신에게 건넸다."},
   note:{en:"Nini gave you the key to Edward's locked drawers in the archive.", ko:"니니가 기록실에 있는 에드워드의 잠긴 서랍 열쇠를 건넸다."} };
@@ -526,16 +526,16 @@ EV.photo2 = { id:"photo2", name:{en:"The second photograph",ko:"두 번째 사�
   desc:{en:"A photograph from Edward's drawer: the same two cubs, both ears whole, their scarf knots clearly visible. On the back, in Edward's hand: \"Big Green Bear (right) and Green.\"", ko:"에드워드의 서랍에서 나온 사진. 같은 두 아기 곰, 두 귀 모두 멀쩡하고 목도리 매듭이 또렷하다. 뒷면에 에드워드의 글씨: \"큰 초록 곰(오른쪽)과 그린.\""},
   note:{en:"Edward's drawer holds a second photograph of the cubs. Both ears whole; the caption names them.", ko:"에드워드의 서랍에 아기 곰들의 또 다른 사진이 있다. 두 귀 모두 멀쩡하고, 뒷면에 이름이 적혀 있다."} };
 EV.stmt_ck = { id:"stmt_ck", name:{en:"Statement: Oliver",ko:"진술: 올리버"}, tag:"STATEMENT", note:null,
-  desc:{en:"The Clockkeeper: \"Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.\"", ko:"시계지기: \"어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠.\""} };
+  desc:{en:"Clockkeeper Oliver: \"Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.\"", ko:"시계지기 올리버: \"어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠.\""} };
 EV.stmt_hz = { id:"stmt_hz", name:{en:"Statement: Hazel",ko:"진술: 헤이즐"}, tag:"STATEMENT", note:null,
-  desc:{en:"The café owner: \"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.\"", ko:"카페 주인: \"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠.\""} };
+  desc:{en:"Café owner Hazel: \"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.\"", ko:"카페 주인 헤이즐: \"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠.\""} };
 EV.stmt_nini = { id:"stmt_nini", name:{en:"Statement: Nini",ko:"진술: 니니"}, tag:"STATEMENT", note:null,
   desc:{en:"Nini: \"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.\"", ko:"니니: \"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요.\""} };
 EV.photo_home = { id:"photo_home", name:{en:"The photograph (home copy)",ko:"사진(집에 둔 것)"}, img:"ev_photo_post_flood", tag:"PHOTO",
   desc:{en:"A worn photograph of two small cubs in scarves, standing close. The frame is old and deep, and it leans on the shelf instead of hanging.", ko:"목도리를 두른 두 아기 곰이 나란히 선 낡은 사진. 액자는 오래되고 깊어서, 걸려 있지 않고 선반에 기대어 서 있다."},
   note:{en:"BGB keeps a worn photograph of two cubs on his shelf.", ko:"BGB는 선반에 두 아기 곰이 찍힌 낡은 사진을 두고 있다."} };
 EV.stmt_tm = { id:"stmt_tm", name:{en:"Statement: Tommy",ko:"진술: 토미"}, tag:"STATEMENT", note:null,
-  desc:{en:"The night guard: \"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.\"", ko:"야간 경비: \"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 뒀죠. 뒷모습만 봤습니다.\""} };
+  desc:{en:"Night Guard Tommy: \"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.\"", ko:"야간 경비 토미: \"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 뒀죠. 뒷모습만 봤습니다.\""} };
 EV.stmt_gr = { id:"stmt_gr", name:{en:"Statement: Green",ko:"진술: Green"}, tag:"STATEMENT", note:null,
   desc:{en:"Green, at the Old Mill: \"I was at home all night, chipping ice off the wheel. I was not at the tower. Ask yourself what you remember.\"", ko:"방앗간의 Green: \"밤새 집에서 물레바퀴의 얼음을 깼어. 탑에는 가지 않았어. 네 기억을 떠올려 봐.\""} };
 EV.boots = { id:"boots", name:{en:"Footprints on the stairs",ko:"계단의 발자국"}, img:"ev_boot_prints", tag:"TRACES",
@@ -550,8 +550,8 @@ const NOTES = {
   hz:{en:"Hazel: BGB stayed at the café until a little before a quarter to twelve. He looked like he was waiting for someone.", ko:"헤이즐: BGB는 열두 시 십오 분 전이 조금 못 되도록 카페에 있었다. 누군가를 기다리는 것 같았다."},
   hand:{en:"Your own hand: you hold things in your LEFT hand.", ko:"당신의 손: 당신은 물건을 왼손으로 든다."},
   nini:{en:"Nini last saw Edward at nine. He was sealing two letters.", ko:"니니가 에드워드를 마지막으로 본 것은 아홉 시. 그는 편지 두 통을 봉하고 있었다."},
-  bear:{en:"The Clockkeeper saw a bear on the stairs around 11:40, before BGB arrived.", ko:"시계지기는 11시 40분쯤 계단을 오르는 곰을 보았다. BGB가 도착하기 전이다."},
-  watch:{en:"The Clockkeeper sets Edward's pocket watch to the tower clock every morning.", ko:"시계지기는 매일 아침 에드워드의 회중시계를 탑시계에 맞춘다."}
+  bear:{en:"Clockkeeper Oliver saw a bear on the stairs around 11:40, before BGB arrived.", ko:"시계지기 올리버는 11시 40분쯤 계단을 오르는 곰을 보았다. BGB가 도착하기 전이다."},
+  watch:{en:"Clockkeeper Oliver sets Edward's pocket watch to the tower clock every morning.", ko:"시계지기 올리버는 매일 아침 에드워드의 회중시계를 탑시계에 맞춘다."}
 };
 
 /* ---------- dialogue data ---------- */
@@ -764,9 +764,9 @@ function addEv(id){ if (S.ev.includes(id)) return; S.ev.push(id); addNote(EV[id]
 /* Chapter 2: contradictions between the statements, and the deduction they unlock */
 const CON = [
   { id:"c1", on:()=>S.ev.includes("patrol") && S.ev.includes("receipt"),
-    t:{en:"The Night Guard saw the bear cross Lantern Bridge at 11:35. Hazel's receipt puts the same bear in the café until 11:42. One bear cannot be in two places.", ko:"야간 경비는 11시 35분에 곰이 랜턴 다리를 건너는 것을 보았다. 헤이즐의 영수증은 같은 곰이 11시 42분까지 카페에 있었다고 말한다. 곰 한 마리가 두 곳에 있을 수는 없다."} },
+    t:{en:"Night Guard Tommy saw the bear cross Lantern Bridge at 11:35. Hazel's receipt puts the same bear in the café until 11:42. One bear cannot be in two places.", ko:"야간 경비 토미는 11시 35분에 곰이 랜턴 다리를 건너는 것을 보았다. 헤이즐의 영수증은 같은 곰이 11시 42분까지 카페에 있었다고 말한다. 곰 한 마리가 두 곳에 있을 수는 없다."} },
   { id:"c2", on:()=>has("c2") && has("ck.bear"),
-    t:{en:"The Clockkeeper saw the bear carry something in his RIGHT hand. You carry things in your LEFT.", ko:"시계지기는 곰이 오른손에 무언가를 들고 있었다고 했다. 당신은 물건을 왼손으로 든다."} },
+    t:{en:"Clockkeeper Oliver saw the bear carry something in his RIGHT hand. You carry things in your LEFT.", ko:"시계지기 올리버는 곰이 오른손에 무언가를 들고 있었다고 했다. 당신은 물건을 왼손으로 든다."} },
   { id:"c3", on:()=>has("nini.letters"),
     t:{en:"Nini saw Edward seal two letters. Only one of them has an addressee you know of.", ko:"니니는 에드워드가 편지 두 통을 봉하는 것을 보았다. 수신자를 아는 것은 그중 한 통뿐이다."} }
 ];
@@ -999,8 +999,8 @@ function boardResp(){
 }
 function pageOver(wpx){
   const W = 802, H = 1000, K = lang==="ko", f = (wpx||626)/626;
-  const L = K ? ["BGB가 뒤집어 보지 않으려 했던 사진 액자.","BGB의 카페 알리바이는 사실이었지만, 그는 11시 42분에 떠났다.","니니의 편지 두 통, 그중 수신자를 아는 건 한 통뿐.","순찰 기록: 장갑, 종이 한 장, 느린 곰, 바람 속의 부름.","안쪽에서 빗장이 걸린 뒷문.","BGB가 시계지기에게: \"최대한 빨리 왔어요.\""] : [
-    "The photograph frame BGB would not turn over.","BGB's café alibi was true, but he left at 11:42.","Nini's two letters, and only one known recipient.","The Night Guard's log: gloves, a paper, a slow bear, a call in the wind.","The back door, bolted from the inside.","BGB to the Clockkeeper: \"I came as fast as I could.\""];
+  const L = K ? ["BGB가 뒤집어 보지 않으려 했던 사진 액자.","BGB의 카페 알리바이는 사실이었지만, 그는 11시 42분에 떠났다.","니니의 편지 두 통, 그중 수신자를 아는 건 한 통뿐.","야간 경비 토미의 순찰 기록: 장갑, 종이 한 장, 느린 곰, 바람 속의 부름.","안쪽에서 빗장이 걸린 뒷문.","BGB가 시계지기 올리버에게: \"최대한 빨리 왔어요.\""] : [
+    "The photograph frame BGB would not turn over.","BGB's café alibi was true, but he left at 11:42.","Nini's two letters, and only one known recipient.","Night Guard Tommy's log: gloves, a paper, a slow bear, a call in the wind.","The back door, bolted from the inside.","BGB to Clockkeeper Oliver: \"I came as fast as I could.\""];
   const Y = [288,400,513,632,745,859];
   let h = '<div class="bd" style="width:'+(wpx||Math.round(780*W/H))+'px"><img class="base" src="assets/page_overlooked.webp" alt="">';
   h += box("ctr",175,98,480,72,W,H,'<b style="margin:0;font-size:'+Math.round(25*f)+'px;color:#4a2f10">'+tr(UI.subOver).toUpperCase()+'</b>');
