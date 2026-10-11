@@ -890,8 +890,8 @@ function place(){
   setActorSprite(ed, "front", S.scene==="past" ? 125 : ED_H); ed.style.left = Math.round(NPCX.ed - parseFloat(ed.style.width)/2) + "px";
   setActorSprite(br, "front", S.scene==="past" ? 90 : BR_H); br.style.left = Math.round(NPCX.br - parseFloat(br.style.width)/2) + "px";
   setActorSprite(hl, "front", 175); hl.style.left = Math.round((NPCX.hl ?? -9999) - parseFloat(hl.style.width)/2) + "px";
-  setActorSprite(mo, "front", S.flash ? 100 : MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
-  setActorSprite(gr, "front", S.flash ? 110 : GR_H); gr.style.left = Math.round(NPCX.gr - parseFloat(gr.style.width)/2) + "px";
+  setActorSprite(mo, S.flash ? "front" : npcFace("mo", NPCX.mo), S.flash ? 100 : MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
+  setActorSprite(gr, S.flash ? "front" : npcFace("gr", NPCX.gr), S.flash ? 110 : GR_H); gr.style.left = Math.round(NPCX.gr - parseFloat(gr.style.width)/2) + "px";
   setActorSprite(tm, npcFace("tm", NPCX.tm), TM_H); tm.style.left = Math.round(NPCX.tm - parseFloat(tm.style.width)/2) + "px";
 }
 function applyLight(dt){
