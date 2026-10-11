@@ -29,9 +29,44 @@ const game = new Game($('#stage'), mirrorRoot, {
     $('#narration').textContent = ROOM_INFO[room].line;
   },
   onDoor(d) { go(d.to, d.from === 'right' ? 'right' : 'left'); },
-  onTalk() { say('Nini', 'var(--nini)', 'Bear! Bear! Is it true you have bells?'); },
+  onTalk() { talk(NINI_LINES); },
   onNear(d) { $('#keys').textContent = d ? (d.talk ? 'E  talk' : 'E  open door') : '← → move · E interact · Tab case file'; },
 });
+
+/* ---------- dialogue: click the strip, or press E / Space / Enter, to advance ---------- */
+const NINI_LINES = [
+  ['Nini', 'var(--nini)', 'Bear! Bear! Is it true you have bells?'],
+  ['Nini', 'var(--nini)', 'The clock stopped at 11:47. Everyone in the tower heard it.'],
+  ['Nini', 'var(--nini)', 'I will write down everything I see. You can ask me later!'],
+];
+let convo = null;
+function talk(lines) {
+  if (convo) return;
+  convo = { lines, i: 0 };
+  show();
+}
+function show() {
+  const [who, color, text] = convo.lines[convo.i];
+  const more = convo.i < convo.lines.length - 1;
+  say(who, color, text + `<span class="more" style="float:right;font-size:11px;opacity:.6">${more ? '▼ click' : '■ end'}</span>`);
+  $('#keys').textContent = 'Click / E / Space  continue';
+}
+function advance() {
+  if (!convo) return false;
+  if (++convo.i >= convo.lines.length) {
+    convo = null;
+    $('#narration').textContent = ROOM_INFO[state.room].line;
+    $('#keys').textContent = '← → move · E interact · Tab case file';
+  } else show();
+  sfx('tap');
+  return true;
+}
+$('#strip').style.cursor = 'pointer';
+$('#strip').addEventListener('click', advance);
+addEventListener('keydown', e => {
+  if (!convo || !['e', 'E', ' ', 'Enter'].includes(e.key)) return;
+  e.preventDefault(); e.stopPropagation(); advance();
+}, true);
 
 function say(who, color, text) {
   $('#narration').innerHTML = `<b style="color:${color};display:block;font-size:13px">${who}</b>${text}`;
@@ -82,4 +117,4 @@ let last = performance.now();
 (function tick(t) { game.frame(Math.min(.05, (t - last) / 1000)); last = t; requestAnimationFrame(tick); })(last);
 
 // dev helper: ?dev=1 -> window.bgb for poking at phases
-if (location.search.includes('dev')) window.bgb = { state, openFolder, go, game };
+if (location.search.includes('dev')) window.bgb = { state, openFolder, go, game, talk, advance, NINI_LINES };
