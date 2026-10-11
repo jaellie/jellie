@@ -281,7 +281,7 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
   2. **Nini** knocks, shaken. BGB already knows Edward is dead (he was there); the village is gathering because the **Clockkeeper saw a scarf-wearing bear on the stairs at 11:40, before BGB's official arrival.** BGB's true café alibi clears him. (A false surprise here would break 🔒 Q6.)
   3. Walk through the village (cozy but muted: shutters closed, no bell). Short talk with Nini on the way (first dialogue choice, §9).
   4. BGB looks up at the **tower clock: 11:47.** Nobody wants to go in.
-  5. First **Case File** opening: the village asks BGB, cleared by his alibi and trusted, to look into it because the Constable is snowed in.
+  5. First **Case File** opening. 🔒 (user-approved rewrite) The Constable is snowed in and nobody knows what to do; **Nini asks BGB to come to the Clocktower with her.** The village does not formally assign him the investigation. BGB starts looking into it on his own, trusted because of his alibi. The prologue dialogue is short Enter-by-Enter lines; Nini speaks politely (해요체) to BGB, and her yesterday-dusk sighting ("I saw you on the path behind the clock tower") ends the scene on a light note, with no follow-up questions from BGB.
 - **Evidence:** EV-01 Photograph (home copy), EV-02 Edward's letter to BGB (BGB *does not mention it*; see Hard Rule 5).
 - **Withheld:** BGB's own whereabouts after the café.
 - **Closing question:** *Who killed Edward?*
