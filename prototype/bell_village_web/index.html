@@ -135,6 +135,14 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #mwheel{position:absolute;right:-220px;top:140px;width:300px;height:300px;border-radius:50%;border:26px solid #4a2a18;background:#c9d3e0}
 #mdoor{position:absolute;left:260px;top:250px;width:150px;height:270px;background:#4a2a18;border-radius:75px 75px 0 0}
 #mmarks img{position:absolute}
+#ysc{position:absolute;inset:0;display:none;background:linear-gradient(#5f78b6 0,#5f78b6 8%,#d9b79a 30%,#d9b79a)}
+#ysc.on{display:block}
+#yworld{position:absolute;left:0;top:0;width:2632px;height:1080px;will-change:transform}
+#yworld img,#yfg img,#yfar img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
+#yfar img{left:-120px;top:-126px;width:3302px;height:938px}
+#ymarks img{position:absolute}
+#stage.flash #ysc{filter:sepia(.22) saturate(1.1) brightness(1.04)}
+#stage.flash5 #ysc{filter:grayscale(.55) sepia(.3) brightness(.92) contrast(1.02)}
 #stage .silh,#dlg .por img.silh{filter:brightness(.16) contrast(1.2)}
 #csc.on{display:block}
 #cfar img{left:-300px;top:150px;width:3715px;height:896px}
@@ -355,6 +363,15 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
     <div id="mmarks"></div>
    </div>
    <div id="mfg" class="layer"><img src="assets/m_fg.webp" width="2997" height="999" alt="" style="left:0;top:81px"></div>
+  </div>
+  <div id="ysc">
+   <div class="layer" id="yfar"><img src="assets/y_far.webp" alt=""></div>
+   <div id="yworld">
+    <img src="assets/y_mid.webp" style="left:0;top:-158px" width="2632" height="1238" alt="">
+    <img src="assets/y_ground.webp" style="left:0;top:640px" width="2632" height="422" alt="">
+    <div id="ymarks"></div>
+   </div>
+   <div id="yfg" class="layer"><img src="assets/y_fg.webp" width="2632" height="218" alt="" style="left:0;top:863px"></div>
   </div>
   <div id="csc">
    <div class="layer" id="cfar"><img src="assets/a_far.webp" alt=""></div>
@@ -771,11 +788,11 @@ function place(){
   setActorSprite(hz, hface, HZ_H); hz.style.left = Math.round(NPCX.hz - parseFloat(hz.style.width)/2) + "px";
   tm.style.transform = "scale("+(1-0.005*Math.sin(tt/950+4)).toFixed(3)+","+(1+0.012*Math.sin(tt/950+4)).toFixed(3)+")";
   mo.classList.add("silh"); gr.classList.add("silh"); br.classList.add("silh"); bgb.classList.toggle("silh", !!S.flash);
-  if (S.flash){ const tgt = P.x + (P.face === "right" ? -100 : 100); BRX += (tgt - BRX) * 0.06; NPCX.br = S.scene === "tower" ? 1560 : (S.scene === "flood" && !has("f5.free")) ? 1750 : (S.flash === 5 && S.scene === "village") ? 1860 : Math.round(BRX); } else NPCX.br = -9999;
-  setActorSprite(ed, "front", ED_H); ed.style.left = Math.round(NPCX.ed - parseFloat(ed.style.width)/2) + "px";
-  setActorSprite(br, "front", BR_H); br.style.left = Math.round(NPCX.br - parseFloat(br.style.width)/2) + "px";
-  setActorSprite(mo, "front", MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
-  setActorSprite(gr, "front", GR_H); gr.style.left = Math.round(NPCX.gr - parseFloat(gr.style.width)/2) + "px";
+  if (S.flash){ const tgt = P.x + (P.face === "right" ? -100 : 100); BRX += (tgt - BRX) * 0.06; NPCX.br = S.scene === "tower" ? 1560 : (S.scene === "flood" && !has("f5.free")) ? 1750 : (S.flash === 5 && S.scene === "past") ? 1520 : Math.round(BRX); } else NPCX.br = -9999;
+  setActorSprite(ed, "front", S.scene==="past" ? 125 : ED_H); ed.style.left = Math.round(NPCX.ed - parseFloat(ed.style.width)/2) + "px";
+  setActorSprite(br, "front", S.scene==="past" ? 90 : BR_H); br.style.left = Math.round(NPCX.br - parseFloat(br.style.width)/2) + "px";
+  setActorSprite(mo, "front", S.flash ? 100 : MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
+  setActorSprite(gr, "front", S.flash ? 110 : GR_H); gr.style.left = Math.round(NPCX.gr - parseFloat(gr.style.width)/2) + "px";
   setActorSprite(tm, npcFace("tm", NPCX.tm), TM_H); tm.style.left = Math.round(NPCX.tm - parseFloat(tm.style.width)/2) + "px";
 }
 function applyLight(dt){
@@ -851,21 +868,21 @@ const IA_A = [
 const IA_FL = [
   { id:"fbrother", x:()=>1750, label:UI.lBrother, top:440, run:()=>startDlg(has("f5.free") ? "fb_wait" : "fb0") },
   { id:"fbell",    x:()=>700,  label:UI.lHandbell, top:520, run:()=>startDlg(!has("f5.free") ? "fb_wait" : has("f5.bell") ? "fb_up" : "fb_bell") },
-  { id:"fup",      x:()=>2380, label:UI.lUp,       top:420, run:()=>{ if (!has("f5.free") || !has("f5.bell")){ startDlg("fb_up"); return; } setScene("village", 1000); } }
+  { id:"fup",      x:()=>2380, label:UI.lUp,       top:420, run:()=>{ if (!has("f5.free") || !has("f5.bell")){ startDlg("fb_up"); return; } setScene("past", 1100); } }
 ];
 const IA_D = [
-  { id:"v1",   x:()=>1500, label:UI.lVill,    top:FEET-MO_H-150, run:()=>startDlg("fd_v1") },
-  { id:"v2",   x:()=>1650, label:UI.lVill,    top:FEET-GR_H-150, run:()=>startDlg("fd_v2") },
-  { id:"fded", x:()=>1800, label:UI.lWatchEd, top:FEET-ED_H-150, run:()=>startDlg("fd_ed") },
-  { id:"farch",x:()=>4200, label:UI.lWatchEd, top:560,           run:()=>{ if (!has("f5.ed")){ startDlg("fd_no"); return; } startDlg("fd_arch"); } }
+  { id:"v1",   x:()=>1100, label:UI.lVill,    top:FEET-MO_H-150, run:()=>startDlg("fd_v1") },
+  { id:"v2",   x:()=>1230, label:UI.lVill,    top:FEET-GR_H-150, run:()=>startDlg("fd_v2") },
+  { id:"fded", x:()=>1450, label:UI.lWatchEd, top:FEET-ED_H-150, run:()=>startDlg("fd_ed") },
+  { id:"farch",x:()=>2300, label:UI.lWatchEd, top:560,           run:()=>{ if (!has("f5.ed")){ startDlg("fd_no"); return; } startDlg("fd_arch"); } }
 ];
 const IA_F = [
-  { id:"ed",   x:()=>1250, label:UI.talkEd,   top:FEET-ED_H-150, run:()=>startDlg(has("f4.ed") ? "fe9" : "fe0") },
-  { id:"gate", x:()=>1750, label:UI.lGate,    top:640,           run:()=>startDlg(has("f4.gate") ? "fg9" : "fg0") },
-  { id:"ftow", x:()=>2856, label:UI.toTowerF, top:600,           run:()=>{ if (!has("f4.ed")){ startDlg("ft_no"); return; } setScene("tower", 470); } }
+  { id:"ed",   x:()=>1000, label:UI.talkEd,   top:FEET-ED_H-150, run:()=>startDlg(has("f4.ed") ? "fe9" : "fe0") },
+  { id:"gate", x:()=>1350, label:UI.lGate,    top:640,           run:()=>startDlg(has("f4.gate") ? "fg9" : "fg0") },
+  { id:"ftow", x:()=>1730, label:UI.toTowerF, top:600,           run:()=>{ if (!has("f4.ed")){ startDlg("ft_no"); return; } setScene("tower", 470); } }
 ];
 const IA_FT = [
-  { id:"fexit",  x:()=>445,  label:UI.leaveF, top:530, run:()=>setScene("village", 2640) },
+  { id:"fexit",  x:()=>445,  label:UI.leaveF, top:530, run:()=>setScene("past", 1700) },
   { id:"flever", x:()=>1500, label:UI.lLever, top:520, run:()=>{ if (has("f4.end")){ startDlg("fl9"); return; } startDlg("fl0"); } }
 ];
 const IA_M = [
@@ -887,7 +904,7 @@ const IA_C = [
   { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(has("hz.done")?"h9":"h0") }
 ];
 function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = ["nini","ck","hz","tm","mo","gr","v1","v2","fded","fbrother"].includes(i.id); m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
-mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks")); mkMarks(IA_M, $("mmarks")); mkMarks(IA_F, marks); mkMarks(IA_D, marks); mkMarks(IA_FL, $("fmarks")); mkMarks(IA_FT, $("tmarks"));
+mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks")); mkMarks(IA_M, $("mmarks")); mkMarks(IA_F, $("ymarks")); mkMarks(IA_D, $("ymarks")); mkMarks(IA_FL, $("fmarks")); mkMarks(IA_FT, $("tmarks"));
 IA = IA_V;
 let near = null, peek = 0, autoGo = null;
 
@@ -992,25 +1009,25 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 /* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
-const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2400}, mill:{min:0,end:3000}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2400}, mill:{min:0,end:3000}, past:{min:0,end:2632}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
 function locOf(n){ return tr(n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
-  S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage", MI = name === "mill", FLD = name === "flood", IN = T || A || C || PR || MI || FLD;
-  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR); $("msc").classList.toggle("on", MI); $("fsc").classList.toggle("on", FLD);
-  const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : PR ? $("pworld") : MI ? $("mworld") : FLD ? $("fworld") : $("world");
-  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else if (PR) host.appendChild($("pmarks")); else if (MI) host.appendChild($("mmarks")); else if (FLD) host.appendChild($("fmarks")); else host.appendChild(marks);
-  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : (PR || MI || FLD) ? [] : LAMPS_T; IA = A ? IA_A : C ? IA_C : PR ? IA_P : MI ? IA_M : FLD ? IA_FL : (S.flash && T) ? IA_FT : IA_T; NPCX = (A || PR || FLD) ? NPCX_A : C ? NPCX_C : MI ? NPCX_M : NPCX_T; if (FLD) FEET = 930; }
+  S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage", MI = name === "mill", FLD = name === "flood", PST = name === "past", IN = PST || T || A || C || PR || MI || FLD;
+  $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR); $("msc").classList.toggle("on", MI); $("fsc").classList.toggle("on", FLD); $("ysc").classList.toggle("on", PST);
+  const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : PR ? $("pworld") : MI ? $("mworld") : FLD ? $("fworld") : PST ? $("yworld") : $("world");
+  host.appendChild($("shadows")); host.appendChild($("actors")); if (T) host.appendChild($("tmarks")); else if (A) host.appendChild($("amarks")); else if (C) host.appendChild($("cmarks")); else if (PR) host.appendChild($("pmarks")); else if (MI) host.appendChild($("mmarks")); else if (FLD) host.appendChild($("fmarks")); else if (PST) host.appendChild($("ymarks")); else host.appendChild(marks);
+  if (IN){ const R = ROOM[name]; W = R.end; CAM_MIN = R.min; CAM_MAX = Math.max(CAM_MIN, W - STAGE_W); P_MIN = R.min + 330; FEET = FEET_T; LAMPS = A ? LAMPS_A : C ? LAMPS_C : (PR || MI || FLD) ? [] : LAMPS_T; IA = A ? IA_A : C ? IA_C : PR ? IA_P : MI ? IA_M : FLD ? IA_FL : (S.flash && T) ? IA_FT : IA_T; NPCX = (A || PR || FLD) ? NPCX_A : C ? NPCX_C : MI ? NPCX_M : NPCX_T; if (FLD) FEET = 930; if (PST){ FEET = FEET_V; NPCX = NPCX_V; LAMPS = []; IA = S.flash === 5 ? IA_D : IA_F; } }
   else  { W = VILLAGE_W; CAM_MIN = 0; CAM_MAX = W - STAGE_W; P_MIN = 470; FEET = FEET_V; NPCX = NPCX_V; LAMPS = LAMPS_V; IA = S.flash === 5 ? IA_D : S.flash ? IA_F : IA_V; }
   nini.style.display = IN ? "none" : ""; nini._sh.style.display = IN ? "none" : "";
   ck.style.display = (A || C || PR || MI || FLD) ? "none" : ""; ck._sh.style.display = (A || C || PR || MI || FLD) ? "none" : "";
   hz.style.display = C ? "" : "none"; hz._sh.style.display = C ? "" : "none";
   tm.style.display = IN ? "none" : ""; tm._sh.style.display = IN ? "none" : "";
   mo.style.display = IN ? "none" : ""; mo._sh.style.display = IN ? "none" : "";
-  const FL = !!S.flash; $("stage").classList.toggle("flash", S.flash === 4 || S.flash === true); $("stage").classList.toggle("flash5", S.flash === 5); PH = FL ? KID_H : 220;
+  const FL = !!S.flash; $("stage").classList.toggle("flash", S.flash === 4 || S.flash === true); $("stage").classList.toggle("flash5", S.flash === 5); PH = FL ? (PST ? 105 : KID_H) : 220;
   if (FL){ [nini,ck,hz,tm,mo,gr].forEach(a=>{ a.style.display = "none"; a._sh.style.display = "none"; });
-    NPCX.ed = (!IN) ? (S.flash === 5 ? 1800 : 1250) : -9999; BRX = x + 100; } else NPCX.ed = -9999;
-  const DAWN = S.flash === 5 && !IN; if (DAWN){ NPCX.mo = 1500; NPCX.gr = 1650; mo.style.display = ""; mo._sh.style.display = ""; gr.style.display = ""; gr._sh.style.display = ""; }
-  ed.style.display = (FL && !IN) ? "" : "none"; ed._sh.style.display = (FL && !IN) ? "" : "none";
+    NPCX.ed = PST ? (S.flash === 5 ? 1450 : 1000) : -9999; BRX = x + 100; } else NPCX.ed = -9999;
+  const DAWN = S.flash === 5 && PST; if (DAWN){ NPCX.mo = 1100; NPCX.gr = 1230; mo.style.display = ""; mo._sh.style.display = ""; gr.style.display = ""; gr._sh.style.display = ""; }
+  ed.style.display = (FL && PST) ? "" : "none"; ed._sh.style.display = (FL && PST) ? "" : "none";
   br.style.display = FL ? "" : "none"; br._sh.style.display = FL ? "" : "none";
   if (!FL) $("rain").classList.remove("on");
   if (S.flash === 5) $("rain").classList.toggle("on", FLD);   /* flood night: rain; the dawn after: dry and cold */
@@ -1040,7 +1057,7 @@ function showEnd5(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent
 function startFlash(){
   S.ret = { scene:S.scene, x:Math.round(P.x) }; S.flash = true; S.flags["f4.ed"] = false; S.flags["f4.gate"] = false; S.flags["f4.lever"] = false; S.flags["f4.end"] = false; S.flags["f4.shown"] = false;
   $("endcard").classList.remove("on"); mode = "modal"; $("fade").classList.add("on");
-  setTimeout(()=>{ setSceneNow("village", 700); $("fade").classList.remove("on"); const c = $("flcap"); c.textContent = tr(UI.capF); c.classList.add("on"); mode = "play"; setTimeout(()=>c.classList.remove("on"), 3600); stage.focus(); }, 800);
+  setTimeout(()=>{ setSceneNow("past", 650); $("fade").classList.remove("on"); const c = $("flcap"); c.textContent = tr(UI.capF); c.classList.add("on"); mode = "play"; setTimeout(()=>c.classList.remove("on"), 3600); stage.focus(); }, 800);
 }
 function endFlash(){ const r = S.ret || { scene:"archive", x:1500 }; const from5 = S.flash === 5; S.flash = false; $("endcard").classList.remove("on"); mode = "modal"; $("fade").classList.add("on");
   setTimeout(()=>{ setSceneNow(r.scene, r.x); $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (from5) setTimeout(()=>startDlg("pf_end"), 700); }, 800); }
@@ -1279,6 +1296,9 @@ function frame(now){
   $("mfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
   $("mfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("fworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("yfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
+  $("yfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
+  $("yworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("mworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("pworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("cfar").style.transform = "translate3d("+(-cam*0.2).toFixed(2)+"px,0,0)";
@@ -1307,7 +1327,7 @@ function fit(){
   stage.style.transform = "scale("+s+")"; stage.style.left = ((vw - STAGE_W*s)/2)+"px"; stage.style.top = ((vh - STAGE_H*s)/2)+"px"; }
 addEventListener("resize", fit);
 
-load(); cam = 0; fit(); setSceneNow(["tower","archive","cafe","cottage","mill"].includes(S.scene) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus();
+load(); cam = 0; fit(); setSceneNow((["tower","archive","cafe","cottage","mill"].includes(S.scene) || (S.flash && ["past","flood"].includes(S.scene))) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus();
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
 window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4 };
 requestAnimationFrame(frame);

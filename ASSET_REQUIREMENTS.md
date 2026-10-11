@@ -49,7 +49,7 @@ Prologue: BGB's cottage (4 layers, prompts in section H) · Chapter 6: the Heale
 Placeholders in the game now: the cottage and the Old Mill are flat-colour boxes; Molly and Green are black silhouettes until their sprites and portraits arrive.
 
 ## Chapter 4 placeholder build (current state)
-Playable now with placeholders: the flashback uses the night village with a sepia grade, black silhouettes for the controlled child and his brother (no scarf side shown on purpose), and Edward from his new turnaround (front view only). Needed to replace them: flashback village layers (Far, Mid, Ground+Foreground prompts in the Background tab), the young twins (Sprite tab), Edward left and right views (already drawn, not yet sliced for the game).
+Playable now with placeholders: the flashback uses the real flashback village art (Far, Mid, Ground, Foreground; a warm tint in code) with black silhouettes for the controlled child and his brother (no scarf side shown on purpose), and Edward from his new turnaround (front view only). Needed to replace them: the young twins (Sprite tab), Edward left and right views (already drawn, not yet sliced for the game).
 
 ## Chapter 5 placeholder build (current state)
-Playable now: the flooded stairwell scene uses the real flood art (stairwell, animated water and foam, rain). The brother and the two villagers are black silhouettes; Edward is the front sprite. Needed: the young twins (sprites), flashback village layers for the dawn scene (currently the night village in a cold grey grade), villager sprites (Molly's design is reused for one silhouette).
+Playable now: the flooded stairwell scene uses the real flood art (stairwell, animated water and foam, rain). The brother and the two villagers are black silhouettes; Edward is the front sprite. Needed: the young twins (sprites), villager sprites (the dawn uses the same flashback village in a cold grey grade) (Molly's design is reused for one silhouette).
