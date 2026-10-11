@@ -701,22 +701,41 @@ const NOTES = {
 
 /* ---------- dialogue data ---------- */
 const D = {
- n0:{sp:"nini", ex:"worried", t:{en:"Edward never missed the midnight bell. Never.", ko:"에드워드 아저씨는 자정 종을 한 번도 놓친 적이 없어요. 한 번도요."}, next:"n1"},
- n1:{sp:"nini", ex:"worried", t:{en:"Everyone is standing at the tower and nobody will go in. They keep asking if it was an accident.", ko:"다들 탑 앞에 서 있기만 하고 아무도 안으로 들어가지 못해요. 사고였느냐고만 계속 물어요."},
-   ch:[{t:{en:"Tell me what you remember about last night.",ko:"어젯밤에 기억나는 걸 말해 줘."},go:"n2a"},{t:{en:"Has anyone said who was on the stairs?",ko:"계단에 누가 있었는지 말한 사람이 있어?"},go:"n2b"}]},
- n2a:{sp:"nini", ex:"thinking", t:{en:"I left the archive at 9:00. He was sealing letters at his desk. Two of them. I didn't ask who they were for.", ko:"저는 9시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요."}, set:"nini.letters", note:"nini", ev:"stmt_nini", next:"n2d"},
- n2d:{sp:"nini", ex:"worried", ev:"notebook", t:{en:"This is my notebook. A page is torn out, and on the one beneath I wrote: 'Red ledger moved?' Please keep it.", ko:"이건 제 공책이에요. 한 장이 뜯겨 있고, 그 아래 장에 '붉은 장부 옮겨졌나?'라고 적어 뒀어요. 가지고 계세요."}, next:"n3"},
- n2b:{sp:"nini", ex:"neutral", t:{en:"Oliver says a bear in a scarf climbed the stairs at 11:40. Before you got there.", ko:"올리버 아저씨가 그러는데, 11시 40분쯤 목도리를 한 곰이 계단을 올라갔대요. 아저씨가 오기 전에요."},
-   ch:[{t:{en:"I was at the café until 11:45.",ko:"나는 12시 15분 전까지 카페에 있었어."},go:"n2c"},{t:{en:"(Say nothing.)",ko:"(말없이 있는다.)"},go:"n3"}]},
- n2c:{sp:"nini", ex:"neutral", t:{en:"I know. Hazel told everyone. That's why they want you to look into it.", ko:"알아요. 헤이즐 아주머니가 다 말했어요. 그래서 다들 아저씨가 조사해 주길 바라는 거예요."}, next:"n3"},
- n3:{sp:"nini", ex:"worried", t:{en:"Please look at the clock. It stopped at 11:47, and nobody can tell me what that means.", ko:"아저씨, 시계를 봐 주세요. 11시 47분에 멈췄는데, 그게 무슨 뜻인지 아무도 말해 주지 못해요."}, set:"nini.done"},
- n9:{sp:"nini", ex:"neutral", t:{en:"I'll stay here with the others. Tell me what you find.", ko:"저는 다른 분들과 여기 있을게요. 아저씨가 알아내시면 말해 주세요."}},
- c0:{sp:"ck", ex:"neutral", t:{en:"Mm. Last night, around 11:40. I saw a bear climbing these stairs. He was carrying something in his right hand.", ko:"음. 어젯밤, 11시 40분쯤이었습니다. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었습니다."}, set:"ck.bear", note:"bear", ev:"stmt_ck",
-   ch:[{t:{en:"Is the tower clock reliable?",ko:"이 탑시계는 믿을 만한가요?"},go:"c1"},{t:{en:"(Glance at your own hands.)",ko:"(자신의 손을 내려다본다.)"},go:"c2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]},
- c2:{sp:"bgb", ex:"thinking", t:{en:"My notebook is in my left hand, the way it always is.", ko:"공책은 늘 그렇듯 왼손에 들려 있어."}, set:"c2", note:"hand", next:null},
- c1:{sp:"ck", ex:"thinking", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 1분도 어긋나지 않았습니다."}, set:"ck.watch", note:"watch"},
- c9:{sp:"ck", ex:"neutral", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보십시오. 시계는 어디 안 갑니다."},
-   ch:[{t:{en:"Is the tower clock reliable?",ko:"이 탑시계는 믿을 만한가요?"},go:"c1"},{t:{en:"(Glance at your own hands.)",ko:"(자신의 손을 내려다본다.)"},go:"c2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]}
+ n0:{sp:"nini", ex:"neutral", t:{en:"Big Green Bear! Over here!", ko:"빅그베 아저씨! 여기예요!"}, next:"n0a"},
+ n0a:{sp:"bgb", ex:"neutral", t:{en:"Nini. You're still here?", ko:"니니. 아직도 여기 있었어?"}, next:"n0b"},
+ n0b:{sp:"nini", ex:"worried", t:{en:"Yeah. Everyone's too scared to go inside. And nobody knows if what happened to Edward was really an accident.", ko:"네. 다들 안에 들어가기가 무섭대요. 에드워드 아저씨가 정말 사고로 돌아가신 건지도 모르겠고요."}, next:"n1"},
+ n1:{sp:"nini", ex:"worried", t:{en:"He never missed the midnight bell. Not even once.", ko:"아저씨는 자정 종을 한 번도 빼먹으신 적이 없거든요. 정말 한 번도요."},
+   ch:[{t:{en:"Do you remember what happened last night?",ko:"어젯밤에 무슨 일이 있었는지 기억나?"},go:"n2a"},{t:{en:"When did you last see Edward?",ko:"에드워드 아저씨를 마지막으로 본 게 언제야?"},go:"n2a"}]},
+ n2a:{sp:"nini", ex:"thinking", t:{en:"I left the Archive around 9 last night. Edward was writing letters.", ko:"어젯밤 9시쯤 기록실에서 나왔어요. 에드워드 아저씨는 편지를 쓰고 계셨고요."}, set:"nini.letters", note:"nini", ev:"stmt_nini", next:"n2a1"},
+ n2a1:{sp:"bgb", ex:"thinking", t:{en:"Letters?", ko:"편지?"}, next:"n2a2"},
+ n2a2:{sp:"nini", ex:"thinking", t:{en:"Two of them. He was sealing the envelopes. I don't know who they were for.", ko:"네. 두 통이요. 봉투에 풀을 바르고 계셨어요. 누구한테 보내는 건지는 몰라요."}, next:"n2d"},
+ n2d:{sp:"nini", ex:"neutral", t:{en:"Oh, and this. It's my notebook. Could you hold on to it?", ko:"아, 그리고 이거요. 제 공책인데, 아저씨가 가지고 계실래요?"}, ev:"notebook", next:"n2d1"},
+ n2d1:{sp:"bgb", ex:"thinking", t:{en:"Why your notebook?", ko:"네 공책을 왜?"}, next:"n2d2"},
+ n2d2:{sp:"nini", ex:"worried", t:{en:"One of the pages is missing. I don't know who tore it out.", ko:"한 장이 없어졌거든요. 누가 뜯어 갔는지 모르겠어요."}, next:"n2d3"},
+ n2d3:{sp:"nini", ex:"worried", t:{en:"I wrote something on the next page, too. \"Red ledger moved?\"", ko:"그다음 장에 제가 적어 둔 것도 있어요. '붉은 장부 옮겨졌나?'라고요."}, next:"n2d4"},
+ n2d4:{sp:"bgb", ex:"thinking", t:{en:"The red ledger.", ko:"붉은 장부라."}, next:"n2d5"},
+ n2d5:{sp:"nini", ex:"neutral", t:{en:"Yeah. I think Edward was looking for it. I thought it might help.", ko:"네. 에드워드 아저씨가 찾으셨던 것 같아요. 혹시 도움이 될까 해서요."}, next:"n2b"},
+ n2b:{sp:"nini", ex:"neutral", t:{en:"Oh, and Oliver said he saw someone going up the stairs last night.", ko:"참, 올리버 아저씨가 어젯밤에 누군가 계단을 올라가는 걸 봤대요."}, next:"n2b1"},
+ n2b1:{sp:"bgb", ex:"neutral", t:{en:"Did he?", ko:"그래?"}, next:"n2b2"},
+ n2b2:{sp:"nini", ex:"neutral", t:{en:"Yeah. They were wearing a scarf. You should ask Oliver about it.", ko:"네. 목도리를 하고 있었대요. 자세한 건 올리버 아저씨한테 물어보세요."}, next:"n3"},
+ n3:{sp:"nini", ex:"worried", t:{en:"And could you look at the clock? It stopped at 11:47.", ko:"그리고 시계도 봐 주세요. 11시 47분에 멈췄어요."}, next:"n3a"},
+ n3a:{sp:"bgb", ex:"neutral", t:{en:"Okay. I'll take a look.", ko:"알았어. 한번 살펴볼게."}, next:"n3b"},
+ n3b:{sp:"nini", ex:"neutral", t:{en:"I'll wait here. Be careful, Mr. Bear!", ko:"전 여기서 기다릴게요. 조심하세요, 아저씨!"}, set:"nini.done"},
+ n9:{sp:"nini", ex:"neutral", t:{en:"I'll wait here. Be careful, Mr. Bear!", ko:"전 여기서 기다릴게요. 조심하세요, 아저씨!"}},
+ c0:{sp:"ck", ex:"neutral", t:{en:"You're here. Has Nini told you what happened?", ko:"오셨군요. 니니에게 이야기는 들으셨습니까?"}, next:"c0a"},
+ c0a:{sp:"bgb", ex:"neutral", t:{en:"I heard you saw someone on the stairs last night.", ko:"어젯밤 계단에서 누군가를 보셨다고요?"}, next:"c0b"},
+ c0b:{sp:"ck", ex:"neutral", t:{en:"That's right. Around 11:40. They were wearing a scarf and heading upstairs.", ko:"그렇습니다. 11시 40분쯤이었습니다. 목도리를 두르고 계단을 올라가고 있었습니다."}, set:"ck.bear", note:"bear", ev:"stmt_ck", next:"c0c"},
+ c0c:{sp:"bgb", ex:"thinking", t:{en:"Did you see their face?", ko:"얼굴은 보셨나요?"}, next:"c0d"},
+ c0d:{sp:"ck", ex:"thinking", t:{en:"No. Only from behind. But I did notice something in their right hand.", ko:"아니요. 뒷모습뿐이었습니다. 다만 오른손에 무언가를 들고 있었습니다."},
+   ch:[{t:{en:"Could you see what it was?",ko:"뭘 들고 있었는지 보셨습니까?"},go:"c3"},{t:{en:"Is the tower clock accurate?",ko:"이 탑시계는 정확한가요?"},go:"c1"},{t:{en:"(Glance at your own hands.)",ko:"(자신의 손을 내려다본다.)"},go:"c2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:"c4",bye:true}]},
+ c3:{sp:"ck", ex:"neutral", t:{en:"I couldn't make it out. It was dark.", ko:"거기까지는 보지 못했습니다. 어두웠으니까요."}},
+ c1:{sp:"ck", ex:"thinking", t:{en:"Very accurate. I wind it every evening.", ko:"정확합니다. 제가 매일 저녁 태엽을 감습니다."}, set:"ck.watch", note:"watch", next:"c1b"},
+ c1b:{sp:"ck", ex:"neutral", t:{en:"Edward set his pocket watch by this clock every morning. They were never even a minute apart.", ko:"에드워드 씨의 회중시계도 매일 아침 이 시계에 맞췄습니다. 1분도 차이 나지 않았습니다."}},
+ c2:{sp:"bgb", ex:"thinking", t:{en:"(My notebook is in my left hand, as always.)", ko:"(늘 그렇듯 공책은 왼손에 들려 있다.)"}, set:"c2", note:"hand", next:null},
+ c4:{sp:"ck", ex:"neutral", t:{en:"I hope that was helpful.", ko:"도움이 되었으면 좋겠습니다."}, next:"c4b"},
+ c4b:{sp:"ck", ex:"neutral", t:{en:"Those stairs are old and slippery. Please watch your step.", ko:"계단이 오래돼서 미끄럽습니다. 올라가실 때 조심하십시오."}},
+ c9:{sp:"ck", ex:"neutral", t:{en:"Is there anything else you wish to ask?", ko:"더 물어보실 것이 있습니까?"},
+   ch:[{t:{en:"Could you see what it was?",ko:"뭘 들고 있었는지 보셨습니까?"},go:"c3"},{t:{en:"Is the tower clock accurate?",ko:"이 탑시계는 정확한가요?"},go:"c1"},{t:{en:"(Glance at your own hands.)",ko:"(자신의 손을 내려다본다.)"},go:"c2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:"c4",bye:true}]}
 };
 D.p_f0 = {sp:"bgb", ex:"thinking", t:{en:"He was always on my side.", ko:"그분은 항상 내 편이었는데."}, ev:"photo_home", next:"p_f1"};
 D.p_f1 = {sp:"bgb", ex:"worried", t:{en:"I'll leave it for now.", ko:"일단 그대로 두자."}, set:"pro.frame", next:null};
@@ -788,8 +807,8 @@ D.fd_no = {sp:"kid", t:{en:"He is not ready to look away yet.", ko:"아직 눈�
 D.pf_end = {sp:"bgb", ex:"thinking", t:{en:"He always looked out for me.", ko:"그분은 늘 나를 챙겨 주셨어."}, next:"ci6_0"};
 /* Chapter openings: BGB's own thoughts, a short recap and one pointer to what to do next */
 Object.assign(D, {
-  ci1_0: {sp:"bgb", ex:"thinking", t:{en:"Edward is dead. The tower clock stopped at 11:47, and the village just stands outside, afraid to go in.", ko:"에드워드가 죽었다. 탑시계는 11시 47분에 멈췄고, 마을 사람들은 무서워서 안에 들어가지도 못하고 서 있어."}, next:"ci1_1"},
-  ci1_1: {sp:"bgb", ex:"neutral", t:{en:"I should start with the tower itself. Look around inside, and talk to Oliver. The door is to the right.", ko:"먼저 시계탑 안부터 살펴보자. 이것저것 조사하고, 올리버하고도 이야기해 봐야 해. 문은 오른쪽에 있어."}, next:null},
+  ci1_0: {sp:"bgb", ex:"thinking", t:{en:"The clock stopped at 11:47. What exactly happened to Edward?", ko:"시계는 11시 47분에 멈췄어. 에드워드 아저씨에게 무슨 일이 있었던 걸까."}, next:"ci1_1"},
+  ci1_1: {sp:"bgb", ex:"neutral", t:{en:"I'll take a look inside. There must be something I haven't checked yet.", ko:"일단 안을 살펴보자. 아직 확인하지 못한 게 있을 거야."}, next:null},
   ci2_0: {sp:"bgb", ex:"thinking", t:{en:"The clock broke when Edward fell, and a bear climbed those stairs around 11:40. That is all the tower can tell me.", ko:"시계는 에드워드가 떨어질 때 고장 났고, 11시 40분쯤 어떤 곰이 그 계단을 올랐어. 탑이 알려 줄 수 있는 건 거기까지야."}, next:"ci2_1"},
   ci2_1: {sp:"bgb", ex:"neutral", t:{en:"Now I need people's stories. Hazel's café, Tommy's logbook, Nini and Oliver. Then I can compare them.", ko:"이제는 사람들의 이야기가 필요해. 헤이즐의 카페, 토미의 일지, 니니와 올리버. 그걸 맞춰 보면 돼."}, next:null},
   ci3_0: {sp:"bgb", ex:"thinking", t:{en:"One bear cannot be in two places. The bear on the bridge and the bear in the café were different, and the one with the right hand was not me.", ko:"곰은 한 마리일 수 없어. 다리 위의 곰과 카페의 곰은 달랐고, 오른손에 물건을 든 곰은 내가 아니야."}, next:"ci3_1"},
@@ -1314,8 +1333,9 @@ let near = null, peek = 0, autoGo = null;
 let afterDlg = null;
 function endMono(id, then){ afterDlg = then; startDlg(id); }
 Object.assign(D, {
-  ce1_0: {sp:"bgb", ex:"thinking", t:{en:"Here is what the tower told me. The clock stopped at 11:47, when Edward fell. And a bear climbed those stairs around 11:40.", ko:"탑이 알려 준 건 이거야. 시계는 에드워드가 떨어진 11시 47분에 멈췄어. 그리고 11시 40분쯤 어떤 곰이 그 계단을 올랐어."}, next:"ce1_1"},
-  ce1_1: {sp:"bgb", ex:"worried", t:{en:"Who was that bear?", ko:"그 곰은 누구였을까?"}, next:null},
+  ce1_0: {sp:"bgb", ex:"thinking", t:{en:"11:40. A scarf. Something carried in the right hand.", ko:"11시 40분. 목도리. 오른손에 들고 있던 물건."}, next:"ce1_1"},
+  ce1_1: {sp:"bgb", ex:"neutral", t:{en:"That's all Oliver saw.", ko:"올리버 씨가 본 건 그게 전부야."}, next:"ce1_2"},
+  ce1_2: {sp:"bgb", ex:"worried", t:{en:"I wonder what everyone else saw last night. I should talk to Hazel first.", ko:"다른 사람들은 어젯밤에 뭘 봤을까. 헤이즐 씨부터 만나 봐야겠어."}, next:null},
   ce2_0: {sp:"bgb", ex:"thinking", t:{en:"One bear cannot be in two places. The bear on the bridge and the bear in the café were different.", ko:"곰은 한 마리일 수 없어. 다리 위의 곰과 카페의 곰은 달랐어."}, next:"ce2_1"},
   ce2_1: {sp:"bgb", ex:"worried", t:{en:"And the one with the right hand was not me. So who is the other bear?", ko:"그리고 오른손에 물건을 든 곰은 내가 아니야. 그럼 다른 곰은 누구지?"}, next:null},
   ce3_0: {sp:"bgb", ex:"thinking", t:{en:"Two photographs, and the scarf knots do not agree. Green told me to ask myself what I remember.", ko:"사진 두 장, 그리고 서로 맞지 않는 목도리 매듭. Green은 내 기억을 떠올려 보라고 했어."}, next:"ce3_1"},
@@ -1497,7 +1517,7 @@ function showChoices(){
   n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice nine cream"; b.textContent = tr(c.t); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
   box.classList.add("on");   /* both answers start cream; the one you pick turns burgundy */
 }
-function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.go) menuFollow = (cur === "followUp") ? menuFollow : (n.ch.some(x=>!x.go) ? cur : null); else menuFollow = null; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
+function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.bye) menuFollow = null; else if (c.go) menuFollow = (cur === "followUp") ? menuFollow : (n.ch.some(x=>x.bye||!x.go) ? cur : null); else menuFollow = null; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
   setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
 function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); holdHint = true; setTimeout(()=>endMono("ce7_"+en+"_0", ()=>showEndE(en)), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(fromClick){
