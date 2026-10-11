@@ -283,6 +283,12 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .pbtn:hover{--img:url(assets/plaque_red_small.webp);color:#f6e3c0}
 #fade{position:absolute;inset:0;background:#02030a;opacity:0;pointer-events:none;transition:opacity .7s;z-index:40}
 #fade.on{opacity:1;pointer-events:auto}
+#chcard{position:absolute;inset:0;z-index:41;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0;pointer-events:none;transition:opacity .9s;color:#f3e6c8;text-align:center}
+#chcard.on{opacity:1}
+#chcard .ce{font:600 26px/1 "Alegreya SC",Georgia,serif;letter-spacing:.32em;color:#c9a96a}
+#chcard .ct{font:700 74px/1.15 "Alegreya",Georgia,serif}
+html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:700}
+#chcard .cl{width:260px;height:2px;background:linear-gradient(90deg,transparent,#c9a96a,transparent)}
 #toast{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.92);background:#fff3d0;border:5px solid var(--burgundy);outline:3px solid var(--brass);outline-offset:-11px;color:#4a1a22;padding:26px 56px;border-radius:14px;font:700 38px/1.2 var(--font-body);text-align:center;max-width:1300px;box-shadow:0 12px 40px rgba(0,0,0,.55),0 0 0 9999px rgba(6,9,20,.18);opacity:0;transition:opacity .25s,transform .25s;z-index:45;pointer-events:none}
 #toast.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
 
@@ -442,7 +448,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
     <button class="pbtn nine cream" id="eNext" style="display:none"></button>
     <button class="pbtn nine cream" id="eBack">Back to the village</button>
   </div></div>
-  <div id="fade"></div>
+  <div id="fade"></div><div id="chcard"><div class="ce" id="chE"></div><div class="cl"></div><div class="ct" id="chT"></div></div>
   <span id="meas"></span>
  </div>
 </div>
@@ -929,8 +935,8 @@ function checkDeduce(){
   if (has("gr.hand") && has("ck.bear") && !S.flags.dd03){ S.flags.dd03 = true; addNote(DD03); toast((lang==="ko"?"추리":"Deduction")+": "+(lang==="ko"?"계단의 곰은 당신이 아니다":"The stair bear was not you")); }
   const tw = ["hatch","pendulum","handbell","chute","melt","boots"].filter(x=>S.ev.includes(x)).length;
   if (S.ev.includes("clock") && S.ev.includes("pendulum") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
-  if (has("ck.bear") && S.ev.includes("clock") && tw >= 3 && !S.flags.q1){ S.flags.q1 = true; toast((lang==="ko"?"질문":"Question")+": "+tr(UI.askBear)); }
-  if (S.flags["con.c1"] && S.flags["con.c2"] && !S.flags.dd02){ S.flags.dd02 = true; addNote(DD02); toast((lang==="ko"?"추리 완성":"Deduction")+": "+(lang==="ko"?"곰은 한 마리일 수 없다":"Two bears cannot be one")); }
+  if (has("ck.bear") && S.ev.includes("clock") && tw >= 3 && !S.flags.q1){ S.flags.q1 = true; if (!S.flags["ch.2"]){ S.flags["ch.2"] = true; setTimeout(()=>whenPlay(()=>chapterIntro(2)), 3500); } toast((lang==="ko"?"질문":"Question")+": "+tr(UI.askBear)); }
+  if (S.flags["con.c1"] && S.flags["con.c2"] && !S.flags.dd02){ S.flags.dd02 = true; if (!S.flags["ch.3"]){ S.flags["ch.3"] = true; setTimeout(()=>whenPlay(()=>chapterIntro(3)), 3500); } addNote(DD02); toast((lang==="ko"?"추리 완성":"Deduction")+": "+(lang==="ko"?"곰은 한 마리일 수 없다":"Two bears cannot be one")); }
 }
 function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSON.stringify(n); if (S.notes.some(x=>x.k===key)) return; S.notes.push({k:key, n}); }
 function setLang(l){ lang = l; save(); applyLang(); if (mode==="cf") renderCF(); }
@@ -984,9 +990,17 @@ function advance(fromClick){
   applyNode(n); goto(n.next || null);
 }
 function goto(id){ if (!id){ endDlg(); return; } cur = id; renderDlg(true); }
+const CHT = {1:["멈춘 시계","The Clock That Stopped"],2:["네 명의 증인","Four Witnesses"],3:["다른 곰","The Other Bear"],4:["훔쳐 간 이름","The Name That Was Stolen"],5:["좋은 사람","A Good Person"]};
+/* chapter title card: fade to black, scene change while black, title, fade back in */
+function chapterIntro(n, mid, done){
+  const k = lang==="ko"; mode = "modal"; hideHintNow(); $("fade").classList.add("on");
+  setTimeout(()=>{ if (mid) mid(); $("chE").textContent = k ? n+"장" : "CHAPTER "+n; $("chT").textContent = CHT[n][k?0:1]; $("chcard").classList.add("on");
+    setTimeout(()=>{ $("chcard").classList.remove("on"); setTimeout(()=>{ $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (done) done(); }, 900); }, 2600); }, 800);
+}
+function whenPlay(fn){ const t = setInterval(()=>{ if (mode === "play"){ clearInterval(t); fn(); } }, 400); }
 function endDlg(){ const f5 = S.flash === 5 && has("f5.end") && !has("f5.shown"); if (f5){ setf("f5.shown"); setTimeout(()=>{ toast(lang==="ko"?"종이 한 번, 느리게 울린다. 그날 밤 울리지 않았던 종이다.":"A single slow bell tone, the one that never rang that night."); setTimeout(()=>showEnd5(), 2400); }, 900); }
   const fin = S.flash && S.flash !== 5 && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); setTimeout(()=>showEnd4(), 1800); $("rain").classList.add("on"); }
-  const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>setScene("village", 700), 50); }
+  const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>chapterIntro(1, ()=>setSceneNow("village", 700)), 50); }
  endDlg0(); }
 function endDlg0(){ $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null; mode = "play"; clearInterval(typing); typing = null; save(); }
 
@@ -1047,8 +1061,8 @@ function rewindFx(){ const st = $("stage"); st.classList.add("rw"); toast(tr(UI.
 let NEXTK = 4;
 function startFlash5(){
   S.flash = 5; ["f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown"].forEach(k=>S.flags[k] = false);
-  $("endcard").classList.remove("on"); mode = "modal"; $("fade").classList.add("on");
-  setTimeout(()=>{ setSceneNow("flood", 420); $("rain").classList.add("on"); $("fade").classList.remove("on"); const c = $("flcap"); c.textContent = tr(UI.locFl); c.classList.add("on"); mode = "play"; setTimeout(()=>c.classList.remove("on"), 3000); stage.focus(); }, 800);
+  $("endcard").classList.remove("on");
+  chapterIntro(5, ()=>{ setSceneNow("flood", 420); $("rain").classList.add("on"); }, ()=>{ const c = $("flcap"); c.textContent = tr(UI.locFl); c.classList.add("on"); setTimeout(()=>c.classList.remove("on"), 3000); });
 }
 function showEnd5(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"5장 끝":"END OF CHAPTER 5"; $("eH").textContent = k?"좋은 사람":"A Good Person";
   $("eP1").textContent = k?"아이는 추위 속에 홀로 서 있다. 아무도 그를 보지 않았다.":"The child stands alone in the cold. Nobody looked at him.";
@@ -1056,8 +1070,8 @@ function showEnd5(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent
   $("eNext").style.display = "none"; $("eBack").textContent = k?"현재로 돌아가기":"Back to the present"; $("endcard").classList.add("on"); }
 function startFlash(){
   S.ret = { scene:S.scene, x:Math.round(P.x) }; S.flash = true; S.flags["f4.ed"] = false; S.flags["f4.gate"] = false; S.flags["f4.lever"] = false; S.flags["f4.end"] = false; S.flags["f4.shown"] = false;
-  $("endcard").classList.remove("on"); mode = "modal"; $("fade").classList.add("on");
-  setTimeout(()=>{ setSceneNow("past", 650); $("fade").classList.remove("on"); const c = $("flcap"); c.textContent = tr(UI.capF); c.classList.add("on"); mode = "play"; setTimeout(()=>c.classList.remove("on"), 3600); stage.focus(); }, 800);
+  $("endcard").classList.remove("on");
+  chapterIntro(4, ()=>setSceneNow("past", 650), ()=>{ const c = $("flcap"); c.textContent = tr(UI.capF); c.classList.add("on"); setTimeout(()=>c.classList.remove("on"), 3600); });
 }
 function endFlash(){ const r = S.ret || { scene:"archive", x:1500 }; const from5 = S.flash === 5; S.flash = false; $("endcard").classList.remove("on"); mode = "modal"; $("fade").classList.add("on");
   setTimeout(()=>{ setSceneNow(r.scene, r.x); $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (from5) setTimeout(()=>startDlg("pf_end"), 700); }, 800); }
