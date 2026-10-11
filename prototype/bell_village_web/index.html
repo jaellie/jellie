@@ -357,7 +357,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
    <svg id="vhands" style="position:absolute;left:2796px;top:337px" width="120" height="120" viewBox="-60 -60 120 120" aria-label="Tower clock stopped at 11:47"><g stroke="#2b1a0e" stroke-linecap="round"><line x1="0" y1="3" x2="0" y2="-24" stroke-width="2.2" transform="rotate(282)"/><line x1="0" y1="4" x2="0" y2="-16" stroke-width="3.4" transform="rotate(353.5)"/></g><circle r="3.6" fill="#2b1a0e"/><circle r="1.4" fill="#c97a2e"/></svg>
    <div class="glow" style="left:2700px;top:700px;width:310px;height:330px"></div>
    <div class="hgate" style="left:1445px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">빅그베의 오두막</b></div>
-   <div class="hgate" style="left:3265px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">치료사의 집</b></div>
+   <div class="hgate" style="left:2290px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">치료사의 집</b></div>
    <div id="millgate"><i class="mp l"></i><i class="mp r"></i><i class="ma"></i><i class="md"></i><b class="ms">낡은 방앗간 · Old Mill</b></div>
    <div id="shadows"></div>
    <div id="actors"></div>
@@ -1041,7 +1041,7 @@ let IA = [
   { id:"enterC", x:()=>5200, label:UI.enterC, top:560, run:()=>tryEnter("cafe", 500, ch1Gate) },
   { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? "mo9" : "mo0") },
   { id:"home",   x:()=>1560,      label:UI.toHome, top:600,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 700); } },
-  { id:"heal",   x:()=>3380,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 470); } },
+  { id:"heal",   x:()=>2405,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 470); } },
   { id:"mill",   x:()=>6150,      label:UI.toMill, top:600,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
   { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } startDlg(tmNode()); } },
   { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
@@ -1071,7 +1071,7 @@ const IA_A = [
 const IA_FL = [
   { id:"fbrother", x:()=>1750, label:UI.lBrother, top:440, run:()=>startDlg(has("f5.free") ? "fb_wait" : "fb0") },
   { id:"fbell",    x:()=>700,  label:UI.lHandbell, top:520, run:()=>startDlg(!has("f5.free") ? "fb_wait" : has("f5.bell") ? "fb_up" : "fb_bell") },
-  { id:"fup",      x:()=>2380, label:UI.lUp,       top:420, run:()=>{ if (!has("f5.free") || !has("f5.bell")){ startDlg("fb_up"); return; } setScene("past", 1100); } }
+  { id:"fup",      x:()=>930,  label:UI.lUp,       top:680, run:()=>{ if (!has("f5.free") || !has("f5.bell")){ startDlg("fb_up"); return; } setScene("past", 1100); } }
 ];
 const IA_D = [
   { id:"v1",   x:()=>1100, label:UI.lVill,    top:FEET-MO_H-150, run:()=>startDlg("fd_v1") },
@@ -1089,7 +1089,7 @@ const IA_FT = [
   { id:"flever", x:()=>1500, label:UI.lLever, top:520, run:()=>{ if (has("f4.end")){ startDlg("fl9"); return; } startDlg("fl0"); } }
 ];
 const IA_H = [
-  { id:"hexit", x:()=>2030, label:UI.leaveH, top:330, run:()=>setScene("village", 3380) },
+  { id:"hexit", x:()=>2030, label:UI.leaveH, top:330, run:()=>setScene("village", 2405) },
   { id:"hl",    x:()=>1300, label:UI.talkHl, top:FEET_T-175-150, run:()=>startDlg(has("c6.hl") ? "hl9" : "hl0") }
 ];
 const IA_M = [
@@ -1626,6 +1626,8 @@ function frame(now){
   $("cworld").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   $("cfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   place(); applyLight(dt);
+  { const ACT = { nini, ck, hz, tm, mo, gr, hl:mo, ed, fded:ed, v1:mo, v2:gr, fbrother:br };   /* the ! bubble sits 15 to 30 px above whoever it belongs to (it bobs 8 px) */
+    IA.forEach(i=>{ const a = ACT[i.id]; if (i.el && a && a.style.display !== "none") i.el.style.top = Math.round(parseFloat(a.style.top) - 129 - 20) + "px"; }); }
   // nearest interactable
   near = null; let best = 140;
   if (mode==="play"){ IA.forEach(i=>{ if (i.when && !i.when()) return; const d = Math.abs(P.x - i.x()); if (d < best){ best = d; near = i; } }); }
