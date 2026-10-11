@@ -122,11 +122,12 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #fwater .ff{position:absolute;left:-200px;top:975px;width:3200px;height:110px;background:url(assets/flood_foam.webp) 0 0/800px 100% repeat-x;opacity:.9;animation:wv 6s linear infinite reverse}
 @keyframes wv{to{background-position:800px 0}}
 #stage.flash5 #vsc,#stage.flash5 #tsc{filter:grayscale(.45) sepia(.35) brightness(.95) contrast(1.02)}
-#msc{position:absolute;inset:0;display:none;background:linear-gradient(#bfd0e0,#e8e4d8 62%)}
+#msc{position:absolute;inset:0;display:none;background:#31416e}
 #msc.on{display:block}
 #mworld{position:absolute;left:0;top:0;width:3000px;height:1080px;will-change:transform}
 #mworld img{display:block;position:absolute;pointer-events:none;-webkit-user-drag:none}
-#mfar img{left:-120px;top:0}
+#msky{position:absolute;inset:0;background:linear-gradient(#070b20 0%,var(--night-0) 18%,var(--night-1) 62%,#31416e 100%)}
+#mfar img{left:-150px;top:168px;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 34%,#000 80%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 34%,#000 80%,transparent 100%)}
 #mhill{position:absolute;left:0;top:520px;width:2400px;height:420px;background:linear-gradient(#a9b9cf,#c9d3e0)}
 #mfloor{position:absolute;left:0;top:890px;width:2400px;height:190px;background:linear-gradient(#dce6f2,#9fb2cf)}
 #mmill{position:absolute;left:900px;top:380px;width:700px;height:520px;background:#7a6f66;border:10px solid #4a2a18}
@@ -410,7 +411,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
    <div id="fwater" class="layer"><div class="fw"></div><div class="ff"></div></div>
   </div>
   <div id="msc">
-   <div class="layer" id="mfar"><img src="assets/m_far.webp" alt=""></div>
+   <div id="msky"></div><div class="layer" id="mfar"><img src="assets/far.webp" width="3230" height="492" alt=""></div>
    <div id="mworld">
     <img src="assets/m_mid.webp" style="left:0;top:-191px" width="3023" height="1417" alt="">
     <img src="assets/m_ground.webp" style="left:-100px;top:787px" width="3221" height="319" alt="">
