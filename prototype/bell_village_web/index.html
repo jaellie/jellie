@@ -390,16 +390,15 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
      <img src="assets/k_mid.webp" style="left:0;top:-18px;width:2171px;height:1019px" alt=""><img src="assets/k_mid.webp" style="left:-2171px;top:-18px;width:2171px;height:1019px;transform:scaleX(-1)" alt=""><img src="assets/k_mid.webp" style="left:2171px;top:-18px;width:2171px;height:1019px;transform:scaleX(-1)" alt="">
      <img src="assets/k_ground.webp" style="left:0;top:405px;width:2172px;height:724px" alt=""><img src="assets/k_ground.webp" style="left:-2172px;top:405px;width:2172px;height:724px;transform:scaleX(-1)" alt=""><img src="assets/k_ground.webp" style="left:2172px;top:405px;width:2172px;height:724px;transform:scaleX(-1)" alt="">
     </div>
-    <div id="rmH" class="rm">
-     <img src="assets/h_mid.webp" style="left:0;top:-127px;width:2171px;height:1018px" alt=""><img src="assets/h_mid.webp" style="left:-2171px;top:-127px;width:2171px;height:1018px;transform:scaleX(-1)" alt=""><img src="assets/h_mid.webp" style="left:2171px;top:-127px;width:2171px;height:1018px;transform:scaleX(-1)" alt="">
-     <img src="assets/h_ground.webp" style="left:0;top:397px;width:2172px;height:724px" alt=""><img src="assets/h_ground.webp" style="left:-2172px;top:397px;width:2172px;height:724px;transform:scaleX(-1)" alt=""><img src="assets/h_ground.webp" style="left:2172px;top:397px;width:2172px;height:724px;transform:scaleX(-1)" alt="">
+    <div id="rmH" class="rm"><img src="assets/h_mid.webp" style="left:0px;top:-150px;width:2382px;height:1117px" alt=""><img src="assets/h_mid.webp" style="left:-2382px;top:-150px;width:2382px;height:1117px;transform:scaleX(-1)" alt=""><img src="assets/h_mid.webp" style="left:2382px;top:-150px;width:2382px;height:1117px;transform:scaleX(-1)" alt="">
+     <img src="assets/h_ground.webp" style="left:0px;top:534px;width:1738px;height:579px" alt=""><img src="assets/h_ground.webp" style="left:1738px;top:534px;width:1738px;height:579px;transform:scaleX(-1)" alt=""><img src="assets/h_ground.webp" style="left:-1738px;top:534px;width:1738px;height:579px;transform:scaleX(-1)" alt=""><img src="assets/h_ground.webp" style="left:3476px;top:534px;width:1738px;height:579px" alt="">
     </div>
     <img id="pframe" src="assets/ev_keepsake_frame.webp" alt="Photograph frame">
     <div id="pmarks"></div><div id="hmarks"></div>
    </div>
    <div id="pfg" class="layer">
     <div id="pfgC" class="rm"><img src="assets/k_fg.webp" style="left:0;top:401px;width:2172px;height:724px" alt=""><img src="assets/k_fg.webp" style="left:-2172px;top:401px;width:2172px;height:724px;transform:scaleX(-1)" alt=""><img src="assets/k_fg.webp" style="left:2172px;top:401px;width:2172px;height:724px;transform:scaleX(-1)" alt=""></div>
-    <div id="pfgH" class="rm"><img src="assets/h_fg.webp" style="left:0;top:394px;width:2172px;height:724px" alt=""><img src="assets/h_fg.webp" style="left:-2172px;top:394px;width:2172px;height:724px;transform:scaleX(-1)" alt=""><img src="assets/h_fg.webp" style="left:2172px;top:394px;width:2172px;height:724px;transform:scaleX(-1)" alt=""></div>
+    <div id="pfgH" class="rm"><img src="assets/h_fg.webp" style="left:0px;top:533px;width:1738px;height:579px" alt=""><img src="assets/h_fg.webp" style="left:1738px;top:533px;width:1738px;height:579px;transform:scaleX(-1)" alt=""><img src="assets/h_fg.webp" style="left:-1738px;top:533px;width:1738px;height:579px;transform:scaleX(-1)" alt=""><img src="assets/h_fg.webp" style="left:3476px;top:533px;width:1738px;height:579px" alt=""></div>
    </div>
   </div>
   <div id="fsc">
@@ -1243,7 +1242,7 @@ let IA = [
   { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? "mo9" : "mo0") },
   { id:"gather", x:()=>2700, label:UI.toGather, top:640, when:()=>has("c7.rec"), run:()=>startGather() },
   { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 1850); } },
-  { id:"heal",   x:()=>2320,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 1850); } },
+  { id:"heal",   x:()=>2320,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 2030); } },
   { id:"mill",   x:()=>5302,      label:UI.toMill, top:690,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
   { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ if (ch1Gate()){ startDlg(talk("tm")); return; } startDlg(tmNode()); } },
   { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
@@ -1292,8 +1291,8 @@ const IA_FT = [
   { id:"flever", x:()=>1500, label:UI.lLever, top:520, run:()=>{ if (has("f4.end")){ startDlg("fl9"); return; } startDlg("fl0"); } }
 ];
 const IA_H = [
-  { id:"hexit", x:()=>1943, label:UI.leaveH, top:430, run:()=>setScene("village", 2320) },
-  { id:"hl",    x:()=>1450, label:UI.talkHl, top:FEET_T-175-150, run:()=>startDlg(has("c6.hl") ? "hl9" : "hl0") }
+  { id:"hexit", x:()=>2131, label:UI.leaveH, top:430, run:()=>setScene("village", 2320) },
+  { id:"hl",    x:()=>1591, label:UI.talkHl, top:FEET_T-175-150, run:()=>startDlg(has("c6.hl") ? "hl9" : "hl0") }
 ];
 const IA_M = [
   { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 5250) },
@@ -1599,7 +1598,7 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 /* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
-const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2171}, mill:{min:0,end:3000}, past:{min:0,end:2632}, healer:{min:0,end:2171}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2171}, mill:{min:0,end:3000}, past:{min:0,end:2632}, healer:{min:0,end:2382}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
 function locOf(n){ return tr(n==="healer" ? UI.locH : n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
   S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage" || name === "healer", MI = name === "mill", FLD = name === "flood", PST = name === "past", HL = name === "healer", IN = PST || HL || T || A || C || PR || MI || FLD;
@@ -1612,7 +1611,7 @@ function setSceneNow(name, x){
   ck.style.display = (A || C || PR || MI || FLD) ? "none" : ""; ck._sh.style.display = (A || C || PR || MI || FLD) ? "none" : "";
   hz.style.display = C ? "" : "none"; hz._sh.style.display = C ? "" : "none";
   tm.style.display = IN ? "none" : ""; tm._sh.style.display = IN ? "none" : "";
-  mo.style.display = IN ? "none" : ""; mo._sh.style.display = IN ? "none" : ""; hl.style.display = HL ? "" : "none"; hl._sh.style.display = HL ? "" : "none"; if (HL) NPCX.hl = 1450;
+  mo.style.display = IN ? "none" : ""; mo._sh.style.display = IN ? "none" : ""; hl.style.display = HL ? "" : "none"; hl._sh.style.display = HL ? "" : "none"; if (HL) NPCX.hl = 1591;
   const FL = !!S.flash; $("stage").classList.toggle("flash", S.flash === 4 || S.flash === true); $("stage").classList.toggle("flash5", S.flash === 5); PH = FL ? (PST ? 105 : KID_H) : 220;
   if (FL){ [nini,ck,hz,tm,mo,gr].forEach(a=>{ a.style.display = "none"; a._sh.style.display = "none"; });
     NPCX.ed = PST ? (S.flash === 5 ? 1450 : 1000) : -9999; BRX = x + 100; } else NPCX.ed = -9999;
