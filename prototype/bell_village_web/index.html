@@ -1346,15 +1346,14 @@ function nextHint(){
   if (!has("ck.bear")) return L("시계지기 올리버와 이야기하자.","Talk to Oliver, the Clockkeeper.");
   return L("탑 안을 더 조사하자. 시계, 해치, 발자국, 손종, 추를 살펴봐.","Look around the tower more: the clock, the hatch, the footprints, the handbell, the pendulum.");
 }
-function askBgb(){ if (mode !== "play" || performance.now() < dlgLock) return; hideHintNow(); D.hintNow = {sp: S.flash ? "kid" : "bgb", ex:"thinking", t:{en:nextHint(), ko:nextHint()}, next:null}; startDlg("hintNow"); }
-/* the next-step thought also appears by itself whenever the objective changes */
-let lastGoal = "", goalT = 0;
+function askBgb(){ if (mode !== "play" || performance.now() < dlgLock) return false; hideHintNow(); D.hintNow = {sp: S.flash ? "kid" : "bgb", ex:"thinking", t:{en:nextHint(), ko:nextHint()}, next:null}; startDlg("hintNow"); return true; }
+/* the next-step thought also comes up by itself, as a dialogue, whenever the objective changes */
+let lastGoal = "";
 setInterval(()=>{
-  const g = $("goal");
-  if (mode !== "play"){ g.classList.remove("on"); return; }
+  if (mode !== "play" || performance.now() < dlgLock || autoGo) return;
   let h; try { h = nextHint(); } catch(e){ return; }
-  if (h && h !== lastGoal){ lastGoal = h; g.innerHTML = (S.flash ? "" : "<b>"+(lang==="ko"?"빅그베":"BGB")+"</b>") + h.replace(/&/g,"&amp;").replace(/</g,"&lt;"); g.classList.add("on"); clearTimeout(goalT); goalT = setTimeout(()=>g.classList.remove("on"), 6500); }
-}, 800);
+  if (h && h !== lastGoal && askBgb()) lastGoal = h;
+}, 900);
 bgb.style.pointerEvents = "auto"; bgb.style.cursor = "pointer"; bgb.addEventListener("click", askBgb);
 
 /* ---------- UI plumbing ---------- */
