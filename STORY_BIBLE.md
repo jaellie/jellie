@@ -747,6 +747,7 @@ A Case File board with **three columns.** Each column is a **separate question**
 | Clockkeeper (Oliver) | 시계지기 (올리버) |
 | Café Owner (Hazel) | 카페 주인 (헤이즐) |
 | Night Guard (Tommy) | 야간 경비원 (토미) |
+| Big Green Bear (BGB) | 빅그린베어 (줄임말: **빅그베**) |
 | Old Badger (Molly) | 몰리 할머니 |
 | The Old Mill | 낡은 방앗간 |
 | Edward Bell | 에드워드 벨 |

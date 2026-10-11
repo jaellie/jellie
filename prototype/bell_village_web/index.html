@@ -457,7 +457,7 @@ const tr = o => typeof o === "string" ? o : (o[lang] || o.en);
 const UI = {
   leave:{en:"Leave the Clocktower", ko:"시계탑을 나간다"}, leaveA:{en:"Leave the archive", ko:"기록실을 나간다"}, lReg:{en:"Examine the register", ko:"장부를 살핀다"}, lDraw:{en:"Try the drawers", ko:"서랍을 열어 본다"}, locA:{en:"Archive", ko:"기록실"}, lHatch:{en:"Examine the hatch", ko:"해치를 살핀다"}, lPend:{en:"Examine the pendulum", ko:"추 막대를 살핀다"}, lBell:{en:"Examine the handbell", ko:"손종을 살핀다"}, lChute:{en:"Examine the back door", ko:"뒷문을 살핀다"}, lMelt:{en:"Look at the puddles", ko:"물 자국을 살핀다"}, lClk:{en:"Examine the clock", ko:"시계를 살핀다"}, locT:{en:"Clocktower", ko:"시계탑"},
   enterA:{en:"Enter the archive", ko:"기록실에 들어간다"}, enterC:{en:"Enter Hazel's café", ko:"헤이즐의 카페에 들어간다"},
-  locP:{en:"BGB's cottage", ko:"BGB의 오두막"}, lFrame:{en:"Look at the photograph", ko:"사진을 본다"}, lDoor:{en:"Open the door", ko:"문을 연다"}, lDoorNo:{en:"Someone is knocking", ko:"누군가 문을 두드린다"},
+  locP:{en:"BGB's cottage", ko:"빅그베의 오두막"}, lFrame:{en:"Look at the photograph", ko:"사진을 본다"}, lDoor:{en:"Open the door", ko:"문을 연다"}, lDoorNo:{en:"Someone is knocking", ko:"누군가 문을 두드린다"},
   askBear:{en:"Who was the bear on the stairs?", ko:"계단의 곰은 누구인가?"}, askStop:{en:"The clock stopped at 11:47. That is not necessarily when Edward died.", ko:"시계는 11시 47분에 멈췄다. 그것이 에드워드가 죽은 시각이라는 뜻은 아니다."},
   locM:{en:"The Old Mill", ko:"낡은 방앗간"}, talkMo:{en:"Talk to Molly", ko:"몰리 할머니와 이야기한다"}, talkGr:{en:"Talk to Green", ko:"Green과 이야기한다"}, toMill:{en:"Walk to the Old Mill", ko:"낡은 방앗간으로 간다"}, leaveM:{en:"Walk back to the village", ko:"마을로 돌아간다"}, lComp:{en:"Compare the photographs", ko:"사진을 맞춰 본다"},
   talkTm:{en:"Talk to Tommy", ko:"토미와 이야기한다"},
@@ -478,7 +478,7 @@ const UI = {
   empty:{en:"Nothing here yet.", ko:"아직 아무것도 없다."},
   unmet:{en:"Not met yet", ko:"아직 만나지 못함"}, close:{en:"Close", ko:"닫기"},
   back:{en:"Back to the village", ko:"마을로 돌아가기"},
-  end:{en:["CHAPTER 1","The Clock That Stopped","The door opens onto the winding room. That scene is the next one to build.","Needs: Clocktower interior background, BGB walk frames, Oliver portrait."], ko:["1장","멈춰 선 시계","문이 태엽실로 이어진다. 그 장면이 다음에 만들 장면이다.","필요: 시계탑 내부 배경, BGB 걷기 프레임, 올리버 초상."]},
+  end:{en:["CHAPTER 1","The Clock That Stopped","The door opens onto the winding room. That scene is the next one to build.","Needs: Clocktower interior background, BGB walk frames, Oliver portrait."], ko:["1장","멈춰 선 시계","문이 태엽실로 이어진다. 그 장면이 다음에 만들 장면이다.","필요: 시계탑 내부 배경, 빅그베 걷기 프레임, 올리버 초상."]},
   rot:{en:"Rotate your phone for a larger view", ko:"더 크게 보려면 폰을 가로로 돌리세요"},
   legend:{en:["W Witness: when someone saw it","E Event: when it happened","C Clock: what a clock shows","D Death: estimated time of death"], ko:["W 목격: 누군가 본 시각","E 사건: 일어난 시각","C 시계: 시계가 가리키는 시각","D 사망: 추정 사망 시각"]},
   tlNote:{en:"A stopped clock tells you when the clock stopped. It does not tell you when Edward died.", ko:"멈춘 시계는 시계가 멈춘 시각을 알려줄 뿐, 에드워드가 죽은 시각은 알려주지 않는다."},
@@ -533,7 +533,7 @@ EV.stmt_nini = { id:"stmt_nini", name:{en:"Statement: Nini",ko:"진술: 니니"}
   desc:{en:"Nini: \"I left the archive at nine. He was sealing letters at his desk. Two of them. I didn't ask who they were for.\"", ko:"니니: \"저는 아홉 시에 기록실을 나왔어요. 아저씨는 책상에서 편지를 봉하고 계셨고요. 두 통이었어요. 누구에게 보내는지는 묻지 않았어요.\""} };
 EV.photo_home = { id:"photo_home", name:{en:"The photograph (home copy)",ko:"사진(집에 둔 것)"}, img:"ev_photo_post_flood", tag:"PHOTO",
   desc:{en:"A worn photograph of two small cubs in scarves, standing close. The frame is old and deep, and it leans on the shelf instead of hanging.", ko:"목도리를 두른 두 아기 곰이 나란히 선 낡은 사진. 액자는 오래되고 깊어서, 걸려 있지 않고 선반에 기대어 서 있다."},
-  note:{en:"BGB keeps a worn photograph of two cubs on his shelf.", ko:"BGB는 선반에 두 아기 곰이 찍힌 낡은 사진을 두고 있다."} };
+  note:{en:"BGB keeps a worn photograph of two cubs on his shelf.", ko:"빅그베는 선반에 두 아기 곰이 찍힌 낡은 사진을 두고 있다."} };
 EV.stmt_tm = { id:"stmt_tm", name:{en:"Statement: Tommy",ko:"진술: 토미"}, tag:"STATEMENT", note:null,
   desc:{en:"Night Guard Tommy: \"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.\"", ko:"야간 경비 토미: \"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 뒀죠. 뒷모습만 봤습니다.\""} };
 EV.stmt_gr = { id:"stmt_gr", name:{en:"Statement: Green",ko:"진술: Green"}, tag:"STATEMENT", note:null,
@@ -547,10 +547,10 @@ EV.receipt = { id:"receipt", name:{en:"Café receipt",ko:"카페 영수증"}, im
 const NOTES = {
   mo:{en:"Molly says the village does not talk about Green. In her telling he is the one who let the bell fail.", ko:"몰리 할머니는 마을이 Green 이야기를 하지 않는다고 했다. 그녀의 말로는 종이 울리지 않게 한 쪽은 Green이다."},
   gr:{en:"Green lives alone at the Old Mill. A faded scar marks his left ear. He lifts the kettle with his right hand, and that hand is bare in the cold.", ko:"Green은 낡은 방앗간에서 혼자 산다. 왼쪽 귀에 희미한 흉터가 있다. 주전자는 오른손으로 들고, 그 손은 추위 속에서 맨손이다."},
-  hz:{en:"Hazel: BGB stayed at the café until a little before a quarter to twelve. He looked like he was waiting for someone.", ko:"헤이즐: BGB는 열두 시 십오 분 전이 조금 못 되도록 카페에 있었다. 누군가를 기다리는 것 같았다."},
+  hz:{en:"Hazel: BGB stayed at the café until a little before a quarter to twelve. He looked like he was waiting for someone.", ko:"헤이즐: 빅그베는 열두 시 십오 분 전이 조금 못 되도록 카페에 있었다. 누군가를 기다리는 것 같았다."},
   hand:{en:"Your own hand: you hold things in your LEFT hand.", ko:"당신의 손: 당신은 물건을 왼손으로 든다."},
   nini:{en:"Nini last saw Edward at nine. He was sealing two letters.", ko:"니니가 에드워드를 마지막으로 본 것은 아홉 시. 그는 편지 두 통을 봉하고 있었다."},
-  bear:{en:"Clockkeeper Oliver saw a bear on the stairs around 11:40, before BGB arrived.", ko:"시계지기 올리버는 11시 40분쯤 계단을 오르는 곰을 보았다. BGB가 도착하기 전이다."},
+  bear:{en:"Clockkeeper Oliver saw a bear on the stairs around 11:40, before BGB arrived.", ko:"시계지기 올리버는 11시 40분쯤 계단을 오르는 곰을 보았다. 빅그베가 도착하기 전이다."},
   watch:{en:"Clockkeeper Oliver sets Edward's pocket watch to the tower clock every morning.", ko:"시계지기 올리버는 매일 아침 에드워드의 회중시계를 탑시계에 맞춘다."}
 };
 
@@ -606,7 +606,7 @@ D.h1 = {sp:"hz", t:{en:"You were here until a little before a quarter to twelve.
 D.h1b = {sp:"hz", t:{en:"You settled your tab at eleven forty-two. I wrote the time on the receipt myself. Here, keep it.", ko:"열한 시 사십이 분에 계산하셨어요. 시각은 제가 직접 영수증에 적었죠. 자, 가지고 계세요."}, ev:"receipt", set:"hz.done", next:null};
 D.h2 = {sp:"hz", t:{en:"He lent me money for the roof last winter. I paid back half. It's no secret, so don't go writing it down as one.", ko:"작년 겨울에 지붕 고치라고 돈을 빌려줬어요. 절반은 갚았고요. 비밀도 아니니 무슨 비밀인 양 적지는 마세요."}, set:"hz.owed", next:"h0"};
 D.h9 = {sp:"hz", t:{en:"Take your time. The kettle's always on.", ko:"천천히 하세요. 주전자는 늘 불 위에 있답니다."}};
-const SP = { mo:{name:{en:"Molly",ko:"몰리"}, img:"assets/nini_front.webp", sil:true}, gr:{name:{en:"Green",ko:"Green"}, img:"assets/big_green_bear_front.webp", sil:true}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp"}, bgb:{name:{en:"BGB",ko:"BGB"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
+const SP = { mo:{name:{en:"Molly",ko:"몰리"}, img:"assets/nini_front.webp", sil:true}, gr:{name:{en:"Green",ko:"Green"}, img:"assets/big_green_bear_front.webp", sil:true}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
 const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
@@ -881,7 +881,7 @@ function setScene(name, x){
 }
 function enterTower(){ setScene("tower", 470); }
 function showEnd(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"3장 끝":"END OF CHAPTER 3"; $("eH").textContent = k?"다른 곰":"The Other Bear";
-  $("eP1").textContent = k?"두 장의 사진을 맞춰 보려는 순간, 사진 속 기억이 BGB의 눈앞으로 밀려온다.":"As BGB lines the two photographs up, the memory inside them pulls at him.";
+  $("eP1").textContent = k?"두 장의 사진을 맞춰 보려는 순간, 사진 속 기억이 빅그베의 눈앞으로 밀려온다.":"As BGB lines the two photographs up, the memory inside them pulls at him.";
   $("eP2").textContent = k?"다음은 4장, 23년 전의 이야기입니다. 필요한 그림: 과거의 마을, 어린 쌍둥이.":"Next is Chapter 4, 23 years earlier. Needs: the flashback village and the young twins."; $("endcard").classList.add("on"); }
 $("eBack").onclick = ()=>{ $("endcard").classList.remove("on"); mode = "play"; stage.focus(); };
 
@@ -931,7 +931,7 @@ function peopleStrip(){
     { id:"nini", on:true, name:SP.nini.name, img:"assets/por_nini_neutral.webp", d:K?"기록실 조수. 에드워드를 마지막으로 본 사람 중 하나.":"Archive assistant. One of the last to see Edward." },
     { id:"ck", on:has("ck.bear"), name:SP.ck.name, img:"assets/por_oliver_neutral.webp", d:K?"밤 근무. 11시 40분쯤 계단을 오르는 곰을 보았다.":"Night shift. Saw a bear on the stairs around 11:40." },
     { id:"tm", on:has("tm.stmt"), name:SP.tm.name, img:"assets/tommy_front.webp", d:K?"야간 경비. 11시 35분에 겨자색 목도리를 한 곰이 다리를 건넜다고 했다.":"Night guard. Says a bear in a mustard scarf crossed the bridge at 11:35." },
-    { id:"hz", on:has("hz.stmt"), name:SP.hz.name, img:"assets/cafe_owner_front.webp", d:K?"카페 주인. BGB가 12시 15분 전이 조금 못 되도록 있었다고 말했다.":"Café owner. Says BGB stayed until a little before a quarter to twelve." }
+    { id:"hz", on:has("hz.stmt"), name:SP.hz.name, img:"assets/cafe_owner_front.webp", d:K?"카페 주인. 빅그베가 12시 15분 전이 조금 못 되도록 있었다고 말했다.":"Café owner. Says BGB stayed until a little before a quarter to twelve." }
   ];
   if (!P.find(x=>x.id===selPerson && x.on)) selPerson = "nini";
   let h = '<div class="pstrip">';
@@ -953,14 +953,14 @@ function boardId(){
   let h = '<div class="bd"><img class="base" src="assets/board_identity.webp" alt="">';
   h += box("ctr",590,8,315,56,W,H,'<b style="margin:0;color:#4a2f10;font-size:17px;letter-spacing:.02em;white-space:nowrap">'+tr(UI.subId).toUpperCase()+'</b>');
   h += box("",155,128,265,272,W,H,'<img class="ph" src="assets/por_bgb_neutral.webp" alt="">');
-  h += box("ctr",160,400,255,50,W,H,'<b style="margin:0">BGB</b>');
+  h += box("ctr",160,400,255,50,W,H,'<b style="margin:0">'+(K?"빅그베":"BGB")+'</b>');
   h += box("",1090,130,275,275,W,H,PV ? '<div style="display:grid;place-items:center;height:100%;background:#2a2f4a;color:#c9c2a8;font:italic 600 22px/1.3 var(--font-body);text-align:center;padding:12px">'+(K?"(초상화 아직 없음)":"(portrait not drawn yet)")+'</div>' : '<div style="display:grid;place-items:center;height:100%;background:#2a2f4a;color:#c9c2a8;font:700 90px var(--font-body)">?</div>');
   h += box("ctr",1085,405,285,50,W,H,'<b style="margin:0">'+(PV?'GREEN':'?')+'</b>');
   if (PV) h += '<img class="stamp" src="assets/stamp_unknown.webp" alt="" style="left:'+(1120/W*100)+'%;top:'+(330/H*100)+'%;width:'+(230/W*100)+'%;transform:rotate(-8deg)">';
   if (PV) h += box("ctr",640,238,250,260,W,H,'<img src="assets/ev_keepsake_frame.webp" alt="" style="max-width:100%;max-height:100%;object-fit:contain">');
   /* clue cards: each is pinned only when the player holds the clue; the preview shows the finished board */
   const C = [
-    { on:has("c2"),                 t:K?["손잡이","신체"]:["Handedness","Physical"], d:K?["BGB는 왼손을 쓴다.","회상 속 아이는 오른손을 쓴다. BGB는 왼손잡이다."]:["BGB uses his left hand.","In the memory the child uses his right hand. BGB is left-handed."] },
+    { on:has("c2"),                 t:K?["손잡이","신체"]:["Handedness","Physical"], d:K?["빅그베는 왼손을 쓴다.","회상 속 아이는 오른손을 쓴다. 빅그베는 왼손잡이다."]:["BGB uses his left hand.","In the memory the child uses his right hand. BGB is left-handed."] },
     { on:false,                     t:K?["목도리 매듭","신체"]:["Scarf knot","Physical"], d:K?["","에드워드는 아이의 목도리를 오른쪽에 묶는다."]:["","Edward ties the child's scarf on the right side."] },
     { on:false,                     t:K?["귀의 흉터","신체"]:["Ear scar","Physical"], d:K?["","왼쪽 귀의 희미한 흉터."]:["","A faded scar on the left ear."] },
     { on:S.ev.includes("photo2"),   t:K?["설명","사진"]:["Caption","Photo"], d:K?["뒷면에 이름. 매듭과 맞을까?","설명과 매듭이 어긋난다."]:["Names on the back. Knots agree?","Caption and knots disagree."] },
@@ -979,7 +979,7 @@ function boardResp(){
   const SPR = [[69,100,434],[537,100,429],[997,100,449]], SH = 416;
   const rib = K ? ["추락","도움의 지연","진실 은폐"] : ["THE FALL","DELAYED HELP","HID THE TRUTH"], X = [125,585,1045];
   const q = K ? ["누가 에드워드를 떨어뜨렸는가?","도움이 필요한 사람 곁에서, 누가 기다렸는가?","누가 증거와 진실을 숨겼는가?"] : ["Who caused Edward's fall?","Who had the chance to help, and waited?","Who concealed evidence and the truth?"];
-  const names = ["Green","BGB","BGB"];
+  const names = ["Green",K?"빅그베":"BGB",K?"빅그베":"BGB"];
   const basis = PV ? (K ? ["달아날 때 에드워드가 죽었다고 믿었다.","11:50 살아 있는 에드워드를 발견, 11:55 종을 울렸다. 그는 모든 걸 알지는 못했다. 하지만 에드워드에게 도움이 필요하다는 건 알았다.","장갑, 편지, 뒷문 빗장, 그리고 자신의 진술."] : ["Fled believing Edward dead.","Found Edward alive at 11:50; the bell rang at 11:55. He did not know everything. He knew Edward needed help.","The glove, the letter, the chute bolt, his own account."]) : ["","",""];
   for (let i=0;i<3;i++){
     if (!(PV || i===0)) continue;                         /* locked column: no sprite, nothing drawn */
@@ -999,7 +999,7 @@ function boardResp(){
 }
 function pageOver(wpx){
   const W = 802, H = 1000, K = lang==="ko", f = (wpx||626)/626;
-  const L = K ? ["BGB가 뒤집어 보지 않으려 했던 사진 액자.","BGB의 카페 알리바이는 사실이었지만, 그는 11시 42분에 떠났다.","니니의 편지 두 통, 그중 수신자를 아는 건 한 통뿐.","야간 경비 토미의 순찰 기록: 장갑, 종이 한 장, 느린 곰, 바람 속의 부름.","안쪽에서 빗장이 걸린 뒷문.","BGB가 시계지기 올리버에게: \"최대한 빨리 왔어요.\""] : [
+  const L = K ? ["빅그베가 뒤집어 보지 않으려 했던 사진 액자.","빅그베의 카페 알리바이는 사실이었지만, 그는 11시 42분에 떠났다.","니니의 편지 두 통, 그중 수신자를 아는 건 한 통뿐.","야간 경비 토미의 순찰 기록: 장갑, 종이 한 장, 느린 곰, 바람 속의 부름.","안쪽에서 빗장이 걸린 뒷문.","빅그베가 시계지기 올리버에게: \"최대한 빨리 왔어요.\""] : [
     "The photograph frame BGB would not turn over.","BGB's café alibi was true, but he left at 11:42.","Nini's two letters, and only one known recipient.","Night Guard Tommy's log: gloves, a paper, a slow bear, a call in the wind.","The back door, bolted from the inside.","BGB to Clockkeeper Oliver: \"I came as fast as I could.\""];
   const Y = [288,400,513,632,745,859];
   let h = '<div class="bd" style="width:'+(wpx||Math.round(780*W/H))+'px"><img class="base" src="assets/page_overlooked.webp" alt="">';
