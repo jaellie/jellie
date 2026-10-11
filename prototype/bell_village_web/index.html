@@ -586,7 +586,7 @@ const UI = {
   locM:{en:"The Old Mill", ko:"낡은 방앗간"}, talkMo:{en:"Talk to Molly", ko:"몰리 할머니와 이야기한다"}, talkGr:{en:"Talk to Green", ko:"Green과 이야기한다"}, toMill:{en:"Walk to the Old Mill", ko:"낡은 방앗간으로 간다"}, leaveM:{en:"Walk back to the village", ko:"마을로 돌아간다"}, lComp:{en:"Compare the photographs", ko:"사진을 맞춰 본다"},
   lBag:{en:"Look at the bag on the table", ko:"탁자 위 봉투를 살핀다"}, lWin:{en:"Look out the window", ko:"창밖을 본다"}, lBook:{en:"Look at the books", ko:"책들을 살핀다"}, lStove:{en:"Look at the stove", ko:"난로를 살핀다"}, lKettle:{en:"Look at the kettle", ko:"주전자를 살핀다"},
   locF:{en:"Bell Village, 23 years earlier", ko:"벨 마을, 23년 전"}, capF:{en:"23 YEARS EARLIER \u00b7 BELL VILLAGE", ko:"23년 전 \u00b7 벨 마을"}, talkEd:{en:"Talk to Edward", ko:"에드워드에게 말한다"}, lGate:{en:"Open the gate", ko:"문을 연다"}, toTowerF:{en:"Slip into the Clocktower", ko:"시계탑에 몰래 들어간다"}, lLever:{en:"Watch the lever", ko:"레버를 지켜본다"}, leaveF:{en:"Go back outside", ko:"밖으로 나간다"}, rewind:{en:"That's not how it happened.", ko:"그렇게 된 게 아니야."}, mem:{en:"Memory", ko:"기억"},
-  locFl:{en:"The flooded stairwell", ko:"물에 잠긴 계단통"}, lBrother:{en:"Reach for your brother", ko:"동생에게 손을 뻗는다"}, lHandbell:{en:"Ring the handbell", ko:"손종을 울린다"}, lUp:{en:"Climb out", ko:"위로 올라간다"}, lWatchEd:{en:"Watch Edward", ko:"에드워드를 지켜본다"}, lVill:{en:"Listen", ko:"귀를 기울인다"},
+  locFl:{en:"The flooded stairwell", ko:"물에 잠긴 계단통"}, lBrother:{en:"Reach for your brother", ko:"동생에게 손을 뻗는다"}, lHandbell:{en:"Ring the handbell", ko:"손종을 울린다"}, lUp:{en:"Climb out", ko:"위로 올라간다"}, lEar:{en:"Examine your left ear", ko:"왼쪽 귀를 살핀다"}, lScarfF:{en:"Examine your scarf", ko:"목도리를 살핀다"}, lTowerF:{en:"Look at the clock tower", ko:"시계탑을 올려다본다"}, lNotice:{en:"Read the notice", ko:"안내판을 읽는다"}, lWinF:{en:"Look at the river", ko:"강을 내다본다"}, lWatchEd:{en:"Watch Edward", ko:"에드워드를 지켜본다"}, lVill:{en:"Listen", ko:"귀를 기울인다"},
   talkTm:{en:"Talk to Tommy", ko:"토미와 이야기한다"},
   lPost:{en:"Read Tommy's logbook", ko:"토미의 일지를 읽는다"}, conHead:{en:"Contradictions and deductions", ko:"모순과 추리"}, askNext:{en:"Is there another bear?", ko:"다른 곰이 있는가?"},
   leaveC:{en:"Leave the café", ko:"카페를 나간다"}, talkHz:{en:"Talk to Hazel", ko:"헤이즐과 이야기한다"}, locC:{en:"Hazel's Café", ko:"헤이즐의 카페"}, lBoots:{en:"Look at the prints on the stairs", ko:"계단의 발자국을 살핀다"},
@@ -864,6 +864,198 @@ D.mo2a3 = {sp:"bgb", ex:"thinking", t:{en:"It says the related records were kept
 D.mo2a4 = {sp:"mo", t:{en:"Edward would've known where to find them. I never had much to do with those ledgers.", ko:"에드워드라면 어디에 뒀는지 알았겠지. 난 그런 장부까지는 모르겠구나."}, set:"mo.c2"};
 D.mo2n = {sp:"bgb", ex:"thinking", t:{en:"(I don't have a record to show her yet.)", ko:"(보여 줄 만한 기록이 아직 없다.)"}};
 D.mo3a = {sp:"mo", t:{en:"Mind your step, dear. No need to rush and take a fall.", ko:"눈길 조심하렴. 서두르다 넘어지지 말고."}};
+D.f4a = {sp:"nar", t:{en:"(The two children in the photograph slowly begin to move. The scene transitions to Bell Village, 23 years earlier.)", ko:"(사진 속 두 아이의 모습이 서서히 움직이기 시작한다. 화면이 23년 전의 벨 마을로 전환된다.)"}, next:"f4a1"};
+D.f4a1 = {sp:"nar", t:{en:"(A cloudy afternoon before the rain. Two young bears stand outside the clock tower.)", ko:"(비가 내리기 전의 흐린 오후. 어린 곰 두 마리가 시계탑 앞에 서 있다.)"}, next:"f4a2"};
+D.f4a2 = {sp:"yo", t:{en:"Come on! Hurry up!", ko:"형! 빨리 와!"}, next:"f4a3"};
+D.f4a3 = {sp:"kid", t:{en:"Don't run. You're going to fall again.", ko:"뛰지 마. 또 넘어지려고."}, next:"f4a4"};
+D.f4a4 = {sp:"yo", t:{en:"I won't!", ko:"안 넘어져!"}, next:"f4a5"};
+D.f4a5 = {sp:"nar", t:{en:"(The younger brother bounds up the steps two at a time and stumbles.)", ko:"(동생이 계단을 두 칸씩 올라가다가 비틀거린다.)"}, next:"f4a6"};
+D.f4a6 = {sp:"kid", t:{en:"See?", ko:"거봐."}, next:"f4a7"};
+D.f4a7 = {sp:"yo", t:{en:"But I didn't fall!", ko:"안 넘어졌잖아!"}, next:"f4a8"};
+D.f4a8 = {sp:"ed", t:{en:"You two again. I should've known.", ko:"이 녀석들, 오늘도 여기 있구나."}, next:"f4a9"};
+D.f4a9 = {sp:"yo", t:{en:"Edward!", ko:"에드워드 아저씨!"}, next:"f4a10"};
+D.f4a10 = {sp:"ed", t:{en:"Come here a moment. Your scarves are coming undone.", ko:"잠깐 이리 와 보렴. 목도리가 다 풀렸잖니."}, next:"f4a11"};
+D.f4a11 = {sp:"nar", t:{en:"(Edward ties the older brother's scarf first.)", ko:"(에드워드가 먼저 형의 목도리를 묶는다.)"}, note:"m1", next:"f4a12"};
+D.f4a12 = {sp:"ed", t:{en:"There. Yours goes to the right.", ko:"자, 네 건 오른쪽으로."}, next:"f4a13"};
+D.f4a13 = {sp:"nar", t:{en:"(He ties the younger brother's scarf on the opposite side.)", ko:"(동생의 목도리를 반대쪽으로 묶는다.)"}, next:"f4a14"};
+D.f4a14 = {sp:"ed", t:{en:"And yours goes to the left.", ko:"동생 건 왼쪽으로."}, next:"f4a15"};
+D.f4a15 = {sp:"yo", t:{en:"Why do you tie them differently?", ko:"왜 다르게 묶어요?"}, next:"f4a16"};
+D.f4a16 = {sp:"ed", t:{en:"Otherwise, how am I supposed to tell you apart?", ko:"안 그러면 누가 누군지 모르겠거든."}, note:"m4", next:"f4a17"};
+D.f4a17 = {sp:"yo", t:{en:"You can tell by our voices!", ko:"목소리로 알아보면 되잖아요!"}, next:"f4a18"};
+D.f4a18 = {sp:"ed", t:{en:"And what if you both keep your mouths shut?", ko:"그러면 둘 다 입을 다물고 있으면 어쩌지?"}, next:"f4a19"};
+D.f4a19 = {sp:"yo", t:{en:"That's never gonna happen!", ko:"그럴 일은 없는데요!"}, next:"f4a20"};
+D.f4a20 = {sp:"kid", t:{en:"He's got a point.", ko:"그건 맞아요."}, next:"f4a21"};
+D.f4a21 = {sp:"ed", t:{en:"Ha! Can't argue with that.", ko:"하하! 그건 나도 인정해야겠구나."}, set:"f4.intro"};
+D.f4d = {sp:"kid", t:{en:"Door's sticking again.", ko:"문이 또 걸리네."}, next:"f4d1"};
+D.f4d1 = {sp:"nar", t:{en:"(He pushes the door open.)", ko:"(문을 밀어 연다.)"}, note:"m2", next:"f4d2"};
+D.f4d2 = {sp:"kid", t:{en:"Got it.", ko:"됐다."}, set:"f4.gate"};
+D.f4n = {sp:"nar", t:{en:"(An old sign hangs on the clock tower wall.)", ko:"(시계탑 벽에 낡은 안내판이 걸려 있다.)"}, next:"f4n1"};
+D.f4n1 = {sp:"nar", t:{en:"\"Ring the warning bell when the river reaches a dangerous level. If the warning bell fails, use the emergency handbell.\"", ko:"\"강물이 위험 수위에 이르면 경보 종을 울릴 것. 경보 종이 작동하지 않을 경우, 비상 손종을 사용할 것.\""}, next:"f4n2"};
+D.f4n2 = {sp:"yo", t:{en:"Hey, do you know what that is?", ko:"형, 저거 알아?"}, next:"f4n3"};
+D.f4n3 = {sp:"kid", t:{en:"The warning bell.", ko:"경보 종."}, next:"f4n4"};
+D.f4n4 = {sp:"yo", t:{en:"No, the thing underneath!", ko:"아니, 그 밑에 있는 거!"}, next:"f4n5"};
+D.f4n5 = {sp:"kid", t:{en:"The handbell?", ko:"손종?"}, next:"f4n6"};
+D.f4n6 = {sp:"yo", t:{en:"I wanna ring it sometime.", ko:"나도 한번 울려 보고 싶어."}, next:"f4n7"};
+D.f4n7 = {sp:"kid", t:{en:"You're not supposed to ring it for fun.", ko:"아무 때나 울리는 거 아니야."}, next:"f4n8"};
+D.f4n8 = {sp:"yo", t:{en:"Not even once?", ko:"한 번만 울리면 안 돼?"}, next:"f4n9"};
+D.f4n9 = {sp:"kid", t:{en:"No.", ko:"안 돼."}, next:"f4n10"};
+D.f4n10 = {sp:"yo", t:{en:"You're no fun.", ko:"치사해."}, set:"f4.notice"};
+D.f4w = {sp:"nar", t:{en:"(The river is visible through the window. The current is stronger than usual.)", ko:"(창문 너머로 강이 보인다. 물살이 평소보다 빠르다.)"}, next:"f4w1"};
+D.f4w1 = {sp:"kid", t:{en:"The river's pretty high.", ko:"강물이 많이 불었네."}, next:"f4w2"};
+D.f4w2 = {sp:"yo", t:{en:"But it hasn't even rained.", ko:"비도 안 왔는데?"}, next:"f4w3"};
+D.f4w3 = {sp:"kid", t:{en:"Must've rained up in the mountains.", ko:"위쪽 산에는 왔나 보지."}, set:"f4.window"};
+D.f4e = {sp:"ed", t:{en:"Still here, you two?", ko:"아직 안 갔니?"}, next:"f4e1"};
+D.f4e1 = {sp:"kid", t:{en:"We're just going to play a little longer.", ko:"조금만 더 놀다가 갈게요."}, next:"f4e2"};
+D.f4e2 = {sp:"ed", t:{en:"Don't stay too long. I don't like the look of this weather.", ko:"너무 늦지는 마라. 오늘은 날씨가 영 마음에 걸리는구나."}, next:"f4e3"};
+D.f4e3 = {sp:"yo", t:{en:"Edward, can you tell us apart without looking at our scarves?", ko:"아저씨, 저희 목도리 안 보고도 알아볼 수 있어요?"}, next:"f4e4"};
+D.f4e4 = {sp:"ed", t:{en:"Let's see.", ko:"어디 보자."}, next:"f4e5"};
+D.f4e5 = {sp:"nar", t:{en:"(Edward looks from one child to the other.)", ko:"(에드워드가 두 아이를 번갈아 본다.)"}, next:"f4e6"};
+D.f4e6 = {sp:"ed", t:{en:"You're the older one, aren't you?", ko:"이쪽이 형이지?"}, next:"f4e7"};
+D.f4e7 = {sp:"yo", t:{en:"Wrong!", ko:"틀렸어요!"}, next:"f4e8"};
+D.f4e8 = {sp:"kid", t:{en:"Edward, I'm over here.", ko:"아저씨, 저 여기 있어요."}, next:"f4e9"};
+D.f4e9 = {sp:"ed", t:{en:"Goodness. Fooled again.", ko:"아이고, 또 속았구나."}, next:"f4e10"};
+D.f4e10 = {sp:"yo", t:{en:"Ha! See? You can't tell without the scarves!", ko:"하하! 역시 목도리 없으면 모르시죠?"}, next:"f4e11"};
+D.f4e11 = {sp:"ed", t:{en:"Apparently not.", ko:"그러게 말이다."}, next:"f4e12"};
+D.f4e12 = {sp:"nar", t:{en:"(Edward gently pats the older brother's shoulder.)", ko:"(에드워드가 형의 어깨를 가볍게 두드린다.)"}, next:"f4e13"};
+D.f4e13 = {sp:"ed", t:{en:"Look after your little brother, all right?", ko:"동생 잘 챙기고. 알겠지?"}, next:"f4e14"};
+D.f4e14 = {sp:"kid", t:{en:"I will.", ko:"네."}, set:"f4.ed"};
+D.f4eb = {sp:"ed", t:{en:"Don't stay out too long.", ko:"너무 늦지는 마라."}};
+D.f4l = {sp:"nar", t:{en:"(Edward leaves. The younger brother notices a large lever inside the tower.)", ko:"(에드워드가 자리를 떠난다. 동생은 탑 안쪽의 커다란 레버를 발견한다.)"}, next:"f4l1"};
+D.f4l1 = {sp:"yo", t:{en:"Hey! Look at this!", ko:"형! 이것 좀 봐!"}, next:"f4l2"};
+D.f4l2 = {sp:"kid", t:{en:"What is it?", ko:"뭔데?"}, next:"f4l3"};
+D.f4l3 = {sp:"yo", t:{en:"Think this makes the bell ring?", ko:"이거 움직이면 종이 울리나?"}, next:"f4l4"};
+D.f4l4 = {sp:"kid", t:{en:"Don't touch it.", ko:"만지지 마."}, next:"f4l5"};
+D.f4l5 = {sp:"yo", t:{en:"I'm just looking.", ko:"그냥 보는 거야."}, next:"f4l6"};
+D.f4l6 = {sp:"nar", t:{en:"(The younger brother gives the lever a small tug. The metal creaks.)", ko:"(동생이 레버를 살짝 잡아당긴다. 금속이 삐걱거린다.)"}, next:"f4l7"};
+D.f4l7 = {sp:"yo", t:{en:"Hey! It moves!", ko:"어? 움직인다!"}, next:"f4l8"};
+D.f4l8 = {sp:"kid", t:{en:"I said don't.", ko:"하지 말라니까."}, next:"f4l9"};
+D.f4l9 = {sp:"yo", t:{en:"Just a second!", ko:"잠깐만!"}, next:"f4l10"};
+D.f4l10 = {sp:"nar", t:{en:"(The end of his scarf catches in the lever mechanism.)", ko:"(동생의 목도리 끝이 레버 틈으로 빨려 들어간다.)"}, next:"f4l11"};
+D.f4l11 = {sp:"yo", t:{en:"Huh?", ko:"어?"}, next:"f4l12"};
+D.f4l12 = {sp:"nar", t:{en:"(As he turns, the scarf pulls tight.)", ko:"(동생이 몸을 돌리자 목도리가 팽팽하게 당겨진다.)"}, next:"f4l13"};
+D.f4l13 = {sp:"yo", t:{en:"Hey, it's stuck!", ko:"형, 이거 안 빠져!"},
+   ch:[{t:{en:"Help him pull the scarf free.",ko:"목도리를 빼 준다."},go:"f4c1"},{t:{en:"Tell him to hold still.",ko:"동생에게 가만히 있으라고 한다."},go:"f4c2"}]};
+D.f4c1 = {sp:"kid", t:{en:"Stop moving. Let me try.", ko:"움직이지 마. 내가 해 볼게."}, next:"f4c11"};
+D.f4c11 = {sp:"nar", t:{en:"(The older brother pulls at the scarf. A few threads tear.)", ko:"(형이 목도리를 잡아당긴다. 털실이 찢어지는 소리가 난다.)"}, next:"f4c12"};
+D.f4c12 = {sp:"yo", t:{en:"Hey! My scarf!", ko:"아! 내 목도리!"}, next:"f4c13"};
+D.f4c13 = {sp:"kid", t:{en:"It's okay. Just a little tear.", ko:"괜찮아. 조금 찢어진 것뿐이야."}, note:"m3", next:"f4m"};
+D.f4c2 = {sp:"kid", t:{en:"Hold still.", ko:"가만히 있어 봐."}, next:"f4c21"};
+D.f4c21 = {sp:"yo", t:{en:"Hurry!", ko:"빨리!"}, next:"f4c22"};
+D.f4c22 = {sp:"nar", t:{en:"(The older brother carefully frees the scarf. A few strands of wool unravel and remain caught in the mechanism.)", ko:"(형이 목도리를 레버에서 조심스럽게 풀어낸다. 목도리 끝에서 털실 몇 가닥이 풀려 레버 틈에 남는다.)"}, next:"f4c23"};
+D.f4c23 = {sp:"kid", t:{en:"There.", ko:"됐어."}, next:"f4c24"};
+D.f4c24 = {sp:"yo", t:{en:"Phew!", ko:"휴!"}, note:"m3", next:"f4m"};
+D.f4m = {sp:"nar", t:{en:"(The younger brother examines his scarf.)", ko:"(동생은 풀려난 목도리를 살펴본다.)"}, next:"f4m1"};
+D.f4m1 = {sp:"yo", t:{en:"Edward just tied this for me.", ko:"아저씨가 묶어 주신 건데."}, next:"f4m2"};
+D.f4m2 = {sp:"kid", t:{en:"We can tie it again.", ko:"다시 묶으면 되지."}, next:"f4m3"};
+D.f4m3 = {sp:"yo", t:{en:"You do it.", ko:"형이 해 줘."}, next:"f4m4"};
+D.f4m4 = {sp:"nar", t:{en:"(The older brother reties his brother's scarf.)", ko:"(형이 동생의 목도리를 묶어 준다.)"}, next:"f4m5"};
+D.f4m5 = {sp:"yo", t:{en:"You're not as good at it as Edward.", ko:"아저씨처럼 잘 못 묶네."}, next:"f4m6"};
+D.f4m6 = {sp:"kid", t:{en:"Then do it yourself.", ko:"그럼 네가 해."}, next:"f4m7"};
+D.f4m7 = {sp:"yo", t:{en:"No way!", ko:"싫어!"}, next:"f4m8"};
+D.f4m8 = {sp:"nar", t:{en:"(The brothers laugh.)", ko:"(두 아이가 웃는다.)"}, set:"f4.lever"};
+D.f4x = {sp:"nar", t:{en:"(He examines the lever.)", ko:"(레버를 조사한다.)"}, next:"f4x1"};
+D.f4x1 = {sp:"kid", t:{en:"There's still some wool stuck in there.", ko:"털실이 아직 끼어 있네."}, next:"f4x2"};
+D.f4x2 = {sp:"nar", t:{en:"(He tries pushing the lever. It won't budge.)", ko:"(레버를 밀어 본다. 레버가 움직이지 않는다.)"}, next:"f4x3"};
+D.f4x3 = {sp:"kid", t:{en:"It won't move.", ko:"안 움직여."}, next:"f4x4"};
+D.f4x4 = {sp:"yo", t:{en:"Maybe it's supposed to be like that?", ko:"원래 그런 거 아니야?"}, next:"f4x5"};
+D.f4x5 = {sp:"kid", t:{en:"I don't know.", ko:"모르겠어."}, next:"f4x6"};
+D.f4x6 = {sp:"yo", t:{en:"Can we go now? I'm hungry.", ko:"그럼 이제 가자. 배고파."}, next:"f4x7"};
+D.f4x7 = {sp:"nar", t:{en:"(Raindrops begin tapping against the tower roof.)", ko:"(탑 지붕에 빗방울이 떨어진다.)"}, next:"f4x8"};
+D.f4x8 = {sp:"yo", t:{en:"It's raining!", ko:"비 온다!"}, next:"f4x9"};
+D.f4x9 = {sp:"kid", t:{en:"Yeah. Come on.", ko:"그러네. 빨리 가자."}, next:"f4x10"};
+D.f4x10 = {sp:"nar", t:{en:"(The brothers head toward the door. Thunder rumbles in the distance.)", ko:"(두 아이가 문으로 향한다. 멀리서 천둥이 울린다.)"}, next:"f4x11"};
+D.f4x11 = {sp:"yo", t:{en:"Hey.", ko:"형."}, next:"f4x12"};
+D.f4x12 = {sp:"kid", t:{en:"What?", ko:"왜?"}, next:"f4x13"};
+D.f4x13 = {sp:"yo", t:{en:"Should we tell Edward about that thing?", ko:"아까 그거, 아저씨한테 말해야 할까?"}, next:"f4x14"};
+D.f4x14 = {sp:"kid", t:{en:"What thing?", ko:"어떤 거?"}, next:"f4x15"};
+D.f4x15 = {sp:"yo", t:{en:"The lever.", ko:"레버 말이야."}, next:"f4x16"};
+D.f4x16 = {sp:"nar", t:{en:"(A brief silence.)", ko:"(잠시 침묵.)"},
+   ch:[{t:{en:"Let's tell Edward.",ko:"아저씨한테 말씀드리자."},go:"f4r1"},{t:{en:"Let's check it again tomorrow.",ko:"내일 다시 확인하자."},go:"f4r2"}]};
+D.f4r1 = {sp:"kid", t:{en:"Yeah. Let's go tell him.", ko:"응. 가서 말씀드리자."}, next:"f4r11"};
+D.f4r11 = {sp:"nar", t:{en:"(Just as they reach the door, a fierce gust blows in.)", ko:"(두 아이가 문을 열려는 순간, 바깥에서 거센 바람이 불어온다.)"}, next:"f4r12"};
+D.f4r12 = {sp:"yo", t:{en:"Whoa! It's pouring!", ko:"으악! 비 엄청 와!"}, next:"f4r13"};
+D.f4r13 = {sp:"kid", t:{en:"Stay inside for now.", ko:"일단 안에 있어."}, next:"f4v"};
+D.f4r2 = {sp:"kid", t:{en:"Let's come back tomorrow.", ko:"내일 다시 와 보자."}, next:"f4r21"};
+D.f4r21 = {sp:"yo", t:{en:"What if Edward gets mad?", ko:"아저씨한테 혼나면 어떡해?"}, next:"f4r22"};
+D.f4r22 = {sp:"kid", t:{en:"I'll talk to him.", ko:"내가 얘기할게."}, next:"f4r23"};
+D.f4r23 = {sp:"yo", t:{en:"Promise?", ko:"약속?"}, next:"f4r24"};
+D.f4r24 = {sp:"kid", t:{en:"Promise.", ko:"약속."}, next:"f4v"};
+D.f4v = {sp:"nar", t:{en:"(Time passes. The river rises rapidly outside. A faint shout comes from somewhere in the distance.)", ko:"(시간이 흐른다. 창밖의 강물이 빠르게 불어나고 있다. 멀리서 누군가 외치는 소리가 희미하게 들린다.)"}, next:"f4v1"};
+D.f4v1 = {sp:"yo", t:{en:"Hey, did you hear something?", ko:"형, 무슨 소리 들리지 않았어?"}, next:"f4v2"};
+D.f4v2 = {sp:"kid", t:{en:"Wait.", ko:"잠깐."}, next:"f4v3"};
+D.f4v3 = {sp:"nar", t:{en:"(Another shout.)", ko:"(다시 소리가 들린다.)"}, next:"f4v4"};
+D.f4v4 = {sp:"yo", t:{en:"Sounds like someone's calling.", ko:"누가 부르는 것 같아."}, next:"f4v5"};
+D.f4v5 = {sp:"nar", t:{en:"(The older brother approaches the window. A small boat rocks violently in the current.)", ko:"(형이 창문으로 다가간다. 강 위에서 작은 배 한 척이 거센 물살에 흔들리고 있다.)"}, next:"f4v6"};
+D.f4v6 = {sp:"kid", t:{en:"There's someone out on the river.", ko:"강에 사람이 있어."}, next:"f4v7"};
+D.f4v7 = {sp:"yo", t:{en:"What do we do?", ko:"어떡해?"}, next:"f4v8"};
+D.f4v8 = {sp:"kid", t:{en:"We have to ring the bell.", ko:"종을 울려야 해."}, next:"f4v9"};
+D.f4v9 = {sp:"nar", t:{en:"(The older brother pulls the warning bell lever. It won't move.)", ko:"(형이 경보 종 레버를 잡아당긴다. 레버는 움직이지 않는다.)"}, next:"f4v10"};
+D.f4v10 = {sp:"kid", t:{en:"Why won't it move?", ko:"왜 안 움직이지?"}, next:"f4v11"};
+D.f4v11 = {sp:"nar", t:{en:"(He pulls again. Only the harsh scraping of metal can be heard.)", ko:"(다시 잡아당긴다. 금속이 거칠게 긁히는 소리만 난다.)"}, next:"f4v12"};
+D.f4v12 = {sp:"yo", t:{en:"Hey?", ko:"형?"}, next:"f4v13"};
+D.f4v13 = {sp:"kid", t:{en:"Just a second.", ko:"잠깐만."}, next:"f4v14"};
+D.f4v14 = {sp:"nar", t:{en:"(The older brother looks inside the mechanism. Wet strands of wool are wedged tightly between the gears.)", ko:"(형이 레버 안쪽을 살펴본다. 젖은 털실이 톱니 사이에 단단히 끼어 있다.)"}, next:"f4v15"};
+D.f4v15 = {sp:"yo", t:{en:"Is it because I touched it earlier?", ko:"내가 아까 만져서 그런 거야?"}, next:"f4v16"};
+D.f4v16 = {sp:"kid", t:{en:"That doesn't matter right now.", ko:"지금은 그게 중요한 게 아니야."}, next:"f4v17"};
+D.f4v17 = {sp:"yo", t:{en:"I'm sorry.", ko:"미안해, 형."}, next:"f4v18"};
+D.f4v18 = {sp:"kid", t:{en:"It's okay. We'll find another way.", ko:"괜찮아. 다른 방법을 찾자."}, next:"f4v19"};
+D.f4v19 = {sp:"nar", t:{en:"(A heavy crash echoes from below the tower.)", ko:"(탑 아래쪽에서 커다란 충격음이 들린다.)"}, next:"f4v20"};
+D.f4v20 = {sp:"yo", t:{en:"What was that?!", ko:"뭐야?!"}, next:"f4v21"};
+D.f4v21 = {sp:"nar", t:{en:"(Water begins seeping through the floorboards.)", ko:"(바닥 틈으로 물이 스며들기 시작한다.)"}, next:"f4v22"};
+D.f4v22 = {sp:"kid", t:{en:"Get back!", ko:"뒤로 물러나!"}, next:"f4v23"};
+D.f4v23 = {sp:"nar", t:{en:"(The younger brother runs toward the stairs. Another crash. An old wooden beam collapses.)", ko:"(동생이 계단 쪽으로 달려간다. 또 한 번 충격음이 들리고, 낡은 들보가 무너진다.)"}, next:"f4v24"};
+D.f4v24 = {sp:"yo", t:{en:"Help!", ko:"형!"}, next:"f4v25"};
+D.f4v25 = {sp:"nar", t:{en:"(The screen fades to black. After a moment, only the younger brother's voice can be heard.)", ko:"(화면이 어두워진다. 잠시 후, 동생의 목소리만 들린다.)"}, next:"f4v26"};
+D.f4v26 = {sp:"yo", t:{en:"I'm stuck! I can't move!", ko:"형! 나 못 움직이겠어!"}, next:"f4v27"};
+D.f4v27 = {sp:"nar", t:{en:"(The river roars in the distance.)", ko:"(멀리서 거센 강물 소리가 들린다.)"}, set:"f4.end"};
+D.f5a = {sp:"nar", t:{en:"(His younger brother is trapped beneath a fallen beam. Water rises around him.)", ko:"(동생의 다리가 무너진 들보 아래에 끼어 있다. 물이 빠르게 차오른다.)"}, next:"f5a1"};
+D.f5a1 = {sp:"yo", t:{en:"I'm stuck! I can't move!", ko:"형! 나 못 움직이겠어!"}, next:"f5a2"};
+D.f5a2 = {sp:"kid", t:{en:"Hang on. I'll get you out.", ko:"기다려. 꺼내 줄게."},
+   ch:[{t:{en:"Lift the beam.",ko:"들보를 들어 올린다."},go:"f5b1"},{t:{en:"Go for help.",ko:"도움을 부르러 간다."},go:"f5b2"}]};
+D.f5a2 = {sp:"kid", t:{en:"Hang on. I'll get you out.", ko:"기다려. 꺼내 줄게."},
+   ch:[{t:{en:"Lift the beam.",ko:"들보를 들어 올린다."},go:"f5b1"},{t:{en:"Go for help.",ko:"도움을 부르러 간다."},go:"f5b2"}]};
+D.f5b1 = {sp:"nar", t:{en:"(He lifts the beam. As his brother escapes, the wood tears his left ear.)", ko:"(형이 들보를 들어 올린다. 동생이 빠져나오는 순간, 들보가 형의 왼쪽 귀를 찢는다.)"}, next:"f5b11"};
+D.f5b11 = {sp:"yo", t:{en:"You're bleeding!", ko:"형, 피 나!"}, next:"f5b12"};
+D.f5b12 = {sp:"kid", t:{en:"I'm fine. Come on.", ko:"괜찮아. 가자."}, note:"m5", set:"f5.free"};
+D.f5b2 = {sp:"nar", t:{en:"(The stairs are blocked by water and debris. He returns and lifts the beam.)", ko:"(계단은 물과 잔해로 막혀 있다. 형은 돌아와 들보를 들어 올린다.)"}, next:"f5b21"};
+D.f5b21 = {sp:"nar", t:{en:"(His brother escapes, but the beam tears his left ear.)", ko:"(동생은 빠져나오지만, 형의 왼쪽 귀가 찢어진다.)"}, note:"m5", set:"f5.free"};
+D.f5h = {sp:"nar", t:{en:"(The brothers reach the emergency handbell.)", ko:"(두 아이가 비상 손종 앞에 도착한다.)"}, next:"f5h1"};
+D.f5h1 = {sp:"yo", t:{en:"What about the man on the boat?", ko:"형, 배에 있던 사람은?"}, next:"f5h2"};
+D.f5h2 = {sp:"kid", t:{en:"We need to ring the bell.", ko:"종부터 울리자."}, next:"f5h3"};
+D.f5h3 = {sp:"nar", t:{en:"(The bell rings across the village. Lights appear in the windows.)", ko:"(종소리가 울려 퍼진다. 마을의 창문마다 불이 켜진다.)"}, note:"m5b", set:"f5.bell", next:"f5r"};
+D.f5r = {sp:"nar", t:{en:"(Edward rushes up the stairs.)", ko:"(에드워드가 계단을 올라온다.)"}, next:"f5r1"};
+D.f5r1 = {sp:"ed", t:{en:"Children! Are you hurt?", ko:"얘들아! 다친 데는 없니?"}, next:"f5r2"};
+D.f5r2 = {sp:"yo", t:{en:"My leg hurts.", ko:"다리가 아파요."}, next:"f5r3"};
+D.f5r3 = {sp:"nar", t:{en:"(Edward picks up the younger brother.)", ko:"(에드워드가 동생을 안아 든다.)"}, next:"f5r4"};
+D.f5r4 = {sp:"ed", t:{en:"Hang in there. Let's get you somewhere warm.", ko:"조금만 참으렴. 금방 따뜻한 데로 가자."}, next:"f5r5"};
+D.f5r5 = {sp:"kid", t:{en:"Edward, the warning bell didn't ring.", ko:"아저씨, 종이 안 울렸어요."}, next:"f5r6"};
+D.f5r6 = {sp:"ed", t:{en:"I know. We'll talk later.", ko:"알아. 나중에 이야기하자."}, next:"f5r7"};
+D.f5r7 = {sp:"nar", t:{en:"(Edward carries the younger brother downstairs.)", ko:"(에드워드가 동생을 안고 내려간다.)"}, set:"f5.ed"};
+D.f5p = {sp:"nar", t:{en:"(The villagers gather around Edward and the younger brother.)", ko:"(마을 사람들이 에드워드와 동생을 둘러싼다.)"}, next:"f5p1"};
+D.f5p1 = {sp:"v1", t:{en:"That's the boy who rang the bell?", ko:"저 아이가 종을 울렸대?"}, note:"m7", next:"f5p2"};
+D.f5p2 = {sp:"v2", t:{en:"Such a brave little thing.", ko:"어린 게 참 용감하네."}, next:"f5p3"};
+D.f5p3 = {sp:"nar", t:{en:"(The younger brother looks back at his older brother.)", ko:"(동생이 에드워드의 어깨 너머로 형을 바라본다.)"}, note:"m6", next:"f5p4"};
+D.f5p4 = {sp:"yo", t:{en:"Hey!", ko:"형!"}, next:"f5p5"};
+D.f5p5 = {sp:"nar", t:{en:"(The older brother stands outside the crowd. No one looks back.)", ko:"(형은 군중 밖에 서 있다. 아무도 돌아보지 않는다.)"}, next:"f5p6"};
+D.f5p6 = {sp:"nar", t:{en:"(Edward carries the younger brother toward the Archive.)", ko:"(에드워드가 동생을 안고 기록관으로 향한다.)"}, next:"f5p7"};
+D.f5p7 = {sp:"yo", t:{en:"Edward, what about my brother?", ko:"아저씨, 형도 같이 가요."}, next:"f5p8"};
+D.f5p8 = {sp:"ed", t:{en:"He'll be along.", ko:"곧 따라올 거야."}, next:"f5p9"};
+D.f5p9 = {sp:"nar", t:{en:"(The Archive door closes.)", ko:"(기록관 문이 닫힌다.)"}, next:"f5p10"};
+D.f5p10 = {sp:"nar", t:{en:"(The player controls the older brother, left alone in the square.)", ko:"(플레이어는 광장에 남겨진 형을 조작한다.)"}, set:"f5.left"};
+D.f5ear = {sp:"kid", t:{en:"Ow.", ko:"아야."}, set:"f5.ear"};
+D.f5sc = {sp:"kid", t:{en:"It's soaked.", ko:"다 젖었네."}, set:"f5.sc"};
+D.f5tw = {sp:"nar", t:{en:"(The warning bell remains silent.)", ko:"(경보 종은 여전히 조용하다.)"}, next:"f5tw1"};
+D.f5tw1 = {sp:"kid", t:{en:"I should've told Edward.", ko:"아까 말했어야 했는데."}, next:"f5tw2"};
+D.f5tw2 = {sp:"nar", t:{en:"(Voices drift across the square.)", ko:"(멀리서 주민들의 목소리가 들린다.)"}, next:"f5tw3"};
+D.f5tw3 = {sp:"v1", t:{en:"Still no sign of the boatman?", ko:"뱃사공은 아직 못 찾았대?"}, next:"f5tw4"};
+D.f5tw4 = {sp:"v2", t:{en:"If only the warning bell had rung.", ko:"경보 종만 울렸어도."}, next:"f5tw5"};
+D.f5tw5 = {sp:"nar", t:{en:"(The older brother says nothing.)", ko:"(형은 아무 말도 하지 않는다.)"}, set:"f5.tower"};
+D.f7_0 = {sp:"nar", t:{en:"(Big Green Bear looks down at the photograph.)", ko:"(빅그베가 사진을 내려다본다.)"}, next:"f7_1"};
+D.f7_1 = {sp:"bgb", t:{en:"We both made it home.", ko:"둘 다 돌아왔지."}, next:"f7_2"};
+D.f7_2 = {sp:"nar", t:{en:"(He turns the photograph over.)", ko:"(사진을 뒤집는다.)"}, next:"f7_3"};
+D.f7_3 = {sp:"nar", t:{en:"\"Both children came home safely that day.\"", ko:"\"그날, 두 아이 모두 무사히 돌아왔다.\""}, next:"f7_4"};
+D.f7_4 = {sp:"nar", t:{en:"(Big Green Bear sets the photograph down.)", ko:"(빅그베가 사진을 내려놓는다.)"}};
+D.f4lv9 = {sp:"kid", t:{en:"The lever stays wedged.", ko:"레버는 끼인 채 그대로다."}};
 D.p_w = {sp:"bgb", ex:"neutral", t:{en:"The snow's really piling up. Footprints won't last long out there.", ko:"눈이 꽤 쌓였네. 발자국도 금방 지워지겠어."}};
 D.p_b = {sp:"bgb", ex:"neutral", t:{en:"My old storybooks. I've lost count of how many times I've read them.", ko:"오래된 동화책들이야. 몇 번이나 읽었는지 모르겠네."}};
 D.p_s = {sp:"bgb", ex:"neutral", t:{en:"The fire's almost out.", ko:"불이 거의 다 꺼졌네."}};
@@ -873,31 +1065,10 @@ D.m_no = {sp:"bgb", ex:"thinking", t:{en:"I should look into the other bear firs
 /* Chapter 3: Nini remembers the walk (does not know it was Green) */
 /* Café, afternoon (R21): Hazel can place BGB at 16:55 from the counter */
 /* Chapter 4 (placeholder build): no twin is ever named; the controlled child's label is a plain hyphen */
-D.fe0 = {sp:"ed", t:{en:"Big brother, hold still. Let me see that scarf.", ko:"큰애야, 가만히 있어 보렴. 목도리 좀 보자."}, note:"m1", next:"fe1"};
-D.fe1 = {sp:"ed", t:{en:"There. This knot on your side, and your brother's on the other. I can't tell you two apart without these.", ko:"자. 네 건 이쪽, 동생 건 반대쪽에 묶었다. 이게 없으면 너희 둘을 구분하지 못하겠구나."}, note:"m4", set:"f4.ed", next:"fe2"};
-D.fe2 = {sp:"ed", t:{en:"Don't stay out late. The river has been loud all day.", ko:"늦게까지 놀지는 마라. 오늘따라 강이 시끄럽구나."}, next:null};
-D.fe9 = {sp:"ed", t:{en:"Go on. And mind the stairs.", ko:"가 보렴. 계단 조심하고."}};
-D.fg0 = {sp:"kid", t:{en:"The gate sticks. He pushes it open with his hand.", ko:"문이 뻑뻑하다. 손으로 밀어서 연다."}, note:"m2", set:"f4.gate", next:null};
-D.fg9 = {sp:"kid", t:{en:"The gate swings easily now.", ko:"문이 이제 잘 열린다."}};
 D.ft_no = {sp:"kid", t:{en:"Edward is still nearby. Maybe he has something to say first.", ko:"에드워드가 아직 근처에 있다. 먼저 할 말이 있을지도 모른다."}};
-D.fl0 = {sp:"kid", t:{en:"His little brother is fiddling with a big lever, and his scarf is caught in it.", ko:"동생이 커다란 레버를 만지작거리고 있다. 목도리 끝이 레버에 끼었다."},
-   ch:[{t:{en:"Pull him away.",ko:"끌어당긴다."},go:"flrw"},{t:{en:"Watch.",ko:"지켜본다."},go:"fl1"}]};
-D.flrw = {sp:"kid", t:{en:"(He reaches out, but the moment slips away.)", ko:"(손을 뻗지만 장면이 흩어진다.)"}, set:"f4.rewind", next:"fl0"};
-D.fl1 = {sp:"kid", t:{en:"A thread of wool tears off and stays jammed in the lever. His brother laughs and does not know what he has done.", ko:"털실 한 가닥이 찢어져 레버에 끼인 채 남는다. 동생은 웃고, 자기가 무슨 짓을 했는지 모른다."}, note:"m3", set:"f4.lever", next:"fl2"};
-D.fl2 = {sp:"kid", t:{en:"Rain begins to patter on the tower roof.", ko:"탑 지붕 위로 빗방울이 떨어지기 시작한다."}, set:"f4.end", next:null};
-D.fl9 = {sp:"kid", t:{en:"The lever stays wedged. Far below, the river is rising.", ko:"레버는 끼인 채 그대로다. 저 아래에서 강물이 불어난다."}};
 /* Chapter 5 (placeholder build) */
-D.fb0 = {sp:"kid", t:{en:"His little brother is wedged behind a fallen beam, the water already at his chest.", ko:"동생이 쓰러진 들보 뒤에 끼어 있다. 물이 벌써 가슴까지 찼다."},
-   ch:[{t:{en:"Go back for Edward.",ko:"에드워드를 부르러 간다."},go:"fbrw"},{t:{en:"Pull him out.",ko:"끌어낸다."},go:"fb1"}]};
-D.fbrw = {sp:"kid", t:{en:"(He turns, but the moment slips away.)", ko:"(돌아서지만 장면이 흩어진다.)"}, next:"fb0"};
-D.fb1 = {sp:"kid", t:{en:"He grabs his brother and pulls. A beam swings down and tears his left ear, and he keeps pulling until the boy is free.", ko:"동생을 붙잡고 끌어당긴다. 들보가 휘어 내려와 왼쪽 귀를 찢지만 멈추지 않고, 동생을 끝내 빼낸다."}, note:"m5", set:"f5.free", next:null};
 D.fb_wait = {sp:"kid", t:{en:"His brother first.", ko:"동생이 먼저다."}};
-D.fb_bell = {sp:"kid", t:{en:"He rings the handbell as hard as he can. Far up the hill, lights come on in the windows.", ko:"있는 힘껏 손종을 울린다. 저 위 언덕의 창문마다 불이 켜진다."}, note:"m5b", set:"f5.bell", next:null};
 D.fb_up = {sp:"kid", t:{en:"Not yet. The bell has to ring first.", ko:"아직이다. 먼저 종을 울려야 한다."}};
-D.fd_v1 = {sp:"kid", t:{en:"\"Edward is a good person. Thank goodness for Edward.\"", ko:"\"에드워드는 좋은 사람이야. 에드워드가 있어서 다행이지.\""}, note:"m7", set:"f5.crowd", next:null};
-D.fd_v2 = {sp:"kid", t:{en:"\"Look how gently he carries the brave one.\"", ko:"\"용감한 아이를 얼마나 조심스레 안고 있는지 좀 봐.\""}, set:"f5.crowd", next:null};
-D.fd_ed = {sp:"ed", t:{en:"Hold on, little one. I have you.", ko:"조금만 참으렴, 아가야. 내가 안고 있다."}, note:"m6", set:"f5.ed", next:null};
-D.fd_arch = {sp:"kid", t:{en:"Edward carries his brother into the Archive. The door shuts. Nobody looks at the child left standing in the cold.", ko:"에드워드가 동생을 안고 기록실로 들어간다. 문이 닫힌다. 추위 속에 남은 아이를 보는 사람은 없다."}, set:"f5.end", next:null};
 D.fd_no = {sp:"kid", t:{en:"He is not ready to look away yet.", ko:"아직 눈을 뗄 수가 없다."}};
 D.pf_end = {sp:"bgb", ex:"thinking", t:{en:"He always looked out for me.", ko:"그분은 늘 나를 챙겨 주셨어."}, next:"ci6_0"};
 /* Chapter openings: BGB's own thoughts, a short recap and one pointer to what to do next */
@@ -908,14 +1079,10 @@ Object.assign(D, {
   ci2_1: {sp:"bgb", ex:"neutral", t:{en:"I should talk to the others. See what they remember about last night.", ko:"이제 다른 사람들 얘기도 들어 봐야겠어. 어젯밤에 무슨 일이 있었는지."}, next:null},
   ci3_0: {sp:"bgb", ex:"thinking", t:{en:"Edward was writing two letters the night before he died.", ko:"에드워드 아저씨는 돌아가시기 전날 밤, 편지 두 통을 쓰고 계셨어."}, next:"ci3_1"},
   ci3_1: {sp:"bgb", ex:"neutral", t:{en:"I'll start with the desk key Nini was keeping.", ko:"니니가 맡아 둔 서랍 열쇠부터 확인해 보자."}, next:null},
-  ci4_0: {sp:"bgb", ex:"thinking", t:{en:"Two photographs that disagree, and a memory pulling at me from inside them.", ko:"서로 어긋나는 두 장의 사진, 그리고 그 안에서 나를 끌어당기는 기억."}, next:"ci4_1"},
-  ci4_1: {sp:"bgb", ex:"neutral", t:{en:"I will follow it. Talk to Edward, look around the village, and make my way to the tower.", ko:"따라가 보자. 에드워드와 이야기하고, 마을을 둘러보고, 탑까지 가 보는 거야."}, next:null},
-  ci5_0: {sp:"bgb", ex:"thinking", t:{en:"The bell never rang. The water began to rise.", ko:"종은 울리지 않았고, 물이 차오르기 시작했어."}, next:"ci5_1"},
-  ci5_1: {sp:"bgb", ex:"worried", t:{en:"First help whoever is trapped, then ring the handbell, then climb the stairs beside it.", ko:"먼저 갇힌 사람을 도와야 해. 그다음 손종을 울리고, 그 옆의 계단으로 올라가자."}, next:null},
   ci6_0: {sp:"bgb", ex:"thinking", t:{en:"The knots, the right hand, the torn ear. I saw all of it, and I cannot unsee it.", ko:"매듭, 오른손, 찢어진 귀. 다 봤어. 이제 모르는 척할 수 없어."}, next:"ci6_1"},
   ci6_1: {sp:"bgb", ex:"neutral", t:{en:"Compare the clues on the Identity Board under People. After that, I have to see Green at the Old Mill.", ko:"사람 탭의 신원 보드에서 단서를 맞춰 보자. 그다음엔 낡은 방앗간의 Green을 만나야 해."}, next:null}
 });
-const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp"}, kid:{name:{en:"-",ko:"-"}, img:"assets/twin_elder_front.webp", sil:true}, mo:{name:{en:"Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"Green"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
+const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp"}, kid:{name:{en:"Older brother",ko:"형"}, img:"assets/twin_elder_front.webp"}, yo:{name:{en:"Younger brother",ko:"동생"}, img:"assets/twin_younger_front.webp"}, nar:{name:{en:"",ko:""}, img:"assets/twin_elder_front.webp", hide:true}, v1:{name:{en:"Villager 1",ko:"주민 1"}, img:"assets/molly_front.webp", sil:true}, v2:{name:{en:"Villager 2",ko:"주민 2"}, img:"assets/molly_front.webp", sil:true}, mo:{name:{en:"Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"Green"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
 const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
@@ -978,7 +1145,8 @@ function place(){
   tm.style.transform = "scale("+(1-0.005*Math.sin(tt/950+4)).toFixed(3)+","+(1+0.012*Math.sin(tt/950+4)).toFixed(3)+")";
   hl.classList.add("silh"); mo.classList.toggle("silh", !!S.flash); gr.classList.toggle("silh", !!S.flash);
   bgb.dataset.base = S.flash ? "twin_elder" : has("c6.on") ? "bgb_torn" : "big_green_bear";
-  if (S.flash){ const tgt = P.x + (P.face === "right" ? -100 : 100); BRX += (tgt - BRX) * 0.06; NPCX.br = S.scene === "tower" ? 1560 : (S.scene === "flood" && !has("f5.free")) ? 1750 : (S.flash === 5 && S.scene === "past") ? 1520 : Math.round(BRX); } else NPCX.br = -9999;
+  if (S.flash){ const tgt = P.x + (P.face === "right" ? -100 : 100); BRX += (tgt - BRX) * 0.06; NPCX.br = S.scene === "tower" ? 1560 : (S.scene === "flood" && !has("f5.free")) ? 1750 : (S.flash === 5 && S.scene === "past") ? (has("f5.left") ? -9999 : 1520) : (S.flash === 5 && S.scene === "flood" && has("f5.ed")) ? -9999 : Math.round(BRX);
+    if (S.flash === 5){ NPCX.ed = S.scene === "flood" ? (has("f5.bell") && !has("f5.ed") ? 1250 : -9999) : (has("f5.left") ? -9999 : 1450); const sh = NPCX.ed > -9000; ed.style.display = sh ? "" : "none"; ed._sh.style.display = sh ? "" : "none"; const sb = NPCX.br > -9000; br.style.display = sb ? "" : "none"; br._sh.style.display = sb ? "" : "none"; } } else NPCX.br = -9999;
   setActorSprite(ed, "front", S.scene==="past" ? 125 : ED_H); ed.style.left = Math.round(NPCX.ed - parseFloat(ed.style.width)/2) + "px";
   setActorSprite(br, "front", S.scene==="past" ? 90 : BR_H); br.style.left = Math.round(NPCX.br - parseFloat(br.style.width)/2) + "px";
   setActorSprite(hl, "front", 175); hl.style.left = Math.round((NPCX.hl ?? -9999) - parseFloat(hl.style.width)/2) + "px";
@@ -1366,24 +1534,24 @@ const IA_A = [
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>{ if (!has("nini.key")){ startDlg("dr_lock"); return; } if (!has("ar.drawer")){ startDlg("dr0"); return; } if (has("ar.photo")){ startDlg("ar_re4"); return; } if (!(has("ar.ledger") && has("ar.papers") && has("mo.met"))){ gateMsg("arre"); return; } afterDlg = ()=>endMono("ce3_0", startFlash); startDlg("ar_re"); } }
 ];
 const IA_FL = [
-  { id:"fbrother", x:()=>1750, label:UI.lBrother, top:440, run:()=>startDlg(has("f5.free") ? "fb_wait" : "fb0") },
-  { id:"fbell",    x:()=>700,  label:UI.lHandbell, top:520, run:()=>startDlg(!has("f5.free") ? "fb_wait" : has("f5.bell") ? "fb_up" : "fb_bell") },
-  { id:"fup",      x:()=>930,  label:UI.lUp,       top:680, run:()=>{ if (!has("f5.free") || !has("f5.bell")){ startDlg("fb_up"); return; } setScene("past", 1100); } }
+  { id:"fbrother", x:()=>1750, label:UI.lBrother, top:440, run:()=>startDlg(has("f5.free") ? "fb_wait" : "f5a2") },
+  { id:"fbell",    x:()=>700,  label:UI.lHandbell, top:520, run:()=>{ if (!has("f5.free")){ startDlg("fb_wait"); return; } if (has("f5.bell")){ startDlg("fb_up"); return; } startDlg("f5h"); } },
+  { id:"fup",      x:()=>930,  label:UI.lUp,       top:680, run:()=>{ if (!has("f5.free") || !has("f5.ed")){ startDlg("fb_up"); return; } setScene("past", 1100); } }
 ];
 const IA_D = [
-  { id:"v1",   x:()=>1100, label:UI.lVill,    top:FEET-MO_H-150, run:()=>startDlg("fd_v1") },
-  { id:"v2",   x:()=>1230, label:UI.lVill,    top:FEET-GR_H-150, run:()=>startDlg("fd_v2") },
-  { id:"fded", x:()=>1450, label:UI.lWatchEd, top:FEET-ED_H-150, run:()=>startDlg("fd_ed") },
-  { id:"farch",x:()=>2300, label:UI.lWatchEd, top:560,           run:()=>{ if (!has("f5.ed")){ startDlg("fd_no"); return; } startDlg("fd_arch"); } }
+  { id:"fear",  x:()=>1900, label:UI.lEar,    top:560, when:()=>has("f5.left"), run:()=>startDlg("f5ear") },
+  { id:"fsc",   x:()=>2050, label:UI.lScarfF, top:560, when:()=>has("f5.left"), run:()=>startDlg("f5sc") },
+  { id:"ftow5", x:()=>1730, label:UI.lTowerF, top:600, when:()=>has("f5.left"), run:()=>startDlg("f5tw") }
 ];
 const IA_F = [
-  { id:"ed",   x:()=>1000, label:UI.talkEd,   top:FEET-ED_H-150, run:()=>startDlg(has("f4.ed") ? "fe9" : "fe0") },
-  { id:"gate", x:()=>1350, label:UI.lGate,    top:640,           run:()=>startDlg(has("f4.gate") ? "fg9" : "fg0") },
-  { id:"ftow", x:()=>1730, label:UI.toTowerF, top:600,           run:()=>{ if (!has("f4.ed")){ startDlg("ft_no"); return; } setScene("tower", 470); } }
+  { id:"ed",   x:()=>1000, label:UI.talkEd,   top:FEET-ED_H-150, run:()=>startDlg(has("f4.ed") ? "f4eb" : "f4e") },
+  { id:"fnote",x:()=>1250, label:UI.lNotice,  top:640, run:()=>startDlg("f4n") },
+  { id:"fwin", x:()=>1550, label:UI.lWinF,    top:640, run:()=>startDlg("f4w") },
+  { id:"ftow", x:()=>1730, label:UI.toTowerF, top:600, run:()=>{ if (!has("f4.ed")){ startDlg("ft_no"); return; } if (has("f4.gate")){ setScene("tower", 470); return; } afterDlg = ()=>setScene("tower", 470); startDlg("f4d"); } }
 ];
 const IA_FT = [
   { id:"fexit",  x:()=>445,  label:UI.leaveF, top:530, run:()=>setScene("past", 1700) },
-  { id:"flever", x:()=>1500, label:UI.lLever, top:520, run:()=>{ if (has("f4.end")){ startDlg("fl9"); return; } startDlg("fl0"); } }
+  { id:"flever", x:()=>1500, label:UI.lLever, top:520, run:()=>{ if (has("f4.end")){ startDlg("f4lv9"); return; } startDlg(has("f4.lever") ? "f4x" : "f4l"); } }
 ];
 const IA_H = [
   { id:"hexit", x:()=>2131, label:UI.leaveH, top:430, run:()=>setScene("village", 1770) },
@@ -1429,10 +1597,6 @@ Object.assign(D, {
   ce3_2: {sp:"bgb", ex:"worried", t:{en:"...", ko:"..."}, next:"ce3_3"},
   ce3_3: {sp:"bgb", ex:"thinking", t:{en:"I need to take another look at that photograph.", ko:"사진을 다시 봐야겠어."}, next:"ce3_4"},
   ce3_4: {sp:"bgb", ex:"thinking", t:{en:"(The photograph fills the screen, and the scene slowly transitions into the past.)", ko:"(사진이 화면을 가득 채우고, 장면이 서서히 과거로 전환된다.)"}, next:null},
-  ce4_0: {sp:"bgb", ex:"thinking", t:{en:"Edward told the two apart only by their knots. A scarf end jammed the lever, and the bell never rang.", ko:"에드워드는 두 아이를 매듭으로만 구분했어. 목도리 끝이 레버에 끼었고, 종은 울리지 않았어."}, next:"ce4_1"},
-  ce4_1: {sp:"bgb", ex:"worried", t:{en:"And now the water is rising.", ko:"그리고 이제 물이 차오르기 시작해."}, next:null},
-  ce5_0: {sp:"bgb", ex:"thinking", t:{en:"Someone rang the handbell, and nobody saw who. The crowd praised the child Edward carried.", ko:"누군가 손종을 울렸지만 아무도 그걸 보지 못했어. 사람들은 에드워드가 안고 나온 아이를 칭찬했어."}, next:"ce5_1"},
-  ce5_1: {sp:"bgb", ex:"worried", t:{en:"Nobody looked at the child left standing in the cold.", ko:"추위 속에 홀로 남은 아이를 본 사람은 없었어."}, next:null},
   ce6_0: {sp:"bgb", ex:"thinking", t:{en:"When I found Edward at 11:50, he was alive. I hid the glove and the letter, and the bell rang 5 minutes later.", ko:"11시 50분에 에드워드를 찾았을 때 그는 살아 있었어. 나는 장갑과 편지를 숨겼고, 종은 5분 뒤에 울렸어."}, next:"ce6_1"},
   ce6_1: {sp:"bgb", ex:"worried", t:{en:"No one can say whether help would have saved him. But I know what I did.", ko:"도움이 있었다면 살았을지는 아무도 말할 수 없어. 하지만 내가 한 일은 내가 알아."}, next:null},
   ce7_1_0: {sp:"bgb", ex:"thinking", t:{en:"It is all written down: Edward's name, mine, Green's, each in its place. Nothing can be undone.", ko:"다 적혔어. 에드워드의 이름, 내 이름, Green의 이름도 제자리에. 되돌릴 수 있는 건 없어."}, next:"ce7_1_1"},
@@ -1458,14 +1622,13 @@ setInterval(updatePlate, 400);
 function nextHint(){
   const K = lang==="ko", ev = e=>S.ev.includes(e), L = (ko,en)=>K?ko:en;
   if (S.flash === 5){
-    if (S.scene === "flood"){ if (!has("f5.free")) return L("동생이 들보에 끼어 있어. 먼저 구하자.","My brother is wedged behind a beam. Help him first."); if (!has("f5.bell")) return L("이제 손종을 울리자. 왼쪽 손종 쪽으로 가.","Now ring the handbell, over on the left."); return L("종을 울렸어. 손종 옆 계단으로 올라가자.","The bell has rung. Climb the stairs beside it."); }
-    return !has("f5.end") ? L("마을 사람들의 말을 듣고, 에드워드를 지켜본 뒤 오른쪽 기록실 문으로 가 보자.","Listen to the villagers, watch Edward, then head for the Archive door on the right.") : L("이야기가 이어질 거야. 잠시 기다리자.","The story will go on. Wait a moment.");
+    if (S.scene === "flood"){ if (!has("f5.free")) return L("동생이 들보에 끼어 있어. 먼저 구하자.","My brother is wedged behind a beam. Help him first."); if (!has("f5.bell")) return L("종부터 울리자. 왼쪽 손종 쪽으로 가.","The bell first. Over to the handbell on the left."); return L("손종 옆 계단으로 올라가자.","Climb the stairs beside the handbell."); }
+    return !has("f5.ear") || !has("f5.sc") ? L("광장에 혼자 남았어. 내 왼쪽 귀와 목도리를 살펴보자.","I'm alone in the square. Check my left ear and my scarf.") : L("시계탑을 올려다보자.","Look up at the clock tower.");
   }
   if (S.flash){
-    if (!has("f4.ed")) return L("에드워드에게 말을 걸어 보자.","Talk to Edward.");
-    if (!has("f4.gate")) return L("마을 대문을 살펴보자.","Take a look at the village gate.");
-    if (!has("f4.lever")) return L("시계탑 안으로 들어가 레버를 살펴보자.","Go into the clock tower and look at the lever.");
-    return L("이야기가 이어질 거야. 잠시 기다리자.","The story will go on. Wait a moment.");
+    if (!has("f4.ed")) return L("에드워드에게 말을 걸어 보자. 안내판과 강도 살펴봐도 좋아.","Talk to Edward. The notice and the river are worth a look too.");
+    if (!has("f4.lever")) return L("시계탑 안으로 들어가 보자.","Let's go into the clock tower.");
+    return L("레버를 다시 살펴보자.","Take another look at the lever.");
   }
   if (!has("pro.done")) return !has("pro.frame") ? L("선반 위의 사진부터 보자.","Look at the photograph on the shelf first.") : L("이제 오른쪽 문으로 나가자.","Now out through the door on the right.");
   if (has("c7.done")) return L("한 가지 결말을 봤어. 다른 선택을 해 보고 싶으면 마을 광장의 니니에게 말을 걸어 봐.","I have seen one ending. To choose differently, talk to Nini in the village plaza.");
@@ -1586,7 +1749,7 @@ function showPage(anim){
 }
 function renderDlg(anim){
   const n = D[cur]; if (!n) return; const sp = SP[n.sp];
-  $("dNm").textContent = tr(sp.name);
+  $("dNm").textContent = tr(sp.name); $("dNm").style.visibility = sp.hide ? "hidden" : ""; $("dPor").style.visibility = sp.hide ? "hidden" : "";
   const ex = EXPR.includes(n.ex) ? n.ex : "neutral"; // each line picks its expression; speakers without portraits keep the still
   const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil);   /* silhouette until the real portrait exists */
   if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
@@ -1691,8 +1854,8 @@ function endDlg(){ if (afterDlg){ const af = afterDlg; afterDlg = null; setTimeo
   if (accAfterOpen){ accAfterOpen = false; setTimeout(nextAcc, 350); }
   if (ACC.some(a=>a.q===cur)){ accCur = ACC.find(a=>a.q===cur); setTimeout(openPresent, 350); }
   if (/^acc_r\d[a-c]$/.test(cur||"") && has("c7.gather")) setTimeout(nextAcc, 600); if (cur === "ci6_1") setTimeout(()=>toast(lang==="ko"?"신원 보드가 열렸다. 사람 탭에서 단서를 맞춰 보자.":"The Identity Board is open. Compare the clues under People."), 700);
-  if (has("c6.fin") && !has("c6.shown")){ setf("c6.shown"); holdHint = true; setTimeout(()=>endMono("ce6_0", startCh7), 1400); } const f5 = S.flash === 5 && has("f5.end") && !has("f5.shown"); if (f5){ setf("f5.shown"); holdHint = true; setTimeout(()=>{ toast(lang==="ko"?"종이 한 번, 느리게 울린다. 그날 밤 울리지 않았던 종이다.":"A single slow bell tone, the one that never rang that night."); setTimeout(()=>endMono("ce5_0", endFlash), 2400); }, 900); }
-  const fin = S.flash && S.flash !== 5 && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); holdHint = true; setTimeout(()=>endMono("ce4_0", startFlash5), 1400); $("rain").classList.add("on"); }
+  if (has("c6.fin") && !has("c6.shown")){ setf("c6.shown"); holdHint = true; setTimeout(()=>endMono("ce6_0", startCh7), 1400); } const f5 = S.flash === 5 && has("f5.ear") && has("f5.sc") && has("f5.tower") && !has("f5.shown"); if (f5){ setf("f5.shown"); holdHint = true; setTimeout(()=>endFlash(), 1400); }
+  const fin = S.flash === true && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); holdHint = true; $("rain").classList.add("on"); setTimeout(()=>startFlash5(), 1600); }
   const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>chapterIntro(1, ()=>setSceneNow("village", 700)), 50); }
  endDlg0(); }
 function endDlg0(){ $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null; mode = "play"; clearInterval(typing); typing = null; save(); }
@@ -1750,29 +1913,29 @@ function setSceneNow(name, x){
 }
 function setScene(name, x){
   mode = "modal"; hideHintNow(); $("fade").classList.add("on");
-  setTimeout(()=>{ setSceneNow(name, x); $("fade").classList.remove("on"); mode = "play"; stage.focus(); }, 750);
+  setTimeout(()=>{ setSceneNow(name, x); $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (S.flash === 5 && name === "past" && !has("f5.left")) setTimeout(()=>startDlg("f5p"), 500); }, 750);
 }
 function enterTower(){ setScene("tower", 470); }
 function rewindFx(){ const st = $("stage"); st.classList.add("rw"); toast(tr(UI.rewind)); setTimeout(()=>st.classList.remove("rw"), 1700); }
 let NEXTK = 4;
 function startFlash5(){
-  S.flash = 5; ["f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown"].forEach(k=>S.flags[k] = false);
-  $("endcard").classList.remove("on");
-  chapterIntro(5, ()=>{ setSceneNow("flood", 420); $("rain").classList.add("on"); }, ()=>{ const c = $("flcap"); c.textContent = tr(UI.locFl); c.classList.add("on"); setTimeout(()=>c.classList.remove("on"), 3000); });
+  S.flash = 5; ["f5.free","f5.bell","f5.ed","f5.left","f5.ear","f5.sc","f5.tower","f5.shown","f5.end"].forEach(k=>S.flags[k] = false);
+  $("endcard").classList.remove("on"); holdHint = true;
+  chapterIntro(5, ()=>{ setSceneNow("flood", 420); $("rain").classList.add("on"); }, ()=>{ const c = $("flcap"); c.textContent = tr(UI.locFl); c.classList.add("on"); setTimeout(()=>c.classList.remove("on"), 3000); holdHint = false; startDlg("f5a"); });
 }
 function showEnd5(){ $("eCred").style.display = "none"; const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"5장 끝":"END OF CHAPTER 5"; $("eH").textContent = k?"좋은 사람":"A Good Person";
   $("eP1").textContent = k?"아이는 추위 속에 홀로 서 있다. 아무도 그를 보지 않았다.":"The child stands alone in the cold. Nobody looked at him.";
   $("eP2").textContent = k?"이어서 6장, 사라진 5분입니다.":"Chapter 6, Five Missing Minutes, follows.";
   $("eNext").style.display = "none"; $("eBack").textContent = k?"현재로 돌아가기":"Back to the present"; $("endcard").classList.add("on"); }
 function startFlash(){
-  S.ret = { scene:S.scene, x:Math.round(P.x) }; S.flash = true; S.flags["f4.ed"] = false; S.flags["f4.gate"] = false; S.flags["f4.lever"] = false; S.flags["f4.end"] = false; S.flags["f4.shown"] = false;
-  $("endcard").classList.remove("on");
-  chapterIntro(4, ()=>setSceneNow("past", 650), ()=>{ const c = $("flcap"); c.textContent = tr(UI.capF); c.classList.add("on"); setTimeout(()=>c.classList.remove("on"), 3600); });
+  S.ret = { scene:S.scene, x:Math.round(P.x) }; S.flash = true; ["f4.intro","f4.ed","f4.gate","f4.notice","f4.window","f4.lever","f4.end","f4.shown"].forEach(k=>S.flags[k] = false);
+  $("endcard").classList.remove("on"); holdHint = true;
+  chapterIntro(4, ()=>setSceneNow("past", 650), ()=>{ const c = $("flcap"); c.textContent = tr(UI.capF); c.classList.add("on"); setTimeout(()=>c.classList.remove("on"), 3600); holdHint = false; startDlg("f4a"); });
 }
 function endFlash(){ const r = S.ret || { scene:"archive", x:1500 }; const from5 = S.flash === 5; S.flash = false; $("endcard").classList.remove("on");
-  if (from5){ setf("c6.on"); chapterIntro(6, ()=>setSceneNow(r.scene, r.x), ()=>startDlg("pf_end")); return; }
   mode = "modal"; $("fade").classList.add("on");
-  setTimeout(()=>{ setSceneNow(r.scene, r.x); $("fade").classList.remove("on"); mode = "play"; stage.focus(); }, 800); }
+  setTimeout(()=>{ setSceneNow(r.scene, r.x); $("fade").classList.remove("on"); mode = "play"; stage.focus();
+    if (from5){ setf("c6.on"); holdHint = true; afterDlg = ()=>chapterIntro(6, null, ()=>{ holdHint = false; startDlg("pf_end"); }); setTimeout(()=>startDlg("f7_0"), 600); } }, 800); }
 function showEnd4(){ $("eCred").style.display = "none"; const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"4장 끝":"END OF CHAPTER 4"; $("eH").textContent = k?"훔쳐 간 이름":"The Name That Was Stolen";
   $("eP1").textContent = k?"종은 울리지 않는다. 물이 차오르기 시작한다.":"The bell does not ring. The water begins to rise.";
   $("eP2").textContent = k?"이어서 5장, 홍수의 밤을 플레이할 수 있습니다.":"You can continue straight into Chapter 5, the flood night.";
@@ -1995,17 +2158,17 @@ function skipTo(n){
   else if (n === 3) chapterIntro(3, ()=>setSceneNow("village", 3050));
   else if (n === 4){ setSceneNow("mill", 1400); startFlash(); }
   else if (n === 7 || n === 77){
-    qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown","f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown","c6.on","dd04","gr.admit","c6.hl","c6.turn","c6.hid","c6.k1","c6.k2","c6.k3","c6.k4","c6.k5","c6.k6","dd05","dd12","c6.d","c6.fin","c6.shown"]);
+    qFlags(["f4.ed","f4.gate","f4.lever","f4.end","f4.shown","f5.free","f5.bell","f5.left","f5.ear","f5.sc","f5.tower","f5.ed","f5.end","f5.shown","c6.on","dd04","gr.admit","c6.hl","c6.turn","c6.hid","c6.k1","c6.k2","c6.k3","c6.k4","c6.k5","c6.k6","dd05","dd12","c6.d","c6.fin","c6.shown"]);
     S.resp = ["Green","BGB","BGB"]; qEv(["acct_gr","report","watch","pit","stmt_ck2","wool","patrol2","walk","hide","glove","letter"]); checkDeduce();
     if (n === 7){ setSceneNow("mill", 1400); startCh7(); }
     else { qFlags(["c7.on","c7.green","dd09","c7.rec"]); qEv(["motive","record"]); checkDeduce(); setSceneNow("village", 1950); toast(lang==="ko"?"연출 모드: 7장 마을 모임":"Director: Chapter 7 gathering"); }
   }
   else if (n === 6 || n === 66){
-    qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown","f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown","c6.on"]); S.ret = { scene:"archive", x:1500 };
+    qFlags(["f4.ed","f4.gate","f4.lever","f4.end","f4.shown","f5.free","f5.bell","f5.left","f5.ear","f5.sc","f5.tower","f5.ed","f5.end","f5.shown","c6.on"]); S.ret = { scene:"archive", x:1500 };
     if (n === 66){ qFlags(["dd04","gr.admit","c6.hl","c6.turn"]); qEv(["acct_gr","report","watch"]); checkDeduce(); setSceneNow("village", 1400); toast(lang==="ko"?"연출 모드: 6장 결론 파트":"Director: Chapter 6 conclusions"); }
     else { setSceneNow("archive", 1500); chapterIntro(6, null, ()=>startDlg("pf_end")); }
   }
-  else if (n === 5){ S.ret = { scene:"mill", x:1400 }; SKIP_STEPS[4](); qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown"]); NEXTK = 5; setSceneNow("mill", 1400); startFlash5(); }
+  else if (n === 5){ S.ret = { scene:"mill", x:1400 }; SKIP_STEPS[4](); qFlags(["f4.ed","f4.gate","f4.lever","f4.end","f4.shown"]); NEXTK = 5; setSceneNow("mill", 1400); startFlash5(); }
 }
 function setDirUi(){
   const on = !!S.dir, k = lang==="ko"; $("pDir").classList.toggle("on", on); $("dirHead").textContent = k ? "연출 모드" : "DIRECTOR MODE";
