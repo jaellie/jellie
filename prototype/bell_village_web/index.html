@@ -709,7 +709,8 @@ const D = {
    ch:[{t:{en:"Is the tower clock reliable?",ko:"이 탑시계는 믿을 만한가요?"},go:"c1"},{t:{en:"(Glance at your own hands.)",ko:"(자신의 손을 내려다본다.)"},go:"c2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]},
  c2:{sp:"bgb", ex:"thinking", t:{en:"My notebook is in my left hand, the way it always is.", ko:"공책은 늘 그렇듯 왼손에 들려 있어."}, set:"c2", note:"hand", next:null},
  c1:{sp:"ck", ex:"thinking", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 1분도 어긋나지 않았습니다."}, set:"ck.watch", note:"watch"},
- c9:{sp:"ck", ex:"neutral", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보십시오. 시계는 어디 안 갑니다."}}
+ c9:{sp:"ck", ex:"neutral", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보십시오. 시계는 어디 안 갑니다."},
+   ch:[{t:{en:"Is the tower clock reliable?",ko:"이 탑시계는 믿을 만한가요?"},go:"c1"},{t:{en:"(Glance at your own hands.)",ko:"(자신의 손을 내려다본다.)"},go:"c2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]}
 };
 D.p_f0 = {sp:"bgb", ex:"thinking", t:{en:"He always looked out for me.", ko:"그분은 늘 나를 챙겨 주셨어."}, ev:"photo_home", next:"p_f1"};
 D.p_f1 = {sp:"bgb", ex:"worried", t:{en:"Leave it.", ko:"그냥 두자."}, set:"pro.frame", next:null};
@@ -1339,7 +1340,7 @@ function nextHint(){
   if (has("q1")){
     if (!ev("receipt")) return has("hz.met") ? L("헤이즐에게 어젯밤 일에 대해 다시 물어보자.","Ask Hazel again about last night.") : L("카페의 헤이즐에게 가 보자. 기록실 오른쪽이야.","Visit Hazel at the café, to the right of the Archive.");
     if (!ev("patrol")) return L("마을의 순찰 초소에서 토미의 일지를 읽어 보자.","Read Tommy's logbook at the patrol post in the village.");
-    if (!has("c2")) return L("올리버와 이야기하면서 내 손을 확인해 보자.","Talk to Oliver, and glance at my own hands.");
+    if (!has("c2")) return L("올리버에게 다시 말을 걸어서 '자신의 손을 내려다본다'를 골라 보자.","Talk to Oliver again and choose to glance at my own hands.");
     return L("모은 증언을 사건 파일에서 맞춰 보자.","Compare the statements in the Case File.");
   }
   if (S.scene !== "tower") return L("먼저 시계탑으로 가자. 마을 가운데 있는 큰 탑이야.","Head for the clock tower first, the tall tower in the middle of the village.");
@@ -1412,6 +1413,7 @@ function splitPages(text){
   if (rows(text) <= 1) return [text];
   let sents = text.match(/[^.?!…]+(?:[.?!…]+["'”’)\]]*)(?:\s+|$)|[^.?!…]+$/g) || [text];
   sents = sents.map(x=>x.trim()).filter(Boolean);
+  for (let k=0;k<sents.length-1;k++){ if (sents[k].length <= 5){ sents[k+1] = sents[k]+" "+sents[k+1]; sents.splice(k,1); k--; } }   /* a lone \"Mm.\" stays with the next sentence */
   const cut = t => { if (rows(t) <= 2) return [t]; const mid = t.length/2; let best = -1, bd = 1e9; for (let k=0;k<t.length;k++){ if (/[,，、]/.test(t[k])){ const d = Math.abs(k-mid); if (d<bd){ bd = d; best = k; } } } if (best < 0) return [t]; return [t.slice(0,best+1).trim(), t.slice(best+1).trim()].filter(Boolean); };
   const out = []; let cur = [], used = 0;
   sents.flatMap(cut).forEach(part=>{ const r = rows(part); if (cur.length && used + r > 2){ out.push(cur.join("\n")); cur = []; used = 0; } cur.push(part); used += r; });   /* each sentence starts its own row; a page holds at most two rows */
