@@ -365,7 +365,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
    <div class="hgate" style="left:440px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">빅그베의 오두막</b></div>
    <img src="assets/b_healer.webp" alt="Healer's house" style="position:absolute;left:2060px;top:520px;width:520px;height:507px">
    <img src="assets/b_guard_post.webp" alt="Patrol post" style="position:absolute;left:1648px;top:630px;width:246px;height:auto">
-   <div id="millgate"><i class="mp l"></i><i class="mp r"></i><i class="ma"></i><i class="md"></i><b class="ms">낡은 방앗간 · Old Mill</b></div>
+   <img src="assets/b_mill.webp" alt="Old Mill" style="position:absolute;left:4560px;top:378px;width:700px;height:auto">
    <div id="shadows"></div>
    <div id="actors"></div>
    <div id="marks"></div>
@@ -1244,7 +1244,7 @@ let IA = [
   { id:"gather", x:()=>2700, label:UI.toGather, top:640, when:()=>has("c7.rec"), run:()=>startGather() },
   { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 2100); } },
   { id:"heal",   x:()=>2320,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 1850); } },
-  { id:"mill",   x:()=>4890,      label:UI.toMill, top:600,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
+  { id:"mill",   x:()=>4902,      label:UI.toMill, top:690,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
   { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ if (ch1Gate()){ startDlg(talk("tm")); return; } startDlg(tmNode()); } },
   { id:"post",   x:()=>1786,      label:UI.lPost,  top:660,            run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(ckNode()) },
