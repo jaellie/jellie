@@ -1509,12 +1509,12 @@ let IA = [
   { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ if (ch1Gate()){ startDlg(talk("tm")); return; } startDlg(tmNode()); } },
   { id:"post",   x:()=>1236,      label:UI.lPost,  top:660,            run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(ckNode()) },
-  { id:"clock",  x:()=>2735,      label:UI.look,   top:560,            run:()=>inspect("clock") },
-  { id:"door",   x:()=>2856,      label:UI.enter,  top:600,            run:()=>enterTower() }
+  { id:"clock",  x:()=>2185,      label:UI.look,   top:560,            run:()=>inspect("clock") },
+  { id:"door",   x:()=>2306,      label:UI.enter,  top:600,            run:()=>enterTower() }
 ];
 const IA_V = IA.slice();
 const IA_T = [
-  { id:"exit",  x:()=>445,  label:UI.leave,  top:530, run:()=>setScene("village", 2640) },
+  { id:"exit",  x:()=>445,  label:UI.leave,  top:530, run:()=>setScene("village", 2090) },
   { id:"ck",    x:()=>NPCX_T.ck, label:UI.talkCk, top:FEET_T-CK_H-150, run:()=>startDlg(ckNode()) },
   { id:"bell",  x:()=>897,  label:UI.lBell,  top:500, run:()=>inspect("handbell") },
   { id:"boots", x:()=>640,  label:UI.lBoots, top:640, run:()=>inspect("boots") },
