@@ -690,6 +690,7 @@ EV.receipt = { id:"receipt", name:{en:"Café receipt",ko:"카페 영수증"}, im
   desc:{en:"A receipt from Hazel's Café, settled at 11:42. Hazel wrote the time on it herself.", ko:"헤이즐의 카페 영수증. 11시 42분에 계산되었고, 헤이즐이 직접 시각을 적어 두었다."},
   note:{en:"The café receipt is stamped 11:42.", ko:"카페 영수증에는 11시 42분이 적혀 있다."} };
 const NOTES = {
+  glove:{en:"Green has only a left glove. He says he lost the right one last night.", ko:"그린에게는 왼손 장갑 한 짝뿐이다. 오른쪽은 어젯밤에 잃어버렸다고 한다."},
   regret:{en:"Edward asked Molly whether there was any point in making up for an old wrong. She told him being late was no reason not to try.", ko:"에드워드는 몰리에게 오래된 잘못을 이제 와서 바로잡는 것이 무슨 소용이냐고 물었다. 몰리는 늦었다고 해서 하지 말아야 할 이유는 없다고 답했다."},
   family:{en:"Edward's wife was gravely ill years ago. He kept working at the Archive, probably to pay for her treatment.", ko:"오래전 에드워드의 부인은 많이 아팠다. 에드워드는 치료비 때문에 기록관 일을 계속했을 것이다."},
   t1:{en:"Tommy was the first to find Edward, during his early-morning patrol.", ko:"에드워드를 가장 먼저 발견한 사람은 새벽 순찰 중이던 토미다."},
@@ -827,6 +828,27 @@ CH("hqx", [["bgb","고마워, 헤이즐.","Thanks, Hazel."], ["hz","너도 너�
 CH("may0", [["hl","빅그베. 에드워드 씨 때문에 왔지?","Big Green Bear. You're here about Edward, aren't you?"], ["bgb","사망 시간을 알고 싶어.","I need to know when he died."], ["hl","정확한 시각까지는 말할 수 없어.","I can't give you an exact time."], ["bgb","대략이라도.","Even an estimate would help."], ["hl","밤 11시 55분에서 12시 15분 사이로 보고 있어.","Somewhere between 11:55 p.m. and 12:15 a.m."], ["bgb","추락 때문에?","From the fall?"], ["hl","추락으로 크게 다쳤어. 그리고 추위에 오래 노출됐지.","The fall caused severe injuries. He was also exposed to the cold for some time."], ["bgb","조금만 더 일찍 발견됐다면?","What if someone had found him sooner?"], ["hl","살릴 수 있었을지는 몰라. 하지만 치료를 시작할 기회는 있었겠지.","I can't say whether he would have survived. But he would've had a chance to receive treatment."], ["nar","(빅그베가 잠시 침묵한다.)","(Big Green Bear falls silent.)"], ["hl","빅그베?","Big Green Bear?"], ["bgb","아니야. 고마워.","It's nothing. Thank you.",{ev:"tod", set:"may.done"}]]);
 D.may9 = {sp:"hl", ex:"neutral", t:{ko:"무리하지 마, 빅그베.", en:"Don't push yourself, Big Green Bear."}};
 CH("f5_end", [["nar","(수집한 단서를 확인한다.)","(He reviews the clues he has collected.)"], ["nar","- 23년 전 형이 동생을 구했다.\n- 사고 보고서가 바뀌었다.","- Twenty-three years ago, Green saved his brother.\n- The incident report was changed."], ["nar","- 에드워드는 기록에 서명했다.\n- 11:42에 카페를 나왔다.","- Edward signed the record.\n- Big Green Bear left the café at 11:42."], ["nar","- 에드워드의 추정 사망 시간은 11:55~00:15다.","- Edward's estimated time of death is 11:55–00:15."], ["bgb","기록은 바뀌었어. 하지만 그날 형이 날 구했다는 건 기억해.","The records were changed. But I remember my brother saving me.",{}, "thinking"], ["bgb","에드워드 아저씨는 왜 이제 와서 그 기록을 바로잡으려 했을까?","Why did Edward decide to set the record straight after all these years?",{}, "thinking"], ["nar","(빅그베가 오래된 방앗간이 있는 방향을 바라본다.)","(Big Green Bear looks toward the old mill.)"], ["bgb","형을 만나야겠어.","I need to see my brother.",{}, "thinking"]]);
+/* ---------- Chapter 6 (user script: The Missing Five Minutes), the final chapter ---------- */
+const GMCH = [MC("에드워드 아저씨","Ask About Edward","gm1"), MC("시계탑","Ask About the Clock Tower","gm2"), MC("23년 전","Ask About Twenty-Three Years Ago","gm3"), MC("그냥 이야기하기","Make Small Talk","gm4"), MC("대화 마치기","End Conversation","gmx",true)];
+CH("mill_d", [["nar","(방앗간 문 앞에 선다.)","(Big Green Bear stands at the mill door.)"], ["gr","돌아가.","Go home."], ["bgb","아직 아무 말도 안 했는데.","I haven't said anything yet."], ["gr","무슨 일로 왔는지는 알아.","I know why you're here."], ["bgb","그럼 문 좀 열어 줘.","Then open the door."], ["nar","(잠시 후 문이 열린다.)","(The door opens.)"], ["gr","오래 있을 생각은 하지 마.","Don't make yourself comfortable."], ["bgb","차라도 한 잔 줄 줄 알았는데.","I was hoping for a cup of tea."], ["gr","찻잎 없어.","No tea leaves."], ["bgb","예전에도 그랬잖아.","You never had any.",{set:"fin.m1"}]]);
+D.gm = {sp:"gr", ex:"neutral", t:{ko:"물어볼 게 있으면 해.", en:"If you've got questions, ask."}, ch:GMCH};
+CH("gm1", [["bgb","에드워드 아저씨가 널 만나러 오라고 했어?","Did Edward ask you to meet him?"], ["gr","아니. 내가 찾아갔어.","No. I went to him."], ["bgb","왜?","Why?"], ["gr","하지 말아 달라고 부탁할 일이 있었거든.","There was something I needed him not to do."], ["bgb","들어주셨어?","Did he agree?"], ["gr","넌 그분 성격 알잖아.","You know what he was like."], ["bgb","한 번 마음먹으면 안 바꾸셨지.","Once he'd made up his mind, that was it."], ["gr","그날도 그랬어.","That night was no different."]]);
+CH("gm2", [["bgb","시계탑에 간 건 맞지?","You went to the clock tower, didn't you?"], ["gr","그래.","Yes."], ["bgb","거기서 무슨 일이 있었어?","What happened up there?"], ["gr","서류를 가져가려고 했어.","I tried to take the papers."], ["bgb","에드워드 아저씨가 가지고 있던?","The ones Edward had?"], ["gr","응. 놓으라고 하셨는데, 내가 말을 안 들었어.","Yes. He told me to let go. I wouldn't."], ["bgb","그리고?","And then?"], ["gr","종이가 찢어졌어. 그분이 뒤로 물러났고.","The paper tore. He stepped backward."], ["nar","(그린이 손을 내려다본다.)","(Green looks down at his hands.)"], ["gr","그다음엔 너무 빨랐어.","Everything after that happened too fast."], ["bgb","떨어지는 걸 봤어?","Did you see him fall?"], ["gr","끝까지는 못 봤어.","Not all the way."], ["bgb","아래로 내려가 보지는 않았고?","You didn't go down to check?"], ["gr","못 했어.","I couldn't."], ["bgb","왜?","Why?"], ["gr","그걸 나도 모르겠어.","I wish I knew."]]);
+CH("gm3", [["gr","그분이 옛날 기록을 다시 꺼냈어.","He'd brought out the old records."], ["bgb","봤어.","I saw them."], ["gr","뭐가 적혀 있던데?","What did they say?"], ["bgb","우리가 아는 이야기랑 다르더라.","A different story from the one we know."], ["gr","어떤 게 진짜인지는 너도 알잖아.","You know which one is true."], ["bgb","형도 알지.","So do you."], ["gr","나는 네가 잊은 줄 알았어.","I thought you'd forgotten."], ["bgb","잊으려고 한 거지.","I tried to."], ["gr","그게 가능해?","Can you do that?"], ["bgb","형은?","Can you?"], ["nar","(그린은 대답하지 않는다.)","(Green doesn't answer.)"]]);
+CH("gm4", [["bgb","여기서 혼자 지내기 힘들지 않아?","Isn't it hard living out here alone?"], ["gr","익숙해.","I'm used to it."], ["bgb","방앗간도 많이 낡았네.","This place has seen better days."], ["gr","너도.","So have you."], ["bgb","그건 좀 심한데.","That's a little harsh."], ["gr","농담이야.","I'm kidding."]]);
+CH("gmx", [["bgb","또 올게.","I'll come by again."], ["gr","마음대로 해.","Suit yourself."]]);
+CH("mo_sc", [["nar","(오래된 목도리가 걸려 있다. 매듭은 오른쪽 어깨 방향으로 묶여 있다.)","(An old scarf hangs nearby, tied with the knot on the right.)"], ["bgb","아직도 이렇게 묶네.","You still tie it that way."], ["gr","너도 왼쪽으로 묶잖아.","You still tie yours on the left.",{set:"fin.o1"}]]);
+CH("mo_gl", [["nar","(작업대 위에는 왼손 장갑만 놓여 있다.)","(Only a left glove lies on the workbench.)"], ["bgb","오른쪽은?","Where's the other one?"], ["gr","잃어버렸어.","Lost it."], ["bgb","언제?","When?"], ["gr","어젯밤.","Last night."], ["bgb","새로 사야겠네.","You'll need a new pair."], ["gr","한 짝은 멀쩡한데.","This one's still perfectly good."], ["bgb","한 짝만으론 소용없잖아.","Not much use on its own."], ["nar","(그린이 장갑을 서랍에 넣는다.)","(Green puts the glove in a drawer.)",{set:"fin.o2", note:"glove"}]]);
+CH("mo_doc", [["nar","(탁자 위에 찢어진 서류 조각이 있다.)","(A torn piece of paper lies on the table.)"], ["nar","\"경고 종의 결함은 사고 이전부터 보고되었다.\"","\"The warning bell's defect had been reported before the accident.\""], ["nar","\"관련 기록과 구조자의 신원은 의도적으로 변경되었다.\"","\"The records and the rescuer's identity were deliberately altered.\""], ["bgb","에드워드 아저씨가 공개하려던 내용이네.","This is what Edward was going to reveal."], ["gr","전부는 아니야.","Not all of it."], ["bgb","뭐가 더 있는데?","What else?"], ["gr","그날 누가 진실을 알고 있었는지까지 적혀 있었어.","He also wrote down who knew the truth that day.",{ev:"tdoc", set:"fin.o3"}]]);
+CH("gs4", [["gr","토미가 그분을 발견했다며.","Tommy found him, didn't he?"], ["bgb","그렇게 들었어.","That's what I heard."], ["gr","많이 추웠겠지.","It must've been cold."], ["bgb","눈이 많이 왔으니까.","It was snowing pretty hard."], ["gr","메이 선생님은 뭐래?","What did May say?"], ["bgb","추락한 뒤에도 한동안 살아 계셨을 거래.","She thinks he lived for some time after the fall."], ["nar","(그린이 고개를 든다.)","(Green looks up.)"], ["gr","얼마나?","How long?"], ["bgb","정확히는 모른대.","She couldn't say exactly."], ["gr","누가 조금만 일찍 발견했으면 달랐을까?","Would it have made a difference if someone had found him sooner?"], ["bgb","그건 아무도 모르지.","Nobody knows."], ["gr","적어도 혼자 두지는 않았겠지.","At least he wouldn't have been alone."], ["bgb","혼자는 아니었을 거야.","I don't think he was alone."], ["gr","무슨 뜻이야?","What do you mean?"], ["bgb","아니. 마지막까지 누군가 곁에 있었으면 좋았겠다는 뜻이야.","Nothing. I just wish someone had been there with him."], ["gr","그래.","Yeah."], ["bgb","형은 그분이 떨어지고 바로 떠났다고 했지?","You said you left right after he fell?"], ["gr","응.","Yes."], ["bgb","그럼 마지막에 무슨 말을 하셨는지도 모르겠네.","Then you wouldn't know what his last words were."], ["gr","말을 하셨어?","He said something?"], ["nar","(빅그베가 입을 다문다.)","(Big Green Bear falls silent.)"], ["bgb","아니. 그냥.","No. I was just wondering.",{set:"fin.s4"}]]);
+CH("may2", [["hl","또 왔구나.","You're back."], ["bgb","한 가지 더 물어보려고.","I have one more question."], ["hl","뭔데?","What is it?"], ["bgb","에드워드 아저씨가 떨어지고도 살아 계셨을 가능성이 있어?","Could Edward have survived for a while after the fall?"], ["hl","충분히 있어. 다만 정확히 얼마나 버티셨는지는 알 수 없어.","It's quite possible. I just can't say for how long."], ["bgb","그렇구나.","I see."], ["hl","한 가지 이상한 게 있어.","There's one thing I can't explain."], ["bgb","뭔데?","What is it?"], ["hl","에드워드 씨 손에 작은 상처가 있었어. 추락하면서 생긴 상처는 아니야.","Edward had a small cut on his hand. It wasn't from the fall."], ["bgb","손에?","On his hand?"], ["hl","손톱 밑에 노란 실도 끼어 있었고.","There was yellow thread caught under his fingernails, too."], ["nar","(빅그베가 자신의 목도리를 내려다본다.)","(Big Green Bear glances at his scarf.)"], ["bgb","오래된 목도리라 실이 잘 풀려.","It's an old scarf. The threads come loose easily."], ["hl","네 목도리 얘긴 안 했는데.","I wasn't talking about your scarf."], ["nar","(잠시 침묵.)","(A brief silence.)"], ["bgb","아, 그렇네.","Right. You weren't.",{ev:"thread", set:"fin.may2"}]]);
+CH("fr6", [["nar","(액자 뒤쪽이 조금 벌어져 있다.)","(The back of the picture frame is slightly loose.)"], ["nar","(접힌 편지와 오른손 장갑 한 짝이 있다.)","(A folded letter and a right-hand glove are hidden behind it.)"], ["bgb","아직 여기 있었네.","Still here."], ["nar","\"이번에는 누구의 이름도 지우지 않겠습니다.\"","\"This time, I will not erase anyone's name.\""], ["nar","(편지 아래쪽에는 에드워드의 서명이 있다.)","(Edward's signature appears at the bottom.)",{ev:"hidden", set:"fin.frame"}]]);
+D.fr9 = {sp:"bgb", ex:"thinking", t:{ko:"편지와 장갑은 그대로 두자.", en:"I'll leave the letter and the glove where they are."}};
+CH("gl7", [["nar","(빅그베가 방앗간을 다시 찾는다.)","(Big Green Bear returns to the mill.)"], ["gr","또 왔어?","Back again?"], ["bgb","하나만 물어보려고.","Just one more question."], ["gr","뭔데?","What is it?"], ["bgb","그날로 돌아갈 수 있다면 어떻게 할 거야?","What would you do if you could go back to that night?"], ["gr","아래로 내려갔겠지.","I'd have gone downstairs."], ["bgb","그다음엔?","And then?"], ["gr","살아 계셨는지 확인했을 거야.","I'd have checked if he was still alive."], ["bgb","살아 계셨다면?","And if he was?"], ["gr","사람을 불렀겠지. 당연히.","I'd have called for help. Of course."], ["nar","(빅그베가 잠시 그린을 바라본다.)","(Big Green Bear looks at Green for a moment.)"], ["gr","넌?","What about you?"], ["bgb","나?","Me?"], ["gr","그날로 돌아갈 수 있다면.","If you could go back."], ["bgb","글쎄.","I don't know."], ["gr","넌 항상 답을 잘했잖아.","You always had an answer for everything."], ["bgb","이번엔 없네.","Not this time.",{set:"fin.last"}]]);
+CH("fn0", [["nar","(마을 광장. 니니가 빅그베를 기다리고 있다.)","(In the village square, Nini waits for Big Green Bear.)"], ["nini","아저씨! 알아내셨어요?","Mr. Bear! Did you figure it out?"], ["bgb","응. 조금은.","Yeah. Some of it."], ["nini","그럼 이제 다 끝난 거예요?","So is it all over now?"], ["bgb","그건 모르겠네.","I'm not sure."], ["nini","에드워드 아저씨가 그러셨는데요.","You know what Edward used to say?"], ["bgb","뭐라고?","What?"], ["nini","기록은 잊지 않으려고 남기는 거래요.","He said we keep records so we won't forget."], ["bgb","그랬지.","He did."], ["nini","그런데 왜 어떤 기록은 없어지는 걸까요?","Then why do some records disappear?"], ["nar","(빅그베가 대답하지 않는다.)","(Big Green Bear says nothing.)"]], {next:"fn_ch"});
+D.fn_ch = {sp:"nar", ex:"neutral", t:{ko:"마지막 선택. 편지를 어떻게 할까?", en:"Final Choice. What will he do with the letter?"}, ch:[QA("편지를 건넨다","Hand Over the Letter","fnA"), QA("편지를 간직한다","Keep the Letter","fnB")]};
+CH("fnA", [["nar","(빅그베가 니니에게 편지를 건넨다.)","(Big Green Bear hands Nini the letter.)"], ["nini","에드워드 아저씨 글씨네요.","That's Edward's handwriting."], ["bgb","응.","Yeah."], ["nini","이거 기록관에 가져다 놓을까요?","Should I take it to the Archive?"], ["bgb","그래.","Yes."], ["nini","아저씨도 같이 가요.","Come with me."], ["nar","(빅그베가 잠시 머뭇거린다.)","(Big Green Bear hesitates.)"], ["bgb","잠깐만.","Just a second."], ["nar","(그가 주머니에서 오른손 장갑을 꺼낸다.)","(He takes the right-hand glove from his pocket.)"], ["nini","이건 뭐예요?","What's that?"], ["bgb","편지랑 같이 있었어.","It was with the letter."], ["nini","어디서요?","Where?"], ["nar","(빅그베가 니니를 바라본다.)","(Big Green Bear looks at Nini.)"], ["bgb","그 얘기도 해야겠지.","I suppose I should tell you that, too.",{fx:"theend1"}]]);
+CH("fnB", [["nini","아저씨?","Mr. Bear?"], ["bgb","미안. 무슨 얘기였지?","Sorry. What were we talking about?"], ["nini","기록이요!","Records!"], ["bgb","아, 맞다.","Right."], ["nini","아저씨는 에드워드 아저씨처럼 좋은 사람이에요.","You're a good person, just like Edward."], ["bgb","그렇게 생각해?","You think so?"], ["nini","당연하죠!","Of course!"], ["nar","(니니가 웃는다.)","(Nini smiles.)"], ["nini","안녕하세요! 안녕하세요!","Hello! Hello!"], ["bgb","안녕! 안녕!","Hello! Hello!"], ["nar","(니니가 떠난다. 빅그베가 집으로 돌아온다.)","(Nini walks away. Big Green Bear returns home.)",{fx:"walk"}], ["nar","(그는 액자 뒤에 편지와 장갑을 넣는다. 장갑을 밀어 넣다가 무언가 손끝에 걸린다.)","(He hides the letter and glove behind the picture frame. Something catches against his fingertips.)"], ["nar","(작은 황동 단추다. 단추에는 작은 글씨가 새겨져 있다.)","(A small brass button. Tiny letters are engraved on it.)",{ev:"button"}], ["nar","E. BELL","E. BELL"], ["nar","(빅그베가 단추를 손바닥에 올려놓는다.)","(Big Green Bear rests the button in his palm.)"], ["nar","(짧은 회상. 눈 덮인 바닥. 에드워드의 손이 빅그베의 노란 목도리를 붙잡는다.)","(Brief flashback. Snow-covered ground. Edward's hand grips Big Green Bear's yellow scarf.)"], ["ed","잠깐...","Wait..."], ["nar","(현재. 빅그베가 단추를 편지 사이에 끼운다. 액자를 다시 세운다.)","(Present. Big Green Bear slips the button between the folded pages and puts the picture frame back.)",{fx:"theend2"}]]);
 D.p_f0 = {sp:"bgb", ex:"thinking", t:{en:"He was always on my side.", ko:"그분은 항상 내 편이었는데."}, ev:"photo_home", next:"p_f1"};
 D.p_f1 = {sp:"bgb", ex:"worried", t:{en:"I'll leave it for now.", ko:"일단 그대로 두자."}, set:"pro.frame", next:null};
 D.p_f9 = {sp:"bgb", ex:"neutral", t:{en:"Now's not the time.", ko:"지금은 그럴 때가 아니야."}};
@@ -907,7 +929,7 @@ Object.assign(D, {
   ci6_0: {sp:"bgb", ex:"thinking", t:{en:"The knots, the right hand, the torn ear. I saw all of it, and I cannot unsee it.", ko:"매듭, 오른손, 찢어진 귀. 다 봤어. 이제 모르는 척할 수 없어."}, next:"ci6_1"},
   ci6_1: {sp:"bgb", ex:"neutral", t:{en:"Compare the clues on the Identity Board under People. After that, I have to see Green at the Old Mill.", ko:"사람 탭의 신원 보드에서 단서를 맞춰 보자. 그다음엔 낡은 방앗간의 Green을 만나야 해."}, next:null}
 });
-const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp"}, kid:{name:{en:"Green",ko:"형"}, img:"assets/twin_elder_front.webp"}, yo:{name:{en:"Little Green",ko:"동생"}, img:"assets/twin_younger_front.webp"}, nar:{name:{en:"",ko:""}, img:"assets/twin_elder_front.webp", hide:true}, v1:{name:{en:"Villager",ko:"마을 사람"}, img:"assets/molly_front.webp", sil:true}, v2:{name:{en:"Villager 2",ko:"주민 2"}, img:"assets/molly_front.webp", sil:true}, mo:{name:{en:"Grandma Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"Green"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
+const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp"}, kid:{name:{en:"Green",ko:"형"}, img:"assets/twin_elder_front.webp"}, yo:{name:{en:"Little Green",ko:"동생"}, img:"assets/twin_younger_front.webp"}, nar:{name:{en:"",ko:""}, img:"assets/twin_elder_front.webp", hide:true}, v1:{name:{en:"Villager",ko:"마을 사람"}, img:"assets/molly_front.webp", sil:true}, v2:{name:{en:"Villager 2",ko:"주민 2"}, img:"assets/molly_front.webp", sil:true}, mo:{name:{en:"Grandma Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"그린"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
 const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
@@ -1024,7 +1046,7 @@ Object.assign(UI, {
   askFall:{en:"Who caused Edward's fall?", ko:"누가 에드워드를 떨어뜨렸는가?"}, askWith:{en:"Who was with Edward before the Clockkeeper?", ko:"시계지기보다 먼저 에드워드 곁에 있던 사람은 누구인가?"},
   concl:{en:"Conclusions", ko:"결론"}, confirm:{en:"Confirm", ko:"확정"}, compare:{en:"Compare the clues", ko:"단서를 맞춰 본다"}, pickWho:{en:"Whose name goes here?", ko:"누구의 이름을 적을까?"}, noName:{en:"Choose a name", ko:"이름을 정한다"}
 });
-Object.assign(UI, { lScarfK:{en:"Examine the scarf", ko:"목도리를 살펴본다"}, lRep:{en:"Examine the incident report", ko:"사고 기록철을 살펴본다"}, lReq:{en:"Examine the maintenance request", ko:"정비 요청서를 살펴본다"}, lShelf:{en:"Examine the empty ledger shelf", ko:"서류장을 살펴본다"}, lNoteU:{en:"Look beneath the desk", ko:"책상 아래를 살펴본다"}, lDesk:{en:"Examine Edward's desk", ko:"에드워드의 책상을 살펴본다"}, lPw:{en:"Examine the pocket watch", ko:"회중시계를 살펴본다"}, lHatch2:{en:"Examine the maintenance hatch", ko:"정비구를 살펴본다"}, lMech:{en:"Examine the clock mechanism", ko:"시계 장치를 살펴본다"} });
+Object.assign(UI, { lOldScarf:{en:"Examine the old scarf", ko:"오래된 목도리를 살펴본다"}, lGlove:{en:"Examine the glove", ko:"장갑을 살펴본다"}, lTorn:{en:"Examine the torn document", ko:"찢어진 서류를 살펴본다"}, lScarfK:{en:"Examine the scarf", ko:"목도리를 살펴본다"}, lRep:{en:"Examine the incident report", ko:"사고 기록철을 살펴본다"}, lReq:{en:"Examine the maintenance request", ko:"정비 요청서를 살펴본다"}, lShelf:{en:"Examine the empty ledger shelf", ko:"서류장을 살펴본다"}, lNoteU:{en:"Look beneath the desk", ko:"책상 아래를 살펴본다"}, lDesk:{en:"Examine Edward's desk", ko:"에드워드의 책상을 살펴본다"}, lPw:{en:"Examine the pocket watch", ko:"회중시계를 살펴본다"}, lHatch2:{en:"Examine the maintenance hatch", ko:"정비구를 살펴본다"}, lMech:{en:"Examine the clock mechanism", ko:"시계 장치를 살펴본다"} });
 SP.cr = {name:{en:"Council Rep.",ko:"의회 관계자"}, img:"assets/tommy_front.webp", sil:true};
 SP.hl = {name:{en:"May", ko:"메이"}, img:"assets/tommy_front.webp", sil:true};
 
@@ -1073,6 +1095,18 @@ EV.mnote = { id:"mnote", name:{en:"Midnight disclosure note",ko:"자정 공개 �
 EV.tod = { id:"tod", name:{en:"Estimated time of death",ko:"추정 사망 시간"}, tag:"MEDICAL",
   desc:{en:"May: between 11:55 p.m. and 12:15 a.m. The fall caused severe injuries, and he was exposed to the cold for some time. She cannot say whether he would have survived, but he would have had a chance to receive treatment.", ko:"메이: 밤 11시 55분에서 12시 15분 사이. 추락으로 크게 다쳤고 추위에 오래 노출되었다. 살릴 수 있었을지는 알 수 없지만, 치료를 시작할 기회는 있었을 것이다."},
   note:{en:"May puts Edward's death between 11:55 p.m. and 12:15 a.m.", ko:"메이는 에드워드의 사망을 밤 11시 55분에서 12시 15분 사이로 본다."} };
+EV.tdoc = { id:"tdoc", name:{en:"The torn document",ko:"찢어진 서류"}, tag:"DOCUMENT",
+  desc:{en:"\"The warning bell's defect had been reported before the accident. The records and the rescuer's identity were deliberately altered.\" Green says Edward also wrote down who knew the truth that day.", ko:"\"경고 종의 결함은 사고 이전부터 보고되었다. 관련 기록과 구조자의 신원은 의도적으로 변경되었다.\" 그린은 에드워드가 그날 누가 진실을 알고 있었는지도 적어 두었다고 한다."},
+  note:{en:"A torn document at the Old Mill says the bell's defect was reported before the accident, and that the records and the rescuer's identity were altered.", ko:"방앗간의 찢어진 서류에는 종의 결함이 사고 전에 보고되었고 기록과 구조자의 신원이 변경되었다고 적혀 있다."} };
+EV.thread = { id:"thread", name:{en:"Yellow thread",ko:"노란 실"}, tag:"TRACES",
+  desc:{en:"May found a small cut on Edward's hand that did not come from the fall, and yellow thread caught under his fingernails.", ko:"메이는 에드워드의 손에서 추락으로 생기지 않은 작은 상처를 발견했고, 손톱 밑에는 노란 실이 끼어 있었다."},
+  note:{en:"Edward had a small cut on his hand that wasn't from the fall, and yellow thread under his fingernails.", ko:"에드워드의 손에는 추락으로 생기지 않은 작은 상처가 있었고, 손톱 밑에 노란 실이 끼어 있었다."} };
+EV.hidden = { id:"hidden", name:{en:"The hidden letter and glove",ko:"숨겨진 편지와 장갑"}, tag:"LETTER",
+  desc:{en:"Behind the picture frame: a folded letter signed by Edward, \"This time, I will not erase anyone's name,\" and a right-hand glove.", ko:"액자 뒤에 접힌 편지와 오른손 장갑 한 짝이 있었다. 에드워드의 서명이 있는 편지에는 \"이번에는 누구의 이름도 지우지 않겠습니다.\"라고 적혀 있다."},
+  note:{en:"Behind the frame: Edward's letter, \"This time, I will not erase anyone's name,\" and a right-hand glove.", ko:"액자 뒤에는 에드워드의 편지와 오른손 장갑이 있었다. 편지에는 \"이번에는 누구의 이름도 지우지 않겠습니다.\"라고 적혀 있다."} };
+EV.button = { id:"button", name:{en:"Brass button, E. BELL",ko:"황동 단추, E. BELL"}, tag:"TRACES",
+  desc:{en:"A small brass button engraved E. BELL.", ko:"E. BELL이라고 새겨진 작은 황동 단추."},
+  note:{en:"A small brass button engraved E. BELL.", ko:"E. BELL이라고 새겨진 작은 황동 단추."} };
 EV.stmt_ck2 = { id:"stmt_ck2", name:{en:"Statement: Oliver, again",ko:"진술: 올리버의 두 번째 증언"}, tag:"STATEMENT",
   desc:{en:"BGB told Oliver he came \"just as the bell rang\" and \"as fast as I could.\" Oliver found him kneeling by Edward, coat buttoned wrong over something, the left tail of his scarf torn short. He heard the handbell at 11:55 on his way back.", ko:"빅그베는 올리버에게 \"종이 울리자마자\", \"최대한 빨리 왔어요\"라고 말했다. 올리버가 왔을 때 빅그베는 에드워드 곁에 무릎을 꿇고 있었고, 외투 단추는 무언가를 가린 채 엇갈려 있었고, 왼쪽 목도리 끝은 짧게 찢겨 있었다. 올리버는 돌아오는 길에 자정 5분 전에 손종 소리를 들었다."},
   note:{en:"Oliver: BGB said he came just as the bell rang. He was kneeling by Edward, his coat buttoned wrong over something, his left scarf tail torn short. The handbell rang at 11:55.", ko:"올리버: 빅그베는 종이 울리자마자 왔다고 했다. 그는 에드워드 곁에 무릎을 꿇고 있었고, 외투 단추가 무언가를 가린 채 엇갈려 있었고, 왼쪽 목도리 끝이 짧게 찢겨 있었다. 손종은 자정 5분 전에 울렸다."} };
@@ -1352,6 +1386,12 @@ function showEndE(n){ const k = lang==="ko", E = ENDINGS[n]; mode = "modal"; set
   $("eEy").textContent = E[k?"ko":"en"][0]; $("eH").textContent = E[k?"ko":"en"][1]; $("eP1").textContent = E.p1[k?"ko":"en"]; $("eP2").textContent = E.p2[k?"ko":"en"];
   NEXTK = 77; const nx = $("eNext"); nx.style.display = ""; nx.textContent = k?"다른 선택을 해 본다":"Choose differently";
   $("eCred").style.display = ""; $("eCred").textContent = k?"감사의 말":"Credits"; $("eBack").textContent = k?"계속 둘러보기":"Keep exploring"; $("endcard").classList.add("on"); save(); }
+function showFinal(k){ const K = lang==="ko"; mode = "modal"; setf("fin.end"); setf("end"+k);
+  $("eEy").textContent = k===1 ? (K?"엔딩 A":"ENDING A") : (K?"엔딩 B":"ENDING B");
+  $("eH").textContent = k===1 ? (K?"남겨진 기록":"The Record That Remained") : (K?"좋은 사람":"A Good Person");
+  $("eP1").textContent = K?"끝":"THE END"; $("eP2").textContent = K?"\u201c좋은 사람에 대한 기억이지.\u201d":"\u201cIt's the memory of a good person.\u201d";
+  NEXTK = 88; const nx = $("eNext"); nx.style.display = ""; nx.textContent = K?"다른 선택을 해 본다":"Choose differently";
+  $("eCred").style.display = ""; $("eCred").textContent = K?"감사의 말":"Credits"; $("eBack").textContent = K?"계속 둘러보기":"Keep exploring"; $("endcard").classList.add("on"); holdHint = false; save(); }
 function replayChoice(){ $("endcard").classList.remove("on"); S.flags["c7.done"] = false; mode = "play"; startDlg("cc0"); }
 function startCh7(){ setf("c7.on"); $("endcard").classList.remove("on"); chapterIntro(7, ()=>setSceneNow("mill", 1400)); }
 
@@ -1365,7 +1405,7 @@ let IA = [
   { id:"gather", x:()=>2150, label:UI.toGather, top:640, when:()=>has("c7.rec"), run:()=>startGather() },
   { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 1850); } },
   { id:"heal",   x:()=>1770,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 2030); } },
-  { id:"mill",   x:()=>4752,      label:UI.toMill, top:690,            run:()=>{ const g = ch2Gate() || (!has("c6.on") ? "mill3" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
+  { id:"mill",   x:()=>4752,      label:UI.toMill, top:690,            run:()=>{ const g = ch2Gate() || (!has("fin.on") ? "mill3" : null); if (g){ gateMsg(g); return; } if (!has("fin.m1")){ afterDlg = ()=>setScene("mill", 520); startDlg("mill_d"); return; } setScene("mill", 520); } },
   { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>startDlg(tmNode()) },
   { id:"post",   x:()=>1236,      label:UI.lPost,  top:660,   when:()=>has("c6.on"),   run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } inspect("patrol"); } },
   { id:"ck",     x:()=>NPCX.ck,   label:UI.talkCk, top:FEET-CK_H-150,   run:()=>startDlg(ckNode()) },
@@ -1410,11 +1450,13 @@ D.f4no = {sp:"kid", ex:"neutral", t:{ko:"동생 목도리부터 봐 줘야겠어
 const IA_FT = [];
 const IA_H = [
   { id:"hexit", x:()=>2131, label:UI.leaveH, top:430, run:()=>setScene("village", 1770) },
-  { id:"hl",    x:()=>1591, label:UI.talkHl, top:FEET_T-175-150, run:()=>startDlg(has("c6.on") ? (has("c6.hl") ? "hl9" : "hl0") : (has("may.done") ? "may9" : "may0")) }
+  { id:"hl",    x:()=>1591, label:UI.talkHl, top:FEET_T-175-150, run:()=>startDlg(has("fin.on") ? (has("fin.s4") && !has("fin.may2") ? "may2" : "may9") : (has("may.done") ? "may9" : "may0")) }
 ];
 const IA_M = [
   { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 4700) },
-  { id:"bag",  x:()=>1160, label:UI.lBag, top:640, when:()=>has("c6.on"), run:()=>inspect("bread") },
+  { id:"mscarf", x:()=>800, label:UI.lOldScarf, top:600, run:()=>startDlg("mo_sc") },
+  { id:"mglove", x:()=>1000, label:UI.lGlove, top:620, run:()=>startDlg("mo_gl") },
+  { id:"mdoc", x:()=>1300, label:UI.lTorn, top:620, run:()=>startDlg("mo_doc") },
   { id:"gr",   x:()=>NPCX_M.gr, label:UI.talkGr, top:FEET_T-GR_H-150, run:()=>startDlg(grNode()) }
 ];
 const IA_P = [
@@ -1422,8 +1464,8 @@ const IA_P = [
   { id:"pbook",  x:()=>770,  label:UI.lBook,   top:470, run:()=>startDlg("p_b") },
   { id:"pstove", x:()=>1530, label:UI.lStove,  top:580, run:()=>startDlg("p_s") },
   { id:"pkettle",x:()=>1585, label:UI.lKettle, top:470, run:()=>startDlg("p_k") },
-  { id:"frame", x:()=>1198, label:UI.lFrame, top:290, run:()=>startDlg((has("c6.on") && !homeGate()) ? (has("c6.hid") ? "p6_f9" : "p6_f0") : has("pro.frame") ? "p_f9" : "p_f0") },
-  { id:"pdoor", x:()=>1957, label:UI.lDoor,  top:430, run:()=>{ if (has("c6.on")){ setScene("village", 640); return; } if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
+  { id:"frame", x:()=>1198, label:UI.lFrame, top:290, run:()=>startDlg((has("fin.on") && has("fin.may2")) ? (has("fin.frame") ? "fr9" : "fr6") : has("pro.frame") ? "p_f9" : "p_f0") },
+  { id:"pdoor", x:()=>1957, label:UI.lDoor,  top:430, run:()=>{ if (has("pro.done")){ setScene("village", 640); return; } if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
 ];
 let PRO_GO = false;
 const IA_C = [
@@ -1452,7 +1494,7 @@ Object.assign(D, {
 });
 
 /* top-left plate: shows the current chapter number and name */
-function curChapter(){ return S.flash === 5 ? 5 : S.flash ? 4 : has("c7.on") ? 7 : has("c6.on") ? 6 : has("f5.past") ? 5 : has("dd02") ? 3 : has("q1") ? 2 : has("pro.done") ? 1 : 0; }
+function curChapter(){ return S.flash === 5 ? 5 : S.flash ? 4 : has("fin.on") ? 6 : has("c7.on") ? 7 : has("c6.on") ? 6 : has("f5.past") ? 5 : has("dd02") ? 3 : has("q1") ? 2 : has("pro.done") ? 1 : 0; }
 let plateKey = "";
 function updatePlate(){
   const n = curChapter(), k = lang === "ko", key = n + lang;
@@ -1471,6 +1513,15 @@ function nextHint(){
     return L("경고 종 레버를 살펴보자. 오른쪽 시계탑 옆이야.","Go look at the warning bell lever, over by the clock tower on the right.");
   }
   if (!has("pro.done")) return !has("pro.frame") ? L("선반 위의 사진부터 보자.","Look at the photograph on the shelf first.") : L("이제 오른쪽 문으로 나가자.","Now out through the door on the right.");
+  if (has("fin.on")){
+    if (!has("fin.m1")) return L("방앗간으로 가서 형을 만나자. 마을 맨 오른쪽이야.","Go see my brother at the Old Mill, at the far right of the village.");
+    if (!(has("fin.o1") && has("fin.o2") && has("fin.o3"))) return L("방앗간을 조사하자. 목도리, 장갑, 찢어진 서류를 살펴봐.","Look around the mill: the old scarf, the glove and the torn document.");
+    if (!has("fin.s4")) return L("그린에게 다시 말을 걸어 보자.","Talk to Green again.");
+    if (!has("fin.may2")) return L("메이의 진료소에 가 보자. 시계탑 왼쪽 옆이야.","Visit May's clinic, just left of the clock tower.");
+    if (!has("fin.frame")) return L("집으로 돌아가 액자를 살펴보자. 마을 맨 왼쪽이야.","Go home and look at the picture frame, at the far left of the village.");
+    if (!has("fin.last")) return L("방앗간의 그린에게 마지막으로 물어보자.","Ask Green one last question at the Old Mill.");
+    return L("광장의 니니에게 가 보자.","Go to Nini in the square.");
+  }
   if (has("c7.done")) return L("한 가지 결말을 봤어. 다른 선택을 해 보고 싶으면 마을 광장의 니니에게 말을 걸어 봐.","I have seen one ending. To choose differently, talk to Nini in the village plaza.");
   if (has("c7.rec")) return L("마을 사람들이 시계탑 앞 광장에 모여 있어. 그리로 가자.","The village is gathering at the tower plaza. Let's go there.");
   if (has("dd09")) return L("시계탑 안, 추 옆의 상자를 열어 보자.","Open the case next to the pendulum in the tower.");
@@ -1539,7 +1590,7 @@ const DD02 = { en:"Someone in a scarf crossed the bridge at 11:35 and climbed th
 function checkDeduce(){
   CON.forEach(c=>{ if (c.on() && !S.flags["con."+c.id]){ S.flags["con."+c.id] = true; addNote(c.t); toast((lang==="ko"?"모순 발견":"Contradiction found")); } });
   if (has("dd02") && has("mol.bell") && ["ar.rep","ar.req","ar.shelf","ar.drawer","ar.note"].every(has) && !has("c3.q")){ setf("c3.q"); holdHint = true; setTimeout(()=>whenPlay(()=>endMono("dq0", startFlash)), 1200); }
-  if (has("f5.past") && has("hz5.night") && has("may.done") && !has("f5.done")){ setf("f5.done"); holdHint = true; addNote({en:"The records were changed after the flood. Edward signed. BGB left the café at 11:42, and May puts Edward's death between 11:55 and 12:15.", ko:"홍수 뒤 기록이 바뀌었고 에드워드는 서명했다. 빅그베는 11시 42분에 카페를 나왔고, 메이는 에드워드의 사망 시각을 11시 55분에서 12시 15분 사이로 본다."}); setTimeout(()=>whenPlay(()=>endMono("f5_end", ()=>{ setf("c6.on"); chapterIntro(6, ()=>setSceneNow("village", 4500), ()=>{ holdHint = false; startDlg("ci6_0"); }); })), 1200); }
+  if (has("f5.past") && has("hz5.night") && has("may.done") && !has("f5.done")){ setf("f5.done"); holdHint = true; addNote({en:"The records were changed after the flood. Edward signed. BGB left the café at 11:42, and May puts Edward's death between 11:55 and 12:15.", ko:"홍수 뒤 기록이 바뀌었고 에드워드는 서명했다. 빅그베는 11시 42분에 카페를 나왔고, 메이는 에드워드의 사망 시각을 11시 55분에서 12시 15분 사이로 본다."}); setTimeout(()=>whenPlay(()=>endMono("f5_end", ()=>{ setf("fin.on"); chapterIntro(6, ()=>setSceneNow("village", 4500), ()=>{ holdHint = false; }); })), 1200); }
   if (S.ev.includes("clock") && S.ev.includes("hatch2") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
   if (has("c1.found") && has("tm.stmt") && !S.flags.q1){ S.flags.q1 = true; S.flags["ch.2"] = true; holdHint = true; addNote({en:"Tommy found Edward during his early-morning patrol. At 11:35 the previous night, he saw a scarfed figure heading toward the clock tower. Their identity remains unknown.", ko:"토미는 새벽 순찰 중 에드워드를 발견했다. 전날 밤 11시 35분에는 목도리를 한 인물이 시계탑으로 향하는 모습을 목격했다. 그 인물이 누구인지는 알 수 없다."}); setTimeout(()=>whenPlay(()=>endMono("c1_end", ()=>chapterIntro(2, ()=>setSceneNow("village", 1950)))), 1500); }
   if (has("q1") && has("ck.bear") && ["clock","mech","hatch2","pwatch"].every(e=>S.ev.includes(e)) && !S.flags.dd02){ S.flags.dd02 = true; S.flags["ch.3"] = true; holdHint = true; addNote(DD02); addNote({en:"Someone went up the tower, and not long after, the clock stopped. The cracked pocket watch still ticks. The maintenance hatch was open.", ko:"누군가 탑에 올라갔고 얼마 지나지 않아 시계가 멈췄다. 깨진 회중시계는 계속 움직이고 있다. 정비구는 열려 있었다."}); setTimeout(()=>whenPlay(()=>endMono("c2_end", ()=>chapterIntro(3, ()=>setSceneNow("village", 2150)))), 1500); }
@@ -1616,7 +1667,7 @@ function showChoices(){
 }
 function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.bye) menuFollow = null; else if (c.go) menuFollow = (cur === "followUp") ? menuFollow : (n.ch.some(x=>x.bye||!x.go) ? cur : null); else menuFollow = null; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
   setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
-function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); holdHint = true; setTimeout(()=>endMono("ce7_"+en+"_0", ()=>showEndE(en)), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.fx === "rain") $("rain").classList.add("on"); if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
+function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); holdHint = true; setTimeout(()=>endMono("ce7_"+en+"_0", ()=>showEndE(en)), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.fx === "rain") $("rain").classList.add("on"); if (/^theend[12]$/.test(n.fx||"")){ const fe = +n.fx.slice(6); holdHint = true; setTimeout(()=>showFinal(fe), 900); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(fromClick){
   if (performance.now() < dlgLock) return;
   if (fromClick && D[cur] && D[cur].ch && !typing && pgi >= pgs.length - 1) return;   /* a click never picks an answer; choose with the buttons, 1/2 or arrows + E */
@@ -1660,11 +1711,11 @@ function whenPlay(fn){ const t = setInterval(()=>{ if (mode === "play"){ clearIn
 /* Chapter 6 routing: which line a person or object gives now */
 const towerDone = () => ["ck.clk","ck.mech","ck.hatch","ck.pw"].every(has);
 const ckNode = () => has("c6.turn") && !has("stmt_ck2") ? "ck6_0" : has("c6.turn") ? "ck6_9" : !has("q1") ? talk("ck") : !has("c2.met") ? "oka" : (has("ck.bear") && towerDone()) ? "okm2" : "okm";
-const grNode = () => has("c7.green") ? "g7_9" : has("c7.on") ? "g7_0" : !has("c6.on") ? "c6_wait" : !has("dd04") ? "c6_wait" : !has("gr.admit") ? "g6_0" : !has("c6.hl") ? "g6_h" : !has("c6.turn") ? "g6_t0" : "g6_9";
+const grNode = () => !has("fin.on") ? "c6_wait" : (has("fin.o1") && has("fin.o2") && has("fin.o3") && !has("fin.s4")) ? "gs4" : (has("fin.frame") && !has("fin.last")) ? "gl7" : "gm";
 const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : !has("c6.on") ? (has("f5.past") ? (has("hz5.met") ? "hz5" : "hz50") : talk("hz")) : has("hz.done") && has("hz.pm") ? talk("hz") : has("hz.met") ? "h9" : "h0";
 const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : !has("c6.on") ? (has("tmn.met") ? "tmn" : "tmn0") : has("tm.stmt") && has("tm.pm") ? talk("tm") : has("tm.met") ? "tm9" : "tm0";
-const niniNode = () => has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : !has("dd02") ? (has("nin.met") ? "nin" : "nin0") : talk("nini");
-const homeGate = () => !has("c6.on") ? "home0" : !has("c6.turn") ? "home1" : (missing(["report","wool","patrol2","handbell","melt"]).length ? "homeK" : null);
+const niniNode = () => has("fin.last") ? (has("fin.end") ? "fn_ch" : "fn0") : has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : !has("dd02") ? (has("nin.met") ? "nin" : "nin0") : talk("nini");
+const homeGate = () => !has("fin.on") ? "home00" : !has("fin.may2") ? "home0" : null;
 const healGate = () => !has("c6.on") ? (has("f5.past") ? null : "heal0") : !has("dd06") ? "heal1" : null;
 
 function gateMsg6(k){
@@ -1691,7 +1742,8 @@ const GATE_T = {
 };
 function gateMsg(k){ D.gate = {sp:"bgb", ex:"thinking", t:GATE_T[k]}; startDlg("gate"); }
 Object.assign(GATE_T, {
-  home0:{ko:"아직 이곳은 들어갈 수 없다. 에드워드의 일에 대해 시계지기 올리버와 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Clockkeeper Oliver about what happened to Edward."},
+  home00:{ko:"아직 이곳은 들어갈 수 없다. 에드워드의 죽음에 대해 마을 사람들과 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with the villagers about Edward's death."},
+  home0:{ko:"아직 이곳은 들어갈 수 없다. 에드워드의 손에 대해 메이와 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with May about Edward's hand."},
   home1:{ko:"아직 이곳은 들어갈 수 없다. 에드워드가 쓰러진 순간에 대해 Green과 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Green about the moment Edward fell."},
   heal0:{ko:"아직 이곳은 들어갈 수 없다. 에드워드의 마지막 모습에 대해 헤이즐과 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Hazel about Edward's last night."},
   heal1:{ko:"아직 이곳은 들어갈 수 없다. 에드워드가 쓰러진 순간에 대해 Green과 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Green about the moment Edward fell."}
@@ -1794,7 +1846,7 @@ function showEnd(){ $("eCred").style.display = "none"; const k = lang==="ko"; mo
   $("eP1").textContent = k?"두 장의 사진을 맞춰 보려는 순간, 사진 속 기억이 빅그베의 눈앞으로 밀려온다.":"As BGB lines the two photographs up, the memory inside them pulls at him.";
   $("eP2").textContent = k?"사진 속으로 들어갈 수 있습니다. 4장은 임시 그림으로 먼저 만들었습니다.":"You can step into the photograph. Chapter 4 is built with placeholder art."; NEXTK = 4; const nx = $("eNext"); nx.style.display = ""; nx.textContent = k?"사진 속으로":"Step into the photograph"; $("eBack").textContent = tr(UI.back); $("endcard").classList.add("on"); }
 $("eBack").onclick = ()=>{ if (S.flash){ endFlash(); return; } $("endcard").classList.remove("on"); mode = "play"; stage.focus(); };
-$("eNext").onclick = ()=>{ if (NEXTK === 77) replayChoice(); else if (NEXTK === 7) startCh7(); else if (NEXTK === 5) startFlash5(); else startFlash(); };
+$("eNext").onclick = ()=>{ if (NEXTK === 88){ $("endcard").classList.remove("on"); mode = "play"; startDlg("fn_ch"); } else if (NEXTK === 77) replayChoice(); else if (NEXTK === 7) startCh7(); else if (NEXTK === 5) startFlash5(); else startFlash(); };
 
 /* case file */
 let tab = 0, selEv = null, sub = false, PV = false, evPage = 0;
@@ -2007,23 +2059,17 @@ function skipTo(n){
   if (n === 2) chapterIntro(2, ()=>setSceneNow("village", 2150));
   else if (n === 3) chapterIntro(3, ()=>setSceneNow("village", 3050));
   else if (n === 4){ setSceneNow("mill", 1400); startFlash(); }
-  else if (n === 7 || n === 77){
-    qFlags(["f4.ed","f4.gate","f4.lever","f4.end","f4.shown","f5.free","f5.bell","f5.left","f5.ear","f5.sc","f5.tower","f5.ed","f5.end","f5.shown","c6.on","dd04","gr.admit","c6.hl","c6.turn","c6.hid","c6.k1","c6.k2","c6.k3","c6.k4","c6.k5","c6.k6","dd05","dd12","c6.d","c6.fin","c6.shown"]);
-    S.resp = ["Green","BGB","BGB"]; qEv(["acct_gr","report","watch","pit","stmt_ck2","wool","patrol2","walk","hide","glove","letter"]); checkDeduce();
-    if (n === 7){ setSceneNow("mill", 1400); startCh7(); }
-    else { qFlags(["c7.on","c7.green","dd09","c7.rec"]); qEv(["motive","record"]); checkDeduce(); setSceneNow("village", 1950); toast(lang==="ko"?"연출 모드: 7장 마을 모임":"Director: Chapter 7 gathering"); }
-  }
-  else if (n === 6 || n === 66){
-    qFlags(["f4.ed","f4.gate","f4.lever","f4.end","f4.shown","f5.free","f5.bell","f5.left","f5.ear","f5.sc","f5.tower","f5.ed","f5.end","f5.shown","c6.on"]); S.ret = { scene:"archive", x:1500 };
-    if (n === 66){ qFlags(["dd04","gr.admit","c6.hl","c6.turn"]); qEv(["acct_gr","report","watch"]); checkDeduce(); setSceneNow("village", 1400); toast(lang==="ko"?"연출 모드: 6장 결론 파트":"Director: Chapter 6 conclusions"); }
-    else { setSceneNow("archive", 1500); chapterIntro(6, null, ()=>startDlg("pf_end")); }
+  else if (n === 6 || n === 66 || n === 7 || n === 77){
+    qFlags(["f4.end","f4.shown","f5.toPresent","f5.shown","f5.past","hz5.met","hz5.night","may.done","f5.done","fin.on"]); qEv(["receipt","tod"]);
+    if (n === 66 || n === 77){ qFlags(["fin.m1","fin.o1","fin.o2","fin.o3","fin.s4","fin.may2","fin.frame","fin.last"]); qEv(["tdoc","thread","hidden"]); setSceneNow("village", 1100); toast(lang==="ko"?"연출 모드: 6장 마지막 선택":"Director: Chapter 6 final choice"); }
+    else chapterIntro(6, ()=>setSceneNow("village", 4500));
   }
   else if (n === 5){ S.ret = { scene:"mill", x:1400 }; SKIP_STEPS[4](); qFlags(["f4.ed","f4.gate","f4.lever","f4.end","f4.shown"]); NEXTK = 5; setSceneNow("mill", 1400); startFlash5(); }
 }
 function setDirUi(){
   const on = !!S.dir, k = lang==="ko"; $("pDir").classList.toggle("on", on); $("dirHead").textContent = k ? "연출 모드" : "DIRECTOR MODE";
-  const L = {2:k?"2장으로 건너뛰기":"Skip to Chapter 2", 3:k?"3장으로 건너뛰기":"Skip to Chapter 3", 4:k?"3장 끝, 4장으로":"Skip to Chapter 4", 5:k?"5장 홍수의 밤으로":"Skip to Chapter 5", 6:k?"6장 시작으로":"Skip to Chapter 6", 66:k?"6장 결론 파트로":"Skip to Ch.6 conclusions", 7:k?"7장 시작으로":"Skip to Chapter 7", 77:k?"7장 마을 모임으로":"Skip to Ch.7 gathering"};
-  document.querySelectorAll(".dirb").forEach(b=>{ b.textContent = L[b.dataset.skip]; });
+  const L = {2:k?"2장으로 건너뛰기":"Skip to Chapter 2", 3:k?"3장으로 건너뛰기":"Skip to Chapter 3", 4:k?"3장 끝, 4장으로":"Skip to Chapter 4", 5:k?"5장 좋은 사람으로":"Skip to Chapter 5", 6:k?"6장 시작으로":"Skip to Chapter 6", 66:k?"6장 마지막 선택으로":"Skip to the final choice", 7:k?"7장 시작으로":"Skip to Chapter 7", 77:k?"7장 마을 모임으로":"Skip to Ch.7 gathering"};
+  document.querySelectorAll(".dirb").forEach(b=>{ b.textContent = L[b.dataset.skip]; b.style.display = (b.dataset.skip==="7" || b.dataset.skip==="77") ? "none" : ""; });
   $("pCode").placeholder = k ? "코드" : "Code";
 }
 function tryCode(){
