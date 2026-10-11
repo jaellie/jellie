@@ -242,6 +242,7 @@ And the **mirror to the Ch.5 rescue:** the elder saved the younger in the flood;
 **Narrator Rule 🟡:** Game narration, Notes-tab text, and system messages **never state a falsehood.** BGB's *spoken* lines may be evasive, but never a lie the player can't later see as an omission. The unreliable part of BGB is what he **doesn't say**, never what the game **tells** the player. (This is what keeps the twist fair.)
 
 **Text style rule 🔒:** no em dashes in player-facing text, in English or Korean (use a comma, a colon, a period or a new sentence). This applies to dialogue, notes, popups, labels and endings. (Design notes in this document may still use them.)
+**Korean speech-level rule 🔒:** one register per speaker, never mixed inside a character. 빅그베: 해요체 (존댓말) to adults (올리버, 헤이즐, 토미, 몰리 할머니), 해체 (반말) to 니니 and Green, and 해체 for his own thoughts. 니니: 해요체. 올리버, 토미: 합쇼체 (-습니다/-십시오). 헤이즐: 해요체, warm. 몰리 할머니, Green: 해체 (반말).
 **Naming rule 🔒:** player-facing text names people as **role + name** the first time and in labels (Clockkeeper Oliver / 시계지기 올리버, Café owner Hazel / 카페 주인 헤이즐, Night Guard Tommy / 야간 경비 토미, Old badger Molly / 몰리 할머니). Never a bare role such as "the Night Guard's log"; write "Night Guard Tommy's patrol log" (야간 경비 토미의 순찰 일지).
 
 ---

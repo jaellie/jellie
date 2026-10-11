@@ -530,7 +530,7 @@ EV.photo2 = { id:"photo2", name:{en:"The second photograph",ko:"두 번째 사�
   desc:{en:"A photograph from Edward's drawer: the same two cubs, both ears whole, their scarf knots clearly visible. On the back, in Edward's hand: \"Big Green Bear (right) and Green.\"", ko:"에드워드의 서랍에서 나온 사진. 같은 두 아기 곰, 두 귀 모두 멀쩡하고 목도리 매듭이 또렷하다. 뒷면에 에드워드의 글씨: \"큰 초록 곰(오른쪽)과 그린.\""},
   note:{en:"Edward's drawer holds a second photograph of the cubs. Both ears whole; the caption names them.", ko:"에드워드의 서랍에 아기 곰들의 또 다른 사진이 있다. 두 귀 모두 멀쩡하고, 뒷면에 이름이 적혀 있다."} };
 EV.stmt_ck = { id:"stmt_ck", name:{en:"Statement: Oliver",ko:"진술: 올리버"}, tag:"STATEMENT", note:null,
-  desc:{en:"Clockkeeper Oliver: \"Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.\"", ko:"시계지기 올리버: \"어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠.\""} };
+  desc:{en:"Clockkeeper Oliver: \"Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.\"", ko:"시계지기 올리버: \"어젯밤, 열한 시 사십 분쯤이었습니다. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었습니다.\""} };
 EV.stmt_hz = { id:"stmt_hz", name:{en:"Statement: Hazel",ko:"진술: 헤이즐"}, tag:"STATEMENT", note:null,
   desc:{en:"Café owner Hazel: \"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.\"", ko:"카페 주인 헤이즐: \"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠.\""} };
 EV.stmt_nini = { id:"stmt_nini", name:{en:"Statement: Nini",ko:"진술: 니니"}, tag:"STATEMENT", note:null,
@@ -539,7 +539,7 @@ EV.photo_home = { id:"photo_home", name:{en:"The photograph (home copy)",ko:"사
   desc:{en:"A worn photograph of two small cubs in scarves, standing close. The frame is old and deep, and it leans on the shelf instead of hanging.", ko:"목도리를 두른 두 아기 곰이 나란히 선 낡은 사진. 액자는 오래되고 깊어서, 걸려 있지 않고 선반에 기대어 서 있다."},
   note:{en:"BGB keeps a worn photograph of two cubs on his shelf.", ko:"빅그베는 선반에 두 아기 곰이 찍힌 낡은 사진을 두고 있다."} };
 EV.stmt_tm = { id:"stmt_tm", name:{en:"Statement: Tommy",ko:"진술: 토미"}, tag:"STATEMENT", note:null,
-  desc:{en:"Night Guard Tommy: \"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.\"", ko:"야간 경비 토미: \"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 뒀죠. 뒷모습만 봤습니다.\""} };
+  desc:{en:"Night Guard Tommy: \"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.\"", ko:"야간 경비 토미: \"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 두었습니다. 뒷모습만 봤습니다.\""} };
 EV.stmt_gr = { id:"stmt_gr", name:{en:"Statement: Green",ko:"진술: Green"}, tag:"STATEMENT", note:null,
   desc:{en:"Green, at the Old Mill: \"I was at home all night, chipping ice off the wheel. I was not at the tower. Ask yourself what you remember.\"", ko:"방앗간의 Green: \"밤새 집에서 물레바퀴의 얼음을 깼어. 탑에는 가지 않았어. 네 기억을 떠올려 봐.\""} };
 EV.boots = { id:"boots", name:{en:"Footprints on the stairs",ko:"계단의 발자국"}, img:"ev_boot_prints", tag:"TRACES",
@@ -570,13 +570,13 @@ const D = {
  n2c:{sp:"nini", ex:"neutral", t:{en:"I know. Hazel told everyone. That's why they want you to look into it.", ko:"알아요. 헤이즐 아주머니가 다 말했어요. 그래서 다들 아저씨가 조사해 주길 바라는 거예요."}, next:"n3"},
  n3:{sp:"nini", ex:"worried", t:{en:"Please look at the clock. It stopped at eleven forty-seven, and nobody can tell me what that means.", ko:"아저씨, 시계를 봐 주세요. 열한 시 사십칠 분에 멈췄는데, 그게 무슨 뜻인지 아무도 말해 주지 못해요."}, set:"nini.done"},
  n9:{sp:"nini", ex:"neutral", t:{en:"I'll stay here with the others. Tell me what you find.", ko:"저는 다른 분들과 여기 있을게요. 아저씨가 알아내시면 말해 주세요."}},
- c0:{sp:"ck", ex:"neutral", t:{en:"Mm. Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.", ko:"음. 어젯밤, 열한 시 사십 분쯤이었어요. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었죠."}, set:"ck.bear", note:"bear", ev:"stmt_ck",
+ c0:{sp:"ck", ex:"neutral", t:{en:"Mm. Last night, around eleven forty. I saw a bear climbing these stairs. He was carrying something in his right hand.", ko:"음. 어젯밤, 열한 시 사십 분쯤이었습니다. 곰이 이 계단을 올라가는 걸 봤습니다. 오른손에 무언가를 들고 있었습니다."}, set:"ck.bear", note:"bear", ev:"stmt_ck",
    ch:[{t:{en:"Is the tower clock reliable?",ko:"이 탑시계는 믿을 만한가요?"},go:"c1"},{t:{en:"(Glance at your own hands.)",ko:"(자신의 손을 내려다본다.)"},go:"c2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]},
- c2:{sp:"bgb", ex:"thinking", t:{en:"My notebook is in my left hand, the way it always is.", ko:"공책은 늘 그렇듯 왼손에 들려 있다."}, set:"c2", note:"hand", next:null},
- c1:{sp:"ck", ex:"thinking", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았죠."}, set:"ck.watch", note:"watch"},
- c9:{sp:"ck", ex:"neutral", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보세요. 시계는 어디 안 갑니다."}}
+ c2:{sp:"bgb", ex:"thinking", t:{en:"My notebook is in my left hand, the way it always is.", ko:"공책은 늘 그렇듯 왼손에 들려 있어."}, set:"c2", note:"hand", next:null},
+ c1:{sp:"ck", ex:"thinking", t:{en:"Mm. I wind it every evening. I set Edward's pocket watch by it each morning, so the two never differ by a minute.", ko:"음. 저녁마다 태엽을 감습니다. 에드워드 씨의 회중시계도 매일 아침 이 시계에 맞추니, 둘은 일 분도 어긋나지 않았습니다."}, set:"ck.watch", note:"watch"},
+ c9:{sp:"ck", ex:"neutral", t:{en:"Mm. Take your time with it. The clock isn't going anywhere.", ko:"음. 천천히 살펴보십시오. 시계는 어디 안 갑니다."}}
 };
-D.p_f0 = {sp:"bgb", ex:"thinking", t:{en:"He always looked out for me.", ko:"그분은 늘 나를 챙겨 주셨다."}, ev:"photo_home", next:"p_f1"};
+D.p_f0 = {sp:"bgb", ex:"thinking", t:{en:"He always looked out for me.", ko:"그분은 늘 나를 챙겨 주셨어."}, ev:"photo_home", next:"p_f1"};
 D.p_f1 = {sp:"bgb", ex:"worried", t:{en:"Leave it.", ko:"그냥 두자."}, set:"pro.frame", next:null};
 D.p_f9 = {sp:"bgb", ex:"neutral", t:{en:"Not now.", ko:"지금은 아니야."}};
 D.p_n0 = {sp:"nini", ex:"worried", t:{en:"It's me, Nini. Edward is gone, and everyone is gathering at the tower.", ko:"저예요, 니니. 에드워드 아저씨가 돌아가셨어요. 다들 탑 앞에 모여 있어요."}, next:"p_n1"};
@@ -601,9 +601,9 @@ D.gr5 = {sp:"gr", ex:"neutral", t:{en:"Ask yourself what you remember.", ko:"네
 D.gr9 = {sp:"gr", ex:"neutral", t:{en:"I have said it already. Ask yourself what you remember.", ko:"이미 말했어. 네 기억을 떠올려 봐."}};
 D.tm0 = {sp:"tm", t:{en:"Evening, Mr. Big Green Bear. I walk this bridge loop every night and keep the log.", ko:"안녕하세요, 빅그린베어 씨. 저는 밤마다 이 다리 둘레를 돌며 일지를 씁니다."},
    ch:[{t:{en:"What did you see last night?",ko:"어젯밤에 뭘 보셨나요?"},go:"tm1"},{t:{en:"Do you mind the tower at night?",ko:"밤에 탑이 거슬리진 않으세요?"},go:"tm2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
-D.tm1 = {sp:"tm", t:{en:"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.", ko:"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 뒀죠. 뒷모습만 봤습니다."}, ev:"stmt_tm", set:"tm.stmt", next:null};
+D.tm1 = {sp:"tm", t:{en:"At eleven thirty five a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.", ko:"열한 시 삼십오 분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 두었습니다. 뒷모습만 봤습니다."}, ev:"stmt_tm", set:"tm.stmt", next:null};
 D.tm2 = {sp:"tm", t:{en:"The winding and the bells keep me awake, I will say that. But I never go in. The tower is not my watch.", ko:"태엽 소리와 종소리가 잠을 설치게 하긴 합니다. 그래도 안에는 들어가지 않습니다. 탑은 제 순찰 구역이 아니니까요."}, next:"tm0"};
-D.tm9 = {sp:"tm", t:{en:"The times are in the log, hanging on the post. Take your time with it.", ko:"시각은 가로등 기둥에 걸린 일지에 있습니다. 천천히 보세요."}};
+D.tm9 = {sp:"tm", t:{en:"The times are in the log, hanging on the post. Take your time with it.", ko:"시각은 가로등 기둥에 걸린 일지에 있습니다. 천천히 보십시오."}};
 D.h0 = {sp:"hz", t:{en:"Mr. Big Green Bear. Terrible business. The whole café has talked of nothing else since the bell.", ko:"빅그린베어 씨. 끔찍한 일이에요. 종이 울린 뒤로 우리 카페는 그 얘기뿐이에요."},
    ch:[{t:{en:"About last night.",ko:"어젯밤 일에 대해서요."},go:"h1"},{t:{en:"Did you know Edward well?",ko:"에드워드 씨를 잘 아셨나요?"},go:"h2"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
 D.h1 = {sp:"hz", t:{en:"You were here until a little before a quarter to twelve. You looked like you were waiting for someone.", ko:"열두 시 십오 분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠."}, note:"hz", set:"hz.stmt", ev:"stmt_hz", next:"h1b"};
@@ -1141,7 +1141,7 @@ addEventListener("resize", fit);
 
 load(); cam = 0; fit(); setSceneNow(["tower","archive","cafe","cottage","mill"].includes(S.scene) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus();
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
-window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV };
+window.__bv = { setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D };
 requestAnimationFrame(frame);
 })();
 </script>
