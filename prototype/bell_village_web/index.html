@@ -1524,7 +1524,7 @@ const grNode = () => has("c7.green") ? "g7_9" : has("c7.on") ? "g7_0" : !has("c6
 const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : has("hz.done") && has("hz.pm") ? talk("hz") : "h0";
 const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : has("tm.stmt") && has("tm.pm") ? talk("tm") : "tm0";
 const niniNode = () => has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done") ? talk("nini") : "n0";
-const homeGate = () => !has("c6.on") ? "home0" : !has("c6.turn") ? "home1" : (!has("c6.k3") ? "homeK" : null);
+const homeGate = () => !has("c6.on") ? "home0" : !has("c6.turn") ? "home1" : (missing(["report","wool","patrol2","handbell","melt"]).length ? "homeK" : null);
 const healGate = () => !has("c6.on") ? "heal0" : !has("dd06") ? "heal1" : null;
 
 function gateMsg6(k){
