@@ -317,21 +317,12 @@ Each chapter lists: **Setting · Playable · Goal · Beats · Evidence · Deduct
 - **Withheld:** Why BGB looked "like he was waiting".
 - **Closing question:** *Is there another bear?*
 
-### CHAPTER 3 — Crossed Traces (엇갈린 흔적; user-renamed from "The Other Bear") 🟡
-- **Setting:** Archive (record room, locked), the village's quiet edge, **Old Mill** (Green). · **Playable:** Yes.
-- **Goal:** Find and confront the second bear.
-- **Beats:**
-  1. Villagers go quiet at a name (**Molly**, the old badger who lived through the flood, is the first to speak, bitterly): *"We don't talk about Green."* Several (Café Owner, **Molly**) give a **biased** account: the bear who "let the bell fail."
-  2. Nini gives BGB the **archive key.** In the record room: the **flood-year register** (EV-12). Edward's drawer: a **second photograph** (EV-13): the same two cubs, different pose.
-  3. Walk to the **Old Mill.** First meeting with **Green:** guarded; the **ear scar** is plainly visible in daylight (witnesses at night, at a distance, could not have seen it); scarf knot on the **right** (⬜ see art note). He is **right-handed** (lifts the kettle with his right). He denies being at the tower. He says: *"Ask yourself what you remember."* (Truth; the player will misread it as a taunt.)
-  4. Back at the archive, BGB reaches for the photograph to compare…
-- **Evidence:** EV-12 Flood-year register (ink of two ages, unread yet), EV-13 Second photograph, EV-15 Rear-tower footprints (wide stride; Old Mill).
-- **Note:** Green's **right hand is bare** in the freezing cold. A link, not proof (the glove itself is hidden at BGB's home, EV-14/EV-31).
-- **Deductions:** DD-03 *The bear on the stairs was right-handed, wore a mustard scarf, and was not BGB.* (Probable, not proven.)
-- **Reveals:** A second bear. Green is the obvious suspect.
-- **Withheld:** The swap. The ink. The scar's origin.
-- **Transition:** Player clicks the photograph. **→ Flashback (§10).**
-- **Closing question:** *Is Green guilty — or did the village decide that long ago?*
+### CHAPTER 3 — The Torn Record (찢어진 기록) 🔒 *(user-approved rewrite, replaces the earlier "The Other Bear" beats)*
+- **Setting:** Village square → the Archive → the village square → the Archive. · **Playable:** Yes.
+- **Beats:** (1) **Nini** gives BGB the desk key (Edward told her not to lose it) and mentions that the bear she saw yesterday walked fast, which is why he did not see her wave (R21 walking line, 🔒). (2) BGB unlocks the **Archive** door with the key. (3) In the desk drawer: an **old ledger and two sealed envelopes** (one addressed to BGB, the other smudged and water-stained). BGB does **not** open them (willful avoidance, consistent with Hard Rule 15). (4) The **red ledger** is clasped; tucked inside the back cover is a **23-years-ago Bell Maintenance Record** ("Related records are to be kept separately by order of the Council", recorded by Edward Bell). (5) The papers on the desk hold **Nini's missing notebook page** ("Red ledger moved? Ask Edward. Tidy the drawer before midnight."): *why is it here?* (open question). (6) **Molly** in the square (BGB uses 존댓말): she avoids the topic, calls Edward stubborn and a good man, and can be shown the maintenance record ("Edward would've known where they are"). (7) Back in the Archive, behind the drawer panels: the **old photograph** of two young bears in scarves, date only on the back. BGB closes the chapter and the photograph pulls him into Chapter 4.
+- **Evidence:** two sealed letters, old bell maintenance record, torn notebook page, old photograph (EV-13, pre-flood), key, flood-year register (optional).
+- **Changes from v1.0:** **Green and the Old Mill are no longer in Chapter 3** (the mill is entered from Chapter 6, where Green first appears on screen). The "right-handed" deduction DD-03 and Green's first statement move to Chapter 6 (DD-06). The two sealed letters in the drawer **replace** "Edward's letter reaches BGB's mailbox at 18:00"; ⬜ **to reconcile in Chapter 6:** the letter to "G." and the glove behind the photograph, and what the smudged letter is.
+- **Closing question:** *What is in the photograph?*
 
 ### CHAPTER 4 — The Name That Was Stolen 🟡 *(PAST, playable)*
 - **Caption:** `23 YEARS EARLIER · BELL VILLAGE`
