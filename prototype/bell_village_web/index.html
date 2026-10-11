@@ -285,6 +285,14 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .card h2{margin:6px 0 14px;font:700 46px/1.1 var(--font-body)}
 .card p{font:400 28px/1.4 var(--font-body);margin:10px 0}
 .card .eyebrow{font:500 18px/1 var(--font-label);letter-spacing:.2em;color:#8a6a3e}
+#pCodeRow{display:flex;gap:10px;justify-content:center;margin:22px auto 0;width:340px}
+#pCode{flex:1;min-width:0;padding:12px 14px;font:600 22px/1 var(--font-body);color:var(--ink);background:#f3e6c8;border:2px solid #8a6a3a;border-radius:8px;outline:none}
+#pCode:focus{border-color:#6e2a35}
+#pCodeGo{padding:0 18px;font:700 20px/1 var(--font-body);color:#f6e3c0;background:#6e2a35;border:0;border-radius:8px;cursor:pointer}
+#pDir{display:none;margin-top:14px;border-top:2px dashed #8a6a3a;padding-top:6px}
+#pDir.on{display:block}
+#pDir .dirhead{font:700 18px/1 var(--font-body);letter-spacing:.2em;color:#6e2a35;text-align:center;margin:8px 0 0}
+#pDir .dirb{min-width:300px;padding:12px 34px;font-size:22px;margin-top:10px}
 .pbtn{display:block;width:fit-content;min-width:340px;margin:14px auto 0;padding:20px 58px;--s:1.25;background:transparent;font:700 28px/1.1 var(--font-body);color:var(--ink);cursor:pointer}
 .pbtn:hover{--img:url(assets/plaque_red_small.webp);color:#f6e3c0}
 #fade{position:absolute;inset:0;background:#02030a;opacity:0;pointer-events:none;transition:opacity .7s;z-index:40}
@@ -446,6 +454,10 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
     <button class="pbtn nine cream" id="pResume">Resume</button>
     <button class="pbtn nine cream" id="pLang">Language: English</button>
     <button class="pbtn nine cream" id="pReset">Restart</button>
+    <div id="pCodeRow"><input id="pCode" type="text" maxlength="16" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Code"><button id="pCodeGo" type="button">OK</button></div>
+    <div id="pDir"><div class="dirhead" id="dirHead">DIRECTOR MODE</div>
+     <button class="pbtn nine cream dirb" data-skip="2"></button><button class="pbtn nine cream dirb" data-skip="3"></button><button class="pbtn nine cream dirb" data-skip="4"></button><button class="pbtn nine cream dirb" data-skip="5"></button>
+    </div>
   </div></div>
   <div id="flv"></div><div id="flcap"></div><div id="rain"></div>
   <div class="modal" id="endcard"><div class="card">
@@ -946,7 +958,7 @@ function checkDeduce(){
   if (S.flags["con.c1"] && S.flags["con.c2"] && !S.flags.dd02){ S.flags.dd02 = true; if (!S.flags["ch.3"] && S.flags["ch.2"]){ S.flags["ch.3"] = true; setTimeout(()=>whenPlay(()=>chapterIntro(3)), 3500); } addNote(DD02); toast((lang==="ko"?"추리 완성":"Deduction")+": "+(lang==="ko"?"곰은 한 마리일 수 없다":"Two bears cannot be one")); }
 }
 function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSON.stringify(n); if (S.notes.some(x=>x.k===key)) return; S.notes.push({k:key, n}); }
-function setLang(l){ lang = l; save(); applyLang(); if (mode==="cf") renderCF(); }
+function setLang(l){ lang = l; save(); applyLang(); setDirUi(); if (mode==="cf") renderCF(); }
 function applyLang(){
   document.documentElement.lang = lang; buildSide(); labelSide();
   $("hudTitle").textContent = tr(UI.case); $("hudLoc").textContent = locOf(S.scene);
@@ -1038,7 +1050,7 @@ function inspect(id){
 }
 
 /* pause */
-function openPause(){ if (mode!=="play") return; mode = "modal"; $("pause").classList.add("on"); $("pResume").focus(); }
+function openPause(){ if (mode!=="play") return; setDirUi(); mode = "modal"; $("pause").classList.add("on"); $("pResume").focus(); }
 function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.focus(); }
 
 /* enter tower */
@@ -1272,14 +1284,47 @@ function openCF(){ if (mode!=="play") return; mode = "cf"; $("cf").classList.add
 function closeCF(){ $("cf").classList.remove("on"); mode = "play"; stage.focus(); }
 $("cfclose").onclick = closeCF; $("bCase").onclick = openCF; $("bSet").onclick = openPause; $("tC").onclick = ()=> mode==="cf"?closeCF():openCF();
 $("bLook").onclick = ()=>{ peek = 6; };
+/* director mode: enter the code, then jump to the start of any built chapter. States are set quietly, the same flags the dialogues set. */
+const DIR_CODE = "jae";
+function qEv(ids){ ids.forEach(id=>{ if (EV[id] && !S.ev.includes(id)){ S.ev.push(id); addNote(EV[id].note); } }); }
+function qFlags(fs){ fs.forEach(f=>S.flags[f] = true); }
+const SKIP_STEPS = {
+  2: ()=>{ qFlags(["pro.done","pro.frame","pro.greet","ck.bear","ck.watch","q1","ch.2"]); qEv(["clock","pendulum","handbell","hatch","boots","notice"]); },
+  3: ()=>{ SKIP_STEPS[2](); qFlags(["c2","hz.stmt","hz.done","hz.pm","hz.owed","tm.stmt","tm.pm","nini.letters","nini.done","dd02","ch.3","con.c1","con.c2","con.c3","dd01"]); qEv(["patrol","receipt","chute","melt","stmt_ck","stmt_hz","stmt_tm","stmt_nini","tab_pm","greet","notebook"]); },
+  4: ()=>{ SKIP_STEPS[3](); qFlags(["nini.key","nini.walk","gr.done","gr.hand","gr.knew","gr.denied","mo.green","mo.told","hz.bread","dd03"]); qEv(["key","photo2","photo_home","register","stmt_gr","bread"]); }
+};
+function skipTo(n){
+  if (S.flash){ S.flash = false; $("stage").classList.remove("flash","flash5"); $("rain").classList.remove("on"); $("endcard").classList.remove("on"); }
+  $("pause").classList.remove("on"); mode = "play"; $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null;
+  if (n >= 2) SKIP_STEPS[Math.min(n,4)]();
+  checkDeduce(); save(); refreshHud();
+  if (n === 2){ setSceneNow("village", 2700); toast(lang==="ko"?"연출 모드: 2장 시작 (1장 완료)":"Director: start of Chapter 2 (Chapter 1 done)"); }
+  else if (n === 3){ setSceneNow("village", 4100); toast(lang==="ko"?"연출 모드: 3장 시작 (2장 완료)":"Director: start of Chapter 3 (Chapter 2 done)"); }
+  else if (n === 4){ setSceneNow("mill", 1400); showEnd(); }
+  else if (n === 5){ S.ret = { scene:"mill", x:1400 }; SKIP_STEPS[4](); qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown"]); NEXTK = 5; setSceneNow("mill", 1400); startFlash5(); }
+}
+function setDirUi(){
+  const on = !!S.dir, k = lang==="ko"; $("pDir").classList.toggle("on", on); $("dirHead").textContent = k ? "연출 모드" : "DIRECTOR MODE";
+  const L = {2:k?"2장으로 건너뛰기":"Skip to Chapter 2", 3:k?"3장으로 건너뛰기":"Skip to Chapter 3", 4:k?"3장 끝, 4장으로":"Skip to Chapter 4", 5:k?"5장 홍수의 밤으로":"Skip to Chapter 5"};
+  document.querySelectorAll(".dirb").forEach(b=>{ b.textContent = L[b.dataset.skip]; });
+  $("pCode").placeholder = k ? "코드" : "Code";
+}
+function tryCode(){
+  const v = $("pCode").value.trim().toLowerCase(); $("pCode").value = ""; if (!v) return;
+  if (v === DIR_CODE){ S.dir = !S.dir; save(); setDirUi(); toast(S.dir ? (lang==="ko"?"연출 모드 켜짐":"Director mode on") : (lang==="ko"?"연출 모드 꺼짐":"Director mode off")); }
+  else toast(lang==="ko"?"알 수 없는 코드":"Unknown code");
+}
+$("pCodeGo").onclick = tryCode; $("pCode").addEventListener("keydown", e=>{ if (e.key === "Enter"){ e.preventDefault(); tryCode(); } });
+document.querySelectorAll(".dirb").forEach(b=>{ b.onclick = ()=>skipTo(+b.dataset.skip); });
 $("pResume").onclick = closePause; $("pLang").onclick = ()=>setLang(lang==="en"?"ko":"en");
-$("pReset").onclick = ()=>{ try{ localStorage.removeItem(SAVE_KEY);}catch(e){} S = {x:700,flags:{},ev:[],notes:[],lang,scene:"cottage"}; setSceneNow("cottage", 700); closePause(); toast(lang==="ko"?"처음부터 다시 시작":"Restarted"); };
+$("pReset").onclick = ()=>{ try{ localStorage.removeItem(SAVE_KEY);}catch(e){} S = {x:700,flags:{},ev:[],notes:[],lang,scene:"cottage",dir:S.dir}; setSceneNow("cottage", 700); closePause(); toast(lang==="ko"?"처음부터 다시 시작":"Restarted"); };
 
 /* ---------- input ---------- */
 function hideHintNow(){ const h = $("hint"); h.classList.add("instant"); h.classList.remove("on"); }
 function act(){ if (mode==="dlg") advance(); else if (mode==="play" && near){ hideHintNow(); near.run(); } }
 window.addEventListener("keydown", e=>{
   const k = e.key;
+  if (e.target && e.target.tagName === "INPUT"){ if (k === "Escape") closePause(); return; }
   if (["ArrowLeft","ArrowRight","Tab"," "].includes(k)) e.preventDefault();
   if (k==="Tab"){ if (mode==="cf") closeCF(); else openCF(); return; }
   if (k==="Escape"){ if (mode==="cf") closeCF(); else if (mode==="modal" && $("pause").classList.contains("on")) closePause(); else if (mode==="modal" && $("inspect").classList.contains("on")) $("iClose").click(); else if (mode==="play") openPause(); return; }
