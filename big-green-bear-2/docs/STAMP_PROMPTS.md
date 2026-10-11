@@ -22,29 +22,20 @@ ELEMENT: the same stamp impression as the style lock but with NO text at all ins
 ## 4. Game stamps: English and Korean
 Paste the STAMP STYLE LOCK first, then one block below. For Korean add the sentence: "The text is Korean Hangul, written exactly as given, in a heavy bold serif or gothic brush-cut style, each syllable block clear and fully spelled, no extra strokes, no mixed-up vowels."
 
-| ID | English text | Korean text | Where it appears |
-|---|---|---|---|
-| `stamp_archived` | ARCHIVED | 보관됨 | old files, closed records |
-| `stamp_confidential` | CONFIDENTIAL | 기밀 | Edward's records |
-| `stamp_reviewed` | REVIEWED | 검토 완료 | statements you have read |
-| `stamp_evidence` | EVIDENCE | 증거물 | items added to the case |
-| `stamp_unknown` | UNKNOWN | 미확인 | unidentified person or object |
-| `stamp_missing_record` | MISSING RECORD | 기록 없음 | the hole in BGB's timeline |
-| `stamp_contradiction` | CONTRADICTION | 모순 | when two statements clash |
-| `stamp_verified` | VERIFIED | 확인됨 | confirmed clues |
-| `stamp_case_open` (ring) | THE CASE DOES NOT CLOSE | 사건은 닫히지 않았다 | wrong final deduction |
+| ID | English text | Korean text |
+|---|---|---|
+| `stamp_archived` | ARCHIVED | 보관됨 |
+| `stamp_confidential` | CONFIDENTIAL | 기밀 |
+| `stamp_reviewed` | REVIEWED | 검토 완료 |
+| `stamp_evidence` | EVIDENCE | 증거물 |
+| `stamp_unknown` | UNKNOWN | 미확인 |
+| `stamp_missing_record` | MISSING RECORD | 기록 없음 |
+| `stamp_contradiction` | CONTRADICTION | 모순 |
+| `stamp_verified` | VERIFIED | 확인됨 |
+| `stamp_case_open` (ring) | THE CASE DOES NOT CLOSE | 사건은 닫히지 않았다 |
 
-### English prompt (replace `<TEXT>` and `<ID>`)
-```
-[STAMP STYLE LOCK]
-ELEMENT: <ID>. The stamp contains exactly one line of text: "<TEXT>". Nothing else inside the border.
-```
-
-### Korean prompt (replace `<KOREAN>` and `<ID>`)
-```
-[STAMP STYLE LOCK]
-ELEMENT: <ID>_ko. The stamp contains exactly one line of Korean text: "<KOREAN>". The text is Korean Hangul, written exactly as given, in a heavy bold serif or gothic brush-cut style, each syllable block clear and fully spelled, no extra strokes, no mixed-up vowels. Do not translate or add any other words. Nothing else inside the border.
-```
+### How the prompt is built
+The page joins the pieces for you: press **EN** or **KO** on a stamp row to copy `STAMP STYLE LOCK` + `ELEMENT: <id>. The stamp contains exactly one line of text: "<TEXT>". Nothing else inside the border.` (for Korean it also adds the Hangul rules: exact syllables, heavy bold serif or gothic brush-cut style, no extra strokes). The ring stamp has its own wording below.
 
 ### Ring stamp (for `stamp_case_open`)
 ```
@@ -52,7 +43,21 @@ ELEMENT: <ID>_ko. The stamp contains exactly one line of Korean text: "<KOREAN>"
 ELEMENT: stamp_case_open_ko. A double circle ring stamp 900x900 px (outer ring 6 px, inner ring 3 px, gap 8 px). The Korean text "사건은 닫히지 않았다" curves along the inside of the ring in two short arcs, "사건은" on the upper arc and "닫히지 않았다" on the lower arc, with a small five-point star in the center. Exact Hangul, bold, fully spelled, no extra strokes, no other words.
 ```
 
-## 5. Korean UI text set (for in-engine labels or baked tabs)
+## 5. When each stamp is used (proposal, change anything)
+I do not have notes on how your first asset pack used these six, so this is my proposed use in the case-file UI.
+| Stamp | Situation |
+|---|---|
+| ARCHIVED 보관됨 | A case thread is finished (chapter ends) or you open Edward's old archive files. The stamp thumps onto the folder page. |
+| CONFIDENTIAL 기밀 | The first time you open protected records (the family record book, the flood records). A hint that someone hid them. |
+| REVIEWED 검토 완료 | A witness statement in the STATEMENTS tab once you have read all of it and compared it with evidence. |
+| EVIDENCE 증거물 | When you pick up an item (key, pocket watch, photo). It slides into the folder with this stamp. |
+| UNKNOWN 미확인 | A person or object you cannot identify yet: the two silhouettes on the identity board, the child in the old photo. |
+| MISSING RECORD 기록 없음 | A timeline slot with no record: BGB's gap after 11:52, the power log before the blackout. |
+| CONTRADICTION 모순 | Two statements or clues clash (for example Nini's "two Bears" vs the guard's "one Bear"). |
+| VERIFIED 확인됨 | A clue is confirmed by a second source (for example the stopped pocket watch plus a sound witness for 11:52). |
+| THE CASE DOES NOT CLOSE 사건은 닫히지 않았다 | A wrong final deduction: no game over, the case reopens. |
+
+## 6. Korean UI text set (for in-engine labels or baked tabs)
 | Place | English | Korean |
 |---|---|---|
 | Menu | CONTINUE | 이어하기 |
@@ -74,7 +79,7 @@ ELEMENT: stamp_case_open_ko. A double circle ring stamp 900x900 px (outer ring 6
 ELEMENT: folder_tab_<id>_ko, a paper folder tab that sticks out of a navy folder edge, 360x96 px, aged cream paper with a brass hairline frame. A single short Korean label handwritten in dark graphite-ink brush pen, centered: "<KOREAN>". Exact Hangul, clear and fully spelled, no extra strokes, no other words, no numbers.
 ```
 
-## 6. Checklist (reject the stamp if any item fails)
+## 7. Checklist (reject the stamp if any item fails)
 - [ ] Every Hangul block is spelled exactly like the given string (check each syllable)
 - [ ] Only the requested text, no extra words, no numbers, no logo
 - [ ] Ink #A8483F, faded spots and tiny gaps, slightly uneven pressure

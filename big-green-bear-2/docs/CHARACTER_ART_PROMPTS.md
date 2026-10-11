@@ -6,12 +6,10 @@ All values below were measured from the delivered bear sprites (outline #122819 
 outline ≈ 0.4 % of image height). Attach the delivered **bear images as style references** to every generation.
 
 ## How to use
-1. Paste **A. STYLE LOCK** first, every time.
-2. Paste the character block (**B–D**), then ONE pose line from that character's list.
-3. For each character generate the **`_nomouth` neutral base first**, approve it, then attach it (plus a bear image) as reference for every other pose.
-4. **View rule:** every in-game pose is generated as `three_quarter_left` (the bear stands on the right and faces left toward the other character; Green is this sprite mirrored in-engine). Only `bear_front_neutral` (portrait / mirror scene) is a true front view. Attach `turnaround/bear_turn_three_quarter_left.png` as the view reference.
-5. **Facing rule for everyone:** the bear stands on the right and faces left (`three_quarter_left`). Every other character (Nini, Edward, Clockkeeper (cat), Café owner (dog), Night guard Tommy (otter) stands on the LEFT of the screen and faces right: generate them as `three_quarter_right`, about 35 degrees, same camera as the bear sheet. Each also gets ONE true front view `<name>_front_neutral` for portraits and the mirror/board scenes. Attach `turnaround/bear_turn_three_quarter_right.png` as the camera/pose reference.
-6. After each image run the **checklist (G)**.
+1. **Fast way:** open a pose below and press **Copy full prompt**. The page joins STYLE LOCK + the character block + that pose + the view rule + the magenta background for you. You paste ONE thing per image.
+2. Generate each character's **`_nomouth` base** first and approve it. For every other pose attach the base (edit mode) and keep only the new pose line.
+3. **View rule (the only place it is written):** the bear stands on the right and faces left, so his poses are `three_quarter_left` (about 35 degrees; attach `turnaround/bear_turn_three_quarter_left.png`). Everyone else stands on the left and faces right: `three_quarter_right` (attach `turnaround/bear_turn_three_quarter_right.png`). Each character also gets one true front view `<name>_front_neutral` for portraits and the mirror scene. Green is the bear mirrored in-engine.
+4. After each image run the **checklist (G)**, then tick it off here.
 
 ---
 
@@ -20,8 +18,7 @@ outline ≈ 0.4 % of image height). Attach the delivered **bear images as style 
 STYLE LOCK. Use the attached Big Green Bear images as the exact master style and match them precisely.
 
 LOOK
-Soft plush storybook character illustration, like a hand-painted stuffed toy: simple chunky rounded shapes, matte velvety fur with a very fine fuzzy texture, soft airbrushed shading (light from the upper left, low contrast), muted slightly desaturated colors with gentle vintage warmth. No gloss, no specular shine, no glitter, no 3D render look, no anime, no flat vector, no photorealism.
-This is HAND-PAINTED, NOT cel-shaded: soft brush-blended shading and fine fur texture, never flat color blocks with hard-edged shadow shapes.
+Clean soft-shaded storybook character illustration of a plush toy: simple chunky rounded shapes, smooth matte fur with only a very faint fur texture, soft gentle shading (light from the upper left, low contrast, smooth gradients, no hard-edged shadow blocks), muted slightly desaturated colors with gentle vintage warmth. No gloss, no specular shine, no glitter, no 3D render look, no anime, no photorealism, no fuzzy hair strands.
 
 OUTLINE (identical on every character in every image)
 One continuous dark olive-brown outline, color #122819 (dark green-black), a clean line of UNIFORM weight, about 0.4% of the image height (about 12 px on a 2900 px tall image, about 9 px on a 2300 px tall image), rounded line ends, a very slight organic wobble, no tapering, no thick-and-thin variation, no double lines. The outline goes around the whole silhouette and around the main inner shapes (arms, ears, coat, scarf, boots, glasses). Fine details (fur, knit pattern, wool curls) have NO outline, only soft shading.
@@ -31,10 +28,10 @@ Eyes: small solid near-black dots (#1B1A16); a tiny white highlight only for sad
 Cheek blush: very soft, low opacity pink-brown (#B58A7C at 35%), only when the expression list asks for it.
 
 CANVAS
-Transparent background (true alpha, clean edges, no white fringe). One character per image. Full body, standing, VIEW per the character's rule below (default: three-quarter view turned toward the LEFT side of the image, about 35 degrees, like the attached turnaround reference), feet touching the bottom edge, tight crop with about 1.5% margin. No ground, no shadow, no props unless requested, no text, no watermark, no frame.
+Background: perfectly flat solid magenta #FF00FF, no gradient, no shadow, no floor, no texture; the subject has no magenta or pink-purple near its edge (it is keyed out afterwards). One character per image. Full body, standing, VIEW per the character's rule below (default: three-quarter view turned toward the LEFT side of the image, about 35 degrees, like the attached turnaround reference), feet touching the bottom edge, tight crop with about 1.5% margin. No ground, no shadow, no props unless requested, no text, no watermark, no frame.
 
 SCALE
-Keep the same body size in every pose of the same character. Only the pose and the face change. Heights: Big Green Bear 2900 px, Nini 1600 px, Edward 2320 px.
+Keep the same body size in every pose of the same character. Only the pose and the face change. Heights: Big Green Bear 2900 px, Nini 1600, Edward 2320, Clockkeeper 2030, Café owner 2610, Tommy 2755.
 
 LEFT / RIGHT
 Left and right always mean the side you see in the image, never the character's own anatomy.
@@ -48,9 +45,9 @@ hard-edged flat shadow shapes, glossy highlights, plastic, 3D render, fuzzy fur-
 ## B. Big Green Bear
 ```
 CHARACTER: Big Green Bear.
-A big round plush bear: pear-shaped body, large round head, small round ears with a darker green inner recess. Sage-green fur (#5F8258) with soft fuzzy texture, a slightly lighter muzzle area (#7A9C6E), no cream belly. A thick hand-knitted mustard scarf (#C5A766) with a herringbone braid knit, wrapped around the neck; its tail hangs down the chest on his OWN LEFT side (visible in the three-quarter-left view; image-right in a true front view) and ends in a ribbed cuff. Paws are simple rounded mitten shapes with one short curved line for the thumb. Small solid dot eyes, dark rounded-triangle nose. Height 2900 px.
+A big round plush bear: pear-shaped body, large round head, small round ears with a darker green inner recess. Sage-green fur (#5F8258) with smooth soft-shaded texture, a slightly lighter muzzle area (#7A9C6E), no cream belly. A thick hand-knitted mustard scarf (#C5A766) with a herringbone braid knit, wrapped around the neck; its tail hangs down the chest on his OWN LEFT side (visible in the three-quarter-left view; image-right in a true front view) and ends in a ribbed cuff. Paws are simple rounded mitten shapes with one short curved line for the thumb. Small solid dot eyes, dark rounded-triangle nose. Height 2900 px.
 ```
-Full pose list (generate ALL of them in the new style; all in three-quarter-left view; below, "RIGHT"/active hand = the near-side arm on his OWN LEFT, the one on the same side as the scarf tail):
+Pose list (all `three_quarter_left`; "RIGHT"/active hand = his near-side arm, his OWN LEFT, on the scarf side):
 0. `bear_front_neutral` (portrait/mirror scene, TRUE FRONT VIEW, generate with the front-view reference): neutral standing, arms relaxed, dot eyes, NO mouth, no blush. Scarf tail on the image-right chest.
 1. `bear_stand_nomouth` (BASE, generate first): neutral standing, arms relaxed at the sides, eyes open as dots, NO mouth, no blush.
 2. `bear_stand_smile_closedeyes` (**Big Green Bear's tell**): eyes closed as happy upward arcs, gentle closed-mouth smile, arms relaxed.
@@ -78,7 +75,7 @@ Full pose list (generate ALL of them in the new style; all in three-quarter-left
 CHARACTER: Nini.
 A small sheep girl, 55% of the bear's height (1600 px tall). A round head covered by a thick cap of cream-white curly wool (#EFE6CF) drawn as soft curl shapes without outlines, a smooth pale cream face (#F3E8D6), small solid dot eyes, a tiny pink triangular nose, two floppy ears with pink insides (#E8B4B0). She wears a mustard-yellow hooded raincoat (#D9A93F) with the hood resting on her shoulders, two dark brown round buttons, a short A-line cut, small white mitten hands, wool-covered legs and short brown boots (#8B6B4A). Standing, arms relaxed at her sides.
 ```
-Full pose list (generate ALL in three-quarter-right view, facing the bear; "toward" = toward the right side of the image):
+Pose list (all `three_quarter_right`; "toward" = toward the right side of the image):
 0. `nini_front_neutral` (portrait, TRUE FRONT VIEW): neutral standing, tiny closed mouth, soft blush.
 1. `nini_stand_nomouth` (BASE, generate first): neutral standing, arms relaxed, NO mouth, soft blush.
 2. `nini_stand_neutral`: same pose with a tiny closed mouth (a small "w" line).
@@ -100,7 +97,6 @@ Full pose list (generate ALL in three-quarter-right view, facing the bear; "towa
 CHARACTER: Edward.
 An elderly hedgehog archivist, 80% of the bear's height (2320 px tall), round pear-shaped body, slightly stooped but dignified posture. Back and head covered with soft felted-looking quills in muted gray-brown (#7A6A58) with cream tips, never sharp or menacing; face and belly soft cream-gray (#D9CFBE); small solid dot eyes with tired kind eyelids; a dark rounded nose; tiny round ears. Round thin wire-rimmed glasses (brass #B08D57). A dark navy waistcoat (#243044) with small brass buttons over a cream shirt (#F2E8D4) with ink-stained cuffs, a thin brass chain with a pocket watch in the waistcoat pocket, short dark trousers, simple dark brown shoes (#4A3A2E).
 ```
-(all in three-quarter-right view, facing the bear)
 - `edward_front_neutral` (portrait, TRUE FRONT VIEW): neutral, hands clasped, no mouth.
 - `edward_stand_nomouth`: neutral base, NO mouth, hands clasped in front.
 - `edward_stand_calm`: mild knowing half-smile.
@@ -154,14 +150,26 @@ Heights are relative to the bear (2900 px). All three use the STYLE LOCK outline
 CHARACTER: Clockkeeper.
 An old gray tabby cat who maintains the clock tower, 70% of the bear's height (2030 px tall), slim but sturdy, slightly hunched, calm and precise. Soft gray fur (#8E949B) with darker gray tabby stripes on the forehead, cheeks and tail (#5F656C), a cream muzzle and chest (#E8DFCC), small pointed ears with pink-gray insides, a long tail with a curl at the tip, small solid dot eyes with heavy tired eyelids, a tiny pink-brown nose, short whiskers drawn as a few thin lines. Brass goggles pushed up on the forehead (#B08D57), a worn dark brown leather apron (#5A4030) with a tool pocket holding a small oilcan and a screwdriver, rolled-up sleeves on a faded blue shirt (#5B7A9C), a small brass gear hanging from a string at the belt. Stands upright on two legs, arms relaxed.
 ```
-- `clockkeeper_front_neutral` (TRUE FRONT), `clockkeeper_stand_nomouth` (BASE, 3/4 right, generate first), `clockkeeper_speaking`, `clockkeeper_uncertain` (eyes aside, ears slightly back, goggles slipping), `clockkeeper_certain` (steady eyes, small firm mouth), `clockkeeper_oil_gear` (oilcan in one hand, looking at a gear), `clockkeeper_check_clock` (hand shading the eyes, looking up).
+- `clockkeeper_front_neutral` (portrait, TRUE FRONT): neutral standing, tiny closed mouth.
+- `clockkeeper_stand_nomouth` (BASE, generate first): neutral standing, arms relaxed, NO mouth.
+- `clockkeeper_speaking`: mouth slightly open as if explaining, one paw lifted a little.
+- `clockkeeper_uncertain`: eyes aside, ears slightly back, goggles slipping, small tense mouth.
+- `clockkeeper_certain`: steady eyes, small firm mouth, chin slightly lifted.
+- `clockkeeper_oil_gear`: oilcan in one paw, looking down at a small brass gear in the other.
+- `clockkeeper_check_clock`: one paw shading the eyes, head tilted back, looking up.
 
 ### H2. Café owner: a golden dog (90%, 2610 px)
 ```
 CHARACTER: Café owner.
 A warm, plump golden retriever-type dog who runs the café next to the tower, 90% of the bear's height (2610 px tall), pear-shaped and cozy. Soft golden-tan fur (#D9A55F) with a cream muzzle and chest (#F3E8D6), floppy rounded ears in a slightly darker tan (#B9803F), a short wagging tail, small solid dot eyes with friendly lids, a dark rounded nose, no tongue unless the pose asks. A burgundy apron (#6E2A35) with a cream stripe and a small white cup embroidered on the chest over a rolled-sleeve cream shirt (#F2E8D4), a tea towel over one shoulder. Standing, relaxed, welcoming.
 ```
-- `cafe_front_neutral` (TRUE FRONT), `cafe_stand_nomouth` (BASE), `cafe_speaking`, `cafe_uncertain` (eyes aside, ears drooping, paw rubbing the other arm), `cafe_certain`, `cafe_hold_teacup` (tray with one steaming white teacup), `cafe_wipe_cup` (wiping a cup with the towel, looking at it).
+- `cafe_front_neutral` (portrait, TRUE FRONT): neutral standing, tiny closed mouth.
+- `cafe_stand_nomouth` (BASE, generate first): neutral standing, NO mouth.
+- `cafe_speaking`: warm open-mouth talking, one paw gesturing.
+- `cafe_uncertain`: eyes aside, ears drooping, one paw rubbing the other arm (the slightly suspicious glance).
+- `cafe_certain`: steady eyes, small firm smile.
+- `cafe_hold_teacup`: a tray with one steaming white teacup held out, gentle smile.
+- `cafe_wipe_cup`: wiping a cup with the tea towel, looking down at it.
 - Design note: gentle and likable, but with one slightly ambiguous glance pose (`cafe_uncertain`) so the player can suspect him.
 
 ### H3. Night guard: Tommy, an otter (95%, 2755 px)
@@ -169,8 +177,13 @@ A warm, plump golden retriever-type dog who runs the café next to the tower, 90
 CHARACTER: Tommy, the Night guard.
 A sleek, friendly young otter who patrols the clock tower at night, 95% of the bear's height (2755 px tall), long slim pear-shaped body that stands upright, thick rounded tail held low behind him. Smooth warm brown fur (#7A5A3C) with a lighter cream-tan muzzle, chin and chest (#E3D2B0), small round ears, whiskers drawn as a few thin lines, small solid dot eyes (round and kind, never glowing), a dark rounded nose, small webbed paws with simple finger lines. A dark navy peaked guard cap with a small brass badge (#243044 / #B08D57), a long navy coat with two brass buttons and a reflective cream armband, and a lantern (brass frame, warm yellow glass #E8C770, soft glow only inside the glass) hanging from one paw. Stands upright, relaxed, alert.
 ```
-- `guard_front_neutral` (TRUE FRONT), `guard_stand_nomouth` (BASE, 3/4 right, generate first), `guard_speaking`, `guard_uncertain`, `guard_certain`, `guard_lantern_raise` (lifting the lantern forward, head tilted), `guard_salute` (touching the cap with one paw).
-- Each also needs the 4 core expressions above; same body size in every pose.
+- `guard_front_neutral` (portrait, TRUE FRONT): neutral standing, tiny closed mouth.
+- `guard_stand_nomouth` (BASE, generate first): neutral standing, NO mouth.
+- `guard_speaking`: friendly open-mouth talking, lantern hanging at his side.
+- `guard_uncertain`: eyes aside, whiskers drooping, lantern lowered.
+- `guard_certain`: steady eyes, small firm mouth.
+- `guard_lantern_raise`: lifting the lantern forward, head tilted, curious.
+- `guard_salute`: touching the cap brim with one paw, small smile.
 
 
 ---

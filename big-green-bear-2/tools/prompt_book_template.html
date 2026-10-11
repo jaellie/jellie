@@ -55,6 +55,10 @@ li[data-ids] .mk{position:absolute;left:0;top:3px}
 .mk input:checked::after{content:"";width:9px;height:5px;border-left:2px solid #10200f;border-bottom:2px solid #10200f;transform:rotate(-45deg) translate(1px,-1px)}
 .mk input:focus-visible{outline:2px solid var(--brass-hi);outline-offset:2px}
 li.done,tr.done{opacity:.55}
+.cp{font:600 11.5px Figtree,sans-serif;color:#1b1b17;background:var(--brass-hi);border:0;border-radius:6px;padding:3px 9px;margin-left:8px;cursor:pointer;vertical-align:middle;white-space:nowrap}
+.cp:hover{transform:scale(1.05)}
+.cp.ok{background:#7fb38a}
+td .cp{margin:0 0 0 6px}
 .chipset{display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:6px}
 .chipset .mk{position:static;border:1px solid var(--line);border-radius:99px;padding:3px 10px 3px 6px;background:var(--bg2);font:12px 'JetBrains Mono',monospace}
 .chipset .mk.done{opacity:.55;text-decoration:line-through}
@@ -145,7 +149,7 @@ if(window.claude&&claude.use){claude.use('db').then(function(db){
     Object.keys(busy).forEach(function(k){if(busy[k]){if(done[k])m[k]=true;else delete m[k]}});done=m;render()},function(){store=null;say('Shared saving is not available. Using this device only.')});
 },function(){})}
 /* ---- tabs ---- */
-function show(id){tabs.forEach(function(t){t.setAttribute('aria-selected',t.dataset.p===id)});panes.forEach(function(p){p.classList.toggle('on',p.id==='pane-'+id)});try{localStorage.setItem('bpb-tab',id)}catch(e){}filter()}
+function show(id){tabs.forEach(function(t){t.setAttribute('aria-selected',t.dataset.p===id)});panes.forEach(function(p){p.classList.toggle('on',p.id==='pane-'+id)});try{localStorage.setItem('bpb-tab2',id)}catch(e){}filter()}
 tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.p)})});
 /* ---- collapse ---- */
 var openSet={};try{openSet=JSON.parse(localStorage.getItem(OPENLS)||'{}')}catch(e){}
@@ -160,12 +164,39 @@ function filter(){var v=q.value.trim().toLowerCase(),any=false,p=$('.pane.on');i
   if(!v)$$('.sec',p).forEach(function(s){s.classList.toggle('open',!!openSet[s.id])});
   $('#empty').style.display=any?'none':'block'}
 q.addEventListener('input',filter);
+/* ---- composed prompts: one button = everything for one image ---- */
+function firstPre(secPrefix,pane){var s=$$('#pane-'+pane+' .sec').filter(function(x){return x.id.indexOf(secPrefix)===0})[0];return s?$('pre',s).textContent.trim():''}
+var STYLE=firstPre('chars-a-','chars'),STAMPSTYLE=firstPre('stamp-2-','stamp');
+function liText(li){var c=li.cloneNode(true);$$('.mk,.cp,.chipset',c).forEach(function(n){n.remove()});return c.textContent.trim()}
+function addBtn(host,label,fn){var b=document.createElement('button');b.type='button';b.className='cp';b.textContent=label;b.addEventListener('click',function(){copyText(fn(),b,label)});host.appendChild(b)}
+function copyText(txt,b,label){
+  function ok(){b.textContent='Copied';b.classList.add('ok');setTimeout(function(){b.textContent=label;b.classList.remove('ok')},1400)}
+  function fb(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){b.textContent='Select + copy failed'}ta.remove()}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fb)}else fb()}
+$$('#pane-chars .sec').forEach(function(s){
+  if(!/^chars-(b|c|d|h)-/.test(s.id))return;
+  var char='';
+  $$('.prompt,li[data-ids]',s).forEach(function(n){
+    if(n.classList.contains('prompt')){char=$('pre',n).textContent.trim();return}
+    var id=n.dataset.ids;if(id.indexOf(' ')>-1||!char)return;
+    var bear=/^chars-b-/.test(s.id),front=/front_neutral$/.test(id);
+    var view=front?'true FRONT view, facing the camera, symmetrical stance, both ears visible.':'three-quarter view turned toward the '+(bear?'LEFT':'RIGHT')+' side of the image, about 35 degrees (match the attached turnaround reference).';
+    (function(n,char,view){addBtn(n,'Copy full prompt',function(){return STYLE+'\n\n'+char+'\n\nPOSE: '+liText(n)+'\n\nVIEW: '+view})})(n,char,view)
+  })
+});
+var RING=($$('#pane-stamp .prompt pre').filter(function(p){return p.textContent.indexOf('stamp_case_open_ko')>-1})[0]||{textContent:''}).textContent.trim();
+$$('#pane-stamp tr[data-ids]').forEach(function(tr){
+  var id=tr.dataset.ids,c=tr.cells,en=c[1]?c[1].textContent.trim():'',ko=c[2]?c[2].textContent.trim():'',host=c[0];
+  var ring=id==='stamp_case_open';
+  addBtn(host,'EN',function(){return STAMPSTYLE+'\n\n'+(ring?'ELEMENT: '+id+'. A double circle ring stamp 900x900 px (outer ring 6 px, inner ring 3 px, gap 8 px). The English text "THE CASE DOES" curves along the upper inside arc and "NOT CLOSE" along the lower inside arc, with a small five-point star in the center. Nothing else.':'ELEMENT: '+id+'. The stamp contains exactly one line of text: "'+en+'". Nothing else inside the border.')});
+  addBtn(host,'KO',function(){return STAMPSTYLE+'\n\n'+(ring?RING:'ELEMENT: '+id+'_ko. The stamp contains exactly one line of Korean text: "'+ko+'". The text is Korean Hangul, written exactly as given, in a heavy bold serif or gothic brush-cut style, each syllable block clear and fully spelled, no extra strokes, no mixed-up vowels. Do not translate or add any other words. Nothing else inside the border.')})
+});
 /* ---- copy ---- */
 document.addEventListener('click',function(e){var b=e.target.closest('.copy');if(!b)return;var t=b.parentNode.querySelector('pre').textContent;
  function ok(){b.textContent='Copied';b.classList.add('ok');setTimeout(function(){b.textContent='Copy';b.classList.remove('ok')},1400)}
  function fb(){var r=document.createRange();r.selectNodeContents(b.parentNode.querySelector('pre'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected, press Copy'}
  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,fb)}else fb()});
-var start='chars';try{start=localStorage.getItem('bpb-tab')||start}catch(e){}
+var start='stamp';try{start=localStorage.getItem('bpb-tab2')||start}catch(e){}
 var h=location.hash.slice(1);if(h){var el=document.getElementById(h);if(el){var pp=el.closest('.pane');if(pp){start=pp.id.replace('pane-','');var sec=el.classList&&el.classList.contains('sec')?el:el.closest('.sec');if(sec)setOpen(sec,true)}}}
 show(start);
 })();

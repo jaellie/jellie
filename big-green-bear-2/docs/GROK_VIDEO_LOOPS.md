@@ -1,9 +1,8 @@
 # Art style + Grok video loops (per character)
 
-## 1. Is the art cel-shaded or hand-painted?
-**Hand-painted** (soft, brush-blended shading + fine fur/knit texture) **with a clean uniform ink outline.**
-It is NOT cel-shaded. Cel-shading = flat color blocks + hard-edged shadow shapes + thick outline, like TV animation.
-Official name for the project: **"hand-painted storybook plush, ink-outlined"**. (The style lock now says this explicitly and bans cel-shading.)
+## 1. Art style
+**Clean soft-shaded** (smooth gradients, faint fur texture) **with a thin uniform dark green-black outline.** It sits between hand-painted and cel-shaded: no hard-edged shadow blocks, no fuzzy hair strands.
+Official name for the project: **"clean soft-shaded storybook plush, thin dark-green outline"** (master style decided from the v2 turnaround sheet).
 
 Why it matters for video: AI video models handle flat cel art more stably, while fur/knit textures can "boil" (shimmer frame to frame).
 Therefore:
@@ -30,7 +29,7 @@ IMAGE-TO-VIDEO. The attached image is the exact first frame.
 CAMERA: completely static, locked off. No zoom, no pan, no tilt, no shake, no parallax.
 BACKGROUND: stays perfectly flat solid magenta #FF00FF in every frame. No floor, no shadow, no lighting change, no vignette, no particles.
 CHARACTER: stays exactly the same character in every frame: same face, same outline, same colors, same proportions, same scarf/clothes, same texture. Do not redesign, do not add objects, do not add characters, do not change the art style.
-STYLE: hand-painted plush storybook look. The outline stays one thin uniform dark olive line. Fur and knit texture stay still on the surface (no crawling, no boiling, no morphing texture).
+STYLE: clean soft-shaded storybook plush look. The outline stays one thin uniform dark green-black line (#122819). Fur and knit texture stay still on the surface (no crawling, no boiling, no morphing texture).
 MOTION: subtle, slow and natural unless stated. The character stays in place in the frame and feet stay on the same spot.
 LOOP: the last frame must match the first frame exactly (same pose, same expression, same scarf position) so the clip loops seamlessly.
 ```
