@@ -1342,8 +1342,8 @@ const IA_T = [
   { id:"boots", x:()=>640,  label:UI.lBoots, top:640, run:()=>inspect("boots") },
   { id:"hatch", x:()=>1210, label:UI.lHatch, top:530, run:()=>inspect("hatch") },
   { id:"clock", x:()=>1511, label:UI.lClk,   top:560, run:()=>inspect("clock") },
-  { id:"pend",  x:()=>1663, label:UI.lPend,  top:560, run:()=>inspect("pendulum") },
-  { id:"melt",  x:()=>1485, label:UI.lMelt,  top:530, run:()=>inspect("melt") },
+  { id:"pend",  x:()=>1663, label:UI.lPend,  top:560, when:()=>has("c6.on"), run:()=>inspect("pendulum") },
+  { id:"melt",  x:()=>1485, label:UI.lMelt,  top:530, when:()=>has("c6.on"), run:()=>inspect("melt") },
   { id:"chute", x:()=>2168, label:UI.lChute, top:540, run:()=>inspect("chute") },
   { id:"pcase", x:()=>1740, label:UI.lCase, top:560, when:()=>has("dd09"), run:()=>startDlg(has("c7.rec") ? "rec9" : "rec0") },
   { id:"pit",   x:()=>1345, label:UI.lPit,   top:640, when:()=>has("c6.turn"), run:()=>inspect("pit") }
@@ -1486,7 +1486,7 @@ function nextHint(){
   }
   if (S.scene !== "tower") return L("먼저 시계탑으로 가자. 마을 가운데 있는 큰 탑이야.","Head for the clock tower first, the tall tower in the middle of the village.");
   if (!has("ck.bear")) return L("시계지기 올리버와 이야기하자.","Talk to Oliver, the Clockkeeper.");
-  return L("탑 안을 더 조사하자. 시계, 해치, 발자국, 손종, 추를 살펴봐.","Look around the tower more: the clock, the hatch, the footprints, the handbell, the pendulum.");
+  return L("탑 안을 더 조사하자. 시계, 해치, 발자국, 손종, 뒷문을 살펴봐.","Look around the tower more: the clock, the hatch, the footprints, the handbell, the back door.");
 }
 function askBgb(){ if (mode !== "play" || performance.now() < dlgLock) return false; hideHintNow(); D.hintNow = {sp: S.flash ? "kid" : "bgb", ex:"thinking", t:{en:nextHint(), ko:nextHint()}, next:null}; startDlg("hintNow"); return true; }
 /* the next-step thought also comes up by itself, as a dialogue, whenever the objective changes */
@@ -1520,7 +1520,7 @@ function checkDeduce(){
   CON.forEach(c=>{ if (c.on() && !S.flags["con."+c.id]){ S.flags["con."+c.id] = true; addNote(c.t); toast((lang==="ko"?"모순 발견":"Contradiction found")); } });
   if (has("gr.hand") && has("ck.bear") && !S.flags.dd03){ S.flags.dd03 = true; addNote(DD03); toast((lang==="ko"?"추리":"Deduction")+": "+(lang==="ko"?"계단의 곰은 당신이 아니다":"The stair bear was not you")); }
   const tw = ["hatch","pendulum","handbell","chute","melt","boots"].filter(x=>S.ev.includes(x)).length;
-  if (S.ev.includes("clock") && S.ev.includes("pendulum") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
+  if (S.ev.includes("clock") && S.ev.includes("hatch") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
   if (has("ck.bear") && S.ev.includes("clock") && tw >= 3 && !S.flags.q1){ S.flags.q1 = true; if (!S.flags["ch.2"]){ S.flags["ch.2"] = true; holdHint = true; setTimeout(()=>whenPlay(()=>endMono("ce1_0", ()=>chapterIntro(2))), 3500); } toast((lang==="ko"?"질문":"Question")+": "+tr(UI.askBear)); }
   const hv = ids => ids.every(e=>S.ev.includes(e));
   if (has("gr.admit") && hv(["hatch","boots","chute","pendulum","patrol","acct_gr"]) && !has("dd06")){ setf("dd06"); addNote(NOTES.n_dd06); toast((lang==="ko"?"추리 완성: ":"Deduction: ")+(lang==="ko"?"Green이 에드워드를 떨어뜨렸다":"Green caused the fall")); }
@@ -2084,7 +2084,7 @@ function frame(now){
   if (mode==="play"){ IA.forEach(i=>{ if (i.when && !i.when()) return; const d = Math.abs(P.x - i.x()); if (d < best){ best = d; near = i; } }); }
   if (peek > 0) peek -= dt;
   const hint = $("hint"), showHint = !!(near && mode==="play");
-  IA.forEach(i=>{ const on = (near===i && mode==="play") || (peek>0 && mode==="play"); i.el.classList.toggle("on", on); i.el.classList.toggle("soft", near===i && showHint); });
+  IA.forEach(i=>{ if (i.when && !i.when()){ i.el.classList.remove("on","soft"); return; } const on = (near===i && mode==="play") || (peek>0 && mode==="play"); i.el.classList.toggle("on", on); i.el.classList.toggle("soft", near===i && showHint); });
   if (showHint){ hint.classList.remove("instant"); if ($("hintTx").dataset.k !== near.id){ $("hintTx").dataset.k = near.id; $("hintTx").textContent = tr(near.label); } hint.classList.add("on"); }
   else { if (mode!=="play") hint.classList.add("instant"); hint.classList.remove("on"); }
   requestAnimationFrame(frame);
