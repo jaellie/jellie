@@ -1393,9 +1393,11 @@ function nextHint(){
 }
 function askBgb(){ if (mode !== "play" || performance.now() < dlgLock) return false; hideHintNow(); D.hintNow = {sp: S.flash ? "kid" : "bgb", ex:"thinking", t:{en:nextHint(), ko:nextHint()}, next:null}; startDlg("hintNow"); return true; }
 /* the next-step thought also comes up by itself, as a dialogue, whenever the objective changes */
-let lastGoal = "", holdHint = false;
+let lastGoal = "", holdHint = false, calmSince = 0;
 setInterval(()=>{
-  if (holdHint || mode !== "play" || performance.now() < dlgLock || autoGo) return;
+  if (holdHint || mode !== "play" || performance.now() < dlgLock || autoGo) { calmSince = performance.now(); return; }
+  if (P.moving || keys.size) { calmSince = performance.now(); return; }
+  if (performance.now() - calmSince < 3000) return;   /* only when the player has stood still for a few seconds, never while they are walking or just arrived */
   let h; try { h = nextHint(); } catch(e){ return; }
   if (h && h !== lastGoal && askBgb()) lastGoal = h;
 }, 900);
@@ -1450,7 +1452,7 @@ function refreshHud(){}
 /* dialogue */
 let cur = null, typing = null, full = "";
 let dlgLock = 0;   /* ignore clicks for a moment after a conversation opens, so a double tap cannot skip it */
-function startDlg(id){ menuFollow = null; dlgLock = performance.now() + 450; mode = "dlg"; cur = id; renderDlg(true); $("dlg").classList.add("on"); }
+function startDlg(id){ keys.clear(); autoGo = null; menuFollow = null; dlgLock = performance.now() + 450; mode = "dlg"; cur = id; renderDlg(true); $("dlg").classList.add("on"); }
 /* long lines are cut into pages at sentence ends (Enter turns the page), so no line runs past two rows and no word is split */
 function splitPages(text){
   const ROW = lang==="ko" ? 29 : 52, rows = t => Math.max(1, Math.ceil(t.length / ROW));
@@ -1603,6 +1605,7 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2171}, mill:{min:0,end:3000}, past:{min:0,end:2632}, healer:{min:0,end:2382}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
 function locOf(n){ return tr(n==="healer" ? UI.locH : n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
+  calmSince = performance.now(); keys.clear(); autoGo = null;   /* a held or stuck key (or an old tap-to-walk target) must never carry into the new room */
   S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage" || name === "healer", MI = name === "mill", FLD = name === "flood", PST = name === "past", HL = name === "healer", IN = PST || HL || T || A || C || PR || MI || FLD;
   $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR); $("psc").classList.toggle("hl", HL); $("pmarks").style.display = HL ? "none" : ""; $("hmarks").style.display = HL ? "" : "none"; $("msc").classList.toggle("on", MI); $("fsc").classList.toggle("on", FLD); $("ysc").classList.toggle("on", PST);
   const host = T ? $("tworld") : A ? $("aworld") : C ? $("cworld") : PR ? $("pworld") : MI ? $("mworld") : FLD ? $("fworld") : PST ? $("yworld") : $("world");
@@ -1929,6 +1932,8 @@ window.addEventListener("keydown", e=>{
 });
 window.addEventListener("keyup", e=>keys.delete(e.key.toLowerCase()));
 window.addEventListener("blur", ()=>keys.clear());
+document.addEventListener("visibilitychange", ()=>keys.clear());
+window.addEventListener("pointerup", ()=>{ keys.delete("arrowleft"); keys.delete("arrowright"); });   /* a touch button released off-element can never stay held */
 $("dlg").addEventListener("click", ()=>{ if (mode==="dlg") advance(true); });
 const hold = (id, key)=>{ const b = $(id); const on = e=>{ e.preventDefault(); keys.add(key); }, off = ()=>keys.delete(key); b.addEventListener("pointerdown", on); ["pointerup","pointerleave","pointercancel"].forEach(ev=>b.addEventListener(ev, off)); };
 const tmpGo = (id, sc, x) => $(id).addEventListener("pointerdown", e=>{ e.preventDefault(); if (mode==="play" && S.scene==="village") tryEnter(sc, x, sc==="cafe" ? ch1Gate : ch2Gate); });
@@ -1943,6 +1948,7 @@ function frame(now){
   if (mode==="play"){
     let l = keys.has("arrowleft")||keys.has("a"), r = keys.has("arrowright")||keys.has("d");
     if ((l || r) && autoGo) autoGo = null;                                   /* manual input cancels the tap-to-walk */
+    if (autoGo && !IA.includes(autoGo)) autoGo = null;
     if (autoGo){ const dx = autoGo.x() - P.x; if (Math.abs(dx) < 26){ const it = autoGo; autoGo = null; hideHintNow(); it.run(); l = r = false; } else { r = dx > 0; l = !r; } }
     const run = keys.has("shift") || !!autoGo; const sp = run ? 430 : 270;
     if (l !== r){ P.x += (r?1:-1) * sp * dt; P.face = r ? "right" : "left"; P.moving = true; P.walk += dt * (run?11:8); }
