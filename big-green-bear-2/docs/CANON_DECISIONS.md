@@ -13,7 +13,7 @@ Anything not listed here is still TBD (see "Open").
 - **Green** uses the hand on the **LEFT side of the image**; scarf tail on the **LEFT side of the image**.
 
 ## Identity clues
-- **Ear scar: GREEN has it**, on the ear on the **LEFT side of the image**.
+- **Ear scar: GREEN has it**, on the ear on the **LEFT side of the image** (CONFIRMED again by the author).
   Implementation: overlay applied on the final (already mirrored) Green sprite, so it always appears on the screen-left ear.
   Consequence: in the mirror window, a reflected Big Green Bear (no scar) must NOT show a scar; a reflected Green shows it on the opposite side (physically correct).
 - Smile: Big Green Bear closes his eyes when smiling; Green keeps them slightly open. (Delivered `bear_smile_openeyes` = Green's smile.)
@@ -36,4 +36,4 @@ Anything not listed here is still TBD (see "Open").
 4. Physical explanation of the mirror "reflection that was not a reflection".
 5. ~~Motive~~ RESOLVED (C).
 6. Supporting cast: Clockkeeper = old gray cat (70%), Café owner = golden dog (90%), Night guard = tall barn owl (105%). Species chosen by Claude, approved by the user as long as instantly recognizable.
-7. Witness positions 11:47-11:52, delay length, when BGB learned the swap, ear-scar side (screen-left vs anatomical), see STORY_BIBLE.md section 8.
+7. Witness positions 11:47-11:52, delay length, when BGB learned the swap, see STORY_BIBLE.md section 8.

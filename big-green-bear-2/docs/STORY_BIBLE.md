@@ -61,7 +61,7 @@ Game convention is the side seen on screen. Anatomical wording from the author i
 | Ear scar | none | the ear on the **image-LEFT** (his own right ear), old healed scar |
 | Smile | eyes closed | eyes slightly open |
 This matches the existing sprites: Green = the same sprite mirrored, with the scar overlay.
-- **Note on "left ear":** I read the author's "left ear scar" as the ear on the **screen-left**, as in `CANON_DECISIONS.md`. If it should be Green's own left ear instead, the overlay moves to the other ear (a one-line change). **Please confirm.**
+- **CONFIRMED by the author: screen-left ear.** (Earlier note:  I read the author's "left ear scar" as the ear on the **screen-left**, as in `CANON_DECISIONS.md`. If it should be Green's own left ear instead, the overlay moves to the other ear (a one-line change). **Please confirm.**)
 
 ### 3.3 How the player discovers the swap
 Compare **old photos** with the **flood records**:
@@ -123,4 +123,4 @@ Fill this table before writing any chapter that uses witnesses. I will propose p
 4. **Exact delay length** of BGB's help call.
 5. **When BGB learned about the swap** (before the story, or during it).
 6. **Witness positions** (section 7).
-7. **Ear scar side** (section 3.2 note).
+7. ~~Ear scar side~~ RESOLVED: screen-left ear.

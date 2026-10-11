@@ -125,7 +125,13 @@ OVERLAY: [STYLE LOCK outline and face rules]. Isolated elements on a transparent
 ```
 - `overlay_mouths_sheet`: smile, wide smile, flat, small "o", wide open (talking), frown, trembling.
 - `overlay_eyes_sheet`: open dot eyes, closed-happy arcs, blink line, worried inner brows, wide eyes with highlight.
-- `overlay_ear_scar`: one tiny healed scar nick (a short curved line with a slightly lighter patch) for the ear on the LEFT side of the image. It belongs to **Green**.
+- `overlay_ear_scar` (**Green only, CONFIRMED: the ear on the LEFT side of the image**). Generate 2 versions, one per view. Prompt:
+```
+OVERLAY: [STYLE LOCK outline and face rules]. A single tiny healed scar on a bear's ear, isolated on a flat magenta #FF00FF background. The scar is one short slightly curved nick line about 1.2% of the bear's head width, drawn in the same dark green-black line (#122819) and the same line weight as the outline, with a small slightly lighter fur-colored patch (#7A9C6E) along it. Old, calm and healed, never bloody, never graphic. Show the scar on the ear that is on the LEFT side of the image.
+VERSION A (front): the ear is seen nearly head-on, round, with its darker inner recess; scar on the outer rim at the upper left.
+VERSION B (three-quarter, bear facing the RIGHT side of the image): the ear on the left of the head is the near ear, seen at a slight angle; scar on its outer rim.
+```
+  Placement rule: apply the overlay on the FINAL (already mirrored) Green sprite, so it always sits on the screen-left ear. The bear (BGB) never gets it.
 - `prop_green_bell`: a small jade-green bell (#7DB28E, darker #3F7054) with a loop, soft shading, the same outline.
 - Evidence props (later): key, pocket watch, old photograph (one child / two children), family record book.
 
