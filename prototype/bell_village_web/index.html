@@ -8,7 +8,9 @@
 @font-face{font-family:"Pretendard";font-weight:400;font-display:swap;src:url(assets/fonts/pretendard-400.woff2) format("woff2");unicode-range:U+AC00-D7A3,U+1100-11FF,U+3130-318F}
 @font-face{font-family:"Pretendard";font-weight:600;font-display:swap;src:url(assets/fonts/pretendard-600.woff2) format("woff2");unicode-range:U+AC00-D7A3,U+1100-11FF,U+3130-318F}
 @font-face{font-family:"Pretendard";font-weight:700;font-display:swap;src:url(assets/fonts/pretendard-700.woff2) format("woff2");unicode-range:U+AC00-D7A3,U+1100-11FF,U+3130-318F}
-html[lang="ko"] *{letter-spacing:-0.01em !important}   /* Korean tracking -1% */
+html[lang="ko"] *{letter-spacing:-0.01em !important}
+html[lang="ko"]{word-break:keep-all;overflow-wrap:break-word;line-break:strict}
+html{text-wrap:pretty}   /* Korean tracking -1% */
 /* Layout: one fixed 1920x1080 stage scaled to the window; parallax layers behind a walkable snow path, UI laid over it. */
 :root{
   --night-0:#0b1230;      /* sky top */
@@ -219,7 +221,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .hudbtn:hover{transform:scale(1.07);filter:brightness(1.15)}
 .hudbtn:focus-visible,.choice:focus-visible,.tab:focus-visible,.pbtn:focus-visible{outline:3px solid #ffd27a;outline-offset:3px}
 .hudbtn .k{position:absolute;right:-6px;bottom:-8px;font:700 13px/1 var(--font-label);background:#1b2340;color:#ffe3a6;border:1px solid var(--brass);border-radius:4px;padding:3px 5px}
-#hint{position:absolute;left:50%;bottom:34px;translate:-50% 6px;scale:var(--hb,1);transform-origin:50% 100%;width:fit-content;max-width:720px;padding:17px 42px;--s:1;display:flex;align-items:center;justify-content:center;gap:11px;font:600 20px/1.1 var(--font-body);color:var(--ink);white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .25s ease,translate .25s ease,visibility 0s linear .25s}
+#hint{position:absolute;left:50%;bottom:34px;translate:-50% 6px;scale:var(--hb,1);transform-origin:50% 100%;width:fit-content;max-width:720px;padding:23px 54px;--s:1;display:flex;align-items:center;justify-content:center;gap:11px;font:600 20px/1.1 var(--font-body);color:var(--ink);white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .25s ease,translate .25s ease,visibility 0s linear .25s}
 #hint.on{opacity:1;visibility:visible;translate:-50% 0;transition-delay:0s}
 #hint.instant,#hint.instant.on{transition:none}
 #hint kbd{font:700 17px/1 var(--font-label);background:var(--burgundy);color:#f6e3c0;border-radius:5px;padding:6px 9px;box-shadow:0 2px 0 #3d1219}
@@ -308,7 +310,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #pDir.on{display:block}
 #pDir .dirhead{font:700 18px/1 var(--font-body);letter-spacing:.2em;color:#6e2a35;text-align:center;margin:8px 0 0}
 #pDir .dirb{min-width:300px;padding:12px 34px;font-size:22px;margin-top:10px}
-.pbtn{display:block;width:fit-content;min-width:340px;margin:14px auto 0;padding:20px 58px;--s:1.25;background:transparent;font:700 28px/1.1 var(--font-body);color:var(--ink);cursor:pointer}
+.pbtn{display:block;width:fit-content;min-width:340px;margin:14px auto 0;padding:25px 66px;--s:1.25;background:transparent;font:700 28px/1.1 var(--font-body);color:var(--ink);cursor:pointer}
 .pbtn:hover{--img:url(assets/plaque_red_small.webp);color:#f6e3c0}
 #fade{position:absolute;inset:0;background:#02030a;opacity:0;pointer-events:none;transition:opacity .7s;z-index:40}
 #fade.on{opacity:1;pointer-events:auto}
@@ -1190,6 +1192,27 @@ function refreshHud(){}
 let cur = null, typing = null, full = "";
 let dlgLock = 0;   /* ignore clicks for a moment after a conversation opens, so a double tap cannot skip it */
 function startDlg(id){ dlgLock = performance.now() + 450; mode = "dlg"; cur = id; renderDlg(true); $("dlg").classList.add("on"); }
+/* long lines are cut into pages at sentence ends (Enter turns the page), so no line runs past two rows and no word is split */
+function splitPages(text){
+  const MAX = lang==="ko" ? 58 : 100;
+  if (text.length <= MAX) return [text];
+  let sents = text.match(/[^.?!…]+(?:[.?!…]+["'”’)\]]*)(?:\s+|$)|[^.?!…]+$/g) || [text];
+  sents = sents.map(x=>x.trim()).filter(Boolean);
+  const out = [];
+  const cut = t => { if (t.length <= MAX*1.25) return [t]; const mid = t.length/2; let best = -1, bd = 1e9; for (let k=0;k<t.length;k++){ if (/[,，、]/.test(t[k]) || (t[k]===" " && /[,，]/.test(t[k-1]||""))){ const d = Math.abs(k-mid); if (d<bd){ bd = d; best = k; } } } if (best < 0) return [t]; const a = t.slice(0,best+1).trim(), b = t.slice(best+1).trim(); return [a, b].filter(Boolean); };
+  let cur = "";
+  sents.forEach(sn=>{ cut(sn).forEach(part=>{ if (!cur) cur = part; else if ((cur+" "+part).length <= MAX) cur += " " + part; else { out.push(cur); cur = part; } }); });
+  if (cur) out.push(cur);
+  return out.length ? out : [text];
+}
+let pgs = [""], pgi = 0;
+function typeSet(tx, str, i){ tx.textContent = ""; tx.appendChild(document.createTextNode(str.slice(0,i))); const r = document.createElement("span"); r.style.visibility = "hidden"; r.textContent = str.slice(i); tx.appendChild(r); }   /* the unseen rest keeps the line breaks stable while typing */
+function showPage(anim){
+  full = pgs[pgi]; const tx = $("dTx"); clearInterval(typing); typing = null;
+  const last = pgi >= pgs.length - 1;
+  if (!anim){ tx.textContent = full; if (last) showChoices(); return; }
+  let i = 0; typeSet(tx, full, 0); typing = setInterval(()=>{ i += 1; typeSet(tx, full, i); if (i >= full.length){ clearInterval(typing); typing = null; if (last) showChoices(); } }, 22);
+}
 function renderDlg(anim){
   const n = D[cur]; if (!n) return; const sp = SP[n.sp];
   $("dNm").textContent = tr(sp.name);
@@ -1197,11 +1220,10 @@ function renderDlg(anim){
   const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil);   /* silhouette until the real portrait exists */
   if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
   $("dPor").onload = () => { $("dPor").style.opacity = 1; };
-  full = tr(n.t); const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":""); clearInterval(typing);
-  sizeDlg(full);
+  const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":"");
+  pgs = splitPages(tr(n.t)); pgi = 0; sizeDlg(pgs.reduce((a,b)=>b.length>a.length?b:a, ""));
   $("choices").classList.remove("on"); $("choices").innerHTML = "";
-  if (!anim){ tx.textContent = full; showChoices(); return; }
-  let i = 0; tx.textContent = ""; typing = setInterval(()=>{ i += 1; tx.textContent = full.slice(0,i); if (i >= full.length){ clearInterval(typing); typing = null; showChoices(); } }, 22);
+  showPage(anim);
 }
 function sizeDlg(text){
   const m = $("meas"); m.style.fontSize = lang==="ko" ? "33px" : "36.5px"; m.textContent = text;
@@ -1219,8 +1241,9 @@ function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.go === "flrw") rewi
 function applyNode(n){ if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(fromClick){
   if (performance.now() < dlgLock) return;
-  if (fromClick && D[cur] && D[cur].ch && !typing) return;   /* a click never picks an answer; choose with the buttons, 1/2 or arrows + E */
-  if (typing){ clearInterval(typing); typing = null; $("dTx").textContent = full; showChoices(); return; }
+  if (fromClick && D[cur] && D[cur].ch && !typing && pgi >= pgs.length - 1) return;   /* a click never picks an answer; choose with the buttons, 1/2 or arrows + E */
+  if (typing){ clearInterval(typing); typing = null; $("dTx").textContent = full; if (pgi >= pgs.length - 1) showChoices(); return; }
+  if (pgi < pgs.length - 1){ pgi += 1; showPage(true); return; }
   const n = D[cur]; if (n.ch){ const bs = [...document.querySelectorAll('#choices .choice')]; const sel = document.querySelector('#choices .choice.sel'); if (sel) sel.click(); else if (bs[0]) bs[0].classList.add('sel'); return; }
   applyNode(n); goto(n.next || null);
 }
