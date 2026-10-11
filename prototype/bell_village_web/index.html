@@ -1346,6 +1346,17 @@ Object.assign(D, {
   ce7_4_0: {sp:"bgb", ex:"worried", t:{en:"The page turned to ash. The names stay swapped, and the truth is gone.", ko:"종이는 재가 됐어. 이름은 바뀐 채 남고, 진실은 사라졌어."}, next:null}
 });
 
+/* top-left plate: shows the current chapter number and name */
+function curChapter(){ return S.flash === 5 ? 5 : S.flash ? 4 : has("c7.on") ? 7 : has("c6.on") ? 6 : has("dd02") ? 3 : has("q1") ? 2 : has("pro.done") ? 1 : 0; }
+let plateKey = "";
+function updatePlate(){
+  const n = curChapter(), k = lang === "ko", key = n + lang;
+  if (key === plateKey) return; plateKey = key;
+  const l1 = document.querySelector("#caseplate .l1");
+  l1.textContent = n === 0 ? (k ? "프롤로그" : "PROLOGUE") : (k ? n + "장" : "CHAPTER " + n);
+  $("hudTitle").textContent = n === 0 ? (k ? "사진" : "The Photograph") : CHT[n][k ? 0 : 1];
+}
+setInterval(updatePlate, 400);
 /* Tap BGB (or press H): a thought that says who to talk to or where to go next */
 function nextHint(){
   const K = lang==="ko", ev = e=>S.ev.includes(e), L = (ko,en)=>K?ko:en;
@@ -1441,7 +1452,7 @@ function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSO
 function setLang(l){ lang = l; save(); applyLang(); setDirUi(); if (mode==="cf") renderCF(); }
 function applyLang(){
   document.documentElement.lang = lang; buildSide(); labelSide();
-  $("hudTitle").textContent = tr(UI.case); $("hudLoc").textContent = locOf(S.scene);
+  plateKey = ""; updatePlate(); $("hudLoc").textContent = locOf(S.scene);
   $("pResume").textContent = tr(UI.resume); $("pReset").textContent = tr(UI.restart); $("pLang").textContent = tr(UI.langBtn); $("eBack").textContent = tr(UI.back);
   document.querySelector("#pause .eyebrow").textContent = tr(UI.paused);
   const E = tr(UI.end); $("eEy").textContent = E[0]; $("eH").textContent = E[1]; $("eP1").textContent = E[2]; $("eP2").textContent = E[3]; $("rot").textContent = tr(UI.rot);
