@@ -356,7 +356,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
    <img id="door" src="assets/p_tower_shaft.webp" alt="Clocktower" style="position:absolute;left:2607px;top:35px;width:499px;height:960px">
    <svg id="vhands" style="position:absolute;left:2796px;top:337px" width="120" height="120" viewBox="-60 -60 120 120" aria-label="Tower clock stopped at 11:47"><g stroke="#2b1a0e" stroke-linecap="round"><line x1="0" y1="3" x2="0" y2="-24" stroke-width="2.2" transform="rotate(282)"/><line x1="0" y1="4" x2="0" y2="-16" stroke-width="3.4" transform="rotate(353.5)"/></g><circle r="3.6" fill="#2b1a0e"/><circle r="1.4" fill="#c97a2e"/></svg>
    <div class="glow" style="left:2700px;top:700px;width:310px;height:330px"></div>
-   <div class="hgate" style="left:1445px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">빅그베의 오두막</b></div>
+   <div class="hgate" style="left:440px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">빅그베의 오두막</b></div>
    <div class="hgate" style="left:2290px"><i class="hr"></i><i class="hw"></i><i class="hd"></i><i class="hf"></i><b class="ms">치료사의 집</b></div>
    <div id="millgate"><i class="mp l"></i><i class="mp r"></i><i class="ma"></i><i class="md"></i><b class="ms">낡은 방앗간 · Old Mill</b></div>
    <div id="shadows"></div>
@@ -1067,7 +1067,7 @@ let IA = [
   { id:"enterA", x:()=>4200, label:UI.enterA, top:560, run:()=>tryEnter("archive", 430, ch2Gate) },
   { id:"enterC", x:()=>5200, label:UI.enterC, top:560, run:()=>tryEnter("cafe", 500, ch1Gate) },
   { id:"mo",     x:()=>NPCX.mo,   label:UI.talkMo, top:FEET-MO_H-150,   run:()=>startDlg(has("mo.green") && has("mo.told") ? "mo9" : "mo0") },
-  { id:"home",   x:()=>1560,      label:UI.toHome, top:600,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 700); } },
+  { id:"home",   x:()=>555,       label:UI.toHome, top:740,            run:()=>{ const g = homeGate(); if (g){ gateMsg6(g); return; } setScene("cottage", 700); } },
   { id:"heal",   x:()=>2405,      label:UI.toHeal, top:600,            run:()=>{ const g = healGate(); if (g){ gateMsg6(g); return; } setScene("healer", 470); } },
   { id:"mill",   x:()=>6150,      label:UI.toMill, top:600,            run:()=>{ const g = ch2Gate() || (!has("nini.key") ? "nini" : null); if (g){ gateMsg(g); return; } setScene("mill", 520); } },
   { id:"tm",     x:()=>NPCX.tm,   label:UI.talkTm, top:FEET-TM_H-150,   run:()=>{ const g = ch1Gate(); if (g){ gateMsg(g); return; } startDlg(tmNode()); } },
@@ -1130,7 +1130,7 @@ const IA_P = [
   { id:"pstove", x:()=>1700, label:UI.lStove,  top:480, run:()=>startDlg("p_s") },
   { id:"pkettle",x:()=>1730, label:UI.lKettle, top:420, run:()=>startDlg("p_k") },
   { id:"frame", x:()=>1300, label:UI.lFrame, top:430, run:()=>startDlg(has("c6.k3") ? (has("c6.hid") ? "p6_f9" : "p6_f0") : has("pro.frame") ? "p_f9" : "p_f0") },
-  { id:"pdoor", x:()=>2030, label:UI.lDoor,  top:330, run:()=>{ if (has("c6.on")){ setScene("village", 1560); return; } if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
+  { id:"pdoor", x:()=>2030, label:UI.lDoor,  top:330, run:()=>{ if (has("c6.on")){ setScene("village", 640); return; } if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
 ];
 let PRO_GO = false;
 const IA_C = [
