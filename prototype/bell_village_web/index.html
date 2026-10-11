@@ -751,6 +751,46 @@ D.p_n6 = {sp:"bgb", ex:"neutral", t:{en:"Yesterday? Sorry. I must've missed you.
 D.p_n9 = {sp:"nini", ex:"neutral", t:{en:"Then I'll say hello twice today, to make up for yesterday!", ko:"그럼 어제 못 한 인사까지 오늘 두 번 할래요!"}, next:"p_n9a"};
 D.p_n9a = {sp:"nini", ex:"neutral", t:{en:"Hello! Hello!", ko:"안녕하세요! 안녕하세요!"}, next:"p_n10"};
 D.p_n10 = {sp:"bgb", ex:"neutral", t:{en:"Haha, hello! Hello!", ko:"하하, 안녕! 안녕!"}, set:"pro.done", next:null};
+D.tm0 = {sp:"tm", t:{en:"Good evening, Mr. Big Green Bear. Have you been to the clock tower?", ko:"안녕하십니까, 빅그린베어 씨. 시계탑에 다녀오셨습니까?"}, next:"tm0a"};
+D.tm0a = {sp:"bgb", ex:"neutral", t:{en:"Yes. I heard you were on patrol last night.", ko:"네. 어젯밤 순찰하셨다고 들었습니다."}, next:"tm0b"};
+D.tm0b = {sp:"tm", t:{en:"That's correct. I patrolled the bridge and back lane as usual. I kept a record, too.", ko:"그렇습니다. 늘 그렇듯 다리와 뒷길을 돌았습니다. 기록도 남겨 두었습니다."}, set:"tm.met",
+   ch:[{t:{en:"Was there anything unusual last night?",ko:"어젯밤에 특이한 건 없었습니까?"},go:"tm1a"},{t:{en:"What about when you started your shift?",ko:"근무를 시작할 때는요?"},go:"tm3a"},{t:{en:"Did you go to the clock tower?",ko:"시계탑에는 가 보셨습니까?"},go:"tm2a"},{t:{en:"Thank you.",ko:"감사합니다."},go:"tm4a",bye:true}]};
+D.tm9 = {sp:"tm", t:{en:"Is there anything more you need?", ko:"더 필요하신 것이 있습니까?"},
+   ch:[{t:{en:"Was there anything unusual last night?",ko:"어젯밤에 특이한 건 없었습니까?"},go:"tm1a"},{t:{en:"What about when you started your shift?",ko:"근무를 시작할 때는요?"},go:"tm3a"},{t:{en:"Did you go to the clock tower?",ko:"시계탑에는 가 보셨습니까?"},go:"tm2a"},{t:{en:"Thank you.",ko:"감사합니다."},go:"tm4a",bye:true}]};
+D.tm1a = {sp:"tm", t:{en:"Around 11:35, I saw someone hurrying across Lantern Bridge.", ko:"11시 35분쯤 랜턴 다리를 급히 건너는 분을 봤습니다."}, next:"tm1b"};
+D.tm1b = {sp:"bgb", ex:"thinking", t:{en:"Do you remember anything about them?", ko:"기억나는 게 있으세요?"}, next:"tm1c"};
+D.tm1c = {sp:"tm", t:{en:"They were wearing a mustard-colored scarf. At first, I thought it was you.", ko:"겨자색 목도리를 하고 있었습니다. 처음엔 빅그린베어 씨인 줄 알았습니다."}, next:"tm1d"};
+D.tm1d = {sp:"bgb", ex:"surprised", t:{en:"Me?", ko:"저라고요?"}, next:"tm1e"};
+D.tm1e = {sp:"tm", t:{en:"I only saw them from behind. That's what I wrote in my log, but I can't say for certain.", ko:"뒷모습만 봤습니다. 일지에도 일단 그렇게 적어 두었지만, 확실한 건 아닙니다."}, ev:"stmt_tm", set:"tm.stmt"};
+D.tm3a = {sp:"tm", t:{en:"I started my patrol at 5:00 p.m. That's when I saw someone carrying a sack down the back lane.", ko:"오후 5시에 순찰을 시작했습니다. 그때 뒷길에서 자루를 들고 가는 분을 봤습니다."}, next:"tm3b"};
+D.tm3b = {sp:"bgb", ex:"thinking", t:{en:"Which way were they going?", ko:"어디로 가던가요?"}, next:"tm3c"};
+D.tm3c = {sp:"tm", t:{en:"Toward the Old Mill. Their hat was pulled down low, so I couldn't see their face.", ko:"오래된 방앗간 쪽이었습니다. 모자를 깊이 눌러쓰고 있어서 얼굴은 보지 못했습니다."}, set:"tm.pm"};
+D.tm2a = {sp:"tm", t:{en:"No, sir. My patrol only covers the bridge and the back lane.", ko:"아니요. 제 순찰 구역은 다리와 뒷길뿐입니다."}, next:"tm2b"};
+D.tm2b = {sp:"tm", t:{en:"I hear the bells every day, but I have no reason to go inside the tower.", ko:"종소리는 매일 듣습니다만, 탑 안에 들어갈 일은 없습니다."}};
+D.tm4a = {sp:"tm", t:{en:"My patrol log is hanging on that lamppost. You're welcome to check it.", ko:"순찰 일지는 저기 가로등 기둥에 걸려 있습니다. 필요하시면 확인하십시오."}};
+D.h0 = {sp:"hz", t:{en:"Oh, Mr. Big Green Bear. You're here. Would you like some tea?", ko:"어머, 빅그린베어 씨. 오셨네요. 따뜻한 차라도 한 잔 드릴까요?"}, set:"hz.met", next:"h0a"};
+D.h0a = {sp:"bgb", ex:"neutral", t:{en:"No, thank you, Hazel. I just have a few questions.", ko:"괜찮습니다, 헤이즐 씨. 잠깐 여쭤볼 게 있어서요."}, next:"h0b"};
+D.h0b = {sp:"hz", t:{en:"About Edward, I suppose? It's just heartbreaking.", ko:"에드워드 씨 일 때문이죠? 정말 마음이 아파요."},
+   ch:[{t:{en:"What time did I leave last night?",ko:"어젯밤 제가 몇 시에 나갔죠?"},go:"h1a"},{t:{en:"Were you close to Edward?",ko:"에드워드 씨와는 가까우셨나요?"},go:"h2a"},{t:{en:"Do you remember anything from yesterday afternoon?",ko:"어제 오후에 기억나는 일이 있나요?"},go:"h3a"},{t:{en:"Thank you.",ko:"감사합니다."},go:"h4a",bye:true}]};
+D.h9 = {sp:"hz", t:{en:"Is there anything else you'd like to ask?", ko:"더 궁금한 게 있으세요?"},
+   ch:[{t:{en:"What time did I leave last night?",ko:"어젯밤 제가 몇 시에 나갔죠?"},go:"h1a"},{t:{en:"Were you close to Edward?",ko:"에드워드 씨와는 가까우셨나요?"},go:"h2a"},{t:{en:"Do you remember anything from yesterday afternoon?",ko:"어제 오후에 기억나는 일이 있나요?"},go:"h3a"},{t:{en:"Thank you.",ko:"감사합니다."},go:"h4a",bye:true}]};
+D.h1a = {sp:"hz", t:{en:"You paid at 11:42. I wrote the time on the receipt.", ko:"11시 42분에 계산하셨어요. 영수증에 시각도 적어 뒀답니다."}, note:"hz", set:"hz.stmt", ev:"stmt_hz", next:"h1b"};
+D.h1b = {sp:"bgb", ex:"neutral", t:{en:"Could I see it?", ko:"영수증을 볼 수 있을까요?"}, next:"h1c"};
+D.h1c = {sp:"hz", t:{en:"Certainly. Here you go.", ko:"물론이죠. 여기 있어요."}, ev:"receipt", set:"hz.done", next:"h1d"};
+D.h1d = {sp:"hz", t:{en:"You stayed longer than usual last night. I thought you were waiting for someone.", ko:"그런데 어젯밤엔 평소보다 오래 계셨어요. 누군가를 기다리시는 줄 알았죠."}, next:"h1e"};
+D.h1e = {sp:"bgb", ex:"thinking", t:{en:"Did it seem that way?", ko:"그렇게 보였나요?"}, next:"h1f"};
+D.h1f = {sp:"hz", t:{en:"Yes. You kept looking toward the door. Perhaps I was reading too much into it.", ko:"네. 자꾸 문 쪽을 보셨거든요. 제가 괜한 생각을 했을 수도 있지만요."}};
+D.h2a = {sp:"hz", t:{en:"He was a good man. He even lent me money to fix the café roof last winter.", ko:"좋은 분이셨죠. 지난겨울엔 카페 지붕을 고칠 돈도 빌려주셨어요."}, next:"h2b"};
+D.h2b = {sp:"hz", t:{en:"I've only paid back half. I don't even know who I'm supposed to repay now.", ko:"아직 절반밖에 못 갚았어요. 이제 누구에게 갚아야 할지도 모르겠네요."}, set:"hz.owed"};
+D.h3a = {sp:"hz", t:{en:"You were sitting by that window yesterday afternoon. Don't you remember?", ko:"어제 오후에도 저 창가에 앉아 계셨잖아요. 기억 안 나세요?"}, next:"h3b"};
+D.h3b = {sp:"bgb", ex:"neutral", t:{en:"Yes. I had some tea.", ko:"네. 차를 마셨죠."}, next:"h3c"};
+D.h3c = {sp:"hz", t:{en:"I brought you a refill around 4:55. You were reading the paper.", ko:"4시 55분쯤 차를 더 따라 드렸어요. 신문을 읽고 계셨고요."}, ev:"tab_pm", set:"hz.pm", next:"h3d"};
+D.h3d = {sp:"hz", t:{en:"Come to think of it, someone bought bread at the back door earlier.", ko:"참, 그 전에 뒷문으로 빵을 사 간 손님이 한 분 있었어요."}, next:"h3e"};
+D.h3e = {sp:"bgb", ex:"thinking", t:{en:"Around what time?", ko:"몇 시쯤이었나요?"}, next:"h3f"};
+D.h3f = {sp:"hz", t:{en:"Around 4:40. They had their hat pulled low and barely said a word.", ko:"4시 40분쯤이요. 모자를 푹 눌러쓰고 말도 거의 없었어요."}, next:"h3g"};
+D.h3g = {sp:"bgb", ex:"thinking", t:{en:"You didn't recognize them?", ko:"누군지는 모르시고요?"}, next:"h3h"};
+D.h3h = {sp:"hz", t:{en:"No. I didn't ask, either. They just bought some bread and left.", ko:"네. 굳이 묻지도 않았어요. 빵만 사서 가셨으니까요."}, set:"hz.bread"};
+D.h4a = {sp:"hz", t:{en:"Come by anytime. There's always a warm cup of tea waiting for you.", ko:"언제든 들르세요. 따뜻한 차는 늘 준비되어 있으니까요."}};
 D.p_w = {sp:"bgb", ex:"neutral", t:{en:"The snow's really piling up. Footprints won't last long out there.", ko:"눈이 꽤 쌓였네. 발자국도 금방 지워지겠어."}};
 D.p_b = {sp:"bgb", ex:"neutral", t:{en:"My old storybooks. I've lost count of how many times I've read them.", ko:"오래된 동화책들이야. 몇 번이나 읽었는지 모르겠네."}};
 D.p_s = {sp:"bgb", ex:"neutral", t:{en:"The fire's almost out.", ko:"불이 거의 다 꺼졌네."}};
@@ -774,9 +814,6 @@ D.gr9 = {sp:"gr", ex:"neutral", t:{en:"I have said it already. Ask yourself what
 /* Chapter 3: Nini remembers the walk (does not know it was Green) */
 D.nw0 = {sp:"nini", ex:"thinking", t:{en:"Mr. Bear, I thought of that bear from yesterday. He walked faster than you do, like he had somewhere to be.", ko:"아저씨, 어제 그 곰 생각이 났어요. 걸음이 아저씨보다 빨랐어요. 꼭 어디 급하게 가는 것처럼요."}, note:"nw", set:"nini.walk", next:null};
 /* Café, afternoon (R21): Hazel can place BGB at 16:55 from the counter */
-D.h3 = {sp:"hz", t:{en:"And yesterday afternoon you had tea at the window table. I brought you a refill at 4:55. I can see that table from the counter, and my back-door bell rang while you were reading the paper.", ko:"어제 오후에도 창가 자리에서 차를 드셨죠. 5시 5분 전에 제가 리필을 가져다 드렸어요. 카운터에서 그 자리가 훤히 보이고, 뒷문 종이 울렸을 때도 신문을 보고 계셨고요."}, ev:"tab_pm", set:"hz.pm", next:"h4"};
-D.h4 = {sp:"hz", t:{en:"Someone did buy bread at the back door around 4:40. Hat low, few words. I did not ask who. Customers have their reasons.", ko:"4시 40분쯤 뒷문으로 빵을 사 간 손님이 있긴 했어요. 모자를 푹 눌러쓰고 말이 없었죠. 누구인지는 묻지 않았어요. 손님마다 사정이 있으니까요."}, set:"hz.bread", next:"h0"};
-D.tm3 = {sp:"tm", t:{en:"Last night my watch began at 5:00. Right at the start, a bear with a sack went down the back lane toward the Mill road. I did not write a name.", ko:"어젯밤 근무는 5시에 시작했습니다. 시작하자마자 자루를 든 곰이 뒷길로 방앗간 길 쪽으로 갔습니다. 이름은 적지 않았습니다."}, set:"tm.pm", next:"tm0"};
 /* Chapter 4 (placeholder build): no twin is ever named; the controlled child's label is a plain hyphen */
 D.fe0 = {sp:"ed", t:{en:"Big brother, hold still. Let me see that scarf.", ko:"큰애야, 가만히 있어 보렴. 목도리 좀 보자."}, note:"m1", next:"fe1"};
 D.fe1 = {sp:"ed", t:{en:"There. This knot on your side, and your brother's on the other. I can't tell you two apart without these.", ko:"자. 네 건 이쪽, 동생 건 반대쪽에 묶었다. 이게 없으면 너희 둘을 구분하지 못하겠구나."}, note:"m4", set:"f4.ed", next:"fe2"};
@@ -809,8 +846,8 @@ D.pf_end = {sp:"bgb", ex:"thinking", t:{en:"He always looked out for me.", ko:"�
 Object.assign(D, {
   ci1_0: {sp:"bgb", ex:"thinking", t:{en:"The clock stopped at 11:47. What exactly happened to Edward?", ko:"시계는 11시 47분에 멈췄어. 에드워드 아저씨에게 무슨 일이 있었던 걸까."}, next:"ci1_1"},
   ci1_1: {sp:"bgb", ex:"neutral", t:{en:"I'll take a look inside. There must be something I haven't checked yet.", ko:"일단 안을 살펴보자. 아직 확인하지 못한 게 있을 거야."}, next:null},
-  ci2_0: {sp:"bgb", ex:"thinking", t:{en:"The clock broke when Edward fell, and a bear climbed those stairs around 11:40. That is all the tower can tell me.", ko:"시계는 에드워드가 떨어질 때 고장 났고, 11시 40분쯤 어떤 곰이 그 계단을 올랐어. 탑이 알려 줄 수 있는 건 거기까지야."}, next:"ci2_1"},
-  ci2_1: {sp:"bgb", ex:"neutral", t:{en:"Now I need people's stories. Hazel's café, Tommy's logbook, Nini and Oliver. Then I can compare them.", ko:"이제는 사람들의 이야기가 필요해. 헤이즐의 카페, 토미의 일지, 니니와 올리버. 그걸 맞춰 보면 돼."}, next:null},
+  ci2_0: {sp:"bgb", ex:"thinking", t:{en:"That's about all I can learn from the clock tower.", ko:"시계탑에서 확인할 수 있는 건 여기까지인가."}, next:"ci2_1"},
+  ci2_1: {sp:"bgb", ex:"neutral", t:{en:"I should talk to the others. See what they remember about last night.", ko:"이제 다른 사람들 얘기도 들어 봐야겠어. 어젯밤에 무슨 일이 있었는지."}, next:null},
   ci3_0: {sp:"bgb", ex:"thinking", t:{en:"One bear cannot be in two places. The bear on the bridge and the bear in the café were different, and the one with the right hand was not me.", ko:"곰은 한 마리일 수 없어. 다리 위의 곰과 카페의 곰은 달랐고, 오른손에 물건을 든 곰은 내가 아니야."}, next:"ci3_1"},
   ci3_1: {sp:"bgb", ex:"neutral", t:{en:"So who is the other bear? Talk to Nini about the drawer key, then try the Archive and the Old Mill.", ko:"그럼 다른 곰은 누구지? 니니에게 서랍 열쇠 이야기를 듣고, 기록관과 낡은 방앗간을 확인해 보자."}, next:null},
   ci4_0: {sp:"bgb", ex:"thinking", t:{en:"Two photographs that disagree, and a memory pulling at me from inside them.", ko:"서로 어긋나는 두 장의 사진, 그리고 그 안에서 나를 끌어당기는 기억."}, next:"ci4_1"},
@@ -820,17 +857,6 @@ Object.assign(D, {
   ci6_0: {sp:"bgb", ex:"thinking", t:{en:"The knots, the right hand, the torn ear. I saw all of it, and I cannot unsee it.", ko:"매듭, 오른손, 찢어진 귀. 다 봤어. 이제 모르는 척할 수 없어."}, next:"ci6_1"},
   ci6_1: {sp:"bgb", ex:"neutral", t:{en:"Compare the clues on the Identity Board under People. After that, I have to see Green at the Old Mill.", ko:"사람 탭의 신원 보드에서 단서를 맞춰 보자. 그다음엔 낡은 방앗간의 Green을 만나야 해."}, next:null}
 });
-D.tm0 = {sp:"tm", t:{en:"Evening, Mr. Big Green Bear. I walk this bridge loop every night and keep the log.", ko:"안녕하세요, 빅그린베어 씨. 저는 밤마다 이 다리 둘레를 돌며 일지를 씁니다."},
-   ch:[{t:{en:"What did you see last night?",ko:"어젯밤에 뭘 보셨나요?"},go:"tm1"},{t:{en:"Do you mind the tower at night?",ko:"밤에 탑이 거슬리진 않으세요?"},go:"tm2"},{t:{en:"Anything earlier in your watch?",ko:"근무 초반에 본 건 없나요?"},go:"tm3"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
-D.tm1 = {sp:"tm", t:{en:"At 11:35 a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.", ko:"11시 35분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 두었습니다. 뒷모습만 봤습니다."}, ev:"stmt_tm", set:"tm.stmt", next:null};
-D.tm2 = {sp:"tm", t:{en:"The winding and the bells keep me awake, I will say that. But I never go in. The tower is not my watch.", ko:"태엽 소리와 종소리가 잠을 설치게 하긴 합니다. 그래도 안에는 들어가지 않습니다. 탑은 제 순찰 구역이 아니니까요."}, next:"tm0"};
-D.tm9 = {sp:"tm", t:{en:"The times are in the log, hanging on the post. Take your time with it.", ko:"시각은 가로등 기둥에 걸린 일지에 있습니다. 천천히 보십시오."}};
-D.h0 = {sp:"hz", t:{en:"Mr. Big Green Bear. Terrible business. The whole café has talked of nothing else since the bell.", ko:"빅그린베어 씨. 끔찍한 일이에요. 종이 울린 뒤로 우리 카페는 그 얘기뿐이에요."}, set:"hz.met",
-   ch:[{t:{en:"About last night.",ko:"어젯밤 일에 대해서요."},go:"h1"},{t:{en:"Did you know Edward well?",ko:"에드워드 씨를 잘 아셨나요?"},go:"h2"},{t:{en:"What about yesterday afternoon?",ko:"어제 오후는요?"},go:"h3"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
-D.h1 = {sp:"hz", t:{en:"You were here until a little before 11:45. You looked like you were waiting for someone.", ko:"12시 15분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠."}, note:"hz", set:"hz.stmt", ev:"stmt_hz", next:"h1b"};
-D.h1b = {sp:"hz", t:{en:"You settled your tab at 11:42. I wrote the time on the receipt myself. Here, keep it.", ko:"11시 42분에 계산하셨어요. 시각은 제가 직접 영수증에 적었죠. 자, 가지고 계세요."}, ev:"receipt", set:"hz.done", next:null};
-D.h2 = {sp:"hz", t:{en:"He lent me money for the roof last winter. I paid back half. It's no secret, so don't go writing it down as one.", ko:"작년 겨울에 지붕 고치라고 돈을 빌려줬어요. 절반은 갚았고요. 비밀도 아니니 무슨 비밀인 양 적지는 마세요."}, set:"hz.owed", next:"h0"};
-D.h9 = {sp:"hz", t:{en:"Take your time. The kettle's always on.", ko:"천천히 하세요. 주전자는 늘 불 위에 있답니다."}};
 const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp"}, kid:{name:{en:"-",ko:"-"}, img:"assets/twin_elder_front.webp", sil:true}, mo:{name:{en:"Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"Green"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
 const EXPR = ["neutral","worried","surprised","thinking"];
 
@@ -1336,8 +1362,9 @@ Object.assign(D, {
   ce1_0: {sp:"bgb", ex:"thinking", t:{en:"11:40. A scarf. Something carried in the right hand.", ko:"11시 40분. 목도리. 오른손에 들고 있던 물건."}, next:"ce1_1"},
   ce1_1: {sp:"bgb", ex:"neutral", t:{en:"That's all Oliver saw.", ko:"올리버 씨가 본 건 그게 전부야."}, next:"ce1_2"},
   ce1_2: {sp:"bgb", ex:"worried", t:{en:"I wonder what everyone else saw last night. I should talk to Hazel first.", ko:"다른 사람들은 어젯밤에 뭘 봤을까. 헤이즐 씨부터 만나 봐야겠어."}, next:null},
-  ce2_0: {sp:"bgb", ex:"thinking", t:{en:"One bear cannot be in two places. The bear on the bridge and the bear in the café were different.", ko:"곰은 한 마리일 수 없어. 다리 위의 곰과 카페의 곰은 달랐어."}, next:"ce2_1"},
-  ce2_1: {sp:"bgb", ex:"worried", t:{en:"And the one with the right hand was not me. So who is the other bear?", ko:"그리고 오른손에 물건을 든 곰은 내가 아니야. 그럼 다른 곰은 누구지?"}, next:null},
+  ce2_0: {sp:"bgb", ex:"thinking", t:{en:"11:35, Lantern Bridge. 11:42, the café receipt.", ko:"11시 35분, 랜턴 다리. 11시 42분, 카페 영수증."}, next:"ce2_1"},
+  ce2_1: {sp:"bgb", ex:"neutral", t:{en:"Tommy saw a scarf, and Hazel said I was at the café.", ko:"토미 씨는 목도리만 봤고, 헤이즐 씨는 내가 카페에 있었다고 했어."}, next:"ce2_2"},
+  ce2_2: {sp:"bgb", ex:"worried", t:{en:"And there's that person who took the back lane in the afternoon. I should check the Archive and the Old Mill.", ko:"오후에 뒷길로 지나간 사람도 마음에 걸려. 기록관과 오래된 방앗간을 살펴봐야겠어."}, next:null},
   ce3_0: {sp:"bgb", ex:"thinking", t:{en:"Two photographs, and the scarf knots do not agree. Green told me to ask myself what I remember.", ko:"사진 두 장, 그리고 서로 맞지 않는 목도리 매듭. Green은 내 기억을 떠올려 보라고 했어."}, next:"ce3_1"},
   ce3_1: {sp:"bgb", ex:"worried", t:{en:"Something is pulling at me from inside the picture.", ko:"사진 속에서 뭔가가 나를 잡아당겨."}, next:null},
   ce4_0: {sp:"bgb", ex:"thinking", t:{en:"Edward told the two apart only by their knots. A scarf end jammed the lever, and the bell never rang.", ko:"에드워드는 두 아이를 매듭으로만 구분했어. 목도리 끝이 레버에 끼었고, 종은 울리지 않았어."}, next:"ce4_1"},
@@ -1562,8 +1589,8 @@ function whenPlay(fn){ const t = setInterval(()=>{ if (mode === "play"){ clearIn
 /* Chapter 6 routing: which line a person or object gives now */
 const ckNode = () => has("c6.turn") && !has("stmt_ck2") ? "ck6_0" : has("c6.turn") ? "ck6_9" : !has("ck.bear") ? "c0" : (!has("c2") || !has("ck.watch")) ? "c9" : talk("ck");
 const grNode = () => has("c7.green") ? "g7_9" : has("c7.on") ? "g7_0" : !has("c6.on") ? (has("gr.done") ? "gr9" : "gr0") : !has("dd04") ? "c6_wait" : !has("gr.admit") ? "g6_0" : !has("c6.hl") ? "g6_h" : !has("c6.turn") ? "g6_t0" : "g6_9";
-const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : has("hz.done") && has("hz.pm") ? talk("hz") : "h0";
-const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : has("tm.stmt") && has("tm.pm") ? talk("tm") : "tm0";
+const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : has("hz.done") && has("hz.pm") ? talk("hz") : has("hz.met") ? "h9" : "h0";
+const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : has("tm.stmt") && has("tm.pm") ? talk("tm") : has("tm.met") ? "tm9" : "tm0";
 const niniNode = () => has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : has("gr.done") && !has("nini.walk") ? "nw0" : has("dd02") && !has("nini.key") ? "nk0" : has("nini.done") ? talk("nini") : "n0";
 const homeGate = () => !has("c6.on") ? "home0" : !has("c6.turn") ? "home1" : (missing(["report","wool","patrol2","handbell","melt"]).length ? "homeK" : null);
 const healGate = () => !has("c6.on") ? "heal0" : !has("dd06") ? "heal1" : null;
