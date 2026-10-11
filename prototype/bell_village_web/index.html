@@ -614,7 +614,7 @@ const SP = { mo:{name:{en:"Molly",ko:"몰리"}, img:"assets/nini_front.webp", si
 const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
-const SAVE_KEY = "bgb2.bellvillage.proto.v1";
+const SAVE_KEY = "bgb2.bellvillage.proto.v2";   /* v2: saves from before the prologue existed would skip it, so everyone restarts once */
 let S = { x:700, flags:{}, ev:[], notes:[], lang:"en", scene:"cottage" };   /* a new game starts in the prologue */
 function load(){ try { const r = localStorage.getItem(SAVE_KEY); if (r) { const o = JSON.parse(r); if (o && typeof o.x === "number") S = Object.assign(S, o); } } catch(e){} lang = S.lang || "en"; }
 function save(){ S.lang = lang; try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} }
