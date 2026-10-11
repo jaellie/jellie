@@ -389,10 +389,10 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
    <div id="psky"></div><div class="layer" id="pfar"><img src="assets/far.webp" width="3230" height="492" alt=""></div>
    <div id="pworld">
     <div id="rmC" class="rm"><div style="position:absolute;left:-2171px;top:-60px;width:6513px;height:210px;background:linear-gradient(#2b190e 0,#3a2314 60%,#4a2f1b)"></div>
-     <img src="assets/k_mid.webp" style="left:0;top:-18px;width:2171px;height:1019px" alt=""><div style="position:absolute;left:-2400px;top:-60px;width:2408px;height:1000px;background:linear-gradient(#2b190e 0,#4a2f1b 18%,#5a3a22 60%,#3a2314)"></div><div style="position:absolute;left:2091px;top:-60px;width:2480px;height:1000px;background:linear-gradient(#2b190e 0,#4a2f1b 18%,#5a3a22 60%,#3a2314)"></div>
+     <img src="assets/k_mid.webp" style="left:0;top:-18px;width:2171px;height:1019px" alt=""><div style="position:absolute;left:-2400px;top:-60px;width:2408px;height:1300px;background:linear-gradient(#2b190e 0,#4a2f1b 18%,#5a3a22 60%,#3a2314)"></div><div style="position:absolute;left:2142px;top:-60px;width:2600px;height:1300px;background:linear-gradient(#2b190e 0,#4a2f1b 18%,#5a3a22 60%,#3a2314)"></div>
      <img src="assets/k_ground.webp" style="left:0;top:405px;width:2172px;height:724px" alt=""><img src="assets/k_ground.webp" style="left:-2172px;top:405px;width:2172px;height:724px;transform:scaleX(-1)" alt=""><img src="assets/k_ground.webp" style="left:2172px;top:405px;width:2172px;height:724px;transform:scaleX(-1)" alt="">
     </div>
-    <div id="rmH" class="rm"><div style="position:absolute;left:-2382px;top:760px;width:7146px;height:90px;background:linear-gradient(#2d1a0f,#3d2616 60%,#4a2f1b)"></div><div style="position:absolute;left:-2382px;top:-60px;width:7146px;height:150px;background:linear-gradient(#2b190e 0,#3a2314 70%,#4a2f1b)"></div><img src="assets/h_mid.webp" style="left:0px;top:-150px;width:2382px;height:1117px" alt=""><div style="position:absolute;left:-2400px;top:-60px;width:2408px;height:1000px;background:linear-gradient(#2b190e 0,#4a2f1b 18%,#5a3a22 60%,#3a2314)"></div><div style="position:absolute;left:2374px;top:-60px;width:2400px;height:1000px;background:linear-gradient(#2b190e 0,#4a2f1b 18%,#5a3a22 60%,#3a2314)"></div>
+    <div id="rmH" class="rm"><div style="position:absolute;left:-2382px;top:760px;width:7146px;height:90px;background:linear-gradient(#2d1a0f,#3d2616 60%,#4a2f1b)"></div><div style="position:absolute;left:-2382px;top:-60px;width:7146px;height:150px;background:linear-gradient(#2b190e 0,#3a2314 70%,#4a2f1b)"></div><img src="assets/h_mid.webp" style="left:0px;top:-150px;width:2382px;height:1117px" alt=""><div style="position:absolute;left:-2400px;top:-60px;width:2408px;height:1300px;background:linear-gradient(#2b190e 0,#4a2f1b 18%,#5a3a22 60%,#3a2314)"></div><div style="position:absolute;left:2344px;top:-60px;width:2600px;height:1300px;background:linear-gradient(#2b190e 0,#4a2f1b 18%,#5a3a22 60%,#3a2314)"></div>
      <img src="assets/h_ground.webp" style="left:0;top:534px;width:2382px;height:579px" alt="">
     </div>
     <img id="pframe" src="assets/ev_keepsake_frame.webp" alt="Photograph frame">
@@ -1603,7 +1603,7 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 /* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
-const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2171}, mill:{min:0,end:3000}, past:{min:0,end:2632}, healer:{min:0,end:2382}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2150}, mill:{min:0,end:3000}, past:{min:0,end:2632}, healer:{min:0,end:2352}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
 function locOf(n){ return tr(n==="healer" ? UI.locH : n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
   calmSince = performance.now(); keys.clear(); autoGo = null;   /* a held or stuck key (or an old tap-to-walk target) must never carry into the new room */
