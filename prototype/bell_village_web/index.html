@@ -799,7 +799,7 @@ D.tm0 = {sp:"tm", t:{en:"Evening, Mr. Big Green Bear. I walk this bridge loop ev
 D.tm1 = {sp:"tm", t:{en:"At 11:35 a bear in a mustard scarf crossed Lantern Bridge in a hurry. I wrote it down as you, Mr. Big Green Bear. I only saw his back.", ko:"11시 35분에 겨자색 목도리를 한 곰이 랜턴 다리를 서둘러 건넜습니다. 빅그린베어 씨, 당신이라고 적어 두었습니다. 뒷모습만 봤습니다."}, ev:"stmt_tm", set:"tm.stmt", next:null};
 D.tm2 = {sp:"tm", t:{en:"The winding and the bells keep me awake, I will say that. But I never go in. The tower is not my watch.", ko:"태엽 소리와 종소리가 잠을 설치게 하긴 합니다. 그래도 안에는 들어가지 않습니다. 탑은 제 순찰 구역이 아니니까요."}, next:"tm0"};
 D.tm9 = {sp:"tm", t:{en:"The times are in the log, hanging on the post. Take your time with it.", ko:"시각은 가로등 기둥에 걸린 일지에 있습니다. 천천히 보십시오."}};
-D.h0 = {sp:"hz", t:{en:"Mr. Big Green Bear. Terrible business. The whole café has talked of nothing else since the bell.", ko:"빅그린베어 씨. 끔찍한 일이에요. 종이 울린 뒤로 우리 카페는 그 얘기뿐이에요."},
+D.h0 = {sp:"hz", t:{en:"Mr. Big Green Bear. Terrible business. The whole café has talked of nothing else since the bell.", ko:"빅그린베어 씨. 끔찍한 일이에요. 종이 울린 뒤로 우리 카페는 그 얘기뿐이에요."}, set:"hz.met",
    ch:[{t:{en:"About last night.",ko:"어젯밤 일에 대해서요."},go:"h1"},{t:{en:"Did you know Edward well?",ko:"에드워드 씨를 잘 아셨나요?"},go:"h2"},{t:{en:"What about yesterday afternoon?",ko:"어제 오후는요?"},go:"h3"},{t:{en:"Thank you.",ko:"고맙습니다."},go:null}]};
 D.h1 = {sp:"hz", t:{en:"You were here until a little before 11:45. You looked like you were waiting for someone.", ko:"12시 15분 전이 조금 못 되도록 여기 계셨어요. 누군가를 기다리는 것 같았죠."}, note:"hz", set:"hz.stmt", ev:"stmt_hz", next:"h1b"};
 D.h1b = {sp:"hz", t:{en:"You settled your tab at 11:42. I wrote the time on the receipt myself. Here, keep it.", ko:"11시 42분에 계산하셨어요. 시각은 제가 직접 영수증에 적었죠. 자, 가지고 계세요."}, ev:"receipt", set:"hz.done", next:null};
@@ -1034,7 +1034,7 @@ const KCON = [
 const EV_WHERE = {
   wool:{en:"ask Oliver in the tower", ko:"시계탑의 올리버에게 물어보면"}, stmt_ck2:{en:"ask Oliver in the tower", ko:"시계탑의 올리버에게 물어보면"}, melt:{en:"look around the tower", ko:"시계탑을 살펴보면"},
   report:{en:"visit the Healer's house", ko:"치료사의 집에 가 보면"}, watch:{en:"visit the Healer's house", ko:"치료사의 집에 가 보면"}, patrol2:{en:"ask Tommy about his log", ko:"토미에게 일지에 대해 물어보면"},
-  walk:{en:"ask Hazel at the café", ko:"카페의 헤이즐에게 물어보면"}, receipt:{en:"ask Hazel at the café", ko:"카페의 헤이즐에게 물어보면"}, handbell:{en:"look around the tower", ko:"시계탑을 살펴보면"}, chute:{en:"look around the tower", ko:"시계탑을 살펴보면"},
+  walk:{en:"ask Hazel about that night", ko:"헤이즐에게 그날 밤에 대해 물어보면"}, receipt:{en:"ask Hazel about last night", ko:"헤이즐에게 어젯밤 일에 대해 물어보면"}, handbell:{en:"look around the tower", ko:"시계탑을 살펴보면"}, chute:{en:"look around the tower", ko:"시계탑을 살펴보면"},
   patrol:{en:"read Tommy's logbook", ko:"토미의 일지를 읽어 보면"}, glove:{en:"look at the photograph at home", ko:"집의 사진을 살펴보면"}, letter:{en:"look at the photograph at home", ko:"집의 사진을 살펴보면"}, hide:{en:"look at the photograph at home", ko:"집의 사진을 살펴보면"}
 };
 const missing = ids => ids.filter(e=>!S.ev.includes(e));
@@ -1337,7 +1337,7 @@ function nextHint(){
   if (has("nini.key")) return L("낡은 방앗간의 Green을 만나 보자. 마을 맨 오른쪽이야.","Meet Green at the Old Mill, at the far right of the village.");
   if (has("dd02")) return L("니니와 서랍 열쇠에 대해 이야기하자.","Talk to Nini about the drawer key.");
   if (has("q1")){
-    if (!ev("receipt")) return L("카페의 헤이즐에게 가 보자. 기록실 오른쪽이야.","Visit Hazel at the café, to the right of the Archive.");
+    if (!ev("receipt")) return has("hz.met") ? L("헤이즐에게 어젯밤 일에 대해 다시 물어보자.","Ask Hazel again about last night.") : L("카페의 헤이즐에게 가 보자. 기록실 오른쪽이야.","Visit Hazel at the café, to the right of the Archive.");
     if (!ev("patrol")) return L("마을의 순찰 초소에서 토미의 일지를 읽어 보자.","Read Tommy's logbook at the patrol post in the village.");
     if (!has("c2")) return L("올리버와 이야기하면서 내 손을 확인해 보자.","Talk to Oliver, and glance at my own hands.");
     return L("모은 증언을 사건 파일에서 맞춰 보자.","Compare the statements in the Case File.");
@@ -1487,6 +1487,7 @@ function gateMsg6(k){
 const GATE_T = {
   ck:   {ko:"아직 이곳은 들어갈 수 없다. 계단의 곰에 대해 시계지기 올리버와 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Clockkeeper Oliver about the bear on the stairs."},
   tower:{ko:"아직 이곳은 들어갈 수 없다. 계단의 곰에 대해 시계탑으로 가 보면 단서를 더 찾을 수 있을 것 같다.", en:"I can't go in there yet. Going back to the clock tower might turn up more clues about the bear on the stairs."},
+  rcpt2:{ko:"아직 이곳은 들어갈 수 없다. 어젯밤 곰이 한 마리였는지에 대해 헤이즐과 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Hazel about whether there was only one bear last night."},
   rcpt: {ko:"아직 이곳은 들어갈 수 없다. 곰이 한 마리였는지에 대해 헤이즐의 카페로 가 보면 힌트를 찾을 수 있을 것 같다.", en:"I can't go in there yet. Whether there was only one bear might be answered at Hazel's café."},
   logb: {ko:"아직 이곳은 들어갈 수 없다. 다리를 건넌 곰에 대해 마을의 순찰 초소로 가 보면 힌트를 찾을 수 있을 것 같다.", en:"I can't go in there yet. The patrol post in the village might tell me about the bear on the bridge."},
   hand: {ko:"아직 이곳은 들어갈 수 없다. 오른손에 든 물건에 대해 시계지기 올리버와 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Clockkeeper Oliver about what the bear carried in his right hand."},
@@ -1500,7 +1501,7 @@ Object.assign(GATE_T, {
   heal1:{ko:"아직 이곳은 들어갈 수 없다. 에드워드가 쓰러진 순간에 대해 Green과 더 이야기를 나눠 보자.", en:"I can't go in there yet. Let me talk more with Green about the moment Edward fell."}
 });
 const ch1Gate = () => !S.flags.q1 ? (has("ck.bear") ? "tower" : "ck") : null;
-const ch2Gate = () => ch1Gate() || (!has("dd02") ? (!S.ev.includes("receipt") ? "rcpt" : !S.ev.includes("patrol") ? "logb" : "hand") : null);
+const ch2Gate = () => ch1Gate() || (!has("dd02") ? (!S.ev.includes("receipt") ? (has("hz.met") ? "rcpt2" : "rcpt") : !S.ev.includes("patrol") ? "logb" : "hand") : null);
 function tryEnter(sc, x, gate){ const g = gate(); if (g){ gateMsg(g); return false; } setScene(sc, x); return true; }
 function endDlg(){ if (accAfterOpen){ accAfterOpen = false; setTimeout(nextAcc, 350); }
   if (ACC.some(a=>a.q===cur)){ accCur = ACC.find(a=>a.q===cur); setTimeout(openPresent, 350); }
