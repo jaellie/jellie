@@ -10,7 +10,7 @@ evidence / document / photo / timeline / identity cards, case label, paperclip, 
 Attach 3 of them (e.g. `frame_main`, `ui_folder_tab_case`, `ui_evidence_card`) as **style references** for every generation below.
 
 ## 1. Rules for the whole kit
-- **No text baked into any image.** All words (Korean + English) render in-engine. Leave label areas empty.
+- **No text baked into any image.** All words (Korean + English) render in-engine. Leave label areas empty. Exception: ink stamps may carry baked text; see `STAMP_PROMPTS.md` (English + Korean, with a blank-stamp option).
 - Every element is a **separate transparent PNG** (or a clean grid sheet that I slice). No backgrounds, no checkerboard, no watermarks.
 - Interactive elements come in **states**: `normal`, `hover`, `pressed`, `disabled`, `selected` (same size, same silhouette, only material changes).
 - Scalable panels are drawn as **9-slice sources**: flat middle, fixed corners/edges, no ornament that would stretch.

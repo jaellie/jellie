@@ -77,5 +77,6 @@ document.addEventListener('click',function(e){var b=e.target.closest('.copy');if
 var start='chars';try{start=localStorage.getItem('bpb-tab')||start}catch(e){}
 var h=location.hash.slice(1);if(h){var el=document.getElementById(h);if(el){var pp=el.closest('.pane');if(pp)start=pp.id.replace('pane-','')}}
 show(start);
+if(h){var t=document.getElementById(h);if(t)setTimeout(function(){t.scrollIntoView()},50)}
 })();
 </script>

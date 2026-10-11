@@ -7,6 +7,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOCS = [
  ("chars", "Characters", "CHARACTER_ART_PROMPTS.md"),
  ("ui", "UI Kit", "UI_KIT_PROMPTS.md"),
+ ("stamp", "Stamps + Korean", "STAMP_PROMPTS.md"),
  ("anim", "Animation guide", "ANIMATION_LOOPS.md"),
  ("video", "Grok video", "GROK_VIDEO_LOOPS.md"),
 ]
