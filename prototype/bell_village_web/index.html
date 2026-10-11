@@ -1250,7 +1250,7 @@ const IA_T = [
 const IA_A = [
   { id:"exit",  x:()=>410,  label:UI.leaveA, top:540, run:()=>setScene("village", 3705) },
   { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, run:()=>inspect("register") },
-  { id:"comp",  x:()=>1500, label:UI.lComp,  top:540, run:()=>{ if (has("c6.on")){ startDlg("c6_comp"); return; } if (!has("gr.done")){ startDlg("m_no"); return; } showEnd(); } },
+  { id:"comp",  x:()=>1500, label:UI.lComp,  top:540, run:()=>{ if (has("c6.on")){ startDlg("c6_comp"); return; } if (!has("gr.done")){ startDlg("m_no"); return; } endMono("ce3_0", startFlash); } },
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, run:()=>inspect(has("nini.key") ? "photo2" : "drawers") }
 ];
 const IA_FL = [
@@ -1301,6 +1301,31 @@ IA = IA_V;
 let near = null, peek = 0, autoGo = null;
 
 
+
+/* chapter-end thoughts: BGB sums the chapter up before the end card or the next chapter */
+let afterDlg = null;
+function endMono(id, then){ afterDlg = then; startDlg(id); }
+Object.assign(D, {
+  ce1_0: {sp:"bgb", ex:"thinking", t:{en:"Here is what the tower told me. The clock stopped at 11:47, when Edward fell. And a bear climbed those stairs around 11:40.", ko:"탑이 알려 준 건 이거야. 시계는 에드워드가 떨어진 11시 47분에 멈췄어. 그리고 11시 40분쯤 어떤 곰이 그 계단을 올랐어."}, next:"ce1_1"},
+  ce1_1: {sp:"bgb", ex:"worried", t:{en:"Who was that bear?", ko:"그 곰은 누구였을까?"}, next:null},
+  ce2_0: {sp:"bgb", ex:"thinking", t:{en:"One bear cannot be in two places. The bear on the bridge and the bear in the café were different.", ko:"곰은 한 마리일 수 없어. 다리 위의 곰과 카페의 곰은 달랐어."}, next:"ce2_1"},
+  ce2_1: {sp:"bgb", ex:"worried", t:{en:"And the one with the right hand was not me. So who is the other bear?", ko:"그리고 오른손에 물건을 든 곰은 내가 아니야. 그럼 다른 곰은 누구지?"}, next:null},
+  ce3_0: {sp:"bgb", ex:"thinking", t:{en:"Two photographs, and the scarf knots do not agree. Green told me to ask myself what I remember.", ko:"사진 두 장, 그리고 서로 맞지 않는 목도리 매듭. Green은 내 기억을 떠올려 보라고 했어."}, next:"ce3_1"},
+  ce3_1: {sp:"bgb", ex:"worried", t:{en:"Something is pulling at me from inside the picture.", ko:"사진 속에서 뭔가가 나를 잡아당겨."}, next:null},
+  ce4_0: {sp:"bgb", ex:"thinking", t:{en:"Edward told the two apart only by their knots. A scarf end jammed the lever, and the bell never rang.", ko:"에드워드는 두 아이를 매듭으로만 구분했어. 목도리 끝이 레버에 끼었고, 종은 울리지 않았어."}, next:"ce4_1"},
+  ce4_1: {sp:"bgb", ex:"worried", t:{en:"And now the water is rising.", ko:"그리고 이제 물이 차오르기 시작해."}, next:null},
+  ce5_0: {sp:"bgb", ex:"thinking", t:{en:"Someone rang the handbell, and nobody saw who. The crowd praised the child Edward carried.", ko:"누군가 손종을 울렸지만 아무도 그걸 보지 못했어. 사람들은 에드워드가 안고 나온 아이를 칭찬했어."}, next:"ce5_1"},
+  ce5_1: {sp:"bgb", ex:"worried", t:{en:"Nobody looked at the child left standing in the cold.", ko:"추위 속에 홀로 남은 아이를 본 사람은 없었어."}, next:null},
+  ce6_0: {sp:"bgb", ex:"thinking", t:{en:"When I found Edward at 11:50, he was alive. I hid the glove and the letter, and the bell rang 5 minutes later.", ko:"11시 50분에 에드워드를 찾았을 때 그는 살아 있었어. 나는 장갑과 편지를 숨겼고, 종은 5분 뒤에 울렸어."}, next:"ce6_1"},
+  ce6_1: {sp:"bgb", ex:"worried", t:{en:"No one can say whether help would have saved him. But I know what I did.", ko:"도움이 있었다면 살았을지는 아무도 말할 수 없어. 하지만 내가 한 일은 내가 알아."}, next:null},
+  ce7_1_0: {sp:"bgb", ex:"thinking", t:{en:"It is all written down: Edward's name, mine, Green's, each in its place. Nothing can be undone.", ko:"다 적혔어. 에드워드의 이름, 내 이름, Green의 이름도 제자리에. 되돌릴 수 있는 건 없어."}, next:"ce7_1_1"},
+  ce7_1_1: {sp:"bgb", ex:"neutral", t:{en:"But now the truth stays with us.", ko:"그래도 이제 사실은 남아 있어."}, next:null},
+  ce7_2_0: {sp:"bgb", ex:"thinking", t:{en:"It is recorded as an accident. The village is quiet, and I am still the hero.", ko:"사고로 적혔어. 마을은 조용해졌고, 나는 여전히 영웅이야."}, next:"ce7_2_1"},
+  ce7_2_1: {sp:"bgb", ex:"worried", t:{en:"The photograph still leans on the shelf, unturned.", ko:"사진은 뒤집어 보지 않은 채 선반에 기대어 있어."}, next:null},
+  ce7_3_0: {sp:"bgb", ex:"worried", t:{en:"Only Green's name is left on the page. I watched him go, and my hand found the knot of my scarf.", ko:"장부에는 Green의 이름만 남았어. 그가 끌려가는 걸 보며 내 손이 목도리 매듭을 더듬었어."}, next:null},
+  ce7_4_0: {sp:"bgb", ex:"worried", t:{en:"The page turned to ash. The names stay swapped, and the truth is gone.", ko:"종이는 재가 됐어. 이름은 바뀐 채 남고, 진실은 사라졌어."}, next:null}
+});
+
 /* Tap BGB (or press H): a thought that says who to talk to or where to go next */
 function nextHint(){
   const K = lang==="ko", ev = e=>S.ev.includes(e), L = (ko,en)=>K?ko:en;
@@ -1349,9 +1374,9 @@ function nextHint(){
 }
 function askBgb(){ if (mode !== "play" || performance.now() < dlgLock) return false; hideHintNow(); D.hintNow = {sp: S.flash ? "kid" : "bgb", ex:"thinking", t:{en:nextHint(), ko:nextHint()}, next:null}; startDlg("hintNow"); return true; }
 /* the next-step thought also comes up by itself, as a dialogue, whenever the objective changes */
-let lastGoal = "";
+let lastGoal = "", holdHint = false;
 setInterval(()=>{
-  if (mode !== "play" || performance.now() < dlgLock || autoGo) return;
+  if (holdHint || mode !== "play" || performance.now() < dlgLock || autoGo) return;
   let h; try { h = nextHint(); } catch(e){ return; }
   if (h && h !== lastGoal && askBgb()) lastGoal = h;
 }, 900);
@@ -1378,7 +1403,7 @@ function checkDeduce(){
   if (has("gr.hand") && has("ck.bear") && !S.flags.dd03){ S.flags.dd03 = true; addNote(DD03); toast((lang==="ko"?"추리":"Deduction")+": "+(lang==="ko"?"계단의 곰은 당신이 아니다":"The stair bear was not you")); }
   const tw = ["hatch","pendulum","handbell","chute","melt","boots"].filter(x=>S.ev.includes(x)).length;
   if (S.ev.includes("clock") && S.ev.includes("pendulum") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
-  if (has("ck.bear") && S.ev.includes("clock") && tw >= 3 && !S.flags.q1){ S.flags.q1 = true; if (!S.flags["ch.2"]){ S.flags["ch.2"] = true; setTimeout(()=>whenPlay(()=>chapterIntro(2)), 3500); } toast((lang==="ko"?"질문":"Question")+": "+tr(UI.askBear)); }
+  if (has("ck.bear") && S.ev.includes("clock") && tw >= 3 && !S.flags.q1){ S.flags.q1 = true; if (!S.flags["ch.2"]){ S.flags["ch.2"] = true; holdHint = true; setTimeout(()=>whenPlay(()=>endMono("ce1_0", ()=>chapterIntro(2))), 3500); } toast((lang==="ko"?"질문":"Question")+": "+tr(UI.askBear)); }
   const hv = ids => ids.every(e=>S.ev.includes(e));
   if (has("gr.admit") && hv(["hatch","boots","chute","pendulum","patrol","acct_gr"]) && !has("dd06")){ setf("dd06"); addNote(NOTES.n_dd06); toast((lang==="ko"?"추리 완성: ":"Deduction: ")+(lang==="ko"?"Green이 에드워드를 떨어뜨렸다":"Green caused the fall")); }
   if (hv(["register","record"]) && has("f4.ed") && !has("dd07")){ setf("dd07"); addNote(NOTES.n_dd07); }
@@ -1388,7 +1413,7 @@ function checkDeduce(){
   if (hv(["pit","report","clock","watch"]) && !has("dd10")){ setf("dd10"); addNote(NOTES.n_dd10); }
   if (hv(["pit","report","watch"]) && !has("dd11")){ setf("dd11"); addNote(NOTES.n_dd11); }
   if (typeof KCON !== "undefined" && KCON.every(k=>has("c6."+k.id)) && !has("dd05")){ setf("dd05"); addNote(NOTES.n_dd05); addNote(NOTES.n_last); toast((lang==="ko"?"추리 완성: ":"Deduction: ")+(lang==="ko"?"사라진 5분":"The five missing minutes")); }
-  if (S.flags["con.c1"] && S.flags["con.c2"] && !S.flags.dd02){ S.flags.dd02 = true; if (!S.flags["ch.3"] && S.flags["ch.2"]){ S.flags["ch.3"] = true; setTimeout(()=>whenPlay(()=>chapterIntro(3)), 3500); } addNote(DD02); toast((lang==="ko"?"추리 완성":"Deduction")+": "+(lang==="ko"?"곰은 한 마리일 수 없다":"Two bears cannot be one")); }
+  if (S.flags["con.c1"] && S.flags["con.c2"] && !S.flags.dd02){ S.flags.dd02 = true; if (!S.flags["ch.3"] && S.flags["ch.2"]){ S.flags["ch.3"] = true; holdHint = true; setTimeout(()=>whenPlay(()=>endMono("ce2_0", ()=>chapterIntro(3))), 3500); } addNote(DD02); toast((lang==="ko"?"추리 완성":"Deduction")+": "+(lang==="ko"?"곰은 한 마리일 수 없다":"Two bears cannot be one")); }
 }
 function addNote(n){ if (!n) return; const key = typeof n === "string" ? n : JSON.stringify(n); if (S.notes.some(x=>x.k===key)) return; S.notes.push({k:key, n}); }
 function setLang(l){ lang = l; save(); applyLang(); setDirUi(); if (mode==="cf") renderCF(); }
@@ -1453,7 +1478,7 @@ function showChoices(){
 }
 function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.go) menuFollow = (cur === "followUp") ? menuFollow : (n.ch.some(x=>!x.go) ? cur : null); else menuFollow = null; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
   setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
-function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); setTimeout(()=>showEndE(en), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
+function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); holdHint = true; setTimeout(()=>endMono("ce7_"+en+"_0", ()=>showEndE(en)), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(fromClick){
   if (performance.now() < dlgLock) return;
   if (fromClick && D[cur] && D[cur].ch && !typing && pgi >= pgs.length - 1) return;   /* a click never picks an answer; choose with the buttons, 1/2 or arrows + E */
@@ -1490,7 +1515,7 @@ const CHT = {1:["멈춘 시계","The Clock That Stopped"],2:["네 명의 증인"
 function chapterIntro(n, mid, done){
   const k = lang==="ko"; mode = "modal"; hideHintNow(); $("fade").classList.add("on");
   setTimeout(()=>{ if (mid) mid(); $("chE").textContent = k ? n+"장" : "CHAPTER "+n; $("chT").textContent = CHT[n][k?0:1]; $("chcard").classList.add("on");
-    setTimeout(()=>{ $("chcard").classList.remove("on"); setTimeout(()=>{ $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (done) done(); if (n !== 6 && D["ci"+n+"_0"]) setTimeout(()=>{ if (mode === "play") startDlg("ci"+n+"_0"); }, 700); }, 900); }, 2600); }, 800);
+    setTimeout(()=>{ $("chcard").classList.remove("on"); setTimeout(()=>{ $("fade").classList.remove("on"); mode = "play"; stage.focus(); if (done) done(); if (n !== 6 && D["ci"+n+"_0"]) setTimeout(()=>{ if (mode === "play"){ startDlg("ci"+n+"_0"); try { lastGoal = nextHint(); } catch(e){} } }, 700); }, 900); }, 2600); }, 800);
 }
 function whenPlay(fn){ const t = setInterval(()=>{ if (mode === "play"){ clearInterval(t); fn(); } }, 400); }
 /* Chapter 6 routing: which line a person or object gives now */
@@ -1527,11 +1552,12 @@ Object.assign(GATE_T, {
 const ch1Gate = () => !S.flags.q1 ? (has("ck.bear") ? "tower" : "ck") : null;
 const ch2Gate = () => ch1Gate() || (!has("dd02") ? (!S.ev.includes("receipt") ? (has("hz.met") ? "rcpt2" : "rcpt") : !S.ev.includes("patrol") ? "logb" : "hand") : null);
 function tryEnter(sc, x, gate){ const g = gate(); if (g){ gateMsg(g); return false; } setScene(sc, x); return true; }
-function endDlg(){ if (accAfterOpen){ accAfterOpen = false; setTimeout(nextAcc, 350); }
+function endDlg(){ if (afterDlg){ const af = afterDlg; afterDlg = null; setTimeout(()=>{ holdHint = false; af(); }, 450); }
+  if (accAfterOpen){ accAfterOpen = false; setTimeout(nextAcc, 350); }
   if (ACC.some(a=>a.q===cur)){ accCur = ACC.find(a=>a.q===cur); setTimeout(openPresent, 350); }
   if (/^acc_r\d[a-c]$/.test(cur||"") && has("c7.gather")) setTimeout(nextAcc, 600); if (cur === "ci6_1") setTimeout(()=>toast(lang==="ko"?"신원 보드가 열렸다. 사람 탭에서 단서를 맞춰 보자.":"The Identity Board is open. Compare the clues under People."), 700);
-  if (has("c6.fin") && !has("c6.shown")){ setf("c6.shown"); setTimeout(()=>showEnd6(), 1800); } const f5 = S.flash === 5 && has("f5.end") && !has("f5.shown"); if (f5){ setf("f5.shown"); setTimeout(()=>{ toast(lang==="ko"?"종이 한 번, 느리게 울린다. 그날 밤 울리지 않았던 종이다.":"A single slow bell tone, the one that never rang that night."); setTimeout(()=>showEnd5(), 2400); }, 900); }
-  const fin = S.flash && S.flash !== 5 && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); setTimeout(()=>showEnd4(), 1800); $("rain").classList.add("on"); }
+  if (has("c6.fin") && !has("c6.shown")){ setf("c6.shown"); holdHint = true; setTimeout(()=>endMono("ce6_0", startCh7), 1400); } const f5 = S.flash === 5 && has("f5.end") && !has("f5.shown"); if (f5){ setf("f5.shown"); holdHint = true; setTimeout(()=>{ toast(lang==="ko"?"종이 한 번, 느리게 울린다. 그날 밤 울리지 않았던 종이다.":"A single slow bell tone, the one that never rang that night."); setTimeout(()=>endMono("ce5_0", endFlash), 2400); }, 900); }
+  const fin = S.flash && S.flash !== 5 && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); holdHint = true; setTimeout(()=>endMono("ce4_0", startFlash5), 1400); $("rain").classList.add("on"); }
   const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>chapterIntro(1, ()=>setSceneNow("village", 700)), 50); }
  endDlg0(); }
 function endDlg0(){ $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null; mode = "play"; clearInterval(typing); typing = null; save(); }
@@ -1831,7 +1857,7 @@ function skipTo(n){
   checkDeduce(); save(); refreshHud();
   if (n === 2) chapterIntro(2, ()=>setSceneNow("village", 2700));
   else if (n === 3) chapterIntro(3, ()=>setSceneNow("village", 3600));
-  else if (n === 4){ setSceneNow("mill", 1400); showEnd(); }
+  else if (n === 4){ setSceneNow("mill", 1400); startFlash(); }
   else if (n === 7 || n === 77){
     qFlags(["f4.ed","f4.gate","f4.lever","f4.rewind","f4.end","f4.shown","f5.free","f5.bell","f5.crowd","f5.ed","f5.end","f5.shown","c6.on","dd04","gr.admit","c6.hl","c6.turn","c6.hid","c6.k1","c6.k2","c6.k3","c6.k4","c6.k5","c6.k6","dd05","dd12","c6.d","c6.fin","c6.shown"]);
     S.resp = ["Green","BGB","BGB"]; qEv(["acct_gr","report","watch","pit","stmt_ck2","wool","patrol2","walk","hide","glove","letter"]); checkDeduce();
