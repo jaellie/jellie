@@ -740,7 +740,9 @@ const D = {
 };
 /* ---------- Chapters 1 and 2 (user script: The First Witness / The Stopped Clock) ---------- */
 /* each line picks a portrait expression from its wording unless the script line names one */
+const GRX = {"돌아가.": "worried", "무슨 일로 왔는지는 알아.": "thinking", "오래 있을 생각은 하지 마.": "neutral", "찻잎 없어.": "neutral", "아니. 내가 찾아갔어.": "thinking", "하지 말아 달라고 부탁할 일이 있었거든.": "worried", "넌 그분 성격 알잖아.": "neutral", "그날도 그랬어.": "worried", "그래.": "worried", "서류를 가져가려고 했어.": "thinking", "응. 놓으라고 하셨는데, 내가 말을 안 들었어.": "worried", "종이가 찢어졌어. 그분이 뒤로 물러났고.": "worried", "그다음엔 너무 빨랐어.": "worried", "끝까지는 못 봤어.": "worried", "못 했어.": "worried", "그걸 나도 모르겠어.": "worried", "그분이 옛날 기록을 다시 꺼냈어.": "thinking", "뭐가 적혀 있던데?": "thinking", "어떤 게 진짜인지는 너도 알잖아.": "thinking", "나는 네가 잊은 줄 알았어.": "worried", "그게 가능해?": "worried", "익숙해.": "neutral", "너도.": "neutral", "농담이야.": "neutral", "너도 왼쪽으로 묶잖아.": "neutral", "잃어버렸어.": "worried", "어젯밤.": "worried", "한 짝은 멀쩡한데.": "neutral", "전부는 아니야.": "thinking", "그날 누가 진실을 알고 있었는지까지 적혀 있었어.": "worried", "토미가 그분을 발견했다며.": "thinking", "많이 추웠겠지.": "worried", "메이 선생님은 뭐래?": "thinking", "얼마나?": "surprised", "누가 조금만 일찍 발견했으면 달랐을까?": "worried", "적어도 혼자 두지는 않았겠지.": "worried", "무슨 뜻이야?": "surprised", "말을 하셨어?": "surprised", "또 왔어?": "neutral", "뭔데?": "thinking", "아래로 내려갔겠지.": "worried", "살아 계셨는지 확인했을 거야.": "worried", "사람을 불렀겠지. 당연히.": "neutral", "넌?": "thinking", "그날로 돌아갈 수 있다면.": "thinking", "넌 항상 답을 잘했잖아.": "worried"};   /* Green speaks little, so his faces are set line by line */
 function autoEx(sp, ko){
+  if (sp === "gr" && GRX[ko]) return GRX[ko];
   if (!ko || sp === "nar") return "neutral";
   if (/죽|돌아가셨|슬|힘들|후회|잘못|사고|위험|걱정|미안|무서|못 했|잃|아프|아파|상처|피 |혼자|추위|늦었|외로|돌아오지 못|말수가 적|아끼던|괴롭|울리지 않/.test(ko)) return "worried";
   if (/\?!|!$|정말|세상에|어\?|뭐\?|어제도 왔니|그랬습니까|말을 하셨어|헉/.test(ko) && ko.length < 26) return "surprised";
