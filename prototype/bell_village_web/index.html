@@ -58,6 +58,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .mark{position:absolute;width:118px;height:129px;margin-left:-59px;filter:brightness(1.12) contrast(1.15) drop-shadow(0 3px 5px rgba(0,0,0,.55));pointer-events:none;animation:bob 1.6s ease-in-out infinite;opacity:0;scale:1;transition:opacity .25s ease,scale .25s ease}
 .mark.look{width:120px;height:auto;margin-left:-60px;filter:brightness(1.1) drop-shadow(0 0 3px rgba(18,10,6,.95)) drop-shadow(0 4px 6px rgba(0,0,0,.6))}
 .mark.on{opacity:1}
+.mark.go{width:104px;height:auto;margin-left:-52px;filter:brightness(1.08) drop-shadow(0 0 3px rgba(18,10,6,.95)) drop-shadow(0 4px 6px rgba(0,0,0,.6))}
+.mark.go.on{opacity:1}
 .mark:not(.look){width:78px;height:86px;margin-left:-39px}
 .mark:not(.look).on{opacity:.85}
 #stage img.mark.on{pointer-events:auto;cursor:pointer}
@@ -1210,7 +1212,7 @@ function mkActor(cls, base, h, x){
   d.dataset.base = base; d.style.height = h + "px"; d.style.top = (FEET - h) + "px"; d.style.left = x + "px";
   actors.appendChild(d); return d;
 }
-const SPR = { big_green_bear:[299, 545, 337, 540, 305, 546], bgb_torn:[290, 551, 342, 546, 306, 553], green:[273, 548, 325, 540, 277, 546], twin_elder:[248, 498, 314, 496, 262, 499], twin_younger:[239, 453, 289, 442, 258, 456], molly:[347, 525, 355, 520, 342, 524], may:[187, 524, 206, 520, 182, 525], nini:[128,247,161,248], clockkeeper:[170,232,163,231], cafe_owner:[169,198,159,199], tommy:[207,427,211,425], edward:[170,300,170,300]  };
+const SPR = { big_green_bear:[299, 545, 337, 540, 305, 546], bgb_torn:[290, 551, 342, 546, 306, 553], green:[273, 548, 325, 540, 277, 546], twin_elder:[248, 498, 314, 496, 262, 499], twin_younger:[239, 453, 289, 442, 258, 456], molly:[347, 525, 355, 520, 342, 524], may:[234, 521, 231, 520, 215, 520], nini:[128,247,161,248], clockkeeper:[170,232,163,231], cafe_owner:[169,198,159,199], tommy:[207,427,211,425], edward:[170,300,170,300]  };
 function setActorSprite(el, dir, h){
   const base = el.dataset.base, img = el.querySelector("img");
   const s = {left:"left", right:"right", front:"front"}[dir] || "front";
@@ -1221,7 +1223,7 @@ function setActorSprite(el, dir, h){
 }
 const HZ_H = 175, TM_H = 190, MO_H = 150, GR_H = 215, ED_H = 175, KID_H = 150, BR_H = 128;
 let PH = 220;   /* player height: a child in the flashback */
-const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), tm = mkActor("tm","tommy",TM_H,1930), mo = mkActor("mo","molly",MO_H,-9999), ed = mkActor("ed","edward",ED_H,-9999), br = mkActor("br","twin_younger",BR_H,-9999), gr = mkActor("gr","green",GR_H,-9999), hl = mkActor("hl","may",200,-9999), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
+const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), tm = mkActor("tm","tommy",TM_H,1930), mo = mkActor("mo","molly",MO_H,-9999), ed = mkActor("ed","edward",ED_H,-9999), br = mkActor("br","twin_younger",BR_H,-9999), gr = mkActor("gr","green",GR_H,-9999), hl = mkActor("hl","may",188,-9999), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
 let NPCX = { ed:-9999, br:-9999, nini:1010, ck:2060, hz:-9999, tm:1380, mo:-9999, gr:-9999 }; const NPCX_V = { ed:-9999, br:-9999, nini:1010, ck:2060, hz:-9999, tm:1380, mo:2650, gr:-9999 }, NPCX_T = { ed:-9999, br:-9999, nini:-9999, ck:830, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_A = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_C = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:1050, tm:-9999, mo:-9999, gr:-9999 }, NPCX_M = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:1650 };
 const P = { x:S.x, dir:"front", walk:0, moving:false, face:"right" };
 /* NPCs stand facing front; once BGB comes within 300 px they turn and keep looking at him until he walks beyond 380 px (the gap stops flicker) */
@@ -1257,7 +1259,7 @@ function place(){
   setActorSprite(ed, "front", S.scene==="past" ? 125 : ED_H); ed.style.left = Math.round(NPCX.ed - parseFloat(ed.style.width)/2) + "px";
   { const bx = NPCX.br; if (Math.abs(bx - (br._px ?? bx)) > 0.9){ br._dir = bx > br._px ? "right" : "left"; br._mv = tt; } br._px = bx; const bd = (br._mv && tt - br._mv < 260 && br._dir) ? br._dir : "front";   /* the younger twin faces the way he is walking, front when he stops */
   setActorSprite(br, bd, S.scene==="past" ? 90 : BR_H); } br.style.left = Math.round(NPCX.br - parseFloat(br.style.width)/2) + "px";
-  setActorSprite(hl, npcFace("hl", NPCX.hl ?? -9999), 200); hl.style.left = Math.round((NPCX.hl ?? -9999) - parseFloat(hl.style.width)/2) + "px";
+  setActorSprite(hl, npcFace("hl", NPCX.hl ?? -9999), 188); hl.style.left = Math.round((NPCX.hl ?? -9999) - parseFloat(hl.style.width)/2) + "px";
   setActorSprite(mo, S.flash ? "front" : npcFace("mo", NPCX.mo), S.flash ? 100 : MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
   setActorSprite(gr, S.flash ? "front" : npcFace("gr", NPCX.gr), S.flash ? 110 : GR_H); gr.style.left = Math.round(NPCX.gr - parseFloat(gr.style.width)/2) + "px";
   setActorSprite(tm, npcFace("tm", NPCX.tm), TM_H); tm.style.left = Math.round(NPCX.tm - parseFloat(tm.style.width)/2) + "px";
@@ -1873,7 +1875,8 @@ const IA_C = [
   { id:"exit",  x:()=>480,  label:UI.leaveC, top:540, run:()=>setScene("village", 3901) },
   { id:"hz",    x:()=>NPCX_C.hz, label:UI.talkHz, top:FEET_T-HZ_H-150, run:()=>startDlg(hzNode()) }
 ];
-function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const npc = ["nini","ck","hz","tm","mo","gr","hl","v1","v2","fded","fbrother"].includes(i.id); m.className = "mark" + (npc ? "" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
+const TRAVEL = new Set(["enterA","enterC","home","heal","mill","door","exit","hexit","pdoor","gather"]);   /* place-change points get the footprint marker; the magnifier stays on "look closer" objects */
+function mkMarks(list, host){ list.forEach(i => { const m = document.createElement("img"); const go = TRAVEL.has(i.id); const npc = ["nini","ck","hz","tm","mo","gr","hl","v1","v2","fded","fbrother"].includes(i.id); m.className = "mark" + (npc ? "" : go ? " go" : " look"); m.src = npc ? "assets/bubble_exclaim.webp" : go ? "assets/hotspot_foot.webp" : "assets/hotspot_ring.webp"; m.style.left = i.x()+"px"; m.style.top = i.top+"px"; host.appendChild(m); i.el = m; m.addEventListener("click", ()=>{ if (mode==="play") autoGo = i; }); }); }   /* tap a ring or a ! to walk there and use it */
 mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks")); mkMarks(IA_H, $("hmarks")); mkMarks(IA_M, $("mmarks")); mkMarks(IA_F, $("ymarks")); mkMarks(IA_D, $("ymarks")); mkMarks(IA_FL, $("fmarks")); mkMarks(IA_FT, $("tmarks"));
 IA = IA_V;
 let near = null, peek = 0, autoGo = null;
