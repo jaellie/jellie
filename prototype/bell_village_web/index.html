@@ -462,9 +462,9 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jcard{position:relative;border:26px solid transparent;border-image:url(assets/journal_card.webp) 26 fill/26px stretch;padding:0 8px;margin:6px 0 10px}
 .jcard .jp{margin:0;font-size:26px}
 .jsign{text-align:right;font:700 30px/1.1 Pretendard,var(--font-body);color:#6e2a35;margin-top:6px}
-#jrnl .gchip{display:inline-flex;align-items:center;font:600 23px/1.1 var(--font-body);padding:9px 14px;border-radius:30px;border:2px solid #8a6a3a;background:#f6e9c8;color:#3a2a1a}
-#jrnl .gchip:hover{background:#f1dfb4}#jrnl .gchip.on{background:#6e2a35;color:#f6e3c0;border-color:#6e2a35}
-#jrnl .chips{margin:6px 0 8px;gap:8px}
+#jrnl .gchip{display:inline-flex;align-items:center;justify-content:center;min-height:46px;font:600 23px/1.1 var(--font-body);padding:0 6px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;background:none;border-radius:0;color:#3a2a1a;cursor:pointer}
+#jrnl .gchip:hover{filter:brightness(1.06)}#jrnl .gchip.on{border-image-source:url(assets/journal_plaque_current.webp);color:#f6e3c0}
+#jrnl .chips{margin:6px 0 8px;gap:6px 4px}
 .badge{font-size:15px}.newclue{margin-left:8px}
 /* people */
 .jpg{display:grid;grid-template-columns:repeat(3,212px);gap:15px 34px;margin-top:6px}
@@ -515,7 +515,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jkind{position:absolute;left:330px;top:100px;font:700 17px/1 var(--font-label);letter-spacing:.14em;border:2px solid #6e2a35;color:#6e2a35;border-radius:4px;padding:6px 9px}
 .jh3{font:700 38px/1.15 var(--font-body);margin:4px 0}
 .jmeta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
-.jmt{font:600 21px/1 var(--font-body);padding:7px 12px;border-radius:30px;border:2px solid #8a6a3a;background:#f6e9c8;color:#3a2a1a}
+.jmt{display:inline-flex;align-items:center;min-height:42px;font:600 21px/1 var(--font-body);padding:0 6px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;color:#3a2a1a}
 /* events */
 .jtl{position:absolute;left:0;top:40px;right:0;bottom:0}
 .jtlin{position:relative;padding-bottom:20px}
@@ -541,7 +541,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jpl{position:absolute;transform:translateX(-50%);height:46px;min-width:92px;padding:0 4px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;background:none;font:700 23px/46px Pretendard,var(--font-body);color:#3a2a1a;white-space:nowrap;cursor:pointer;z-index:3}
 .jpl.sel{height:52px;line-height:52px;border-image-source:url(assets/journal_plaque_selected.webp);color:#6e2a35;margin-top:-3px}
 .jpl.cur{border-image-source:url(assets/journal_plaque_current.webp);color:#f6e3c0}
-.jplace{position:absolute;left:0;top:596px;width:704px;height:214px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}.jplace .chips{margin:4px 0}#jrnl .jplace .gchip{font-size:20px;padding:6px 11px}.jch{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+.jplace{position:absolute;left:0;top:596px;width:704px;height:214px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}.jplace .chips{margin:4px 0}#jrnl .jplace .gchip{font-size:20px;min-height:40px}.jch{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
 .jct{font:700 34px/1.15 Pretendard,var(--font-body);color:#6e2a35}.jct.jmute{color:#8a6a3e;font-size:30px}
 .jcs{font:400 22px/1.3 var(--font-body);color:#5a4630;margin:3px 0}
 /* notes */
@@ -566,8 +566,8 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jct2{display:flex;gap:10px;align-items:center}.jct2 b{font:700 22px/1.15 var(--font-body);min-width:0}
 .jci{flex:none;width:52px;height:52px;display:grid;place-items:center}.jci img,.jci svg{max-width:52px;max-height:52px}
 .jcb{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.jcb button{font:600 17px/1 var(--font-body);padding:8px 10px;border-radius:20px;border:2px solid #8a6a3a;background:#f6e9c8;color:#3a2a1a;cursor:pointer}
-.jcb button.on{background:#6e2a35;color:#f6e3c0;border-color:#6e2a35}
+.jcb button{min-height:38px;font:600 17px/1 var(--font-body);padding:0 4px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;background:none;color:#3a2a1a;cursor:pointer}
+.jcb button.on{border-image-source:url(assets/journal_plaque_current.webp);color:#f6e3c0}
 .jopts{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 6px}
 .jopts button{flex:1 1 calc(50% - 5px);min-width:0;min-height:72px;padding:4px 6px;border:18px solid transparent;border-image:url(assets/journal_opt.webp) 36 fill/18px stretch;background:none;color:#3a2a1a;font:600 24px/1.2 var(--font-body);cursor:pointer;text-align:center}
 .jopts button.on{border-image-source:url(assets/journal_optsel.webp);color:#6e2a35}
