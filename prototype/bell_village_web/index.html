@@ -379,7 +379,12 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #finale .show{opacity:1;transform:none}
 #finale .fe{font:600 24px/1 "Alegreya SC",Georgia,serif;letter-spacing:.34em;color:#c9a96a}
 #finale .fh{font:700 58px/1.15 "Alegreya",Georgia,serif}
-#finale #fnTH{font-size:92px;letter-spacing:.06em}
+#fnTi{flex-direction:row!important;justify-content:center;align-items:baseline;gap:0!important;white-space:nowrap}
+#finale #fnT,#finale #fnTH{font:700 92px/1.15 "Alegreya",Georgia,serif;letter-spacing:.02em;color:#f3e6c8}
+html[lang="ko"] #finale #fnT,html[lang="ko"] #finale #fnTH{font-family:Pretendard,"Alegreya",serif}
+html[lang="en"] #finale #fnT,html[lang="en"] #finale #fnTH{font-size:76px}
+#finale #fnTH{font-style:italic;color:#d58a5c;width:0;margin-left:0;overflow:hidden;transition:opacity 1.8s,width 1.6s ease-in-out,margin-left 1.6s ease-in-out,transform 1.8s}
+#finale #fnTH.show{margin-left:44px}
 html[lang="ko"] #finale .fh{font-family:Pretendard,"Alegreya",serif}
 #finale .fl{width:0;height:2px;background:linear-gradient(90deg,transparent,#c9a96a,transparent);transition:opacity 1s,width 2.2s;transform:none}
 #finale .fl.show{width:360px}
@@ -1810,31 +1815,34 @@ function monoNext(){
 function monoEnd(){ monoOn = false; clearTimeout(monoT); $("monoT").classList.remove("show"); setTimeout(()=>{ if (monoThen){ const f = monoThen; monoThen = null; f(); } $("mono").classList.remove("on"); setTimeout(()=>{ mode = "play"; holdHint = false; }, 1900); }, 1200); }
 $("mono").addEventListener("click", ()=>{ if (monoOn && monoI >= 0) monoNext(); });
 document.addEventListener("keydown", e=>{ if (monoOn && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); e.stopPropagation(); if (monoI >= 0) monoNext(); } }, true);
-function endSeqA(){
-  const f = $("fade"); f.style.transition = "opacity 1.8s"; f.classList.add("on");
-  setTimeout(()=>{ setSceneNow("village", 3060); NPCX_V.nini = 2985; $("stage").classList.add("cine"); nini.style.display = ""; nini._sh.style.display = ""; $("stage").classList.add("dusk"); mode = "modal"; f.classList.remove("on");
-    setTimeout(()=>{ f.classList.add("on"); setTimeout(()=>{ f.style.transition = ""; NPCX_V.nini = 1010; $("stage").classList.remove("dusk"); showFinal(1, true); setTimeout(()=>$("stage").classList.remove("cine"), 2500); f.classList.remove("on"); }, 2000); }, 4600); }, 2000);
+let ENDHOLD = false;
+function endSeqA(){   /* the clock-tower still stays up (no jump to the village, no washed-out filter), then one slow fade to the title */
+  const f = $("fade"); ENDHOLD = true; mode = "modal"; $("stage").classList.add("cine");
+  setTimeout(()=>{ f.style.transition = "opacity 2.2s"; f.classList.add("on");
+    setTimeout(()=>{ f.style.transition = ""; showFinal(1, true); ENDHOLD = false; f.classList.remove("on"); setTimeout(()=>$("stage").classList.remove("cine"), 2500); }, 2400); }, 4200);
 }
 let finTimers = [];
+function fnTitleBoth(){ const h = $("fnTH"); $("fnT").classList.add("show"); h.style.width = h.scrollWidth + 4 + "px"; h.classList.add("show"); }   /* the title slides left as the subtitle opens beside it */
 function showFinal(k, instant){ window._lastEnd = k; const K = lang==="ko"; mode = "modal"; setf("fin.end"); setf("end"+k); hideHintNow();
   const F = $("finale");
   $("fnE").textContent = k===1 ? (K?"엔딩 A":"ENDING A") : (K?"엔딩 B":"ENDING B");
   $("fnH").textContent = k===1 ? (K?"남겨진 기록":"The Record That Remained") : (K?"좋은 사람":"A Good Person");
-  $("fnT").textContent = K ? "빅그베의 모험 2" : "BIG GREEN BEAR'S ADVENTURE II"; $("fnTH").textContent = K ? "은폐" : "The Cover-Up";
+  $("fnT").textContent = K ? "빅그베의 모험 2" : "Big Green Bear's Adventure II"; $("fnTH").textContent = K ? "은폐" : "The Cover-Up";
   $("fnR").textContent = K?"다른 선택을 해 본다":"Choose differently"; $("fnC").textContent = K?"감사의 말":"Credits"; $("fnK").textContent = K?"계속 둘러보기":"Keep exploring";
-  ["fnE","fnH","fnL","fnT","fnTH","fnB"].forEach(i=>$(i).classList.remove("show"));
+  ["fnE","fnH","fnL","fnT","fnTH","fnB"].forEach(i=>$(i).classList.remove("show")); $("fnTH").style.width = "0";
   finTimers.forEach(clearTimeout); finTimers = []; const at = (ms, fn) => finTimers.push(setTimeout(fn, ms));
   if (instant){ F.style.transition = "none"; F.classList.add("on"); void F.offsetWidth; F.style.transition = ""; } else F.classList.add("on");   /* called from a fade to black: the finale is already fully black, so there is no second fade */
   at(1400, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.add("show")));      /* ending name */
   at(4800, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")));    /* then the screen is fully black */
-  at(7400, ()=>["fnT","fnTH"].forEach(i=>$(i).classList.add("show")));            /* 2 s of silence, then the title */
-  at(13400, ()=>showCredits());                                                    /* held 4 s, then the credits */
+  at(7400, ()=>$("fnT").classList.add("show"));                                   /* 2 s of silence, then the title */
+  at(10400, fnTitleBoth);                                                          /* the title slides left, the subtitle opens beside it */
+  at(16600, ()=>showCredits());                                                    /* held, then the credits */
   holdHint = false; save(); }
 function finaleSkip(){ if (!$("finale").classList.contains("on")) return; finTimers.forEach(t=>clearTimeout(t)); finTimers = [];
-  ["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")); ["fnT","fnTH","fnB"].forEach(i=>$(i).classList.add("show")); }
+  ["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")); fnTitleBoth(); $("fnB").classList.add("show"); }
 $("finale").addEventListener("click", e=>{ if (e.target.closest("button")) return; finaleSkip(); });
 $("fnR").onclick = ()=>{ finaleSkip(); $("finale").classList.remove("on"); mode = "play"; startDlg("fn_ch"); };
-$("fnC").onclick = ()=>{ finTimers.forEach(t=>clearTimeout(t)); finTimers = []; ["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")); ["fnT","fnTH"].forEach(i=>$(i).classList.add("show")); showCredits(); };
+$("fnC").onclick = ()=>{ finTimers.forEach(t=>clearTimeout(t)); finTimers = []; ["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")); fnTitleBoth(); showCredits(); };
 $("fnK").onclick = ()=>{ $("finale").classList.remove("on"); mode = "play"; stage.focus(); };
 function replayChoice(){ $("endcard").classList.remove("on"); S.flags["c7.done"] = false; mode = "play"; startDlg("cc0"); }
 function startCh7(){ setf("c7.on"); $("endcard").classList.remove("on"); chapterIntro(7, ()=>setSceneNow("mill", 1400)); }
@@ -2927,7 +2935,7 @@ function setSideOpen(on){ stage.classList.toggle("sideopen", on); sideBook.class
 sideBook.addEventListener("click", e=>{ e.stopPropagation(); if (mode === "play") setSideOpen(!stage.classList.contains("sideopen")); stage.focus(); });
 document.addEventListener("pointerdown", e=>{ if (stage.classList.contains("sideopen") && !e.target.closest("#side,#sideBook")) setSideOpen(false); }, true);
 function frame(now){
-  { const sk = mode === "dlg" && $("dlg").classList.contains("on") && cur && STILLS[cur] || ($("endcard").classList.contains("on") && /E1$/.test($("eEy").textContent) ? "assets/still_clock_tower.webp" : ""), st = $("still"); if (sk && $("stillImg").getAttribute("src") !== sk) $("stillImg").src = sk; st.classList.toggle("on", !!sk); stage.classList.toggle("stillon", !!sk); STILL_ON = !!sk; }
+  { const sk = mode === "dlg" && $("dlg").classList.contains("on") && cur && STILLS[cur] || (ENDHOLD ? "assets/still_clock_tower.webp" : $("endcard").classList.contains("on") && /E1$/.test($("eEy").textContent) ? "assets/still_clock_tower.webp" : ""), st = $("still"); if (sk && $("stillImg").getAttribute("src") !== sk) $("stillImg").src = sk; st.classList.toggle("on", !!sk); stage.classList.toggle("stillon", !!sk); STILL_ON = !!sk; }
   { const bp = $("bigPor"), want = mode === "dlg" && $("dlg").classList.contains("on") && !!bigSide && !STILL_ON; if (bp.classList.contains("on") !== want) bp.classList.toggle("on", want); }
   { const hide = mode !== "play"; if (stage.classList.contains("nomenu") !== hide){ stage.classList.toggle("nomenu", hide); if (hide) setSideOpen(false); } }   /* the menu is only there while exploring: any dialogue, pause, modal, scene change or journal hides and folds it, and it comes back by itself */
   const dt = Math.min(0.05, (now - last)/1000); last = now;
