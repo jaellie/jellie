@@ -2396,6 +2396,8 @@ function grpIcon(gr, size){   /* group card: a real picture of one of its items 
 const JA = n => "assets/journal_"+n+".webp";
 const jsec = t => '<div class="jsec">'+t+'</div>';
 const jtag = (cls, txt, st) => '<span class="'+cls+'"'+(st?' style="'+st+'"':'')+'>'+txt+'</span>';
+/* font size that keeps a name inside its polaroid strip: Hangul is about one em wide, Latin about half an em */
+const fitPx = (t, max, avail, min=18) => { const u = [...t].reduce((a,c)=>a + (/[\u3131-\uD7A3]/.test(c) ? 1 : .52), 0); return Math.max(min, Math.min(max, Math.floor(avail/Math.max(u,1)))); };
 const POLA_R = [-2,2,-1,1,2,-2,1,-1];
 const JKIND = { past23:"doc", letters:"doc", medical:"doc", cafe:"doc", patrol:"doc", plaza:"doc", photos:"photo" };
 
@@ -2403,10 +2405,10 @@ function jPeople(){
   const met = metPeople(); if (!met.includes(selPerson)) selPerson = "nini";
   const k = lang === "ko";
   let l = jsec(k ? "마을 사람들 · 발견한 인물 "+met.length+"명" : "VILLAGERS · "+met.length+" MET")+'<div class="jpg">'
-    + met.map((id,i)=>'<button type="button" class="jtile'+(id===selPerson?' sel':'')+'" data-pp="'+id+'" style="--r:'+POLA_R[i%8]+'deg"><span class="jw"><img src="assets/'+PERSON_UI[id].img+'.webp" alt=""></span><b class="jn">'+tr(SP[id].name)+'</b></button>').join('')+'</div>';
+    + met.map((id,i)=>'<button type="button" class="jtile'+(id===selPerson?' sel':'')+'" data-pp="'+id+'" style="--r:'+POLA_R[i%8]+'deg"><span class="jw"><img src="assets/'+PERSON_UI[id].img+'.webp" alt=""></span><b class="jn" style="font-size:'+fitPx(tr(SP[id].name),28,176)+'px">'+tr(SP[id].name)+'</b></button>').join('')+'</div>';
   const pv = personView(selPerson), u = PERSON_UI[selPerson]; if (!pv) return { l, r:'' };
   const no = String(met.indexOf(selPerson)+1).padStart(2,"0");
-  let r = '<div class="jdoss"><div class="jbig"><span class="jw"><img src="assets/'+u.img+'.webp" alt=""></span><b class="jn">'+tr(SP[selPerson].name)+'</b></div>'
+  let r = '<div class="jdoss"><div class="jbig"><span class="jw"><img src="assets/'+u.img+'.webp" alt=""></span><b class="jn" style="font-size:'+fitPx(tr(SP[selPerson].name),38,196,22)+'px">'+tr(SP[selPerson].name)+'</b></div>'
     + '<div class="jhead"><div class="jrole">'+tr(u.role)+'</div><div class="jfile"><img src="'+JA("stamp_file_burgundy")+'" alt=""><span>FILE No. '+no+'</span></div></div></div><div class="jscroll jfill">'
     + jsec(L2("프로필","PROFILE"))+'<p class="jp">'+tr(u.intro)+'</p>';
   if (pv.statements.length) r += jsec(L2("진술","STATEMENTS"))+pv.statements.map(id=>'<div class="jcard"><p class="jp">'+tr(EV[id].desc)+'</p><div class="jsign">'+tr(SP[selPerson].name)+'</div></div>').join('');
