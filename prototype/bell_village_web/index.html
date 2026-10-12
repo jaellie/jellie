@@ -383,7 +383,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #finale #fnT,#finale #fnTH{font:700 92px/1.15 "Alegreya",Georgia,serif;letter-spacing:.02em;color:#f3e6c8}
 html[lang="ko"] #finale #fnT,html[lang="ko"] #finale #fnTH{font-family:Pretendard,"Alegreya",serif}
 html[lang="en"] #finale #fnT,html[lang="en"] #finale #fnTH{font-size:76px}
-#finale #fnTH{font-style:italic;color:#d58a5c;width:0;margin-left:0;overflow:hidden;transition:opacity 1.8s,width 1.6s ease-in-out,margin-left 1.6s ease-in-out,transform 1.8s}
+#finale #fnTH{font-style:italic;color:#d58a5c;padding-right:.25em;box-sizing:content-box;width:0;margin-left:0;overflow:hidden;transition:opacity 1.8s,width 1.6s ease-in-out,margin-left 1.6s ease-in-out,transform 1.8s}
 #finale #fnTH.show{margin-left:44px}
 html[lang="ko"] #finale .fh{font-family:Pretendard,"Alegreya",serif}
 #finale .fl{width:0;height:2px;background:linear-gradient(90deg,transparent,#c9a96a,transparent);transition:opacity 1s,width 2.2s;transform:none}
@@ -1816,10 +1816,9 @@ function monoEnd(){ monoOn = false; clearTimeout(monoT); $("monoT").classList.re
 $("mono").addEventListener("click", ()=>{ if (monoOn && monoI >= 0) monoNext(); });
 document.addEventListener("keydown", e=>{ if (monoOn && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); e.stopPropagation(); if (monoI >= 0) monoNext(); } }, true);
 let ENDHOLD = false;
-function endSeqA(){   /* the clock-tower still stays up (no jump to the village, no washed-out filter), then one slow fade to the title */
+function endSeqA(){   /* the dialogue ends first; then the clock-tower still fades in slowly, holds 5 s, and fades out into the finale */
   const f = $("fade"); ENDHOLD = true; mode = "modal"; $("stage").classList.add("cine");
-  setTimeout(()=>{ f.style.transition = "opacity 2.2s"; f.classList.add("on");
-    setTimeout(()=>{ f.style.transition = ""; showFinal(1, true); ENDHOLD = false; f.classList.remove("on"); setTimeout(()=>$("stage").classList.remove("cine"), 2500); }, 2400); }, 4200);
+  setTimeout(()=>{ ENDHOLD = false; showFinal(1, false); setTimeout(()=>$("stage").classList.remove("cine"), 2500); }, 1600 + 5000);
 }
 let finTimers = [];
 function fnTitleBoth(){ const h = $("fnTH"); $("fnT").classList.add("show"); h.style.width = h.scrollWidth + 4 + "px"; h.classList.add("show"); }   /* the title slides left as the subtitle opens beside it */
@@ -2204,7 +2203,6 @@ const STILLS = (() => {
   span("f4ok", 22, 28, "assets/still_brothers_awning.webp");   /* 23 years ago: the twins under the awning, knots on opposite shoulders */
   span("mill_d", 6, 9, "assets/still_mill_tea.webp");           /* the Old Mill: empty cups, empty tea tin */
   span("f5s2", 31, 33, "assets/still_edward_signing.webp");     /* Edward hesitates over the signature, a fox waiting at the door */
-  span("fnA", 12, 13, "assets/still_clock_tower.webp");
   m.ce7_1_0 = m.ce7_1_1 = "assets/still_clock_tower.webp";         /* Ending A: Nini writes it all down under the tower */
   span("fnB", 11, 14, "assets/still_photo_frame.webp");        /* the photograph, the letter and the glove behind the frame */
   m.fnB_17 = m.fr6 = m.p6_f0 = "assets/still_photo_frame.webp";
