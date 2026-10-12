@@ -255,8 +255,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #choices{position:absolute;left:500px;bottom:346px;z-index:8;display:none;flex-direction:column;gap:8px;align-items:stretch;width:max-content;max-width:1100px;max-height:640px;overflow-y:auto;overflow-x:hidden;padding:4px 14px 2px 4px;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}   /* one panel that sits on the dialogue box, starting at the name ribbon (left is set from the box); it grows upward and scrolls if a list is long */
 #choices.on{display:flex}
 .choice{display:flex;align-items:center;gap:12px;width:auto;max-width:1100px;height:56px;min-height:56px;padding:0 4px 0 6px;border:0;border-style:solid;border-width:0 28px;border-image:url(assets/dlg_choice_normal.webp) 0 56 fill/0 28px stretch;background:none;font:600 27px/1.2 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s,opacity .12s;flex:none;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));white-space:nowrap}
-.choice .nb{flex:none;width:36px;height:36px;margin-left:-8px;background:url(assets/dlg_choice_badge.webp) center/contain no-repeat;display:grid;place-items:center;font:700 21px/1 var(--font-label);color:#6e2a35}
-.choice.sel .nb,.choice:hover .nb{background-image:url(assets/dlg_choice_badge_sel.webp);color:#f6e3c0}
+.choice .nb{flex:none;width:26px;margin-left:-2px;text-align:center;font:700 28px/1 var(--font-label);color:#6e2a35}
+.choice.sel .nb,.choice:hover .nb{color:#f6e3c0}.choice.asked .nb{color:#8a7a62}.choice.asked.sel .nb,.choice.asked:hover .nb{color:#f6e3c0}
 .choice.asked{border-image-source:url(assets/dlg_choice_heard.webp);color:#5a4a38}.choice.asked:hover,.choice.asked.sel{border-image-source:url(assets/dlg_choice_selected.webp);color:#f6e3c0}
 .choice.asked:after{content:"\2713";margin-left:auto;padding-left:18px;color:#6e2a35;font:700 24px/1.3 var(--font-body)}
 .choice.asked:hover:after,.choice.asked.sel:after{color:#f6e3c0}
