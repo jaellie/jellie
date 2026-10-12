@@ -3,7 +3,7 @@
    Characters are drawn from behind with plain shapes; swap Flat.char() when final character art arrives. */
 (function (root) {
   var TAU = Math.PI * 2;
-  function hex(c) { c = String(c).replace('#', ''); if (c.length === 3) c = c[0] + c[0] + c[1] + c[1] + c[2] + c[2]; return [parseInt(c.slice(0, 2), 16), parseInt(c.slice(2, 4), 16), parseInt(c.slice(4, 6), 16)]; }
+  function hex(c) { c = String(c); if (c.charAt(0) === 'r') { var m = c.match(/[\d.]+/g) || [0, 0, 0]; return [+m[0], +m[1], +m[2]]; } c = c.replace('#', ''); if (c.length === 3) c = c[0] + c[0] + c[1] + c[1] + c[2] + c[2]; return [parseInt(c.slice(0, 2), 16), parseInt(c.slice(2, 4), 16), parseInt(c.slice(4, 6), 16)]; }
   function mix(a, b, t) { a = typeof a === 'string' ? hex(a) : a; b = typeof b === 'string' ? hex(b) : b; return 'rgb(' + Math.round(a[0] + (b[0] - a[0]) * t) + ',' + Math.round(a[1] + (b[1] - a[1]) * t) + ',' + Math.round(a[2] + (b[2] - a[2]) * t) + ')'; }
   function lt(c, t) { return mix(c, '#ffffff', t); }
   function dk(c, t) { return mix(c, '#2b2233', t); }
@@ -43,8 +43,13 @@
   }
 
   /* ---------- roadside things (s = size level, y = ground line, x = centre) ---------- */
+  /* swaying is a tiny rotation around the trunk base; sizes never change */
   function tree(cx, x, y, s, o) {
-    var look = o.look, base = o.leaf, L = o.sn ? '#eef1fb' : base, seed = o.seed || 0, sw = Math.sin(o.t * 1.3 + seed) * 1.3 * s;
+    var a = o.still ? 0 : Math.sin(o.t * 1.1 + (o.seed || 0)) * 0.022;
+    cx.save(); cx.translate(x, y); cx.rotate(a); treeBody(cx, 0, 0, s, o); cx.restore();
+  }
+  function treeBody(cx, x, y, s, o) {
+    var look = o.look, base = o.leaf, L = o.sn ? '#eef1fb' : base, seed = o.seed || 0, sw = 0;
     var trunk = '#8c6a5a';
     ell(cx, x, y, 22 * s, 4.5 * s, SHADOW);
     if (look === 'bare') {
@@ -73,6 +78,7 @@
   }
   function palm(cx, x, y, s, sd, t, seed) {
     ell(cx, x, y, 20 * s, 4 * s, SHADOW);
+    cx.save(); cx.translate(x, y); cx.rotate(Math.sin(t * 1.0 + seed) * 0.02); x = 0; y = 0;
     cx.strokeStyle = '#b08458'; cx.lineCap = 'round'; cx.lineWidth = 6 * s;
     var tx = x + sd * 12 * s, ty = y - 84 * s;
     cx.beginPath(); cx.moveTo(x, y); cx.quadraticCurveTo(x + sd * 2 * s, y - 50 * s, tx, ty); cx.stroke();
@@ -82,6 +88,25 @@
       ell(cx, 14 * s, 0, 18 * s, 4.5 * s, f[2]); cx.restore();
     });
     circ(cx, tx - 3 * s, ty + 4 * s, 3 * s, '#8a5a40'); circ(cx, tx + 3 * s, ty + 5 * s, 3 * s, '#8a5a40');
+    cx.restore();
+  }
+  function bush(cx, x, y, s, o) {
+    var L = o.leaf || '#79bd93';
+    ell(cx, x, y, 16 * s, 3.4 * s, SHADOW);
+    circ(cx, x - 8 * s, y - 7 * s, 8 * s, dk(L, .1)); circ(cx, x + 8 * s, y - 7 * s, 8 * s, dk(L, .1)); circ(cx, x, y - 10 * s, 10 * s, L);
+    circ(cx, x - 3 * s, y - 13 * s, 4.5 * s, lt(L, .3));
+    if (o.dots) [[-7, -9], [5, -14], [8, -6]].forEach(function (p, i) { circ(cx, x + p[0] * s, y + p[1] * s, 1.8 * s, o.dots[i % o.dots.length]); });
+  }
+  function flowers(cx, x, y, s, o) {
+    var cols = o.dots || ['#ffd36b', '#ffffff', '#f7a8c0'];
+    for (var i = 0; i < 6; i++) { var fx = x + (i - 2.5) * 5 * s, fy = y - (i % 3) * 2 * s; cx.strokeStyle = '#5ca67a'; cx.lineWidth = 1.2 * s; cx.beginPath(); cx.moveTo(fx, fy); cx.lineTo(fx, fy - 7 * s); cx.stroke(); circ(cx, fx, fy - 8 * s, 2.4 * s, cols[i % cols.length]); }
+  }
+  function sign(cx, x, y, s, sd, o) {
+    ell(cx, x, y, 14 * s, 3 * s, SHADOW);
+    rr(cx, x - 2 * s, y - 38 * s, 4 * s, 38 * s, 1.5 * s, '#8c6a5a');
+    rr(cx, x - 20 * s, y - 52 * s, 40 * s, 20 * s, 5 * s, '#f6e3c4');
+    rr(cx, x - 20 * s, y - 52 * s, 40 * s, 5 * s, 3 * s, o.accent || '#e9806e');
+    rr(cx, x - 13 * s, y - 42 * s, 26 * s, 2.4 * s, 1.2 * s, 'rgba(60,58,104,.5)'); rr(cx, x - 9 * s, y - 37 * s, 18 * s, 2.4 * s, 1.2 * s, 'rgba(60,58,104,.35)');
   }
   function house(cx, x, y, s, sd, o, lit, winter) {
     var w = 56 * s, h = 38 * s, x0 = sd < 0 ? x - w : x, body = lt(o.c || '#fff6e3', .1), roof = mix(o.roof || '#c9603f', '#ffffff', .12);
@@ -146,14 +171,17 @@
 
   /* one roadside object; env carries the scene state */
   function obj(cx, o, x, y, s, env) {
-    var sd = o.sd, c = env.c, lit = env.lit, winter = c.winter > .5, t = env.t;
-    if (o.t === 'tree') { var bd = env.bd, TRS = env.TRS; tree(cx, x, y, s, { look: TRS && TRS.look ? TRS.look : ({ SPRING: 'blossom', AUTUMN: 'autumn', WINTER: 'bare' })[bd.season] || 'green', leaf: TRS && TRS.leaf ? TRS.leaf : (env.LEAFC[bd.season] || env.LEAFC.SUMMER)[0], sn: TRS ? !!TRS.snow : bd.season === 'WINTER', seed: o.seed, t: t }); }
+    var sd = o.sd, c = env.c, lit = env.lit, winter = c.winter > .5, t = env.t, tint = env.tint || function (v) { return v; };
+    if (o.t === 'tree') { var bd = env.bd, TRS = env.TRS; tree(cx, x, y, s, { look: TRS && TRS.look ? TRS.look : ({ SPRING: 'blossom', AUTUMN: 'autumn', WINTER: 'bare' })[bd.season] || 'green', leaf: tint(TRS && TRS.leaf ? TRS.leaf : (env.LEAFC[bd.season] || env.LEAFC.SUMMER)[0]), sn: TRS ? !!TRS.snow : bd.season === 'WINTER', seed: o.seed, t: t, still: env.still }); }
     else if (o.t === 'palm') palm(cx, x, y, s, sd, t, o.seed || 0);
     else if (o.t === 'lamp') { lamp(cx, x, y, s, sd, lit); if (lit) env.glows.push([x - sd * 9 * s, y - 80 * s, s]); }
     else if (o.t === 'bld' || o.t === 'euro') bld(cx, x, y, s, sd, o, lit, o.t === 'euro', winter);
     else if (o.t === 'house') house(cx, x, y, s, sd, o, lit, winter);
     else if (o.t === 'prop') shop(cx, x, y, s, sd, o, lit);
     else if (o.t === 'fence') fence(cx, x, y, s);
+    else if (o.t === 'bush') bush(cx, x, y, s, { leaf: tint((env.TRS && env.TRS.leaf) || (env.LEAFC[env.bd.season] || env.LEAFC.SUMMER)[0]), dots: o.dots });
+    else if (o.t === 'flowers') flowers(cx, x, y, s, o);
+    else if (o.t === 'sign') sign(cx, x, y, s, sd, o);
     else if (o.t === 'hay') hay(cx, x, y, s, winter);
     else if (o.t === 'land') { var S2 = s * (o.big === false ? .62 : 1); land(cx, x, y, S2, sd, lit); if (lit) env.glows.push([sd < 0 ? x - 104 * S2 + 33 * S2 : x + 33 * S2, y - 38 * S2, S2 * 1.6]); }
   }
