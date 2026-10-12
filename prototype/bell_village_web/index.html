@@ -231,7 +231,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #hint{position:absolute;left:50%;bottom:34px;translate:-50% 6px;scale:var(--hb,1);transform-origin:50% 100%;width:fit-content;max-width:720px;padding:17px 42px;--s:1;display:flex;align-items:center;justify-content:center;gap:11px;font:600 20px/1.1 var(--font-body);color:var(--ink);white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .25s ease,translate .25s ease,visibility 0s linear .25s}
 #hint.on{opacity:1;visibility:visible;translate:-50% 0;transition-delay:0s}
 #hint.instant,#hint.instant.on{transition:none}
-#hint kbd{font:700 13px/1 var(--font-label);background:var(--burgundy);color:#f6e3c0;border-radius:4px;padding:4px 7px;box-shadow:0 2px 0 #3d1219}
+#hint kbd{font:700 10px/1 var(--font-label);background:var(--burgundy);color:#f6e3c0;border-radius:3px;padding:3px 5px;box-shadow:0 1.5px 0 #3d1219}
 
 /* Dialogue */
 #dlg{position:absolute;left:200px;bottom:34px;width:1520px;height:296px;display:none;z-index:8} /* sized in whole pixels (1.4x the sprite) so the nine-slice has no seams; left is set from the width so the box stays centred */
@@ -239,7 +239,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #dlgbg{position:absolute;inset:0;--img:url(assets/dialogue_box_tall_portrait_ribbon.webp);--sl:410;--sr:100;--st:68;--sb:26;border-image-width:95px 140px 36px 574px}
 #dlg.cap #dlgbg{--img:url(assets/dialogue_box_caption.webp);--sl:100;--sr:100;--st:68;--sb:26;border-image-width:95px 140px 36px 140px}
 #dlg.cap .por,#dlg.cap .nm{display:none}
-#dlg.cap .tx{left:190px;right:196px}
+#dlg.cap .tx{left:190px;right:196px;top:92px}
 #meas{position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font:400 36.5px/1.32 var(--font-body)}
 #dlg .por{position:absolute;left:49px;top:59px;width:200px;height:196px;overflow:hidden;border-radius:5px}
 #dlg .por img{transition:opacity .15s;width:200px;height:auto;display:block;filter:drop-shadow(0 2px 2px rgba(60,35,10,.4))}
@@ -1723,7 +1723,7 @@ function applyLang(){
   document.querySelector("#pause .eyebrow").textContent = tr(UI.paused);
   const E = tr(UI.end); $("eEy").textContent = E[0]; $("eH").textContent = E[1]; $("eP1").textContent = E[2]; $("eP2").textContent = E[3]; $("rot").textContent = tr(UI.rot);
   if (cur) renderDlg();
-  const ht = $("hintTx"); if (ht.dataset.k) ht.textContent = tr(IA.find(i=>i.id===ht.dataset.k).label);
+  const ht = $("hintTx"); { const hi = ht.dataset.k && IA.find(i=>i.id===ht.dataset.k); if (hi) ht.textContent = tr(hi.label); }
 }
 function refreshHud(){}
 
