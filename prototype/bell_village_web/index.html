@@ -113,6 +113,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #snow{position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:5;pointer-events:none;transition:opacity 1.5s}
 #rain{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;transition:opacity 2s}
 #rain canvas{position:absolute;left:0;top:0;width:1920px;height:1080px}
+#raintint{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;transition:opacity 2s;mix-blend-mode:multiply;background:linear-gradient(rgba(96,112,148,.5),rgba(84,98,132,.4))}   /* an overcast, rainy tint over the scene (under the UI) */
 #rain.on{opacity:1}
 #stage.rw #vsc,#stage.rw #tsc{animation:rwob 1.6s ease-in-out;filter:grayscale(1) sepia(.7) contrast(1.1)}
 @keyframes rwob{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px) skewX(1deg)}40%{transform:translateX(8px)}60%{transform:translateX(-5px) skewX(-1deg)}80%{transform:translateX(4px)}}
@@ -755,7 +756,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
   <div id="hint" class="nine cream"><kbd>E</kbd><span id="hintTx"></span></div>
   <div id="toast"></div>
 
-  <canvas id="snow" width="1920" height="1080"></canvas>
+  <canvas id="snow" width="1920" height="1080"></canvas><div id="raintint"></div>
   <div id="still"><img id="stillImg" alt=""></div>
   <div id="bigPor"><img id="bPorImg" alt=""></div>
   <div id="choices"></div>
@@ -2399,7 +2400,7 @@ function setSceneNow(name, x){
   br.style.display = FL ? "" : "none"; br._sh.style.display = FL ? "" : "none";
   if (!FL) $("rain").classList.remove("on");
   if (S.flash === 5) $("rain").classList.toggle("on", FLD);   /* flood night: rain; the dawn after: dry and cold */
-  else if (FL && S.flags["f4.end"]) $("rain").classList.add("on");
+  else if (FL) $("rain").classList.add("on");   /* Chapter 4 happens on a rainy day 23 years ago, from its first scene */
   gr.style.display = (MI || GA) ? "" : "none"; gr._sh.style.display = (MI || GA) ? "" : "none";
   $("t8").classList.toggle("hide", IN || !!S.flash); $("t9").classList.toggle("hide", IN || !!S.flash);
   P.x = x; cam = Math.max(CAM_MIN, Math.min(CAM_MAX, P.x - STAGE_W/2)); near = null;
@@ -3030,7 +3031,7 @@ setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
   function frame(t){
     requestAnimationFrame(frame);
     const dt = Math.min(.05, (t - last) / 1000 || 0); last = t;
-    const hide = $("rain").classList.contains("on"); cv.style.opacity = hide ? 0 : 1;
+    const hide = $("rain").classList.contains("on"); cv.style.opacity = hide ? 0 : 1; $("raintint").style.opacity = hide ? 1 : 0;
     if (hide || document.hidden) return;
     cx.clearRect(0, 0, 1920, 1080);
     for (const f of flakes){
