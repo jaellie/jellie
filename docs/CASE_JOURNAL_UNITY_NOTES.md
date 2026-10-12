@@ -60,3 +60,19 @@
 | journal_stack_tray | 285×187 | 물건 묶음. 안쪽 붉은 천 위에 아이콘 |
 | journal_stack_sheet | 186×238 | 묶음 뒤에 깔리는 종이 (8°, 4° 기울임) |
 원본: `art_source/originals/journal_k_stacks_v1.png` (sha256은 MANIFEST). 윤곽의 붉은 잔여 픽셀은 알파 정리로 제거했다.
+
+## 9. K 배치 2차 스프라이트 (납품됨, 게임에 적용)
+| 이름 | 크기 | 쓰임 / 9-slice 경계(스프라이트 기준 px) |
+|---|---|---|
+| journal_cork | 924×414 | 코르크판. 9-slice 46, 화면 테두리 24 |
+| journal_cardpin | 400×149 | 단서 쪽지(붉은 핀 포함). 9-slice 50, 화면 18 |
+| journal_opt / journal_optsel | 500×96 / 500×97 | 판단 버튼 보통/선택. 9-slice 36, 화면 18 |
+| journal_selrow | 700×117 | 시간 줄 선택 배경(반투명 분홍). 9-slice 40, 화면 12 |
+| journal_exhibit | 960×395 | 증거 전시대. 9-slice 110, 화면 34 |
+| journal_rule | 930×46 | 구역 제목 줄. 9-slice 좌 120 / 우 30, 화면 높이 12 |
+| journal_scrolltrack / thumb | 34×330 / 34×204 | 스크롤바 |
+| journal_tabicon_{people,evidence,events,notes} | 폭 96 | 책갈피 아이콘(화면 최대 32) |
+| journal_tl_line | 46×81 | 시간 줄 점선, 세로 반복(화면 8×15) |
+| journal_tl_{fact,claim,unk} / tl_est | 72×72 / 47×180 | 기록, 진술, 미확인 마커 / 추정 구간 마커 |
+| journal_scroll | 930×132 | 아직 쓰는 곳 없음 |
+원본은 `art_source/originals/journal_k_*_v1.png` (sha256은 MANIFEST). 반투명 내부는 그대로 두고 윤곽 가장자리만 색을 정리했다.

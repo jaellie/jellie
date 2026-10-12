@@ -445,16 +445,17 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 #jL{left:127px}#jR{left:915px}
 #jRibs .jrib{position:absolute;left:1726px;width:170px;height:62px;border:0;padding:0;background:none;cursor:pointer}
 #jRibs .jrib img{position:absolute;inset:0;width:170px;height:62px}
-#jRibs .jrib span{position:relative;display:block;padding:0 14px 0 34px;font:700 21px/62px var(--font-body);color:#f6e3c0;text-shadow:0 1px 1px rgba(0,0,0,.6);text-align:left;white-space:nowrap}
+#jRibs .jrib .jri{position:absolute;left:12px;top:50%;width:auto;height:auto;max-width:32px;max-height:32px;transform:translateY(-50%)}
+#jRibs .jrib span{position:relative;display:block;padding:0 8px 0 56px;font:700 20px/62px var(--font-body);color:#f6e3c0;text-shadow:0 1px 1px rgba(0,0,0,.6);text-align:left;white-space:nowrap}
 #jRibs .jrib.act{left:1732px}
 #jrnl #cfclose{position:absolute;left:1772px;top:56px;right:auto;width:78px;height:80px;z-index:3}
 #jThread{position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none;z-index:40}
 #stage.jopen #caseplate,#stage.jopen #side,#stage.jopen .hudbtn,#stage.jopen #touch{visibility:hidden}
 /* shared page parts */
 .jsec{display:flex;align-items:center;gap:10px;margin:0 0 10px;font:600 21px/1 var(--font-label);letter-spacing:.18em;color:#8a6a3e;min-height:30px}
-.jsec:after{content:"";flex:1;border-bottom:2px solid rgba(138,106,62,.45)}
+.jsec:after{content:"";flex:1;height:12px;border-style:solid;border-width:0 8px 0 31px;border-image:url(assets/journal_rule.webp) 0 30 0 120 fill/0 8px 0 31px stretch}
 .jscroll{overflow-y:auto;overflow-x:hidden;padding-right:10px;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}
-.jscroll::-webkit-scrollbar{width:8px}.jscroll::-webkit-scrollbar-thumb{background:#8a6a3a;border-radius:4px}
+.jscroll::-webkit-scrollbar{width:14px}.jscroll::-webkit-scrollbar-track{background:url(assets/journal_scrolltrack.webp) center/12px 100% no-repeat}.jscroll::-webkit-scrollbar-thumb{background:url(assets/journal_scrollthumb.webp) center/100% 100% no-repeat;min-height:40px}
 .jfill{position:absolute;left:0;right:0;top:0;bottom:0}
 .jp{font:400 27px/1.45 var(--font-body);margin:6px 0;color:#2b2217}
 .jnote{font:italic 400 22px/1.35 var(--font-body);color:#6d5a40;margin:6px 0}
@@ -507,29 +508,29 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jpager{position:absolute;left:0;bottom:2px;display:flex;gap:14px;align-items:center;font:600 22px var(--font-body)}
 .jpager button{width:46px;height:38px;border-radius:8px;border:2px solid #8a6a3a;background:#f1dfb4;font:700 24px var(--font-body);color:var(--ink);cursor:pointer}.jpager button:disabled{opacity:.4}
 .jtitle{font:700 44px/1.1 var(--font-body);margin:0 0 10px}
-.jexh{position:relative;width:690px;height:270px;margin:6px 0 10px;border-radius:14px;background:radial-gradient(ellipse at 50% 40%,#e9d9b0,#cfba85);box-shadow:inset 0 0 0 4px #a98f58,inset 0 0 40px rgba(80,50,20,.4)}
-.jexi{position:absolute;left:50px;top:20px;width:240px;height:230px;display:grid;place-items:center;filter:drop-shadow(0 12px 10px rgba(40,25,10,.45))}
-.jexs{position:absolute;left:380px;top:50px;width:150px;height:48px;transform:rotate(-3deg)}
+.jexh{position:relative;width:690px;height:290px;margin:6px 0 10px;border:34px solid transparent;border-image:url(assets/journal_exhibit.webp) 110 fill/34px stretch;box-sizing:border-box}
+.jexi{position:absolute;left:20px;top:2px;width:230px;height:216px;display:grid;place-items:center;filter:drop-shadow(0 12px 10px rgba(40,25,10,.45))}
+.jexs{position:absolute;left:330px;top:34px;width:150px;height:48px;transform:rotate(-3deg)}
 .jexs img{position:absolute;inset:0;width:150px;height:48px}.jexs span{position:absolute;inset:0;display:grid;place-items:center;font:700 17px/1 var(--font-label);letter-spacing:.08em;color:#26364f}
-.jkind{position:absolute;left:380px;top:116px;font:700 17px/1 var(--font-label);letter-spacing:.14em;border:2px solid #6e2a35;color:#6e2a35;border-radius:4px;padding:6px 9px}
+.jkind{position:absolute;left:330px;top:100px;font:700 17px/1 var(--font-label);letter-spacing:.14em;border:2px solid #6e2a35;color:#6e2a35;border-radius:4px;padding:6px 9px}
 .jh3{font:700 38px/1.15 var(--font-body);margin:4px 0}
 .jmeta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
 .jmt{font:600 21px/1 var(--font-body);padding:7px 12px;border-radius:30px;border:2px solid #8a6a3a;background:#f6e9c8;color:#3a2a1a}
 /* events */
 .jtl{position:absolute;left:0;top:40px;right:0;bottom:0}
 .jtlin{position:relative;padding-bottom:20px}
-.jtlin:before{content:"";position:absolute;left:150px;top:0;bottom:0;border-left:3px dashed rgba(138,106,58,.7)}
-.jrow{position:relative;display:grid;grid-template-columns:128px 44px 1fr;gap:0;padding:12px 10px 12px 0;margin-bottom:4px;cursor:pointer;border-radius:8px}
+.jtlin:before{content:"";position:absolute;left:154px;top:0;bottom:0;width:8px;background:url(assets/journal_tl_line.webp) center top/8px 15px repeat-y}
+.jrow{position:relative;display:grid;grid-template-columns:128px 44px 1fr;gap:0;padding:2px 0;margin-bottom:2px;border:12px solid transparent;border-right-width:10px;cursor:pointer}
 .jrow.jq{cursor:default}
-.jrow.sel{background:rgba(110,42,53,.14);box-shadow:inset 6px 0 0 #6e2a35}
+.jrow.sel{border-image:url(assets/journal_selrow.webp) 40 fill/12px stretch}
 .jrow.link{background:rgba(196,69,58,.12)}
 .jt{text-align:right;padding-right:10px;font:700 30px/1.1 var(--font-body);color:#3a2a1a}
 .jm{display:grid;place-items:start center;padding-top:6px}
-.mk{display:block;width:24px;height:24px;border-radius:50%}
-.mk.fact{background:radial-gradient(circle at 35% 30%,#e6c98a,#8a6a36);border:3px solid #5a3a22}
-.mk.claim{background:#fbf3d8;border:4px solid #8a5a14}
-.mk.est{width:20px;height:60px;border:3px dashed #8a2a3a;border-radius:10px;background:repeating-linear-gradient(45deg,rgba(138,42,58,.25) 0 6px,transparent 6px 12px)}
-.mk.unk{background:#f2e8d4;border:3px dashed #8a6a3e}
+.mk{display:block;width:28px;height:28px;background:center/contain no-repeat}
+.mk.fact{background-image:url(assets/journal_tl_fact.webp)}
+.mk.claim{background-image:url(assets/journal_tl_claim.webp)}
+.mk.est{width:17px;height:64px;background-image:url(assets/journal_tl_est.webp)}
+.mk.unk{background-image:url(assets/journal_tl_unk.webp)}
 .jb{min-width:0;padding-left:8px;font:400 24px/1.35 var(--font-body)}
 .jb .jc8{margin:6px 0 0}.jpl8{margin:4px 0 0!important}
 #anchor{display:inline-block;width:1px;height:1px}
@@ -557,10 +558,10 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jeyebrow{font:600 20px/1 var(--font-label);letter-spacing:.2em;color:#8a6a3e}
 .jqh{font:700 36px/1.2 var(--font-body);margin:6px 0 14px}
 .jstep{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a7a,#a8483f 60%,#6e2a35);color:#fff;font:700 18px/1 var(--font-body);font-style:normal;margin-right:2px}
-.jcork{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px;padding:22px 16px 16px;margin:0 0 14px;border-radius:12px;background-color:#b07a43;box-shadow:inset 0 0 0 6px #7a5230,inset 0 0 50px rgba(60,30,10,.5)}
-.jclue{position:relative;padding:12px 12px 10px;background:#fbf3d8;border:2px solid #a98f58;box-shadow:0 5px 8px rgba(0,0,0,.4);transform:rotate(var(--r,0deg));min-width:0}
-.jclue.basis{outline:4px solid #6e2a35;outline-offset:2px}
-.jpn{position:absolute;left:50%;top:-12px;margin-left:-9px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f2d595,#b08d57 60%,#7d5f2e);box-shadow:0 3px 4px rgba(0,0,0,.45)}
+.jcork{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px;padding:14px 2px 6px;margin:0 0 14px;border:24px solid transparent;border-image:url(assets/journal_cork.webp) 46 fill/24px stretch}
+.jclue{position:relative;padding:4px 4px 0;border:18px solid transparent;border-image:url(assets/journal_cardpin.webp) 50 fill/18px stretch;filter:drop-shadow(0 4px 5px rgba(0,0,0,.4));transform:rotate(var(--r,0deg));min-width:0}
+.jclue.basis{outline:4px solid #6e2a35;outline-offset:-4px;border-radius:14px}
+.jpn{display:none;position:absolute;left:50%;top:-12px;margin-left:-9px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f2d595,#b08d57 60%,#7d5f2e);box-shadow:0 3px 4px rgba(0,0,0,.45)}
 .jclue.basis .jpn{background:radial-gradient(circle at 35% 30%,#ff8a7a,#a8483f 60%,#6e2a35)}
 .jct2{display:flex;gap:10px;align-items:center}.jct2 b{font:700 22px/1.15 var(--font-body);min-width:0}
 .jci{flex:none;width:52px;height:52px;display:grid;place-items:center}.jci img,.jci svg{max-width:52px;max-height:52px}
@@ -568,8 +569,8 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jcb button{font:600 17px/1 var(--font-body);padding:8px 10px;border-radius:20px;border:2px solid #8a6a3a;background:#f6e9c8;color:#3a2a1a;cursor:pointer}
 .jcb button.on{background:#6e2a35;color:#f6e3c0;border-color:#6e2a35}
 .jopts{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 6px}
-.jopts button{flex:1 1 calc(50% - 5px);min-width:0;min-height:72px;padding:8px 14px;border:4px double #8a6a3a;border-radius:8px;background:#f6e9c8;color:#3a2a1a;font:600 24px/1.2 var(--font-body);cursor:pointer;text-align:center}
-.jopts button.on{border-color:#6e2a35;background:#f1d9d6;color:#6e2a35}
+.jopts button{flex:1 1 calc(50% - 5px);min-width:0;min-height:72px;padding:4px 6px;border:18px solid transparent;border-image:url(assets/journal_opt.webp) 36 fill/18px stretch;background:none;color:#3a2a1a;font:600 24px/1.2 var(--font-body);cursor:pointer;text-align:center}
+.jopts button.on{border-image-source:url(assets/journal_optsel.webp);color:#6e2a35}
 .oldnotes{margin:14px 0 10px}
 </style>
 
@@ -2430,7 +2431,7 @@ function jEvidence(){
   const e = EV[selEv], ii = cur.ids.indexOf(selEv)+1, pl = PLACE_OF[selEv], used = QS.filter(q=>q.open() && q.clues.includes(selEv));
   const r = '<div class="jscroll jfill"><div class="jtitle">'+tr(GROUP_NAME[selGroup]||GROUP_NAME.other)+'</div>'
     + '<div class="chips jitems">'+cur.ids.map(id=>'<button type="button" class="gchip'+(id===selEv?' on':'')+(EV[id].reach==="dormant"?' old':'')+'" data-ev="'+id+'">'+tr(EV[id].name)+'</button>').join('')+'</div>'
-    + '<div class="jexh"><div class="jexi">'+evIcon(e, 230)+'</div><div class="jexs"><img src="'+JA("stamp_exhibit_navy")+'" alt=""><span>EXHIBIT '+String(gi+1).padStart(2,"0")+'-'+ii+'</span></div><span class="jkind">'+e.tag+'</span></div>'
+    + '<div class="jexh"><div class="jexi">'+evIcon(e, 196)+'</div><div class="jexs"><img src="'+JA("stamp_exhibit_navy")+'" alt=""><span>EXHIBIT '+String(gi+1).padStart(2,"0")+'-'+ii+'</span></div><span class="jkind">'+e.tag+'</span></div>'
     + '<h3 class="jh3">'+tr(e.name)+'</h3><p class="jp">'+tr(e.desc)+'</p>'
     + (e.reach === "dormant" ? '<p class="jnote">'+L2("이전 버전에서 얻은 기록이다.","Recorded in an earlier version.")+'</p>' : '')
     + (pl || used.length ? '<div class="jmeta">'+(pl ? '<span class="jmt">'+L2("장소: ","Place: ")+tr(PLACES[pl])+'</span>' : '')+used.map(q=>'<span class="jmt">'+(lang==="ko" ? "질문 "+qNum(q)+"에서 사용" : "Used in question "+qNum(q))+'</span>').join('')+'</div>' : '')
@@ -2579,11 +2580,12 @@ function jNotes(){
 }
 
 const JKEEP = { tab:-1 };   /* keeps the timeline scroll position when a row is picked */
+const JICON = ["people","evidence","events","notes"];
 const JRIB = ["burgundy","brass","navy","moss"], JRH = [["인물 기록","PEOPLE FILE"],["증거 기록","EVIDENCE FILE"],["사건 지도","CASE MAP"],["추리 노트","DEDUCTION"]];
 function renderCF(){
   tab = Math.max(0, Math.min(CF_TABS-1, tab|0));
   const labs = tr(UI.tabs), J = tab === 0 ? jPeople() : tab === 1 ? jEvidence() : tab === 2 ? jRecon() : jNotes();
-  $("jRibs").innerHTML = labs.map((t,i)=>'<button type="button" class="jrib'+(i===tab?' act':'')+'" data-tab="'+i+'" style="top:'+(190+118*i)+'px"><img src="'+JA("bookmark_"+JRIB[i]+(i===tab?"_selected":"_normal"))+'" alt=""><span>'+t+'</span></button>').join('');
+  $("jRibs").innerHTML = labs.map((t,i)=>'<button type="button" class="jrib'+(i===tab?' act':'')+'" data-tab="'+i+'" style="top:'+(190+118*i)+'px"><img src="'+JA("bookmark_"+JRIB[i]+(i===tab?"_selected":"_normal"))+'" alt=""><img class="jri" src="'+JA("tabicon_"+JICON[i])+'" alt=""><span>'+t+'</span></button>').join('');
   $("jRibs").querySelectorAll("[data-tab]").forEach(b=>{ b.onclick = ()=>{ tab = +b.dataset.tab; sub = false; renderCF(); }; });
   $("jRunL").innerHTML = '<span>BELL VILLAGE · CASE JOURNAL</span><span>0'+(tab+1)+' / 04</span>';
   $("jRunR").innerHTML = '<span>'+(J.rh || L2(JRH[tab][0], JRH[tab][1]))+'</span><span></span>';
