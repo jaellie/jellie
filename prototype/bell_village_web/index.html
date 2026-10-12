@@ -111,9 +111,9 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #flcap{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:44;pointer-events:none;opacity:0;transition:opacity 1.2s;font:700 42px/1.2 var(--font-label);letter-spacing:.16em;white-space:nowrap;color:#f6e3c0;text-shadow:0 3px 10px rgba(0,0,0,.7);text-align:center}
 #flcap.on{opacity:1}
 #snow{position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:5;pointer-events:none;transition:opacity 1.5s}
-#rain{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;transition:opacity 2s;background:repeating-linear-gradient(105deg,rgba(200,215,240,.0) 0 14px,rgba(200,215,240,.28) 14px 16px);background-size:60px 60px;animation:rainmv .45s linear infinite}
-#rain.on{opacity:.8}
-@keyframes rainmv{to{background-position:-20px 60px}}
+#rain{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;transition:opacity 2s}
+#rain canvas{position:absolute;left:0;top:0;width:1920px;height:1080px}
+#rain.on{opacity:1}
 #stage.rw #vsc,#stage.rw #tsc{animation:rwob 1.6s ease-in-out;filter:grayscale(1) sepia(.7) contrast(1.1)}
 @keyframes rwob{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px) skewX(1deg)}40%{transform:translateX(8px)}60%{transform:translateX(-5px) skewX(-1deg)}80%{transform:translateX(4px)}}
 /* Old Mill: PLACEHOLDER art (flat daylight colours) until the real layers exist */
@@ -785,7 +785,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
      <button class="pbtn nine cream dirb" data-skip="2"></button><button class="pbtn nine cream dirb" data-skip="3"></button><button class="pbtn nine cream dirb" data-skip="4"></button><button class="pbtn nine cream dirb" data-skip="5"></button><button class="pbtn nine cream dirb" data-skip="6"></button><button class="pbtn nine cream dirb" data-skip="66"></button><button class="pbtn nine cream dirb" data-skip="7"></button><button class="pbtn nine cream dirb" data-skip="77"></button>
     </div>
   </div></div>
-  <div id="flv"></div><div id="flcap"></div><div id="rain"></div>
+  <div id="flv"></div><div id="flcap"></div><div id="rain"><canvas id="rainc" width="1920" height="1080"></canvas></div>
   <div class="modal" id="present"><div class="card" style="text-align:center">
     <div class="eyebrow" id="prEy">PRESENT EVIDENCE</div><h2 id="prQ" style="font-size:34px"></h2><div id="prL"></div><p id="prN"></p>
   </div></div>
@@ -3039,6 +3039,34 @@ setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
       cx.globalAlpha = f.a; const d = f.r * 4; cx.drawImage(f.spr, f.x - d/2, f.y - d/2, d, d);
     }
     cx.globalAlpha = 1;
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* Rain for the flood night: slanted streaks at two depths, with small splash rings where drops land on the ground and a faint mist near the bottom. Only drawn while #rain is on. */
+(function(){
+  const box = $("rain"), cv = $("rainc"), cx = cv.getContext("2d"), rnd = (a, b) => a + Math.random() * (b - a);
+  const SLOPE = 0.2;   /* sideways travel per unit of fall */
+  const drops = [], splashes = [];
+  const mk = far => ({ x:rnd(-300, 1920), y:rnd(-100, 1080), v:far ? rnd(900, 1150) : rnd(1300, 1700), len:far ? rnd(18, 30) : rnd(34, 58), a:far ? rnd(.16, .28) : rnd(.28, .5), w:far ? 1 : 1.7, gy:far ? rnd(840, 930) : rnd(930, 1060) });
+  for (let i = 0; i < 240; i++) drops.push(mk(true)); for (let i = 0; i < 110; i++) drops.push(mk(false));
+  let last = 0;
+  function frame(t){
+    requestAnimationFrame(frame);
+    const dt = Math.min(.05, (t - last) / 1000 || 0); last = t;
+    const op = +getComputedStyle(box).opacity; if (!op || document.hidden) return;
+    cx.clearRect(0, 0, 1920, 1080);
+    cx.lineCap = "round";
+    for (const d of drops){
+      d.y += d.v * dt; d.x += d.v * SLOPE * dt;
+      if (d.y >= d.gy){ if (d.w > 1 || Math.random() < .5) splashes.push({ x:d.x, y:d.gy, t:0, big:d.w > 1 }); d.y = rnd(-120, -10); d.x = rnd(-300, 1920); }
+      cx.strokeStyle = "rgba(205,222,245," + d.a + ")"; cx.lineWidth = d.w; cx.beginPath(); cx.moveTo(d.x, d.y); cx.lineTo(d.x - d.len * SLOPE, d.y - d.len); cx.stroke();
+    }
+    for (let i = splashes.length - 1; i >= 0; i--){
+      const s = splashes[i]; s.t += dt; const k = s.t / .32; if (k >= 1){ splashes.splice(i, 1); continue; }
+      const rw = (s.big ? 16 : 9) * (.4 + k), rh = rw * .32; cx.strokeStyle = "rgba(210,228,250," + (.5 * (1 - k)) + ")"; cx.lineWidth = 1.4; cx.beginPath(); cx.ellipse(s.x, s.y, rw, rh, 0, 0, 6.283); cx.stroke();
+    }
+    const g = cx.createLinearGradient(0, 760, 0, 1080); g.addColorStop(0, "rgba(150,170,205,0)"); g.addColorStop(1, "rgba(150,170,205,.16)"); cx.fillStyle = g; cx.fillRect(0, 760, 1920, 320);
   }
   requestAnimationFrame(frame);
 })();
