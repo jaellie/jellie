@@ -1316,6 +1316,90 @@ EV.motive = { id:"motive", name:{en:"Green's reason",ko:"Green의 이유"}, tag:
 EV.record = { id:"record", name:{en:"Edward's Final Record",ko:"에드워드의 마지막 기록"}, tag:"RECORD",
   desc:{en:"The corrected register and a handwritten confession, hidden in the pendulum case. Edward names himself first, then the Mayor, the Bell-warden, the Healer of that time and Molly. He states the swap and who did what, and hands Nini the keys.", ko:"추 상자 속에 숨겨 둔 바로잡은 장부와 손으로 쓴 고백이다. 에드워드는 자기 이름을 가장 먼저 적고, 이어 시장, 종지기 어른, 그때의 치료사, 몰리를 적었다. 이름이 바뀐 일과 누가 무엇을 했는지를 밝히고, 열쇠를 니니에게 넘긴다."},
   note:{en:"Edward's Final Record: the corrected register and his confession, naming himself first, then the council.", ko:"에드워드의 마지막 기록: 바로잡은 장부와 고백. 자기 이름을 가장 먼저 적고 이어 회의 사람들을 적었다."} };
+/* ---------- Case File Phase 1: display-only metadata (approved by Loki). IDs, S.ev, S.notes and every flag stay untouched. ----------
+   [group, kind, reach, why, holder]. reach "dormant" is an internal state only; owned items (old saves) always stay readable. */
+const EV_META = {
+  notice:["plaza","document","live","",null],
+  found_loc:["place","scene","live","","tm"],
+  stmt_tm:["statements","statement","live","","tm"],
+  stmt_nini:["statements","statement","live","","nini"],
+  notebook:["letters","document","live","","nini"],
+  greet:["statements","statement","live","","nini"],
+  stmt_ck:["statements","statement","live","","ck"],
+  clock:["clock","physical","live","",null],
+  mech:["clock","physical","live","",null],
+  hatch2:["tower","physical","live","",null],
+  pwatch:["clock","physical","live","","ed"],
+  bellinc:["past23","history","live","","mo"],
+  oldrep:["past23","document","live","",null],
+  mreq:["past23","document","live","",null],
+  noledger:["past23","document","live","",null],
+  draft:["letters","document","live","","ed"],
+  mnote:["letters","document","live","","ed"],
+  receipt:["cafe","document","live","","hz"],
+  stmt_hz:["statements","statement","live","","hz"],
+  tab_pm:["cafe","document","live","","hz"],
+  tod:["medical","medical","live","","hl"],
+  thread:["medical","trace","live","","hl"],
+  tdoc:["past23","document","live","","gr"],
+  hidden:["hiding","document","live","",null],
+  button:["trace","trace","live","",null],
+  photo2:["photos","photo","dormant","gate",null],
+  bellrec:["past23","document","dormant","gate","ed"],
+  register:["past23","document","dormant","gate","ed"],
+  photo_home:["photos","photo","dormant","gate",null],
+  hatch:["tower","physical","dormant","gate",null],
+  pendulum:["clock","physical","dormant","gate",null],
+  handbell:["tower","physical","dormant","gate",null],
+  chute:["tower","physical","dormant","gate",null],
+  melt:["tower","trace","dormant","gate",null],
+  boots:["tower","trace","dormant","gate",null],
+  pit:["tower","physical","dormant","gate",null],
+  patrol:["patrol","document","dormant","gate","tm"],
+  acct_gr:["statements","statement","dormant","old","gr"],
+  report:["medical","medical","dormant","old","hl"],
+  watch:["clock","physical","dormant","old","ed"],
+  stmt_ck2:["statements","statement","dormant","old","ck"],
+  wool:["trace","trace","dormant","old",null],
+  patrol2:["patrol","document","dormant","old","tm"],
+  walk:["cafe","scene","dormant","old",null],
+  hide:["hiding","physical","dormant","old",null],
+  glove:["hiding","physical","dormant","old",null],
+  letter:["hiding","document","dormant","old","ed"],
+  motive:["statements","statement","dormant","old","gr"],
+  record:["past23","document","dormant","old","ed"],
+  letters:["letters","document","dormant","jump","ed"],
+  torn_page:["letters","document","dormant","jump","nini"],
+  key:["letters","physical","dormant","jump","nini"],
+  bread:["cafe","trace","dormant","jump","hz"],
+  drawers:["letters","physical","dormant","none",null],
+  stmt_gr:["statements","statement","dormant","none","gr"]
+};
+Object.keys(EV).forEach(k=>{ const m = EV_META[k]; if (m){ EV[k].group = m[0]; EV[k].kind = m[1]; EV[k].reach = m[2]; EV[k].why = m[3]; EV[k].holder = m[4]; } });
+/* derived view: the evidence the player owns, grouped for display. It never changes ownership. */
+function evGroups(){
+  const g = {}; S.ev.forEach(id=>{ const e = EV[id]; if (!e) return; const k = e.group || "other"; (g[k] = g[k] || []).push(id); });
+  return Object.keys(g).map(k=>({ group:k, ids:g[k] }));
+}
+function evStatements(person){ return S.ev.filter(id=>EV[id] && EV[id].kind === "statement" && (!person || EV[id].holder === person)); }
+/* eight people, revealed in four steps (first meeting, observation, flashback, final deduction). Statements are the speaker's words, never narrated as fact.
+   "verify" marks a trigger flag that must be confirmed before it is used to gate anything. Nothing is hidden or shown from this table yet. */
+const PEOPLE = [
+  { id:"nini", sp:"nini", first:()=>true,                tiers:[{ev:["stmt_nini","greet"]}, {ev:["notebook"]}] },
+  { id:"ck",   sp:"ck",   first:()=>has("ck.bear"),      tiers:[{ev:["stmt_ck"]}, {ev:["clock","mech","pwatch"]}] },
+  { id:"tm",   sp:"tm",   first:()=>has("tm.stmt"),      tiers:[{ev:["stmt_tm"]}, {ev:["found_loc"]}] },
+  { id:"hz",   sp:"hz",   first:()=>has("hz.stmt"),      tiers:[{ev:["stmt_hz"]}, {ev:["receipt","tab_pm"]}] },
+  { id:"mo",   sp:"mo",   first:()=>has("mol.met"),      tiers:[{ev:["bellinc"]}], verify:["f5.*"] },
+  { id:"hl",   sp:"hl",   first:()=>has("may.done") || S.ev.includes("tod"), tiers:[{ev:["tod","thread"]}], verify:["may.done"] },
+  { id:"ed",   sp:"ed",   first:()=>true,                tiers:[{ev:["draft","mnote"]}], verify:["f5.*"] },
+  { id:"gr",   sp:"gr",   first:()=>has("fin.m1"),       tiers:[{ev:[]}, {flags:["fin.o1","fin.o2","fin.o3"]}, {flags:["f5.done"]}, {flags:["dd04"]}], verify:["fin.o1","fin.o2","fin.o3","dd04"] }
+];
+function personView(id){
+  const p = PEOPLE.find(x=>x.id===id); if (!p || !p.first()) return null;        /* unmet people have no card, no slot and no count */
+  return { id:p.id, statements:evStatements(p.id), evidence:[].concat.apply([], p.tiers.map(t=>(t.ev||[]).filter(e=>S.ev.includes(e)))) };
+}
+function metPeople(){ return PEOPLE.filter(p=>p.first()).map(p=>p.id); }
+
 Object.assign(NOTES, {
   n_dd07:{en:"The register was altered by a group, with Edward's hand: two inks, council seals, five signatures, and the Final Record confirms it.", ko:"장부는 여럿이 함께, 에드워드의 손으로 고쳐졌다. 두 가지 잉크, 회의의 봉인, 다섯 사람의 서명이 있고, 마지막 기록이 그것을 확인한다."},
   n_dd08:{en:"Green fought to protect BGB, not to take back his name.", ko:"Green은 이름을 되찾으려는 게 아니라 빅그베를 지키려고 싸웠다."},
@@ -2056,7 +2140,7 @@ function renderCF(){
   } else if (tab===3){
     h += '<div class="legend">'+tr(UI.legend).map(s=>'<span><span class="tag">'+s[0]+'</span>'+s.slice(2)+'</span>').join('')+'</div><div class="tl" id="tl"></div><p style="font:italic 400 28px/1.4 var(--font-body);color:#5a4630;max-width:900px">'+tr(UI.tlNote)+'</p>';
   } else if (tab===4){
-    h += '<div style="display:flex;gap:28px;align-items:flex-start"><div style="flex:1;min-width:0;max-height:770px;overflow-y:auto;padding-right:8px">'+qBlock()+(S.notes.length ? '<ul class="notes">'+S.notes.map(o=>'<li>'+tr(o.n)+'</li>').join('')+'</ul>' : '<p style="font:italic 400 28px var(--font-body)">'+tr(UI.empty)+'</p>')+conBlock()+'</div>'
+    h += '<div style="display:flex;gap:28px;align-items:flex-start"><div style="flex:1;min-width:0;max-height:770px;overflow-y:auto;padding-right:8px">'+qBlock()+autoNotes()+conBlock()+'</div>'
       + '<div style="flex:none;width:540px">'+pageOver(540)+'<div class="pvnote" style="width:540px;font-size:19px">'+(PV ? '' : (lang==="ko"?"이후 챕터에서 채워진다. ":"Fills in later. "))+'<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div></div></div>';
   } else {
     h += '<div class="mapbox"><div class="pin" style="left:168px;top:372px;background:#c4453a"></div><div class="pinlab" style="left:194px;top:372px">'+tr(UI.here)+'</div><div class="pin" style="left:346px;top:300px;background:#d9a441"></div><div class="pinlab" style="left:372px;top:300px">'+tr(UI.tower)+'</div></div>';
@@ -2180,6 +2264,12 @@ function pageOver(wpx){
   else h += box("",205,Y[0]-76,485,72,W,H,'<span style="font:italic 600 '+(20*f).toFixed(1)+'px/1.2 var(--font-body);color:#6d5a40">'+(K?"아직 다시 읽을 것이 없다.":"Nothing to re-read yet.")+'</span>','justify-content:flex-end');
   return h + '</div>';
 }
+/* auto notes are kept in S.notes (saves stay intact) but are no longer shown as the main notes list */
+function autoNotes(){
+  if (!S.notes.length) return '<p style="font:italic 400 28px var(--font-body)">'+tr(UI.empty)+'</p>';
+  const k = lang==="ko";
+  return '<details class="oldnotes" style="margin:6px 0 10px"><summary style="font:italic 600 24px var(--font-body);color:#6d5a40;cursor:pointer">'+(k?"보관된 자동 기록 ":"Archived auto notes ")+'('+S.notes.length+')</summary><ul class="notes">'+S.notes.map(o=>'<li>'+tr(o.n)+'</li>').join('')+'</ul></details>';
+}
 function qBlock(){
   const q = has("c7.rec") ? UI.askChoose : has("c7.green") ? UI.askRecord : has("c6.turn") ? UI.askWith : has("c6.on") ? UI.askFall : S.flags.dd02 ? UI.askNext : S.flags.q1 ? UI.askBear : null; if (!q) return '';
   return '<div class="eyebrow" style="margin:0 0 4px">'+(lang==="ko"?"지금의 질문":"THE QUESTION")+'</div><div style="font:italic 700 32px/1.2 var(--font-body);color:#6e2a35;margin:0 0 14px">'+tr(q)+'</div>';
@@ -2193,18 +2283,19 @@ function conBlock(){
 }
 function renderEvGrid(){
   const g = $("evg"); const CX = [[60,318],[340,597],[618,876]], CY = [[95,348],[372,617],[642,888]], k = 520/940; /* slot rectangles measured from grid_3x3_equal.webp (940x990): nine equal slots */
-  const pages = Math.max(1, Math.ceil(S.ev.length/9)); evPage = Math.min(evPage, pages-1);
-  if (selEv && S.ev.includes(selEv)) evPage = Math.floor(S.ev.indexOf(selEv)/9);
-  S.ev.slice(evPage*9, evPage*9+9).forEach((id,i)=>{ const b = document.createElement("button"); b.className = "evcell"+(selEv===id?" sel":""); const col=i%3,row=Math.floor(i/3);
+  const own = S.ev.filter(id=>EV[id]);   /* unknown ids from a damaged or newer save are kept in S.ev but never drawn */
+  const pages = Math.max(1, Math.ceil(own.length/9)); evPage = Math.min(evPage, pages-1);
+  if (selEv && own.includes(selEv)) evPage = Math.floor(own.indexOf(selEv)/9);
+  own.slice(evPage*9, evPage*9+9).forEach((id,i)=>{ const b = document.createElement("button"); b.className = "evcell"+(selEv===id?" sel":""); const col=i%3,row=Math.floor(i/3);
     const rw = Math.round((CX[col][1]-CX[col][0])*k), rh = Math.round((CY[row][1]-CY[row][0])*k);
     b.style.cssText = "left:"+Math.round(CX[col][0]*k)+"px;top:"+Math.round(CY[row][0]*k)+"px;width:"+rw+"px;height:"+rh+"px"; b.innerHTML = evIcon(EV[id], Math.min(96, rh-16)); b.title = tr(EV[id].name);
     b.onclick = ()=>{ selEv = id; renderCF(); }; g.appendChild(b); });
-  if (!selEv && S.ev.length) selEv = S.ev[S.ev.length-1];
+  if (!selEv && own.length) selEv = own[own.length-1];
   if (pages > 1){ const pgr = document.createElement("div"); pgr.className = "pager"; pgr.style.cssText = "position:absolute;left:0;top:560px";
     pgr.innerHTML = '<button id="pvP"'+(evPage?'':' disabled')+'>&lsaquo;</button><span>'+tr(UI.page)+' '+(evPage+1)+' / '+pages+'</span><button id="pvN"'+(evPage<pages-1?'':' disabled')+'>&rsaquo;</button>';
-    g.appendChild(pgr); pgr.querySelector("#pvP").onclick = ()=>{ evPage--; selEv = S.ev[evPage*9]; renderCF(); }; pgr.querySelector("#pvN").onclick = ()=>{ evPage++; selEv = S.ev[evPage*9]; renderCF(); }; }
+    g.appendChild(pgr); pgr.querySelector("#pvP").onclick = ()=>{ evPage--; selEv = own[evPage*9]; renderCF(); }; pgr.querySelector("#pvN").onclick = ()=>{ evPage++; selEv = own[evPage*9]; renderCF(); }; }
   const d = $("evd"); const e = selEv && EV[selEv];
-  d.innerHTML = e ? '<span class="tag">'+e.tag+'</span><h3>'+tr(e.name)+'</h3><p>'+tr(e.desc)+'</p>' : '<p style="font:italic 400 28px/1.4 var(--font-body);color:#6d5a40">'+(S.ev.length? (lang==="ko"?"증거를 선택하면 설명이 나온다.":"Select an item to read about it.") : tr(UI.empty))+'</p>';
+  d.innerHTML = e ? '<span class="tag">'+e.tag+'</span><h3>'+tr(e.name)+'</h3><p>'+tr(e.desc)+'</p>' : '<p style="font:italic 400 28px/1.4 var(--font-body);color:#6d5a40">'+(own.length? (lang==="ko"?"증거를 선택하면 설명이 나온다.":"Select an item to read about it.") : tr(UI.empty))+'</p>';
 }
 function renderTl(){
   const t = $("tl"); const k = 925/1628; const SL = [[173,403],[432,667],[695,926],[954,1189],[1218,1445]], sx = SL.map(x=>x[0]); const K = lang==="ko"; /* slot rectangles measured from timeline_strip_v2.webp (1628x563), top 142, bottom 367 */
@@ -2372,7 +2463,7 @@ if (S.flags && S.flags["c3.qz"] && !S.flash && !S.flags["f4.end"] && !S.flags["f
 let resumeFlash = 0; if (S.flash){ resumeFlash = S.flash; S.flash = false; S.scene = "village"; S.x = resumeFlash === 5 ? 3700 : 2150; }   /* a save made inside a flashback (some are from the old Chapter 4/5) restarts that flashback instead of leaving the player with nothing to do */
 cam = 0; fit(); setSceneNow((["tower","archive","cafe","cottage","mill"].includes(S.scene) || (S.flash && ["past","flood"].includes(S.scene))) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus(); if (resumeFlash) setTimeout(()=>{ if (resumeFlash === 5) startFlash5(); else startFlash(); }, 900);
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
-window.__bv = { D, NOTES, SP, EV, ENDINGS, ACC, SMALL, FOLLOW, KCON, GATE_T, CHT, UI, setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4 };
+window.__bv = { D, NOTES, SP, EV, ENDINGS, ACC, SMALL, FOLLOW, KCON, GATE_T, CHT, UI, setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4, EV_META, evGroups, evStatements, PEOPLE, personView, metPeople };
 requestAnimationFrame(frame);
   if (typeof nineAll === "function") requestAnimationFrame(nineAll);
   /* layers with will-change keep the raster scale they were first painted at, so after a resize or rotation they look soft; drop and restore the hint to re-paint them sharp */
