@@ -2172,7 +2172,7 @@ function skipTo(n){
   else if (n === 6 || n === 66 || n === 7 || n === 77){
     qFlags(["f4.end","f4.shown","f5.toPresent","f5.shown","f5.past","hz5.met","hz5.night","may.done","f5.done","fin.on"]); qEv(["receipt","tod"]);
     if (n === 66 || n === 77){ qFlags(["fin.m1","fin.o1","fin.o2","fin.o3","fin.s4","fin.may2","fin.frame","fin.last"]); qEv(["tdoc","thread","hidden"]); setSceneNow("village", 1100); toast(lang==="ko"?"연출 모드: 6장 마지막 선택":"Director: Chapter 6 final choice"); }
-    else chapterIntro(6, ()=>setSceneNow("village", 4500));
+    else { setSceneNow("village", 4500); showMono(()=>{ S.flash = false; setSceneNow("village", 4500); }); }   /* the jump plays the recap that closes the Chapter 5 flashback, then lands at the start of Chapter 6 */
   }
   else if (n === 5){ S.ret = { scene:"mill", x:1400 }; SKIP_STEPS[4](); qFlags(["f4.ed","f4.gate","f4.lever","f4.end","f4.shown"]); NEXTK = 5; setSceneNow("mill", 1400); startFlash5(); }
 }
