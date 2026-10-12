@@ -273,7 +273,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .choice:hover,.choice.sel{filter:brightness(1.08) saturate(1.15) drop-shadow(0 3px 5px rgba(0,0,0,.4)) drop-shadow(0 0 7px rgba(255,214,140,.55));color:#6e2a35;transform:translateX(4px) rotate(-.6deg)}
 
 /* full-screen story stills shown behind the dialogue box for chosen lines */
-#still{position:absolute;inset:0;z-index:6;opacity:0;pointer-events:none;transition:opacity .7s}
+#still{position:absolute;inset:0;z-index:6;opacity:0;pointer-events:none;transition:opacity 1.6s ease-in-out}
 #still.on{opacity:1}
 #still img{width:100%;height:100%;object-fit:cover;display:block}
 #still:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(3,4,14,.55) 100%)}
@@ -1236,7 +1236,7 @@ Object.assign(D, {
   ci6_1: {sp:"bgb", ex:"neutral", t:{en:"Compare the clues on the Identity Board under People. After that, I have to see Green at the Old Mill.", ko:"사람 탭의 신원 보드에서 단서를 맞춰 보자. 그다음엔 낡은 방앗간의 Green을 만나야 해."}, next:null}
 });
 const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp", por:"assets/por_edward_"}, kid:{name:{en:"Green",ko:"형"}, img:"assets/twin_elder_front.webp", por:"assets/por_elder_"}, yo:{name:{en:"Little Green",ko:"동생"}, img:"assets/twin_younger_front.webp", por:"assets/por_younger_"}, nar:{name:{en:"",ko:""}, img:"assets/twin_elder_front.webp", hide:true}, v1:{name:{en:"Villager",ko:"마을 사람"}, img:"assets/molly_front.webp", sil:true, big:"assets/sil_rabbit.webp"}, v2:{name:{en:"Villager 2",ko:"주민 2"}, img:"assets/molly_front.webp", sil:true, big:"assets/sil_goat.webp"}, mo:{name:{en:"Grandma Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"그린"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp", por:"assets/por_hazel_"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
-const EXPR = ["neutral","worried","surprised","thinking"], EXPR_X = { bgb:["laugh","sad","stern","relieved"] };   /* extra expressions only some speakers have */
+const EXPR = ["neutral","worried","surprised","thinking"], EXPR_X = { bgb:["laugh","sad","stern","relieved"], gr:["laugh","sad","stern","relieved"] };   /* extra expressions only some speakers have */
 
 /* ---------- state ---------- */
 const SAVE_KEY = "bgb2.bellvillage.proto.v2";   /* v2: saves from before the prologue existed would skip it, so everyone restarts once */
@@ -2197,7 +2197,7 @@ function sizeDlg(text){
 /* The close-up of an NPC on the left looks toward the middle of the screen. Mirrored only here, only for people whose side carries no clue: Green and BGB (scarf side) and May (hair and satchel side) are never mirrored. */
 const NOFLIP = new Set(["gr","bgb","hl","kid","yo","mo","hz","v1","cr"]);   /* mo and hz already look to the right in their art */
 const FLIP_TOGGLE = new Set(["mo:worried","tm:surprised","tm:thinking"]);   /* expressions whose art faces the other way from the rest of that person */
-let STILL_ON = false;
+let STILL_ON = false, STILL_SW = 0;
 const STILLS = (() => {
   const m = { fnB_15:"assets/still_endB_wait.webp", fnB_16:"assets/still_endB_wait.webp" };
   const span = (id, a, b, src) => { for (let i = a; i <= b; i++) m[id + "_" + i] = src; };
@@ -2935,7 +2935,9 @@ function setSideOpen(on){ stage.classList.toggle("sideopen", on); sideBook.class
 sideBook.addEventListener("click", e=>{ e.stopPropagation(); if (mode === "play") setSideOpen(!stage.classList.contains("sideopen")); stage.focus(); });
 document.addEventListener("pointerdown", e=>{ if (stage.classList.contains("sideopen") && !e.target.closest("#side,#sideBook")) setSideOpen(false); }, true);
 function frame(now){
-  { const sk = mode === "dlg" && $("dlg").classList.contains("on") && cur && STILLS[cur] || (ENDHOLD ? "assets/still_clock_tower.webp" : $("endcard").classList.contains("on") && /E1$/.test($("eEy").textContent) ? "assets/still_clock_tower.webp" : ""), st = $("still"); if (sk && $("stillImg").getAttribute("src") !== sk) $("stillImg").src = sk; st.classList.toggle("on", !!sk); stage.classList.toggle("stillon", !!sk); STILL_ON = !!sk; }
+  { const sk = mode === "dlg" && $("dlg").classList.contains("on") && cur && STILLS[cur] || (ENDHOLD ? "assets/still_clock_tower.webp" : $("endcard").classList.contains("on") && /E1$/.test($("eEy").textContent) ? "assets/still_clock_tower.webp" : ""), st = $("still"), im = $("stillImg"); let want = sk;
+    if (sk && im.getAttribute("src") !== sk){ if (STILL_SW) want = ""; else if (st.classList.contains("on")){ want = ""; STILL_SW = setTimeout(()=>{ im.src = sk; STILL_SW = 0; }, 1700); } else im.src = sk; }   /* a different still fades out first, then the next fades in */
+    st.classList.toggle("on", !!want); stage.classList.toggle("stillon", !!sk); STILL_ON = !!sk; }
   { const bp = $("bigPor"), want = mode === "dlg" && $("dlg").classList.contains("on") && !!bigSide && !STILL_ON; if (bp.classList.contains("on") !== want) bp.classList.toggle("on", want); }
   { const hide = mode !== "play"; if (stage.classList.contains("nomenu") !== hide){ stage.classList.toggle("nomenu", hide); if (hide) setSideOpen(false); } }   /* the menu is only there while exploring: any dialogue, pause, modal, scene change or journal hides and folds it, and it comes back by itself */
   const dt = Math.min(0.05, (now - last)/1000); last = now;
