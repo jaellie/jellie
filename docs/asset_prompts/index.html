@@ -863,110 +863,128 @@ const PNG_EDGE = [
 const JOURNAL = [
 "THE CASE JOURNAL (shared design rules for every piece in this set):",
 "- It is a big open investigator's notebook lying on a desk, seen straight from above (flat, orthographic, no perspective, no tilt). The game screen is 1920 x 1080 px; the book is 1700 x 960 px with a left page and a right page, a binding in the middle and four index tabs sticking out of the right edge.",
-"- Materials: dark brown leather cover (#5A3A22, shadow #3B2415, highlight #7A5233) with cream hand stitching (#D9C39A), small brass fittings (#B08D57, glints #E6C98A), burgundy accents (#6E2A35), warm cream parchment pages (#F2E8D4). Everything looks old, loved and cozy, like a village archivist's book. A little wear is fine; keep it clean enough that text on top stays readable.",
-"- The pieces are separate layers: leather frame, pages, spine, tabs, card frames, small paper props. Do NOT draw any text, letters, numbers, labels, page numbers or ruled lines anywhere: the game prints all words itself.",
+"- Materials: dark brown leather cover (#5A3A22, shadow #3B2415, highlight #7A5233) with cream hand stitching (#D9C39A), small brass fittings (#B08D57, glints #E6C98A, dark #7D5F2E), burgundy accents (#6E2A35), warm cream parchment pages (#F2E8D4, deeper #EFE2C6). Everything looks old, loved and cozy, like a village archivist's book. A little wear is fine; keep it clean enough that text on top stays readable.",
+"- Lighting: ONE direction, warm amber from the upper left. Top and left edges a little lighter, bottom and right edges a little darker. Shadows are cool brown, never black. NO baked drop shadows outside any piece (the game adds those).",
+"- The pieces are separate layers. The art provides material and decoration ONLY. The game code (HTML, CSS, SVG) provides every word, every selected or hover state, scrolling, the red connecting thread and all layout. So: do NOT draw any text, letters, numbers, page numbers, ruled lines, selection highlights or red threads.",
 "- Keep the large flat areas calm (low contrast texture, no strong patterns) because text will sit on them."
 ].join("\n");
 const jp = (title, o, meta, edge) => { const it = P(title, o, meta); it.body = it.body.replace(NEG, NEG_UI); if (edge) it.body = it.body.replace(PNG, PNG_EDGE); return it; };
-SECTIONS.push({id:"j", name:"J. Case Journal (new Case File UI)", sub:"The Investigator's Journal redesign. Order: wireframe (done, see the Wireframe artifact) then these pieces. Everything is drawn at the exact pixel size it has on the 1920 x 1080 stage, no text inside any piece. Words, selection states and scrolling are code.", items:[
- jp("Journal cover frame: hollow leather border (1700 x 960)", {
-   goal:"The leather cover that surrounds the two open pages. It is the outer frame of the whole Case File screen.",
-   refs:["the wireframe (Case Journal Wireframe artifact): cover frame sprite 1700 x 960 at (90, 60)","an existing game UI sprite such as the nav binder or HUD buttons, for the brass and leather painting style"],
-   blocks:[JOURNAL],
-   subject:"A flat open-book leather cover seen from above, drawn only as a BORDER: the centre is a hollow, fully transparent rectangle where the pages will show.",
-   layout:["ONE image, exactly 1700 x 960 px.","The leather border is exactly 40 px thick on all four sides. The hollow centre is a fully transparent rectangle from (40, 40) to (1660, 920), 1620 x 880 px. Nothing is painted inside it.","The outer corners are rounded with a 26 px radius and the area outside the rounded corners is fully transparent.","Brass corner caps sit on the four outer corners (about 64 x 64 px each). A row of cream stitching runs along the inner edge of the border, 8 px from the hollow.","No spine, no hinge and no centre line: the middle of the book is handled by a separate piece. The top and bottom borders are straight and uniform so they can be stretched slightly if needed."],
-   details:["Leather: fine pebbled grain, a little edge wear at the corners, slightly darker toward the outer edge.","Lighting: warm amber from the upper left, so the top and left borders are a bit lighter and the bottom and right borders a bit darker."],
-   include:["a hollow transparent centre exactly 1620 x 880 px","brass corner caps","cream stitching along the inner edge"], exclude:["any text or emblem in the middle","a spine","pages or paper inside the hollow","a baked shadow outside the border","a visible hinge","perspective"],
-   tech:["Exactly 1700x960 px, transparent PNG, the centre rectangle truly transparent (alpha 0)."]},
-   {size:"1700x960", tags:["UI","no text"]}, true),
 
- jp("Journal pages: left page and right page (780 x 880 each)", {
-   goal:"The two paper pages inside the cover. Words and cards are placed on top by the game.",
-   refs:["the wireframe: left page at (130, 100), right page at (970, 100), each 780 x 880"],
+SECTIONS.push({id:"j", name:"J. Case Journal, batch 1: common frames (approved to make first)", sub:"Only these six pieces are made first. Place them in the game, test the resizing, and only then start section K. Each piece is the exact pixel size it has on the 1920 x 1080 stage. Specs: docs/CASE_JOURNAL_ASSET_SPEC.md. Check each file with tools/check_journal_sprite.py before sending it to the game.", items:[
+ jp("Journal 1: leather cover frame, hollow border (1700 x 960)", {
+   goal:"The leather cover that surrounds the two open pages: the outer frame of the whole Case File screen.",
+   refs:["docs/CASE_JOURNAL_ASSET_SPEC.md, asset J1 (position 90, 60)","the Case Journal visual mockup (leather border with a stitched ring and brass corners)","an existing game UI sprite such as the nav binder or HUD buttons, for the brass and leather painting style"],
+   blocks:[JOURNAL],
+   subject:"A flat open-book leather cover seen from above, drawn only as a BORDER around a hollow centre.",
+   layout:["ONE image, exactly 1700 x 960 px.","The leather border is exactly 40 px thick on all four sides. The hollow centre is a fully transparent rectangle from (40, 40) to (1660, 920), 1620 x 880 px.","Outer corners are rounded with a 30 px radius; everything outside the rounded corners is fully transparent.","A ring of cream hand stitching runs 14 px inside the outer edge (dashed stitches, about 3 px thick, 14 px long, 10 px apart).","Four brass corner pieces wrap the four outer corners. Each is L-shaped: two arms 90 px long along the two edges, never thicker than the 40 px border, so nothing enters the hollow centre. Slight bevel. The outer rounded corner (30 px radius) stays cut cleanly through the brass.","No spine, no hinge, no centre line, no clasp. The straight borders are uniform along their whole length."],
+   details:["Leather: fine pebbled grain, slight edge wear at the corners, a bit darker toward the outer edge."],
+   include:["a hollow transparent centre of exactly 1620 x 880 px","brass corner pieces","a stitched ring"], exclude:["any text or emblem","a spine","pages inside the hollow","a baked shadow outside the border","a visible hinge or clasp","perspective","a selected or highlighted state"],
+   tech:["Exactly 1700x960 px, transparent PNG. The hollow centre must be truly transparent (alpha 0)."]},
+   {size:"1700x960", tags:["UI","batch 1","no text"]}, true),
+
+ jp("Journal 2: pages, left page and right page (780 x 880 each)", {
+   goal:"The two paper pages inside the cover.",
+   refs:["docs/CASE_JOURNAL_ASSET_SPEC.md, asset J2 (left page at 130, 100; right page at 970, 100)","the Case Journal visual mockup (page edge stack on the outer sides, soft shadow toward the binding)"],
    blocks:[JOURNAL],
    subject:"Two blank parchment pages, drawn as TWO separate pieces side by side on one sheet.",
-   layout:["Sheet 1584 x 880 px. Left page: x 0 to 780. Right page: x 804 to 1584. A 24 px fully transparent gap between them. Each page is exactly 780 x 880 px.","LEFT page: the OUTER edge (left side) shows a thin stack of page edges, 10 px wide, made of fine cream lines with tiny irregularities. The INNER edge (right side, toward the binding) fades into a soft darker shadow about 60 px wide, as if the paper curves into the spine.","RIGHT page: the same idea mirrored in logic, not copied: the outer page-edge stack is on the RIGHT side, the soft binding shadow is on the LEFT side.","Top and bottom edges are straight with a very slight natural wobble. Corners are square with a 6 px softening."],
-   details:["Paper: warm parchment #F2E8D4 with fine fibres and faint, low-contrast stains near the outer corners only. The central 640 x 760 px area of each page must be calm and even (texture contrast under 5%) so text is easy to read.","No ruled lines, no margins, no grid, no printed marks."],
-   include:["a stack of page edges on the outer side only","a soft binding shadow on the inner side only"], exclude:["text","ruled lines","tape or clips (those are separate pieces)","a baked shadow outside the pages","stains in the middle","perspective"],
+   layout:["Sheet 1584 x 880 px. Left page: x 0 to 780. Right page: x 804 to 1584. A 24 px fully transparent gap between them. Each page is exactly 780 x 880 px.","LEFT page: the OUTER edge (left side) shows a thin stack of page edges, 12 px wide, made of fine cream lines with small irregularities. The INNER edge (right side) fades into a soft darker shadow about 70 px wide, as if the paper curves into the binding.","RIGHT page: the outer edge stack is on the RIGHT side (12 px) and the soft binding shadow is on the LEFT side (70 px).","Top and bottom edges are straight with a very slight natural wobble. Corners are square with a 6 px softening."],
+   details:["Paper: warm parchment #F2E8D4 with fine fibres and faint stains near the outer corners only. The central 640 x 760 px of each page must be calm and even (texture contrast under 5%) so text stays easy to read."],
+   include:["a stack of page edges on the outer side only","a soft binding shadow on the inner side only"], exclude:["text","ruled lines","tape or clips","a baked shadow outside the pages","stains in the middle","perspective"],
    tech:["Sheet 1584x880 px, transparent PNG, each page exactly 780x880."]},
-   {size:"1584x880", tags:["UI","no text"]}, true),
+   {size:"1584x880", tags:["UI","batch 1","no text"]}, true),
 
- jp("Journal spine: binding gutter (60 x 880)", {
+ jp("Journal 3: spine, binding gutter (60 x 880)", {
    goal:"The binding strip between the two pages.",
-   refs:["the wireframe: spine at (910, 100), 60 x 880"],
+   refs:["docs/CASE_JOURNAL_ASSET_SPEC.md, asset J3 (position 910, 100)","the Case Journal visual mockup (dark valley with four leather straps)"],
    blocks:[JOURNAL],
-   subject:"A narrow vertical strip showing the bound centre of an open book: the paper folds down into a shaded valley and four small leather binding straps cross it.",
-   layout:["ONE image exactly 60 x 880 px.","The valley shading is darkest in the exact centre (x = 30) and fades to transparent-looking paper tone toward both sides, so it overlaps the soft shadows of the two pages without a visible edge.","Four leather straps cross the strip horizontally at y = 140, 340, 540, 740 (each about 56 px wide and 22 px tall) with two small brass rivets each and cream stitching."],
-   details:["The strip top and bottom edges are straight and flat."],
-   include:["a soft valley shadow","four leather straps with brass rivets"], exclude:["text","a hard centre line","wide shadows beyond the strip","perspective"],
+   subject:"A narrow vertical strip showing the bound centre of an open book: a deep shaded valley with four leather binding straps across it.",
+   layout:["ONE image exactly 60 x 880 px.","The valley is darkest at the centre (x = 30) and fades to fully transparent toward x = 0 and x = 60, so it overlaps the shadows of the two pages without a visible edge.","Four leather straps cross the strip horizontally, each 56 px wide and 24 px tall, with their top edges at y = 140, 340, 540 and 740. Each strap has two small brass rivets and a subtle highlight on its top edge."],
+   include:["a soft valley shadow","four leather straps with brass rivets"], exclude:["text","a hard centre line","shadows wider than the strip","perspective"],
    tech:["Exactly 60x880 px, transparent PNG."]},
-   {size:"60x880", tags:["UI","no text"]}, true),
+   {size:"60x880", tags:["UI","batch 1","no text"]}, true),
 
- jp("Journal index tabs: 4 colours, normal and pulled-out", {
-   goal:"The four index tabs on the right edge of the book (People, Evidence, Events, Deduction). Icons and words are added in code.",
-   refs:["the wireframe: tab sprites 130 x 140 at x = 1768, pitch 155 px; the active tab is pulled out 12 px further"],
+ jp("Journal 4: ribbon bookmark tabs, 4 colours, normal and selected", {
+   goal:"The four index bookmarks that stick out of the right edge of the book (People, Evidence, Events, Deduction). Icons and words are added by the game.",
+   refs:["docs/CASE_JOURNAL_ASSET_SPEC.md, asset J4 (normal tabs at x = 1748, y = 190, 308, 426, 544)","the Case Journal visual mockup (thin ribbons with a swallowtail end)"],
    blocks:[JOURNAL],
-   subject:"Blank cloth-and-leather index tabs, shaped like the tabs on a binder: flat on the left (tucked under the cover) and rounded on the right.",
-   layout:["Sheet 760 x 380 px, 4 columns x 2 rows, each cell 190 x 190 px. Row 1: NORMAL tabs, each exactly 130 x 140 px, aligned to the LEFT of its cell, vertically centred. Row 2: ACTIVE (pulled-out) tabs, each exactly 142 x 140 px, aligned to the left of its cell.","Columns, left to right: burgundy #6E2A35 (People), brass-gold #B08D57 (Evidence), deep navy #26364F (Events), moss green #4C6A45 (Deduction).","The active version is the same tab, 12 px longer on the right, slightly lighter, with a thin cream highlight along the top and right edges."],
-   details:["Each tab has cream stitching 8 px inside its border and one small brass rivet near the rounded end. The middle area of the tab is calm and flat enough for a 48 px icon and two lines of 22 px text."],
-   include:["8 separate tabs (4 normal, 4 active)","a stitched border","one brass rivet each"], exclude:["text","icons","numbers","a shadow under the tab","tabs touching"],
-   tech:["Sheet 760x380 px, transparent PNG."]},
-   {size:"760x380", tags:["UI","no text"]}),
+   subject:"Four blank cloth ribbons with stitched edges, thin and natural like real bookmarks.",
+   layout:["Sheet 800 x 200 px: 4 columns x 2 rows, each cell 200 x 100 px. Row 1: NORMAL ribbons, each exactly 164 x 76 px, aligned to the LEFT of its cell. Row 2: SELECTED ribbons, each exactly 169 x 76 px, aligned to the left of its cell.","Shape: the LEFT end is square and flat (it tucks under the cover). The RIGHT end has a swallowtail notch 16 px deep (a V cut into the middle of the right edge).","Colours left to right: burgundy #6E2A35 (People), olive-brass #8A6A2A (Evidence), deep navy #26364F (Events), moss green #3D5A38 (Deduction).","SELECTED version: the same ribbon 5 px longer, a little lighter and warmer, with a thin cream highlight along the top edge. Nothing else changes (no glow, no outline)."],
+   details:["Cloth: fine woven grain. A row of cream stitching 6 px inside the border and one tiny brass rivet near the left end. The area from x = 14 to x = 140 must stay calm and flat for a 24 px icon and a 20 px word."],
+   include:["8 separate ribbons (4 normal, 4 selected)","a swallowtail right end","stitched border","one tiny rivet each"], exclude:["text","icons","numbers","a shadow under the ribbon","ribbons touching"],
+   tech:["Sheet 800x200 px, transparent PNG."]},
+   {size:"800x200", tags:["UI","batch 1","no text"]}, true),
 
- jp("Journal tab icons (4)", {
-   goal:"Small pictograms printed on the index tabs.",
-   refs:["the supplied round HUD icons (icon_satchel, icon_search): same simple cream-on-dark pictogram style"],
+ jp("Journal 5: polaroid frames for character photos (person tile and large)", {
+   goal:"Snapshot frames that go over the character portraits in the People tab. The portraits are the EXISTING game portraits placed under the transparent window; no character is drawn here.",
+   refs:["docs/CASE_JOURNAL_ASSET_SPEC.md, asset J5","the Case Journal visual mockup (cream snapshot cards)"],
    blocks:[JOURNAL],
-   subject:"Four cream pictograms with a thin dark brown outline, drawn flat and bold so they read at 48 px.",
-   layout:["Sheet 512 x 128 px, 4 cells of 128 x 128 px in one row, each icon about 96 x 96 px centred in its cell.","Order: 1 People (two overlapping head-and-shoulder silhouettes), 2 Evidence (an open folder with a magnifier lens in front), 3 Events (a pocket-watch face with a small map pin beside it), 4 Deduction (a notebook with a pencil and a small question mark)."],
-   details:["Colour: cream #F6E3C0 fill with an outline #2A1A12, 3 px line weight at this size."],
-   include:["four icons","simple readable shapes"], exclude:["text or letters","circles or discs behind the icons","gradients","shadows"],
-   tech:["Sheet 512x128 px, transparent PNG."]},
-   {size:"512x128", tags:["UI","icons"]}),
+   subject:"Two empty cream snapshot frames with a transparent window.",
+   layout:["Sheet 472 x 290 px. LEFT: the person-tile frame, exactly 212 x 240 px at (0, 0). RIGHT: the large frame, exactly 236 x 290 px at (236, 0). A 24 px transparent gap between them.","Person-tile frame: cream paper card with a thin dark outline. The transparent window is exactly 192 x 168 px at (10, 10). The paper strip below the window (62 px) is plain, for a handwritten name added by the game.","Large frame: a wider snapshot. The transparent window is exactly 216 x 224 px at (10, 10). The strip below is 56 px.","Window edges are crisp and fully transparent; the paper around them has a very slight bevel so the portrait looks tucked in."],
+   details:["No tape, no clip, no tilt, no selection ring: tape and clips come later (section K) and tilt and selection are done in code."],
+   include:["two frames with exact windows","a plain name strip"], exclude:["portraits or faces","text","tape or clips","a drop shadow","blurry window edges","a selected look"],
+   tech:["Sheet 472x290 px, transparent PNG, windows exactly as stated."]},
+   {size:"472x290", tags:["UI","batch 1","no text","9-slice"]}, true),
 
- jp("Journal Card frames (9-slice): group card, clue card, question card", {
-   goal:"Paper card frames for the evidence groups, the clues and the question list, each with a normal and a selected look.",
-   refs:["the wireframe: group card 220 x 176, clue card 342 x 150, question card 700 x 136"],
+ jp("Journal 6: paper card frame (9-slice, 300 x 122)", {
+   goal:"The basic paper card used for clue cards, statement slips and the place card. The game stretches it with 9-slice scaling, so it must survive being resized.",
+   refs:["docs/CASE_JOURNAL_ASSET_SPEC.md, asset J6 (9-slice borders 28 px)","the Case Journal visual mockup (clue cards on the cork board)"],
    blocks:[JOURNAL],
-   subject:"Six paper-card frames drawn at their exact final sizes. The inside of every card is a flat light paper area (#FBF0D3) for text and pictures; only the border is decorated, so the frames can be stretched in the game with 9-slice scaling.",
-   layout:["Sheet 760 x 1044 px, one frame per row, left-aligned, 24 px transparent gap between rows, in this order from the top: 1 group card NORMAL 220 x 176; 2 group card SELECTED 220 x 176; 3 clue card NORMAL 342 x 150; 4 clue card SELECTED 342 x 150; 5 question card NORMAL 700 x 136; 6 question card SELECTED 700 x 136.","Corners are rounded with a 20 px radius. The border is 8 px thick with a thin dark brown outline (#2A1A12) and a cream-brass inner line; the four corners have a tiny brass dot. The straight edges are plain (no pattern that would distort when stretched).","SELECTED version: same size and layout, but the border becomes burgundy #6E2A35 and about 4 px thicker (growing inward, not outward), and a small red ribbon notch hangs from the top-right corner."],
-   details:["Flat light interior with almost no texture (the card is a text background)."],
-   include:["six frames","a plain stretchable edge","burgundy border for selected"], exclude:["text","pictures inside the cards","drop shadows outside the frames","patterns on the edges"],
-   tech:["Sheet 760x1044 px, transparent PNG, every frame exactly the stated size."]},
-   {size:"760x1044", tags:["UI","9-slice"]}, true),
+   subject:"A single light paper card seen from above.",
+   layout:["ONE image exactly 300 x 122 px. The 28 px border on every side is the decorated part: a thin dark brown outline (#2A1A12, 2 px), a cream-brass inner line, slightly rounded corners (radius 10 px) and a tiny brass dot in each corner. Everything inside the 28 px border (the centre 244 x 66 px) is one flat, even light paper colour #FBF3D8 with almost no texture.","The straight edges between the corners are completely plain (no pattern, no dots, no stains) so stretching never distorts them. Nothing crosses the 28 px slice lines except the outline."],
+   details:["It will be resized to sizes like 220 x 100, 420 x 180 and 700 x 134, so keep every corner detail inside its 28 x 28 px corner."],
+   include:["one card","plain stretchable edges","corner details only inside the corners"], exclude:["text","pictures","a drop shadow","a selected state","a tilt","patterns on the edges"],
+   tech:["Exactly 300x122 px, transparent PNG (only the rounded corners are transparent)."]},
+   {size:"300x122", tags:["UI","batch 1","9-slice"]}, true)
+]});
 
- jp("Journal Portrait frames: person tile and large portrait", {
-   goal:"Photo-style frames that go on top of the character portraits in the People tab.",
-   refs:["the supplied character portraits (por_*.webp), which will be placed under the transparent window"],
-   blocks:[JOURNAL],
-   subject:"Three snapshot frames with a transparent window where the portrait shows through.",
-   layout:["Sheet 708 x 260 px, one row, 24 px gaps: A person tile NORMAL 220 x 240; B person tile SELECTED 220 x 240; C large portrait frame 220 x 260.","A and B: a cream paper card with a thin dark outline. The transparent window is exactly 188 x 170 px at (16, 14) from the top-left of the card. The strip of paper under the window (about 44 px tall) is left plain for the name.","B is the selected look: a burgundy border and a small red ribbon notch at the top-right.","C: a snapshot with a wider cream border and two strips of washi tape (cream with a thin red stripe) across the top corners. The transparent window is exactly 196 x 206 px at (12, 12)."],
-   details:["The window edges are crisp and fully transparent so the portrait shows cleanly."],
-   include:["three frames","transparent windows with exact sizes","washi tape on C only"], exclude:["text","portraits or faces","a drop shadow","blurry window edges"],
-   tech:["Sheet 708x260 px, transparent PNG."]},
-   {size:"708x260", tags:["UI","no text"]}, true),
-
- jp("Journal embellishments: clips, tape, pins, bookmark, stamps", {
-   goal:"Loose paper props that decorate cards and pages.",
-   refs:["the supplied Icon pack sheet 2 (loose painted objects) for painting style"],
+/* ============ K. CASE JOURNAL, BATCH 2 (HOLD until batch 1 is checked in the game) ============ */
+SECTIONS.push({id:"k", name:"K. Case Journal, batch 2: decorations and evidence art (HOLD)", sub:"Do NOT make these yet. First place the six batch-1 pieces in the game and check sizes and 9-slice resizing. The Edward and Hazel portraits also need a separate approval (the existing character art must be reused where it exists).", items:[
+ jp("Journal embellishments: tape, clips, pins, seals (sheet)", {
+   goal:"Loose paper props that decorate cards. Replaces the CSS stand-ins used in the mockup.",
+   refs:["the Case Journal visual mockup","the supplied Icon pack sheet 2 (loose painted objects) for painting style"],
    blocks:[JOURNAL],
    subject:"A sheet of loose props, each on its own.",
-   layout:["Sheet 1024 x 512 px, a grid of 4 columns x 2 rows, each cell 256 x 256 px, every prop centred with at least 24 px of transparent gap.","Order: 1 two paper clips (one silver-brass, one burgundy), 2 two strips of washi tape (cream with a thin red stripe, 140 x 40 px, slightly torn ends), 3 four photo corners (small cream triangles, 48 px), 4 a red push pin (about 56 px), 5 a ribbon bookmark (burgundy ribbon with a brass tip, 40 x 220 px, hanging straight down), 6 a round blank rubber stamp ring in burgundy ink (about 120 px, worn, EMPTY inside), 7 a rectangular blank stamp frame in burgundy ink (about 220 x 80 px, EMPTY inside), 8 a small ink blot and a thin flourish divider line (300 px wide)."],
-   details:["The stamps are only the empty ring and frame; the game prints the words (such as NEW CLUE) inside."],
+   layout:["Sheet 1024 x 512 px, a grid of 4 columns x 2 rows, each cell 256 x 256 px, every prop centred with at least 24 px of transparent gap.","Order: 1 two paper clips (silver-brass and burgundy), 2 two strips of washi tape (cream with thin red stripes, 84 x 30 px, torn ends), 3 four small photo corners (48 px), 4 a red push pin head (about 40 px) and a gold push pin head (about 40 px), 5 a ribbon bookmark (burgundy ribbon with a brass tip, 40 x 220 px, hanging straight down), 6 a round blank rubber stamp ring in burgundy ink (about 120 px, worn, EMPTY inside), 7 a rectangular blank stamp frame in burgundy ink (about 220 x 80 px, EMPTY inside), 8 a round red wax seal with a checkmark pressed in (about 60 px) and a small ink blot."],
+   details:["The stamps are only the empty ring and frame; the game prints the words inside."],
    include:["eight props","empty stamp shapes"], exclude:["text inside the stamps","shadows","anything touching"],
    tech:["Sheet 1024x512 px, transparent PNG."]},
-   {size:"1024x512", tags:["UI","no text"]}),
-
- jp("Journal Map pins and place icons (12)", {
-   goal:"Pins for the map and small icons for the eight places in the Events tab.",
+   {size:"1024x512", tags:["UI","batch 2","no text"]}),
+ jp("Journal cork clue board (9-slice, 650 x 300)", {
+   goal:"The cork board that holds the clue cards in the Deduction tab.",
+   refs:["the Case Journal visual mockup (step 2, Check the clues)"],
+   blocks:[JOURNAL],
+   subject:"A rectangular cork board with a dark wooden frame, seen from above, empty.",
+   layout:["ONE image exactly 650 x 300 px. Wooden frame 14 px thick, rounded corners (12 px radius). The inside is warm cork (#B07A43) with fine speckle, calm enough that paper cards pinned on top stay readable. The 40 px border on every side is the decorated part; the centre 570 x 220 px is plain cork so it can be stretched (9-slice, 40 px)."],
+   include:["a wood frame","plain stretchable cork centre"], exclude:["pins or notes on it","text","a drop shadow"],
+   tech:["Exactly 650x300 px, transparent PNG (only the rounded corners are transparent)."]},
+   {size:"650x300", tags:["UI","batch 2","9-slice"]}, true),
+ jp("Journal evidence tray (9-slice, 700 x 300)", {
+   goal:"The tray that the selected evidence is shown on in the Evidence tab.",
+   refs:["the Case Journal visual mockup (Evidence tab, exhibit tray)"],
+   blocks:[JOURNAL],
+   subject:"A shallow display tray lined with warm paper, seen from above, empty.",
+   layout:["ONE image exactly 700 x 300 px. A thin brass-edged tray with rounded corners (14 px radius) and a soft inner shadow. The 48 px border is decorated; the centre 604 x 204 px is plain even paper-brown (#E2D0A0) for stretching (9-slice, 48 px)."],
+   include:["a brass-edged tray","plain stretchable centre"], exclude:["objects inside","text","a drop shadow"],
+   tech:["Exactly 700x300 px, transparent PNG."]},
+   {size:"700x300", tags:["UI","batch 2","9-slice"]}, true),
+ jp("Journal exhibit tag (300 x 150)", {
+   goal:"The string tag that names the selected evidence (EXHIBIT number and type stamp are printed by the game).",
+   refs:["the Case Journal visual mockup"],
+   blocks:[JOURNAL],
+   subject:"A cream luggage-style tag with a clipped corner and a brass eyelet, with a short loop of string.",
+   layout:["ONE image exactly 300 x 150 px. The right-top corner is clipped diagonally (36 px). A brass eyelet at the left, 22 px from the edge, with a short string loop. The writing area is blank and flat."],
+   include:["a clipped corner","a brass eyelet and string"], exclude:["text","a drop shadow"],
+   tech:["Exactly 300x150 px, transparent PNG."]},
+   {size:"300x150", tags:["UI","batch 2","no text"]}, true),
+ jp("Journal map pins and place icons (12)", {
+   goal:"Pins for the map and small icons for the places in the Events tab. The place list and the coordinates come from the game data, not from this picture.",
    refs:["the existing map_parchment art (for scale and line style)"],
    blocks:[JOURNAL],
    subject:"Three pin states and eight place icons, plus one spare.",
-   layout:["Sheet 512 x 384 px, 4 columns x 3 rows, each cell 128 x 128 px, every item centred with at least 16 px of transparent gap.","Row 1: 1 normal pin (a brass thumbtack, 56 px), 2 selected pin (a larger red thumbtack, 76 px, slightly raised), 3 current-location marker (a small lantern or bear-paw marker, 76 px), 4 an unknown-place marker (a parchment circle with a question mark, 72 px).","Row 2 (places, about 96 px): 5 village square (a signpost beside a well), 6 clocktower (a small tower with a round clock face), 7 archive (a building with a stack of books), 8 café (a teacup on a saucer in front of a small awning).","Row 3: 9 Big Green Bear's cottage (a small cabin with a chimney), 10 May's house (a small house with a herb sprig above the door), 11 old mill (a water wheel beside a small house), 12 spare: a plain scroll."],
-   details:["Colours match the parchment map: warm browns and creams with a little burgundy."],
-   include:["12 items","pictogram clarity at 48 px"], exclude:["text","shadows","gradients"],
+   layout:["Sheet 512 x 384 px, 4 columns x 3 rows, each cell 128 x 128 px, every item centred with at least 16 px of transparent gap.","Row 1: 1 normal pin (a brass thumbtack, 56 px), 2 selected pin (a larger red thumbtack, 76 px, slightly raised), 3 current-location marker (a small lantern marker, 76 px), 4 an unknown-place marker (a parchment circle with a question mark, 72 px).","Row 2 (places, about 96 px): 5 village square (a signpost beside a well), 6 clocktower (a small tower with a round clock face), 7 archive (a building with a stack of books), 8 café (a teacup on a saucer in front of a small awning).","Row 3: 9 Big Green Bear's cottage (a small cabin with a chimney), 10 May's house (a small house with a herb sprig above the door), 11 old mill (a water wheel beside a small house), 12 spare: a plain scroll."],
+   include:["12 items"], exclude:["text","shadows","gradients"],
    tech:["Sheet 512x384 px, transparent PNG."]},
-   {size:"512x384", tags:["UI","icons"]}),
+   {size:"512x384", tags:["UI","batch 2","icons"]}),
 
  jp("Evidence icons A: clocks, tower and records (12)", {
    goal:"Pictures for evidence cards, so every item is visually memorable. These replace the placeholder icons.",
@@ -1001,7 +1019,7 @@ SECTIONS.push({id:"j", name:"J. Case Journal (new Case File UI)", sub:"The Inves
    tech:["Sheet 1024x1024 px, transparent PNG."]},
    {size:"1024x1024", tags:["evidence","icons"]}),
 
- jp("Edward and Hazel: portraits, 4 expressions each", {
+ jp("Edward and Hazel: portraits, 4 expressions each (NEEDS SEPARATE APPROVAL)", {
    goal:"Dialogue and People-tab portraits for two characters who still only have full-body sprites.",
    refs:["edward_front.webp (Edward's full-body sprite)","cafe_owner_front.webp (Hazel's full-body sprite)","the existing portraits por_nini_* and por_oliver_* for line weight, scale and face placement"],
    blocks:[],
@@ -1012,7 +1030,6 @@ SECTIONS.push({id:"j", name:"J. Case Journal (new Case File UI)", sub:"The Inves
    tech:["Sheet 1600x824 px, transparent PNG."]},
    {size:"1600x824", tags:["portraits"]})
 ]});
-/* extend the sheet-spacing rule to the new sheet titles */
 
 const GAP = [
 "SHEET SPACING (REQUIRED):",
@@ -1020,7 +1037,7 @@ const GAP = [
 "- Each item also keeps at least 12 px of transparent margin from the edge of the sheet.",
 "- Items sit on a clean grid in the stated order so they can be cut out automatically. Nothing is drawn in the gaps (no shadows, glow, ground lines or labels)."
 ].join("\n");
-const SHEET_RE = /Journal index tabs|Journal tab icons|embellishments|Map pins|Evidence icons|group icons|Edward and Hazel|Small props|Icon pack|poses|portraits|holding|lifting|icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits|Identity Board|Responsibility Board|notebook page/i;
+const SHEET_RE = /embellishments|map pins|Evidence icons|group icons|Edward and Hazel|Small props|Icon pack|poses|portraits|holding|lifting|icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits|Identity Board|Responsibility Board|notebook page/i;
 SECTIONS.forEach(sec => sec.items.forEach(it => { if (it.kind === "png" && SHEET_RE.test(it.title) && !it.body.includes("SHEET SPACING")) it.body = it.body.replace("\n\nSTYLE (apply to everything):", "\n\n" + GAP + "\n\nSTYLE (apply to everything):"); }));
 
 // ---- render
