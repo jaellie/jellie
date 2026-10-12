@@ -737,8 +737,16 @@ const NOTES = {
 const D = {
 };
 /* ---------- Chapters 1 and 2 (user script: The First Witness / The Stopped Clock) ---------- */
+/* each line picks a portrait expression from its wording unless the script line names one */
+function autoEx(sp, ko){
+  if (!ko || sp === "nar") return "neutral";
+  if (/죽|돌아가셨|슬|힘들|후회|잘못|사고|위험|걱정|미안|무서|못 했|잃|아프|아파|상처|피 |혼자|추위|늦었|외로|돌아오지 못|말수가 적|아끼던|괴롭|울리지 않/.test(ko)) return "worried";
+  if (/\?!|!$|정말|세상에|어\?|뭐\?|어제도 왔니|그랬습니까|말을 하셨어|헉/.test(ko) && ko.length < 26) return "surprised";
+  if (/\?|글쎄|그러고 보니|어디 보자|아마|모르겠|\.\.\./.test(ko)) return "thinking";
+  return "neutral";
+}
 function CH(id, lines, end){
-  lines.forEach((l, i)=>{ const n = { sp:l[0], ex:l[4] || "neutral", t:{ ko:l[1], en:l[2] } }; if (l[3]) Object.assign(n, l[3]);
+  lines.forEach((l, i)=>{ const n = { sp:l[0], ex:l[4] || autoEx(l[0], l[1]), t:{ ko:l[1], en:l[2] } }; if (l[3]) Object.assign(n, l[3]);
     if (i < lines.length - 1) n.next = id + "_" + (i+1); else if (end) Object.assign(n, end);
     D[i ? id + "_" + i : id] = n; });
 }
