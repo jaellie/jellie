@@ -975,6 +975,27 @@ SECTIONS.push({id:"j", name:"J. Case Journal, batch 1: common frames (approved t
    {size:"300x122", tags:["UI","batch 1","9-slice"]}, true)
 ]});
 
+/* ---- N. Dialogue choice set (replaces the cream plaque buttons used for answers) ---- */
+const CHOICE = [
+"THE DIALOGUE CHOICE SET (design rules):",
+"- These pieces are the answer buttons shown under the dialogue box. They must feel LIGHTER than the dialogue box: the box is the star, the answers are supporting actors. Thin ink outline, light parchment, brass only as tiny corner dots. No thick brass frame, no heavy bevel.",
+"- Materials: light parchment #FBF3D8 (edge shade #EFE2C6), ink outline #2A1A12 about 2 px, a thin cream-brass inner line #D9C39A, tiny brass dots #B08D57 (glint #E6C98A, dark #7D5F2E), burgundy #6E2A35 for the selected state.",
+"- The game code draws every word, every number and every shadow. The art draws material and decoration ONLY.",
+"- Each strip is stretched sideways by 9-slice scaling, so the straight stretch between the two end caps must be completely plain (no pattern, no dots, no stains, no texture change). The height never changes: every strip is exactly 56 px tall, so nothing is ever squashed vertically."
+].join("\n");
+SECTIONS.push({id:"n", name:"N. Dialogue choice set (new answer buttons, 5 pieces)", sub:"Replaces the heavy cream plaque buttons under the dialogue box with one lighter family: normal, selected, already-heard, a small header ribbon and a number badge. Draw it as one sheet so the pieces match.", items:[
+ jp("Dialogue choices: answer button set (normal, selected, heard, header ribbon, number badge)", {
+   goal:"One consistent set of answer buttons for the dialogue choices. Lighter than the dialogue box, readable on top of the night village, and clear about three states: normal, selected, and 'already heard'.",
+   refs:["the current dialogue box sprite (match its parchment tone and its ink outline, but use LESS decoration)","the current name ribbon on the dialogue box (the header ribbon is a small sibling of it)","the plaque sprites in the Case Journal (match the thin outline and the small brass dots)"],
+   blocks:[CHOICE],
+   subject:"Five small UI pieces on one sheet, each drawn on its own.",
+   layout:["Sheet 480 x 380 px, transparent. Pieces are placed on the left edge in this order from top to bottom, each with at least 16 px of fully transparent gap to the next one and 12 px to the sheet edge.","Piece 1, NORMAL button: 400 x 56 px at (12, 12). Light parchment strip. 9-slice caps: the left 28 px and right 28 px are the decorated ends (rounded corners with radius 14 px, a thin cream-brass inner line, one tiny brass dot near the middle of each end). The centre between the caps is plain flat parchment.","Piece 2, SELECTED button: 400 x 56 px at (12, 84). Same shape and size as piece 1, but filled with burgundy #6E2A35 (a slightly lighter band along the top edge, #8A3A47), a cream inner line #F6E3C0 and the same tiny brass dots. Text will be cream on top of it.","Piece 3, HEARD button: 400 x 56 px at (12, 156). Same shape as piece 1, but faded: parchment slightly greyer and cooler (#E9DFC8), the outline lighter (#7A6A55), the brass dots dull (#9A8A6A). It still looks clickable, just quieter.","Piece 4, HEADER ribbon: 300 x 44 px at (12, 228). A small burgundy ribbon label with a swallow-tail right end, the same ribbon language as the name ribbon on the dialogue box, but half its size. Left 24 px and right 36 px are the caps; the centre is plain burgundy for 9-slice stretching. Text will be cream.","Piece 5, NUMBER badge: 44 x 44 px at (12, 288) and, next to it at (72, 288), the same badge in the SELECTED colours. A small round parchment disc with an ink outline and a thin brass rim (selected: a burgundy disc with a cream rim). Empty, a number will be written on it."],
+   details:["Every strip is exactly 56 px tall (header ribbon 44 px). The decoration stays inside the end caps.","The same outline weight (about 2 px), the same corner radius and the same dot size on pieces 1 to 3 so they read as one family.","Light from the upper left: the top edge a little lighter, the bottom edge a little darker."],
+   include:["a completely plain, stretchable middle on pieces 1 to 4","tiny brass dots only inside the end caps","a clearly different look for normal, selected and heard"], exclude:["text, letters or numbers","a thick brass frame","a drop shadow","a pattern or texture across the stretch area","a selected glow","anything that is not one of the five pieces"],
+   tech:["Sheet 480x380 px, transparent PNG (real alpha). In the game: 9-slice, left and right borders 28 px for pieces 1 to 3, left 24 and right 36 for piece 4."]},
+   {size:"480x380", tags:["UI","9-slice","no text","sheet"], note:"After this arrives the game swaps the answer buttons, the heard state, the header and a number badge for keys 1 to 9. The dialogue box itself is not redrawn."}, true)
+]});
+
 /* ============ K. CASE JOURNAL, BATCH 2 (HOLD until batch 1 is checked in the game) ============ */
 SECTIONS.push({id:"k", name:"K. Case Journal, batch 2: everything else the screen needs (HOLD until batch 1 is checked in the game)", sub:"Do NOT make these yet. First place the six batch-1 pieces in the game and check sizes and 9-slice resizing. This batch moves almost everything the mockup drew with CSS into pictures: the map, pins, plaques, tape, clips, stamps, pills, timeline parts, selected states, ornaments and scrollbar. Words, red thread (SVG), scrolling and layout stay in code. The Edward and Hazel portraits also need a separate approval.", items:[
  jp("Journal village map: parchment map of Bell Village (596 x 576, delivered)", {
@@ -1165,7 +1186,7 @@ const GAP = [
 "- Each item also keeps at least 12 px of transparent margin from the edge of the sheet.",
 "- Items sit on a clean grid in the stated order so they can be cut out automatically. Nothing is drawn in the gaps (no shadows, glow, ground lines or labels)."
 ].join("\n");
-const SHEET_RE = /embellishments|stamps \(sheet\)|stack frames|timeline sprites|tab icons|map markers|map pins|Evidence icons|group icons|Edward and Hazel|Small props|Icon pack|poses|portraits|holding|lifting|icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits|Identity Board|Responsibility Board|notebook page/i;
+const SHEET_RE = /answer button set|embellishments|stamps \(sheet\)|stack frames|timeline sprites|tab icons|map markers|map pins|Evidence icons|group icons|Edward and Hazel|Small props|Icon pack|poses|portraits|holding|lifting|icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits|Identity Board|Responsibility Board|notebook page/i;
 SECTIONS.forEach(sec => sec.items.forEach(it => { if (it.kind === "png" && SHEET_RE.test(it.title) && !it.body.includes("SHEET SPACING")) it.body = it.body.replace("\n\nSTYLE (apply to everything):", "\n\n" + GAP + "\n\nSTYLE (apply to everything):"); }));
 
 // ---- render
