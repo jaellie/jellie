@@ -110,6 +110,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #stage.flash #flv,#stage.flash5 #flv{opacity:1}
 #flcap{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:44;pointer-events:none;opacity:0;transition:opacity 1.2s;font:700 42px/1.2 var(--font-label);letter-spacing:.16em;white-space:nowrap;color:#f6e3c0;text-shadow:0 3px 10px rgba(0,0,0,.7);text-align:center}
 #flcap.on{opacity:1}
+#snow{position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:5;pointer-events:none;transition:opacity 1.5s}
 #rain{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;transition:opacity 2s;background:repeating-linear-gradient(105deg,rgba(200,215,240,.0) 0 14px,rgba(200,215,240,.28) 14px 16px);background-size:60px 60px;animation:rainmv .45s linear infinite}
 #rain.on{opacity:.8}
 @keyframes rainmv{to{background-position:-20px 60px}}
@@ -375,7 +376,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #finale{position:absolute;inset:0;z-index:42;background:#02030a;opacity:0;pointer-events:none;transition:opacity 1.8s;color:#f3e6c8;text-align:center}
 #finale.on{opacity:1;pointer-events:auto}
 #fnCard,#fnTi{position:absolute;left:0;right:0;top:50%;transform:translateY(-52%);display:flex;flex-direction:column;align-items:center;gap:22px;padding:0 140px}
-#finale .fe,#finale .fh,#finale .fl,#finale .ft,#finale .fb{opacity:0;transition:opacity 1.8s,transform 1.8s;transform:translateY(10px)}
+#finale .fe,#finale .fh,#finale .fl,#finale .ft,#finale .fb{opacity:0;transition:opacity 1.2s,transform 1.2s;transform:translateY(10px)}
 #finale .show{opacity:1;transform:none}
 #finale .fe{font:600 26px/1 "Alegreya SC","Noto Serif KR",Georgia,serif;letter-spacing:.5em;padding-left:.5em;color:#c9a96a;display:flex;align-items:center;gap:30px}
 #finale .fe:before,#finale .fe:after{content:"";width:84px;height:1px;background:linear-gradient(90deg,transparent,#c9a96a)}
@@ -383,11 +384,11 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #finale .fh{font:600 84px/1.15 "Alegreya",Georgia,serif;letter-spacing:.01em;color:#f6ead0;text-shadow:0 0 46px rgba(214,150,92,.28),0 2px 0 rgba(0,0,0,.4)}
 #fnTi{flex-direction:row!important;justify-content:center;align-items:baseline;gap:0!important;white-space:nowrap}
 #finale #fnT,#finale #fnTH{font:700 92px/1.15 "Alegreya",Georgia,serif;letter-spacing:.02em;color:#f6ead0;text-shadow:0 0 60px rgba(246,234,208,.16),0 2px 0 rgba(0,0,0,.4)}
-html[lang="ko"] #finale #fnT,html[lang="ko"] #finale #fnTH{font-family:"Noto Serif KR",Pretendard,serif;font-weight:600;letter-spacing:.05em}
+html[lang="ko"] #finale #fnT,html[lang="ko"] #finale #fnTH{font-family:Pretendard,"Alegreya",serif;font-weight:700;letter-spacing:.02em}
 html[lang="en"] #finale #fnT,html[lang="en"] #finale #fnTH{font-size:76px}
 #finale #fnTH{font-style:italic;font-weight:400;color:#d58a5c;text-shadow:none;padding-right:.25em;box-sizing:content-box;width:0;margin-left:0;overflow:hidden;transition:opacity 1.8s,width 1.6s ease-in-out,margin-left 1.6s ease-in-out,transform 1.8s}
 #finale #fnTH.show{margin-left:44px}
-html[lang="ko"] #finale .fh{font-family:"Noto Serif KR",Pretendard,serif;font-weight:600;letter-spacing:.04em}
+html[lang="ko"] #finale .fh{font-family:Pretendard,"Alegreya",serif;font-weight:700;letter-spacing:.02em}
 #finale .fl{width:0;height:2px;background:linear-gradient(90deg,transparent,#c9a96a,transparent);transition:opacity 1s,width 2.2s;transform:none}
 #finale .fl.show{width:360px}
 #finale .ft{font:600 26px/1.4 "Alegreya SC",Georgia,serif;letter-spacing:.32em;color:#c9a96a}
@@ -755,6 +756,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
   <div id="hint" class="nine cream"><kbd>E</kbd><span id="hintTx"></span></div>
   <div id="toast"></div>
 
+  <canvas id="snow" width="1920" height="1080"></canvas>
   <div id="still"><img id="stillImg" alt=""></div>
   <div id="bigPor"><img id="bPorImg" alt=""></div>
   <div id="choices"></div>
@@ -1834,11 +1836,11 @@ function showFinal(k, instant){ window._lastEnd = k; const K = lang==="ko"; mode
   ["fnE","fnH","fnL","fnT","fnTH","fnB"].forEach(i=>$(i).classList.remove("show")); $("fnTH").style.width = "0";
   finTimers.forEach(clearTimeout); finTimers = []; const at = (ms, fn) => finTimers.push(setTimeout(fn, ms));
   if (instant){ F.style.transition = "none"; F.classList.add("on"); void F.offsetWidth; F.style.transition = ""; } else F.classList.add("on");   /* called from a fade to black: the finale is already fully black, so there is no second fade */
-  at(1400, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.add("show")));      /* ending name */
-  at(4800, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")));    /* then the screen is fully black */
-  at(7400, ()=>$("fnT").classList.add("show"));                                   /* 2 s of silence, then the title */
-  at(10400, fnTitleBoth);                                                          /* the title slides left, the subtitle opens beside it */
-  at(16600, ()=>showCredits());                                                    /* held, then the credits */
+  at(600, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.add("show")));      /* ending name */
+  at(3800, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")));    /* then the screen is fully black */
+  at(6000, ()=>$("fnT").classList.add("show"));                                   /* 2 s of silence, then the title */
+  at(9000, fnTitleBoth);                                                          /* the title slides left, the subtitle opens beside it */
+  at(15200, ()=>showCredits());                                                    /* held, then the credits */
   holdHint = false; save(); }
 function finaleSkip(){ if (!$("finale").classList.contains("on")) return; finTimers.forEach(t=>clearTimeout(t)); finTimers = [];
   ["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")); fnTitleBoth(); $("fnB").classList.add("show"); }
@@ -3012,6 +3014,30 @@ if (S.flags && S.flags["c3.qz"] && !S.flash && !S.flags["f4.end"] && !S.flags["f
 let resumeFlash = 0; if (S.flash){ resumeFlash = S.flash; S.flash = false; S.scene = "village"; S.x = resumeFlash === 5 ? 3700 : 2150; }   /* a save made inside a flashback (some are from the old Chapter 4/5) restarts that flashback instead of leaving the player with nothing to do */
 cam = 0; fit(); setSceneNow((["tower","archive","cafe","cottage","mill"].includes(S.scene) || (S.flash && ["past","flood"].includes(S.scene))) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus(); if (resumeFlash) setTimeout(()=>{ if (resumeFlash === 5) startFlash5(); else startFlash(); }, 900);
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
+
+/* Soft snowfall over every scene: three depths of round, blurred flakes with a slow sideways sway. It fades out while the flood-night rain is on. */
+(function(){
+  const cv = $("snow"), cx = cv.getContext("2d"), reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const sprite = r => { const c = document.createElement("canvas"); c.width = c.height = r * 4; const g = c.getContext("2d"), q = g.createRadialGradient(r*2, r*2, 0, r*2, r*2, r*2); q.addColorStop(0, "rgba(255,255,255,.95)"); q.addColorStop(.35, "rgba(246,250,255,.7)"); q.addColorStop(1, "rgba(235,243,255,0)"); g.fillStyle = q; g.fillRect(0, 0, r*4, r*4); return c; };
+  const LAYERS = [ { n:90, r:[1.6,2.8], v:[20,34], a:[.4,.65], sway:14 }, { n:64, r:[3,5], v:[36,56], a:[.55,.8], sway:26 }, { n:22, r:[7,12], v:[60,92], a:[.28,.46], sway:40 } ];
+  const rnd = (a, b) => a + Math.random() * (b - a), flakes = [];
+  LAYERS.forEach((L, li) => { const n = reduce ? Math.round(L.n / 3) : L.n; for (let i = 0; i < n; i++){ const r = rnd(L.r[0], L.r[1]); flakes.push({ x:rnd(0, 1920), y:rnd(-40, 1080), r, v:rnd(L.v[0], L.v[1]), a:rnd(L.a[0], L.a[1]), ph:rnd(0, 6.28), sw:L.sway, f:rnd(.5, 1.1), spr:sprite(Math.round(r * 2) / 2 < 1 ? 1 : Math.round(r)) }); } });
+  let last = 0;
+  function frame(t){
+    requestAnimationFrame(frame);
+    const dt = Math.min(.05, (t - last) / 1000 || 0); last = t;
+    const hide = $("rain").classList.contains("on"); cv.style.opacity = hide ? 0 : 1;
+    if (hide || document.hidden) return;
+    cx.clearRect(0, 0, 1920, 1080);
+    for (const f of flakes){
+      f.y += f.v * dt; f.ph += f.f * dt; f.x += Math.sin(f.ph) * f.sw * dt + 6 * dt;
+      if (f.y > 1090){ f.y = -20; f.x = rnd(0, 1920); } if (f.x > 1950) f.x = -30; else if (f.x < -40) f.x = 1940;
+      cx.globalAlpha = f.a; const d = f.r * 4; cx.drawImage(f.spr, f.x - d/2, f.y - d/2, d, d);
+    }
+    cx.globalAlpha = 1;
+  }
+  requestAnimationFrame(frame);
+})();
 window.__bv = { D, NOTES, SP, EV, ENDINGS, ACC, SMALL, FOLLOW, KCON, GATE_T, CHT, UI, setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4, EV_META, evGroups, evStatements, PEOPLE, personView, metPeople, skipTo, evIcon, EI, GI, QS, TL_DATA, PLACES, PERSON_UI, GROUP_NAME };
 requestAnimationFrame(frame);
   if (typeof nineAll === "function") requestAnimationFrame(nineAll);
