@@ -404,6 +404,32 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .evcell img,.evcell svg{max-height:calc(100% - 34px)}
 .placerow{padding:8px 0;border-bottom:2px dashed rgba(138,106,58,.4)}
 .placerow b{font:700 26px var(--font-body)}
+
+/* Case File phase 2.5 */
+.pstrip.big{gap:12px}.pstrip.big .ptile{width:118px}.pstrip.big .ptile .pf{width:102px;height:102px}.pstrip.big .ptile .pf img{width:102px;height:102px}.pstrip.big .ptile b{font-size:21px}
+.pcard{gap:34px;margin-top:14px}
+.pcard .pp{width:300px;height:340px;border-width:5px}
+.pcard h3{font-size:56px}.pcard .role{font-size:30px;margin:4px 0 12px}
+.pcard .cfp{font-size:30px}.pcard .quote{font-size:28px;padding:6px 18px;margin:10px 0}.pcard .sec{font-size:20px;margin:22px 0 6px}.pcard .gchip{font-size:24px}
+.mapwrap{width:512px;height:533px;flex:none}.mapwrap .mapbox{transform:scale(.8);transform-origin:0 0}
+.pin{cursor:pointer;transition:all .12s}.pin.sel{width:30px;height:30px;margin:-15px 0 0 -15px;background:#c4453a!important;box-shadow:0 0 0 4px var(--burgundy),0 0 18px 6px rgba(196,69,58,.5)}
+.pin.dim,.pinlab.dim{opacity:.45}.pinlab{cursor:pointer}
+.tlrow{cursor:pointer}.tlrow.sel{background:rgba(176,141,87,.22);border-radius:8px}.tlrow.link{background:rgba(196,69,58,.12);border-radius:8px}.tlrow .tt{font-size:28px;width:150px}.tlrow .tb{font-size:22px}
+.placerow{cursor:pointer}.placerow.sel{background:rgba(176,141,87,.22);border-radius:8px;padding-left:8px}
+.qlist{display:flex;flex-direction:column;gap:12px}
+.qsum{display:flex;align-items:center;gap:16px;text-align:left;width:100%;font:inherit;color:var(--ink);cursor:pointer;background:rgba(255,248,225,.55);border:3px solid rgba(176,141,87,.75);border-radius:10px;padding:14px 18px}
+.qsum:hover{border-color:var(--burgundy)}.qsum .qt{flex:1;min-width:0;font:700 27px/1.25 var(--font-body)}.qsum .qs{font:600 20px/1.2 var(--font-body);color:#6d5a40;margin-top:4px}
+.qstat{font:700 15px/1 var(--font-label);letter-spacing:.1em;padding:6px 10px;border-radius:99px;border:2px solid;white-space:nowrap}.qstat.open{color:#8a5a14}.qstat.done{color:#2f5f3a}
+.qh{font:700 44px/1.15 var(--font-body);margin:6px 0 10px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.ccard{background:rgba(255,248,225,.6);border:3px solid rgba(176,141,87,.75);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.ccard.basis{border-color:var(--burgundy);background:rgba(110,42,53,.1)}
+.ccard .ct{display:flex;gap:10px;align-items:center}.ccard .ci{width:56px;height:56px;flex:none;display:grid;place-items:center}.ccard .ci img,.ccard .ci svg{max-width:56px;max-height:56px}
+.ccard b{font:700 22px/1.2 var(--font-body)}.ccard .csum{font:400 18px/1.3 var(--font-body);color:#5a4630}
+.ccard .cb{display:flex;gap:8px;flex-wrap:wrap}.ccard .cb button{font:600 17px/1 var(--font-body);padding:8px 10px;border-radius:7px;border:2px solid #8a6a3a;background:#f3e6c8;color:#4a2f10;cursor:pointer}
+.ccard .cb button.on{background:#6e2a35;color:#f6e3c0;border-color:#6e2a35}
+.qopts.big button{font-size:26px;padding:14px 18px}
+.backbtn{font:700 20px var(--font-body);padding:8px 14px;border-radius:8px;border:2px solid #8a6a3a;background:#f3e6c8;color:#4a2f10;cursor:pointer;margin-bottom:8px}
 </style>
 
 <div id="vp">
@@ -930,6 +956,7 @@ CH("fnA", [["nar","(빅그베가 니니에게 편지를 건넨다.)","(Big Green
 CH("fnB", [["nini","아저씨?","Mr. Bear?"], ["bgb","미안. 무슨 얘기였지?","Sorry. What were we talking about?"], ["nini","기록이요!","Records!"], ["bgb","아, 맞다.","Right."], ["nini","아저씨는 에드워드 아저씨처럼 좋은 사람이에요.","You're a good person, just like Edward."], ["bgb","그렇게 생각해?","You think so?"], ["nini","당연하죠!","Of course!"], ["nar","(니니가 웃는다.)","(Nini smiles.)"], ["nini","안녕하세요! 안녕하세요!","Hello! Hello!"], ["bgb","안녕! 안녕!","Hello! Hello!"], ["nar","(니니가 떠난다. 빅그베가 집으로 돌아온다.)","(Nini walks away. Big Green Bear returns home.)",{fx:"walk"}], ["nar","(그는 액자 뒤에 편지와 장갑을 넣는다. 장갑을 밀어 넣다가 무언가 손끝에 걸린다.)","(He hides the letter and glove behind the picture frame. Something catches against his fingertips.)"], ["nar","(작은 황동 단추다. 단추에는 작은 글씨가 새겨져 있다.)","(A small brass button. Tiny letters are engraved on it.)",{ev:"button"}], ["nar","E. BELL","E. BELL"], ["nar","(빅그베가 단추를 손바닥에 올려놓는다.)","(Big Green Bear rests the button in his palm.)"], ["nar","(짧은 회상. 눈 덮인 바닥. 에드워드의 손이 빅그베의 노란 목도리를 붙잡는다.)","(Brief flashback. Snow-covered ground. Edward's hand grips Big Green Bear's yellow scarf.)"], ["ed","잠깐...","Wait..."], ["nar","(현재. 빅그베가 단추를 편지 사이에 끼운다. 액자를 다시 세운다.)","(Present. Big Green Bear slips the button between the folded pages and puts the picture frame back.)",{fx:"theend2"}]]);
 D.p_f0 = {sp:"bgb", ex:"thinking", t:{en:"He was always on my side.", ko:"그분은 항상 내 편이었는데."}, ev:"photo_home", next:"p_f1"};
 D.p_f1 = {sp:"bgb", ex:"worried", t:{en:"I'll leave it for now.", ko:"일단 그대로 두자."}, set:"pro.frame", next:null};
+CH("pf_h", [["nar","(선반에 기대어 선 낡은 사진. 목도리를 두른 두 아기 곰이 나란히 서 있다.)","(A worn photograph leans on the shelf. Two small cubs stand close together in scarves.)"], ["bgb","그분은 항상 내 편이었는데.","He was always on my side.",{ev:"photo_home"}]]);
 D.p_f9 = {sp:"bgb", ex:"neutral", t:{en:"Now's not the time.", ko:"지금은 그럴 때가 아니야."}};
 D.p_n0 = {sp:"nini", ex:"worried", t:{en:"Big Green Bear! Are you in there?", ko:"빅그베 아저씨! 안에 계세요?"}, next:"p_n0a"};
 D.p_n0a = {sp:"bgb", ex:"neutral", t:{en:"Nini? What's wrong?", ko:"니니? 무슨 일이야?"}, next:"p_n0b"};
@@ -1658,7 +1685,7 @@ const IA_A = [
   { id:"oshelf",x:()=>1230, label:UI.lShelf, top:540, when:()=>!has("c6.on"), run:()=>startDlg("ar_shelf") },
   { id:"onote", x:()=>1740, label:UI.lNoteU, top:540, when:()=>!has("c6.on"), run:()=>startDlg("ar_note") },
   { id:"odesk", x:()=>1960, label:UI.lDesk,  top:540, when:()=>!has("c6.on"), run:()=>startDlg("ar_desk") },
-  { id:"odraw", x:()=>2190, label:UI.lDraw, top:540, when:()=>has("ar.drawer") && !has("ar.photo") && !S.ev.includes("photo2"), run:()=>startDlg("ar_ph") },   /* photo2: a separate search after the desk; not part of the 3rd-chapter quiz condition */
+  { id:"odraw", x:()=>2190, label:UI.lDraw, top:540, when:()=>has("ar.drawer") && !S.ev.includes("photo2"), run:()=>startDlg(has("ar.photo") ? "ar_re4" : "ar_ph") },   /* photo2: a separate search after the desk; not part of the 3rd-chapter quiz condition */
   { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, when:()=>has("c6.on"), run:()=>inspect("register") },
   { id:"ledger",x:()=>1230, label:UI.lLedger,top:540, when:()=>has("c6.on"), run:()=>startDlg(has("ar.ledger") ? "ld4" : "ld") },
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, when:()=>has("c6.on"), run:()=>startDlg(has("ar.photo") ? "ar_re4" : "ar_ph") }
@@ -1687,6 +1714,7 @@ const IA_P = [
   { id:"pbook",  x:()=>770,  label:UI.lBook,   top:470, run:()=>startDlg("p_b") },
   { id:"pstove", x:()=>1530, label:UI.lStove,  top:580, run:()=>startDlg("p_s") },
   { id:"pkettle",x:()=>1585, label:UI.lKettle, top:470, run:()=>startDlg("p_k") },
+  { id:"pphoto", x:()=>1198, label:UI.lFrame, top:290, when:()=>has("ch.3") && !has("fin.on") && !S.ev.includes("photo_home"), run:()=>startDlg("pf_h") },   /* photo_home: a separate look after chapter 3; never sets the prologue frame flag */
   { id:"frame", x:()=>1198, label:UI.lFrame, top:290, when:()=>has("fin.on") && has("fin.may2"), run:()=>startDlg((has("fin.on") && has("fin.may2")) ? (has("fin.frame") ? "fr9" : "fr6") : has("pro.frame") ? "p_f9" : "p_f0") },
   { id:"pdoor", x:()=>1957, label:UI.lDoor,  top:430, run:()=>{ if (has("pro.done")){ setScene("village", 640); return; } startDlg("p_n0"); PRO_GO = true; } }
 ];
@@ -2062,9 +2090,31 @@ function endDlg(){ if (afterDlg){ const af = afterDlg; afterDlg = null; setTimeo
 function endDlg0(){ $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null; mode = "play"; clearInterval(typing); typing = null; save(); }
 
 /* inspect */
+/* evidence and group icons: art-style placeholders by kind, used only where an item has no picture of its own */
+const SV = {
+  letter:'<rect x="8" y="18" width="48" height="32" rx="3"/><path d="M8 20l24 18 24-18"/><circle cx="32" cy="38" r="5" fill="#6e2a35" stroke="#6e2a35"/>',
+  document:'<path d="M16 6h24l10 10v42H16z"/><path d="M40 6v10h10"/><path d="M22 28h22M22 36h22M22 44h14"/>',
+  photo:'<rect x="8" y="12" width="48" height="40" rx="3"/><rect x="14" y="18" width="36" height="28" fill="#c8a96f"/><circle cx="26" cy="29" r="4"/><path d="M14 46l12-10 8 6 8-8 8 8"/>',
+  physical:'<circle cx="32" cy="32" r="11"/><circle cx="32" cy="32" r="4"/><path d="M32 8v8M32 48v8M8 32h8M48 32h8M15 15l6 6M43 43l6 6M49 15l-6 6M21 43l-6 6"/>',
+  trace:'<circle cx="28" cy="28" r="15"/><path d="M39 39l16 16"/><path d="M20 28c4-6 10 6 16 0" stroke="#6e2a35"/>',
+  medical:'<rect x="14" y="10" width="36" height="46" rx="4"/><path d="M24 10V6h16v4"/><path d="M32 22v20M22 32h20" stroke="#6e2a35" stroke-width="5"/>',
+  scene:'<path d="M32 58C20 42 14 34 14 25a18 18 0 0 1 36 0c0 9-6 17-18 33z"/><circle cx="32" cy="25" r="7"/>',
+  history:'<path d="M12 12h34a6 6 0 0 1 6 6v34H18a6 6 0 0 1-6-6z"/><path d="M18 52V18"/><path d="M40 12v14l5-4 5 4V12" fill="#6e2a35" stroke="#6e2a35"/>',
+  tower:'<path d="M20 58V24l12-14 12 14v34z"/><circle cx="32" cy="34" r="7"/><path d="M32 29v5l3 2"/><path d="M26 58V48h12v10"/>',
+  hiding:'<rect x="10" y="22" width="44" height="32" rx="3"/><path d="M10 30h44"/><circle cx="32" cy="42" r="4" fill="#6e2a35" stroke="#6e2a35"/><path d="M32 42v8" stroke="#6e2a35"/>',
+  cafe:'<path d="M12 24h34v14a14 14 0 0 1-14 14h-6a14 14 0 0 1-14-14z"/><path d="M46 28h6a6 6 0 0 1 0 12h-6"/><path d="M22 8c-3 4 3 6 0 10M32 8c-3 4 3 6 0 10"/>',
+  patrol:'<path d="M24 14h16l4 8H20z"/><rect x="20" y="22" width="24" height="30" rx="3"/><path d="M26 30h12M26 38h12"/><path d="M28 14c0-6 8-6 8 0"/>',
+  plaza:'<path d="M30 8h4v50h-4z"/><path d="M34 14h18l6 6-6 6H34zM30 34H12l-6 6 6 6h18z"/>'
+};
+const GROUP_SV = { clock:"clock", tower:"tower", past23:"history", letters:"letter", photos:"photo", hiding:"hiding", trace:"trace", medical:"medical", cafe:"cafe", patrol:"patrol", plaza:"plaza", place:"scene" };
+function svIcon(key, size){
+  if (key === "clock") return '<svg viewBox="-70 -70 140 140" width="'+size+'" height="'+size+'"><use href="#clk" x="-70" y="-70" width="140" height="140"/></svg>';
+  return '<svg viewBox="0 0 64 64" width="'+size+'" height="'+size+'" fill="#f6e3c0" stroke="#5b3d18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(SV[key]||SV.document)+'</svg>';
+}
 function evIcon(e, size){
   if (e.img) return '<img src="assets/'+e.img+'.webp" alt="" style="max-height:'+size+'px;max-width:'+size+'px;width:auto;height:auto">';
   if (e.icon === "clock") return '<svg viewBox="-70 -70 140 140" width="'+size+'" height="'+size+'"><use href="#clk" x="-70" y="-70" width="140" height="140"/></svg>';
+  if (e.kind) return svIcon(e.kind, size);
   return '<img src="assets/paper_scrap.webp" alt="" style="height:'+size+'px">';
 }
 function inspect(id){
@@ -2083,7 +2133,7 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2150}, mill:{min:0,end:3000}, past:{min:110,end:2525}, healer:{min:0,end:2352}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
 function locOf(n){ return tr(n==="healer" ? UI.locH : n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
-  S.vis = S.vis || {}; S.vis[name] = 1;   /* places the player has been, for the Case File reconstruction tab */
+  if (!S.flash){ S.vis = S.vis || {}; S.vis[name] = 1; }   /* places the player has been, for the Case File reconstruction tab */
   calmSince = performance.now(); keys.clear(); autoGo = null;   /* a held or stuck key (or an old tap-to-walk target) must never carry into the new room */
   S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage" || name === "healer", MI = name === "mill", FLD = name === "flood", PST = name === "past", HL = name === "healer", IN = PST || HL || T || A || C || PR || MI || FLD;
   $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR); $("psc").classList.toggle("hl", HL); $("pmarks").style.display = HL ? "none" : ""; $("hmarks").style.display = HL ? "" : "none"; $("msc").classList.toggle("on", MI); $("fsc").classList.toggle("on", FLD); $("ysc").classList.toggle("on", PST);
@@ -2187,9 +2237,13 @@ const MEM_GREEN = ["m1","m2","m3","m4","m5","m5b","m7"], MEM_ED = ["m6"];
 const memLines = keys => keys.filter(k=>NOTES[k] && S.notes.some(n=>n.k === JSON.stringify(NOTES[k]))).map(k=>tr(NOTES[k]));
 const evChip = id => '<button type="button" class="gchip'+(EV[id].reach==="dormant"?' old':'')+'" data-ev="'+id+'">'+tr(EV[id].name)+'</button>';
 
+function grpIcon(gr, size){   /* group card: a real picture of one of its items when there is one, otherwise the group's own icon */
+  const withImg = gr.ids.filter(id=>EV[id].img || EV[id].icon).pop();
+  return withImg ? evIcon(EV[withImg], size) : svIcon(GROUP_SV[gr.group] || "document", size);
+}
 function peoplePage(){
   const met = metPeople(); if (!met.includes(selPerson)) selPerson = "nini";
-  let h = '<div class="pstrip">'+met.map(id=>'<button class="ptile'+(id===selPerson?' sel':'')+'" data-pp="'+id+'"><span class="pf"><img src="assets/'+PERSON_UI[id].img+'.webp" alt=""></span><b>'+tr(SP[id].name)+'</b></button>').join('')+'</div>';
+  let h = '<div class="pstrip big">'+met.map(id=>'<button class="ptile'+(id===selPerson?' sel':'')+'" data-pp="'+id+'"><span class="pf"><img src="assets/'+PERSON_UI[id].img+'.webp" alt=""></span><b>'+tr(SP[id].name)+'</b></button>').join('')+'</div>';
   const pv = personView(selPerson), u = PERSON_UI[selPerson]; if (!pv) return h;
   h += '<div class="pcard"><div class="pp"><img src="assets/'+u.img+'.webp" alt=""></div><div class="pb"><h3>'+tr(SP[selPerson].name)+'</h3><div class="role">'+tr(u.role)+'</div><p class="cfp">'+tr(u.intro)+'</p>';
   if (pv.statements.length){ h += '<div class="sec">'+L2("진술","STATEMENTS")+'</div>'+pv.statements.map(id=>'<div class="quote">'+tr(EV[id].desc)+'</div>').join(''); }
@@ -2225,7 +2279,7 @@ function renderEvGrid2(){
     const col = i%3, row = Math.floor(i/3), rep = EV[gr.ids[gr.ids.length-1]];
     const b = document.createElement("button"); b.className = "evcell"+(gr.group === selGroup ? " sel" : ""); b.dataset.g = gr.group;
     b.style.cssText = "left:"+Math.round(CX[col][0]*k)+"px;top:"+Math.round(CY[row][0]*k)+"px;width:"+Math.round((CX[col][1]-CX[col][0])*k)+"px;height:"+Math.round((CY[row][1]-CY[row][0])*k)+"px";
-    b.innerHTML = evIcon(rep, 70)+(gr.ids.length>1?'<span class="cnt">'+gr.ids.length+'</span>':'')+'<span class="gl">'+tr(GROUP_NAME[gr.group]||GROUP_NAME.other)+'</span>';
+    b.innerHTML = grpIcon(gr, 70)+(gr.ids.length>1?'<span class="cnt">'+gr.ids.length+'</span>':'')+'<span class="gl">'+tr(GROUP_NAME[gr.group]||GROUP_NAME.other)+'</span>';
     b.title = tr(GROUP_NAME[gr.group]||GROUP_NAME.other);
     b.onclick = ()=>{ selGroup = gr.group; selEv = gr.ids[gr.ids.length-1]; renderCF(); }; g.appendChild(b);
   });
@@ -2258,23 +2312,47 @@ const PLACE_OF = { notice:"plaza", bellinc:"plaza", patrol:"plaza", found_loc:"t
 const SCENE_PLACE = { village:"plaza", tower:"tower", archive:"archive", cafe:"cafe", cottage:"cottage", healer:"healer", mill:"mill" };
 function placeEv(pid){ return S.ev.filter(id=>PLACE_OF[id] === pid && EV[id]); }
 function placeSeen(pid){ return pid === "plaza" || pid === "tower" || (S.vis && S.vis[pid === "plaza" ? "village" : pid]) || SCENE_PLACE[S.scene] === pid || placeEv(pid).length > 0; }
+let reRow = -1, rePlace = null, qSel = null;
+const ROW_PLACE = { "11:40":"tower", "11:42":"cafe", "11:47":"tower" };   /* a time is tied to a place only where the record itself names that place */
+function placeVisited(pid){
+  if (pid === "plaza" || pid === "tower" || pid === "cottage") return true;
+  if (S.vis && S.vis[pid === "plaza" ? "village" : pid]) return true;
+  if (placeEv(pid).length) return true;
+  if (pid === "archive") return has("ar.opened") || has("ar.rep") || has("ar.drawer");
+  if (pid === "cafe") return has("hz.met") || has("hz.stmt") || has("hz.pm");
+  if (pid === "healer") return has("may.done") || hasEv("tod");
+  if (pid === "mill") return has("fin.m1");
+  return false;
+}
+function mapHtml(pids, sel){
+  return '<div class="mapwrap"><div class="mapbox">'+pids.map(pid=>{ const p = PLACES[pid], cur = SCENE_PLACE[S.scene] === pid, on = pid === sel, dim = sel && !on;
+    return '<div class="pin'+(on?' sel':'')+(dim?' dim':'')+'" data-pl="'+pid+'" style="left:'+p.x+'px;top:'+p.y+'px;'+(cur&&!on?'background:#c4453a':'background:#d9a441')+'"></div><div class="pinlab'+(dim?' dim':'')+'" data-pl="'+pid+'" style="left:'+(p.x+(on?30:26))+'px;top:'+p.y+'px">'+tr(p)+'</div>'; }).join('')+'</div></div>';
+}
 function reconPage(){
+  const rows = TL_DATA.filter(r=>r.ev.every(hasEv)), pids = Object.keys(PLACES).filter(placeVisited);
+  if (rePlace && !pids.includes(rePlace)) rePlace = null;
   let h = '<div class="seg"><button type="button" data-re="time" class="'+(reMode==="time"?'on':'')+'">'+L2("시간순","By time")+'</button><button type="button" data-re="place" class="'+(reMode==="place"?'on':'')+'">'+L2("장소별","By place")+'</button></div>';
+  let left = '';
   if (reMode === "time"){
-    const rows = TL_DATA.filter(r=>r.ev.every(hasEv));
-    if (!rows.length) return h + '<p class="cfp" style="font-style:italic">'+tr(UI.empty)+'</p>';
-    const dusk = rows.filter(r=>r.dusk).length > 1;
-    h += rows.map(r=>{ const ty = TY[r.ty];
-      return '<div class="tlrow"><div class="tt">'+r.t+'</div><div class="tb"><span class="badge '+ty[2]+'">'+L2(ty[0],ty[1])+'</span>'+L2(r.k,r.e)+(r.dusk && dusk ? ' <span class="newclue">'+L2("기록이 서로 다르다","records differ")+'</span>' : '')+'<div style="margin-top:6px">'+r.ev.map(evChip).join('')+'</div></div></div>'; }).join('');
-    h += '<div class="tlrow"><div class="tt">?</div><div class="tb cfnote">'+L2("아직 확인되지 않은 시간대가 있다.","Some stretches of the night are still unconfirmed.")+'</div></div>';
-    return h;
+    if (reRow >= rows.length) reRow = -1;
+    if (!rows.length) left = '<p class="cfp" style="font-style:italic">'+tr(UI.empty)+'</p>';
+    else {
+      const dusk = rows.filter(r=>r.dusk).length > 1;
+      left = rows.map((r,i)=>{ const ty = TY[r.ty], pl = ROW_PLACE[r.t];
+        return '<div class="tlrow'+(i===reRow?' sel':'')+(rePlace && pl===rePlace && i!==reRow?' link':'')+'" data-row="'+i+'"><div class="tt">'+r.t+'</div><div class="tb"><span class="badge '+ty[2]+'">'+L2(ty[0],ty[1])+'</span>'+L2(r.k,r.e)+(r.dusk && dusk ? ' <span class="newclue">'+L2("기록이 서로 다르다","records differ")+'</span>' : '')
+          +(i===reRow ? '<div class="cfnote" style="margin:6px 0 0">'+(pl ? L2("장소: ","Place: ")+tr(PLACES[pl]) : L2("이 기록만으로는 장소를 알 수 없다.","This record does not say where."))+'</div>' : '')
+          +'<div style="margin-top:6px">'+r.ev.map(evChip).join('')+'</div></div></div>'; }).join('')
+        + '<div class="tlrow" style="cursor:default"><div class="tt">?</div><div class="tb cfnote">'+L2("아직 확인되지 않은 시간대가 있다.","Some stretches of the night are still unconfirmed.")+'</div></div>';
+    }
+  } else {
+    left = pids.map(pid=>{ const ev = placeEv(pid).filter(id=>EV[id].kind !== "statement"), on = pid === rePlace;
+      const times = rows.filter(r=>ROW_PLACE[r.t] === pid);
+      return '<div class="placerow'+(on?' sel':'')+'" data-pl="'+pid+'"><b>'+tr(PLACES[pid])+(SCENE_PLACE[S.scene]===pid ? ' <span class="newclue">'+L2("현재 위치","you are here")+'</span>' : '')+'</b>'
+        +'<div class="chips" style="margin:6px 0 0">'+(ev.length ? ev.map(evChip).join('') : '<span class="cfnote">'+L2("아직 발견한 것이 없다.","Nothing found here yet.")+'</span>')+'</div>'
+        +(on && times.length ? '<div class="cfnote" style="margin:8px 0 0">'+L2("이곳과 관련된 시간: ","Times tied to this place: ")+times.map(r=>'<b>'+r.t+'</b>').join(", ")+'</div>' : '')+'</div>'; }).join('');
   }
-  const pids = Object.keys(PLACES).filter(placeSeen);
-  h += '<div style="display:flex;gap:30px;align-items:flex-start"><div style="flex:1;min-width:0">'+pids.map(pid=>{ const ev = placeEv(pid).filter(id=>EV[id].kind !== "statement");
-    return '<div class="placerow"><b>'+tr(PLACES[pid])+(SCENE_PLACE[S.scene]===pid ? ' <span class="newclue">'+L2("현재 위치","you are here")+'</span>' : '')+'</b><div class="chips" style="margin:6px 0 0">'+(ev.length ? ev.map(evChip).join('') : '<span class="cfnote">'+L2("아직 발견한 것이 없다.","Nothing found here yet.")+'</span>')+'</div></div>'; }).join('')+'</div>';
-  h += '<div class="mapbox">'+pids.map(pid=>{ const p = PLACES[pid], cur = SCENE_PLACE[S.scene] === pid;
-    return '<div class="pin" style="left:'+p.x+'px;top:'+p.y+'px;background:'+(cur?'#c4453a':'#d9a441')+'"></div><div class="pinlab" style="left:'+(p.x+26)+'px;top:'+p.y+'px">'+tr(p)+'</div>'; }).join('')+'</div></div>';
-  return h;
+  const selPlace = reMode === "time" ? (reRow >= 0 && rows[reRow] ? ROW_PLACE[rows[reRow].t] || null : rePlace) : rePlace;
+  return h + '<div style="display:flex;gap:30px;align-items:flex-start"><div style="flex:1;min-width:0">'+left+'</div>'+mapHtml(pids, selPlace)+'</div>';
 }
 
 /* deduction notes: neutral questions, the player's own judgments, never graded and never overwritten */
@@ -2292,26 +2370,41 @@ const QS = [
   { id:"q6", open:()=>has("c3.qz") || has("f4.end") || has("f5.done"), clues:["mnote","oldrep","bellrec","tdoc"], k:"23년 전 기록에는 어떤 일이 있었는가?", e:"What happened to the records from 23 years ago?",
     o:[["changed","기록이 바뀌었다고 본다","I think the records were changed"],["same","기록은 있는 그대로라고 본다","I think the records are as they were"],["unk","아직 판단할 수 없다","I can't tell yet"]] }
 ];
+const qNum = q => q.id.slice(1).padStart(2,"0");
 function notesPage(){
   S.qa = S.qa || {};
   const open = QS.filter(q=>q.open());
+  if (qSel && !open.some(q=>q.id === qSel)) qSel = null;
+  if (qSel) return questionDetail(QS.find(q=>q.id === qSel));
   let h = '';
   if (!open.length) h += '<p class="cfp" style="font-style:italic">'+L2("아직 풀어야 할 질문이 없다.","No open questions yet.")+'</p>';
-  open.forEach(q=>{ const clues = q.clues.filter(hasEv), a = S.qa[q.id], fresh = a && clues.length > a.n;
-    h += '<div class="qcard"><h4>'+L2(q.k,q.e)+(fresh ? '<span class="newclue">'+L2("새 단서","new clue")+'</span>' : '')+'</h4>'
-      + '<div class="chips" style="margin:6px 0">'+(clues.length ? clues.map(evChip).join('') : '<span class="cfnote">'+L2("연결할 단서가 아직 없다.","No clues to connect yet.")+'</span>')+'</div>'
-      + '<div class="sec" style="margin-top:8px">'+L2("지금의 판단","YOUR CURRENT VIEW")+'</div><div class="qopts">'+q.o.map(o=>'<button type="button" data-q="'+q.id+'" data-v="'+o[0]+'" class="'+(a && a.v===o[0]?'on':'')+'">'+L2(o[1],o[2])+'</button>').join('')+'</div>'
-      + '<p class="cfnote">'+L2("판단은 언제든 바꿀 수 있다.","You can change your view at any time.")+'</p></div>'; });
-  h += autoNotes();
+  h += '<div class="qlist">'+open.map(q=>{ const clues = q.clues.filter(hasEv), a = S.qa[q.id], fresh = a && a.v && clues.length > a.n, opt = a && a.v ? q.o.find(o=>o[0]===a.v) : null;
+    return '<button type="button" class="qsum" data-qopen="'+q.id+'"><div class="qt">'+L2(q.k,q.e)+'<div class="qs">'+L2("단서 ","Clues ")+clues.length+(opt ? ' · '+L2("내 판단: ","My view: ")+L2(opt[1],opt[2]) : '')+(fresh ? '<span class="newclue">'+L2("새 단서","new clue")+'</span>' : '')+'</div></div><span class="qstat '+(opt?'done':'open')+'">'+(opt ? L2("판단 기록","VIEW SAVED") : L2("조사 중","OPEN"))+'</span></button>'; }).join('')+'</div>';
+  return h + autoNotes();
+}
+function questionDetail(q){
+  const a = (S.qa || {})[q.id] || {}, clues = q.clues.filter(hasEv), basis = a.b || [], fresh = a.v && clues.length > a.n;
+  let h = '<button type="button" class="backbtn" data-qback="1">&lsaquo; '+L2("질문 목록","All questions")+'</button>'
+    + '<div class="eyebrow">CASE FILE / '+L2("질문","QUESTION")+' '+qNum(q)+'</div><div class="qh">'+L2(q.k,q.e)+'</div>'
+    + '<div class="sec" style="margin-top:14px">'+L2("현재 확보한 단서","CLUES YOU HAVE")+(fresh ? '<span class="newclue">'+L2("새 단서가 생겼다","a new clue came in")+'</span>' : '')+'</div>';
+  h += clues.length ? '<div class="cgrid">'+clues.map(id=>{ const e = EV[id], on = basis.includes(id), d = tr(e.desc), sd = d.length > 70 ? d.slice(0,70)+"…" : d;
+    return '<div class="ccard'+(on?' basis':'')+'"><div class="ct"><div class="ci">'+evIcon(e, 48)+'</div><b>'+tr(e.name)+'</b></div><div class="csum">'+sd+'</div><div class="cb"><button type="button" data-basis="'+id+'" data-bq="'+q.id+'" class="'+(on?'on':'')+'">'+(on ? L2("근거로 표시됨","Marked as basis") : L2("근거로 표시","Mark as basis"))+'</button><button type="button" data-ev="'+id+'">'+L2("자세히","Open")+'</button></div></div>'; }).join('')+'</div>'
+    : '<p class="cfnote">'+L2("연결할 단서가 아직 없다.","No clues to connect yet.")+'</p>';
+  h += '<div class="sec" style="margin-top:24px">'+L2("나의 현재 판단","YOUR CURRENT VIEW")+'</div><div class="qopts big">'+q.o.map(o=>'<button type="button" data-q="'+q.id+'" data-v="'+o[0]+'" class="'+(a.v===o[0]?'on':'')+'">'+L2(o[1],o[2])+'</button>').join('')+'</div>'
+    + '<p class="cfnote">'+L2("단서를 근거로 표시하는 것과 판단을 정하는 것은 별개다. 판단은 언제든 바꿀 수 있고, 새 단서가 생겨도 저절로 바뀌지 않는다.","Marking a basis and settling on a view are separate. You can change your view at any time, and a new clue never changes it for you.")+'</p>';
   return h;
 }
-
 function goEv(id){ const e = EV[id]; if (!e) return; if (e.kind === "statement"){ tab = 0; if (e.holder) selPerson = e.holder; } else { tab = 1; selEv = id; selGroup = e.group; } renderCF(); }
 function wireCF(){
-  document.querySelectorAll("[data-ev]").forEach(b=>{ b.onclick = ()=>goEv(b.dataset.ev); });
+  document.querySelectorAll("[data-ev]").forEach(b=>{ b.onclick = e=>{ e.stopPropagation(); goEv(b.dataset.ev); }; });
   document.querySelectorAll("[data-pp]").forEach(b=>{ b.onclick = ()=>{ selPerson = b.dataset.pp; renderCF(); }; });
   document.querySelectorAll("[data-re]").forEach(b=>{ b.onclick = ()=>{ reMode = b.dataset.re; renderCF(); }; });
-  document.querySelectorAll("[data-q]").forEach(b=>{ b.onclick = ()=>{ const q = QS.find(x=>x.id === b.dataset.q); S.qa = S.qa || {}; S.qa[q.id] = { v:b.dataset.v, n:q.clues.filter(hasEv).length }; save(); renderCF(); }; });
+  document.querySelectorAll("[data-row]").forEach(b=>{ b.onclick = ()=>{ reRow = reRow === +b.dataset.row ? -1 : +b.dataset.row; rePlace = null; renderCF(); }; });
+  document.querySelectorAll("[data-pl]").forEach(b=>{ b.onclick = ()=>{ rePlace = rePlace === b.dataset.pl ? null : b.dataset.pl; if (reMode === "time") reRow = -1; renderCF(); }; });
+  document.querySelectorAll("[data-qopen]").forEach(b=>{ b.onclick = ()=>{ qSel = b.dataset.qopen; renderCF(); }; });
+  document.querySelectorAll("[data-qback]").forEach(b=>{ b.onclick = ()=>{ qSel = null; renderCF(); }; });
+  document.querySelectorAll("[data-basis]").forEach(b=>{ b.onclick = ()=>{ S.qa = S.qa || {}; const q = b.dataset.bq, a = S.qa[q] = S.qa[q] || {}, set = new Set(a.b || []); set.has(b.dataset.basis) ? set.delete(b.dataset.basis) : set.add(b.dataset.basis); a.b = [...set]; save(); renderCF(); }; });
+  document.querySelectorAll("[data-q]").forEach(b=>{ b.onclick = ()=>{ const q = QS.find(x=>x.id === b.dataset.q); S.qa = S.qa || {}; const a = S.qa[q.id] = S.qa[q.id] || {}; a.v = b.dataset.v; a.n = q.clues.filter(hasEv).length; save(); renderCF(); }; });
 }
 function renderCF(){
   tab = Math.max(0, Math.min(CF_TABS-1, tab|0));
@@ -2498,12 +2591,12 @@ function skipTo(n){
   if (S.flash){ S.flash = false; $("stage").classList.remove("flash","flash5"); $("rain").classList.remove("on"); $("endcard").classList.remove("on"); }
   $("pause").classList.remove("on"); mode = "play"; $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null;
   $("mono").classList.remove("on"); $("finale").classList.remove("on"); monoOn = false; finTimers.forEach(clearTimeout); finTimers = [];
-  S.flags = { "pro.done":true }; S.ev = []; S.notes = []; S.resp = null; S.pick = -1; S.tips = TIPS.map(t=>t.id);   /* a jump rebuilds the story state from scratch, so flags from a later chapter cannot leak into an earlier one */
+  S.vis = {}; S.flags = { "pro.done":true }; S.ev = []; S.notes = []; S.resp = null; S.pick = -1; S.tips = TIPS.map(t=>t.id);   /* a jump rebuilds the story state from scratch, so flags from a later chapter cannot leak into an earlier one */
   if (n >= 2) SKIP_STEPS[Math.min(n,4)]();
   checkDeduce(); save(); refreshHud();
   if (n === 2) chapterIntro(2, ()=>setSceneNow("village", 2150));
   else if (n === 3) chapterIntro(3, ()=>setSceneNow("village", 3050));
-  else if (n === 4){ setSceneNow("mill", 1400); startFlash(); }
+  else if (n === 4){ setSceneNow("mill", 1400); delete S.vis.mill; startFlash(); }
   else if (n === 6 || n === 66 || n === 7 || n === 77){
     qFlags(["f4.end","f4.shown","f5.toPresent","f5.shown","f5.past","hz5.met","hz5.night","may.done","f5.done","fin.on"]); qEv(["receipt","tod"]);
     if (n === 66 || n === 77){ qFlags(["fin.m1","fin.o1","fin.o2","fin.o3","fin.s4","fin.may2","fin.frame","fin.last"]); qEv(["tdoc","thread","hidden"]); setSceneNow("village", 1100); toast(lang==="ko"?"연출 모드: 6장 마지막 선택":"Director: Chapter 6 final choice"); }
@@ -2633,7 +2726,7 @@ if (S.flags && S.flags["c3.qz"] && !S.flash && !S.flags["f4.end"] && !S.flags["f
 let resumeFlash = 0; if (S.flash){ resumeFlash = S.flash; S.flash = false; S.scene = "village"; S.x = resumeFlash === 5 ? 3700 : 2150; }   /* a save made inside a flashback (some are from the old Chapter 4/5) restarts that flashback instead of leaving the player with nothing to do */
 cam = 0; fit(); setSceneNow((["tower","archive","cafe","cottage","mill"].includes(S.scene) || (S.flash && ["past","flood"].includes(S.scene))) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus(); if (resumeFlash) setTimeout(()=>{ if (resumeFlash === 5) startFlash5(); else startFlash(); }, 900);
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
-window.__bv = { D, NOTES, SP, EV, ENDINGS, ACC, SMALL, FOLLOW, KCON, GATE_T, CHT, UI, setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4, EV_META, evGroups, evStatements, PEOPLE, personView, metPeople };
+window.__bv = { D, NOTES, SP, EV, ENDINGS, ACC, SMALL, FOLLOW, KCON, GATE_T, CHT, UI, setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4, EV_META, evGroups, evStatements, PEOPLE, personView, metPeople, skipTo };
 requestAnimationFrame(frame);
   if (typeof nineAll === "function") requestAnimationFrame(nineAll);
   /* layers with will-change keep the raster scale they were first painted at, so after a resize or rotation they look soft; drop and restore the hint to re-paint them sharp */
