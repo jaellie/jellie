@@ -784,6 +784,41 @@ SECTIONS[1].items = [
     tech:["WAV, stereo, 44.1 kHz, 24-bit."]}, {kind:"audio"})
 ];
 
+/* ---- May, the village healer (the only human in the cast) ---- */
+const MAY = [
+"MAY (the village healer), a HUMAN young woman, do not turn her into an animal:",
+"- She is the one human in a cast of animals, so draw her as a gentle picture-book person: simplified, soft features, slightly large calm eyes, NOT photographic, NOT anime, NOT a realistic portrait. She is inspired by the attached reference photo (hair, face shape, calm expression), but stylised as a hand-painted storybook character.",
+"- Height: about 85% of Big Green Bear's height. Slim, relaxed shoulders, a slightly tired but kind posture.",
+"- Hair: long, straight, very dark brown-black (#1E1B22, highlight #3A3646), parted a little off-centre, tucked behind her ears and gathered low at the nape with a cream ribbon (#EFE3C8); the tail hangs over her LEFT shoulder to her chest. One loose strand frames her face.",
+"- Face: soft rounded face, warm light skin (#EFC9A8, shadow #C99B7A), dark round eyes (#2A1A12) with a small highlight, thin straight brows, a small nose, small closed mouth with a faint, calm half-smile, a tiny beauty mark on the left cheek.",
+"- Clothes (winter, practical): a dusty teal wool dress (#4F7A78, shadow #3A5D5C) with sleeves pushed to the elbows, a long cream linen apron (#EFE3C8, shadow #CFC3AE) with a small embroidered green herb sprig on the chest pocket, a thin brown leather belt (#6B4528) with a small pouch and a brass buckle (#B08D57), wool tights and sturdy brown boots (#6B4528).",
+"- A canvas healer's satchel (#B79B6A) with a red cross-stitch mark is worn across the body on a strap over her LEFT shoulder, resting on her RIGHT hip. A bundle of dried lavender sticks out of it.",
+"- No animal ears or tail. No scarf in mustard yellow (that belongs to the bears). Hands are simple and well drawn, five fingers, relaxed."
+].join("\n");
+SECTIONS.find(s => s.id === "f").items.push(
+ P("May (human healer): three still poses", {
+   goal:"The village healer, the only human in the cast. She appears in her clinic, tells BGB when Edward could have died, and finds the yellow thread on his hand.",
+   refs:["the attached reference photo of the author, ONLY for hair, face shape and calm expression (stylise it, do not copy it photographically)", REF_CHAR + " (match line weight, painterly softness and scale next to Nini and Big Green Bear)"],
+   blocks:[MAY, LEFTRIGHT],
+   subject:"May standing relaxed with her hands loosely together in front of her apron, ready to listen.",
+   layout:["ONE row of 3 separate drawings: front, facing LEFT (side view), facing RIGHT (side view). Cells 400 x 640 px (sheet 1200 x 640 px), same scale, feet baseline y = 600.","Every direction is drawn BY HAND from that direction. Never mirror one view to make another: the satchel strap and the hair tail stay on HER LEFT shoulder in all three views (so in the left-facing view the hair and strap are on the far side, and in the right-facing view they are on the near side)."],
+   details:["Expression: calm and caring, eyes slightly lowered, a faint half-smile.","Pose: relaxed upright stance, weight on both feet, shoulders soft.","Lighting: warm amber from the upper left, cool blue-violet shadows, a thin amber rim light on the left edges."],
+   include:["the cream ribbon at the nape","the herb sprig embroidery on the apron","the satchel with lavender","her hair tail over the left shoulder in every view"], exclude:["animal features","anime eyes","photographic skin","mustard yellow scarf","mirroring","text","background"],
+   tech:["Sheet 1200x640 px, transparent PNG.","Each figure fits inside a 360 x 600 px area of its cell."]},
+   {size:"1200x640", tags:["human","no mirroring"]}),
+
+ P("May: portraits, 4 expressions", {
+   goal:"Dialogue-box portraits for May (the clinic scenes in Chapters 5 and 6).",
+   refs:["the attached reference photo of the author, ONLY for hair, face shape and calm expression (stylised)", REF_CHAR + " (the animal portraits, to match line weight and painterly softness)"],
+   blocks:[MAY],
+   subject:"Four bust portraits of May, head and shoulders with the apron and satchel strap visible, facing the viewer in a slight three-quarter turn.",
+   layout:["ONE row of 4 squares, each 400 x 400 px (sheet 1600 x 400 px). Order: neutral, worried, surprised, thinking.","Her face sits in the middle of each square with the eyes about 40% from the top, like the other portraits."],
+   details:["Neutral: calm, professional kindness, a faint half-smile.","Worried: brows drawn together in the middle, eyes lowered, lips pressed.","Surprised: eyes wide, brows high, lips slightly parted.","Thinking: eyes aside and up, a finger lightly touching her chin."],
+   include:["the cream hair ribbon and the hair tail over her left shoulder","the beauty mark on her left cheek in every portrait"], exclude:["animal features","anime style","photographic skin","background","text"],
+   tech:["Sheet 1600x400 px, transparent PNG."]},
+   {size:"1600x400", tags:["human"]})
+);
+
 // ---- sheet rule: every multi-item sheet keeps a clear gap between items
 const GAP = [
 "SHEET SPACING (REQUIRED):",
