@@ -1470,10 +1470,10 @@ document.addEventListener("keydown", e=>{ if (monoOn && (e.key === "Enter" || e.
 function endSeqA(){
   const f = $("fade"); f.style.transition = "opacity 1.8s"; f.classList.add("on");
   setTimeout(()=>{ setSceneNow("village", 3060); NPCX_V.nini = 2985; $("stage").classList.add("cine"); nini.style.display = ""; nini._sh.style.display = ""; $("stage").classList.add("dusk"); mode = "modal"; f.classList.remove("on");
-    setTimeout(()=>{ f.classList.add("on"); setTimeout(()=>{ f.style.transition = ""; NPCX_V.nini = 1010; $("stage").classList.remove("dusk"); showFinal(1); setTimeout(()=>$("stage").classList.remove("cine"), 2500); f.classList.remove("on"); }, 2000); }, 4600); }, 2000);
+    setTimeout(()=>{ f.classList.add("on"); setTimeout(()=>{ f.style.transition = ""; NPCX_V.nini = 1010; $("stage").classList.remove("dusk"); showFinal(1, true); setTimeout(()=>$("stage").classList.remove("cine"), 2500); f.classList.remove("on"); }, 2000); }, 4600); }, 2000);
 }
 let finTimers = [];
-function showFinal(k){ const K = lang==="ko"; mode = "modal"; setf("fin.end"); setf("end"+k); hideHintNow();
+function showFinal(k, instant){ const K = lang==="ko"; mode = "modal"; setf("fin.end"); setf("end"+k); hideHintNow();
   const F = $("finale");
   $("fnE").textContent = k===1 ? (K?"엔딩 A":"ENDING A") : (K?"엔딩 B":"ENDING B");
   $("fnH").textContent = k===1 ? (K?"남겨진 기록":"The Record That Remained") : (K?"좋은 사람":"A Good Person");
@@ -1481,7 +1481,7 @@ function showFinal(k){ const K = lang==="ko"; mode = "modal"; setf("fin.end"); s
   $("fnR").textContent = K?"다른 선택을 해 본다":"Choose differently"; $("fnC").textContent = K?"감사의 말":"Credits"; $("fnK").textContent = K?"계속 둘러보기":"Keep exploring";
   ["fnE","fnH","fnL","fnT","fnTH","fnB"].forEach(i=>$(i).classList.remove("show"));
   finTimers.forEach(clearTimeout); finTimers = []; const at = (ms, fn) => finTimers.push(setTimeout(fn, ms));
-  F.classList.add("on");
+  if (instant){ F.style.transition = "none"; F.classList.add("on"); void F.offsetWidth; F.style.transition = ""; } else F.classList.add("on");   /* called from a fade to black: the finale is already fully black, so there is no second fade */
   at(1400, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.add("show")));      /* ending name */
   at(4800, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")));    /* then the screen is fully black */
   at(7400, ()=>["fnT","fnTH"].forEach(i=>$(i).classList.add("show")));            /* 2 s of silence, then the title */
@@ -1779,7 +1779,7 @@ function showChoices(){
 }
 function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.bye) menuFollow = null; else if (c.go) menuFollow = (cur === "followUp") ? menuFollow : (n.ch.some(x=>x.bye||!x.go) ? cur : null); else menuFollow = null; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
   setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
-function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); holdHint = true; setTimeout(()=>endMono("ce7_"+en+"_0", ()=>showEndE(en)), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.fx === "rain") $("rain").classList.add("on"); if (n.fx === "recap"){ holdHint = true; setTimeout(()=>showMono(()=>{ setSceneNow("village", 1100); }), 150); }  if (/^theend[12]$/.test(n.fx||"")){ const fe = +n.fx.slice(6); holdHint = true; mode = "modal"; setTimeout(()=>{ if (fe === 1) endSeqA(); else { const f = $("fade"); f.style.transition = "opacity 1.8s"; f.classList.add("on"); setTimeout(()=>{ f.style.transition = ""; showFinal(2); f.classList.remove("on"); }, 2000); } }, 700); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
+function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); holdHint = true; setTimeout(()=>endMono("ce7_"+en+"_0", ()=>showEndE(en)), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.fx === "rain") $("rain").classList.add("on"); if (n.fx === "recap"){ holdHint = true; setTimeout(()=>showMono(()=>{ setSceneNow("village", 1100); }), 150); }  if (/^theend[12]$/.test(n.fx||"")){ const fe = +n.fx.slice(6); holdHint = true; mode = "modal"; setTimeout(()=>{ if (fe === 1) endSeqA(); else { const f = $("fade"); f.style.transition = "opacity 1.8s"; f.classList.add("on"); setTimeout(()=>{ f.style.transition = ""; showFinal(2, true); f.classList.remove("on"); }, 2000); } }, 700); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(fromClick){
   if (performance.now() < dlgLock) return;
   if (fromClick && D[cur] && D[cur].ch && !typing && pgi >= pgs.length - 1) return;   /* a click never picks an answer; choose with the buttons, 1/2 or arrows + E */
