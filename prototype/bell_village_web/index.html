@@ -267,6 +267,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #bigPor{position:absolute;left:290px;bottom:236px;height:650px;z-index:7;pointer-events:none;opacity:0;transition:opacity .22s}
 #bigPor.on{opacity:1}
 #bigPor.r{left:auto;right:290px}
+#bigPor.flip img{transform:scaleX(-1)}
 #bigPor img{height:100%;width:auto;display:block;filter:drop-shadow(0 6px 14px rgba(6,4,16,.65))}
 /* Case File */
 #cf{position:absolute;inset:0;background:rgba(6,9,20,.82);display:none;z-index:20}
@@ -2149,7 +2150,7 @@ function renderDlg(anim){
   const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil); $("dPor").classList.toggle("pz", !!sp.por);   /* silhouette until the real portrait exists */
   if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
   bigSide = (sp.por && !sp.hide && !sp.sil) ? (n.sp === "bgb" ? "r" : "l") : "";   /* who gets the close-up: anyone with expression portraits, on the side away from the answers */
-  if (bigSide){ const bi = $("bPorImg"); if (bi.getAttribute("src") !== portrait) bi.src = portrait; $("bigPor").classList.toggle("r", bigSide === "r"); }
+  if (bigSide){ const bi = $("bPorImg"); if (bi.getAttribute("src") !== portrait) bi.src = portrait; $("bigPor").classList.toggle("r", bigSide === "r"); $("bigPor").classList.toggle("flip", bigSide === "l" && !NOFLIP.has(n.sp)); }
   $("dPor").onload = () => { $("dPor").style.opacity = 1; };
   const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":"");
   pgs = splitPages(tr(n.t)); pgi = 0; sizeDlg(pgs.reduce((a,b)=>b.length>a.length?b:a, ""));
@@ -2162,6 +2163,8 @@ function sizeDlg(text){
   const box = 1520;   /* always the art's natural width: a narrower box had to squash or crop the middle of the art, which showed as a blurred band */
   const bw = Math.min(1520, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px"; { const ch = $("choices"); if (bigSide === "l"){ ch.style.left = "auto"; ch.style.right = Math.round((STAGE_W - bw)/2 + 30) + "px"; } else { ch.style.right = "auto"; ch.style.left = Math.round((STAGE_W - bw)/2 + 262) + "px"; } }
 }
+/* The close-up of an NPC on the left looks toward the middle of the screen. Mirrored only here, only for people whose side carries no clue: Green and BGB (scarf side) and May (hair and satchel side) are never mirrored. */
+const NOFLIP = new Set(["gr","bgb","hl","kid","yo","mo","hz"]);   /* mo and hz already look to the right in their art */
 let bigSide = "";
 const askedGo = new Set();   /* answers already heard this session; with the story flags they set, these only dim an answer, they never lock it */
 const isAsked = c => !!c.go && (askedGo.has(c.go) || !!(D[c.go] && typeof D[c.go].set === "string" && has(D[c.go].set)));
