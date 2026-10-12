@@ -1894,7 +1894,7 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 
 /* enter tower */
 /* Interior art is padded with mirrored edges; the camera stays inside the REAL art: min = where the painted art starts, end = where it ends. Player starts clear of the left category panel. */
-const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2150}, mill:{min:0,end:3000}, past:{min:0,end:2632}, healer:{min:0,end:2352}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
+const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2150}, mill:{min:0,end:3000}, past:{min:110,end:2525}, healer:{min:0,end:2352}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
 function locOf(n){ return tr(n==="healer" ? UI.locH : n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
   calmSince = performance.now(); keys.clear(); autoGo = null;   /* a held or stuck key (or an old tap-to-walk target) must never carry into the new room */
