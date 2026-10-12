@@ -233,7 +233,6 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .hudbtn .k{position:absolute;right:-6px;bottom:-8px;font:700 13px/1 var(--font-label);background:#1b2340;color:#ffe3a6;border:1px solid var(--brass);border-radius:4px;padding:3px 5px}
 .hudbtn .k{opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s;pointer-events:none}
 .hudbtn:hover .k,.hudbtn:focus-visible .k{opacity:1;transform:none}
-@media (hover:none){.hudbtn .k{opacity:1;transform:none}}
 #hint{position:absolute;left:50%;bottom:34px;translate:-50% 6px;scale:var(--hb,1);transform-origin:50% 100%;width:fit-content;max-width:720px;padding:17px 42px;--s:1;display:flex;align-items:center;justify-content:center;gap:11px;font:600 20px/1.1 var(--font-body);color:var(--ink);white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .25s ease,translate .25s ease,visibility 0s linear .25s}
 #hint.on{opacity:1;visibility:visible;translate:-50% 0;transition-delay:0s}
 #hint.instant,#hint.instant.on{transition:none}
@@ -371,7 +370,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #stage.cine #caseplate,#stage.cine #side,#stage.cine #sideBook,#stage.cine .hudbtn,#stage.cine #touch{opacity:0;pointer-events:none;transition:opacity 1.2s}
 #tip{position:absolute;left:50%;top:28px;translate:-50% -12px;max-width:1100px;z-index:36;display:flex;align-items:center;gap:18px;padding:14px 30px 14px 18px;background:linear-gradient(#e6d3a8,#d8c08e);border:2.5px solid #b08a44;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.3);color:var(--ink);font:600 25px/1.4 var(--font-body);opacity:0;pointer-events:none;transition:opacity .5s,translate .5s}
 #tip.on{opacity:.97;translate:-50% 0}
-#tip b{font:700 15px/1 var(--font-label);letter-spacing:.2em;background:var(--burgundy);color:#f6e3c0;border-radius:5px;padding:7px 10px;flex:none}
+#tip b{font:700 15px/1 var(--font-label);letter-spacing:.2em;background:#2b3a5f;color:#f6e3c0;border-radius:5px;padding:7px 10px;flex:none}
 #tip kbd{font:700 17px/1 var(--font-label);background:var(--burgundy);color:#f6e3c0;border-radius:4px;padding:4px 8px;box-shadow:0 2px 0 #3d1219;margin:0 2px}
 #finale{position:absolute;inset:0;z-index:42;background:#02030a;opacity:0;pointer-events:none;transition:opacity 1.8s;color:#f3e6c8;text-align:center}
 #finale.on{opacity:1;pointer-events:auto}
@@ -2185,7 +2184,7 @@ function renderDlg(anim){
   const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil); $("dPor").classList.toggle("pz", !!sp.por);   /* silhouette until the real portrait exists */
   if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
   bigSide = ((sp.por || sp.big || sp.img) && !sp.hide && (!sp.sil || sp.big)) ? (n.sp === "bgb" || n.sp === "yo" ? "r" : "l") : "";   /* who gets the close-up: anyone with expression portraits, on the side away from the answers */
-  if (bigSide){ const bi = $("bPorImg"), bsrc = sp.big || portrait; if (bi.getAttribute("src") !== bsrc) bi.src = bsrc; $("bigPor").classList.toggle("spr", !sp.por && !sp.big); $("bigPor").classList.toggle("small", false); $("bigPor").classList.toggle("r", bigSide === "r"); $("bigPor").classList.toggle("flip", bigSide === "l" && (!NOFLIP.has(n.sp) !== FLIP_TOGGLE.has(n.sp+":"+ex))); }
+  if (bigSide){ const bi = $("bPorImg"), bsrc = sp.big || portrait; if (bi.getAttribute("src") !== bsrc) bi.src = bsrc; $("bigPor").classList.toggle("spr", !sp.por && !sp.big); $("bigPor").classList.toggle("small", false); $("bigPor").classList.toggle("r", bigSide === "r"); $("bigPor").classList.toggle("flip", (bigSide === "l" && (!NOFLIP.has(n.sp) !== FLIP_TOGGLE.has(n.sp+":"+ex))) || (bigSide === "r" && FLIPR.has(n.sp))); }
   $("dPor").onload = () => { $("dPor").style.opacity = 1; };
   const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":"");
   pgs = splitPages(tr(n.t)); pgi = 0; sizeDlg(pgs.reduce((a,b)=>b.length>a.length?b:a, ""));
@@ -2199,6 +2198,7 @@ function sizeDlg(text){
   const bw = Math.min(1520, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px"; { const ch = $("choices"); if (bigSide === "l"){ ch.style.left = "auto"; ch.style.right = Math.round((STAGE_W - bw)/2 + 30) + "px"; } else { ch.style.right = "auto"; ch.style.left = Math.round((STAGE_W - bw)/2 + 262) + "px"; } }
 }
 /* The close-up of an NPC on the left looks toward the middle of the screen. Mirrored only here, only for people whose side carries no clue: Green and BGB (scarf side) and May (hair and satchel side) are never mirrored. */
+const FLIPR = new Set(["yo"]);   /* close-ups on the right of the screen whose art looks right: mirrored so they look toward the middle */
 const NOFLIP = new Set(["gr","bgb","hl","kid","yo","mo","hz","v1","cr"]);   /* mo and hz already look to the right in their art */
 const FLIP_TOGGLE = new Set(["mo:worried","tm:surprised","tm:thinking"]);   /* expressions whose art faces the other way from the rest of that person */
 let STILL_ON = false, STILL_SW = 0;
@@ -2872,6 +2872,7 @@ function skipTo(n){
   $("mono").classList.remove("on"); $("finale").classList.remove("on"); monoOn = false; finTimers.forEach(clearTimeout); finTimers = [];
   S.vis = {}; S.flags = { "pro.done":true }; S.ev = []; S.notes = []; S.resp = null; S.pick = -1; S.tips = TIPS.map(t=>t.id);   /* a jump rebuilds the story state from scratch, so flags from a later chapter cannot leak into an earlier one */
   if (n >= 2) SKIP_STEPS[Math.min(n,4)]();
+  if (n >= 5) qFlags(["c3.qz"]);   /* the Chapter 3 quiz must not start the Chapter 4 flashback during a jump to a later chapter */
   checkDeduce(); save(); refreshHud();
   if (n === 2) chapterIntro(2, ()=>setSceneNow("village", 2150));
   else if (n === 3) chapterIntro(3, ()=>setSceneNow("village", 3050));
