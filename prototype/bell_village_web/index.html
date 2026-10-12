@@ -272,6 +272,12 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #choices .chead{flex:none;align-self:flex-start;margin:0 0 6px 6px;padding:0;font:700 24px/1.2 var(--font-body);letter-spacing:.02em;color:#f6e3c0;text-shadow:0 2px 6px rgba(8,5,20,.95),0 0 12px rgba(8,5,20,.85);white-space:nowrap}
 .choice:hover,.choice.sel{filter:brightness(1.08) saturate(1.15) drop-shadow(0 3px 5px rgba(0,0,0,.4)) drop-shadow(0 0 7px rgba(255,214,140,.55));color:#6e2a35;transform:translateX(4px) rotate(-.6deg)}
 
+/* full-screen story stills shown behind the dialogue box for chosen lines */
+#still{position:absolute;inset:0;z-index:6;opacity:0;pointer-events:none;transition:opacity .7s}
+#still.on{opacity:1}
+#still img{width:100%;height:100%;object-fit:cover;display:block}
+#still:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(3,4,14,.55) 100%)}
+#stage.stillon #caseplate,#stage.stillon .hudbtn,#stage.stillon #sideBook{opacity:0;pointer-events:none}
 /* speaker close-up: the expression portrait is shown large beside the dialogue box (the box and its small frame are unchanged) */
 #bigPor{position:absolute;left:290px;bottom:236px;height:650px;z-index:7;pointer-events:none;opacity:0;transition:opacity .22s}
 #bigPor.on{opacity:1}
@@ -741,6 +747,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
   <div id="hint" class="nine cream"><kbd>E</kbd><span id="hintTx"></span></div>
   <div id="toast"></div>
 
+  <div id="still"><img id="stillImg" alt=""></div>
   <div id="bigPor"><img id="bPorImg" alt=""></div>
   <div id="choices"></div>
   <div id="dlg"><div id="dlgbg" class="nine"></div><div class="por"><img id="dPor" src="assets/nini_front.webp" alt=""></div><div class="nm" id="dNm"></div><div class="tx" id="dTx"></div></div>
@@ -1220,7 +1227,7 @@ Object.assign(D, {
   ci6_0: {sp:"bgb", ex:"thinking", t:{en:"The knots, the right hand, the torn ear. I saw all of it, and I cannot unsee it.", ko:"매듭, 오른손, 찢어진 귀. 다 봤어. 이제 모르는 척할 수 없어."}, next:"ci6_1"},
   ci6_1: {sp:"bgb", ex:"neutral", t:{en:"Compare the clues on the Identity Board under People. After that, I have to see Green at the Old Mill.", ko:"사람 탭의 신원 보드에서 단서를 맞춰 보자. 그다음엔 낡은 방앗간의 Green을 만나야 해."}, next:null}
 });
-const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp", por:"assets/por_edward_"}, kid:{name:{en:"Green",ko:"형"}, img:"assets/twin_elder_front.webp"}, yo:{name:{en:"Little Green",ko:"동생"}, img:"assets/twin_younger_front.webp"}, nar:{name:{en:"",ko:""}, img:"assets/twin_elder_front.webp", hide:true}, v1:{name:{en:"Villager",ko:"마을 사람"}, img:"assets/molly_front.webp", sil:true}, v2:{name:{en:"Villager 2",ko:"주민 2"}, img:"assets/molly_front.webp", sil:true}, mo:{name:{en:"Grandma Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"그린"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp", por:"assets/por_hazel_"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
+const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp", por:"assets/por_edward_"}, kid:{name:{en:"Green",ko:"형"}, img:"assets/twin_elder_front.webp", por:"assets/por_elder_"}, yo:{name:{en:"Little Green",ko:"동생"}, img:"assets/twin_younger_front.webp", por:"assets/por_younger_"}, nar:{name:{en:"",ko:""}, img:"assets/twin_elder_front.webp", hide:true}, v1:{name:{en:"Villager",ko:"마을 사람"}, img:"assets/molly_front.webp", sil:true, big:"assets/sil_rabbit.webp"}, v2:{name:{en:"Villager 2",ko:"주민 2"}, img:"assets/molly_front.webp", sil:true, big:"assets/sil_goat.webp"}, mo:{name:{en:"Grandma Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"그린"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp", por:"assets/por_hazel_"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
 const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
@@ -1343,7 +1350,7 @@ Object.assign(UI, {
   concl:{en:"Conclusions", ko:"결론"}, confirm:{en:"Confirm", ko:"확정"}, compare:{en:"Compare the clues", ko:"단서를 맞춰 본다"}, pickWho:{en:"Whose name goes here?", ko:"누구의 이름을 적을까?"}, noName:{en:"Choose a name", ko:"이름을 정한다"}
 });
 Object.assign(UI, { lOldScarf:{en:"Examine the old scarf", ko:"오래된 목도리를 살펴본다"}, lGlove:{en:"Examine the glove", ko:"장갑을 살펴본다"}, lTorn:{en:"Examine the torn document", ko:"찢어진 서류를 살펴본다"}, lScarfK:{en:"Examine the scarf", ko:"목도리를 살펴본다"}, lRep:{en:"Examine the incident report", ko:"사고 기록철을 살펴본다"}, lReq:{en:"Examine the maintenance request", ko:"정비 요청서를 살펴본다"}, lShelf:{en:"Examine the empty ledger shelf", ko:"서류장을 살펴본다"}, lNoteU:{en:"Look beneath the desk", ko:"책상 아래를 살펴본다"}, lDesk:{en:"Examine Edward's desk", ko:"에드워드의 책상을 살펴본다"}, lPw:{en:"Examine the pocket watch", ko:"회중시계를 살펴본다"}, lHatch2:{en:"Examine the maintenance hatch", ko:"정비구를 살펴본다"}, lMech:{en:"Examine the clock mechanism", ko:"시계 장치를 살펴본다"} });
-SP.cr = {name:{en:"Council Rep.",ko:"의회 관계자"}, img:"assets/tommy_front.webp", sil:true};
+SP.cr = {name:{en:"Council Rep.",ko:"의회 관계자"}, img:"assets/tommy_front.webp", sil:true, big:"assets/sil_fox.webp"};
 SP.hl = {name:{en:"May", ko:"메이"}, img:"assets/may_front.webp", por:"assets/por_may_"};
 
 EV.acct_gr = { id:"acct_gr", name:{en:"Green's account",ko:"Green의 진술: 그날 밤"}, tag:"STATEMENT",
@@ -1551,7 +1558,7 @@ Object.assign(UI, {
   presentH:{en:"Show the village what proves it.", ko:"무엇이 그것을 증명하는지 보여 주자."}, presentOk:{en:"Present", ko:"제시한다"},
   askRecord:{en:"Where did Edward hide the truth?", ko:"에드워드는 진실을 어디에 숨겼는가?"}, askChoose:{en:"What goes into the Final Record?", ko:"마지막 기록에는 무엇을 적을 것인가?"}
 });
-SP.edv = {name:{en:"Edward (his written voice)", ko:"에드워드 (적어 둔 목소리)"}, img:"assets/edward_front.webp", sil:true};
+SP.edv = {name:{en:"Edward (his written voice)", ko:"에드워드 (적어 둔 목소리)"}, img:"assets/edward_front.webp", sil:true, big:"assets/sil_hedgehog.webp"};
 
 EV.motive = { id:"motive", name:{en:"Green's reason",ko:"Green의 이유"}, tag:"STATEMENT",
   desc:{en:"Green says Edward meant to read the true record aloud at midnight, in front of everyone. Green went to stop him, to protect his brother. \"You think I wanted the name back? He'd have taken your life apart.\"", ko:"Green은 에드워드가 자정에 모두가 보는 앞에서 진짜 기록을 읽으려 했다고 말한다. Green은 동생을 지키려고 그를 막으러 갔다. \"내가 이름을 되찾고 싶어서 그랬다고 생각해? 그 사람이 네 삶을 통째로 흔들어 놓았을 거야.\""},
@@ -2155,13 +2162,13 @@ function showPage(anim){
 }
 function renderDlg(anim){
   const n = D[cur]; if (!n) return; const sp = SP[n.sp];
-  { const dl = $("dlg"), big = !!((sp.por || sp.img) && !sp.hide && !sp.sil), want = !!sp.hide || big; dl.classList.toggle("big", big); if (dl.classList.contains("cap") !== want){ dl.classList.toggle("cap", want); const bg = $("dlgbg"); bg._nk = null; if (dl.classList.contains("on")) nineDraw(bg); } }   /* a line of narration uses the same box without the portrait and name ribbon */
+  { const dl = $("dlg"), big = !!((sp.por || sp.big || sp.img) && !sp.hide && (!sp.sil || sp.big)), want = !!sp.hide || big; dl.classList.toggle("big", big); if (dl.classList.contains("cap") !== want){ dl.classList.toggle("cap", want); const bg = $("dlgbg"); bg._nk = null; if (dl.classList.contains("on")) nineDraw(bg); } }   /* a line of narration uses the same box without the portrait and name ribbon */
   $("dNm").textContent = tr(sp.name); $("dNm").style.visibility = sp.hide ? "hidden" : ""; $("dPor").style.visibility = sp.hide ? "hidden" : "";
   const ex = EXPR.includes(n.ex) ? n.ex : "neutral"; // each line picks its expression; speakers without portraits keep the still
   const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil); $("dPor").classList.toggle("pz", !!sp.por);   /* silhouette until the real portrait exists */
   if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
-  bigSide = ((sp.por || sp.img) && !sp.hide && !sp.sil) ? (n.sp === "bgb" || n.sp === "yo" ? "r" : "l") : "";   /* who gets the close-up: anyone with expression portraits, on the side away from the answers */
-  if (bigSide){ const bi = $("bPorImg"); if (bi.getAttribute("src") !== portrait) bi.src = portrait; $("bigPor").classList.toggle("spr", !sp.por); $("bigPor").classList.toggle("small", !sp.por && n.sp === "yo"); $("bigPor").classList.toggle("r", bigSide === "r"); $("bigPor").classList.toggle("flip", bigSide === "l" && (!NOFLIP.has(n.sp) !== FLIP_TOGGLE.has(n.sp+":"+ex))); }
+  bigSide = ((sp.por || sp.big || sp.img) && !sp.hide && (!sp.sil || sp.big)) ? (n.sp === "bgb" || n.sp === "yo" ? "r" : "l") : "";   /* who gets the close-up: anyone with expression portraits, on the side away from the answers */
+  if (bigSide){ const bi = $("bPorImg"), bsrc = sp.big || portrait; if (bi.getAttribute("src") !== bsrc) bi.src = bsrc; $("bigPor").classList.toggle("spr", !sp.por && !sp.big); $("bigPor").classList.toggle("small", false); $("bigPor").classList.toggle("r", bigSide === "r"); $("bigPor").classList.toggle("flip", bigSide === "l" && (!NOFLIP.has(n.sp) !== FLIP_TOGGLE.has(n.sp+":"+ex))); }
   $("dPor").onload = () => { $("dPor").style.opacity = 1; };
   const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":"");
   pgs = splitPages(tr(n.t)); pgi = 0; sizeDlg(pgs.reduce((a,b)=>b.length>a.length?b:a, ""));
@@ -2175,8 +2182,10 @@ function sizeDlg(text){
   const bw = Math.min(1520, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px"; { const ch = $("choices"); if (bigSide === "l"){ ch.style.left = "auto"; ch.style.right = Math.round((STAGE_W - bw)/2 + 30) + "px"; } else { ch.style.right = "auto"; ch.style.left = Math.round((STAGE_W - bw)/2 + 262) + "px"; } }
 }
 /* The close-up of an NPC on the left looks toward the middle of the screen. Mirrored only here, only for people whose side carries no clue: Green and BGB (scarf side) and May (hair and satchel side) are never mirrored. */
-const NOFLIP = new Set(["gr","bgb","hl","kid","yo","mo","hz"]);   /* mo and hz already look to the right in their art */
+const NOFLIP = new Set(["gr","bgb","hl","kid","yo","mo","hz","v1","cr"]);   /* mo and hz already look to the right in their art */
 const FLIP_TOGGLE = new Set(["mo:worried","tm:surprised","tm:thinking"]);   /* expressions whose art faces the other way from the rest of that person */
+let STILL_ON = false;
+const STILLS = { fnB_15:"assets/still_endB_wait.webp", fnB_16:"assets/still_endB_wait.webp" };   /* Ending B: Edward's hand on the scarf, then his 'Wait...' */
 let bigSide = "";
 const askedGo = new Set();   /* answers already heard this session; with the story flags they set, these only dim an answer, they never lock it */
 const isAsked = c => !!c.go && (askedGo.has(c.go) || !!(D[c.go] && typeof D[c.go].set === "string" && has(D[c.go].set)));
@@ -2902,7 +2911,8 @@ function setSideOpen(on){ stage.classList.toggle("sideopen", on); sideBook.class
 sideBook.addEventListener("click", e=>{ e.stopPropagation(); if (mode === "play") setSideOpen(!stage.classList.contains("sideopen")); stage.focus(); });
 document.addEventListener("pointerdown", e=>{ if (stage.classList.contains("sideopen") && !e.target.closest("#side,#sideBook")) setSideOpen(false); }, true);
 function frame(now){
-  { const bp = $("bigPor"), want = mode === "dlg" && $("dlg").classList.contains("on") && !!bigSide; if (bp.classList.contains("on") !== want) bp.classList.toggle("on", want); }
+  { const sk = mode === "dlg" && $("dlg").classList.contains("on") && cur && STILLS[cur] || "", st = $("still"); if (sk && $("stillImg").getAttribute("src") !== sk) $("stillImg").src = sk; st.classList.toggle("on", !!sk); stage.classList.toggle("stillon", !!sk); STILL_ON = !!sk; }
+  { const bp = $("bigPor"), want = mode === "dlg" && $("dlg").classList.contains("on") && !!bigSide && !STILL_ON; if (bp.classList.contains("on") !== want) bp.classList.toggle("on", want); }
   { const hide = mode !== "play"; if (stage.classList.contains("nomenu") !== hide){ stage.classList.toggle("nomenu", hide); if (hide) setSideOpen(false); } }   /* the menu is only there while exploring: any dialogue, pause, modal, scene change or journal hides and folds it, and it comes back by itself */
   const dt = Math.min(0.05, (now - last)/1000); last = now;
   P.moving = false; if (mode!=="play") autoGo = null;
