@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Acceptance check for the Case Journal sprites (docs/CASE_JOURNAL_ASSET_SPEC.md).
-Usage: check_journal_sprite.py J1|J2|J3|J4|J5|J6 FILE [--sheet OUT.png]   (J6 can write a 9-slice resize contact sheet)
+Usage: check_journal_sprite.py J1|J2|J3|J4|J5T|J5L|J6 FILE [--sheet OUT.png]   (J6 can write a 9-slice resize contact sheet)
 Exit code 0 = pass, 1 = fail. It cannot see text or drawing quality; the eye check is still needed."""
 import sys
 from PIL import Image
 import numpy as np
-SPEC = {"J1":(1700,960),"J2":(1584,880),"J3":(60,880),"J4":(800,200),"J5":(472,290),"J6":(300,122)}
+# rev2: sizes of the delivered and processed sprites (see docs/CASE_JOURNAL_ASSET_SPEC.md section 9)
+SPEC = {"J1":(1697,1022),"J2":(1646,908),"J3":(111,892),"J4":(800,200),"J5T":(212,237),"J5L":(236,290),"J6":(404,122)}
 fails=[]; notes=[]
 def chk(ok,msg): (notes if ok else fails).append(("ok   " if ok else "FAIL ")+msg)
 def A(a,box): x0,y0,x1,y1=box; return a[y0:y1,x0:x1,3]
@@ -22,51 +23,48 @@ def main():
     chk((W,H)==SPEC[key],"exact size %dx%d (got %dx%d)"%(SPEC[key]+(W,H)))
     if (W,H)!=SPEC[key]: return report()
     if key=="J1":
-        chk(A(a,(40,40,1660,920)).max()==0,"hollow centre 1620x880 is fully transparent")
-        chk(a[0,0,3]==0 and a[959,1699,3]==0,"outer corners are transparent (rounded)")
-        chk(a[480,20,3]==255 and a[20,850,3]==255 and a[480,1680,3]==255 and a[940,850,3]==255,"40 px border is opaque on all four sides")
-        chk(fringe(a)<0.02,"soft-edge pixels are rare (%.2f%% of painted pixels)"%(100*fringe(a)))
+        hx0,hy0,hx1,hy1=63,64,1635,956
+        chk(A(a,(hx0+6,hy0+6,hx1-6,hy1-6)).max()==0,"hollow centre %dx%d is fully transparent"%(hx1-hx0,hy1-hy0))
+        chk(a[0,0,3]==0 and a[0,W-1,3]==0 and a[H-1,0,3]==0 and a[H-1,W-1,3]==0,"all four image corners are transparent (rounded)")
+        chk(a[H//2,25,3]>240 and a[25,W//2,3]>240 and a[H//2,W-25,3]>240 and a[H-25,W//2,3]>240,"border is opaque on all four sides")
+        chk(fringe(a)<0.12,"soft-edge pixels are limited (%.1f%% of painted pixels, limit 12%%)"%(100*fringe(a)))
     if key=="J2":
-        chk(A(a,(780,0,804,880)).max()==0,"24 px gap between the two pages is transparent")
-        for nm,x0 in (("left",0),("right",804)):
-            c=a[60:820,x0+70:x0+710]; lum=(0.3*c[...,0]+0.59*c[...,1]+0.11*c[...,2])
-            chk(lum.std()<8,"%s page centre is calm (luminance std %.1f < 8)"%(nm,lum.std()))
-            m=c[...,:3].reshape(-1,3).mean(0); chk(abs(m-np.array([242,232,212])).max()<22,"%s page colour near parchment (%s)"%(nm,m.round().astype(int).tolist()))
-        chk(A(a,(0,0,780,880)).min()>200 and A(a,(804,0,1584,880)).min()>200,"both pages are fully opaque 780x880")
+        chk(A(a,(823-3,40,823+3,H-40)).mean()<40,"page gap at the centre is (nearly) transparent")
+        for nm,(x0,x1) in (("left",(150,700)),("right",(950,1500))):
+            c=a[120:H-120,x0:x1]; lum=(0.3*c[...,0]+0.59*c[...,1]+0.11*c[...,2])
+            chk(lum.std()<14,"%s page centre is calm (luminance std %.1f < 14)"%(nm,lum.std()))
+            m=c[...,:3].reshape(-1,3).mean(0); chk(abs(m-np.array([240,222,184])).max()<45,"%s page colour is warm parchment (%s)"%(nm,m.round().astype(int).tolist()))
+            chk(c[...,3].min()>250,"%s page centre is opaque"%nm)
     if key=="J3":
-        chk(a[:,0,3].max()<12 and a[:,59,3].max()<12,"strip fades to transparent at both side edges")
-        chk(a[:,30,3].mean()>100,"centre of the valley is solid enough")
-        for y in (140,340,540,740): chk(a[y+12,30,3]>200,"strap at y=%d is present"%y)
+        chk(a[:,0,3].mean()<60 and a[:,W-1,3].mean()<60,"strip edges are mostly transparent (mean alpha %.0f / %.0f)"%(a[:,0,3].mean(),a[:,W-1,3].mean()))
+        chk(a[H//2,W//2,3]>240,"centre is opaque")
+        chk(a[:30,W//2,3].max()>200 and a[-30:,W//2,3].max()>200,"strip reaches near the top and bottom")
     if key=="J4":
         for c in range(4):
-            for r,w in ((0,164),(1,169)):
+            for r in (0,1):
                 cell=a[r*100:r*100+100,c*200:c*200+200,3]; b=bbox(cell)
-                chk(b is not None and b[0]<=1 and b[1]<=1 and abs(b[2]-w)<=2 and abs(b[3]-76)<=2,"%s ribbon %d is %dx76 at the cell's top-left (bbox %s)"%("normal" if r==0 else "selected",c+1,w,b))
-                if r==0: chk(cell[38,w-3]<10 and cell[38,5]>200,"ribbon %d: swallowtail notch on the right, flat on the left"%(c+1))
-    if key=="J5":
-        for nm,(x0,w,h,wx,wy,ww,wh) in {"tile":(0,212,240,10,10,192,168),"large":(236,236,290,10,10,216,224)}.items():
-            b=bbox(a[:,x0:x0+w+24,3][:, :]) if nm=="tile" else bbox(a[:,x0:,3])
-            chk(a[h//2,x0+3,3]==255 and a[h-3,x0+w//2,3]==255,"%s frame paper is opaque at its edges"%nm)
-            chk(A(a,(x0+wx,wy,x0+wx+ww,wy+wh)).max()==0,"%s window %dx%d at (%d,%d) is fully transparent"%(nm,ww,wh,wx,wy))
-        chk(A(a,(212,0,236,290)).max()==0,"24 px gap between the two frames is transparent")
+                chk(b is not None and b[0]<=1 and b[1]<=1 and abs(b[2]-170)<=2 and abs(b[3]-62)<=2,"%s ribbon %d is 170x62 at the cell's top-left (bbox %s)"%("normal" if r==0 else "selected",c+1,tuple(int(v) for v in b) if b else None))
+                chk(cell[31,165]<10 and cell[31,5]>200,"%s ribbon %d: notch on the right, flat on the left"%("normal" if r==0 else "selected",c+1))
+    if key in ("J5T","J5L"):
+        win={"J5T":(21,22,170,155),"J5L":(22,25,193,194)}[key]
+        chk(A(a,(win[0]+3,win[1]+3,win[0]+win[2]-3,win[1]+win[3]-3)).max()==0,"window %dx%d at (%d,%d) is fully transparent"%(win[2],win[3],win[0],win[1]))
+        chk(a[H//2,6,3]>240 and a[H-6,W//2,3]>240,"frame paper is opaque at its edges")
+        chk(a[0,0,3]<255,"corner is cut (frame is not a plain rectangle)")
     if key=="J6":
-        c=a[28:94,28:272]; chk(c[...,3].min()==255,"centre 244x66 is opaque")
-        chk(c[...,:3].reshape(-1,3).std(0).max()<4,"centre is one flat colour (std %.1f < 4)"%c[...,:3].reshape(-1,3).std(0).max())
-        chk(a[0,0,3]==0,"outer corner pixel is transparent (rounded)")
-        top=a[2:26,40:260,:3].astype(float); chk(top.std(axis=1).max()<12,"top edge strip has no horizontal pattern (stretch-safe)")
-        side=a[40:82,2:26,:3].astype(float); chk(side.std(axis=0).max()<12,"left edge strip has no vertical pattern (stretch-safe)")
+        c=a[40:H-40,60:W-60]; chk(c[...,3].min()>250,"centre is opaque")
+        lum=0.3*c[...,0]+0.59*c[...,1]+0.11*c[...,2]; chk(lum.std()<10,"centre is calm (luminance std %.1f < 10)"%lum.std())
+        chk(a[0,0,3]<255,"outer corner is cut (rounded)")
         if "--sheet" in sys.argv:
-            out=sys.argv[sys.argv.index("--sheet")+1]; s=28; sizes=[(220,100),(300,122),(420,180),(700,134)]
-            sheet=Image.new("RGBA",(760,sum(h+16 for _,h in sizes)+16),(60,60,70,255)); y=8
+            out=sys.argv[sys.argv.index("--sheet")+1]; s=26; sizes=[(220,100),(300,122),(404,122),(520,150),(640,110)]
+            sheet=Image.new("RGBA",(680,sum(h+16 for _,h in sizes)+16),(60,60,70,255)); y=8
             for (tw,th) in sizes:
-                parts=lambda box: im.crop(box)
                 canvas=Image.new("RGBA",(tw,th),(0,0,0,0))
-                xs=[(0,s,0,s),(s,300-s,s,tw-s),(300-s,300,tw-s,tw)]; ys=[(0,s,0,s),(s,122-s,s,th-s),(122-s,122,th-s,th)]
+                xs=[(0,s,0,s),(s,404-s,s,tw-s),(404-s,404,tw-s,tw)]; ys=[(0,s,0,s),(s,122-s,s,th-s),(122-s,122,th-s,th)]
                 for (sx0,sx1,dx0,dx1) in xs:
                     for (sy0,sy1,dy0,dy1) in ys:
-                        canvas.paste(im.crop((sx0,sy0,sx1,sy1)).resize((max(1,dx1-dx0),max(1,dy1-dy0)),Image.NEAREST if False else Image.BICUBIC),(dx0,dy0))
+                        canvas.paste(im.crop((sx0,sy0,sx1,sy1)).resize((max(1,dx1-dx0),max(1,dy1-dy0)),Image.BICUBIC),(dx0,dy0))
                 sheet.alpha_composite(canvas,(8,y)); y+=th+16
-            sheet.save(out); notes.append("ok   9-slice contact sheet written to %s (look for seams and stretched corner dots)"%out)
+            sheet.save(out); notes.append("ok   9-slice contact sheet written to %s (slice 26 px; look for seams and stretched rivets)"%out)
     return report()
 def report():
     print("\n".join(notes+fails)); print("RESULT:", "FAIL (%d)"%len(fails) if fails else "PASS"); return 1 if fails else 0

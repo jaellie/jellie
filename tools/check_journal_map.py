@@ -6,7 +6,7 @@ By eye: the overlay draws each pin position, building footprint and plaque zone 
 import sys, json
 from PIL import Image, ImageDraw
 import numpy as np
-W,H=596,610
+W,H=596,576
 places=json.load(open(__file__.replace("tools/check_journal_map.py","docs/CASE_JOURNAL_PLACES.json")))["places"]
 im=Image.open(sys.argv[1]).convert("RGBA"); a=np.array(im).astype(float)
 fails=[]
