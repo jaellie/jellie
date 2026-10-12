@@ -341,6 +341,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 
 /* Pause / inspect / end card */
 .modal{position:absolute;inset:0;background:rgba(6,9,20,.74);display:none;z-index:30;place-items:center}
+.stillon #endcard{background:linear-gradient(rgba(6,9,20,0) 40%,rgba(6,9,20,.55));place-items:end end;padding:0 60px 50px 0}   /* an ending still stays visible behind the card */
 .modal.on{display:grid}
 .card{width:760px;padding:44px 52px 40px;border-radius:12px;border:5px solid var(--brass);background:radial-gradient(ellipse at 30% 10%,#f8ebc8,var(--paper) 55%,var(--paper-deep));color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.6);text-align:center}
 .card h2{margin:6px 0 14px;font:700 46px/1.1 var(--font-body)}
@@ -2195,7 +2196,8 @@ const STILLS = (() => {
   span("f4ok", 22, 28, "assets/still_brothers_awning.webp");   /* 23 years ago: the twins under the awning, knots on opposite shoulders */
   span("mill_d", 6, 9, "assets/still_mill_tea.webp");           /* the Old Mill: empty cups, empty tea tin */
   span("f5s2", 31, 33, "assets/still_edward_signing.webp");     /* Edward hesitates over the signature, a fox waiting at the door */
-  span("fnA", 12, 13, "assets/still_clock_tower.webp");         /* Ending A: Nini writes it all down under the tower */
+  span("fnA", 12, 13, "assets/still_clock_tower.webp");
+  m.ce7_1_0 = m.ce7_1_1 = "assets/still_clock_tower.webp";         /* Ending A: Nini writes it all down under the tower */
   span("fnB", 11, 14, "assets/still_photo_frame.webp");        /* the photograph, the letter and the glove behind the frame */
   m.fnB_17 = m.fr6 = m.p6_f0 = "assets/still_photo_frame.webp";
   return m;
@@ -2925,7 +2927,7 @@ function setSideOpen(on){ stage.classList.toggle("sideopen", on); sideBook.class
 sideBook.addEventListener("click", e=>{ e.stopPropagation(); if (mode === "play") setSideOpen(!stage.classList.contains("sideopen")); stage.focus(); });
 document.addEventListener("pointerdown", e=>{ if (stage.classList.contains("sideopen") && !e.target.closest("#side,#sideBook")) setSideOpen(false); }, true);
 function frame(now){
-  { const sk = mode === "dlg" && $("dlg").classList.contains("on") && cur && STILLS[cur] || "", st = $("still"); if (sk && $("stillImg").getAttribute("src") !== sk) $("stillImg").src = sk; st.classList.toggle("on", !!sk); stage.classList.toggle("stillon", !!sk); STILL_ON = !!sk; }
+  { const sk = mode === "dlg" && $("dlg").classList.contains("on") && cur && STILLS[cur] || ($("endcard").classList.contains("on") && /E1$/.test($("eEy").textContent) ? "assets/still_clock_tower.webp" : ""), st = $("still"); if (sk && $("stillImg").getAttribute("src") !== sk) $("stillImg").src = sk; st.classList.toggle("on", !!sk); stage.classList.toggle("stillon", !!sk); STILL_ON = !!sk; }
   { const bp = $("bigPor"), want = mode === "dlg" && $("dlg").classList.contains("on") && !!bigSide && !STILL_ON; if (bp.classList.contains("on") !== want) bp.classList.toggle("on", want); }
   { const hide = mode !== "play"; if (stage.classList.contains("nomenu") !== hide){ stage.classList.toggle("nomenu", hide); if (hide) setSideOpen(false); } }   /* the menu is only there while exploring: any dialogue, pause, modal, scene change or journal hides and folds it, and it comes back by itself */
   const dt = Math.min(0.05, (now - last)/1000); last = now;
