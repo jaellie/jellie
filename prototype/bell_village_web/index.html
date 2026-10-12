@@ -1123,6 +1123,8 @@ CH("hq2", [["bgb","에드워드 아저씨도 요즘 카페에 오셨어?","Had E
 CH("hqx", [["bgb","고마워, 헤이즐.","Thanks, Hazel."], ["hz","너도 너무 무리하지 마.","Don't push yourself too hard."]]);
 CH("may0", [["hl","빅그베. 에드워드 씨 때문에 왔지?","Big Green Bear. You're here about Edward, aren't you?"], ["bgb","사망 시간을 알고 싶어.","I need to know when he died."], ["hl","정확한 시각까지는 말할 수 없어.","I can't give you an exact time."], ["bgb","대략이라도.","Even an estimate would help."], ["hl","밤 11시 55분에서 12시 15분 사이로 보고 있어.","Somewhere between 11:55 p.m. and 12:15 a.m."], ["bgb","추락 때문에?","From the fall?"], ["hl","추락으로 크게 다쳤어. 그리고 추위에 오래 노출됐지.","The fall caused severe injuries. He was also exposed to the cold for some time."], ["bgb","조금만 더 일찍 발견됐다면?","What if someone had found him sooner?"], ["hl","살릴 수 있었을지는 몰라. 하지만 치료를 시작할 기회는 있었겠지.","I can't say whether he would have survived. But he would've had a chance to receive treatment."], ["nar","(빅그베가 잠시 침묵한다.)","(Big Green Bear falls silent.)"], ["hl","빅그베?","Big Green Bear?"], ["bgb","아니야. 고마워.","It's nothing. Thank you.",{ev:"tod", set:"may.done"}]]);
 D.may9 = {sp:"hl", ex:"neutral", t:{ko:"무리하지 마, 빅그베.", en:"Don't push yourself, Big Green Bear."}};
+/* in the final chapter, before the Mill has been searched and Green asked again, May has nothing new: BGB says what the hint already says */
+CH("may9h", [["hl","무리하지 마, 빅그베.","Don't push yourself, Big Green Bear."], ["bgb","그린에게 다시 말을 걸어 보자.","I should talk to Green again."]]);
 CH("f5_end", [["nar","(수집한 단서를 확인한다.)","(He reviews the clues he has collected.)"], ["nar","- 23년 전 형이 동생을 구했다.\n- 사고 보고서가 바뀌었다.","- Twenty-three years ago, Green saved his brother.\n- The incident report was changed."], ["nar","- 에드워드는 기록에 서명했다.\n- 11:42에 카페를 나왔다.","- Edward signed the record.\n- Big Green Bear left the café at 11:42."], ["nar","- 에드워드의 추정 사망 시간은 11:55~00:15다.","- Edward's estimated time of death is 11:55–00:15."], ["bgb","기록은 바뀌었어. 하지만 그날 형이 날 구했다는 건 기억해.","The records were changed. But I remember my brother saving me.",{}, "thinking"], ["bgb","에드워드 아저씨는 왜 이제 와서 그 기록을 바로잡으려 했을까?","Why did Edward decide to set the record straight after all these years?",{}, "thinking"], ["nar","(빅그베가 오래된 방앗간이 있는 방향을 바라본다.)","(Big Green Bear looks toward the old mill.)"], ["bgb","형을 만나야겠어.","I need to see my brother.",{}, "thinking"]]);
 /* ---------- Chapter 6 (user script: The Missing Five Minutes), the final chapter ---------- */
 const GMCH = [MC("에드워드 아저씨","Ask About Edward","gm1"), MC("시계탑","Ask About the Clock Tower","gm2"), MC("23년 전","Ask About Twenty-Three Years Ago","gm3"), MC("그냥 이야기하기","Make Small Talk","gm4"), MC("대화 마치기","End Conversation","gmx",true)];
@@ -1558,7 +1560,7 @@ Object.assign(UI, {
   presentH:{en:"Show the village what proves it.", ko:"무엇이 그것을 증명하는지 보여 주자."}, presentOk:{en:"Present", ko:"제시한다"},
   askRecord:{en:"Where did Edward hide the truth?", ko:"에드워드는 진실을 어디에 숨겼는가?"}, askChoose:{en:"What goes into the Final Record?", ko:"마지막 기록에는 무엇을 적을 것인가?"}
 });
-SP.edv = {name:{en:"Edward (his written voice)", ko:"에드워드 (적어 둔 목소리)"}, img:"assets/edward_front.webp", sil:true, big:"assets/sil_hedgehog.webp"};
+SP.edv = {name:{en:"Edward, his written voice", ko:"에드워드 적어 둔 목소리"}, img:"assets/edward_front.webp", sil:true, big:"assets/sil_hedgehog.webp"};
 
 EV.motive = { id:"motive", name:{en:"Green's reason",ko:"Green의 이유"}, tag:"STATEMENT",
   desc:{en:"Green says Edward meant to read the true record aloud at midnight, in front of everyone. Green went to stop him, to protect his brother. \"You think I wanted the name back? He'd have taken your life apart.\"", ko:"Green은 에드워드가 자정에 모두가 보는 앞에서 진짜 기록을 읽으려 했다고 말한다. Green은 동생을 지키려고 그를 막으러 갔다. \"내가 이름을 되찾고 싶어서 그랬다고 생각해? 그 사람이 네 삶을 통째로 흔들어 놓았을 거야.\""},
@@ -1892,7 +1894,7 @@ D.f4no = {sp:"kid", ex:"neutral", t:{ko:"동생 목도리부터 봐 줘야겠어
 const IA_FT = [];
 const IA_H = [
   { id:"hexit", x:()=>2131, label:UI.leaveH, top:430, run:()=>setScene("village", 1770) },
-  { id:"hl",    x:()=>1591, label:UI.talkHl, top:FEET_T-200-150, run:()=>startDlg(has("fin.on") ? (has("fin.s4") && !has("fin.may2") ? "may2" : "may9") : (has("may.done") ? "may9" : "may0")) }
+  { id:"hl",    x:()=>1591, label:UI.talkHl, top:FEET_T-200-150, run:()=>startDlg(has("fin.on") ? (has("fin.s4") && !has("fin.may2") ? "may2" : !has("fin.s4") ? "may9h" : "may9") : (has("may.done") ? "may9" : "may0")) }
 ];
 const IA_M = [
   { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 4700) },
