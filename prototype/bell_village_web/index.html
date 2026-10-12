@@ -494,9 +494,10 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 
   <!-- HUD -->
   <div id="caseplate" class="nine"><div class="l1">CASE C-01</div><div class="l2" id="hudTitle">The Death of Edward</div><div class="l3" id="hudLoc">Bell Village</div></div>
-  <button class="hudbtn" id="bCase" style="right:178px;top:26px;background-image:url(assets/icon_satchel.webp)" aria-label="Case File"><span class="k">Tab</span></button>
-  <button class="hudbtn" id="bLook" style="right:100px;top:26px;background-image:url(assets/icon_search.webp)" aria-label="Look around"><span class="k">Q</span></button>
-  <button class="hudbtn" id="bSet" style="right:22px;top:26px;background-image:url(assets/icon_settings.webp)" aria-label="Pause"><span class="k">Esc</span></button>
+  <button class="hudbtn" id="bCase" style="right:256px;top:26px;background-image:url(assets/icon_satchel.webp)" aria-label="Case File"><span class="k">Tab</span></button>
+  <button class="hudbtn" id="bLook" style="right:178px;top:26px;background-image:url(assets/icon_search.webp)" aria-label="Look around"><span class="k">Q</span></button>
+  <button class="hudbtn" id="bSet" style="right:100px;top:26px;background-image:url(assets/icon_settings.webp)" aria-label="Pause"><span class="k">Esc</span></button>
+  <button class="hudbtn" id="bBgm" style="right:22px;top:26px;background-image:url(assets/icon_bgm_on.webp)" aria-label="Music on or off"><span class="k">M</span></button>
   <div id="side" role="navigation" aria-label="Case File categories"></div>
   <div id="hint" class="nine cream"><kbd>E</kbd><span id="hintTx"></span></div>
   <div id="toast"></div>
@@ -1473,7 +1474,7 @@ function endSeqA(){
     setTimeout(()=>{ f.classList.add("on"); setTimeout(()=>{ f.style.transition = ""; NPCX_V.nini = 1010; $("stage").classList.remove("dusk"); showFinal(1, true); setTimeout(()=>$("stage").classList.remove("cine"), 2500); f.classList.remove("on"); }, 2000); }, 4600); }, 2000);
 }
 let finTimers = [];
-function showFinal(k, instant){ const K = lang==="ko"; mode = "modal"; setf("fin.end"); setf("end"+k); hideHintNow();
+function showFinal(k, instant){ window._lastEnd = k; const K = lang==="ko"; mode = "modal"; setf("fin.end"); setf("end"+k); hideHintNow();
   const F = $("finale");
   $("fnE").textContent = k===1 ? (K?"엔딩 A":"ENDING A") : (K?"엔딩 B":"ENDING B");
   $("fnH").textContent = k===1 ? (K?"남겨진 기록":"The Record That Remained") : (K?"좋은 사람":"A Good Person");
@@ -1681,6 +1682,49 @@ setInterval(()=>{
   if (h && h !== lastGoal && askBgb()) lastGoal = h;
 }, 900);
 bgb.style.pointerEvents = "auto"; bgb.style.cursor = "pointer"; bgb.addEventListener("click", askBgb);
+
+/* ---------- background music: one looping track per moment, crossfaded; the icon at the top right turns it on and off ---------- */
+const BGM_FALLBACK = { tower:"village", archive:"village", cafe:"village", clinic:"village", cottage:"village", village_late:"village", danger:"flashback", credits:"ending" };
+const BGM_VOL = 0.55; let bgmOff = false, bgmUnlocked = false, bgmKey = "", bgmCur = null; const bgmMissing = new Set();
+try { bgmOff = localStorage.getItem("bgb2.bgm.off") === "1"; } catch(e){}
+function bgmWanted(){
+  if (monoOn) return "recap";
+  if ($("finale").classList.contains("on")) return window._lastEnd === 2 ? "ending_b" : "ending_a";
+  if (S.flash === 5) return "flash5";
+  if (S.flash) return has("f4.river") ? "danger" : "flashback";
+  if (S.scene === "tower") return "tower"; if (S.scene === "archive") return "archive"; if (S.scene === "cafe") return "cafe"; if (S.scene === "healer") return "clinic"; if (S.scene === "mill") return "mill";
+  if (S.scene === "cottage") return has("pro.done") ? "cottage" : "prologue";
+  return has("fin.on") ? "village_late" : "village";
+}
+function bgmFade(a, to, ms, done){ if (!a) return; clearInterval(a._f); const from = a.volume, t0 = performance.now(); a._f = setInterval(()=>{ const k = Math.min(1, (performance.now() - t0) / ms); a.volume = Math.max(0, Math.min(1, from + (to - from) * k)); if (k >= 1){ clearInterval(a._f); if (done) done(); } }, 50); }
+const bgmKnown = {};   /* key -> true (file exists) or false (no file yet), found by a quick HEAD request */
+function bgmHas(k, cb){ if (k in bgmKnown){ cb(bgmKnown[k]); return; } fetch("assets/bgm/" + k + ".mp3", { method:"HEAD" }).then(r=>{ bgmKnown[k] = r.ok; if (!r.ok) bgmMissing.add(k); cb(r.ok); }, ()=>{ bgmKnown[k] = false; bgmMissing.add(k); cb(false); }); }
+function bgmPlay(key){
+  const want = key, tryKey = k => {
+    if (!k){ const prev = bgmCur; bgmCur = null; if (prev) bgmFade(prev, 0, 1200, ()=>prev.pause()); return; }
+    bgmHas(k, ok=>{
+      if (bgmKey !== want) return;   /* the moment changed while we were checking */
+      if (!ok){ tryKey(BGM_FALLBACK[k] || ""); return; }
+      const prev = bgmCur; if (prev && prev._k === k) return;
+      const a = new Audio("assets/bgm/" + k + ".mp3"); a._k = k; a.loop = true; a.volume = 0; a.preload = "auto";
+      a.addEventListener("error", ()=>{ bgmKnown[k] = false; bgmMissing.add(k); if (bgmCur === a){ bgmCur = null; bgmKey = ""; } });
+      bgmCur = a; if (prev) bgmFade(prev, 0, 1400, ()=>prev.pause());
+      const p = a.play(); if (p && p.catch) p.catch(()=>{ bgmUnlocked = false; });
+      bgmFade(a, BGM_VOL, 1600);
+    });
+  };
+  tryKey(key);
+}
+function bgmSync(){ if (bgmOff || !bgmUnlocked){ return; } const w = bgmWanted(); if (w !== bgmKey){ bgmKey = w; bgmPlay(w); } }
+function bgmIcon(){ $("bBgm").style.backgroundImage = 'url(assets/' + (bgmOff ? "icon_bgm_off" : "icon_bgm_on") + '.webp)'; $("bBgm").setAttribute("aria-pressed", bgmOff ? "false" : "true"); }
+function toggleBgm(){ bgmOff = !bgmOff; try { localStorage.setItem("bgb2.bgm.off", bgmOff ? "1" : "0"); } catch(e){} bgmIcon(); bgmUnlocked = true;
+  if (bgmOff){ if (bgmCur){ const c = bgmCur; bgmFade(c, 0, 400, ()=>c.pause()); } bgmCur = null; bgmKey = ""; toast(lang==="ko" ? "배경음악 끔" : "Music off"); }
+  else { bgmKey = ""; bgmSync(); toast(lang==="ko" ? "배경음악 켬" : "Music on"); } }
+$("bBgm").onclick = ()=>{ toggleBgm(); $("bBgm").blur(); stage.focus(); };
+bgmIcon();
+["pointerdown","keydown"].forEach(ev=>window.addEventListener(ev, ()=>{ if (!bgmUnlocked){ bgmUnlocked = true; bgmSync(); } }, { passive:true }));   /* browsers start sound only after the first click or key */
+setInterval(bgmSync, 700);
+window.__bgm = ()=>({ key:bgmKey, cur:bgmCur && bgmCur._k, paused:bgmCur ? bgmCur.paused : null, vol:bgmCur ? +bgmCur.volume.toFixed(2) : null, off:bgmOff, missing:[...bgmMissing] });
 
 /* ---------- UI plumbing ---------- */
 let mode = "play"; // play | dlg | cf | modal
@@ -2209,6 +2253,7 @@ window.addEventListener("keydown", e=>{
   if (k==="e"||k==="E"||k==="Enter"||k===" "){ if (e.target && e.target.tagName==="BUTTON" && mode!=="dlg") return; act(); return; }
   if (k==="9" && mode==="play" && S.scene==="village" && !S.flash){ archiveEnter(); return; }   /* temporary entrance until the Chapter 3 key scene exists */
   if (k==="8" && mode==="play" && S.scene==="village" && !S.flash){ tryEnter("cafe", 500, ch1Gate); return; }   /* temporary entrance until the Chapter 2 key scene exists */
+  if (k==="m"||k==="M"){ toggleBgm(); return; }
   if (k==="q"||k==="Q"){ peek = 3; return; }
   if ((k==="h"||k==="H") && mode==="play"){ askBgb(); return; }
   if (mode==="dlg" && (k==="ArrowUp"||k==="ArrowDown"||k==="w"||k==="s")){
