@@ -2084,7 +2084,7 @@ window.__bgm = ()=>({ key:bgmKey, cur:bgmCur && bgmCur._k, paused:bgmCur ? bgmCu
 let mode = "play"; // play | dlg | cf | modal
 const keys = new Set();
 function toast(msg){ const t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.h); toast.h = setTimeout(()=>t.classList.remove("on"), 1900); }
-function addEv(id){ if (S.ev.includes(id)) return; S.ev.push(id); addNote(EV[id].note); toast(tr(UI.got)+": "+tr(EV[id].name)); checkDeduce(); save(); refreshHud(); }
+function addEv(id){ if (S.ev.includes(id)) return; S.ev.push(id); addNote(EV[id].note); toast("["+tr(UI.got)+"] "+tr(EV[id].name)); checkDeduce(); save(); refreshHud(); }
 /* Chapter 2: contradictions between the statements, and the deduction they unlock */
 const CON = [
   { id:"c1", on:()=>has("tm.stmt") && has("ck.bear"),
