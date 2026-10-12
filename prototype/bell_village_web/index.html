@@ -1699,7 +1699,7 @@ const DD03 = { en:"The bear on the stairs was right-handed and wore a mustard sc
 const DD02 = { en:"Someone in a scarf crossed the bridge at 11:35 and climbed the tower stairs at 11:40. The tower clock stopped at 11:47.", ko:"목도리를 한 누군가가 11시 35분에 다리를 건너 11시 40분에 탑 계단을 올랐다. 탑 시계는 11시 47분에 멈췄다." };
 function checkDeduce(){
   CON.forEach(c=>{ if (c.on() && !S.flags["con."+c.id]){ S.flags["con."+c.id] = true; addNote(c.t); toast((lang==="ko"?"모순 발견":"Contradiction found")); } });
-  if (has("dd02") && has("mol.bell") && ["ar.rep","ar.req","ar.shelf","ar.drawer","ar.note"].every(has) && !has("c3.q")){ setf("c3.q"); holdHint = true; setTimeout(()=>whenPlay(()=>endMono("dq0", startFlash)), 1200); }
+  if (has("dd02") && has("mol.bell") && ["ar.rep","ar.req","ar.shelf","ar.drawer","ar.note"].every(has) && !has("c3.qz")){ setf("c3.qz"); holdHint = true; setTimeout(()=>whenPlay(()=>endMono("dq0", startFlash)), 1200); }
   if (has("f5.past") && has("hz5.night") && has("may.done") && !has("f5.done")){ setf("f5.done"); holdHint = true; addNote({en:"The records were changed after the flood. Edward signed. BGB left the café at 11:42, and May puts Edward's death between 11:55 and 12:15.", ko:"홍수 뒤 기록이 바뀌었고 에드워드는 서명했다. 빅그베는 11시 42분에 카페를 나왔고, 메이는 에드워드의 사망 시각을 11시 55분에서 12시 15분 사이로 본다."}); setTimeout(()=>whenPlay(()=>endMono("f5_end", ()=>{ setf("fin.on"); chapterIntro(6, ()=>setSceneNow("village", 4500), ()=>{ holdHint = false; }); })), 1200); }
   if (S.ev.includes("clock") && S.ev.includes("hatch2") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
   if (has("c1.found") && has("tm.stmt") && !S.flags.q1){ S.flags.q1 = true; S.flags["ch.2"] = true; holdHint = true; addNote({en:"Tommy found Edward during his early-morning patrol. At 11:35 the previous night, he saw a scarfed figure heading toward the clock tower. Their identity remains unknown.", ko:"토미는 새벽 순찰 중 에드워드를 발견했다. 전날 밤 11시 35분에는 목도리를 한 인물이 시계탑으로 향하는 모습을 목격했다. 그 인물이 누구인지는 알 수 없다."}); setTimeout(()=>whenPlay(()=>endMono("c1_end", ()=>chapterIntro(2, ()=>setSceneNow("village", 1950)))), 1500); }
@@ -2296,6 +2296,7 @@ function fit(){
 addEventListener("resize", fit);
 
 load(); if (S.flags && S.flags["fin.on"] && !S.flags["f5.done"]) Object.keys(S.flags).forEach(k=>{ if (k.startsWith("fin.")) delete S.flags[k]; });   /* the final chapter cannot be open before Chapter 5 is finished */
+if (S.flags && S.flags["c3.qz"] && !S.flash && !S.flags["f4.end"] && !S.flags["f5.past"]) delete S.flags["c3.qz"];   /* the quiz started but the flashback never began (reloaded in between): ask again */
 let resumeFlash = 0; if (S.flash){ resumeFlash = S.flash; S.flash = false; S.scene = "village"; S.x = resumeFlash === 5 ? 3700 : 2150; }   /* a save made inside a flashback (some are from the old Chapter 4/5) restarts that flashback instead of leaving the player with nothing to do */
 cam = 0; fit(); setSceneNow((["tower","archive","cafe","cottage","mill"].includes(S.scene) || (S.flash && ["past","flood"].includes(S.scene))) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus(); if (resumeFlash) setTimeout(()=>{ if (resumeFlash === 5) startFlash5(); else startFlash(); }, 900);
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
