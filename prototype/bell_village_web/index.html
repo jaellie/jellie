@@ -1960,6 +1960,7 @@ function updatePlate(){
   $("hudTitle").textContent = n === 0 ? (k ? "사진" : "The Photograph") : CHT[n][k ? 0 : 1];
 }
 setInterval(updatePlate, 400);
+setInterval(()=>{ if (mode === "play" && !S.flash && has("f5.done") && !has("fin.on") && !F5RUN) checkDeduce(); }, 1500);   /* resume an interrupted end of Chapter 5 */
 /* Tap BGB (or press H): a thought that says who to talk to or where to go next */
 function nextHint(){
   const K = lang==="ko", ev = e=>S.ev.includes(e), L = (ko,en)=>K?ko:en;
@@ -2107,10 +2108,11 @@ const CON = [
 ];
 const DD03 = { en:"The bear on the stairs was right-handed and wore a mustard scarf. It was not you. (Probable, not proven.)", ko:"계단의 곰은 오른손잡이였고 겨자색 목도리를 하고 있었다. 당신이 아니다. (유력하지만 확정은 아니다.)" };
 const DD02 = { en:"Someone in a scarf crossed the bridge at 11:35 and climbed the tower stairs at 11:40. The tower clock stopped at 11:47.", ko:"목도리를 한 누군가가 11시 35분에 다리를 건너 11시 40분에 탑 계단을 올랐다. 탑 시계는 11시 47분에 멈췄다." };
+let F5RUN = false;   /* Chapter 5's closing sequence has been started in this session. A save that was closed in the middle of it (f5.done set, fin.on not) starts it again. */
 function checkDeduce(){
   CON.forEach(c=>{ if (c.on() && !S.flags["con."+c.id]){ S.flags["con."+c.id] = true; addNote(c.t); toast((lang==="ko"?"모순 발견":"Contradiction found")); } });
   if (has("dd02") && has("mol.bell") && ["ar.rep","ar.req","ar.shelf","ar.drawer","ar.note"].every(has) && !has("c3.qz")){ setf("c3.qz"); holdHint = true; setTimeout(()=>whenPlay(()=>endMono("dq0", startFlash)), 1200); }
-  if (has("f5.past") && has("hz5.night") && has("may.done") && !has("f5.done")){ setf("f5.done"); holdHint = true; addNote({en:"The records were changed after the flood. Edward signed. BGB left the café at 11:42, and May puts Edward's death between 11:55 and 12:15.", ko:"홍수 뒤 기록이 바뀌었고 에드워드는 서명했다. 빅그베는 11시 42분에 카페를 나왔고, 메이는 에드워드의 사망 시각을 11시 55분에서 12시 15분 사이로 본다."}); setTimeout(()=>whenPlay(()=>endMono("f5_end", ()=>{ setf("fin.on"); chapterIntro(6, ()=>setSceneNow("village", 4500), ()=>{ holdHint = false; }); })), 1200); }
+  if (has("f5.past") && has("hz5.night") && has("may.done") && !has("fin.on") && !F5RUN){ F5RUN = true; const first = !has("f5.done"); setf("f5.done"); holdHint = true; if (first) addNote({en:"The records were changed after the flood. Edward signed. BGB left the café at 11:42, and May puts Edward's death between 11:55 and 12:15.", ko:"홍수 뒤 기록이 바뀌었고 에드워드는 서명했다. 빅그베는 11시 42분에 카페를 나왔고, 메이는 에드워드의 사망 시각을 11시 55분에서 12시 15분 사이로 본다."}); setTimeout(()=>whenPlay(()=>endMono("f5_end", ()=>{ setf("fin.on"); chapterIntro(6, ()=>setSceneNow("village", 4500), ()=>{ holdHint = false; }); })), 1200); }
   if (S.ev.includes("clock") && S.ev.includes("hatch2") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
   if (has("c1.found") && has("tm.stmt") && !S.flags.q1){ S.flags.q1 = true; S.flags["ch.2"] = true; holdHint = true; addNote({en:"Tommy found Edward during his early-morning patrol. At 11:35 the previous night, he saw a scarfed figure heading toward the clock tower. Their identity remains unknown.", ko:"토미는 새벽 순찰 중 에드워드를 발견했다. 전날 밤 11시 35분에는 목도리를 한 인물이 시계탑으로 향하는 모습을 목격했다. 그 인물이 누구인지는 알 수 없다."}); setTimeout(()=>whenPlay(()=>endMono("c1_end", ()=>chapterIntro(2, ()=>setSceneNow("village", 1950)))), 1500); }
   if (has("q1") && has("ck.bear") && ["clock","mech","hatch2","pwatch"].every(e=>S.ev.includes(e)) && !S.flags.dd02){ S.flags.dd02 = true; S.flags["ch.3"] = true; holdHint = true; addNote(DD02); addNote({en:"Someone went up the tower, and not long after, the clock stopped. The cracked pocket watch still ticks. The maintenance hatch was open.", ko:"누군가 탑에 올라갔고 얼마 지나지 않아 시계가 멈췄다. 깨진 회중시계는 계속 움직이고 있다. 정비구는 열려 있었다."}); setTimeout(()=>whenPlay(()=>endMono("c2_end", ()=>chapterIntro(3, ()=>setSceneNow("village", 2150)))), 1500); }
