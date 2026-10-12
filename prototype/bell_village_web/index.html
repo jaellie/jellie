@@ -265,7 +265,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #page{position:absolute;left:392px;top:0;width:1228px;height:940px;border-radius:12px;border:5px solid var(--brass);background:radial-gradient(ellipse at 30% 10%,#f8ebc8,var(--paper) 55%,var(--paper-deep));box-shadow:inset 0 0 70px rgba(120,80,30,.32),0 20px 60px rgba(0,0,0,.6);color:var(--ink);overflow:hidden}
 #page h2{margin:0;font:700 44px/1.1 var(--font-body)}
 #page .eyebrow{font:500 18px/1 var(--font-label);letter-spacing:.2em;color:#8a6a3e}
-#pg{position:absolute;inset:44px 56px 40px 56px;overflow-y:auto;overflow-x:hidden;padding-right:10px;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}
+#pg{position:absolute;inset:44px 56px 40px 56px;overflow-y:auto;overflow-x:hidden;padding-right:24px;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}
 #pg::-webkit-scrollbar{width:10px}#pg::-webkit-scrollbar-thumb{background:#8a6a3a;border-radius:6px}
 #cfclose{position:absolute;right:-18px;top:-18px;width:78px;height:80px;border:0;background:url(assets/icon_close.webp) 0 0/100% 100%;cursor:pointer;z-index:3}
 .obj{display:flex;gap:16px;align-items:center;font:600 30px/1.25 var(--font-body);padding:12px 0;border-bottom:1px dashed rgba(120,80,30,.35)}
@@ -435,6 +435,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 #cf{background:rgba(6,9,20,.86)}
 #jrnl{position:absolute;left:0;top:0;width:1920px;height:1080px;font-family:var(--font-body);color:var(--ink)}
 #jrnl *{box-sizing:border-box}
+#jrnl{letter-spacing:-.01em}
 #jrnl .jimg{position:absolute;display:block;pointer-events:none}
 #jSpine{position:absolute;left:851px;top:93px;width:44px;height:892px;pointer-events:none;background:linear-gradient(90deg,rgba(60,35,12,0),rgba(60,35,12,.5) 50%,rgba(60,35,12,0))}
 #jSpine i{position:absolute;left:2px;width:40px;height:22px;border-radius:3px;background:linear-gradient(#7a5233,#4a2e1a);box-shadow:0 2px 3px rgba(0,0,0,.45)}
@@ -457,7 +458,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jscroll,.jplace{touch-action:pan-y;overscroll-behavior:contain}
 .jscroll{overflow-y:auto;overflow-x:hidden;padding-right:10px;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}
 .jscroll::-webkit-scrollbar{width:14px}.jscroll::-webkit-scrollbar-track{background:url(assets/journal_scrolltrack.webp) center/12px 100% no-repeat}.jscroll::-webkit-scrollbar-thumb{background:url(assets/journal_scrollthumb.webp) center/100% 100% no-repeat;min-height:40px}
-.jfill{position:absolute;left:0;right:0;top:0;bottom:0}
+.jfill{position:absolute;left:0;right:0;top:0;bottom:0;padding-left:12px}
 .jp{font:400 27px/1.45 var(--font-body);margin:6px 0;color:#2b2217}
 .jnote{font:italic 400 22px/1.35 var(--font-body);color:#6d5a40;margin:6px 0}
 .jcard{position:relative;border:26px solid transparent;border-image:url(assets/journal_card.webp) 26 fill/26px stretch;padding:0 8px;margin:6px 0 10px}
@@ -476,12 +477,12 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jtile .jn{position:absolute;left:8px;right:8px;top:180px;height:50px;display:grid;place-items:center;z-index:2;font:700 28px/1 Pretendard,var(--font-body);color:#3a2a1a;white-space:nowrap}
 .jtile:hover{transform:rotate(var(--r,0deg)) scale(1.02)}
 .jtile.sel{transform:rotate(var(--r,0deg)) scale(1.05);filter:drop-shadow(0 0 3px #c4453a) drop-shadow(0 0 7px rgba(196,69,58,.6));z-index:3}
-.jdoss{position:absolute;left:0;top:0;width:704px;height:300px}
-.jbig{position:absolute;left:0;top:10px;width:236px;height:290px;transform:rotate(-2deg)}
+.jdoss{position:absolute;left:0;top:0;width:704px;height:300px;display:flex;justify-content:center;align-items:flex-start;gap:36px}
+.jbig{position:relative;flex:none;margin-top:10px;width:236px;height:290px;transform:rotate(-2deg)}
 .jbig:after{background-image:url(assets/journal_polaroid_large.webp)}
 .jbig .jw{position:absolute;left:22px;top:25px;width:193px;height:194px;overflow:hidden;background:#c8a96f}
 .jbig .jn{position:absolute;left:10px;right:10px;top:224px;height:56px;display:grid;place-items:center;z-index:2;font:700 38px/1 Pretendard,var(--font-body);color:#3a2a1a;white-space:nowrap}
-.jhead{position:absolute;left:270px;top:24px;right:0}
+.jhead{position:relative;flex:0 1 270px;margin-top:34px}
 .jrole{font:700 40px/1.15 Pretendard,var(--font-body);color:#6e2a35}
 .jfile{position:relative;width:200px;height:59px;margin-top:26px;transform:rotate(-4deg)}
 .jfile img{position:absolute;inset:0;width:200px;height:59px}
