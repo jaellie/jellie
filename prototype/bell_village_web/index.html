@@ -2106,8 +2106,10 @@ window.__bgm = ()=>({ key:bgmKey, cur:bgmCur && bgmCur._k, paused:bgmCur ? bgmCu
 /* ---------- UI plumbing ---------- */
 let mode = "play"; // play | dlg | cf | modal
 const keys = new Set();
-function toast(msg){ const t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.h); toast.h = setTimeout(()=>t.classList.remove("on"), 1900); }
-function addEv(id){ if (S.ev.includes(id)) return; S.ev.push(id); addNote(EV[id].note); toast("["+tr(UI.got)+"] "+tr(EV[id].name)); checkDeduce(); save(); refreshHud(); }
+function toast(msg){ if (ENDING || (typeof cur === "string" && /^fn[AB]_\d/.test(cur))) return;   /* no clue or contradiction pop-ups once the case is closed */
+  const t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.h); toast.h = setTimeout(()=>t.classList.remove("on"), 1900); }
+function addEv(id){ if (S.ev.includes(id)) return; S.ev.push(id); addNote(EV[id].note); if (!QUIET_EV.has(id) && !has("fin.last")) toast("["+tr(UI.got)+"] "+tr(EV[id].name)); checkDeduce(); save(); refreshHud(); }
+const QUIET_EV = new Set(["button"]);   /* the investigation is over by then: the brass button is recorded without the pop-up */
 /* Chapter 2: contradictions between the statements, and the deduction they unlock */
 const CON = [
   { id:"c1", on:()=>has("tm.stmt") && has("ck.bear"),
@@ -2122,7 +2124,7 @@ const DD02 = { en:"Someone in a scarf crossed the bridge at 11:35 and climbed th
 let F5RUN = false;   /* Chapter 5's closing sequence has been started in this session. A save that was closed in the middle of it (f5.done set, fin.on not) starts it again. */
 function checkDeduce(){
   if (ENDING) return;
-  CON.forEach(c=>{ if (c.on() && !S.flags["con."+c.id]){ S.flags["con."+c.id] = true; addNote(c.t); toast((lang==="ko"?"모순 발견":"Contradiction found")); } });
+  CON.forEach(c=>{ if (c.on() && !S.flags["con."+c.id]){ S.flags["con."+c.id] = true; addNote(c.t); if (!has("fin.last")) toast((lang==="ko"?"모순 발견":"Contradiction found")); } });
   if (has("dd02") && has("mol.bell") && ["ar.rep","ar.req","ar.shelf","ar.drawer","ar.note"].every(has) && !has("c3.qz")){ setf("c3.qz"); holdHint = true; setTimeout(()=>whenPlay(()=>endMono("dq0", startFlash)), 1200); }
   if (has("f5.past") && has("hz5.night") && has("may.done") && !has("fin.on") && !F5RUN){ F5RUN = true; const first = !has("f5.done"); setf("f5.done"); holdHint = true; if (first) addNote({en:"The records were changed after the flood. Edward signed. BGB left the café at 11:42, and May puts Edward's death between 11:55 and 12:15.", ko:"홍수 뒤 기록이 바뀌었고 에드워드는 서명했다. 빅그베는 11시 42분에 카페를 나왔고, 메이는 에드워드의 사망 시각을 11시 55분에서 12시 15분 사이로 본다."}); setTimeout(()=>whenPlay(()=>endMono("f5_end", ()=>{ setf("fin.on"); chapterIntro(6, ()=>setSceneNow("village", 4500), ()=>{ holdHint = false; }); })), 1200); }
   if (S.ev.includes("clock") && S.ev.includes("hatch2") && !S.flags.dd01){ S.flags.dd01 = true; addNote(UI.askStop); }   /* DD-01 stays an open question until Chapter 6 */
@@ -2181,7 +2183,7 @@ function renderDlg(anim){
   { const dl = $("dlg"), big = !!((sp.por || sp.big || sp.img) && !sp.hide && (!sp.sil || sp.big)), want = !!sp.hide || big; dl.classList.toggle("big", big); if (dl.classList.contains("cap") !== want){ dl.classList.toggle("cap", want); const bg = $("dlgbg"); bg._nk = null; if (dl.classList.contains("on")) nineDraw(bg); } }   /* a line of narration uses the same box without the portrait and name ribbon */
   $("dNm").textContent = tr(sp.name); $("dNm").style.visibility = sp.hide ? "hidden" : ""; $("dPor").style.visibility = sp.hide ? "hidden" : "";
   const exw = (EXPR_X[n.sp] && EXOVR[cur]) || n.ex, ex = (EXPR.includes(exw) || (EXPR_X[n.sp]||[]).includes(exw)) ? exw : "neutral"; // each line picks its expression; speakers without portraits keep the still
-  const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil); $("dPor").classList.toggle("pz", !!sp.por);   /* silhouette until the real portrait exists */
+  const portrait = sp.por ? sp.por + ex + (n.sp === "kid" && SCAR_ON(cur) ? "_scar" : "") + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil); $("dPor").classList.toggle("pz", !!sp.por);   /* silhouette until the real portrait exists */
   if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
   bigSide = ((sp.por || sp.big || sp.img) && !sp.hide && (!sp.sil || sp.big)) ? (n.sp === "bgb" || n.sp === "yo" ? "r" : "l") : "";   /* who gets the close-up: anyone with expression portraits, on the side away from the answers */
   if (bigSide){ const bi = $("bPorImg"), bsrc = sp.big || portrait; if (bi.getAttribute("src") !== bsrc) bi.src = bsrc; $("bigPor").classList.toggle("spr", !sp.por && !sp.big); $("bigPor").classList.toggle("small", false); $("bigPor").classList.toggle("r", bigSide === "r"); $("bigPor").classList.toggle("flip", (bigSide === "l" && (!NOFLIP.has(n.sp) !== FLIP_TOGGLE.has(n.sp+":"+ex))) || (bigSide === "r" && FLIPR.has(n.sp))); }
@@ -2198,6 +2200,7 @@ function sizeDlg(text){
   const bw = Math.min(1520, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px"; { const ch = $("choices"); if (bigSide === "l"){ ch.style.left = "auto"; ch.style.right = Math.round((STAGE_W - bw)/2 + 30) + "px"; } else { ch.style.right = "auto"; ch.style.left = Math.round((STAGE_W - bw)/2 + 262) + "px"; } }
 }
 /* The close-up of an NPC on the left looks toward the middle of the screen. Mirrored only here, only for people whose side carries no clue: Green and BGB (scarf side) and May (hair and satchel side) are never mirrored. */
+const SCAR_ON = id => { const m = /^f4ok_(\d+)$/.exec(id || ""); return m ? +m[1] >= 2 : /^f5/.test(id || ""); };   /* the older twin wears the ear mark from the moment the beam grazes him */
 const FLIPR = new Set(["yo"]);   /* close-ups on the right of the screen whose art looks right: mirrored so they look toward the middle */
 const NOFLIP = new Set(["gr","bgb","hl","kid","yo","mo","hz","v1","cr"]);   /* mo and hz already look to the right in their art */
 const FLIP_TOGGLE = new Set(["mo:worried","tm:surprised","tm:thinking"]);   /* expressions whose art faces the other way from the rest of that person */
