@@ -277,7 +277,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #bigPor.on{opacity:1}
 #bigPor.r{left:auto;right:290px}
 #bigPor.flip img{transform:scaleX(-1)}
-#bigPor.spr{height:820px;bottom:150px}   /* speakers without expression portraits (the young twins): the full front sprite, enlarged; the lower part hides behind the dialogue box */
+#bigPor.spr{height:860px;bottom:150px}
+#bigPor.spr.small{height:600px;bottom:150px}   /* the younger twin is much smaller than his brother */   /* speakers without expression portraits (the young twins): the full front sprite, enlarged; the lower part hides behind the dialogue box */
 #bigPor img{height:100%;width:auto;display:block;filter:drop-shadow(0 6px 14px rgba(6,4,16,.65))}
 /* Case File */
 #cf{position:absolute;inset:0;background:rgba(6,9,20,.82);display:none;z-index:20}
@@ -2160,7 +2161,7 @@ function renderDlg(anim){
   const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil); $("dPor").classList.toggle("pz", !!sp.por);   /* silhouette until the real portrait exists */
   if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
   bigSide = ((sp.por || sp.img) && !sp.hide && !sp.sil) ? (n.sp === "bgb" || n.sp === "yo" ? "r" : "l") : "";   /* who gets the close-up: anyone with expression portraits, on the side away from the answers */
-  if (bigSide){ const bi = $("bPorImg"); if (bi.getAttribute("src") !== portrait) bi.src = portrait; $("bigPor").classList.toggle("spr", !sp.por); $("bigPor").classList.toggle("r", bigSide === "r"); $("bigPor").classList.toggle("flip", bigSide === "l" && (!NOFLIP.has(n.sp) !== FLIP_TOGGLE.has(n.sp+":"+ex))); }
+  if (bigSide){ const bi = $("bPorImg"); if (bi.getAttribute("src") !== portrait) bi.src = portrait; $("bigPor").classList.toggle("spr", !sp.por); $("bigPor").classList.toggle("small", !sp.por && n.sp === "yo"); $("bigPor").classList.toggle("r", bigSide === "r"); $("bigPor").classList.toggle("flip", bigSide === "l" && (!NOFLIP.has(n.sp) !== FLIP_TOGGLE.has(n.sp+":"+ex))); }
   $("dPor").onload = () => { $("dPor").style.opacity = 1; };
   const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":"");
   pgs = splitPages(tr(n.t)); pgi = 0; sizeDlg(pgs.reduce((a,b)=>b.length>a.length?b:a, ""));
