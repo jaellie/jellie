@@ -1520,6 +1520,16 @@ function mkMarks(list, host){ list.forEach(i => { const m = document.createEleme
 mkMarks(IA_V, marks); mkMarks(IA_T, $("tmarks")); mkMarks(IA_A, $("amarks")); mkMarks(IA_C, $("cmarks")); mkMarks(IA_P, $("pmarks")); mkMarks(IA_H, $("hmarks")); mkMarks(IA_M, $("mmarks")); mkMarks(IA_F, $("ymarks")); mkMarks(IA_D, $("ymarks")); mkMarks(IA_FL, $("fmarks")); mkMarks(IA_FT, $("tmarks"));
 IA = IA_V;
 let near = null, peek = 0, autoGo = null;
+/* does this person have something that moves the story on? (then "!", otherwise only "...") */
+const NPCMARK = {
+  nini:()=> has("fin.last") ? !has("fin.end") : !has("q1") && (!has("nin.met") || !has("nini.letters") || !S.ev.includes("notebook")),
+  tm:()=> !has("q1") && !(has("c1.found") && has("tm.stmt")),
+  ck:()=> has("q1") && !has("dd02") && (!has("c2.met") || !has("c2.why") || !has("ck.bear")),
+  mo:()=> has("dd02") && !has("mol.bell"),
+  hz:()=> has("f5.past") && !has("hz5.night"),
+  hl:()=> (has("f5.past") && !has("may.done")) || (has("fin.on") && has("fin.s4") && !has("fin.may2")),
+  gr:()=> has("fin.on") && ((has("fin.o1") && has("fin.o2") && has("fin.o3") && !has("fin.s4")) || (has("fin.frame") && !has("fin.last")))
+};
 
 
 
@@ -2204,7 +2214,12 @@ function frame(now){
   if (mode==="play"){ IA.forEach(i=>{ if (i.when && !i.when()) return; const d = Math.abs(P.x - i.x()); if (d < best){ best = d; near = i; } }); }
   if (peek > 0) peek -= dt;
   const hint = $("hint"), showHint = !!(near && mode==="play");
-  IA.forEach(i=>{ if (i.when && !i.when()){ i.el.classList.remove("on","soft"); return; } const on = (near===i && mode==="play") || (peek>0 && mode==="play"); i.el.classList.toggle("on", on); i.el.classList.toggle("soft", near===i && showHint); });
+  IA.forEach(i=>{ if (i.when && !i.when()){ i.el.classList.remove("on","soft"); return; }
+    const mk = NPCMARK[i.id], act = mk && ({ nini, ck, hz, tm, mo, gr, hl })[i.id];
+    if (mk && act){   /* a person who moves the story on shows "!" at all times; one who only has small talk shows "..." when you come close */
+      const q = !!mk(), want = q ? "assets/bubble_exclaim.webp" : "assets/bubble_dots.webp"; if (i.el.getAttribute("src") !== want) i.el.setAttribute("src", want);
+      i.el.style.left = Math.round(i.x()) + "px"; i.el.classList.toggle("on", act.style.display !== "none" && mode === "play" && (q || Math.abs(P.x - i.x()) < 300)); i.el.classList.remove("soft"); return; }
+    const on = (near===i && mode==="play") || (peek>0 && mode==="play"); i.el.classList.toggle("on", on); i.el.classList.toggle("soft", near===i && showHint); });
   if (showHint){ hint.classList.remove("instant"); if ($("hintTx").dataset.k !== near.id){ $("hintTx").dataset.k = near.id; $("hintTx").textContent = tr(near.label); } hint.classList.add("on"); }
   else { if (mode!=="play") hint.classList.add("instant"); hint.classList.remove("on"); }
   requestAnimationFrame(frame);
