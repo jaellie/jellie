@@ -893,15 +893,16 @@ SECTIONS.push({id:"j", name:"J. Case Journal, batch 1: common frames (approved t
    tech:["Sheet 1584x880 px, transparent PNG, each page exactly 780x880."]},
    {size:"1584x880", tags:["UI","batch 1","no text"]}, true),
 
- jp("Journal 3: spine, binding gutter (60 x 880)", {
-   goal:"The binding strip between the two pages.",
-   refs:["docs/CASE_JOURNAL_ASSET_SPEC.md, asset J3 (position 910, 100)","the Case Journal visual mockup (dark valley with four leather straps)"],
+ jp("Journal 3: thin spine, binding gutter (44 x 892)", {
+   goal:"A thin binding strip between the two pages. The first spine (111 px wide) took too much page width, so this one is slim. It sits on top of the page gutter and hides nothing important.",
+   refs:["docs/CASE_JOURNAL_ASSET_SPEC.md, section 10 (position 851, 93)","the delivered journal spine (art_source/originals/journal_j3_spine_v1.png): same leather colour, grain, straps and brass rivets, only much slimmer","the delivered pages (journal_pages): the gutter between the two pages is only 22 px wide and dark"],
    blocks:[JOURNAL],
-   subject:"A narrow vertical strip showing the bound centre of an open book: a deep shaded valley with four leather binding straps across it.",
-   layout:["ONE image exactly 60 x 880 px.","The valley is darkest at the centre (x = 30) and fades to fully transparent toward x = 0 and x = 60, so it overlaps the shadows of the two pages without a visible edge.","Four leather straps cross the strip horizontally, each 56 px wide and 24 px tall, with their top edges at y = 140, 340, 540 and 740. Each strap has two small brass rivets and a subtle highlight on its top edge."],
-   include:["a soft valley shadow","four leather straps with brass rivets"], exclude:["text","a hard centre line","shadows wider than the strip","perspective"],
-   tech:["Exactly 60x880 px, transparent PNG."]},
-   {size:"60x880", tags:["UI","batch 1","no text"]}, true),
+   subject:"A very slim vertical leather binding strip seen from above, where the two halves of an open book meet: a shallow dark valley with four narrow leather straps wrapped across it.",
+   layout:["ONE image exactly 44 x 892 px.","The strip is 44 px wide in total. The shaded valley is darkest at the centre (x = 22) and fades to fully transparent at x = 0 and x = 44, so it blends into the page edges without a visible line.","Four leather straps wrap across the strip horizontally. Each strap is the FULL 44 px wide and 20 px tall, with its top edge at y = 140, 340, 540 and 740, a tiny brass rivet (about 6 px) near each end (so 2 per strap, 8 px from the strap edges) and a subtle highlight on its top edge.","The top and bottom ends of the strip are straight and clean (cut exactly at y = 0 and y = 892)."],
+   details:["Use the same leather brown (#7A4A2A to #4A2E1A), grain and brass (#B08D57) as the delivered spine so it matches the cover."],
+   include:["a slim valley shadow","four full-width straps with two tiny rivets each"], exclude:["text","a hard centre line","anything wider than 44 px","sculpted curved ends","perspective","a baked shadow outside the strip"],
+   tech:["Exactly 44x892 px, transparent PNG."]},
+   {size:"44x892", tags:["UI","batch 1","no text"]}, true),
 
  jp("Journal 4: ribbon bookmark tabs, 4 colours, normal and selected", {
    goal:"The four index bookmarks that stick out of the right edge of the book (People, Evidence, Events, Deduction). Icons and words are added by the game.",
