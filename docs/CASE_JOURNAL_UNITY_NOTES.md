@@ -76,3 +76,10 @@
 | journal_tl_{fact,claim,unk} / tl_est | 72×72 / 47×180 | 기록, 진술, 미확인 마커 / 추정 구간 마커 |
 | journal_scroll | 930×132 | 아직 쓰는 곳 없음 |
 원본은 `art_source/originals/journal_k_*_v1.png` (sha256은 MANIFEST). 반투명 내부는 그대로 두고 윤곽 가장자리만 색을 정리했다.
+
+## 10. 아이콘 세트와 태그 (K 배치 3차, 게임에 적용)
+- 칩, 작은 버튼은 `journal_plaque_normal/current`(9-slice 좌우 22)를 **높이 46 고정**으로 쓴다. 세로로 늘리면 모서리 황동 장식이 찌그러지므로 높이는 늘리지 않는다.
+- 그룹 아이콘 `journal_gi_{clock,tower,history,letter,photo,hiding,trace,medical,cafe,patrol,plaza,scene,document}` (긴 변 224). 묶음 틀 안에 84px로 그린다.
+- 항목 아이콘 `journal_ei_*` (긴 변 224). 증거 ID 연결(코드 `EI`): clock, mech, hatch2→hatch, pwatch/watch→pwatch, bellinc→bell, oldrep, mreq, noledger, draft/letters→draft, mnote, notebook, tdoc/torn_page→tornpage, thread/wool→thread, button, hidden/glove→hidden, notice, tod, receipt, tab_pm→tabpm, pit, hide→frame. 짝을 정하지 못해 아직 연결하지 않은 것: photomill, photolantern.
+- `journal_tag` 540×186: 전시대 라벨. 늘리지 않고 300×104로 그린다(밧줄 구멍 오른쪽에 글자).
+원본: `journal_k_icons_groups_v1`, `journal_k_icons_items_v1`, `journal_k_icons_items2_v1`, `journal_k_tag_v1`.

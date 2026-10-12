@@ -462,7 +462,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jcard{position:relative;border:26px solid transparent;border-image:url(assets/journal_card.webp) 26 fill/26px stretch;padding:0 8px;margin:6px 0 10px}
 .jcard .jp{margin:0;font-size:26px}
 .jsign{text-align:right;font:700 30px/1.1 Pretendard,var(--font-body);color:#6e2a35;margin-top:6px}
-#jrnl .gchip{display:inline-flex;align-items:center;justify-content:center;min-height:46px;font:600 23px/1.1 var(--font-body);padding:0 6px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;background:none;border-radius:0;color:#3a2a1a;cursor:pointer}
+#jrnl .gchip{display:inline-flex;align-items:center;justify-content:center;height:46px;white-space:nowrap;font:600 23px/1.1 var(--font-body);padding:0 6px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;background:none;border-radius:0;color:#3a2a1a;cursor:pointer}
 #jrnl .gchip:hover{filter:brightness(1.06)}#jrnl .gchip.on{border-image-source:url(assets/journal_plaque_current.webp);color:#f6e3c0}
 #jrnl .chips{margin:6px 0 8px;gap:6px 4px}
 .badge{font-size:15px}.newclue{margin-left:8px}
@@ -510,12 +510,12 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jtitle{font:700 44px/1.1 var(--font-body);margin:0 0 10px}
 .jexh{position:relative;width:690px;height:290px;margin:6px 0 10px;border:34px solid transparent;border-image:url(assets/journal_exhibit.webp) 110 fill/34px stretch;box-sizing:border-box}
 .jexi{position:absolute;left:20px;top:2px;width:230px;height:216px;display:grid;place-items:center;filter:drop-shadow(0 12px 10px rgba(40,25,10,.45))}
-.jexs{position:absolute;left:330px;top:34px;width:150px;height:48px;transform:rotate(-3deg)}
-.jexs img{position:absolute;inset:0;width:150px;height:48px}.jexs span{position:absolute;inset:0;display:grid;place-items:center;font:700 17px/1 var(--font-label);letter-spacing:.08em;color:#26364f}
-.jkind{position:absolute;left:330px;top:100px;font:700 17px/1 var(--font-label);letter-spacing:.14em;border:2px solid #6e2a35;color:#6e2a35;border-radius:4px;padding:6px 9px}
+.jtag{position:absolute;left:290px;top:16px;width:300px;height:104px;background:url(assets/journal_tag.webp) 0 0/100% 100% no-repeat;transform:rotate(-3deg)}
+.jtn{position:absolute;left:88px;right:14px;top:22px;font:700 20px/1 var(--font-label);letter-spacing:.08em;color:#26364f}
+.jkind{position:absolute;left:88px;top:54px;font:700 17px/1 var(--font-label);letter-spacing:.14em;color:#6e2a35}
 .jh3{font:700 38px/1.15 var(--font-body);margin:4px 0}
 .jmeta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
-.jmt{display:inline-flex;align-items:center;min-height:42px;font:600 21px/1 var(--font-body);padding:0 6px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;color:#3a2a1a}
+.jmt{display:inline-flex;align-items:center;height:46px;white-space:nowrap;font:600 21px/1 var(--font-body);padding:0 6px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;color:#3a2a1a}
 /* events */
 .jtl{position:absolute;left:0;top:40px;right:0;bottom:0}
 .jtlin{position:relative;padding-bottom:20px}
@@ -541,7 +541,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jpl{position:absolute;transform:translateX(-50%);height:46px;min-width:92px;padding:0 4px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;background:none;font:700 23px/46px Pretendard,var(--font-body);color:#3a2a1a;white-space:nowrap;cursor:pointer;z-index:3}
 .jpl.sel{height:52px;line-height:52px;border-image-source:url(assets/journal_plaque_selected.webp);color:#6e2a35;margin-top:-3px}
 .jpl.cur{border-image-source:url(assets/journal_plaque_current.webp);color:#f6e3c0}
-.jplace{position:absolute;left:0;top:596px;width:704px;height:214px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}.jplace .chips{margin:4px 0}#jrnl .jplace .gchip{font-size:20px;min-height:40px}.jch{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+.jplace{position:absolute;left:0;top:596px;width:704px;height:214px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}.jplace .chips{margin:4px 0}#jrnl .jplace .gchip{font-size:20px}.jch{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
 .jct{font:700 34px/1.15 Pretendard,var(--font-body);color:#6e2a35}.jct.jmute{color:#8a6a3e;font-size:30px}
 .jcs{font:400 22px/1.3 var(--font-body);color:#5a4630;margin:3px 0}
 /* notes */
@@ -566,7 +566,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jct2{display:flex;gap:10px;align-items:center}.jct2 b{font:700 22px/1.15 var(--font-body);min-width:0}
 .jci{flex:none;width:52px;height:52px;display:grid;place-items:center}.jci img,.jci svg{max-width:52px;max-height:52px}
 .jcb{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.jcb button{min-height:38px;font:600 17px/1 var(--font-body);padding:0 4px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;background:none;color:#3a2a1a;cursor:pointer}
+.jcb button{height:46px;white-space:nowrap;font:600 17px/1 var(--font-body);padding:0 4px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;background:none;color:#3a2a1a;cursor:pointer}
 .jcb button.on{border-image-source:url(assets/journal_plaque_current.webp);color:#f6e3c0}
 .jopts{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 6px}
 .jopts button{flex:1 1 calc(50% - 5px);min-width:0;min-height:72px;padding:4px 6px;border:18px solid transparent;border-image:url(assets/journal_opt.webp) 36 fill/18px stretch;background:none;color:#3a2a1a;font:600 24px/1.2 var(--font-body);cursor:pointer;text-align:center}
@@ -2254,11 +2254,18 @@ const SV = {
   plaza:'<path d="M30 8h4v50h-4z"/><path d="M34 14h18l6 6-6 6H34zM30 34H12l-6 6 6 6h18z"/>'
 };
 const GROUP_SV = { clock:"clock", tower:"tower", past23:"history", letters:"letter", photos:"photo", hiding:"hiding", trace:"trace", medical:"medical", cafe:"cafe", patrol:"patrol", plaza:"plaza", place:"scene" };
+/* sprite icons (assets/journal_gi_*, journal_ei_*): group icons by key, item icons by evidence id */
+const GI = { clock:1, tower:1, history:1, letter:1, photo:1, hiding:1, trace:1, medical:1, cafe:1, patrol:1, plaza:1, scene:1, document:1 };
+const EI = { clock:"clock", mech:"mech", hatch2:"hatch", pwatch:"pwatch", watch:"pwatch", bellinc:"bell", oldrep:"oldrep", mreq:"mreq", noledger:"noledger", draft:"draft", letters:"draft", mnote:"mnote", notebook:"notebook", tdoc:"tdoc", torn_page:"tornpage",
+  thread:"thread", wool:"thread", button:"button", hidden:"hidden", glove:"hidden", notice:"notice", tod:"tod", receipt:"receipt", tab_pm:"tabpm", pit:"pit", hide:"frame" };
+const spImg = (n, size) => '<img src="assets/journal_'+n+'.webp" alt="" style="max-height:'+size+'px;max-width:'+size+'px;width:auto;height:auto">';
 function svIcon(key, size){
+  if (GI[key]) return spImg("gi_"+key, size);
   if (key === "clock") return '<svg viewBox="-70 -70 140 140" width="'+size+'" height="'+size+'"><use href="#clk" x="-70" y="-70" width="140" height="140"/></svg>';
   return '<svg viewBox="0 0 64 64" width="'+size+'" height="'+size+'" fill="#f6e3c0" stroke="#5b3d18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(SV[key]||SV.document)+'</svg>';
 }
 function evIcon(e, size){
+  const eid = e.id || Object.keys(EV).find(k=>EV[k]===e); if (EI[eid]) return spImg("ei_"+EI[eid], size);
   if (e.img) return '<img src="assets/'+e.img+'.webp" alt="" style="max-height:'+size+'px;max-width:'+size+'px;width:auto;height:auto">';
   if (e.icon === "clock") return '<svg viewBox="-70 -70 140 140" width="'+size+'" height="'+size+'"><use href="#clk" x="-70" y="-70" width="140" height="140"/></svg>';
   if (e.kind) return svIcon(e.kind, size);
@@ -2376,8 +2383,10 @@ const memLines = keys => keys.filter(k=>NOTES[k] && S.notes.some(n=>n.k === JSON
 const evChip = id => '<button type="button" class="gchip'+(EV[id].reach==="dormant"?' old':'')+'" data-ev="'+id+'">'+tr(EV[id].name)+'</button>';
 
 function grpIcon(gr, size){   /* group card: a real picture of one of its items when there is one, otherwise the group's own icon */
+  const k = GROUP_SV[gr.group] || "document";
+  if (GI[k]) return svIcon(k, size);
   const withImg = gr.ids.filter(id=>EV[id].img || EV[id].icon).pop();
-  return withImg ? evIcon(EV[withImg], size) : svIcon(GROUP_SV[gr.group] || "document", size);
+  return withImg ? evIcon(EV[withImg], size) : svIcon(k, size);
 }
 /* ===== Case File: Investigator's Journal (display layer only; same data, flags and IDs) =====
    Stage coordinates (1920x1080). Cover (24,29), pages (50,85), thin spine (851,93) 44x892, left page x127..831, right page x915..1619, y140..950. */
@@ -2431,7 +2440,7 @@ function jEvidence(){
   const e = EV[selEv], ii = cur.ids.indexOf(selEv)+1, pl = PLACE_OF[selEv], used = QS.filter(q=>q.open() && q.clues.includes(selEv));
   const r = '<div class="jscroll jfill"><div class="jtitle">'+tr(GROUP_NAME[selGroup]||GROUP_NAME.other)+'</div>'
     + '<div class="chips jitems">'+cur.ids.map(id=>'<button type="button" class="gchip'+(id===selEv?' on':'')+(EV[id].reach==="dormant"?' old':'')+'" data-ev="'+id+'">'+tr(EV[id].name)+'</button>').join('')+'</div>'
-    + '<div class="jexh"><div class="jexi">'+evIcon(e, 196)+'</div><div class="jexs"><img src="'+JA("stamp_exhibit_navy")+'" alt=""><span>EXHIBIT '+String(gi+1).padStart(2,"0")+'-'+ii+'</span></div><span class="jkind">'+e.tag+'</span></div>'
+    + '<div class="jexh"><div class="jexi">'+evIcon(e, 196)+'</div><div class="jtag"><span class="jtn">EXHIBIT '+String(gi+1).padStart(2,"0")+'-'+ii+'</span><span class="jkind">'+e.tag+'</span></div></div>'
     + '<h3 class="jh3">'+tr(e.name)+'</h3><p class="jp">'+tr(e.desc)+'</p>'
     + (e.reach === "dormant" ? '<p class="jnote">'+L2("이전 버전에서 얻은 기록이다.","Recorded in an earlier version.")+'</p>' : '')
     + (pl || used.length ? '<div class="jmeta">'+(pl ? '<span class="jmt">'+L2("장소: ","Place: ")+tr(PLACES[pl])+'</span>' : '')+used.map(q=>'<span class="jmt">'+(lang==="ko" ? "질문 "+qNum(q)+"에서 사용" : "Used in question "+qNum(q))+'</span>').join('')+'</div>' : '')
