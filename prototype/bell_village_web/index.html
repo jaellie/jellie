@@ -996,7 +996,7 @@ function mkActor(cls, base, h, x){
   d.dataset.base = base; d.style.height = h + "px"; d.style.top = (FEET - h) + "px"; d.style.left = x + "px";
   actors.appendChild(d); return d;
 }
-const SPR = { big_green_bear:[299, 545, 337, 540, 305, 546], bgb_torn:[290, 551, 342, 546, 306, 553], green:[273, 548, 325, 540, 277, 546], twin_elder:[248, 498, 314, 496, 262, 499], twin_younger:[239, 453, 289, 442, 258, 456], molly:[347, 525, 355, 520, 342, 524], nini:[128,247,161,248], clockkeeper:[170,232,163,231], cafe_owner:[169,198,159,199], tommy:[207,427,211,425], edward:[170,300,170,300]  };
+const SPR = { big_green_bear:[299, 545, 337, 540, 305, 546], bgb_torn:[290, 551, 342, 546, 306, 553], green:[273, 548, 325, 540, 277, 546], twin_elder:[248, 498, 314, 496, 262, 499], twin_younger:[239, 453, 289, 442, 258, 456], molly:[347, 525, 355, 520, 342, 524], may:[187, 524, 206, 520, 182, 525], nini:[128,247,161,248], clockkeeper:[170,232,163,231], cafe_owner:[169,198,159,199], tommy:[207,427,211,425], edward:[170,300,170,300]  };
 function setActorSprite(el, dir, h){
   const base = el.dataset.base, img = el.querySelector("img");
   const s = {left:"left", right:"right", front:"front"}[dir] || "front";
@@ -1007,12 +1007,12 @@ function setActorSprite(el, dir, h){
 }
 const HZ_H = 175, TM_H = 190, MO_H = 150, GR_H = 215, ED_H = 175, KID_H = 150, BR_H = 128;
 let PH = 220;   /* player height: a child in the flashback */
-const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), tm = mkActor("tm","tommy",TM_H,1930), mo = mkActor("mo","molly",MO_H,-9999), ed = mkActor("ed","edward",ED_H,-9999), br = mkActor("br","twin_younger",BR_H,-9999), gr = mkActor("gr","green",GR_H,-9999), hl = mkActor("hl","nini",175,-9999), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
+const bgb = mkActor("bgb","big_green_bear",BGB_H,S.x), hz = mkActor("hz","cafe_owner",HZ_H,1050), tm = mkActor("tm","tommy",TM_H,1930), mo = mkActor("mo","molly",MO_H,-9999), ed = mkActor("ed","edward",ED_H,-9999), br = mkActor("br","twin_younger",BR_H,-9999), gr = mkActor("gr","green",GR_H,-9999), hl = mkActor("hl","may",200,-9999), nini = mkActor("nini","nini",NINI_H,900), ck = mkActor("ck","clockkeeper",CK_H,2560);
 let NPCX = { ed:-9999, br:-9999, nini:1010, ck:2060, hz:-9999, tm:1380, mo:-9999, gr:-9999 }; const NPCX_V = { ed:-9999, br:-9999, nini:1010, ck:2060, hz:-9999, tm:1380, mo:2650, gr:-9999 }, NPCX_T = { ed:-9999, br:-9999, nini:-9999, ck:830, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_A = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:-9999 }, NPCX_C = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:1050, tm:-9999, mo:-9999, gr:-9999 }, NPCX_M = { ed:-9999, br:-9999, nini:-9999, ck:-9999, hz:-9999, tm:-9999, mo:-9999, gr:1650 };
 const P = { x:S.x, dir:"front", walk:0, moving:false, face:"right" };
 /* NPCs stand facing front; once BGB comes within 300 px they turn and keep looking at him until he walks beyond 380 px (the gap stops flicker) */
 let BRX = 0;
-const FACING = { nini:false, ck:false, hz:false, tm:false, mo:false, gr:false };
+const FACING = { hl:false, nini:false, ck:false, hz:false, tm:false, mo:false, gr:false };
 function npcFace(key, nx){ const d = Math.abs(P.x - nx); if (!FACING[key] && d < 300) FACING[key] = true; else if (FACING[key] && d > 380) FACING[key] = false; return FACING[key] ? (P.x < nx ? "left" : "right") : "front"; }   /* BGB is on the left -> face left, toward him */
 function place(){
   if (S.scene === "village" && !S.flash) NPCX.mo = has("c7.gather") ? 2490 : has("dd02") ? 2650 : -9999;   /* Molly appears once the second bear is a possibility */
@@ -1036,13 +1036,13 @@ function place(){
   const hface = npcFace("hz", NPCX.hz);
   setActorSprite(hz, hface, HZ_H); hz.style.left = Math.round(NPCX.hz - parseFloat(hz.style.width)/2) + "px";
   tm.style.transform = "scale("+(1-0.005*Math.sin(tt/950+4)).toFixed(3)+","+(1+0.012*Math.sin(tt/950+4)).toFixed(3)+")";
-  hl.classList.add("silh"); mo.classList.toggle("silh", !!S.flash); gr.classList.toggle("silh", !!S.flash);
+  mo.classList.toggle("silh", !!S.flash); gr.classList.toggle("silh", !!S.flash);
   bgb.dataset.base = S.flash ? "twin_elder" : has("c6.on") ? "bgb_torn" : "big_green_bear";
   if (S.flash){ const tgt = P.x + (P.face === "right" ? -100 : 100); BRX += (tgt - BRX) * 0.06; NPCX.br = S.scene === "tower" ? 1560 : (S.scene === "flood" && !has("f5.free")) ? 1750 : (S.flash === 5 && S.scene === "past") ? (has("f5.left") ? -9999 : 1520) : (S.flash === 5 && S.scene === "flood" && has("f5.ed")) ? -9999 : Math.round(BRX);
     if (S.flash === 5){ NPCX.ed = S.scene === "flood" ? (has("f5.bell") && !has("f5.ed") ? 1250 : -9999) : (has("f5.left") ? -9999 : 1450); const sh = NPCX.ed > -9000; ed.style.display = sh ? "" : "none"; ed._sh.style.display = sh ? "" : "none"; const sb = NPCX.br > -9000; br.style.display = sb ? "" : "none"; br._sh.style.display = sb ? "" : "none"; } } else NPCX.br = -9999;
   setActorSprite(ed, "front", S.scene==="past" ? 125 : ED_H); ed.style.left = Math.round(NPCX.ed - parseFloat(ed.style.width)/2) + "px";
   setActorSprite(br, "front", S.scene==="past" ? 90 : BR_H); br.style.left = Math.round(NPCX.br - parseFloat(br.style.width)/2) + "px";
-  setActorSprite(hl, "front", 175); hl.style.left = Math.round((NPCX.hl ?? -9999) - parseFloat(hl.style.width)/2) + "px";
+  setActorSprite(hl, npcFace("hl", NPCX.hl ?? -9999), 200); hl.style.left = Math.round((NPCX.hl ?? -9999) - parseFloat(hl.style.width)/2) + "px";
   setActorSprite(mo, S.flash ? "front" : npcFace("mo", NPCX.mo), S.flash ? 100 : MO_H); mo.style.left = Math.round(NPCX.mo - parseFloat(mo.style.width)/2) + "px";   /* placeholder silhouettes: front only, so no wrong scarf side shows */
   setActorSprite(gr, S.flash ? "front" : npcFace("gr", NPCX.gr), S.flash ? 110 : GR_H); gr.style.left = Math.round(NPCX.gr - parseFloat(gr.style.width)/2) + "px";
   setActorSprite(tm, npcFace("tm", NPCX.tm), TM_H); tm.style.left = Math.round(NPCX.tm - parseFloat(tm.style.width)/2) + "px";
@@ -1094,7 +1094,7 @@ Object.assign(UI, {
 });
 Object.assign(UI, { lOldScarf:{en:"Examine the old scarf", ko:"오래된 목도리를 살펴본다"}, lGlove:{en:"Examine the glove", ko:"장갑을 살펴본다"}, lTorn:{en:"Examine the torn document", ko:"찢어진 서류를 살펴본다"}, lScarfK:{en:"Examine the scarf", ko:"목도리를 살펴본다"}, lRep:{en:"Examine the incident report", ko:"사고 기록철을 살펴본다"}, lReq:{en:"Examine the maintenance request", ko:"정비 요청서를 살펴본다"}, lShelf:{en:"Examine the empty ledger shelf", ko:"서류장을 살펴본다"}, lNoteU:{en:"Look beneath the desk", ko:"책상 아래를 살펴본다"}, lDesk:{en:"Examine Edward's desk", ko:"에드워드의 책상을 살펴본다"}, lPw:{en:"Examine the pocket watch", ko:"회중시계를 살펴본다"}, lHatch2:{en:"Examine the maintenance hatch", ko:"정비구를 살펴본다"}, lMech:{en:"Examine the clock mechanism", ko:"시계 장치를 살펴본다"} });
 SP.cr = {name:{en:"Council Rep.",ko:"의회 관계자"}, img:"assets/tommy_front.webp", sil:true};
-SP.hl = {name:{en:"May", ko:"메이"}, img:"assets/tommy_front.webp", sil:true};
+SP.hl = {name:{en:"May", ko:"메이"}, img:"assets/may_front.webp", por:"assets/por_may_"};
 
 EV.acct_gr = { id:"acct_gr", name:{en:"Green's account",ko:"Green의 진술: 그날 밤"}, tag:"STATEMENT",
   desc:{en:"Green says he was at the tower. Edward would not hand over the record, they struggled beside the open hatch, and Edward fell through it. Green says he believed Edward was dead and fled by the back door.", ko:"Green은 그날 밤 탑에 있었다고 말한다. 에드워드가 기록을 내주지 않았고, 열린 해치 옆에서 몸싸움이 벌어졌고, 에드워드가 그 아래로 떨어졌다고 한다. Green은 에드워드가 죽었다고 믿고 뒷문으로 달아났다고 말한다."},
@@ -1550,7 +1550,7 @@ D.f4no = {sp:"kid", ex:"neutral", t:{ko:"동생 목도리부터 봐 줘야겠어
 const IA_FT = [];
 const IA_H = [
   { id:"hexit", x:()=>2131, label:UI.leaveH, top:430, run:()=>setScene("village", 1770) },
-  { id:"hl",    x:()=>1591, label:UI.talkHl, top:FEET_T-175-150, run:()=>startDlg(has("fin.on") ? (has("fin.s4") && !has("fin.may2") ? "may2" : "may9") : (has("may.done") ? "may9" : "may0")) }
+  { id:"hl",    x:()=>1591, label:UI.talkHl, top:FEET_T-200-150, run:()=>startDlg(has("fin.on") ? (has("fin.s4") && !has("fin.may2") ? "may2" : "may9") : (has("may.done") ? "may9" : "may0")) }
 ];
 const IA_M = [
   { id:"exit", x:()=>420, label:UI.leaveM, top:600, run:()=>setScene("village", 4700) },
