@@ -96,7 +96,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #psc:not(.hl) #rmC,#psc:not(.hl) #pfgC,#psc.hl #rmH,#psc.hl #pfgH{display:block}
 #psc.hl #pframe{display:none}
 #psc .rm img,#psc #pfg img{position:absolute;display:block;pointer-events:none;-webkit-user-drag:none}
-#pframe{position:absolute;left:1088px;bottom:675px;width:220px;height:auto;display:block;pointer-events:none}
+#pframe{position:absolute;left:1128px;bottom:675px;width:140px;height:auto;display:block;pointer-events:none}
 #pfg{position:absolute;left:0;top:0;will-change:transform}
 #psky{position:absolute;inset:0;background:linear-gradient(#070b20 0%,var(--night-0) 18%,var(--night-1) 62%,#31416e 100%)}
 #pfar img{position:absolute;left:-150px;top:168px;display:block;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 34%,#000 80%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 34%,#000 80%,transparent 100%)}
@@ -1564,8 +1564,8 @@ const IA_P = [
   { id:"pbook",  x:()=>770,  label:UI.lBook,   top:470, run:()=>startDlg("p_b") },
   { id:"pstove", x:()=>1530, label:UI.lStove,  top:580, run:()=>startDlg("p_s") },
   { id:"pkettle",x:()=>1585, label:UI.lKettle, top:470, run:()=>startDlg("p_k") },
-  { id:"frame", x:()=>1198, label:UI.lFrame, top:290, run:()=>startDlg((has("fin.on") && has("fin.may2")) ? (has("fin.frame") ? "fr9" : "fr6") : has("pro.frame") ? "p_f9" : "p_f0") },
-  { id:"pdoor", x:()=>1957, label:UI.lDoor,  top:430, run:()=>{ if (has("pro.done")){ setScene("village", 640); return; } if (!has("pro.frame")){ startDlg("p_f9"); return; } startDlg("p_n0"); PRO_GO = true; } }
+  { id:"frame", x:()=>1198, label:UI.lFrame, top:290, when:()=>has("fin.on") && has("fin.may2"), run:()=>startDlg((has("fin.on") && has("fin.may2")) ? (has("fin.frame") ? "fr9" : "fr6") : has("pro.frame") ? "p_f9" : "p_f0") },
+  { id:"pdoor", x:()=>1957, label:UI.lDoor,  top:430, run:()=>{ if (has("pro.done")){ setScene("village", 640); return; } startDlg("p_n0"); PRO_GO = true; } }
 ];
 let PRO_GO = false;
 const IA_C = [
@@ -1622,7 +1622,7 @@ function nextHint(){
     if (!has("f4.scarf")) return L("동생의 목도리를 살펴보자.","Take a look at my brother's scarf.");
     return L("경고 종 레버를 살펴보자. 오른쪽 시계탑 옆이야.","Go look at the warning bell lever, over by the clock tower on the right.");
   }
-  if (!has("pro.done")) return !has("pro.frame") ? L("선반 위의 사진부터 보자.","Look at the photograph on the shelf first.") : L("이제 오른쪽 문으로 나가자.","Now out through the door on the right.");
+  if (!has("pro.done")) return L("오른쪽 문으로 나가 보자.","Head out through the door on the right.");
   if (has("fin.on")){
     if (!has("fin.m1")) return L("방앗간으로 가서 형을 만나자. 마을 맨 오른쪽이야.","Go see my brother at the Old Mill, at the far right of the village.");
     if (!(has("fin.o1") && has("fin.o2") && has("fin.o3"))) return L("방앗간을 조사하자. 목도리, 장갑, 찢어진 서류를 살펴봐.","Look around the mill: the old scarf, the glove and the torn document.");
