@@ -237,6 +237,9 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #dlg{position:absolute;left:200px;bottom:34px;width:1520px;height:296px;display:none;z-index:8} /* sized in whole pixels (1.4x the sprite) so the nine-slice has no seams; left is set from the width so the box stays centred */
 #dlg.on{display:block}
 #dlgbg{position:absolute;inset:0;--img:url(assets/dialogue_box_tall_portrait_ribbon.webp);--sl:410;--sr:100;--st:68;--sb:26;border-image-width:95px 140px 36px 574px}
+#dlg.cap #dlgbg{--img:url(assets/dialogue_box_caption.webp);--sl:100;--sr:100;--st:68;--sb:26;border-image-width:95px 140px 36px 140px}
+#dlg.cap .por,#dlg.cap .nm{display:none}
+#dlg.cap .tx{left:190px;right:196px}
 #meas{position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font:400 36.5px/1.32 var(--font-body)}
 #dlg .por{position:absolute;left:49px;top:59px;width:200px;height:196px;overflow:hidden;border-radius:5px}
 #dlg .por img{transition:opacity .15s;width:200px;height:auto;display:block;filter:drop-shadow(0 2px 2px rgba(60,35,10,.4))}
@@ -1751,6 +1754,7 @@ function showPage(anim){
 }
 function renderDlg(anim){
   const n = D[cur]; if (!n) return; const sp = SP[n.sp];
+  { const dl = $("dlg"), want = !!sp.hide; if (dl.classList.contains("cap") !== want){ dl.classList.toggle("cap", want); const bg = $("dlgbg"); bg._nk = null; if (dl.classList.contains("on")) nineDraw(bg); } }   /* a line of narration uses the same box without the portrait and name ribbon */
   $("dNm").textContent = tr(sp.name); $("dNm").style.visibility = sp.hide ? "hidden" : ""; $("dPor").style.visibility = sp.hide ? "hidden" : "";
   const ex = EXPR.includes(n.ex) ? n.ex : "neutral"; // each line picks its expression; speakers without portraits keep the still
   const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil);   /* silhouette until the real portrait exists */
