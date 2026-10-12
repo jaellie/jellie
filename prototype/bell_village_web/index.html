@@ -2257,7 +2257,7 @@ const GROUP_SV = { clock:"clock", tower:"tower", past23:"history", letters:"lett
 /* sprite icons (assets/journal_gi_*, journal_ei_*): group icons by key, item icons by evidence id */
 const GI = { clock:1, tower:1, history:1, letter:1, photo:1, hiding:1, trace:1, medical:1, cafe:1, patrol:1, plaza:1, scene:1, document:1 };
 const EI = { clock:"clock", mech:"mech", hatch2:"hatch", pwatch:"pwatch", watch:"pwatch", bellinc:"bell", oldrep:"oldrep", mreq:"mreq", noledger:"noledger", draft:"draft", letters:"draft", mnote:"mnote", notebook:"notebook", tdoc:"tdoc", torn_page:"tornpage",
-  thread:"thread", wool:"thread", button:"button", hidden:"hidden", glove:"hidden", notice:"notice", tod:"tod", receipt:"receipt", tab_pm:"tabpm", pit:"pit", hide:"frame" };
+  thread:"thread", wool:"thread", hatch:"hatch", patrol:"gi_patrol", patrol2:"gi_patrol", bellrec:"gi_history", letter:"draft", drawers:"gi_hiding", bread:"gi_cafe", report:"gi_medical", button:"button", hidden:"hidden", glove:"hidden", notice:"notice", tod:"tod", receipt:"receipt", tab_pm:"tabpm", pit:"pit", hide:"frame" };
 const spImg = (n, size) => '<img src="assets/journal_'+n+'.webp" alt="" style="max-height:'+size+'px;max-width:'+size+'px;width:auto;height:auto">';
 function svIcon(key, size){
   if (GI[key]) return spImg("gi_"+key, size);
@@ -2265,7 +2265,7 @@ function svIcon(key, size){
   return '<svg viewBox="0 0 64 64" width="'+size+'" height="'+size+'" fill="#f6e3c0" stroke="#5b3d18" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(SV[key]||SV.document)+'</svg>';
 }
 function evIcon(e, size){
-  const eid = e.id || Object.keys(EV).find(k=>EV[k]===e); if (EI[eid]) return spImg("ei_"+EI[eid], size);
+  const eid = e.id || Object.keys(EV).find(k=>EV[k]===e); if (EI[eid]) return spImg(EI[eid].startsWith("gi_") ? EI[eid] : "ei_"+EI[eid], size);
   if (e.img) return '<img src="assets/'+e.img+'.webp" alt="" style="max-height:'+size+'px;max-width:'+size+'px;width:auto;height:auto">';
   if (e.icon === "clock") return '<svg viewBox="-70 -70 140 140" width="'+size+'" height="'+size+'"><use href="#clk" x="-70" y="-70" width="140" height="140"/></svg>';
   if (e.kind) return svIcon(e.kind, size);
@@ -2917,7 +2917,7 @@ if (S.flags && S.flags["c3.qz"] && !S.flash && !S.flags["f4.end"] && !S.flags["f
 let resumeFlash = 0; if (S.flash){ resumeFlash = S.flash; S.flash = false; S.scene = "village"; S.x = resumeFlash === 5 ? 3700 : 2150; }   /* a save made inside a flashback (some are from the old Chapter 4/5) restarts that flashback instead of leaving the player with nothing to do */
 cam = 0; fit(); setSceneNow((["tower","archive","cafe","cottage","mill"].includes(S.scene) || (S.flash && ["past","flood"].includes(S.scene))) ? S.scene : "village", S.x); fit(); applyLang(); stage.focus(); if (resumeFlash) setTimeout(()=>{ if (resumeFlash === 5) startFlash5(); else startFlash(); }, 900);
 setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
-window.__bv = { D, NOTES, SP, EV, ENDINGS, ACC, SMALL, FOLLOW, KCON, GATE_T, CHT, UI, setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4, EV_META, evGroups, evStatements, PEOPLE, personView, metPeople, skipTo };
+window.__bv = { D, NOTES, SP, EV, ENDINGS, ACC, SMALL, FOLLOW, KCON, GATE_T, CHT, UI, setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4, EV_META, evGroups, evStatements, PEOPLE, personView, metPeople, skipTo, evIcon, EI, GI };
 requestAnimationFrame(frame);
   if (typeof nineAll === "function") requestAnimationFrame(nineAll);
   /* layers with will-change keep the raster scale they were first painted at, so after a resize or rotation they look soft; drop and restore the hint to re-paint them sharp */
