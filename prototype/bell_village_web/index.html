@@ -257,14 +257,20 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #dlg .tx i{color:#6d4f2d}
 #choices{position:absolute;left:500px;bottom:346px;z-index:8;display:none;flex-direction:column;gap:8px;align-items:stretch;width:max-content;max-width:1100px;max-height:640px;overflow-y:auto;overflow-x:hidden;padding:4px 14px 2px 4px;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}   /* one panel that sits on the dialogue box, starting at the name ribbon (left is set from the box); it grows upward and scrolls if a list is long */
 #choices.on{display:flex}
-.choice{display:flex;align-items:center;gap:12px;width:auto;max-width:1100px;height:56px;min-height:56px;padding:0 4px 0 6px;border:0;border-style:solid;border-width:0 28px;border-image:url(assets/dlg_choice_normal.webp) 0 56 fill/0 28px stretch;background:none;font:600 27px/1.2 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s,opacity .12s;flex:none;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));white-space:nowrap}
+.choice{display:flex;align-items:center;gap:12px;width:auto;max-width:1100px;height:56px;min-height:56px;box-sizing:content-box;padding:0;border:0;border-style:solid;background:none;font:600 27px/1.2 var(--font-body);color:#3a2a1a;cursor:pointer;text-align:left;transition:transform .12s,filter .12s;flex:none;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));white-space:nowrap}
+.choice.n1{rotate:-.5deg;margin-left:6px;} .choice.n2{rotate:.4deg} .choice.n3{rotate:-.3deg;margin-left:12px} .choice.n4{rotate:.5deg;margin-left:3px} .choice.n5{rotate:-.4deg;margin-left:9px}
+.choice.n1{border-width:0.0px 62px 0.0px 62px;border-image:url(assets/dlg_note_1.webp) 0 124 0 124 fill/0.0px 62px 0.0px 62px stretch;--ns:url(assets/dlg_note_1.webp)}
+.choice.n2{border-width:0.5px 62px 0.5px 62px;border-image:url(assets/dlg_note_2.webp) 1 124 1 124 fill/0.5px 62px 0.5px 62px stretch;--ns:url(assets/dlg_note_2.webp)}
+.choice.n3{border-width:11.0px 62px 0.5px 62px;border-image:url(assets/dlg_note_3.webp) 22 124 1 124 fill/11.0px 62px 0.5px 62px stretch;--ns:url(assets/dlg_note_3.webp)}
+.choice.n4{border-width:0.5px 62px 0.0px 62px;border-image:url(assets/dlg_note_4.webp) 1 124 0 124 fill/0.5px 62px 0.0px 62px stretch;--ns:url(assets/dlg_note_4.webp)}
+.choice.n5{border-width:2.0px 62px 2.0px 62px;border-image:url(assets/dlg_note_5.webp) 4 124 4 124 fill/2.0px 62px 2.0px 62px stretch;--ns:url(assets/dlg_note_5.webp)}
 .choice .nb{flex:none;width:26px;margin-left:-2px;text-align:center;font:700 28px/1 var(--font-label);color:#6e2a35}
-.choice.sel .nb,.choice:hover .nb{color:#f6e3c0}.choice.asked .nb{color:#8a7a62}.choice.asked.sel .nb,.choice.asked:hover .nb{color:#f6e3c0}
-.choice.asked{border-image-source:url(assets/dlg_choice_heard.webp);color:#5a4a38}.choice.asked:hover,.choice.asked.sel{border-image-source:url(assets/dlg_choice_selected.webp);color:#f6e3c0}
+.choice.asked .nb{color:#8a7a62}
+.choice.asked{filter:grayscale(.55) brightness(.93) drop-shadow(0 3px 5px rgba(0,0,0,.4));color:#6b5b45}.choice.asked:hover,.choice.asked.sel{filter:brightness(1.08) saturate(1.15) drop-shadow(0 3px 5px rgba(0,0,0,.4)) drop-shadow(0 0 7px rgba(255,214,140,.55));color:#6e2a35}
 .choice.asked:after{content:"\2713";margin-left:auto;padding-left:18px;color:#6e2a35;font:700 24px/1.3 var(--font-body)}
-.choice.asked:hover:after,.choice.asked.sel:after{color:#f6e3c0}
+
 #choices .chead{flex:none;align-self:flex-start;margin:0 0 6px 6px;padding:0;font:700 24px/1.2 var(--font-body);letter-spacing:.02em;color:#f6e3c0;text-shadow:0 2px 6px rgba(8,5,20,.95),0 0 12px rgba(8,5,20,.85);white-space:nowrap}
-.choice:hover,.choice.sel{border-image-source:url(assets/dlg_choice_selected.webp);color:#f6e3c0;transform:translateX(3px)}
+.choice:hover,.choice.sel{filter:brightness(1.08) saturate(1.15) drop-shadow(0 3px 5px rgba(0,0,0,.4)) drop-shadow(0 0 7px rgba(255,214,140,.55));color:#6e2a35;transform:translateX(4px) rotate(-.6deg)}
 
 /* speaker close-up: the expression portrait is shown large beside the dialogue box (the box and its small frame are unchanged) */
 #bigPor{position:absolute;left:290px;bottom:236px;height:650px;z-index:7;pointer-events:none;opacity:0;transition:opacity .22s}
@@ -2175,7 +2181,7 @@ function showChoices(){
   const n = D[cur]; if (!n.ch) return; const box = $("choices"); box.innerHTML = "";
   const sp = SP[n.sp], menu = n.ch.some(c=>c.bye) && sp && !sp.hide && n.sp !== "bgb";   /* a question menu: label it with who is being asked */
   if (menu){ const h = document.createElement("div"); h.className = "chead"; h.textContent = lang === "ko" ? tr(sp.name)+"에게 묻기" : "Ask "+tr(sp.name); box.appendChild(h); }
-  n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice" + (menu && !c.bye && isAsked(c) ? " asked" : ""); b.innerHTML = '<span class="nb">'+(i+1)+'</span>'; b.appendChild(document.createTextNode(tr(c.t))); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
+  n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice n" + (i%5+1) + (menu && !c.bye && isAsked(c) ? " asked" : ""); b.innerHTML = '<span class="nb">'+(i+1)+'</span>'; b.appendChild(document.createTextNode(tr(c.t))); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
   box.scrollTop = box.scrollHeight;
   box.classList.add("on");   /* both answers start cream; the one you pick turns burgundy */
 }
