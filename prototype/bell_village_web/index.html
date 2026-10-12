@@ -2189,7 +2189,15 @@ function sizeDlg(text){
 const NOFLIP = new Set(["gr","bgb","hl","kid","yo","mo","hz","v1","cr"]);   /* mo and hz already look to the right in their art */
 const FLIP_TOGGLE = new Set(["mo:worried","tm:surprised","tm:thinking"]);   /* expressions whose art faces the other way from the rest of that person */
 let STILL_ON = false;
-const STILLS = { fnB_15:"assets/still_endB_wait.webp", fnB_16:"assets/still_endB_wait.webp" };   /* Ending B: Edward's hand on the scarf, then his 'Wait...' */
+const STILLS = (() => {
+  const m = { fnB_15:"assets/still_endB_wait.webp", fnB_16:"assets/still_endB_wait.webp" };
+  const span = (id, a, b, src) => { for (let i = a; i <= b; i++) m[id + "_" + i] = src; };
+  span("f4ok", 22, 28, "assets/still_brothers_awning.webp");   /* 23 years ago: the twins under the awning, knots on opposite shoulders */
+  span("mill_d", 6, 9, "assets/still_mill_tea.webp");           /* the Old Mill: empty cups, empty tea tin */
+  span("f5s2", 31, 33, "assets/still_edward_signing.webp");     /* Edward hesitates over the signature, a fox waiting at the door */
+  span("fnA", 12, 13, "assets/still_clock_tower.webp");         /* Ending A: Nini writes it all down under the tower */
+  return m;
+})();   /* Ending B: Edward's hand on the scarf, then his 'Wait...' */
 let bigSide = "";
 const askedGo = new Set();   /* answers already heard this session; with the story flags they set, these only dim an answer, they never lock it */
 const isAsked = c => !!c.go && (askedGo.has(c.go) || !!(D[c.go] && typeof D[c.go].set === "string" && has(D[c.go].set)));
