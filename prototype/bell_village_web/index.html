@@ -325,22 +325,29 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #chcard{position:absolute;inset:0;z-index:41;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0;pointer-events:none;transition:opacity .9s;color:#f3e6c8;text-align:center}
 #chcard.on{opacity:1}
 #stage.cine #caseplate,#stage.cine #side,#stage.cine .hudbtn,#stage.cine #touch{opacity:0;pointer-events:none;transition:opacity 1.2s}
-#finale{position:absolute;inset:0;z-index:42;background:radial-gradient(ellipse at 50% 42%,#14182c 0%,#05060f 62%,#02030a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;opacity:0;pointer-events:none;transition:opacity 1.8s;color:#f3e6c8;text-align:center;padding:0 140px}
+#finale{position:absolute;inset:0;z-index:42;background:#02030a;opacity:0;pointer-events:none;transition:opacity 1.8s;color:#f3e6c8;text-align:center}
 #finale.on{opacity:1;pointer-events:auto}
-#finale .fe,#finale .fh,#finale .fl,#finale .fx,#finale .ft,#finale .fq,#finale .fb{opacity:0;transition:opacity 1.6s,transform 1.6s;transform:translateY(10px)}
+#fnCard,#fnTi{position:absolute;left:0;right:0;top:50%;transform:translateY(-52%);display:flex;flex-direction:column;align-items:center;gap:22px;padding:0 140px}
+#finale .fe,#finale .fh,#finale .fl,#finale .ft,#finale .fb{opacity:0;transition:opacity 1.8s,transform 1.8s;transform:translateY(10px)}
 #finale .show{opacity:1;transform:none}
 #finale .fe{font:600 24px/1 "Alegreya SC",Georgia,serif;letter-spacing:.34em;color:#c9a96a}
 #finale .fh{font:700 58px/1.15 "Alegreya",Georgia,serif}
+#finale #fnTH{font-size:92px;letter-spacing:.06em}
 html[lang="ko"] #finale .fh{font-family:Pretendard,"Alegreya",serif}
 #finale .fl{width:0;height:2px;background:linear-gradient(90deg,transparent,#c9a96a,transparent);transition:opacity 1s,width 2.2s;transform:none}
 #finale .fl.show{width:360px}
-#finale .fx{font:600 40px/1 "Alegreya SC",Georgia,serif;letter-spacing:.5em;color:#e9d9b0;margin-top:26px;padding-left:.5em}
-#finale .ft{font:600 22px/1.4 "Alegreya SC",Georgia,serif;letter-spacing:.3em;color:#8d8366}
-#finale .fq{font:italic 500 34px/1.5 "Alegreya",Georgia,serif;color:#d9cba6;min-height:52px;margin-top:20px;transform:none}
-html[lang="ko"] #finale .fq{font-family:Pretendard,"Alegreya",serif;font-style:normal;font-weight:500}
-#finale .fb{display:flex;gap:18px;margin-top:34px;transform:none}
+#finale .ft{font:600 26px/1.4 "Alegreya SC",Georgia,serif;letter-spacing:.32em;color:#c9a96a}
+#finale .fb{position:absolute;left:0;right:0;bottom:90px;display:flex;justify-content:center;gap:18px;transform:none}
 #finale .fb button{font:600 24px/1 var(--font-body);color:#e9d9b0;background:rgba(255,255,255,.05);border:1.5px solid rgba(201,169,106,.55);border-radius:30px;padding:16px 34px;cursor:pointer}
 #finale .fb button:hover,#finale .fb button:focus-visible{background:rgba(201,169,106,.22);outline:none}
+#credits{z-index:60}
+#mono{position:absolute;inset:0;z-index:43;background:#02030a;opacity:0;pointer-events:none;transition:opacity 1.8s;display:flex;align-items:center;justify-content:center;padding:0 260px;cursor:pointer}
+#mono.on{opacity:1;pointer-events:auto}
+#mono .mt{font:500 40px/1.7 "Alegreya",Georgia,serif;color:#e9dcb8;text-align:center;opacity:0;transition:opacity 1.2s,filter 1.2s;max-width:1400px;text-wrap:balance}
+html[lang="ko"] #mono .mt{font-family:Pretendard,"Alegreya",serif;font-weight:500;line-height:1.75}
+#mono .mt.show{opacity:1}
+#mono .mt.blur{filter:blur(5px)}
+#mono .mn{position:absolute;bottom:70px;left:0;right:0;text-align:center;font:600 18px/1 "Alegreya SC",Georgia,serif;letter-spacing:.3em;color:#6f6650;opacity:.8}
 #chcard .ce{font:600 26px/1 "Alegreya SC",Georgia,serif;letter-spacing:.32em;color:#c9a96a}
 #chcard .ct{font:700 74px/1.15 "Alegreya",Georgia,serif}
 html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:700}
@@ -531,7 +538,8 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
     <button class="pbtn nine cream" id="eCred" style="display:none">Credits</button>
     <button class="pbtn nine cream" id="eBack">Back to the village</button>
   </div></div>
-  <div id="finale"><div class="fe" id="fnE"></div><div class="fh" id="fnH"></div><div class="fl" id="fnL"></div><div class="fx" id="fnX">THE END</div><div class="ft" id="fnT">BIG GREEN BEAR'S ADVENTURE</div><div class="fq" id="fnQ"></div><div class="fb" id="fnB"><button id="fnR"></button><button id="fnC"></button><button id="fnK"></button></div></div>
+  <div id="finale"><div id="fnCard"><div class="fe" id="fnE"></div><div class="fh" id="fnH"></div><div class="fl" id="fnL"></div></div><div id="fnTi"><div class="ft" id="fnT"></div><div class="fh" id="fnTH"></div></div><div class="fb" id="fnB"><button id="fnR"></button><button id="fnC"></button><button id="fnK"></button></div></div>
+  <div id="mono"><div class="mt" id="monoT"></div><div class="mn" id="monoN"></div></div>
   <div id="goal"></div><div id="fade"></div><div id="chcard"><div class="ce" id="chE"></div><div class="cl"></div><div class="ct" id="chT"></div></div>
   <span id="meas"></span>
  </div>
@@ -875,8 +883,9 @@ CH("may2", [["hl","또 왔구나.","You're back."], ["bgb","한 가지 더 물�
 CH("fr6", [["nar","(액자 뒤쪽이 조금 벌어져 있다.)","(The back of the picture frame is slightly loose.)"], ["nar","(접힌 편지와 오른손 장갑 한 짝이 있다.)","(A folded letter and a right-hand glove are hidden behind it.)"], ["bgb","아직 여기 있었네.","Still here."], ["nar","\"이번에는 누구의 이름도 지우지 않겠습니다.\"","\"This time, I will not erase anyone's name.\""], ["nar","(편지 아래쪽에는 에드워드의 서명이 있다.)","(Edward's signature appears at the bottom.)",{ev:"hidden", set:"fin.frame"}]]);
 D.fr9 = {sp:"bgb", ex:"thinking", t:{ko:"편지와 장갑은 그대로 두자.", en:"I'll leave the letter and the glove where they are."}};
 CH("gl7", [["nar","(빅그베가 방앗간을 다시 찾는다.)","(Big Green Bear returns to the mill.)"], ["gr","또 왔어?","Back again?"], ["bgb","하나만 물어보려고.","Just one more question."], ["gr","뭔데?","What is it?"], ["bgb","그날로 돌아갈 수 있다면 어떻게 할 거야?","What would you do if you could go back to that night?"], ["gr","아래로 내려갔겠지.","I'd have gone downstairs."], ["bgb","그다음엔?","And then?"], ["gr","살아 계셨는지 확인했을 거야.","I'd have checked if he was still alive."], ["bgb","살아 계셨다면?","And if he was?"], ["gr","사람을 불렀겠지. 당연히.","I'd have called for help. Of course."], ["nar","(빅그베가 잠시 그린을 바라본다.)","(Big Green Bear looks at Green for a moment.)"], ["gr","넌?","What about you?"], ["bgb","나?","Me?"], ["gr","그날로 돌아갈 수 있다면.","If you could go back."], ["bgb","글쎄.","I don't know."], ["gr","넌 항상 답을 잘했잖아.","You always had an answer for everything."], ["bgb","이번엔 없네.","Not this time.",{set:"fin.last"}]]);
-CH("fn0", [["nar","(마을 광장. 니니가 빅그베를 기다리고 있다.)","(In the village square, Nini waits for Big Green Bear.)"], ["nini","아저씨! 알아내셨어요?","Mr. Bear! Did you figure it out?"], ["bgb","응. 조금은.","Yeah. Some of it."], ["nini","그럼 이제 다 끝난 거예요?","So is it all over now?"], ["bgb","그건 모르겠네.","I'm not sure."], ["nini","에드워드 아저씨가 그러셨는데요.","You know what Edward used to say?"], ["bgb","뭐라고?","What?"], ["nini","기록은 잊지 않으려고 남기는 거래요.","He said we keep records so we won't forget."], ["bgb","그랬지.","He did."], ["nini","그런데 왜 어떤 기록은 없어지는 걸까요?","Then why do some records disappear?"], ["nar","(빅그베가 대답하지 않는다.)","(Big Green Bear says nothing.)"]], {next:"fn_ch"});
-D.fn_ch = {sp:"nar", ex:"neutral", t:{ko:"마지막 선택. 편지를 어떻게 할까?", en:"Final Choice. What will he do with the letter?"}, ch:[QA("편지를 건넨다","Hand Over the Letter","fnA"), QA("편지를 간직한다","Keep the Letter","fnB")]};
+CH("fn0", [["nar","(마을 광장. 니니가 빅그베를 기다리고 있다.)","(In the village square, Nini waits for Big Green Bear.)"], ["nini","아저씨! 알아내셨어요?","Mr. Bear! Did you figure it out?"], ["bgb","응. 조금은.","Yeah. Some of it."], ["nini","그럼 이제 다 끝난 거예요?","So is it all over now?"], ["bgb","그건 모르겠네.","I'm not sure."], ["nini","에드워드 아저씨가 그러셨는데요.","You know what Edward used to say?"], ["bgb","뭐라고?","What?"], ["nini","기록은 잊지 않으려고 남기는 거래요.","He said we keep records so we won't forget."], ["bgb","그랬지.","He did."], ["nini","그런데 왜 어떤 기록은 없어지는 걸까요?","Then why do some records disappear?"], ["nar","(빅그베가 대답하지 않는다.)","(Big Green Bear says nothing.)",{fx:"recap"}]]);
+CH("fn_b", [["nini","아저씨?","Mr. Bear?"], ["bgb","응?","Yeah?"], ["nini","제 말 듣고 계셨어요?","Were you listening?"], ["bgb","응. 듣고 있었어.","Yeah. I was listening."]], {next:"fn_ch"});
+D.fn_ch = {sp:"nini", ex:"neutral", t:{ko:"그럼 어떻게 하실 거예요?", en:"So what are you going to do?"}, ch:[QA("편지를 건넨다","Hand Over the Letter","fnA"), QA("편지를 간직한다","Keep the Letter","fnB")]};
 CH("fnA", [["nar","(빅그베가 니니에게 편지를 건넨다.)","(Big Green Bear hands Nini the letter.)"], ["nini","에드워드 아저씨 글씨네요.","That's Edward's handwriting."], ["bgb","응.","Yeah."], ["nini","이거 기록관에 가져다 놓을까요?","Should I take it to the Archive?"], ["bgb","그래.","Yes."], ["nini","아저씨도 같이 가요.","Come with me."], ["nar","(빅그베가 잠시 머뭇거린다.)","(Big Green Bear hesitates.)"], ["bgb","잠깐만.","Just a second."], ["nar","(그가 주머니에서 오른손 장갑을 꺼낸다.)","(He takes the right-hand glove from his pocket.)"], ["nini","이건 뭐예요?","What's that?"], ["bgb","편지랑 같이 있었어.","It was with the letter."], ["nini","어디서요?","Where?"], ["nar","(빅그베가 니니를 바라본다.)","(Big Green Bear looks at Nini.)"], ["bgb","그 얘기도 해야겠지.","I suppose I should tell you that, too.",{fx:"theend1"}]]);
 CH("fnB", [["nini","아저씨?","Mr. Bear?"], ["bgb","미안. 무슨 얘기였지?","Sorry. What were we talking about?"], ["nini","기록이요!","Records!"], ["bgb","아, 맞다.","Right."], ["nini","아저씨는 에드워드 아저씨처럼 좋은 사람이에요.","You're a good person, just like Edward."], ["bgb","그렇게 생각해?","You think so?"], ["nini","당연하죠!","Of course!"], ["nar","(니니가 웃는다.)","(Nini smiles.)"], ["nini","안녕하세요! 안녕하세요!","Hello! Hello!"], ["bgb","안녕! 안녕!","Hello! Hello!"], ["nar","(니니가 떠난다. 빅그베가 집으로 돌아온다.)","(Nini walks away. Big Green Bear returns home.)",{fx:"walk"}], ["nar","(그는 액자 뒤에 편지와 장갑을 넣는다. 장갑을 밀어 넣다가 무언가 손끝에 걸린다.)","(He hides the letter and glove behind the picture frame. Something catches against his fingertips.)"], ["nar","(작은 황동 단추다. 단추에는 작은 글씨가 새겨져 있다.)","(A small brass button. Tiny letters are engraved on it.)",{ev:"button"}], ["nar","E. BELL","E. BELL"], ["nar","(빅그베가 단추를 손바닥에 올려놓는다.)","(Big Green Bear rests the button in his palm.)"], ["nar","(짧은 회상. 눈 덮인 바닥. 에드워드의 손이 빅그베의 노란 목도리를 붙잡는다.)","(Brief flashback. Snow-covered ground. Edward's hand grips Big Green Bear's yellow scarf.)"], ["ed","잠깐...","Wait..."], ["nar","(현재. 빅그베가 단추를 편지 사이에 끼운다. 액자를 다시 세운다.)","(Present. Big Green Bear slips the button between the folded pages and puts the picture frame back.)",{fx:"theend2"}]]);
 D.p_f0 = {sp:"bgb", ex:"thinking", t:{en:"He was always on my side.", ko:"그분은 항상 내 편이었는데."}, ev:"photo_home", next:"p_f1"};
@@ -1277,7 +1286,7 @@ function showCredits(){ const k = lang==="ko"; $("endcard").classList.remove("on
   $("crEy").textContent = k ? "감사의 말" : "THANK YOU"; $("crH").textContent = k ? "함께해 준 사람들" : "Special Thanks";
   $("crL").innerHTML = k ? "<li>빅그베 아이디어를 주신 sy</li><li>영어 번역을 도와준 tommy</li>" : "<li>sy, for the idea of Big Green Bear</li><li>tommy, for help with the English translation</li>";
   $("crP").textContent = k ? "플레이해 주셔서 감사합니다." : "Thank you for playing."; $("crBack").textContent = k ? "돌아가기" : "Back"; $("credits").classList.add("on"); }
-$("eCred").onclick = showCredits; $("crBack").onclick = ()=>{ $("credits").classList.remove("on"); if (!$("finale").classList.contains("on")) $("endcard").classList.add("on"); };
+$("eCred").onclick = showCredits; $("crBack").onclick = ()=>{ $("credits").classList.remove("on"); if ($("finale").classList.contains("on")) finaleSkip(); else $("endcard").classList.add("on"); };
 function showEnd6(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"6장 끝":"END OF CHAPTER 6"; $("eH").textContent = k?"사라진 5분":"Five Missing Minutes";
   $("eP1").textContent = k?"누가 도울 수 있었고, 하지 않았는가. 증거는 모두 사건 파일에 있다.":"Who had the chance to help, and didn't? The evidence is all in the Case File.";
   $("eP2").textContent = k?"이어서 7장 \"우리가 고르는 진실\"이 시작됩니다.":"Chapter 7, The Truth We Choose, follows.";
@@ -1421,6 +1430,39 @@ function showEndE(n){ const k = lang==="ko", E = ENDINGS[n]; mode = "modal"; set
   NEXTK = 77; const nx = $("eNext"); nx.style.display = ""; nx.textContent = k?"다른 선택을 해 본다":"Choose differently";
   $("eCred").style.display = ""; $("eCred").textContent = k?"감사의 말":"Credits"; $("eBack").textContent = k?"계속 둘러보기":"Keep exploring"; $("endcard").classList.add("on"); save(); }
 /* Ending A: Nini and BGB stand together at dusk before the Archive door, then the screen closes */
+/* the long monologue over black, before the final choice; each paragraph in turn, Enter or a click moves on */
+const MONO = [
+ ["23년 전, 강이 넘치던 날. 마을의 경고 종은 울리지 않았다.","Twenty-three years ago, when the river flooded, the village warning bell never rang."],
+ ["종은 이미 고장 나 있었다. 여러 번 수리를 요청했지만, 의회는 번번이 미뤘다.","The bell had been faulty for some time. Despite repeated repair requests, the council kept putting them off."],
+ ["그날 형은 나를 구하다 왼쪽 귀를 다쳤다. 하지만 의회는 종을 방치한 책임을 피하려 했고, 결국 형이 종을 망가뜨리고 내가 형을 구한 것으로 기록을 바꿨다.","My brother injured his left ear saving me that day. But the council wanted to avoid responsibility for the faulty bell. So they changed the story: my brother was blamed for breaking it, and I was credited with saving him."],
+ ["에드워드 아저씨는 진실을 알고 있었다. 하지만 의회의 압박에 못 이겨 거짓 기록에 서명했고, 그 선택을 23년 동안 후회했다.","Edward knew the truth. But under pressure from the council, he signed the false report, a decision he regretted for twenty-three years."],
+ ["이제라도 바로잡으려 했던 거겠지. 자정이 되면 모든 걸 밝히려고 했으니까.","I suppose he wanted to make things right, even after all these years. He'd planned to tell everyone the truth at midnight."],
+ ["11시 35분, 다리. 11시 40분, 시계탑 계단. 형은 에드워드 아저씨를 만나러 갔다. 23년 전처럼, 이번에도 나를 지키려 했던 거겠지.","11:35, the bridge. 11:40, the clock tower stairs. My brother went to see Edward. I suppose he was trying to protect me again, just as he had twenty-three years ago."],
+ ["하지만 에드워드 아저씨는 더 이상 진실을 숨기려 하지 않았다. 형은 그 서류를 빼앗으려 했고, 두 사람은 몸싸움을 벌였다.","But Edward refused to bury the truth again. My brother tried to take the papers from him, and they struggled."],
+ ["서류가 찢어지고, 아저씨는 뒤로 물러나다 열린 정비구 아래로 떨어졌다. 11시 47분, 시계가 멈췄다.","The papers tore, and Edward stumbled backward through the open maintenance hatch. At 11:47, the clock stopped."],
+ ["형은 아래로 내려가 보지 못했다. 아저씨가 살아 있었는지도 모른 채 그곳을 떠났다.","My brother couldn't bring himself to go down and check. He left without knowing whether Edward was still alive."],
+ ["11시 42분, 나는 카페를 나왔다.","I left the café at 11:42."],
+ ["11시 50분. 나는 에드워드 아저씨를 발견했다.","11:50. I found Edward.", "blur"],
+ ["11시 55분, 비상 종이 울렸다. 그 사이에 무슨 일이 있었는지는 어떤 기록에도 남아 있지 않다.","At 11:55, the emergency bell rang. What happened in between was never recorded."],
+ ["메이 선생님은 조금만 일찍 발견했더라면 결과가 달라졌을지 알 수 없다고 했다. 아마 그건 누구도 끝내 알 수 없을 것이다.","May said she couldn't know whether finding him sooner would have changed anything. Perhaps no one ever will."],
+ ["에드워드 아저씨는 기록을 남기는 이유가 잊지 않기 위해서라고 했다. 하지만 기록되지 않은 일까지 사라지는 건 아니다.","Edward used to say we keep records so we won't forget. But something doesn't cease to exist just because it was never written down."],
+ ["23년 전, 아저씨는 한 가지 진실을 지웠다. 그리고 지금, 내게도 아직 말하지 않은 이야기가 있다.","Twenty-three years ago, Edward erased a truth. And now there's a part of this story I haven't told."]
+];
+let monoI = 0, monoT = null, monoOn = false;
+function showMono(){
+  mode = "modal"; monoOn = true; monoI = -1; hideHintNow(); const M = $("mono"); $("monoT").className = "mt"; $("monoT").textContent = "";
+  $("monoN").textContent = lang==="ko" ? "Enter" : "Enter"; M.classList.add("on"); monoT = setTimeout(monoNext, 2200);
+}
+function monoNext(){
+  if (!monoOn) return; clearTimeout(monoT); const T = $("monoT");
+  if (monoI >= MONO.length - 1){ monoEnd(); return; }
+  T.classList.remove("show"); const next = monoI + 1;
+  setTimeout(()=>{ if (!monoOn) return; monoI = next; const L = MONO[next]; T.textContent = lang==="ko" ? L[0] : L[1]; T.classList.toggle("blur", L[2] === "blur"); T.classList.add("show");
+    const dur = Math.max(4200, (lang==="ko" ? L[0] : L[1]).length * 95 + 1800); monoT = setTimeout(monoNext, dur); }, next === 0 ? 0 : 1100);
+}
+function monoEnd(){ monoOn = false; clearTimeout(monoT); $("monoT").classList.remove("show"); setTimeout(()=>{ $("mono").classList.remove("on"); setTimeout(()=>{ mode = "play"; holdHint = false; startDlg("fn_b"); }, 1900); }, 1200); }
+$("mono").addEventListener("click", ()=>{ if (monoOn && monoI >= 0) monoNext(); });
+document.addEventListener("keydown", e=>{ if (monoOn && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); e.stopPropagation(); if (monoI >= 0) monoNext(); } }, true);
 function endSeqA(){
   const f = $("fade"); f.style.transition = "opacity 1.8s"; f.classList.add("on");
   setTimeout(()=>{ setSceneNow("village", 3060); NPCX_V.nini = 2985; $("stage").classList.add("cine"); nini.style.display = ""; nini._sh.style.display = ""; $("stage").classList.add("dusk"); mode = "modal"; f.classList.remove("on");
@@ -1428,25 +1470,24 @@ function endSeqA(){
 }
 let finTimers = [];
 function showFinal(k){ const K = lang==="ko"; mode = "modal"; setf("fin.end"); setf("end"+k); hideHintNow();
-  const F = $("finale"), q = K ? "\u201c좋은 사람에 대한 기억이지.\u201d" : "\u201cIt's the memory of a good person.\u201d";
+  const F = $("finale");
   $("fnE").textContent = k===1 ? (K?"엔딩 A":"ENDING A") : (K?"엔딩 B":"ENDING B");
   $("fnH").textContent = k===1 ? (K?"남겨진 기록":"The Record That Remained") : (K?"좋은 사람":"A Good Person");
-  $("fnX").textContent = K ? "끝" : "THE END"; $("fnQ").textContent = "";
+  $("fnT").textContent = K ? "빅그베의 모험 2" : "BIG GREEN BEAR'S ADVENTURE II"; $("fnTH").textContent = K ? "은폐" : "The Cover-Up";
   $("fnR").textContent = K?"다른 선택을 해 본다":"Choose differently"; $("fnC").textContent = K?"감사의 말":"Credits"; $("fnK").textContent = K?"계속 둘러보기":"Keep exploring";
-  const els = ["fnE","fnH","fnL","fnX","fnT","fnB"].map($); els.forEach(e=>e.classList.remove("show"));
+  ["fnE","fnH","fnL","fnT","fnTH","fnB"].forEach(i=>$(i).classList.remove("show"));
   finTimers.forEach(clearTimeout); finTimers = []; const at = (ms, fn) => finTimers.push(setTimeout(fn, ms));
   F.classList.add("on");
-  at(1600, ()=>{ $("fnE").classList.add("show"); $("fnH").classList.add("show"); });
-  at(4200, ()=>$("fnL").classList.add("show"));
-  at(5000, ()=>$("fnX").classList.add("show"));
-  at(7000, ()=>$("fnT").classList.add("show"));
-  at(8800, ()=>{ let i = 0; const t = setInterval(()=>{ i++; $("fnQ").textContent = q.slice(0,i); if (i >= q.length){ clearInterval(t); at(900, ()=>$("fnB").classList.add("show")); } }, 70); finTimers.push(t); });
+  at(1400, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.add("show")));      /* ending name */
+  at(4800, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")));    /* then the screen is fully black */
+  at(7400, ()=>["fnT","fnTH"].forEach(i=>$(i).classList.add("show")));            /* 2 s of silence, then the title */
+  at(13400, ()=>showCredits());                                                    /* held 4 s, then the credits */
   holdHint = false; save(); }
-function finaleSkip(){ if (!$("finale").classList.contains("on")) return; finTimers.forEach(t=>{ clearTimeout(t); clearInterval(t); }); finTimers = [];
-  ["fnE","fnH","fnL","fnX","fnT","fnB"].forEach(i=>$(i).classList.add("show")); $("fnQ").textContent = lang==="ko" ? "\u201c좋은 사람에 대한 기억이지.\u201d" : "\u201cIt's the memory of a good person.\u201d"; }
+function finaleSkip(){ if (!$("finale").classList.contains("on")) return; finTimers.forEach(t=>clearTimeout(t)); finTimers = [];
+  ["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")); ["fnT","fnTH","fnB"].forEach(i=>$(i).classList.add("show")); }
 $("finale").addEventListener("click", e=>{ if (e.target.closest("button")) return; finaleSkip(); });
 $("fnR").onclick = ()=>{ finaleSkip(); $("finale").classList.remove("on"); mode = "play"; startDlg("fn_ch"); };
-$("fnC").onclick = ()=>showCredits();
+$("fnC").onclick = ()=>{ finTimers.forEach(t=>clearTimeout(t)); finTimers = []; ["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")); ["fnT","fnTH"].forEach(i=>$(i).classList.add("show")); showCredits(); };
 $("fnK").onclick = ()=>{ $("finale").classList.remove("on"); mode = "play"; stage.focus(); };
 function replayChoice(){ $("endcard").classList.remove("on"); S.flags["c7.done"] = false; mode = "play"; startDlg("cc0"); }
 function startCh7(){ setf("c7.on"); $("endcard").classList.remove("on"); chapterIntro(7, ()=>setSceneNow("mill", 1400)); }
@@ -1733,7 +1774,7 @@ function showChoices(){
 }
 function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.bye) menuFollow = null; else if (c.go) menuFollow = (cur === "followUp") ? menuFollow : (n.ch.some(x=>x.bye||!x.go) ? cur : null); else menuFollow = null; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
   setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
-function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); holdHint = true; setTimeout(()=>endMono("ce7_"+en+"_0", ()=>showEndE(en)), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.fx === "rain") $("rain").classList.add("on"); if (/^theend[12]$/.test(n.fx||"")){ const fe = +n.fx.slice(6); holdHint = true; mode = "modal"; setTimeout(()=>{ if (fe === 1) endSeqA(); else { const f = $("fade"); f.style.transition = "opacity 1.8s"; f.classList.add("on"); setTimeout(()=>{ f.style.transition = ""; showFinal(2); f.classList.remove("on"); }, 2000); } }, 700); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
+function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); holdHint = true; setTimeout(()=>endMono("ce7_"+en+"_0", ()=>showEndE(en)), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.fx === "rain") $("rain").classList.add("on"); if (n.fx === "recap"){ holdHint = true; setTimeout(showMono, 150); } if (/^theend[12]$/.test(n.fx||"")){ const fe = +n.fx.slice(6); holdHint = true; mode = "modal"; setTimeout(()=>{ if (fe === 1) endSeqA(); else { const f = $("fade"); f.style.transition = "opacity 1.8s"; f.classList.add("on"); setTimeout(()=>{ f.style.transition = ""; showFinal(2); f.classList.remove("on"); }, 2000); } }, 700); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(fromClick){
   if (performance.now() < dlgLock) return;
   if (fromClick && D[cur] && D[cur].ch && !typing && pgi >= pgs.length - 1) return;   /* a click never picks an answer; choose with the buttons, 1/2 or arrows + E */
