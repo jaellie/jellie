@@ -83,3 +83,6 @@
 - 항목 아이콘 `journal_ei_*` (긴 변 224). 증거 ID 연결(코드 `EI`): clock, mech, hatch2→hatch, pwatch/watch→pwatch, bellinc→bell, oldrep, mreq, noledger, draft/letters→draft, mnote, notebook, tdoc/torn_page→tornpage, thread/wool→thread, button, hidden/glove→hidden, notice, tod, receipt, tab_pm→tabpm, pit, hide→frame. 짝을 정하지 못해 아직 연결하지 않은 것: photomill, photolantern.
 - `journal_tag` 540×186: 전시대 라벨. 늘리지 않고 300×104로 그린다(밧줄 구멍 오른쪽에 글자).
 원본: `journal_k_icons_groups_v1`, `journal_k_icons_items_v1`, `journal_k_icons_items2_v1`, `journal_k_tag_v1`.
+
+## 11. 단서 쪽지 핀 분리
+`journal_cardpin`의 붉은 핀은 9-slice 윗변 가운데에 박혀 있어 늘어나면 찌그러진다. 핀을 지운 `journal_cardplain`(400×149, 9-slice 50, 화면 18)과 따로 쓰는 `journal_pin`(80×80, 화면 26)으로 나눴다. 핀은 쪽지 윗변 가운데에 얹는 별도 Image로 둔다 (늘리지 않는다).
