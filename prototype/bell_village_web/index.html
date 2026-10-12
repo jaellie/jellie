@@ -211,7 +211,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #tfg,#tfar{pointer-events:none}
 
 /* Persistent category panel (left), as in the mockup */
-#side{position:absolute;left:12px;top:182px;width:294px;height:570px;background:url(assets/nav_binder_v2.webp) 0 0/100% 100% no-repeat;z-index:5}
+#side{position:absolute;left:12px;top:182px;width:294px;height:401px;background:url(assets/nav_binder_4.webp) 0 0/100% 100% no-repeat;z-index:5}
 .sbtn{position:absolute;left:61px;width:197px;height:72px;padding:0 16px 0 20px;--s:.97;background-color:transparent;display:flex;align-items:center;justify-content:flex-start;gap:9px;font:700 20px/1 var(--font-label);letter-spacing:.02em;white-space:nowrap;color:var(--ink);cursor:pointer;border-radius:12px;transition:filter .12s,transform .12s}
 .sbtn svg{width:25px;height:25px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .sbtn:hover{filter:brightness(1.08);transform:translateX(3px)}
@@ -257,7 +257,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #cf{position:absolute;inset:0;background:rgba(6,9,20,.82);display:none;z-index:20}
 #cf.on{display:block}
 #cfwrap{position:absolute;left:150px;top:70px;width:1620px;height:940px}
-#nav{position:absolute;left:0;top:70px;width:386px;height:748px;background:url(assets/nav_binder_v2.webp) 0 0/100% 100% no-repeat}
+#nav{position:absolute;left:0;top:70px;width:386px;height:527px;background:url(assets/nav_binder_4.webp) 0 0/100% 100% no-repeat}
 .tab{position:absolute;left:80px;width:259px;height:95px;background-color:transparent;border-radius:14px;font:700 26px/1 var(--font-label);letter-spacing:.05em;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:filter .12s;padding:0 24px;--s:1.25}
 .tab:not(.nine){border:0}
 .tab:hover{filter:brightness(1.07)}
@@ -374,6 +374,36 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 #rot{position:fixed;left:16px;right:16px;top:calc(10px + env(safe-area-inset-top,0px));display:none;text-align:center;font:600 15px/1.3 var(--font-body);color:#ffe3a6;background:rgba(18,26,52,.88);border:1px solid var(--brass);border-radius:8px;padding:8px 12px;z-index:60;pointer-events:none}
 @media (orientation:portrait) and (max-width:700px){#rot{display:block}}
 @media (prefers-reduced-motion:reduce){.mark{animation:none}}
+
+/* Case File phase 2 */
+.pcard{display:flex;gap:26px;align-items:flex-start;margin-top:6px}
+.pcard .pp{width:200px;height:200px;border-radius:12px;border:4px solid var(--brass);background:#c8a96f;overflow:hidden;flex:none}
+.pcard .pp img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.pcard .pb{flex:1;min-width:0}
+.pcard h3{margin:0;font:700 40px/1.1 var(--font-body)}
+.pcard .role{font:italic 600 24px/1.2 var(--font-body);color:#6d5a40;margin:2px 0 8px}
+.sec{margin:16px 0 4px;font:500 17px/1 var(--font-label);letter-spacing:.2em;color:#8a6a3e}
+.quote{border-left:5px solid var(--brass);padding:4px 14px;margin:6px 0;font:400 24px/1.35 var(--font-body)}
+.cfp{font:400 26px/1.4 var(--font-body);margin:6px 0}
+.cfnote{font:italic 400 22px/1.35 var(--font-body);color:#6d5a40;margin:6px 0}
+.tlrow{display:flex;gap:18px;align-items:flex-start;padding:10px 0;border-bottom:2px dashed rgba(138,106,58,.4)}
+.tlrow .tt{width:170px;flex:none;font:700 32px/1.1 var(--font-body)}
+.tlrow .tb{flex:1;min-width:0;font:400 25px/1.3 var(--font-body)}
+.badge{display:inline-block;font:700 14px/1 var(--font-label);letter-spacing:.1em;padding:4px 8px;border-radius:99px;border:2px solid;margin-right:8px;vertical-align:middle}
+.b-fact{color:#2f5f3a}.b-claim{color:#8a5a14}.b-est{color:#6e2a35}.b-unk{color:#6d5a40}
+.seg{display:flex;gap:10px;margin:4px 0 12px}
+.seg button,.qopts button,.gchip{font:600 22px/1 var(--font-body);padding:10px 14px;border-radius:8px;border:2px solid #8a6a3a;background:#f3e6c8;color:#4a2f10;cursor:pointer}
+.seg button.on,.qopts button.on,.gchip.on{background:#6e2a35;color:#f6e3c0;border-color:#6e2a35}
+.gchip.old{opacity:.8;border-style:dashed}
+.qcard{background:rgba(255,248,225,.55);border:3px solid rgba(176,141,87,.75);border-radius:10px;padding:14px 18px;margin:12px 0}
+.qcard h4{margin:0 0 6px;font:700 28px/1.25 var(--font-body)}
+.qopts{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 2px}
+.newclue{color:#6e2a35;font:700 17px var(--font-label);letter-spacing:.1em;margin-left:8px}
+.evcell .gl{position:absolute;left:2px;right:2px;bottom:3px;font:700 15px/1.05 var(--font-body);text-align:center;color:var(--ink)}
+.evcell .cnt{position:absolute;right:6px;top:4px;min-width:24px;height:24px;border-radius:12px;background:#6e2a35;color:#f6e3c0;font:700 15px/24px var(--font-body);text-align:center}
+.evcell img,.evcell svg{max-height:calc(100% - 34px)}
+.placerow{padding:8px 0;border-bottom:2px dashed rgba(138,106,58,.4)}
+.placerow b{font:700 26px var(--font-body)}
 </style>
 
 <div id="vp">
@@ -599,6 +629,7 @@ const ICONS = [
   '<path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 19h4"/>',
   '<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>'
 ];
+const CF_TABS = 4; ICONS.splice(0, ICONS.length, ICONS[1], ICONS[2], ICONS[5], ICONS[4]);   /* Case File has four tabs: people, evidence, reconstruction (map), notes */
 const PLY = [113,330,543,757,968,1180], SK = 294/746;   /* plaque tops in nav_binder_v2.webp (746x1445); the plaques are painted into the art */
 function buildSide(){
   const side = $("side"); if (side.dataset.built) return; side.dataset.built = "1";
@@ -633,7 +664,7 @@ const UI = {
   talk: {en:"Talk to Nini", ko:"니니와 이야기한다"}, talkCk:{en:"Talk to Oliver", ko:"올리버와 이야기한다"},
   read:{en:"Read the signpost", ko:"표지판을 읽는다"}, look:{en:"Look up at the clock", ko:"시계를 올려다본다"}, enter:{en:"Enter the Clocktower", ko:"시계탑에 들어간다"},
   resume:{en:"Resume", ko:"계속하기"}, restart:{en:"Restart", ko:"처음부터"}, langBtn:{en:"Language: English", ko:"언어: 한국어"}, paused:{en:"PAUSED", ko:"일시정지"},
-  tabs:{en:["Investigate","People","Evidence","Timeline","Notes","Map"], ko:["조사","인물","증거","타임라인","노트","지도"]},
+  tabs:{en:["People","Evidence","Reconstruction","Deduction Notes"], ko:["인물","증거","사건 재구성","추리 노트"]},
   got:{en:"Evidence added", ko:"증거 추가"}, newnote:{en:"Note added", ko:"노트 추가"},
   case:{en:"The Death of Edward", ko:"에드워드의 죽음"}, loc:{en:"Bell Village", ko:"벨 마을"},
   objHead:{en:"What to do", ko:"할 일"},
@@ -1627,6 +1658,7 @@ const IA_A = [
   { id:"oshelf",x:()=>1230, label:UI.lShelf, top:540, when:()=>!has("c6.on"), run:()=>startDlg("ar_shelf") },
   { id:"onote", x:()=>1740, label:UI.lNoteU, top:540, when:()=>!has("c6.on"), run:()=>startDlg("ar_note") },
   { id:"odesk", x:()=>1960, label:UI.lDesk,  top:540, when:()=>!has("c6.on"), run:()=>startDlg("ar_desk") },
+  { id:"odraw", x:()=>2190, label:UI.lDraw, top:540, when:()=>has("ar.drawer") && !has("ar.photo") && !S.ev.includes("photo2"), run:()=>startDlg("ar_ph") },   /* photo2: a separate search after the desk; not part of the 3rd-chapter quiz condition */
   { id:"reg",   x:()=>655,  label:UI.lReg,   top:540, when:()=>has("c6.on"), run:()=>inspect("register") },
   { id:"ledger",x:()=>1230, label:UI.lLedger,top:540, when:()=>has("c6.on"), run:()=>startDlg(has("ar.ledger") ? "ld4" : "ld") },
   { id:"draw",  x:()=>1960, label:UI.lDraw,  top:540, when:()=>has("c6.on"), run:()=>startDlg(has("ar.photo") ? "ar_re4" : "ar_ph") }
@@ -2051,6 +2083,7 @@ function closePause(){ $("pause").classList.remove("on"); mode = "play"; stage.f
 const ROOM = { flood:{min:0,end:2600}, cottage:{min:0,end:2150}, mill:{min:0,end:3000}, past:{min:110,end:2525}, healer:{min:0,end:2352}, cafe:{min:140,end:2440}, archive:{min:48,end:2352}, tower:{min:75,end:2324} };
 function locOf(n){ return tr(n==="healer" ? UI.locH : n==="flood" ? UI.locFl : n==="mill" ? UI.locM : n==="tower" ? UI.locT : n==="archive" ? UI.locA : n==="cafe" ? UI.locC : n==="cottage" ? UI.locP : UI.loc); }
 function setSceneNow(name, x){
+  S.vis = S.vis || {}; S.vis[name] = 1;   /* places the player has been, for the Case File reconstruction tab */
   calmSince = performance.now(); keys.clear(); autoGo = null;   /* a held or stuck key (or an old tap-to-walk target) must never carry into the new room */
   S.scene = name; const T = name === "tower", A = name === "archive", C = name === "cafe", PR = name === "cottage" || name === "healer", MI = name === "mill", FLD = name === "flood", PST = name === "past", HL = name === "healer", IN = PST || HL || T || A || C || PR || MI || FLD;
   $("vsc").style.display = IN ? "none" : "block"; $("tsc").classList.toggle("on", T); $("asc").classList.toggle("on", A); $("csc").classList.toggle("on", C); $("psc").classList.toggle("on", PR); $("psc").classList.toggle("hl", HL); $("pmarks").style.display = HL ? "none" : ""; $("hmarks").style.display = HL ? "" : "none"; $("msc").classList.toggle("on", MI); $("fsc").classList.toggle("on", FLD); $("ysc").classList.toggle("on", PST);
@@ -2120,38 +2153,174 @@ const SLOTS = [85,174,259,344,429,514];
 function renderNav(){
   const nav = $("nav"); nav.innerHTML = ""; const labs = tr(UI.tabs);
   const k = 386/746;
-  PLY.forEach((py,i)=>{
+  PLY.slice(0,CF_TABS).forEach((py,i)=>{
     const b = document.createElement("button"); b.className = "tab" + (i===tab ? " nine red act" : "");
     b.style.top = Math.round(py*k) + "px"; b.textContent = labs[i];
     b.onclick = ()=>{ tab = i; sub = false; renderCF(); }; nav.appendChild(b);
   });
 }
-function renderCF(){
-  renderNav(); const pg = $("pg"); const labs = tr(UI.tabs);
-  let h = '<div class="eyebrow">CASE C-01 &middot; '+tr(UI.loc)+'</div><h2>'+labs[tab]+'</h2><div style="height:18px"></div>';
-  if (sub && SUBS[tab]){ pg.innerHTML = h + subView(tab); wireSub(); wireCh6(); return; }
-  if (SUBS[tab]) h += '<button class="subbtn nine cream" id="subBtn">'+tr(UI[SUBS[tab].k])+' &rsaquo;</button>';
-  if (tab===0){
-    h += boardResp() + pickRow() + '<div class="pvnote">'+((PV||has("c6.turn")) ? '' : (lang==="ko"?"이후 챕터에서 열이 하나씩 열린다. ":"More columns open in later chapters. ")) + '<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>' + conclPanel();
-  } else if (tab===1){
-    h += peopleStrip() + '<div class="idwrap" style="width:'+Math.round(1100*ID_Z)+'px;height:'+Math.round(634*ID_Z)+'px"><div style="width:1100px;transform:scale('+ID_Z+');transform-origin:0 0">'+boardId()+'</div></div>'+cmpBlock()+'<div class="pvnote" style="width:100%;margin-top:6px;font-size:19px">'+((PV||has("c6.on")) ? '' : (lang==="ko"?"이후 챕터에서 채워진다. ":"Fills in later. "))+'<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div>';
-  } else if (tab===2){
-    h += '<div class="grid2"><div class="evgrid" id="evg"></div><div class="evdesc" id="evd"></div></div>';
-  } else if (tab===3){
-    h += '<div class="legend">'+tr(UI.legend).map(s=>'<span><span class="tag">'+s[0]+'</span>'+s.slice(2)+'</span>').join('')+'</div><div class="tl" id="tl"></div><p style="font:italic 400 28px/1.4 var(--font-body);color:#5a4630;max-width:900px">'+tr(UI.tlNote)+'</p>';
-  } else if (tab===4){
-    h += '<div style="display:flex;gap:28px;align-items:flex-start"><div style="flex:1;min-width:0;max-height:770px;overflow-y:auto;padding-right:8px">'+qBlock()+autoNotes()+conBlock()+'</div>'
-      + '<div style="flex:none;width:540px">'+pageOver(540)+'<div class="pvnote" style="width:540px;font-size:19px">'+(PV ? '' : (lang==="ko"?"이후 챕터에서 채워진다. ":"Fills in later. "))+'<button class="pvbtn" id="pvBtn">'+tr(PV?UI.pvOff:UI.pv)+'</button></div></div></div>';
-  } else {
-    h += '<div class="mapbox"><div class="pin" style="left:168px;top:372px;background:#c4453a"></div><div class="pinlab" style="left:194px;top:372px">'+tr(UI.here)+'</div><div class="pin" style="left:346px;top:300px;background:#d9a441"></div><div class="pinlab" style="left:372px;top:300px">'+tr(UI.tower)+'</div></div>';
+/* ===== Case File phase 2: four tabs (People, Evidence, Reconstruction, Deduction Notes) =====
+   Display only. No evidence ID, flag, chapter or story fact changes. The one new save field is S.qa: the player's own judgments. */
+let selGroup = null, reMode = "time", CF_GS = [];
+const hasEv = id => S.ev.includes(id);
+const L2 = (k, e) => lang === "ko" ? k : e;
+const GROUP_NAME = {
+  clock:{ko:"시계",en:"Clocks"}, tower:{ko:"시계탑 현장",en:"Tower scene"}, past23:{ko:"23년 전의 기록",en:"Records from 23 years ago"},
+  letters:{ko:"편지와 메모",en:"Letters and notes"}, photos:{ko:"사진",en:"Photographs"}, hiding:{ko:"숨겨진 물건",en:"Hidden things"},
+  trace:{ko:"흔적",en:"Traces"}, medical:{ko:"치료사의 소견",en:"The Healer's findings"}, cafe:{ko:"카페",en:"Café"},
+  patrol:{ko:"순찰 일지",en:"Patrol log"}, plaza:{ko:"마을 광장",en:"Village square"}, place:{ko:"장소",en:"Places"},
+  statements:{ko:"진술",en:"Statements"}, other:{ko:"기타",en:"Other"}
+};
+/* first-meeting text only: what the player already knows when the card opens */
+const PERSON_UI = {
+  nini:{img:"por_nini_neutral", role:{ko:"기록관 조수",en:"Archive assistant"}, intro:{ko:"에드워드의 기록관에서 일하며 공책을 쓴다.",en:"Works at Edward's archive and keeps a notebook."}},
+  ck:{img:"por_oliver_neutral", role:{ko:"시계지기",en:"Clockkeeper"}, intro:{ko:"시계탑에서 밤 근무를 한다.",en:"Works the night shift at the clock tower."}},
+  tm:{img:"por_tommy_neutral", role:{ko:"야간 경비",en:"Night guard"}, intro:{ko:"광장과 다리를 도는 야간 경비. 에드워드를 가장 먼저 발견했다.",en:"Patrols the square and the bridge at night. Was the first to find Edward."}},
+  hz:{img:"cafe_owner_front", role:{ko:"카페 주인",en:"Café owner"}, intro:{ko:"마을의 카페를 운영한다.",en:"Runs the village café."}},
+  mo:{img:"por_molly_neutral", role:{ko:"마을 어르신",en:"Village elder"}, intro:{ko:"마을에서 오래 산 몰리 할머니.",en:"Grandma Molly, a long-time villager."}},
+  hl:{img:"por_may_neutral", role:{ko:"치료사",en:"Healer"}, intro:{ko:"마을의 치료사.",en:"The village healer."}},
+  ed:{img:"edward_front", role:{ko:"기록관 서기",en:"Archive clerk"}, intro:{ko:"기록관에서 일하던 에드워드 벨. 이번 사건의 피해자.",en:"Edward Bell, who worked at the archive. The victim in this case."}},
+  gr:{img:"por_green_neutral", role:{ko:"방앗간에 사는 곰",en:"A bear at the Old Mill"}, intro:{ko:"낡은 방앗간에서 혼자 산다.",en:"Lives alone at the Old Mill."}}
+};
+/* the player's own notes from flashbacks, shown on a card only after they were recorded */
+const MEM_GREEN = ["m1","m2","m3","m4","m5","m5b","m7"], MEM_ED = ["m6"];
+const memLines = keys => keys.filter(k=>NOTES[k] && S.notes.some(n=>n.k === JSON.stringify(NOTES[k]))).map(k=>tr(NOTES[k]));
+const evChip = id => '<button type="button" class="gchip'+(EV[id].reach==="dormant"?' old':'')+'" data-ev="'+id+'">'+tr(EV[id].name)+'</button>';
+
+function peoplePage(){
+  const met = metPeople(); if (!met.includes(selPerson)) selPerson = "nini";
+  let h = '<div class="pstrip">'+met.map(id=>'<button class="ptile'+(id===selPerson?' sel':'')+'" data-pp="'+id+'"><span class="pf"><img src="assets/'+PERSON_UI[id].img+'.webp" alt=""></span><b>'+tr(SP[id].name)+'</b></button>').join('')+'</div>';
+  const pv = personView(selPerson), u = PERSON_UI[selPerson]; if (!pv) return h;
+  h += '<div class="pcard"><div class="pp"><img src="assets/'+u.img+'.webp" alt=""></div><div class="pb"><h3>'+tr(SP[selPerson].name)+'</h3><div class="role">'+tr(u.role)+'</div><p class="cfp">'+tr(u.intro)+'</p>';
+  if (pv.statements.length){ h += '<div class="sec">'+L2("진술","STATEMENTS")+'</div>'+pv.statements.map(id=>'<div class="quote">'+tr(EV[id].desc)+'</div>').join(''); }
+  if (selPerson === "gr"){
+    const obs = [];
+    if (has("fin.o1")) obs.push(L2("방앗간에 걸린 오래된 목도리는 매듭이 오른쪽 어깨 방향으로 묶여 있다.","The old scarf at the mill is tied with the knot toward the right shoulder."));
+    if (has("fin.o2")) obs.push(L2("작업대 위에는 왼손 장갑만 있다. 오른쪽은 어젯밤에 잃어버렸다고 한다.","Only a left glove lies on the workbench. He says he lost the right one last night."));
+    if (obs.length) h += '<div class="sec">'+L2("관찰","OBSERVED")+'</div>'+obs.map(t=>'<p class="cfp">'+t+'</p>').join('');
   }
-  pg.innerHTML = h;
-  if (SUBS[tab]) $("subBtn").onclick = ()=>{ sub = true; renderCF(); };
-  wireCh6();
-  document.querySelectorAll(".ptile[data-p]").forEach(b=>{ b.onclick = ()=>{ selPerson = b.dataset.p; renderCF(); }; });
-  if (tab===0 || tab===1 || tab===4) $("pvBtn").onclick = ()=>{ PV = !PV; renderCF(); };
-  if (tab===2) renderEvGrid(); if (tab===3) renderTl();
+  const mem = memLines(selPerson === "gr" ? MEM_GREEN : selPerson === "ed" ? MEM_ED : []);
+  if (mem.length) h += '<div class="sec">'+L2("회상에서 본 것","SEEN IN A MEMORY")+'</div>'+mem.map(t=>'<p class="cfp">'+t+'</p>').join('');
+  if (pv.evidence.length) h += '<div class="sec">'+L2("관련 증거","RELATED EVIDENCE")+'</div><div class="chips">'+pv.evidence.map(evChip).join('')+'</div>';
+  if (!pv.statements.length && !pv.evidence.length && !mem.length && !(selPerson === "gr" && (has("fin.o1") || has("fin.o2")))) h += '<p class="cfnote">'+L2("아직 더 알아낸 것이 없다.","Nothing more is known yet.")+'</p>';
+  return h + '</div></div>';
 }
+
+function evidencePage(){
+  CF_GS = evGroups().map(g=>({group:g.group, ids:g.ids.filter(id=>EV[id].kind !== "statement")})).filter(g=>g.ids.length);
+  if (!CF_GS.length) return '<p class="cfp" style="font-style:italic">'+tr(UI.empty)+'</p>';
+  if (selEv && (!EV[selEv] || !hasEv(selEv) || EV[selEv].kind === "statement")) selEv = null;
+  if (selEv && EV[selEv].group !== selGroup) selGroup = EV[selEv].group;
+  if (!selGroup || !CF_GS.some(g=>g.group === selGroup)) selGroup = CF_GS[0].group;
+  const cur = CF_GS.find(g=>g.group === selGroup);
+  if (!selEv || !cur.ids.includes(selEv)) selEv = cur.ids[cur.ids.length-1];
+  return '<div class="grid2"><div class="evgrid" id="evg"></div><div class="evdesc" id="evd"></div></div>';
+}
+function renderEvGrid2(){
+  const g = $("evg"); if (!g) return;
+  const CX = [[60,318],[340,597],[618,876]], CY = [[95,348],[372,617],[642,888]], k = 520/940;
+  const pages = Math.max(1, Math.ceil(CF_GS.length/9)); evPage = Math.min(evPage, pages-1);
+  evPage = Math.floor(CF_GS.findIndex(x=>x.group === selGroup)/9);
+  CF_GS.slice(evPage*9, evPage*9+9).forEach((gr,i)=>{
+    const col = i%3, row = Math.floor(i/3), rep = EV[gr.ids[gr.ids.length-1]];
+    const b = document.createElement("button"); b.className = "evcell"+(gr.group === selGroup ? " sel" : ""); b.dataset.g = gr.group;
+    b.style.cssText = "left:"+Math.round(CX[col][0]*k)+"px;top:"+Math.round(CY[row][0]*k)+"px;width:"+Math.round((CX[col][1]-CX[col][0])*k)+"px;height:"+Math.round((CY[row][1]-CY[row][0])*k)+"px";
+    b.innerHTML = evIcon(rep, 70)+(gr.ids.length>1?'<span class="cnt">'+gr.ids.length+'</span>':'')+'<span class="gl">'+tr(GROUP_NAME[gr.group]||GROUP_NAME.other)+'</span>';
+    b.title = tr(GROUP_NAME[gr.group]||GROUP_NAME.other);
+    b.onclick = ()=>{ selGroup = gr.group; selEv = gr.ids[gr.ids.length-1]; renderCF(); }; g.appendChild(b);
+  });
+  if (pages > 1){ const pgr = document.createElement("div"); pgr.className = "pager"; pgr.style.cssText = "position:absolute;left:0;top:560px";
+    pgr.innerHTML = '<button id="pvP"'+(evPage?'':' disabled')+'>&lsaquo;</button><span>'+tr(UI.page)+' '+(evPage+1)+' / '+pages+'</span><button id="pvN"'+(evPage<pages-1?'':' disabled')+'>&rsaquo;</button>';
+    g.appendChild(pgr); pgr.querySelector("#pvP").onclick = ()=>{ selGroup = CF_GS[(evPage-1)*9].group; selEv = null; renderCF(); }; pgr.querySelector("#pvN").onclick = ()=>{ selGroup = CF_GS[(evPage+1)*9].group; selEv = null; renderCF(); }; }
+  const cur = CF_GS.find(x=>x.group === selGroup), e = EV[selEv];
+  $("evd").innerHTML = '<div class="sec" style="margin-top:0">'+tr(GROUP_NAME[selGroup]||GROUP_NAME.other).toUpperCase()+'</div><div class="chips" style="margin:8px 0">'+cur.ids.map(id=>'<button type="button" class="gchip'+(id===selEv?' on':'')+(EV[id].reach==="dormant"?' old':'')+'" data-ev="'+id+'">'+tr(EV[id].name)+'</button>').join('')+'</div>'
+    + '<span class="tag">'+e.tag+'</span><h3>'+tr(e.name)+'</h3><p>'+tr(e.desc)+'</p>'
+    + (e.reach === "dormant" ? '<p class="cfnote">'+L2("이전 버전에서 얻은 기록이다.","Recorded in an earlier version.")+'</p>' : '');
+}
+
+/* reconstruction: every row needs the evidence that backs it. Unconfirmed times are never listed. */
+const TL_DATA = [
+  { t:"16:50", ty:"claim", ev:["greet"], k:"니니는 해 질 무렵 뒷길의 곰에게 손을 흔들었다고 한다.", e:"Nini says she waved at a bear on the back lane around dusk.", dusk:1 },
+  { t:"17:08", ty:"claim", ev:["patrol"], k:"순찰 일지: 뒷길에 자루를 든 곰이 방앗간 길 쪽으로 갔다.", e:"Patrol log: a bear with a sack on the back lane, heading for the Mill road.", dusk:1 },
+  { t:"11:35", ty:"claim", ev:["stmt_tm"], k:"토미: 다리 근처에서 목도리를 한 사람이 시계탑 쪽으로 갔다.", e:"Tommy: a scarfed figure near the bridge, heading for the clock tower." },
+  { t:"11:40", ty:"claim", ev:["stmt_ck"], k:"올리버: 목도리를 두른 누군가가 계단을 올랐다.", e:"Oliver: someone in a scarf went up the stairs." },
+  { t:"11:42", ty:"fact", ev:["receipt"], k:"카페에서 계산했다. 시각은 헤이즐이 영수증에 적었다.", e:"The tab was settled at the café. Hazel wrote the time on the receipt." },
+  { t:"11:47", ty:"fact", ev:["clock"], k:"탑시계가 11:47을 가리킨 채 멈춰 있다.", e:"The tower clock stands stopped at 11:47." },
+  { t:"11:55 ~ 12:15", ty:"est", ev:["tod"], k:"메이의 소견: 에드워드는 이 사이에 숨진 것으로 추정된다. 추위 때문에 정확하지 않다.", e:"May's estimate: Edward died somewhere in this window. The cold makes it unreliable." }
+];
+const TY = { fact:["확인된 기록","RECORD","b-fact"], claim:["목격 진술","WITNESS","b-claim"], est:["전문가 추정","ESTIMATE","b-est"] };
+const PLACES = {
+  plaza:{ko:"마을 광장",en:"Village square",x:250,y:400}, tower:{ko:"시계탑",en:"Clocktower",x:346,y:300}, archive:{ko:"기록관",en:"Archive",x:450,y:360},
+  cafe:{ko:"카페",en:"Café",x:190,y:310}, cottage:{ko:"빅그베의 오두막",en:"BGB's cottage",x:120,y:470}, healer:{ko:"메이의 집",en:"May's house",x:300,y:230}, mill:{ko:"낡은 방앗간",en:"Old Mill",x:520,y:480}
+};
+const PLACE_OF = { notice:"plaza", bellinc:"plaza", patrol:"plaza", found_loc:"tower", clock:"tower", mech:"tower", hatch2:"tower", pwatch:"tower", hatch:"tower", pendulum:"tower", handbell:"tower", chute:"tower", melt:"tower", boots:"tower", pit:"tower",
+  oldrep:"archive", mreq:"archive", noledger:"archive", draft:"archive", mnote:"archive", photo2:"archive", bellrec:"archive", register:"archive", receipt:"cafe", tab_pm:"cafe", tod:"healer", thread:"healer", tdoc:"mill", hidden:"cottage", photo_home:"cottage" };
+const SCENE_PLACE = { village:"plaza", tower:"tower", archive:"archive", cafe:"cafe", cottage:"cottage", healer:"healer", mill:"mill" };
+function placeEv(pid){ return S.ev.filter(id=>PLACE_OF[id] === pid && EV[id]); }
+function placeSeen(pid){ return pid === "plaza" || pid === "tower" || (S.vis && S.vis[pid === "plaza" ? "village" : pid]) || SCENE_PLACE[S.scene] === pid || placeEv(pid).length > 0; }
+function reconPage(){
+  let h = '<div class="seg"><button type="button" data-re="time" class="'+(reMode==="time"?'on':'')+'">'+L2("시간순","By time")+'</button><button type="button" data-re="place" class="'+(reMode==="place"?'on':'')+'">'+L2("장소별","By place")+'</button></div>';
+  if (reMode === "time"){
+    const rows = TL_DATA.filter(r=>r.ev.every(hasEv));
+    if (!rows.length) return h + '<p class="cfp" style="font-style:italic">'+tr(UI.empty)+'</p>';
+    const dusk = rows.filter(r=>r.dusk).length > 1;
+    h += rows.map(r=>{ const ty = TY[r.ty];
+      return '<div class="tlrow"><div class="tt">'+r.t+'</div><div class="tb"><span class="badge '+ty[2]+'">'+L2(ty[0],ty[1])+'</span>'+L2(r.k,r.e)+(r.dusk && dusk ? ' <span class="newclue">'+L2("기록이 서로 다르다","records differ")+'</span>' : '')+'<div style="margin-top:6px">'+r.ev.map(evChip).join('')+'</div></div></div>'; }).join('');
+    h += '<div class="tlrow"><div class="tt">?</div><div class="tb cfnote">'+L2("아직 확인되지 않은 시간대가 있다.","Some stretches of the night are still unconfirmed.")+'</div></div>';
+    return h;
+  }
+  const pids = Object.keys(PLACES).filter(placeSeen);
+  h += '<div style="display:flex;gap:30px;align-items:flex-start"><div style="flex:1;min-width:0">'+pids.map(pid=>{ const ev = placeEv(pid).filter(id=>EV[id].kind !== "statement");
+    return '<div class="placerow"><b>'+tr(PLACES[pid])+(SCENE_PLACE[S.scene]===pid ? ' <span class="newclue">'+L2("현재 위치","you are here")+'</span>' : '')+'</b><div class="chips" style="margin:6px 0 0">'+(ev.length ? ev.map(evChip).join('') : '<span class="cfnote">'+L2("아직 발견한 것이 없다.","Nothing found here yet.")+'</span>')+'</div></div>'; }).join('')+'</div>';
+  h += '<div class="mapbox">'+pids.map(pid=>{ const p = PLACES[pid], cur = SCENE_PLACE[S.scene] === pid;
+    return '<div class="pin" style="left:'+p.x+'px;top:'+p.y+'px;background:'+(cur?'#c4453a':'#d9a441')+'"></div><div class="pinlab" style="left:'+(p.x+26)+'px;top:'+p.y+'px">'+tr(p)+'</div>'; }).join('')+'</div></div>';
+  return h;
+}
+
+/* deduction notes: neutral questions, the player's own judgments, never graded and never overwritten */
+const QS = [
+  { id:"q1", open:()=>hasEv("stmt_ck"), clues:["stmt_tm","stmt_ck"], k:"다리 근처에서 목격된 인물과 계단에서 목격된 인물은 같은 사람을 가리키는가?", e:"Do the figure seen near the bridge and the figure seen on the stairs point to the same person?",
+    o:[["same","같은 사람을 가리킨다","They point to the same person"],["diff","다른 사람을 가리킨다","They point to different people"],["unk","아직 판단할 수 없다","I can't tell yet"]] },
+  { id:"q2", open:()=>hasEv("clock"), clues:["clock","mech","pwatch","tod"], k:"11:47은 무엇을 의미하는가?", e:"What does 11:47 mean?",
+    o:[["stop","탑시계가 멈춘 시각이다","It is when the tower clock stopped"],["death","에드워드가 숨진 시각이다","It is when Edward died"],["unk","아직 판단할 수 없다","I can't tell yet"]] },
+  { id:"q3", open:()=>hasEv("stmt_ck"), clues:["stmt_ck","stmt_tm"], k:"계단에서 목격된 인물에 대해 무엇을 알 수 있는가?", e:"What can be known about the person seen on the stairs?",
+    o:[["known","누구인지 특정할 수 있다","They can be identified"],["unknown","누구인지 특정할 수 없다","They cannot be identified"],["unk","아직 판단할 수 없다","I can't tell yet"]] },
+  { id:"q4", open:()=>hasEv("stmt_nini"), clues:["stmt_nini","notebook","draft"], k:"에드워드의 편지 두 통은 누구에게 쓴 것인가?", e:"Who were Edward's two letters written to?",
+    o:[["both","두 통 모두 수신자를 짐작할 수 있다","I can guess both recipients"],["one","한 통의 수신자만 짐작할 수 있다","I can guess only one recipient"],["none","수신자를 짐작할 수 없다","I can't guess either"],["unk","아직 판단할 수 없다","I can't tell yet"]] },
+  { id:"q5", open:()=>hasEv("bellinc"), clues:["bellinc","oldrep","mreq","noledger","bellrec"], k:"23년 전 경보 종은 왜 울리지 않았는가?", e:"Why did the warning bell not ring 23 years ago?",
+    o:[["fault","장치가 고장 났다","The mechanism failed"],["sabotage","누군가 망가뜨렸다","Someone damaged it"],["other","다른 이유가 있다","There is another reason"],["unk","아직 판단할 수 없다","I can't tell yet"]] },
+  { id:"q6", open:()=>has("c3.qz") || has("f4.end") || has("f5.done"), clues:["mnote","oldrep","bellrec","tdoc"], k:"23년 전 기록에는 어떤 일이 있었는가?", e:"What happened to the records from 23 years ago?",
+    o:[["changed","기록이 바뀌었다고 본다","I think the records were changed"],["same","기록은 있는 그대로라고 본다","I think the records are as they were"],["unk","아직 판단할 수 없다","I can't tell yet"]] }
+];
+function notesPage(){
+  S.qa = S.qa || {};
+  const open = QS.filter(q=>q.open());
+  let h = '';
+  if (!open.length) h += '<p class="cfp" style="font-style:italic">'+L2("아직 풀어야 할 질문이 없다.","No open questions yet.")+'</p>';
+  open.forEach(q=>{ const clues = q.clues.filter(hasEv), a = S.qa[q.id], fresh = a && clues.length > a.n;
+    h += '<div class="qcard"><h4>'+L2(q.k,q.e)+(fresh ? '<span class="newclue">'+L2("새 단서","new clue")+'</span>' : '')+'</h4>'
+      + '<div class="chips" style="margin:6px 0">'+(clues.length ? clues.map(evChip).join('') : '<span class="cfnote">'+L2("연결할 단서가 아직 없다.","No clues to connect yet.")+'</span>')+'</div>'
+      + '<div class="sec" style="margin-top:8px">'+L2("지금의 판단","YOUR CURRENT VIEW")+'</div><div class="qopts">'+q.o.map(o=>'<button type="button" data-q="'+q.id+'" data-v="'+o[0]+'" class="'+(a && a.v===o[0]?'on':'')+'">'+L2(o[1],o[2])+'</button>').join('')+'</div>'
+      + '<p class="cfnote">'+L2("판단은 언제든 바꿀 수 있다.","You can change your view at any time.")+'</p></div>'; });
+  h += autoNotes();
+  return h;
+}
+
+function goEv(id){ const e = EV[id]; if (!e) return; if (e.kind === "statement"){ tab = 0; if (e.holder) selPerson = e.holder; } else { tab = 1; selEv = id; selGroup = e.group; } renderCF(); }
+function wireCF(){
+  document.querySelectorAll("[data-ev]").forEach(b=>{ b.onclick = ()=>goEv(b.dataset.ev); });
+  document.querySelectorAll("[data-pp]").forEach(b=>{ b.onclick = ()=>{ selPerson = b.dataset.pp; renderCF(); }; });
+  document.querySelectorAll("[data-re]").forEach(b=>{ b.onclick = ()=>{ reMode = b.dataset.re; renderCF(); }; });
+  document.querySelectorAll("[data-q]").forEach(b=>{ b.onclick = ()=>{ const q = QS.find(x=>x.id === b.dataset.q); S.qa = S.qa || {}; S.qa[q.id] = { v:b.dataset.v, n:q.clues.filter(hasEv).length }; save(); renderCF(); }; });
+}
+function renderCF(){
+  tab = Math.max(0, Math.min(CF_TABS-1, tab|0));
+  renderNav(); const pg = $("pg"), labs = tr(UI.tabs);
+  let h = '<div class="eyebrow">CASE C-01 &middot; '+tr(UI.loc)+'</div><h2>'+labs[tab]+'</h2><div style="height:14px"></div>';
+  h += tab === 0 ? peoplePage() : tab === 1 ? evidencePage() : tab === 2 ? reconPage() : notesPage();
+  pg.innerHTML = h; if (tab === 1) renderEvGrid2(); wireCF();   /* wire last so the chips built by renderEvGrid2 are clickable */
+}
+
 /* ---------- boards (art: board_identity / board_resp / page_overlooked) ---------- */
 const SUBS = {};
 const ID_Z = 0.74; let selPerson = "nini";
@@ -2266,9 +2435,10 @@ function pageOver(wpx){
 }
 /* auto notes are kept in S.notes (saves stay intact) but are no longer shown as the main notes list */
 function autoNotes(){
-  if (!S.notes.length) return '<p style="font:italic 400 28px var(--font-body)">'+tr(UI.empty)+'</p>';
+  const con = conBlock();
+  if (!S.notes.length && !con) return '';
   const k = lang==="ko";
-  return '<details class="oldnotes" style="margin:6px 0 10px"><summary style="font:italic 600 24px var(--font-body);color:#6d5a40;cursor:pointer">'+(k?"보관된 자동 기록 ":"Archived auto notes ")+'('+S.notes.length+')</summary><ul class="notes">'+S.notes.map(o=>'<li>'+tr(o.n)+'</li>').join('')+'</ul></details>';
+  return '<details class="oldnotes" style="margin:14px 0 10px"><summary style="font:italic 600 24px var(--font-body);color:#6d5a40;cursor:pointer">'+(k?"보관된 자동 기록 ":"Archived auto notes ")+'('+S.notes.length+')</summary>'+(S.notes.length ? '<ul class="notes">'+S.notes.map(o=>'<li>'+tr(o.n)+'</li>').join('')+'</ul>' : '')+con+'</details>';
 }
 function qBlock(){
   const q = has("c7.rec") ? UI.askChoose : has("c7.green") ? UI.askRecord : has("c6.turn") ? UI.askWith : has("c6.on") ? UI.askFall : S.flags.dd02 ? UI.askNext : S.flags.q1 ? UI.askBear : null; if (!q) return '';
