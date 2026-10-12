@@ -242,6 +242,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #dlg.cap #dlgbg{--img:url(assets/dialogue_box_caption.webp);--sl:100;--sr:100;--st:68;--sb:26;border-image-width:95px 140px 36px 140px}
 #dlg.cap .por,#dlg.cap .nm{display:none}
 #dlg.cap .tx{left:190px;right:196px;top:92px}
+#dlg.cap.big .tx{left:96px;right:140px}
+#dlg.cap.big .nm{display:flex;left:50px;top:-40px;width:auto;min-width:250px;max-width:520px;height:92px;padding:0 30px 4px 22px;justify-content:flex-start;transform:rotate(-1.6deg);align-items:center;font:700 38px/1 var(--font-label);letter-spacing:.04em;white-space:nowrap;border:0;border-style:solid;border-width:0 47px 0 64px;border-image:url(assets/dlg_name_ribbon.webp) 0 85 0 115 fill/0 47px 0 64px stretch;color:#f6e3c0;text-shadow:0 2px 0 #3d1219,0 0 6px rgba(40,10,15,.6);z-index:3;box-sizing:border-box}
 #meas{position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font:400 36.5px/1.32 var(--font-body)}
 #dlg .por{position:absolute;left:49px;top:59px;width:200px;height:196px;overflow:hidden;border-radius:5px}
 #dlg .por img.pz{width:232px;margin:-4px 0 0 -16px}
@@ -252,13 +254,14 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #dlg .tx i{color:#6d4f2d}
 #choices{position:absolute;left:500px;bottom:346px;z-index:8;display:none;flex-direction:column;gap:8px;align-items:stretch;width:max-content;max-width:1100px;max-height:640px;overflow-y:auto;overflow-x:hidden;padding:4px 14px 2px 4px;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}   /* one panel that sits on the dialogue box, starting at the name ribbon (left is set from the box); it grows upward and scrolls if a list is long */
 #choices.on{display:flex}
-.choice{width:auto;max-width:1100px;min-height:80px;padding:15px 44px;--s:1.18;font:600 29px/1.25 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s,opacity .12s;background-color:transparent;flex:none}
-.choice.asked{opacity:.62}.choice.asked:hover,.choice.asked.sel{opacity:1}
-.choice.asked:after{content:"\2713";float:right;margin-left:18px;color:#6e2a35;font:700 24px/1.3 var(--font-body)}
+.choice{display:flex;align-items:center;gap:12px;width:auto;max-width:1100px;height:56px;min-height:56px;padding:0 4px 0 6px;border:0;border-style:solid;border-width:0 28px;border-image:url(assets/dlg_choice_normal.webp) 0 56 fill/0 28px stretch;background:none;font:600 27px/1.2 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s,opacity .12s;flex:none;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));white-space:nowrap}
+.choice .nb{flex:none;width:36px;height:36px;margin-left:-8px;background:url(assets/dlg_choice_badge.webp) center/contain no-repeat;display:grid;place-items:center;font:700 21px/1 var(--font-label);color:#6e2a35}
+.choice.sel .nb,.choice:hover .nb{background-image:url(assets/dlg_choice_badge_sel.webp);color:#f6e3c0}
+.choice.asked{border-image-source:url(assets/dlg_choice_heard.webp);color:#5a4a38}.choice.asked:hover,.choice.asked.sel{border-image-source:url(assets/dlg_choice_selected.webp);color:#f6e3c0}
+.choice.asked:after{content:"\2713";margin-left:auto;padding-left:18px;color:#6e2a35;font:700 24px/1.3 var(--font-body)}
 .choice.asked:hover:after,.choice.asked.sel:after{color:#f6e3c0}
-#choices .chead{flex:none;align-self:flex-start;margin:0 0 2px 8px;padding:2px 12px;font:700 22px/1.2 var(--font-body);letter-spacing:.02em;color:#f6e3c0;text-shadow:0 1px 3px rgba(10,6,20,.9),0 0 8px rgba(10,6,20,.8)}
-.choice:hover,.choice.sel{--img:url(assets/plaque_red_small.webp);color:#f6e3c0;transform:translateY(-2px)}
-.choice{--img:url(assets/plaque_cream_small.webp)}
+#choices .chead{flex:none;align-self:flex-start;margin:0 0 6px 6px;padding:0;font:700 24px/1.2 var(--font-body);letter-spacing:.02em;color:#f6e3c0;text-shadow:0 2px 6px rgba(8,5,20,.95),0 0 12px rgba(8,5,20,.85);white-space:nowrap}
+.choice:hover,.choice.sel{border-image-source:url(assets/dlg_choice_selected.webp);color:#f6e3c0;transform:translateX(3px)}
 
 /* speaker close-up: the expression portrait is shown large beside the dialogue box (the box and its small frame are unchanged) */
 #bigPor{position:absolute;left:180px;bottom:236px;height:650px;z-index:7;pointer-events:none;opacity:0;transition:opacity .22s}
@@ -2140,7 +2143,7 @@ function showPage(anim){
 }
 function renderDlg(anim){
   const n = D[cur]; if (!n) return; const sp = SP[n.sp];
-  { const dl = $("dlg"), want = !!sp.hide; if (dl.classList.contains("cap") !== want){ dl.classList.toggle("cap", want); const bg = $("dlgbg"); bg._nk = null; if (dl.classList.contains("on")) nineDraw(bg); } }   /* a line of narration uses the same box without the portrait and name ribbon */
+  { const dl = $("dlg"), big = !!(sp.por && !sp.hide && !sp.sil), want = !!sp.hide || big; dl.classList.toggle("big", big); if (dl.classList.contains("cap") !== want){ dl.classList.toggle("cap", want); const bg = $("dlgbg"); bg._nk = null; if (dl.classList.contains("on")) nineDraw(bg); } }   /* a line of narration uses the same box without the portrait and name ribbon */
   $("dNm").textContent = tr(sp.name); $("dNm").style.visibility = sp.hide ? "hidden" : ""; $("dPor").style.visibility = sp.hide ? "hidden" : "";
   const ex = EXPR.includes(n.ex) ? n.ex : "neutral"; // each line picks its expression; speakers without portraits keep the still
   const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil); $("dPor").classList.toggle("pz", !!sp.por);   /* silhouette until the real portrait exists */
@@ -2166,7 +2169,7 @@ function showChoices(){
   const n = D[cur]; if (!n.ch) return; const box = $("choices"); box.innerHTML = "";
   const sp = SP[n.sp], menu = n.ch.some(c=>c.bye) && sp && !sp.hide && n.sp !== "bgb";   /* a question menu: label it with who is being asked */
   if (menu){ const h = document.createElement("div"); h.className = "chead"; h.textContent = lang === "ko" ? tr(sp.name)+"에게 묻기" : "Ask "+tr(sp.name); box.appendChild(h); }
-  n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice nine cream" + (menu && !c.bye && isAsked(c) ? " asked" : ""); b.textContent = tr(c.t); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
+  n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice" + (menu && !c.bye && isAsked(c) ? " asked" : ""); b.innerHTML = '<span class="nb">'+(i+1)+'</span>'; b.appendChild(document.createTextNode(tr(c.t))); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
   box.scrollTop = box.scrollHeight;
   box.classList.add("on");   /* both answers start cream; the one you pick turns burgundy */
 }
@@ -2864,7 +2867,7 @@ window.addEventListener("keydown", e=>{
   if (mode==="dlg" && (k==="ArrowUp"||k==="ArrowDown"||k==="w"||k==="s")){
     const bs = [...document.querySelectorAll("#choices .choice")]; if (!bs.length) return; let i = bs.findIndex(b=>b.classList.contains("sel")); bs.forEach(b=>b.classList.remove("sel"));
     i = (i + ((k==="ArrowDown"||k==="s")?1:-1) + bs.length) % bs.length; bs[i].classList.add("sel"); return; }
-  if (mode==="dlg" && /^[1-4]$/.test(k)){ const bs = document.querySelectorAll("#choices .choice"); if (bs[+k-1]) bs[+k-1].click(); return; }
+  if (mode==="dlg" && /^[1-9]$/.test(k)){ const bs = document.querySelectorAll("#choices .choice"); if (bs[+k-1]) bs[+k-1].click(); return; }
   keys.add(k.toLowerCase());
 });
 window.addEventListener("keyup", e=>keys.delete(e.key.toLowerCase()));
