@@ -430,6 +430,146 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .ccard .cb button.on{background:#6e2a35;color:#f6e3c0;border-color:#6e2a35}
 .qopts.big button{font-size:26px;padding:14px 18px}
 .backbtn{font:700 20px var(--font-body);padding:8px 14px;border-radius:8px;border:2px solid #8a6a3a;background:#f3e6c8;color:#4a2f10;cursor:pointer;margin-bottom:8px}
+
+/* Case File: Investigator's Journal. Frames, tabs, plaques, markers, stamps are sprites (assets/journal_*.webp); CSS only places and fills them. */
+#cf{background:rgba(6,9,20,.86)}
+#jrnl{position:absolute;left:0;top:0;width:1920px;height:1080px;font-family:var(--font-body);color:var(--ink)}
+#jrnl *{box-sizing:border-box}
+#jrnl .jimg{position:absolute;display:block;pointer-events:none}
+#jSpine{position:absolute;left:851px;top:93px;width:44px;height:892px;pointer-events:none;background:linear-gradient(90deg,rgba(60,35,12,0),rgba(60,35,12,.5) 50%,rgba(60,35,12,0))}
+#jSpine i{position:absolute;left:2px;width:40px;height:22px;border-radius:3px;background:linear-gradient(#7a5233,#4a2e1a);box-shadow:0 2px 3px rgba(0,0,0,.45)}
+#jSpine i:before,#jSpine i:after{content:"";position:absolute;top:7px;width:8px;height:8px;border-radius:50%;background:#d6b878}#jSpine i:before{left:6px}#jSpine i:after{right:6px}
+.jrun{position:absolute;top:104px;width:704px;height:26px;display:flex;justify-content:space-between;font:600 19px/1 var(--font-label);letter-spacing:.2em;color:#8a6a3e;text-transform:uppercase}
+#jRunL{left:127px}#jRunR{left:915px}
+.jcol{position:absolute;top:140px;width:704px;height:810px;overflow:hidden}
+#jL{left:127px}#jR{left:915px}
+#jRibs .jrib{position:absolute;left:1726px;width:170px;height:62px;border:0;padding:0;background:none;cursor:pointer}
+#jRibs .jrib img{position:absolute;inset:0;width:170px;height:62px}
+#jRibs .jrib span{position:relative;display:block;padding:0 14px 0 34px;font:700 21px/62px var(--font-body);color:#f6e3c0;text-shadow:0 1px 1px rgba(0,0,0,.6);text-align:left;white-space:nowrap}
+#jRibs .jrib.act{left:1732px}
+#jrnl #cfclose{position:absolute;left:1738px;top:40px;right:auto;width:78px;height:80px;z-index:3}
+#jThread{position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none;z-index:40}
+#stage.jopen #caseplate,#stage.jopen #side,#stage.jopen .hudbtn,#stage.jopen #touch{visibility:hidden}
+/* shared page parts */
+.jsec{display:flex;align-items:center;gap:10px;margin:0 0 10px;font:600 21px/1 var(--font-label);letter-spacing:.18em;color:#8a6a3e;min-height:30px}
+.jsec:after{content:"";flex:1;border-bottom:2px solid rgba(138,106,62,.45)}
+.jscroll{overflow-y:auto;overflow-x:hidden;padding-right:10px;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}
+.jscroll::-webkit-scrollbar{width:8px}.jscroll::-webkit-scrollbar-thumb{background:#8a6a3a;border-radius:4px}
+.jfill{position:absolute;left:0;right:0;top:0;bottom:0}
+.jp{font:400 27px/1.45 var(--font-body);margin:6px 0;color:#2b2217}
+.jnote{font:italic 400 22px/1.35 var(--font-body);color:#6d5a40;margin:6px 0}
+.jcard{position:relative;border:26px solid transparent;border-image:url(assets/journal_card.webp) 26 fill/26px stretch;padding:0 8px;margin:6px 0 10px}
+.jcard .jp{margin:0;font-size:26px}
+.jsign{text-align:right;font:700 30px/1.1 Pretendard,var(--font-body);color:#6e2a35;margin-top:6px}
+#jrnl .gchip{display:inline-flex;align-items:center;font:600 23px/1.1 var(--font-body);padding:9px 14px;border-radius:30px;border:2px solid #8a6a3a;background:#f6e9c8;color:#3a2a1a}
+#jrnl .gchip:hover{background:#f1dfb4}#jrnl .gchip.on{background:#6e2a35;color:#f6e3c0;border-color:#6e2a35}
+#jrnl .chips{margin:6px 0 8px;gap:8px}
+.badge{font-size:15px}.newclue{margin-left:8px}
+/* people */
+.jpg{display:grid;grid-template-columns:repeat(3,212px);gap:15px 34px;margin-top:6px}
+.jtile{position:relative;width:212px;height:237px;border:0;background:none;padding:0;cursor:pointer;transform:rotate(var(--r,0deg));transition:transform .15s,filter .15s}
+.jtile:after,.jbig:after,.jsk-photo:after{content:"";position:absolute;inset:0;background:url(assets/journal_polaroid_tile.webp) 0 0/100% 100% no-repeat;pointer-events:none}
+.jtile .jw{position:absolute;left:21px;top:22px;width:170px;height:155px;overflow:hidden;background:#c8a96f}
+.jw img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.jtile .jn{position:absolute;left:8px;right:8px;top:180px;height:50px;display:grid;place-items:center;z-index:2;font:700 28px/1 Pretendard,var(--font-body);color:#3a2a1a;white-space:nowrap}
+.jtile:hover{transform:rotate(var(--r,0deg)) scale(1.02)}
+.jtile.sel{transform:rotate(var(--r,0deg)) scale(1.05);filter:drop-shadow(0 0 3px #c4453a) drop-shadow(0 0 7px rgba(196,69,58,.6));z-index:3}
+.jdoss{position:absolute;left:0;top:0;width:704px;height:300px}
+.jbig{position:absolute;left:0;top:10px;width:236px;height:290px;transform:rotate(-2deg)}
+.jbig:after{background-image:url(assets/journal_polaroid_large.webp)}
+.jbig .jw{position:absolute;left:22px;top:25px;width:193px;height:194px;overflow:hidden;background:#c8a96f}
+.jbig .jn{position:absolute;left:10px;right:10px;top:224px;height:56px;display:grid;place-items:center;z-index:2;font:700 38px/1 Pretendard,var(--font-body);color:#3a2a1a;white-space:nowrap}
+.jhead{position:absolute;left:270px;top:24px;right:0}
+.jrole{font:700 40px/1.15 Pretendard,var(--font-body);color:#6e2a35}
+.jfile{position:relative;width:200px;height:59px;margin-top:26px;transform:rotate(-4deg)}
+.jfile img{position:absolute;inset:0;width:200px;height:59px}
+.jfile span{position:absolute;inset:0;display:grid;place-items:center;font:700 22px/1 var(--font-label);letter-spacing:.14em;color:#6e2a35}
+#jR .jdoss + .jfill{top:312px}
+.jobs{padding-left:10px;border-left:4px solid #8a6a3a}
+.jmem{border:3px double #8a6a3a;background:#e8d6aa;padding:8px 14px;font-style:italic;color:#5a4630;margin:8px 0}
+/* evidence */
+.jeg{display:grid;grid-template-columns:repeat(3,222px);grid-auto-rows:226px;gap:8px 19px;margin-top:4px}
+.jst{position:relative;border:0;background:none;padding:0;cursor:pointer;display:block;text-align:center}
+.jsk{position:absolute;display:grid;place-items:center}
+.jsk-doc{left:46px;top:8px;width:130px;height:152px;background:#fbf3d8;border:2px solid #b8a578;box-shadow:0 5px 10px rgba(40,25,10,.4);transform:rotate(2deg)}
+.jsk-obj{left:36px;top:18px;width:150px;height:128px;border-radius:14px;background:radial-gradient(ellipse,#e9d9b0,#d0b983);box-shadow:inset 0 0 0 3px #b8a578,0 5px 10px rgba(40,25,10,.35)}
+.jsk-photo{left:36px;top:4px;width:150px;height:168px;transform:rotate(-3deg)}
+.jsk-photo .jw{position:absolute;left:14px;top:14px;width:122px;height:110px;overflow:hidden;background:#c8a96f;display:grid;place-items:center}
+.jsk-photo .jw img{width:100%;height:100%;object-fit:cover}
+.jst.multi:before,.jst.multi:after{content:"";position:absolute;top:10px;width:130px;height:150px;background:#eadfc0;border:2px solid #b8a578;z-index:0}
+.jst.multi:before{left:56px;transform:rotate(8deg)}.jst.multi:after{left:51px;transform:rotate(4deg);background:#f1e6c8}
+.jst .jsk{z-index:1}
+.jgl{position:absolute;left:0;right:0;top:164px;height:58px;display:flex;align-items:center;justify-content:center;font:600 25px/1.12 Pretendard,var(--font-body);color:#3a2a1a;text-align:center;overflow:hidden}
+.jst.sel .jgl{color:#6e2a35;text-decoration:underline;text-decoration-color:#6e2a35;text-decoration-thickness:3px;text-underline-offset:4px}
+.jcnt{position:absolute;right:12px;top:2px;z-index:3;min-width:34px;height:34px;padding:0 6px;border-radius:17px;background:#6e2a35;color:#f6e3c0;font:700 22px/34px var(--font-body);text-align:center}
+.jpin{position:absolute;left:14px;top:-18px;width:56px;height:56px;z-index:4;pointer-events:none}
+.jpager{position:absolute;left:0;bottom:2px;display:flex;gap:14px;align-items:center;font:600 22px var(--font-body)}
+.jpager button{width:46px;height:38px;border-radius:8px;border:2px solid #8a6a3a;background:#f1dfb4;font:700 24px var(--font-body);color:var(--ink);cursor:pointer}.jpager button:disabled{opacity:.4}
+.jtitle{font:700 44px/1.1 var(--font-body);margin:0 0 10px}
+.jexh{position:relative;width:690px;height:270px;margin:6px 0 10px;border-radius:14px;background:radial-gradient(ellipse at 50% 40%,#e9d9b0,#cfba85);box-shadow:inset 0 0 0 4px #a98f58,inset 0 0 40px rgba(80,50,20,.4)}
+.jexi{position:absolute;left:50px;top:20px;width:240px;height:230px;display:grid;place-items:center;filter:drop-shadow(0 12px 10px rgba(40,25,10,.45))}
+.jexs{position:absolute;left:380px;top:50px;width:150px;height:48px;transform:rotate(-3deg)}
+.jexs img{position:absolute;inset:0;width:150px;height:48px}.jexs span{position:absolute;inset:0;display:grid;place-items:center;font:700 17px/1 var(--font-label);letter-spacing:.08em;color:#26364f}
+.jkind{position:absolute;left:380px;top:116px;font:700 17px/1 var(--font-label);letter-spacing:.14em;border:2px solid #6e2a35;color:#6e2a35;border-radius:4px;padding:6px 9px}
+.jh3{font:700 38px/1.15 var(--font-body);margin:4px 0}
+.jmeta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.jmt{font:600 21px/1 var(--font-body);padding:7px 12px;border-radius:30px;border:2px solid #8a6a3a;background:#f6e9c8;color:#3a2a1a}
+/* events */
+.jtl{position:absolute;left:0;top:40px;right:0;bottom:0}
+.jtlin{position:relative;padding-bottom:20px}
+.jtlin:before{content:"";position:absolute;left:150px;top:0;bottom:0;border-left:3px dashed rgba(138,106,58,.7)}
+.jrow{position:relative;display:grid;grid-template-columns:128px 44px 1fr;gap:0;padding:12px 10px 12px 0;margin-bottom:4px;cursor:pointer;border-radius:8px}
+.jrow.jq{cursor:default}
+.jrow.sel{background:rgba(110,42,53,.14);box-shadow:inset 6px 0 0 #6e2a35}
+.jrow.link{background:rgba(196,69,58,.12)}
+.jt{text-align:right;padding-right:10px;font:700 30px/1.1 var(--font-body);color:#3a2a1a}
+.jm{display:grid;place-items:start center;padding-top:6px}
+.mk{display:block;width:24px;height:24px;border-radius:50%}
+.mk.fact{background:radial-gradient(circle at 35% 30%,#e6c98a,#8a6a36);border:3px solid #5a3a22}
+.mk.claim{background:#fbf3d8;border:4px solid #8a5a14}
+.mk.est{width:20px;height:60px;border:3px dashed #8a2a3a;border-radius:10px;background:repeating-linear-gradient(45deg,rgba(138,42,58,.25) 0 6px,transparent 6px 12px)}
+.mk.unk{background:#f2e8d4;border:3px dashed #8a6a3e}
+.jb{min-width:0;padding-left:8px;font:400 24px/1.35 var(--font-body)}
+.jb .jc8{margin:6px 0 0}.jpl8{margin:4px 0 0!important}
+#anchor{display:inline-block;width:1px;height:1px}
+.jmap{position:absolute;width:596px;height:576px}
+.jmap>img{position:absolute;inset:0;width:596px;height:576px;display:block;pointer-events:none}
+.jmk{position:absolute;width:96px;height:96px;border:0;padding:0;background:none;cursor:pointer;z-index:2}
+.jmk img{width:96px;height:96px;display:block;pointer-events:none}
+.jpl{position:absolute;transform:translateX(-50%);height:46px;min-width:92px;padding:0 4px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;background:none;font:700 23px/46px Pretendard,var(--font-body);color:#3a2a1a;white-space:nowrap;cursor:pointer;z-index:3}
+.jpl.sel{height:52px;line-height:52px;border-image-source:url(assets/journal_plaque_selected.webp);color:#6e2a35;margin-top:-3px}
+.jpl.cur{border-image-source:url(assets/journal_plaque_current.webp);color:#f6e3c0}
+.jplace{position:absolute;left:0;top:596px;width:704px;height:214px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}.jplace .chips{margin:4px 0}#jrnl .jplace .gchip{font-size:20px;padding:6px 11px}.jch{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+.jct{font:700 34px/1.15 Pretendard,var(--font-body);color:#6e2a35}.jct.jmute{color:#8a6a3e;font-size:30px}
+.jcs{font:400 22px/1.3 var(--font-body);color:#5a4630;margin:3px 0}
+/* notes */
+.jqs{position:absolute;left:0;top:40px;right:0;bottom:0}
+.jq{position:relative;display:flex;align-items:center;gap:12px;width:100%;min-height:128px;margin-bottom:6px;padding:6px 8px 6px 14px;text-align:left;border:0;border-bottom:2px solid rgba(138,106,62,.45);border-radius:6px;background:none;cursor:pointer;font:inherit;color:var(--ink)}
+.jq.sel{background:rgba(110,42,53,.1);box-shadow:inset 7px 0 0 #6e2a35}
+.jqn{flex:none;width:64px;text-align:center;font:700 54px/1 Pretendard,var(--font-body);color:#8a6a3e}.jq.sel .jqn{color:#6e2a35}
+.jqt{flex:1;min-width:0;font:600 25px/1.28 var(--font-body)}
+.jqs2{display:block;font:600 19px/1.2 var(--font-body);color:#6d5a40;margin-top:4px}
+.jring{position:relative;flex:none;width:96px;height:96px;transform:rotate(-8deg)}
+.jring img{position:absolute;inset:0;width:96px;height:96px}
+.jring span{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font:700 18px/1.15 var(--font-label);letter-spacing:.06em}
+.jring.open span{color:#8a5a14}.jring.done span{color:#2f5f3a}
+.jeyebrow{font:600 20px/1 var(--font-label);letter-spacing:.2em;color:#8a6a3e}
+.jqh{font:700 36px/1.2 var(--font-body);margin:6px 0 14px}
+.jstep{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a7a,#a8483f 60%,#6e2a35);color:#fff;font:700 18px/1 var(--font-body);font-style:normal;margin-right:2px}
+.jcork{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px;padding:22px 16px 16px;margin:0 0 14px;border-radius:12px;background-color:#b07a43;box-shadow:inset 0 0 0 6px #7a5230,inset 0 0 50px rgba(60,30,10,.5)}
+.jclue{position:relative;padding:12px 12px 10px;background:#fbf3d8;border:2px solid #a98f58;box-shadow:0 5px 8px rgba(0,0,0,.4);transform:rotate(var(--r,0deg));min-width:0}
+.jclue.basis{outline:4px solid #6e2a35;outline-offset:2px}
+.jpn{position:absolute;left:50%;top:-12px;margin-left:-9px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f2d595,#b08d57 60%,#7d5f2e);box-shadow:0 3px 4px rgba(0,0,0,.45)}
+.jclue.basis .jpn{background:radial-gradient(circle at 35% 30%,#ff8a7a,#a8483f 60%,#6e2a35)}
+.jct2{display:flex;gap:10px;align-items:center}.jct2 b{font:700 22px/1.15 var(--font-body);min-width:0}
+.jci{flex:none;width:52px;height:52px;display:grid;place-items:center}.jci img,.jci svg{max-width:52px;max-height:52px}
+.jcb{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.jcb button{font:600 17px/1 var(--font-body);padding:8px 10px;border-radius:20px;border:2px solid #8a6a3a;background:#f6e9c8;color:#3a2a1a;cursor:pointer}
+.jcb button.on{background:#6e2a35;color:#f6e3c0;border-color:#6e2a35}
+.jopts{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 6px}
+.jopts button{flex:1 1 calc(50% - 5px);min-width:0;min-height:72px;padding:8px 14px;border:4px double #8a6a3a;border-radius:8px;background:#f6e9c8;color:#3a2a1a;font:600 24px/1.2 var(--font-body);cursor:pointer;text-align:center}
+.jopts button.on{border-color:#6e2a35;background:#f1d9d6;color:#6e2a35}
+.oldnotes{margin:14px 0 10px}
 </style>
 
 <div id="vp">
@@ -566,10 +706,15 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
   <div id="dlg"><div id="dlgbg" class="nine"></div><div class="por"><img id="dPor" src="assets/nini_front.webp" alt=""></div><div class="nm" id="dNm"></div><div class="tx" id="dTx"></div></div>
 
   <div id="cf">
-   <div id="cfwrap">
-    <div id="nav"></div>
-    <div id="page"><div id="pg"></div></div>
+   <div id="jrnl">
+    <img class="jimg" id="jPages" src="assets/journal_pages.webp" alt="" style="left:50px;top:85px;width:1646px;height:908px">
+    <div class="jrun" id="jRunL"></div><div class="jrun" id="jRunR"></div>
+    <div class="jcol" id="jL"></div><div class="jcol" id="jR"></div>
+    <img class="jimg" id="jCover" src="assets/journal_cover.webp" alt="" style="left:24px;top:29px;width:1697px;height:1022px">
+    <div id="jSpine"><i style="top:150px"></i><i style="top:330px"></i><i style="top:510px"></i><i style="top:690px"></i></div>
+    <div id="jRibs"></div>
     <button id="cfclose" aria-label="Close Case File"></button>
+    <svg id="jThread" width="1920" height="1080" viewBox="0 0 1920 1080" aria-hidden="true"></svg>
    </div>
   </div>
 
@@ -690,7 +835,7 @@ const UI = {
   talk: {en:"Talk to Nini", ko:"니니와 이야기한다"}, talkCk:{en:"Talk to Oliver", ko:"올리버와 이야기한다"},
   read:{en:"Read the signpost", ko:"표지판을 읽는다"}, look:{en:"Look up at the clock", ko:"시계를 올려다본다"}, enter:{en:"Enter the Clocktower", ko:"시계탑에 들어간다"},
   resume:{en:"Resume", ko:"계속하기"}, restart:{en:"Restart", ko:"처음부터"}, langBtn:{en:"Language: English", ko:"언어: 한국어"}, paused:{en:"PAUSED", ko:"일시정지"},
-  tabs:{en:["People","Evidence","Reconstruction","Deduction Notes"], ko:["인물","증거","사건 재구성","추리 노트"]},
+  tabs:{en:["People","Evidence","Events","Deduction"], ko:["인물","증거","사건 재구성","추리 노트"]},
   got:{en:"Evidence added", ko:"증거 추가"}, newnote:{en:"Note added", ko:"노트 추가"},
   case:{en:"The Death of Edward", ko:"에드워드의 죽음"}, loc:{en:"Bell Village", ko:"벨 마을"},
   objHead:{en:"What to do", ko:"할 일"},
@@ -2200,15 +2345,6 @@ $("eNext").onclick = ()=>{ if (NEXTK === 88){ $("endcard").classList.remove("on"
 /* case file */
 let tab = 0, selEv = null, sub = false, PV = false, evPage = 0;
 const SLOTS = [85,174,259,344,429,514];
-function renderNav(){
-  const nav = $("nav"); nav.innerHTML = ""; const labs = tr(UI.tabs);
-  const k = 386/746;
-  PLY.slice(0,CF_TABS).forEach((py,i)=>{
-    const b = document.createElement("button"); b.className = "tab" + (i===tab ? " nine red act" : "");
-    b.style.top = Math.round(py*k) + "px"; b.textContent = labs[i];
-    b.onclick = ()=>{ tab = i; sub = false; renderCF(); }; nav.appendChild(b);
-  });
-}
 /* ===== Case File phase 2: four tabs (People, Evidence, Reconstruction, Deduction Notes) =====
    Display only. No evidence ID, flag, chapter or story fact changes. The one new save field is S.qa: the player's own judgments. */
 let selGroup = null, reMode = "time", CF_GS = [];
@@ -2241,55 +2377,64 @@ function grpIcon(gr, size){   /* group card: a real picture of one of its items 
   const withImg = gr.ids.filter(id=>EV[id].img || EV[id].icon).pop();
   return withImg ? evIcon(EV[withImg], size) : svIcon(GROUP_SV[gr.group] || "document", size);
 }
-function peoplePage(){
+/* ===== Case File: Investigator's Journal (display layer only; same data, flags and IDs) =====
+   Stage coordinates (1920x1080). Cover (24,29), pages (50,85), thin spine (851,93) 44x892, left page x127..831, right page x915..1619, y140..950. */
+const JA = n => "assets/journal_"+n+".webp";
+const jsec = t => '<div class="jsec">'+t+'</div>';
+const jtag = (cls, txt, st) => '<span class="'+cls+'"'+(st?' style="'+st+'"':'')+'>'+txt+'</span>';
+const POLA_R = [-2,2,-1,1,2,-2,1,-1];
+const JKIND = { past23:"doc", letters:"doc", medical:"doc", cafe:"doc", patrol:"doc", plaza:"doc", photos:"photo" };
+
+function jPeople(){
   const met = metPeople(); if (!met.includes(selPerson)) selPerson = "nini";
-  let h = '<div class="pstrip big">'+met.map(id=>'<button class="ptile'+(id===selPerson?' sel':'')+'" data-pp="'+id+'"><span class="pf"><img src="assets/'+PERSON_UI[id].img+'.webp" alt=""></span><b>'+tr(SP[id].name)+'</b></button>').join('')+'</div>';
-  const pv = personView(selPerson), u = PERSON_UI[selPerson]; if (!pv) return h;
-  h += '<div class="pcard"><div class="pp"><img src="assets/'+u.img+'.webp" alt=""></div><div class="pb"><h3>'+tr(SP[selPerson].name)+'</h3><div class="role">'+tr(u.role)+'</div><p class="cfp">'+tr(u.intro)+'</p>';
-  if (pv.statements.length){ h += '<div class="sec">'+L2("진술","STATEMENTS")+'</div>'+pv.statements.map(id=>'<div class="quote">'+tr(EV[id].desc)+'</div>').join(''); }
+  const k = lang === "ko";
+  let l = jsec(k ? "마을 사람들 · 발견한 인물 "+met.length+"명" : "VILLAGERS · "+met.length+" MET")+'<div class="jpg">'
+    + met.map((id,i)=>'<button type="button" class="jtile'+(id===selPerson?' sel':'')+'" data-pp="'+id+'" style="--r:'+POLA_R[i%8]+'deg"><span class="jw"><img src="assets/'+PERSON_UI[id].img+'.webp" alt=""></span><b class="jn">'+tr(SP[id].name)+'</b></button>').join('')+'</div>';
+  const pv = personView(selPerson), u = PERSON_UI[selPerson]; if (!pv) return { l, r:'' };
+  const no = String(met.indexOf(selPerson)+1).padStart(2,"0");
+  let r = '<div class="jdoss"><div class="jbig"><span class="jw"><img src="assets/'+u.img+'.webp" alt=""></span><b class="jn">'+tr(SP[selPerson].name)+'</b></div>'
+    + '<div class="jhead"><div class="jrole">'+tr(u.role)+'</div><div class="jfile"><img src="'+JA("stamp_file_burgundy")+'" alt=""><span>FILE No. '+no+'</span></div></div></div><div class="jscroll jfill">'
+    + jsec(L2("프로필","PROFILE"))+'<p class="jp">'+tr(u.intro)+'</p>';
+  if (pv.statements.length) r += jsec(L2("진술","STATEMENTS"))+pv.statements.map(id=>'<div class="jcard"><p class="jp">'+tr(EV[id].desc)+'</p><div class="jsign">'+tr(SP[selPerson].name)+'</div></div>').join('');
   if (selPerson === "gr"){
     const obs = [];
     if (has("fin.o1")) obs.push(L2("방앗간에 걸린 오래된 목도리는 매듭이 오른쪽 어깨 방향으로 묶여 있다.","The old scarf at the mill is tied with the knot toward the right shoulder."));
     if (has("fin.o2")) obs.push(L2("작업대 위에는 왼손 장갑만 있다. 오른쪽은 어젯밤에 잃어버렸다고 한다.","Only a left glove lies on the workbench. He says he lost the right one last night."));
-    if (obs.length) h += '<div class="sec">'+L2("관찰","OBSERVED")+'</div>'+obs.map(t=>'<p class="cfp">'+t+'</p>').join('');
+    if (obs.length) r += jsec(L2("관찰","OBSERVED"))+obs.map(t=>'<p class="jp jobs">'+t+'</p>').join('');
   }
   const mem = memLines(selPerson === "gr" ? MEM_GREEN : selPerson === "ed" ? MEM_ED : []);
-  if (mem.length) h += '<div class="sec">'+L2("회상에서 본 것","SEEN IN A MEMORY")+'</div>'+mem.map(t=>'<p class="cfp">'+t+'</p>').join('');
-  if (pv.evidence.length) h += '<div class="sec">'+L2("관련 증거","RELATED EVIDENCE")+'</div><div class="chips">'+pv.evidence.map(evChip).join('')+'</div>';
-  if (!pv.statements.length && !pv.evidence.length && !mem.length && !(selPerson === "gr" && (has("fin.o1") || has("fin.o2")))) h += '<p class="cfnote">'+L2("아직 더 알아낸 것이 없다.","Nothing more is known yet.")+'</p>';
-  return h + '</div></div>';
+  if (mem.length) r += jsec(L2("회상에서 본 것","SEEN IN A MEMORY"))+mem.map(t=>'<p class="jp jmem">'+t+'</p>').join('');
+  if (pv.evidence.length) r += jsec(L2("관련 증거","RELATED EVIDENCE"))+'<div class="chips">'+pv.evidence.map(evChip).join('')+'</div>';
+  if (!pv.statements.length && !pv.evidence.length && !mem.length && !(selPerson === "gr" && (has("fin.o1") || has("fin.o2")))) r += '<p class="jnote">'+L2("아직 더 알아낸 것이 없다.","Nothing more is known yet.")+'</p>';
+  return { l, r: r + '</div>' };
 }
 
-function evidencePage(){
+function jEvidence(){
   CF_GS = evGroups().map(g=>({group:g.group, ids:g.ids.filter(id=>EV[id].kind !== "statement")})).filter(g=>g.ids.length);
-  if (!CF_GS.length) return '<p class="cfp" style="font-style:italic">'+tr(UI.empty)+'</p>';
+  if (!CF_GS.length) return { l: jsec(L2("증거 보관함","EVIDENCE ARCHIVE"))+'<p class="jnote">'+tr(UI.empty)+'</p>', r:'' };
   if (selEv && (!EV[selEv] || !hasEv(selEv) || EV[selEv].kind === "statement")) selEv = null;
   if (selEv && EV[selEv].group !== selGroup) selGroup = EV[selEv].group;
   if (!selGroup || !CF_GS.some(g=>g.group === selGroup)) selGroup = CF_GS[0].group;
-  const cur = CF_GS.find(g=>g.group === selGroup);
+  const gi = CF_GS.findIndex(x=>x.group === selGroup), cur = CF_GS[gi];
   if (!selEv || !cur.ids.includes(selEv)) selEv = cur.ids[cur.ids.length-1];
-  return '<div class="grid2"><div class="evgrid" id="evg"></div><div class="evdesc" id="evd"></div></div>';
-}
-function renderEvGrid2(){
-  const g = $("evg"); if (!g) return;
-  const CX = [[60,318],[340,597],[618,876]], CY = [[95,348],[372,617],[642,888]], k = 520/940;
-  const pages = Math.max(1, Math.ceil(CF_GS.length/9)); evPage = Math.min(evPage, pages-1);
-  evPage = Math.floor(CF_GS.findIndex(x=>x.group === selGroup)/9);
-  CF_GS.slice(evPage*9, evPage*9+9).forEach((gr,i)=>{
-    const col = i%3, row = Math.floor(i/3), rep = EV[gr.ids[gr.ids.length-1]];
-    const b = document.createElement("button"); b.className = "evcell"+(gr.group === selGroup ? " sel" : ""); b.dataset.g = gr.group;
-    b.style.cssText = "left:"+Math.round(CX[col][0]*k)+"px;top:"+Math.round(CY[row][0]*k)+"px;width:"+Math.round((CX[col][1]-CX[col][0])*k)+"px;height:"+Math.round((CY[row][1]-CY[row][0])*k)+"px";
-    b.innerHTML = grpIcon(gr, 70)+(gr.ids.length>1?'<span class="cnt">'+gr.ids.length+'</span>':'')+'<span class="gl">'+tr(GROUP_NAME[gr.group]||GROUP_NAME.other)+'</span>';
-    b.title = tr(GROUP_NAME[gr.group]||GROUP_NAME.other);
-    b.onclick = ()=>{ selGroup = gr.group; selEv = gr.ids[gr.ids.length-1]; renderCF(); }; g.appendChild(b);
-  });
-  if (pages > 1){ const pgr = document.createElement("div"); pgr.className = "pager"; pgr.style.cssText = "position:absolute;left:0;top:560px";
-    pgr.innerHTML = '<button id="pvP"'+(evPage?'':' disabled')+'>&lsaquo;</button><span>'+tr(UI.page)+' '+(evPage+1)+' / '+pages+'</span><button id="pvN"'+(evPage<pages-1?'':' disabled')+'>&rsaquo;</button>';
-    g.appendChild(pgr); pgr.querySelector("#pvP").onclick = ()=>{ selGroup = CF_GS[(evPage-1)*9].group; selEv = null; renderCF(); }; pgr.querySelector("#pvN").onclick = ()=>{ selGroup = CF_GS[(evPage+1)*9].group; selEv = null; renderCF(); }; }
-  const cur = CF_GS.find(x=>x.group === selGroup), e = EV[selEv];
-  $("evd").innerHTML = '<div class="sec" style="margin-top:0">'+tr(GROUP_NAME[selGroup]||GROUP_NAME.other).toUpperCase()+'</div><div class="chips" style="margin:8px 0">'+cur.ids.map(id=>'<button type="button" class="gchip'+(id===selEv?' on':'')+(EV[id].reach==="dormant"?' old':'')+'" data-ev="'+id+'">'+tr(EV[id].name)+'</button>').join('')+'</div>'
-    + '<span class="tag">'+e.tag+'</span><h3>'+tr(e.name)+'</h3><p>'+tr(e.desc)+'</p>'
-    + (e.reach === "dormant" ? '<p class="cfnote">'+L2("이전 버전에서 얻은 기록이다.","Recorded in an earlier version.")+'</p>' : '');
+  const pages = Math.ceil(CF_GS.length/9); evPage = Math.floor(gi/9);
+  let l = jsec(L2("증거 보관함 · "+CF_GS.length+"묶음","EVIDENCE ARCHIVE · "+CF_GS.length+" SETS"))+'<div class="jeg">'
+    + CF_GS.slice(evPage*9, evPage*9+9).map(gr=>{
+      const rep = EV[gr.ids[gr.ids.length-1]], on = gr.group === selGroup, kind = JKIND[gr.group] || "obj", nm = tr(GROUP_NAME[gr.group]||GROUP_NAME.other);
+      const body = kind === "photo" ? '<span class="jsk jsk-photo"><span class="jw">'+evIcon(rep, 110)+'</span></span>'
+        : kind === "doc" ? '<span class="jsk jsk-doc">'+grpIcon(gr, 84)+'</span>' : '<span class="jsk jsk-obj">'+grpIcon(gr, 84)+'</span>';
+      return '<button type="button" class="jst'+(on?' sel':'')+(gr.ids.length>1?' multi':'')+'" data-g="'+gr.group+'" title="'+nm+'">'+body
+        +(gr.ids.length>1?'<span class="jcnt">'+gr.ids.length+'</span>':'')+(on?'<img class="jpin" src="'+JA("marker_selected")+'" alt="">':'')+'<span class="jgl">'+nm+'</span></button>'; }).join('')+'</div>';
+  if (pages > 1) l += '<div class="jpager"><button type="button" data-evp="-1"'+(evPage?'':' disabled')+'>&lsaquo;</button><span>'+tr(UI.page)+' '+(evPage+1)+' / '+pages+'</span><button type="button" data-evp="1"'+(evPage<pages-1?'':' disabled')+'>&rsaquo;</button></div>';
+  const e = EV[selEv], ii = cur.ids.indexOf(selEv)+1, pl = PLACE_OF[selEv], used = QS.filter(q=>q.open() && q.clues.includes(selEv));
+  const r = '<div class="jscroll jfill"><div class="jtitle">'+tr(GROUP_NAME[selGroup]||GROUP_NAME.other)+'</div>'
+    + '<div class="chips jitems">'+cur.ids.map(id=>'<button type="button" class="gchip'+(id===selEv?' on':'')+(EV[id].reach==="dormant"?' old':'')+'" data-ev="'+id+'">'+tr(EV[id].name)+'</button>').join('')+'</div>'
+    + '<div class="jexh"><div class="jexi">'+evIcon(e, 230)+'</div><div class="jexs"><img src="'+JA("stamp_exhibit_navy")+'" alt=""><span>EXHIBIT '+String(gi+1).padStart(2,"0")+'-'+ii+'</span></div><span class="jkind">'+e.tag+'</span></div>'
+    + '<h3 class="jh3">'+tr(e.name)+'</h3><p class="jp">'+tr(e.desc)+'</p>'
+    + (e.reach === "dormant" ? '<p class="jnote">'+L2("이전 버전에서 얻은 기록이다.","Recorded in an earlier version.")+'</p>' : '')
+    + (pl || used.length ? '<div class="jmeta">'+(pl ? '<span class="jmt">'+L2("장소: ","Place: ")+tr(PLACES[pl])+'</span>' : '')+used.map(q=>'<span class="jmt">'+(lang==="ko" ? "질문 "+qNum(q)+"에서 사용" : "Used in question "+qNum(q))+'</span>').join('')+'</div>' : '')
+    + '</div>';
+  return { l, r };
 }
 
 /* reconstruction: every row needs the evidence that backs it. Unconfirmed times are never listed. */
@@ -2303,9 +2448,9 @@ const TL_DATA = [
   { t:"11:55 ~ 12:15", ty:"est", ev:["tod"], k:"메이의 소견: 에드워드는 이 사이에 숨진 것으로 추정된다. 추위 때문에 정확하지 않다.", e:"May's estimate: Edward died somewhere in this window. The cold makes it unreliable." }
 ];
 const TY = { fact:["확인된 기록","RECORD","b-fact"], claim:["목격 진술","WITNESS","b-claim"], est:["전문가 추정","ESTIMATE","b-est"] };
-const PLACES = {
-  plaza:{ko:"마을 광장",en:"Village square",x:250,y:400}, tower:{ko:"시계탑",en:"Clocktower",x:346,y:300}, archive:{ko:"기록관",en:"Archive",x:450,y:360},
-  cafe:{ko:"카페",en:"Café",x:190,y:310}, cottage:{ko:"빅그베의 오두막",en:"BGB's cottage",x:120,y:470}, healer:{ko:"메이의 집",en:"May's house",x:300,y:230}, mill:{ko:"낡은 방앗간",en:"Old Mill",x:520,y:480}
+const PLACES = {   /* pin tips read from assets/journal_map.webp (596x576); the street runs west to east: cottage, square, healer, tower, archive, cafe, mill */
+  cottage:{ko:"빅그베의 오두막",en:"BGB's cottage",x:141,y:136}, plaza:{ko:"마을 광장",en:"Village square",x:292,y:196}, healer:{ko:"메이의 집",en:"May's house",x:105,y:272},
+  tower:{ko:"시계탑",en:"Clocktower",x:295,y:350}, archive:{ko:"기록관",en:"Archive",x:478,y:325}, cafe:{ko:"카페",en:"Café",x:123,y:428}, mill:{ko:"낡은 방앗간",en:"Old Mill",x:380,y:478}
 };
 const PLACE_OF = { notice:"plaza", bellinc:"plaza", patrol:"plaza", found_loc:"tower", clock:"tower", mech:"tower", hatch2:"tower", pwatch:"tower", hatch:"tower", pendulum:"tower", handbell:"tower", chute:"tower", melt:"tower", boots:"tower", pit:"tower",
   oldrep:"archive", mreq:"archive", noledger:"archive", draft:"archive", mnote:"archive", photo2:"archive", bellrec:"archive", register:"archive", receipt:"cafe", tab_pm:"cafe", tod:"healer", thread:"healer", tdoc:"mill", hidden:"cottage", photo_home:"cottage" };
@@ -2324,37 +2469,6 @@ function placeVisited(pid){
   if (pid === "mill") return has("fin.m1");
   return false;
 }
-function mapHtml(pids, sel){
-  return '<div class="mapwrap"><div class="mapbox">'+pids.map(pid=>{ const p = PLACES[pid], cur = SCENE_PLACE[S.scene] === pid, on = pid === sel, dim = sel && !on;
-    return '<div class="pin'+(on?' sel':'')+(dim?' dim':'')+'" data-pl="'+pid+'" style="left:'+p.x+'px;top:'+p.y+'px;'+(cur&&!on?'background:#c4453a':'background:#d9a441')+'"></div><div class="pinlab'+(dim?' dim':'')+'" data-pl="'+pid+'" style="left:'+(p.x+(on?30:26))+'px;top:'+p.y+'px">'+tr(p)+'</div>'; }).join('')+'</div></div>';
-}
-function reconPage(){
-  const rows = TL_DATA.filter(r=>r.ev.every(hasEv)), pids = Object.keys(PLACES).filter(placeVisited);
-  if (rePlace && !pids.includes(rePlace)) rePlace = null;
-  let h = '<div class="seg"><button type="button" data-re="time" class="'+(reMode==="time"?'on':'')+'">'+L2("시간순","By time")+'</button><button type="button" data-re="place" class="'+(reMode==="place"?'on':'')+'">'+L2("장소별","By place")+'</button></div>';
-  let left = '';
-  if (reMode === "time"){
-    if (reRow >= rows.length) reRow = -1;
-    if (!rows.length) left = '<p class="cfp" style="font-style:italic">'+tr(UI.empty)+'</p>';
-    else {
-      const dusk = rows.filter(r=>r.dusk).length > 1;
-      left = rows.map((r,i)=>{ const ty = TY[r.ty], pl = ROW_PLACE[r.t];
-        return '<div class="tlrow'+(i===reRow?' sel':'')+(rePlace && pl===rePlace && i!==reRow?' link':'')+'" data-row="'+i+'"><div class="tt">'+r.t+'</div><div class="tb"><span class="badge '+ty[2]+'">'+L2(ty[0],ty[1])+'</span>'+L2(r.k,r.e)+(r.dusk && dusk ? ' <span class="newclue">'+L2("기록이 서로 다르다","records differ")+'</span>' : '')
-          +(i===reRow ? '<div class="cfnote" style="margin:6px 0 0">'+(pl ? L2("장소: ","Place: ")+tr(PLACES[pl]) : L2("이 기록만으로는 장소를 알 수 없다.","This record does not say where."))+'</div>' : '')
-          +'<div style="margin-top:6px">'+r.ev.map(evChip).join('')+'</div></div></div>'; }).join('')
-        + '<div class="tlrow" style="cursor:default"><div class="tt">?</div><div class="tb cfnote">'+L2("아직 확인되지 않은 시간대가 있다.","Some stretches of the night are still unconfirmed.")+'</div></div>';
-    }
-  } else {
-    left = pids.map(pid=>{ const ev = placeEv(pid).filter(id=>EV[id].kind !== "statement"), on = pid === rePlace;
-      const times = rows.filter(r=>ROW_PLACE[r.t] === pid);
-      return '<div class="placerow'+(on?' sel':'')+'" data-pl="'+pid+'"><b>'+tr(PLACES[pid])+(SCENE_PLACE[S.scene]===pid ? ' <span class="newclue">'+L2("현재 위치","you are here")+'</span>' : '')+'</b>'
-        +'<div class="chips" style="margin:6px 0 0">'+(ev.length ? ev.map(evChip).join('') : '<span class="cfnote">'+L2("아직 발견한 것이 없다.","Nothing found here yet.")+'</span>')+'</div>'
-        +(on && times.length ? '<div class="cfnote" style="margin:8px 0 0">'+L2("이곳과 관련된 시간: ","Times tied to this place: ")+times.map(r=>'<b>'+r.t+'</b>').join(", ")+'</div>' : '')+'</div>'; }).join('');
-  }
-  const selPlace = reMode === "time" ? (reRow >= 0 && rows[reRow] ? ROW_PLACE[rows[reRow].t] || null : rePlace) : rePlace;
-  return h + '<div style="display:flex;gap:30px;align-items:flex-start"><div style="flex:1;min-width:0">'+left+'</div>'+mapHtml(pids, selPlace)+'</div>';
-}
-
 /* deduction notes: neutral questions, the player's own judgments, never graded and never overwritten */
 const QS = [
   { id:"q1", open:()=>hasEv("stmt_ck"), clues:["stmt_tm","stmt_ck"], k:"다리 근처에서 목격된 인물과 계단에서 목격된 인물은 같은 사람을 가리키는가?", e:"Do the figure seen near the bridge and the figure seen on the stairs point to the same person?",
@@ -2371,47 +2485,109 @@ const QS = [
     o:[["changed","기록이 바뀌었다고 본다","I think the records were changed"],["same","기록은 있는 그대로라고 본다","I think the records are as they were"],["unk","아직 판단할 수 없다","I can't tell yet"]] }
 ];
 const qNum = q => q.id.slice(1).padStart(2,"0");
-function notesPage(){
-  S.qa = S.qa || {};
-  const open = QS.filter(q=>q.open());
-  if (qSel && !open.some(q=>q.id === qSel)) qSel = null;
-  if (qSel) return questionDetail(QS.find(q=>q.id === qSel));
-  let h = '';
-  if (!open.length) h += '<p class="cfp" style="font-style:italic">'+L2("아직 풀어야 할 질문이 없다.","No open questions yet.")+'</p>';
-  h += '<div class="qlist">'+open.map(q=>{ const clues = q.clues.filter(hasEv), a = S.qa[q.id], fresh = a && a.v && clues.length > a.n, opt = a && a.v ? q.o.find(o=>o[0]===a.v) : null;
-    return '<button type="button" class="qsum" data-qopen="'+q.id+'"><div class="qt">'+L2(q.k,q.e)+'<div class="qs">'+L2("단서 ","Clues ")+clues.length+(opt ? ' · '+L2("내 판단: ","My view: ")+L2(opt[1],opt[2]) : '')+(fresh ? '<span class="newclue">'+L2("새 단서","new clue")+'</span>' : '')+'</div></div><span class="qstat '+(opt?'done':'open')+'">'+(opt ? L2("판단 기록","VIEW SAVED") : L2("조사 중","OPEN"))+'</span></button>'; }).join('')+'</div>';
-  return h + autoNotes();
-}
-function questionDetail(q){
-  const a = (S.qa || {})[q.id] || {}, clues = q.clues.filter(hasEv), basis = a.b || [], fresh = a.v && clues.length > a.n;
-  let h = '<button type="button" class="backbtn" data-qback="1">&lsaquo; '+L2("질문 목록","All questions")+'</button>'
-    + '<div class="eyebrow">CASE FILE / '+L2("질문","QUESTION")+' '+qNum(q)+'</div><div class="qh">'+L2(q.k,q.e)+'</div>'
-    + '<div class="sec" style="margin-top:14px">'+L2("현재 확보한 단서","CLUES YOU HAVE")+(fresh ? '<span class="newclue">'+L2("새 단서가 생겼다","a new clue came in")+'</span>' : '')+'</div>';
-  h += clues.length ? '<div class="cgrid">'+clues.map(id=>{ const e = EV[id], on = basis.includes(id), d = tr(e.desc), sd = d.length > 70 ? d.slice(0,70)+"…" : d;
-    return '<div class="ccard'+(on?' basis':'')+'"><div class="ct"><div class="ci">'+evIcon(e, 48)+'</div><b>'+tr(e.name)+'</b></div><div class="cb"><button type="button" data-basis="'+id+'" data-bq="'+q.id+'" class="'+(on?'on':'')+'">'+(on ? L2("근거로 표시됨","Marked as basis") : L2("근거로 표시","Mark as basis"))+'</button><button type="button" data-ev="'+id+'">'+L2("자세히","Open")+'</button></div></div>'; }).join('')+'</div>'
-    : '<p class="cfnote">'+L2("연결할 단서가 아직 없다.","No clues to connect yet.")+'</p>';
-  h += '<div class="sec" style="margin-top:24px">'+L2("나의 현재 판단","YOUR CURRENT VIEW")+'</div><div class="qopts big">'+q.o.map(o=>'<button type="button" data-q="'+q.id+'" data-v="'+o[0]+'" class="'+(a.v===o[0]?'on':'')+'">'+L2(o[1],o[2])+'</button>').join('')+'</div>'
-    + '<p class="cfnote">'+L2("단서를 근거로 표시하는 것과 판단을 정하는 것은 별개다. 판단은 언제든 바꿀 수 있고, 새 단서가 생겨도 저절로 바뀌지 않는다.","Marking a basis and settling on a view are separate. You can change your view at any time, and a new clue never changes it for you.")+'</p>';
-  return h;
-}
 function goEv(id){ const e = EV[id]; if (!e) return; if (e.kind === "statement"){ tab = 0; if (e.holder) selPerson = e.holder; } else { tab = 1; selEv = id; selGroup = e.group; } renderCF(); }
 function wireCF(){
   document.querySelectorAll("[data-ev]").forEach(b=>{ b.onclick = e=>{ e.stopPropagation(); goEv(b.dataset.ev); }; });
   document.querySelectorAll("[data-pp]").forEach(b=>{ b.onclick = ()=>{ selPerson = b.dataset.pp; renderCF(); }; });
-  document.querySelectorAll("[data-re]").forEach(b=>{ b.onclick = ()=>{ reMode = b.dataset.re; renderCF(); }; });
+  document.querySelectorAll("[data-g]").forEach(b=>{ b.onclick = ()=>{ const gr = CF_GS.find(x=>x.group === b.dataset.g); if (!gr) return; selGroup = gr.group; selEv = gr.ids[gr.ids.length-1]; renderCF(); }; });
+  document.querySelectorAll("[data-evp]").forEach(b=>{ b.onclick = ()=>{ const gi = CF_GS.findIndex(x=>x.group === selGroup), np = Math.max(0, Math.min(Math.ceil(CF_GS.length/9)-1, Math.floor(gi/9)+(+b.dataset.evp))); selGroup = CF_GS[np*9].group; selEv = null; renderCF(); }; });
   document.querySelectorAll("[data-row]").forEach(b=>{ b.onclick = ()=>{ reRow = reRow === +b.dataset.row ? -1 : +b.dataset.row; rePlace = null; renderCF(); }; });
-  document.querySelectorAll("[data-pl]").forEach(b=>{ b.onclick = ()=>{ rePlace = rePlace === b.dataset.pl ? null : b.dataset.pl; if (reMode === "time") reRow = -1; renderCF(); }; });
+  document.querySelectorAll("[data-pl]").forEach(b=>{ b.onclick = ()=>{ const cur = (reRow >= 0 && TL_DATA.filter(r=>r.ev.every(hasEv))[reRow] ? ROW_PLACE[TL_DATA.filter(r=>r.ev.every(hasEv))[reRow].t] : null) || rePlace; rePlace = cur === b.dataset.pl ? null : b.dataset.pl; reRow = -1; renderCF(); }; });
   document.querySelectorAll("[data-qopen]").forEach(b=>{ b.onclick = ()=>{ qSel = b.dataset.qopen; renderCF(); }; });
-  document.querySelectorAll("[data-qback]").forEach(b=>{ b.onclick = ()=>{ qSel = null; renderCF(); }; });
   document.querySelectorAll("[data-basis]").forEach(b=>{ b.onclick = ()=>{ S.qa = S.qa || {}; const q = b.dataset.bq, a = S.qa[q] = S.qa[q] || {}, set = new Set(a.b || []); set.has(b.dataset.basis) ? set.delete(b.dataset.basis) : set.add(b.dataset.basis); a.b = [...set]; save(); renderCF(); }; });
   document.querySelectorAll("[data-q]").forEach(b=>{ b.onclick = ()=>{ const q = QS.find(x=>x.id === b.dataset.q); S.qa = S.qa || {}; const a = S.qa[q.id] = S.qa[q.id] || {}; a.v = b.dataset.v; a.n = q.clues.filter(hasEv).length; save(); renderCF(); }; });
 }
+
+/* reconstruction: timeline on the left page, map on the right page. A red thread joins the selected row to its place. */
+const JMAP = {x:54, y:10};   /* map art origin inside the right column (stage 969,150) */
+function jRecon(){
+  const rows = TL_DATA.filter(r=>r.ev.every(hasEv)), pids = Object.keys(PLACES).filter(placeVisited);
+  if (rePlace && !pids.includes(rePlace)) rePlace = null;
+  if (reRow >= rows.length) reRow = -1;
+  let l = jsec(L2("시간의 기록","TIMELINE"));
+  if (!rows.length) l += '<p class="jnote">'+tr(UI.empty)+'</p>';
+  else {
+    const dusk = rows.filter(r=>r.dusk).length > 1;
+    l += '<div class="jtl jscroll" id="jtl"><div class="jtlin">'+rows.map((r,i)=>{ const ty = TY[r.ty], pl = ROW_PLACE[r.t], on = i === reRow;
+      return '<div class="jrow'+(on?' sel':'')+(rePlace && pl===rePlace && !on?' link':'')+'" data-row="'+i+'"><div class="jt">'+r.t.replace(" ~ ","<br>~ ")+'</div><div class="jm"><i class="mk '+r.ty+'"></i></div><div class="jb"><span class="badge '+ty[2]+'">'+L2(ty[0],ty[1])+'</span>'+L2(r.k,r.e)
+        +(r.dusk && dusk ? ' <span class="newclue">'+L2("기록이 서로 다르다","records differ")+'</span>' : '')
+        +(on ? '<div class="jnote jpl8">'+(pl ? L2("장소: ","Place: ")+tr(PLACES[pl]) : L2("이 기록만으로는 장소를 알 수 없다.","This record does not say where."))+'</div>' : '')
+        +'<div class="chips jc8">'+r.ev.map(evChip).join('')+'</div>'+(on?'<span id="anchor"></span>':'')+'</div></div>'; }).join('')
+      + '<div class="jrow jq"><div class="jt">?</div><div class="jm"><i class="mk unk"></i></div><div class="jb jnote">'+L2("아직 확인되지 않은 시간대가 있다.","Some stretches of the night are still unconfirmed.")+'</div></div></div></div>';
+  }
+  const selPlace = reRow >= 0 && rows[reRow] ? (ROW_PLACE[rows[reRow].t] || null) : rePlace;
+  let r = '<div class="jmap" id="jmap" style="left:'+JMAP.x+'px;top:'+JMAP.y+'px"><img src="'+JA("map")+'" alt="">'
+    + pids.map(pid=>{ const p = PLACES[pid], on = pid === selPlace, cur = SCENE_PLACE[S.scene] === pid, w = tr(p);
+      return '<button type="button" class="jmk'+(on?' sel':'')+'" data-pl="'+pid+'" title="'+w+'" style="left:'+(p.x-48)+'px;top:'+(p.y-84)+'px"><img src="'+JA(on?"marker_selected":"marker_normal")+'" alt=""></button>'
+        +'<button type="button" class="jpl '+(on?'sel':cur?'cur':'')+'" data-pl="'+pid+'" style="left:'+p.x+'px;top:'+(p.y+10)+'px">'+w+'</button>'; }).join('')+'</div>';
+  let card;
+  if (selPlace){
+    const ev = placeEv(selPlace).filter(id=>EV[id].kind !== "statement"), times = rows.filter(x=>ROW_PLACE[x.t] === selPlace);
+    card = '<div class="jch"><div class="jct">'+tr(PLACES[selPlace])+(SCENE_PLACE[S.scene]===selPlace ? ' <span class="newclue">'+L2("현재 위치","you are here")+'</span>' : '')+'</div>'
+      + (times.length ? '<div class="jcs">'+L2("관련 시간: ","Times here: ")+times.map(x=>'<b>'+x.t+'</b>').join(", ")+'</div>' : '')+'</div>'
+      + '<div class="chips">'+(ev.length ? ev.map(evChip).join('') : '<span class="jnote">'+L2("아직 발견한 것이 없다.","Nothing found here yet.")+'</span>')+'</div>';
+  } else if (reRow >= 0 && rows[reRow]) card = '<div class="jct jmute">'+L2("이 기록만으로는 장소를 알 수 없다.","This record does not say where.")+'</div><div class="jcs">'+L2("장소를 억지로 정하지 않고 지도에 잇지 않았다.","No place is forced onto the map.")+'</div>';
+  else card = '<div class="jcs">'+L2("기록을 고르거나 지도의 장소를 눌러 보자.","Pick a record, or tap a place on the map.")+'</div>';
+  return { l, r: r + '<div class="jcard jplace" id="jplace">'+card+'</div>', rh: L2("장소","PLACES") };
+}
+function drawThread(){
+  const svg = $("jThread"); if (!svg) return; svg.innerHTML = "";
+  const sel = document.querySelector(".jrow.sel"), box = $("jtl"); if (tab !== 2 || !sel || !box) return;
+  const st = $("jrnl").getBoundingClientRect(), sc = st.width/1920;
+  const R = el => { const r = el.getBoundingClientRect(); return { l:(r.left-st.left)/sc, t:(r.top-st.top)/sc, r:(r.right-st.left)/sc, b:(r.bottom-st.top)/sc }; };
+  const bx = R(box), rw = R(sel), ay = rw.t + 28; if (ay < bx.t + 6 || ay > bx.b - 6) return;
+  const ax = bx.r - 4, mx = 940, rad = 18, pl = ROW_PLACE[TL_DATA.filter(r=>r.ev.every(hasEv))[reRow].t];
+  let d, tail = "";
+  if (pl){
+    const mk = document.querySelector('.jmk[data-pl="'+pl+'"]'); if (!mk) return;
+    const m = R(mk), hx = m.l + 48, hy = m.t + 40, ex = hx - 22;
+    const obs = [...document.querySelectorAll(".jpl,.jmk,#jplace")].filter(e=>e.dataset.pl !== pl).map(e=>{ const q = R(e); return e.classList.contains("jmk") ? { l:q.l+30, r:q.r-30, t:q.t+24, b:q.t+86 } : q; });
+    let y = hy; for (const o of [0,-22,22,-44,44,-66,66]){ const yy = hy+o; if (!obs.some(q=>yy+4 > q.t && yy-4 < q.b && q.r > mx && q.l < ex)){ y = yy; break; } }
+    const dir = y > ay ? 1 : -1;
+    d = 'M '+ax+' '+ay+' H '+(mx-rad)+' Q '+mx+' '+ay+' '+mx+' '+(ay+dir*rad)+' V '+(y-dir*rad)+' Q '+mx+' '+y+' '+(mx+rad)+' '+y+' H '+ex;
+    tail = '<circle cx="'+ex+'" cy="'+y+'" r="5" fill="#b9382b"/>';
+  } else {
+    const tx = 944; d = 'M '+ax+' '+ay+' H '+(tx-14);
+    tail = '<circle cx="'+tx+'" cy="'+ay+'" r="13" fill="none" stroke="#b9382b" stroke-width="3.5" stroke-dasharray="5 5"/><text x="'+(tx-4.5)+'" y="'+(ay+7)+'" font-size="20" font-weight="700" fill="#b9382b" font-family="Alegreya,serif">?</text>';
+  }
+  svg.innerHTML = '<path d="'+d+'" fill="none" stroke="rgba(0,0,0,.32)" stroke-width="7" transform="translate(2,4)"/><path d="'+d+'" fill="none" stroke="#b9382b" stroke-width="4.5" stroke-linecap="round"'+(pl?'':' stroke-dasharray="12 9"')+'/><circle cx="'+ax+'" cy="'+ay+'" r="8" fill="#a8483f" stroke="#6e2a35" stroke-width="3"/>'+tail;
+}
+
+
+function jNotes(){
+  S.qa = S.qa || {};
+  const open = QS.filter(q=>q.open());
+  if (qSel && !open.some(q=>q.id === qSel)) qSel = null;
+  const cur = qSel ? QS.find(q=>q.id === qSel) : open[0];
+  let l = jsec(L2("사건 질문 색인","CASE QUESTIONS"));
+  if (!open.length) l += '<p class="jnote">'+L2("아직 풀어야 할 질문이 없다.","No open questions yet.")+'</p>';
+  l += '<div class="jqs jscroll">'+open.map(q=>{ const clues = q.clues.filter(hasEv), a = S.qa[q.id], fresh = a && a.v && clues.length > a.n, opt = a && a.v ? q.o.find(o=>o[0]===a.v) : null;
+    return '<button type="button" class="jq'+(cur && cur.id===q.id?' sel':'')+'" data-qopen="'+q.id+'"><span class="jqn">'+qNum(q)+'</span><span class="jqt">'+L2(q.k,q.e)
+      +'<span class="jqs2">'+L2("단서 ","Clues ")+clues.length+(opt ? ' · '+L2("내 판단: ","My view: ")+L2(opt[1],opt[2]) : '')+(fresh ? '<span class="newclue">'+L2("새 단서","new clue")+'</span>' : '')+'</span></span>'
+      +'<span class="jring '+(opt?'done':'open')+'"><img src="'+JA(opt?"stamp_ring_green":"stamp_ring_ochre")+'" alt=""><span>'+(opt ? L2("판단<br>기록","VIEW<br>SAVED") : L2("조사<br>중","OPEN"))+'</span></span></button>'; }).join('')+autoNotes()+'</div>';
+  if (!cur) return { l, r:'' };
+  const a = S.qa[cur.id] || {}, clues = cur.clues.filter(hasEv), basis = a.b || [], fresh = a.v && clues.length > a.n;
+  let r = '<div class="jscroll jfill"><div class="jeyebrow">'+L2("질문 ","QUESTION ")+qNum(cur)+'</div><div class="jqh">'+L2(cur.k,cur.e)+'</div>'
+    + '<div class="jsec"><i class="jstep">1</i>'+L2("단서 확인","CHECK THE CLUES")+(fresh ? '<span class="newclue">'+L2("새 단서가 생겼다","a new clue came in")+'</span>' : '')+'</div>';
+  r += clues.length ? '<div class="jcork">'+clues.map((id,i)=>{ const e = EV[id], on = basis.includes(id);
+    return '<div class="jclue'+(on?' basis':'')+'" style="--r:'+[-1.4,1.1,.9,-1.2,1][i%5]+'deg"><i class="jpn"></i><div class="jct2"><span class="jci">'+evIcon(e, 48)+'</span><b>'+tr(e.name)+'</b></div><div class="jcb"><button type="button" data-basis="'+id+'" data-bq="'+cur.id+'" class="'+(on?'on':'')+'">'+(on ? L2("근거로 표시됨","Marked as basis") : L2("근거로 표시","Mark as basis"))+'</button><button type="button" data-ev="'+id+'">'+L2("자세히","Open")+'</button></div></div>'; }).join('')+'</div>'
+    : '<p class="jnote">'+L2("연결할 단서가 아직 없다.","No clues to connect yet.")+'</p>';
+  r += '<div class="jsec"><i class="jstep">2</i>'+L2("나의 판단","YOUR VIEW")+'</div><div class="jopts">'+cur.o.map(o=>'<button type="button" data-q="'+cur.id+'" data-v="'+o[0]+'" class="'+(a.v===o[0]?'on':'')+'">'+L2(o[1],o[2])+'</button>').join('')+'</div>'
+    + '<p class="jnote">'+L2("단서를 근거로 표시하는 것과 판단을 정하는 것은 별개다. 판단은 언제든 바꿀 수 있고, 새 단서가 생겨도 저절로 바뀌지 않는다.","Marking a basis and settling on a view are separate. You can change your view at any time, and a new clue never changes it for you.")+'</p></div>';
+  return { l, r };
+}
+
+const JRIB = ["burgundy","brass","navy","moss"], JRH = [["인물 기록","PEOPLE FILE"],["증거 기록","EVIDENCE FILE"],["사건 지도","CASE MAP"],["추리 노트","DEDUCTION"]];
 function renderCF(){
   tab = Math.max(0, Math.min(CF_TABS-1, tab|0));
-  renderNav(); const pg = $("pg"), labs = tr(UI.tabs);
-  let h = '<div class="eyebrow">CASE C-01 &middot; '+tr(UI.loc)+'</div><h2>'+labs[tab]+'</h2><div style="height:14px"></div>';
-  h += tab === 0 ? peoplePage() : tab === 1 ? evidencePage() : tab === 2 ? reconPage() : notesPage();
-  pg.innerHTML = h; if (tab === 1) renderEvGrid2(); wireCF();   /* wire last so the chips built by renderEvGrid2 are clickable */
+  const labs = tr(UI.tabs), J = tab === 0 ? jPeople() : tab === 1 ? jEvidence() : tab === 2 ? jRecon() : jNotes();
+  $("jRibs").innerHTML = labs.map((t,i)=>'<button type="button" class="jrib'+(i===tab?' act':'')+'" data-tab="'+i+'" style="top:'+(190+118*i)+'px"><img src="'+JA("bookmark_"+JRIB[i]+(i===tab?"_selected":"_normal"))+'" alt=""><span>'+t+'</span></button>').join('');
+  $("jRibs").querySelectorAll("[data-tab]").forEach(b=>{ b.onclick = ()=>{ tab = +b.dataset.tab; sub = false; renderCF(); }; });
+  $("jRunL").innerHTML = '<span>BELL VILLAGE · CASE JOURNAL</span><span>0'+(tab+1)+' / 04</span>';
+  $("jRunR").innerHTML = '<span>'+(J.rh || L2(JRH[tab][0], JRH[tab][1]))+'</span><span></span>';
+  $("jL").innerHTML = J.l; $("jR").innerHTML = J.r;
+  wireCF(); drawThread();
+  const tl = $("jtl"); if (tl){ const row = tl.querySelector(".jrow.sel"); tl.onscroll = drawThread; }
 }
 
 /* ---------- boards (art: board_identity / board_resp / page_overlooked) ---------- */
@@ -2574,8 +2750,8 @@ function renderTl(){
     c.innerHTML = '<small>'+i.tag+' · '+({W:"WITNESS",E:"EVENT",C:"CLOCK"}[i.tag])+'</small>'+i.time+'<span style="font:400 15px/1.1 var(--font-body)">'+i.txt+'</span>'; t.appendChild(c); });
   if (S.flags["con.c1"]){ const m = document.createElement("img"); m.src = "assets/stamp_contradiction.webp"; m.alt = ""; m.style.cssText = "position:absolute;width:210px;left:"+Math.round((sx[1]+12)*k)+"px;top:-6px;transform:rotate(-6deg);pointer-events:none"; t.appendChild(m); }
 }
-function openCF(){ if (mode!=="play") return; mode = "cf"; $("cf").classList.add("on"); renderCF(); }
-function closeCF(){ $("cf").classList.remove("on"); mode = "play"; stage.focus(); }
+function openCF(){ if (mode!=="play") return; mode = "cf"; $("cf").classList.add("on"); stage.classList.add("jopen"); renderCF(); }
+function closeCF(){ $("cf").classList.remove("on"); stage.classList.remove("jopen"); mode = "play"; stage.focus(); }
 $("cfclose").onclick = closeCF; $("bCase").onclick = openCF; $("bSet").onclick = openPause; $("tC").onclick = ()=> mode==="cf"?closeCF():openCF();
 $("bLook").onclick = ()=>{ peek = 6; };
 /* director mode: enter the code, then jump to the start of any built chapter. States are set quietly, the same flags the dialogues set. */
@@ -2715,7 +2891,7 @@ function fit(){
   const vw = innerWidth, vh = innerHeight;
   let s = vw/vh > STAGE_W0/STAGE_H ? vh/STAGE_H : vw/STAGE_W0;            /* wide screens: fit the height and show MORE of the scene sideways (no side bars) */
   STAGE_W = vw/vh > STAGE_W0/STAGE_H ? Math.min(STAGE_WMAX, Math.max(STAGE_W0, Math.floor(vw/s))) : STAGE_W0;
-  stage.style.width = STAGE_W + "px"; $("cfwrap").style.left = Math.round((STAGE_W - 1620)/2) + "px";
+  stage.style.width = STAGE_W + "px"; $("jrnl").style.left = Math.round((STAGE_W - 1920)/2) + "px";
   CAM_MAX = Math.max(CAM_MIN, W - STAGE_W);
   stage.style.setProperty("--hb", Math.min(1.7, Math.max(1, 14/(20*s))).toFixed(3)); /* keeps prompt text at least ~14 px on small screens */
   stage.style.transform = "scale("+s+")"; stage.style.left = ((vw - STAGE_W*s)/2)+"px"; stage.style.top = ((vh - STAGE_H*s)/2)+"px"; }
