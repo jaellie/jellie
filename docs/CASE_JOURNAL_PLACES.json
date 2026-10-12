@@ -1,0 +1,51 @@
+{
+ "_comment": "Pin tip positions in the 596x610 journal map art. Order follows the game's west-to-east street: cottage 555, square 1010-1130, Lantern Bridge lamp post 1236, healer 1770, tower 2185-2306, archive 3155, cafe 3901, mill 4752. Label plaque is drawn by the game 10 px below the pin, 150 px wide, centred.",
+ "places": {
+  "cottage": {
+   "x": 116,
+   "y": 127,
+   "name": "BGB's cottage",
+   "footprint_h": 90
+  },
+  "square": {
+   "x": 286,
+   "y": 244,
+   "name": "Village square",
+   "footprint_h": 90
+  },
+  "healer": {
+   "x": 129,
+   "y": 311,
+   "name": "May's house (Healer)",
+   "footprint_h": 90
+  },
+  "tower": {
+   "x": 298,
+   "y": 398,
+   "name": "Clocktower",
+   "footprint_h": 100
+  },
+  "archive": {
+   "x": 448,
+   "y": 407,
+   "name": "Archive",
+   "footprint_h": 90
+  },
+  "cafe": {
+   "x": 110,
+   "y": 483,
+   "name": "Hazel's Caf\u00e9",
+   "footprint_h": 90
+  },
+  "mill": {
+   "x": 404,
+   "y": 552,
+   "name": "Old Mill",
+   "footprint_h": 90
+  }
+ },
+ "lantern_bridge": {
+  "x": 186,
+  "y": 286
+ }
+}

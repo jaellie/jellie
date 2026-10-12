@@ -938,17 +938,120 @@ SECTIONS.push({id:"j", name:"J. Case Journal, batch 1: common frames (approved t
 ]});
 
 /* ============ K. CASE JOURNAL, BATCH 2 (HOLD until batch 1 is checked in the game) ============ */
-SECTIONS.push({id:"k", name:"K. Case Journal, batch 2: decorations and evidence art (HOLD)", sub:"Do NOT make these yet. First place the six batch-1 pieces in the game and check sizes and 9-slice resizing. The Edward and Hazel portraits also need a separate approval (the existing character art must be reused where it exists).", items:[
- jp("Journal embellishments: tape, clips, pins, seals (sheet)", {
-   goal:"Loose paper props that decorate cards. Replaces the CSS stand-ins used in the mockup.",
+SECTIONS.push({id:"k", name:"K. Case Journal, batch 2: everything else the screen needs (HOLD until batch 1 is checked in the game)", sub:"Do NOT make these yet. First place the six batch-1 pieces in the game and check sizes and 9-slice resizing. This batch moves almost everything the mockup drew with CSS into pictures: the map, pins, plaques, tape, clips, stamps, pills, timeline parts, selected states, ornaments and scrollbar. Words, red thread (SVG), scrolling and layout stay in code. The Edward and Hazel portraits also need a separate approval.", items:[
+ jp("Journal village map: parchment map of Bell Village (596 x 610)", {
+   goal:"The map shown on the right page of the Events tab. It must be a faithful, readable schematic of the village as the game plays it, with each place drawn as a small illustrated landmark exactly where the game will put its pin. The map is the one place where the picture must follow exact positions, because the game draws pins and plaques on top of it from a data file (docs/CASE_JOURNAL_PLACES.json).",
+   refs:["art_source/placeholders/journal/K_map_guide.png (ATTACH THIS: it shows the exact pin positions, building footprints and label zones; the numbers, boxes and coloured lines on it are guides only and must NOT appear in the final picture)","the existing map_parchment art (same parchment, torn edge, sepia ink and compass style)","docs/CASE_JOURNAL_PLACES.json (the pin coordinates)","the game village scenes (for what each building looks like)"],
+   blocks:[JOURNAL],
+   subject:"A hand-drawn storybook parchment map of Bell Village on a winter night's end: sepia ink on warm parchment, a few dabs of blue-white snow on roofs and ground, seen from above at a gentle bird's-eye angle (buildings drawn in a simple three-quarter view so they read as little houses).",
+   layout:["ONE image exactly 596 x 610 px. The torn parchment edge fills almost the whole image; outside the irregular torn edge the image is fully transparent.","SEVEN LANDMARKS. For each, the BASE CENTRE of the building (its door) sits exactly on the pin position given below, and the building rises up to 90 px above that point (the tower 100 px) and about 48 px to each side. Keep the 150 x 44 px zone directly under each pin (starting 10 px below it) completely CALM: only flat parchment or a very faint road, no detail, because the game puts a name plaque there.","1 BGB's cottage at (116, 127): a small cosy cabin with a chimney and a snow-capped roof, a little yard.","2 Village square at (286, 244): an open cobbled square with a signpost and a notice board at its centre and one lamp post; no big building.","3 May's house (the Healer) at (129, 311): a small neat house with a herb sprig above the door and a little herb patch; it stands just to the LEFT of the clocktower area.","4 Clocktower at (298, 398): the tallest landmark, a stone tower with a round clock face, a small door at the base and a narrow back lane running behind it.","5 Archive at (448, 407): a long low stone building with a short flight of steps at the door and tall narrow windows.","6 Hazel's Café at (110, 483): a small cheerful shop with a striped awning and a teacup sign.","7 Old Mill at (404, 552): a weathered mill house with a big wooden water wheel on its east side, standing right at the river bank.","ROADS: pale cream lanes about 22 px wide wind between the places in this order: cottage, square, May's house, tower, archive, café, mill (the game's street runs in exactly this order, west to east). A river about 26 px wide (blue-grey #96B9CD) enters at the top-right corner, runs down the east side and bends toward the bottom centre to pass the Old Mill. A narrow stream (9 px) crosses the lane between the square and May's house, with a small arched stone footbridge with a lantern post at (186, 286): this is Lantern Bridge.","A compass rose sits in the top-right area around (510, 70), about 80 px across.","Fill the rest with calm, low-contrast pine trees, fences, snowy hills and small garden plots, kept away from the label zones. Overall the map must stay light and readable; the darkest ink is #4A2F10."],
+   details:["Painting: the same hand-inked storybook line as the existing map_parchment, outlines about #4A2F10, soft sepia washes, parchment #E9D5A2 with deeper #D9BE86 at the torn edge. Light from the upper left.","Scale: every landmark is about the same size so none dominates, except the clocktower which is taller."],
+   include:["seven landmarks exactly on the given pin positions","calm 150 x 44 px zones under each pin","Lantern Bridge","compass rose","a transparent area outside the torn edge"], exclude:["ANY text, letters, numbers, labels or banners","pins, flags, dots, dashed routes, X marks","the guide boxes and numbers","extra named buildings","a frame or border box","a drop shadow outside the torn edge","a dark vignette"],
+   tech:["Exactly 596x610 px, transparent PNG (alpha 0 outside the torn edge).","Landmark base centres must land within 6 px of the pin positions; the game will be checked with an overlay."]},
+   {size:"596x610", tags:["UI","batch 2","map","no text"]}, true),
+
+ jp("Journal map markers: pins (sheet)", {
+   goal:"Four marker sprites for the map. They replace the CSS circles.",
+   refs:["the Case Journal visual mockup","art_source/placeholders/journal/K_map_guide.png (pin tips sit on the landmark base centres)"],
+   blocks:[JOURNAL],
+   subject:"Four small push-pin style markers, each drawn so that its POINT (the place that touches the map) is at the exact centre of the bottom of its cell, so the game can align the point to a coordinate.",
+   layout:["Sheet 512 x 128 px, 4 cells of 128 x 128 px in one row. In every cell the pin point is at x = 64, y = 112.","1 normal pin: a brass thumbtack with a round head, about 40 px wide and 56 px tall. 2 selected pin: a larger red thumbtack with a slightly raised look, about 56 x 80 px. 3 current-location marker: a small lit lantern on a pin, about 56 x 84 px. 4 unknown-place marker: a parchment-coloured round pin head with a question mark, about 52 x 76 px."],
+   details:["Colours: brass #B08D57, red #A8483F with a #6E2A35 shadow side, lantern glass warm amber."],
+   include:["four pins with their points at (64, 112) in each cell"], exclude:["text except the question mark in marker 4","a drop shadow","a glow halo"],
+   tech:["Sheet 512x128 px, transparent PNG."]},
+   {size:"512x128", tags:["UI","batch 2","map"]}, true),
+
+ jp("Journal map label plaques (9-slice sheet)", {
+   goal:"The small name plaques drawn on the map under each pin. The game prints the place name inside; the plaque grows with the name, so it must be 9-slice friendly.",
+   refs:["the Case Journal visual mockup (map labels)"],
+   blocks:[JOURNAL],
+   subject:"Three blank cream plaques with a thin brass edge.",
+   layout:["Sheet 180 x 192 px, one plaque per row, left-aligned, 24 px gap: 1 normal plaque 160 x 46 px at (0, 0); 2 selected plaque 180 x 52 px at (0, 70) (burgundy outline, slightly raised, a tiny red pin dot at its top-left corner); 3 current-location plaque 180 x 46 px at (0, 146) (deep burgundy fill with a cream edge).","Corner radius 8 px. The 18 px border on the left and right is the decorated part; the middle is plain and flat so it can stretch horizontally (9-slice, 18 px left and right, 12 px top and bottom)."],
+   include:["three blank plaques with plain stretchable middles"], exclude:["text","a drop shadow","patterns in the middle"],
+   tech:["Sheet 180x192 px, transparent PNG."]},
+   {size:"180x192", tags:["UI","batch 2","9-slice","map"]}, true),
+
+ jp("Journal embellishments: tape, clips, pin heads, step pins, wax seal (sheet)", {
+   goal:"Loose paper props that replace the CSS tape, clips and pins.",
    refs:["the Case Journal visual mockup","the supplied Icon pack sheet 2 (loose painted objects) for painting style"],
    blocks:[JOURNAL],
-   subject:"A sheet of loose props, each on its own.",
-   layout:["Sheet 1024 x 512 px, a grid of 4 columns x 2 rows, each cell 256 x 256 px, every prop centred with at least 24 px of transparent gap.","Order: 1 two paper clips (silver-brass and burgundy), 2 two strips of washi tape (cream with thin red stripes, 84 x 30 px, torn ends), 3 four small photo corners (48 px), 4 a red push pin head (about 40 px) and a gold push pin head (about 40 px), 5 a ribbon bookmark (burgundy ribbon with a brass tip, 40 x 220 px, hanging straight down), 6 a round blank rubber stamp ring in burgundy ink (about 120 px, worn, EMPTY inside), 7 a rectangular blank stamp frame in burgundy ink (about 220 x 80 px, EMPTY inside), 8 a round red wax seal with a checkmark pressed in (about 60 px) and a small ink blot."],
-   details:["The stamps are only the empty ring and frame; the game prints the words inside."],
-   include:["eight props","empty stamp shapes"], exclude:["text inside the stamps","shadows","anything touching"],
+   subject:"A sheet of loose props, each on its own, drawn flat and upright (the game tilts them).",
+   layout:["Sheet 1024 x 512 px, a grid of 4 columns x 2 rows, each cell 256 x 256 px, every prop centred with at least 24 px of transparent gap.","Cell 1: two paper clips (one silver-brass 30 x 64 px, one burgundy 30 x 64 px). Cell 2: two strips of washi tape (cream with thin red stripes, 84 x 30 px, torn ends) and one longer strip 120 x 30 px. Cell 3: four small photo corners (48 px). Cell 4: a red push-pin head (40 px) and a gold push-pin head (40 px), plain, no numbers. Cell 5: three larger red step pins (46 px) that are plain red pin heads (the game prints the numbers 1, 2, 3 on them). Cell 6: a red wax seal with a checkmark pressed into it (60 px). Cell 7: a small brass count badge (a plain round brass medallion, 40 px) and a burgundy one (40 px), both blank. Cell 8: a ribbon bookmark (burgundy ribbon with a brass tip, 40 x 220 px, hanging straight down) and a small ink blot (80 px)."],
+   include:["every prop upright and flat","blank pin heads and badges"], exclude:["any text or numbers","shadows","anything touching"],
    tech:["Sheet 1024x512 px, transparent PNG."]},
    {size:"1024x512", tags:["UI","batch 2","no text"]}),
+
+ jp("Journal stamps (sheet): status rings, file stamp, exhibit stamp", {
+   goal:"Blank rubber-stamp shapes for the question status, the person file number and the exhibit number. The game prints the words inside.",
+   refs:["the Case Journal visual mockup"],
+   blocks:[JOURNAL],
+   subject:"Four blank ink stamps in worn ink, drawn upright.",
+   layout:["Sheet 512 x 256 px, 2 columns x 2 rows, each cell 256 x 128 px, every stamp centred with at least 16 px of transparent gap.","1 round double-ring stamp 96 px across in ochre ink #8A5A14 (status OPEN). 2 round double-ring stamp 96 px across in green ink #2F5F3A (status VIEW SAVED). 3 rectangular stamp frame 200 x 56 px with a double line in burgundy ink #6E2A35 (person FILE number). 4 rectangular stamp frame 150 x 44 px in deep blue ink #26364F (EXHIBIT)."],
+   details:["The inside of every stamp is EMPTY and clean enough for 20 px text. The ink edge is slightly uneven and worn."],
+   include:["four blank stamps"], exclude:["text or numbers inside","a drop shadow"],
+   tech:["Sheet 512x256 px, transparent PNG."]},
+   {size:"512x256", tags:["UI","batch 2","no text"]}),
+
+ jp("Journal evidence stack frames: document, photo, object tray, back layer (sheet)", {
+   goal:"The look of the evidence group cards in the Evidence tab, so documents, photos and objects look different. The evidence picture (existing game art or the new icons) is placed on top by the game.",
+   refs:["the Case Journal visual mockup (Evidence tab left page)"],
+   blocks:[JOURNAL],
+   subject:"Four empty card bases, drawn upright (the game tilts and stacks them).",
+   layout:["Sheet 704 x 176 px, 4 cells of 176 x 176 px in one row, every base centred.","1 document sheet: a cream paper sheet 130 x 150 px with a folded top-right corner and a faint edge shadow line inside the paper. 2 photo: a small snapshot frame 140 x 160 px with a transparent window 120 x 112 px at (10, 10) and a plain 38 px bottom strip. 3 object tray: a shallow felt-lined tray 150 x 130 px with a thin brass edge and rounded corners. 4 back layer: a plain slightly darker paper sheet 130 x 150 px used behind the others to show a pile."],
+   include:["four empty bases"], exclude:["pictures inside","text","tape or clips","a drop shadow"],
+   tech:["Sheet 704x176 px, transparent PNG."]},
+   {size:"704x176", tags:["UI","batch 2","no text"]}, true),
+
+ jp("Journal pills and badges (sheet): filter pill, evidence chip, type badges, count badges", {
+   goal:"The small rounded labels used everywhere. The game prints the words.",
+   refs:["the Case Journal visual mockup"],
+   blocks:[JOURNAL],
+   subject:"Blank pill and badge frames.",
+   layout:["Sheet 576 x 232 px.","Row 1: pill NORMAL 150 x 48 px at (0, 0) (cream fill, thin brass border) and pill SELECTED 150 x 48 px at (174, 0) (burgundy fill #6E2A35, cream border). Both are 9-slice friendly: 24 px rounded ends, a plain stretchable middle (slice 24 px left and right).","Row 2 at y = 92: four rectangular badge frames, each 120 x 34 px at x = 0, 144, 288, 432: green ink #2F5F3A (RECORD), ochre #8A5A14 (WITNESS), burgundy #8A2A3A (ESTIMATE), blue #4A5A8A (DOCUMENT). Each is an outlined stamp-like rectangle with a slight tilt of 0 degrees (the game tilts it) and an empty inside.","Row 3 at y = 168: two round count badges 40 x 40 px at (0, 168) burgundy and (64, 168) brass, blank."],
+   include:["two pills","four badge frames","two count badges"], exclude:["text or numbers","drop shadows"],
+   tech:["Sheet 576x232 px, transparent PNG."]},
+   {size:"576x232", tags:["UI","batch 2","9-slice","no text"]}, true),
+
+ jp("Journal timeline sprites (sheet): dotted line, markers, estimate bracket", {
+   goal:"The vertical timeline in the Events tab, drawn with sprites instead of CSS.",
+   refs:["the Case Journal visual mockup (Events tab left page)"],
+   blocks:[JOURNAL],
+   subject:"Five timeline pieces in one row.",
+   layout:["Sheet 320 x 100 px, 5 cells of 64 x 100 px.","1 dotted line tile: a vertical dashed brown line 6 px wide, exactly 16 px of repeating pattern per 16 px of height, TILEABLE vertically (the top and bottom edges join seamlessly), drawn 64 px tall and centred horizontally. 2 RECORD marker 30 x 30 px: a brass seal disc with a dark rim. 3 WITNESS marker 30 x 30 px: a hollow ochre ring with a cream centre. 4 UNKNOWN marker 30 x 30 px: a dashed grey-brown ring. 5 ESTIMATE bracket 22 x 90 px: a tall rounded capsule with a dashed burgundy outline and diagonal hatching inside, vertical 9-slice friendly (the 22 px top and bottom ends are decorated, the middle is plain hatching that can stretch)."],
+   include:["a seamless tile","four distinct marker shapes"], exclude:["text","shadows","a tile with visible seams"],
+   tech:["Sheet 320x100 px, transparent PNG."]},
+   {size:"320x100", tags:["UI","batch 2","9-slice"]}, true),
+
+ jp("Journal selection frames (9-slice stack): row band, selected card, choice stamps", {
+   goal:"The selected states that are drawn as pictures instead of CSS rings.",
+   refs:["the Case Journal visual mockup (selected timeline row, basis-marked clue card, judgment choices)"],
+   blocks:[JOURNAL],
+   subject:"Four frames stacked in one tall sheet.",
+   layout:["Sheet 700 x 488 px, one frame per row, left-aligned, 24 px transparent gap.","1 SELECTED ROW band 700 x 134 px at (0, 0): a soft burgundy tint fill (about 14% opacity, this one is intentionally semi-transparent) with a solid burgundy bar 7 px wide on the left edge and rounded corners (8 px). 9-slice: 24 px borders.","2 SELECTED PAPER CARD 300 x 122 px at (0, 158): the same card as the basic paper card (28 px border, plain #FBF3D8 centre) but with a burgundy 4 px border and a small red pin dot at the top centre. 9-slice 28 px.","3 CHOICE STAMP NORMAL 308 x 80 px at (0, 304): a rectangular rubber-stamp block with a double line border in brown, cream inside. 9-slice 24 px.","4 CHOICE STAMP SELECTED 308 x 80 px at (0, 408): the same block with a burgundy double border and a pinkish fill #F1D9D6, as if freshly stamped."],
+   include:["four frames","plain stretchable centres"], exclude:["text","a drop shadow","patterns on the edges"],
+   tech:["Sheet 700x488 px, transparent PNG."]},
+   {size:"700x488", tags:["UI","batch 2","9-slice"]}, true),
+
+ jp("Journal ornaments and scroll parts (sheet): divider, scroll fade, scrollbar", {
+   goal:"Section divider lines, the soft fade at the bottom of scrolling areas, and the scrollbar.",
+   refs:["the Case Journal visual mockup"],
+   blocks:[JOURNAL],
+   subject:"Four small parts.",
+   layout:["Sheet 760 x 200 px.","1 section divider: a thin brown ink line with a tiny leaf-and-dot ornament at its left end, 700 x 14 px at (0, 0); the part to the right of the ornament is plain and TILEABLE horizontally (seamless at both ends) so it can stretch.","2 scroll fade: 700 x 56 px at (0, 38): a gradient from fully transparent at the top to opaque parchment #F2E8D4 at the bottom, with the same fine fibre texture as the pages (intentionally semi-transparent).","3 scrollbar track 12 x 200 px at (720, 0): a thin dark parchment groove with rounded ends, vertical 9-slice (12 px ends).","4 scrollbar thumb 12 x 120 px at (744, 0): a brass-brown bar with rounded ends and a faint highlight, vertical 9-slice (12 px ends)."],
+   include:["four parts with seamless tiling where stated"], exclude:["text","shadows","visible seams"],
+   tech:["Sheet 760x200 px, transparent PNG."]},
+   {size:"760x200", tags:["UI","batch 2"]}, true),
+
+ jp("Journal tab icons (4)", {
+   goal:"The four small icons printed on the bookmarks.",
+   refs:["the supplied round HUD icons (icon_satchel, icon_search): same simple cream-on-dark pictogram style"],
+   blocks:[JOURNAL],
+   subject:"Four cream pictograms with a thin dark brown outline, bold and simple so they read at 24 px.",
+   layout:["Sheet 512 x 128 px, 4 cells of 128 x 128 px in one row, each icon about 96 x 96 px centred.","Order: 1 People (two overlapping head-and-shoulder silhouettes), 2 Evidence (an open folder), 3 Events (a pocket-watch face with a small map pin), 4 Deduction (a notebook with a pencil and a question mark)."],
+   details:["Colour: cream #F6E3C0 fill with an outline #2A1A12, 3 px line weight at this size."],
+   include:["four icons"], exclude:["text or letters","a disc behind the icons","gradients","shadows"],
+   tech:["Sheet 512x128 px, transparent PNG."]},
+   {size:"512x128", tags:["UI","batch 2","icons"]}),
  jp("Journal cork clue board (9-slice, 650 x 300)", {
    goal:"The cork board that holds the clue cards in the Deduction tab.",
    refs:["the Case Journal visual mockup (step 2, Check the clues)"],
@@ -976,16 +1079,6 @@ SECTIONS.push({id:"k", name:"K. Case Journal, batch 2: decorations and evidence 
    include:["a clipped corner","a brass eyelet and string"], exclude:["text","a drop shadow"],
    tech:["Exactly 300x150 px, transparent PNG."]},
    {size:"300x150", tags:["UI","batch 2","no text"]}, true),
- jp("Journal map pins and place icons (12)", {
-   goal:"Pins for the map and small icons for the places in the Events tab. The place list and the coordinates come from the game data, not from this picture.",
-   refs:["the existing map_parchment art (for scale and line style)"],
-   blocks:[JOURNAL],
-   subject:"Three pin states and eight place icons, plus one spare.",
-   layout:["Sheet 512 x 384 px, 4 columns x 3 rows, each cell 128 x 128 px, every item centred with at least 16 px of transparent gap.","Row 1: 1 normal pin (a brass thumbtack, 56 px), 2 selected pin (a larger red thumbtack, 76 px, slightly raised), 3 current-location marker (a small lantern marker, 76 px), 4 an unknown-place marker (a parchment circle with a question mark, 72 px).","Row 2 (places, about 96 px): 5 village square (a signpost beside a well), 6 clocktower (a small tower with a round clock face), 7 archive (a building with a stack of books), 8 café (a teacup on a saucer in front of a small awning).","Row 3: 9 Big Green Bear's cottage (a small cabin with a chimney), 10 May's house (a small house with a herb sprig above the door), 11 old mill (a water wheel beside a small house), 12 spare: a plain scroll."],
-   include:["12 items"], exclude:["text","shadows","gradients"],
-   tech:["Sheet 512x384 px, transparent PNG."]},
-   {size:"512x384", tags:["UI","batch 2","icons"]}),
-
  jp("Evidence icons A: clocks, tower and records (12)", {
    goal:"Pictures for evidence cards, so every item is visually memorable. These replace the placeholder icons.",
    refs:["existing evidence pictures (ev_receipt, ev_notebook_torn, p_pocketwatch_front_cracked) for style and scale"],
@@ -996,7 +1089,6 @@ SECTIONS.push({id:"k", name:"K. Case Journal, batch 2: decorations and evidence 
    include:["12 separate objects","a clear silhouette for each"], exclude:["readable text","shadows on the ground","cells touching"],
    tech:["Sheet 1024x768 px, transparent PNG."]},
    {size:"1024x768", tags:["evidence","icons"]}),
-
  jp("Evidence icons B: traces, café, medical and places (12)", {
    goal:"Second set of evidence pictures.",
    refs:["existing evidence pictures (ev_receipt, ev_wool_strand, p_gloves, p_letter_sealed) for style and scale"],
@@ -1007,7 +1099,6 @@ SECTIONS.push({id:"k", name:"K. Case Journal, batch 2: decorations and evidence 
    include:["12 separate objects","clear silhouettes"], exclude:["readable text","cells touching","ground shadows"],
    tech:["Sheet 1024x768 px, transparent PNG."]},
    {size:"1024x768", tags:["evidence","icons"]}),
-
  jp("Evidence group icons (13)", {
    goal:"One icon per evidence group card in the Evidence tab.",
    refs:["the Evidence icons A and B sheets (same painting style)"],
@@ -1018,7 +1109,6 @@ SECTIONS.push({id:"k", name:"K. Case Journal, batch 2: decorations and evidence 
    include:["13 emblems","three empty cells"], exclude:["text","shadows","anything touching"],
    tech:["Sheet 1024x1024 px, transparent PNG."]},
    {size:"1024x1024", tags:["evidence","icons"]}),
-
  jp("Edward and Hazel: portraits, 4 expressions each (NEEDS SEPARATE APPROVAL)", {
    goal:"Dialogue and People-tab portraits for two characters who still only have full-body sprites.",
    refs:["edward_front.webp (Edward's full-body sprite)","cafe_owner_front.webp (Hazel's full-body sprite)","the existing portraits por_nini_* and por_oliver_* for line weight, scale and face placement"],
@@ -1037,7 +1127,7 @@ const GAP = [
 "- Each item also keeps at least 12 px of transparent margin from the edge of the sheet.",
 "- Items sit on a clean grid in the stated order so they can be cut out automatically. Nothing is drawn in the gaps (no shadows, glow, ground lines or labels)."
 ].join("\n");
-const SHEET_RE = /embellishments|map pins|Evidence icons|group icons|Edward and Hazel|Small props|Icon pack|poses|portraits|holding|lifting|icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits|Identity Board|Responsibility Board|notebook page/i;
+const SHEET_RE = /embellishments|stamps \(sheet\)|stack frames|timeline sprites|tab icons|map markers|map pins|Evidence icons|group icons|Edward and Hazel|Small props|Icon pack|poses|portraits|holding|lifting|icons|Stamps|turnaround|torn-tail|Young twin|Flood water|portraits|Identity Board|Responsibility Board|notebook page/i;
 SECTIONS.forEach(sec => sec.items.forEach(it => { if (it.kind === "png" && SHEET_RE.test(it.title) && !it.body.includes("SHEET SPACING")) it.body = it.body.replace("\n\nSTYLE (apply to everything):", "\n\n" + GAP + "\n\nSTYLE (apply to everything):"); }));
 
 // ---- render
