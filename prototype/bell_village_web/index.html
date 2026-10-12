@@ -213,7 +213,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #tfg,#tfar{pointer-events:none}
 
 /* Persistent category panel (left), as in the mockup */
-#side{position:absolute;left:12px;top:182px;width:294px;height:401px;background:url(assets/nav_binder_4.webp) 0 0/100% 100% no-repeat;z-index:5}
+#side{display:none;position:absolute;left:12px;top:208px;width:294px;height:401px;background:url(assets/nav_binder_4.webp) 0 0/100% 100% no-repeat;z-index:5}
 .sbtn{position:absolute;left:61px;width:197px;height:72px;padding:0 16px 0 20px;--s:.97;background-color:transparent;display:flex;align-items:center;justify-content:flex-start;gap:9px;font:700 20px/1 var(--font-label);letter-spacing:.02em;white-space:nowrap;color:var(--ink);cursor:pointer;border-radius:12px;transition:filter .12s,transform .12s}
 .sbtn svg{width:25px;height:25px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .sbtn:hover{filter:brightness(1.08);transform:translateX(3px)}
@@ -222,10 +222,10 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 
 /* HUD */
 .sprite{position:absolute;background-repeat:no-repeat;background-size:100% 100%}
-#caseplate{position:absolute;left:26px;top:20px;width:fit-content;min-width:430px;padding:22px 64px 24px 64px;display:flex;flex-direction:column;gap:7px;--img:url(assets/panel_wide_title.webp);--sl:40;--sr:40;--st:34;--sb:34;--s:.98;z-index:6}
-#caseplate .l1{font:500 20px/1 var(--font-label);letter-spacing:.16em;color:#8a6a3e}
-#caseplate .l2{font:700 37px/1.1 var(--font-body);color:var(--ink);white-space:nowrap}
-#caseplate .l3{font:400 21px/1 var(--font-body);color:#6d5a40;font-style:italic}
+#caseplate{position:absolute;left:26px;top:20px;width:fit-content;min-width:0;padding:15px 46px 16px 46px;display:flex;flex-direction:column;gap:2px;--img:url(assets/panel_wide_title.webp);--sl:40;--sr:40;--st:34;--sb:34;--s:.7;z-index:6}
+#caseplate .l1{font:500 15px/1 var(--font-label);letter-spacing:.16em;color:#8a6a3e}
+#caseplate .l2{font:700 27px/1.1 var(--font-body);color:var(--ink);white-space:nowrap}
+#caseplate .l3{font:400 16px/1 var(--font-body);color:#6d5a40;font-style:italic}
 .hudbtn{position:absolute;width:76px;height:78px;border:0;padding:0;background-size:100% 100%;background-color:transparent;cursor:pointer;transition:transform .12s,filter .12s}
 .hudbtn:hover{transform:scale(1.07);filter:brightness(1.15)}
 .hudbtn:focus-visible{outline:3px solid #ffd27a;outline-offset:3px}
@@ -244,14 +244,19 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #dlg.cap .tx{left:190px;right:196px;top:92px}
 #meas{position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font:400 36.5px/1.32 var(--font-body)}
 #dlg .por{position:absolute;left:49px;top:59px;width:200px;height:196px;overflow:hidden;border-radius:5px}
+#dlg .por img.pz{width:232px;margin:-4px 0 0 -16px}
 #dlg .por img{transition:opacity .15s;width:200px;height:auto;display:block;filter:drop-shadow(0 2px 2px rgba(60,35,10,.4))}
 #dlg .nm{position:absolute;left:275px;top:17px;width:267px;height:51px;box-sizing:border-box;padding-top:12px;transform:rotate(-3.2deg);transform-origin:50% 50%;display:grid;place-items:center;font:700 31px/1 var(--font-label);letter-spacing:.06em;color:#f6e3c0;text-shadow:0 1px 0 #3d1219}
 #dlg .tx{white-space:pre-line;position:absolute;left:316px;top:116px;right:196px;height:150px;font:400 36.5px/1.32 var(--font-body);color:var(--ink)}
 :lang(ko) #dlg .tx,#dlg .tx.ko{font-size:33px;line-height:1.5}
 #dlg .tx i{color:#6d4f2d}
-#choices{position:absolute;left:500px;bottom:352px;z-index:8;display:none;flex-direction:column;gap:12px;align-items:flex-start}   /* left is set from the dialogue box so every answer starts at the same x */
+#choices{position:absolute;left:500px;bottom:346px;z-index:8;display:none;flex-direction:column;gap:8px;align-items:stretch;width:max-content;max-width:1100px;max-height:640px;overflow-y:auto;overflow-x:hidden;padding:4px 14px 2px 4px;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}   /* one panel that sits on the dialogue box, starting at the name ribbon (left is set from the box); it grows upward and scrolls if a list is long */
 #choices.on{display:flex}
-.choice{width:fit-content;max-width:1100px;min-height:92px;padding:20px 48px;--s:1.3;font:600 31px/1.25 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s;background-color:transparent}
+.choice{width:auto;max-width:1100px;min-height:80px;padding:15px 44px;--s:1.18;font:600 29px/1.25 var(--font-body);color:var(--ink);cursor:pointer;text-align:left;transition:transform .12s,opacity .12s;background-color:transparent;flex:none}
+.choice.asked{opacity:.62}.choice.asked:hover,.choice.asked.sel{opacity:1}
+.choice.asked:after{content:"\2713";float:right;margin-left:18px;color:#6e2a35;font:700 24px/1.3 var(--font-body)}
+.choice.asked:hover:after,.choice.asked.sel:after{color:#f6e3c0}
+#choices .chead{flex:none;align-self:flex-start;margin:0 0 2px 8px;padding:2px 12px;font:700 22px/1.2 var(--font-body);letter-spacing:.02em;color:#f6e3c0;text-shadow:0 1px 3px rgba(10,6,20,.9),0 0 8px rgba(10,6,20,.8)}
 .choice:hover,.choice.sel{--img:url(assets/plaque_red_small.webp);color:#f6e3c0;transform:translateY(-2px)}
 .choice{--img:url(assets/plaque_cream_small.webp)}
 
@@ -329,7 +334,13 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #fade.on{opacity:1;pointer-events:auto}
 #chcard{position:absolute;inset:0;z-index:41;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0;pointer-events:none;transition:opacity .9s;color:#f3e6c8;text-align:center}
 #chcard.on{opacity:1}
-#stage.cine #caseplate,#stage.cine #side,#stage.cine .hudbtn,#stage.cine #touch{opacity:0;pointer-events:none;transition:opacity 1.2s}
+#stage.sideopen #side{display:block}
+#sideBook{position:absolute;left:26px;top:122px;width:76px;height:78px;border:0;padding:0;background:url(assets/btn_round_dark.webp) 0 0/100% 100% no-repeat;cursor:pointer;z-index:6;transition:transform .12s,filter .12s}
+#sideBook:hover{transform:scale(1.07);filter:brightness(1.15)}
+#sideBook svg{position:absolute;left:19px;top:20px;width:38px;height:38px;fill:none;stroke:#f6e3c0;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#sideBook.on{filter:brightness(1.25)}
+#stage.nomenu #side,#stage.nomenu #sideBook{display:none}
+#stage.cine #caseplate,#stage.cine #side,#stage.cine #sideBook,#stage.cine .hudbtn,#stage.cine #touch{opacity:0;pointer-events:none;transition:opacity 1.2s}
 #tip{position:absolute;left:50%;top:28px;translate:-50% -12px;max-width:1100px;z-index:36;display:flex;align-items:center;gap:18px;padding:14px 30px 14px 18px;background:linear-gradient(#f8ebcc,#efdcb4);border:2.5px solid var(--brass);border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.45);color:var(--ink);font:600 25px/1.4 var(--font-body);opacity:0;pointer-events:none;transition:opacity .5s,translate .5s}
 #tip.on{opacity:.96;translate:-50% 0}
 #tip b{font:700 15px/1 var(--font-label);letter-spacing:.2em;background:var(--burgundy);color:#f6e3c0;border-radius:5px;padding:7px 10px;flex:none}
@@ -705,6 +716,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
   <button class="hudbtn" id="bLook" style="right:100px;top:26px;background-image:url(assets/icon_search.webp)" aria-label="Look around"><span class="k">Q</span></button>
   <button class="hudbtn" id="bSet" style="right:22px;top:26px;background-image:url(assets/icon_settings.webp)" aria-label="Pause"><span class="k">Esc</span></button>
   <button class="hudbtn" id="bBgm" style="right:256px;top:26px;background-image:url(assets/icon_bgm_on.webp)" aria-label="Music on or off"><span class="k">M</span></button>
+  <button id="sideBook" aria-label="Case Journal menu" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c2.6-1 5.4-1 8 .8 2.6-1.8 5.4-1.8 8-.8v13c-2.6-1-5.4-1-8 .8-2.6-1.8-5.4-1.8-8-.8z"/><path d="M12 6.300v13"/></svg></button>
   <div id="side" role="navigation" aria-label="Case File categories"></div>
   <div id="hint" class="nine cream"><kbd>E</kbd><span id="hintTx"></span></div>
   <div id="toast"></div>
@@ -815,7 +827,7 @@ function buildSide(){
     const b = document.createElement("button"); b.className = "sbtn " + (i===0 ? "nine red first" : ""); b.dataset.i = i;
     b.style.top = Math.round(PLY[i]*SK) + "px";
     b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">'+ic+'</svg><span></span>';
-    b.addEventListener("click", ()=>{ if (mode==="play") { tab = i; openCF(); } });
+    b.addEventListener("click", ()=>{ if (mode==="play") { tab = i; stage.classList.remove("sideopen"); openCF(); } });
     side.appendChild(b);
   });
 }
@@ -2125,7 +2137,7 @@ function renderDlg(anim){
   { const dl = $("dlg"), want = !!sp.hide; if (dl.classList.contains("cap") !== want){ dl.classList.toggle("cap", want); const bg = $("dlgbg"); bg._nk = null; if (dl.classList.contains("on")) nineDraw(bg); } }   /* a line of narration uses the same box without the portrait and name ribbon */
   $("dNm").textContent = tr(sp.name); $("dNm").style.visibility = sp.hide ? "hidden" : ""; $("dPor").style.visibility = sp.hide ? "hidden" : "";
   const ex = EXPR.includes(n.ex) ? n.ex : "neutral"; // each line picks its expression; speakers without portraits keep the still
-  const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil);   /* silhouette until the real portrait exists */
+  const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil); $("dPor").classList.toggle("pz", !!sp.por);   /* silhouette until the real portrait exists */
   if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
   $("dPor").onload = () => { $("dPor").style.opacity = 1; };
   const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":"");
@@ -2137,14 +2149,19 @@ function sizeDlg(text){
   const m = $("meas"); m.style.fontSize = lang==="ko" ? "33px" : "36.5px"; m.textContent = text;
   const w = Math.min(m.offsetWidth + 14, 1008); // text width, one line, capped at the full text area
   const box = 1520;   /* always the art's natural width: a narrower box had to squash or crop the middle of the art, which showed as a blurred band */
-  const bw = Math.min(1520, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px"; $("choices").style.left = Math.round((STAGE_W - bw)/2 + 300) + "px";
+  const bw = Math.min(1520, box); $("dlg").style.width = bw + "px"; $("dlg").style.left = Math.round((STAGE_W - bw)/2) + "px"; $("choices").style.left = Math.round((STAGE_W - bw)/2 + 262) + "px";
 }
+const askedGo = new Set();   /* answers already heard this session; with the story flags they set, these only dim an answer, they never lock it */
+const isAsked = c => !!c.go && (askedGo.has(c.go) || !!(D[c.go] && typeof D[c.go].set === "string" && has(D[c.go].set)));
 function showChoices(){
   const n = D[cur]; if (!n.ch) return; const box = $("choices"); box.innerHTML = "";
-  n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice nine cream"; b.textContent = tr(c.t); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
+  const sp = SP[n.sp], menu = n.ch.some(c=>c.bye) && sp && !sp.hide && n.sp !== "bgb";   /* a question menu: label it with who is being asked */
+  if (menu){ const h = document.createElement("div"); h.className = "chead"; h.textContent = lang === "ko" ? tr(sp.name)+"에게 묻기" : "Ask "+tr(sp.name); box.appendChild(h); }
+  n.ch.forEach((c,i)=>{ const b = document.createElement("button"); b.className = "choice nine cream" + (menu && !c.bye && isAsked(c) ? " asked" : ""); b.textContent = tr(c.t); b.addEventListener("click", ()=>pick(i)); box.appendChild(b); });
+  box.scrollTop = box.scrollHeight;
   box.classList.add("on");   /* both answers start cream; the one you pick turns burgundy */
 }
-function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.bye) menuFollow = null; else if (c.go) menuFollow = (cur === "followUp") ? menuFollow : (n.ch.some(x=>x.bye||!x.go) ? cur : null); else menuFollow = null; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
+function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.go && !c.bye) askedGo.add(c.go); if (c.bye) menuFollow = null; else if (c.go) menuFollow = (cur === "followUp") ? menuFollow : (n.ch.some(x=>x.bye||!x.go) ? cur : null); else menuFollow = null; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
   setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
 function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); holdHint = true; setTimeout(()=>endMono("ce7_"+en+"_0", ()=>showEndE(en)), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1100); } if (n.fx === "rain") $("rain").classList.add("on"); if (n.fx === "recap"){ holdHint = true; setTimeout(()=>showMono(()=>{ setSceneNow("village", 1100); }), 150); }  if (/^theend[12]$/.test(n.fx||"")){ const fe = +n.fx.slice(6); holdHint = true; mode = "modal"; setTimeout(()=>{ if (fe === 1) endSeqA(); else { const f = $("fade"); f.style.transition = "opacity 1.8s"; f.classList.add("on"); setTimeout(()=>{ f.style.transition = ""; showFinal(2, true); f.classList.remove("on"); }, 2000); } }, 700); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(fromClick){
@@ -2853,7 +2870,12 @@ hold("tL","arrowleft"); hold("tR","arrowright"); $("tE").addEventListener("point
 
 /* ---------- loop ---------- */
 let cam = 0, last = performance.now();
+const sideBook = $("sideBook");
+function setSideOpen(on){ stage.classList.toggle("sideopen", on); sideBook.classList.toggle("on", on); sideBook.setAttribute("aria-expanded", on ? "true" : "false"); }
+sideBook.addEventListener("click", e=>{ e.stopPropagation(); if (mode === "play") setSideOpen(!stage.classList.contains("sideopen")); stage.focus(); });
+document.addEventListener("pointerdown", e=>{ if (stage.classList.contains("sideopen") && !e.target.closest("#side,#sideBook")) setSideOpen(false); }, true);
 function frame(now){
+  { const hide = mode !== "play"; if (stage.classList.contains("nomenu") !== hide){ stage.classList.toggle("nomenu", hide); if (hide) setSideOpen(false); } }   /* the menu is only there while exploring: any dialogue, pause, modal, scene change or journal hides and folds it, and it comes back by itself */
   const dt = Math.min(0.05, (now - last)/1000); last = now;
   P.moving = false; if (mode!=="play") autoGo = null;
   if (mode==="play"){
