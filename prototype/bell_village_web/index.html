@@ -842,7 +842,7 @@ const UI = {
   talk: {en:"Talk to Nini", ko:"니니와 이야기한다"}, talkCk:{en:"Talk to Oliver", ko:"올리버와 이야기한다"},
   read:{en:"Read the signpost", ko:"표지판을 읽는다"}, look:{en:"Look up at the clock", ko:"시계를 올려다본다"}, enter:{en:"Enter the Clocktower", ko:"시계탑에 들어간다"},
   resume:{en:"Resume", ko:"계속하기"}, restart:{en:"Restart", ko:"처음부터"}, langBtn:{en:"Language: English", ko:"언어: 한국어"}, paused:{en:"PAUSED", ko:"일시정지"},
-  tabs:{en:["People","Evidence","Events","Deduction"], ko:["인물","증거","사건 재구성","추리 노트"]},
+  tabs:{en:["People","Evidence","Map","Deduction"], ko:["인물","증거","지도","추리 노트"]},
   got:{en:"Evidence added", ko:"증거 추가"}, newnote:{en:"Note added", ko:"노트 추가"},
   case:{en:"The Death of Edward", ko:"에드워드의 죽음"}, loc:{en:"Bell Village", ko:"벨 마을"},
   objHead:{en:"What to do", ko:"할 일"},
@@ -1187,7 +1187,7 @@ Object.assign(D, {
   ci6_0: {sp:"bgb", ex:"thinking", t:{en:"The knots, the right hand, the torn ear. I saw all of it, and I cannot unsee it.", ko:"매듭, 오른손, 찢어진 귀. 다 봤어. 이제 모르는 척할 수 없어."}, next:"ci6_1"},
   ci6_1: {sp:"bgb", ex:"neutral", t:{en:"Compare the clues on the Identity Board under People. After that, I have to see Green at the Old Mill.", ko:"사람 탭의 신원 보드에서 단서를 맞춰 보자. 그다음엔 낡은 방앗간의 Green을 만나야 해."}, next:null}
 });
-const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp"}, kid:{name:{en:"Green",ko:"형"}, img:"assets/twin_elder_front.webp"}, yo:{name:{en:"Little Green",ko:"동생"}, img:"assets/twin_younger_front.webp"}, nar:{name:{en:"",ko:""}, img:"assets/twin_elder_front.webp", hide:true}, v1:{name:{en:"Villager",ko:"마을 사람"}, img:"assets/molly_front.webp", sil:true}, v2:{name:{en:"Villager 2",ko:"주민 2"}, img:"assets/molly_front.webp", sil:true}, mo:{name:{en:"Grandma Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"그린"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
+const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp", por:"assets/por_edward_"}, kid:{name:{en:"Green",ko:"형"}, img:"assets/twin_elder_front.webp"}, yo:{name:{en:"Little Green",ko:"동생"}, img:"assets/twin_younger_front.webp"}, nar:{name:{en:"",ko:""}, img:"assets/twin_elder_front.webp", hide:true}, v1:{name:{en:"Villager",ko:"마을 사람"}, img:"assets/molly_front.webp", sil:true}, v2:{name:{en:"Villager 2",ko:"주민 2"}, img:"assets/molly_front.webp", sil:true}, mo:{name:{en:"Grandma Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"그린"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp", por:"assets/por_hazel_"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
 const EXPR = ["neutral","worried","surprised","thinking"];
 
 /* ---------- state ---------- */
@@ -2377,10 +2377,10 @@ const PERSON_UI = {
   nini:{img:"por_nini_neutral", role:{ko:"기록관 조수",en:"Archive assistant"}, intro:{ko:"에드워드의 기록관에서 일하며 공책을 쓴다.",en:"Works at Edward's archive and keeps a notebook."}},
   ck:{img:"por_oliver_neutral", role:{ko:"시계지기",en:"Clockkeeper"}, intro:{ko:"시계탑에서 밤 근무를 한다.",en:"Works the night shift at the clock tower."}},
   tm:{img:"por_tommy_neutral", role:{ko:"야간 경비",en:"Night guard"}, intro:{ko:"광장과 다리를 도는 야간 경비. 에드워드를 가장 먼저 발견했다.",en:"Patrols the square and the bridge at night. Was the first to find Edward."}},
-  hz:{img:"cafe_owner_front", role:{ko:"카페 주인",en:"Café owner"}, intro:{ko:"마을의 카페를 운영한다.",en:"Runs the village café."}},
+  hz:{img:"por_hazel_neutral", role:{ko:"카페 주인",en:"Café owner"}, intro:{ko:"마을의 카페를 운영한다.",en:"Runs the village café."}},
   mo:{img:"por_molly_neutral", role:{ko:"마을 어르신",en:"Village elder"}, intro:{ko:"마을에서 오래 산 몰리 할머니.",en:"Grandma Molly, a long-time villager."}},
   hl:{img:"por_may_neutral", role:{ko:"치료사",en:"Healer"}, intro:{ko:"마을의 치료사.",en:"The village healer."}},
-  ed:{img:"edward_front", role:{ko:"기록관 서기",en:"Archive clerk"}, intro:{ko:"기록관에서 일하던 에드워드 벨. 이번 사건의 피해자.",en:"Edward Bell, who worked at the archive. The victim in this case."}},
+  ed:{img:"por_edward_neutral", role:{ko:"기록관 서기",en:"Archive clerk"}, intro:{ko:"기록관에서 일하던 에드워드 벨. 이번 사건의 피해자.",en:"Edward Bell, who worked at the archive. The victim in this case."}},
   gr:{img:"por_green_neutral", role:{ko:"방앗간에 사는 곰",en:"A bear at the Old Mill"}, intro:{ko:"낡은 방앗간에서 혼자 산다.",en:"Lives alone at the Old Mill."}}
 };
 /* the player's own notes from flashbacks, shown on a card only after they were recorded */

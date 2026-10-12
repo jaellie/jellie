@@ -86,3 +86,9 @@
 
 ## 11. 단서 쪽지 핀 분리
 `journal_cardpin`의 붉은 핀은 9-slice 윗변 가운데에 박혀 있어 늘어나면 찌그러진다. 핀을 지운 `journal_cardplain`(400×149, 9-slice 50, 화면 18)과 따로 쓰는 `journal_pin`(80×80, 화면 26)으로 나눴다. 핀은 쪽지 윗변 가운데에 얹는 별도 Image로 둔다 (늘리지 않는다).
+
+## 12. 탭 이름 변경
+세 번째 탭 이름: 한국어 "사건 재구성" → **"지도"**, 영어 "Events" → **"Map"**. (탭 순서와 내용은 그대로: 인물, 증거, 지도, 추리 노트 / People, Evidence, Map, Deduction.) 쪽 머리글은 한국어 "사건 지도", 영어 "CASE MAP"이다.
+
+## 13. 에드워드와 헤이즐 초상
+`por_edward_{neutral,worried,surprised,thinking}`, `por_hazel_{...}` (높이 420, 폭 약 380~430). 대사창에서는 줄마다 표정을 고르고, 인물 폴라로이드에서는 neutral을 쓴다.
