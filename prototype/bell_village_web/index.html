@@ -1230,7 +1230,7 @@ Object.assign(D, {
   ci6_1: {sp:"bgb", ex:"neutral", t:{en:"Compare the clues on the Identity Board under People. After that, I have to see Green at the Old Mill.", ko:"사람 탭의 신원 보드에서 단서를 맞춰 보자. 그다음엔 낡은 방앗간의 Green을 만나야 해."}, next:null}
 });
 const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp", por:"assets/por_edward_"}, kid:{name:{en:"Green",ko:"형"}, img:"assets/twin_elder_front.webp", por:"assets/por_elder_"}, yo:{name:{en:"Little Green",ko:"동생"}, img:"assets/twin_younger_front.webp", por:"assets/por_younger_"}, nar:{name:{en:"",ko:""}, img:"assets/twin_elder_front.webp", hide:true}, v1:{name:{en:"Villager",ko:"마을 사람"}, img:"assets/molly_front.webp", sil:true, big:"assets/sil_rabbit.webp"}, v2:{name:{en:"Villager 2",ko:"주민 2"}, img:"assets/molly_front.webp", sil:true, big:"assets/sil_goat.webp"}, mo:{name:{en:"Grandma Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"그린"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp", por:"assets/por_hazel_"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
-const EXPR = ["neutral","worried","surprised","thinking"];
+const EXPR = ["neutral","worried","surprised","thinking"], EXPR_X = { bgb:["laugh","sad","stern","relieved"] };   /* extra expressions only some speakers have */
 
 /* ---------- state ---------- */
 const SAVE_KEY = "bgb2.bellvillage.proto.v2";   /* v2: saves from before the prologue existed would skip it, so everyone restarts once */
@@ -2168,7 +2168,7 @@ function renderDlg(anim){
   const n = D[cur]; if (!n) return; const sp = SP[n.sp];
   { const dl = $("dlg"), big = !!((sp.por || sp.big || sp.img) && !sp.hide && (!sp.sil || sp.big)), want = !!sp.hide || big; dl.classList.toggle("big", big); if (dl.classList.contains("cap") !== want){ dl.classList.toggle("cap", want); const bg = $("dlgbg"); bg._nk = null; if (dl.classList.contains("on")) nineDraw(bg); } }   /* a line of narration uses the same box without the portrait and name ribbon */
   $("dNm").textContent = tr(sp.name); $("dNm").style.visibility = sp.hide ? "hidden" : ""; $("dPor").style.visibility = sp.hide ? "hidden" : "";
-  const ex = EXPR.includes(n.ex) ? n.ex : "neutral"; // each line picks its expression; speakers without portraits keep the still
+  const ex = (EXPR.includes(n.ex) || (EXPR_X[n.sp]||[]).includes(n.ex)) ? n.ex : "neutral"; // each line picks its expression; speakers without portraits keep the still
   const portrait = sp.por ? sp.por + ex + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil); $("dPor").classList.toggle("pz", !!sp.por);   /* silhouette until the real portrait exists */
   if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
   bigSide = ((sp.por || sp.big || sp.img) && !sp.hide && (!sp.sil || sp.big)) ? (n.sp === "bgb" || n.sp === "yo" ? "r" : "l") : "";   /* who gets the close-up: anyone with expression portraits, on the side away from the answers */
