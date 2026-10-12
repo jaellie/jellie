@@ -2536,7 +2536,7 @@ function drawThread(){
   const st = $("jrnl").getBoundingClientRect(), sc = st.width/1920;
   const R = el => { const r = el.getBoundingClientRect(); return { l:(r.left-st.left)/sc, t:(r.top-st.top)/sc, r:(r.right-st.left)/sc, b:(r.bottom-st.top)/sc }; };
   const bx = R(box), rw = R(sel), ay = rw.t + 28; if (ay < bx.t + 6 || ay > bx.b - 6) return;
-  const ax = bx.r - 4, mx = 940, rad = 18, pl = ROW_PLACE[TL_DATA.filter(r=>r.ev.every(hasEv))[reRow].t];
+  const ax = bx.r - 4, mx = 905, rad = 18, pl = ROW_PLACE[TL_DATA.filter(r=>r.ev.every(hasEv))[reRow].t];
   let d, tail = "";
   if (pl){
     const mk = document.querySelector('.jmk[data-pl="'+pl+'"]'); if (!mk) return;
@@ -2547,8 +2547,8 @@ function drawThread(){
     d = 'M '+ax+' '+ay+' H '+(mx-rad)+' Q '+mx+' '+ay+' '+mx+' '+(ay+dir*rad)+' V '+(y-dir*rad)+' Q '+mx+' '+y+' '+(mx+rad)+' '+y+' H '+ex;
     tail = '<circle cx="'+ex+'" cy="'+y+'" r="5" fill="#b9382b"/>';
   } else {
-    const tx = 944; d = 'M '+ax+' '+ay+' H '+(tx-14);
-    tail = '<circle cx="'+tx+'" cy="'+ay+'" r="13" fill="none" stroke="#b9382b" stroke-width="3.5" stroke-dasharray="5 5"/><text x="'+(tx-4.5)+'" y="'+(ay+7)+'" font-size="20" font-weight="700" fill="#b9382b" font-family="Alegreya,serif">?</text>';
+    const tx = 909; d = 'M '+ax+' '+ay+' H '+(tx-12);
+    tail = '<circle cx="'+tx+'" cy="'+ay+'" r="11" fill="#f3e6c8" stroke="#b9382b" stroke-width="3" stroke-dasharray="5 4"/><text x="'+(tx-4)+'" y="'+(ay+6)+'" font-size="17" font-weight="700" fill="#b9382b" font-family="Alegreya,serif">?</text>';
   }
   svg.innerHTML = '<path d="'+d+'" fill="none" stroke="rgba(0,0,0,.32)" stroke-width="7" transform="translate(2,4)"/><path d="'+d+'" fill="none" stroke="#b9382b" stroke-width="4.5" stroke-linecap="round"'+(pl?'':' stroke-dasharray="12 9"')+'/><circle cx="'+ax+'" cy="'+ay+'" r="8" fill="#a8483f" stroke="#6e2a35" stroke-width="3"/>'+tail;
 }
@@ -2577,6 +2577,7 @@ function jNotes(){
   return { l, r };
 }
 
+const JKEEP = { tab:-1 };   /* keeps the timeline scroll position when a row is picked */
 const JRIB = ["burgundy","brass","navy","moss"], JRH = [["인물 기록","PEOPLE FILE"],["증거 기록","EVIDENCE FILE"],["사건 지도","CASE MAP"],["추리 노트","DEDUCTION"]];
 function renderCF(){
   tab = Math.max(0, Math.min(CF_TABS-1, tab|0));
@@ -2585,9 +2586,11 @@ function renderCF(){
   $("jRibs").querySelectorAll("[data-tab]").forEach(b=>{ b.onclick = ()=>{ tab = +b.dataset.tab; sub = false; renderCF(); }; });
   $("jRunL").innerHTML = '<span>BELL VILLAGE · CASE JOURNAL</span><span>0'+(tab+1)+' / 04</span>';
   $("jRunR").innerHTML = '<span>'+(J.rh || L2(JRH[tab][0], JRH[tab][1]))+'</span><span></span>';
+  const old = $("jtl"); const top = old && JKEEP.tab === tab ? old.scrollTop : 0;
   $("jL").innerHTML = J.l; $("jR").innerHTML = J.r;
+  const tl = $("jtl"); if (tl){ tl.scrollTop = top; tl.onscroll = drawThread; }
+  JKEEP.tab = tab;
   wireCF(); drawThread();
-  const tl = $("jtl"); if (tl){ const row = tl.querySelector(".jrow.sel"); tl.onscroll = drawThread; }
 }
 
 /* ---------- boards (art: board_identity / board_resp / page_overlooked) ---------- */
