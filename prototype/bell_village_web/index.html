@@ -58,6 +58,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .mark{position:absolute;width:118px;height:129px;margin-left:-59px;filter:brightness(1.12) contrast(1.15) drop-shadow(0 3px 5px rgba(0,0,0,.55));pointer-events:none;animation:bob 1.6s ease-in-out infinite;opacity:0;scale:1;transition:opacity .25s ease,scale .25s ease}
 .mark.look{width:120px;height:auto;margin-left:-60px;filter:brightness(1.1) drop-shadow(0 0 3px rgba(18,10,6,.95)) drop-shadow(0 4px 6px rgba(0,0,0,.6))}
 .mark.on{opacity:1}
+.mark:not(.look){width:92px;height:101px;margin-left:-46px}
+.mark:not(.look).on{opacity:.85}
 #stage img.mark.on{pointer-events:auto;cursor:pointer}
 .mark.soft{opacity:.78;scale:.82}
 @keyframes bob{50%{transform:translateY(-8px)}}
@@ -2216,7 +2218,7 @@ function frame(now){
   $("cfg").style.transform = "translate3d("+(-cam).toFixed(2)+"px,0,0)";
   place(); applyLight(dt);
   { const ACT = { nini, ck, hz, tm, mo, gr, hl, ed, fded:ed, v1:mo, v2:gr, fbrother:br };   /* the ! bubble sits 15 to 30 px above whoever it belongs to (it bobs 8 px) */
-    IA.forEach(i=>{ const a = ACT[i.id]; if (i.el && a && a.style.display !== "none") i.el.style.top = Math.round(parseFloat(a.style.top) - 129 - 20) + "px"; }); }
+    IA.forEach(i=>{ const a = ACT[i.id]; if (i.el && a && a.style.display !== "none") i.el.style.top = Math.round(parseFloat(a.style.top) - 101 - 20) + "px"; }); }
   // nearest interactable
   near = null; let best = 140;
   if (mode==="play"){ IA.forEach(i=>{ if (i.when && !i.when()) return; const d = Math.abs(P.x - i.x()); if (d < best){ best = d; near = i; } }); }
