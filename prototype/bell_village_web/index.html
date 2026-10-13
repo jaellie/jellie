@@ -1268,7 +1268,8 @@ function load(){ try { const r = localStorage.getItem(SAVE_KEY); if (r) { const 
     ["f4.end","f4.shown","f5.toPresent","f5.shown","f5.past","hz5.met","hz5.night","may.done","f5.done","fin.on"].forEach(k=>S.flags[k] = true);
     S.flash = false; if (!["village","mill","cottage","healer","cafe","archive","tower"].includes(S.scene)){ S.scene = "village"; } S.scene = "village"; S.x = 4500; }
   lang = S.lang || "en"; }
-function save(){ S.lang = lang; try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} }
+let RELOADING = false;
+function save(){ if (RELOADING) return; S.lang = lang; try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e){} }
 const has = f => !!S.flags[f];
 const setf = f => { if (f) S.flags[f] = true; };
 
@@ -1899,7 +1900,7 @@ function finaleSkip(){ if (!$("finale").classList.contains("on")) return; finTim
   ["fnE","fnH","fnL","fnS","fnQ"].forEach(i=>$(i).classList.remove("show")); fnTitleBoth(); $("fnB").classList.add("show"); $("fnN").classList.add("show"); }
 $("fnR").onclick = ()=>{ ENDING = false; finaleSkip(); $("finale").classList.remove("on"); mode = "play"; startDlg("fn_ch"); };
 $("fnC").onclick = ()=>{ finTimers.forEach(t=>clearTimeout(t)); finTimers = []; ["fnE","fnH","fnL","fnS","fnQ"].forEach(i=>$(i).classList.remove("show")); fnTitleBoth(); showCredits(); };
-$("fnK").onclick = ()=>{ ENDING = false; $("finale").classList.remove("on"); if (UNIFIED_END){ EPI_DONE = false; $("fnN").classList.remove("show"); $("pReset").onclick(); return; } mode = "play"; stage.focus(); };   /* the single ending: the last button starts the game over */
+$("fnK").onclick = ()=>{ ENDING = false; $("finale").classList.remove("on"); if (UNIFIED_END){ EPI_DONE = false; $("fnN").classList.remove("show"); RELOADING = true; try{ localStorage.removeItem(SAVE_KEY); }catch(e){} location.reload(); return; }   /* a clean page, so no leftover dialogue or chapter state survives */ mode = "play"; stage.focus(); };   /* the single ending: the last button starts the game over */
 function replayChoice(){ $("endcard").classList.remove("on"); S.flags["c7.done"] = false; mode = "play"; startDlg("cc0"); }
 function startCh7(){ setf("c7.on"); $("endcard").classList.remove("on"); chapterIntro(7, ()=>setSceneNow("mill", 1400)); }
 
