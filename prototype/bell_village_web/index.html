@@ -380,12 +380,13 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #tip kbd{font:700 17px/1 var(--font-label);background:var(--burgundy);color:#f6e3c0;border-radius:4px;padding:4px 8px;box-shadow:0 2px 0 #3d1219;margin:0 2px}
 #finale{position:absolute;inset:0;z-index:42;background:#02030a;opacity:0;pointer-events:none;transition:opacity 1.8s;color:#f3e6c8;text-align:center}
 #finale.on{opacity:1;pointer-events:auto}
-#fnCard,#fnTi{position:absolute;left:0;right:0;top:50%;transform:translateY(-52%);display:flex;flex-direction:column;align-items:center;gap:22px;padding:0 140px}
+#fnCard,#fnTi,#fnQP{position:absolute;left:0;right:0;top:50%;transform:translateY(-52%);display:flex;flex-direction:column;align-items:center;gap:22px;padding:0 140px}
 #fnEpi{position:absolute;inset:0;opacity:0;transition:opacity 2.6s ease-in-out;pointer-events:none}
 #fnEpi img{width:100%;height:100%;object-fit:cover;display:block}
 #fnEpi:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(3,4,14,.55) 100%)}
 #finale #fnEpi.show{opacity:1}
 #finale.epi{pointer-events:none}
+#finale .fn{position:absolute;left:0;right:0;bottom:36px;padding:0 40px;font:400 19px/1.5 Pretendard,"Alegreya",serif;color:#a79a7d;opacity:0;transition:opacity 1.2s}
 #finale .fe,#finale .fh,#finale .fl,#finale .fs,#finale .fq,#finale .ft,#finale .fb{opacity:0;transition:opacity 1.2s,transform 1.2s;transform:translateY(10px)}
 #finale .show{opacity:1;transform:none}
 #finale .fe{font:600 26px/1 "Alegreya SC","Noto Serif KR",Georgia,serif;letter-spacing:.5em;padding-left:.5em;color:#c9a96a;display:flex;align-items:center;gap:30px}
@@ -400,7 +401,9 @@ html[lang="en"] #finale #fnT,html[lang="en"] #finale #fnTH{font-size:76px}
 #finale #fnTH.show{margin-left:44px}
 html[lang="ko"] #finale .fh{font-family:Pretendard,"Alegreya",serif;font-weight:700;letter-spacing:.02em}
 #finale .fs{font:600 30px/1.5 Pretendard,"Alegreya",serif;color:#e9d9b0;letter-spacing:.02em;margin-top:6px}
-#finale .fq{font:italic 400 28px/1.6 "Alegreya",Pretendard,serif;color:#d58a5c;max-width:1100px;margin-top:18px}
+#finale .fq{font:italic 400 92px/1.35 "Alegreya",Georgia,serif;letter-spacing:.01em;color:#f6ead0;max-width:1560px;text-wrap:balance;text-shadow:0 0 60px rgba(214,150,92,.22),0 2px 0 rgba(0,0,0,.4)}
+html[lang="ko"] #finale .fq{font-family:Pretendard,"Alegreya",serif;font-style:normal;font-weight:700;letter-spacing:.01em;line-height:1.4}
+html[lang="en"] #finale .fq{font-size:76px}
 #finale .fl{width:0;height:2px;background:linear-gradient(90deg,transparent,#c9a96a,transparent);transition:opacity 1s,width 2.2s;transform:none}
 #finale .fl.show{width:360px}
 #finale .ft{font:600 26px/1.4 "Alegreya SC",Georgia,serif;letter-spacing:.32em;color:#c9a96a}
@@ -816,7 +819,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
     <button class="pbtn nine cream" id="eCred" style="display:none">Credits</button>
     <button class="pbtn nine cream" id="eBack">Back to the village</button>
   </div></div>
-  <div id="finale"><div id="fnEpi"><img src="assets/still_clock_tower.webp" alt=""></div><div id="fnCard"><div class="fe" id="fnE"></div><div class="fh" id="fnH"></div><div class="fl" id="fnL"></div><div class="fs" id="fnS"></div><div class="fq" id="fnQ"></div></div><div id="fnTi"><div class="ft" id="fnT"></div><div class="fh" id="fnTH"></div></div><div class="fb" id="fnB"><button id="fnR"></button><button id="fnC"></button><button id="fnK"></button></div></div>
+  <div id="finale"><div id="fnEpi"><img src="assets/still_clock_tower.webp" alt=""></div><div id="fnCard"><div class="fe" id="fnE"></div><div class="fh" id="fnH"></div><div class="fl" id="fnL"></div><div class="fs" id="fnS"></div></div><div id="fnQP"><div class="fq" id="fnQ"></div></div><div id="fnTi"><div class="ft" id="fnT"></div><div class="fh" id="fnTH"></div></div><div class="fb" id="fnB"><button id="fnR"></button><button id="fnC"></button><button id="fnK"></button></div><div class="fn" id="fnN"></div></div>
   <div id="tip"><b>TIP</b><span id="tipTx"></span></div>
   <div id="mono"><div class="mt" id="monoT"></div><div class="mn" id="monoN"></div></div>
   <div id="goal"></div><div id="fade"></div><div id="chcard"><div class="ce" id="chE"></div><div class="cl"></div><div class="ct" id="chT"></div></div>
@@ -1867,19 +1870,21 @@ function showFinal(k, instant){ window._lastEnd = k; const K = lang==="ko"; mode
   $("fnE").textContent = k===3 ? (K?"엔딩":"ENDING") : k===1 ? (K?"엔딩 A":"ENDING A") : (K?"엔딩 B":"ENDING B");
   $("fnH").textContent = k===3 ? (K?"마지막 기록":"The Final Record") : k===1 ? (K?"남겨진 기록":"The Record That Remained") : (K?"좋은 사람":"A Good Person");
   $("fnS").textContent = k===3 ? (K?"어떤 진실은 끝내 기록되지 않는다.":"Some truths are never written down.") : ""; $("fnQ").textContent = k===3 ? (K?"당신도 사랑하는 사람을 위해 진실을 숨길 수 있습니까?":"Would you hide the truth to protect someone you love?") : "";
-  $("fnR").style.display = (k===3 && UNIFIED_END) ? "none" : "";
   $("fnT").textContent = K ? "빅그베의 모험 2" : "Big Green Bear's Adventure II"; $("fnTH").textContent = K ? "은폐" : "The Cover-Up";
   $("fnR").textContent = K?"다른 선택을 해 본다":"Choose differently"; $("fnC").textContent = K?"감사의 말":"Credits"; $("fnK").textContent = K?"계속 둘러보기":"Keep exploring";
-  ["fnE","fnH","fnL","fnS","fnQ","fnT","fnTH","fnB"].forEach(i=>$(i).classList.remove("show")); $("fnTH").style.width = "0";
+  const uni = k===3 && UNIFIED_END; $("fnR").style.display = uni ? "none" : ""; $("fnC").style.display = uni ? "none" : "";
+  if (uni){ $("fnK").textContent = K ? "처음으로" : "Back to the start"; $("fnN").textContent = K ? "설정 - 코드에 [jae]를 입력하면 연출 모드로 빠르게 플레이해 보실 수 있습니다." : "Enter [jae] under Settings, Code, to play quickly in Director Mode."; } else $("fnN").textContent = "";
+  ["fnE","fnH","fnL","fnS","fnQ","fnT","fnTH","fnB","fnN"].forEach(i=>$(i).classList.remove("show")); $("fnTH").style.width = "0";
   finTimers.forEach(clearTimeout); finTimers = []; const at = (ms, fn) => finTimers.push(setTimeout(fn, ms));
   if (instant){ F.style.transition = "none"; F.classList.add("on"); void F.offsetWidth; F.style.transition = ""; } else F.classList.add("on");   /* called from a fade to black: the finale is already fully black, so there is no second fade */
   if (k === 3){   /* the single ending: its name and the line, then the question stays a little longer than the rest */
     at(600, ()=>["fnE","fnH","fnL","fnS"].forEach(i=>$(i).classList.add("show")));
-    at(3800, ()=>$("fnQ").classList.add("show"));
-    at(9000, ()=>["fnE","fnH","fnL","fnS","fnQ"].forEach(i=>$(i).classList.remove("show")));
-    at(11400, ()=>$("fnT").classList.add("show"));
-    at(14400, fnTitleBoth);
-    at(20600, ()=>showCredits());
+    at(5600, ()=>["fnE","fnH","fnL","fnS"].forEach(i=>$(i).classList.remove("show")));
+    at(8000, ()=>$("fnQ").classList.add("show"));            /* the question gets a page of its own, as large as the title */
+    at(14500, ()=>$("fnQ").classList.remove("show"));
+    at(17000, ()=>$("fnT").classList.add("show"));
+    at(20000, fnTitleBoth);
+    at(26200, ()=>showCredits());
   } else {
   at(600, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.add("show")));      /* ending name */
   at(3800, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")));    /* then the screen is fully black */
@@ -1889,10 +1894,10 @@ function showFinal(k, instant){ window._lastEnd = k; const K = lang==="ko"; mode
   }
   holdHint = false; save(); }
 function finaleSkip(){ if (!$("finale").classList.contains("on")) return; finTimers.forEach(t=>clearTimeout(t)); finTimers = [];
-  ["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")); fnTitleBoth(); $("fnB").classList.add("show"); }
+  ["fnE","fnH","fnL","fnS","fnQ"].forEach(i=>$(i).classList.remove("show")); fnTitleBoth(); $("fnB").classList.add("show"); $("fnN").classList.add("show"); }
 $("fnR").onclick = ()=>{ ENDING = false; finaleSkip(); $("finale").classList.remove("on"); mode = "play"; startDlg("fn_ch"); };
-$("fnC").onclick = ()=>{ finTimers.forEach(t=>clearTimeout(t)); finTimers = []; ["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")); fnTitleBoth(); showCredits(); };
-$("fnK").onclick = ()=>{ ENDING = false; $("finale").classList.remove("on"); mode = "play"; stage.focus(); };
+$("fnC").onclick = ()=>{ finTimers.forEach(t=>clearTimeout(t)); finTimers = []; ["fnE","fnH","fnL","fnS","fnQ"].forEach(i=>$(i).classList.remove("show")); fnTitleBoth(); showCredits(); };
+$("fnK").onclick = ()=>{ ENDING = false; $("finale").classList.remove("on"); if (UNIFIED_END){ EPI_DONE = false; $("fnN").classList.remove("show"); $("pReset").onclick(); return; } mode = "play"; stage.focus(); };   /* the single ending: the last button starts the game over */
 function replayChoice(){ $("endcard").classList.remove("on"); S.flags["c7.done"] = false; mode = "play"; startDlg("cc0"); }
 function startCh7(){ setf("c7.on"); $("endcard").classList.remove("on"); chapterIntro(7, ()=>setSceneNow("mill", 1400)); }
 
@@ -1982,7 +1987,7 @@ IA = IA_V;
 let near = null, peek = 0, autoGo = null;
 /* does this person have something that moves the story on? (then "!", otherwise only "...") */
 const NPCMARK = {
-  nini:()=> has("fin.last") ? !has("fin.end") : !has("q1") && (!has("nin.met") || !has("nini.letters") || !S.ev.includes("notebook")),
+  nini:()=> has("fin.last") ? (UNIFIED_END || !has("fin.end")) : !has("q1") && (!has("nin.met") || !has("nini.letters") || !S.ev.includes("notebook")),
   tm:()=> !has("q1") && !(has("c1.found") && has("tm.stmt")),
   ck:()=> has("q1") && !has("dd02") && (!has("c2.met") || !has("c2.why") || !has("ck.bear")),
   mo:()=> has("dd02") && !has("mol.bell"),
@@ -2109,7 +2114,7 @@ setInterval(()=>{
 }, 700);
 
 /* ---------- background music: one looping track per moment, crossfaded; the icon at the top right turns it on and off ---------- */
-const BGM_FALLBACK = { tower:"village", archive:"village", cafe:"village", clinic:"village", cottage:"village", village_late:"village", danger:"flashback", credits:"ending", ending:"village", ending_a:"village", ending_b:"village" };
+const BGM_FALLBACK = { tower:"village", archive:"village", cafe:"village", clinic:"village", cottage:"village", village_late:"village", danger:"flashback", credits:"ending_a", ending:"ending_a", ending_a:"village", ending_b:"ending_a" };
 const BGM_VOL = 0.55; let bgmOff = false, bgmUnlocked = false, bgmKey = "", bgmCur = null; const bgmMissing = new Set();
 try { bgmOff = localStorage.getItem("bgb2.bgm.off") === "1"; } catch(e){}
 function bgmWanted(){
@@ -2336,7 +2341,7 @@ const ckNode = () => has("c6.turn") && !has("stmt_ck2") ? "ck6_0" : has("c6.turn
 const grNode = () => !has("fin.on") ? "c6_wait" : (has("fin.o1") && has("fin.o2") && has("fin.o3") && !has("fin.s4")) ? "gs4" : (has("fin.frame") && !has("fin.last")) ? "gl7" : "gm";
 const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : !has("c6.on") ? (has("f5.past") ? (has("hz5.met") ? "hz5" : "hz50") : talk("hz")) : has("hz.done") && has("hz.pm") ? talk("hz") : has("hz.met") ? "h9" : "h0";
 const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : !has("c6.on") ? (has("tmn.met") ? "tmn" : "tmn0") : has("tm.stmt") && has("tm.pm") ? talk("tm") : has("tm.met") ? "tm9" : "tm0";
-const niniNode = () => has("fin.last") ? (has("fin.end") ? (UNIFIED_END ? "fn_after" : "fn_ch") : "fn0") : has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : !has("dd02") ? (has("nin.met") ? "nin" : "nin0") : talk("nini");
+const niniNode = () => has("fin.last") ? (has("fin.end") && !UNIFIED_END ? "fn_ch" : "fn0") : has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : !has("dd02") ? (has("nin.met") ? "nin" : "nin0") : talk("nini");
 const homeGate = () => !has("fin.on") ? "home00" : !has("fin.may2") ? "home0" : null;
 const healGate = () => !has("c6.on") ? (has("f5.past") ? null : "heal0") : !has("dd06") ? "heal1" : null;
 
@@ -3190,7 +3195,7 @@ D.fn_end_43 = {sp:"nar", ex:"neutral", t:{ko:"(23년 전의 기록도, 오늘 �
 D.fn_end_44 = {sp:"nar", ex:"neutral", t:{ko:"(화면이 어두워진다.)", en:"(The screen fades to black.)"},fx:"theend3"};
 D.fn_after = {sp:"nini", ex:"neutral", t:{ko:"그럼 내일 봬요, 아저씨!", en:"See you tomorrow, Mr. Bear!"}};
 if (UNIFIED_END){ delete D.fn_ch.ch; D.fn_ch.next = "fn_end_01"; }
-window.__bv = { D, NOTES, SP, EV, ENDINGS, ACC, SMALL, FOLLOW, KCON, GATE_T, CHT, UI, setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4, EV_META, evGroups, evStatements, PEOPLE, personView, metPeople, skipTo, evIcon, EI, GI, QS, TL_DATA, PLACES, PERSON_UI, GROUP_NAME };
+window.__bv = { showFinal, D, NOTES, SP, EV, ENDINGS, ACC, SMALL, FOLLOW, KCON, GATE_T, CHT, UI, setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4, EV_META, evGroups, evStatements, PEOPLE, personView, metPeople, skipTo, evIcon, EI, GI, QS, TL_DATA, PLACES, PERSON_UI, GROUP_NAME };
 requestAnimationFrame(frame);
   if (typeof nineAll === "function") requestAnimationFrame(nineAll);
   /* layers with will-change keep the raster scale they were first painted at, so after a resize or rotation they look soft; drop and restore the hint to re-paint them sharp */
