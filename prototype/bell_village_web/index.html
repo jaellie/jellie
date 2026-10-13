@@ -396,9 +396,10 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #fnTi{flex-direction:row!important;justify-content:center;align-items:baseline;gap:0!important;white-space:nowrap}
 #finale #fnT,#finale #fnTH{font:700 92px/1.15 "Alegreya",Georgia,serif;letter-spacing:.02em;color:#f6ead0;text-shadow:0 0 60px rgba(246,234,208,.16),0 2px 0 rgba(0,0,0,.4)}
 html[lang="ko"] #finale #fnT,html[lang="ko"] #finale #fnTH{font-family:Pretendard,"Alegreya",serif;font-weight:700;letter-spacing:.02em}
+html[lang] #finale #fnT{font-weight:400}
 html[lang="en"] #finale #fnT,html[lang="en"] #finale #fnTH{font-size:76px}
-#finale #fnTH{font-style:italic;font-weight:400;color:#d58a5c;text-shadow:none;padding-right:.25em;box-sizing:content-box;width:0;margin-left:0;overflow:hidden;transition:opacity 1.8s,width 1.6s ease-in-out,margin-left 1.6s ease-in-out,transform 1.8s}
-#finale #fnTH.show{margin-left:44px}
+#finale #fnTH{font-style:normal;font-weight:700;color:#9c9a94;text-shadow:none;padding-right:.25em;box-sizing:content-box;width:0;margin-left:0;overflow:hidden;transition:opacity 1.8s,width 1.6s ease-in-out,margin-left 1.6s ease-in-out,transform 1.8s}
+#finale #fnTH.show{margin-left:24px}
 html[lang="ko"] #finale .fh{font-family:Pretendard,"Alegreya",serif;font-weight:700;letter-spacing:.02em}
 #finale .fs{font:600 30px/1.5 Pretendard,"Alegreya",serif;color:#e9d9b0;letter-spacing:.02em;margin-top:6px}
 #finale .fq{font:italic 400 92px/1.35 "Alegreya",Georgia,serif;letter-spacing:.01em;color:#f6ead0;max-width:1560px;text-wrap:balance;text-shadow:0 0 60px rgba(214,150,92,.22),0 2px 0 rgba(0,0,0,.4)}
@@ -1870,7 +1871,7 @@ function showFinal(k, instant){ window._lastEnd = k; const K = lang==="ko"; mode
   $("fnE").textContent = k===3 ? (K?"엔딩":"ENDING") : k===1 ? (K?"엔딩 A":"ENDING A") : (K?"엔딩 B":"ENDING B");
   $("fnH").textContent = k===3 ? (K?"마지막 기록":"The Final Record") : k===1 ? (K?"남겨진 기록":"The Record That Remained") : (K?"좋은 사람":"A Good Person");
   $("fnS").textContent = k===3 ? (K?"어떤 진실은 끝내 기록되지 않는다.":"Some truths are never written down.") : ""; $("fnQ").textContent = k===3 ? (K?"당신도 사랑하는 사람을 위해 진실을 숨길 수 있습니까?":"Would you hide the truth to protect someone you love?") : "";
-  $("fnT").textContent = K ? "빅그베의 모험 2" : "Big Green Bear's Adventure II"; $("fnTH").textContent = K ? "은폐" : "The Cover-Up";
+  $("fnT").textContent = K ? "빅그베의 모험 2:" : "Big Green Bear's Adventure II:"; $("fnTH").textContent = K ? "은폐" : "The Cover-Up";
   $("fnR").textContent = K?"다른 선택을 해 본다":"Choose differently"; $("fnC").textContent = K?"감사의 말":"Credits"; $("fnK").textContent = K?"계속 둘러보기":"Keep exploring";
   const uni = k===3 && UNIFIED_END; $("fnR").style.display = uni ? "none" : ""; $("fnC").style.display = uni ? "none" : "";
   if (uni){ $("fnK").textContent = K ? "처음으로" : "Back to the start"; $("fnN").textContent = K ? "설정 - 코드에 [jae]를 입력하면 연출 모드로 빠르게 플레이해 보실 수 있습니다." : "Enter [jae] under Settings, Code, to play quickly in Director Mode."; } else $("fnN").textContent = "";
