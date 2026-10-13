@@ -1,0 +1,26 @@
+{
+ "source": "bell_village_night_MID.png",
+ "source_size": [
+  6516,
+  2172
+ ],
+ "resampled": false,
+ "note": "Automatic crops are CANDIDATES. Review _contact_sheet.png before use.",
+ "sprites": [
+  {
+   "name": "mid",
+   "file": "mid.png",
+   "src_bbox": [
+    19,
+    115,
+    6507,
+    2005
+   ],
+   "size": [
+    6488,
+    1890
+   ],
+   "qa": []
+  }
+ ]
+}

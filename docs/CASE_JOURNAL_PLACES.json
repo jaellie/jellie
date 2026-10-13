@@ -1,0 +1,55 @@
+{
+ "_comment": "rev2: pin tip positions (door base of each building) read from the DELIVERED map art k_map.png (596x576). The art follows the game's street order: cottage, square, healer, tower, archive, cafe, mill. The game draws plaques 10 px below each pin.",
+ "places": {
+  "cottage": {
+   "x": 141,
+   "y": 136,
+   "name": "BGB's cottage",
+   "footprint_h": 90
+  },
+  "square": {
+   "x": 292,
+   "y": 196,
+   "name": "Village square",
+   "footprint_h": 90
+  },
+  "healer": {
+   "x": 105,
+   "y": 272,
+   "name": "Healer's office (치료실)",
+   "footprint_h": 90
+  },
+  "tower": {
+   "x": 295,
+   "y": 350,
+   "name": "Clocktower",
+   "footprint_h": 110
+  },
+  "archive": {
+   "x": 478,
+   "y": 325,
+   "name": "Archive",
+   "footprint_h": 90
+  },
+  "cafe": {
+   "x": 123,
+   "y": 428,
+   "name": "Hazel's Café",
+   "footprint_h": 90
+  },
+  "mill": {
+   "x": 380,
+   "y": 478,
+   "name": "Old Mill",
+   "footprint_h": 90
+  }
+ },
+ "lantern_bridge": {
+  "x": 207,
+  "y": 232
+ },
+ "map_size": [
+  596,
+  576
+ ]
+}

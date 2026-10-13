@@ -1,0 +1,66 @@
+{
+ "source": "bell_village_night_FAR_GROUND_FOREGROUND_sheet.png",
+ "source_size": [
+  6516,
+  2172
+ ],
+ "resampled": false,
+ "note": "Automatic crops are CANDIDATES. Review _contact_sheet.png before use.",
+ "sprites": [
+  {
+   "name": "far",
+   "file": "far.png",
+   "src_bbox": [
+    29,
+    72,
+    6489,
+    1056
+   ],
+   "size": [
+    6460,
+    984
+   ],
+   "opaque_ratio": 0.718,
+   "semi_ratio": 0.063,
+   "qa": []
+  },
+  {
+   "name": "ground",
+   "file": "ground.png",
+   "src_bbox": [
+    68,
+    1143,
+    6449,
+    1637
+   ],
+   "size": [
+    6381,
+    494
+   ],
+   "opaque_ratio": 0.465,
+   "semi_ratio": 0.318,
+   "qa": [
+    "heavy_semi_alpha"
+   ]
+  },
+  {
+   "name": "foreground",
+   "file": "foreground.png",
+   "src_bbox": [
+    38,
+    1640,
+    6484,
+    2145
+   ],
+   "size": [
+    6446,
+    505
+   ],
+   "opaque_ratio": 0.495,
+   "semi_ratio": 0.311,
+   "qa": [
+    "heavy_semi_alpha"
+   ]
+  }
+ ]
+}
