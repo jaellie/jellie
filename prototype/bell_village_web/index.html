@@ -55,7 +55,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 .cs{position:absolute;height:24px;pointer-events:none;transform-origin:50% 50%;background:radial-gradient(ellipse at 50% 50%,rgba(6,10,28,.62) 0%,rgba(6,10,28,.36) 42%,rgba(6,10,28,0) 72%);filter:blur(1.2px)}
 #fg{position:absolute;left:0;top:0;will-change:transform}
 #fg img{position:absolute;left:0;top:884px;display:block;pointer-events:none}
-.mark{position:absolute;width:118px;height:129px;margin-left:-59px;filter:brightness(1.12) contrast(1.15) drop-shadow(0 3px 5px rgba(0,0,0,.55));pointer-events:none;animation:bob 1.6s ease-in-out infinite;opacity:0;scale:1;transition:opacity .25s ease,scale .25s ease}
+.mark{z-index:2;position:absolute;width:118px;height:129px;margin-left:-59px;filter:brightness(1.12) contrast(1.15) drop-shadow(0 3px 5px rgba(0,0,0,.55));pointer-events:none;animation:bob 1.6s ease-in-out infinite;opacity:0;scale:1;transition:opacity .25s ease,scale .25s ease}
 .mark.look{width:120px;height:auto;margin-left:-60px;filter:brightness(1.1) drop-shadow(0 0 3px rgba(18,10,6,.95)) drop-shadow(0 4px 6px rgba(0,0,0,.6))}
 .mark.on{opacity:1}
 .mark.go{width:104px;height:auto;margin-left:-52px;filter:brightness(1.08) drop-shadow(0 0 3px rgba(18,10,6,.95)) drop-shadow(0 4px 6px rgba(0,0,0,.6))}
@@ -215,7 +215,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #tfg,#tfar{pointer-events:none}
 
 /* Persistent category panel (left), as in the mockup */
-#side{display:block;position:absolute;left:12px;top:208px;width:294px;height:401px;background:url(assets/nav_binder_4.webp) 0 0/100% 100% no-repeat;z-index:5;transform-origin:0 50%;transform:translateX(-262px) rotate(15deg);transition:transform .35s ease-out}   /* tucked away: only its right edge shows until the mouse comes near */
+#side{display:block;position:absolute;left:12px;top:170px;width:294px;height:401px;background:url(assets/nav_binder_4.webp) 0 0/100% 100% no-repeat;z-index:5;transform-origin:0 50%;transform:translateX(-262px) rotate(10deg);transition:transform .35s ease-out}   /* tucked away: only its right edge shows until the mouse comes near */
 #side:after{content:"";position:absolute;right:5px;top:41%;width:26px;height:28px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f6e3c0' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 5.5c2.6-1 5.4-1 8 .8 2.6-1.8 5.4-1.8 8-.8v13c-2.6-1-5.4-1-8 .8-2.6-1.8-5.4-1.8-8-.8z'/%3E%3Cpath d='M12 6.300v13'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.9;transition:opacity .2s;pointer-events:none}
 .sbtn{position:absolute;left:61px;width:197px;height:72px;padding:0 16px 0 20px;--s:.97;background-color:transparent;display:flex;align-items:center;justify-content:flex-start;gap:9px;font:700 20px/1 var(--font-label);letter-spacing:.02em;white-space:nowrap;color:var(--ink);cursor:pointer;border-radius:12px;transition:filter .12s,transform .12s}
 .sbtn svg{width:25px;height:25px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
@@ -243,6 +243,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 /* Dialogue */
 #dlg{position:absolute;left:200px;bottom:34px;width:1520px;height:296px;display:none;z-index:8} /* sized in whole pixels (1.4x the sprite) so the nine-slice has no seams; left is set from the width so the box stays centred */
 #dlg.on{display:block}
+#dlg{transition:opacity .45s}
+#dlg.stillwait{opacity:0;pointer-events:none}
 #dlgbg{position:absolute;inset:0;--img:url(assets/dialogue_box_tall_portrait_ribbon.webp);--sl:410;--sr:100;--st:68;--sb:26;border-image-width:95px 140px 36px 574px}
 #dlg.cap #dlgbg{--img:url(assets/dialogue_box_caption.webp);--sl:100;--sr:100;--st:68;--sb:26;border-image-width:95px 140px 36px 140px}
 #dlg.cap .por,#dlg.cap .nm{display:none}
@@ -363,7 +365,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #fade.on{opacity:1;pointer-events:auto}
 #chcard{position:absolute;inset:0;z-index:41;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0;pointer-events:none;transition:opacity .9s;color:#f3e6c8;text-align:center}
 #chcard.on{opacity:1}
-#stage.sideopen #side{transform:translateX(4px) rotate(15deg)}
+#stage.sideopen #side{transform:none}
 #stage.sideopen #side:after{opacity:0}
 #sideBook{display:none!important}
 #sideBook{position:absolute;left:26px;top:122px;width:76px;height:78px;border:0;padding:0;background:url(assets/btn_round_dark.webp) 0 0/100% 100% no-repeat;cursor:pointer;z-index:6;transition:transform .12s,filter .12s}
@@ -654,7 +656,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
    <img src="assets/b_mill.webp" alt="Old Mill" style="position:absolute;left:4410px;top:378px;width:700px;height:auto">
    <div id="shadows"></div>
    <div id="actors"></div>
-   <img src="assets/b_guard_post.webp" alt="Patrol post" style="position:absolute;left:1098px;top:630px;width:246px;height:auto;pointer-events:none">   <!-- in front of the actors, so Big Green Bear walks behind the lamp post -->
+   <img src="assets/b_guard_post.webp" alt="Patrol post" style="position:absolute;left:1098px;top:630px;width:246px;height:auto;pointer-events:none;z-index:1">   <!-- in front of the actors, so Big Green Bear walks behind the lamp post -->
    <div id="marks"></div>
   </div>
   <div id="fg"><img src="assets/foreground.webp" width="4190" height="328" alt=""><img src="assets/foreground.webp" width="4190" height="328" alt="" style="left:4180px"></div>
@@ -1160,7 +1162,7 @@ CH("fn0", [["nar","(마을 광장. 니니가 빅그베를 기다리고 있다.)"
 CH("fn_b", [["nini","아저씨?","Mr. Bear?"], ["bgb","응?","Yeah?"], ["nini","제 말 듣고 계셨어요?","Were you listening?"], ["bgb","응. 듣고 있었어.","Yeah. I was listening."]], {next:"fn_ch"});
 D.fn_ch = {sp:"nini", ex:"neutral", t:{ko:"그럼 어떻게 하실 거예요?", en:"So what are you going to do?"}, ch:[QA("편지를 건넨다","Hand Over the Letter","fnA"), QA("편지를 간직한다","Keep the Letter","fnB")]};
 CH("fnA", [["nar","(빅그베가 니니에게 편지를 건넨다.)","(Big Green Bear hands Nini the letter.)"], ["nini","에드워드 아저씨 글씨네요.","That's Edward's handwriting."], ["bgb","응.","Yeah."], ["nini","이거 기록관에 가져다 놓을까요?","Should I take it to the Archive?"], ["bgb","그래.","Yes."], ["nini","아저씨도 같이 가요.","Come with me."], ["nar","(빅그베가 잠시 머뭇거린다.)","(Big Green Bear hesitates.)"], ["bgb","잠깐만.","Just a second."], ["nar","(그가 주머니에서 오른손 장갑을 꺼낸다.)","(He takes the right-hand glove from his pocket.)"], ["nini","이건 뭐예요?","What's that?"], ["bgb","편지랑 같이 있었어.","It was with the letter."], ["nini","어디서요?","Where?"], ["nar","(빅그베가 니니를 바라본다.)","(Big Green Bear looks at Nini.)"], ["bgb","그 얘기도 해야겠지.","I suppose I should tell you that, too.",{fx:"theend1"}]]);
-CH("fnB", [["nini","아저씨?","Mr. Bear?"], ["bgb","미안. 무슨 얘기였지?","Sorry. What were we talking about?"], ["nini","기록이요!","Records!"], ["bgb","아, 맞다.","Right."], ["nini","아저씨는 에드워드 아저씨처럼 좋은 사람이에요.","You're a good person, just like Edward."], ["bgb","그렇게 생각해?","You think so?"], ["nini","당연하죠!","Of course!"], ["nar","(니니가 웃는다.)","(Nini smiles.)"], ["nini","안녕하세요! 안녕하세요!","Hello! Hello!"], ["bgb","안녕! 안녕!","Hello! Hello!"], ["nar","(니니가 떠난다. 빅그베가 집으로 돌아온다.)","(Nini walks away. Big Green Bear returns home.)",{fx:"walk"}], ["nar","(그는 액자 뒤에 편지와 장갑을 넣는다. 장갑을 밀어 넣다가 무언가 손끝에 걸린다.)","(He hides the letter and glove behind the picture frame. Something catches against his fingertips.)"], ["nar","(작은 황동 단추다. 단추에는 작은 글씨가 새겨져 있다.)","(A small brass button. Tiny letters are engraved on it.)",{ev:"button"}], ["nar","E. BELL","E. BELL"], ["nar","(빅그베가 단추를 손바닥에 올려놓는다.)","(Big Green Bear rests the button in his palm.)"], ["nar","(짧은 회상. 눈 덮인 바닥. 에드워드의 손이 빅그베의 노란 목도리를 붙잡는다.)","(Brief flashback. Snow-covered ground. Edward's hand grips Big Green Bear's yellow scarf.)"], ["ed","잠깐...","Wait..."], ["nar","(현재. 빅그베가 단추를 편지 사이에 끼운다. 액자를 다시 세운다.)","(Present. Big Green Bear slips the button between the folded pages and puts the picture frame back.)",{fx:"theend2"}]]);
+CH("fnB", [["nini","아저씨?","Mr. Bear?"], ["bgb","미안. 무슨 얘기였지?","Sorry. What were we talking about?"], ["nini","기록이요!","Records!"], ["bgb","아, 맞다.","Right."], ["nini","아저씨는 에드워드 아저씨처럼 좋은 사람이에요.","You're a good person, just like Edward."], ["bgb","그렇게 생각해?","You think so?"], ["nini","당연하죠!","Of course!"], ["nar","(니니가 웃는다.)","(Nini smiles.)"], ["nini","안녕하세요! 안녕하세요!","Hello! Hello!",null,"neutral"], ["bgb","안녕! 안녕!","Hello! Hello!"], ["nar","(니니가 떠난다. 빅그베가 집으로 돌아온다.)","(Nini walks away. Big Green Bear returns home.)",{fx:"walk"}], ["nar","(그는 액자 뒤에 편지와 장갑을 넣는다. 장갑을 밀어 넣다가 무언가 손끝에 걸린다.)","(He hides the letter and glove behind the picture frame. Something catches against his fingertips.)"], ["nar","(작은 황동 단추다. 단추에는 작은 글씨가 새겨져 있다.)","(A small brass button. Tiny letters are engraved on it.)",{ev:"button"}], ["nar","E. BELL","E. BELL"], ["nar","(빅그베가 단추를 손바닥에 올려놓는다.)","(Big Green Bear rests the button in his palm.)"], ["nar","(짧은 회상. 눈 덮인 바닥. 에드워드의 손이 빅그베의 노란 목도리를 붙잡는다.)","(Brief flashback. Snow-covered ground. Edward's hand grips Big Green Bear's yellow scarf.)"], ["ed","잠깐...","Wait..."], ["nar","(현재. 빅그베가 단추를 편지 사이에 끼운다. 액자를 다시 세운다.)","(Present. Big Green Bear slips the button between the folded pages and puts the picture frame back.)",{fx:"theend2"}]]);
 D.p_f0 = {sp:"bgb", ex:"thinking", t:{en:"He was always on my side.", ko:"그분은 항상 내 편이었는데."}, ev:"photo_home", next:"p_f1"};
 D.p_f1 = {sp:"bgb", ex:"worried", t:{en:"I'll leave it for now.", ko:"일단 그대로 두자."}, set:"pro.frame", next:null};
 CH("pf_h", [["nar","(선반에 기대어 선 낡은 사진. 목도리를 두른 두 아기 곰이 나란히 서 있다.)","(A worn photograph leans on the shelf. Two small cubs stand close together in scarves.)"], ["bgb","그분은 항상 내 편이었는데.","He was always on my side.",{ev:"photo_home"}]]);
@@ -2175,7 +2177,7 @@ function refreshHud(){}
 
 /* dialogue */
 let cur = null, typing = null, full = "";
-let dlgLock = 0;   /* ignore clicks for a moment after a conversation opens, so a double tap cannot skip it */
+let dlgLock = 0, stillWaitT = 0;   /* ignore clicks for a moment after a conversation opens, so a double tap cannot skip it */
 function startDlg(id){ keys.clear(); autoGo = null; menuFollow = null; dlgLock = performance.now() + 450; mode = "dlg"; cur = id; renderDlg(true); $("dlg").classList.add("on"); }
 /* long lines are cut into pages at sentence ends (Enter turns the page), so no line runs past two rows and no word is split */
 function splitPages(text){
@@ -2218,7 +2220,11 @@ function renderDlg(anim){
   const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":"");
   pgs = splitPages(tr(n.t)); pgi = 0; sizeDlg(pgs.reduce((a,b)=>b.length>a.length?b:a, ""));
   $("choices").classList.remove("on"); $("choices").innerHTML = "";
-  showPage(anim);
+  clearTimeout(stillWaitT); const dl = $("dlg");
+  if (STILLS[cur] && !STILL_ON){   /* a still is about to appear: no text box until the picture is up, so the line is never cut off mid-way */
+    dl.classList.add("stillwait"); dlgLock = Math.max(dlgLock, performance.now() + 2600);
+    stillWaitT = setTimeout(()=>{ dl.classList.remove("stillwait"); showPage(anim); }, 2400);
+  } else { dl.classList.remove("stillwait"); showPage(anim); }
 }
 function sizeDlg(text){
   const m = $("meas"); m.style.fontSize = lang==="ko" ? "33px" : "36.5px"; m.textContent = text;
@@ -2350,7 +2356,7 @@ function endDlg(){ if (afterDlg){ const af = afterDlg; afterDlg = null; setTimeo
   const fin = S.flash === true && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); holdHint = true; $("rain").classList.add("on"); setTimeout(()=>startFlash5(), 1600); }
   const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>chapterIntro(1, ()=>setSceneNow("village", 700)), 50); }
  ch6Trans(); endDlg0(); }
-function endDlg0(){ $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null; mode = ENDING ? "modal" : "play"; clearInterval(typing); typing = null; save(); }
+function endDlg0(){ clearTimeout(stillWaitT); $("dlg").classList.remove("stillwait"); $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null; mode = ENDING ? "modal" : "play"; clearInterval(typing); typing = null; save(); }
 
 /* inspect */
 /* evidence and group icons: art-style placeholders by kind, used only where an item has no picture of its own */
