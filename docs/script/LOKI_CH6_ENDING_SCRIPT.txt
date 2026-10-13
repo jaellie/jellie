@@ -1,0 +1,998 @@
+0. 6장 시작 · 5장 마무리 → 방앗간으로
+
+[f5_end] 나레이션 (neutral)
+KO: (수집한 단서를 확인한다.)
+EN: (Big Green Bear reviews the clues he has collected.)
+
+[f5_end_1] 나레이션 (neutral)
+KO:
+- 23년 전 형이 나를 구했다.
+- 사고 보고서가 바뀌었다.
+EN:
+- Twenty-three years ago, my brother saved me.
+- The accident report was altered.
+
+[f5_end_2] 나레이션 (neutral)
+KO:
+- 에드워드 아저씨는 기록에 서명했다.
+- 11:42에 카페를 나왔다.
+EN:
+- Edward signed the report.
+- I left the café at 11:42.
+
+[f5_end_3] 나레이션 (neutral)
+KO: - 에드워드 아저씨의 추정 사망 시간은 11:55~00:15라고 했다.
+EN: - Edward's estimated time of death was between 11:55 p.m. and 12:15 a.m.
+
+[f5_end_4] 빅그베 (sad)
+KO: 기록이 바뀌었었어. 하지만 그날 형이 날 구했다는 건 기억해.
+EN: The records were changed. But I remember my brother saving me that day.
+
+[f5_end_5] 빅그베 (thinking)
+KO: 에드워드 아저씨는 왜 이제 와서 그 기록을 바로잡으려 했을까?
+EN: Why did Edward want to set the record straight after all these years?
+
+[f5_end_6] 나레이션 (neutral)
+KO: (빅그베가 오래된 방앗간이 있는 방향을 바라본다.)
+EN: (Big Green Bear looks toward the old mill.)
+
+[f5_end_7] 빅그베 (sad)
+KO: 형을 만나야겠어.
+EN: I need to see my brother.
+
+1. 낡은 방앗간 첫 방문
+
+[mill_d] 나레이션 (neutral)
+KO: (방앗간 문 앞에 선다.)
+EN: (Big Green Bear stands at the mill door.)
+
+[mill_d_1] 그린 (neutral)
+KO: 돌아가.
+EN: Go home.
+
+[mill_d_3] 그린 (neutral)
+KO: 무슨 일로 왔는지는 알아.
+EN: I know why you're here.
+
+[mill_d_4] 빅그베 (neutral)
+KO: 그럼 문 좀 열어 줘.
+EN: Then open the door.
+
+[mill_d_5] 나레이션 (neutral)
+KO: (잠시 후 문이 열린다.)
+EN: (After a moment, the door opens.)
+
+[mill_d_6] 그린 (neutral)
+KO: 오래 있을 생각은 하지 마.
+EN: Don't make yourself comfortable.
+
+[mill_d_7] 빅그베 (neutral)
+KO: 차라도 한 잔 줄 줄 알았는데.
+EN: I was hoping for a cup of tea.
+
+[mill_d_8] 그린 (neutral)
+KO: 찻잎 없어.
+EN: No tea leaves.
+
+[mill_d_9] 빅그베 (neutral)
+KO: 예전에도 그랬잖아.
+EN: You never had any.
+
+[gm] 그린 (neutral)
+KO: 할 말 있으면 해.
+EN: If you've got something to say, say it.
+
+[gm1] 빅그베 (surprised)
+KO: 에드워드 아저씨가 널 만나러 오라고 했어?
+EN: Did Edward ask you to meet him?
+
+[gm1_1] 그린 (thinking)
+KO: 아니. 내가 찾아갔어.
+EN: No. I went to see him.
+
+[gm1_2] 빅그베 (thinking)
+KO: 왜?
+EN: Why?
+
+[gm1_3] 그린 (neutral)
+KO: 하지 말아 달라고 부탁할 일이 있었거든.
+EN: There was something I needed to ask him not to do.
+
+[gm1_4] 빅그베 (surprised)
+KO: 들어주셨어?
+EN: Did he agree?
+
+[gm1_5] 그린 (neutral)
+KO: 넌 그분 성격 알잖아.
+EN: You know what he was like.
+
+[gm1_6] 빅그베 (neutral)
+KO: 한 번 마음먹으면 안 바꾸셨지.
+EN: Once he made up his mind, there was no changing it.
+
+[gm1_7] 그린 (neutral)
+KO: 어제도 그러셨지.
+EN: That night was no different.
+
+[gm2] 빅그베 (thinking)
+KO: 시계탑에 간 건 맞지?
+EN: You went to the clock tower, didn't you?
+
+[gm2_1] 그린 (neutral)
+KO: 그래.
+EN: I did.
+
+[gm2_2] 빅그베 (surprised)
+KO: 거기서 무슨 일이 있었는지 말해줘.
+EN: Tell me what happened up there.
+
+[gm2_3] 그린 (neutral)
+KO: 서류를 가져가려고 했어.
+EN: I tried to take the papers.
+
+[gm2_4] 빅그베 (thinking)
+KO: 에드워드 아저씨가 가지고 있던?
+EN: The ones Edward had?
+
+[gm2_5] 그린 (neutral)
+KO: 응. 놓으라고 하셨는데... 그럴 수 없었지.
+EN: Yeah. He told me to let go, but I couldn't.
+
+[gm2_6] 빅그베 (thinking)
+KO: 그리고?
+EN: And then?
+
+[gm2_7] 그린 (neutral)
+KO: 종이가 찢어졌어.
+EN: The paper tore.
+
+[gm2_8] 나레이션 (neutral)
+KO: (그린이 손을 내려다본다.)
+EN: (Green looks down at his hands.)
+
+[gm2_9] 그린 (neutral)
+KO: 그 다음 일은 나도 갑작스러웠어.
+EN: Everything after that happened so fast.
+
+[gm2_10] 빅그베 (surprised)
+KO: 떨어지는 걸 봤어?
+EN: Did you see him fall?
+
+[gm2_11] 그린 (neutral)
+KO: 응.
+EN: Yeah.
+
+[gm2_12] 빅그베 (thinking)
+KO: 아래로 내려가 보지는 않았고?
+EN: You didn't go down to check?
+
+[gm2_13] 그린 (neutral)
+KO: 응.
+EN: No.
+
+[gm2_14] 빅그베 (thinking)
+KO: 왜?
+EN: Why not?
+
+[gm2_15] 그린 (neutral)
+KO: 무서웠어.
+EN: I was scared.
+
+[gm3] 그린 (thinking)
+KO: 아저씨가 옛날 기록을 다시 꺼내셨었어.
+EN: Edward had brought out the old records.
+
+[gm3_1] 빅그베 (neutral)
+KO: 봤어.
+EN: I saw them.
+
+[gm3_2] 그린 (thinking)
+KO: 뭐가 적혀 있었는지 난 몰라. 넌 알아?
+EN: I don't know what was written in them. Do you?
+
+[gm3_3] 빅그베 (neutral)
+KO: 우리가 아는 이야기랑 다르더라.
+EN: They told a different story from the one we know.
+
+[gm3_4] 그린 (thinking)
+KO: 그렇구나. 어떤 게 진짜인지는 너도 알잖아.
+EN: I see. But you know which version is true.
+
+[gm3_5] 빅그베 (neutral)
+KO: 형도 알고 있잖아.
+EN: So do you.
+
+[gm3_6] 그린 (worried)
+KO: 나는 네가 잊은 줄 알았어.
+EN: I thought you'd forgotten.
+
+[gm3_7] 빅그베 (neutral)
+KO: 그러려고 했어.
+EN: I tried to.
+
+[gm3_8] 그린 (worried)
+KO: 그게 가능해?
+EN: Can you really do that?
+
+[gm3_9] 빅그베 (thinking)
+KO: 형은?
+EN: Can you?
+
+[gm3_10] 나레이션 (neutral)
+KO: (그린은 대답하지 않는다.)
+EN: (Green doesn't answer.)
+
+[gm4] 빅그베 (worried)
+KO: 여기서 혼자 지내기 힘들지 않아?
+EN: Isn't it hard living out here alone?
+
+[gm4_1] 그린 (neutral)
+KO: 익숙해.
+EN: I'm used to it.
+
+[gm4_2] 빅그베 (neutral)
+KO: 방앗간도 많이 낡았네.
+EN: This place has seen better days.
+
+[gm4_3] 그린 (neutral)
+KO: 너도.
+EN: So have you.
+
+[gm4_4] 빅그베 (neutral)
+KO: 그 말은 좀 심한데.
+EN: That's a little harsh.
+
+[gm4_5] 그린 (laugh)
+KO: 농담이야.
+EN: I'm kidding.
+
+[gmx] 빅그베 (neutral)
+KO: 또 올게.
+EN: I'll come by again.
+
+[gmx_1] 그린 (laugh)
+KO: 알겠어.
+EN: Suit yourself.
+
+2. 방앗간 조사 · 목도리, 장갑, 서류
+
+[mo_sc] 나레이션 (neutral)
+KO: (오래된 목도리가 걸려 있다. 매듭은 오른쪽 어깨 방향으로 묶여 있다.)
+EN: (An old scarf hangs nearby, its knot tied toward the right shoulder.)
+
+[mo_sc_1] 빅그베 (neutral)
+KO: 아직도 이렇게 묶네.
+EN: You still tie it that way.
+
+[mo_sc_2] 그린 (neutral)
+KO: 너도 왼쪽으로 묶잖아.
+EN: You still tie yours on the left.
+
+[mo_gl] 나레이션 (neutral)
+KO: (작업대 위에는 왼손 장갑만 놓여 있다.)
+EN: (Only a left-hand glove lies on the workbench.)
+
+[mo_gl_1] 빅그베 (thinking)
+KO: 오른쪽 장갑은 어딨어?
+EN: Where's the other glove?
+
+[mo_gl_2] 그린 (worried)
+KO: 잃어버렸어.
+EN: Lost it.
+
+[mo_gl_3] 빅그베 (thinking)
+KO: 언제?
+EN: When?
+
+[mo_gl_4] 그린 (worried)
+KO: 어젯밤.
+EN: Last night.
+
+[mo_gl_5] 빅그베 (neutral)
+KO: 새로 사야겠네.
+EN: You'll need a new pair.
+
+[mo_gl_6] 그린 (neutral)
+KO: 그래도 한 쪽은 멀쩡한데.
+EN: This one's still perfectly good.
+
+[mo_gl_7] 빅그베 (neutral)
+KO: 한 쪽만으론 소용없잖아.
+EN: Not much use on its own.
+
+[mo_gl_8] 나레이션 (neutral)
+KO: (그린이 장갑을 서랍에 넣는다.)
+EN: (Green puts the glove in a drawer.)
+
+[mo_doc] 나레이션 (neutral)
+KO: (탁자 위에 찢어진 서류 조각이 있다.)
+EN: (A torn piece of paper lies on the table.)
+
+[mo_doc_1] 나레이션 (neutral)
+KO: "경고 종의 결함은 사고 이전부터 보고되었다."
+EN: "The warning bell's defect had been reported before the accident."
+
+[mo_doc_2] 나레이션 (neutral)
+KO: "관련 기록과 구조자의 신원은 의도적으로 변경되었다."
+EN: "The records and the rescuer's identity were deliberately altered."
+
+[mo_doc_3] 빅그베 (neutral)
+KO: 에드워드 아저씨가 공개하려던 내용이야.
+EN: This is what Edward was going to reveal.
+
+[mo_doc_4] 그린 (thinking)
+KO: 이게 전부는 아니야.
+EN: That's not all.
+
+[mo_doc_5] 빅그베 (thinking)
+KO: 뭐가 더 있어?
+EN: What else is there?
+
+[mo_doc_6] 그린 (worried)
+KO: 그날 누가 진실을 알고 있었는지까지 적혀 있었어.
+EN: He'd even written down who knew the truth that day.
+
+[tr_2] 빅그베 (thinking)
+KO: 방앗간 안을 둘러보자. 목도리, 장갑, 서류. 그린이 말하지 않은 게 여기 있을 거야.
+EN: I should look around the mill. The scarf, the glove, the papers. There must be something here Green hasn't told me.
+
+[tr_3] 빅그베 (thinking)
+KO: 이제 그린에게 다시 말을 걸어 보자. 물어볼 게 생겼어.
+EN: Time to talk to Green again. I've got more questions.
+
+3. 그린과 두 번째 대화 · 토미와 메이가 본 것
+
+[gs4] 그린 (thinking)
+KO: 토미가 아저씨를 처음 발견했다며.
+EN: Tommy was the one who found Edward, right?
+
+[gs4_1] 빅그베 (neutral)
+KO: 아, 맞아. 나도 그렇게 들었어.
+EN: Yeah. That's what I heard, too.
+
+[gs4_2] 그린 (neutral)
+KO: 많이 추웠는데.
+EN: It was freezing that night.
+
+[gs4_3] 빅그베 (neutral)
+KO: 눈이 많이 왔으니까.
+EN: It was snowing pretty hard.
+
+[gs4_4] 그린 (thinking)
+KO: 메이 선생님은 뭐라셔?
+EN: What did May say?
+
+[gs4_5] 빅그베 (neutral)
+KO: 아저씨께서 추락한 뒤에도 한동안 살아 계셨을 거래.
+EN: She thinks Edward may have survived for a while after the fall.
+
+[gs4_6] 나레이션 (neutral)
+KO: (그린이 놀란 얼굴로 고개를 든다.)
+EN: (Green looks up, startled.)
+
+[gs4_7] 그린 (surprised)
+KO: 얼마나?
+EN: How long?
+
+[gs4_8] 빅그베 (neutral)
+KO: 정확히는 모른대.
+EN: She couldn't say exactly.
+
+[gs4_9] 그린 (worried)
+KO: 누가 조금만 일찍 발견했으면 달랐을까?
+EN: Would things have been different if someone had found him sooner?
+
+[gs4_10] 빅그베 (neutral)
+KO: 그건 아무도 모르지.
+EN: Nobody knows.
+
+[gs4_11] 그린 (neutral)
+KO: 적어도 혼자 두지는 않았겠지.
+EN: At least he wouldn't have been alone.
+
+[gs4_12] 빅그베 (neutral)
+KO: 혼자가 아니었을 수도.
+EN: Maybe he wasn't alone.
+
+[gs4_13] 그린 (surprised)
+KO: 무슨 뜻이야?
+EN: What do you mean?
+
+[gs4_14] 빅그베 (neutral)
+KO: 아니. 마지막에 누군가 곁에 있으셨다면 좋았겠다는 뜻이야.
+EN: Nothing. I just wish someone had been there with him at the end.
+
+[gs4_15] 그린 (neutral)
+KO: 그렇지.
+EN: Yeah.
+
+[gs4_16] 빅그베 (thinking)
+KO: 형은 그분이 떨어지고 바로 떠났다고 했지?
+EN: You said you left right after he fell, didn't you?
+
+[gs4_17] 그린 (neutral)
+KO: 응.
+EN: Yeah.
+
+[gs4_18] 빅그베 (thinking)
+KO: 그럼 마지막에 무슨 말을 하셨는지도 모르겠네.
+EN: Then you wouldn't know what his last words were.
+
+[gs4_19] 그린 (surprised)
+KO: 무슨 말이야?
+EN: Did he say something?
+
+[gs4_20] 나레이션 (neutral)
+KO: (빅그베가 입을 다문다.)
+EN: (Big Green Bear falls silent.)
+
+[gs4_21] 빅그베 (neutral)
+KO: 아니. 그냥. 내 생각이야.
+EN: No. I was just wondering.
+
+[tr_4] 빅그베 (neutral)
+KO: 이제 메이의 치료실로 가 보자. 메이에게 마지막으로 물어볼 것이 있어.
+EN: I should head to May's clinic. There's one last thing I need to ask her.
+
+4. 메이의 치료실
+
+[may9h] 메이 (neutral)
+KO: 무리하지 마, 빅그베.
+EN: Don't push yourself, Big Green Bear.
+
+[may9h_1] 빅그베 (neutral)
+KO: 그린에게 다시 말을 걸어 보자.
+EN: I should talk to Green again.
+
+[may2] 메이 (neutral)
+KO: 또 왔구나.
+EN: You're back.
+
+[may2_1] 빅그베 (neutral)
+KO: 한 가지 더 물어보려고.
+EN: I have one more question.
+
+[may2_2] 메이 (thinking)
+KO: 뭔데?
+EN: What is it?
+
+[may2_3] 빅그베 (thinking)
+KO: 에드워드 아저씨가 떨어지고도 살아 계셨을 가능성이 있어?
+EN: Is it possible Edward was still alive for a while after the fall?
+
+[may2_4] 메이 (neutral)
+KO: 응, 다만 정확히 얼마나 버티셨는지는 알 수 없고.
+EN: Yes, it's possible. But I can't say exactly how long he survived.
+
+[may2_5] 빅그베 (neutral)
+KO: 그렇구나.
+EN: I see.
+
+[may2_6] 메이 (neutral)
+KO: 근데, 한 가지 이상한 게 있어.
+EN: But there's something I can't explain.
+
+[may2_7] 빅그베 (thinking)
+KO: 뭔데?
+EN: What is it?
+
+[may2_8] 메이 (worried)
+KO: 에드워드 씨 손에 작은 상처가 있었어. 추락하면서 생긴 상처는 아니야.
+EN: Edward had a small cut on his hand. It wasn't caused by the fall.
+
+[may2_9] 빅그베 (thinking)
+KO: 손에?
+EN: On his hand?
+
+[may2_10] 메이 (neutral)
+KO: 손톱 밑에 노란 실도 끼어 있었고.
+EN: There was yellow thread caught under his fingernails, too.
+
+[may2_11] 나레이션 (neutral)
+KO: (빅그베가 자신의 목도리를 내려다본다.)
+EN: (Big Green Bear looks down at his scarf.)
+
+[may2_12] 빅그베 (neutral)
+KO: 그렇구나.
+EN: I see.
+
+[may9] 메이 (neutral)
+KO: 무리하지 마, 빅그베.
+EN: Don't push yourself, Big Green Bear.
+
+[tr_5] 빅그베 (thinking)
+KO: 이제 집으로 돌아가서 액자를 확인해 보자.
+EN: I should head home and take another look at that picture frame.
+
+5. 빅그베의 집 · 액자
+
+[fr6] 나레이션 (neutral)
+KO: (액자 뒤쪽이 조금 벌어져 있다.)
+EN: (The back of the picture frame is slightly loose.)
+
+[fr6_1] 나레이션 (neutral)
+KO: (에드워드 아저씨가 쓴 편지와 오른손 장갑 한 짝이 있다.)
+EN: (A letter written by Edward and a single right-hand glove are hidden behind it.)
+
+[fr6_2] 빅그베 (neutral)
+KO: ...
+EN: ...
+
+[fr6_3] 나레이션 (neutral)
+KO: "이번에는 누구의 이름도 지우지 않겠습니다."
+EN: "This time, I will not erase anyone's name."
+
+[fr6_4] 나레이션 (neutral)
+KO: (편지 아래쪽에는 에드워드의 서명이 있다.)
+EN: (Edward's signature appears at the bottom of the letter.)
+
+[fr9] 빅그베 (thinking)
+KO: 편지와 장갑은 그대로 두자.
+EN: I'll leave the letter and glove where they are.
+
+[tr_6] 빅그베 (neutral)
+KO: 이제 낡은 방앗간으로 가 보자.
+EN: I should head back to the Old Mill. There's something I need to say to Green.
+
+6. 방앗간 · 그린에게 마지막 질문
+
+[gl7] 나레이션 (neutral)
+KO: (빅그베가 방앗간을 다시 찾는다.)
+EN: (Big Green Bear returns to the mill.)
+
+[gl7_1] 그린 (neutral)
+KO: 또 왔어?
+EN: Back again?
+
+[gl7_2] 빅그베 (neutral)
+KO: 하나만 물어보려고.
+EN: Just one more question.
+
+[gl7_3] 그린 (thinking)
+KO: 뭔데?
+EN: What is it?
+
+[gl7_4] 빅그베 (thinking)
+KO: 그날로 돌아갈 수 있다면 어떻게 할 거야?
+EN: What would you do if you could go back to that night?
+
+[gl7_5] 그린 (worried)
+KO: 이번엔 아래로 내려갔겠지.
+EN: I'd go downstairs this time.
+
+[gl7_6] 빅그베 (thinking)
+KO: 그다음엔?
+EN: And then?
+
+[gl7_7] 그린 (worried)
+KO: 살아 계셨는지 확인했을 거야.
+EN: I'd check if he was still alive.
+
+[gl7_8] 빅그베 (thinking)
+KO: 살아 계셨다면?
+EN: And if he was?
+
+[gl7_9] 그린 (neutral)
+KO: 사람을 불렀을 거야. 무조건.
+EN: I'd call for help. No matter what.
+
+[gl7_10] 나레이션 (neutral)
+KO: (빅그베가 잠시 그린을 바라본다.)
+EN: (Big Green Bear looks at Green for a moment.)
+
+[gl7_11] 그린 (thinking)
+KO: 넌?
+EN: What about you?
+
+[gl7_12] 빅그베 (thinking)
+KO: 나?
+EN: Me?
+
+[gl7_13] 그린 (thinking)
+KO: 그날로 돌아갈 수 있다면.
+EN: If you could go back to that night.
+
+[gl7_14] 빅그베 (neutral)
+KO: 글쎄.
+EN: I don't know.
+
+[tr_7] 빅그베 (neutral)
+KO: 이제 광장으로 가 보자. 마지막으로 니니를 만나야 해.
+EN: I should head to the square. There's one last person I need to see.
+
+6-2. 방앗간 직후 · 검은 화면 위 독백
+
+[mono_01] 빅그베 (neutral)
+KO:
+23년 전, 강이 넘치던 날.<br>
+마을의 경고 종은 울리지 않았다.
+EN:
+Twenty-three years ago, the river flooded.
+The village warning bell never rang.
+
+[mono_02] 빅그베 (neutral)
+KO:
+종은 이미 고장 나 있었다.<br>
+에드워드 아저씨는.여러 번 수리를 요청했지만, 의회는 번번이 미뤘다.
+EN:
+The bell had already been broken.
+The council had received repeated requests to repair it, but kept putting them off.
+
+[mono_03] 빅그베 (neutral)
+KO:
+그날 형은 나를 구하다 귀를 다쳤다.<br>
+마을은 종의 고장 때문에 막대한 피해를 입었고,
+소중한 시민이 죽었다.<br>
+의회는 종을 방치한 책임을 피하려 했고,<br>
+결국 그린이 종을 망가뜨린 것으로 최종 기록했다.
+EN:
+My brother hurt his left ear saving me that day.
+The village suffered devastating losses because the warning bell failed.
+And one of our own lost their life.
+But the council didn't want to take responsibility for neglecting the bell.
+So the official report blamed Green, my brother, for breaking it.
+
+[mono_04] 빅그베 (neutral)
+KO:
+에드워드 아저씨는 진실을 알고 있었다.<br>
+하지만 의회의 압박에 못 이겨 거짓 기록에 서명했고,<br>
+그 선택을 23년 동안 후회했다.
+EN:
+Edward knew the truth.
+But the council pressured him into signing the false report.
+He regretted that decision for twenty-three years.
+
+[mono_05] 빅그베 (neutral)
+KO:
+이제라도 바로잡으려 했던 거겠지.<br>
+자정이 되면 모든 걸 밝히려고 하셨으니까.
+EN:
+I suppose he wanted to make things right, even after all these years.
+He was going to reveal everything at midnight.
+
+[mono_06] 빅그베 (neutral)
+KO:
+11시 35분, 다리.<br>
+11시 40분, 시계탑 계단.<br>
+형은 에드워드 아저씨를 만나러 갔다.<br>
+23년 전처럼, 이번에도 나를 지키려 했던 거겠지.
+EN:
+11:35, the bridge.
+11:40, the clock tower stairs.
+My brother went to see Edward.
+I suppose he was trying to protect me again, just like he did twenty-three years ago.
+
+[mono_07] 빅그베 (neutral)
+KO:
+하지만 에드워드 아저씨는 더 이상 진실을 숨기려 하지 않았다.<br>
+형은 그 서류를 빼앗으려 했고, 두 사람은 몸싸움을 벌였다.
+EN:
+But Edward refused to hide the truth any longer.
+My brother tried to take the papers from him, and they struggled.
+
+[mono_08] 빅그베 (neutral)
+KO:
+서류가 찢어지고,
+아저씨는 뒤로 물러나다 열린 정비구 아래로 떨어졌다.
+11시 47분, 시계가 멈췄다.
+EN:
+The papers tore.
+Edward stepped backward and fell through the open maintenance hatch.
+At 11:47, the clock stopped.
+
+[mono_09] 빅그베 (neutral)
+KO:
+형은 아래로 내려가 보지 못했다.
+아저씨가 살아 있었는지도 모른 채 그곳을 떠났다.
+EN:
+My brother couldn't bring himself to go down and check.
+He left without knowing whether Edward was still alive.
+
+[mono_10] 빅그베 (neutral)
+KO:
+11시 42분, 나는 카페를 나왔다.
+EN:
+At 11:42, I left the café.
+
+[mono_11] 빅그베 (neutral)
+KO:
+11시 50분. 나는 에드워드 아저씨를 발견했다.
+EN:
+At 11:50, I found Edward.
+
+[mono_12] 빅그베 (neutral)
+KO:
+11시 55분, 비상 종이 울렸다.<br>
+그 사이에 무슨 일이 있었는지는 어떤 기록에도 남아 있지 않다.
+EN:
+At 11:55, the emergency bell rang.
+What happened in those five minutes was never recorded.
+
+[mono_13] 빅그베 (neutral)
+KO:
+메이 선생님은 조금만 일찍 발견했더라면 결과가 달라졌을지 알 수 없다고 했다.<br>
+아마 그건 누구도 끝내 알 수 없을 것이다.
+EN:
+May said she couldn't know whether finding him sooner would have changed anything.
+Perhaps no one ever will.
+
+[mono_14] 빅그베 (neutral)
+KO:
+에드워드 아저씨는 기록을 남기는 이유가 잊지 않기 위해서라고 했다.
+하지만 기록되지 않은 일까지 사라지는 건 아니다.
+EN:
+Edward used to say we keep records so we won't forget.
+But something doesn't cease to exist just because it was never written down.
+
+[mono_15] 빅그베 (neutral)
+KO:
+23년 전, 아저씨는 한 가지 진실을 지웠다.
+그리고 지금, 내게도 아직 말하지 않은 이야기가 있다.
+EN:
+Twenty-three years ago, Edward erased a truth.
+And now there's a part of this story I haven't told.
+
+7. 광장 · 니니
+
+[fn0] 나레이션 (neutral)
+KO: (마을 광장. 니니가 빅그베를 기다리고 있다.)
+EN: (In the village square, Nini waits for Big Green Bear.)
+
+[fn0_1] 니니 (thinking)
+KO: 아저씨! 뭔가 좀 알아내셨어요?
+EN: Mr. Bear! Did you find anything out?
+
+[fn0_2] 빅그베 (neutral)
+KO: 응. 조금은.
+EN: Yeah. A little.
+
+[fn0_3] 니니 (thinking)
+KO: 그럼 이제 다 끝난 거예요?
+EN: So, is it all over now?
+
+[fn0_4] 빅그베 (thinking)
+KO: 그건 모르겠네.
+EN: I'm not sure.
+
+[fn0_5] 니니 (neutral)
+KO: 에드워드 아저씨가 그러셨는데요.
+EN: You know what Edward used to say?
+
+[fn0_6] 빅그베 (thinking)
+KO: 뭐라고?
+EN: What?
+
+[fn0_7] 니니 (neutral)
+KO: 기록은 잊지 않으려고 남기는 거래요.
+EN: He said we keep records so we won't forget.
+
+[fn0_8] 빅그베 (neutral)
+KO: 그랬지.
+EN: He did.
+
+[fn0_9] 니니 (thinking)
+KO: 그런데 왜 어떤 기록은 없어지는 걸까요?
+EN: Then why do some records disappear?
+
+[fn0_10] 나레이션 (neutral)
+KO: (빅그베가 대답하지 않는다.)
+EN: (Big Green Bear doesn't answer.)
+
+[fn_b] 니니 (thinking)
+KO: 아저씨?
+EN: Mr. Bear?
+
+[fn_b_1] 빅그베 (thinking)
+KO: 응?
+EN: Hm?
+
+[fn_b_2] 니니 (thinking)
+KO: 제 말 듣고 계셨어요?
+EN: Were you listening?
+
+[fn_b_3] 빅그베 (neutral)
+KO: 응. 듣고 있었어.
+EN: Yeah. I was listening.
+
+[fn_ch] 니니 (neutral)
+KO: 그럼 어떻게 하실 거예요?
+EN: So, what are you going to do?
+
+8. 통합 엔딩 · 마지막 기록
+
+[fn_end_01] 나레이션 (neutral)
+KO: (빅그베가 주머니 속 편지를 만지작거린다.)
+EN: (Big Green Bear runs his fingers over the letter in his pocket.)
+
+[fn_end_02] 니니 (thinking)
+KO: 아저씨, 뭔가 알아내신 거잖아요. 그렇죠?
+EN: You found something out, didn't you?
+
+[fn_end_03] 빅그베 (neutral)
+KO: 응. 생각보다 많은 걸 알게 됐어.
+EN: Yeah. More than I expected.
+
+[fn_end_04] 니니 (neutral)
+KO: 그럼 기록관에 가요! 제가 적는 것도 도와드릴게요.
+EN: Then let's go to the Archive! I can help you write everything down.
+
+[fn_end_05] 나레이션 (neutral)
+KO: (빅그베가 니니를 바라본다.)
+EN: (Big Green Bear looks at Nini.)
+
+[fn_end_06] 빅그베 (thinking)
+KO: 니니, 에드워드 아저씨가 좋은 분이었다고 생각해?
+EN: Nini, do you think Edward was a good person?
+
+[fn_end_07] 니니 (surprised)
+KO: 당연하죠! 왜 그런 걸 물어보세요?
+EN: Of course! Why would you ask that?
+
+[fn_end_08] 빅그베 (thinking)
+KO: 그냥. 좋은 사람도 잘못된 선택을 할 수 있잖아.
+EN: Just wondering. Even good people can make bad choices.
+
+[fn_end_09] 니니 (thinking)
+KO: 그럼 나중에 바로잡으면 되잖아요.
+EN: Then they can make things right afterward, can't they?
+
+[fn_end_10] 나레이션 (neutral)
+KO: (빅그베가 잠시 말을 잇지 못한다.)
+EN: (Big Green Bear falls silent for a moment.)
+
+[fn_end_11] 빅그베 (sad)
+KO: 그래. 그럴 수 있다면 좋겠지.
+EN: Yeah. It would be nice if they could.
+
+[fn_end_12] 니니 (thinking)
+KO: 아저씨?
+EN: Mr. Bear?
+
+[fn_end_13] 빅그베 (neutral)
+KO: 오늘은 이만하자. 내일 카페에 가서 맛있는 거 먹을까?
+EN: Let's call it a day. How about we get something nice at the café tomorrow?
+
+[fn_end_14] 니니 (surprised)
+KO: 진짜요? 좋아요!
+EN: Really? I'd love that!
+
+[fn_end_15] 니니 (warm_smile)
+KO: 아저씨는 에드워드 아저씨처럼 좋은 사람이에요.
+EN: You're a good person, just like Edward.
+
+[fn_end_16] 빅그베 (thinking)
+KO: 그렇게 생각해?
+EN: You think so?
+
+[fn_end_17] 니니 (warm_smile)
+KO: 당연하죠!
+EN: Of course!
+
+[fn_end_18] 나레이션 (neutral)
+KO: (니니가 환하게 웃는다.)
+EN: (Nini beams at him.)
+
+[fn_end_19] 니니 (neutral)
+KO: 그럼 내일 봬요, 아저씨!
+EN: See you tomorrow, Mr. Bear!
+
+[fn_end_20] 빅그베 (neutral)
+KO: 응. 내일 보자.
+EN: Yeah. See you tomorrow.
+
+9. 빅그베의 집 · 감춰진 마지막 진실
+
+[fn_end_21] 나레이션 (neutral)
+KO: (니니가 떠난 뒤, 빅그베는 집으로 돌아온다.)
+EN: (After Nini leaves, Big Green Bear returns home.)
+
+[fn_end_22] 나레이션 (neutral)
+KO: (탁자 위에는 오래된 사진이 놓여 있다. 두 마리의 어린 곰이 나란히 웃고 있다.)
+EN: (An old photograph rests on the table. Two young bears smile side by side.)
+
+[fn_end_23] 나레이션 (neutral)
+KO: (빅그베가 액자 뒤에서 편지와 오른손 장갑을 꺼낸다.)
+EN: (Big Green Bear takes the letter and the right-hand glove from behind the frame.)
+
+[fn_end_24] 나레이션 (neutral)
+KO: (편지를 펼친다.)
+EN: (He unfolds the letter.)
+
+[fn_end_25] 에드워드의 편지 (neutral)
+KO: "이번에는 누구의 이름도 지우지 않겠습니다."
+EN: "This time, I will not erase anyone's name."
+
+[fn_end_26] 나레이션 (neutral)
+KO: (빅그베가 편지를 다시 접는다.)
+EN: (Big Green Bear folds the letter again.)
+
+[fn_end_27] 나레이션 (neutral)
+KO: (편지와 장갑을 액자 뒤에 넣으려던 순간, 작은 황동 단추가 손끝에 걸린다.)
+EN: (As he puts the letter and glove behind the frame, his fingers brush against a small brass button.)
+
+[fn_end_28] 나레이션 (neutral)
+KO: (단추에는 작은 글씨가 새겨져 있다.)
+EN: (Tiny letters are engraved on the button.)
+
+[fn_end_29] 나레이션 (neutral)
+KO: 에드워드 벨
+EN: E. BELL
+
+[fn_end_30] 나레이션 (neutral)
+KO: (빅그베가 단추를 손바닥에 올려놓는다.)
+EN: (Big Green Bear rests the button in his palm.)
+
+10. 짧은 회상 · 11시 50분
+
+[fn_end_31] 나레이션 (neutral)
+KO: (눈 덮인 바닥. 에드워드가 쓰러져 있다.)
+EN: (Snow-covered ground. Edward lies where he fell.)
+
+[fn_end_32] 나레이션 (neutral)
+KO: (에드워드의 손이 빅그베의 노란 목도리를 붙잡는다.)
+EN: (Edward's hand grips Big Green Bear's yellow scarf.)
+
+[fn_end_33] 에드워드 (worried)
+KO: 잠깐...
+EN: Wait...
+
+[fn_end_34] 나레이션 (neutral)
+KO: (에드워드가 빅그베를 올려다본다.)
+EN: (Edward looks up at Big Green Bear.)
+
+[fn_end_35] 나레이션 (neutral)
+KO: (빅그베는 아무 말도 하지 않는다.)
+EN: (Big Green Bear says nothing.)
+
+11. 현재 · 같은 선택
+
+[fn_end_36] 나레이션 (neutral)
+KO: (빅그베가 손바닥 위의 단추를 내려다본다.)
+EN: (Big Green Bear looks down at the button in his palm.)
+
+[fn_end_37] 나레이션 (neutral)
+KO: (그는 단추를 접힌 편지 사이에 끼운다.)
+EN: (He slips the button between the folds of the letter.)
+
+[fn_end_38] 나레이션 (neutral)
+KO: (편지와 장갑을 액자 뒤에 넣고, 액자를 다시 세운다.)
+EN: (He hides the letter and glove behind the frame and sets it upright again.)
+
+[fn_end_39] 나레이션 (neutral)
+KO: (사진 속 두 어린 곰은 여전히 웃고 있다.)
+EN: (The two young bears in the photograph are still smiling.)
+
+[fn_end_40] 빅그베 (sad)
+KO: 형, 내일은 차라도 한 잔 마시자.
+EN: Maybe we can have that cup of tea tomorrow, brother.
+
+[fn_end_41] 나레이션 (neutral)
+KO: (창밖으로 눈이 내린다.)
+EN: (Snow falls outside the window.)
+
+[fn_end_42] 나레이션 (neutral)
+KO: (마을의 시계는 여전히 11시 47분에 멈춰 있다.)
+EN: (The village clock is still stopped at 11:47.)
+
+[fn_end_43] 나레이션 (neutral)
+KO: (23년 전의 기록도, 오늘 밤의 기록도 바뀌지 않았다.)
+EN: (Neither the record from twenty-three years ago nor the record of tonight has been corrected.)
+
+[fn_end_44] 나레이션 (neutral)
+KO: (화면이 어두워진다.)
+EN: (The screen fades to black.)
+
+ENDING
+
+The Final Record
+
+마지막 기록
+
+KO: 어떤 진실은 끝내 기록되지 않는다.
+EN: Some truths are never written down.
+
+당신도 사랑하는 사람을 위해<br>
+진실을 숨길 수 있습니까?
+
+Would you hide the truth
+to protect someone you love?

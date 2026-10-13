@@ -381,7 +381,7 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #finale{position:absolute;inset:0;z-index:42;background:#02030a;opacity:0;pointer-events:none;transition:opacity 1.8s;color:#f3e6c8;text-align:center}
 #finale.on{opacity:1;pointer-events:auto}
 #fnCard,#fnTi{position:absolute;left:0;right:0;top:50%;transform:translateY(-52%);display:flex;flex-direction:column;align-items:center;gap:22px;padding:0 140px}
-#finale .fe,#finale .fh,#finale .fl,#finale .ft,#finale .fb{opacity:0;transition:opacity 1.2s,transform 1.2s;transform:translateY(10px)}
+#finale .fe,#finale .fh,#finale .fl,#finale .fs,#finale .fq,#finale .ft,#finale .fb{opacity:0;transition:opacity 1.2s,transform 1.2s;transform:translateY(10px)}
 #finale .show{opacity:1;transform:none}
 #finale .fe{font:600 26px/1 "Alegreya SC","Noto Serif KR",Georgia,serif;letter-spacing:.5em;padding-left:.5em;color:#c9a96a;display:flex;align-items:center;gap:30px}
 #finale .fe:before,#finale .fe:after{content:"";width:84px;height:1px;background:linear-gradient(90deg,transparent,#c9a96a)}
@@ -394,6 +394,8 @@ html[lang="en"] #finale #fnT,html[lang="en"] #finale #fnTH{font-size:76px}
 #finale #fnTH{font-style:italic;font-weight:400;color:#d58a5c;text-shadow:none;padding-right:.25em;box-sizing:content-box;width:0;margin-left:0;overflow:hidden;transition:opacity 1.8s,width 1.6s ease-in-out,margin-left 1.6s ease-in-out,transform 1.8s}
 #finale #fnTH.show{margin-left:44px}
 html[lang="ko"] #finale .fh{font-family:Pretendard,"Alegreya",serif;font-weight:700;letter-spacing:.02em}
+#finale .fs{font:600 30px/1.5 Pretendard,"Alegreya",serif;color:#e9d9b0;letter-spacing:.02em;margin-top:6px}
+#finale .fq{font:italic 400 28px/1.6 "Alegreya",Pretendard,serif;color:#d58a5c;max-width:1100px;margin-top:18px}
 #finale .fl{width:0;height:2px;background:linear-gradient(90deg,transparent,#c9a96a,transparent);transition:opacity 1s,width 2.2s;transform:none}
 #finale .fl.show{width:360px}
 #finale .ft{font:600 26px/1.4 "Alegreya SC",Georgia,serif;letter-spacing:.32em;color:#c9a96a}
@@ -809,7 +811,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
     <button class="pbtn nine cream" id="eCred" style="display:none">Credits</button>
     <button class="pbtn nine cream" id="eBack">Back to the village</button>
   </div></div>
-  <div id="finale"><div id="fnCard"><div class="fe" id="fnE"></div><div class="fh" id="fnH"></div><div class="fl" id="fnL"></div></div><div id="fnTi"><div class="ft" id="fnT"></div><div class="fh" id="fnTH"></div></div><div class="fb" id="fnB"><button id="fnR"></button><button id="fnC"></button><button id="fnK"></button></div></div>
+  <div id="finale"><div id="fnCard"><div class="fe" id="fnE"></div><div class="fh" id="fnH"></div><div class="fl" id="fnL"></div><div class="fs" id="fnS"></div><div class="fq" id="fnQ"></div></div><div id="fnTi"><div class="ft" id="fnT"></div><div class="fh" id="fnTH"></div></div><div class="fb" id="fnB"><button id="fnR"></button><button id="fnC"></button><button id="fnK"></button></div></div>
   <div id="tip"><b>TIP</b><span id="tipTx"></span></div>
   <div id="mono"><div class="mt" id="monoT"></div><div class="mn" id="monoN"></div></div>
   <div id="goal"></div><div id="fade"></div><div id="chcard"><div class="ce" id="chE"></div><div class="cl"></div><div class="ct" id="chT"></div></div>
@@ -1794,18 +1796,18 @@ function showEndE(n){ const k = lang==="ko", E = ENDINGS[n]; mode = "modal"; set
 /* Ending A: Nini and BGB stand together at dusk before the Archive door, then the screen closes */
 /* the long monologue over black, before the final choice; each paragraph in turn, Enter or a click moves on */
 const MONO = [
- ["23년 전, 강이 넘치던 날. 마을의 경고 종은 울리지 않았다.","Twenty-three years ago, when the river flooded, the village warning bell never rang."],
- ["종은 이미 고장 나 있었다. 여러 번 수리를 요청했지만, 의회는 번번이 미뤘다.","The bell had been faulty for some time. Despite repeated repair requests, the council kept putting them off."],
- ["그날 형은 나를 구하다 왼쪽 귀를 다쳤다. 하지만 의회는 종을 방치한 책임을 피하려 했고, 결국 형이 종을 망가뜨리고 내가 형을 구한 것으로 기록을 바꿨다.","My brother injured his left ear saving me that day. But the council wanted to avoid responsibility for the faulty bell. So they changed the story: my brother was blamed for breaking it, and I was credited with saving him."],
- ["에드워드 아저씨는 진실을 알고 있었다. 하지만 의회의 압박에 못 이겨 거짓 기록에 서명했고, 그 선택을 23년 동안 후회했다.","Edward knew the truth. But under pressure from the council, he signed the false report, a decision he regretted for twenty-three years."],
- ["이제라도 바로잡으려 했던 거겠지. 자정이 되면 모든 걸 밝히려고 했으니까.","I suppose he wanted to make things right, even after all these years. He'd planned to tell everyone the truth at midnight."],
- ["11시 35분, 다리. 11시 40분, 시계탑 계단. 형은 에드워드 아저씨를 만나러 갔다. 23년 전처럼, 이번에도 나를 지키려 했던 거겠지.","11:35, the bridge. 11:40, the clock tower stairs. My brother went to see Edward. I suppose he was trying to protect me again, just as he had twenty-three years ago."],
- ["하지만 에드워드 아저씨는 더 이상 진실을 숨기려 하지 않았다. 형은 그 서류를 빼앗으려 했고, 두 사람은 몸싸움을 벌였다.","But Edward refused to bury the truth again. My brother tried to take the papers from him, and they struggled."],
- ["서류가 찢어지고, 아저씨는 뒤로 물러나다 열린 정비구 아래로 떨어졌다. 11시 47분, 시계가 멈췄다.","The papers tore, and Edward stumbled backward through the open maintenance hatch. At 11:47, the clock stopped."],
+ ["23년 전, 강이 넘치던 날. 마을의 경고 종은 울리지 않았다.","Twenty-three years ago, the river flooded. The village warning bell never rang."],
+ ["종은 이미 고장 나 있었다. 여러 번 수리를 요청했지만, 의회는 번번이 미뤘다.","The bell had already been broken. The council had received repeated requests to repair it, but kept putting them off."],
+ ["그날 형은 나를 구하다 귀를 다쳤다. 마을은 종의 고장 때문에 막대한 피해를 입었고, 소중한 시민이 죽었다. 의회는 종을 방치한 책임을 피하려 했고, 결국 그린이 종을 망가뜨린 것으로 최종 기록했다.","My brother hurt his left ear saving me that day. The village suffered devastating losses because the warning bell failed. And one of our own lost their life. But the council didn't want to take responsibility for neglecting the bell. So the official report blamed Green, my brother, for breaking it."],
+ ["에드워드 아저씨는 진실을 알고 있었다. 하지만 의회의 압박에 못 이겨 거짓 기록에 서명했고, 그 선택을 23년 동안 후회했다.","Edward knew the truth. But the council pressured him into signing the false report. He regretted that decision for twenty-three years."],
+ ["이제라도 바로잡으려 했던 거겠지. 자정이 되면 모든 걸 밝히려고 하셨으니까.","I suppose he wanted to make things right, even after all these years. He was going to reveal everything at midnight."],
+ ["11시 35분, 다리. 11시 40분, 시계탑 계단. 형은 에드워드 아저씨를 만나러 갔다. 23년 전처럼, 이번에도 나를 지키려 했던 거겠지.","11:35, the bridge. 11:40, the clock tower stairs. My brother went to see Edward. I suppose he was trying to protect me again, just like he did twenty-three years ago."],
+ ["하지만 에드워드 아저씨는 더 이상 진실을 숨기려 하지 않았다. 형은 그 서류를 빼앗으려 했고, 두 사람은 몸싸움을 벌였다.","But Edward refused to hide the truth any longer. My brother tried to take the papers from him, and they struggled."],
+ ["서류가 찢어지고, 아저씨는 뒤로 물러나다 열린 정비구 아래로 떨어졌다. 11시 47분, 시계가 멈췄다.","The papers tore. Edward stepped backward and fell through the open maintenance hatch. At 11:47, the clock stopped."],
  ["형은 아래로 내려가 보지 못했다. 아저씨가 살아 있었는지도 모른 채 그곳을 떠났다.","My brother couldn't bring himself to go down and check. He left without knowing whether Edward was still alive."],
- ["11시 42분, 나는 카페를 나왔다.","I left the café at 11:42."],
- ["11시 50분. 나는 에드워드 아저씨를 발견했다.","11:50. I found Edward.", "blur", ["11시 50분. 나는","11:50. I"]],
- ["11시 55분, 비상 종이 울렸다. 그 사이에 무슨 일이 있었는지는 어떤 기록에도 남아 있지 않다.","At 11:55, the emergency bell rang. What happened in between was never recorded."],
+ ["11시 42분, 나는 카페를 나왔다.","At 11:42, I left the café."],
+ ["11시 50분. 나는 에드워드 아저씨를 발견했다.","At 11:50, I found Edward.", "blur", ["11시 50분. 나는","At 11:50, I"]],
+ ["11시 55분, 비상 종이 울렸다. 그 사이에 무슨 일이 있었는지는 어떤 기록에도 남아 있지 않다.","At 11:55, the emergency bell rang. What happened in those five minutes was never recorded."],
  ["메이 선생님은 조금만 일찍 발견했더라면 결과가 달라졌을지 알 수 없다고 했다. 아마 그건 누구도 끝내 알 수 없을 것이다.","May said she couldn't know whether finding him sooner would have changed anything. Perhaps no one ever will."],
  ["에드워드 아저씨는 기록을 남기는 이유가 잊지 않기 위해서라고 했다. 하지만 기록되지 않은 일까지 사라지는 건 아니다.","Edward used to say we keep records so we won't forget. But something doesn't cease to exist just because it was never written down."],
  ["23년 전, 아저씨는 한 가지 진실을 지웠다. 그리고 지금, 내게도 아직 말하지 않은 이야기가 있다.","Twenty-three years ago, Edward erased a truth. And now there's a part of this story I haven't told."]
@@ -1843,24 +1845,35 @@ function ch6Trans(){
 let ENDHOLD = "", ENDING = false;   /* ENDHOLD = the still kept on screen while an ending closes; ENDING = an ending is running (no clue prompts, no travel) */
 function endSeq(k){   /* A: the clock-tower still fades in slowly, holds 5 s. B: the photograph still is already up, holds 3.5 s. Then it fades out into the finale */
   ENDING = true; ENDHOLD = k === 1 ? "assets/still_clock_tower.webp" : "assets/still_photo_frame.webp"; mode = "modal"; $("stage").classList.add("cine");
-  setTimeout(()=>{ ENDHOLD = ""; showFinal(k, false); setTimeout(()=>$("stage").classList.remove("cine"), 2500); }, k === 1 ? 1600 + 5000 : 3500);
+  setTimeout(()=>{ ENDHOLD = ""; showFinal(k, false); setTimeout(()=>$("stage").classList.remove("cine"), 2500); }, k === 1 ? 1600 + 5000 : k === 3 ? 2200 : 3500);
 }
 let finTimers = [];
 function fnTitleBoth(){ const h = $("fnTH"); $("fnT").classList.add("show"); h.style.width = h.scrollWidth + 4 + "px"; h.classList.add("show"); }   /* the title slides left as the subtitle opens beside it */
 function showFinal(k, instant){ window._lastEnd = k; const K = lang==="ko"; mode = "modal"; setf("fin.end"); setf("end"+k); hideHintNow();
   const F = $("finale");
-  $("fnE").textContent = k===1 ? (K?"엔딩 A":"ENDING A") : (K?"엔딩 B":"ENDING B");
-  $("fnH").textContent = k===1 ? (K?"남겨진 기록":"The Record That Remained") : (K?"좋은 사람":"A Good Person");
+  $("fnE").textContent = k===3 ? (K?"엔딩":"ENDING") : k===1 ? (K?"엔딩 A":"ENDING A") : (K?"엔딩 B":"ENDING B");
+  $("fnH").textContent = k===3 ? (K?"마지막 기록":"The Final Record") : k===1 ? (K?"남겨진 기록":"The Record That Remained") : (K?"좋은 사람":"A Good Person");
+  $("fnS").textContent = k===3 ? (K?"어떤 진실은 끝내 기록되지 않는다.":"Some truths are never written down.") : ""; $("fnQ").textContent = k===3 ? (K?"당신도 사랑하는 사람을 위해 진실을 숨길 수 있습니까?":"Would you hide the truth to protect someone you love?") : "";
+  $("fnR").style.display = (k===3 && UNIFIED_END) ? "none" : "";
   $("fnT").textContent = K ? "빅그베의 모험 2" : "Big Green Bear's Adventure II"; $("fnTH").textContent = K ? "은폐" : "The Cover-Up";
   $("fnR").textContent = K?"다른 선택을 해 본다":"Choose differently"; $("fnC").textContent = K?"감사의 말":"Credits"; $("fnK").textContent = K?"계속 둘러보기":"Keep exploring";
-  ["fnE","fnH","fnL","fnT","fnTH","fnB"].forEach(i=>$(i).classList.remove("show")); $("fnTH").style.width = "0";
+  ["fnE","fnH","fnL","fnS","fnQ","fnT","fnTH","fnB"].forEach(i=>$(i).classList.remove("show")); $("fnTH").style.width = "0";
   finTimers.forEach(clearTimeout); finTimers = []; const at = (ms, fn) => finTimers.push(setTimeout(fn, ms));
   if (instant){ F.style.transition = "none"; F.classList.add("on"); void F.offsetWidth; F.style.transition = ""; } else F.classList.add("on");   /* called from a fade to black: the finale is already fully black, so there is no second fade */
+  if (k === 3){   /* the single ending: its name and the line, then the question stays a little longer than the rest */
+    at(600, ()=>["fnE","fnH","fnL","fnS"].forEach(i=>$(i).classList.add("show")));
+    at(3800, ()=>$("fnQ").classList.add("show"));
+    at(9000, ()=>["fnE","fnH","fnL","fnS","fnQ"].forEach(i=>$(i).classList.remove("show")));
+    at(11400, ()=>$("fnT").classList.add("show"));
+    at(14400, fnTitleBoth);
+    at(20600, ()=>showCredits());
+  } else {
   at(600, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.add("show")));      /* ending name */
   at(3800, ()=>["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")));    /* then the screen is fully black */
   at(6000, ()=>$("fnT").classList.add("show"));                                   /* 2 s of silence, then the title */
   at(9000, fnTitleBoth);                                                          /* the title slides left, the subtitle opens beside it */
   at(15200, ()=>showCredits());                                                    /* held, then the credits */
+  }
   holdHint = false; save(); }
 function finaleSkip(){ if (!$("finale").classList.contains("on")) return; finTimers.forEach(t=>clearTimeout(t)); finTimers = [];
   ["fnE","fnH","fnL"].forEach(i=>$(i).classList.remove("show")); fnTitleBoth(); $("fnB").classList.add("show"); }
@@ -2221,9 +2234,9 @@ function renderDlg(anim){
   pgs = splitPages(tr(n.t)); pgi = 0; sizeDlg(pgs.reduce((a,b)=>b.length>a.length?b:a, ""));
   $("choices").classList.remove("on"); $("choices").innerHTML = "";
   clearTimeout(stillWaitT); const dl = $("dlg");
-  if (STILLS[cur] && !STILL_ON){   /* a still is about to appear: no text box until the picture is up, so the line is never cut off mid-way */
-    dl.classList.add("stillwait"); dlgLock = Math.max(dlgLock, performance.now() + 2600);
-    stillWaitT = setTimeout(()=>{ dl.classList.remove("stillwait"); showPage(anim); }, 2400);
+  if (STILLS[cur] && (!STILL_ON || STILL_SRC !== STILLS[cur])){   /* a still is about to appear (or change): no text box until the picture is up, so the line is never cut off mid-way */
+    const wait = STILL_ON ? 3700 : 2400; dl.classList.add("stillwait"); dlgLock = Math.max(dlgLock, performance.now() + wait + 200);
+    stillWaitT = setTimeout(()=>{ dl.classList.remove("stillwait"); showPage(anim); }, wait);
   } else { dl.classList.remove("stillwait"); showPage(anim); }
 }
 function sizeDlg(text){
@@ -2235,9 +2248,9 @@ function sizeDlg(text){
 /* The close-up of an NPC on the left looks toward the middle of the screen. Mirrored only here, only for people whose side carries no clue: Green and BGB (scarf side) and May (hair and satchel side) are never mirrored. */
 const SCAR_ON = id => { const m = /^f4ok_(\d+)$/.exec(id || ""); return m ? +m[1] >= 2 : /^f5/.test(id || ""); };   /* the older twin wears the ear mark from the moment the beam grazes him */
 const FLIPR = new Set(["yo"]);   /* close-ups on the right of the screen whose art looks right: mirrored so they look toward the middle */
-const NOFLIP = new Set(["gr","bgb","hl","kid","yo","mo","hz","ed","v1","cr"]);   /* mo and hz already look to the right in their art */
+const NOFLIP = new Set(["gr","bgb","hl","kid","yo","mo","hz","ed","edl","v1","cr"]);   /* mo and hz already look to the right in their art */
 const FLIP_TOGGLE = new Set(["mo:worried","tm:surprised","tm:thinking","ed:surprised","ed:thinking","hz:surprised"]);   /* expressions whose art faces the other way from the rest of that person */
-let STILL_ON = false, STILL_SW = 0;
+let STILL_ON = false, STILL_SW = 0, STILL_SRC = "";
 const STILLS = (() => {
   const m = { fnB_15:"assets/still_endB_wait.webp", fnB_16:"assets/still_endB_wait.webp" };
   const span = (id, a, b, src) => { for (let i = a; i <= b; i++) m[id + "_" + i] = src; };
@@ -2247,6 +2260,7 @@ const STILLS = (() => {
   m.ce7_1_0 = m.ce7_1_1 = "assets/still_clock_tower.webp";         /* Ending A: Nini writes it all down under the tower */
   span("fnB", 11, 14, "assets/still_photo_frame.webp");        /* the photograph, the letter and the glove behind the frame */
   m.fnB_17 = m.fr6 = m.p6_f0 = "assets/still_photo_frame.webp";
+  for (let i = 22; i <= 44; i++){ const n = "fn_end_" + String(i).padStart(2, "0"); m[n] = (i >= 31 && i <= 35) ? "assets/still_endB_wait.webp" : "assets/still_photo_frame.webp"; }   /* unified ending: the photograph, Edward's hand on the scarf, the photograph again */
   return m;
 })();   /* Ending B: Edward's hand on the scarf, then his 'Wait...' */
 let bigSide = "";
@@ -2262,7 +2276,7 @@ function showChoices(){
 }
 function pick(i){ const n = D[cur]; const c = n.ch[i]; if (c.go && !c.bye) askedGo.add(c.go); if (c.bye) menuFollow = null; else if (c.go) menuFollow = (cur === "followUp") ? menuFollow : (n.ch.some(x=>x.bye||!x.go) ? cur : null); else menuFollow = null; if (c.go === "flrw") rewindFx(); const bs = [...document.querySelectorAll("#choices .choice")]; bs.forEach((b,j)=>b.classList.toggle("sel", j===i)); const id = cur;
   setTimeout(()=>{ if (cur !== id) return; applyNode(n); goto(c.go); }, 260); }
-function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); holdHint = true; setTimeout(()=>endMono("ce7_"+en+"_0", ()=>showEndE(en)), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1700); } if (n.fx === "rain") $("rain").classList.add("on"); if (n.fx === "recap"){ holdHint = true; setTimeout(()=>showMono(()=>{ setSceneNow("village", 1100); }), 150); }  if (/^theend[12]$/.test(n.fx||"")){ holdHint = true; endSeq(+n.fx.slice(6)); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
+function applyNode(n){ if (n.fx === "e1check") n.next = e1Ready() ? "e1_0" : "e1_no"; if (/^end[1-4]$/.test(n.fx||"")){ const en = +n.fx.slice(3); holdHint = true; setTimeout(()=>endMono("ce7_"+en+"_0", ()=>showEndE(en)), 700); } if (n.fx === "walk"){ $("fade").classList.add("on"); setTimeout(()=>$("fade").classList.remove("on"), 1700); } if (n.fx === "rain") $("rain").classList.add("on"); if (n.fx === "recap"){ holdHint = true; setTimeout(()=>showMono(()=>{ setSceneNow("village", 1100); }), 150); }  if (/^theend[123]$/.test(n.fx||"")){ holdHint = true; endSeq(+n.fx.slice(6)); } if (n.set) setf(n.set); if (n.ev) addEv(n.ev); checkDeduce(); if (n.note) addNote(NOTES[n.note]); save(); }
 function advance(fromClick){
   if (performance.now() < dlgLock) return;
   if (fromClick && D[cur] && D[cur].ch && !typing && pgi >= pgs.length - 1) return;   /* a click never picks an answer; choose with the buttons, 1/2 or arrows + E */
@@ -2309,7 +2323,7 @@ const ckNode = () => has("c6.turn") && !has("stmt_ck2") ? "ck6_0" : has("c6.turn
 const grNode = () => !has("fin.on") ? "c6_wait" : (has("fin.o1") && has("fin.o2") && has("fin.o3") && !has("fin.s4")) ? "gs4" : (has("fin.frame") && !has("fin.last")) ? "gl7" : "gm";
 const hzNode = () => has("c6.turn") && !has("walk") ? "h6_0" : has("walk") ? "h6_9" : !has("c6.on") ? (has("f5.past") ? (has("hz5.met") ? "hz5" : "hz50") : talk("hz")) : has("hz.done") && has("hz.pm") ? talk("hz") : has("hz.met") ? "h9" : "h0";
 const tmNode = () => has("c6.turn") && !has("patrol2") ? "tm6_0" : has("patrol2") ? "tm6_9" : !has("c6.on") ? (has("tmn.met") ? "tmn" : "tmn0") : has("tm.stmt") && has("tm.pm") ? talk("tm") : has("tm.met") ? "tm9" : "tm0";
-const niniNode = () => has("fin.last") ? (has("fin.end") ? "fn_ch" : "fn0") : has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : !has("dd02") ? (has("nin.met") ? "nin" : "nin0") : talk("nini");
+const niniNode = () => has("fin.last") ? (has("fin.end") ? (UNIFIED_END ? "fn_after" : "fn_ch") : "fn0") : has("c7.done") ? "cc0" : has("c6.d") && !has("c6.fin") ? "c6_n0" : !has("dd02") ? (has("nin.met") ? "nin" : "nin0") : talk("nini");
 const homeGate = () => !has("fin.on") ? "home00" : !has("fin.may2") ? "home0" : null;
 const healGate = () => !has("c6.on") ? (has("f5.past") ? null : "heal0") : !has("dd06") ? "heal1" : null;
 
@@ -2981,7 +2995,7 @@ function frame(now){
     if (sk && im.getAttribute("src") !== sk){ if (STILL_SW) want = ""; else if (st.classList.contains("on")){ want = ""; STILL_SW = setTimeout(()=>{ im.src = sk; STILL_SW = 0; }, 1700); } else im.src = sk; }   /* a different still fades out first, then the next fades in */
     if (want && !(im.complete && im.naturalWidth > 0 && im.getAttribute("src") === want)) want = "";   /* never fade in before the new picture has loaded (the old one used to flash) */
     if (want && !st.classList.contains("on")) dlgLock = Math.max(dlgLock, performance.now() + 3500);   /* a new still stays up long enough to look at: Space, Enter and clicks do nothing for the first moments */
-    st.classList.toggle("on", !!want); stage.classList.toggle("stillon", !!sk); STILL_ON = !!sk; }
+    st.classList.toggle("on", !!want); stage.classList.toggle("stillon", !!sk); STILL_ON = !!sk; STILL_SRC = sk || ""; }
   { const bp = $("bigPor"), want = mode === "dlg" && $("dlg").classList.contains("on") && !!bigSide && !STILL_ON; if (bp.classList.contains("on") !== want) bp.classList.toggle("on", want); }
   { const hide = mode !== "play"; if (stage.classList.contains("nomenu") !== hide){ stage.classList.toggle("nomenu", hide); if (hide) setSideOpen(false); } }   /* the menu is only there while exploring: any dialogue, pause, modal, scene change or journal hides and folds it, and it comes back by itself */
   const dt = Math.min(0.05, (now - last)/1000); last = now;
@@ -3111,6 +3125,58 @@ setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
 /* Warm the cache with every portrait and still so a new line never waits on a file (the previous picture used to show for a second). */
 setTimeout(()=>{ const list = []; Object.entries(SP).forEach(([key, sp])=>{ if (sp.por) [...EXPR, ...(EXPR_X[key] || [])].forEach(x=>{ list.push(sp.por + x + ".webp"); if (key === "kid" && EXPR.includes(x)) list.push(sp.por + x + "_scar.webp"); }); if (sp.big) list.push(sp.big); });
   Object.values(STILLS).forEach(u=>list.push(u)); [...new Set(list)].forEach((u, i)=>setTimeout(()=>{ const im = new Image(); im.src = u; }, i * 60)); }, 2500);
+
+/* ---- Unified ending (Loki's script): one ending, no letter choice. Set UNIFIED_END to false to bring back endings A and B. ---- */
+const UNIFIED_END = true;
+SP.edl = { name:{en:"Edward's Letter", ko:"에드워드의 편지"}, img:"assets/envelope_wax_seal.webp", big:"assets/envelope_wax_seal.webp" };
+const TEXT_OVR = {"f5_end": {"ko": "(수집한 단서를 확인한다.)", "en": "(Big Green Bear reviews the clues he has collected.)"}, "f5_end_1": {"ko": "- 23년 전 형이 나를 구했다.\n- 사고 보고서가 바뀌었다.", "en": "- Twenty-three years ago, my brother saved me.\n- The accident report was altered."}, "f5_end_2": {"ko": "- 에드워드 아저씨는 기록에 서명했다.\n- 11:42에 카페를 나왔다.", "en": "- Edward signed the report.\n- I left the café at 11:42."}, "f5_end_3": {"ko": "- 에드워드 아저씨의 추정 사망 시간은 11:55~00:15라고 했다.", "en": "- Edward's estimated time of death was between 11:55 p.m. and 12:15 a.m."}, "f5_end_4": {"ko": "기록이 바뀌었었어. 하지만 그날 형이 날 구했다는 건 기억해.", "en": "The records were changed. But I remember my brother saving me that day."}, "f5_end_5": {"ko": "에드워드 아저씨는 왜 이제 와서 그 기록을 바로잡으려 했을까?", "en": "Why did Edward want to set the record straight after all these years?"}, "mill_d_5": {"ko": "(잠시 후 문이 열린다.)", "en": "(After a moment, the door opens.)"}, "gm": {"ko": "할 말 있으면 해.", "en": "If you've got something to say, say it."}, "gm1_1": {"ko": "아니. 내가 찾아갔어.", "en": "No. I went to see him."}, "gm1_3": {"ko": "하지 말아 달라고 부탁할 일이 있었거든.", "en": "There was something I needed to ask him not to do."}, "gm1_6": {"ko": "한 번 마음먹으면 안 바꾸셨지.", "en": "Once he made up his mind, there was no changing it."}, "gm1_7": {"ko": "어제도 그러셨지.", "en": "That night was no different."}, "gm2_1": {"ko": "그래.", "en": "I did."}, "gm2_2": {"ko": "거기서 무슨 일이 있었는지 말해줘.", "en": "Tell me what happened up there."}, "gm2_5": {"ko": "응. 놓으라고 하셨는데... 그럴 수 없었지.", "en": "Yeah. He told me to let go, but I couldn't."}, "gm2_7": {"ko": "종이가 찢어졌어.", "en": "The paper tore."}, "gm2_9": {"ko": "그 다음 일은 나도 갑작스러웠어.", "en": "Everything after that happened so fast."}, "gm2_11": {"ko": "응.", "en": "Yeah."}, "gm2_13": {"ko": "응.", "en": "No."}, "gm2_14": {"ko": "왜?", "en": "Why not?"}, "gm2_15": {"ko": "무서웠어.", "en": "I was scared."}, "gm3": {"ko": "아저씨가 옛날 기록을 다시 꺼내셨었어.", "en": "Edward had brought out the old records."}, "gm3_2": {"ko": "뭐가 적혀 있었는지 난 몰라. 넌 알아?", "en": "I don't know what was written in them. Do you?"}, "gm3_3": {"ko": "우리가 아는 이야기랑 다르더라.", "en": "They told a different story from the one we know."}, "gm3_4": {"ko": "그렇구나. 어떤 게 진짜인지는 너도 알잖아.", "en": "I see. But you know which version is true."}, "gm3_5": {"ko": "형도 알고 있잖아.", "en": "So do you."}, "gm3_7": {"ko": "그러려고 했어.", "en": "I tried to."}, "gm3_8": {"ko": "그게 가능해?", "en": "Can you really do that?"}, "gm4_4": {"ko": "그 말은 좀 심한데.", "en": "That's a little harsh."}, "gmx_1": {"ko": "알겠어.", "en": "Suit yourself."}, "mo_sc": {"ko": "(오래된 목도리가 걸려 있다. 매듭은 오른쪽 어깨 방향으로 묶여 있다.)", "en": "(An old scarf hangs nearby, its knot tied toward the right shoulder.)"}, "mo_gl": {"ko": "(작업대 위에는 왼손 장갑만 놓여 있다.)", "en": "(Only a left-hand glove lies on the workbench.)"}, "mo_gl_1": {"ko": "오른쪽 장갑은 어딨어?", "en": "Where's the other glove?"}, "mo_gl_6": {"ko": "그래도 한 쪽은 멀쩡한데.", "en": "This one's still perfectly good."}, "mo_gl_7": {"ko": "한 쪽만으론 소용없잖아.", "en": "Not much use on its own."}, "mo_doc_3": {"ko": "에드워드 아저씨가 공개하려던 내용이야.", "en": "This is what Edward was going to reveal."}, "mo_doc_4": {"ko": "이게 전부는 아니야.", "en": "That's not all."}, "mo_doc_5": {"ko": "뭐가 더 있어?", "en": "What else is there?"}, "mo_doc_6": {"ko": "그날 누가 진실을 알고 있었는지까지 적혀 있었어.", "en": "He'd even written down who knew the truth that day."}, "tr_2": {"ko": "방앗간 안을 둘러보자. 목도리, 장갑, 서류. 그린이 말하지 않은 게 여기 있을 거야.", "en": "I should look around the mill. The scarf, the glove, the papers. There must be something here Green hasn't told me."}, "tr_3": {"ko": "이제 그린에게 다시 말을 걸어 보자. 물어볼 게 생겼어.", "en": "Time to talk to Green again. I've got more questions."}, "gs4": {"ko": "토미가 아저씨를 처음 발견했다며.", "en": "Tommy was the one who found Edward, right?"}, "gs4_1": {"ko": "아, 맞아. 나도 그렇게 들었어.", "en": "Yeah. That's what I heard, too."}, "gs4_2": {"ko": "많이 추웠는데.", "en": "It was freezing that night."}, "gs4_4": {"ko": "메이 선생님은 뭐라셔?", "en": "What did May say?"}, "gs4_5": {"ko": "아저씨께서 추락한 뒤에도 한동안 살아 계셨을 거래.", "en": "She thinks Edward may have survived for a while after the fall."}, "gs4_6": {"ko": "(그린이 놀란 얼굴로 고개를 든다.)", "en": "(Green looks up, startled.)"}, "gs4_9": {"ko": "누가 조금만 일찍 발견했으면 달랐을까?", "en": "Would things have been different if someone had found him sooner?"}, "gs4_12": {"ko": "혼자가 아니었을 수도.", "en": "Maybe he wasn't alone."}, "gs4_14": {"ko": "아니. 마지막에 누군가 곁에 있으셨다면 좋았겠다는 뜻이야.", "en": "Nothing. I just wish someone had been there with him at the end."}, "gs4_15": {"ko": "그렇지.", "en": "Yeah."}, "gs4_16": {"ko": "형은 그분이 떨어지고 바로 떠났다고 했지?", "en": "You said you left right after he fell, didn't you?"}, "gs4_17": {"ko": "응.", "en": "Yeah."}, "gs4_19": {"ko": "무슨 말이야?", "en": "Did he say something?"}, "gs4_21": {"ko": "아니. 그냥. 내 생각이야.", "en": "No. I was just wondering."}, "tr_4": {"ko": "이제 메이의 치료실로 가 보자. 메이에게 마지막으로 물어볼 것이 있어.", "en": "I should head to May's clinic. There's one last thing I need to ask her."}, "may2_3": {"ko": "에드워드 아저씨가 떨어지고도 살아 계셨을 가능성이 있어?", "en": "Is it possible Edward was still alive for a while after the fall?"}, "may2_4": {"ko": "응, 다만 정확히 얼마나 버티셨는지는 알 수 없고.", "en": "Yes, it's possible. But I can't say exactly how long he survived."}, "may2_6": {"ko": "근데, 한 가지 이상한 게 있어.", "en": "But there's something I can't explain."}, "may2_8": {"ko": "에드워드 씨 손에 작은 상처가 있었어. 추락하면서 생긴 상처는 아니야.", "en": "Edward had a small cut on his hand. It wasn't caused by the fall."}, "may2_11": {"ko": "(빅그베가 자신의 목도리를 내려다본다.)", "en": "(Big Green Bear looks down at his scarf.)"}, "may2_12": {"ko": "그렇구나.", "en": "I see."}, "tr_5": {"ko": "이제 집으로 돌아가서 액자를 확인해 보자.", "en": "I should head home and take another look at that picture frame."}, "fr6_1": {"ko": "(에드워드 아저씨가 쓴 편지와 오른손 장갑 한 짝이 있다.)", "en": "(A letter written by Edward and a single right-hand glove are hidden behind it.)"}, "fr6_2": {"ko": "...", "en": "..."}, "fr6_4": {"ko": "(편지 아래쪽에는 에드워드의 서명이 있다.)", "en": "(Edward's signature appears at the bottom of the letter.)"}, "fr9": {"ko": "편지와 장갑은 그대로 두자.", "en": "I'll leave the letter and glove where they are."}, "tr_6": {"ko": "이제 낡은 방앗간으로 가 보자.", "en": "I should head back to the Old Mill. There's something I need to say to Green."}, "gl7_5": {"ko": "이번엔 아래로 내려갔겠지.", "en": "I'd go downstairs this time."}, "gl7_7": {"ko": "살아 계셨는지 확인했을 거야.", "en": "I'd check if he was still alive."}, "gl7_9": {"ko": "사람을 불렀을 거야. 무조건.", "en": "I'd call for help. No matter what."}, "gl7_13": {"ko": "그날로 돌아갈 수 있다면.", "en": "If you could go back to that night."}, "tr_7": {"ko": "이제 광장으로 가 보자. 마지막으로 니니를 만나야 해.", "en": "I should head to the square. There's one last person I need to see.\n6-2. 방앗간 직후 · 검은 화면 위 독백"}, "fn0_1": {"ko": "아저씨! 뭔가 좀 알아내셨어요?", "en": "Mr. Bear! Did you find anything out?"}, "fn0_2": {"ko": "응. 조금은.", "en": "Yeah. A little."}, "fn0_3": {"ko": "그럼 이제 다 끝난 거예요?", "en": "So, is it all over now?"}, "fn0_10": {"ko": "(빅그베가 대답하지 않는다.)", "en": "(Big Green Bear doesn't answer.)"}, "fn_b_1": {"ko": "응?", "en": "Hm?"}, "fn_ch": {"ko": "그럼 어떻게 하실 거예요?", "en": "So, what are you going to do?"}};
+Object.entries(TEXT_OVR).forEach(([id, t])=>{ if (D[id]) D[id].t = t; });
+D.fn_end_01 = {sp:"nar", ex:"neutral", t:{ko:"(빅그베가 주머니 속 편지를 만지작거린다.)", en:"(Big Green Bear runs his fingers over the letter in his pocket.)"}, next:"fn_end_02"};
+D.fn_end_02 = {sp:"nini", ex:"thinking", t:{ko:"아저씨, 뭔가 알아내신 거잖아요. 그렇죠?", en:"You found something out, didn't you?"}, next:"fn_end_03"};
+D.fn_end_03 = {sp:"bgb", ex:"neutral", t:{ko:"응. 생각보다 많은 걸 알게 됐어.", en:"Yeah. More than I expected."}, next:"fn_end_04"};
+D.fn_end_04 = {sp:"nini", ex:"neutral", t:{ko:"그럼 기록관에 가요! 제가 적는 것도 도와드릴게요.", en:"Then let's go to the Archive! I can help you write everything down."}, next:"fn_end_05"};
+D.fn_end_05 = {sp:"nar", ex:"neutral", t:{ko:"(빅그베가 니니를 바라본다.)", en:"(Big Green Bear looks at Nini.)"}, next:"fn_end_06"};
+D.fn_end_06 = {sp:"bgb", ex:"thinking", t:{ko:"니니, 에드워드 아저씨가 좋은 분이었다고 생각해?", en:"Nini, do you think Edward was a good person?"}, next:"fn_end_07"};
+D.fn_end_07 = {sp:"nini", ex:"surprised", t:{ko:"당연하죠! 왜 그런 걸 물어보세요?", en:"Of course! Why would you ask that?"}, next:"fn_end_08"};
+D.fn_end_08 = {sp:"bgb", ex:"thinking", t:{ko:"그냥. 좋은 사람도 잘못된 선택을 할 수 있잖아.", en:"Just wondering. Even good people can make bad choices."}, next:"fn_end_09"};
+D.fn_end_09 = {sp:"nini", ex:"thinking", t:{ko:"그럼 나중에 바로잡으면 되잖아요.", en:"Then they can make things right afterward, can't they?"}, next:"fn_end_10"};
+D.fn_end_10 = {sp:"nar", ex:"neutral", t:{ko:"(빅그베가 잠시 말을 잇지 못한다.)", en:"(Big Green Bear falls silent for a moment.)"}, next:"fn_end_11"};
+D.fn_end_11 = {sp:"bgb", ex:"worried", t:{ko:"그래. 그럴 수 있다면 좋겠지.", en:"Yeah. It would be nice if they could."}, next:"fn_end_12"};
+D.fn_end_12 = {sp:"nini", ex:"thinking", t:{ko:"아저씨?", en:"Mr. Bear?"}, next:"fn_end_13"};
+D.fn_end_13 = {sp:"bgb", ex:"neutral", t:{ko:"오늘은 이만하자. 내일 카페에 가서 맛있는 거 먹을까?", en:"Let's call it a day. How about we get something nice at the café tomorrow?"}, next:"fn_end_14"};
+D.fn_end_14 = {sp:"nini", ex:"surprised", t:{ko:"진짜요? 좋아요!", en:"Really? I'd love that!"}, next:"fn_end_15"};
+D.fn_end_15 = {sp:"nini", ex:"neutral", t:{ko:"아저씨는 에드워드 아저씨처럼 좋은 사람이에요.", en:"You're a good person, just like Edward."}, next:"fn_end_16"};
+D.fn_end_16 = {sp:"bgb", ex:"thinking", t:{ko:"그렇게 생각해?", en:"You think so?"}, next:"fn_end_17"};
+D.fn_end_17 = {sp:"nini", ex:"neutral", t:{ko:"당연하죠!", en:"Of course!"}, next:"fn_end_18"};
+D.fn_end_18 = {sp:"nar", ex:"neutral", t:{ko:"(니니가 환하게 웃는다.)", en:"(Nini beams at him.)"}, next:"fn_end_19"};
+D.fn_end_19 = {sp:"nini", ex:"neutral", t:{ko:"그럼 내일 봬요, 아저씨!", en:"See you tomorrow, Mr. Bear!"}, next:"fn_end_20"};
+D.fn_end_20 = {sp:"bgb", ex:"neutral", t:{ko:"응. 내일 보자.", en:"Yeah. See you tomorrow."}, next:"fn_end_21"};
+D.fn_end_21 = {sp:"nar", ex:"neutral", t:{ko:"(니니가 떠난 뒤, 빅그베는 집으로 돌아온다.)", en:"(After Nini leaves, Big Green Bear returns home.)"},fx:"walk", next:"fn_end_22"};
+D.fn_end_22 = {sp:"nar", ex:"neutral", t:{ko:"(탁자 위에는 오래된 사진이 놓여 있다. 두 마리의 어린 곰이 나란히 웃고 있다.)", en:"(An old photograph rests on the table. Two young bears smile side by side.)"}, next:"fn_end_23"};
+D.fn_end_23 = {sp:"nar", ex:"neutral", t:{ko:"(빅그베가 액자 뒤에서 편지와 오른손 장갑을 꺼낸다.)", en:"(Big Green Bear takes the letter and the right-hand glove from behind the frame.)"}, next:"fn_end_24"};
+D.fn_end_24 = {sp:"nar", ex:"neutral", t:{ko:"(편지를 펼친다.)", en:"(He unfolds the letter.)"}, next:"fn_end_25"};
+D.fn_end_25 = {sp:"edl", ex:"neutral", t:{ko:"\"이번에는 누구의 이름도 지우지 않겠습니다.\"", en:"\"This time, I will not erase anyone's name.\""}, next:"fn_end_26"};
+D.fn_end_26 = {sp:"nar", ex:"neutral", t:{ko:"(빅그베가 편지를 다시 접는다.)", en:"(Big Green Bear folds the letter again.)"}, next:"fn_end_27"};
+D.fn_end_27 = {sp:"nar", ex:"neutral", t:{ko:"(편지와 장갑을 액자 뒤에 넣으려던 순간, 작은 황동 단추가 손끝에 걸린다.)", en:"(As he puts the letter and glove behind the frame, his fingers brush against a small brass button.)"}, next:"fn_end_28"};
+D.fn_end_28 = {sp:"nar", ex:"neutral", t:{ko:"(단추에는 작은 글씨가 새겨져 있다.)", en:"(Tiny letters are engraved on the button.)"},ev:"button", next:"fn_end_29"};
+D.fn_end_29 = {sp:"nar", ex:"neutral", t:{ko:"에드워드 벨", en:"E. BELL"}, next:"fn_end_30"};
+D.fn_end_30 = {sp:"nar", ex:"neutral", t:{ko:"(빅그베가 단추를 손바닥에 올려놓는다.)", en:"(Big Green Bear rests the button in his palm.)"}, next:"fn_end_31"};
+D.fn_end_31 = {sp:"nar", ex:"neutral", t:{ko:"(눈 덮인 바닥. 에드워드가 쓰러져 있다.)", en:"(Snow-covered ground. Edward lies where he fell.)"}, next:"fn_end_32"};
+D.fn_end_32 = {sp:"nar", ex:"neutral", t:{ko:"(에드워드의 손이 빅그베의 노란 목도리를 붙잡는다.)", en:"(Edward's hand grips Big Green Bear's yellow scarf.)"}, next:"fn_end_33"};
+D.fn_end_33 = {sp:"ed", ex:"worried", t:{ko:"잠깐...", en:"Wait..."}, next:"fn_end_34"};
+D.fn_end_34 = {sp:"nar", ex:"neutral", t:{ko:"(에드워드가 빅그베를 올려다본다.)", en:"(Edward looks up at Big Green Bear.)"}, next:"fn_end_35"};
+D.fn_end_35 = {sp:"nar", ex:"neutral", t:{ko:"(빅그베는 아무 말도 하지 않는다.)", en:"(Big Green Bear says nothing.)"}, next:"fn_end_36"};
+D.fn_end_36 = {sp:"nar", ex:"neutral", t:{ko:"(빅그베가 손바닥 위의 단추를 내려다본다.)", en:"(Big Green Bear looks down at the button in his palm.)"}, next:"fn_end_37"};
+D.fn_end_37 = {sp:"nar", ex:"neutral", t:{ko:"(그는 단추를 접힌 편지 사이에 끼운다.)", en:"(He slips the button between the folds of the letter.)"}, next:"fn_end_38"};
+D.fn_end_38 = {sp:"nar", ex:"neutral", t:{ko:"(편지와 장갑을 액자 뒤에 넣고, 액자를 다시 세운다.)", en:"(He hides the letter and glove behind the frame and sets it upright again.)"}, next:"fn_end_39"};
+D.fn_end_39 = {sp:"nar", ex:"neutral", t:{ko:"(사진 속 두 어린 곰은 여전히 웃고 있다.)", en:"(The two young bears in the photograph are still smiling.)"}, next:"fn_end_40"};
+D.fn_end_40 = {sp:"bgb", ex:"worried", t:{ko:"형, 내일은 차라도 한 잔 마시자.", en:"Maybe we can have that cup of tea tomorrow, brother."}, next:"fn_end_41"};
+D.fn_end_41 = {sp:"nar", ex:"neutral", t:{ko:"(창밖으로 눈이 내린다.)", en:"(Snow falls outside the window.)"}, next:"fn_end_42"};
+D.fn_end_42 = {sp:"nar", ex:"neutral", t:{ko:"(마을의 시계는 여전히 11시 47분에 멈춰 있다.)", en:"(The village clock is still stopped at 11:47.)"}, next:"fn_end_43"};
+D.fn_end_43 = {sp:"nar", ex:"neutral", t:{ko:"(23년 전의 기록도, 오늘 밤의 기록도 바뀌지 않았다.)", en:"(Neither the record from twenty-three years ago nor the record of tonight has been corrected.)"}, next:"fn_end_44"};
+D.fn_end_44 = {sp:"nar", ex:"neutral", t:{ko:"(화면이 어두워진다.)", en:"(The screen fades to black.)"},fx:"theend3"};
+D.fn_after = {sp:"nini", ex:"neutral", t:{ko:"그럼 내일 봬요, 아저씨!", en:"See you tomorrow, Mr. Bear!"}};
+if (UNIFIED_END){ delete D.fn_ch.ch; D.fn_ch.next = "fn_end_01"; }
 window.__bv = { D, NOTES, SP, EV, ENDINGS, ACC, SMALL, FOLLOW, KCON, GATE_T, CHT, UI, setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4, EV_META, evGroups, evStatements, PEOPLE, personView, metPeople, skipTo, evIcon, EI, GI, QS, TL_DATA, PLACES, PERSON_UI, GROUP_NAME };
 requestAnimationFrame(frame);
   if (typeof nineAll === "function") requestAnimationFrame(nineAll);
