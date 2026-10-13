@@ -381,6 +381,11 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #finale{position:absolute;inset:0;z-index:42;background:#02030a;opacity:0;pointer-events:none;transition:opacity 1.8s;color:#f3e6c8;text-align:center}
 #finale.on{opacity:1;pointer-events:auto}
 #fnCard,#fnTi{position:absolute;left:0;right:0;top:50%;transform:translateY(-52%);display:flex;flex-direction:column;align-items:center;gap:22px;padding:0 140px}
+#fnEpi{position:absolute;inset:0;opacity:0;transition:opacity 2.6s ease-in-out;pointer-events:none}
+#fnEpi img{width:100%;height:100%;object-fit:cover;display:block}
+#fnEpi:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(3,4,14,.55) 100%)}
+#finale #fnEpi.show{opacity:1}
+#finale.epi{pointer-events:none}
 #finale .fe,#finale .fh,#finale .fl,#finale .fs,#finale .fq,#finale .ft,#finale .fb{opacity:0;transition:opacity 1.2s,transform 1.2s;transform:translateY(10px)}
 #finale .show{opacity:1;transform:none}
 #finale .fe{font:600 26px/1 "Alegreya SC","Noto Serif KR",Georgia,serif;letter-spacing:.5em;padding-left:.5em;color:#c9a96a;display:flex;align-items:center;gap:30px}
@@ -811,7 +816,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
     <button class="pbtn nine cream" id="eCred" style="display:none">Credits</button>
     <button class="pbtn nine cream" id="eBack">Back to the village</button>
   </div></div>
-  <div id="finale"><div id="fnCard"><div class="fe" id="fnE"></div><div class="fh" id="fnH"></div><div class="fl" id="fnL"></div><div class="fs" id="fnS"></div><div class="fq" id="fnQ"></div></div><div id="fnTi"><div class="ft" id="fnT"></div><div class="fh" id="fnTH"></div></div><div class="fb" id="fnB"><button id="fnR"></button><button id="fnC"></button><button id="fnK"></button></div></div>
+  <div id="finale"><div id="fnEpi"><img src="assets/still_clock_tower.webp" alt=""></div><div id="fnCard"><div class="fe" id="fnE"></div><div class="fh" id="fnH"></div><div class="fl" id="fnL"></div><div class="fs" id="fnS"></div><div class="fq" id="fnQ"></div></div><div id="fnTi"><div class="ft" id="fnT"></div><div class="fh" id="fnTH"></div></div><div class="fb" id="fnB"><button id="fnR"></button><button id="fnC"></button><button id="fnK"></button></div></div>
   <div id="tip"><b>TIP</b><span id="tipTx"></span></div>
   <div id="mono"><div class="mt" id="monoT"></div><div class="mn" id="monoN"></div></div>
   <div id="goal"></div><div id="fade"></div><div id="chcard"><div class="ce" id="chE"></div><div class="cl"></div><div class="ct" id="chT"></div></div>
@@ -1566,7 +1571,7 @@ function showCredits(){ const k = lang==="ko"; $("endcard").classList.remove("on
   $("crEy").textContent = k ? "감사의 말" : "THANK YOU"; $("crH").textContent = k ? "함께해 준 사람들" : "Special Thanks";
   $("crL").innerHTML = k ? "<li>빅그베 아이디어를 주신 sy</li><li>영어 번역을 도와준 tommy</li>" : "<li>sy, for the idea of Big Green Bear</li><li>tommy, for help with the English translation</li>";
   $("crP").textContent = k ? "플레이해 주셔서 감사합니다." : "Thank you for playing."; $("crBack").textContent = k ? "돌아가기" : "Back"; $("credits").classList.add("on"); }
-$("eCred").onclick = showCredits; $("crBack").onclick = ()=>{ $("credits").classList.remove("on"); if ($("finale").classList.contains("on")) finaleSkip(); else $("endcard").classList.add("on"); };
+$("eCred").onclick = showCredits; $("crBack").onclick = ()=>{ $("credits").classList.remove("on"); if ($("finale").classList.contains("on")){ if (UNIFIED_END && window._lastEnd === 3 && !EPI_DONE) epilogue(); else finaleSkip(); } else $("endcard").classList.add("on"); };
 function showEnd6(){ const k = lang==="ko"; mode = "modal"; $("eEy").textContent = k?"6장 끝":"END OF CHAPTER 6"; $("eH").textContent = k?"사라진 5분":"Five Missing Minutes";
   $("eP1").textContent = k?"누가 도울 수 있었고, 하지 않았는가. 증거는 모두 사건 파일에 있다.":"Who had the chance to help, and didn't? The evidence is all in the Case File.";
   $("eP2").textContent = k?"이어서 7장 \"우리가 고르는 진실\"이 시작됩니다.":"Chapter 7, The Truth We Choose, follows.";
@@ -1847,7 +1852,15 @@ function endSeq(k){   /* A: the clock-tower still fades in slowly, holds 5 s. B:
   ENDING = true; ENDHOLD = k === 1 ? "assets/still_clock_tower.webp" : "assets/still_photo_frame.webp"; mode = "modal"; $("stage").classList.add("cine");
   setTimeout(()=>{ ENDHOLD = ""; showFinal(k, false); setTimeout(()=>$("stage").classList.remove("cine"), 2500); }, k === 1 ? 1600 + 5000 : k === 3 ? 2200 : 3500);
 }
-let finTimers = [];
+let finTimers = [], EPI_DONE = false;
+/* The very last picture of the game, after the credits: the tower clock moving again at 11:48, Nini writing it all down. It cannot be skipped. */
+function epilogue(){
+  EPI_DONE = true; const e = $("fnEpi"), F = $("finale"); F.classList.add("epi");
+  ["fnE","fnH","fnL","fnS","fnQ","fnT","fnTH","fnB"].forEach(i=>$(i).classList.remove("show"));
+  setTimeout(()=>e.classList.add("show"), 400);
+  setTimeout(()=>e.classList.remove("show"), 400 + 2600 + 7000);
+  setTimeout(()=>{ F.classList.remove("epi"); finaleSkip(); }, 400 + 2600 + 7000 + 2800);
+}
 function fnTitleBoth(){ const h = $("fnTH"); $("fnT").classList.add("show"); h.style.width = h.scrollWidth + 4 + "px"; h.classList.add("show"); }   /* the title slides left as the subtitle opens beside it */
 function showFinal(k, instant){ window._lastEnd = k; const K = lang==="ko"; mode = "modal"; setf("fin.end"); setf("end"+k); hideHintNow();
   const F = $("finale");
