@@ -215,7 +215,8 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #tfg,#tfar{pointer-events:none}
 
 /* Persistent category panel (left), as in the mockup */
-#side{display:none;position:absolute;left:12px;top:208px;width:294px;height:401px;background:url(assets/nav_binder_4.webp) 0 0/100% 100% no-repeat;z-index:5}
+#side{display:block;position:absolute;left:12px;top:208px;width:294px;height:401px;background:url(assets/nav_binder_4.webp) 0 0/100% 100% no-repeat;z-index:5;transform:translateX(-268px);transition:transform .35s ease-out}   /* tucked away: only its right edge shows until the mouse comes near */
+#side:after{content:"";position:absolute;right:5px;top:41%;width:26px;height:28px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f6e3c0' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 5.5c2.6-1 5.4-1 8 .8 2.6-1.8 5.4-1.8 8-.8v13c-2.6-1-5.4-1-8 .8-2.6-1.8-5.4-1.8-8-.8z'/%3E%3Cpath d='M12 6.300v13'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.9;transition:opacity .2s;pointer-events:none}
 .sbtn{position:absolute;left:61px;width:197px;height:72px;padding:0 16px 0 20px;--s:.97;background-color:transparent;display:flex;align-items:center;justify-content:flex-start;gap:9px;font:700 20px/1 var(--font-label);letter-spacing:.02em;white-space:nowrap;color:var(--ink);cursor:pointer;border-radius:12px;transition:filter .12s,transform .12s}
 .sbtn svg{width:25px;height:25px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .sbtn:hover{filter:brightness(1.08);transform:translateX(3px)}
@@ -362,7 +363,9 @@ body{background:#05070f;color:var(--paper);font-family:var(--font-body);overflow
 #fade.on{opacity:1;pointer-events:auto}
 #chcard{position:absolute;inset:0;z-index:41;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0;pointer-events:none;transition:opacity .9s;color:#f3e6c8;text-align:center}
 #chcard.on{opacity:1}
-#stage.sideopen #side{display:block}
+#stage.sideopen #side{transform:none}
+#stage.sideopen #side:after{opacity:0}
+#sideBook{display:none!important}
 #sideBook{position:absolute;left:26px;top:122px;width:76px;height:78px;border:0;padding:0;background:url(assets/btn_round_dark.webp) 0 0/100% 100% no-repeat;cursor:pointer;z-index:6;transition:transform .12s,filter .12s}
 #sideBook:hover{transform:scale(1.07);filter:brightness(1.15)}
 #sideBook svg{position:absolute;left:19px;top:20px;width:38px;height:38px;fill:none;stroke:#f6e3c0;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
@@ -571,7 +574,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jtlin{position:relative;padding-bottom:20px}
 .jtlin:before{content:"";position:absolute;left:154px;top:0;bottom:0;width:8px;background:url(assets/journal_tl_line.webp) center top/8px 15px repeat-y}
 .jrow{position:relative;display:grid;grid-template-columns:128px 44px 1fr;gap:0;padding:2px 0;margin-bottom:2px;border:12px solid transparent;border-right-width:10px;cursor:pointer}
-.jrow.jq{cursor:default}
+.jrow.jqu{cursor:default}
 .jrow.sel{border-image:url(assets/journal_selrow.webp) 40 fill/12px stretch}
 .jrow.link{background:rgba(196,69,58,.12)}
 .jt{text-align:right;padding-right:10px;font:700 30px/1.1 var(--font-body);color:#3a2a1a}
@@ -591,7 +594,7 @@ html[lang="ko"] #chcard .ct{font-family:Pretendard,"Alegreya",serif;font-weight:
 .jpl{position:absolute;transform:translateX(-50%);height:46px;min-width:92px;padding:0 4px;border:0;border-style:solid;border-width:0 22px;border-image:url(assets/journal_plaque_normal.webp) 0 22 fill/0 22px stretch;background:none;font:700 23px/46px Pretendard,var(--font-body);color:#3a2a1a;white-space:nowrap;cursor:pointer;z-index:3}
 .jpl.sel{height:52px;line-height:52px;border-image-source:url(assets/journal_plaque_selected.webp);color:#6e2a35;margin-top:-3px}
 .jpl.cur{border-image-source:url(assets/journal_plaque_current.webp);color:#f6e3c0}
-.jplace{position:absolute;left:0;top:596px;width:704px;height:214px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}
+.jplace{position:absolute;left:0;top:590px;width:704px;height:194px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#8a6a3a transparent}
 .jplace::-webkit-scrollbar{width:10px}.jplace::-webkit-scrollbar-thumb{background:#8a6a3a;border-radius:5px}.jplace .chips{margin:4px 0}#jrnl .jplace .gchip{height:32px;font-size:17px;padding:0 2px;border-width:0 15px;border-image-width:0 15px}.jch{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
 .jct{font:700 34px/1.15 Pretendard,var(--font-body);color:#6e2a35}.jct.jmute{color:#8a6a3e;font-size:30px}
 .jcs{font:400 22px/1.3 var(--font-body);color:#5a4630;margin:3px 0}
@@ -1123,7 +1126,7 @@ CH("f5a", [["nar","(두 형제가 비를 피해 서 있다. 에드워드가 다�
 CH("f5q1", [["yo","아저씨, 제가 종을 망가뜨린 것 같아요.","Edward, I think I broke the bell."], ["ed","무슨 말이니?","What do you mean?"], ["yo","원래 잘 안 움직였는데, 제가 당기다가 목도리가 걸렸어요.","It was already stuck, but I pulled on it and my scarf got caught."], ["kid","제가 더 빨리 말렸어야 했어요.","I should've stopped him sooner."], ["ed","우선 집에 가자. 나머지는 나중에 이야기하자꾸나.","Let's get you both home first. We can talk about the rest later."]]);
 CH("f5q2", [["yo","형이 절 구해 줬어요.","Green saved me."], ["ed","무슨 일이 있었니?","What happened?"], ["yo","들보가 떨어졌는데 형이 절 밀어냈어요.","A beam fell, and he pushed me out of the way."], ["ed","그랬구나.","I see."], ["kid","그냥 가까이 있었어요.","I was just standing nearby."], ["ed","그래도 동생을 구한 건 네가 맞잖니.","You still saved your brother."]]);
 CH("f5q3", [["ed","둘 다 따라오렴. 오늘은 충분히 무서운 일을 겪었어.","Come along, both of you. You've had enough scares for one day."]], {next:"f5s2"});
-CH("f5s2", [["nar","(며칠 후. 에드워드의 책상 위에 사고 보고서가 놓여 있다.)","(A few days later. An incident report lies on Edward's desk.)"], ["nar","사고 보고서 초안\n- 경고 종 장치 파손","Draft Incident Report\n- Warning bell mechanism damaged"], ["nar","- 구조 행위자: 미확인\n- 관련 아동 진술 확인 필요","- Rescuer: Unconfirmed\n- Children's statements pending"], ["nar","(에드워드가 붉은 장부를 펼친다.)","(Edward opens a red ledger.)"], ["ed","교체 요청이 있었는데도 보류됐군.","There was a replacement request, but it was deferred."], ["nar","(문밖에서 의회 관계자의 목소리가 들린다.)","(A council representative speaks from outside.)"], ["cr","보고서는 오늘 안에 마무리해 주십시오.","We need that report finalized today."], ["ed","아직 확인할 사항이 남았습니다.","There are still things I need to verify."], ["cr","예산 결정까지 문제 삼으실 생각입니까?","Are you planning to question the council's budget decision?"], ["ed","장치에 문제가 있었다는 기록이 있습니다.","There's a record showing the mechanism was faulty."], ["cr","그 기록이 공개되면 마을 전체가 혼란스러워질 겁니다.","Releasing that record would throw the whole village into turmoil."], ["ed","그렇다고 없던 일이 되지는 않습니다.","That doesn't mean it didn't happen."], ["cr","보호하고 계신 아이들도 생각하셔야죠.","You should think about the children in your care."], ["nar","(에드워드가 펜을 내려놓는다.)","(Edward sets down his pen.)"], ["nar","(에드워드가 두 형제를 부른다.)","(Edward calls the twins over.)"], ["ed","그날 일에 관해 다시 물어볼 게 있단다.","I need to ask you about what happened that day."], ["kid","제가 종을 망가뜨렸어요.","I broke the bell."], ["yo","형?","Green?"], ["ed","그게 사실이니?","Is that the truth?"], ["kid","네.","Yes."], ["yo","하지만...","But..."], ["kid","제가 했어요.","It was me."], ["nar","(동생은 형의 왼쪽 귀를 바라본다.)","(Little Green looks at the injury on Green's left ear.)"], ["ed","그럼 동생을 구한 것도 네가 맞지?","And you were the one who saved your brother?"], ["kid","네.","Yes."], ["nar","(에드워드가 한동안 아무 말도 하지 않는다.)","(Edward remains silent for a while.)"], ["ed","알겠다. 오늘은 그만 가 보렴.","I understand. That's all for today."], ["nar","(두 형제가 나간다. 보고서의 일부가 수정되어 있다.)","(The twins leave. Several lines of the report have been changed.)"], ["nar","공식 사고 기록\n- 경고 종 파손 책임: 형","Official Incident Record\n- Responsibility for bell damage: Older twin"], ["nar","- 구조 공적: 동생\n- 관련자 이름: 수정됨","- Rescue credit: Younger twin\n- Names of involved children: Amended"], ["nar","- 정비 요청 기록: 첨부되지 않음","- Maintenance request: Not attached"], ["nar","(에드워드가 서명을 망설인다.)","(Edward hesitates before signing.)"], ["ed","미안하다.","I'm sorry."], ["nar","(그가 보고서에 서명한다.)","(He signs the report.)",{note:"m6"}], ["nar","(며칠 뒤, 마을 광장.)","(A few days later, in the village square.)"], ["v1","네가 참 용감한 일을 했다지?","I hear you were very brave."], ["yo","네?","Me?"], ["v1","형을 구했다면서. 정말 착한 아이구나.","You saved your brother. What a good boy.",{note:"m7"}], ["nar","(동생이 형을 바라본다.)","(Little Green looks at Green.)"], ["yo","그게...","Well..."], ["kid","가자.","Come on."], ["nar","(형이 동생의 손을 잡는다.)","(Green takes his brother's hand.)"], ["yo","형, 사람들이 잘못 알고 있어.","Green, they've got it wrong."], ["kid","알아.","I know."], ["yo","그럼 말해야지.","Then we should tell them."], ["kid","지금은 그냥 가자.","Let's just go for now."], ["yo","형은 억울하지 않아?","Doesn't it bother you?"], ["kid","넌 괜찮아?","Are you okay?"], ["yo","응.","Yeah."], ["kid","그럼 됐어.","Then that's enough for me."], ["nar","(동생이 아무 말도 하지 못한다.)","(Little Green says nothing.)",{set:"f5.toPresent"}]]);
+CH("f5s2", [["nar","(며칠 후. 에드워드의 책상 위에 사고 보고서가 놓여 있다.)","(A few days later. An incident report lies on Edward's desk.)"], ["nar","사고 보고서 초안\n- 경고 종 장치 파손","Draft Incident Report\n- Warning bell mechanism damaged"], ["nar","- 구조 행위자: 미확인\n- 관련 아동 진술 확인 필요","- Rescuer: Unconfirmed\n- Children's statements pending"], ["nar","(에드워드가 붉은 장부를 펼친다.)","(Edward opens a red ledger.)"], ["ed","교체 요청이 있었는데도 보류됐군.","There was a replacement request, but it was deferred."], ["nar","(문밖에서 의회 관계자의 목소리가 들린다.)","(A council representative speaks from outside.)"], ["cr","보고서는 오늘 안에 마무리해 주십시오.","We need that report finalized today."], ["ed","아직 확인할 사항이 남았습니다.","There are still things I need to verify."], ["cr","예산 결정까지 문제 삼으실 생각입니까?","Are you planning to question the council's budget decision?"], ["ed","장치에 문제가 있었다는 기록이 있습니다.","There's a record showing the mechanism was faulty."], ["cr","그 기록이 공개되면 마을 전체가 혼란스러워질 겁니다.","Releasing that record would throw the whole village into turmoil."], ["ed","그렇다고 없던 일이 되지는 않습니다.","That doesn't mean it didn't happen."], ["nar","(에드워드가 펜을 내려놓는다.)","(Edward sets down his pen.)"], ["nar","(에드워드가 두 형제를 부른다.)","(Edward calls the twins over.)"], ["ed","그날 일에 관해 다시 물어볼 게 있단다.","I need to ask you about what happened that day."], ["kid","제가 종을 망가뜨렸어요.","I broke the bell."], ["yo","형?","Green?"], ["ed","그게 사실이니?","Is that the truth?"], ["kid","네.","Yes."], ["yo","하지만...","But..."], ["kid","제가 했어요.","It was me."], ["nar","(동생은 형의 왼쪽 귀를 바라본다.)","(Little Green looks at the injury on Green's left ear.)"], ["ed","그럼 동생을 구한 것도 네가 맞지?","And you were the one who saved your brother?"], ["kid","네.","Yes."], ["nar","(에드워드가 한동안 아무 말도 하지 않는다.)","(Edward remains silent for a while.)"], ["ed","알겠다. 오늘은 그만 가 보렴.","I understand. That's all for today."], ["nar","(두 형제가 나간다. 보고서의 일부가 수정되어 있다.)","(The twins leave. Several lines of the report have been changed.)"], ["nar","공식 사고 기록\n- 경고 종 파손 책임: 형","Official Incident Record\n- Responsibility for bell damage: Older twin"], ["nar","- 구조 공적: 동생\n- 관련자 이름: 수정됨","- Rescue credit: Younger twin\n- Names of involved children: Amended"], ["nar","- 정비 요청 기록: 첨부되지 않음","- Maintenance request: Not attached"], ["nar","(에드워드가 서명을 망설인다.)","(Edward hesitates before signing.)"], ["ed","미안하다.","I'm sorry."], ["nar","(그가 보고서에 서명한다.)","(He signs the report.)",{note:"m6"}], ["nar","(며칠 뒤, 마을 광장.)","(A few days later, in the village square.)"], ["v1","네가 참 용감한 일을 했다지?","I hear you were very brave."], ["yo","네?","Me?"], ["v1","형을 구했다면서. 정말 착한 아이구나.","You saved your brother. What a good boy.",{note:"m7"}], ["nar","(동생이 형을 바라본다.)","(Little Green looks at Green.)"], ["yo","그게...","Well..."], ["kid","가자.","Come on."], ["nar","(형이 동생의 손을 잡는다.)","(Green takes his brother's hand.)"], ["yo","형, 사람들이 잘못 알고 있어.","Green, they've got it wrong."], ["kid","알아.","I know."], ["yo","그럼 말해야지.","Then we should tell them."], ["kid","지금은 그냥 가자.","Let's just go for now."], ["yo","형은 억울하지 않아?","Doesn't it bother you?"], ["kid","넌 괜찮아?","Are you okay?"], ["yo","응.","Yeah."], ["kid","그럼 됐어.","Then that's enough for me."], ["nar","(동생이 아무 말도 하지 못한다.)","(Little Green says nothing.)",{set:"f5.toPresent"}]]);
 
 /* Chapter 5, present day */
 CH("hz50", [["nar","(빅그베가 카페에 들어선다.)","(Big Green Bear enters the café.)"], ["hz","빅그베! 어서 와.","Big Green Bear! Come on in."], ["bgb","헤이즐, 어젯밤 일로 물어볼 게 있어.","Hazel, I need to ask you about last night."], ["hz","에드워드 씨 일이지?","About Edward?"], ["bgb","응.","Yeah."]], {ch:HZ5CH, set:"hz5.met"});
@@ -1240,7 +1243,7 @@ Object.assign(D, {
   ci6_1: {sp:"bgb", ex:"neutral", t:{en:"Compare the clues on the Identity Board under People. After that, I have to see Green at the Old Mill.", ko:"사람 탭의 신원 보드에서 단서를 맞춰 보자. 그다음엔 낡은 방앗간의 Green을 만나야 해."}, next:null}
 });
 const SP = { ed:{name:{en:"Edward",ko:"에드워드"}, img:"assets/edward_front.webp", por:"assets/por_edward_"}, kid:{name:{en:"Green",ko:"형"}, img:"assets/twin_elder_front.webp", por:"assets/por_elder_"}, yo:{name:{en:"Little Green",ko:"동생"}, img:"assets/twin_younger_front.webp", por:"assets/por_younger_"}, nar:{name:{en:"",ko:""}, img:"assets/twin_elder_front.webp", hide:true}, v1:{name:{en:"Villager",ko:"마을 사람"}, img:"assets/molly_front.webp", sil:true, big:"assets/sil_rabbit.webp"}, v2:{name:{en:"Villager 2",ko:"주민 2"}, img:"assets/molly_front.webp", sil:true, big:"assets/sil_goat.webp"}, mo:{name:{en:"Grandma Molly",ko:"몰리"}, img:"assets/molly_front.webp", por:"assets/por_molly_"}, gr:{name:{en:"Green",ko:"그린"}, img:"assets/green_front.webp", por:"assets/por_green_"}, tm:{name:{en:"Tommy",ko:"토미"}, img:"assets/tommy_front.webp", por:"assets/por_tommy_"}, bgb:{name:{en:"BGB",ko:"빅그베"}, img:"assets/big_green_bear_front.webp", por:"assets/por_bgb_"}, hz:{name:{en:"Hazel",ko:"헤이즐"}, img:"assets/cafe_owner_front.webp", por:"assets/por_hazel_"}, nini:{name:{en:"Nini",ko:"니니"}, img:"assets/nini_front.webp", por:"assets/por_nini_"}, ck:{name:{en:"Oliver",ko:"올리버"}, img:"assets/clockkeeper_front.webp", por:"assets/por_oliver_"} };
-const EXOVR = {"nin0_1":"laugh","nq3_2":"laugh","nq3_4":"laugh","ml4_4":"laugh","fnB_9":"laugh","p_n10":"laugh","nq4_4":"sad","nq4_6":"sad","tq4_4":"sad","gs4_14":"sad","gm3_7":"sad","gl7_14":"sad","p_f0":"sad","pf_h_1":"sad","pf_end":"sad","g6_4":"sad","g7_0":"sad","g7_2":"sad","acc_r2b":"sad","acc_r3a":"sad","acc_r4b":"sad","ce6_0":"sad","ce6_1":"sad","ce7_2_1":"sad","ce7_3_0":"sad","ce7_4_0":"sad","e1_0":"sad","rec1":"sad","f5_end_4":"sad","f5_end_7":"sad","mill_d_2":"stern","mill_d_4":"stern","mill_d_9":"stern","gl7_16":"stern","g6_0":"stern","e4_0":"stern","ci6_0":"stern","ce7_1_0":"relieved","ce7_1_1":"relieved","fnA_13":"relieved","mill_d_1":"stern","mill_d_3":"stern","mill_d_6":"stern","gm1_3":"stern","gm2_3":"stern","gmx_1":"stern","g6_1":"stern","g7_6":"stern","mill_d_8":"sad","gm1_7":"sad","gm2_1":"sad","gm2_5":"sad","gm2_7":"sad","gm2_9":"sad","gm2_11":"sad","gm2_13":"sad","gm2_15":"sad","gs4_2":"sad","gs4_11":"sad","gs4_15":"sad","gl7_15":"sad","g6_2":"sad","g6_3":"sad","g7_1":"sad","g7_3":"sad","g7_7":"sad","acc_r1b":"sad","e1_1":"sad","e3_1":"sad","gm4_5":"laugh","g7_9":"relieved"};   /* per-line picks from the new 8-expression sets (Big Green Bear and Green only) */
+const EXOVR = {"nin0_1":"laugh","nq3_2":"laugh","nq3_4":"laugh","ml4_4":"laugh","fnB_9":"laugh","p_n10":"laugh","nq4_4":"sad","nq4_6":"sad","tq4_4":"sad","gs4_14":"neutral","gm3_7":"neutral","gl7_14":"neutral","p_f0":"sad","pf_h_1":"sad","pf_end":"sad","g6_4":"neutral","g7_0":"neutral","g7_2":"neutral","acc_r2b":"neutral","acc_r3a":"neutral","acc_r4b":"neutral","ce6_0":"neutral","ce6_1":"neutral","ce7_2_1":"neutral","ce7_3_0":"neutral","ce7_4_0":"neutral","e1_0":"neutral","rec1":"neutral","f5_end_4":"sad","f5_end_7":"sad","mill_d_2":"worried","mill_d_4":"neutral","mill_d_9":"neutral","gl7_16":"stern","g6_0":"stern","e4_0":"stern","ci6_0":"stern","ce7_1_0":"relieved","ce7_1_1":"relieved","fnA_13":"relieved","mill_d_1":"neutral","mill_d_3":"neutral","mill_d_6":"neutral","gm1_3":"neutral","gm2_3":"neutral","gmx_1":"laugh","g6_1":"neutral","g7_6":"neutral","mill_d_8":"neutral","gm1_7":"neutral","gm2_1":"neutral","gm2_5":"neutral","gm2_7":"neutral","gm2_9":"neutral","gm2_11":"neutral","gm2_13":"neutral","gm2_15":"neutral","gs4_2":"neutral","gs4_11":"neutral","gs4_15":"neutral","gl7_15":"neutral","g6_2":"neutral","g6_3":"neutral","g7_1":"neutral","g7_3":"neutral","g7_7":"neutral","acc_r1b":"neutral","e1_1":"neutral","e3_1":"neutral","gm4_5":"laugh","g7_9":"relieved","mill_d_7":"neutral","gs4_12":"neutral"};   /* per-line picks from the new 8-expression sets (Big Green Bear and Green only) */
 const EXPR = ["neutral","worried","surprised","thinking"], EXPR_X = { bgb:["laugh","sad","stern","relieved"], gr:["laugh","sad","stern","relieved"] };   /* extra expressions only some speakers have */
 
 /* ---------- state ---------- */
@@ -1820,6 +1823,21 @@ function monoNext(){
 function monoEnd(){ monoOn = false; clearTimeout(monoT); $("monoT").classList.remove("show"); setTimeout(()=>{ if (monoThen){ const f = monoThen; monoThen = null; f(); } $("mono").classList.remove("on"); setTimeout(()=>{ mode = "play"; holdHint = false; }, 1900); }, 1200); }
 $("mono").addEventListener("click", ()=>{ if (monoOn && monoI >= 0) monoNext(); });
 document.addEventListener("keydown", e=>{ if (monoOn && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); e.stopPropagation(); if (monoI >= 0) monoNext(); } }, true);
+
+/* Chapter 6 moves between places. When one part is finished, Big Green Bear says out loud where he is going next and why, so the player is never left guessing. */
+D.tr_2 = {sp:"bgb", ex:"thinking", t:{ko:"방앗간 안을 둘러보자. 목도리, 장갑, 서류. 그린이 말하지 않은 게 여기 있을 거야.", en:"Let's look around the mill. The scarf, the glove, the papers. What Green hasn't said must be here."}};
+D.tr_3 = {sp:"bgb", ex:"thinking", t:{ko:"이제 그린에게 다시 말을 걸어 보자. 물어볼 게 생겼어.", en:"Time to talk to Green again. I have questions now."}};
+D.tr_4 = {sp:"bgb", ex:"neutral", t:{ko:"이제 메이의 치료실로 가 보자. 메이와 해야 할 말이 있어.", en:"Now to May's clinic. I need to talk to May."}};
+D.tr_5 = {sp:"bgb", ex:"thinking", t:{ko:"이제 집으로 돌아가자. 액자를 다시 봐야겠어.", en:"Now home. I need another look at that picture frame."}};
+D.tr_6 = {sp:"bgb", ex:"neutral", t:{ko:"이제 낡은 방앗간으로 가 보자. 그린과 해야 할 말이 있어.", en:"Now to the Old Mill. I have something to say to Green."}};
+D.tr_7 = {sp:"bgb", ex:"neutral", t:{ko:"이제 광장으로 가 보자. 니니와 해야 할 말이 있어.", en:"Now to the square. I have something to say to Nini."}};
+const ch6Stage = ()=> !has("fin.on") ? 0 : !has("fin.m1") ? 1 : !(has("fin.o1") && has("fin.o2") && has("fin.o3")) ? 2 : !has("fin.s4") ? 3 : !has("fin.may2") ? 4 : !has("fin.frame") ? 5 : !has("fin.last") ? 6 : 7;
+function ch6Trans(){
+  if (ENDING || S.flash || !has("fin.on")) return;
+  const st = ch6Stage();
+  if (!has("tr.init")){ setf("tr.init"); for (let n = 2; n <= st; n++) setf("tr." + n); return; }   /* saves that are already part-way through: no catching up */
+  if (st >= 2 && !has("tr." + st)){ for (let n = 2; n <= st; n++) setf("tr." + n); setTimeout(()=>{ if (mode === "play" && !cur) startDlg("tr_" + st); }, 900); }
+}
 let ENDHOLD = "", ENDING = false;   /* ENDHOLD = the still kept on screen while an ending closes; ENDING = an ending is running (no clue prompts, no travel) */
 function endSeq(k){   /* A: the clock-tower still fades in slowly, holds 5 s. B: the photograph still is already up, holds 3.5 s. Then it fades out into the finale */
   ENDING = true; ENDHOLD = k === 1 ? "assets/still_clock_tower.webp" : "assets/still_photo_frame.webp"; mode = "modal"; $("stage").classList.add("cine");
@@ -2179,6 +2197,13 @@ function showPage(anim){
   if (!anim){ tx.textContent = full; if (last) showChoices(); return; }
   let i = 0; typeSet(tx, full, 0); typing = setInterval(()=>{ i += 1; typeSet(tx, full, i); if (i >= full.length){ clearInterval(typing); typing = null; if (last) showChoices(); } }, 22);
 }
+/* Swap an image without ever showing the previous picture under the new line: hidden until the new file is decoded. */
+function swapImg(img, src){
+  if (img.getAttribute("src") === src) return;
+  img.style.visibility = "hidden"; img.src = src;
+  const show = ()=>{ if (img.getAttribute("src") === src) img.style.visibility = ""; };
+  if (img.decode) img.decode().then(show, show); else img.onload = show;
+}
 function renderDlg(anim){
   const n = D[cur]; if (!n) return; const sp = SP[n.sp];
   { const dl = $("dlg"), big = !!((sp.por || sp.big || sp.img) && !sp.hide && (!sp.sil || sp.big)), want = !!sp.hide || big; dl.classList.toggle("big", big); if (dl.classList.contains("cap") !== want){ dl.classList.toggle("cap", want); const bg = $("dlgbg"); bg._nk = null; if (dl.classList.contains("on")) nineDraw(bg); } }   /* a line of narration uses the same box without the portrait and name ribbon */
@@ -2187,7 +2212,7 @@ function renderDlg(anim){
   const portrait = sp.por ? sp.por + ex + (n.sp === "kid" && SCAR_ON(cur) ? "_scar" : "") + ".webp" : sp.img; $("dPor").classList.toggle("silh", !!sp.sil); $("dPor").classList.toggle("pz", !!sp.por);   /* silhouette until the real portrait exists */
   if ($("dPor").getAttribute("src") !== portrait){ $("dPor").style.opacity = 0; $("dPor").src = portrait; }
   bigSide = ((sp.por || sp.big || sp.img) && !sp.hide && (!sp.sil || sp.big)) ? (n.sp === "bgb" || n.sp === "yo" ? "r" : "l") : "";   /* who gets the close-up: anyone with expression portraits, on the side away from the answers */
-  if (bigSide){ const bi = $("bPorImg"), bsrc = sp.big || portrait; if (bi.getAttribute("src") !== bsrc) bi.src = bsrc; $("bigPor").classList.toggle("spr", !sp.por && !sp.big); $("bigPor").classList.toggle("small", false); $("bigPor").classList.toggle("r", bigSide === "r"); $("bigPor").classList.toggle("flip", (bigSide === "l" && (!NOFLIP.has(n.sp) !== FLIP_TOGGLE.has(n.sp+":"+ex))) || (bigSide === "r" && FLIPR.has(n.sp))); }
+  if (bigSide){ const bi = $("bPorImg"), bsrc = sp.big || portrait; swapImg(bi, bsrc); $("bigPor").classList.toggle("spr", !sp.por && !sp.big); $("bigPor").classList.toggle("small", false); $("bigPor").classList.toggle("r", bigSide === "r"); $("bigPor").classList.toggle("flip", (bigSide === "l" && (!NOFLIP.has(n.sp) !== FLIP_TOGGLE.has(n.sp+":"+ex))) || (bigSide === "r" && FLIPR.has(n.sp))); }
   $("dPor").onload = () => { $("dPor").style.opacity = 1; };
   const tx = $("dTx"); tx.className = "tx" + (lang==="ko"?" ko":"");
   pgs = splitPages(tr(n.t)); pgi = 0; sizeDlg(pgs.reduce((a,b)=>b.length>a.length?b:a, ""));
@@ -2203,14 +2228,14 @@ function sizeDlg(text){
 /* The close-up of an NPC on the left looks toward the middle of the screen. Mirrored only here, only for people whose side carries no clue: Green and BGB (scarf side) and May (hair and satchel side) are never mirrored. */
 const SCAR_ON = id => { const m = /^f4ok_(\d+)$/.exec(id || ""); return m ? +m[1] >= 2 : /^f5/.test(id || ""); };   /* the older twin wears the ear mark from the moment the beam grazes him */
 const FLIPR = new Set(["yo"]);   /* close-ups on the right of the screen whose art looks right: mirrored so they look toward the middle */
-const NOFLIP = new Set(["gr","bgb","hl","kid","yo","mo","hz","v1","cr"]);   /* mo and hz already look to the right in their art */
-const FLIP_TOGGLE = new Set(["mo:worried","tm:surprised","tm:thinking"]);   /* expressions whose art faces the other way from the rest of that person */
+const NOFLIP = new Set(["gr","bgb","hl","kid","yo","mo","hz","ed","v1","cr"]);   /* mo and hz already look to the right in their art */
+const FLIP_TOGGLE = new Set(["mo:worried","tm:surprised","tm:thinking","ed:surprised","ed:thinking","hz:surprised"]);   /* expressions whose art faces the other way from the rest of that person */
 let STILL_ON = false, STILL_SW = 0;
 const STILLS = (() => {
   const m = { fnB_15:"assets/still_endB_wait.webp", fnB_16:"assets/still_endB_wait.webp" };
   const span = (id, a, b, src) => { for (let i = a; i <= b; i++) m[id + "_" + i] = src; };
   span("f4ok", 22, 28, "assets/still_brothers_awning.webp");   /* 23 years ago: the twins under the awning, knots on opposite shoulders */
-  span("mill_d", 6, 9, "assets/still_mill_tea.webp");           /* the Old Mill: empty cups, empty tea tin */
+  m.gmx = m.gmx_1 = "assets/still_mill_tea.webp";                /* the Old Mill: empty cups, empty tea tin, shown when the talk with Green ends */
   span("f5s2", 31, 33, "assets/still_edward_signing.webp");     /* Edward hesitates over the signature, a fox waiting at the door */
   m.ce7_1_0 = m.ce7_1_1 = "assets/still_clock_tower.webp";         /* Ending A: Nini writes it all down under the tower */
   span("fnB", 11, 14, "assets/still_photo_frame.webp");        /* the photograph, the letter and the glove behind the frame */
@@ -2323,7 +2348,7 @@ function endDlg(){ if (afterDlg){ const af = afterDlg; afterDlg = null; setTimeo
   if (has("c6.fin") && !has("c6.shown")){ setf("c6.shown"); holdHint = true; setTimeout(()=>endMono("ce6_0", startCh7), 1400); } const f5 = S.flash === 5 && has("f5.toPresent") && !has("f5.shown"); if (f5){ setf("f5.shown"); holdHint = true; setTimeout(()=>endFlash(), 900); }
   const fin = S.flash === true && has("f4.end") && !has("f4.shown"); if (fin){ setf("f4.shown"); holdHint = true; $("rain").classList.add("on"); setTimeout(()=>startFlash5(), 1600); }
   const go = PRO_GO && has("pro.done"); if (go){ PRO_GO = false; setTimeout(()=>chapterIntro(1, ()=>setSceneNow("village", 700)), 50); }
- endDlg0(); }
+ ch6Trans(); endDlg0(); }
 function endDlg0(){ $("dlg").classList.remove("on"); $("choices").classList.remove("on"); cur = null; mode = ENDING ? "modal" : "play"; clearInterval(typing); typing = null; save(); }
 
 /* inspect */
@@ -2616,7 +2641,7 @@ function jRecon(){
         +(r.dusk && dusk ? ' <span class="newclue">'+L2("기록이 서로 다르다","records differ")+'</span>' : '')
         +(on ? '<div class="jnote jpl8">'+(pl ? L2("장소: ","Place: ")+tr(PLACES[pl]) : L2("이 기록만으로는 장소를 알 수 없다.","This record does not say where."))+'</div>' : '')
         +'<div class="chips jc8">'+r.ev.map(evChip).join('')+'</div>'+(on?'<span id="anchor"></span>':'')+'</div></div>'; }).join('')
-      + '<div class="jrow jq"><div class="jt">?</div><div class="jm"><i class="mk unk"></i></div><div class="jb jnote">'+L2("아직 확인되지 않은 시간대가 있다.","Some stretches of the night are still unconfirmed.")+'</div></div></div></div>';
+      + '<div class="jrow jqu"><div class="jt">?</div><div class="jm"><i class="mk unk"></i></div><div class="jb jnote">'+L2("아직 확인되지 않은 시간대가 있다.","Some stretches of the night are still unconfirmed.")+'</div></div></div></div>';
   }
   const selPlace = reRow >= 0 && rows[reRow] ? (ROW_PLACE[rows[reRow].t] || null) : rePlace;
   let r = '<div class="jmap" id="jmap" style="left:'+JMAP.x+'px;top:'+JMAP.y+'px"><img src="'+JA("map")+'" alt="">'
@@ -2940,11 +2965,14 @@ hold("tL","arrowleft"); hold("tR","arrowright"); $("tE").addEventListener("point
 let cam = 0, last = performance.now();
 const sideBook = $("sideBook");
 function setSideOpen(on){ stage.classList.toggle("sideopen", on); sideBook.classList.toggle("on", on); sideBook.setAttribute("aria-expanded", on ? "true" : "false"); }
-sideBook.addEventListener("click", e=>{ e.stopPropagation(); if (mode === "play") setSideOpen(!stage.classList.contains("sideopen")); stage.focus(); });
+let sideT = 0, sideIn = false;
+$("side").addEventListener("pointerenter", ()=>{ if (mode !== "play") return; sideIn = true; clearTimeout(sideT); setSideOpen(true); });
+$("side").addEventListener("pointerleave", ()=>{ sideIn = false; clearTimeout(sideT); sideT = setTimeout(()=>{ if (!sideIn) setSideOpen(false); }, 5000); });   /* stays out for 5 s after the mouse leaves, then tucks away again */
 document.addEventListener("pointerdown", e=>{ if (stage.classList.contains("sideopen") && !e.target.closest("#side,#sideBook")) setSideOpen(false); }, true);
 function frame(now){
   { const sk = mode === "dlg" && $("dlg").classList.contains("on") && cur && STILLS[cur] || (ENDHOLD ? ENDHOLD : $("endcard").classList.contains("on") && /E1$/.test($("eEy").textContent) ? "assets/still_clock_tower.webp" : ""), st = $("still"), im = $("stillImg"); let want = sk;
     if (sk && im.getAttribute("src") !== sk){ if (STILL_SW) want = ""; else if (st.classList.contains("on")){ want = ""; STILL_SW = setTimeout(()=>{ im.src = sk; STILL_SW = 0; }, 1700); } else im.src = sk; }   /* a different still fades out first, then the next fades in */
+    if (want && !(im.complete && im.naturalWidth > 0 && im.getAttribute("src") === want)) want = "";   /* never fade in before the new picture has loaded (the old one used to flash) */
     st.classList.toggle("on", !!want); stage.classList.toggle("stillon", !!sk); STILL_ON = !!sk; }
   { const bp = $("bigPor"), want = mode === "dlg" && $("dlg").classList.contains("on") && !!bigSide && !STILL_ON; if (bp.classList.contains("on") !== want) bp.classList.toggle("on", want); }
   { const hide = mode !== "play"; if (stage.classList.contains("nomenu") !== hide){ stage.classList.toggle("nomenu", hide); if (hide) setSideOpen(false); } }   /* the menu is only there while exploring: any dialogue, pause, modal, scene change or journal hides and folds it, and it comes back by itself */
@@ -3071,6 +3099,10 @@ setInterval(()=>{ S.x = Math.round(P.x); save(); }, 4000);
   }
   requestAnimationFrame(frame);
 })();
+
+/* Warm the cache with every portrait and still so a new line never waits on a file (the previous picture used to show for a second). */
+setTimeout(()=>{ const list = []; Object.entries(SP).forEach(([key, sp])=>{ if (sp.por) [...EXPR, ...(EXPR_X[key] || [])].forEach(x=>{ list.push(sp.por + x + ".webp"); if (key === "kid" && EXPR.includes(x)) list.push(sp.por + x + "_scar.webp"); }); if (sp.big) list.push(sp.big); });
+  Object.values(STILLS).forEach(u=>list.push(u)); [...new Set(list)].forEach((u, i)=>setTimeout(()=>{ const im = new Image(); im.src = u; }, i * 60)); }, 2500);
 window.__bv = { D, NOTES, SP, EV, ENDINGS, ACC, SMALL, FOLLOW, KCON, GATE_T, CHT, UI, setScene, setSceneNow, lamp:lampLight, light:()=>({l:bgb._L&&bgb._L.l,r:bgb._L&&bgb._L.r,cool:bgb._L&&bgb._L.cool}), P, S, setx:x=>{P.x=x}, IA, openCF, closeCF, startDlg, inspect, setLang, getMode:()=>mode, tab:i=>{tab=i; sub=false; if(mode==="cf") renderCF();}, sub:(t,v)=>{tab=t; sub=true; PV=!!v; if(mode==="cf") renderCF();}, addEv, EV, D, showEnd4, EV_META, evGroups, evStatements, PEOPLE, personView, metPeople, skipTo, evIcon, EI, GI, QS, TL_DATA, PLACES, PERSON_UI, GROUP_NAME };
 requestAnimationFrame(frame);
   if (typeof nineAll === "function") requestAnimationFrame(nineAll);
