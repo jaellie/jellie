@@ -46,9 +46,12 @@ project renders with the Built-in pipeline until one is assigned. To switch:
 
 `.github/workflows/unity-tests.yml` compiles the project and runs EditMode + PlayMode tests with
 `game-ci/unity-test-runner` v4.4.0 (pinned by commit) on Unity 6000.0.85f1, on every push to the
-development branch or by manual dispatch. It needs three repository secrets for a **Unity Personal**
-license (current GameCI documentation): `UNITY_LICENSE` (contents of `Unity_lic.ulf` from a Unity Hub
-activation), `UNITY_EMAIL`, `UNITY_PASSWORD`. Without them the job prints a notice and skips Unity.
+development branch or by manual dispatch. For a **Unity Personal** seat it needs two repository
+secrets: `UNITY_EMAIL` and `UNITY_PASSWORD` of a dedicated CI Unity account with two-factor
+authentication off. No license file: the GameCI CLI (v0.1.72, pinned) activates Personal seats with
+the account, and a Personal `.ulf` is machine-bound and fails in CI containers. (The GameCI docs page
+still lists three secrets; the CLI source is what runs.) Without the secrets the job prints a notice
+and skips Unity.
 Results appear as the "Unity test results" check and the `unity-test-results` artifact.
 
 PlayMode smoke tests (`Tests/PlayMode`): P holds the car, leaving P without the brake is

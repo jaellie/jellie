@@ -5,19 +5,52 @@
 
 ## 0. 가장 중요한 전제
 
-- **Unity 코드(C#)는 한 번도 컴파일하거나 실행하지 않았습니다.** 작업 환경에 Unity Editor와 C# 컴파일러가 없었습니다. C# 약 8,000줄(64개 파일)은 모두 "작성만 된" 상태입니다.
+- **Unity 코드(C#)는 한 번도 컴파일하거나 실행하지 않았습니다.** 작업 환경에 Unity Editor와 C# 컴파일러가 없었습니다. C# 약 9,000줄(72개 파일)은 모두 "작성만 된" 상태입니다.
 - 실제로 동작을 확인한 것은 **브라우저 미리보기(three.js)** 뿐입니다. C#과 같은 로직과 같은 설정값으로 포팅했고, headless Chromium 자동 테스트 **82/82 통과**. 마우스, 키보드, 터치는 모두 시뮬레이션 입력입니다.
 - 실제 폰, 실제 터치스크린, 바닥에 둔 실제 키보드(발 사용)는 **테스트하지 않았습니다**.
 - 그래서 다음 단계 1순위는 **Unity에서 프로젝트를 열어 컴파일 오류를 잡고 EditMode 테스트를 돌리는 것**입니다.
 - **현재 Claude 작업 환경 점검 결과:** Unity Editor, .NET SDK, Mono 모두 없고, Unity 다운로드 서버는 네트워크 정책으로 차단되며 Unity 라이선스도 없습니다. **이 환경에서는 Unity 컴파일과 테스트가 불가능합니다.**
 - **검증 방법 (결정됨):** A) GitHub Actions + GameCI가 기본, B) 사용자 로컬 Unity가 대안.
-  - **GameCI 요구사항 확인 (2026-10-31):** GameCI 공식 문서 저장소(최신 커밋 2026-10-24) 기준, Unity Personal은 Secrets 3개 `UNITY_LICENSE`(Unity Hub로 활성화해 생긴 `Unity_lic.ulf`의 내용), `UNITY_EMAIL`, `UNITY_PASSWORD`가 모두 필요합니다(Pro는 `UNITY_SERIAL`). game-ci.com 자체는 이 세션 네트워크에서 차단되어 문서 원본 저장소로 확인했습니다.
+  - **GameCI 요구사항 재확인 (2026-10-31, 소스 코드 기준):** 문서가 아니라 실제로 실행되는 코드를 읽어 확인했습니다.
+    - unity-test-runner v4.4.0은 직접 활성화하지 않고 `game-ci/cli`(v0.1.72로 고정)를 실행하며, 자격 증명은 CLI가 환경 변수에서 읽습니다.
+    - CLI의 라이선스 방식 선택 순서: 라이선스 파일 → 시리얼 → 플로팅 서버 → **personal**. `UNITY_EMAIL` + `UNITY_PASSWORD`만 있으면 **personal** 방식으로 결정됩니다.
+    - **Unity Personal에 필요한 Secrets는 2개: `UNITY_EMAIL`, `UNITY_PASSWORD`.** 계정 자격 증명은 **필요합니다**(무료 Personal 좌석은 Unity 계정으로 로그인해 활성화하는 방식이라, 자격 증명 없이 활성화하는 방법이 없음).
+    - **`UNITY_LICENSE`(.ulf)는 쓰지 않습니다.** Personal `.ulf`는 만든 기기에 묶여 있어 CI 컨테이너에서 "Machine bindings don't match"로 실패합니다(CLI 소스 주석). Unity는 Personal의 수동(오프라인) 활성화도 없앴습니다.
+    - **2단계 인증(2FA)은 꺼져 있어야 합니다.** 자동 활성화는 인증 코드를 입력할 수 없습니다. 그래서 **개인 계정이 아닌 CI 전용 Unity 계정**을 권장합니다.
+    - Pro/Plus는 `UNITY_SERIAL` 추가. `.ulf`는 Enterprise/Industry용.
+    - 참고: GameCI 문서 페이지(2026-10-24)는 아직 Secrets 3개로 안내하지만, 실제 코드와 맞지 않는 오래된 안내입니다. game-ci.com은 이 세션에서 차단되어 원본 저장소(문서, unity-test-runner, cli)를 받아 확인했습니다.
+    - 남은 불확실성: 실제 계정으로 활성화되는지는 첫 CI 실행에서만 확인됩니다.
   - **Unity 버전:** `6000.0.85f1`. GameCI Docker 이미지(Linux base, Android)가 있는 가장 최신 6000.0 패치입니다(Docker Hub 확인, 이미지 갱신일 2026-10-20). `ProjectVersion.txt`와 CI에 고정했습니다.
   - **워크플로:** `.github/workflows/unity-tests.yml` (unity-test-runner v4.4.0, 커밋 SHA 고정, 개발 브랜치 push와 수동 실행에서만 동작, 최소 권한). Secrets가 없으면 Unity 단계를 건너뜁니다.
-  - **현재 상태:** Secrets 미설정 → **Unity 컴파일·테스트는 아직 한 번도 실행되지 않음.**
+  - **현재 상태:** Secrets 미설정. 워크플로 실행 #1은 "성공"이지만 **Secrets 없음 → Unity 단계 건너뜀**이었습니다. **Unity 컴파일·테스트는 아직 한 번도 실행되지 않음.**
 
 미리보기 링크(비공개): https://claude.ai/artifact/GSutqJuo2tSdP6aj9yFxaP
 (저장소 사본: `Tools/browser-preview/index.html`, 테스트: `Tools/browser-preview/run-tests.js`)
+
+---
+
+## 0-1. 기능별 상태: 구현 / 테스트 / 미검증 (2026-10-31)
+
+용어:
+- **구현** = C# 코드 작성 완료. **Unity에서 컴파일한 적 없음.**
+- **테스트(미리보기)** = 같은 로직을 옮긴 브라우저 미리보기에서 자동 테스트 통과. Unity 동작을 증명하지는 않음.
+- **테스트(정적)** = Python 스크립트로 파일 내용 검사(JSON, 키, 괄호 균형 등). 실행 테스트 아님.
+- **미검증** = 어떤 실행 환경에서도 확인하지 않음.
+
+| 기능 | 구현 | 테스트한 방법 | Unity 컴파일 | Unity 테스트 | 실기기 |
+|---|---|---|---|---|---|
+| 차량 물리 (WheelCollider, 크리프, 제동, 저항) | ✅ | 미리보기(단순 모델) | ❌ 미검증 | EditMode·PlayMode 작성, 미실행 | ❌ |
+| 변속기 P/R/N/D, 인터록 | ✅ | 미리보기 | ❌ | EditMode·PlayMode 작성, 미실행 | ❌ |
+| 사실적 조향 (±540°, 35°, 애커먼) | ✅ | 미리보기 | ❌ | EditMode·PlayMode 작성, 미실행 | ❌ |
+| 원 조향 (어디서나, 떨림 제거) | ✅ | 미리보기 (에뮬레이션 터치) | ❌ | EditMode 작성, 미실행 | ❌ 실제 터치 미확인 |
+| 가운데 마우스 = 터치 | ✅ | 미리보기 | ❌ | 없음 | ❌ |
+| 발 페달 키보드 + 보정 마법사 | ✅ | 미리보기 (시뮬레이션 키) | ❌ | EditMode 작성, 미실행 | ❌ 실제 키보드 미확인 |
+| 1인칭 운전석, 거울, 카메라 전환 | ✅ | 미리보기 (일부) | ❌ | 없음 | ❌ |
+| HUD, 세로 기어 선택기, (P) 버튼 | ✅ | 미리보기 | ❌ | 없음 | ❌ |
+| 현지화 (한국어/영어, 저장, 변경 이벤트) | ✅ | 정적 (키 143개, 중복 0, 자리표시자 불일치 0, 코드 키 139개 존재) | ❌ | EditMode 작성, 미실행 | ❌ |
+| 첫 실행 고지 + 언어 선택 (임시 화면) | ✅ | 없음 (미리보기에 미포함) | ❌ | 없음 (PlayMode는 우회) | ❌ |
+| CI 워크플로 (GameCI) | ✅ | YAML 문법 검사, GitHub에서 실행 #1 (Unity 건너뜀) | - | - | - |
+| AI 교통 (Phase C~F) | ❌ 미착수 (기준선 검증 후) | - | - | - | - |
 
 ---
 
@@ -55,7 +88,7 @@
 
 - Claude는 `ccr-21c0ed33-uzs8xd`에서 작업하고, Codex는 별도 디자인 브랜치에서 작업합니다(브랜치 이름 확인 필요, 2026-10-31 기준 원격에 없음).
 - Codex 작업을 덮어쓰지 않습니다. 검토하지 않은 변경은 병합하지 않습니다. Codex 변경은 병합 전에 호환성(API, 문자열 키, 레이어, 도로 형상)을 검토합니다.
-- 두 쪽이 공유하는 규칙은 `INTEGRATION.md`(작성 예정)에 둡니다.
+- 두 쪽이 공유하는 규칙은 `INTEGRATION.md`에 둡니다.
   - 언어·고지 API와 문자열 키
   - 시작 화면 순서
   - 도로 형상 계약: 단위·축, 차선 데이터는 `RoadNetwork`가 기준, 장식물 금지 구역, 레이어·태그, 신호등·표지판 프리팹 인터페이스
@@ -247,7 +280,7 @@
 
 ## 8. 알려진 문제와 위험
 
-1. C# 컴파일 오류 가능성: 64개 파일이 한 번도 빌드되지 않았습니다.
+1. C# 컴파일 오류 가능성: 72개 파일이 한 번도 빌드되지 않았습니다.
 2. `ProjectSettings`가 거의 비어 있습니다(`ProjectVersion.txt`만 있음). Active Input Handling을 수동으로 Input System으로 설정해야 합니다.
 3. `manifest.json`의 패키지 버전은 추정치입니다.
 4. URP 에셋이 없어서 Built-in으로 렌더링됩니다. 휴대폰 빌드에서는 `Shader.Find`로 찾는 셰이더(`Unlit/Texture` 등)를 Always Included Shaders에 넣어야 합니다.
@@ -283,8 +316,8 @@
 - 임시 고지 화면 허용(필수·기능 동작, 로직 변경 없이 교체 가능).
 
 ### 결정 대기 사항
-- **사용자 작업:** GitHub Secrets 3개 등록(아래 "검증 절차"). 등록 후 Claude가 CI를 실행하고 결과를 이 문서에 기록.
-- Codex 디자인 브랜치 이름.
+- **사용자 작업:** GitHub Secrets 2개 등록(아래 "검증 절차"). 등록 후 Claude가 CI를 실행하고 결과를 이 문서에 기록.
+- Codex 디자인 브랜치 이름. (2026-10-31: Codex가 GitHub에 접근하지 못함. 전달용 소스 압축본을 사용자에게 제공)
 - 원 조향 감도(1:1)와 반응 속도(70 ms)가 실제 기기에서 괜찮은지.
 - 앞바퀴 최대 각도 35° 유지 또는 38~40°로 상향.
 - 발 페달 응답과 자동 제동 값.
@@ -299,24 +332,21 @@
 | `TESTING.md` | Unity Play Mode 테스트 표(M1, 운전석, 컨트롤, 조향) |
 | `PEDALS.md` | 발 페달 기술 검토(10가지 질문 답변), 설정값, 설치 방법, 테스트 계획 |
 | `ROADMAP.md` | Phase A 점검 결과, Phase C~F 계획, AI 교통 요구사항·수용 기준, Codex 호환 계약 |
-| `INTEGRATION.md` | (작성 예정) Codex와의 연동 계약 |
+| `INTEGRATION.md` | Codex와의 연동 계약 (시작 화면 인터페이스, 문자열 키, HUD 규칙, 도로 계약) |
 | `Tools/browser-preview/` | 미리보기 HTML과 자동 테스트(Node + Playwright) |
 
 ## 검증 절차 (사용자 1회 작업)
 
-GameCI 문서 기준 Unity Personal 설정. **비밀번호와 라이선스 내용은 채팅에 붙여넣지 말고 GitHub에만 입력하세요.**
-1. Unity Hub 설치 → CI에 쓸 Unity 계정으로 로그인. 개인 계정 대신 **CI 전용 Unity 계정**을 만들면 노출 위험이 줄어듭니다.
-2. Unity Hub → Preferences(설정) → Licenses → **Add** → **Get a free personal license**. 라이선스가 이미 보여도 Add를 눌러야 `.ulf` 파일이 생성됩니다.
-3. `.ulf` 파일 위치:
-   - Windows: `C:\ProgramData\Unity\Unity_lic.ulf`
-   - macOS: `/Library/Application Support/Unity/Unity_lic.ulf`
-   - Linux: `~/.local/share/unity3d/Unity/Unity_lic.ulf`
-4. GitHub `jaellie/jellie` → Settings → Secrets and variables → Actions → New repository secret:
-   - `UNITY_LICENSE`: `.ulf` 파일 내용 전체
-   - `UNITY_EMAIL`: Unity 계정 이메일
-   - `UNITY_PASSWORD`: Unity 계정 비밀번호
-5. 등록했다고 알려주면 Claude가 워크플로를 실행하고, 로그를 읽고, 확인된 오류만 고칩니다.
-- 참고: Unity Personal 사용 조건(매출 기준 등)은 계정 소유자가 확인해야 합니다. 2단계 인증 계정의 CI 동작은 GameCI 문서에 명시되어 있지 않아 첫 실행에서 확인합니다.
+Unity Personal + game-ci/cli v0.1.72 기준(소스 코드로 확인). **비밀번호는 채팅에 붙여넣지 말고 GitHub 설정 화면에만 입력하세요.**
+1. **CI 전용 Unity 계정**을 새로 만듭니다(개인 계정과 분리하면 노출 시 피해가 작음). 이 계정은 **2단계 인증을 켜지 마세요**(CI가 인증 코드를 입력할 수 없음). 비밀번호는 다른 곳에서 쓰지 않는 길고 고유한 것으로.
+2. 그 계정으로 Unity에 한 번 로그인해 Personal 이용 약관에 동의합니다(Unity Hub 또는 id.unity.com). `.ulf` 파일은 **필요 없습니다**.
+3. GitHub `jaellie/jellie` → Settings → Secrets and variables → Actions → New repository secret:
+   - `UNITY_EMAIL`: CI 전용 계정 이메일
+   - `UNITY_PASSWORD`: 그 비밀번호
+   - `UNITY_LICENSE`는 등록하지 않습니다(등록하면 CLI가 파일 방식을 먼저 시도하고, 기기 바인딩 불일치로 실패한 뒤 계정 방식으로 넘어감).
+4. 등록했다고 알려주면 Claude가 워크플로를 실행하고, 로그를 읽고, 확인된 오류만 고칩니다.
+- 보안: 워크플로는 개발 브랜치 push와 수동 실행에서만 돌고(포크 PR 없음), 외부 액션은 커밋 SHA로 고정, 토큰 권한은 읽기 + 테스트 결과 체크 쓰기뿐입니다. GitHub는 로그에서 Secret 값을 가립니다. Personal 좌석은 CLI가 작업 끝에 반납합니다.
+- 참고: Unity Personal 사용 조건(매출 기준 등)은 계정 소유자가 확인해야 합니다.
 - 대안 B(로컬): Unity Hub로 6000.0.85f1 설치 → 프로젝트 열기 → Console 빨간 오류 전체 전달 → Test Runner에서 EditMode·PlayMode 실행 결과 전달.
 
 ## 검증 결과 (확인된 것만 기록)
@@ -327,6 +357,8 @@ GameCI 문서 기준 Unity Personal 설정. **비밀번호와 라이선스 내�
 | EditMode 테스트 | CI | **미실행** | - |
 | PlayMode 스모크 테스트 | CI | **미실행** | - |
 | 브라우저 미리보기 자동 테스트 | headless Chromium | 82/82 통과 (Unity 아님) | 2026-10-31 |
+| CI 워크플로 동작 (Secrets 없음 경로) | GitHub Actions 실행 #1 (a5c5a5b) | 성공: 안내 출력 후 Unity 단계 건너뜀. **Unity는 실행되지 않음** | 2026-10-31 |
+| strings.json 정적 검사 | Python | 키 143, 중복 0, 자리표시자 불일치 0, 코드 키 139개 모두 존재 | 2026-10-31 |
 
 ## 변경 기록
 
@@ -335,3 +367,4 @@ GameCI 문서 기준 Unity Personal 설정. **비밀번호와 라이선스 내�
 | 2026-10-31 | 최초 작성 (M1 ~ 원 조향 떨림 제거까지) |
 | 2026-10-31 | Claude/Codex 협업 방식, 언어 선택·면책 고지 요구사항, AI 교통 요구사항과 Phase C~F 순서·결정론 원칙, 기준선 검증 관문, Claude 환경에서 Unity 실행 불가 확인 추가 |
 | 2026-10-31 | GameCI 요구사항 확인(Personal: Secrets 3개), Unity 6000.0.85f1 고정, CI 워크플로·PlayMode 스모크 테스트 추가, 현지화 기능 계층·문자열 이동·첫 실행 고지(임시 화면)·INTEGRATION.md 작성. Unity 미검증 |
+| 2026-10-31 | GameCI 라이선스 재확인(소스 코드): Personal은 `UNITY_EMAIL`+`UNITY_PASSWORD` 2개, `.ulf` 불필요(CI에서 기기 바인딩으로 실패), 2FA 끈 CI 전용 계정. 워크플로를 2개 Secrets와 CLI v0.1.72 고정으로 수정. 기능별 구현/테스트/미검증 표 추가. CI 실행 #1(건너뜀 경로) 기록 |

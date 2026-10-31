@@ -1,10 +1,11 @@
 # Compiles the Unity project and runs its EditMode + PlayMode tests with GameCI.
 #
-# Required repository secrets (Unity Personal license, per GameCI docs as of 2026-10):
-#   UNITY_LICENSE   contents of Unity_lic.ulf from a local Unity Hub activation
-#   UNITY_EMAIL     Unity account email
-#   UNITY_PASSWORD  Unity account password
-# Without them the job reports a notice and skips the Unity steps instead of failing.
+# Required repository secrets (Unity Personal seat):
+#   UNITY_EMAIL     email of a Unity account dedicated to CI
+#   UNITY_PASSWORD  its password (the account must not use two-factor authentication)
+# No license file: game-ci/cli v0.1.72 (what unity-test-runner v4.4.0 runs) activates Personal seats
+# with the account ("personal" method). A Personal .ulf is machine-bound and fails in CI containers
+# ("Machine bindings don't match"). Without the secrets the job prints a notice and skips Unity.
 #
 # Safety: runs only on pushes to the development branch and manual dispatch (never on
 # pull_request_target / forks); third-party actions are pinned to commit SHAs; the token
@@ -36,15 +37,14 @@ jobs:
       - name: Check Unity secrets
         id: secrets
         env:
-          HAS_LICENSE: ${{ secrets.UNITY_LICENSE != '' }}
           HAS_EMAIL: ${{ secrets.UNITY_EMAIL != '' }}
           HAS_PASSWORD: ${{ secrets.UNITY_PASSWORD != '' }}
         run: |
-          if [ "$HAS_LICENSE" = "true" ] && [ "$HAS_EMAIL" = "true" ] && [ "$HAS_PASSWORD" = "true" ]; then
+          if [ "$HAS_EMAIL" = "true" ] && [ "$HAS_PASSWORD" = "true" ]; then
             echo "configured=true" >> "$GITHUB_OUTPUT"
           else
             echo "configured=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Unity secrets are not configured (UNITY_LICENSE, UNITY_EMAIL, UNITY_PASSWORD). Skipping Unity compile and tests."
+            echo "::notice::Unity secrets are not configured (UNITY_EMAIL, UNITY_PASSWORD). Skipping Unity compile and tests."
           fi
 
       - name: Checkout
@@ -64,12 +64,14 @@ jobs:
         if: steps.secrets.outputs.configured == 'true'
         uses: game-ci/unity-test-runner@32e57712352b500e17974b245a6dce9e11a73213 # v4.4.0
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
+          # The Unity version comes from ProjectSettings/ProjectVersion.txt (6000.0.85f1);
+          # the CLI ignores unityVersion for full projects.
           projectPath: DrivingPracticeSimulator
-          unityVersion: 6000.0.85f1
+          # Pinned CLI; with only UNITY_EMAIL + UNITY_PASSWORD it resolves to the "personal" licensing method.
+          cliVersion: v0.1.72
           testMode: all
           artifactsPath: test-artifacts
           githubToken: ${{ secrets.GITHUB_TOKEN }}
