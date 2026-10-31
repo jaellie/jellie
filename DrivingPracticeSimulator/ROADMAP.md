@@ -28,17 +28,99 @@ simulated touch) and `TouchSteeringController` provide drag steering. Also added
 keyboard with a calibration wizard, touch pedals, vertical gear selector, turn signals / hazard /
 headlights / wipers (`VehicleAccessories`, which covers A8), and the driving HUD.
 
-## Plan for later phases (not started)
+## Plan for later phases (not started; blocked until the Unity baseline is verified)
 
-- **C: one intersection.** Road-network data (`RoadNetwork` ScriptableObject): road segments with
-  lane count/width (3.0–3.5 m urban lanes), right-hand traffic, curb radii sized for the car's
-  ≈6 m outer turning radius. Mesh generation for asphalt, lane paint (white dashed lane lines,
-  yellow center line, stop lines, 횡단보도), curbs and sidewalks. One signalized 4-way intersection.
-- **D: three AI cars.** Lane graph (lanes → connectors through intersections) generated from the
-  road network. Kinematic AI on splines (no WheelColliders), with IDM-style car-following,
-  smooth braking at stop lines on red/amber, and a signal phase controller.
-- **E: small network.** Several intersections, side streets, narrow roads, parked cars, signs and
-  speed limits (Korean urban defaults: 50 km/h arterials, 30 km/h school zones), 5–10 AI cars
-  with distance-based LOD (cull or freeze far vehicles).
-- **F: evaluation.** Red-light, stop-line, lane-departure, speed-limit, collision and turn-signal
-  checks using the same lane graph. Penalties are filtered when the AI caused the event.
+**Gate:** no Phase C–F code until the project compiles in Unity, the EditMode tests pass, and the
+baseline driving checks (creep, braking, P hold, shift interlocks, steering) pass in Play Mode.
+See PROGRESS.md §9.
+
+**Core requirement:** the practice town has **active AI traffic**, not static roads with
+decorative cars. Every phase below builds toward the capability list, verified one step at a time.
+
+### AI traffic capabilities (target by end of Phase E/F)
+
+| # | Capability | First phase | Notes |
+|---|---|---|---|
+| T1 | Follow lanes and the road network | D | Lane graph paths, smooth speed on curves |
+| T2 | Obey traffic lights and stop lines | D | Stop before the line on red, and on amber if it can stop comfortably |
+| T3 | Keep safe following distance | D | IDM-style car following (time gap ≈ 1.5 s, min gap ≈ 2 m) |
+| T4 | Slow and stop for vehicles ahead | D | Includes the player's car, stopped or slow |
+| T5 | Turn at intersections | D | Left/right/straight connectors, lower speed through turns |
+| T6 | Use turn signals | D | Signal ≥ 30 m (or ≥ 3 s) before a turn or lane change; visible lamps |
+| T7 | Respond to the player's vehicle | D (basic), E | Treat the player as an obstacle/leader; wait when the player blocks a crossing path |
+| T8 | Yield when required | E | Unsignalized junctions, permissive left turns, merging, pedestrians later |
+| T9 | Basic lane changes where permitted | E | Only on dashed lines, gap acceptance, signal first; never in intersections |
+| T10 | Avoid collisions when reasonably possible | D–E | Conflict-zone reservation in intersections, emergency braking; a crash is a test failure, not a rare event |
+
+### Phase C: one functional Korean-style intersection
+- `RoadNetwork` data (ScriptableObject, owned by gameplay):
+  - nodes, road segments and lanes, with width 3.0–3.5 m
+  - right-hand traffic, lane markings typed (center line yellow solid/double, lane line white dashed/solid)
+  - stop lines, crosswalks (횡단보도)
+  - curb radii checked against the car's ≈ 6 m outer turning radius
+- One signalized 4-way intersection. `TrafficSignalController` runs fixed phases:
+  - green → amber 3 s → all-red 1–2 s
+  - protected or permissive left turn: configurable, Korean conventions to confirm
+- Generated road meshes: asphalt, paint, curbs, sidewalks. Lane-graph connectors pass through the intersection.
+- Gizmo/debug view of lanes, connectors, stop lines and signal states.
+- **Acceptance:**
+  - the player can drive every movement (straight/left/right) within lane width at realistic speeds
+  - geometry is reviewed against the turning radius
+  - signal timing is deterministic
+  - EditMode tests cover the lane graph (connectivity, connector continuity, lane widths)
+
+### Phase D: three AI vehicles, validated
+- Kinematic AI on lane-graph splines: no WheelColliders, so they're cheap and deterministic.
+  - Kinematic rigidbody + trigger collider; contact with the player is detected and counted.
+- Behavior state machine: Cruise → Follow → ApproachStop → Stopped → Proceed → Turn. Covers T1–T6, basic T7, T10.
+- Decision logic (IDM, signal stop decision, signal timing, conflict check) lives in engine-free
+  `DrivingSim.Core` classes, so it can be unit tested like the existing transmission and pedal logic.
+- **Acceptance (automated scenario tests, see "Determinism" below):**
+  - red-light stop before the line in 100 % of seeded runs
+  - correct queueing behind a stopped car with gap ≥ min gap
+  - all three cars complete 20 signal cycles with **zero AI–AI collisions**
+  - turns follow connectors with signals on
+
+### Phase E: small interconnected network, 5–10 AI vehicles
+- 3–5 intersections (signalized plus at least one unsignalized), side streets, a narrow road,
+  parked cars, signs and speed limits (Korean urban defaults: 50 km/h arterials, 30 km/h school zones).
+- Route planning on the lane graph (random but seeded destinations), spawning and despawning out of
+  sight, distance-based LOD (far vehicles update less often or freeze off-screen).
+- Adds T8 (yield rules), T9 (lane changes on permitted markings with gap acceptance) and full T7
+  (waiting for the player, not cutting in front).
+- **Acceptance:**
+  - 10 AI cars run 10 simulated minutes with zero AI–AI collisions and no deadlock (every car keeps moving within N signal cycles)
+  - stable 30 FPS on the target Android device
+
+### Phase F: complex interactions and driving assessment
+- Player evaluation on the same lane graph: red light, stop line, lane departure, speed limit,
+  collision, turn-signal use, yielding.
+- **Fault attribution:** a penalty is withheld when an AI vehicle caused the situation (AI violated a
+  rule, or entered the player's reserved conflict zone). Assessment logs keep both sides' state.
+- More complex interactions: unprotected left turns against oncoming traffic, merging, U-turn points, pedestrians (optional).
+
+### Determinism and testability (all AI phases)
+- AI simulation runs in `FixedUpdate` with a fixed timestep. No `Time.deltaTime`-dependent logic,
+  no `Random` without an explicit seed. Spawn, routes and signal offsets come from one seed.
+- Pure decision logic in `DrivingSim.Core` with EditMode tests (IDM, stop decision, gap acceptance,
+  yield rules, signal state machine).
+- **Scenario PlayMode tests:** scripted situations (red light ahead, stopped leader, player
+  blocking the intersection, lane change with a gap and without one) run headless in CI with fixed
+  seeds and assert outcomes (stopped before the line, minimum gap, no collision, finished route).
+- Long-run soak test: N simulated minutes at accelerated time with collision and deadlock counters.
+- A debug overlay showing each AI's state, target speed, leader, signal and reserved conflict zone.
+
+### Compatibility contract with Codex (environment and visuals)
+Codex owns visual design and decorative assets; gameplay owns the road network data and lane paths.
+Both work to these rules, which go into `INTEGRATION.md` before Phase C starts:
+- **Units and axes:** meters, Y up, +Z forward, right-hand traffic. Road pieces use a documented pivot and connection points.
+- **Source of truth:** lane widths, lane centerlines, stop lines, crosswalk positions and intersection
+  boundaries come from `RoadNetwork`. Decorative meshes must not move them; visual markings are generated
+  from (or validated against) the same data.
+- **Keep-out zones:** decorative objects (buildings, trees, signs, parked-car props) stay outside
+  lanes, crosswalks and sight-triangle zones at intersections. Colliders on decoration only where intended.
+- **Layers and tags:** a fixed list (e.g. Road, Vehicle, AIVehicle, Decoration, UI) so physics, AI
+  sensing and cameras agree.
+- **Traffic light and sign visuals:** Codex supplies prefabs exposing a small interface (set lamp state, show sign
+  value). Gameplay drives the state.
+- A validation tool (editor menu) reports decoration that overlaps lanes or keep-out zones.
