@@ -317,6 +317,7 @@ namespace DrivingSim.Tests
             Press(v, true, true);
             Assert.AreEqual(PedalValidationStep.Failed, v.Step);
             Assert.AreEqual(1, v.WrongPedalPresses);
+            Assert.AreEqual(PedalValidationFailure.AcceleratorDuringBrakePrompt, v.Failure);
         }
 
         [Test]

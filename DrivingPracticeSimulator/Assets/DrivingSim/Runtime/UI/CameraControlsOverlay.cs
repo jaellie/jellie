@@ -1,4 +1,5 @@
 using DrivingSim.Cameras;
+using DrivingSim.Localization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -49,18 +50,18 @@ namespace DrivingSim.UI
 
             // Top-right cluster: [view] [FOV - / value / +]
             RectTransform topRight = Row("TopRight", safe.transform, new Vector2(1f, 1f), new Vector2(-24f, -24f));
-            overlay.viewButton = MakeButton("ViewButton", topRight, new Vector2(170f, 84f), "1인칭", font, out overlay.viewLabel);
+            overlay.viewButton = MakeButton("ViewButton", topRight, new Vector2(170f, 84f), Loc.T("camera.toFirstPerson"), font, out overlay.viewLabel);
 
             var fovGroup = Row("FovGroup", topRight, new Vector2(1f, 1f), Vector2.zero);
             overlay.cockpitOnlyGroup = fovGroup.gameObject;
             overlay.fovDownButton = MakeButton("FovDown", fovGroup, new Vector2(84f, 84f), "−", font, out _);
-            overlay.fovLabel = MakeText("FovValue", fovGroup, new Vector2(140f, 84f), "시야 65°", font, 30);
+            overlay.fovLabel = MakeText("FovValue", fovGroup, new Vector2(140f, 84f), Loc.T("camera.fov", 65), font, 30);
             overlay.fovUpButton = MakeButton("FovUp", fovGroup, new Vector2(84f, 84f), "+", font, out _);
 
             // Look buttons flank the steering indicator at the bottom center, clear of the
             // right-edge gear selector and the pedal zones.
-            overlay.lookLeftButton = MakeBottomButton("LookLeft", safe.transform, new Vector2(-340f, 24f), "< 왼쪽 보기", font);
-            overlay.lookRightButton = MakeBottomButton("LookRight", safe.transform, new Vector2(340f, 24f), "오른쪽 보기 >", font);
+            overlay.lookLeftButton = MakeBottomButton("LookLeft", safe.transform, new Vector2(-340f, 24f), "camera.lookLeft", font);
+            overlay.lookRightButton = MakeBottomButton("LookRight", safe.transform, new Vector2(340f, 24f), "camera.lookRight", font);
 
             // At runtime AddComponent already ran OnEnable before the references above existed.
             if (Application.isPlaying && overlay.isActiveAndEnabled) overlay.Subscribe();
@@ -81,6 +82,7 @@ namespace DrivingSim.UI
             if (fovUpButton != null) fovUpButton.Pressed += OnFovUp;
             controller.ModeChanged += OnModeChanged;
             controller.CockpitFovChanged += OnFovChanged;
+            LocalizationService.LanguageChanged += OnLanguageChanged;
             OnModeChanged(controller.Mode);
             OnFovChanged(controller.cockpitFov);
         }
@@ -96,11 +98,18 @@ namespace DrivingSim.UI
             if (fovUpButton != null) fovUpButton.Pressed -= OnFovUp;
             controller.ModeChanged -= OnModeChanged;
             controller.CockpitFovChanged -= OnFovChanged;
+            LocalizationService.LanguageChanged -= OnLanguageChanged;
             controller.SetLookLeft(false);
             controller.SetLookRight(false);
         }
 
         void OnViewPressed() => controller.ToggleFirstPerson();
+
+        void OnLanguageChanged(DrivingSim.Core.Language _)
+        {
+            OnModeChanged(controller.Mode);
+            OnFovChanged(controller.cockpitFov);
+        }
         void OnFovDown() => controller.AdjustCockpitFov(-controller.fovStep);
         void OnFovUp() => controller.AdjustCockpitFov(controller.fovStep);
 
@@ -108,7 +117,7 @@ namespace DrivingSim.UI
         {
             bool cockpit = mode == CameraViewMode.Cockpit;
             // The label names the view the button switches to.
-            if (viewLabel != null) viewLabel.text = cockpit ? "3인칭" : "1인칭";
+            if (viewLabel != null) viewLabel.text = Loc.T(cockpit ? "camera.toThirdPerson" : "camera.toFirstPerson");
             if (cockpitOnlyGroup != null) cockpitOnlyGroup.SetActive(cockpit);
             if (lookLeftButton != null) lookLeftButton.gameObject.SetActive(cockpit);
             if (lookRightButton != null) lookRightButton.gameObject.SetActive(cockpit);
@@ -116,7 +125,7 @@ namespace DrivingSim.UI
 
         void OnFovChanged(float fov)
         {
-            if (fovLabel != null) fovLabel.text = $"시야 {Mathf.RoundToInt(fov)}°";
+            if (fovLabel != null) fovLabel.text = Loc.T("camera.fov", Mathf.RoundToInt(fov));
         }
 
         static void EnsureEventSystem()
@@ -177,9 +186,10 @@ namespace DrivingSim.UI
             return go.GetComponent<HoldButton>();
         }
 
-        static HoldButton MakeBottomButton(string name, Transform parent, Vector2 offset, string label, Font font)
+        static HoldButton MakeBottomButton(string name, Transform parent, Vector2 offset, string labelKey, Font font)
         {
-            HoldButton button = MakeButton(name, parent, new Vector2(210f, 90f), label, font, out _);
+            HoldButton button = MakeButton(name, parent, new Vector2(210f, 90f), Loc.T(labelKey), font, out Text label);
+            label.gameObject.AddComponent<LocalizedText>().Key = labelKey;
             var rect = (RectTransform)button.transform;
             rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0f);
             rect.pivot = new Vector2(0.5f, 0f);

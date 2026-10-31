@@ -1,6 +1,7 @@
 using System;
 using DrivingSim.Controls;
 using DrivingSim.Core;
+using DrivingSim.Localization;
 using UnityEngine;
 
 namespace DrivingSim.Vehicle
@@ -85,15 +86,15 @@ namespace DrivingSim.Vehicle
         public void ToggleTurnSignal(TurnSignal signal)
         {
             signals.Toggle(signal);
-            Feedback?.Invoke(signals.Signal == TurnSignal.Off ? "방향지시등 끔"
-                : signals.Signal == TurnSignal.Left ? "좌측 방향지시등" : "우측 방향지시등");
+            Feedback?.Invoke(Loc.T(signals.Signal == TurnSignal.Off ? "signal.off"
+                : signals.Signal == TurnSignal.Left ? "signal.left" : "signal.right"));
             Changed?.Invoke();
         }
 
         public void ToggleHazard()
         {
             signals.ToggleHazard();
-            Feedback?.Invoke(signals.Hazard ? "비상등 켬" : "비상등 끔");
+            Feedback?.Invoke(Loc.T(signals.Hazard ? "hazard.on" : "hazard.off"));
             Changed?.Invoke();
         }
 
@@ -101,7 +102,7 @@ namespace DrivingSim.Vehicle
         {
             headlights = !headlights;
             ApplyHeadlights();
-            Feedback?.Invoke(headlights ? "전조등 켬" : "전조등 끔");
+            Feedback?.Invoke(Loc.T(headlights ? "headlights.on" : "headlights.off"));
             Changed?.Invoke();
         }
 
@@ -116,10 +117,10 @@ namespace DrivingSim.Vehicle
         {
             switch (mode)
             {
-                case WiperMode.Intermittent: return "와이퍼 간헐";
-                case WiperMode.Low: return "와이퍼 저속";
-                case WiperMode.High: return "와이퍼 고속";
-                default: return "와이퍼 끔";
+                case WiperMode.Intermittent: return Loc.T("wipers.intermittent");
+                case WiperMode.Low: return Loc.T("wipers.low");
+                case WiperMode.High: return Loc.T("wipers.high");
+                default: return Loc.T("wipers.off");
             }
         }
 
@@ -128,7 +129,7 @@ namespace DrivingSim.Vehicle
             signals.AutoCancel = autoCancelTurnSignal;
             if (vehicle != null && signals.UpdateSteering(vehicle.SteeringWheelAngleDeg))
             {
-                Feedback?.Invoke("방향지시등 자동 해제");
+                Feedback?.Invoke(Loc.T("signal.autoCancel"));
                 Changed?.Invoke();
             }
 

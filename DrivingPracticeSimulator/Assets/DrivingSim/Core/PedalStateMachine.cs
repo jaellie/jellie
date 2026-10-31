@@ -159,6 +159,17 @@ namespace DrivingSim.Core
         }
     }
 
+    public enum PedalValidationFailure
+    {
+        None,
+        /// <summary>The accelerator activated while the brake was prompted.</summary>
+        AcceleratorDuringBrakePrompt,
+        /// <summary>The brake activated while the accelerator was prompted.</summary>
+        BrakeDuringAcceleratorPrompt,
+        /// <summary>Too many presses hit only unmapped keys.</summary>
+        TooManyMissedPresses,
+    }
+
     public enum PedalValidationStep
     {
         PressBrake,
@@ -194,7 +205,8 @@ namespace DrivingSim.Core
         public int MissedPresses { get; private set; }
         /// <summary>Presses that also included unmapped keys.</summary>
         public int PressesWithUnmappedKeys { get; private set; }
-        public string FailureReason { get; private set; } = "";
+        /// <summary>Why validation failed (the UI turns this into localized text).</summary>
+        public PedalValidationFailure Failure { get; private set; } = PedalValidationFailure.None;
 
         public void Update(bool brakeDown, bool acceleratorDown, bool unmappedKeyDown)
         {
@@ -223,13 +235,13 @@ namespace DrivingSim.Core
             if (wrong)
             {
                 WrongPedalPresses++;
-                Fail(brakePrompt ? "브레이크를 밟았는데 가속이 감지되었습니다." : "가속을 밟았는데 브레이크가 감지되었습니다.");
+                Fail(brakePrompt ? PedalValidationFailure.AcceleratorDuringBrakePrompt : PedalValidationFailure.BrakeDuringAcceleratorPrompt);
                 return;
             }
             if (!intended)
             {
                 MissedPresses++;
-                if (MissedPresses > MaxMissedPresses) Fail("등록되지 않은 키만 눌린 경우가 여러 번 있었습니다. 키를 추가하거나 다시 보정하세요.");
+                if (MissedPresses > MaxMissedPresses) Fail(PedalValidationFailure.TooManyMissedPresses);
                 return;
             }
 
@@ -245,9 +257,9 @@ namespace DrivingSim.Core
             }
         }
 
-        void Fail(string reason)
+        void Fail(PedalValidationFailure failure)
         {
-            FailureReason = reason;
+            Failure = failure;
             Step = PedalValidationStep.Failed;
         }
     }

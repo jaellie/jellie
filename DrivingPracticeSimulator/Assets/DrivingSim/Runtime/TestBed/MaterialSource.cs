@@ -33,6 +33,9 @@ namespace DrivingSim.TestBed
             if (shader == null) shader = Shader.Find("Standard");
             if (shader == null) shader = Shader.Find("Universal Render Pipeline/Lit");
             if (shader == null) shader = Shader.Find("Unlit/Color");
+            if (shader == null) shader = Shader.Find("Sprites/Default");
+            // Last resort so construction never throws (e.g. headless test runs without shaders).
+            if (shader == null) shader = Shader.Find("Hidden/InternalErrorShader");
             return shader;
         }
 

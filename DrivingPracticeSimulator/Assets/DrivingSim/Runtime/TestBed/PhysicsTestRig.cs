@@ -1,6 +1,7 @@
 using DrivingSim.Cameras;
 using DrivingSim.Controls;
 using DrivingSim.Diagnostics;
+using DrivingSim.Startup;
 using DrivingSim.UI;
 using DrivingSim.Vehicle;
 using UnityEngine;
@@ -67,8 +68,10 @@ namespace DrivingSim.TestBed
             minimap.SetTarget(vehicle.transform);
 
             HudTheme theme = HudTheme.Default;
+            // First-launch gate (language, mandatory notice). Placeholder screens until the final design is assigned.
+            StartupFlow startup = new GameObject("StartupFlow").AddComponent<StartupFlow>();
             PedalCalibrationWizard calibration = PedalCalibrationWizard.Create(footPedals, theme);
-            DrivingHUDController.Create(theme, vehicle, accessories, router, footPedals, touchSteering, mobilePedals, calibration, minimap);
+            DrivingHUDController.Create(theme, vehicle, accessories, router, footPedals, touchSteering, mobilePedals, calibration, minimap, startup);
             CameraControlsOverlay.Create(cameraController);
             EnsureEventSystemSettings();
 

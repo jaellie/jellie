@@ -58,9 +58,9 @@ namespace DrivingSim.Diagnostics
             vehicle.ParkingBrakeChanged -= OnParkingBrakeChanged;
         }
 
-        void OnGearChanged(TransmissionGear gear) => ShowFeedback(DrivingMessagesKo.ShiftFeedback(gear, ShiftResult.Accepted));
-        void OnShiftRejected(TransmissionGear gear, ShiftResult result) => ShowFeedback(DrivingMessagesKo.ShiftFeedback(gear, result) + $"  ({result})");
-        void OnParkingBrakeChanged(bool engaged) => ShowFeedback(DrivingMessagesKo.ParkingBrake(engaged));
+        void OnGearChanged(TransmissionGear gear) => ShowFeedback(DrivingMessages.ShiftFeedback(gear, ShiftResult.Accepted));
+        void OnShiftRejected(TransmissionGear gear, ShiftResult result) => ShowFeedback(DrivingMessages.ShiftFeedback(gear, result) + $"  ({result})");
+        void OnParkingBrakeChanged(bool engaged) => ShowFeedback(DrivingMessages.ParkingBrake(engaged));
 
         void ShowFeedback(string message)
         {
@@ -87,7 +87,7 @@ namespace DrivingSim.Diagnostics
             float screenWidth = Screen.width / scale;
             if (showFeedback || parkingBrakeWarning)
             {
-                string line = parkingBrakeWarning ? DrivingMessagesKo.ParkingBrakeStillOn : feedback;
+                string line = parkingBrakeWarning ? DrivingMessages.ParkingBrakeStillOn : feedback;
                 GUI.Label(new Rect(screenWidth * 0.5f - 300f, 16f, 600f, 34f), line, feedbackStyle);
             }
 

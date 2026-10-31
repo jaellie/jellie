@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using DrivingSim.Controls;
 using DrivingSim.Core;
+using DrivingSim.Localization;
+using DrivingSim.Startup;
 using UnityEngine;
 using UnityEngine.UI;
 #if ENABLE_INPUT_SYSTEM
@@ -112,8 +114,8 @@ namespace DrivingSim.UI
 
             RectTransform indicators = UIBuild.Rect("Indicators", card, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -262f), new Vector2(1180f, 130f));
             indicatorGroup = indicators.gameObject;
-            brakeIndicator = Indicator("Brake", indicators, -300f, "브레이크  BRAKE", font);
-            acceleratorIndicator = Indicator("Accelerator", indicators, 300f, "가속  ACCELERATOR", font);
+            brakeIndicator = Indicator("Brake", indicators, -300f, "wizard.indicator.brake", font);
+            acceleratorIndicator = Indicator("Accelerator", indicators, 300f, "wizard.indicator.accelerator", font);
 
             keysText = Block("Keys", card, 400f, 250f, font, 24, theme.text);
             keysText.alignment = TextAnchor.UpperLeft;
@@ -136,11 +138,12 @@ namespace DrivingSim.UI
             return UIBuild.Label("Text", rect, "", font, size, color);
         }
 
-        Image Indicator(string name, RectTransform parent, float x, string label, Font font)
+        Image Indicator(string name, RectTransform parent, float x, string labelKey, Font font)
         {
             RectTransform rect = UIBuild.Rect(name, parent, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(x, 0f), new Vector2(560f, 130f));
             Image image = UIBuild.Panel(rect, theme.RoundedPanel, theme.panel);
-            Text text = UIBuild.Label("Label", rect, label, font, 40, theme.text);
+            Text text = UIBuild.Label("Label", rect, Loc.T(labelKey), font, 40, theme.text);
+            text.gameObject.AddComponent<LocalizedText>().Key = labelKey;
             text.fontStyle = FontStyle.Bold;
             return image;
         }
@@ -154,15 +157,22 @@ namespace DrivingSim.UI
             if (subscribed)
             {
                 subscribed = false;
+                LocalizationService.LanguageChanged -= OnLanguageChanged;
                 foreach (HoldButton button in buttons) if (button != null) button.ClearPressedHandlers();
             }
             if (IsOpen) Close();
+        }
+
+        void OnLanguageChanged(Language _)
+        {
+            if (IsOpen) Go(step);
         }
 
         void Subscribe()
         {
             if (subscribed) return;
             subscribed = true;
+            LocalizationService.LanguageChanged += OnLanguageChanged;
             for (int i = 0; i < buttons.Length; i++)
             {
                 int index = i;
@@ -171,6 +181,18 @@ namespace DrivingSim.UI
         }
 
         void Start()
+        {
+            // Never open on top of the first-launch language/notice screens; wait until they are done.
+            var startup = FindFirstObjectByType<StartupFlow>();
+            if (startup != null && !startup.GameplayAllowed && !StartupFlow.SuppressForAutomatedTests)
+            {
+                startup.GameplayAllowedChanged += OpenIfFirstRun;
+                return;
+            }
+            OpenIfFirstRun();
+        }
+
+        void OpenIfFirstRun()
         {
             bool done = false;
             try { done = PlayerPrefs.GetInt(DonePrefsKey, 0) == 1; } catch (Exception) { /* default */ }
@@ -215,50 +237,47 @@ namespace DrivingSim.UI
             switch (next)
             {
                 case Step.Intro:
-                    titleText.text = "페달 보정";
-                    bodyText.text = "바닥에 둔 키보드를 발로 밟아 브레이크와 가속 페달로 사용합니다.\n" +
-                                    "뒤꿈치는 바닥에 대고, 체중을 싣지 말고 가볍게 눌러 주세요.";
+                    titleText.text = Loc.T("wizard.intro.title");
+                    bodyText.text = Loc.T("wizard.intro.body");
                     keysText.text = StatusText();
-                    SetButtons(("보정 시작", () => StartCapture(Step.CaptureBrake)),
-                               (pedals != null && pedals.Mapping != null ? "현재 설정 확인" : null, LoadCurrentMapping),
-                               ("기본값으로 초기화", ResetToDefaults),
-                               (pedals != null && pedals.PedalsEnabled ? "발 페달 끄기" : "발 페달 켜기", TogglePedals),
-                               ("닫기 (Esc)", () => { MarkDone(); Close(); }));
+                    SetButtons((Loc.T("wizard.intro.start"), () => StartCapture(Step.CaptureBrake)),
+                               (pedals != null && pedals.Mapping != null ? Loc.T("wizard.intro.review") : null, LoadCurrentMapping),
+                               (Loc.T("wizard.intro.reset"), ResetToDefaults),
+                               (Loc.T(pedals != null && pedals.PedalsEnabled ? "wizard.intro.pedalsOff" : "wizard.intro.pedalsOn"), TogglePedals),
+                               (Loc.T("wizard.intro.close"), () => { MarkDone(); Close(); }));
                     break;
 
                 case Step.CaptureBrake:
                 case Step.CaptureAccelerator:
                     bool brake = next == Step.CaptureBrake;
-                    titleText.text = brake ? "1단계: 브레이크" : "2단계: 가속";
-                    bodyText.text = brake
-                        ? "브레이크로 쓸 위치에 발을 올리고, 눌렀다 떼기를 " + attemptsPerPedal + "번 하세요."
-                        : "가속 페달로 쓸 위치에 발을 올리고, 눌렀다 떼기를 " + attemptsPerPedal + "번 하세요.";
-                    SetButtons(("이 단계 다시", () => StartCapture(next, keepOther: true)), ("취소 (Esc)", Close));
+                    titleText.text = Loc.T(brake ? "wizard.capture.brake.title" : "wizard.capture.accelerator.title");
+                    bodyText.text = Loc.T(brake ? "wizard.capture.brake.body" : "wizard.capture.accelerator.body", attemptsPerPedal);
+                    SetButtons((Loc.T("wizard.capture.redo"), () => StartCapture(next, keepOther: true)), (Loc.T("wizard.capture.cancel"), Close));
                     RefreshCapture();
                     break;
 
                 case Step.Review:
-                    titleText.text = "3단계: 키 확인";
-                    bodyText.text = "제안된 키를 확인하세요. 양쪽에서 감지된 키는 표시됩니다. 필요하면 직접 편집한 뒤 실제 테스트를 진행하세요.";
-                    SetButtons(("브레이크 키 편집", () => Go(Step.EditBrake)),
-                               ("가속 키 편집", () => Go(Step.EditAccelerator)),
-                               (brakeAnalysis != null ? (includeOccasional ? "1회 감지 키 제외" : "1회 감지 키 포함") : null, ToggleOccasional),
-                               ("처음부터 다시", () => StartCapture(Step.CaptureBrake)),
-                               ("실제 테스트", StartValidation));
+                    titleText.text = Loc.T("wizard.review.title");
+                    bodyText.text = Loc.T("wizard.review.body");
+                    SetButtons((Loc.T("wizard.review.editBrake"), () => Go(Step.EditBrake)),
+                               (Loc.T("wizard.review.editAccelerator"), () => Go(Step.EditAccelerator)),
+                               (brakeAnalysis != null ? Loc.T(includeOccasional ? "wizard.review.excludeOccasional" : "wizard.review.includeOccasional") : null, ToggleOccasional),
+                               (Loc.T("wizard.review.restart"), () => StartCapture(Step.CaptureBrake)),
+                               (Loc.T("wizard.review.test"), StartValidation));
                     RefreshReview();
                     break;
 
                 case Step.EditBrake:
                 case Step.EditAccelerator:
-                    titleText.text = next == Step.EditBrake ? "브레이크 키 편집" : "가속 키 편집";
-                    bodyText.text = "키를 누를 때마다 이 페달에 추가되거나 빠집니다. 다른 페달에 있던 키는 이 페달로 옮겨집니다 (한 키는 한 페달만).";
-                    SetButtons(("편집 완료", () => Go(Step.Review)));
+                    titleText.text = Loc.T(next == Step.EditBrake ? "wizard.edit.brake.title" : "wizard.edit.accelerator.title");
+                    bodyText.text = Loc.T("wizard.edit.body");
+                    SetButtons((Loc.T("wizard.edit.done"), () => Go(Step.Review)));
                     RefreshReview();
                     break;
 
                 case Step.Validate:
-                    titleText.text = "4단계: 실제 테스트";
-                    SetButtons(("다시 테스트", StartValidation), ("키 편집", () => Go(Step.Review)), ("저장", Save));
+                    titleText.text = Loc.T("wizard.validate.title");
+                    SetButtons((Loc.T("wizard.validate.retry"), StartValidation), (Loc.T("wizard.validate.edit"), () => Go(Step.Review)), (Loc.T("wizard.validate.save"), Save));
                     buttons[2].gameObject.SetActive(false); // shown only after passing
                     RefreshValidation();
                     break;
@@ -283,13 +302,13 @@ namespace DrivingSim.UI
             string status;
             switch (pedals.CalibrationStatus)
             {
-                case PedalCalibrationStatus.Validated: status = "검증 완료"; break;
-                case PedalCalibrationStatus.Unvalidated: status = "검증 안 됨 (운전에 사용되지 않음)"; break;
-                case PedalCalibrationStatus.KeyboardChanged: status = "다른 키보드가 연결됨: 실제 테스트를 다시 하세요"; break;
-                default: status = "설정 없음"; break;
+                case PedalCalibrationStatus.Validated: status = Loc.T("wizard.status.validated"); break;
+                case PedalCalibrationStatus.Unvalidated: status = Loc.T("wizard.status.unvalidated"); break;
+                case PedalCalibrationStatus.KeyboardChanged: status = Loc.T("wizard.status.keyboardChanged"); break;
+                default: status = Loc.T("wizard.status.none"); break;
             }
-            string connection = pedals.Device.IsConnected ? "키보드 연결됨" : "키보드가 감지되지 않음";
-            return $"현재 상태: {status}\n{connection} · 발 페달 {(pedals.PedalsEnabled ? "켬" : "끔")}";
+            string connection = Loc.T(pedals.Device.IsConnected ? "wizard.status.keyboardConnected" : "wizard.status.keyboardMissing");
+            return Loc.T("wizard.status.line", status, connection, Loc.T(pedals.PedalsEnabled ? "wizard.status.on" : "wizard.status.off"));
         }
 
         void LoadCurrentMapping()
@@ -357,7 +376,7 @@ namespace DrivingSim.UI
             Keyboard keyboard = Keyboard.current;
             if (keyboard == null)
             {
-                warningText.text = "키보드가 감지되지 않습니다. 연결을 확인하세요.";
+                warningText.text = Loc.T("wizard.noKeyboard");
                 return;
             }
             if (keyboard.escapeKey.wasPressedThisFrame) { Close(); return; }
@@ -468,51 +487,51 @@ namespace DrivingSim.UI
 
             var seen = new HashSet<int>();
             foreach (PedalAttempt attempt in recorder.Attempts) seen.UnionWith(attempt.Keys);
-            string current = recorder.IsPressing ? "누르는 중: " + Names(recorder.CurrentKeys) : "발을 완전히 떼고 다시 밟으세요";
-            keysText.text = $"{current}\n지금까지 감지된 키 ({seen.Count}): {Names(seen)}";
+            string current = recorder.IsPressing ? Loc.T("wizard.capture.pressing", Names(recorder.CurrentKeys)) : Loc.T("wizard.capture.liftFoot");
+            keysText.text = current + "\n" + Loc.T("wizard.capture.seen", seen.Count, Names(seen));
 
             var warnings = new List<string>();
             if (recorder.Attempts.Any(a => a.ReleaseMissing.Count > 0))
-                warnings.Add("떼는 입력이 보고되지 않은 키가 있습니다 (" + Names(recorder.Attempts.SelectMany(a => a.ReleaseMissing).Distinct()) + "). 키보드 문제일 수 있습니다.");
+                warnings.Add(Loc.T("wizard.capture.warn.releaseMissing", Names(recorder.Attempts.SelectMany(a => a.ReleaseMissing).Distinct())));
             if (recorder.Attempts.Any(a => a.KeyDowns.Values.Any(n => n > 1)))
-                warnings.Add($"한 번의 누름 안에서 같은 키가 여러 번 눌렸습니다. 누르는 간격이 {releaseGapSeconds:0.00}초보다 짧으면 두 번이 한 번으로 합쳐질 수 있습니다.");
+                warnings.Add(Loc.T("wizard.capture.warn.merged", releaseGapSeconds));
             warningText.text = string.Join("\n", warnings);
         }
 
         void RefreshReview()
         {
             var text = new StringBuilder();
-            text.AppendLine($"브레이크 ({brakeSet.Count}): {Names(brakeSet)}");
-            text.AppendLine($"가속 ({acceleratorSet.Count}): {Names(acceleratorSet)}");
+            text.AppendLine(Loc.T("wizard.review.brakeKeys", brakeSet.Count, Names(brakeSet)));
+            text.AppendLine(Loc.T("wizard.review.acceleratorKeys", acceleratorSet.Count, Names(acceleratorSet)));
 
             if (brakeAnalysis != null && acceleratorAnalysis != null)
             {
                 text.AppendLine();
-                text.AppendLine("키 · 브레이크 감지(누름 횟수) · 가속 감지(누름 횟수) · 비고");
+                text.AppendLine(Loc.T("wizard.review.tableHeader"));
                 IEnumerable<int> keys = brakeAnalysis.Counts.Keys.Union(acceleratorAnalysis.Counts.Keys)
                     .OrderByDescending(k => Count(brakeAnalysis, k) + Count(acceleratorAnalysis, k)).Take(10);
                 foreach (int key in keys)
                 {
                     var notes = new List<string>();
-                    if (ambiguous.Contains(key)) notes.Add(unresolved.Contains(key) ? "양쪽 감지 → 제외" : "양쪽 감지");
-                    if (brakeAnalysis.ReleaseMissing.Contains(key) || acceleratorAnalysis.ReleaseMissing.Contains(key)) notes.Add("떼기 누락");
-                    if (brakeSet.Contains(key)) notes.Add("→ 브레이크");
-                    else if (acceleratorSet.Contains(key)) notes.Add("→ 가속");
-                    else notes.Add("미사용");
+                    if (ambiguous.Contains(key)) notes.Add(Loc.T(unresolved.Contains(key) ? "wizard.review.note.ambiguousExcluded" : "wizard.review.note.ambiguous"));
+                    if (brakeAnalysis.ReleaseMissing.Contains(key) || acceleratorAnalysis.ReleaseMissing.Contains(key)) notes.Add(Loc.T("wizard.review.note.releaseMissing"));
+                    if (brakeSet.Contains(key)) notes.Add(Loc.T("wizard.review.note.toBrake"));
+                    else if (acceleratorSet.Contains(key)) notes.Add(Loc.T("wizard.review.note.toAccelerator"));
+                    else notes.Add(Loc.T("wizard.review.note.unused"));
                     text.AppendLine($"{Names(new[] { key })} · {Cell(brakeAnalysis, key)} · {Cell(acceleratorAnalysis, key)} · {string.Join(", ", notes)}");
                 }
             }
             keysText.text = text.ToString();
 
             var warnings = new List<string>();
-            if (unresolved.Count > 0) warnings.Add($"양쪽에서 비슷하게 감지되어 어느 페달에도 넣지 않은 키: {Names(unresolved)}");
+            if (unresolved.Count > 0) warnings.Add(Loc.T("wizard.review.warn.unresolved", Names(unresolved)));
             if ((brakeAnalysis?.PossibleRolloverLimit ?? false) || (acceleratorAnalysis?.PossibleRolloverLimit ?? false))
-                warnings.Add("동시에 누른 키 중 일부가 보고되지 않는 키보드일 수 있습니다 (롤오버/고스팅). 한 키만 감지돼도 페달이 동작하도록 설계되어 있습니다.");
+                warnings.Add(Loc.T("wizard.review.warn.rollover"));
             if ((brakeAnalysis?.AttemptsWithRepeatedKeys ?? 0) + (acceleratorAnalysis?.AttemptsWithRepeatedKeys ?? 0) > 0)
-                warnings.Add("일부 누름이 합쳐졌거나 키가 떨렸을 수 있습니다.");
+                warnings.Add(Loc.T("wizard.review.warn.merged"));
             List<int> shortcuts = brakeSet.Concat(acceleratorSet).Where(IsShortcutKey).ToList();
-            if (shortcuts.Count > 0) warnings.Add($"페달 사용 중에는 단축키로 동작하지 않는 키: {Names(shortcuts)} (주차 브레이크는 화면의 (P) 버튼)");
-            if (brakeSet.Count == 0 || acceleratorSet.Count == 0) warnings.Add("브레이크와 가속 모두 키가 하나 이상 있어야 합니다.");
+            if (shortcuts.Count > 0) warnings.Add(Loc.T("wizard.review.warn.shortcuts", Names(shortcuts)));
+            if (brakeSet.Count == 0 || acceleratorSet.Count == 0) warnings.Add(Loc.T("wizard.review.warn.empty"));
             warningText.text = string.Join("\n", warnings);
         }
 
@@ -522,24 +541,24 @@ namespace DrivingSim.UI
             switch (validation.Step)
             {
                 case PedalValidationStep.PressBrake:
-                    bodyText.text = $"브레이크 영역을 {validation.RequiredPresses}번 밟았다 떼세요.";
-                    progressText.text = $"브레이크 {validation.CleanBrakePresses}/{validation.RequiredPresses}";
+                    bodyText.text = Loc.T("wizard.validate.pressBrake", validation.RequiredPresses);
+                    progressText.text = Loc.T("wizard.validate.progressBrake", validation.CleanBrakePresses, validation.RequiredPresses);
                     break;
                 case PedalValidationStep.PressAccelerator:
-                    bodyText.text = $"이제 가속 영역을 {validation.RequiredPresses}번 밟았다 떼세요.";
-                    progressText.text = $"가속 {validation.CleanAcceleratorPresses}/{validation.RequiredPresses}";
+                    bodyText.text = Loc.T("wizard.validate.pressAccelerator", validation.RequiredPresses);
+                    progressText.text = Loc.T("wizard.validate.progressAccelerator", validation.CleanAcceleratorPresses, validation.RequiredPresses);
                     break;
                 case PedalValidationStep.Passed:
-                    bodyText.text = "테스트 통과. 저장하면 다음 실행부터 바로 사용됩니다.";
-                    progressText.text = "통과";
+                    bodyText.text = Loc.T("wizard.validate.passed");
+                    progressText.text = Loc.T("wizard.validate.passedShort");
                     buttons[2].gameObject.SetActive(true);
                     break;
                 case PedalValidationStep.Failed:
-                    bodyText.text = "테스트 실패: " + validation.FailureReason;
-                    progressText.text = "실패";
+                    bodyText.text = Loc.T("wizard.validate.failed", FailureText(validation.Failure));
+                    progressText.text = Loc.T("wizard.validate.failedShort");
                     break;
             }
-            warningText.text = $"잘못된 페달 {validation.WrongPedalPresses} · 놓친 입력 {validation.MissedPresses} · 미등록 키가 섞인 입력 {validation.PressesWithUnmappedKeys}";
+            warningText.text = Loc.T("wizard.validate.counts", validation.WrongPedalPresses, validation.MissedPresses, validation.PressesWithUnmappedKeys);
         }
 
 #if ENABLE_INPUT_SYSTEM
@@ -566,8 +585,8 @@ namespace DrivingSim.UI
 
             if (step == Step.Validate)
             {
-                string conflict = brakeDown && acceleratorDown ? "\n충돌: 둘 다 눌림 → 브레이크 우선, 가속 차단" : "";
-                keysText.text = $"브레이크 키: {Names(activeBrake)}\n가속 키: {Names(activeAccelerator)}\n미등록 키: {Names(scratch)}{conflict}";
+                string conflict = brakeDown && acceleratorDown ? Loc.T("wizard.validate.conflict") : "";
+                keysText.text = Loc.T("wizard.validate.live", Names(activeBrake), Names(activeAccelerator), Names(scratch)) + conflict;
             }
         }
 
@@ -578,6 +597,17 @@ namespace DrivingSim.UI
 #else
         static bool IsShortcutKey(int code) => false;
 #endif
+
+        static string FailureText(PedalValidationFailure failure)
+        {
+            switch (failure)
+            {
+                case PedalValidationFailure.AcceleratorDuringBrakePrompt: return Loc.T("wizard.fail.brakePromptGotAccelerator");
+                case PedalValidationFailure.BrakeDuringAcceleratorPrompt: return Loc.T("wizard.fail.acceleratorPromptGotBrake");
+                case PedalValidationFailure.TooManyMissedPresses: return Loc.T("wizard.fail.tooManyMissed");
+                default: return "";
+            }
+        }
 
         static int Count(PedalKeyAnalysis analysis, int key) => analysis.Counts.TryGetValue(key, out int n) ? n : 0;
 
@@ -592,7 +622,7 @@ namespace DrivingSim.UI
         static string Names(IEnumerable<int> keys)
         {
             var names = keys.Select(KeyboardPedalDevice.DisplayName).ToList();
-            return names.Count == 0 ? "없음" : string.Join(", ", names);
+            return names.Count == 0 ? Loc.T("common.none") : string.Join(", ", names);
         }
 
         void Save()

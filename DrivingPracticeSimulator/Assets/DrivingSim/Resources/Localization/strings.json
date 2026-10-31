@@ -1,0 +1,732 @@
+{
+  "entries": [
+    {
+      "key": "language.title",
+      "ko": "언어를 선택하세요",
+      "en": "Choose your language",
+      "note": "Shown in both languages on first launch."
+    },
+    {
+      "key": "language.name.ko",
+      "ko": "한국어",
+      "en": "한국어",
+      "note": "Always shown in its own language."
+    },
+    {
+      "key": "language.name.en",
+      "ko": "English (US)",
+      "en": "English (US)",
+      "note": "Always shown in its own language."
+    },
+    {
+      "key": "disclaimer.title",
+      "ko": "시작하기 전에",
+      "en": "Before you start"
+    },
+    {
+      "key": "disclaimer.body",
+      "ko": "이 게임은 실제 운전 감각을 익히기 위한 연습용 시뮬레이터이며, 실제 도로에서의 안전한 운전 능력을 검증하는 도구가 아닙니다. 차량 조작감과 주행 환경은 실제 차량과 다를 수 있습니다.",
+      "en": "This simulator is intended for driving practice. It does not assess your ability to drive safely on real roads. Vehicle controls and driving conditions may differ from those of a real car.",
+      "note": "Approved legal/product text. Do not reword without bumping DisclaimerPolicy.CurrentVersion."
+    },
+    {
+      "key": "disclaimer.accept",
+      "ko": "확인했습니다",
+      "en": "I understand",
+      "note": "Required acknowledgment button."
+    },
+    {
+      "key": "common.close",
+      "ko": "닫기",
+      "en": "Close"
+    },
+    {
+      "key": "common.cancel",
+      "ko": "취소",
+      "en": "Cancel"
+    },
+    {
+      "key": "common.temporaryScreen",
+      "ko": "임시 화면",
+      "en": "Temporary screen",
+      "note": "Corner tag on placeholder screens; remove with the final design."
+    },
+    {
+      "key": "common.none",
+      "ko": "없음",
+      "en": "none"
+    },
+    {
+      "key": "gear.name.P",
+      "ko": "P (주차)",
+      "en": "P (Park)"
+    },
+    {
+      "key": "gear.name.R",
+      "ko": "R (후진)",
+      "en": "R (Reverse)"
+    },
+    {
+      "key": "gear.name.N",
+      "ko": "N (중립)",
+      "en": "N (Neutral)"
+    },
+    {
+      "key": "gear.name.D",
+      "ko": "D (주행)",
+      "en": "D (Drive)"
+    },
+    {
+      "key": "shift.accepted",
+      "ko": "{0}로 변속했습니다.",
+      "en": "Shifted to {0}.",
+      "note": "{0} = gear.name.*"
+    },
+    {
+      "key": "shift.brakeRequired",
+      "ko": "브레이크 페달을 밟은 상태에서 변속하세요.",
+      "en": "Press the brake pedal to shift."
+    },
+    {
+      "key": "shift.stopBeforePark",
+      "ko": "차량이 완전히 정지한 뒤 P로 변속하세요.",
+      "en": "Stop the car completely before shifting to P."
+    },
+    {
+      "key": "shift.stopBeforeDirection",
+      "ko": "진행 방향을 바꾸려면 먼저 완전히 정지하세요.",
+      "en": "Stop completely before changing direction."
+    },
+    {
+      "key": "parkingBrake.engaged",
+      "ko": "주차 브레이크 체결",
+      "en": "Parking brake on"
+    },
+    {
+      "key": "parkingBrake.released",
+      "ko": "주차 브레이크 해제",
+      "en": "Parking brake off"
+    },
+    {
+      "key": "parkingBrake.stillOn",
+      "ko": "주차 브레이크가 체결되어 있습니다. 오른쪽 (P) 버튼이나 Space로 해제하세요.",
+      "en": "The parking brake is on. Release it with the (P) button on the right or Space."
+    },
+    {
+      "key": "signal.off",
+      "ko": "방향지시등 끔",
+      "en": "Turn signal off"
+    },
+    {
+      "key": "signal.left",
+      "ko": "좌측 방향지시등",
+      "en": "Left turn signal"
+    },
+    {
+      "key": "signal.right",
+      "ko": "우측 방향지시등",
+      "en": "Right turn signal"
+    },
+    {
+      "key": "signal.autoCancel",
+      "ko": "방향지시등 자동 해제",
+      "en": "Turn signal cancelled"
+    },
+    {
+      "key": "hazard.on",
+      "ko": "비상등 켬",
+      "en": "Hazard lights on"
+    },
+    {
+      "key": "hazard.off",
+      "ko": "비상등 끔",
+      "en": "Hazard lights off"
+    },
+    {
+      "key": "headlights.on",
+      "ko": "전조등 켬",
+      "en": "Headlights on"
+    },
+    {
+      "key": "headlights.off",
+      "ko": "전조등 끔",
+      "en": "Headlights off"
+    },
+    {
+      "key": "wipers.off",
+      "ko": "와이퍼 끔",
+      "en": "Wipers off"
+    },
+    {
+      "key": "wipers.intermittent",
+      "ko": "와이퍼 간헐",
+      "en": "Wipers: intermittent"
+    },
+    {
+      "key": "wipers.low",
+      "ko": "와이퍼 저속",
+      "en": "Wipers: low"
+    },
+    {
+      "key": "wipers.high",
+      "ko": "와이퍼 고속",
+      "en": "Wipers: high"
+    },
+    {
+      "key": "camera.toFirstPerson",
+      "ko": "1인칭",
+      "en": "1st person",
+      "note": "Button label: switches TO this view."
+    },
+    {
+      "key": "camera.toThirdPerson",
+      "ko": "3인칭",
+      "en": "3rd person",
+      "note": "Button label: switches TO this view."
+    },
+    {
+      "key": "camera.fov",
+      "ko": "시야 {0}°",
+      "en": "FOV {0}°"
+    },
+    {
+      "key": "camera.lookLeft",
+      "ko": "< 왼쪽 보기",
+      "en": "< Look left"
+    },
+    {
+      "key": "camera.lookRight",
+      "ko": "오른쪽 보기 >",
+      "en": "Look right >"
+    },
+    {
+      "key": "hud.parkingBrake.engaged",
+      "ko": "(P)\n체결",
+      "en": "(P)\nON",
+      "note": "Two lines inside a 116×96 button."
+    },
+    {
+      "key": "hud.parkingBrake.released",
+      "ko": "(P)\n해제",
+      "en": "(P)\nOFF",
+      "note": "Two lines inside a 116×96 button."
+    },
+    {
+      "key": "hud.brake",
+      "ko": "브레이크",
+      "en": "Brake"
+    },
+    {
+      "key": "hud.accelerator",
+      "ko": "가속",
+      "en": "Accel",
+      "note": "Short: pedal label and status bar."
+    },
+    {
+      "key": "hud.headlights",
+      "ko": "전조등",
+      "en": "Lights"
+    },
+    {
+      "key": "hud.hazard",
+      "ko": "비상등",
+      "en": "Hazard"
+    },
+    {
+      "key": "hud.wipers",
+      "ko": "와이퍼",
+      "en": "Wipers"
+    },
+    {
+      "key": "hud.steering",
+      "ko": "{0}°  ({1:F2}회전)",
+      "en": "{0}°  ({1:F2} turns)",
+      "note": "{0} signed wheel angle, {1} turns."
+    },
+    {
+      "key": "hud.steering.active",
+      "ko": "  · 조향 중",
+      "en": "  · steering"
+    },
+    {
+      "key": "hud.source.keyboardTouch",
+      "ko": "키보드 / 터치 페달",
+      "en": "Keyboard / touch pedals"
+    },
+    {
+      "key": "hud.source.footPedals",
+      "ko": "발 페달 키보드",
+      "en": "Foot-pedal keyboard"
+    },
+    {
+      "key": "hud.source.keyboardChanged",
+      "ko": "발 페달 (다른 키보드: 재검증 권장)",
+      "en": "Foot pedals (different keyboard: re-test advised)"
+    },
+    {
+      "key": "hud.source.brakePriority",
+      "ko": "{0} · 브레이크 우선",
+      "en": "{0} · brake priority"
+    },
+    {
+      "key": "hud.source.brakePriorityOnly",
+      "ko": "브레이크 우선",
+      "en": "Brake priority"
+    },
+    {
+      "key": "hud.source.failSafe",
+      "ko": "발 페달 입력 끊김 · 자동 제동 중",
+      "en": "Foot-pedal input lost · braking automatically"
+    },
+    {
+      "key": "hud.source.rearm",
+      "ko": "브레이크를 한 번 밟으면 발 페달이 다시 동작합니다",
+      "en": "Press the brake once to re-enable the foot pedals"
+    },
+    {
+      "key": "hud.source.unvalidated",
+      "ko": "발 페달: 검증 필요 (일시정지 → 페달 보정)",
+      "en": "Foot pedals: test needed (Pause → Pedal calibration)"
+    },
+    {
+      "key": "toast.pedal.failSafe",
+      "ko": "발 페달 키보드 입력이 끊겼습니다. 가속을 차단하고 제동합니다.",
+      "en": "Foot-pedal keyboard input lost. Throttle cut, braking."
+    },
+    {
+      "key": "toast.pedal.rearm",
+      "ko": "키보드 입력이 돌아왔습니다. 브레이크를 한 번 밟으세요.",
+      "en": "Keyboard input is back. Press the brake once."
+    },
+    {
+      "key": "toast.pedal.restored",
+      "ko": "발 페달 입력이 다시 활성화되었습니다.",
+      "en": "Foot pedals are active again."
+    },
+    {
+      "key": "nav.parkingArea",
+      "ko": "주차 구역",
+      "en": "Parking area"
+    },
+    {
+      "key": "nav.arrived",
+      "ko": "{0} 도착",
+      "en": "Arrived: {0}"
+    },
+    {
+      "key": "nav.distance",
+      "ko": "{0}까지 {1:F0} m",
+      "en": "{0}: {1:F0} m"
+    },
+    {
+      "key": "pause.title",
+      "ko": "일시정지",
+      "en": "Paused"
+    },
+    {
+      "key": "pause.resume",
+      "ko": "계속하기",
+      "en": "Resume"
+    },
+    {
+      "key": "pause.restart",
+      "ko": "다시 시작",
+      "en": "Restart"
+    },
+    {
+      "key": "pause.pedals",
+      "ko": "페달 보정 / 발 페달 설정",
+      "en": "Pedal calibration"
+    },
+    {
+      "key": "pause.language",
+      "ko": "언어",
+      "en": "Language"
+    },
+    {
+      "key": "pause.notice",
+      "ko": "고지 사항",
+      "en": "Notice"
+    },
+    {
+      "key": "pause.mainMenu",
+      "ko": "메인 메뉴 (준비 중)",
+      "en": "Main menu (coming soon)"
+    },
+    {
+      "key": "wizard.indicator.brake",
+      "ko": "브레이크  BRAKE",
+      "en": "BRAKE"
+    },
+    {
+      "key": "wizard.indicator.accelerator",
+      "ko": "가속  ACCELERATOR",
+      "en": "ACCELERATOR"
+    },
+    {
+      "key": "wizard.intro.title",
+      "ko": "페달 보정",
+      "en": "Pedal calibration"
+    },
+    {
+      "key": "wizard.intro.body",
+      "ko": "바닥에 둔 키보드를 발로 밟아 브레이크와 가속 페달로 사용합니다.\n뒤꿈치는 바닥에 대고, 체중을 싣지 말고 가볍게 눌러 주세요.",
+      "en": "Use a keyboard on the floor as brake and accelerator pedals.\nKeep your heel on the floor and press lightly. Never put your weight on it."
+    },
+    {
+      "key": "wizard.intro.start",
+      "ko": "보정 시작",
+      "en": "Start"
+    },
+    {
+      "key": "wizard.intro.review",
+      "ko": "현재 설정 확인",
+      "en": "Review current setup"
+    },
+    {
+      "key": "wizard.intro.reset",
+      "ko": "기본값으로 초기화",
+      "en": "Reset to defaults"
+    },
+    {
+      "key": "wizard.intro.pedalsOff",
+      "ko": "발 페달 끄기",
+      "en": "Turn foot pedals off"
+    },
+    {
+      "key": "wizard.intro.pedalsOn",
+      "ko": "발 페달 켜기",
+      "en": "Turn foot pedals on"
+    },
+    {
+      "key": "wizard.intro.close",
+      "ko": "닫기 (Esc)",
+      "en": "Close (Esc)"
+    },
+    {
+      "key": "wizard.capture.brake.title",
+      "ko": "1단계: 브레이크",
+      "en": "Step 1: Brake"
+    },
+    {
+      "key": "wizard.capture.accelerator.title",
+      "ko": "2단계: 가속",
+      "en": "Step 2: Accelerator"
+    },
+    {
+      "key": "wizard.capture.brake.body",
+      "ko": "브레이크로 쓸 위치에 발을 올리고, 눌렀다 떼기를 {0}번 하세요.",
+      "en": "Place your foot on the area you want to use as the brake. Press and release it {0} times."
+    },
+    {
+      "key": "wizard.capture.accelerator.body",
+      "ko": "가속 페달로 쓸 위치에 발을 올리고, 눌렀다 떼기를 {0}번 하세요.",
+      "en": "Place your foot on the area you want to use as the accelerator. Press and release it {0} times."
+    },
+    {
+      "key": "wizard.capture.redo",
+      "ko": "이 단계 다시",
+      "en": "Redo this step"
+    },
+    {
+      "key": "wizard.capture.cancel",
+      "ko": "취소 (Esc)",
+      "en": "Cancel (Esc)"
+    },
+    {
+      "key": "wizard.capture.pressing",
+      "ko": "누르는 중: {0}",
+      "en": "Pressing: {0}"
+    },
+    {
+      "key": "wizard.capture.liftFoot",
+      "ko": "발을 완전히 떼고 다시 밟으세요",
+      "en": "Lift your foot completely, then press again"
+    },
+    {
+      "key": "wizard.capture.seen",
+      "ko": "지금까지 감지된 키 ({0}): {1}",
+      "en": "Keys detected so far ({0}): {1}"
+    },
+    {
+      "key": "wizard.capture.warn.releaseMissing",
+      "ko": "떼는 입력이 보고되지 않은 키가 있습니다 ({0}). 키보드 문제일 수 있습니다.",
+      "en": "Some key releases were never reported ({0}). This may be a keyboard issue."
+    },
+    {
+      "key": "wizard.capture.warn.merged",
+      "ko": "한 번의 누름 안에서 같은 키가 여러 번 눌렸습니다. 누르는 간격이 {0:0.00}초보다 짧으면 두 번이 한 번으로 합쳐질 수 있습니다.",
+      "en": "A key went down more than once in one press. Presses closer than {0:0.00} s apart may be merged into one."
+    },
+    {
+      "key": "wizard.review.title",
+      "ko": "3단계: 키 확인",
+      "en": "Step 3: Review keys"
+    },
+    {
+      "key": "wizard.review.body",
+      "ko": "제안된 키를 확인하세요. 양쪽에서 감지된 키는 표시됩니다. 필요하면 직접 편집한 뒤 실제 테스트를 진행하세요.",
+      "en": "Check the proposed keys. Keys detected for both pedals are flagged. Edit them if needed, then run the live test."
+    },
+    {
+      "key": "wizard.review.editBrake",
+      "ko": "브레이크 키 편집",
+      "en": "Edit brake keys"
+    },
+    {
+      "key": "wizard.review.editAccelerator",
+      "ko": "가속 키 편집",
+      "en": "Edit accelerator keys"
+    },
+    {
+      "key": "wizard.review.excludeOccasional",
+      "ko": "1회 감지 키 제외",
+      "en": "Exclude one-off keys"
+    },
+    {
+      "key": "wizard.review.includeOccasional",
+      "ko": "1회 감지 키 포함",
+      "en": "Include one-off keys"
+    },
+    {
+      "key": "wizard.review.restart",
+      "ko": "처음부터 다시",
+      "en": "Start over"
+    },
+    {
+      "key": "wizard.review.test",
+      "ko": "실제 테스트",
+      "en": "Live test"
+    },
+    {
+      "key": "wizard.review.brakeKeys",
+      "ko": "브레이크 ({0}): {1}",
+      "en": "Brake ({0}): {1}"
+    },
+    {
+      "key": "wizard.review.acceleratorKeys",
+      "ko": "가속 ({0}): {1}",
+      "en": "Accelerator ({0}): {1}"
+    },
+    {
+      "key": "wizard.review.tableHeader",
+      "ko": "키 · 브레이크 감지(누름 횟수) · 가속 감지(누름 횟수) · 비고",
+      "en": "Key · brake presses seen (key-downs) · accelerator presses seen (key-downs) · notes"
+    },
+    {
+      "key": "wizard.review.note.ambiguousExcluded",
+      "ko": "양쪽 감지 → 제외",
+      "en": "seen for both → excluded"
+    },
+    {
+      "key": "wizard.review.note.ambiguous",
+      "ko": "양쪽 감지",
+      "en": "seen for both"
+    },
+    {
+      "key": "wizard.review.note.releaseMissing",
+      "ko": "떼기 누락",
+      "en": "release missed"
+    },
+    {
+      "key": "wizard.review.note.toBrake",
+      "ko": "→ 브레이크",
+      "en": "→ brake"
+    },
+    {
+      "key": "wizard.review.note.toAccelerator",
+      "ko": "→ 가속",
+      "en": "→ accelerator"
+    },
+    {
+      "key": "wizard.review.note.unused",
+      "ko": "미사용",
+      "en": "unused"
+    },
+    {
+      "key": "wizard.review.warn.unresolved",
+      "ko": "양쪽에서 비슷하게 감지되어 어느 페달에도 넣지 않은 키: {0}",
+      "en": "Keys seen about equally for both pedals, assigned to neither: {0}"
+    },
+    {
+      "key": "wizard.review.warn.rollover",
+      "ko": "동시에 누른 키 중 일부가 보고되지 않는 키보드일 수 있습니다 (롤오버/고스팅). 한 키만 감지돼도 페달이 동작하도록 설계되어 있습니다.",
+      "en": "This keyboard may drop some simultaneous keys (rollover/ghosting). A pedal works as long as any one of its keys is reported."
+    },
+    {
+      "key": "wizard.review.warn.merged",
+      "ko": "일부 누름이 합쳐졌거나 키가 떨렸을 수 있습니다.",
+      "en": "Some presses may have merged, or keys chattered."
+    },
+    {
+      "key": "wizard.review.warn.shortcuts",
+      "ko": "페달 사용 중에는 단축키로 동작하지 않는 키: {0} (주차 브레이크는 화면의 (P) 버튼)",
+      "en": "These keys won't work as shortcuts while the pedals are active: {0} (use the on-screen (P) button for the parking brake)"
+    },
+    {
+      "key": "wizard.review.warn.empty",
+      "ko": "브레이크와 가속 모두 키가 하나 이상 있어야 합니다.",
+      "en": "Both pedals need at least one key."
+    },
+    {
+      "key": "wizard.edit.brake.title",
+      "ko": "브레이크 키 편집",
+      "en": "Edit brake keys"
+    },
+    {
+      "key": "wizard.edit.accelerator.title",
+      "ko": "가속 키 편집",
+      "en": "Edit accelerator keys"
+    },
+    {
+      "key": "wizard.edit.body",
+      "ko": "키를 누를 때마다 이 페달에 추가되거나 빠집니다. 다른 페달에 있던 키는 이 페달로 옮겨집니다 (한 키는 한 페달만).",
+      "en": "Each key you press is added to or removed from this pedal. A key from the other pedal moves here (a key belongs to one pedal only)."
+    },
+    {
+      "key": "wizard.edit.done",
+      "ko": "편집 완료",
+      "en": "Done"
+    },
+    {
+      "key": "wizard.validate.title",
+      "ko": "4단계: 실제 테스트",
+      "en": "Step 4: Live test"
+    },
+    {
+      "key": "wizard.validate.retry",
+      "ko": "다시 테스트",
+      "en": "Test again"
+    },
+    {
+      "key": "wizard.validate.edit",
+      "ko": "키 편집",
+      "en": "Edit keys"
+    },
+    {
+      "key": "wizard.validate.save",
+      "ko": "저장",
+      "en": "Save"
+    },
+    {
+      "key": "wizard.validate.pressBrake",
+      "ko": "브레이크 영역을 {0}번 밟았다 떼세요.",
+      "en": "Press and release the brake area {0} times."
+    },
+    {
+      "key": "wizard.validate.pressAccelerator",
+      "ko": "이제 가속 영역을 {0}번 밟았다 떼세요.",
+      "en": "Now press and release the accelerator area {0} times."
+    },
+    {
+      "key": "wizard.validate.progressBrake",
+      "ko": "브레이크 {0}/{1}",
+      "en": "Brake {0}/{1}"
+    },
+    {
+      "key": "wizard.validate.progressAccelerator",
+      "ko": "가속 {0}/{1}",
+      "en": "Accelerator {0}/{1}"
+    },
+    {
+      "key": "wizard.validate.passed",
+      "ko": "테스트 통과. 저장하면 다음 실행부터 바로 사용됩니다.",
+      "en": "Test passed. Save to use these pedals from now on."
+    },
+    {
+      "key": "wizard.validate.passedShort",
+      "ko": "통과",
+      "en": "Passed"
+    },
+    {
+      "key": "wizard.validate.failed",
+      "ko": "테스트 실패: {0}",
+      "en": "Test failed: {0}"
+    },
+    {
+      "key": "wizard.validate.failedShort",
+      "ko": "실패",
+      "en": "Failed"
+    },
+    {
+      "key": "wizard.validate.counts",
+      "ko": "잘못된 페달 {0} · 놓친 입력 {1} · 미등록 키가 섞인 입력 {2}",
+      "en": "Wrong pedal {0} · missed presses {1} · presses with unmapped keys {2}"
+    },
+    {
+      "key": "wizard.validate.live",
+      "ko": "브레이크 키: {0}\n가속 키: {1}\n미등록 키: {2}",
+      "en": "Brake keys: {0}\nAccelerator keys: {1}\nUnmapped keys: {2}"
+    },
+    {
+      "key": "wizard.validate.conflict",
+      "ko": "\n충돌: 둘 다 눌림 → 브레이크 우선, 가속 차단",
+      "en": "\nConflict: both pressed → brake wins, accelerator blocked"
+    },
+    {
+      "key": "wizard.fail.brakePromptGotAccelerator",
+      "ko": "브레이크를 밟았는데 가속이 감지되었습니다.",
+      "en": "The accelerator was detected while pressing the brake."
+    },
+    {
+      "key": "wizard.fail.acceleratorPromptGotBrake",
+      "ko": "가속을 밟았는데 브레이크가 감지되었습니다.",
+      "en": "The brake was detected while pressing the accelerator."
+    },
+    {
+      "key": "wizard.fail.tooManyMissed",
+      "ko": "등록되지 않은 키만 눌린 경우가 여러 번 있었습니다. 키를 추가하거나 다시 보정하세요.",
+      "en": "Several presses hit only unmapped keys. Add keys or recalibrate."
+    },
+    {
+      "key": "wizard.status.line",
+      "ko": "현재 상태: {0}\n{1} · 발 페달 {2}",
+      "en": "Status: {0}\n{1} · foot pedals {2}"
+    },
+    {
+      "key": "wizard.status.validated",
+      "ko": "검증 완료",
+      "en": "tested"
+    },
+    {
+      "key": "wizard.status.unvalidated",
+      "ko": "검증 안 됨 (운전에 사용되지 않음)",
+      "en": "not tested (not used for driving)"
+    },
+    {
+      "key": "wizard.status.keyboardChanged",
+      "ko": "다른 키보드가 연결됨: 실제 테스트를 다시 하세요",
+      "en": "different keyboard connected: run the live test again"
+    },
+    {
+      "key": "wizard.status.none",
+      "ko": "설정 없음",
+      "en": "not set up"
+    },
+    {
+      "key": "wizard.status.keyboardConnected",
+      "ko": "키보드 연결됨",
+      "en": "keyboard connected"
+    },
+    {
+      "key": "wizard.status.keyboardMissing",
+      "ko": "키보드가 감지되지 않음",
+      "en": "no keyboard detected"
+    },
+    {
+      "key": "wizard.status.on",
+      "ko": "켬",
+      "en": "on"
+    },
+    {
+      "key": "wizard.status.off",
+      "ko": "끔",
+      "en": "off"
+    },
+    {
+      "key": "wizard.noKeyboard",
+      "ko": "키보드가 감지되지 않습니다. 연결을 확인하세요.",
+      "en": "No keyboard detected. Check the connection."
+    }
+  ]
+}

@@ -10,9 +10,11 @@
 - 실제 폰, 실제 터치스크린, 바닥에 둔 실제 키보드(발 사용)는 **테스트하지 않았습니다**.
 - 그래서 다음 단계 1순위는 **Unity에서 프로젝트를 열어 컴파일 오류를 잡고 EditMode 테스트를 돌리는 것**입니다.
 - **현재 Claude 작업 환경 점검 결과:** Unity Editor, .NET SDK, Mono 모두 없고, Unity 다운로드 서버는 네트워크 정책으로 차단되며 Unity 라이선스도 없습니다. **이 환경에서는 Unity 컴파일과 테스트가 불가능합니다.**
-- **검증 방법 (결정 대기):**
-  - A) GitHub Actions + GameCI로 Unity를 CI에서 돌리기 (권장). Claude가 CI 로그를 직접 읽고 반복 수정할 수 있습니다. 필요한 것은 리포 Secrets `UNITY_LICENSE`, `UNITY_EMAIL`, `UNITY_PASSWORD`와 정확한 Unity 6000.0.x 버전입니다.
-  - B) 사용자가 로컬 Unity에서 열고 오류와 테스트 결과를 전달.
+- **검증 방법 (결정됨):** A) GitHub Actions + GameCI가 기본, B) 사용자 로컬 Unity가 대안.
+  - **GameCI 요구사항 확인 (2026-10-31):** GameCI 공식 문서 저장소(최신 커밋 2026-10-24) 기준, Unity Personal은 Secrets 3개 `UNITY_LICENSE`(Unity Hub로 활성화해 생긴 `Unity_lic.ulf`의 내용), `UNITY_EMAIL`, `UNITY_PASSWORD`가 모두 필요합니다(Pro는 `UNITY_SERIAL`). game-ci.com 자체는 이 세션 네트워크에서 차단되어 문서 원본 저장소로 확인했습니다.
+  - **Unity 버전:** `6000.0.85f1`. GameCI Docker 이미지(Linux base, Android)가 있는 가장 최신 6000.0 패치입니다(Docker Hub 확인, 이미지 갱신일 2026-10-20). `ProjectVersion.txt`와 CI에 고정했습니다.
+  - **워크플로:** `.github/workflows/unity-tests.yml` (unity-test-runner v4.4.0, 커밋 SHA 고정, 개발 브랜치 push와 수동 실행에서만 동작, 최소 권한). Secrets가 없으면 Unity 단계를 건너뜁니다.
+  - **현재 상태:** Secrets 미설정 → **Unity 컴파일·테스트는 아직 한 번도 실행되지 않음.**
 
 미리보기 링크(비공개): https://claude.ai/artifact/GSutqJuo2tSdP6aj9yFxaP
 (저장소 사본: `Tools/browser-preview/index.html`, 테스트: `Tools/browser-preview/run-tests.js`)
@@ -35,7 +37,7 @@
 | 입력/HUD | 포인터·터치 조향, 발 페달 키보드, 세로 기어, HUD | 작성 완료 (미검증) |
 | 조향 개편 | 3바퀴 핸들, 원 그리기 조향, 떨림 제거 | 작성 완료, 미리보기에서 검증 |
 | **기준선 검증** | Unity 컴파일, EditMode 테스트, Play Mode 기본 주행 확인 | **진행 필요 (Phase C 이전 필수 관문)** |
-| 언어 선택·면책 고지 | 한국어/영어, 첫 실행 필수 고지 (기능은 Claude, 화면은 Codex) | **계획됨 (미착수)** |
+| 언어 선택·면책 고지 | 한국어/영어, 첫 실행 필수 고지 (기능은 Claude, 화면은 Codex) | **기능 계층 작성 완료 (Unity 미검증)**, 최종 화면은 Codex |
 | Phase C | 한국식 교차로 1개 (신호등, 횡단보도, 정지선, 차선 그래프) | **미착수 (기준선 검증 후)** |
 | Phase D | AI 차량 3대: 차선 주행, 신호·정지선 준수, 차간거리, 회전, 방향지시등, 플레이어 반응 | **미착수** |
 | Phase E | 연결된 소규모 도로망, AI 5~10대, 양보, 차선 변경, 표지판, 주차 차량 | **미착수** |
@@ -58,7 +60,17 @@
   - 시작 화면 순서
   - 도로 형상 계약: 단위·축, 차선 데이터는 `RoadNetwork`가 기준, 장식물 금지 구역, 레이어·태그, 신호등·표지판 프리팹 인터페이스
 
-## 1-2. 새 요구사항 (계획됨, 미착수)
+## 1-2. 새 요구사항
+
+### 구현 상태 (2026-10-31, 모두 Unity 미검증)
+- 현지화: `Core/Localization.cs`(Language, StringTable, DisclaimerPolicy), `Runtime/Localization/LocalizationService.cs`(Loc.T, SetLanguage, LanguageChanged, LocalizedText), `Resources/Localization/strings.json`(143개 키).
+- 기존 하드코딩 한국어 137개를 모두 키로 이동(HUD, 변속 메시지, 차량 장치, 카메라 버튼, 페달 보정 마법사). Core의 검증 실패 사유는 문장 대신 enum(`PedalValidationFailure`)으로 바꿈.
+- 고지: `Runtime/Startup/DisclaimerService.cs`(버전·시각·언어 저장), `StartupFlow`(언어 → 고지 → 게임, 그 전까지 입력 차단), 화면 인터페이스 `ILanguageSelectionView`·`IDisclaimerView`, 임시 화면 `PlaceholderStartupViews.cs`. 일시정지 메뉴에서 언어와 고지를 다시 열 수 있음.
+- 연동 계약: `INTEGRATION.md`.
+- 테스트(미실행): EditMode `LocalizationTests`(키 누락, 번역 누락, 자리표시자 일치, 승인 문구 고정), PlayMode `DrivingBaselinePlayModeTests`(P 유지, 변속 거부, D/R 크리프, 주행 중 P 거부, 25 km/h 제동, 풀락 조향, 정지 중 조향 유지).
+- 이 환경에서 Python으로 확인한 것: strings.json 키 143개, 중복 0, 자리표시자 불일치 0, 코드에서 쓰는 키 139개 모두 존재. (Unity 실행이 아닌 정적 검사)
+
+### 요구사항 원문
 
 **언어 선택**
 - 한국어와 영어(미국). 선택은 로컬에 저장하고 설정에서 바꿀 수 있습니다.
@@ -265,10 +277,13 @@
 6. **Phase F**: 복잡한 상호작용과 운전 평가(AI 잘못 감점 제외).
 7. **나머지 UI**(Codex 중심): 메인 메뉴, 연습 모드, 코스·차량 선택, 설정, 튜토리얼, 완료 화면, 한국어 폰트, 최종 벡터 에셋.
 
+### 결정된 사항 (2026-10-31)
+- 검증: A(GameCI) 기본, B(로컬) 대안. Unity `6000.0.85f1`.
+- 현지화 분담: Claude가 구조·문자열 테이블·저장·이벤트·기존 문자열 이동·API, Codex가 한국어·영어 문구·타이포그래피·화면 디자인.
+- 임시 고지 화면 허용(필수·기능 동작, 로직 변경 없이 교체 가능).
+
 ### 결정 대기 사항
-- 검증 방법: A(CI, Secrets 3개와 Unity 버전 필요) 또는 B(로컬).
-- 현지화 역할 분담 제안 승인 여부.
-- Codex 화면이 오기 전 임시(기능 전용) 고지 화면을 둘지 여부.
+- **사용자 작업:** GitHub Secrets 3개 등록(아래 "검증 절차"). 등록 후 Claude가 CI를 실행하고 결과를 이 문서에 기록.
 - Codex 디자인 브랜치 이름.
 - 원 조향 감도(1:1)와 반응 속도(70 ms)가 실제 기기에서 괜찮은지.
 - 앞바퀴 최대 각도 35° 유지 또는 38~40°로 상향.
@@ -287,9 +302,36 @@
 | `INTEGRATION.md` | (작성 예정) Codex와의 연동 계약 |
 | `Tools/browser-preview/` | 미리보기 HTML과 자동 테스트(Node + Playwright) |
 
+## 검증 절차 (사용자 1회 작업)
+
+GameCI 문서 기준 Unity Personal 설정. **비밀번호와 라이선스 내용은 채팅에 붙여넣지 말고 GitHub에만 입력하세요.**
+1. Unity Hub 설치 → CI에 쓸 Unity 계정으로 로그인. 개인 계정 대신 **CI 전용 Unity 계정**을 만들면 노출 위험이 줄어듭니다.
+2. Unity Hub → Preferences(설정) → Licenses → **Add** → **Get a free personal license**. 라이선스가 이미 보여도 Add를 눌러야 `.ulf` 파일이 생성됩니다.
+3. `.ulf` 파일 위치:
+   - Windows: `C:\ProgramData\Unity\Unity_lic.ulf`
+   - macOS: `/Library/Application Support/Unity/Unity_lic.ulf`
+   - Linux: `~/.local/share/unity3d/Unity/Unity_lic.ulf`
+4. GitHub `jaellie/jellie` → Settings → Secrets and variables → Actions → New repository secret:
+   - `UNITY_LICENSE`: `.ulf` 파일 내용 전체
+   - `UNITY_EMAIL`: Unity 계정 이메일
+   - `UNITY_PASSWORD`: Unity 계정 비밀번호
+5. 등록했다고 알려주면 Claude가 워크플로를 실행하고, 로그를 읽고, 확인된 오류만 고칩니다.
+- 참고: Unity Personal 사용 조건(매출 기준 등)은 계정 소유자가 확인해야 합니다. 2단계 인증 계정의 CI 동작은 GameCI 문서에 명시되어 있지 않아 첫 실행에서 확인합니다.
+- 대안 B(로컬): Unity Hub로 6000.0.85f1 설치 → 프로젝트 열기 → Console 빨간 오류 전체 전달 → Test Runner에서 EditMode·PlayMode 실행 결과 전달.
+
+## 검증 결과 (확인된 것만 기록)
+
+| 항목 | 방법 | 결과 | 날짜 |
+|---|---|---|---|
+| Unity 컴파일 | CI 또는 로컬 | **미실행** | - |
+| EditMode 테스트 | CI | **미실행** | - |
+| PlayMode 스모크 테스트 | CI | **미실행** | - |
+| 브라우저 미리보기 자동 테스트 | headless Chromium | 82/82 통과 (Unity 아님) | 2026-10-31 |
+
 ## 변경 기록
 
 | 날짜 | 내용 |
 |---|---|
 | 2026-10-31 | 최초 작성 (M1 ~ 원 조향 떨림 제거까지) |
 | 2026-10-31 | Claude/Codex 협업 방식, 언어 선택·면책 고지 요구사항, AI 교통 요구사항과 Phase C~F 순서·결정론 원칙, 기준선 검증 관문, Claude 환경에서 Unity 실행 불가 확인 추가 |
+| 2026-10-31 | GameCI 요구사항 확인(Personal: Secrets 3개), Unity 6000.0.85f1 고정, CI 워크플로·PlayMode 스모크 테스트 추가, 현지화 기능 계층·문자열 이동·첫 실행 고지(임시 화면)·INTEGRATION.md 작성. Unity 미검증 |

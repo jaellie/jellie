@@ -27,6 +27,13 @@ namespace DrivingSim.Controls
             drivingBlockers.Remove(owner);
             shortcutBlockers.Remove(owner);
         }
+
+        /// <summary>Clears every blocker. For automated tests and scene resets only.</summary>
+        public static void ResetAll()
+        {
+            drivingBlockers.Clear();
+            shortcutBlockers.Clear();
+        }
     }
 
     /// <summary>

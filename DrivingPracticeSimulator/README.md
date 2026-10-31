@@ -12,8 +12,9 @@ architecture review and the plan for roads, AI traffic and driving evaluation.
 
 ## Requirements
 
-- Unity **6000.0 LTS** (any recent 6000.0.x patch). `ProjectSettings/ProjectVersion.txt` names
-  6000.0.47f1. If Hub offers a different installed 6000.0 version, accept it.
+- Unity **6000.0.85f1** (Unity 6 LTS), pinned in `ProjectSettings/ProjectVersion.txt` and in CI.
+  It's the newest 6000.0 patch with GameCI Docker images (Linux and Android) as of 2026-10-31.
+  Install the same version locally so local and CI results match.
 - Android Build Support module (needed later. Milestone 1 runs in the Editor).
 
 Packages (`Packages/manifest.json`): Input System, URP, Test Framework, uGUI, and the built-in
@@ -40,6 +41,27 @@ project renders with the Built-in pipeline until one is assigned. To switch:
 **Assets → Create → Rendering → URP Asset (with Universal Renderer)**, then assign it in
 **Project Settings → Graphics** and **Quality**, then run *Create Physics Test Scene* again
 (the generated materials then use `Universal Render Pipeline/Lit`).
+
+## Automated tests in CI (GitHub Actions + GameCI)
+
+`.github/workflows/unity-tests.yml` compiles the project and runs EditMode + PlayMode tests with
+`game-ci/unity-test-runner` v4.4.0 (pinned by commit) on Unity 6000.0.85f1, on every push to the
+development branch or by manual dispatch. It needs three repository secrets for a **Unity Personal**
+license (current GameCI documentation): `UNITY_LICENSE` (contents of `Unity_lic.ulf` from a Unity Hub
+activation), `UNITY_EMAIL`, `UNITY_PASSWORD`. Without them the job prints a notice and skips Unity.
+Results appear as the "Unity test results" check and the `unity-test-results` artifact.
+
+PlayMode smoke tests (`Tests/PlayMode`): P holds the car, leaving P without the brake is
+rejected, D/R creep, P refused while moving, braking from 25 km/h stops and holds, full-lock
+steering turns the car right with Ackermann, steering stays put when released while stopped.
+
+## Language and first-launch notice
+
+Korean / English (US), saved locally, changeable later (pause menu → 언어 / Language). Before the first
+drive the player must pick a language and acknowledge the practice-only notice. The acknowledgment
+(version, time, language) is saved and the notice can be reopened (pause menu → 고지 사항 / Notice). The
+screens are temporary placeholders until Codex's design is plugged in. Strings live in
+`Resources/Localization/strings.json`. The contract for UI work is **[INTEGRATION.md](INTEGRATION.md)**.
 
 ## Keyboard controls (physics validation only)
 
