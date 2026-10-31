@@ -90,8 +90,8 @@ namespace DrivingSim.Diagnostics
             }
 
             BuildText();
-            GUI.Box(new Rect(8f, 8f, 430f, 470f), GUIContent.none);
-            GUI.Label(new Rect(16f, 12f, 420f, 466f), text.ToString(), style);
+            GUI.Box(new Rect(8f, 8f, 430f, 490f), GUIContent.none);
+            GUI.Label(new Rect(16f, 12f, 420f, 486f), text.ToString(), style);
         }
 
         void BuildText()
@@ -129,7 +129,8 @@ namespace DrivingSim.Diagnostics
             text.AppendLine();
             text.AppendLine("W/↑ accel  S/↓ brake  A D/←→ steer  C center");
             text.AppendLine("Shift: gentle pedals   1 P  2 R  3 N  4 D   Q/E lever");
-            text.AppendLine("Space parking brake  V camera  Backspace reset");
+            text.AppendLine("Space parking brake  Backspace reset");
+            text.AppendLine("V 1st/3rd person  T top-down  Z/X look L/R  [ ] FOV");
         }
 
         static string Radius(float meters) => float.IsInfinity(meters) || meters > 999f ? "—" : $"{meters:F2} m";

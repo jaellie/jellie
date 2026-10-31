@@ -3,7 +3,8 @@
     "rootNamespace": "DrivingSim",
     "references": [
         "DrivingSim.Core",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

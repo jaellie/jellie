@@ -1,8 +1,9 @@
 # Driving Practice Simulator (운전 연습 시뮬레이터)
 
 A Unity 6 / C# Android driving-practice simulator based on Korean Class 2 Ordinary
-(2종 보통) automatic lessons. **Current state: Milestone 1, the vehicle physics prototype.**
-Menus, mobile controls, the cockpit view and mission logic come in later milestones.
+(2종 보통) automatic lessons. **Current state: Milestone 1 (vehicle physics prototype) plus Phase B of the road & traffic
+upgrade (first-person cockpit, mirrors, camera switching).** See [ROADMAP.md](ROADMAP.md) for the
+architecture review and the plan for roads, AI traffic and driving evaluation.
 
 > ⚠️ **Verification status.** No Unity Editor or C# compiler was available where these files
 > were written, so **nothing here has been compiled, run in Play Mode, or built for Android.**
@@ -52,12 +53,32 @@ project renders with the Built-in pipeline until one is assigned. To switch:
 | 1 / 2 / 3 / 4 | Select P / R / N / D |
 | Q / E | Move the lever one position toward P / toward D |
 | Space | Toggle the parking brake (starts **engaged**) |
-| V | Chase camera ↔ top-down camera |
+| V | First-person cockpit ↔ third-person chase camera |
+| T | Top-down camera (test view) |
+| Z / X (held) | Look left / right in the cockpit |
+| [ / ] | Cockpit field of view − / + (saved between sessions) |
 | F1 | Toggle the telemetry overlay |
 | Backspace | Reset the vehicle to the spawn point (P, parking brake on) |
 
 To pull away: hold **S** → press **4** (D) → **Space** (release parking brake) → release **S**.
 The car creeps forward. Add **W** to accelerate.
+
+## Camera views
+
+| View | How | Notes |
+| --- | --- | --- |
+| Third-person chase | Default. **V** or the on-screen **1인칭/3인칭** button toggles | Follows the car's yaw only |
+| First-person cockpit | **V** / on-screen button | Driver's eye on the left seat. Dashboard, steering wheel driven by the real steering angle, speedometer needle + digital speed, P R N D, parking-brake lamp, three mirrors |
+| Top-down | **T** | Test view for parking and turning radius |
+
+In the cockpit, the on-screen **◀ 왼쪽 / 오른쪽 ▶** buttons (or Z/X) turn the head while held,
+and **− / +** set the field of view (50–85°, default 65°). Look controls are buttons, never a drag,
+so they can't interfere with drag steering. The right side mirror is outside the default field of
+view (as in a real car you glance at it). Use look-right or a wider FOV.
+
+Mirrors render to small RenderTextures (rearview 256×72, sides 160×112), only in the cockpit view,
+with one mirror rendered per frame (rearview every 2nd frame, each side mirror every 4th).
+Tune `renderInterval`, `renderPhase` and the texture size on each `MirrorCamera`.
 
 ## Architecture
 
@@ -70,10 +91,13 @@ Assets/DrivingSim/
     BrakeModel / ResistanceModel / AckermannGeometry
   Runtime/     DrivingSim.Runtime
     Vehicle/   VehiclePhysicsConfig (ScriptableObject), VehicleController (Rigidbody + WheelColliders)
+      Cockpit/ CockpitRig: steering wheel, gauges, gear/parking-brake indicators, eye anchor, mirrors
     Controls/  DrivingInputFrame, IDrivingInputSource, VehicleInputRouter, KeyboardDrivingInput
-    Cameras/   VehicleFollowCamera (third-person + top-down)
+    Cameras/   CameraController (view modes, cockpit look/FOV), VehicleFollowCamera (chase/top-down),
+               MirrorCamera (throttled RenderTexture mirror)
+    UI/        CameraControlsOverlay (on-screen view/look/FOV buttons), HoldButton, SafeAreaFitter
     Diagnostics/ VehicleDebugHUD (dev overlay), VehicleTestProbe (measurements)
-    TestBed/   Procedural test ground + primitive vehicle + rig assembly
+    TestBed/   Procedural test ground + primitive vehicle + cockpit builder + rig assembly
   Editor/      "DrivingSim" menu (scene/config generation)
   Tests/EditMode/  NUnit tests for Core
 ```
@@ -111,5 +135,8 @@ to any real car.**
 - WheelCollider low-speed behavior depends on the editor version and the fixed timestep
   (default 0.02 s). If the car jitters or slides at standstill, see the tuning notes in TESTING.md.
 - No ABS: full brake from high speed can lock the wheels.
+- Mirror and cockpit shaders are looked up with `Shader.Find`. For device builds, add
+  `Unlit/Texture` (Built-in) or `Universal Render Pipeline/Unlit` to *Always Included Shaders*.
+- Existing scenes made before Phase B have no cockpit. Re-run **DrivingSim → Create Physics Test Scene**.
 - The IMGUI overlay's Korean feedback lines rely on OS font fallback. A proper Korean UI font
   (e.g. Noto Sans KR via TextMeshPro) is planned for the UI milestone.

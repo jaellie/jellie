@@ -34,11 +34,28 @@ Test ground layout (spawn at the origin, facing +Z / north):
 | 15 | **Collisions** | Drive slowly into the block, then the end wall. | Collision count increments once per impact. Car doesn't launch or tunnel | | |
 | 16 | **Reset** | Backspace. | Car back at spawn, P, PB on, steering 0 | | |
 
+## Phase B: first-person cockpit
+
+Re-run **DrivingSim → Create Physics Test Scene** first (older scenes have no cockpit).
+
+| # | Test | Steps | Pass criteria | Measured |
+|---|------|-------|---------------|----------|
+| B1 | **View switching** | Press V several times, then T, then V. Also tap the on-screen 1인칭/3인칭 button. | Chase ↔ cockpit each press. T gives top-down. V from top-down goes to the cockpit. No camera jumps after the first frame. Button label shows the *other* view | |
+| B2 | **Cockpit framing** | In the cockpit, parked. | Eye on the left seat. Hood and road visible ahead. Gauge cluster visible **above** the wheel rim. Wheel's orange top marker visible. Nothing clipped by the near plane | |
+| B3 | **Steering wheel = steering input** | Hold D for 2 s (to +720°), then A back. Compare with the telemetry "Wheel" value. | Wheel turns clockwise for D. Exactly 2 full turns at +720°. Marker at top at 0°. While moving and released, the wheel unwinds with self-centering | |
+| B4 | **Gauges** | Drive 0 → 60 km/h. Shift P/R/N/D. Toggle the parking brake. | Needle at the 60 km/h tick (1/3 of the 240° sweep). Digital speed matches telemetry ±1. Active gear in amber. Red (P) lamp only with the parking brake on | |
+| B5 | **Mirrors** | In the cockpit, reverse past cones. Drive past the block. | Rearview shows behind the car. Left/right mirrors show their side and the car's own flank. All are left-right reversed like real mirrors. Exterior glass is plain grey in the chase view | |
+| B6 | **Look left/right** | Hold Z / X, or the on-screen ◀ / ▶ buttons. Release. | Head turns ≈70° smoothly while held and returns on release. Steering is unaffected | |
+| B7 | **FOV** | Press [ / ] or − / + in the cockpit. Restart Play Mode. | FOV changes in 5° steps within 50–85°. Label updates. Value is remembered | |
+| B8 | **Controls unchanged** | Repeat M1 tests 2, 5, 9 in the cockpit view. | Same behavior as in the chase view. Keyboard driving keys never move the camera | |
+| B9 | **Multi-touch (device)** | On a phone: hold ◀ with one finger, tap 3인칭 with another. | Both register (buttons act on pointer down) | |
+| B10 | **Performance** | Profiler, cockpit vs chase, on the target Android device. | Cockpit adds ≤ 1 extra camera render per frame. Report FPS for both | |
+
 ## EditMode unit tests
 
 **Window → General → Test Runner → EditMode → Run All.** They cover the transmission
 interlocks, steering accumulation/clamping/self-centering/speed scaling, creep/throttle/brake
-curves, resistance signs and Ackermann symmetry (`Assets/DrivingSim/Tests/EditMode`).
+curves, resistance signs, Ackermann symmetry and the speedometer dial mapping (`Assets/DrivingSim/Tests/EditMode`).
 
 ## Tuning notes
 

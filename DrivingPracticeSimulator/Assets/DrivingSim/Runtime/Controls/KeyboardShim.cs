@@ -11,6 +11,7 @@ namespace DrivingSim.Controls
         LeftShift, Space, Backspace,
         Digit1, Digit2, Digit3, Digit4,
         Q, E, C, V, F1,
+        T, Z, X, LeftBracket, RightBracket,
     }
 
     /// <summary>
@@ -68,6 +69,11 @@ namespace DrivingSim.Controls
                 case KeyId.C: return Key.C;
                 case KeyId.V: return Key.V;
                 case KeyId.F1: return Key.F1;
+                case KeyId.T: return Key.T;
+                case KeyId.Z: return Key.Z;
+                case KeyId.X: return Key.X;
+                case KeyId.LeftBracket: return Key.LeftBracket;
+                case KeyId.RightBracket: return Key.RightBracket;
                 default: return Key.None;
             }
         }
@@ -96,6 +102,11 @@ namespace DrivingSim.Controls
                 case KeyId.C: return UnityEngine.KeyCode.C;
                 case KeyId.V: return UnityEngine.KeyCode.V;
                 case KeyId.F1: return UnityEngine.KeyCode.F1;
+                case KeyId.T: return UnityEngine.KeyCode.T;
+                case KeyId.Z: return UnityEngine.KeyCode.Z;
+                case KeyId.X: return UnityEngine.KeyCode.X;
+                case KeyId.LeftBracket: return UnityEngine.KeyCode.LeftBracket;
+                case KeyId.RightBracket: return UnityEngine.KeyCode.RightBracket;
                 default: return UnityEngine.KeyCode.None;
             }
         }

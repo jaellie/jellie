@@ -1,4 +1,3 @@
-using DrivingSim.Controls;
 using DrivingSim.Vehicle;
 using UnityEngine;
 
@@ -6,7 +5,8 @@ namespace DrivingSim.Cameras
 {
     /// <summary>
     /// Third-person follow camera that tracks the vehicle's yaw only, so body roll and pitch
-    /// don't shake the view. V toggles a top-down view for parking and turning-radius tests.
+    /// don't shake the view. <see cref="CameraController"/> chooses the mode and enables this
+    /// component only for the chase and top-down views.
     /// </summary>
     [RequireComponent(typeof(Camera))]
     public class VehicleFollowCamera : MonoBehaviour
@@ -41,13 +41,15 @@ namespace DrivingSim.Cameras
             Snap();
         }
 
-        void Start() => Snap();
+        public VehicleController Target => target;
 
-        void Update()
+        public ViewMode Mode
         {
-            if (KeyboardShim.WasPressed(KeyId.V))
-                mode = mode == ViewMode.Chase ? ViewMode.TopDown : ViewMode.Chase;
+            get => mode;
+            set => mode = value;
         }
+
+        void Start() => Snap();
 
         void LateUpdate()
         {
@@ -64,7 +66,7 @@ namespace DrivingSim.Cameras
                 : Quaternion.LookRotation(LookPoint(t, yaw) - transform.position, Vector3.up);
         }
 
-        void Snap()
+        public void Snap()
         {
             if (target == null) return;
             Transform t = target.transform;

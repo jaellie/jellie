@@ -1,6 +1,7 @@
 using DrivingSim.Cameras;
 using DrivingSim.Controls;
 using DrivingSim.Diagnostics;
+using DrivingSim.UI;
 using DrivingSim.Vehicle;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace DrivingSim.TestBed
             EnsureLight();
 
             VehicleController vehicle = PrimitiveVehicleBuilder.Build(config, materials, SpawnPosition, Quaternion.identity);
+            CockpitRig cockpit = CockpitBuilder.Build(vehicle, config, materials);
 
             var systems = new GameObject("DrivingSystems");
             KeyboardDrivingInput keyboard = systems.AddComponent<KeyboardDrivingInput>();
@@ -42,6 +44,10 @@ namespace DrivingSim.TestBed
             VehicleFollowCamera follow = camera.GetComponent<VehicleFollowCamera>();
             if (follow == null) follow = camera.gameObject.AddComponent<VehicleFollowCamera>();
             follow.SetTarget(vehicle);
+            CameraController cameraController = camera.GetComponent<CameraController>();
+            if (cameraController == null) cameraController = camera.gameObject.AddComponent<CameraController>();
+            cameraController.Bind(vehicle, cockpit, follow);
+            CameraControlsOverlay.Create(cameraController);
 
             vehicle.gameObject.SetActive(true);
             return vehicle;
