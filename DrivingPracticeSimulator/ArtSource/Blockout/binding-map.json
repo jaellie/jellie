@@ -1,0 +1,368 @@
+{
+  "status": "Binding reference only; no executable Unity configuration",
+  "root": "BO_Cockpit",
+  "naming": "BO_ files/root/mesh-data; binding-exact child transforms",
+  "bindings": [
+    {
+      "stage1Name": "Interior_Dashboard",
+      "canonicalName": "Interior_Dashboard",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Graphite",
+        "M_BO_Trim",
+        "M_BO_Plastic"
+      ]
+    },
+    {
+      "stage1Name": "Interior_Seats",
+      "canonicalName": "Interior_Seats",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Graphite",
+        "M_BO_Trim"
+      ]
+    },
+    {
+      "stage1Name": "Interior_Doors",
+      "canonicalName": "Interior_Doors",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Graphite",
+        "M_BO_Trim",
+        "M_BO_Plastic"
+      ]
+    },
+    {
+      "stage1Name": "Interior_Headliner",
+      "canonicalName": "Interior_Headliner",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Trim"
+      ]
+    },
+    {
+      "stage1Name": "Interior_SunVisors",
+      "canonicalName": "Interior_SunVisors",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Trim"
+      ]
+    },
+    {
+      "stage1Name": "Interior_Pillars",
+      "canonicalName": "Interior_Pillars",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Trim"
+      ]
+    },
+    {
+      "stage1Name": "Interior_Console",
+      "canonicalName": "Interior_Console",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Graphite",
+        "M_BO_Plastic"
+      ]
+    },
+    {
+      "stage1Name": "Glass_Interior",
+      "canonicalName": "Glass_Interior",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Glass"
+      ]
+    },
+    {
+      "stage1Name": "SteeringWheel",
+      "canonicalName": "SteeringWheel",
+      "originUnity": [
+        -0.3700000047683716,
+        0.8999999761581421,
+        0.11999999731779099
+      ],
+      "slots": [
+        "M_BO_Plastic",
+        "M_BO_Trim",
+        "M_BO_Graphite"
+      ]
+    },
+    {
+      "stage1Name": "Cluster_Panel",
+      "canonicalName": "Cluster_Panel",
+      "originUnity": [
+        -0.3700000047683716,
+        1.090000033378601,
+        0.4699999988079071
+      ],
+      "slots": [
+        "M_BO_Plastic",
+        "M_BO_Graphite",
+        "M_BO_Trim"
+      ]
+    },
+    {
+      "stage1Name": "Cluster_Display",
+      "canonicalName": "Cluster_Display",
+      "originUnity": [
+        -0.28999999165534973,
+        1.090000033378601,
+        0.4699999988079071
+      ],
+      "slots": [
+        "M_ClusterDisplay"
+      ]
+    },
+    {
+      "stage1Name": "Cluster_Needle_Speed",
+      "canonicalName": "Cluster_Needle_Speed",
+      "originUnity": [
+        -0.44999998807907104,
+        1.090999960899353,
+        0.46399998664855957
+      ],
+      "slots": [
+        "M_BO_Trim"
+      ]
+    },
+    {
+      "stage1Name": "Cluster_Needle_Tach",
+      "canonicalName": "Cluster_Needle_Tach",
+      "originUnity": [
+        -0.12999999523162842,
+        1.090999960899353,
+        0.46399998664855957
+      ],
+      "slots": [
+        "M_BO_Trim"
+      ]
+    },
+    {
+      "stage1Name": "MirrorGlass_Rear",
+      "canonicalName": "MirrorGlass_Rear",
+      "originUnity": [
+        -0.0,
+        1.399999976158142,
+        0.6200000047683716
+      ],
+      "slots": [
+        "M_MirrorGlass"
+      ]
+    },
+    {
+      "stage1Name": "MirrorGlass_Left",
+      "canonicalName": "MirrorGlass_Left",
+      "originUnity": [
+        -1.0,
+        1.0199999809265137,
+        0.550000011920929
+      ],
+      "slots": [
+        "M_MirrorGlass"
+      ]
+    },
+    {
+      "stage1Name": "MirrorGlass_Right",
+      "canonicalName": "MirrorGlass_Right",
+      "originUnity": [
+        1.0,
+        1.0199999809265137,
+        0.550000011920929
+      ],
+      "slots": [
+        "M_MirrorGlass"
+      ]
+    },
+    {
+      "stage1Name": "Interior_MirrorHousing_Rear",
+      "canonicalName": "Interior_MirrorHousing_Rear",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Plastic"
+      ]
+    },
+    {
+      "stage1Name": "Interior_Wiper_L",
+      "canonicalName": "Interior_Wiper_L",
+      "originUnity": [
+        -0.5,
+        1.0,
+        0.9750000238418579
+      ],
+      "slots": [
+        "M_BO_Plastic"
+      ]
+    },
+    {
+      "stage1Name": "Interior_Wiper_R",
+      "canonicalName": "Interior_Wiper_R",
+      "originUnity": [
+        0.11999999731779099,
+        1.0,
+        0.9750000238418579
+      ],
+      "slots": [
+        "M_BO_Plastic"
+      ]
+    },
+    {
+      "stage1Name": "Lamp_Dash_Indicator_L",
+      "canonicalName": "Lamp_Dash_Indicator_L",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Plastic"
+      ]
+    },
+    {
+      "stage1Name": "Lamp_Dash_Indicator_R",
+      "canonicalName": "Lamp_Dash_Indicator_R",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Plastic"
+      ]
+    },
+    {
+      "stage1Name": "Lamp_Dash_ParkingBrake",
+      "canonicalName": "Lamp_Dash_ParkingBrake",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Plastic"
+      ]
+    },
+    {
+      "stage1Name": "Interior_HoodEdge",
+      "canonicalName": "Interior_HoodEdge",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": [
+        "M_BO_Graphite"
+      ]
+    },
+    {
+      "stage1Name": "DriverEye",
+      "canonicalName": "DriverEye",
+      "originUnity": [
+        -0.3700000047683716,
+        1.2200000286102295,
+        -0.30000001192092896
+      ],
+      "slots": []
+    },
+    {
+      "stage1Name": "SteeringWheelPivot",
+      "canonicalName": "SteeringWheelPivot",
+      "originUnity": [
+        -0.3700000047683716,
+        0.8999999761581421,
+        0.11999999731779099
+      ],
+      "slots": []
+    },
+    {
+      "stage1Name": "Mirror_Rear",
+      "canonicalName": "Mirror_Rear",
+      "originUnity": [
+        -0.0,
+        1.399999976158142,
+        0.6200000047683716
+      ],
+      "slots": []
+    },
+    {
+      "stage1Name": "Mirror_Left",
+      "canonicalName": "Mirror_Left",
+      "originUnity": [
+        -1.0,
+        1.0199999809265137,
+        0.550000011920929
+      ],
+      "slots": []
+    },
+    {
+      "stage1Name": "Mirror_Right",
+      "canonicalName": "Mirror_Right",
+      "originUnity": [
+        1.0,
+        1.0199999809265137,
+        0.550000011920929
+      ],
+      "slots": []
+    },
+    {
+      "stage1Name": "BO_Cockpit",
+      "canonicalName": "BO_Cockpit",
+      "originUnity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "slots": []
+    }
+  ],
+  "wipers": {
+    "exportMeshPose": "up-glass reference",
+    "previewRestDegrees": -85,
+    "axisUnity": [
+      0,
+      0.468,
+      0.884
+    ],
+    "note": "Preserves ASSET_SPEC native binding; Claude verifies pose sign in Unity."
+  },
+  "conflicts": [
+    "Speed remains left at x=-.45; right tach x=-.13 is provisional.",
+    "The visual cluster backing is .48m wide, with the exact panel origin retained.",
+    "No live mirror/display/signal behavior is supplied."
+  ]
+}

@@ -1,7 +1,7 @@
 """Blender-only asset and driver-eye inspection. No Unity validation claims."""
 from pathlib import Path
 import bpy,json,math
-from mathutils import Vector
+from mathutils import Vector,Matrix
 from mathutils.bvhtree import BVHTree
 SRC=Path(__file__).resolve().parent;ROOT=SRC.parents[1];OUT=ROOT/'Assets/DrivingSim/Art/Blockout'
 def B(p):x,y,z=p;return Vector((-x,-z,y))
@@ -16,18 +16,24 @@ assert not list(OUT.rglob('*.png')) and not list(OUT.rglob('*.blend'))
 bpy.ops.wm.open_mainfile(filepath=str(SRC/'BO_Cockpit.blend'))
 source={};eye=B((-.37,1.22,-.30));opaque=[]
 for obj in bpy.context.scene.objects:
- assert obj.name.startswith('BO_') and '_LOD' not in obj.name
+ assert (obj.name.startswith(('BO_','Interior_','Glass_','SteeringWheel','Cluster','MirrorGlass_','Lamp_','DriverEye','Mirror_','Road_','Marking_','Sidewalk_','Curb_','Bldg_','Prop_','Tree_','Signal_'))) and '_LOD' not in obj.name
  assert all(abs(v)<1e-6 for v in obj.rotation_euler) and near(obj.scale,(1,1,1))
  assert obj.type in ['MESH','EMPTY'] and not obj.modifiers
  row={'origin':U(obj.location),'type':obj.type}
  if obj.type=='MESH':
   pts=[obj.matrix_world@v.co for v in obj.data.vertices]
   row['bounds']=([min(p[i] for p in pts) for i in range(3)],[max(p[i] for p in pts) for i in range(3)])
-  if obj.name.startswith(('BO_Interior_','BO_SteeringWheel','BO_Cluster','BO_Lamp_')):
+  if obj.name.startswith(('Interior_','SteeringWheel','Cluster','Lamp_')):
    opaque.append(obj)
  source[obj.name]=row
-positions={'BO_DriverEye':(-.37,1.22,-.30),'BO_SteeringWheel':(-.37,.90,.12),'BO_SteeringWheelPivot':(-.37,.90,.12),'BO_Cluster_Panel':(-.37,1.09,.47),'BO_Cluster_Needle':(-.45,1.091,.464),'BO_MirrorGlass_Rear':(0,1.4,.62),'BO_MirrorGlass_Left':(-1,1.02,.55),'BO_MirrorGlass_Right':(1,1.02,.55)}
+positions={'DriverEye':(-.37,1.22,-.30),'SteeringWheel':(-.37,.90,.12),'SteeringWheelPivot':(-.37,.90,.12),'Cluster_Panel':(-.37,1.09,.47),'Cluster_Needle_Speed':(-.45,1.091,.464),'MirrorGlass_Rear':(0,1.4,.62),'MirrorGlass_Left':(-1,1.02,.55),'MirrorGlass_Right':(1,1.02,.55)}
 for name,pos in positions.items():assert near(source[name]['origin'],pos),(name,source[name])
+# Pose wipers exactly as the preview does, leaving the saved source/FBX binding mesh upright.
+for obj in bpy.context.scene.objects:
+ if obj.name.startswith('Interior_Wiper_'):obj.data.transform(Matrix.Rotation(math.radians(85),4,B((0,.468,.884)).normalized()))
+wheel=bpy.data.objects['SteeringWheel'];up=Vector((0,math.cos(math.radians(22)),math.sin(math.radians(22))))
+radial=[math.hypot(U(v.co)[0],Vector(U(v.co)).dot(up)) for v in wheel.data.vertices]
+assert abs(max(radial)-.19)<.001,('wheel outer radius',max(radial))
 verts=[];faces=[]
 for obj in opaque:
  n=len(verts);verts.extend([obj.matrix_world@v.co for v in obj.data.vertices]);faces.extend([tuple(n+i for i in p.vertices) for p in obj.data.polygons])
@@ -60,25 +66,30 @@ for asset in report['assets']:
  objects={o.name:o for o in bpy.context.scene.objects};assert set(objects)=={r['name'] for r in asset['objects']}
  materials=set()
  for row in asset['objects']:
-  o=objects[row['name']];assert near(U(o.location),source[o.name]['origin'])
+  o=objects[row['name']];assert near(U(o.matrix_world.translation),source[o.name]['origin'])
   if o.type=='EMPTY':continue
   assert o.type=='MESH';o.data.calc_loop_triangles();assert len(o.data.loop_triangles)==row['triangles']
   assert o.data.uv_layers
   assert set(m.name for m in o.data.materials)<=known;materials.update(m.name for m in o.data.materials)
   pts=[o.matrix_world@v.co for v in o.data.vertices];bounds=([min(p[i] for p in pts) for i in range(3)],[max(p[i] for p in pts) for i in range(3)])
   assert all(near(a,b) for a,b in zip(bounds,source[o.name]['bounds'])),o.name
-  if o.name.startswith(('BO_Road_','BO_Marking_','BO_Sidewalk_')):assert all((o.matrix_world.to_3x3()@p.normal).z>.99 for p in o.data.polygons),o.name
-  if o.name.startswith(('BO_Bldg_','BO_Prop_','BO_Tree_')):
+  if o.name.startswith(('Road_','Marking_','Sidewalk_')):assert all((o.matrix_world.to_3x3()@p.normal).z>.99 for p in o.data.polygons),o.name
+  if o.name.startswith(('Bldg_','Prop_','Tree_')):
    for tri in o.data.loop_triangles:
     coords=[U(o.matrix_world@o.data.vertices[i].co) for i in tri.vertices];poly=[(p[0],p[2]) for p in coords]
     for zone in layout['keepOut']:
      if zone['kind']=='sight_triangle' and max(p[1] for p in coords)<=zone['maxHeight']:continue
      raw=zone['points'];assert not intersects(poly,list(zip(raw[::2],raw[1::2]))),(o.name,zone['id'])
     decor+=1
-  if o.name=='BO_Interior_Dashboard':assert max(p[1] for p in map(lambda v:U(o.matrix_world@v.co),o.data.vertices) if p[2]>=.8)<=1.0601
-  if o.name=='BO_Interior_Headliner':assert min(U(o.matrix_world@v.co)[1] for v in o.data.vertices)>=1.42
- if 'Cockpit' in asset['file']:assert asset['triangles']<=15000 and len(materials)<=8
- else:assert asset['triangles']<=60000 and sum(o.name.startswith('BO_Bldg_') for o in objects.values())==8
+  if o.name=='Interior_Dashboard':assert max(p[1] for p in map(lambda v:U(o.matrix_world@v.co),o.data.vertices) if p[2]>=.8)<=1.0601
+  if o.name=='Interior_Headliner':assert min(U(o.matrix_world@v.co)[1] for v in o.data.vertices)>=1.42
+ if 'Cockpit' in asset['file']:assert asset['triangles']<=15000 and len(materials)<=6
+ else:assert asset['triangles']<=60000 and sum(o.name.startswith('Bldg_') for o in objects.values())==11
  checks.append({'file':asset['file'],'triangles':asset['triangles'],'objects':len(objects),'materials':len(materials),'BlenderFBXRoundTrip':'PASS'})
-result={'status':'Blender-side validation only; Unity import, compilation, gameplay and Android NOT RUN','assetChecks':checks,'decorationTrianglesCheckedAgainstKeepOuts':decor,'eyeClearanceMeters':nearest[3],'driverView':{'eyeLocalUnity':[-.37,1.22,-.30],'verticalFOV':65,'pitchDown':4,'previewVehiclePositionUnity':approach,'sightlines':sightlines,'closerApproachCheck':near_crosswalk},'knownLimits':['All mirrors/displays/signals are flat placeholders, not live outputs.','Wipers are in the specified up-glass binding pose, not gameplay rest.','Exact left mirror quad/eye specification slightly exceeds the stated 2.10m exterior width; needs Claude review.','Default gameplay spawn at z=-80 is outside this approximately 40m-per-approach visual slice.']}
+# Quantify fixed-anchor constraints so screen-edge claims are not inferred from a render.
+fixed_eye=Vector((-.37,1.22,-.30))
+projected_angles={}
+for label,pos in {'A_left_base':(-.75,.97,.95),'A_left_roof':(-.70,1.48,.68),'A_right_base':(.75,.97,.95),'A_right_roof':(.70,1.48,.68),'roof_front':(0,1.4925,.675)}.items():
+ d=Vector(pos)-fixed_eye;projected_angles[label]={'yawDegrees':math.degrees(math.atan2(d.x,d.z)),'pitchFromCameraDegrees':math.degrees(math.atan2(d.y,math.hypot(d.x,d.z)))+4}
+result={'status':'Blender-side validation only; Unity import, compilation, gameplay and Android NOT RUN','assetChecks':checks,'decorationTrianglesCheckedAgainstKeepOuts':decor,'eyeClearanceMeters':nearest[3],'driverView':{'eyeLocalUnity':[-.37,1.22,-.30],'verticalFOV':65,'pitchDown':4,'previewVehiclePositionUnity':approach,'sightlines':sightlines,'closerApproachCheck':near_crosswalk,'fixedAnchorProjectionAngles':projected_angles},'knownLimits':['All mirrors/displays/signals are flat placeholders, not live outputs.','Speed remains on the left at binding x=-.45; right tach is provisional pending Claude’s pivot coordination.','Specified pillar and mirror anchors at 65-degree vertical FOV prevent both pillars being at screen edges and a near-invisible roof band; see fixedAnchorProjectionAngles.','FBX wipers retain the binding pose; inspection rays and preview use the -85-degree rest pose.','Exact left mirror quad/eye specification slightly exceeds the stated 2.10m exterior width; needs Claude review.','Default gameplay spawn at z=-80 is outside this approximately 60m-per-approach visual slice.']}
 (SRC/'validation-report.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))

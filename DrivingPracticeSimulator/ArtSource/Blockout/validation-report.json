@@ -3,21 +3,21 @@
   "assetChecks": [
     {
       "file": "Assets/DrivingSim/Art/Blockout/SM_BO_Cockpit.fbx",
-      "triangles": 1629,
-      "objects": 25,
-      "materials": 8,
+      "triangles": 5246,
+      "objects": 29,
+      "materials": 6,
       "BlenderFBXRoundTrip": "PASS"
     },
     {
       "file": "Assets/DrivingSim/Art/Blockout/SM_BO_Intersection.fbx",
-      "triangles": 2572,
-      "objects": 47,
-      "materials": 14,
+      "triangles": 5714,
+      "objects": 60,
+      "materials": 17,
       "BlenderFBXRoundTrip": "PASS"
     }
   ],
-  "decorationTrianglesCheckedAgainstKeepOuts": 1008,
-  "eyeClearanceMeters": 0.2250000238418579,
+  "decorationTrianglesCheckedAgainstKeepOuts": 4134,
+  "eyeClearanceMeters": 0.2724999189376831,
   "driverView": {
     "eyeLocalUnity": [
       -0.37,
@@ -186,12 +186,36 @@
       ],
       "clearBeforeTarget": false,
       "note": "Central near-road may be masked by the exact cluster geometry; review in Unity before changing specified anchors/dimensions."
+    },
+    "fixedAnchorProjectionAngles": {
+      "A_left_base": {
+        "yawDegrees": -16.90927161046494,
+        "pitchFromCameraDegrees": -6.832785581689034
+      },
+      "A_left_roof": {
+        "yawDegrees": -18.610163514196064,
+        "pitchFromCameraDegrees": 18.113532028293022
+      },
+      "A_right_base": {
+        "yawDegrees": 41.860339973415655,
+        "pitchFromCameraDegrees": -4.472184842213526
+      },
+      "A_right_roof": {
+        "yawDegrees": 47.51380790029386,
+        "pitchFromCameraDegrees": 14.15907333448807
+      },
+      "roof_front": {
+        "yawDegrees": 20.781111438431633,
+        "pitchFromCameraDegrees": 18.644198902845687
+      }
     }
   },
   "knownLimits": [
     "All mirrors/displays/signals are flat placeholders, not live outputs.",
-    "Wipers are in the specified up-glass binding pose, not gameplay rest.",
+    "Speed remains on the left at binding x=-.45; right tach is provisional pending Claude\u2019s pivot coordination.",
+    "Specified pillar and mirror anchors at 65-degree vertical FOV prevent both pillars being at screen edges and a near-invisible roof band; see fixedAnchorProjectionAngles.",
+    "FBX wipers retain the binding pose; inspection rays and preview use the -85-degree rest pose.",
     "Exact left mirror quad/eye specification slightly exceeds the stated 2.10m exterior width; needs Claude review.",
-    "Default gameplay spawn at z=-80 is outside this approximately 40m-per-approach visual slice."
+    "Default gameplay spawn at z=-80 is outside this approximately 60m-per-approach visual slice."
   ]
 }

@@ -1,13 +1,13 @@
 {
   "materials": [
     {
-      "name": "M_BO_Cabin_Dark",
+      "name": "M_BO_Graphite",
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.1,
-        0.12,
-        0.14,
+        0.023227824223555578,
+        0.02611336556975312,
+        0.030666681641938164,
         1
       ],
       "baseMap": "",
@@ -24,13 +24,13 @@
       "doubleSided": false
     },
     {
-      "name": "M_BO_Cabin_Trim",
+      "name": "M_BO_Plastic",
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.27,
-        0.3,
-        0.32,
+        0.007985828279401842,
+        0.009116772993757143,
+        0.010979339119185963,
         1
       ],
       "baseMap": "",
@@ -47,13 +47,13 @@
       "doubleSided": false
     },
     {
-      "name": "M_BO_Fabric",
+      "name": "M_BO_Trim",
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.16,
-        0.18,
-        0.2,
+        0.5070785101492276,
+        0.5070785101492276,
+        0.47699978456654196,
         1
       ],
       "baseMap": "",
@@ -70,13 +70,13 @@
       "doubleSided": false
     },
     {
-      "name": "M_BO_Metal",
+      "name": "M_ClusterDisplay",
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.5,
-        0.54,
-        0.56,
+        0.0009287925696594428,
+        0.0015479876160990713,
+        0.0019349845201238392,
         1
       ],
       "baseMap": "",
@@ -93,36 +93,13 @@
       "doubleSided": false
     },
     {
-      "name": "M_BO_Display",
+      "name": "M_MirrorGlass",
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.025,
-        0.04,
-        0.045,
-        1
-      ],
-      "baseMap": "",
-      "normalMap": "",
-      "maskMap": "",
-      "emissionMap": "",
-      "emissionColor": [
-        0,
-        0,
-        0
-      ],
-      "smoothness": 0.15,
-      "metallic": 0,
-      "doubleSided": false
-    },
-    {
-      "name": "M_BO_Mirror",
-      "shader": "simplelit",
-      "surface": "opaque",
-      "baseColor": [
-        0.24,
-        0.36,
-        0.42,
+        0.0432336359153358,
+        0.10653922395082352,
+        0.147318999244498,
         1
       ],
       "baseMap": "",
@@ -143,10 +120,10 @@
       "shader": "simplelit",
       "surface": "transparent",
       "baseColor": [
-        0.68,
-        0.8,
-        0.84,
-        0.04
+        0.4200332886842154,
+        0.6382832153523972,
+        0.6738595407338318,
+        0.06
       ],
       "baseMap": "",
       "normalMap": "",
@@ -162,36 +139,13 @@
       "doubleSided": true
     },
     {
-      "name": "M_BO_Marker",
-      "shader": "simplelit",
-      "surface": "opaque",
-      "baseColor": [
-        0.77,
-        0.87,
-        0.89,
-        1
-      ],
-      "baseMap": "",
-      "normalMap": "",
-      "maskMap": "",
-      "emissionMap": "",
-      "emissionColor": [
-        0,
-        0,
-        0
-      ],
-      "smoothness": 0.15,
-      "metallic": 0,
-      "doubleSided": false
-    },
-    {
       "name": "M_BO_Asphalt",
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.22,
-        0.24,
-        0.25,
+        0.030074104146591292,
+        0.036306484118193906,
+        0.039681909478526005,
         1
       ],
       "baseMap": "",
@@ -212,9 +166,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.54,
-        0.53,
-        0.5,
+        0.3303437128042374,
+        0.30699931892751636,
+        0.26327340845612224,
         1
       ],
       "baseMap": "",
@@ -235,9 +189,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.66,
-        0.66,
-        0.62,
+        0.49190504085677866,
+        0.49190504085677866,
+        0.43387952044860834,
         1
       ],
       "baseMap": "",
@@ -258,9 +212,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.9,
-        0.91,
-        0.87,
+        0.8688993866725532,
+        0.8900054069935289,
+        0.8275708303626798,
         1
       ],
       "baseMap": "",
@@ -281,9 +235,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.95,
-        0.65,
-        0.08,
+        0.9774019338064516,
+        0.47699978456654196,
+        0.010022825574869039,
         1
       ],
       "baseMap": "",
@@ -304,9 +258,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.64,
-        0.62,
-        0.56,
+        0.5070785101492276,
+        0.46236136930676214,
+        0.3546920614940455,
         1
       ],
       "baseMap": "",
@@ -327,9 +281,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.46,
-        0.39,
-        0.34,
+        0.3931231302267222,
+        0.28464669032765505,
+        0.20490176639819646,
         1
       ],
       "baseMap": "",
@@ -350,9 +304,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.57,
-        0.6,
-        0.6,
+        0.3931231302267222,
+        0.46236136930676214,
+        0.47699978456654196,
         1
       ],
       "baseMap": "",
@@ -373,9 +327,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.19,
-        0.29,
-        0.34,
+        0.05925352111727415,
+        0.1788675039555289,
+        0.28464669032765505,
         1
       ],
       "baseMap": "",
@@ -396,9 +350,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.1,
-        0.28,
-        0.32,
+        0.011645430905844125,
+        0.13286832155381798,
+        0.17064493581555268,
         1
       ],
       "baseMap": "",
@@ -419,9 +373,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.24,
-        0.28,
-        0.28,
+        0.07323895587840543,
+        0.10653922395082352,
+        0.11280478678675158,
         1
       ],
       "baseMap": "",
@@ -442,9 +396,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.28,
-        0.39,
-        0.22,
+        0.10653922395082352,
+        0.24286681390410306,
+        0.033104766570885055,
         1
       ],
       "baseMap": "",
@@ -465,9 +419,9 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.36,
-        0.28,
-        0.21,
+        0.1788675039555289,
+        0.09462962659456918,
+        0.0432336359153358,
         1
       ],
       "baseMap": "",
@@ -488,9 +442,101 @@
       "shader": "simplelit",
       "surface": "opaque",
       "baseColor": [
-        0.025,
-        0.04,
-        0.035,
+        0.0019349845201238392,
+        0.0030959752321981426,
+        0.002708978328173375,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_BusBlue",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.004896310081623859,
+        0.06372379528489175,
+        0.3931231302267222,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_CarPaint",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.6559306827469925,
+        0.7105664902244221,
+        0.7105664902244221,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Tire",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.008540382112116999,
+        0.010022825574869039,
+        0.011645430905844125,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Red",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.38005633644979925,
+        0.033104766570885055,
+        0.021980947079887205,
         1
       ],
       "baseMap": "",
