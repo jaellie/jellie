@@ -1,0 +1,1134 @@
+<title>Physics Test Ground</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one landscape driving screen (HUD drawn at a 1120×630 reference and scaled), notes below. */
+:root {
+  --bg: #eef1f5;
+  --panel: #ffffff;
+  --ink: #1b2430;
+  --muted: #5d6877;
+  --rule: #d6dce4;
+  --blue: #2f7bff;          /* selected gear, active toggles */
+  --amber: #ffab1a;         /* turn indicators */
+  --brake: #f04d42;
+  --accel: #3fcc73;
+  --hud: rgba(14, 18, 24, .72);
+  --hud-strong: rgba(14, 18, 24, .9);
+  --hud-ink: #f2f5fa;
+  --hud-muted: #9aa6b6;
+  --f-display: "Barlow Semi Condensed", "Arial Narrow", sans-serif;
+  --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11151b; --panel: #192029; --ink: #e6ebf1; --muted: #93a0b0; --rule: #2a3340; color-scheme: dark } }
+:root[data-theme="dark"] { --bg: #11151b; --panel: #192029; --ink: #e6ebf1; --muted: #93a0b0; --rule: #2a3340; color-scheme: dark }
+
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 14px; margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px; }
+.wrap { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: 26px; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); font-size: 13px; }
+.badge { font-family: var(--f-display); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+  border: 1px solid var(--rule); border-radius: 4px; padding: 2px 8px; color: var(--muted); }
+
+.stage { position: relative; width: min(100%, calc((100vh - 24px) * 16 / 9)); margin: 0 auto; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 12px; overflow: hidden;
+  background: #2b3036; touch-action: none; user-select: none; -webkit-user-select: none; outline: none; }
+.stage:focus-visible { box-shadow: 0 0 0 3px var(--blue); }
+.stage canvas.gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hud { position: absolute; left: 0; top: 0; width: 1120px; height: 630px; transform-origin: 0 0; pointer-events: none;
+  font-family: var(--f-body); color: var(--hud-ink); }
+.hud * { box-sizing: border-box; }
+.hud .ctl { pointer-events: auto; cursor: pointer; touch-action: none; }
+.p { position: absolute; background: var(--hud); border-radius: 12px; }
+.btn { position: absolute; background: var(--hud); border-radius: 12px; display: grid; place-items: center; font-weight: 600;
+  font-size: 15px; color: var(--hud-ink); border: 0; padding: 0; font-family: var(--f-body); }
+.btn.on, .btn.held { background: var(--blue); color: #fff; }
+.btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.btn[aria-disabled="true"] { color: var(--hud-muted); cursor: default; }
+.speed b { position: absolute; left: 14px; top: 4px; font-family: var(--f-display); font-weight: 700; font-size: 52px; font-variant-numeric: tabular-nums; }
+.speed span { position: absolute; left: 16px; bottom: 8px; font-size: 13px; color: var(--hud-muted); letter-spacing: .04em; }
+.speed i { position: absolute; right: 16px; top: 12px; font-style: normal; font-family: var(--f-display); font-weight: 700; font-size: 50px; color: var(--blue); }
+.tri { width: 26px; height: 26px; background: var(--hud-muted); }
+.tri.l { clip-path: polygon(100% 0, 0 50%, 100% 100%); }
+.tri.r { clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.tri.lit { background: var(--amber); }
+.nav { display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 16px; font-weight: 500; }
+.nav .arrow { width: 22px; height: 26px; background: var(--blue); clip-path: polygon(50% 0, 100% 100%, 50% 75%, 0 100%); flex: none; }
+.map { overflow: hidden; background: var(--hud-strong); }
+.map canvas { width: 100%; height: 100%; display: block; }
+.gears { display: flex; flex-direction: column; gap: 6px; padding: 6px; }
+.gears .btn { position: static; width: 60px; height: 50px; font-family: var(--f-display); font-size: 28px; font-weight: 700; color: var(--hud-muted); }
+.gears .btn.on { color: #fff; }
+.pbtn { flex-direction: column; gap: 2px; font-size: 12px; line-height: 1.15; text-align: center; }
+.pbtn b { font-family: var(--f-display); font-size: 22px; }
+.pbtn.engaged { background: var(--brake); color: #fff; }
+.pedal { position: absolute; border-radius: 14px; overflow: hidden; background: var(--hud); display: grid; place-items: center; font-weight: 600; font-size: 15px; }
+.pedal .fill { position: absolute; left: 0; right: 0; bottom: 0; height: 0; opacity: .8; }
+.pedal em { position: relative; font-style: normal; }
+.status { padding: 8px 12px; display: grid; grid-template-columns: 58px 1fr 14px; gap: 6px 10px; align-items: center; font-size: 12.5px; }
+.status .bar { height: 8px; border-radius: 4px; background: rgba(255,255,255,.15); overflow: hidden; }
+.status .bar > div { height: 100%; width: 0; }
+.lamp { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,.15); }
+.lamp.b.lit { background: var(--brake); } .lamp.a.lit { background: var(--accel); } .lamp.a.sup { background: #e0a21a; }
+.steer .track { position: absolute; left: 30px; right: 30px; top: 16px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.18); }
+.steer .mid { position: absolute; left: 50%; top: 9px; width: 2px; height: 20px; background: rgba(255,255,255,.5); }
+.steer .mark { position: absolute; top: 8px; width: 12px; height: 22px; margin-left: -6px; border-radius: 4px; background: var(--blue); left: 50%; }
+.steer .txt { position: absolute; left: 0; right: 0; bottom: 4px; text-align: center; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.toast { position: absolute; left: 260px; width: 600px; top: 84px; background: var(--hud-strong); color: #ffe08a; border-radius: 10px;
+  padding: 8px 12px; text-align: center; font-size: 15px; font-weight: 500; transition: opacity .25s; box-sizing: border-box; }
+.toast.hide { opacity: 0; }
+.fovbox { position: absolute; display: flex; gap: 6px; align-items: center; }
+.fovbox .btn { position: static; width: 44px; height: 48px; font-size: 20px; }
+.fovbox span { background: var(--hud); border-radius: 10px; height: 48px; display: grid; place-items: center; width: 74px; font-size: 13px; }
+.modal { position: absolute; inset: 0; background: rgba(0,0,0,.58); display: grid; place-items: center; pointer-events: auto; }
+.card { background: var(--hud-strong); border-radius: 16px; padding: 22px 26px; display: flex; flex-direction: column; gap: 12px; color: var(--hud-ink); }
+.card h3 { margin: 0; font-size: 26px; font-weight: 700; text-align: center; }
+.card .btn { position: static; height: 50px; font-size: 16px; padding: 0 16px; }
+.card label { display: flex; gap: 8px; align-items: center; font-size: 14px; color: var(--hud-muted); cursor: pointer; }
+.wiz { width: 860px; }
+.wiz p { margin: 0; font-size: 15.5px; line-height: 1.5; text-align: center; }
+.wiz .dots { text-align: center; font-size: 30px; letter-spacing: 6px; color: var(--blue); min-height: 10px; }
+.wiz .keys { font-family: var(--f-mono); font-size: 13px; line-height: 1.6; background: rgba(255,255,255,.06); border-radius: 8px; padding: 8px 12px; min-height: 44px; white-space: pre-wrap; }
+.wiz .warn { color: #ffd166; font-size: 13px; line-height: 1.5; white-space: pre-wrap; min-height: 18px; }
+.wiz .live { display: grid; grid-template-columns: 70px 1fr; gap: 6px 10px; align-items: center; font-size: 13px; }
+.wiz .live .bar { height: 12px; border-radius: 6px; background: rgba(255,255,255,.15); overflow: hidden; }
+.wiz .live .bar > div { height: 100%; width: 0; }
+.wiz .live .st { grid-column: 1 / -1; color: var(--hud-muted); text-align: right; }
+.wiz .ind { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.wiz .ind div { height: 74px; border-radius: 12px; background: var(--hud); display: grid; place-items: center; font-size: 22px; font-weight: 700; letter-spacing: .02em; }
+.wiz .ind .on-b { background: var(--brake); } .wiz .ind .on-a { background: var(--accel); } .wiz .ind .sup { background: #b9861a; }
+.wiz .row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.debug { position: absolute; left: 16px; top: 116px; width: 260px; padding: 8px 10px; font-family: var(--f-mono); font-size: 11px; line-height: 1.5; white-space: pre; }
+
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.note { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.note h2 { margin: 0 0 8px; font-family: var(--f-display); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.note p, .note li { font-size: 13px; line-height: 1.6; color: var(--ink); }
+.note p { margin: 0; color: var(--muted); }
+.note ul { margin: 0; padding-left: 18px; }
+kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 4px; padding: 0 4px; background: var(--bg); color: var(--ink); }
+.rotate { display: none; font-size: 12.5px; color: var(--muted); margin: 0; }
+@media (orientation: portrait) and (max-width: 700px) { .rotate { display: block; } }
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Physics Test Ground</h1>
+    <span class="sub">운전 연습 시뮬레이터 · 1인칭 운전석 + 새 HUD 미리보기</span>
+    <span class="badge">Browser preview, not Unity</span>
+  </header>
+  <p class="rotate">가로 모드로 돌리면 HUD가 더 크게 보입니다.</p>
+
+  <div class="stage" id="stage" tabindex="0" aria-label="Driving view">
+    <div class="hud" id="hud">
+      <button type="button" class="btn ctl" id="b-pause" style="left:16px;top:16px;width:56px;height:56px;font-size:20px" aria-label="Pause">II</button>
+      <div class="p speed" style="left:82px;top:16px;width:184px;height:88px"><b id="spd">0</b><span>km/h</span><i id="gearBig">P</i></div>
+      <div class="p debug" id="debug" hidden></div>
+
+      <button type="button" class="btn ctl" id="b-tl" style="left:338px;top:16px;width:64px;height:56px" aria-label="Left turn signal"><div class="tri l" id="tri-l"></div></button>
+      <div class="p nav" style="left:410px;top:16px;width:300px;height:56px"><div class="arrow" id="navArrow"></div><span id="navText">주차 구역까지 — m</span></div>
+      <button type="button" class="btn ctl" id="b-tr" style="left:718px;top:16px;width:64px;height:56px" aria-label="Right turn signal"><div class="tri r" id="tri-r"></div></button>
+      <div class="toast hide" id="toast"></div>
+
+      <div class="fovbox" id="fovbox" style="left:806px;top:16px" hidden>
+        <button type="button" class="btn ctl" id="b-fovm" aria-label="Narrower view">−</button><span id="fovText">시야 65°</span><button type="button" class="btn ctl" id="b-fovp" aria-label="Wider view">+</button>
+      </div>
+      <button type="button" class="btn ctl" id="b-view" style="left:1008px;top:16px;width:96px;height:48px">1인칭</button>
+      <div class="p map" style="left:954px;top:72px;width:150px;height:150px"><canvas id="map" width="300" height="300"></canvas></div>
+
+      <div class="p gears" style="left:1032px;top:236px" id="gears">
+        <button type="button" class="btn ctl" data-g="P">P</button><button type="button" class="btn ctl" data-g="R">R</button>
+        <button type="button" class="btn ctl" data-g="N">N</button><button type="button" class="btn ctl" data-g="D">D</button>
+      </div>
+
+      <button type="button" class="btn ctl pbtn engaged" id="b-pb" style="left:1032px;top:478px;width:72px;height:70px;display:flex;align-items:center;justify-content:center" aria-label="Parking brake"><b>(P)</b><span id="pbText">체결</span></button>
+      <div class="pedal ctl" id="pedal-brake" style="left:830px;top:498px;width:104px;height:116px"><div class="fill" style="background:var(--brake)"></div><em>브레이크</em></div>
+      <div class="pedal ctl" id="pedal-acc" style="left:944px;top:464px;width:86px;height:150px"><div class="fill" style="background:var(--accel)"></div><em>가속</em></div>
+
+      <div class="p status" style="left:16px;top:496px;width:272px;height:62px">
+        <span>브레이크</span><div class="bar"><div id="bar-b" style="background:var(--brake)"></div></div><i class="lamp b" id="lamp-b"></i>
+        <span>가속</span><div class="bar"><div id="bar-a" style="background:var(--accel)"></div></div><i class="lamp a" id="lamp-a"></i>
+      </div>
+      <div style="position:absolute;left:16px;top:474px;width:272px;font-size:11.5px;color:var(--hud-muted);text-align:right;text-shadow:0 1px 2px rgba(0,0,0,.6)" id="srcText">키보드 / 터치 페달</div>
+      <button type="button" class="btn ctl" id="b-head" style="left:16px;top:568px;width:80px;height:46px">전조등</button>
+      <button type="button" class="btn ctl" id="b-haz" style="left:102px;top:568px;width:80px;height:46px">비상등</button>
+      <button type="button" class="btn ctl" id="b-wip" style="left:188px;top:568px;width:100px;height:46px">와이퍼 끔</button>
+
+      <button type="button" class="btn ctl" id="b-lookl" style="left:302px;top:562px;width:118px;height:52px" hidden>왼쪽 보기</button>
+      <div class="p steer" style="left:430px;top:562px;width:260px;height:52px">
+        <div class="track"></div><div class="mid"></div><div class="mark" id="steerMark"></div><div class="txt" id="steerText">0°</div>
+      </div>
+      <button type="button" class="btn ctl" id="b-lookr" style="left:700px;top:562px;width:118px;height:52px" hidden>오른쪽 보기</button>
+
+      <div class="modal" id="pause" hidden>
+        <div class="card" style="width:400px">
+          <h3>일시정지</h3>
+          <button type="button" class="btn ctl" id="p-resume">계속하기</button>
+          <button type="button" class="btn ctl" id="p-restart">다시 시작</button>
+          <button type="button" class="btn ctl" id="p-cal">페달 보정 / 발 페달 설정</button>
+          <button type="button" class="btn ctl" aria-disabled="true">메인 메뉴 (준비 중)</button>
+          <label><input type="checkbox" id="opt-mid" checked> 마우스 가운데 버튼 = 터치</label>
+          <label><input type="checkbox" id="opt-left"> 왼쪽 마우스 드래그로도 조향</label>
+          <label><input type="checkbox" id="opt-dbg"> 개발용 텔레메트리</label>
+        </div>
+      </div>
+
+      <div class="modal" id="wizard" hidden>
+        <div class="card wiz">
+          <h3 id="w-title">페달 보정</h3>
+          <p id="w-body"></p>
+          <div class="dots" id="w-dots"></div>
+          <div class="ind" id="w-ind" hidden><div id="w-ib">브레이크 BRAKE</div><div id="w-ia">가속 ACCELERATOR</div></div>
+          <div class="keys" id="w-keys"></div>
+          <div class="warn" id="w-warn"></div>
+          <div class="row" id="w-buttons"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <div class="note">
+      <h2>출발 순서</h2>
+      <ul>
+        <li>브레이크 <kbd>S</kbd>(또는 발 페달) 밟기 → 오른쪽 <b>D</b> 누르기</li>
+        <li>주차 브레이크 해제: 오른쪽 <b>(P)</b> 버튼 또는 <kbd>Space</kbd> → 브레이크 떼기: 크리프로 출발</li>
+        <li>1인칭: 오른쪽 위 <b>1인칭</b> 또는 <kbd>V</kbd>. 위에서 보기 <kbd>T</kbd></li>
+      </ul>
+    </div>
+    <div class="note">
+      <h2>조향 · 마우스</h2>
+      <ul>
+        <li>핸들 ±540° (총 3바퀴), 앞바퀴 최대 35°. 화면 높이만큼 드래그 = 핸들 100°</li>
+        <li>도로 위를 드래그 (손가락 또는 <b>마우스 휠 클릭</b>). 끝까지 꺾으려면 길게 3~4번 끌기</li>
+        <li>정지 중에는 핸들이 그대로, 주행 중 손을 떼면 0.6초 뒤 천천히 복원</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h2>발 페달 키보드</h2>
+      <ul>
+        <li>일시정지 → <b>페달 보정</b>: 브레이크 5회 → 가속 5회 → 키 확인 → <b>실제 테스트 통과 후 저장</b></li>
+        <li>키보드는 힘을 측정하지 못합니다. 오래 누를수록 페달이 깊어지는 방식(가속 2.5초, 브레이크 0.3에서 1.2초)</li>
+        <li>둘 다 밟으면 브레이크 우선. 창 포커스를 잃으면 가속 차단 + 자동 제동, 브레이크를 한 번 밟으면 복귀</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h2>What this is</h2>
+      <p>A browser stand-in for the Unity build. The gear rules, steering, creep, brakes, pedal calibration and HUD layout follow the C# code; motion uses a simple bicycle model with no tire slip or suspension. The ramp is drawn flat. Unity Play Mode is still the real test.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  // =====================================================================
+  // Config: mirrors VehiclePhysicsConfig defaults (Unity units: +Z forward)
+  // =====================================================================
+  const C = {
+    m: 1300, g: 9.81, r: 0.31, L: 2.65, T: 1.55, len: 4.4, wid: 1.76,
+    st: { maxW: 540, maxF: 35, ssA: 20, ssB: 100, hi: 0.45, slew: 120, center: true, scMin: 2, scFull: 30, scGain: 1.0, scMax: 240, scRev: 0.3, snap: 0.5, grace: 0.6,
+          dragPerHeight: 100, keyRate: 270 },
+    us: 0.0025, // understeer gradient (s²/m²) standing in for tire behavior in this kinematic model
+    tr: { th: 0.2, stopped: 1, park: 1, dir: 2 },
+    pt: { maxF: 4400, kw: 85, texp: 1.7, vmaxF: 170, rScale: 0.6, vmaxR: 20, creep: 450, fade: 9, rCreep: 0.8, coast: 150 },
+    br: { max: 3400, exp: 1.4, pb: 1600, plock: 5000, mu: 1.0 },
+    rs: { crr: 0.012, cd: 0.30, A: 2.2, rho: 1.225, fade: 0.3 },
+  };
+  const KMH = 1 / 3.6, DEG = Math.PI / 180;
+  const clamp = (v, a, b) => v < a ? a : v > b ? b : v, c01 = v => clamp(v, 0, 1);
+  const toward = (c, t, d) => Math.abs(t - c) <= d ? t : c + Math.sign(t - c) * d;
+  const ilerp = (a, b, v) => c01((v - a) / (b - a));
+  const ss = t => { t = c01(t); return t * t * (3 - 2 * t); };
+  const ORDER = ['P', 'R', 'N', 'D'];
+  const $ = id => document.getElementById(id);
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* not persisted */ } },
+    del(k) { try { localStorage.removeItem(k); } catch (e) { /* ignore */ } },
+  };
+
+  // ---------- Core models (ports of DrivingSim.Core) ----------
+  function evalShift(cur, tgt, brake, vKmh) {
+    if (tgt === cur) return 'Already';
+    const b = brake >= C.tr.th, s = Math.abs(vKmh), stopped = s <= C.tr.stopped;
+    if (cur === 'P' && !b) return 'BrakeRequired';
+    if (tgt === 'P') { if (s > C.tr.park) return 'SpeedTooHigh'; return b ? 'Accepted' : 'BrakeRequired'; }
+    if (tgt === 'N') return 'Accepted';
+    if (tgt === 'R') { if (vKmh > C.tr.dir) return 'SpeedTooHigh'; return stopped && !b ? 'BrakeRequired' : 'Accepted'; }
+    if (tgt === 'D') { if (vKmh < -C.tr.dir) return 'SpeedTooHigh'; return stopped && !b ? 'BrakeRequired' : 'Accepted'; }
+  }
+  function driveForce(gear, thr, v) {
+    if (gear !== 'D' && gear !== 'R') return 0;
+    const d = gear === 'D' ? 1 : -1, va = v * d, p = C.pt, fade = p.fade * KMH;
+    const creep = p.creep * (gear === 'R' ? p.rCreep : 1) * c01(1 - Math.max(va, 0) / fade);
+    let f = 0;
+    if (thr > 0) {
+      const sh = Math.pow(thr, p.texp), s = Math.max(va, 0);
+      f = p.maxF * sh;
+      if (s > 0.5) f = Math.min(f, p.kw * 1000 * sh / s);
+      if (gear === 'R') f *= p.rScale;
+      const vm = (gear === 'R' ? p.vmaxR : p.vmaxF) * KMH, band = vm * (gear === 'R' ? 0.25 : 0.1);
+      f *= c01((vm - s) / band);
+    }
+    let coast = 0;
+    if (gear === 'D' && thr <= 0.02 && va > fade) coast = -p.coast * c01((va - fade) / fade);
+    return d * (creep + f + coast);
+  }
+  function resist(v) {
+    const s = Math.abs(v); if (s < 1e-4) return 0;
+    const rr = C.rs.crr * C.m * C.g * c01(s / C.rs.fade);
+    return -Math.sign(v) * (rr + 0.5 * C.rs.rho * C.rs.cd * C.rs.A * v * v);
+  }
+  const serviceBrake = b => b <= 0 ? 0 : C.br.max * Math.pow(c01(b), C.br.exp);
+  function ackermann(inner) {
+    const m = Math.abs(inner); if (m < 0.01) return [inner, inner];
+    const R = C.L / Math.tan(m * DEG) + C.T / 2, outer = Math.atan(C.L / (R + C.T / 2)) / DEG;
+    return inner > 0 ? [outer, m] : [-m, -outer];
+  }
+
+  // Turn signal with auto-cancel (TurnSignalModel)
+  const signal = { side: 0, hazard: false, armed: false };
+  function toggleSignal(side) {
+    signal.side = signal.side === side ? 0 : side; signal.armed = false;
+    toast(signal.side === 0 ? '방향지시등 끔' : signal.side < 0 ? '좌측 방향지시등' : '우측 방향지시등');
+  }
+  function updateSignal(sw) {
+    if (!signal.side) return;
+    const t = signal.side > 0 ? sw : -sw;
+    if (t >= 90) signal.armed = true;
+    else if (signal.armed && t <= 20) { signal.side = 0; signal.armed = false; toast('방향지시등 자동 해제'); }
+  }
+
+  // Pedal calibration, state machine and validation (ports of DrivingSim.Core)
+  function makeRecorder(required = 5, gap = 0.2, stuck = 3) {
+    return { required, gap, stuck, held: new Map(), attempts: [], cur: null, downs: null, missing: null, max: 0, start: 0, lastNew: 0, released: -1, lastEnd: -Infinity,
+      get complete() { return this.attempts.length >= this.required; },
+      down(k, t) {
+        if (this.complete || this.held.has(k)) return;                     // OS key repeat is not a new press
+        if (!this.cur) { this.cur = new Set(); this.downs = new Map(); this.missing = new Set(); this.max = 0; this.start = t; this.lastNew = t; }
+        this.held.set(k, t); if (!this.cur.has(k)) { this.cur.add(k); this.lastNew = t; }
+        this.downs.set(k, (this.downs.get(k) || 0) + 1); this.max = Math.max(this.max, this.held.size); this.released = -1;
+      },
+      up(k, t) { if (!this.held.delete(k)) return; if (this.held.size === 0 && this.cur) this.released = t; },
+      update(t) {
+        if (!this.cur) return false;
+        if (this.held.size) {                                                // release never reported -> forced up
+          const stuck = [...this.held].filter(([, s0]) => t - s0 > this.stuck).map(([k]) => k);
+          if (!stuck.length) return false;
+          stuck.forEach(k => { this.held.delete(k); this.missing.add(k); });
+          if (this.held.size) return false;
+          this.released = t;
+        }
+        if (this.released < 0 || t - this.released < this.gap) return false;
+        this.attempts.push({ keys: this.cur, max: this.max, downs: this.downs, missing: this.missing, spread: this.lastNew - this.start, gapBefore: this.start - this.lastEnd });
+        this.lastEnd = this.released; this.cur = null; this.released = -1; return true;
+      } };
+  }
+  function analyze(attempts, minOcc = 2) {
+    const counts = new Map(), keyDowns = new Map(), missing = new Set(); let max = 0, repeated = 0;
+    for (const a of attempts) {
+      for (const k of a.keys) counts.set(k, (counts.get(k) || 0) + 1);
+      let rep = false; for (const [k, n] of a.downs) { keyDowns.set(k, (keyDowns.get(k) || 0) + n); rep = rep || n > 1; }
+      if (rep) repeated++; a.missing.forEach(k => missing.add(k)); max = Math.max(max, a.max);
+    }
+    const th = Math.max(1, Math.min(minOcc, Math.max(attempts.length, 1)));
+    const sorted = [...counts].sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1));
+    let selected = sorted.filter(([, n]) => n >= th).map(([k]) => k), occasional = sorted.filter(([, n]) => n < th).map(([k]) => k);
+    if (!selected.length && counts.size) { const best = Math.max(...counts.values()); selected = occasional.filter(k => counts.get(k) === best); occasional = occasional.filter(k => counts.get(k) !== best); }
+    const avgKeys = attempts.reduce((s0, a) => s0 + a.keys.size, 0) / Math.max(attempts.length, 1);
+    const six = attempts.filter(a => a.max === 6).length;
+    const rollover = attempts.length > 0 && ((max <= 2 && avgKeys > max) || six >= Math.max(2, Math.ceil(attempts.length / 2)));
+    return { n: attempts.length, counts, keyDowns, missing, repeated, selected, occasional, max, rollover };
+  }
+  const ambiguousKeys = (b, a) => [...b.counts.keys()].filter(k => a.counts.has(k)).sort();
+  function resolveConflicts(b, a, margin = 2) {
+    const unresolved = [];
+    for (const k of b.selected.filter(x => a.selected.includes(x))) {
+      const nb = b.counts.get(k) || 0, na = a.counts.get(k) || 0;
+      if (nb - na >= margin) a.selected = a.selected.filter(x => x !== k);
+      else if (na - nb >= margin) b.selected = b.selected.filter(x => x !== k);
+      else { a.selected = a.selected.filter(x => x !== k); b.selected = b.selected.filter(x => x !== k); unresolved.push(k); }
+    }
+    b.occasional = b.occasional.filter(k => !a.selected.includes(k)); a.occasional = a.occasional.filter(k => !b.selected.includes(k));
+    return unresolved;
+  }
+  // PedalResponseSettings defaults (simulated pedal travel; a keyboard measures no force)
+  const PR = { accRise: 2.5, accRelease: 0.25, accMax: 1, accInstant: false, brakeInit: 0.3, brakeRamp: 1.2, brakeRelease: 0.1, brakeDebounce: 0.04, reengage: 0.12, failSafe: 0.6 };
+  function makePedalMachine() {
+    return { brake: 0, acc: 0, brakePressed: false, accPressed: false, conflict: false, suppressed: false, safety: 'normal', since: Infinity, reengage: 0, conflictSince: false,
+      reset() { Object.assign(this, { brake: 0, acc: 0, brakePressed: false, accPressed: false, conflict: false, suppressed: false, safety: 'normal', since: Infinity, reengage: 0, conflictSince: false }); },
+      failSafe() { this.safety = 'failsafe'; this.acc = 0; },
+      update(bd, ad, ok, dt) {
+        this.accPressed = ad && ok;
+        if (!ok) this.failSafe(); else if (this.safety === 'failsafe') this.safety = 'rearm';
+        if (this.safety !== 'normal') {
+          if (this.safety === 'rearm' && bd) this.safety = 'normal';            // a brake press re-arms
+          else {
+            this.brakePressed = ok && bd; this.acc = 0; this.suppressed = this.accPressed; this.conflict = false;
+            const floor = Math.max(PR.failSafe, this.brakePressed ? PR.brakeInit : 0);
+            if (this.brake < floor) this.brake = toward(this.brake, floor, dt / PR.brakeRelease);
+            return;
+          }
+        }
+        this.since = bd ? 0 : this.since + dt;
+        const was = this.brakePressed;
+        this.brakePressed = bd || this.since <= PR.brakeDebounce;
+        if (this.brakePressed) {
+          if (!was || this.brake < PR.brakeInit) this.brake = Math.max(this.brake, PR.brakeInit);
+          this.brake = toward(this.brake, 1, (1 - PR.brakeInit) / PR.brakeRamp * dt);
+        } else this.brake = toward(this.brake, 0, dt / PR.brakeRelease);
+        this.conflict = this.brakePressed && ad;
+        if (this.conflict) this.conflictSince = true;
+        if (this.brakePressed) { this.acc = 0; this.reengage = 0; }
+        else {
+          if (this.conflictSince) { this.reengage = PR.reengage; this.conflictSince = false; }
+          if (this.reengage > 0) { this.reengage -= dt; this.acc = 0; }
+          else if (ad) this.acc = PR.accInstant ? PR.accMax : toward(this.acc, PR.accMax, PR.accMax / PR.accRise * dt);
+          else this.acc = toward(this.acc, 0, dt / PR.accRelease);
+        }
+        this.suppressed = ad && this.acc <= 0 && (this.brakePressed || this.reengage > 0);
+      } };
+  }
+  function makeValidation(required = 3, maxMissed = 1) {
+    return { required, maxMissed, step: 'brake', cleanB: 0, cleanA: 0, wrong: 0, missed: 0, withUnmapped: 0, reason: '', inPress: false, sb: false, sa: false, su: false,
+      update(b, a, u) {
+        if (this.step === 'passed' || this.step === 'failed') return;
+        if (b || a || u) { if (!this.inPress) { this.inPress = true; this.sb = this.sa = this.su = false; } this.sb ||= b; this.sa ||= a; this.su ||= u; return; }
+        if (!this.inPress) return;
+        this.inPress = false;
+        if (this.su) this.withUnmapped++;
+        const bp = this.step === 'brake', intended = bp ? this.sb : this.sa, wrong = bp ? this.sa : this.sb;
+        if (wrong) { this.wrong++; this.step = 'failed'; this.reason = bp ? '브레이크를 밟았는데 가속이 감지되었습니다.' : '가속을 밟았는데 브레이크가 감지되었습니다.'; return; }
+        if (!intended) { this.missed++; if (this.missed > this.maxMissed) { this.step = 'failed'; this.reason = '등록되지 않은 키만 눌린 경우가 여러 번 있었습니다. 키를 추가하거나 다시 보정하세요.'; } return; }
+        if (bp) { if (++this.cleanB >= this.required) this.step = 'acc'; } else if (++this.cleanA >= this.required) this.step = 'passed';
+      } };
+  }
+
+  // =====================================================================
+  // World data (matches TestEnvironmentBuilder; Unity coords)
+  // =====================================================================
+  const boxes = [[0, 140, 4, 0.25, 'block', 1.5], [8, 15, 1, 1, 'block', 1], [-17.4, 17.5, 0.15, 8.5, 'curb', 0.15]];
+  for (let i = 0; i < 6; i++) boxes.push([-16.3, 10 + (i + 0.5) * 2.5, 0.075, 0.8, 'curb', 0.12]);
+  const edge = 135, rng = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+  for (let i = 0; i < 16; i++) {
+    const a = -edge + i * (edge * 2 / 15);
+    boxes.push([a, edge, 6, 5, 'bld', 6 + rng() * 14], [a, -edge, 6, 5, 'bld', 6 + rng() * 14],
+      [edge, a, 5, 6, 'bld', 6 + rng() * 14], [-edge, a, 5, 6, 'bld', 6 + rng() * 14]);
+  }
+  const conesInit = [[-11.7, 9.7], [-11.7, 25.3]];
+  for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; conesInit.push([35 + Math.cos(a) * 7.5, 40 + Math.sin(a) * 7.5]); }
+  for (let i = 0; i < 6; i++) conesInit.push([12, 30 + i * 12]);
+  const DEST = { x: -14.5, z: 17.5, name: '주차 구역' };
+
+  // =====================================================================
+  // State
+  // =====================================================================
+  const S = {};
+  let cones = [];
+  function reset() {
+    Object.assign(S, { x: 0, z: 2 - C.L / 2, h: 0, v: 0, gear: 'P', pb: true, sw: 0, front: 0, scf: 0, thr: 0, brk: 0,
+      held: false, col: 0, contact: false, spin: 0, headlights: false, wiper: 0, wiperPhase: 0, wiperPause: 0, suppressed: false });
+    signal.side = 0; signal.hazard = false;
+    cones.forEach(c => { c.hit = false; c.mesh.rotation.z = 0; c.mesh.position.y = 0.35; });
+  }
+
+  // =====================================================================
+  // three.js scene (three: +X right, +Y up, -Z forward; Unity z -> three -z)
+  // =====================================================================
+  const stage = $('stage');
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  renderer.domElement.className = 'gl';
+  stage.prepend(renderer.domElement);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xbcd3e6);
+  scene.fog = new THREE.Fog(0xbcd3e6, 120, 330);
+  scene.add(new THREE.HemisphereLight(0xeaf2ff, 0x5a5f66, 0.85));
+  const sun = new THREE.DirectionalLight(0xffffff, 0.75); sun.position.set(-40, 80, 30); scene.add(sun);
+
+  const matCache = {};
+  const mat = (hex, opts = {}) => {
+    const key = hex + JSON.stringify(opts);
+    return matCache[key] || (matCache[key] = new THREE.MeshLambertMaterial(Object.assign({ color: hex }, opts)));
+  };
+  const U = (x, y, z) => new THREE.Vector3(x, y, -z);   // Unity -> three
+  function box(parent, ux, uy, uz, sx, sy, sz, color, rotY = 0) {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), typeof color === 'object' ? color : mat(color));
+    m.position.copy(U(ux, uy, uz)); m.rotation.y = rotY; parent.add(m); return m;
+  }
+  const mark = (ux, uz, w, l, color, rotY = 0) => box(scene, ux, 0.006, uz, w, 0.01, l, color, rotY);
+
+  // Ground + grid
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(300, 300), mat(0x3a3d42));
+  ground.rotation.x = -Math.PI / 2; scene.add(ground);
+  const grid = new THREE.GridHelper(280, 28, 0x4b5057, 0x4b5057); grid.position.y = 0.003; scene.add(grid);
+  const W = 0xecebe6, Y = 0xf2c230;
+  mark(-1.75, 60, 0.15, 140, W); mark(1.75, 60, 0.15, 140, W); mark(0, 0, 3.5, 0.3, Y);
+  for (let d = 5; d <= 120; d += 5) mark(0, d, d % 10 ? 1 : 3.5, 0.1, W);
+  for (let i = 0; i <= 6; i++) mark(-14.5, 10 + i * 2.5, 5, 0.12, W);
+  mark(-17, 17.5, 0.12, 15, W);
+  for (const [rad, c, n] of [[5, W, 48], [6, Y, 56]]) for (let i = 0; i < n; i++) {
+    const a = i * Math.PI * 2 / n; mark(35 + Math.cos(a) * rad, 40 + Math.sin(a) * rad, 0.1, 2 * Math.PI * rad / n * 0.6, c, a);
+  }
+  mark(-35, 60, 6, 20, 0x55606d); mark(-35, 76, 6, 12, 0x55606d); mark(-35, 70.2, 6, 0.3, Y);
+  for (const [x, z, hx, hz, k, h] of boxes) box(scene, x, h / 2, z, hx * 2, h, hz * 2, k === 'bld' ? 0x9aa8ba : k === 'curb' ? 0xb8b8b4 : 0xd4524f);
+  const coneGeo = new THREE.ConeGeometry(0.16, 0.7, 12);
+  cones = conesInit.map(([x, z]) => { const m = new THREE.Mesh(coneGeo, mat(0xff7a1a)); m.position.copy(U(x, 0.35, z)); scene.add(m); return { x, z, hit: false, mesh: m }; });
+
+  // ---------- Car ----------
+  const car = new THREE.Group(); scene.add(car);
+  const paint = mat(0x2a73d9), glass = mat(0x1e2733), dark = mat(0x1e2126), trim = mat(0x51565e);
+  box(car, 0, 0.66, 0, C.wid, 0.62, C.len, paint);
+  box(car, 0, 1.23, -0.2, C.wid - 0.2, 0.52, 2.3, glass);
+  box(car, 0, 1.5, -0.25, C.wid - 0.26, 0.04, 1.9, paint);
+  const side = C.wid / 2 - 0.25, front = C.len / 2;
+  const headOff = mat(0xc7c7bd), headOn = mat(0xfff3c4, { emissive: 0xfff0b0 });
+  const heads = [box(car, -side, 0.75, front, 0.35, 0.12, 0.04, headOff), box(car, side, 0.75, front, 0.35, 0.12, 0.04, headOff)];
+  const tailOff = mat(0x8a1d1d), tailOn = mat(0xff3b2f, { emissive: 0xaa1000 });
+  const tails = [box(car, -side, 0.8, -front, 0.35, 0.12, 0.04, tailOff), box(car, side, 0.8, -front, 0.35, 0.12, 0.04, tailOff)];
+  const indOff = mat(0x73501a), indOn = mat(0xffa21a, { emissive: 0xff8a00 });
+  const corner = C.wid / 2 - 0.05;
+  const indL = [box(car, -corner, 0.72, front, 0.12, 0.08, 0.06, indOff), box(car, -corner, 0.72, -front, 0.12, 0.08, 0.06, indOff)];
+  const indR = [box(car, corner, 0.72, front, 0.12, 0.08, 0.06, indOff), box(car, corner, 0.72, -front, 0.12, 0.08, 0.06, indOff)];
+  const wheelGeo = new THREE.CylinderGeometry(C.r, C.r, 0.2, 18);
+  const wheels = [];
+  for (const [ux, uz, fr] of [[-C.T / 2, C.L / 2, 1], [C.T / 2, C.L / 2, 1], [-C.T / 2, -C.L / 2, 0], [C.T / 2, -C.L / 2, 0]]) {
+    const pivot = new THREE.Group(); pivot.position.copy(U(ux, C.r, uz)); car.add(pivot);
+    const spin = new THREE.Group(); pivot.add(spin);
+    const tire = new THREE.Mesh(wheelGeo, mat(0x141416)); tire.rotation.z = Math.PI / 2; spin.add(tire);
+    spin.add(new THREE.Mesh(new THREE.BoxGeometry(0.21, 0.46, 0.08), mat(0xbfc3c9)));
+    wheels.push({ pivot, spin, front: !!fr, left: ux < 0 });
+  }
+
+  // ---------- Cockpit (CockpitBuilder layout) ----------
+  const EYE = U(-0.37, 1.22, -0.30);
+  const interior = new THREE.Group(); car.add(interior);
+  box(interior, 0, 0.98, 0.70, 1.5, 0.14, 0.45, dark);
+  box(interior, 0, 0.976, -0.2, 1.6, 0.012, 2.3, mat(0x24272c)); // cabin floor / door tops (hides the body top from inside)
+  box(interior, 0, 1.055, 0.80, 1.46, 0.01, 0.25, mat(0x2b2e34));
+  box(interior, -0.37, 1.18, 0.56, 0.44, 0.03, 0.2, dark);
+  box(interior, 0.02, 0.93, 0.48, 0.24, 0.2, 0.06, mat(0x2b2e34));
+  box(interior, -0.80, 1.0, -0.2, 0.06, 0.08, 2.2, trim); box(interior, 0.80, 1.0, -0.2, 0.06, 0.08, 2.2, trim);
+  box(interior, 0.37, 1.2, -0.78, 0.5, 0.48, 0.1, trim); box(interior, 0.37, 1.5, -0.8, 0.26, 0.16, 0.09, trim);
+  for (const sx of [-1, 1]) { // A-pillars (car is at the origin while building)
+    const a = U(0.80 * sx, 0.97, 0.95), b = U(0.70 * sx, 1.48, 0.68);
+    const m = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.07, a.distanceTo(b)), mat(0x2b2e34));
+    m.position.copy(a).add(b).multiplyScalar(0.5); m.lookAt(b); interior.add(m);
+  }
+  // Steering wheel: column tilted 22°, wheel spins clockwise (driver's view) for positive angles.
+  const column = new THREE.Group(); column.position.copy(U(-0.37, 0.90, 0.12)); column.rotation.x = -22 * DEG; interior.add(column);
+  const colMesh = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.06, 0.3), dark); colMesh.position.z = -0.17; column.add(colMesh);
+  const wheelSpin = new THREE.Group(); column.add(wheelSpin);
+  const swMat = mat(0x111214);
+  wheelSpin.add(new THREE.Mesh(new THREE.TorusGeometry(0.19, 0.016, 8, 36), swMat));
+  const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.02, 20), swMat); hub.rotation.x = Math.PI / 2; wheelSpin.add(hub);
+  for (const [x, y, w, h] of [[-0.095, -0.01, 0.19, 0.035], [0.095, -0.01, 0.19, 0.035], [0, -0.095, 0.04, 0.19]]) {
+    const s = new THREE.Mesh(new THREE.BoxGeometry(w, h, 0.015), swMat); s.position.set(x, y, 0); wheelSpin.add(s);
+  }
+  const markTop = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.035, 0.034), mat(0xf0b429)); markTop.position.set(0, 0.19, 0.004); wheelSpin.add(markTop);
+  // Instrument cluster as a canvas texture
+  const clusterCanvas = document.createElement('canvas'); clusterCanvas.width = 512; clusterCanvas.height = 205;
+  const cctx = clusterCanvas.getContext('2d');
+  const clusterTex = new THREE.CanvasTexture(clusterCanvas);
+  const cluster = new THREE.Mesh(new THREE.PlaneGeometry(0.40, 0.16), new THREE.MeshBasicMaterial({ map: clusterTex }));
+  cluster.position.copy(U(-0.37, 1.09, 0.465)); cluster.rotation.x = -12 * DEG; interior.add(cluster);
+  // Wipers (exterior, at the windshield base)
+  const wiperPivots = [-0.5, 0.12].map(x => {
+    const p = new THREE.Group(); p.position.copy(U(x, 1.0, 0.975)); p.rotation.z = -85 * DEG; car.add(p);
+    const blade = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.48, 0.02), mat(0x0f1012)); blade.position.y = 0.24; p.add(blade); return p;
+  });
+  // Mirrors: render targets shown left-right flipped on the glass
+  const mirrors = [];
+  const mirrorIdle = new THREE.MeshBasicMaterial({ color: 0x6b7a8a });
+  function addMirror(ux, uy, uz, gw, gh, yawDeg, fov, w, h, housingMat) {
+    const g = new THREE.Group(); g.position.copy(U(ux, uy, uz)); car.add(g);
+    g.lookAt(EYE);
+    const rt = new THREE.WebGLRenderTarget(w, h);
+    rt.texture.repeat.set(-1, 1); rt.texture.offset.set(1, 0);
+    const live = new THREE.MeshBasicMaterial({ map: rt.texture });
+    const glassMesh = new THREE.Mesh(new THREE.PlaneGeometry(gw, gh), mirrorIdle); g.add(glassMesh);
+    const housing = new THREE.Mesh(new THREE.BoxGeometry(gw + 0.02, gh + 0.02, 0.03), housingMat); housing.position.z = -0.018; g.add(housing);
+    const cam = new THREE.PerspectiveCamera(fov, w / h, 0.05, 150);
+    cam.position.copy(U(ux, uy, uz - 0.03)); cam.rotation.order = 'YXZ'; cam.rotation.set(-4 * DEG, yawDeg * DEG, 0); car.add(cam);
+    mirrors.push({ rt, cam, glass: glassMesh, live });
+  }
+  addMirror(0, 1.40, 0.62, 0.26, 0.065, 180, 16, 256, 72, dark);
+  addMirror(-1.0, 1.02, 0.55, 0.16, 0.10, 165, 22, 160, 112, paint);
+  addMirror(1.0, 1.02, 0.55, 0.16, 0.10, 195, 22, 160, 112, paint);
+
+  const camera = new THREE.PerspectiveCamera(60, 16 / 9, 0.1, 600);
+
+  // =====================================================================
+  // Input
+  // =====================================================================
+  const keys = new Set(), pressed = [];
+  const opt = { mid: true, left: false, dbg: false };
+  // Pedal mapping (PedalKeyMapping v2): { brake, acc, validated, source }. Older saves become unvalidated.
+  let mapping = null, pedalsOn = store.get('dps.pedalsOn') !== '0', pedalReliable = true;
+  try {
+    const m = JSON.parse(store.get('dps.pedalMapping2') || store.get('dps.pedalMapping') || 'null');
+    if (m && m.brake && m.brake.length && m.acc && m.acc.length) mapping = { brake: m.brake, acc: m.acc.filter(k => !m.brake.includes(k)), validated: !!m.validated, source: m.source || 'calibration' };
+  } catch (e) { mapping = null; }
+  const DEFAULT_MAPPING = { source: 'default', validated: false,
+    brake: ['KeyT', 'KeyY', 'KeyU', 'KeyG', 'KeyH', 'KeyJ', 'KeyB', 'KeyN', 'KeyM', 'Digit6', 'Digit7'],
+    acc: ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Insert', 'Delete', 'Home', 'End', 'PageUp', 'PageDown', 'Numpad0', 'Numpad1', 'Numpad2', 'Numpad3', 'Numpad4',
+      'Numpad5', 'Numpad6', 'Numpad7', 'Numpad8', 'Numpad9', 'NumpadEnter', 'NumpadAdd', 'NumpadSubtract', 'NumpadDecimal', 'NumpadMultiply', 'NumpadDivide'] };
+  const pedalsActive = () => pedalsOn && !!mapping && mapping.validated && mapping.brake.length > 0 && mapping.acc.length > 0;
+  const calibrationStatus = () => !mapping ? 'none' : mapping.validated ? 'validated' : 'unvalidated';
+  function saveMapping(m) { mapping = m; if (m) store.set('dps.pedalMapping2', JSON.stringify(m)); else { store.del('dps.pedalMapping2'); store.del('dps.pedalMapping'); } pm.reset(); }
+  const reserved = code => pedalsActive() && (mapping.brake.includes(code) || mapping.acc.includes(code));
+  const pm = makePedalMachine();
+  const wiz = { open: false, step: '', rec: null, brakeA: null, accA: null, brake: new Set(), acc: new Set(), amb: [], unresolved: [], occ: false, val: null, source: 'calibration' };
+  // Losing focus = losing reliable pedal input (the browser cannot see keyboard disconnects).
+  const loseInput = () => { pedalReliable = false; keys.clear(); if (pedalsActive() && pm.safety === 'normal') { pm.failSafe(); toast('발 페달 입력이 끊겼습니다. 가속을 차단하고 제동합니다.'); } };
+  addEventListener('blur', loseInput);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) loseInput(); });
+  addEventListener('focus', () => { pedalReliable = true; });
+
+  addEventListener('keydown', e => {
+    if (wiz.open) { e.preventDefault(); keys.add(e.code); wizKey(e, true); return; }
+    if (paused && e.code === 'Escape') { setPaused(false); return; }
+    if (reserved(e.code) || ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'Backspace'].includes(e.code)) e.preventDefault();
+    if (!keys.has(e.code) && !reserved(e.code)) pressed.push(e.code);
+    keys.add(e.code);
+  });
+  addEventListener('keyup', e => { if (wiz.open) wizKey(e, false); keys.delete(e.code); });
+  const down = (...c) => c.some(k => keys.has(k) && !reserved(k));
+
+  // Pointer layer: touch, middle mouse (simulated touch), optional left mouse.
+  const inp = { kThr: 0, kBrk: 0, fBrk: 0, fThr: 0, fKeys: null, touchThr: 0, touchBrk: 0, steerId: null, steerKind: '', lastX: 0, drag: 0, lookL: false, lookR: false };
+  const isControl = el => !!(el && el.closest && el.closest('.ctl, .modal'));
+  stage.addEventListener('mousedown', e => { if (e.button === 1) e.preventDefault(); });    // no autoscroll
+  stage.addEventListener('auxclick', e => e.preventDefault());
+  stage.addEventListener('pointerdown', e => {
+    stage.focus({ preventScroll: true });
+    if (isControl(e.target) || inp.steerId !== null || paused || wiz.open) return;
+    const touch = e.pointerType === 'touch' || e.pointerType === 'pen';
+    const middle = e.pointerType === 'mouse' && e.button === 1 && opt.mid;
+    const left = e.pointerType === 'mouse' && e.button === 0 && opt.left;
+    if (!touch && !middle && !left) return;
+    e.preventDefault();
+    inp.steerId = e.pointerId; inp.steerKind = middle ? 'middle' : left ? 'left' : 'touch'; inp.lastX = e.clientX;
+    try { stage.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+  });
+  stage.addEventListener('pointermove', e => {
+    if (e.pointerId !== inp.steerId) return;
+    if (inp.steerKind === 'middle' && !(e.buttons & 4)) { endSteer(); return; }
+    if (inp.steerKind === 'left' && !(e.buttons & 1)) { endSteer(); return; }
+    // Normalized by height: one stage height of drag = 100° of wheel (TouchSteeringController.degreesPerScreenHeight).
+    inp.drag += (e.clientX - inp.lastX) / stage.clientHeight * C.st.dragPerHeight; inp.lastX = e.clientX;
+  });
+  function endSteer() { inp.steerId = null; inp.steerKind = ''; }
+  stage.addEventListener('pointerup', e => { if (e.pointerId === inp.steerId) endSteer(); });
+  stage.addEventListener('pointercancel', e => { if (e.pointerId === inp.steerId) endSteer(); });
+
+  // HUD controls act on pointerdown for touch, left and middle buttons (middle = touch on UI), once per press.
+  function acceptsPointer(e) { return e.pointerType !== 'mouse' || e.button === 0 || (e.button === 1 && opt.mid); }
+  function onPress(el, fn) {
+    el.addEventListener('pointerdown', e => { if (!acceptsPointer(e)) return; e.preventDefault(); e.stopPropagation(); fn(); });
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' && !reserved(e.code) && !wiz.open) { e.preventDefault(); fn(); } });
+  }
+  function onHold(el, set) {
+    let id = null;
+    el.addEventListener('pointerdown', e => { if (!acceptsPointer(e) || id !== null) return; e.preventDefault(); e.stopPropagation(); id = e.pointerId; el.classList.add('held'); set(true); });
+    const up = e => { if (e.pointerId !== id) return; id = null; el.classList.remove('held'); set(false); };
+    el.addEventListener('pointerleave', up); el.addEventListener('pointercancel', up); addEventListener('pointerup', up);
+  }
+  function bindPedal(id, key) {
+    const el = $(id); let ptr = null;
+    const set = e => { const r = el.getBoundingClientRect(); inp[key] = clamp(0.2 + 0.8 * (e.clientY - r.top) / r.height, 0.2, 1); };
+    el.addEventListener('pointerdown', e => { if (!acceptsPointer(e) || ptr !== null) return; e.preventDefault(); e.stopPropagation(); ptr = e.pointerId; try { el.setPointerCapture(ptr); } catch (err) { /* ignore */ } set(e); });
+    el.addEventListener('pointermove', e => { if (e.pointerId === ptr) set(e); });
+    const up = e => { if (e.pointerId === ptr) { ptr = null; inp[key] = 0; } };
+    el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+  }
+  bindPedal('pedal-acc', 'touchThr'); bindPedal('pedal-brake', 'touchBrk');
+  document.querySelectorAll('#gears .btn').forEach(b => onPress(b, () => requestGear(b.dataset.g)));
+  onPress($('b-tl'), () => toggleSignal(-1)); onPress($('b-tr'), () => toggleSignal(1));
+  onPress($('b-pb'), togglePB);
+  onPress($('b-head'), toggleHeadlights); onPress($('b-haz'), toggleHazard); onPress($('b-wip'), cycleWipers);
+  onPress($('b-view'), () => setView(view === 'cockpit' ? 'chase' : 'cockpit'));
+  onPress($('b-fovm'), () => setFov(fov - 5)); onPress($('b-fovp'), () => setFov(fov + 5));
+  onHold($('b-lookl'), v => { inp.lookL = v; }); onHold($('b-lookr'), v => { inp.lookR = v; });
+  onPress($('b-pause'), () => setPaused(true)); onPress($('p-resume'), () => setPaused(false));
+  onPress($('p-restart'), () => { setPaused(false); reset(); toast('리셋: P, 주차 브레이크 체결'); });
+  onPress($('p-cal'), () => { setPaused(false); openWizard(); });
+  for (const [id, k] of [['opt-mid', 'mid'], ['opt-left', 'left'], ['opt-dbg', 'dbg']]) {
+    $(id).addEventListener('change', e => { opt[k] = e.target.checked; $('debug').hidden = !opt.dbg; });
+  }
+
+  // Actions
+  const gearName = g => ({ P: 'P (주차)', R: 'R (후진)', N: 'N (중립)', D: 'D (주행)' })[g];
+  function requestGear(g) {
+    const r = evalShift(S.gear, g, S.brk, S.v * 3.6);
+    if (r === 'Already') return;
+    if (r === 'Accepted') { S.gear = g; toast(`${gearName(g)}로 변속했습니다.`); }
+    else if (r === 'BrakeRequired') toast('브레이크 페달을 밟은 상태에서 변속하세요.');
+    else toast(g === 'P' ? '차량이 완전히 정지한 뒤 P로 변속하세요.' : '진행 방향을 바꾸려면 먼저 완전히 정지하세요.');
+  }
+  function togglePB() { S.pb = !S.pb; toast(S.pb ? '주차 브레이크 체결' : '주차 브레이크 해제'); }
+  function toggleHeadlights() { S.headlights = !S.headlights; toast(S.headlights ? '전조등 켬' : '전조등 끔'); }
+  function toggleHazard() { signal.hazard = !signal.hazard; toast(signal.hazard ? '비상등 켬' : '비상등 끔'); }
+  const WIPER = ['와이퍼 끔', '와이퍼 간헐', '와이퍼 저속', '와이퍼 고속'];
+  function cycleWipers() { S.wiper = (S.wiper + 1) % 4; toast(WIPER[S.wiper]); }
+
+  let view = 'chase', fov = clamp(+(store.get('dps.fov') || 65) || 65, 50, 85), lookYaw = 0, paused = false, snapCam = true;
+  function setView(v) { view = v; lookYaw = 0; snapCam = true; $('b-view').textContent = v === 'cockpit' ? '3인칭' : '1인칭';
+    $('fovbox').hidden = v !== 'cockpit'; $('b-lookl').hidden = $('b-lookr').hidden = v !== 'cockpit'; }
+  function setFov(f) { fov = clamp(f, 50, 85); $('fovText').textContent = `시야 ${fov}°`; store.set('dps.fov', String(fov)); }
+  function setPaused(p) { paused = p; $('pause').hidden = !p; }
+  setFov(fov);
+
+  function readInput(dt) {
+    const gentle = down('ShiftLeft', 'ShiftRight');
+    const ramp = (cur, on, cap, rise, fall) => !on ? toward(cur, 0, fall * dt) : toward(cur, cap, (cur > cap ? fall : rise) * dt);
+    inp.kThr = ramp(inp.kThr, down('KeyW', 'ArrowUp'), gentle ? 0.3 : 1, 0.8, 3);
+    inp.kBrk = ramp(inp.kBrk, down('KeyS', 'ArrowDown'), gentle ? 0.35 : 1, 2, 4);
+    // Foot pedals (PedalInputManager): logical OR per pedal -> state machine (brake priority, simulated travel, fail-safe).
+    if (pedalsActive()) {
+      const bk = mapping.brake.filter(k => keys.has(k)), ak = mapping.acc.filter(k => keys.has(k));
+      const before = pm.safety;
+      pm.update(bk.length > 0, ak.length > 0, pedalReliable && document.hasFocus(), dt);
+      if (before === 'failsafe' && pm.safety === 'rearm') toast('키보드 입력이 돌아왔습니다. 브레이크를 한 번 밟으세요.');
+      if (before !== 'normal' && pm.safety === 'normal') toast('발 페달 입력이 다시 활성화되었습니다.');
+      inp.fKeys = [bk, ak];
+    } else { pm.reset(); inp.fKeys = null; }
+    inp.fBrk = pm.brake; inp.fThr = pm.acc;
+    const touchB = inp.touchBrk, touchA = touchB > 0 ? 0 : inp.touchThr;
+    S.brk = Math.max(inp.kBrk, inp.fBrk, touchB);
+    const thr = Math.max(inp.kThr, inp.fThr, touchA);
+    S.suppressed = S.brk >= 0.05 && thr > 0;           // router brake override
+    S.thr = S.suppressed ? 0 : thr;
+
+    let steer = 0; if (down('KeyA', 'ArrowLeft')) steer -= 1; if (down('KeyD', 'ArrowRight')) steer += 1;
+    S.sw = clamp(S.sw + steer * C.st.keyRate * dt + inp.drag, -C.st.maxW, C.st.maxW); inp.drag = 0;
+    S.held = steer !== 0 || inp.steerId !== null || down('KeyC');
+    if (down('KeyC')) S.sw = toward(S.sw, 0, 405 * dt);
+
+    const gearKeys = { Digit1: 'P', Digit2: 'R', Digit3: 'N', Digit4: 'D' };
+    for (const code of pressed) {
+      if (gearKeys[code]) requestGear(gearKeys[code]);
+      if (code === 'KeyQ') requestGear(ORDER[Math.max(0, ORDER.indexOf(S.gear) - 1)]);
+      if (code === 'KeyE') requestGear(ORDER[Math.min(3, ORDER.indexOf(S.gear) + 1)]);
+      if (code === 'Space') togglePB();
+      if (code === 'Comma') toggleSignal(-1);
+      if (code === 'Period') toggleSignal(1);
+      if (code === 'KeyH') toggleHazard();
+      if (code === 'KeyL') toggleHeadlights();
+      if (code === 'KeyK') cycleWipers();
+      if (code === 'KeyV') setView(view === 'cockpit' ? 'chase' : 'cockpit');
+      if (code === 'KeyT') setView(view === 'top' ? 'chase' : 'top');
+      if (code === 'BracketLeft') setFov(fov - 5);
+      if (code === 'BracketRight') setFov(fov + 5);
+      if (code === 'Escape') setPaused(true);
+      if (code === 'Backspace') { reset(); toast('리셋: P, 주차 브레이크 체결'); }
+    }
+    pressed.length = 0;
+  }
+
+  // =====================================================================
+  // Simulation (bicycle model about the rear axle; no tire slip)
+  // =====================================================================
+  function tickSteering(dt) {
+    const kmh = S.v * 3.6, s = Math.abs(kmh), st = C.st;
+    // Hands stay on the wheel briefly between drags (hand-over-hand): no unwinding during the grace time.
+    S.sinceHeld = S.held ? 0 : (S.sinceHeld ?? Infinity) + dt;
+    let f = !st.center || s <= st.scMin ? 0 : ss(ilerp(st.scMin, st.scFull, s));
+    if (kmh < 0) f *= st.scRev; if (S.sinceHeld < st.grace) f = 0;
+    S.scf = f;
+    if (f > 0 && S.sw !== 0) {
+      S.sw = toward(S.sw, 0, Math.min(Math.abs(S.sw) * st.scGain, st.scMax) * f * dt);
+      if (Math.abs(S.sw) < st.snap) S.sw = 0;
+    }
+    const scale = 1 + (st.hi - 1) * ilerp(st.ssA, st.ssB, s);
+    S.front = toward(S.front, clamp(S.sw / (st.maxW / st.maxF) * scale, -st.maxF, st.maxF), st.slew * dt);
+  }
+  function corners(x, z, h) {
+    const fx = Math.sin(h), fz = Math.cos(h), rx = Math.cos(h), rz = -Math.sin(h);
+    const cx = x + fx * C.L / 2, cz = z + fz * C.L / 2, hl = C.len / 2, hw = C.wid / 2, pts = [];
+    for (const [a, b] of [[hl, hw], [hl, -hw], [-hl, hw], [-hl, -hw], [hl, 0], [-hl, 0], [0, hw], [0, -hw]]) pts.push([cx + fx * a + rx * b, cz + fz * a + rz * b]);
+    return pts;
+  }
+  function step(dt) {
+    tickSteering(dt);
+    const F = driveForce(S.gear, S.thr, S.v);
+    const bt = serviceBrake(S.brk) + (S.pb ? 2 * C.br.pb : 0) + (S.gear === 'P' ? 2 * C.br.plock : 0);
+    const brakeF = Math.min(bt / C.r, C.br.mu * C.m * C.g), net = F + resist(S.v);
+    if (Math.abs(S.v) < 0.02 && Math.abs(net) <= brakeF) S.v = 0;
+    else {
+      const dir = S.v !== 0 ? Math.sign(S.v) : Math.sign(net);
+      let nv = S.v + (net - dir * brakeF) / C.m * dt;
+      if (brakeF > 0 && S.v !== 0 && Math.sign(nv) !== Math.sign(S.v)) nv = 0;
+      S.v = nv;
+    }
+    // Ackermann: 35° is the inner wheel. The rear-axle centre turns on R = L/tan(inner) + T/2, the same
+    // geometry the Unity WheelColliders get. Understeer gradient stands in for tire behavior at speed.
+    const inner = Math.abs(S.front) * DEG, R = inner < 1e-4 ? Infinity : C.L / Math.tan(inner) + C.T / 2;
+    const yaw = Math.sign(S.front) * (S.v / R) / (1 + C.us * S.v * S.v);
+    const nx = S.x + Math.sin(S.h) * S.v * dt, nz = S.z + Math.cos(S.h) * S.v * dt, nh = S.h + yaw * dt;
+    let blocked = Math.abs(nx) > 148 || Math.abs(nz) > 148;
+    for (const [px, pz] of corners(nx, nz, nh)) {
+      for (const [bx, bz, hx, hz] of boxes) if (Math.abs(px - bx) < hx && Math.abs(pz - bz) < hz) blocked = true;
+      for (const c of cones) if (!c.hit && (px - c.x) ** 2 + (pz - c.z) ** 2 < 0.2 ** 2) { c.hit = true; c.mesh.rotation.z = Math.PI / 2; c.mesh.position.y = 0.16; if (Math.abs(S.v) > 0.5) S.col++; }
+    }
+    if (blocked) { if (!S.contact && Math.abs(S.v) > 0.5) S.col++; S.contact = true; S.v = -0.1 * S.v; }
+    else { S.contact = false; S.x = nx; S.z = nz; S.h = nh; }
+    S.spin += S.v * dt / C.r;
+  }
+
+  // =====================================================================
+  // Rendering helpers
+  // =====================================================================
+  let lastCluster = '';
+  function drawCluster(lit) {
+    const kmh = Math.abs(S.v * 3.6), key = `${Math.round(kmh * 2)}|${S.gear}|${S.pb}|${lit[0]}|${lit[1]}|${S.headlights}`;
+    if (key === lastCluster) return; lastCluster = key;
+    const c = cctx, w = 512, h = 205;
+    c.fillStyle = '#0d1014'; c.fillRect(0, 0, w, h);
+    const cx = 150, cy = 108, r = 84;
+    c.fillStyle = '#05070a'; c.beginPath(); c.arc(cx, cy, r + 6, 0, Math.PI * 2); c.fill();
+    c.strokeStyle = '#e8ebf0'; c.lineWidth = 4; c.font = '600 17px "Barlow Semi Condensed", sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = '#c9d0da';
+    for (let v = 0; v <= 180; v += 20) {
+      const a = (-120 + v / 180 * 240) * DEG, sx = Math.sin(a), sy = -Math.cos(a);
+      c.beginPath(); c.moveTo(cx + sx * r * 0.72, cy + sy * r * 0.72); c.lineTo(cx + sx * r * 0.9, cy + sy * r * 0.9); c.stroke();
+      c.fillText(v, cx + sx * r * 0.55, cy + sy * r * 0.55);
+    }
+    const na = (-120 + Math.min(kmh, 180) / 180 * 240) * DEG;
+    c.strokeStyle = '#ff5533'; c.lineWidth = 5; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx + Math.sin(na) * r * 0.86, cy - Math.cos(na) * r * 0.86); c.stroke();
+    c.fillStyle = '#ff5533'; c.beginPath(); c.arc(cx, cy, 7, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#ffffff'; c.font = '700 76px "Barlow Semi Condensed", sans-serif'; c.fillText(Math.round(kmh), 360, 82);
+    c.fillStyle = '#9aa6b6'; c.font = '500 20px "IBM Plex Sans KR", sans-serif'; c.fillText('km/h', 360, 128);
+    c.font = '700 34px "Barlow Semi Condensed", sans-serif';
+    ORDER.forEach((g, i) => { c.fillStyle = g === S.gear ? '#2f7bff' : '#55606d'; c.fillText(g, 306 + i * 36, 172); });
+    if (S.pb) { c.fillStyle = '#ff4433'; c.font = '700 24px "Barlow Semi Condensed", sans-serif'; c.fillText('(P)', 40, 182); }
+    const tri = (x, dir, on) => { c.fillStyle = on ? '#ffab1a' : '#2c333c'; c.beginPath(); c.moveTo(x + dir * 16, 24); c.lineTo(x - dir * 4, 12); c.lineTo(x - dir * 4, 36); c.fill(); };
+    tri(250, -1, lit[0]); tri(470, 1, lit[1]);
+    if (S.headlights) { c.fillStyle = '#3fcc73'; c.font = '600 18px "IBM Plex Sans KR", sans-serif'; c.fillText('전조등', 455, 182); }
+    clusterTex.needsUpdate = true;
+  }
+
+  const mctx = $('map').getContext('2d');
+  function drawMap() {
+    const c = mctx, M = 300, sc = 3.2; // px per m, north-up
+    c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = '#2a2e33'; c.fillRect(0, 0, M, M);
+    const cx = S.x + Math.sin(S.h) * C.L / 2, cz = S.z + Math.cos(S.h) * C.L / 2;
+    c.translate(M / 2, M / 2); c.scale(sc, -sc); c.translate(-cx, -cz);
+    const rect = (x, z, w, l, col) => { c.fillStyle = col; c.fillRect(x - w / 2, z - l / 2, w, l); };
+    rect(0, 60, 3.6, 140, '#4a4f56'); rect(-14.5, 17.5, 5, 15, '#454a51'); rect(-35, 66, 6, 32, '#55606d');
+    c.strokeStyle = '#6c737c'; c.lineWidth = 0.4; c.beginPath(); c.arc(35, 40, 6, 0, Math.PI * 2); c.stroke();
+    for (const [x, z, hx, hz, k] of boxes) rect(x, z, hx * 2, hz * 2, k === 'bld' ? '#7d8a9b' : k === 'curb' ? '#9a9a96' : '#c4524f');
+    c.fillStyle = '#ff7a1a'; for (const k of cones) if (!k.hit) { c.beginPath(); c.arc(k.x, k.z, 0.5, 0, Math.PI * 2); c.fill(); }
+    c.fillStyle = '#2f7bff'; c.beginPath(); c.arc(DEST.x, DEST.z, 1.6, 0, Math.PI * 2); c.fill();
+    c.setTransform(1, 0, 0, 1, 0, 0); c.translate(M / 2, M / 2); c.rotate(S.h);
+    c.fillStyle = '#ffffff'; c.beginPath(); c.moveTo(0, -14); c.lineTo(10, 12); c.lineTo(0, 6); c.lineTo(-10, 12); c.closePath(); c.fill();
+  }
+
+  let toastTimer;
+  function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.remove('hide'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.add('hide'), 2600); }
+
+  // =====================================================================
+  // Calibration wizard (PedalCalibrationWizard): capture -> review -> edit -> validate -> save
+  // =====================================================================
+  const EXCLUDED = new Set(['Escape', 'MetaLeft', 'MetaRight', 'ContextMenu', 'PrintScreen', '']);
+  const SHORTCUTS = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'Backspace', 'Digit1', 'Digit2', 'Digit3', 'Digit4',
+    'KeyQ', 'KeyE', 'KeyC', 'KeyV', 'KeyT', 'KeyZ', 'KeyX', 'BracketLeft', 'BracketRight', 'Comma', 'Period', 'KeyH', 'KeyL', 'KeyK', 'ShiftLeft']);
+  const keyName = code => code.replace(/^Key/, '').replace(/^Digit/, '').replace(/^Numpad/, 'Num ').replace(/^Arrow/, '→').replace('→Left', '←').replace('→Up', '↑').replace('→Down', '↓').replace('→Right', '→');
+  const names = list => { const a = [...list]; return a.length ? a.map(keyName).join(', ') : '없음'; };
+  const W_ = { attempts: 5, minOcc: 2, gap: 0.2, stuck: 3, margin: 2, presses: 3, maxMissed: 1 };
+  function wizButtons(list) {
+    const row = $('w-buttons'); row.innerHTML = '';
+    for (const [label, fn] of list) { if (!label) continue; const b = document.createElement('button'); b.type = 'button'; b.className = 'btn ctl'; b.textContent = label; onPress(b, fn); row.appendChild(b); }
+  }
+  function openWizard() { wiz.open = true; keys.clear(); $('wizard').hidden = false; wizGo('intro'); }
+  function closeWizard() { wiz.open = false; $('wizard').hidden = true; keys.clear(); store.set('dps.wizardDone', '1'); }
+  function loadSets(m, source) {
+    wiz.brakeA = wiz.accA = null; wiz.amb = []; wiz.unresolved = [];
+    wiz.brake = new Set(m.brake); wiz.acc = new Set(m.acc.filter(k => !wiz.brake.has(k))); wiz.source = source;
+  }
+  function startCapture(step, keepOther) {
+    wiz.rec = makeRecorder(W_.attempts, W_.gap, W_.stuck);
+    if (!keepOther) { wiz.brakeA = null; wiz.accA = null; } else if (step === 'brake') wiz.brakeA = null; else wiz.accA = null;
+    wiz.source = 'calibration'; wizGo(step);
+  }
+  function startValidation() { wiz.val = makeValidation(W_.presses, W_.maxMissed); wizGo('validate'); }
+  function wizGo(step) {
+    wiz.step = step; $('w-warn').textContent = ''; $('w-dots').textContent = ''; $('w-keys').textContent = '';
+    $('w-ind').hidden = !(step === 'validate' || step === 'editB' || step === 'editA');
+    if (step === 'intro') {
+      $('w-title').textContent = '페달 보정';
+      $('w-body').textContent = '바닥에 둔 키보드를 발로 밟아 브레이크와 가속 페달로 씁니다. 뒤꿈치는 바닥에 대고, 체중을 싣지 말고 가볍게 누르세요. (손으로 눌러 시험해도 됩니다)';
+      const st = { none: '설정 없음', unvalidated: '검증 안 됨 (운전에 사용되지 않음)', validated: '검증 완료' }[calibrationStatus()];
+      $('w-keys').textContent = `현재 상태: ${st} · 발 페달 ${pedalsOn ? '켬' : '끔'}\n(브라우저는 키보드 연결 해제를 감지할 수 없어, 창 포커스를 잃으면 입력이 끊긴 것으로 처리합니다)`;
+      wizButtons([['보정 시작', () => startCapture('brake')], [mapping ? '현재 설정 확인' : '', () => { loadSets(mapping, mapping.source); wizGo('review'); }],
+        ['기본값으로 초기화', () => { saveMapping({ ...DEFAULT_MAPPING, brake: [...DEFAULT_MAPPING.brake], acc: [...DEFAULT_MAPPING.acc] }); loadSets(mapping, 'default'); wizGo('review'); }],
+        [pedalsOn ? '발 페달 끄기' : '발 페달 켜기', () => { pedalsOn = !pedalsOn; store.set('dps.pedalsOn', pedalsOn ? '1' : '0'); pm.reset(); wizGo('intro'); }],
+        ['닫기 (Esc)', closeWizard]]);
+    } else if (step === 'brake' || step === 'acc') {
+      $('w-title').textContent = step === 'brake' ? '1단계: 브레이크' : '2단계: 가속';
+      $('w-body').textContent = step === 'brake' ? '브레이크로 쓸 위치에 발을 올리고, 눌렀다 떼기를 5번 하세요.' : '가속 페달로 쓸 위치에 발을 올리고, 눌렀다 떼기를 5번 하세요.';
+      wizButtons([['이 단계 다시', () => startCapture(step, true)], ['취소 (Esc)', closeWizard]]);
+      refreshCapture();
+    } else if (step === 'review') {
+      $('w-title').textContent = '3단계: 키 확인';
+      $('w-body').textContent = '제안된 키를 확인하세요. 양쪽에서 감지된 키는 표시됩니다. 필요하면 직접 편집한 뒤 실제 테스트를 하세요.';
+      wizButtons([['브레이크 키 편집', () => wizGo('editB')], ['가속 키 편집', () => wizGo('editA')],
+        [wiz.brakeA ? (wiz.occ ? '1회 감지 키 제외' : '1회 감지 키 포함') : '', () => { wiz.occ = !wiz.occ; rebuildSets(); wizGo('review'); }],
+        ['처음부터 다시', () => startCapture('brake')], ['실제 테스트', startValidation]]);
+      refreshReview();
+    } else if (step === 'editB' || step === 'editA') {
+      $('w-title').textContent = step === 'editB' ? '브레이크 키 편집' : '가속 키 편집';
+      $('w-body').textContent = '키를 누를 때마다 이 페달에 추가되거나 빠집니다. 다른 페달에 있던 키는 이 페달로 옮겨집니다 (한 키는 한 페달만).';
+      wizButtons([['편집 완료', () => wizGo('review')]]);
+      refreshReview();
+    } else if (step === 'validate') {
+      $('w-title').textContent = '4단계: 실제 테스트';
+      wizButtons([['다시 테스트', startValidation], ['키 편집', () => wizGo('review')], [wiz.val.step === 'passed' ? '저장' : '', saveFromWizard]]);
+      refreshValidation();
+    }
+  }
+  function wizKey(e, isDown) {
+    const t = performance.now() / 1000, code = e.code;
+    if (isDown && code === 'Escape') { closeWizard(); return; }
+    if (EXCLUDED.has(code)) return;
+    if (wiz.step === 'brake' || wiz.step === 'acc') {
+      if (isDown) wiz.rec.down(code, t); else wiz.rec.up(code, t);
+      refreshCapture();
+    } else if ((wiz.step === 'editB' || wiz.step === 'editA') && isDown && !e.repeat) {
+      const target = wiz.step === 'editB' ? wiz.brake : wiz.acc, other = wiz.step === 'editB' ? wiz.acc : wiz.brake;
+      if (target.has(code)) target.delete(code); else { target.add(code); other.delete(code); }
+      wiz.source = 'manual'; refreshReview();
+    }
+  }
+  function liveState() {
+    const ab = [], aa = [], un = [];
+    for (const k of keys) { if (EXCLUDED.has(k)) continue; if (wiz.brake.has(k)) ab.push(k); else if (wiz.acc.has(k)) aa.push(k); else un.push(k); }
+    $('w-ib').className = ab.length ? 'on-b' : ''; $('w-ia').className = aa.length ? (ab.length ? 'sup' : 'on-a') : '';
+    return { ab, aa, un };
+  }
+  function wizTick() {
+    if (!wiz.open) return;
+    const t = performance.now() / 1000;
+    if ((wiz.step === 'brake' || wiz.step === 'acc')) {
+      if (wiz.rec.update(t)) {
+        refreshCapture();
+        if (wiz.rec.complete) {
+          const a = analyze(wiz.rec.attempts, W_.minOcc);
+          if (wiz.step === 'brake') { wiz.brakeA = a; if (!wiz.accA) { startCapture('acc', true); return; } }
+          else { wiz.accA = a; if (!wiz.brakeA) { startCapture('brake', true); return; } }
+          rebuildSets(); wizGo('review');
+        }
+      }
+    } else if (wiz.step === 'editB' || wiz.step === 'editA') liveState();
+    else if (wiz.step === 'validate') {
+      const { ab, aa, un } = liveState();
+      const before = wiz.val.step;
+      wiz.val.update(ab.length > 0, aa.length > 0, un.length > 0);
+      if (wiz.val.step !== before && (wiz.val.step === 'passed' || wiz.val.step === 'failed')) wizGo('validate');
+      refreshValidation({ ab, aa, un });
+    }
+  }
+  function rebuildSets() {
+    wiz.brake = new Set(); wiz.acc = new Set(); wiz.amb = []; wiz.unresolved = [];
+    if (!wiz.brakeA || !wiz.accA) return;
+    const b = { ...wiz.brakeA, selected: [...wiz.brakeA.selected], occasional: [...wiz.brakeA.occasional] };
+    const a = { ...wiz.accA, selected: [...wiz.accA.selected], occasional: [...wiz.accA.occasional] };
+    wiz.amb = ambiguousKeys(b, a);
+    wiz.unresolved = resolveConflicts(b, a, W_.margin);
+    b.selected.forEach(k => wiz.brake.add(k)); a.selected.forEach(k => wiz.acc.add(k));
+    if (wiz.occ) { b.occasional.forEach(k => { if (!wiz.amb.includes(k)) wiz.brake.add(k); }); a.occasional.forEach(k => { if (!wiz.amb.includes(k)) wiz.acc.add(k); }); }
+  }
+  function refreshCapture() {
+    const r = wiz.rec; if (!r) return;
+    $('w-dots').textContent = Array.from({ length: r.required }, (_, i) => i < r.attempts.length ? '●' : '○').join(' ');
+    const seen = new Set(); r.attempts.forEach(a => a.keys.forEach(k => seen.add(k)));
+    $('w-keys').textContent = (r.held.size ? '누르는 중: ' + names(r.cur || []) : '발을 완전히 떼고 다시 밟으세요') + `\n지금까지 감지된 키 (${seen.size}): ${names(seen)}`;
+    const w = [];
+    const missing = new Set(); r.attempts.forEach(a => a.missing.forEach(k => missing.add(k)));
+    if (missing.size) w.push(`떼는 입력이 보고되지 않은 키: ${names(missing)} (키보드 문제일 수 있음)`);
+    if (r.attempts.some(a => [...a.downs.values()].some(n => n > 1))) w.push(`한 번의 누름 안에서 같은 키가 여러 번 눌렸습니다. 간격이 ${W_.gap}초보다 짧으면 두 번이 합쳐질 수 있습니다.`);
+    $('w-warn').textContent = w.join('\n');
+  }
+  function cell(a, k) { const n = a.counts.get(k) || 0; return n ? `${n}/${a.n} (${a.keyDowns.get(k) || n})` : '-'; }
+  function refreshReview() {
+    let t = `브레이크 (${wiz.brake.size}): ${names(wiz.brake)}\n가속 (${wiz.acc.size}): ${names(wiz.acc)}`;
+    if (wiz.brakeA && wiz.accA) {
+      t += '\n\n키 · 브레이크 감지(누름) · 가속 감지(누름) · 비고';
+      const all = [...new Set([...wiz.brakeA.counts.keys(), ...wiz.accA.counts.keys()])]
+        .sort((x, y) => ((wiz.brakeA.counts.get(y) || 0) + (wiz.accA.counts.get(y) || 0)) - ((wiz.brakeA.counts.get(x) || 0) + (wiz.accA.counts.get(x) || 0))).slice(0, 10);
+      for (const k of all) {
+        const notes = [];
+        if (wiz.amb.includes(k)) notes.push(wiz.unresolved.includes(k) ? '양쪽 감지 → 제외' : '양쪽 감지');
+        if (wiz.brakeA.missing.has(k) || wiz.accA.missing.has(k)) notes.push('떼기 누락');
+        notes.push(wiz.brake.has(k) ? '→ 브레이크' : wiz.acc.has(k) ? '→ 가속' : '미사용');
+        t += `\n${keyName(k)} · ${cell(wiz.brakeA, k)} · ${cell(wiz.accA, k)} · ${notes.join(', ')}`;
+      }
+    }
+    $('w-keys').textContent = t;
+    const w = [];
+    if (wiz.unresolved.length) w.push('양쪽에서 비슷하게 감지되어 어느 페달에도 넣지 않은 키: ' + names(wiz.unresolved));
+    if ((wiz.brakeA && wiz.brakeA.rollover) || (wiz.accA && wiz.accA.rollover)) w.push('동시에 누른 키 일부가 보고되지 않는 키보드일 수 있습니다 (롤오버/고스팅). 한 키만 감지돼도 페달은 동작합니다.');
+    const sc = [...wiz.brake, ...wiz.acc].filter(k => SHORTCUTS.has(k));
+    if (sc.length) w.push(`페달 사용 중 단축키로 동작하지 않는 키: ${names(sc)} (주차 브레이크는 (P) 버튼)`);
+    if (!wiz.brake.size || !wiz.acc.size) w.push('브레이크와 가속 모두 키가 하나 이상 있어야 합니다.');
+    $('w-warn').textContent = w.join('\n');
+  }
+  function refreshValidation(live) {
+    const v = wiz.val; if (!v) return;
+    if (v.step === 'brake') { $('w-body').textContent = `브레이크 영역을 ${v.required}번 밟았다 떼세요.`; $('w-dots').textContent = `브레이크 ${v.cleanB}/${v.required}`; }
+    else if (v.step === 'acc') { $('w-body').textContent = `이제 가속 영역을 ${v.required}번 밟았다 떼세요.`; $('w-dots').textContent = `가속 ${v.cleanA}/${v.required}`; }
+    else if (v.step === 'passed') { $('w-body').textContent = '테스트 통과. 저장하면 다음 실행부터 바로 사용됩니다.'; $('w-dots').textContent = '통과'; }
+    else { $('w-body').textContent = '테스트 실패: ' + v.reason; $('w-dots').textContent = '실패'; }
+    if (live) $('w-keys').textContent = `브레이크 키: ${names(live.ab)}\n가속 키: ${names(live.aa)}\n미등록 키: ${names(live.un)}` + (live.ab.length && live.aa.length ? '\n충돌: 둘 다 눌림 → 브레이크 우선, 가속 차단' : '');
+    $('w-warn').textContent = `잘못된 페달 ${v.wrong} · 놓친 입력 ${v.missed} · 미등록 키가 섞인 입력 ${v.withUnmapped}`;
+  }
+  function saveFromWizard() {
+    if (!wiz.val || wiz.val.step !== 'passed') return;
+    saveMapping({ brake: [...wiz.brake], acc: [...wiz.acc], validated: true, source: wiz.source });
+    pedalsOn = true; store.set('dps.pedalsOn', '1');
+    closeWizard(); toast('발 페달 설정을 저장했습니다 (검증 완료).');
+  }
+
+  // =====================================================================
+  // Frame loop
+  // =====================================================================
+  const camPos = new THREE.Vector3(), camLook = new THREE.Vector3(), tmp = new THREE.Vector3();
+  let chaseYaw = 0, mirrorTurn = 0;
+
+  function resize() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    $('hud').style.transform = `scale(${w / 1120})`;
+  }
+  new ResizeObserver(resize).observe(stage);
+
+  function updateCar(dt) {
+    const cx = S.x + Math.sin(S.h) * C.L / 2, cz = S.z + Math.cos(S.h) * C.L / 2;
+    car.position.set(cx, 0, -cz); car.rotation.y = -S.h;
+    const [l, r] = ackermann(S.front);
+    for (const w of wheels) { w.pivot.rotation.y = w.front ? -(w.left ? l : r) * DEG : 0; w.spin.rotation.x = -S.spin; }
+    wheelSpin.rotation.z = -S.sw * DEG;
+    const lit = (signal.side !== 0 || signal.hazard) && (performance.now() / 1000) % 0.8 < 0.4;
+    const litL = lit && (signal.hazard || signal.side < 0), litR = lit && (signal.hazard || signal.side > 0);
+    indL.forEach(m => { m.material = litL ? indOn : indOff; }); indR.forEach(m => { m.material = litR ? indOn : indOff; });
+    heads.forEach(m => { m.material = S.headlights ? headOn : headOff; });
+    tails.forEach(m => { m.material = S.brk > 0.05 || S.headlights ? tailOn : tailOff; });
+    if (S.wiper || S.wiperPhase > 0) { // VehicleAccessories.UpdateWipers
+      if (S.wiperPause > 0) S.wiperPause -= dt;
+      else {
+        S.wiperPhase += dt / (S.wiper === 3 ? 0.8 : 1.4);
+        if (S.wiperPhase >= 1) { S.wiperPhase = S.wiper ? S.wiperPhase - 1 : 0; if (S.wiper === 1) { S.wiperPhase = 0; S.wiperPause = 3; } }
+      }
+      const sweep = (1 - Math.cos(S.wiperPhase * Math.PI * 2)) / 2;
+      wiperPivots.forEach(p => { p.rotation.z = (-85 + 95 * sweep) * DEG; });
+    }
+    return [litL, litR];
+  }
+
+  function updateCamera(dt) {
+    interior.visible = view === 'cockpit';
+    if (view === 'cockpit') {
+      const target = (inp.lookR || keys.has('KeyX') ? 70 : 0) - (inp.lookL || keys.has('KeyZ') ? 70 : 0);
+      lookYaw += (target - lookYaw) * (1 - Math.exp(-9 * dt));
+      car.updateMatrixWorld();
+      camera.position.copy(EYE).applyMatrix4(car.matrixWorld);
+      camera.rotation.order = 'YXZ';
+      camera.rotation.set(-4 * DEG, -S.h - lookYaw * DEG, 0);
+      camera.near = 0.03; camera.fov = fov;
+    } else if (view === 'top') {
+      camera.near = 0.1; camera.fov = 60;
+      camera.position.set(car.position.x, 24, car.position.z);
+      camera.up.set(Math.sin(S.h), 0, -Math.cos(S.h)); camera.lookAt(car.position); camera.up.set(0, 1, 0);
+    } else {
+      camera.near = 0.1; camera.fov = 60;
+      const d = ((S.h - chaseYaw + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+      chaseYaw = snapCam ? S.h : chaseYaw + d * (1 - Math.exp(-5 * dt));
+      const fx = Math.sin(chaseYaw), fz = Math.cos(chaseYaw);
+      tmp.set(car.position.x - fx * 6.5, 2.6, car.position.z + fz * 6.5);
+      if (snapCam) camPos.copy(tmp); else camPos.lerp(tmp, 1 - Math.exp(-8 * dt));
+      camLook.set(car.position.x + fx * 2, 1, car.position.z - fz * 2);
+      camera.position.copy(camPos); camera.lookAt(camLook);
+    }
+    snapCam = false;
+    camera.updateProjectionMatrix();
+  }
+
+  function renderMirrors() {
+    const live = view === 'cockpit';
+    mirrors.forEach(m => { m.glass.material = live ? m.live : mirrorIdle; });
+    if (!live) return;
+    // One mirror per frame: rearview every 2nd frame, the side mirrors alternate (MirrorCamera intervals).
+    mirrorTurn++;
+    const m = mirrorTurn % 2 === 0 ? mirrors[0] : mirrors[1 + ((mirrorTurn >> 1) % 2)];
+    interior.visible = false;
+    renderer.setRenderTarget(m.rt); renderer.render(scene, m.cam); renderer.setRenderTarget(null);
+    interior.visible = true;
+  }
+
+  function updateHUD(lit) {
+    const kmh = Math.abs(S.v * 3.6);
+    $('spd').textContent = Math.round(kmh); $('gearBig').textContent = S.gear;
+    document.querySelectorAll('#gears .btn').forEach(b => b.classList.toggle('on', b.dataset.g === S.gear));
+    $('tri-l').classList.toggle('lit', lit[0]); $('tri-r').classList.toggle('lit', lit[1]);
+    $('b-tl').classList.toggle('on', signal.side < 0); $('b-tr').classList.toggle('on', signal.side > 0);
+    $('b-pb').classList.toggle('engaged', S.pb); $('pbText').textContent = S.pb ? '체결' : '해제';
+    $('b-head').classList.toggle('on', S.headlights); $('b-haz').classList.toggle('on', signal.hazard);
+    $('b-wip').classList.toggle('on', S.wiper > 0); $('b-wip').textContent = WIPER[S.wiper];
+    $('bar-b').style.width = S.brk * 100 + '%'; $('bar-a').style.width = S.thr * 100 + '%';
+    document.querySelector('#pedal-brake .fill').style.height = inp.touchBrk * 100 + '%';
+    document.querySelector('#pedal-acc .fill').style.height = (inp.touchBrk > 0 ? 0 : inp.touchThr) * 100 + '%';
+    $('srcText').textContent = pedalsActive()
+      ? (pm.safety === 'failsafe' ? '발 페달 입력 끊김 · 자동 제동 중' : pm.safety === 'rearm' ? '브레이크를 한 번 밟으면 발 페달이 다시 동작합니다'
+        : '발 페달 키보드' + (S.suppressed || pm.conflict ? ' · 브레이크 우선' : ''))
+      : (pedalsOn && mapping && !mapping.validated ? '발 페달: 검증 필요 (일시정지 → 페달 보정)' : '키보드 / 터치 페달' + (S.suppressed ? ' · 브레이크 우선' : ''));
+    $('lamp-b').classList.toggle('lit', pedalsActive() && pm.brakePressed);
+    $('lamp-a').classList.toggle('lit', pedalsActive() && pm.accPressed && !pm.suppressed);
+    $('lamp-a').classList.toggle('sup', pedalsActive() && pm.suppressed);
+    $('steerMark').style.left = `calc(50% + ${clamp(S.sw / C.st.maxW, -1, 1) * 100}px)`;
+    $('steerText').textContent = `${S.sw >= 0 ? '+' : ''}${S.sw.toFixed(0)}° (${(S.sw / 360).toFixed(2)}회전)${inp.steerId !== null ? ' · 드래그' : ''}`;
+    const cx = S.x + Math.sin(S.h) * C.L / 2, cz = S.z + Math.cos(S.h) * C.L / 2, dx = DEST.x - cx, dz = DEST.z - cz, dist = Math.hypot(dx, dz);
+    if (dist < 4) { $('navText').textContent = `${DEST.name} 도착`; $('navArrow').style.transform = ''; }
+    else {
+      let rel = Math.atan2(dx, dz) - S.h; rel = ((rel + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+      $('navArrow').style.transform = `rotate(${rel}rad)`; $('navText').textContent = `${DEST.name}까지 ${dist.toFixed(0)} m`;
+    }
+    if (S.pb && S.thr > 0.1 && (S.gear === 'D' || S.gear === 'R') && $('toast').classList.contains('hide')) toast(reserved('Space') ? '주차 브레이크가 체결되어 있습니다. 오른쪽 (P) 버튼으로 해제하세요.' : '주차 브레이크가 체결되어 있습니다. 오른쪽 (P) 버튼이나 Space로 해제하세요.');
+    if (opt.dbg) {
+      const [l, r] = ackermann(S.front);
+      $('debug').textContent = `speed  ${(S.v * 3.6).toFixed(1)} km/h\nwheel  ${S.sw.toFixed(0)}°  road ${l.toFixed(1)}/${r.toFixed(1)}°\nthr ${S.thr.toFixed(2)}  brk ${S.brk.toFixed(2)}\nfoot keys ${inp.fKeys ? inp.fKeys.join('/') : '-'}\nself-center ${S.scf.toFixed(2)}  col ${S.col}\nsteer ptr ${inp.steerKind || '-'}`;
+    }
+  }
+
+  let last = performance.now(), acc = 0, mapT = 0;
+  function frame(now) {
+    const dt = Math.min((now - last) / 1000, 0.05); last = now;
+    if (!paused && !wiz.open) {
+      readInput(dt);
+      updateSignal(S.sw);
+      acc += dt; while (acc >= 0.01) { step(0.01); acc -= 0.01; }
+    } else { pressed.length = 0; inp.drag = 0; S.brk = 1; S.thr = 0; }
+    wizTick();
+    const lit = updateCar(dt);
+    updateCamera(dt);
+    if (view === 'cockpit') drawCluster(lit);
+    renderMirrors();
+    renderer.render(scene, camera);
+    if ((mapT += dt) > 0.1) { mapT = 0; drawMap(); }
+    updateHUD(lit);
+    requestAnimationFrame(frame);
+  }
+
+  reset(); setView('chase'); resize();
+  toast('브레이크(S)를 밟고 오른쪽 D를 누르세요.');
+  window.__preview = { S, C, inp, opt, wiz, pm, get mapping() { return mapping; }, get view() { return view; }, get pedalsActive() { return pedalsActive(); }, get wheelSpinDeg() { return -wheelSpin.rotation.z / DEG; }, setView, openWizard };
+  requestAnimationFrame(frame);
+})();
+</script>

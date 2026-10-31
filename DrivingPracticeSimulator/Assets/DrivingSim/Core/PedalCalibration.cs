@@ -17,6 +17,14 @@ namespace DrivingSim.Core
         public HashSet<int> Keys { get; }
         public int MaxSimultaneous { get; }
         public float DurationSeconds { get; }
+        /// <summary>Key-down events per key in this attempt (more than 1 = chatter, or two presses merged).</summary>
+        public Dictionary<int, int> KeyDowns { get; } = new Dictionary<int, int>();
+        /// <summary>Keys whose release was never reported (forced up after the stuck timeout).</summary>
+        public HashSet<int> ReleaseMissing { get; } = new HashSet<int>();
+        /// <summary>Time from the first to the last new key going down. Large values suggest presses were merged.</summary>
+        public float OnsetSpreadSeconds { get; set; }
+        /// <summary>Idle time before this attempt started (from the previous attempt's last release).</summary>
+        public float GapBeforeSeconds { get; set; } = float.PositiveInfinity;
     }
 
     /// <summary>
@@ -26,21 +34,29 @@ namespace DrivingSim.Core
     /// </summary>
     public sealed class PedalAttemptRecorder
     {
-        readonly HashSet<int> held = new HashSet<int>();
+        readonly Dictionary<int, float> held = new Dictionary<int, float>();
         readonly List<PedalAttempt> attempts = new List<PedalAttempt>();
         HashSet<int> current;
+        Dictionary<int, int> currentDowns;
+        HashSet<int> currentMissing;
         int maxSimultaneous;
         float startTime;
+        float lastNewKeyTime;
         float releasedTime = -1f;
+        float lastAttemptEnd = float.NegativeInfinity;
 
-        public PedalAttemptRecorder(int requiredAttempts = 5, float releaseGapSeconds = 0.2f)
+        public PedalAttemptRecorder(int requiredAttempts = 5, float releaseGapSeconds = 0.2f, float stuckKeySeconds = 3f)
         {
             RequiredAttempts = Math.Max(1, requiredAttempts);
             ReleaseGapSeconds = Math.Max(0f, releaseGapSeconds);
+            StuckKeySeconds = Math.Max(0.5f, stuckKeySeconds);
         }
 
         public int RequiredAttempts { get; }
+        /// <summary>Grouping interval: all keys must stay up this long before an attempt ends.</summary>
         public float ReleaseGapSeconds { get; }
+        /// <summary>A key held longer than this during calibration is treated as a missed release.</summary>
+        public float StuckKeySeconds { get; }
         public IReadOnlyList<PedalAttempt> Attempts => attempts;
         public bool IsComplete => attempts.Count >= RequiredAttempts;
         public bool IsPressing => held.Count > 0;
@@ -48,32 +64,57 @@ namespace DrivingSim.Core
 
         public void KeyDown(int key, float time)
         {
-            if (IsComplete) return;
+            if (IsComplete || held.ContainsKey(key)) return; // OS key repeat is not a new press
             if (current == null)
             {
                 current = new HashSet<int>();
+                currentDowns = new Dictionary<int, int>();
+                currentMissing = new HashSet<int>();
                 maxSimultaneous = 0;
                 startTime = time;
+                lastNewKeyTime = time;
             }
-            held.Add(key);
-            current.Add(key);
+            held[key] = time;
+            if (current.Add(key)) lastNewKeyTime = time;
+            currentDowns[key] = currentDowns.TryGetValue(key, out int n) ? n + 1 : 1;
             maxSimultaneous = Math.Max(maxSimultaneous, held.Count);
             releasedTime = -1f;
         }
 
         public void KeyUp(int key, float time)
         {
-            held.Remove(key);
+            if (!held.Remove(key)) return;
             if (held.Count == 0 && current != null) releasedTime = time;
         }
 
         /// <summary>Returns true when an attempt was completed by this call.</summary>
         public bool Update(float time)
         {
-            if (current == null || held.Count > 0 || releasedTime < 0f) return false;
-            if (time - releasedTime < ReleaseGapSeconds) return false;
+            if (current == null) return false;
 
-            attempts.Add(new PedalAttempt(current, maxSimultaneous, releasedTime - startTime));
+            // A release the keyboard never reported would block calibration forever.
+            if (held.Count > 0)
+            {
+                List<int> stuck = null;
+                foreach (KeyValuePair<int, float> pair in held)
+                    if (time - pair.Value > StuckKeySeconds) (stuck ?? (stuck = new List<int>())).Add(pair.Key);
+                if (stuck == null) return false;
+                foreach (int key in stuck) { held.Remove(key); currentMissing.Add(key); }
+                if (held.Count > 0) return false;
+                releasedTime = time;
+            }
+
+            if (releasedTime < 0f || time - releasedTime < ReleaseGapSeconds) return false;
+
+            var attempt = new PedalAttempt(current, maxSimultaneous, releasedTime - startTime)
+            {
+                OnsetSpreadSeconds = lastNewKeyTime - startTime,
+                GapBeforeSeconds = startTime - lastAttemptEnd,
+            };
+            foreach (KeyValuePair<int, int> pair in currentDowns) attempt.KeyDowns[pair.Key] = pair.Value;
+            attempt.ReleaseMissing.UnionWith(currentMissing);
+            attempts.Add(attempt);
+            lastAttemptEnd = releasedTime;
             current = null;
             releasedTime = -1f;
             return true;
@@ -85,6 +126,7 @@ namespace DrivingSim.Core
             attempts.Clear();
             current = null;
             releasedTime = -1f;
+            lastAttemptEnd = float.NegativeInfinity;
         }
     }
 
@@ -98,6 +140,15 @@ namespace DrivingSim.Core
 
         /// <summary>How many attempts each key appeared in.</summary>
         public Dictionary<int, int> Counts { get; } = new Dictionary<int, int>();
+
+        /// <summary>Total key-down events per key across all attempts.</summary>
+        public Dictionary<int, int> KeyDowns { get; } = new Dictionary<int, int>();
+
+        /// <summary>Keys whose release was missed at least once.</summary>
+        public HashSet<int> ReleaseMissing { get; } = new HashSet<int>();
+
+        /// <summary>Attempts where some key went down more than once: chatter, or two presses merged by the grouping interval.</summary>
+        public int AttemptsWithRepeatedKeys { get; set; }
 
         public int AttemptCount { get; set; }
         public int MaxSimultaneous { get; set; }
@@ -115,6 +166,14 @@ namespace DrivingSim.Core
             {
                 foreach (int key in attempt.Keys)
                     result.Counts[key] = result.Counts.TryGetValue(key, out int n) ? n + 1 : 1;
+                bool repeated = false;
+                foreach (KeyValuePair<int, int> pair in attempt.KeyDowns)
+                {
+                    result.KeyDowns[pair.Key] = (result.KeyDowns.TryGetValue(pair.Key, out int d) ? d : 0) + pair.Value;
+                    repeated |= pair.Value > 1;
+                }
+                if (repeated) result.AttemptsWithRepeatedKeys++;
+                result.ReleaseMissing.UnionWith(attempt.ReleaseMissing);
                 result.MaxSimultaneous = Math.Max(result.MaxSimultaneous, attempt.MaxSimultaneous);
             }
 
@@ -151,19 +210,25 @@ namespace DrivingSim.Core
             return cappedAtSix >= Math.Max(2, (attempts.Count + 1) / 2);
         }
 
+        /// <summary>Every key seen in both calibrations, mapped or not. Shown to the player as ambiguous.</summary>
+        public static List<int> AmbiguousKeys(PedalKeyAnalysis brake, PedalKeyAnalysis accelerator) =>
+            brake.Counts.Keys.Where(accelerator.Counts.ContainsKey).OrderBy(k => k).ToList();
+
         /// <summary>
-        /// A key may belong to only one pedal. It stays with the pedal it appeared in more often;
-        /// on a tie it is removed from both and reported as a conflict.
+        /// A key may belong to only one pedal. A key proposed for both stays with a pedal only if it
+        /// appeared there at least <paramref name="dominanceMargin"/> more times; otherwise it is
+        /// removed from both and returned as unresolved. Either way it remains flagged as ambiguous
+        /// (<see cref="AmbiguousKeys"/>) so the player can review it.
         /// </summary>
-        public static List<int> ResolveConflicts(PedalKeyAnalysis brake, PedalKeyAnalysis accelerator)
+        public static List<int> ResolveConflicts(PedalKeyAnalysis brake, PedalKeyAnalysis accelerator, int dominanceMargin = 2)
         {
             var conflicts = new List<int>();
             foreach (int key in brake.Selected.Intersect(accelerator.Selected).ToList())
             {
                 int b = brake.Counts.TryGetValue(key, out int bc) ? bc : 0;
                 int a = accelerator.Counts.TryGetValue(key, out int ac) ? ac : 0;
-                if (b > a) accelerator.Selected.Remove(key);
-                else if (a > b) brake.Selected.Remove(key);
+                if (b - a >= dominanceMargin) accelerator.Selected.Remove(key);
+                else if (a - b >= dominanceMargin) brake.Selected.Remove(key);
                 else
                 {
                     brake.Selected.Remove(key);

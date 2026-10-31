@@ -25,7 +25,7 @@ namespace DrivingSim.TestBed
             var systems = new GameObject("DrivingSystems");
             PointerInputHub pointers = systems.AddComponent<PointerInputHub>();
             KeyboardDrivingInput keyboard = systems.AddComponent<KeyboardDrivingInput>();
-            FootPedalKeyboardInput footPedals = systems.AddComponent<FootPedalKeyboardInput>();
+            PedalInputManager footPedals = systems.AddComponent<PedalInputManager>();
             TouchSteeringController touchSteering = systems.AddComponent<TouchSteeringController>();
             touchSteering.SetHub(pointers);
             MobilePedalController mobilePedals = systems.AddComponent<MobilePedalController>();

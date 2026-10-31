@@ -48,7 +48,7 @@ project renders with the Built-in pipeline until one is assigned. To switch:
 | W / ↑ | Accelerator (ramps up while held, ≈1.25 s to full) |
 | S / ↓ | Brake (ramps up, ≈0.5 s to full) |
 | Left Shift (held) | Gentle pedals: caps throttle at 0.30 and brake at 0.35 |
-| A / D or ← / → | Rotate the steering wheel (360°/s). Releasing leaves it where it is |
+| A / D or ← / → | Rotate the steering wheel (270°/s: center to lock in 2 s). Releasing leaves it where it is |
 | C (held) | Turn the steering wheel back toward center |
 | 1 / 2 / 3 / 4 | Select P / R / N / D |
 | Q / E | Move the lever one position toward P / toward D |
@@ -82,12 +82,13 @@ A pointer that starts on UI never steers. A drag that starts on the road keeps s
 it crosses a button.
 
 **Foot-pedal keyboard.** A keyboard on the floor works as brake (middle area) and accelerator
-(right area). The first run opens a calibration wizard (also in **Pause → 발 페달 키보드 보정**):
-5 brake presses, 5 accelerator presses, then a live test with manual key editing. Keys seen in
-≥ 2 of 5 presses are mapped. Keys claimed equally by both pedals are dropped. A possible
-rollover limit is flagged. The mapping is saved to `persistentDataPath/pedal_key_mapping.json`.
-More keys down = more pedal (1 key 35 %, 3+ keys 100 %; `FootPedalKeyboardInput`). Brake always
-wins: while braking, throttle is zero. Mapped keys are reserved, so they never trigger shortcuts.
+(right area). See **[PEDALS.md](PEDALS.md)** for the design review, calibration algorithm,
+Inspector settings, physical setup advice and the test plan. In short: **Pause → 페달 보정**
+runs 5 brake presses, 5 accelerator presses, a per-key review (ambiguous keys flagged, manual
+editing), then a **required live test**. Only a validated mapping drives the car. Pedal amount
+is simulated from hold time, because a keyboard measures no force: accelerator 0→1 in 2.5 s,
+brake 0.3 at once, then 1.0 after 1.2 s. Brake always wins. Losing the keyboard or app focus
+cuts throttle and applies a 0.6 fail-safe brake until the player presses the brake again.
 
 **Touch pedals** (bottom-right) stay available: pressure follows the finger's height on the pedal.
 
@@ -130,13 +131,17 @@ Tune `renderInterval`, `renderPhase` and the texture size on each `MirrorCamera`
 Assets/DrivingSim/
   Core/        DrivingSim.Core      Engine-free logic. Unit tested.
     AutomaticTransmissionLogic  P/R/N/D state machine + shift interlocks
-    SteeringModel               ±720° wheel → front-wheel angle, speed sensitivity, self-centering
+    SteeringModel               ±540° wheel → front-wheel angle, speed sensitivity, self-centering
+    PedalStateMachine           digital pedals → brake priority, simulated travel, fail-safe
+    PedalCalibration            attempt grouping, key statistics, ambiguity, validation session
     PowertrainModel             creep, throttle force (power limited), reverse, coasting
     BrakeModel / ResistanceModel / AckermannGeometry
   Runtime/     DrivingSim.Runtime
     Vehicle/   VehiclePhysicsConfig (ScriptableObject), VehicleController (Rigidbody + WheelColliders)
       Cockpit/ CockpitRig: steering wheel, gauges, gear/parking-brake indicators, eye anchor, mirrors
-    Controls/  DrivingInputFrame, IDrivingInputSource, VehicleInputRouter, KeyboardDrivingInput
+    Controls/  DrivingInputFrame, IDrivingInputSource, VehicleInputRouter, KeyboardDrivingInput,
+               PointerInputHub, TouchSteeringController, MobilePedalController
+      Pedals/  PedalInputManager, KeyboardPedalDevice (IPedalDevice), PedalKeyMapping
     Cameras/   CameraController (view modes, cockpit look/FOV), VehicleFollowCamera (chase/top-down),
                MirrorCamera (throttled RenderTexture mirror)
     UI/        CameraControlsOverlay (on-screen view/look/FOV buttons), HoldButton, SafeAreaFitter
@@ -161,10 +166,15 @@ drag forces on the Rigidbody. Velocity is never set, except to zero on reset.
 - *Shift interlocks*: leaving or entering P needs brake ≥ 0.2. Entering P needs ≤ 1 km/h.
   D↔R against the direction of travel needs ≤ 2 km/h. Engaging D/R from a stop needs the brake.
   N↔D while rolling forward is free. Each rule is a toggle in the config.
-- *Steering*: `front angle = wheel angle / ratio` (ratio defaults to 720/35 ≈ 20.6:1), scaled
-  down at speed (×0.45 at 100 km/h), slew-limited to 120°/s, with Ackermann applied (35° is the
-  **inner** wheel's limit). Self-centering is off below 1.5 km/h, ramps to full at 25 km/h,
-  is ×0.3 in reverse, and is suppressed while the driver is steering.
+- *Steering* (realistic multi-turn): the steering wheel turns ±540° (3 turns lock to lock);
+  `front angle = wheel angle / 540 × 35` (ratio 15.4:1, linear), scaled down at speed
+  (×0.45 at 100 km/h), slew-limited to 120°/s, with Ackermann applied (35° is the **inner**
+  wheel's limit; rear-axle turning radius 4.56 m, outer-front-wheel radius 5.96 m). Drag
+  steering adds 100° per screen-height of drag, so center to full lock takes about three long
+  swipes. Self-centering is off below 2 km/h, ramps to full at 30 km/h (gain 1.0/s, ≤ 240°/s),
+  is ×0.3 in reverse, waits 0.6 s after the driver lets go (hand-over-hand drags accumulate),
+  and can be disabled (`selfCenteringEnabled`). Vehicle yaw always comes from the
+  WheelColliders; input only turns the steering wheel.
 
 All parameters live in `CompactSedan_PhysicsConfig.asset`. With *Live Apply In Editor* on,
 Inspector edits apply during Play Mode. **These values are prototype tuning, not calibrated

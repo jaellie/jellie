@@ -7,8 +7,8 @@ namespace DrivingSim.Core
     public class SteeringSettings
     {
         [Header("Ratio")]
-        [Tooltip("Steering wheel rotation limit in degrees from center (lock to lock = 2x).")]
-        [Range(90f, 1080f)] public float maxSteeringWheelAngleDeg = 720f;
+        [Tooltip("Steering wheel rotation limit in degrees from center. 540 = 1.5 turns each way, 3 turns lock to lock.")]
+        [Range(90f, 1080f)] public float maxSteeringWheelAngleDeg = 540f;
 
         [Tooltip("Inner front-wheel angle limit in degrees. With Ackermann on, the outer wheel turns less.")]
         [Range(10f, 50f)] public float maxFrontWheelAngleDeg = 35f;
@@ -17,7 +17,7 @@ namespace DrivingSim.Core
         public bool deriveRatioFromLimits = true;
 
         [Tooltip("Steering wheel degrees per front-wheel degree. Used when deriveRatioFromLimits is off.")]
-        [Range(8f, 30f)] public float steeringRatio = 720f / 35f;
+        [Range(8f, 30f)] public float steeringRatio = 540f / 35f;
 
         [Header("Speed-dependent response")]
         [Tooltip("Speed (km/h) at which the steering response starts to be reduced.")]
@@ -33,17 +33,23 @@ namespace DrivingSim.Core
         [Min(0f)] public float frontWheelMaxSlewDegPerSec = 120f;
 
         [Header("Self-centering (caster approximation)")]
+        [Tooltip("Turn off to keep the wheel exactly where the driver leaves it at any speed.")]
+        public bool selfCenteringEnabled = true;
+
         [Tooltip("No self-centering below this speed (km/h): the wheel stays where the driver left it.")]
-        [Min(0f)] public float selfCenterMinSpeedKmh = 1.5f;
+        [Min(0f)] public float selfCenterMinSpeedKmh = 2f;
 
         [Tooltip("Self-centering reaches full strength at this speed (km/h).")]
-        [Min(0.1f)] public float selfCenterFullSpeedKmh = 25f;
+        [Min(0.1f)] public float selfCenterFullSpeedKmh = 30f;
 
         [Tooltip("Return rate proportional to the current angle (1/s) at full strength.")]
-        [Min(0f)] public float selfCenterGainPerSec = 1.5f;
+        [Min(0f)] public float selfCenterGainPerSec = 1.0f;
 
         [Tooltip("Upper bound on the return rate (deg/s) at full strength.")]
-        [Min(0f)] public float selfCenterMaxRateDegPerSec = 360f;
+        [Min(0f)] public float selfCenterMaxRateDegPerSec = 240f;
+
+        [Tooltip("After the driver lets go (e.g. between hand-over-hand drags), the wheel is still considered held for this long, so consecutive drags accumulate instead of unwinding in between.")]
+        [Range(0f, 2f)] public float releaseGraceSeconds = 0.6f;
 
         [Tooltip("Self-centering multiplier while reversing (caster works against you in reverse).")]
         [Range(0f, 1f)] public float selfCenterReverseFactor = 0.3f;
@@ -86,6 +92,8 @@ namespace DrivingSim.Core
 
         public SteeringSettings Settings => settings;
 
+        float sinceDriverRelease = float.PositiveInfinity;
+
         public float SteeringWheelAngleDeg { get; private set; }
 
         /// <summary>Commanded (inner) front-wheel angle after speed scaling and slew limiting.</summary>
@@ -101,6 +109,7 @@ namespace DrivingSim.Core
             SteeringWheelAngleDeg = 0f;
             FrontWheelAngleDeg = 0f;
             LastSelfCenteringFactor = 0f;
+            sinceDriverRelease = float.PositiveInfinity;
         }
 
         /// <summary>Rotates the steering wheel by a driver input delta, accumulating and clamping.</summary>
@@ -124,6 +133,7 @@ namespace DrivingSim.Core
 
         public float SelfCenteringFactor(float signedSpeedKmh, bool driverHolding)
         {
+            if (!settings.selfCenteringEnabled) return 0f;
             float speed = Math.Abs(signedSpeedKmh);
             float factor = SimMath.SmoothStep01(SimMath.InverseLerp(settings.selfCenterMinSpeedKmh, settings.selfCenterFullSpeedKmh, speed));
             if (speed <= settings.selfCenterMinSpeedKmh) factor = 0f;
@@ -151,7 +161,11 @@ namespace DrivingSim.Core
         {
             if (deltaTime <= 0f) return;
 
-            float factor = SelfCenteringFactor(signedSpeedKmh, driverHolding);
+            // Hands stay on the wheel briefly between drags (hand-over-hand), so treat it as held.
+            sinceDriverRelease = driverHolding ? 0f : sinceDriverRelease + deltaTime;
+            bool held = driverHolding || sinceDriverRelease < settings.releaseGraceSeconds;
+
+            float factor = SelfCenteringFactor(signedSpeedKmh, held);
             LastSelfCenteringFactor = factor;
             if (factor > 0f && SteeringWheelAngleDeg != 0f)
             {

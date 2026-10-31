@@ -7,14 +7,17 @@ namespace DrivingSim.Controls
     /// wheel; there is no on-screen wheel to grab. Rotation accumulates across drags and is not
     /// reset on release. Only one pointer steers at a time; pointers that start on UI never steer.
     /// Drag distance is normalized by screen height so sensitivity is resolution independent.
+    /// The drag turns the steering wheel only; the front-wheel angle follows through the steering
+    /// ratio and the vehicle's yaw comes from the wheel physics.
     /// </summary>
     public class TouchSteeringController : MonoBehaviour, IDrivingInputSource
     {
         const int NoPointer = int.MinValue;
 
         [SerializeField] PointerInputHub hub;
-        [Tooltip("Steering wheel degrees per drag of one screen height.")]
-        [Min(10f)] public float degreesPerScreenHeight = 540f;
+        [Tooltip("Steering wheel degrees per drag of one screen height. 100 ≈ 180° per full-width swipe on 16:9, " +
+                 "like one hand-over-hand move; center to full lock (540°) takes about three full-width swipes.")]
+        [Min(10f)] public float degreesPerScreenHeight = 100f;
         public bool invert;
         [Tooltip("Normalized screen area (0-1) where a steering drag may start.")]
         public Rect drivingArea = new Rect(0f, 0f, 1f, 1f);

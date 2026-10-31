@@ -11,7 +11,7 @@ namespace DrivingSim.Controls
     {
         [Header("Steering")]
         [Tooltip("Steering wheel rotation speed while A/D or arrow keys are held (deg/s).")]
-        [Min(1f)] public float steerRateDegPerSec = 360f;
+        [Min(1f)] public float steerRateDegPerSec = 270f; // center to full lock (540°) in 2 s
         [Tooltip("Rate at which C turns the wheel back to center (deg/s).")]
         [Min(1f)] public float centerRateDegPerSec = 540f;
 

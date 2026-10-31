@@ -20,7 +20,7 @@ namespace DrivingSim.UI
         [SerializeField] VehicleController vehicle;
         [SerializeField] VehicleAccessories accessories;
         [SerializeField] VehicleInputRouter router;
-        [SerializeField] FootPedalKeyboardInput footPedals;
+        [SerializeField] PedalInputManager footPedals;
         [SerializeField] TouchSteeringController touchSteering;
         [SerializeField] PedalCalibrationWizard calibration;
         [SerializeField] MinimapCamera minimap;
@@ -51,6 +51,8 @@ namespace DrivingSim.UI
         [SerializeField] Image brakeBar;
         [SerializeField] Image acceleratorBar;
         [SerializeField] Text pedalSourceText;
+        [SerializeField] Image brakeLamp;
+        [SerializeField] Image acceleratorLamp;
         [SerializeField] RectTransform steeringMarker;
         [SerializeField] Text steeringText;
         [SerializeField] RectTransform carMarker;
@@ -75,7 +77,7 @@ namespace DrivingSim.UI
         public bool IsPaused => paused;
 
         public static DrivingHUDController Create(HudTheme theme, VehicleController vehicle, VehicleAccessories accessories,
-            VehicleInputRouter router, FootPedalKeyboardInput footPedals, TouchSteeringController touchSteering,
+            VehicleInputRouter router, PedalInputManager footPedals, TouchSteeringController touchSteering,
             MobilePedalController mobilePedals, PedalCalibrationWizard calibration, MinimapCamera minimap)
         {
             theme = theme != null ? theme : HudTheme.Default;
@@ -179,10 +181,12 @@ namespace DrivingSim.UI
             hazardButton = UIBuild.Button("Hazard", safe, bottomLeft, bottomLeft, new Vector2(176f, 24f), new Vector2(140f, 80f), "비상등", theme, 28, out _);
             wiperButton = UIBuild.Button("Wipers", safe, bottomLeft, bottomLeft, new Vector2(328f, 24f), new Vector2(170f, 80f), "와이퍼", theme, 26, out wiperLabel);
 
-            RectTransform pedals = UIBuild.Rect("PedalStatus", safe, bottomLeft, bottomLeft, new Vector2(24f, 120f), new Vector2(474f, 104f));
+            RectTransform pedals = UIBuild.Rect("PedalStatus", safe, bottomLeft, bottomLeft, new Vector2(24f, 120f), new Vector2(474f, 124f));
             UIBuild.Panel(pedals, theme.RoundedPanel, theme.panel);
             brakeBar = Bar("Brake", pedals, new Vector2(20f, -22f), "브레이크", theme.brakeRed, font);
             acceleratorBar = Bar("Accelerator", pedals, new Vector2(20f, -58f), "가속", theme.acceleratorGreen, font);
+            brakeLamp = Lamp("BrakeLamp", pedals, new Vector2(-28f, -22f));
+            acceleratorLamp = Lamp("AcceleratorLamp", pedals, new Vector2(-28f, -58f));
             pedalSourceText = UIBuild.Label("Source", pedals, "", font, 20, theme.textMuted, TextAnchor.LowerRight);
             ((RectTransform)pedalSourceText.transform).offsetMax = new Vector2(-16f, -8f);
             ((RectTransform)pedalSourceText.transform).offsetMin = new Vector2(16f, 6f);
@@ -223,12 +227,19 @@ namespace DrivingSim.UI
             Vector2 c = new Vector2(0.5f, 1f), size = new Vector2(440f, 80f);
             resumeButton = UIBuild.Button("Resume", card, c, c, new Vector2(0f, -130f), size, "계속하기", theme, 32, out _);
             restartButton = UIBuild.Button("Restart", card, c, c, new Vector2(0f, -226f), size, "다시 시작", theme, 32, out _);
-            calibrateButton = UIBuild.Button("Calibrate", card, c, c, new Vector2(0f, -322f), size, "발 페달 키보드 보정", theme, 32, out _);
+            calibrateButton = UIBuild.Button("Calibrate", card, c, c, new Vector2(0f, -322f), size, "페달 보정 / 발 페달 설정", theme, 32, out _);
             menuButton = UIBuild.Button("MainMenu", card, c, c, new Vector2(0f, -418f), size, "메인 메뉴 (준비 중)", theme, 32, out Text menuLabel);
             menuButton.Interactable = false;
             menuLabel.color = theme.textMuted;
             pauseMenu = dim.gameObject;
             pauseMenu.SetActive(false);
+        }
+
+        /// <summary>Small on/off lamp: lit while the pedal is logically pressed (digital), next to its amount bar.</summary>
+        Image Lamp(string name, Transform parent, Vector2 position)
+        {
+            RectTransform rect = UIBuild.Rect(name, parent, new Vector2(1f, 1f), new Vector2(0.5f, 0.5f), position, new Vector2(22f, 22f));
+            return UIBuild.Panel(rect, UISprites.Circle, new Color(1f, 1f, 1f, 0.15f));
         }
 
         static Image Icon(string name, Transform parent, Sprite sprite, Vector2 size, Color color)
@@ -298,6 +309,7 @@ namespace DrivingSim.UI
             if (resumeButton != null) resumeButton.Pressed += TogglePause;
             if (restartButton != null) restartButton.Pressed += OnRestart;
             if (calibrateButton != null) calibrateButton.Pressed += OnCalibrate;
+            if (footPedals != null) footPedals.SafetyChanged += OnPedalSafety;
             RefreshAccessoryButtons();
             RefreshParkingBrake();
         }
@@ -324,6 +336,7 @@ namespace DrivingSim.UI
             if (resumeButton != null) resumeButton.Pressed -= TogglePause;
             if (restartButton != null) restartButton.Pressed -= OnRestart;
             if (calibrateButton != null) calibrateButton.Pressed -= OnCalibrate;
+            if (footPedals != null) footPedals.SafetyChanged -= OnPedalSafety;
             if (paused) SetPaused(false);
         }
 
@@ -415,8 +428,12 @@ namespace DrivingSim.UI
 
             brakeBar.fillAmount = vehicle.Brake;
             acceleratorBar.fillAmount = vehicle.Throttle;
-            string source = footPedals != null && footPedals.IsActive ? "발 페달 키보드" : "키보드 / 터치 페달";
-            pedalSourceText.text = router != null && router.ThrottleSuppressedByBrake ? source + " · 브레이크 우선" : source;
+            pedalSourceText.text = PedalStatusText();
+            bool footActive = footPedals != null && footPedals.IsActive;
+            brakeLamp.color = footActive && footPedals.BrakePressed ? theme.brakeRed : new Color(1f, 1f, 1f, 0.15f);
+            acceleratorLamp.color = footActive && footPedals.AcceleratorPressed
+                ? (footPedals.AcceleratorSuppressed ? theme.warning : theme.acceleratorGreen)
+                : new Color(1f, 1f, 1f, 0.15f);
 
             float angle = vehicle.SteeringWheelAngleDeg, max = Mathf.Max(vehicle.MaxSteeringWheelAngleDeg, 1f);
             steeringMarker.anchoredPosition = new Vector2(Mathf.Clamp(angle / max, -1f, 1f) * SteeringTrackHalfWidth, 12f);
@@ -427,6 +444,31 @@ namespace DrivingSim.UI
             if (mapImage != null && mapImage.texture == null && minimap != null && minimap.Texture != null) mapImage.texture = minimap.Texture;
             UpdateNavigation();
             if (carMarker != null) carMarker.localRotation = Quaternion.Euler(0f, 0f, -vehicle.transform.eulerAngles.y);
+        }
+
+        string PedalStatusText()
+        {
+            bool conflict = router != null && router.ThrottleSuppressedByBrake;
+            if (footPedals == null) return conflict ? "브레이크 우선" : "키보드 / 터치 페달";
+            if (footPedals.IsActive)
+            {
+                switch (footPedals.Safety)
+                {
+                    case PedalSafetyState.FailSafe: return "발 페달 입력 끊김 · 자동 제동 중";
+                    case PedalSafetyState.AwaitingRearm: return "브레이크를 한 번 밟으면 발 페달이 다시 동작합니다";
+                }
+                string label = footPedals.CalibrationStatus == PedalCalibrationStatus.KeyboardChanged ? "발 페달 (다른 키보드: 재검증 권장)" : "발 페달 키보드";
+                return conflict || footPedals.Conflict ? label + " · 브레이크 우선" : label;
+            }
+            if (footPedals.PedalsEnabled && footPedals.CalibrationStatus == PedalCalibrationStatus.Unvalidated) return "발 페달: 검증 필요 (일시정지 → 페달 보정)";
+            return conflict ? "키보드 / 터치 페달 · 브레이크 우선" : "키보드 / 터치 페달";
+        }
+
+        void OnPedalSafety(PedalSafetyState state)
+        {
+            if (state == PedalSafetyState.FailSafe) ShowToast("발 페달 키보드 입력이 끊겼습니다. 가속을 차단하고 제동합니다.");
+            else if (state == PedalSafetyState.AwaitingRearm) ShowToast("키보드 입력이 돌아왔습니다. 브레이크를 한 번 밟으세요.");
+            else ShowToast("발 페달 입력이 다시 활성화되었습니다.");
         }
 
         void UpdateNavigation()
