@@ -42,9 +42,15 @@ namespace DrivingSim.Controls
 
         [Header("Circular anywhere (stroke turning)")]
         [Tooltip("Minimum pointer travel, as a fraction of screen height, before its direction is measured (filters jitter).")]
-        [Range(0.002f, 0.05f)] public float minSegment = 0.012f;
+        [Range(0.002f, 0.05f)] public float minSegment = 0.019f;
+        [Tooltip("Smoothing of the stroke direction (0 = none). Removes hand-tremor shake; the total turn is kept.")]
+        [Range(0f, 0.9f)] public float directionSmoothing = 0.6f;
         [Tooltip("Sharper direction changes in one segment (reversals) are discarded.")]
         [Range(45f, 170f)] public float maxTurnDeg = 100f;
+
+        [Header("Wheel response")]
+        [Tooltip("The wheel follows circular gestures with this time constant (s) instead of jumping in steps. 0 = instant.")]
+        [Range(0f, 0.3f)] public float outputTimeConstant = 0.07f;
 
         [Header("Horizontal drag (legacy mode)")]
         [Min(10f)] public float degreesPerScreenHeight = 100f;
@@ -54,6 +60,7 @@ namespace DrivingSim.Controls
 
         readonly CircularSteeringGesture gesture = new CircularSteeringGesture { YAxisUp = true };
         readonly TraceSteeringGesture trace = new TraceSteeringGesture { YAxisUp = true };
+        readonly SteeringInputSmoother smoother = new SteeringInputSmoother();
         int activePointer = NoPointer;
 
         public bool IsSteering => activePointer != NoPointer;
@@ -86,6 +93,8 @@ namespace DrivingSim.Controls
             trace.Gain = angularGain;
             trace.MinSegment = minSegment * Mathf.Max(Screen.height, 1);
             trace.MaxTurnDeg = maxTurnDeg;
+            trace.DirectionSmoothing = directionSmoothing;
+            smoother.TimeConstant = mode == SteeringGestureMode.HorizontalDrag ? 0f : outputTimeConstant;
             Vector2 center = CenterPixels;
 
             float delta = 0f;
@@ -110,14 +119,19 @@ namespace DrivingSim.Controls
                     case SteeringGestureMode.Circular: delta += gesture.Sample(p.Position.x, p.Position.y, center.x, center.y); break;
                     default: delta += p.Delta.x / Mathf.Max(Screen.height, 1) * degreesPerScreenHeight * (invert ? -1f : 1f); break;
                 }
-                if (p.Phase == PointerPhase.Ended || p.Phase == PointerPhase.Canceled) Release();
+                if (p.Phase == PointerPhase.Ended || p.Phase == PointerPhase.Canceled)
+                {
+                    if (mode == SteeringGestureMode.CircularAnywhere) delta += trace.Release(); // smoothing lag
+                    Release();
+                }
             }
 
             // Pointer vanished without an end event (device disconnected, app paused).
             if (!seen && IsSteering) Release();
 
-            frame.SteerDeltaDeg += delta;
-            if (IsSteering) frame.SteerHeld = true;
+            frame.SteerDeltaDeg += smoother.Step(delta, deltaTime);
+            // Still "holding" while the smoothed wheel catches up, so self-centering doesn't fight it.
+            if (IsSteering || Mathf.Abs(smoother.Pending) > 0.5f) frame.SteerHeld = true;
         }
 
         bool CanStart(Vector2 position, Vector2 center)

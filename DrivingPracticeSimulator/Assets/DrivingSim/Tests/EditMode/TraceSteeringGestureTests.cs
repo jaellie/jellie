@@ -6,7 +6,7 @@ namespace DrivingSim.Tests
 {
     public class TraceSteeringGestureTests
     {
-        static TraceSteeringGesture Create() => new TraceSteeringGesture { MinSegment = 4f, MaxTurnDeg = 100f, YAxisUp = true };
+        static TraceSteeringGesture Create() => new TraceSteeringGesture { MinSegment = 4f, MaxTurnDeg = 100f, YAxisUp = true, DirectionSmoothing = 0f };
 
         // Loop of radius r around (cx, cy) in Y-up coordinates; sweepDeg < 0 = clockwise on screen.
         static float Loop(TraceSteeringGesture g, float cx, float cy, float r, float startDeg, float sweepDeg, int steps)
@@ -70,6 +70,55 @@ namespace DrivingSim.Tests
             g.Sample(0f, 0f);
             Assert.AreEqual(0f, g.Sample(1f, 1f));
             Assert.AreEqual(0f, g.Sample(-1f, 2f));
+        }
+    
+        [Test]
+        public void NoisyHandDrawnCircle_WithSmoothing_HasNoVisibleBackwardJerk()
+        {
+            var g = new TraceSteeringGesture { MinSegment = 12f, MaxTurnDeg = 100f, YAxisUp = true, DirectionSmoothing = 0.6f };
+            var smoother = new SteeringInputSmoother { TimeConstant = 0.07f };
+            var rng = new Random(42);
+            float worstBackward = 0f;
+            float total = 0f;
+            for (int i = 0; i <= 120; i++)                       // one clockwise circle in 2 s at 60 Hz
+            {
+                double a = -2 * Math.PI * i / 120.0;
+                float x = (float)(Math.Cos(a) * 80 + (rng.NextDouble() - 0.5) * 4);
+                float y = (float)(Math.Sin(a) * 80 + (rng.NextDouble() - 0.5) * 4);
+                float step = smoother.Step(g.Sample(x, y), 1f / 60f);
+                worstBackward = Math.Min(worstBackward, step);
+                total += step;
+            }
+            for (int i = 0; i < 60; i++) total += smoother.Step(0f, 1f / 60f); // drain
+            Assert.Greater(worstBackward, -1f); // without smoothing this noise produces ~50° backward jerks
+            Assert.Greater(total, 300f);
+            Assert.LessOrEqual(total, 365f);
+        }
+
+        [Test]
+        public void Smoother_PreservesTotal()
+        {
+            var s = new SteeringInputSmoother { TimeConstant = 0.07f };
+            float total = s.Step(90f, 1f / 60f);
+            Assert.Less(total, 90f);                              // spread over frames, not a jump
+            for (int i = 0; i < 120; i++) total += s.Step(0f, 1f / 60f);
+            Assert.AreEqual(90f, total, 1e-3f);
+        }
+    
+        [Test]
+        public void Release_ReturnsSmoothingLag_SoShortArcsAreNotUnderCounted()
+        {
+            var g = new TraceSteeringGesture { MinSegment = 4f, MaxTurnDeg = 100f, YAxisUp = true, DirectionSmoothing = 0.6f };
+            float total = 0f;
+            for (int i = 0; i <= 9; i++)                     // clockwise 90° arc, 10° steps
+            {
+                double a = (90 - 10.0 * i) * Math.PI / 180.0;
+                total += g.Sample((float)(Math.Cos(a) * 100), (float)(Math.Sin(a) * 100));
+            }
+            float withoutRelease = total;
+            total += g.Release();
+            Assert.Less(withoutRelease, 70f);                 // lag held back by smoothing
+            Assert.AreEqual(80f, total, 2f);                  // ≈ only the first segment (direction setup) is missing
         }
     }
 }

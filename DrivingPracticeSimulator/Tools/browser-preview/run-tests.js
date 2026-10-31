@@ -26,7 +26,8 @@ const results = []; const check = (group, name, ok, detail = '') => results.push
     ['steerRateDegPerSec', kb, js.st.keyRate], ['highSpeedSteerScale', steer, js.st.hi], ['frontWheelMaxSlewDegPerSec', steer, js.st.slew]];
   const circ = js.st.circle;
   const vec = touch.match(/circleCenter\s*=\s*new Vector2\(([0-9.]+)f,\s*([0-9.]+)f\)/);
-  pairs.push(['minSegment', touch, js.st.trace.minSegment], ['maxTurnDeg', touch, js.st.trace.maxTurn]);
+  pairs.push(['minSegment', touch, js.st.trace.minSegment], ['maxTurnDeg', touch, js.st.trace.maxTurn],
+    ['directionSmoothing', touch, js.st.trace.smooth], ['outputTimeConstant', touch, js.st.outputTau]);
   pairs.push(['circleRadius', touch, circ.radius], ['deadZoneFraction', touch, circ.dead], ['angularGain', touch, circ.gain], ['maxStepDeg', touch, circ.maxStep]);
   check('config', `circleCenter: Unity (${vec[1]}, ${vec[2]}) = preview (${circ.cx}, ${circ.cy})`, parseFloat(vec[1]) === circ.cx && parseFloat(vec[2]) === circ.cy);
   for (const [f, src, v] of pairs) check('config', `${f}: Unity ${csNum(src, f)} = preview ${v}`, csNum(src, f) === v);
@@ -48,25 +49,25 @@ const results = []; const check = (group, name, ok, detail = '') => results.push
   async function circle(button, startDeg, sweepDeg, steps, r = 120) {
     const p0 = onRing(startDeg, r); await page.mouse.move(p0.x, p0.y); await page.mouse.down({ button });
     for (let i = 1; i <= steps; i++) { const p = onRing(startDeg + sweepDeg * i / steps, r); await page.mouse.move(p.x, p.y); }
-    await page.mouse.up({ button });
+    await page.mouse.up({ button }); await sleep(700);           // smoothed wheel settles (~6 time constants)
   }
   async function touchCircle(startDeg, sweepDeg, steps, r = 120) {
     const pt = d => { const p = onRing(d, r); return [{ x: p.x, y: p.y, id: 1 }]; };
     await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: pt(startDeg) });
     for (let i = 1; i <= steps; i++) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: pt(startDeg + sweepDeg * i / steps) });
-    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await sleep(700);
   }
   async function line(button, a, b, steps) {
     await page.mouse.move(a.x, a.y); await page.mouse.down({ button });
     for (let i = 1; i <= steps; i++) await page.mouse.move(a.x + (b.x - a.x) * i / steps, a.y + (b.y - a.y) * i / steps);
-    await page.mouse.up({ button });
+    await page.mouse.up({ button }); await sleep(700);
   }
   const near = (v, t, tol = 2) => Math.abs(v - t) <= tol;
 
   // Default mode: circles anywhere. The first short segment of a gesture only sets the direction (one 7.5° step here).
   await circle('middle', -90, 360, 48);
   let a1 = await sw();
-  check('circular', 'One clockwise circle ≈ +360° (first segment only sets direction)', a1 > 345 && a1 <= 361, `${a1.toFixed(1)}°`);
+  check('circular', 'One clockwise circle ≈ +360° (first segment only sets direction)', a1 > 345 && a1 <= 362, `${a1.toFixed(1)}°`);
   check('circular', 'Cockpit wheel shows the accumulated angle', near(await P('__preview.wheelSpinDeg'), a1, 0.5), `${(await P('__preview.wheelSpinDeg')).toFixed(1)}°`);
   await circle('middle', -90, -360, 48);
   let a2 = await sw();
@@ -77,20 +78,20 @@ const results = []; const check = (group, name, ok, detail = '') => results.push
   await circle('middle', 0, -1440, 192);
   check('circular', 'Counter-clockwise circles reach full left lock (−540°), 3 turns lock to lock', (await sw()) === -540);
   await circle('middle', 0, 540, 72);
-  check('circular', 'Back near center after 1.5 clockwise circles', near(await sw(), 0, 9), `${(await sw()).toFixed(1)}°`);
+  check('circular', 'Back near center after 1.5 clockwise circles', near(await sw(), 0, 12), `${(await sw()).toFixed(1)}°`);
 
   const b0 = await sw();
   await circle('middle', 0, 90, 12);                      // release here...
   await circle('middle', 180, 90, 12);                    // ...re-grip on the opposite side
   const rg = (await sw()) - b0;
-  check('circular', 'Release and re-grip elsewhere: continues, no jump', rg > 160 && rg <= 181, `+${rg.toFixed(1)}° for two 90° arcs`);
+  check('circular', 'Release and re-grip elsewhere: continues, no jump', rg > 160 && rg <= 182, `+${rg.toFixed(1)}° for two 90° arcs`);
   await sleep(2500);
   check('circular', 'Released while stopped: angle kept', near((await sw()) - b0, rg, 0.01));
 
   const b1 = await sw();
   await circle('middle', 60, 60, 12);                     // stroke direction passes through ±180° (moving left at the bottom)
   const bd = (await sw()) - b1;
-  check('circular', 'Stroke direction crossing ±180°: smooth, no 360° jump', bd > 50 && bd <= 61, `+${bd.toFixed(1)}°`);
+  check('circular', 'Stroke direction crossing ±180°: smooth, no 360° jump', bd > 48 && bd <= 62, `+${bd.toFixed(1)}°`);
 
   const b2 = await sw();
   await line('middle', hud(R.cx - 150, R.cy + 2), hud(R.cx + 150, R.cy + 2), 30);
@@ -102,16 +103,16 @@ const results = []; const check = (group, name, ok, detail = '') => results.push
   const b3b = await sw();
   await circle('middle', 200, 45, 9, 140);
   const arc = (await sw()) - b3b;
-  check('circular', 'Small arc = proportionally small turn', arc > 30 && arc <= 46, `45° arc → +${arc.toFixed(1)}°`);
+  check('circular', 'Small arc = proportionally small turn', arc > 34 && arc <= 47, `45° arc → +${arc.toFixed(1)}°`);
 
   // Anywhere: a small loop far from the ring, on the road at the left
   await P('__preview.S.sw = 0');
   const b3c = await sw();
   const far = (d) => hud(200 + 50 * Math.cos(d * Math.PI / 180), 330 + 50 * Math.sin(d * Math.PI / 180));
   { const p0 = far(0); await page.mouse.move(p0.x, p0.y); await page.mouse.down({ button: 'middle' });
-    for (let i = 1; i <= 36; i++) { const p = far(i * 10); await page.mouse.move(p.x, p.y); } await page.mouse.up({ button: 'middle' }); }
+    for (let i = 1; i <= 36; i++) { const p = far(i * 10); await page.mouse.move(p.x, p.y); } await page.mouse.up({ button: 'middle' }); await sleep(700); }
   const fl = (await sw()) - b3c;
-  check('circular', 'Small loop (r = 50 px) far outside the ring also turns the wheel ≈ once', fl > 340 && fl <= 361, `+${fl.toFixed(1)}°`);
+  check('circular', 'Small loop (r = 50 px) far outside the ring also turns the wheel ≈ once', fl > 335 && fl <= 362, `+${fl.toFixed(1)}°`);
   await page.screenshot({ path: path.join(dir, 'shots/v7-ring.png') });
   await circle('middle', 0, -720, 96);                    // back toward center for the following checks
 
@@ -120,12 +121,12 @@ const results = []; const check = (group, name, ok, detail = '') => results.push
   check('circular', 'Left mouse ignored by default', near(await sw(), b4, 0.01));
   await P("document.getElementById('opt-left').click()");
   await circle('left', 0, 90, 12);
-  check('circular', 'Left mouse steers when enabled (optional)', near((await sw()) - b4, 90, 9), `+${((await sw()) - b4).toFixed(1)}°`);
+  check('circular', 'Left mouse steers when enabled (optional)', near((await sw()) - b4, 90, 12), `+${((await sw()) - b4).toFixed(1)}°`);
   await P("document.getElementById('opt-left').click()");
 
   const b5 = await sw();
   await touchCircle(0, -180, 24);
-  check('circular', 'Touchscreen circle (CDP touch events) steers', near((await sw()) - b5, -180, 9), `${((await sw()) - b5).toFixed(1)}°`);
+  check('circular', 'Touchscreen circle (CDP touch events) steers', near((await sw()) - b5, -180, 15), `${((await sw()) - b5).toFixed(1)}°`);
 
   // UI conflicts: a gesture starting outside the ring or on a button never steers.
   const b6 = await sw();
@@ -148,9 +149,21 @@ const results = []; const check = (group, name, ok, detail = '') => results.push
     for (let i = 1; i <= 12; i++) { const p = onRing(-150 + i * 10, 100); await page.mouse.move(p.x, p.y); }     // arc (steers)…
     const end = { x: gearD.x + gearD.width / 2, y: gearD.y + gearD.height / 2 }, s0 = onRing(-30, 100);
     for (let i = 1; i <= 10; i++) await page.mouse.move(s0.x + (end.x - s0.x) * i / 10, s0.y + (end.y - s0.y) * i / 10); // …then onto D
-    await page.mouse.up({ button: 'middle' }); }
+    await page.mouse.up({ button: 'middle' }); await sleep(700); }
   const gearAfter = await P('__preview.S.gear'); await page.keyboard.up('KeyS');
   check('circular', 'Steering gesture dragged onto the D button keeps steering and never presses it', gearAfter === 'P' && !near(await sw(), b6b, 1), `gear ${gearAfter}, wheel ${b6b.toFixed(0)}° → ${(await sw()).toFixed(0)}°`);
+
+  // Smoothness: hand-drawn noisy circle; record the wheel each animation frame while drawing.
+  await P('__preview.S.sw = 0');
+  await P(`window.__trace = []; (function rec(){ window.__trace.push(__preview.S.sw); if (window.__trace.length < 600) requestAnimationFrame(rec); })()`);
+  { let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const p0 = onRing(-90, 90); await page.mouse.move(p0.x, p0.y); await page.mouse.down({ button: 'middle' });
+    for (let i = 1; i <= 90; i++) { const p = onRing(-90 + i * 4, 90 + 3 * Math.sin(i * 0.9)); await page.mouse.move(p.x + (rnd() - 0.5) * 6, p.y + (rnd() - 0.5) * 6); await sleep(16); }
+    await page.mouse.up({ button: 'middle' }); await sleep(700); }
+  const tr = await P('window.__trace.splice(0)');
+  let worstBack = 0; for (let i = 1; i < tr.length; i++) worstBack = Math.min(worstBack, tr[i] - tr[i - 1]);
+  check('circular', 'Noisy hand-drawn circle: wheel turns smoothly (no visible backward jerk)', worstBack > -1.5 && (await sw()) > 300, `worst backward frame ${worstBack.toFixed(2)}°, total ${(await sw()).toFixed(0)}°`);
+  await circle('middle', 0, -360, 48);
 
   // Scroll wheel ignored
   const b7 = await sw(); await page.mouse.move(onRing(0).x, onRing(0).y); await page.mouse.wheel(0, 300); await sleep(150);
@@ -173,15 +186,17 @@ const results = []; const check = (group, name, ok, detail = '') => results.push
   await P('__preview.S.sw = 0');
   await page.keyboard.down('KeyW'); await sleep(4000);
   const speed = await P('__preview.S.v * 3.6');
-  await circle('middle', -90, 180, 24);
+  { const p0 = onRing(-90); await page.mouse.move(p0.x, p0.y); await page.mouse.down({ button: 'middle' });
+    for (let i = 1; i <= 24; i++) { const p = onRing(-90 + i * 7.5); await page.mouse.move(p.x, p.y); } await page.mouse.up({ button: 'middle' }); }
+  await sleep(200);                                       // smoothed wheel has caught up (~3 time constants)
   const swRel = await sw(); await sleep(350); const swGrace = await sw(); await sleep(1500); const swLater = await sw();
   await page.keyboard.up('KeyW');
-  check('steering', 'Released while moving: held 0.6 s, then gradual return', Math.abs(swGrace - swRel) < 1 && swLater < swGrace && swLater > 5, `${speed.toFixed(0)} km/h: ${swRel.toFixed(0)}° → ${swGrace.toFixed(0)}° → ${swLater.toFixed(0)}°`);
+  check('steering', 'Released while moving: held 0.6 s, then gradual return', Math.abs(swGrace - swRel) < 2 && swLater < swGrace && swLater > 5, `${speed.toFixed(0)} km/h: ${swRel.toFixed(0)}° → ${swGrace.toFixed(0)}° → ${swLater.toFixed(0)}°`);
   await page.keyboard.down('KeyS'); await sleep(2500);
   g = await page.$('#gears .btn[data-g="R"]'); gb = await g.boundingBox(); await page.mouse.click(gb.x + gb.width / 2, gb.y + gb.height / 2);
   await P('__preview.S.sw = 540'); await page.keyboard.up('KeyS');
   const h0 = await P('__preview.S.h'); await sleep(3000); const h1 = await P('__preview.S.h'), vr = await P('__preview.S.v');
-  check('steering', 'Reverse with wheel right: nose swings left', vr < -0.3 && h1 < h0 - 0.05);
+  check('steering', 'Reverse with wheel right: nose swings left', vr < -0.3 && h1 < h0 - 0.05, `gear ${await P('__preview.S.gear')}, v ${(vr * 3.6).toFixed(1)} km/h, heading ${(h0 * 57.3).toFixed(0)}° → ${(h1 * 57.3).toFixed(0)}°`);
   await page.keyboard.down('KeyS'); await sleep(1500);
   g = await page.$('#gears .btn[data-g="P"]'); gb = await g.boundingBox(); await page.mouse.click(gb.x + gb.width / 2, gb.y + gb.height / 2); await page.keyboard.up('KeyS');
   await page.screenshot({ path: path.join(dir, 'shots/v6-ring.png') });

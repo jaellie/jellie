@@ -72,11 +72,20 @@ The car creeps forward. Add **W** to accelerate.
 Default mode (`TouchSteeringController.mode = CircularAnywhere`): a gesture may start **anywhere
 that is not a button**, and the code accumulates how much the stroke's direction of travel turns.
 One loop of any size, anywhere = one turn of the wheel (gain 1:1). Clockwise = right. A straight
-stroke = 0°, so a plain left/right drag never steers. Motion shorter than 1.2 % of the screen height
+stroke = 0°, so a plain left/right drag never steers. Motion shorter than 1.9 % of the screen height
 is ignored as jitter. A turn sharper than 100° within one segment (a reversal) is discarded. The first
 segment of each gesture only sets the direction, so a few degrees of the first motion aren't counted.
 Releasing keeps the angle; the next gesture continues from it. A gesture never activates buttons
 it crosses.
+
+**Smoothing (against hand-tremor shake).** Short strokes point in noisy directions, which made the
+wheel shake and even step backward (up to ≈ 50° in simulated noisy circles). Three measures remove
+this without losing rotation: a 1.9 %-of-height minimum segment, exponential smoothing of the
+stroke direction (`directionSmoothing` 0.6), and the wheel following gesture input with a 70 ms time
+constant (`outputTimeConstant`, `SteeringInputSmoother`). On release, the turn still held back by
+the smoothing is added (estimated from the smoothed turn rate), so short twists aren't
+under-counted. Result in the preview: worst backward step 0.6° (simulation) / 0.0° (browser test),
+a 45° arc still gives ≈ 40°, one loop ≈ 353°.
 
 The faint **steering ring** with its mini wheel stays fixed at 50 % width / 43 % height (radius 27 %
 of height) as a visual indicator of the current wheel angle. Its opacity was reduced, since it

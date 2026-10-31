@@ -13,6 +13,8 @@ namespace DrivingSim.Core
     {
         bool hasPoint, hasHeading;
         float lastX, lastY, lastHeadingDeg;
+        float dirX, dirY;
+        float lastStepDeg;
 
         /// <summary>Wheel degrees per degree of turning of the stroke (1 = one loop turns the wheel once).</summary>
         public float Gain { get; set; } = 1f;
@@ -23,10 +25,32 @@ namespace DrivingSim.Core
         /// <summary>Direction changes sharper than this in one segment (reversals, glitches) are discarded.</summary>
         public float MaxTurnDeg { get; set; } = 100f;
 
+        /// <summary>
+        /// Exponential smoothing of the travel direction (0 = none, 0.9 = heavy). Hand tremor makes
+        /// short segments point in noisy directions; smoothing removes the shake. The total turn is
+        /// preserved, only spread over the next samples.
+        /// </summary>
+        public float DirectionSmoothing { get; set; } = 0.6f;
+
         /// <summary>True for Y-up coordinates (Unity screen space), false for Y-down (browser).</summary>
         public bool YAxisUp { get; set; } = true;
 
         public void Reset() => hasPoint = hasHeading = false;
+
+        /// <summary>
+        /// Call when the pointer is released. Direction smoothing lags a turning stroke by about
+        /// k/(1-k) segments; this returns that remaining turn (estimated from the smoothed, low-noise
+        /// turn rate, not the noisy last segment) so short twists are not under-counted, then resets.
+        /// </summary>
+        public float Release()
+        {
+            float k = Math.Max(0f, Math.Min(0.95f, DirectionSmoothing));
+            float lag = hasHeading ? lastStepDeg * k / (1f - k) : 0f;
+            lag = Math.Max(-MaxTurnDeg, Math.Min(MaxTurnDeg, lag));
+            lastStepDeg = 0f;
+            Reset();
+            return lag;
+        }
 
         /// <summary>Returns the steering-wheel change in degrees for this sample (positive = clockwise = right).</summary>
         public float Sample(float x, float y)
@@ -44,7 +68,12 @@ namespace DrivingSim.Core
             lastX = x;
             lastY = y;
 
-            float heading = (float)(Math.Atan2(dy, dx) * 180.0 / Math.PI);
+            float length = (float)Math.Sqrt(dx * dx + dy * dy), ux = dx / length, uy = dy / length;
+            float k = Math.Max(0f, Math.Min(0.95f, DirectionSmoothing));
+            if (hasHeading) { dirX = dirX * k + ux * (1f - k); dirY = dirY * k + uy * (1f - k); }
+            else { dirX = ux; dirY = uy; }
+
+            float heading = (float)(Math.Atan2(dirY, dirX) * 180.0 / Math.PI);
             if (!hasHeading)
             {
                 hasHeading = true; // the first segment only establishes the direction of travel
@@ -54,8 +83,8 @@ namespace DrivingSim.Core
 
             float delta = CircularSteeringGesture.Unwrap(heading - lastHeadingDeg);
             lastHeadingDeg = heading;
-            if (Math.Abs(delta) > MaxTurnDeg) return 0f;
-            return (YAxisUp ? -delta : delta) * Gain;
+            if (Math.Abs(delta) > MaxTurnDeg) return lastStepDeg = 0f;
+            return lastStepDeg = (YAxisUp ? -delta : delta) * Gain;
         }
     }
 }

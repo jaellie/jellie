@@ -79,6 +79,7 @@ Active Input Handling must include the Input System. Regenerate the scene first.
 | S3 | Multiple circles / full lock | Keep circling clockwise, then counter-clockwise. | Clamps at +540° and −540° (3 turns lock to lock). Front wheels ±35° (inner) | |
 | S4 | Release and re-grip | Turn 90°, release, grip on the opposite side of the ring, turn 90°. | +180° total, no jump at the second grip | |
 | S5 | ±180° boundary | Circle through the 9 o'clock position (left side). | Smooth, no 360° jump | |
+| S5b | Smoothness | Draw slow, wobbly circles by hand. | The wheel (cockpit, HUD glyph, bottom indicator) turns smoothly, never jerks backward while circling one way | |
 | S6 | Straight strokes | Drag straight left/right/through the ring center. | ≈ 0°: steering only comes from turning motion | |
 | S7 | Small motion | Move a few pixels along the ring. | Proportionally small change (never a left/right step) | |
 | S8 | Touch (device) | Same as S1–S4 with a finger. Hold a pedal with another finger. | Same results. Only one pointer steers | |

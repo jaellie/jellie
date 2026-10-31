@@ -255,7 +255,8 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
           // Circular gesture (TouchSteeringController): center normalized from bottom-left, radius × screen height.
           circle: { cx: 0.5, cy: 0.43, radius: 0.27, dead: 0.22, gain: 1, maxStep: 90 },
           // Circular-anywhere gesture: stroke turning. minSegment × screen height; sharper turns per segment are discarded.
-          trace: { minSegment: 0.012, maxTurn: 100 } },
+          trace: { minSegment: 0.019, maxTurn: 100, smooth: 0.6 },
+          outputTau: 0.07 }, // wheel follows circular gestures with this time constant (inertia, no stepping)
     us: 0.0025, // understeer gradient (s²/m²) standing in for tire behavior in this kinematic model
     tr: { th: 0.2, stopped: 1, park: 1, dir: 2 },
     pt: { maxF: 4400, kw: 85, texp: 1.7, vmaxF: 170, rScale: 0.6, vmaxR: 20, creep: 450, fade: 9, rCreep: 0.8, coast: 150 },
@@ -624,7 +625,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
   const down = (...c) => c.some(k => keys.has(k) && !reserved(k));
 
   // Pointer layer: touch, middle mouse (simulated touch), optional left mouse.
-  const inp = { kThr: 0, kBrk: 0, fBrk: 0, fThr: 0, fKeys: null, touchThr: 0, touchBrk: 0, steerId: null, steerKind: '', lastX: 0, drag: 0, lookL: false, lookR: false };
+  const inp = { kThr: 0, kBrk: 0, fBrk: 0, fThr: 0, fKeys: null, touchThr: 0, touchBrk: 0, steerId: null, steerKind: '', lastX: 0, drag: 0, pend: 0, lookL: false, lookR: false };
   // Circular steering gesture (port of CircularSteeringGesture). Browser Y points down, so
   // clockwise on screen already increases atan2 (YAxisUp = false in the C# version).
   const ring = () => { const k = C.st.circle; return { cx: k.cx * 1120, cy: (1 - k.cy) * 630, r: k.radius * 630, dead: k.radius * 630 * k.dead }; };
@@ -640,18 +641,26 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
       return Math.abs(d) > C.st.circle.maxStep ? 0 : d * C.st.circle.gain;        // discard tracking jumps
     } };
   // Circular anywhere (port of TraceSteeringGesture): accumulate how much the stroke's direction turns.
-  const trace = { hasP: false, hasH: false, lx: 0, ly: 0, lh: 0,
+  const trace = { hasP: false, hasH: false, lx: 0, ly: 0, lh: 0, vx: 0, vy: 0,
     reset() { this.hasP = this.hasH = false; },
+    release() {                                             // hand back the turn still held in the direction smoothing
+      const k = C.st.trace.smooth, m = C.st.trace.maxTurn;   // lag ≈ k/(1-k) segments at the smoothed turn rate
+      const lag = this.hasH ? Math.max(-m, Math.min(m, (this.lastStep || 0) * k / (1 - k))) : 0;
+      this.lastStep = 0; this.reset(); return lag;
+    },
     sample(x, y) {                                          // hud px (y down: clockwise already increases atan2)
       if (!this.hasP) { this.hasP = true; this.lx = x; this.ly = y; return 0; }
       const dx = x - this.lx, dy = y - this.ly, min = C.st.trace.minSegment * 630;
       if (dx * dx + dy * dy < min * min) return 0;          // jitter filter
       this.lx = x; this.ly = y;
-      const h = Math.atan2(dy, dx) * 180 / Math.PI;
+      // Smooth the travel direction (hand tremor makes short segments point in noisy directions).
+      const n = Math.hypot(dx, dy), k = C.st.trace.smooth;
+      if (this.hasH) { this.vx = this.vx * k + dx / n * (1 - k); this.vy = this.vy * k + dy / n * (1 - k); } else { this.vx = dx / n; this.vy = dy / n; }
+      const h = Math.atan2(this.vy, this.vx) * 180 / Math.PI;
       if (!this.hasH) { this.hasH = true; this.lh = h; return 0; }  // first segment only sets the direction
       let d = ((h - this.lh + 180) % 360); if (d <= 0) d += 360; d -= 180;
       this.lh = h;
-      return Math.abs(d) > C.st.trace.maxTurn ? 0 : d * C.st.circle.gain;
+      return this.lastStep = Math.abs(d) > C.st.trace.maxTurn ? 0 : d * C.st.circle.gain;
     } };
   const toHud = e => { const r = stage.getBoundingClientRect(), k = r.width / 1120; return { x: (e.clientX - r.left) / k, y: (e.clientY - r.top) / k }; };
   const isControl = el => !!(el && el.closest && el.closest('.ctl, .modal'));
@@ -678,11 +687,11 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
     if (inp.steerKind === 'left' && !(e.buttons & 1)) { endSteer(); return; }
     const h = toHud(e);
     if (opt.mode === 'horizontal') inp.drag += (e.clientX - inp.lastX) / stage.clientHeight * C.st.dragPerHeight;   // legacy mode
-    else if (opt.mode === 'center') inp.drag += gesture.sample(h.x, h.y);
-    else inp.drag += trace.sample(h.x, h.y);
+    else if (opt.mode === 'center') inp.pend += gesture.sample(h.x, h.y);
+    else inp.pend += trace.sample(h.x, h.y);
     inp.lastX = e.clientX;
   });
-  function endSteer() { inp.steerId = null; inp.steerKind = ''; gesture.reset(); trace.reset(); }
+  function endSteer() { if (opt.mode === 'anywhere') inp.pend += trace.release(); inp.steerId = null; inp.steerKind = ''; gesture.reset(); trace.reset(); }
   stage.addEventListener('pointerup', e => { if (e.pointerId === inp.steerId) endSteer(); });
   stage.addEventListener('pointercancel', e => { if (e.pointerId === inp.steerId) endSteer(); });
 
@@ -766,8 +775,11 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
     S.thr = S.suppressed ? 0 : thr;
 
     let steer = 0; if (down('KeyA', 'ArrowLeft')) steer -= 1; if (down('KeyD', 'ArrowRight')) steer += 1;
-    S.sw = clamp(S.sw + steer * C.st.keyRate * dt + inp.drag, -C.st.maxW, C.st.maxW); inp.drag = 0;
-    S.held = steer !== 0 || inp.steerId !== null || down('KeyC');
+    // SteeringInputSmoother: circular input reaches the wheel over ~70 ms, so it turns smoothly instead of in steps.
+    const out = inp.pend * (1 - Math.exp(-dt / C.st.outputTau)); inp.pend -= out;
+    if (Math.abs(inp.pend) < 1e-3) inp.pend = 0;
+    S.sw = clamp(S.sw + steer * C.st.keyRate * dt + inp.drag + out, -C.st.maxW, C.st.maxW); inp.drag = 0;
+    S.held = steer !== 0 || inp.steerId !== null || Math.abs(inp.pend) > 0.5 || down('KeyC');
     if (down('KeyC')) S.sw = toward(S.sw, 0, 405 * dt);
 
     const gearKeys = { Digit1: 'P', Digit2: 'R', Digit3: 'N', Digit4: 'D' };
