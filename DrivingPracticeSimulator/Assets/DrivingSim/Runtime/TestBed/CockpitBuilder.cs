@@ -47,6 +47,8 @@ namespace DrivingSim.TestBed
 
             // Dashboard, cluster hood, sills, pillars, passenger seat.
             Box("Dashboard", t, new Vector3(0f, 0.98f, 0.70f), new Vector3(1.5f, 0.14f, 0.45f), dash);
+            // Covers the body's top face inside the cabin so the floor doesn't show in body paint.
+            Box("CabinFloor", t, new Vector3(0f, 0.976f, -0.2f), new Vector3(1.6f, 0.012f, 2.3f), interior);
             Box("DashTop", t, new Vector3(0f, 1.055f, 0.80f), new Vector3(1.46f, 0.01f, 0.25f), interior);
             Box("ClusterHood", t, new Vector3(DriverX, 1.18f, 0.56f), new Vector3(0.44f, 0.03f, 0.2f), dash);
             Box("CenterStack", t, new Vector3(0.02f, 0.93f, 0.48f), new Vector3(0.24f, 0.2f, 0.06f), interior);

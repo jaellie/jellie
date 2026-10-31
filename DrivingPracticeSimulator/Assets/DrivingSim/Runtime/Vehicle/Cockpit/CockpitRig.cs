@@ -27,7 +27,7 @@ namespace DrivingSim.Vehicle
         [Range(90f, 300f)] public float speedometerSweepDeg = 240f;
 
         [Header("Indicator colors")]
-        public Color gearActiveColor = new Color(0.94f, 0.71f, 0.16f);
+        public Color gearActiveColor = new Color(0.18f, 0.48f, 1f); // matches the HUD's blue selected gear
         public Color gearInactiveColor = new Color(0.45f, 0.48f, 0.52f);
 
         int shownSpeed = -1;
