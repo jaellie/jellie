@@ -1,0 +1,439 @@
+{
+  "kind": "Blender source geometry/export checks; NOT Unity validation",
+  "spec_version": 1,
+  "spec_commit": "6939f97fb0e3e3604444250c8472453bb990f4b9",
+  "blender_version": "4.3.2",
+  "unit_system": "METRIC",
+  "unit_scale": 1.0,
+  "coordinate_rule": "Blender=(-Unity.x,-Unity.z,Unity.y)",
+  "export_options": {
+    "use_selection": true,
+    "object_types": [
+      "EMPTY",
+      "MESH"
+    ],
+    "global_scale": 1.0,
+    "apply_scale_options": "FBX_SCALE_ALL",
+    "apply_unit_scale": true,
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "use_mesh_modifiers": true,
+    "mesh_smooth_type": "FACE",
+    "use_tspace": false,
+    "use_triangles": true,
+    "bake_anim": false,
+    "add_leaf_bones": false,
+    "use_custom_props": false,
+    "path_mode": "AUTO",
+    "embed_textures": false
+  },
+  "objects": [
+    {
+      "name": "IT_Cube_1m",
+      "type": "MESH",
+      "blender_origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "expected_unity_origin": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "rotation_euler_radians": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "triangles": 12,
+      "vertices": 8,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "materials": [
+        "M_IT_Checker"
+      ],
+      "blender_bounds_center": [
+        0.0,
+        0.0,
+        0.5
+      ],
+      "blender_bounds_size": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "expected_unity_bounds_center": [
+        -0.0,
+        0.5,
+        -0.0
+      ]
+    },
+    {
+      "name": "IT_Nose",
+      "type": "MESH",
+      "blender_origin": [
+        0.0,
+        -2.0,
+        0.5
+      ],
+      "expected_unity_origin": [
+        -0.0,
+        0.5,
+        2.0
+      ],
+      "rotation_euler_radians": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "triangles": 12,
+      "vertices": 8,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "materials": [
+        "M_IT_Marker"
+      ],
+      "blender_bounds_center": [
+        0.0,
+        -2.0,
+        0.5
+      ],
+      "blender_bounds_size": [
+        0.10000000149011612,
+        0.09999990463256836,
+        0.10000002384185791
+      ],
+      "expected_unity_bounds_center": [
+        -0.0,
+        0.5,
+        2.0
+      ]
+    },
+    {
+      "name": "IT_Left",
+      "type": "MESH",
+      "blender_origin": [
+        1.0,
+        0.0,
+        0.5
+      ],
+      "expected_unity_origin": [
+        -1.0,
+        0.5,
+        -0.0
+      ],
+      "rotation_euler_radians": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "triangles": 12,
+      "vertices": 8,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "materials": [
+        "M_IT_Marker"
+      ],
+      "blender_bounds_center": [
+        1.0,
+        0.0,
+        0.5
+      ],
+      "blender_bounds_size": [
+        0.09999996423721313,
+        0.10000000149011612,
+        0.10000002384185791
+      ],
+      "expected_unity_bounds_center": [
+        -1.0,
+        0.5,
+        -0.0
+      ]
+    },
+    {
+      "name": "IT_Up",
+      "type": "MESH",
+      "blender_origin": [
+        0.0,
+        0.0,
+        2.0
+      ],
+      "expected_unity_origin": [
+        -0.0,
+        2.0,
+        -0.0
+      ],
+      "rotation_euler_radians": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "triangles": 12,
+      "vertices": 8,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "materials": [
+        "M_IT_Marker"
+      ],
+      "blender_bounds_center": [
+        0.0,
+        0.0,
+        2.0
+      ],
+      "blender_bounds_size": [
+        0.10000000149011612,
+        0.10000000149011612,
+        0.09999990463256836
+      ],
+      "expected_unity_bounds_center": [
+        -0.0,
+        2.0,
+        -0.0
+      ]
+    },
+    {
+      "name": "DriverEye",
+      "type": "EMPTY",
+      "blender_origin": [
+        0.3700000047683716,
+        0.30000001192092896,
+        1.2200000286102295
+      ],
+      "expected_unity_origin": [
+        -0.3700000047683716,
+        1.2200000286102295,
+        -0.30000001192092896
+      ],
+      "rotation_euler_radians": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "SteeringWheelPivot",
+      "type": "EMPTY",
+      "blender_origin": [
+        0.3700000047683716,
+        -0.11999999731779099,
+        0.8999999761581421
+      ],
+      "expected_unity_origin": [
+        -0.3700000047683716,
+        0.8999999761581421,
+        0.11999999731779099
+      ],
+      "rotation_euler_radians": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Mirror_Rear",
+      "type": "EMPTY",
+      "blender_origin": [
+        0.0,
+        -0.6200000047683716,
+        1.399999976158142
+      ],
+      "expected_unity_origin": [
+        -0.0,
+        1.399999976158142,
+        0.6200000047683716
+      ],
+      "rotation_euler_radians": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Mirror_Left",
+      "type": "EMPTY",
+      "blender_origin": [
+        1.0,
+        -0.550000011920929,
+        1.0199999809265137
+      ],
+      "expected_unity_origin": [
+        -1.0,
+        1.0199999809265137,
+        0.550000011920929
+      ],
+      "rotation_euler_radians": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Mirror_Right",
+      "type": "EMPTY",
+      "blender_origin": [
+        -1.0,
+        -0.550000011920929,
+        1.0199999809265137
+      ],
+      "expected_unity_origin": [
+        1.0,
+        1.0199999809265137,
+        0.550000011920929
+      ],
+      "rotation_euler_radians": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "IT_LODTest_LOD0",
+      "type": "MESH",
+      "blender_origin": [
+        -2.0,
+        0.0,
+        0.75
+      ],
+      "expected_unity_origin": [
+        2.0,
+        0.75,
+        -0.0
+      ],
+      "rotation_euler_radians": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "triangles": 1984,
+      "vertices": 994,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "materials": [
+        "M_IT_Checker"
+      ],
+      "blender_bounds_center": [
+        -1.999999761581421,
+        -1.341104507446289e-07,
+        0.75
+      ],
+      "blender_bounds_size": [
+        0.9999994039535522,
+        0.9999990463256836,
+        1.0
+      ],
+      "expected_unity_bounds_center": [
+        1.999999761581421,
+        0.75,
+        1.341104507446289e-07
+      ]
+    },
+    {
+      "name": "IT_LODTest_LOD1",
+      "type": "MESH",
+      "blender_origin": [
+        -2.0,
+        0.0,
+        0.75
+      ],
+      "expected_unity_origin": [
+        2.0,
+        0.75,
+        -0.0
+      ],
+      "rotation_euler_radians": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "triangles": 480,
+      "vertices": 242,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "materials": [
+        "M_IT_Checker"
+      ],
+      "blender_bounds_center": [
+        -2.0,
+        -1.4901161193847656e-08,
+        0.75
+      ],
+      "blender_bounds_size": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "expected_unity_bounds_center": [
+        2.0,
+        0.75,
+        1.4901161193847656e-08
+      ]
+    }
+  ],
+  "total_triangles_with_both_lods": 2512,
+  "lod_note": "Coincident sibling spheres intentionally represent alternative LODs; not two separately placed props.",
+  "unity_validation": "NOT RUN; Claude must import and run ArtImportValidator and ArtImportTestKitTests"
+}
