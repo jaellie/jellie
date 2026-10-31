@@ -408,3 +408,4 @@ Unity Personal + game-ci/cli v0.1.72 기준(소스 코드로 확인). **비밀�
 | 2026-10-31 | 역할 변경: UI/UX 전체와 문구는 Claude, 3D 아트는 Codex. Codex UI 브랜치(1c3a9b8) 검토 후 병합(문서 충돌 2건 수동 해결). URP Mobile 설정, 메인 메뉴 → Test Town 씬 흐름과 환경 카탈로그(테스트 타운만 플레이 가능, 나머지 4개 맵은 계획), 일시정지 메뉴의 메인 메뉴 연결, INTEGRATION.md §9 3D 에셋 계약. 새 UI 디자인은 사용자 승인 대기. Unity 미검증 |
 | 2026-10-31 | 새 UI/UX 디자인 제안 "Cabin Light" 인터랙티브 프로토타입(`Tools/ui-prototype/cabin-light.html`, 브라우저용, Unity 아님). 사용자 승인 전에는 Unity UI 재구현을 시작하지 않음 |
 | 2026-10-31 | 3D 에셋 파이프라인(Blender → FBX → Unity) 승인. ASSET_SPEC.md v1, 권위 있는 테스트 타운 배치 데이터(TestTownLayout.json + 생성기 + 평면도), 아트 임포트 설정 자동화·머티리얼 매니페스트 빌더·임포트 테스트 검증기, 레이어·Linear 색 공간 설정, EditMode 테스트(배치 불변식, 임포트 키트). Codex 브랜치 codex/3d-environment. Unity 미검증 |
+| 2026-10-31 | Codex 임포트 테스트 키트(codex/3d-environment @ e8ed2d1) 검토: Unity 검증은 BLOCKED(시크릿 없음). FBX 정적 사전 검사는 전 항목 PASS(스케일, 방향, 피벗, 앵커, 법선, 머티리얼, 텍스처). 블록아웃 진행 가능, 상세 작업은 Unity PASS 후. 리포트: Tools/asset-spec/reports/ |

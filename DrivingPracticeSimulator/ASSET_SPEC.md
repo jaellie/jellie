@@ -20,7 +20,7 @@ If an asset can't meet a rule, raise it before producing it.
 - Scene: Metric, Unit Scale 1.0, Length meters. Apply all rotation and scale (Ctrl+A) before export;
   object **origins** carry the pivot positions listed below.
 - FBX export: Selected objects · Apply Scalings **FBX All** · Forward **−Z Forward** · Up **Y Up** ·
-  **Apply Unit** on · **Use Space Transform** on · **Apply Transform** on · Mesh: Apply Modifiers on,
+  **Apply Unit** on · **Use Space Transform** on · **Apply Transform** on · Path Mode **Strip** (no absolute paths) · Mesh: Apply Modifiers on,
   Smoothing **Face**, Tangent Space off · Armature/animation off · **Embed Textures off** · Path Mode Auto.
 - Unity enforces its side automatically for everything under `Assets/DrivingSim/Art/`
   (`Editor/ArtImportPostprocessor.cs`): scale 1, Bake Axis Conversion, no cameras or lights, no auto colliders,
@@ -141,6 +141,7 @@ EditMode tests (`TownLayoutTests`) guard its invariants. Layout changes go throu
 |---|---|
 | Shaders | `lit` (URP/Lit: vehicle, cockpit, hero surfaces) · `simplelit` (URP/Simple Lit: roads, buildings, props) · `unlit` (URP/Unlit: background, sign faces). No custom shaders, Shader Graph, tessellation, height or detail maps |
 | Texture set | `T_<Asset>_BaseMap` (sRGB, A = alpha only when needed) · `_Normal` (OpenGL / +Y, Blender's default) · `_Mask` (linear: **R metallic, G AO, A smoothness**) · `_Emission` (sRGB). PNG, 8-bit, power of two |
+| Mask and scalars | with a `maskMap`, URP Lit takes metallic from the mask (R) and multiplies smoothness by the mask alpha, so set `metallic: 1.0, smoothness: 1.0`; without a mask the two values are used directly |
 | Sizes | ≤ 1024² (one 2048² cockpit atlas allowed: `T_Cockpit_*`). Android ASTC 6×6, mipmaps on (set by Unity) |
 | Texel density | road/sidewalk 256 px/m (tiling) · buildings 128 px/m · cockpit ≈ 1024 px/m |
 | Transparency | `surface: "transparent"` only for glass and signal lenses. Glass alpha ≤ 0.15, `doubleSided: true` allowed for glass only. No alpha-blended foliage |
