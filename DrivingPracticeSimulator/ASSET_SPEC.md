@@ -21,7 +21,7 @@ If an asset can't meet a rule, raise it before producing it.
   object **origins** carry the pivot positions listed below.
 - FBX export: Selected objects · Apply Scalings **FBX All** · Forward **−Z Forward** · Up **Y Up** ·
   **Apply Unit** on · **Use Space Transform** on · **Apply Transform** on · Path Mode **Strip** (no absolute paths) · Mesh: Apply Modifiers on,
-  Smoothing **Face**, Tangent Space off · Armature/animation off · **Embed Textures off** · Path Mode Auto.
+  Smoothing **Face**, Tangent Space off · Armature/animation off · **Embed Textures off**.
 - Unity enforces its side automatically for everything under `Assets/DrivingSim/Art/`
   (`Editor/ArtImportPostprocessor.cs`): scale 1, Bake Axis Conversion, no cameras or lights, no auto colliders,
   MikkTSpace tangents, material slots kept by name.
