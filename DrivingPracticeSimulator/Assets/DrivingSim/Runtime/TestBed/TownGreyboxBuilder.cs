@@ -65,12 +65,90 @@ namespace DrivingSim.TestBed
             BuildSignals(L, PrimitiveUtil.Group("Signals", t).transform, m);
             BuildStreetFurniture(L, PrimitiveUtil.Group("StreetFurniture", t).transform, m, top);
             BuildBuildings(L, PrimitiveUtil.Group("Buildings", t).transform, m, top);
+            TownDressingData dressing = LoadDressing();
+            if (dressing != null) BuildDressing(dressing, PrimitiveUtil.Group("Dressing", t).transform, m);
 
             // Everything except the signals is static: the saved scene gets static batching (phones need few draw calls).
             foreach (Transform child in root.GetComponentsInChildren<Transform>(true))
                 if (child.GetComponentInParent<TrafficSignalController>() == null) child.gameObject.isStatic = true;
             if (Application.isPlaying) StaticBatchingUtility.Combine(root);
             return root;
+        }
+
+        public static TownDressingData LoadDressing()
+        {
+            var asset = Resources.Load<TextAsset>(TownDressingData.ResourcePath);
+            return asset != null ? JsonUtility.FromJson<TownDressingData>(asset.text) : null;
+        }
+
+        // ---------- street dressing (greybox stand-ins; Codex's prefabs named in "prefab" replace them) ----------
+        static void BuildDressing(TownDressingData d, Transform t, IMaterialSource m)
+        {
+            Material pole = m.Get("SignPole", new Color(0.55f, 0.57f, 0.6f));
+            Material back = m.Get("SignBack", new Color(0.35f, 0.37f, 0.4f));
+            Material red = m.Get("SignRed", new Color(0.86f, 0.12f, 0.1f));
+            Material white = m.Get("SignWhite", new Color(0.95f, 0.95f, 0.93f));
+            Material blue = m.Get("SignBlue", new Color(0.1f, 0.33f, 0.72f));
+            Material green = m.Get("SignGreen", new Color(0.12f, 0.5f, 0.32f));
+            if (d.signs != null)
+                foreach (TownSign s in d.signs)
+                {
+                    Transform g = PrimitiveUtil.Group(s.id, t).transform;
+                    g.localPosition = new Vector3(s.position[0], s.position[1], s.position[2]);
+                    g.localRotation = Quaternion.Euler(0f, s.yawDeg, 0f); // forward = face direction
+                    float w = s.size != null && s.size.Length > 1 ? s.size[0] : 0.6f, h = s.size != null && s.size.Length > 1 ? s.size[1] : 0.6f;
+                    bool wide = w > 1f;
+                    foreach (float px in wide ? new[] { -w * 0.35f, w * 0.35f } : new[] { 0f })
+                        PrimitiveUtil.Create(PrimitiveType.Cylinder, "Pole", g, new Vector3(px, s.faceHeight * 0.5f, -0.04f),
+                            new Vector3(0.08f, s.faceHeight * 0.5f, 0.08f), pole, true);
+                    if (s.type == "speed_limit" || s.type == "no_parking")
+                    {
+                        Quaternion disc = Quaternion.Euler(90f, 0f, 0f);
+                        PrimitiveUtil.Create(PrimitiveType.Cylinder, "Ring", g, new Vector3(0f, s.faceHeight, 0f), new Vector3(w, 0.01f, w), red, false, disc);
+                        PrimitiveUtil.Create(PrimitiveType.Cylinder, "Face", g, new Vector3(0f, s.faceHeight, 0.012f), new Vector3(w * 0.78f, 0.01f, w * 0.78f),
+                            s.type == "no_parking" ? blue : white, false, disc);
+                    }
+                    else
+                    {
+                        Material face = s.type == "bus_stop" ? green : blue;
+                        PrimitiveUtil.Create(PrimitiveType.Cube, "Plate", g, new Vector3(0f, s.faceHeight, 0f), new Vector3(w, h, 0.03f), back, false);
+                        PrimitiveUtil.Create(PrimitiveType.Cube, "Face", g, new Vector3(0f, s.faceHeight, 0.018f), new Vector3(w * 0.96f, h * 0.94f, 0.01f), face, false);
+                    }
+                }
+
+            Material[] paints =
+            {
+                m.Get("CarPaintWhite", new Color(0.92f, 0.92f, 0.9f)), m.Get("CarPaintSilver", new Color(0.66f, 0.68f, 0.7f)),
+                m.Get("CarPaintDark", new Color(0.16f, 0.18f, 0.22f)), m.Get("CarPaintBlue", new Color(0.18f, 0.32f, 0.55f)),
+            };
+            Material glass = m.Get("CarGlassProp", new Color(0.12f, 0.16f, 0.2f));
+            Material busPaint = m.Get("BusBlue", new Color(0.15f, 0.42f, 0.85f));
+            Material shelter = m.Get("Shelter", new Color(0.4f, 0.44f, 0.48f));
+            int i = 0;
+            if (d.props != null)
+                foreach (TownProp p in d.props)
+                {
+                    Transform g = PrimitiveUtil.Group(p.id, t).transform;
+                    g.localPosition = new Vector3(p.position[0], p.position[1], p.position[2]);
+                    g.localRotation = Quaternion.Euler(0f, p.yawDeg, 0f);
+                    switch (p.kind)
+                    {
+                        case "city_bus":
+                            PrimitiveUtil.Create(PrimitiveType.Cube, "Body", g, new Vector3(0f, 1.65f, 0f), new Vector3(2.5f, 2.9f, 11f), busPaint, true);
+                            PrimitiveUtil.Create(PrimitiveType.Cube, "Windows", g, new Vector3(0f, 2.1f, 0f), new Vector3(2.52f, 1.0f, 10.2f), glass, false);
+                            break;
+                        case "bus_shelter":
+                            PrimitiveUtil.Create(PrimitiveType.Cube, "Roof", g, new Vector3(0f, 2.5f, 0f), new Vector3(1.6f, 0.08f, 4f), shelter, false);
+                            PrimitiveUtil.Create(PrimitiveType.Cube, "Back", g, new Vector3(-0.7f, 1.25f, 0f), new Vector3(0.05f, 2.4f, 4f), glass, true);
+                            break;
+                        default:
+                            bool suv = p.kind == "parked_suv";
+                            float bodyH = suv ? 0.95f : 0.75f;
+                            PrimitiveUtil.Create(PrimitiveType.Cube, "Body", g, new Vector3(0f, 0.3f + bodyH * 0.5f, 0f), new Vector3(1.8f, bodyH, 4.4f), paints[i++ % paints.Length], true);
+                            PrimitiveUtil.Create(PrimitiveType.Cube, "Cabin", g, new Vector3(0f, 0.3f + bodyH + 0.3f, -0.2f), new Vector3(1.6f, 0.6f, 2.3f), glass, false);
+                            break;
+                    }
+                }
         }
 
         // ---------- geometry helpers ----------

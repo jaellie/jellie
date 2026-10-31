@@ -1,0 +1,395 @@
+{
+ "version": 1,
+ "layoutVersion": 1,
+ "note": "Street dressing on top of TestTownLayout.json. Generated; do not edit by hand.",
+ "signs": [
+  {
+   "id": "SL50_NB",
+   "type": "speed_limit",
+   "value": "50",
+   "lines": [],
+   "position": [
+    7.4,
+    0.15,
+    -50
+   ],
+   "yawDeg": 180,
+   "faceHeight": 2.2,
+   "size": [
+    0.6,
+    0.6
+   ],
+   "prefab": "SM_Signal_Sign_SpeedLimit"
+  },
+  {
+   "id": "SL50_SB",
+   "type": "speed_limit",
+   "value": "50",
+   "lines": [],
+   "position": [
+    -7.4,
+    0.15,
+    50
+   ],
+   "yawDeg": 0,
+   "faceHeight": 2.2,
+   "size": [
+    0.6,
+    0.6
+   ],
+   "prefab": "SM_Signal_Sign_SpeedLimit"
+  },
+  {
+   "id": "SL30_EB",
+   "type": "speed_limit",
+   "value": "30",
+   "lines": [],
+   "position": [
+    -45,
+    0.15,
+    -3.9
+   ],
+   "yawDeg": 270,
+   "faceHeight": 2.2,
+   "size": [
+    0.6,
+    0.6
+   ],
+   "prefab": "SM_Signal_Sign_SpeedLimit"
+  },
+  {
+   "id": "SL30_WB",
+   "type": "speed_limit",
+   "value": "30",
+   "lines": [],
+   "position": [
+    45,
+    0.15,
+    3.9
+   ],
+   "yawDeg": 90,
+   "faceHeight": 2.2,
+   "size": [
+    0.6,
+    0.6
+   ],
+   "prefab": "SM_Signal_Sign_SpeedLimit"
+  },
+  {
+   "id": "CW_NB",
+   "type": "crosswalk",
+   "value": "",
+   "lines": [],
+   "position": [
+    7.4,
+    0.15,
+    -17.2
+   ],
+   "yawDeg": 180,
+   "faceHeight": 2.2,
+   "size": [
+    0.6,
+    0.6
+   ],
+   "prefab": "SM_Signal_Sign_Crosswalk"
+  },
+  {
+   "id": "CW_SB",
+   "type": "crosswalk",
+   "value": "",
+   "lines": [],
+   "position": [
+    -7.4,
+    0.15,
+    17.2
+   ],
+   "yawDeg": 0,
+   "faceHeight": 2.2,
+   "size": [
+    0.6,
+    0.6
+   ],
+   "prefab": "SM_Signal_Sign_Crosswalk"
+  },
+  {
+   "id": "CW_EB",
+   "type": "crosswalk",
+   "value": "",
+   "lines": [],
+   "position": [
+    -20.8,
+    0.15,
+    -3.9
+   ],
+   "yawDeg": 270,
+   "faceHeight": 2.2,
+   "size": [
+    0.6,
+    0.6
+   ],
+   "prefab": "SM_Signal_Sign_Crosswalk"
+  },
+  {
+   "id": "CW_WB",
+   "type": "crosswalk",
+   "value": "",
+   "lines": [],
+   "position": [
+    20.8,
+    0.15,
+    3.9
+   ],
+   "yawDeg": 90,
+   "faceHeight": 2.2,
+   "size": [
+    0.6,
+    0.6
+   ],
+   "prefab": "SM_Signal_Sign_Crosswalk"
+  },
+  {
+   "id": "DIR_NB",
+   "type": "direction",
+   "value": "",
+   "lines": [
+    "↑ 시청 City Hall",
+    "→ 중앙로 Jungang-ro",
+    "← 항구 Harbor"
+   ],
+   "position": [
+    7.8,
+    0.15,
+    -42
+   ],
+   "yawDeg": 180,
+   "faceHeight": 3.2,
+   "size": [
+    2.6,
+    1.4
+   ],
+   "prefab": "SM_Signal_Sign_Direction"
+  },
+  {
+   "id": "DIR_SB",
+   "type": "direction",
+   "value": "",
+   "lines": [
+    "↑ 역 Station",
+    "← 중앙로 Jungang-ro",
+    "→ 항구 Harbor"
+   ],
+   "position": [
+    -7.8,
+    0.15,
+    42
+   ],
+   "yawDeg": 0,
+   "faceHeight": 3.2,
+   "size": [
+    2.6,
+    1.4
+   ],
+   "prefab": "SM_Signal_Sign_Direction"
+  },
+  {
+   "id": "NP_E",
+   "type": "no_parking",
+   "value": "",
+   "lines": [],
+   "position": [
+    7.4,
+    0.15,
+    30
+   ],
+   "yawDeg": 180,
+   "faceHeight": 2.2,
+   "size": [
+    0.6,
+    0.6
+   ],
+   "prefab": "SM_Signal_Sign_NoParking"
+  },
+  {
+   "id": "NP_W",
+   "type": "no_parking",
+   "value": "",
+   "lines": [],
+   "position": [
+    -7.4,
+    0.15,
+    -30
+   ],
+   "yawDeg": 0,
+   "faceHeight": 2.2,
+   "size": [
+    0.6,
+    0.6
+   ],
+   "prefab": "SM_Signal_Sign_NoParking"
+  },
+  {
+   "id": "BUS_SB",
+   "type": "bus_stop",
+   "value": "",
+   "lines": [],
+   "position": [
+    -7.4,
+    0.15,
+    64.5
+   ],
+   "yawDeg": 0,
+   "faceHeight": 2.2,
+   "size": [
+    0.6,
+    0.6
+   ],
+   "prefab": "SM_Signal_Sign_BusStop"
+  }
+ ],
+ "props": [
+  {
+   "id": "BusShelter_SB",
+   "kind": "bus_shelter",
+   "position": [
+    -8.4,
+    0.15,
+    70.0
+   ],
+   "yawDeg": 90.0,
+   "prefab": "SM_Prop_BusShelter",
+   "onRoad": false
+  },
+  {
+   "id": "Bus_SB",
+   "kind": "city_bus",
+   "position": [
+    -4.875,
+    0.0,
+    70.0
+   ],
+   "yawDeg": 180.0,
+   "prefab": "SM_Prop_Bus_City",
+   "onRoad": true
+  },
+  {
+   "id": "Car_NE_0",
+   "kind": "parked_car",
+   "position": [
+    29.0,
+    0.15,
+    30.0
+   ],
+   "yawDeg": 0.0,
+   "prefab": "SM_Prop_Car_Sedan",
+   "onRoad": false
+  },
+  {
+   "id": "Car_NE_1",
+   "kind": "parked_suv",
+   "position": [
+    31.7,
+    0.15,
+    30.0
+   ],
+   "yawDeg": 0.0,
+   "prefab": "SM_Prop_Car_SUV",
+   "onRoad": false
+  },
+  {
+   "id": "Car_NE_2",
+   "kind": "parked_car",
+   "position": [
+    34.4,
+    0.15,
+    30.0
+   ],
+   "yawDeg": 0.0,
+   "prefab": "SM_Prop_Car_Hatch",
+   "onRoad": false
+  },
+  {
+   "id": "Car_NE_3",
+   "kind": "parked_car",
+   "position": [
+    37.1,
+    0.15,
+    30.0
+   ],
+   "yawDeg": 0.0,
+   "prefab": "SM_Prop_Car_Sedan",
+   "onRoad": false
+  },
+  {
+   "id": "Car_NE_4",
+   "kind": "parked_suv",
+   "position": [
+    39.8,
+    0.15,
+    30.0
+   ],
+   "yawDeg": 0.0,
+   "prefab": "SM_Prop_Car_SUV",
+   "onRoad": false
+  },
+  {
+   "id": "Car_SW_0",
+   "kind": "parked_suv",
+   "position": [
+    -29.0,
+    0.15,
+    -30.0
+   ],
+   "yawDeg": 180.0,
+   "prefab": "SM_Prop_Car_SUV",
+   "onRoad": false
+  },
+  {
+   "id": "Car_SW_1",
+   "kind": "parked_car",
+   "position": [
+    -31.7,
+    0.15,
+    -30.0
+   ],
+   "yawDeg": 180.0,
+   "prefab": "SM_Prop_Car_Hatch",
+   "onRoad": false
+  },
+  {
+   "id": "Car_SW_2",
+   "kind": "parked_car",
+   "position": [
+    -34.4,
+    0.15,
+    -30.0
+   ],
+   "yawDeg": 180.0,
+   "prefab": "SM_Prop_Car_Sedan",
+   "onRoad": false
+  },
+  {
+   "id": "Car_SW_3",
+   "kind": "parked_suv",
+   "position": [
+    -37.1,
+    0.15,
+    -30.0
+   ],
+   "yawDeg": 180.0,
+   "prefab": "SM_Prop_Car_SUV",
+   "onRoad": false
+  },
+  {
+   "id": "Car_SW_4",
+   "kind": "parked_car",
+   "position": [
+    -39.8,
+    0.15,
+    -30.0
+   ],
+   "yawDeg": 180.0,
+   "prefab": "SM_Prop_Car_Hatch",
+   "onRoad": false
+  }
+ ]
+}
