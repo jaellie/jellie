@@ -123,7 +123,7 @@ EditMode tests (`TownLayoutTests`) guard its invariants. Layout changes go throu
 ## 4. Materials and shaders (URP Mobile, confirmed in code)
 
 - Unity 6000.0.85f1, URP 17.0.3, forward renderer, **Linear color space**, HDR off, MSAA 2×, one shadow
-  cascade over 60 m, no depth/opaque textures, no post-processing (`DrivingSim → Configure Project`).
+  cascade over 70 m, no depth/opaque textures, no post-processing (`DrivingSim → Configure Project`).
 - Codex delivers **textures + `Art/Materials/materials.json`**; Unity materials are generated from it
   (`DrivingSim → Art → Build Materials From Manifest`) and bound to FBX material slots **by name**.
   Do not deliver `.mat` files.

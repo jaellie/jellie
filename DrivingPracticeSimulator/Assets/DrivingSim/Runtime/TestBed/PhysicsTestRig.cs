@@ -5,6 +5,7 @@ using DrivingSim.Diagnostics;
 using DrivingSim.Startup;
 using DrivingSim.UI;
 using DrivingSim.Vehicle;
+using DrivingSim.World;
 using UnityEngine;
 
 namespace DrivingSim.TestBed
@@ -73,6 +74,7 @@ namespace DrivingSim.TestBed
             }
             camera.nearClipPlane = 0.1f;
             camera.farClipPlane = 600f;
+            camera.clearFlags = CameraClearFlags.Skybox;
             camera.fieldOfView = 60f;
             VehicleFollowCamera follow = camera.GetComponent<VehicleFollowCamera>();
             if (follow == null) follow = camera.gameObject.AddComponent<VehicleFollowCamera>();
@@ -104,17 +106,7 @@ namespace DrivingSim.TestBed
             if (eventSystem != null) eventSystem.sendNavigationEvents = false;
         }
 
-        static void EnsureLight()
-        {
-            foreach (Light light in Object.FindObjectsByType<Light>(FindObjectsSortMode.None))
-                if (light.type == LightType.Directional) return;
-
-            var lightObject = new GameObject("Directional Light");
-            Light sun = lightObject.AddComponent<Light>();
-            sun.type = LightType.Directional;
-            sun.intensity = 1.1f;
-            sun.shadows = LightShadows.Soft;
-            lightObject.transform.rotation = Quaternion.Euler(50f, -30f, 0f);
-        }
+        /// <summary>Clear daytime sky, soft sun, ambient and fog (World.SceneAtmosphere).</summary>
+        static void EnsureLight() => SceneAtmosphere.Ensure();
     }
 }

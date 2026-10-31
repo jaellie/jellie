@@ -34,7 +34,7 @@ namespace DrivingSim.EditorTools
         /// </summary>
         static readonly string[] RuntimeShaders =
         {
-            "Universal Render Pipeline/Unlit", "Unlit/Texture", "Unlit/Color", "GUI/Text Shader", "Sprites/Default",
+            "Universal Render Pipeline/Unlit", "Skybox/Procedural", "Unlit/Texture", "Unlit/Color", "GUI/Text Shader", "Sprites/Default",
         };
 
         public const string UrpFolder = "Assets/DrivingSim/Settings/URP";
@@ -114,7 +114,7 @@ namespace DrivingSim.EditorTools
             asset.supportsHDR = false;
             asset.msaaSampleCount = 2;
             asset.renderScale = 1f;
-            asset.shadowDistance = 60f;
+            asset.shadowDistance = 70f;     // covers the intersection ahead; one cascade keeps it cheap
             asset.shadowCascadeCount = 1;
             asset.supportsCameraDepthTexture = false;
             asset.supportsCameraOpaqueTexture = false;
@@ -128,7 +128,7 @@ namespace DrivingSim.EditorTools
                 QualitySettings.renderPipeline = asset;
             }
             QualitySettings.SetQualityLevel(current, false);
-            log.AppendLine("- URP Mobile: assigned to Graphics and all quality levels (HDR off, MSAA 2x, 1 cascade, 60 m shadows)");
+            log.AppendLine("- URP Mobile: assigned to Graphics and all quality levels (HDR off, MSAA 2x, 1 cascade, 70 m shadows)");
         }
 
         /// <summary>Fixed user layers (ASSET_SPEC.md §5). Index = layer number; only empty slots are filled.</summary>
