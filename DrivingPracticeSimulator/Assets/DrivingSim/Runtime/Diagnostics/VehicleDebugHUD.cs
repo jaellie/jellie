@@ -15,6 +15,8 @@ namespace DrivingSim.Diagnostics
         [SerializeField] VehicleController vehicle;
         [SerializeField] VehicleTestProbe probe;
         [SerializeField] bool visible = true;
+        [Tooltip("Show shift/parking-brake feedback even when the overlay is hidden (off when the driving HUD shows it).")]
+        [SerializeField] bool feedbackWhenHidden = true;
         [SerializeField] float feedbackSeconds = 3f;
 
         readonly StringBuilder text = new StringBuilder(1024);
@@ -22,6 +24,12 @@ namespace DrivingSim.Diagnostics
         GUIStyle feedbackStyle;
         string feedback = string.Empty;
         float feedbackTime = float.NegativeInfinity;
+
+        public void SetVisibility(bool overlayVisible, bool feedbackWhileHidden)
+        {
+            visible = overlayVisible;
+            feedbackWhenHidden = feedbackWhileHidden;
+        }
 
         public void Bind(VehicleController target, VehicleTestProbe testProbe)
         {
@@ -73,8 +81,8 @@ namespace DrivingSim.Diagnostics
             GUI.matrix = Matrix4x4.Scale(new Vector3(scale, scale, 1f));
             EnsureStyles();
 
-            bool showFeedback = Time.time - feedbackTime < feedbackSeconds;
-            bool parkingBrakeWarning = vehicle.ParkingBrakeEngaged && vehicle.Throttle > 0.1f
+            bool showFeedback = (visible || feedbackWhenHidden) && Time.time - feedbackTime < feedbackSeconds;
+            bool parkingBrakeWarning = (visible || feedbackWhenHidden) && vehicle.ParkingBrakeEngaged && vehicle.Throttle > 0.1f
                                        && (vehicle.Gear == TransmissionGear.D || vehicle.Gear == TransmissionGear.R);
             float screenWidth = Screen.width / scale;
             if (showFeedback || parkingBrakeWarning)
@@ -85,13 +93,13 @@ namespace DrivingSim.Diagnostics
 
             if (!visible)
             {
-                GUI.Label(new Rect(10f, 10f, 300f, 24f), "F1: telemetry", style);
+                GUI.Label(new Rect(10f, Screen.height / scale - 30f, 300f, 24f), "F1: telemetry", style);
                 return;
             }
 
             BuildText();
-            GUI.Box(new Rect(8f, 8f, 430f, 490f), GUIContent.none);
-            GUI.Label(new Rect(16f, 12f, 420f, 486f), text.ToString(), style);
+            GUI.Box(new Rect(8f, 8f, 430f, 512f), GUIContent.none);
+            GUI.Label(new Rect(16f, 12f, 420f, 508f), text.ToString(), style);
         }
 
         void BuildText()
@@ -131,6 +139,7 @@ namespace DrivingSim.Diagnostics
             text.AppendLine("Shift: gentle pedals   1 P  2 R  3 N  4 D   Q/E lever");
             text.AppendLine("Space parking brake  Backspace reset");
             text.AppendLine("V 1st/3rd person  T top-down  Z/X look L/R  [ ] FOV");
+            text.AppendLine(", . signals  H hazard  L lights  K wipers  Esc pause");
         }
 
         static string Radius(float meters) => float.IsInfinity(meters) || meters > 999f ? "—" : $"{meters:F2} m";

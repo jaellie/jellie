@@ -12,21 +12,25 @@ namespace DrivingSim.Controls
         Digit1, Digit2, Digit3, Digit4,
         Q, E, C, V, F1,
         T, Z, X, LeftBracket, RightBracket,
+        Comma, Period, H, L, K, Escape,
     }
 
     /// <summary>
-    /// Keyboard access that works with the Input System package (preferred) or the legacy
-    /// Input Manager, whichever the project's Active Input Handling enables.
+    /// Keyboard access for game shortcuts. Works with the Input System package (preferred) or the
+    /// legacy Input Manager. Keys reserved by the foot pedals, and all keys while a modal screen
+    /// blocks shortcuts, report as not pressed.
     /// </summary>
     public static class KeyboardShim
     {
         public static bool IsDown(KeyId key)
         {
 #if ENABLE_INPUT_SYSTEM
+            if (DrivingInputGate.KeyboardShortcutsBlocked) return false;
             Keyboard keyboard = Keyboard.current;
-            return keyboard != null && keyboard[ToKey(key)].isPressed;
+            Key k = ToKey(key);
+            return keyboard != null && !PedalKeyReservation.IsReserved((int)k) && keyboard[k].isPressed;
 #elif ENABLE_LEGACY_INPUT_MANAGER
-            return UnityEngine.Input.GetKey(ToKeyCode(key));
+            return !DrivingInputGate.KeyboardShortcutsBlocked && UnityEngine.Input.GetKey(ToKeyCode(key));
 #else
             return false;
 #endif
@@ -35,10 +39,12 @@ namespace DrivingSim.Controls
         public static bool WasPressed(KeyId key)
         {
 #if ENABLE_INPUT_SYSTEM
+            if (DrivingInputGate.KeyboardShortcutsBlocked) return false;
             Keyboard keyboard = Keyboard.current;
-            return keyboard != null && keyboard[ToKey(key)].wasPressedThisFrame;
+            Key k = ToKey(key);
+            return keyboard != null && !PedalKeyReservation.IsReserved((int)k) && keyboard[k].wasPressedThisFrame;
 #elif ENABLE_LEGACY_INPUT_MANAGER
-            return UnityEngine.Input.GetKeyDown(ToKeyCode(key));
+            return !DrivingInputGate.KeyboardShortcutsBlocked && UnityEngine.Input.GetKeyDown(ToKeyCode(key));
 #else
             return false;
 #endif
@@ -74,6 +80,12 @@ namespace DrivingSim.Controls
                 case KeyId.X: return Key.X;
                 case KeyId.LeftBracket: return Key.LeftBracket;
                 case KeyId.RightBracket: return Key.RightBracket;
+                case KeyId.Comma: return Key.Comma;
+                case KeyId.Period: return Key.Period;
+                case KeyId.H: return Key.H;
+                case KeyId.L: return Key.L;
+                case KeyId.K: return Key.K;
+                case KeyId.Escape: return Key.Escape;
                 default: return Key.None;
             }
         }
@@ -107,6 +119,12 @@ namespace DrivingSim.Controls
                 case KeyId.X: return UnityEngine.KeyCode.X;
                 case KeyId.LeftBracket: return UnityEngine.KeyCode.LeftBracket;
                 case KeyId.RightBracket: return UnityEngine.KeyCode.RightBracket;
+                case KeyId.Comma: return UnityEngine.KeyCode.Comma;
+                case KeyId.Period: return UnityEngine.KeyCode.Period;
+                case KeyId.H: return UnityEngine.KeyCode.H;
+                case KeyId.L: return UnityEngine.KeyCode.L;
+                case KeyId.K: return UnityEngine.KeyCode.K;
+                case KeyId.Escape: return UnityEngine.KeyCode.Escape;
                 default: return UnityEngine.KeyCode.None;
             }
         }

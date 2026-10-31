@@ -70,6 +70,10 @@ namespace DrivingSim.TestBed
                     Quaternion.Euler(4f, 165f, 0f), 22f, 160, 112, 4, 3, mirrorOff, mirrorHousing),
             };
 
+            Transform[] wipers = BuildWipers(root, materials.Get("WiperBlade", Palette.WiperBlade));
+            VehicleAccessories accessories = vehicle.GetComponent<VehicleAccessories>();
+            if (accessories != null) accessories.SetWiperPivots(wipers);
+
             foreach (Renderer renderer in interiorRoot.GetComponentsInChildren<Renderer>(true))
             {
                 renderer.shadowCastingMode = ShadowCastingMode.Off;
@@ -79,6 +83,25 @@ namespace DrivingSim.TestBed
             CockpitRig rig = vehicle.gameObject.AddComponent<CockpitRig>();
             rig.Configure(vehicle, eye, interiorRoot, wheelSpin, needle, speed, gear, parkingBrake, mirrors);
             return rig;
+        }
+
+        /// <summary>Two blades at the base of the windshield (cabin front face at z ≈ 0.95), visible inside and out.</summary>
+        static Transform[] BuildWipers(Transform root, Material blade)
+        {
+            var mount = PrimitiveUtil.Group("Wipers", root).transform;
+            mount.localPosition = new Vector3(0f, 1.0f, 0.975f);
+            var pivots = new Transform[2];
+            float[] xs = { -0.5f, 0.12f };
+            for (int i = 0; i < 2; i++)
+            {
+                var pivot = new GameObject($"WiperPivot_{i}").transform;
+                pivot.SetParent(mount, false);
+                pivot.localPosition = new Vector3(xs[i], 0f, 0f);
+                pivot.localRotation = Quaternion.Euler(0f, 0f, -85f);
+                Box("Blade", pivot, new Vector3(0f, 0.24f, 0f), new Vector3(0.02f, 0.48f, 0.02f), blade);
+                pivots[i] = pivot;
+            }
+            return pivots;
         }
 
         static Transform BuildSteeringWheel(Transform parent, Material wheelMat, Material columnMat, Material accent)

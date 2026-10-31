@@ -28,6 +28,12 @@ namespace DrivingSim.Controls
 
         public bool ToggleParkingBrake;
         public bool ResetVehicle;
+
+        /// <summary>-1 toggles the left turn signal, +1 the right one.</summary>
+        public int TurnSignalToggle;
+        public bool ToggleHazard;
+        public bool ToggleHeadlights;
+        public bool CycleWipers;
     }
 
     /// <summary>

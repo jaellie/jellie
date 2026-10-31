@@ -69,5 +69,9 @@ namespace DrivingSim.TestBed
         public static readonly Color Hub = new Color(0.75f, 0.77f, 0.8f);
         public static readonly Color HeadLight = new Color(1f, 0.95f, 0.7f);
         public static readonly Color TailLight = new Color(0.85f, 0.1f, 0.1f);
+        public static readonly Color HeadLightOff = new Color(0.78f, 0.78f, 0.74f);
+        public static readonly Color IndicatorOff = new Color(0.45f, 0.3f, 0.1f);
+        public static readonly Color IndicatorOn = new Color(1f, 0.62f, 0.05f);
+        public static readonly Color WiperBlade = new Color(0.06f, 0.06f, 0.07f);
     }
 }

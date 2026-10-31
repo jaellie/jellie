@@ -20,16 +20,30 @@ namespace DrivingSim.TestBed
             VehicleController vehicle = PrimitiveVehicleBuilder.Build(config, materials, SpawnPosition, Quaternion.identity);
             CockpitRig cockpit = CockpitBuilder.Build(vehicle, config, materials);
 
+            VehicleAccessories accessories = vehicle.GetComponent<VehicleAccessories>();
+
             var systems = new GameObject("DrivingSystems");
+            PointerInputHub pointers = systems.AddComponent<PointerInputHub>();
             KeyboardDrivingInput keyboard = systems.AddComponent<KeyboardDrivingInput>();
+            FootPedalKeyboardInput footPedals = systems.AddComponent<FootPedalKeyboardInput>();
+            TouchSteeringController touchSteering = systems.AddComponent<TouchSteeringController>();
+            touchSteering.SetHub(pointers);
+            MobilePedalController mobilePedals = systems.AddComponent<MobilePedalController>();
+
             VehicleInputRouter router = systems.AddComponent<VehicleInputRouter>();
             router.SetVehicle(vehicle);
-            router.RegisterSource(keyboard); // AddComponent runs Awake immediately at runtime
+            router.SetAccessories(accessories);
+            // AddComponent runs Awake immediately at runtime, so register sources explicitly.
+            router.RegisterSource(keyboard);
+            router.RegisterSource(footPedals);
+            router.RegisterSource(touchSteering);
+            router.RegisterSource(mobilePedals);
 
             VehicleTestProbe probe = systems.AddComponent<VehicleTestProbe>();
             probe.SetVehicle(vehicle);
-            VehicleDebugHUD hud = systems.AddComponent<VehicleDebugHUD>();
-            hud.Bind(vehicle, probe);
+            VehicleDebugHUD debugHud = systems.AddComponent<VehicleDebugHUD>();
+            debugHud.Bind(vehicle, probe);
+            debugHud.SetVisibility(overlayVisible: false, feedbackWhileHidden: false); // F1 shows it
 
             Camera camera = Camera.main;
             if (camera == null)
@@ -47,10 +61,26 @@ namespace DrivingSim.TestBed
             CameraController cameraController = camera.GetComponent<CameraController>();
             if (cameraController == null) cameraController = camera.gameObject.AddComponent<CameraController>();
             cameraController.Bind(vehicle, cockpit, follow);
+
+            var minimapObject = new GameObject("MinimapCamera", typeof(Camera));
+            MinimapCamera minimap = minimapObject.AddComponent<MinimapCamera>();
+            minimap.SetTarget(vehicle.transform);
+
+            HudTheme theme = HudTheme.Default;
+            PedalCalibrationWizard calibration = PedalCalibrationWizard.Create(footPedals, theme);
+            DrivingHUDController.Create(theme, vehicle, accessories, router, footPedals, touchSteering, mobilePedals, calibration, minimap);
             CameraControlsOverlay.Create(cameraController);
+            EnsureEventSystemSettings();
 
             vehicle.gameObject.SetActive(true);
             return vehicle;
+        }
+
+        /// <summary>Keyboard UI navigation would let a foot on Space/Enter press buttons; the HUD is pointer-only.</summary>
+        static void EnsureEventSystemSettings()
+        {
+            var eventSystem = Object.FindFirstObjectByType<UnityEngine.EventSystems.EventSystem>();
+            if (eventSystem != null) eventSystem.sendNavigationEvents = false;
         }
 
         static void EnsureLight()

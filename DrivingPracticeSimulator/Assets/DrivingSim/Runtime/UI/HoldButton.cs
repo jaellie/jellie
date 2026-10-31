@@ -9,6 +9,9 @@ namespace DrivingSim.UI
     /// Touch button that reacts on pointer down, so it works while another finger is held on a
     /// pedal (browsers and some touch stacks drop a second finger's "click"). Reports hold state
     /// for look buttons and a press event for tap actions. Each instance tracks its own pointer id.
+    /// Only left-button events are accepted: touches and left clicks come from the uGUI input module,
+    /// middle clicks arrive as left-button events from <c>MiddleMouseUIRouter</c>. The module's own
+    /// middle/right-button events are ignored, so one physical click never activates a button twice.
     /// </summary>
     [RequireComponent(typeof(Graphic))]
     public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
@@ -24,15 +27,28 @@ namespace DrivingSim.UI
 
         public bool IsHeld => pointerId != int.MinValue;
 
+        bool toggledOn;
+
         void Awake()
         {
             graphic = GetComponent<Graphic>();
             graphic.color = normalColor;
         }
 
+        public void ClearPressedHandlers() => Pressed = null;
+
+        /// <summary>For toggle-style buttons: show the pressed color while the option is on.</summary>
+        public void SetToggled(bool on)
+        {
+            toggledOn = on;
+            if (graphic != null && !IsHeld) graphic.color = on ? pressedColor : normalColor;
+        }
+
+        public bool Interactable { get; set; } = true;
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (IsHeld) return;
+            if (IsHeld || !Interactable || eventData.button != PointerEventData.InputButton.Left) return;
             pointerId = eventData.pointerId;
             graphic.color = pressedColor;
             Pressed?.Invoke();
@@ -57,7 +73,7 @@ namespace DrivingSim.UI
         void Release()
         {
             pointerId = int.MinValue;
-            if (graphic != null) graphic.color = normalColor;
+            if (graphic != null) graphic.color = toggledOn ? pressedColor : normalColor;
             HeldChanged?.Invoke(false);
         }
     }

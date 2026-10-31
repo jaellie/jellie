@@ -21,6 +21,13 @@ procedural test ground and dev diagnostics. Nothing has yet been compiled or run
 
 See README → *Camera views* and TESTING.md → *Phase B*.
 
+## Input & HUD update (implemented, untested)
+
+A1 is now addressed: `PointerInputHub` (touchscreen, optional left mouse, middle mouse as a
+simulated touch) and `TouchSteeringController` provide drag steering. Also added: foot-pedal
+keyboard with a calibration wizard, touch pedals, vertical gear selector, turn signals / hazard /
+headlights / wipers (`VehicleAccessories`, which covers A8), and the driving HUD.
+
 ## Plan for later phases (not started)
 
 - **C: one intersection.** Road-network data (`RoadNetwork` ScriptableObject): road segments with

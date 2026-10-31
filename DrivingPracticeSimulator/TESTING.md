@@ -51,11 +51,36 @@ Re-run **DrivingSim → Create Physics Test Scene** first (older scenes have no 
 | B9 | **Multi-touch (device)** | On a phone: hold ◀ with one finger, tap 3인칭 with another. | Both register (buttons act on pointer down) | |
 | B10 | **Performance** | Profiler, cockpit vs chase, on the target Android device. | Cockpit adds ≤ 1 extra camera render per frame. Report FPS for both | |
 
+## Controls and HUD (middle mouse, foot pedals, gear selector)
+
+Active Input Handling must include the Input System. Regenerate the scene first.
+
+| # | Test | Steps | Pass criteria | Measured |
+|---|------|-------|---------------|----------|
+| C1 | **Middle-drag steering** | Hold the wheel button on the road, drag right ~1/3 screen height, release. Drag right again. | Wheel ≈ +180° after the first drag and stays on release. Second drag adds to it. Bottom indicator shows "· 드래그" while held | |
+| C2 | **Scroll wheel ignored** | Scroll up/down over the road and over buttons. | Nothing changes | |
+| C3 | **Middle-click UI** | Middle-click P/R/N/D (with S held), 1인칭, 전조등, the turn arrows. Hold middle on 왼쪽 보기 in the cockpit. | Each acts **once** per click. Look holds while held and stops when you slide off. **No steering** while clicking or holding UI | |
+| C4 | **Drag across UI** | Start a middle drag on the road and move it across the gear selector. | Keeps steering. No gear change | |
+| C5 | **Keyboard + mouse together** | Hold W (or a foot-pedal key) while middle-drag steering. | Both apply at once | |
+| C6 | **No camera movement** | Steer with middle drag and the keyboard in both views. | Camera never rotates from drags (only Z/X or look buttons) | |
+| C7 | **Left click unchanged** | Left-click buttons. Left-drag on the road. | Buttons work. Left drag does **not** steer (default) | |
+| C8 | **Touchscreen** (device) | Steer with one finger, hold a touch pedal with another, tap a gear with a third. | All three work together. Only the first road finger steers | |
+| P1 | **Calibration: brake** | Keyboard on the floor. Pause → 발 페달 키보드 보정 → 시작. Step on the middle area 5×. | Dots fill one per press (foot bounce within 0.2 s counts once). Detected keys listed | |
+| P2 | **Calibration: accelerator** | Step on the right area 5×. | Review shows two key lists. Keys pressed equally by both pedals reported as excluded | |
+| P3 | **Validation** | In review, step on each area, then both. Press an unmapped key. | Live bars follow the feet. Both pressed → only brake, "브레이크 우선". Unmapped key listed | |
+| P4 | **Manual edit** | 브레이크 키 편집, press keys to add/remove, 편집 완료. Toggle "1회 감지 키 포함". | Lists update. A key moves between pedals instead of being in both | |
+| P5 | **Save and reload** | 저장. Stop and restart Play Mode. | Mapping still works. Wizard doesn't reopen. Source label shows "발 페달 키보드" | |
+| P6 | **Pedals while driving** | Hold S → 4 → Space → release via foot pedals. Press brake + accelerator together. | Gear selection works with foot brake. Both together → car slows, throttle bar 0 | |
+| P7 | **Reserved keys** | If a shortcut key (e.g. Space, 4, V) ended up in a pedal mapping, press it. | It acts only as a pedal | |
+| P8 | **Rollover** | Press many keys at once on the floor keyboard. | Note whether the wizard showed the rollover warning and whether the live counts drop keys | |
+| G1 | **Gear selector** | Tap R with the brake released. Then hold brake and tap R, N, D, P. Tap P at 10 km/h. | Rejections show Korean messages. Accepted gear turns blue. Physics behaves as before | |
+| H1 | **HUD** | Check every HUD element at 16:9 and 20:9 (Game view sizes), and with a notch simulator. | No overlaps. Everything inside the safe area. Indicators blink. Wiper label cycles. Mini-map follows. Pause stops time | |
+
 ## EditMode unit tests
 
 **Window → General → Test Runner → EditMode → Run All.** They cover the transmission
 interlocks, steering accumulation/clamping/self-centering/speed scaling, creep/throttle/brake
-curves, resistance signs, Ackermann symmetry and the speedometer dial mapping (`Assets/DrivingSim/Tests/EditMode`).
+curves, resistance signs, Ackermann symmetry the speedometer dial mapping, pedal calibration analysis and turn-signal auto-cancel (`Assets/DrivingSim/Tests/EditMode`).
 
 ## Tuning notes
 

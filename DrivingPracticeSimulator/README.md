@@ -57,11 +57,54 @@ project renders with the Built-in pipeline until one is assigned. To switch:
 | T | Top-down camera (test view) |
 | Z / X (held) | Look left / right in the cockpit |
 | [ / ] | Cockpit field of view − / + (saved between sessions) |
-| F1 | Toggle the telemetry overlay |
+| , / . | Left / right turn signal (cancels itself after the turn) |
+| H / L / K | Hazard lights / headlights / wipers (off → intermittent → low → high) |
+| Esc | Pause menu |
+| F1 | Toggle the developer telemetry overlay (hidden by default) |
 | Backspace | Reset the vehicle to the spawn point (P, parking brake on) |
 
 To pull away: hold **S** → press **4** (D) → **Space** (release parking brake) → release **S**.
 The car creeps forward. Add **W** to accelerate.
+
+## Driving controls beyond the keyboard
+
+**Drag steering (PUBG-style).** Drag horizontally anywhere that isn't a button to turn the steering
+wheel. Rotation accumulates across drags and isn't reset on release. One screen height of drag =
+540° (`TouchSteeringController.degreesPerScreenHeight`). Works with touchscreen fingers and the
+**middle mouse button** (wheel click) as a simulated touch. Left-mouse drag steering is off by
+default (`PointerInputHub.leftMouseAsTouch`) so left-click keeps its normal desktop behavior.
+The scroll wheel is never used.
+
+**Middle mouse on UI.** Unity UI ignores middle clicks. `MiddleMouseUIRouter` sends a
+middle press that starts on a control to that control as one left-button touch (its own pointer
+id). `HoldButton` ignores the input module's own middle-button events, so a click fires once.
+A pointer that starts on UI never steers. A drag that starts on the road keeps steering even when
+it crosses a button.
+
+**Foot-pedal keyboard.** A keyboard on the floor works as brake (middle area) and accelerator
+(right area). The first run opens a calibration wizard (also in **Pause → 발 페달 키보드 보정**):
+5 brake presses, 5 accelerator presses, then a live test with manual key editing. Keys seen in
+≥ 2 of 5 presses are mapped. Keys claimed equally by both pedals are dropped. A possible
+rollover limit is flagged. The mapping is saved to `persistentDataPath/pedal_key_mapping.json`.
+More keys down = more pedal (1 key 35 %, 3+ keys 100 %; `FootPedalKeyboardInput`). Brake always
+wins: while braking, throttle is zero. Mapped keys are reserved, so they never trigger shortcuts.
+
+**Touch pedals** (bottom-right) stay available: pressure follows the finger's height on the pedal.
+
+**Brake override.** `VehicleInputRouter` cuts throttle whenever the merged brake input is ≥ 0.05,
+whatever the source (keyboard W+S, touch, foot pedals).
+
+## Driving HUD
+
+Built in code by `DrivingHUDController` (1920×1080 reference, safe-area aware):
+pause + speed/gear (top-left), turn indicators + navigation (top-center), camera buttons +
+mini-map (top-right), vertical **P R N D** selector with the selected gear in blue (right edge),
+touch pedals (bottom-right), headlights / hazard / wipers + brake and accelerator bars + input
+source (bottom-left), look-left/right + steering indicator (bottom-center). Tapping a gear asks the
+transmission, so the brake and speed interlocks still apply and a rejection shows in Korean.
+Navigation is a placeholder (distance and arrow to the parking bays) until the road network exists.
+Placeholder art is generated rounded rectangles and triangles. Create a
+**DrivingSim → HUD Theme** asset to swap in vector sprites and colors.
 
 ## Camera views
 
@@ -71,7 +114,7 @@ The car creeps forward. Add **W** to accelerate.
 | First-person cockpit | **V** / on-screen button | Driver's eye on the left seat. Dashboard, steering wheel driven by the real steering angle, speedometer needle + digital speed, P R N D, parking-brake lamp, three mirrors |
 | Top-down | **T** | Test view for parking and turning radius |
 
-In the cockpit, the on-screen **◀ 왼쪽 / 오른쪽 ▶** buttons (or Z/X) turn the head while held,
+In the cockpit, the on-screen **왼쪽 보기 / 오른쪽 보기** buttons (or Z/X) turn the head while held,
 and **− / +** set the field of view (50–85°, default 65°). Look controls are buttons, never a drag,
 so they can't interfere with drag steering. The right side mirror is outside the default field of
 view (as in a real car you glance at it). Use look-right or a wider FOV.
@@ -125,6 +168,15 @@ drag forces on the Rigidbody. Velocity is never set, except to zero on reset.
 All parameters live in `CompactSedan_PhysicsConfig.asset`. With *Live Apply In Editor* on,
 Inspector edits apply during Play Mode. **These values are prototype tuning, not calibrated
 to any real car.**
+
+## Editor configuration required
+
+- **Project Settings → Player → Active Input Handling = Input System Package (New)** or **Both**.
+  Drag steering, the middle-mouse touch, the foot-pedal keyboard and the calibration wizard need
+  the Input System. Without it, only the keyboard driving keys work.
+- Re-run **DrivingSim → Create Physics Test Scene** to get the HUD, pointer hub, pedals and lights.
+- On first Play the calibration wizard opens. Press **건너뛰기** to skip; it won't open again
+  (PlayerPrefs `DrivingSim.PedalWizardDone`).
 
 ## Known gaps / not verified
 

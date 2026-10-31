@@ -57,9 +57,10 @@ namespace DrivingSim.UI
             overlay.fovLabel = MakeText("FovValue", fovGroup, new Vector2(140f, 84f), "시야 65°", font, 30);
             overlay.fovUpButton = MakeButton("FovUp", fovGroup, new Vector2(84f, 84f), "+", font, out _);
 
-            // Look buttons on the screen edges at mid height, away from the pedal zones at the bottom.
-            overlay.lookLeftButton = MakeEdgeButton("LookLeft", safe.transform, new Vector2(0f, 0.62f), new Vector2(24f, 0f), "◀ 왼쪽", font);
-            overlay.lookRightButton = MakeEdgeButton("LookRight", safe.transform, new Vector2(1f, 0.62f), new Vector2(-24f, 0f), "오른쪽 ▶", font);
+            // Look buttons flank the steering indicator at the bottom center, clear of the
+            // right-edge gear selector and the pedal zones.
+            overlay.lookLeftButton = MakeBottomButton("LookLeft", safe.transform, new Vector2(-340f, 24f), "< 왼쪽 보기", font);
+            overlay.lookRightButton = MakeBottomButton("LookRight", safe.transform, new Vector2(340f, 24f), "오른쪽 보기 >", font);
 
             // At runtime AddComponent already ran OnEnable before the references above existed.
             if (Application.isPlaying && overlay.isActiveAndEnabled) overlay.Subscribe();
@@ -123,7 +124,8 @@ namespace DrivingSim.UI
             if (FindFirstObjectByType<EventSystem>() != null) return;
             var eventSystem = new GameObject("EventSystem", typeof(EventSystem));
 #if ENABLE_INPUT_SYSTEM
-            eventSystem.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
+            var module = eventSystem.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
+            module.AssignDefaultActions(); // point, click, scroll; don't rely on editor-only Reset()
 #else
             eventSystem.AddComponent<StandaloneInputModule>();
 #endif
@@ -163,17 +165,24 @@ namespace DrivingSim.UI
             var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(HoldButton));
             go.transform.SetParent(parent, false);
             ((RectTransform)go.transform).sizeDelta = size;
+            var image = go.GetComponent<Image>();
+            image.sprite = HudTheme.Default.RoundedPanel;
+            image.type = Image.Type.Sliced;
+            image.color = HudTheme.Default.panel;
+            var hold = go.GetComponent<HoldButton>();
+            hold.normalColor = HudTheme.Default.panel;
+            hold.pressedColor = HudTheme.Default.accentBlue;
             text = MakeText("Label", go.transform, size, label, font, 32);
             text.raycastTarget = false;
             return go.GetComponent<HoldButton>();
         }
 
-        static HoldButton MakeEdgeButton(string name, Transform parent, Vector2 anchor, Vector2 offset, string label, Font font)
+        static HoldButton MakeBottomButton(string name, Transform parent, Vector2 offset, string label, Font font)
         {
-            HoldButton button = MakeButton(name, parent, new Vector2(190f, 110f), label, font, out _);
+            HoldButton button = MakeButton(name, parent, new Vector2(210f, 90f), label, font, out _);
             var rect = (RectTransform)button.transform;
-            rect.anchorMin = rect.anchorMax = anchor;
-            rect.pivot = new Vector2(anchor.x, 0.5f);
+            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0f);
+            rect.pivot = new Vector2(0.5f, 0f);
             rect.anchoredPosition = offset;
             return button;
         }

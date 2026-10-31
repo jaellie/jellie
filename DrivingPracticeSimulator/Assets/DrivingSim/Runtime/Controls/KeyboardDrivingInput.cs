@@ -61,6 +61,11 @@ namespace DrivingSim.Controls
             if (KeyboardShim.WasPressed(KeyId.E)) frame.GearStep += 1;
 
             if (KeyboardShim.WasPressed(KeyId.Space)) frame.ToggleParkingBrake = true;
+            if (KeyboardShim.WasPressed(KeyId.Comma)) frame.TurnSignalToggle = -1;
+            if (KeyboardShim.WasPressed(KeyId.Period)) frame.TurnSignalToggle = 1;
+            if (KeyboardShim.WasPressed(KeyId.H)) frame.ToggleHazard = true;
+            if (KeyboardShim.WasPressed(KeyId.L)) frame.ToggleHeadlights = true;
+            if (KeyboardShim.WasPressed(KeyId.K)) frame.CycleWipers = true;
             if (KeyboardShim.WasPressed(KeyId.Backspace)) frame.ResetVehicle = true;
         }
 

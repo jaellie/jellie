@@ -34,10 +34,23 @@ namespace DrivingSim.TestBed
             PrimitiveUtil.Create(PrimitiveType.Cube, "Cabin", bodyGroup, new Vector3(0f, 1.23f, -0.2f), new Vector3(width - 0.2f, 0.52f, 2.3f), glass, true);
             PrimitiveUtil.Create(PrimitiveType.Cube, "Roof", bodyGroup, new Vector3(0f, 1.5f, -0.25f), new Vector3(width - 0.26f, 0.04f, 1.9f), paint, false);
             float front = length * 0.5f, side = width * 0.5f - 0.25f;
-            PrimitiveUtil.Create(PrimitiveType.Cube, "HeadLight_L", bodyGroup, new Vector3(-side, 0.75f, front), new Vector3(0.35f, 0.12f, 0.04f), head, false);
-            PrimitiveUtil.Create(PrimitiveType.Cube, "HeadLight_R", bodyGroup, new Vector3(side, 0.75f, front), new Vector3(0.35f, 0.12f, 0.04f), head, false);
+            Material headOff = materials.Get("HeadLightOff", Palette.HeadLightOff);
+            Renderer headL = PrimitiveUtil.Create(PrimitiveType.Cube, "HeadLight_L", bodyGroup, new Vector3(-side, 0.75f, front), new Vector3(0.35f, 0.12f, 0.04f), headOff, false).GetComponent<Renderer>();
+            Renderer headR = PrimitiveUtil.Create(PrimitiveType.Cube, "HeadLight_R", bodyGroup, new Vector3(side, 0.75f, front), new Vector3(0.35f, 0.12f, 0.04f), headOff, false).GetComponent<Renderer>();
             PrimitiveUtil.Create(PrimitiveType.Cube, "TailLight_L", bodyGroup, new Vector3(-side, 0.8f, -front), new Vector3(0.35f, 0.12f, 0.04f), tail, false);
             PrimitiveUtil.Create(PrimitiveType.Cube, "TailLight_R", bodyGroup, new Vector3(side, 0.8f, -front), new Vector3(0.35f, 0.12f, 0.04f), tail, false);
+
+            // Turn indicators on all four corners (amber, lit by VehicleAccessories).
+            Material indicatorOff = materials.Get("IndicatorOff", Palette.IndicatorOff);
+            Material indicatorOn = materials.Get("IndicatorOn", Palette.IndicatorOn);
+            float corner = width * 0.5f - 0.05f;
+            Renderer Indicator(string id, float x, float z) => PrimitiveUtil.Create(PrimitiveType.Cube, id, bodyGroup,
+                new Vector3(x, 0.72f, z), new Vector3(0.12f, 0.08f, 0.06f), indicatorOff, false).GetComponent<Renderer>();
+            Renderer[] leftIndicators = { Indicator("Indicator_FL", -corner, front), Indicator("Indicator_RL", -corner, -front) };
+            Renderer[] rightIndicators = { Indicator("Indicator_FR", corner, front), Indicator("Indicator_RR", corner, -front) };
+
+            Light[] headlightLights = { CreateHeadlight("HeadlightBeam_L", t, new Vector3(-side, 0.75f, front + 0.05f)),
+                                        CreateHeadlight("HeadlightBeam_R", t, new Vector3(side, 0.75f, front + 0.05f)) };
 
             float halfBase = config.wheelbaseM * 0.5f;
             float halfTrack = config.trackWidthM * 0.5f;
@@ -55,7 +68,28 @@ namespace DrivingSim.TestBed
 
             VehicleController controller = root.AddComponent<VehicleController>();
             controller.Configure(config, wheels);
+
+            VehicleAccessories accessories = root.AddComponent<VehicleAccessories>();
+            accessories.Configure(controller, leftIndicators, rightIndicators, indicatorOn, indicatorOff,
+                new[] { headL, headR }, head, headOff, headlightLights);
             return controller;
+        }
+
+        static Light CreateHeadlight(string name, Transform parent, Vector3 localPosition)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            go.transform.localPosition = localPosition;
+            go.transform.localRotation = Quaternion.Euler(8f, 0f, 0f);
+            Light light = go.AddComponent<Light>();
+            light.type = LightType.Spot;
+            light.range = 35f;
+            light.spotAngle = 60f;
+            light.intensity = 2f;
+            light.color = new Color(1f, 0.96f, 0.85f);
+            light.shadows = LightShadows.None;
+            light.enabled = false;
+            return light;
         }
 
         static VehicleWheel CreateWheel(string id, Transform root, Transform colliderGroup, Vector3 localPosition, Axle axle, bool isLeft,
