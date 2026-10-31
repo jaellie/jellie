@@ -188,3 +188,51 @@ Designed startup views keep `PlaceholderLanguageView.Create` and `PlaceholderDis
 Unity compilation, tests, asset import and Android interaction are still unverified. See `UI_HANDOFF.md` for full changed-file inventory, dependencies, review steps, and exact integration requirements.
 
 Concurrent update note: Claude’s `c143105` adds the future map-system contract and startup service/test changes. This branch remains based on `69692df`; preserve those newer changes and reconcile this appendix with §7a when integration is separately approved. Menu DTOs here are presentation proposals pending the gameplay-owned IMapSelectionView/catalog API.
+
+## Integration readiness — approved UI foundation (2026-10-31)
+
+The Minimal Automotive × Premium UI direction is approved **as a foundation, not final visual art**. Preserve the premium menu styling. During driving, the detailed first-person cockpit and Korean 3D road environments must be the visual focus; overlays should be quiet, minimal and functional. Evaluate duplicate speed/gear displays, steering indication, mini-map prominence and panel opacity inside the real cockpit before proposing further presentation changes. Do not remove controls, warnings or change input behavior as part of that evaluation. Standalone flat mockups and the illustrative road backdrop are not the final game aesthetic; no more standalone mockup work is scheduled.
+
+### What is implemented versus illustrative
+
+| Area | Handoff status |
+|---|---|
+| HUD/camera/pause presentation, theme, icons, Korean/English font and safe-area layout | Implemented in C#/assets; Unity compilation, import, layout and touch behavior unverified |
+| Language and notice views | Implemented behind the existing interfaces/factories; same required/review modes and once-only explicit callbacks; runtime unverified |
+| Pedal setup screen | Presentation only; existing capture, analysis, validation, safety and saving logic unchanged |
+| Main menu, settings, environment catalog and separate Free Driving/Missions views | Implemented presentation and host events; not connected to actual map loading or mission execution |
+| UI preview harness | Implemented isolated, unsaved review scene; every environment/mission launch deliberately unavailable; not run here |
+| Additional environments, mission scenarios, detailed cockpit/environment art | Not implemented by Codex; catalog entries are examples, not playable content |
+| Flat road background, sample speed/telemetry, schematic mini-map and PNG layouts | Static illustrations only; not Unity/gameplay evidence |
+| EnvironmentDiagram.png | Real 2D UI asset, but its depicted route is a placeholder; never use it as navigable map/lane data |
+
+### Dependencies and entry points
+
+- Existing project/Unity target: `6000.0.85f1`. Keep the existing uGUI and Input System setup. No new runtime package, asmdef, rendering pipeline or CI dependency was introduced; existing package resolution still needs Unity verification.
+- Import `Resources/UI/MidnightTheme.asset`, the supplied `.meta` files, ten sprite PNGs, and `Resources/UI/Fonts/JellieUI-Regular.otf` with `OFL.txt`. The theme loads through `HudTheme.Default`; resource paths and GUID references must stay intact. The font is a static OFL Noto Sans CJK KR derivative, not a TMP asset.
+- All original 143 localization keys remain; total is 177. The 34 additive `menu.*` / `environments.*` keys were explicitly approved by the user. Full Korean/English values: `Tools/ui-design/localization-additions.md`.
+- `StartupFlow` still owns saved language, notice version/time/language and input permission. Keep one driving core/EventSystem/startup flow. Reuse the existing ILanguageSelectionView/IDisclaimerView contract; public placeholder type/factory names are retained for compatibility.
+- `PracticeMenuView.Create(startupFlow)` creates presentation at runtime. Supply catalog records with `SetCatalog`, subscribe to `LaunchRequested`, and show the menu with `ShowHome`/`ShowEnvironments`. Claude owns ID validation, availability, map/environment loading, mission runners, loading concurrency and failure feedback. Call `Hide()` only when the host accepts; on rejection call `ClearLaunchPending()`.
+- Canvas ordering: menu **60**, calibration **50**, startup views **100/101**. Before opening the existing pedal wizard from menu settings, the host must hide the menu (otherwise its opaque shield covers the wizard). Let calibration acquire its own input blocker; do not release it on the menu's behalf. The host must arrange the return screen after calibration closes. Language/notice views can overlay the menu through the existing StartupFlow entry points.
+- The existing disabled pause-menu Main menu entry has not been wired into a new game flow. Do not silently add scene loading or assume a MapCatalog/IMapSelectionView implementation exists.
+- The isolated **DrivingSim → UI → Preview Automotive Menus** action is a review harness, not an environment scene or production entry scene. It must not be inserted into additive environment scenes, which must stay free of vehicle/input/camera/HUD/EventSystem/StartupFlow duplicates.
+
+### Exact overlap and contract review
+
+The UI implementation commit is `6f003f4873419585308c7c57839068734e3878c7`, based on `69692dff2d341a942d9ef6a22dd9b3bb7a67c853`. Claude's branch was independently observed at `c143105c93925de9c318630bba463aeae3a12fb1` during this handoff review.
+
+- **Confirmed textual conflicts:** INTEGRATION.md and PROGRESS.md each had one conflicting region in a read-only three-way text comparison against the common base. No merge result was applied. Preserve Claude's §7a map-system plan, branch ownership, new service APIs and verification notes, then incorporate the UI appendix/foundation decision and handoff status. Do not replace either newer document wholesale with the older snapshot.
+- **No other changed-path overlap at those commits.** Claude changed StartupFlow, DisclaimerService, LocalizationService, added StartupFlowPlayModeTests and updated ROADMAP.md. The UI diff does not modify those files; retain those newer gameplay/service/test/planning changes during a separately approved integration.
+- **Future API/namespace coordination:** Claude's planned MapDefinition/MapCatalog/IMapSelectionView and map.*/mode.*/mission.* namespaces are not implemented by this UI. PracticeEnvironmentOption/PracticeMissionOption are presentation DTOs pending an adapter. Approved UI keys must not be silently renamed or substituted for gameplay IDs. Final environments/mission names come from the authoritative catalog; the preview's parking-area example is not a commitment to a new playable map.
+- Review the existing startup and new UI tests together once integrated. The six new UI tests construct uGUI event objects through reflection to avoid changing the existing test assembly definition; that test path has not run.
+
+### Validation and handoff sequence
+
+1. **Before merge approval:** review the feature diff and handoff; verify Claude's baseline in Unity independently. This document authorizes no merge/rebase or gameplay-branch update.
+2. **After separate integration approval:** retain the latest gameplay branch's protected systems and startup tests, reconcile the two documentation conflicts, and apply only the approved UI changes in the chosen integration workflow. Keep the exact notice body/version and saved acknowledgment behavior.
+3. Import and compile in Unity; run the existing EditMode/PlayMode suites, StartupFlow tests and AutomotiveUIPresentationTests. A CI skip path is not a compile/test pass.
+4. Review the HUD in the actual first-person cockpit with mirrors and instruments visible. Check forward/side-road visibility, duplicate information, warning legibility, glare/contrast, held glance/FOV controls, multi-touch pedals/gear/steering and non-interactive raycasts before tuning appearance. No protected steering/calibration/vehicle parameters may be changed.
+5. Check Korean/English fitting at 1280×720, 1920×1080, 2400×1080; both landscape orientations, notch/navigation insets, resize and first-frame safe-area behavior. Verify actual device text sizes/touch targets (48dp goal) and performance; reference-unit fitting does not prove these.
+6. Record real Unity cockpit captures and actual test/device results for the next UI refinement pass. Do not use the static flat images as evidence of final game quality.
+
+**Verification boundary:** source/asset checks pass against the reviewed base (63 protected files unchanged, original key preservation, exact bilingual notice bodies, placeholders, glyph coverage and theme references). Required/review acknowledgment guards were reviewed in source. Unity compilation, importer correctness, callbacks in execution, Android builds/touch/readability/FPS and combined-branch compatibility remain unverified. Full file inventory and integration sample: UI_HANDOFF.md and Tools/ui-design/changed-files.txt.

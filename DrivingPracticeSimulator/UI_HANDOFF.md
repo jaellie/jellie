@@ -13,6 +13,22 @@ Claude's branch advanced to `c143105c93925de9c318630bba463aeae3a12fb1` after thi
 The newer contract plans MapDefinition/MapCatalog/IMapSelectionView and canonical map/mode/mission namespaces. They are not implemented yet. This UI's DTOs and user-approved menu/environments keys are presentation handoff proposals, not replacements for that future gameplay API; Claude should adapt/review the catalog interface and final map labels. The isolated preview's sample catalog is illustrative and deliberately unavailable.
 The route diagram is a 2D menu illustration, not new road geometry or RoadNetwork data.
 
+## Current integration decision — foundation, not final art
+
+The user approved the Minimal Automotive UI as a foundation. Preserve premium menus and let the detailed 3D cockpit/Korean roads dominate driving. Current HUD sizing, duplicated instrument readouts and opacity await review in the actual Unity cockpit. No further standalone flat mockups are planned. This handoff update changes documentation only; implementation/assets remain at UI code commit `6f003f4`.
+
+| Implemented (written, not Unity-verified) | Illustrative or pending |
+|---|---|
+| HUD/camera/pause styling; safe-area helpers; theme, font and icons | Final cockpit-integrated appearance and device usability |
+| Language/required-notice/review views; calibration layout | Runtime acknowledgment/input/modal verification |
+| Main menu/settings/catalog and distinct mode-selection views | Map loader/catalog adapter, mission execution, pause-menu navigation integration |
+| Isolated UI harness, disabled example launches; six UI tests | Playable extra maps/missions; actual Unity test results |
+| Decorative menu diagram asset | Route content, static road/mini-map/speed images and flat layout illustrations |
+
+**Review findings to carry to Claude:** INTEGRATION.md and PROGRESS.md each have one confirmed textual conflict with `c143105` in a read-only comparison (no merge applied); all other changed paths are disjoint. Preserve Claude's newer startup/service/test/ROADMAP changes. Future MapCatalog/IMapSelectionView and localization namespace alignment still need a gameplay adapter review. Menu canvas 60 would cover calibration canvas 50: hide the menu before opening calibration, then let the host restore the appropriate screen on return. Loading concurrency/failure handling belongs to the host; the view's debounce is not a loading transaction manager.
+
+**Handoff index:** INTEGRATION.md → integration-readiness section for dependencies, conflict resolutions and validation order; Tools/ui-design/changed-files.txt → every added/modified file with A/M status against `69692df`; Tools/ui-design/localization-additions.md → all 34 added keys with Korean/English values. No source or asset files changed during this handoff-only review.
+
 ## Implemented presentation
 
 - Midnight navy surfaces, ice-blue menu actions and selected details, teal progress/confirmation. Active gears stay blue; engaged parking brake stays red.
@@ -79,7 +95,12 @@ menu.LaunchRequested += request =>
     // On acceptance, call menu.Hide() at the appropriate point in that flow.
     // On rejection/failure, call menu.ClearLaunchPending() and present localized feedback.
 };
-menu.PedalSetupRequested += calibration.Open;
+menu.PedalSetupRequested += () =>
+{
+    menu.Hide(); // Menu canvas 60 would otherwise cover calibration canvas 50.
+    calibration.Open(); // The existing wizard owns its own blocker/validation/save behavior.
+    // Host restores the appropriate menu after calibration closes; no new return flow is assumed.
+};
 menu.ShowHome();
 ```
 

@@ -380,3 +380,12 @@ Unity Personal + game-ci/cli v0.1.72 기준(소스 코드로 확인). **비밀�
 - Static checks passed for 63 unchanged protected files, key/placeholder/notice consistency, current glyph coverage and all modern Hangul syllables, theme GUIDs, and preservation of non-presentation methods. This is **not** a Unity compile.
 - Six UI presentation tests added to existing PlayMode assembly, **not run**. Unity compilation, all Unity tests, importer behavior, Android touch/readability/performance remain **not run/unverified**.
 - Full inventory, new assets/dependencies, key list, review steps and host API: `UI_HANDOFF.md`. Static preview images are labeled **not Unity**.
+
+
+### Codex integration handoff clarification — 2026-10-31
+
+- Minimal Automotive UI approved as a **foundation**, not final visual art. Preserve premium menus; prioritize the actual 3D cockpit and Korean roads. Further HUD refinement waits for in-Unity cockpit review; no more standalone flat mockups are scheduled.
+- Documentation-only handoff review: implemented-versus-illustrative inventory, complete A/M file list, and all 34 added localization keys with Korean/English values. See INTEGRATION.md, UI_HANDOFF.md and Tools/ui-design/localization-additions.md.
+- Read-only three-way comparison found one textual conflict each in INTEGRATION.md and PROGRESS.md with Claude's c143105; no other changed-path overlaps at the reviewed commits. No merge was applied. Preserve Claude's newer protected services/startup tests and ROADMAP plan during separately approved integration.
+- Host integration must hide the menu (canvas 60) before opening calibration (canvas 50). Scene loading, mission running, concurrency, availability and return navigation remain host responsibilities.
+- Static preservation checks rerun; Unity compilation/runtime, test execution and Android behavior remain **unverified**. This update changes no gameplay, UI implementation or asset files.
