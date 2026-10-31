@@ -1,0 +1,17 @@
+{
+    "name": "DrivingSim.Runtime",
+    "rootNamespace": "DrivingSim",
+    "references": [
+        "DrivingSim.Core",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

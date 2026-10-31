@@ -1,0 +1,19 @@
+{
+    "name": "DrivingSim.Editor",
+    "rootNamespace": "DrivingSim.EditorTools",
+    "references": [
+        "DrivingSim.Core",
+        "DrivingSim.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
