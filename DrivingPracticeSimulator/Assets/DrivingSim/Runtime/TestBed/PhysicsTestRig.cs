@@ -1,5 +1,6 @@
 using DrivingSim.Cameras;
 using DrivingSim.Controls;
+using DrivingSim.Core;
 using DrivingSim.Diagnostics;
 using DrivingSim.Startup;
 using DrivingSim.UI;
@@ -9,16 +10,33 @@ using UnityEngine;
 namespace DrivingSim.TestBed
 {
     /// <summary>Assembles environment, vehicle, input, camera and diagnostics. Shared by the editor menu and the runtime bootstrap.</summary>
+    /// <summary>Which world the rig is placed in. Physics tests use the flat pad so results stay comparable.</summary>
+    public enum RigEnvironment { TestGround, TestTown }
+
     public static class PhysicsTestRig
     {
         public static readonly Vector3 SpawnPosition = new Vector3(0f, 0.05f, 2f);
 
-        public static VehicleController Assemble(VehiclePhysicsConfig config, IMaterialSource materials)
+        public static VehicleController Assemble(VehiclePhysicsConfig config, IMaterialSource materials,
+            RigEnvironment environment = RigEnvironment.TestGround)
         {
-            TestEnvironmentBuilder.Build(materials);
+            Vector3 spawn = SpawnPosition;
+            Quaternion spawnRotation = Quaternion.identity;
+            TownLayoutData layout = environment == RigEnvironment.TestTown ? TownGreyboxBuilder.LoadLayout() : null;
+            if (layout != null && layout.spawns != null && layout.spawns.Length > 0)
+            {
+                TownGreyboxBuilder.Build(layout, materials);
+                TownSpawn s = layout.spawns[0];
+                spawn = new Vector3(s.position[0], s.position[1] + 0.05f, s.position[2]);
+                spawnRotation = Quaternion.Euler(0f, s.yawDeg, 0f);
+            }
+            else
+            {
+                TestEnvironmentBuilder.Build(materials);
+            }
             EnsureLight();
 
-            VehicleController vehicle = PrimitiveVehicleBuilder.Build(config, materials, SpawnPosition, Quaternion.identity);
+            VehicleController vehicle = PrimitiveVehicleBuilder.Build(config, materials, spawn, spawnRotation);
             CockpitRig cockpit = CockpitBuilder.Build(vehicle, config, materials);
 
             VehicleAccessories accessories = vehicle.GetComponent<VehicleAccessories>();

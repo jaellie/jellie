@@ -33,7 +33,7 @@ namespace DrivingSim.Tests
             PlayerPrefs.SetInt("DrivingSim.PedalWizardDone", 1);
             StartupFlow.SuppressForAutomatedTests = true;
             var before = new HashSet<GameObject>(SceneManager.GetActiveScene().GetRootGameObjects());
-            PhysicsTestRig.Assemble(ScriptableObject.CreateInstance<VehiclePhysicsConfig>(), new RuntimeMaterialSource());
+            PhysicsTestRig.Assemble(ScriptableObject.CreateInstance<VehiclePhysicsConfig>(), new RuntimeMaterialSource(), RigEnvironment.TestTown);
             foreach (GameObject root in SceneManager.GetActiveScene().GetRootGameObjects())
                 if (!before.Contains(root)) created.Add(root);
             for (int i = 0; i < 60; i++) yield return new WaitForFixedUpdate();

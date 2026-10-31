@@ -11,6 +11,7 @@ namespace DrivingSim.TestBed
     {
         [Tooltip("Optional. If empty, a config with default values is created in memory.")]
         [SerializeField] VehiclePhysicsConfig config;
+        [SerializeField] RigEnvironment environment = RigEnvironment.TestTown;
 
         void Awake()
         {
@@ -20,7 +21,7 @@ namespace DrivingSim.TestBed
                 config = ScriptableObject.CreateInstance<VehiclePhysicsConfig>();
                 config.name = "VehiclePhysicsConfig (runtime defaults)";
             }
-            PhysicsTestRig.Assemble(config, new RuntimeMaterialSource());
+            PhysicsTestRig.Assemble(config, new RuntimeMaterialSource(), environment);
         }
     }
 }

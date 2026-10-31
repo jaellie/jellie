@@ -195,3 +195,10 @@ startup flow exist once and are never copied per map.
 2. `MapDefinition` / `MapCatalog` / `IMapEnvironment` + free driving on the practice ground.
 3. Mission framework + first practice-ground missions.
 4. Urban map with Phases C–E traffic; then residential and suburban maps.
+
+## Long-term worlds: Yeosu, Hawaiʻi, San Francisco, Sci-Fi (planned, not started)
+
+See **WORLDS.md**: real elevation and coastlines for the three real-world maps, gameplay-designed roads and modular
+assets on top, a fictional Sci-Fi world, licensed datasets with sources and accuracy limits. Gate: the Test Town
+vertical slice must be playable on Android first. The map types above may become districts inside these worlds
+(user decision pending).

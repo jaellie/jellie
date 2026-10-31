@@ -20,8 +20,8 @@ If an asset can't meet a rule, raise it before producing it.
 - Scene: Metric, Unit Scale 1.0, Length meters. Apply all rotation and scale (Ctrl+A) before export;
   object **origins** carry the pivot positions listed below.
 - FBX export: Selected objects · Apply Scalings **FBX All** · Forward **−Z Forward** · Up **Y Up** ·
-  **Apply Unit** on · **Use Space Transform** on · **Apply Transform** on · Mesh: Apply Modifiers on,
-  Smoothing **Face**, Tangent Space off · Armature/animation off · **Embed Textures off** · Path Mode Auto.
+  **Apply Unit** on · **Use Space Transform** on · **Apply Transform** on · Path Mode **Strip** (no absolute paths) · Mesh: Apply Modifiers on,
+  Smoothing **Face**, Tangent Space off · Armature/animation off · **Embed Textures off**.
 - Unity enforces its side automatically for everything under `Assets/DrivingSim/Art/`
   (`Editor/ArtImportPostprocessor.cs`): scale 1, Bake Axis Conversion, no cameras or lights, no auto colliders,
   MikkTSpace tangents, material slots kept by name.
@@ -54,7 +54,7 @@ Compact sedan, left-hand drive (Korean market).
 |---|---|---|
 | `SM_Sedan_Exterior.fbx` | `Body_Shell_LOD0/1/2`, `Glass_Exterior`, `Lamp_HeadLight_L/R`, `Lamp_TailLight_L/R`, `Lamp_BrakeLight_L/R`, `Lamp_Indicator_FL/FR/RL/RR`, `Body_MirrorHousing_L/R` | vehicle root (0,0,0) |
 | `SM_Sedan_Wheel.fbx` | `Wheel_LOD0/1` (one wheel, used 4×) | hub center; axle along X; tire + rim, **left-wheel orientation** (gameplay mirrors for the right side) |
-| `SM_Sedan_Interior.fbx` | `Interior_Dashboard`, `Interior_Seats`, `Interior_Doors`, `Interior_Headliner`, `Interior_Pillars`, `Interior_Console`, `Glass_Interior`, `SteeringWheel`, `Cluster_Panel`, `Cluster_Needle`, `Cluster_Display`, `Interior_Wiper_L/R`, `MirrorGlass_Rear/Left/Right`, `Interior_MirrorHousing_Rear`, `Lamp_Dash_Indicator_L/R`, `Lamp_Dash_ParkingBrake` | vehicle root, except the animated parts in §2 |
+| `SM_Sedan_Interior.fbx` | `Interior_Dashboard`, `Interior_Seats`, `Interior_Doors`, `Interior_Headliner`, `Interior_Pillars`, `Interior_Console`, `Glass_Interior`, `SteeringWheel`, `Cluster_Panel`, `Cluster_Needle_Speed`, `Cluster_Needle_Tach` (optional), `Cluster_Display`, `Interior_Wiper_L/R`, `MirrorGlass_Rear/Left/Right`, `Interior_MirrorHousing_Rear`, `Lamp_Dash_Indicator_L/R`, `Lamp_Dash_ParkingBrake` | vehicle root, except the animated parts in §2 |
 
 - Lamps are separate objects so gameplay can switch their material (off/on emission).
 - No colliders, rigs, animations or scripts in vehicle FBXs.
@@ -70,7 +70,7 @@ Compact sedan, left-hand drive (Korean market).
 | Sightlines | windshield clear ±35° horizontally from the eye except A-pillars (apparent width ≤ 0.08 m); dash top ≤ 1.06 m at z ≥ 0.80 | the road must stay visible at 65° FOV |
 | **SteeringWheel** | origin at rim center (−0.37, 0.90, 0.12); rim plane tilted **22°**: its normal (driver → dash) is (0, −0.375, 0.927); rim radius 0.19 m, grip ≈ 0.03 m; **top-center marker at 12 o'clock** | gameplay rotates it about that normal: + = clockwise as the driver sees it, up to ±540° |
 | **Cluster_Panel** | center (−0.37, 1.09, 0.47), tilted **12°** up toward the eye, ≈ 0.40 × 0.16 m | dial center (−0.450, 1.091, 0.464) |
-| **Cluster_Needle** | origin at dial center; modeled **pointing at 90 km/h (12 o'clock)** in the dial plane | dial: 0–180 km/h over 240°, 0 at 8 o'clock (−120°), 180 at 4 o'clock (+120°); ticks every 20 km/h in the texture |
+| **Cluster_Needle_Speed** (alias `Cluster_Needle`) · optional **Cluster_Needle_Tach** | origins at their dial centers; modeled **pointing at 12 o'clock** in the dial plane (speed: 90 km/h) | dial: 0–180 km/h over 240°, 0 at 8 o'clock (−120°), 180 at 4 o'clock (+120°); ticks every 20 km/h in the texture |
 | **Cluster_Display** | quad ≈ 0.16 × 0.08 m, center 0.08 m right of panel center, material slot `M_ClusterDisplay` | gameplay draws speed, gear and lamps here |
 | **MirrorGlass_Rear** | quad, center (0, 1.40, 0.62), 0.26 × 0.065 m | normal points at the driver eye; UV 0–1 over the quad, U to the right as the driver sees it; slot `M_MirrorGlass` (replaced by the live image) |
 | **MirrorGlass_Left / Right** | quads, centers (∓1.00, 1.02, 0.55), 0.16 × 0.10 m | same rules; housings `Body_MirrorHousing_L/R` |
@@ -141,6 +141,7 @@ EditMode tests (`TownLayoutTests`) guard its invariants. Layout changes go throu
 |---|---|
 | Shaders | `lit` (URP/Lit: vehicle, cockpit, hero surfaces) · `simplelit` (URP/Simple Lit: roads, buildings, props) · `unlit` (URP/Unlit: background, sign faces). No custom shaders, Shader Graph, tessellation, height or detail maps |
 | Texture set | `T_<Asset>_BaseMap` (sRGB, A = alpha only when needed) · `_Normal` (OpenGL / +Y, Blender's default) · `_Mask` (linear: **R metallic, G AO, A smoothness**) · `_Emission` (sRGB). PNG, 8-bit, power of two |
+| Mask and scalars | with a `maskMap`, URP Lit takes metallic from the mask (R) and multiplies smoothness by the mask alpha, so set `metallic: 1.0, smoothness: 1.0`; without a mask the two values are used directly |
 | Sizes | ≤ 1024² (one 2048² cockpit atlas allowed: `T_Cockpit_*`). Android ASTC 6×6, mipmaps on (set by Unity) |
 | Texel density | road/sidewalk 256 px/m (tiling) · buildings 128 px/m · cockpit ≈ 1024 px/m |
 | Transparency | `surface: "transparent"` only for glass and signal lenses. Glass alpha ≤ 0.15, `doubleSided: true` allowed for glass only. No alpha-blended foliage |

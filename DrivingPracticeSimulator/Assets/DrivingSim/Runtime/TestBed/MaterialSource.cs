@@ -46,12 +46,48 @@ namespace DrivingSim.TestBed
             return material;
         }
 
+        /// <summary>
+        /// Sets the flat color. Name prefixes add behavior: "Emissive_" glows in its own color (lamps, signs);
+        /// "Glass_" is transparent using the color's alpha (URP Lit and Built-in Standard).
+        /// </summary>
         public static void ApplyColor(Material material, Color color)
         {
             if (material.HasProperty("_BaseColor")) material.SetColor("_BaseColor", color);
             if (material.HasProperty("_Color")) material.SetColor("_Color", color);
             if (material.HasProperty("_Smoothness")) material.SetFloat("_Smoothness", 0.15f);
             if (material.HasProperty("_Glossiness")) material.SetFloat("_Glossiness", 0.15f);
+            material.enableInstancing = true;
+
+            string name = material.name ?? "";
+            if (name.StartsWith("Emissive_") && material.HasProperty("_EmissionColor"))
+            {
+                material.EnableKeyword("_EMISSION");
+                material.SetColor("_EmissionColor", color * 1.6f);
+                material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
+            }
+            if (name.StartsWith("Glass_")) MakeTransparent(material);
+        }
+
+        static void MakeTransparent(Material m)
+        {
+            if (m.HasProperty("_Surface"))
+            {
+                // URP Lit
+                m.SetFloat("_Surface", 1f);
+                m.SetFloat("_Blend", 0f);
+                m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            }
+            else if (m.HasProperty("_Mode"))
+            {
+                // Built-in Standard: Transparent mode
+                m.SetFloat("_Mode", 3f);
+                m.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+            }
+            if (m.HasProperty("_SrcBlend")) m.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+            if (m.HasProperty("_DstBlend")) m.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+            if (m.HasProperty("_ZWrite")) m.SetFloat("_ZWrite", 0f);
+            m.SetOverrideTag("RenderType", "Transparent");
+            m.renderQueue = (int)RenderQueue.Transparent;
         }
     }
 
