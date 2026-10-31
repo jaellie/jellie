@@ -189,6 +189,9 @@ const T = {
   't.pbrake':['주차 브레이크가 걸려 있어요','The parking brake is on'],
   't.pbrakeOff':['주차 브레이크를 풀었어요','Parking brake released'],
   't.pbrakeOn':['주차 브레이크를 걸었어요','Parking brake set'],
+  'set.gain':['핸들 감도','Steering sensitivity'],
+  'set.gain.d':['손가락으로 원을 한 바퀴 그리면 핸들이 얼마나 도는지 정해요.','How far the wheel turns when your finger draws one full circle.'],
+  'gain.low':['낮음 · ½바퀴','Low · ½ turn'],'gain.mid':['보통 · ¾바퀴','Medium · ¾ turn'],'gain.high':['실제 · 1바퀴','Real · 1 turn'],
   't.curb':['연석에 닿았어요 · 핸들을 반대로 돌리세요','You hit the curb · Steer the other way'],
   'pause.title':['일시정지','Paused'],'pause.resume':['계속하기','Resume'],'pause.restart':['처음부터','Restart'],
   'pause.settings':['설정','Settings'],'pause.pedals':['발 페달 설정','Foot pedal setup'],'pause.menu':['메인 메뉴','Main menu'],
@@ -247,7 +250,7 @@ const S = {
   lang:'ko', screen:'language', prev:'home',
   hud:'minimal', halo:true, minimap:true, view:'cockpit', fov:65,
   gear:'P', pbrake:true, ind:0, hazard:false, lights:false, wipers:0, drawer:false, camPop:false,
-  speed:0, steer:0, brake:0, accel:0, travel:0, heading:0, lat:5.1, yaw:0, onCurb:false, paused:false, dialog:null,
+  speed:0, steer:0, brake:0, accel:0, travel:0, heading:0, lat:5.1, yaw:0, onCurb:false, steerT:0, delta:0, gain:0.5, paused:false, dialog:null,
   env:'test_town', mode:'free', setTab:'hud', noticeMode:'required',
   cal:{step:0, b:0, a:0, demoBad:false, tb:0, ta:0, checks:[false,false,false]},
   loadP:0
@@ -619,6 +622,7 @@ function settings() {
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
         ${hudChoice('minimal')}${hudChoice('practice')}
       </div></div>`
+    + row(t('set.gain'), t('set.gain.d'), `<div class="seg" style="width:860px">${[[0.5,'gain.low'],[0.75,'gain.mid'],[1,'gain.high']].map(([g,k]) => `<button class="${S.gain===g?'on':''}" data-act="gain" data-v="${g}" style="font-size:32px">${t(k)}</button>`).join('')}</div>`)
     + row(t('set.halo'), t('set.halo.d'), `<button class="toggle ${S.halo?'on':''}" data-act="halo" aria-pressed="${S.halo}" aria-label="${t('set.halo')}"></button>`)
     + row(t('set.map'), '', `<button class="toggle ${S.minimap?'on':''}" data-act="minimap" aria-pressed="${S.minimap}" aria-label="${t('set.map')}"></button>`);
   if (S.setTab === 'cam') body = row(t('set.cam.default'), '', `<div class="seg" style="width:620px"><button class="${S.view==='cockpit'?'on':''}" data-act="view" data-v="cockpit">${t('hud.cockpit')}</button><button class="${S.view==='chase'?'on':''}" data-act="view" data-v="chase">${t('hud.chase')}</button></div>`)
@@ -895,10 +899,10 @@ function act(a, v, el) {
     case 'mode': S.mode = v; render(); break;
     case 'pause': go('pause'); break;
     case 'resume': go(S.hud === 'practice' ? 'practice' : 'drive'); break;
-    case 'restart': Object.assign(S, {speed:0, steer:0, gear:'P', pbrake:true, travel:0, heading:0, lat:5.1, yaw:0}); go(S.hud === 'practice' ? 'practice' : 'drive'); break;
+    case 'restart': Object.assign(S, {speed:0, steer:0, gear:'P', pbrake:true, travel:0, heading:0, lat:5.1, yaw:0, steerT:0, delta:0}); go(S.hud === 'practice' ? 'practice' : 'drive'); break;
     case 'askMenu': S.dialog = 'menu'; render(); break;
     case 'dlgCancel': S.dialog = null; render(); break;
-    case 'dlgMenu': Object.assign(S, {speed:0, steer:0, gear:'P', pbrake:true, travel:0, lat:5.1, yaw:0}); go('home'); break;
+    case 'dlgMenu': Object.assign(S, {speed:0, steer:0, gear:'P', pbrake:true, travel:0, lat:5.1, yaw:0, steerT:0, delta:0}); go('home'); break;
     case 'gear': shift(v); break;
     case 'pbrake': S.pbrake = !S.pbrake; toast(S.pbrake ? 't.pbrakeOn' : 't.pbrakeOff', 'info'); updateHud(); break;
     case 'ind': S.hazard = false; S.ind = S.ind === +v ? 0 : +v; updateHud(); break;
@@ -914,6 +918,7 @@ function act(a, v, el) {
     case 'readNotice': S.noticeMode = 'review'; go('notice'); break;
     case 'hudMode': S.hud = v; render(); break;
     case 'halo': S.halo = !S.halo; render(); break;
+    case 'gain': S.gain = +v; render(); break;
     case 'minimap': S.minimap = !S.minimap; render(); break;
     case 'calNext': S.cal.step = Math.min(6, S.cal.step + 1); render(); break;
     case 'calBack': S.cal.step = Math.max(0, S.cal.step - 1); render(); break;
@@ -956,11 +961,18 @@ function bindSteering() {
     const p = toStage(e), dx = p.x - steerPtr.x, dy = p.y - steerPtr.y;
     if (Math.hypot(dx, dy) < 18) return;
     const h = Math.atan2(dy, dx);
-    if (steerPtr.h !== null) {
+    if (steerPtr.h === null) steerPtr.h = h;
+    else {
+      // Same rules as the Unity gesture: wrap, ignore jumps over 100°, smooth the stroke direction (EMA 0.6),
+      // then scale by the sensitivity setting (finger circle → wheel turn).
       let d = h - steerPtr.h; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI;
-      if (Math.abs(d) < 1.75) S.steer = Math.max(-540, Math.min(540, S.steer + d * 180 / Math.PI));
+      if (Math.abs(d) < 1.75) {
+        const step = d * 0.4;
+        steerPtr.h += step;
+        S.steerT = Math.max(-540, Math.min(540, S.steerT + step * 180 / Math.PI * S.gain));
+      }
     }
-    steerPtr.h = h; steerPtr.x = p.x; steerPtr.y = p.y;
+    steerPtr.x = p.x; steerPtr.y = p.y;
     const halo = document.getElementById('halo');
     if (halo) { halo.style.left = p.x + 'px'; halo.style.top = p.y + 'px'; }
   });
@@ -1035,7 +1047,13 @@ function simulate(dt) {
   if (S.brake > 0) { const d = 28 * dt * S.brake; v = Math.abs(v) <= d ? 0 : v - Math.sign(v) * d; }
   S.speed = v;
   // Kinematic bicycle model: ±540° at the wheel = ±35° at the front wheels, wheelbase 2.65 m.
-  const ms = v / 3.6, delta = (S.steer / 540) * 35 * Math.PI / 180;
+  // Wheel follows the finger through a 70 ms smoother; front wheels are speed-sensitive (100% up to 20 km/h,
+  // 45% at 100 km/h) and slew-limited to 120°/s, as in the Unity SteeringModel.
+  S.steer += (S.steerT - S.steer) * Math.min(1, dt / 0.07);
+  const kmh = Math.abs(v), sscale = kmh <= 20 ? 1 : kmh >= 100 ? 0.45 : 1 - (kmh - 20) / 80 * 0.55;
+  const targetDelta = S.steer / 540 * 35 * sscale;
+  S.delta += Math.max(-120 * dt, Math.min(120 * dt, targetDelta - S.delta));
+  const ms = v / 3.6, delta = S.delta * Math.PI / 180;
   S.yaw = Math.max(-1.2, Math.min(1.2, S.yaw + ms * Math.tan(delta) / 2.65 * dt));
   S.travel += ms * Math.cos(S.yaw) * dt;
   S.lat += ms * Math.sin(S.yaw) * dt;
@@ -1045,7 +1063,7 @@ function simulate(dt) {
     if (!S.onCurb) toast('t.curb');
     S.onCurb = true;
   } else if (Math.abs(S.lat) < limit - 0.3) S.onCurb = false;
-  if (!steerPtr && Math.abs(v) > 2) S.steer *= Math.max(0, 1 - dt * 1.0);
+  if (!steerPtr && Math.abs(v) > 2) S.steerT *= Math.max(0, 1 - dt * 1.0);
   S.heading = S.yaw;
 }
 
