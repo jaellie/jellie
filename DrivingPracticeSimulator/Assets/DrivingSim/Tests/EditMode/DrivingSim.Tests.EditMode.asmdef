@@ -4,6 +4,7 @@
     "references": [
         "DrivingSim.Core",
         "DrivingSim.Editor",
+        "DrivingSim.Runtime",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],

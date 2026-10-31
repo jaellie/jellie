@@ -14,6 +14,13 @@ namespace DrivingSim.Tests
         }
 
         [Test]
+        public void VehicleArt_HasEveryBindingTheGameNeeds()
+        {
+            if (ArtLocator.FindVehicleArt().IsEmpty) Assert.Ignore("No vehicle art yet.");
+            CollectionAssert.IsEmpty(ArtLocator.ValidateBindings());
+        }
+
+        [Test]
         public void MaterialManifest_BuildsWithoutProblems()
         {
             if (!System.IO.File.Exists(ArtMaterialBuilder.ManifestPath)) Assert.Ignore("No materials.json yet.");

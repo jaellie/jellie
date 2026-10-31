@@ -16,12 +16,12 @@ namespace DrivingSim.TestBed
         public const float DriverX = -0.37f;
         public static readonly Vector3 EyeLocal = new Vector3(DriverX, 1.22f, -0.30f);
 
-        static readonly Vector3 WheelCenter = new Vector3(DriverX, 0.90f, 0.12f);
-        const float WheelTiltDeg = 22f;
+        internal static readonly Vector3 WheelCenter = new Vector3(DriverX, 0.90f, 0.12f);
+        internal const float WheelTiltDeg = 22f;
         const float WheelRadius = 0.19f;
 
-        static readonly Vector3 ClusterCenter = new Vector3(DriverX, 1.09f, 0.47f);
-        const float ClusterTiltDeg = 12f;
+        internal static readonly Vector3 ClusterCenter = new Vector3(DriverX, 1.09f, 0.47f);
+        internal const float ClusterTiltDeg = 12f;
 
         public static CockpitRig Build(VehicleController vehicle, VehiclePhysicsConfig config, IMaterialSource materials)
         {
@@ -228,7 +228,7 @@ namespace DrivingSim.TestBed
                 Quaternion.LookRotation(direction, Vector3.up));
         }
 
-        static TextMesh Label(string name, Transform parent, Vector3 position, string text, float characterSize, Color color, Font font)
+        internal static TextMesh Label(string name, Transform parent, Vector3 position, string text, float characterSize, Color color, Font font)
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);

@@ -19,7 +19,7 @@ namespace DrivingSim.TestBed
         public static readonly Vector3 SpawnPosition = new Vector3(0f, 0.05f, 2f);
 
         public static VehicleController Assemble(VehiclePhysicsConfig config, IMaterialSource materials,
-            RigEnvironment environment = RigEnvironment.TestGround)
+            RigEnvironment environment = RigEnvironment.TestGround, VehicleArtSet art = default)
         {
             Vector3 spawn = SpawnPosition;
             Quaternion spawnRotation = Quaternion.identity;
@@ -39,6 +39,15 @@ namespace DrivingSim.TestBed
 
             VehicleController vehicle = PrimitiveVehicleBuilder.Build(config, materials, spawn, spawnRotation);
             CockpitRig cockpit = CockpitBuilder.Build(vehicle, config, materials);
+            if (!art.IsEmpty)
+            {
+                // Codex's models replace the greybox visuals; physics, colliders and input stay as they are.
+                var report = new System.Collections.Generic.List<string>();
+                CockpitRig artCockpit = VehicleArtBinder.BindInterior(vehicle, art.Interior, report);
+                if (artCockpit != null) cockpit = artCockpit;
+                VehicleArtBinder.BindExterior(vehicle, art.Exterior, art.Wheel, report);
+                foreach (string line in report) Debug.LogWarning("[VehicleArt] " + line);
+            }
 
             VehicleAccessories accessories = vehicle.GetComponent<VehicleAccessories>();
 
