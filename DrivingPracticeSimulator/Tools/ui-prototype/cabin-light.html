@@ -851,7 +851,12 @@ function journey() {
 /* ---------------- interaction binding ---------------- */
 const holds = {};
 function bind() {
-  root.querySelectorAll('[data-act]').forEach(el => el.addEventListener('click', e => { e.stopPropagation(); act(el.dataset.act, el.dataset.v, el); }));
+  // Driving controls act on pointer DOWN, like the Unity HoldButton. Browsers send `click` only for the
+  // primary pointer, so a second finger tapping a gear while the first holds the brake never "clicked".
+  root.querySelectorAll('[data-act]').forEach(el => {
+    if (el.hasAttribute('data-ctl')) el.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); act(el.dataset.act, el.dataset.v, el); });
+    else el.addEventListener('click', e => { e.stopPropagation(); act(el.dataset.act, el.dataset.v, el); });
+  });
   root.querySelectorAll('[data-hold]').forEach(el => {
     const k = el.dataset.hold;
     const down = e => { e.preventDefault(); e.stopPropagation(); try { el.setPointerCapture(e.pointerId); } catch (_) {} holds[k] = true; el.classList.add('down'); onHold(k, true); };
