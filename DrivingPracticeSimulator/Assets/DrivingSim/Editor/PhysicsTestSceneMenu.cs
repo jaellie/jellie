@@ -60,7 +60,7 @@ namespace DrivingSim.EditorTools
             EnsureFolder(Path.GetDirectoryName(ScenePath).Replace('\\', '/'));
 
             EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
-            VehicleController vehicle = PhysicsTestRig.Assemble(config, new AssetMaterialSource(MaterialFolder));
+            VehicleController vehicle = PhysicsTestRig.Assemble(config, new AssetMaterialSource(MaterialFolder), RigEnvironment.TestTown);
 
             EditorSceneManager.SaveScene(vehicle.gameObject.scene, ScenePath);
             AddToBuildSettings(ScenePath);

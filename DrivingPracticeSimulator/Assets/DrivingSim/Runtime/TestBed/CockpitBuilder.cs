@@ -59,6 +59,19 @@ namespace DrivingSim.TestBed
             Box("PassengerSeatBack", t, new Vector3(0.37f, 1.2f, -0.78f), new Vector3(0.5f, 0.48f, 0.1f), trim);
             Box("PassengerHeadrest", t, new Vector3(0.37f, 1.5f, -0.8f), new Vector3(0.26f, 0.16f, 0.09f), trim);
 
+            // Visible cabin shell (greybox until Codex's interior): windshield glass and header, headliner,
+            // door panels below the window line, B-pillars. The exterior glass box is invisible from inside.
+            Material glassMat = materials.Get("Glass_Windshield", new Color(0.62f, 0.76f, 0.86f, 0.10f));
+            // Windshield spans the A-pillars: bottom (y 0.97, z 0.95) to top (y 1.48, z 0.68), leaning back ~28°.
+            Box("Windshield", t, new Vector3(0f, 1.225f, 0.815f), new Vector3(1.52f, 0.578f, 0.004f), glassMat, Quaternion.Euler(-27.9f, 0f, 0f));
+            Box("WindshieldHeader", t, new Vector3(0f, 1.49f, 0.66f), new Vector3(1.5f, 0.05f, 0.09f), interior);
+            Box("Headliner", t, new Vector3(0f, 1.465f, -0.35f), new Vector3(1.52f, 0.025f, 2.0f), trim);
+            Box("DoorPanel_L", t, new Vector3(-0.78f, 0.80f, -0.40f), new Vector3(0.05f, 0.40f, 1.9f), interior);
+            Box("DoorPanel_R", t, new Vector3(0.78f, 0.80f, -0.40f), new Vector3(0.05f, 0.40f, 1.9f), interior);
+            Box("Armrest_L", t, new Vector3(-0.73f, 0.92f, -0.30f), new Vector3(0.08f, 0.05f, 0.5f), trim);
+            Box("BPillar_L", t, new Vector3(-0.79f, 1.23f, -0.75f), new Vector3(0.07f, 0.46f, 0.11f), interior);
+            Box("BPillar_R", t, new Vector3(0.79f, 1.23f, -0.75f), new Vector3(0.07f, 0.46f, 0.11f), interior);
+
             Transform wheelSpin = BuildSteeringWheel(t, wheelMat, interior, accent);
             BuildCluster(t, gaugeFace, tick, needleMat, dash, out Transform needle, out TextMesh speed, out TextMesh gear, out TextMesh parkingBrake);
 
