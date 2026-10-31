@@ -91,8 +91,10 @@ namespace DrivingSim.TestBed
             // First-launch gate (language, mandatory notice). Placeholder screens until the final design is assigned.
             StartupFlow startup = new GameObject("StartupFlow").AddComponent<StartupFlow>();
             PedalCalibrationWizard calibration = PedalCalibrationWizard.Create(footPedals, theme);
-            DrivingHUDController.Create(theme, vehicle, accessories, router, footPedals, touchSteering, mobilePedals, calibration, minimap, startup);
-            CameraControlsOverlay.Create(cameraController);
+            // Cabin Light HUD (camera controls live in its camera popover; CameraControlsOverlay is no longer created).
+            DrivingHUDController hud = DrivingHUDController.Create(theme, vehicle, accessories, router, footPedals, touchSteering,
+                mobilePedals, calibration, minimap, startup, cameraController);
+            if (layout != null) hud.SetGuidance(Vector3.zero); // Practice HUD: distance to the Test Town intersection
             EnsureEventSystemSettings();
 
             vehicle.gameObject.SetActive(true);

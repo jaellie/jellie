@@ -65,6 +65,8 @@ namespace DrivingSim.Controls
 
         public bool IsSteering => activePointer != NoPointer;
         public int ActivePointerId => activePointer;
+        /// <summary>Screen position of the steering finger (pixels), valid while <see cref="IsSteering"/>. Read-only, for UI feedback.</summary>
+        public Vector2 ActivePointerPixels { get; private set; }
         public PointerSource ActiveSource { get; private set; }
 
         /// <summary>Ring center in screen pixels.</summary>
@@ -113,6 +115,7 @@ namespace DrivingSim.Controls
                 if (p.Id != activePointer) continue;
 
                 seen = true;
+                ActivePointerPixels = p.Position;
                 switch (mode)
                 {
                     case SteeringGestureMode.CircularAnywhere: delta += trace.Sample(p.Position.x, p.Position.y); break;

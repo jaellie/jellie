@@ -987,6 +987,197 @@
       "key": "toast.menuUnavailable",
       "ko": "메인 메뉴를 열 수 없습니다.",
       "en": "Can't open the main menu right now."
+    },
+    {
+      "key": "hud.vehicle",
+      "ko": "차량",
+      "en": "Vehicle",
+      "note": "Drawer button for lights, hazards and wipers; fits a 124-unit square"
+    },
+    {
+      "key": "hud.on",
+      "ko": "켜짐",
+      "en": "On"
+    },
+    {
+      "key": "hud.off",
+      "ko": "꺼짐",
+      "en": "Off"
+    },
+    {
+      "key": "hud.speed",
+      "ko": "속도",
+      "en": "SPEED",
+      "note": "Practice HUD label"
+    },
+    {
+      "key": "hud.steer",
+      "ko": "핸들",
+      "en": "STEERING",
+      "note": "Practice HUD label"
+    },
+    {
+      "key": "hud.parkingBrake.short",
+      "ko": "주차",
+      "en": "PARK",
+      "note": "Under the (P) glyph on the parking-brake button"
+    },
+    {
+      "key": "hud.guide.intersection",
+      "ko": "{0:F0} m 앞 교차로 · 신호를 확인하세요",
+      "en": "Intersection in {0:F0} m · Check the signal",
+      "note": "Practice guidance placeholder"
+    },
+    {
+      "key": "hud.guide.free",
+      "ko": "자유 주행 중",
+      "en": "Free driving"
+    },
+    {
+      "key": "pause.settings",
+      "ko": "설정",
+      "en": "Settings"
+    },
+    {
+      "key": "pause.where",
+      "ko": "{0} · 자유 주행",
+      "en": "{0} · Free driving",
+      "note": "{0} = map name"
+    },
+    {
+      "key": "pause.confirmMenu.title",
+      "ko": "메인 메뉴로 갈까요?",
+      "en": "Go to the main menu?"
+    },
+    {
+      "key": "pause.confirmMenu.body",
+      "ko": "지금 주행은 저장되지 않아요.",
+      "en": "This drive won't be saved."
+    },
+    {
+      "key": "settings.title",
+      "ko": "설정",
+      "en": "Settings"
+    },
+    {
+      "key": "settings.tab.language",
+      "ko": "언어와 고지",
+      "en": "Language & notice"
+    },
+    {
+      "key": "settings.tab.hud",
+      "ko": "주행 화면",
+      "en": "Driving HUD"
+    },
+    {
+      "key": "settings.tab.camera",
+      "ko": "카메라",
+      "en": "Camera"
+    },
+    {
+      "key": "settings.tab.pedals",
+      "ko": "발 페달",
+      "en": "Foot pedals"
+    },
+    {
+      "key": "settings.language",
+      "ko": "언어",
+      "en": "Language"
+    },
+    {
+      "key": "settings.notice",
+      "ko": "고지 사항",
+      "en": "Notice"
+    },
+    {
+      "key": "settings.notice.hint",
+      "ko": "언제든 다시 읽을 수 있어요.",
+      "en": "You can read it again anytime."
+    },
+    {
+      "key": "settings.notice.read",
+      "ko": "다시 읽기",
+      "en": "Read again"
+    },
+    {
+      "key": "settings.hud.minimal",
+      "ko": "최소",
+      "en": "Minimal"
+    },
+    {
+      "key": "settings.hud.minimal.d",
+      "ko": "조작 버튼만 보여요. 속도와 기어는 계기판에서 봐요.",
+      "en": "Controls only. Read speed and gear on the dashboard."
+    },
+    {
+      "key": "settings.hud.practice",
+      "ko": "연습",
+      "en": "Practice"
+    },
+    {
+      "key": "settings.hud.practice.d",
+      "ko": "속도, 핸들 각도, 페달 입력, 미니맵을 함께 보여줘요.",
+      "en": "Adds speed, steering angle, pedal input and a mini-map."
+    },
+    {
+      "key": "settings.sensitivity",
+      "ko": "핸들 감도",
+      "en": "Steering sensitivity"
+    },
+    {
+      "key": "settings.sensitivity.d",
+      "ko": "손가락으로 원을 한 바퀴 그릴 때 핸들이 도는 양이에요.",
+      "en": "How far the wheel turns when your finger draws one full circle."
+    },
+    {
+      "key": "settings.sensitivity.low",
+      "ko": "낮음 · ½바퀴",
+      "en": "Low · ½ turn"
+    },
+    {
+      "key": "settings.sensitivity.normal",
+      "ko": "보통 · ¾바퀴",
+      "en": "Normal · ¾ turn"
+    },
+    {
+      "key": "settings.sensitivity.realistic",
+      "ko": "실제 · 1바퀴",
+      "en": "Realistic · 1 turn"
+    },
+    {
+      "key": "settings.halo",
+      "ko": "조향 표시",
+      "en": "Steering halo"
+    },
+    {
+      "key": "settings.halo.d",
+      "ko": "핸들을 돌릴 때 손가락 아래에 원이 나타나요.",
+      "en": "A ring appears under your finger while you steer."
+    },
+    {
+      "key": "settings.minimap",
+      "ko": "미니맵 (연습 화면)",
+      "en": "Mini-map (Practice HUD)"
+    },
+    {
+      "key": "settings.camera.default",
+      "ko": "기본 시점",
+      "en": "Default view"
+    },
+    {
+      "key": "settings.camera.fov",
+      "ko": "시야각",
+      "en": "Field of view"
+    },
+    {
+      "key": "settings.pedals.status",
+      "ko": "현재 상태",
+      "en": "Current status"
+    },
+    {
+      "key": "settings.pedals.setup",
+      "ko": "발 페달 다시 설정",
+      "en": "Set up foot pedals"
     }
   ]
 }

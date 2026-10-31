@@ -5,16 +5,20 @@ using DrivingSim.Localization;
 using DrivingSim.Startup;
 using DrivingSim.Vehicle;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace DrivingSim.UI
 {
+    public enum ToastKind { Info, Warning, Safety }
+
     /// <summary>
-    /// Player-facing driving HUD (presentation only; it reads gameplay components and calls their
-    /// public methods). Layout, 1920×1080 reference, inside the safe area:
-    /// top-left pause + navigation · top-center turn indicators · top-right camera
-    /// buttons + mini-map · right edge P/R/N/D · bottom-right touch pedals · bottom-left speed/gear, lights +
-    /// pedal status · bottom-center look buttons + steering indicator. Drags on non-button areas still steer.
+    /// "Cabin Light" driving HUD (approved design; prototype: Tools/ui-prototype/cabin-light.html).
+    /// The windshield stays clear: controls live at the screen edges. Speed and gear are read from the 3D
+    /// cluster in the cockpit; the optional Practice HUD adds speed/gear, steering angle, pedal input, guidance
+    /// and a mini-map. Light marks state (selected gear = ice, indicators = amber, brake = red, accelerator = teal).
+    /// Presentation only: it calls public gameplay methods, so all interlocks and safety rules still decide.
+    /// Steering by drawing circles keeps working anywhere that isn't a control (only controls are raycast targets).
     /// </summary>
     public class DrivingHUDController : MonoBehaviour
     {
@@ -27,91 +31,79 @@ namespace DrivingSim.UI
         [SerializeField] PedalCalibrationWizard calibration;
         [SerializeField] MinimapCamera minimap;
         [SerializeField] StartupFlow startupFlow;
-
-        [Header("Navigation (placeholder until the road network exists)")]
-        [Tooltip("strings.json key of the destination name.")]
-        public string destinationNameKey = "nav.parkingArea";
-        public Vector3 destination = new Vector3(-14.5f, 0f, 17.5f);
-        [Min(1f)] public float arrivalRadiusM = 4f;
+        [SerializeField] CameraController cameraController;
 
         [Header("Touch pedals")]
         public bool showTouchPedals = true;
 
-        [Header("Steering ring")]
-        [Tooltip("Show the compact wheel glyph inside the steering ring (the ring outline always shows in circular mode).")]
-        public bool showSteeringWheelGlyph = true;
+        [Header("Guidance (Practice HUD; a placeholder until routes and missions exist)")]
+        public bool guidanceEnabled;
+        public Vector3 guidanceTarget;
+        [Tooltip("strings.json key with {0:F0} = distance in meters.")]
+        public string guidanceKey = "hud.guide.intersection";
 
-        // Built references
-        [SerializeField] Text speedText;
-        [SerializeField] Text gearText;
-        [SerializeField] Image turnLeftIcon;
-        [SerializeField] Image turnRightIcon;
-        [SerializeField] HoldButton turnLeftButton;
-        [SerializeField] HoldButton turnRightButton;
-        [SerializeField] Text navText;
-        [SerializeField] RectTransform navArrow;
-        [SerializeField] HoldButton parkingBrakeButton;
-        [SerializeField] Text parkingBrakeLabel;
-        [SerializeField] HoldButton headlightButton;
-        [SerializeField] HoldButton hazardButton;
-        [SerializeField] HoldButton wiperButton;
-        [SerializeField] Text wiperLabel;
-        [SerializeField] Image brakeBar;
-        [SerializeField] Image acceleratorBar;
-        [SerializeField] Text pedalSourceText;
-        [SerializeField] Image brakeLamp;
-        [SerializeField] Image acceleratorLamp;
-        [SerializeField] RectTransform steeringRing;
-        [SerializeField] Image steeringRingImage;
-        [SerializeField] RectTransform steeringDeadZone;
-        [SerializeField] RectTransform steeringGlyph;
-        [SerializeField] RectTransform steeringMarker;
-        [SerializeField] Text steeringText;
-        [SerializeField] RectTransform carMarker;
+        // ---- built references ----
+        [SerializeField] RectTransform canvasRect, frame;
+        [SerializeField] HoldButton pauseButton, turnLeftButton, turnRightButton, cameraButton, drawerButton, parkingBrakeButton;
+        [SerializeField] Image turnLeftIcon, turnRightIcon, turnLeftLit, turnRightLit, drawerLit, cameraLit, parkingBrakeLit;
+        [SerializeField] Text parkingBrakeGlyph, parkingBrakeLabel;
+        [SerializeField] RectTransform gearThumb;
+        [SerializeField] HoldButton[] gearButtons = new HoldButton[4];
+        [SerializeField] Text[] gearLabels = new Text[4];
+        [SerializeField] GameObject drawerPanel, cameraPopover, practiceCard, guidancePill, minimapFrame, touchPedalRoot;
+        [SerializeField] HoldButton headlightTile, hazardTile, wiperTile;
+        [SerializeField] Image headlightLit, hazardLit, wiperLit;
+        [SerializeField] Text headlightState, hazardState, wiperState;
+        [SerializeField] HoldButton viewCockpit, viewChase, lookLeft, lookRight, fovDown, fovUp;
+        [SerializeField] Image viewCockpitLit, viewChaseLit;
+        [SerializeField] Text fovText;
+        [SerializeField] Text speedText, gearText, steerText, sourceText, guidanceText;
+        [SerializeField] RectTransform steerFill;
+        [SerializeField] Image brakeBar, acceleratorBar;
         [SerializeField] RawImage mapImage;
+        [SerializeField] RectTransform carMarker;
+        [SerializeField] TouchPedalButton brakePedal, acceleratorPedal;
+        [SerializeField] Image brakePedalLit, acceleratorPedalLit;
+        [SerializeField] RectTransform toastRoot;
+        [SerializeField] Image toastLit, toastIcon;
         [SerializeField] Text toastText;
-        [SerializeField] GameObject toastRoot;
-        [SerializeField] GameObject touchPedalRoot;
-        [SerializeField] HoldButton pauseButton;
-        [SerializeField] GameObject pauseMenu;
-        [SerializeField] HoldButton resumeButton;
-        [SerializeField] HoldButton restartButton;
-        [SerializeField] HoldButton calibrateButton;
-        [SerializeField] HoldButton menuButton;
-        [SerializeField] HoldButton languageButton;
-        [SerializeField] HoldButton noticeButton;
+        [SerializeField] RectTransform halo, haloMark;
+        [SerializeField] Image haloImage;
+        [SerializeField] CabinPauseMenu pauseMenu;
 
-        const float SteeringTrackHalfWidth = 190f;
+        const float SteerBarHalf = 180f;
         float toastUntil;
         int shownSpeed = -1;
         TransmissionGear shownGear = (TransmissionGear)(-1);
-        bool paused;
-        bool subscribed;
+        bool subscribed, paused, parkingToastShown;
 
         public bool IsPaused => paused;
 
         public static DrivingHUDController Create(HudTheme theme, VehicleController vehicle, VehicleAccessories accessories,
             VehicleInputRouter router, PedalInputManager footPedals, TouchSteeringController touchSteering,
-            MobilePedalController mobilePedals, PedalCalibrationWizard calibration, MinimapCamera minimap, StartupFlow startupFlow = null)
+            MobilePedalController mobilePedals, PedalCalibrationWizard calibration, MinimapCamera minimap,
+            StartupFlow startupFlow = null, CameraController cameraController = null)
         {
-            theme = theme != null ? theme : HudTheme.Default;
+            EnsureEventSystem();
             Transform safe = CreateCanvas("DrivingHUDCanvas", 5);
             var hud = safe.root.gameObject.AddComponent<DrivingHUDController>();
-            hud.theme = theme;
+            hud.theme = theme != null ? theme : HudTheme.Default;
             hud.vehicle = vehicle;
             hud.accessories = accessories;
             hud.router = router;
             hud.footPedals = footPedals;
-            hud.startupFlow = startupFlow;
             hud.touchSteering = touchSteering;
             hud.calibration = calibration;
             hud.minimap = minimap;
+            hud.startupFlow = startupFlow;
+            hud.cameraController = cameraController;
             hud.Build(safe, mobilePedals);
+            hud.pauseMenu = CabinPauseMenu.Create(hud, startupFlow, calibration, cameraController, footPedals);
             if (Application.isPlaying && hud.isActiveAndEnabled) hud.Subscribe();
             return hud;
         }
 
-        /// <summary>Screen-space canvas scaled for landscape, with a safe-area child. Returns the safe-area transform.</summary>
+        /// <summary>Screen-space canvas scaled for landscape (1080-tall reference units), with a safe-area child. Returns the safe area.</summary>
         public static Transform CreateCanvas(string name, int sortingOrder)
         {
             var canvasObject = new GameObject(name, typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
@@ -125,257 +117,316 @@ namespace DrivingSim.UI
             var safe = new GameObject("SafeArea", typeof(RectTransform));
             safe.transform.SetParent(canvasObject.transform, false);
             UIBuild.Stretch((RectTransform)safe.transform);
-            safe.AddComponent<SafeAreaFitter>(); // Apply after parenting/stretching, so the initial safe area is retained.
+            safe.AddComponent<SafeAreaFitter>(); // after parenting/stretching, so the initial safe area is retained
             return safe.transform;
         }
 
+        static void EnsureEventSystem()
+        {
+            EventSystem events = FindFirstObjectByType<EventSystem>();
+            if (events == null)
+            {
+                var go = new GameObject("EventSystem", typeof(EventSystem));
+#if ENABLE_INPUT_SYSTEM
+                go.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>().AssignDefaultActions();
+#else
+                go.AddComponent<StandaloneInputModule>();
+#endif
+                events = go.GetComponent<EventSystem>();
+            }
+            events.sendNavigationEvents = false; // a foot on the floor keyboard must not press focused buttons
+        }
+
+        // ================================================================== build
+
+        static readonly Vector2 TL = new Vector2(0f, 1f), TR = new Vector2(1f, 1f), BL = Vector2.zero, BR = new Vector2(1f, 0f), TC = new Vector2(0.5f, 1f), C = new Vector2(0.5f, 0.5f);
+
         void Build(Transform safe, MobilePedalController mobilePedals)
         {
-            safe = AutomotiveLayout.Frame(safe);
-            Font font = theme.Font;
-            Vector2 topLeft = new Vector2(0f, 1f), topRight = new Vector2(1f, 1f), top = new Vector2(0.5f, 1f);
-            Vector2 bottomLeft = Vector2.zero, bottomRight = new Vector2(1f, 0f), bottom = new Vector2(0.5f, 0f);
+            canvasRect = (RectTransform)safe.root;
+            frame = CabinStyle.Rect("Frame", safe, C, C, Vector2.zero, Vector2.zero);
+            UIBuild.Stretch(frame);
+            frame.offsetMin = new Vector2(64f, 40f);
+            frame.offsetMax = new Vector2(-64f, -40f);
 
-            // Pause + speed/gear
-            pauseButton = UIBuild.Button("Pause", safe, topLeft, topLeft, new Vector2(24f, -24f), new Vector2(96f, 96f), "II", theme, 40, out _);
-            AutomotiveLayout.DecorateButton(pauseButton, "Pause", theme, iconOnly: true);
-            RectTransform speedPanel = UIBuild.Rect("SpeedPanel", safe, bottomLeft, bottomLeft, new Vector2(24f, 268f), new Vector2(300f, 150f));
-            UIBuild.Panel(speedPanel, theme.RoundedPanel, theme.panel);
-            speedText = UIBuild.Label("Speed", speedPanel, "0", font, 78, theme.text, TextAnchor.MiddleLeft);
-            ((RectTransform)speedText.transform).offsetMin = new Vector2(24f, 50f);
-            ((RectTransform)speedText.transform).offsetMax = new Vector2(-110f, -8f);
-            speedText.fontStyle = FontStyle.Bold;
-            Text unit = UIBuild.Label("Unit", speedPanel, "km/h", font, 26, theme.textMuted, TextAnchor.LowerLeft);
-            ((RectTransform)unit.transform).offsetMin = new Vector2(26f, 14f);
-            gearText = UIBuild.Label("Gear", speedPanel, "P", font, 72, theme.iceBlue, TextAnchor.MiddleRight);
-            ((RectTransform)gearText.transform).offsetMax = new Vector2(-28f, 0f);
-            gearText.fontStyle = FontStyle.Bold;
+            BuildHalo();
 
-            // Turn indicators + navigation
-            turnLeftButton = UIBuild.Button("TurnLeft", safe, top, top, new Vector2(-80f, -24f), new Vector2(110f, 96f), "", theme, 10, out _);
-            turnLeftIcon = Icon("Arrow", turnLeftButton.transform, theme.LeftArrow, new Vector2(56f, 56f), theme.textMuted);
-            turnRightButton = UIBuild.Button("TurnRight", safe, top, top, new Vector2(80f, -24f), new Vector2(110f, 96f), "", theme, 10, out _);
-            turnRightIcon = Icon("Arrow", turnRightButton.transform, theme.RightArrow, new Vector2(56f, 56f), theme.textMuted);
+            // Top-left: pause
+            pauseButton = IconButton("Pause", frame, TL, TL, Vector2.zero, Vector2.one * CabinStyle.Touch, "Pause", UISprites.Circle, out _);
 
-            RectTransform nav = UIBuild.Rect("Navigation", safe, topLeft, topLeft, new Vector2(136f, -24f), new Vector2(350f, 96f));
-            UIBuild.Panel(nav, theme.RoundedPanel, theme.panel);
-            navArrow = UIBuild.Rect("NavArrow", nav, new Vector2(0f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(56f, 0f), new Vector2(48f, 48f));
-            var arrowImage = navArrow.gameObject.AddComponent<Image>();
-            arrowImage.sprite = UISprites.TriangleUp;
-            arrowImage.color = theme.accentBlue;
-            arrowImage.raycastTarget = false;
-            navText = UIBuild.Label("NavText", nav, "", font, 30, theme.text, TextAnchor.MiddleLeft);
-            navText.resizeTextForBestFit = true;
-            navText.resizeTextMinSize = 24;
-            navText.resizeTextMaxSize = 30;
-            ((RectTransform)navText.transform).offsetMin = new Vector2(100f, 0f);
+            // Top-center: turn signals (they double as indicator lamps)
+            turnLeftButton = IconButton("TurnLeft", frame, TC, TR, new Vector2(-12f, 0f), new Vector2(150f, CabinStyle.Touch), "TurnLeft", UISprites.TriangleLeft, out turnLeftIcon);
+            turnLeftLit = CabinStyle.AddLitEdge((RectTransform)turnLeftButton.transform, CabinStyle.Amber);
+            turnRightButton = IconButton("TurnRight", frame, TC, TL, new Vector2(12f, 0f), new Vector2(150f, CabinStyle.Touch), "TurnRight", UISprites.TriangleRight, out turnRightIcon);
+            turnRightLit = CabinStyle.AddLitEdge((RectTransform)turnRightButton.transform, CabinStyle.Amber);
 
-            // Mini-map (below the camera buttons from CameraControlsOverlay)
-            RectTransform mapFrame = UIBuild.Rect("MiniMap", safe, topRight, topRight, new Vector2(-24f, -128f), new Vector2(200f, 200f));
-            UIBuild.Panel(mapFrame, theme.RoundedPanel, theme.panelStrong);
-            RectTransform mapImageRect = UIBuild.Rect("Map", mapFrame, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(184f, 184f));
-            mapImage = mapImageRect.gameObject.AddComponent<RawImage>();
+            // Top-right: camera button, its popover and (Practice) the mini-map to its left
+            cameraButton = IconButton("Camera", frame, TR, TR, Vector2.zero, Vector2.one * CabinStyle.Touch, "Camera", UISprites.Circle, out _);
+            cameraLit = CabinStyle.AddLitEdge((RectTransform)cameraButton.transform, CabinStyle.Ice);
+            BuildCameraPopover();
+            BuildMinimap();
+
+            BuildPracticeCard();
+            BuildGuidance();
+            BuildToast();
+            BuildDrawer();
+            BuildGearGate();
+            BuildParkingBrake();
+            BuildPedals(mobilePedals);
+            ApplyHudMode();
+        }
+
+        HoldButton IconButton(string name, Transform parent, Vector2 anchor, Vector2 pivot, Vector2 pos, Vector2 size, string icon, Sprite fallback, out Image iconImage)
+        {
+            HoldButton b = CabinStyle.Button(name, parent, anchor, pivot, pos, size, null, out _);
+            iconImage = CabinStyle.Icon(icon, b.transform, Vector2.zero, 56f, CabinStyle.TextColor, fallback);
+            return b;
+        }
+
+        void BuildHalo()
+        {
+            // Transient ring under the steering finger; on the canvas root so it lines up with screen pixels.
+            halo = CabinStyle.Rect("SteeringHalo", canvasRect, C, C, Vector2.zero, new Vector2(280f, 280f));
+            halo.SetAsFirstSibling();
+            haloImage = CabinStyle.Fill(halo, CabinStyle.Ring, new Color(CabinStyle.Ice.r, CabinStyle.Ice.g, CabinStyle.Ice.b, 0.35f));
+            haloMark = CabinStyle.Rect("Mark", halo, TC, C, new Vector2(0f, -4f), new Vector2(24f, 24f));
+            CabinStyle.Fill(haloMark, CabinStyle.CircleSolid, CabinStyle.Ice);
+            halo.gameObject.SetActive(false);
+        }
+
+        void BuildCameraPopover()
+        {
+            RectTransform pop = CabinStyle.Rect("CameraPopover", frame, TR, TR, new Vector2(-150f, 0f), new Vector2(620f, 404f));
+            CabinStyle.Fill(pop, CabinStyle.Glass, Color.white, raycast: true); // blocks steering under the panel
+            cameraPopover = pop.gameObject;
+
+            RectTransform seg = CabinStyle.Rect("View", pop, TC, TC, new Vector2(0f, -24f), new Vector2(572f, 124f));
+            CabinStyle.Fill(seg, CabinStyle.Solid, new Color(0f, 0f, 0f, 0.35f));
+            viewCockpit = CabinStyle.Button("Cockpit", seg, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(8f, 0f), new Vector2(274f, 108f), "camera.toFirstPerson", out _, ButtonStyle.Ghost);
+            viewCockpitLit = CabinStyle.AddLitEdge((RectTransform)viewCockpit.transform, CabinStyle.Ice);
+            viewChase = CabinStyle.Button("Chase", seg, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(-8f, 0f), new Vector2(274f, 108f), "camera.toThirdPerson", out _, ButtonStyle.Ghost);
+            viewChaseLit = CabinStyle.AddLitEdge((RectTransform)viewChase.transform, CabinStyle.Ice);
+
+            lookLeft = CabinStyle.Button("LookLeft", pop, TL, TL, new Vector2(24f, -168f), new Vector2(278f, 104f), "camera.lookLeft", out _, ButtonStyle.Glass, 34);
+            lookRight = CabinStyle.Button("LookRight", pop, TR, TR, new Vector2(-24f, -168f), new Vector2(278f, 104f), "camera.lookRight", out _, ButtonStyle.Glass, 34);
+
+            fovDown = CabinStyle.Button("FovDown", pop, BL, BL, new Vector2(24f, 24f), new Vector2(104f, 96f), null, out _);
+            CabinStyle.Label("Minus", fovDown.transform, "−", 52, CabinStyle.TextColor);
+            fovUp = CabinStyle.Button("FovUp", pop, BR, BR, new Vector2(-24f, 24f), new Vector2(104f, 96f), null, out _);
+            CabinStyle.Label("Plus", fovUp.transform, "+", 52, CabinStyle.TextColor);
+            RectTransform fov = CabinStyle.Rect("Fov", pop, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 24f), new Vector2(340f, 96f));
+            fovText = CabinStyle.Label("Value", fov, "", CabinStyle.Caption, CabinStyle.Text2);
+            cameraPopover.SetActive(false);
+        }
+
+        void BuildMinimap()
+        {
+            RectTransform map = CabinStyle.Rect("MiniMap", frame, TR, TR, new Vector2(-150f, 0f), new Vector2(300f, 300f));
+            CabinStyle.Fill(map, CabinStyle.Glass, Color.white);
+            RectTransform img = CabinStyle.Rect("Map", map, C, C, Vector2.zero, new Vector2(276f, 276f));
+            mapImage = img.gameObject.AddComponent<RawImage>();
             mapImage.raycastTarget = false;
             if (minimap != null) mapImage.texture = minimap.Texture;
-            carMarker = UIBuild.Rect("CarMarker", mapFrame, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(26f, 32f));
-            var marker = carMarker.gameObject.AddComponent<Image>();
-            marker.sprite = theme.CarMarker;
-            marker.color = theme.accentBlue;
-            marker.raycastTarget = false;
-
-            // P/R/N/D on the right edge, under the mini-map
-            GearSelectorUI.Create(safe, vehicle, theme, new Vector2(-24f, -70f), new Vector2(100f, 86f), 8f);
-            // Parking brake directly under the selector (selector bottom = -70 - 192 in this anchor space).
-            // Needed on touch screens, and when Space has been claimed by a foot pedal.
-            parkingBrakeButton = UIBuild.Button("ParkingBrake", safe, new Vector2(1f, 0.5f), new Vector2(1f, 1f), new Vector2(-24f, -274f),
-                new Vector2(116f, 96f), Loc.T("hud.parkingBrake.engaged"), theme, 28, out parkingBrakeLabel);
-            parkingBrakeButton.pressedColor = theme.brakeRed;
-
-            // Touch pedals (alternative to the foot keyboard)
-            touchPedalRoot = UIBuild.Rect("TouchPedals", safe, bottomRight, bottomRight, new Vector2(-152f, 24f), new Vector2(344f, 260f)).gameObject;
-            TouchPedalButton brakePedal = Pedal("Brake", touchPedalRoot.transform, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(180f, 200f), "hud.brake", theme.brakeRed, font);
-            TouchPedalButton acceleratorPedal = Pedal("Accelerator", touchPedalRoot.transform, new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(150f, 260f), "hud.accelerator", theme.acceleratorGreen, font);
-            if (mobilePedals != null) mobilePedals.SetPedals(brakePedal, acceleratorPedal);
-            touchPedalRoot.SetActive(showTouchPedals);
-
-            // Lights and pedal status (bottom-left)
-            headlightButton = UIBuild.Button("Headlights", safe, bottomLeft, bottomLeft, new Vector2(24f, 24f), new Vector2(140f, 96f), Loc.T("hud.headlights"), theme, 28, out Text headlightLabel);
-            Localize(headlightLabel, "hud.headlights");
-            hazardButton = UIBuild.Button("Hazard", safe, bottomLeft, bottomLeft, new Vector2(176f, 24f), new Vector2(140f, 96f), Loc.T("hud.hazard"), theme, 28, out Text hazardLabel);
-            Localize(hazardLabel, "hud.hazard");
-            wiperButton = UIBuild.Button("Wipers", safe, bottomLeft, bottomLeft, new Vector2(328f, 24f), new Vector2(170f, 96f), Loc.T("hud.wipers"), theme, 26, out wiperLabel);
-
-            AutomotiveLayout.DecorateButton(headlightButton, "Headlights", theme, stacked: true);
-            AutomotiveLayout.DecorateButton(hazardButton, "Hazard", theme, stacked: true);
-            AutomotiveLayout.DecorateButton(wiperButton, "Wipers", theme, stacked: true);
-
-            RectTransform pedals = UIBuild.Rect("PedalStatus", safe, bottomLeft, bottomLeft, new Vector2(24f, 120f), new Vector2(474f, 124f));
-            UIBuild.Panel(pedals, theme.RoundedPanel, theme.panel);
-            brakeBar = Bar("Brake", pedals, new Vector2(20f, -22f), "hud.brake", theme.brakeRed, font);
-            acceleratorBar = Bar("Accelerator", pedals, new Vector2(20f, -58f), "hud.accelerator", theme.acceleratorGreen, font);
-            brakeLamp = Lamp("BrakeLamp", pedals, new Vector2(-28f, -22f));
-            acceleratorLamp = Lamp("AcceleratorLamp", pedals, new Vector2(-28f, -58f));
-            pedalSourceText = UIBuild.Label("Source", pedals, "", font, 20, theme.textMuted, TextAnchor.LowerRight);
-            ((RectTransform)pedalSourceText.transform).offsetMax = new Vector2(-16f, -8f);
-            ((RectTransform)pedalSourceText.transform).offsetMin = new Vector2(16f, 6f);
-
-            // Steering indicator (bottom-center, between the look buttons)
-            RectTransform steering = UIBuild.Rect("SteeringIndicator", safe, bottom, bottom, new Vector2(0f, 24f), new Vector2(440f, 90f));
-            UIBuild.Panel(steering, theme.RoundedPanel, theme.panel);
-            RectTransform track = UIBuild.Rect("Track", steering, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 12f), new Vector2(SteeringTrackHalfWidth * 2f, 8f));
-            UIBuild.Panel(track, theme.RoundedPanel, new Color(1f, 1f, 1f, 0.18f));
-            RectTransform center = UIBuild.Rect("Center", steering, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 12f), new Vector2(3f, 24f));
-            UIBuild.Panel(center, null, new Color(1f, 1f, 1f, 0.5f));
-            steeringMarker = UIBuild.Rect("Marker", steering, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 12f), new Vector2(18f, 30f));
-            UIBuild.Panel(steeringMarker, theme.RoundedPanel, theme.accentBlue);
-            steeringText = UIBuild.Label("Angle", steering, "0°", font, 24, theme.text, TextAnchor.LowerCenter);
-            ((RectTransform)steeringText.transform).offsetMin = new Vector2(0f, 6f);
-
-            // Toast
-            RectTransform toast = UIBuild.Rect("Toast", safe, top, top, new Vector2(0f, -136f), new Vector2(900f, 64f));
-            UIBuild.Panel(toast, theme.RoundedPanel, theme.panelStrong);
-            toastText = UIBuild.Label("Text", toast, "", font, 30, theme.warning);
-            toastRoot = toast.gameObject;
-            toastRoot.SetActive(false);
-
-            BuildSteeringRing(safe.root);
-            BuildPauseMenu(safe, font);
+            carMarker = CabinStyle.Rect("Car", map, C, C, Vector2.zero, new Vector2(30f, 36f));
+            Image marker = CabinStyle.Fill(carMarker, Resources.Load<Sprite>("UI/Sprites/CarMarker") ?? UISprites.TriangleUp, CabinStyle.Ice);
+            marker.preserveAspect = true;
+            minimapFrame = map.gameObject;
         }
 
-        /// <summary>
-        /// Circular steering area, drawn on the full-screen canvas so it lines up with screen pixels.
-        /// Not a raycast target: it never blocks buttons, and buttons placed over it still win.
-        /// </summary>
-        void BuildSteeringRing(Transform canvasRoot)
+        void BuildPracticeCard()
         {
-            steeringRing = UIBuild.Rect("SteeringRing", canvasRoot, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(100f, 100f));
-            steeringRing.SetAsFirstSibling();
-            steeringRingImage = steeringRing.gameObject.AddComponent<Image>();
-            steeringRingImage.sprite = UISprites.Ring;
-            steeringRingImage.raycastTarget = false;
+            RectTransform card = CabinStyle.Rect("PracticeCard", frame, TL, TL, new Vector2(0f, -160f), new Vector2(440f, 420f));
+            CabinStyle.Fill(card, CabinStyle.Glass, Color.white);
+            practiceCard = card.gameObject;
 
-            steeringDeadZone = UIBuild.Rect("DeadZone", steeringRing, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(20f, 20f));
-            var dead = steeringDeadZone.gameObject.AddComponent<Image>();
-            dead.sprite = UISprites.Ring;
-            dead.color = new Color(1f, 1f, 1f, 0.1f);
-            dead.raycastTarget = false;
+            Text eyebrow = CabinStyle.Localized("SpeedLabel", card, "hud.speed", 26, CabinStyle.Text3, TextAnchor.UpperLeft, FontStyle.Bold);
+            Place(eyebrow, 32f, -26f, 300f, 34f);
+            speedText = CabinStyle.Label("Speed", card, "0", 104, CabinStyle.TextColor, TextAnchor.LowerLeft, FontStyle.Bold);
+            Place(speedText, 28f, -60f, 240f, 110f);
+            Text unit = CabinStyle.Label("Unit", card, "km/h", 30, CabinStyle.Text2, TextAnchor.LowerLeft);
+            Place(unit, 178f, -136f, 120f, 36f);
+            gearText = CabinStyle.Label("Gear", card, "P", 100, CabinStyle.Ice, TextAnchor.LowerRight, FontStyle.Bold);
+            Place(gearText, 300f, -60f, 112f, 110f);
 
-            steeringGlyph = UIBuild.Rect("WheelGlyph", steeringRing, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(150f, 150f));
-            var rim = steeringGlyph.gameObject.AddComponent<Image>();
-            rim.sprite = UISprites.Ring;
-            rim.color = new Color(1f, 1f, 1f, 0.16f);
-            rim.raycastTarget = false;
-            RectTransform spokeH = UIBuild.Rect("Spoke", steeringGlyph, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(140f, 6f));
-            UIBuild.Panel(spokeH, null, new Color(1f, 1f, 1f, 0.12f));
-            RectTransform spokeV = UIBuild.Rect("SpokeDown", steeringGlyph, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(6f, 70f));
-            UIBuild.Panel(spokeV, null, new Color(1f, 1f, 1f, 0.12f));
-            RectTransform top = UIBuild.Rect("TopMark", steeringGlyph, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(12f, 20f));
-            UIBuild.Panel(top, null, new Color(theme.indicatorAmber.r, theme.indicatorAmber.g, theme.indicatorAmber.b, 0.6f));
+            Text steerLabel = CabinStyle.Localized("SteerLabel", card, "hud.steer", 26, CabinStyle.Text3, TextAnchor.UpperLeft, FontStyle.Bold);
+            Place(steerLabel, 32f, -196f, 200f, 34f);
+            steerText = CabinStyle.Label("SteerValue", card, "0°", 30, CabinStyle.TextColor, TextAnchor.UpperRight);
+            Place(steerText, 212f, -194f, 196f, 36f);
+            RectTransform track = CabinStyle.Rect("SteerTrack", card, TL, TL, new Vector2(40f, -246f), new Vector2(SteerBarHalf * 2f, 16f));
+            CabinStyle.Fill(track, CabinStyle.Solid, new Color(1f, 1f, 1f, 0.08f));
+            RectTransform mid = CabinStyle.Rect("Center", track, C, C, Vector2.zero, new Vector2(3f, 30f));
+            CabinStyle.Fill(mid, null, CabinStyle.Text3);
+            steerFill = CabinStyle.Rect("Fill", track, C, new Vector2(0f, 0.5f), Vector2.zero, new Vector2(0f, 16f));
+            CabinStyle.Fill(steerFill, CabinStyle.Solid, CabinStyle.Ice);
+
+            brakeBar = Bar(card, "hud.brake", -292f, CabinStyle.Red);
+            acceleratorBar = Bar(card, "hud.accelerator", -334f, CabinStyle.Teal);
+            sourceText = CabinStyle.Label("Source", card, "", 22, CabinStyle.Text3, TextAnchor.UpperLeft);
+            Place(sourceText, 32f, -372f, 380f, 40f);
+            sourceText.horizontalOverflow = HorizontalWrapMode.Wrap;
         }
 
-        void UpdateSteeringRing()
+        Image Bar(RectTransform card, string key, float y, Color color)
         {
-            if (steeringRing == null) return;
-            // The ring is the fixed visual wheel; with CircularAnywhere the gesture itself may start anywhere.
-            bool circular = touchSteering != null && touchSteering.mode != SteeringGestureMode.HorizontalDrag;
-            if (steeringRing.gameObject.activeSelf != circular) steeringRing.gameObject.SetActive(circular);
-            if (!circular) return;
-
-            // Canvas scales by height (1080 reference units), so a fraction of screen height maps directly.
-            const float referenceHeight = 1080f;
-            steeringRing.anchorMin = steeringRing.anchorMax = touchSteering.circleCenter;
-            float diameter = touchSteering.circleRadius * 2f * referenceHeight;
-            steeringRing.sizeDelta = new Vector2(diameter, diameter);
-            steeringDeadZone.sizeDelta = Vector2.one * diameter * touchSteering.deadZoneFraction;
-            steeringRingImage.color = new Color(1f, 1f, 1f, touchSteering.IsSteering ? 0.12f : 0.055f); // faint: it overlaps the road and car
-            steeringDeadZone.gameObject.SetActive(touchSteering.mode == SteeringGestureMode.Circular);
-
-            steeringGlyph.gameObject.SetActive(showSteeringWheelGlyph);
-            // UI z rotation is counter-clockwise; the wheel turns clockwise for positive angles.
-            steeringGlyph.localRotation = Quaternion.Euler(0f, 0f, -vehicle.SteeringWheelAngleDeg);
-        }
-
-        void BuildPauseMenu(Transform safe, Font font)
-        {
-            Transform modalSafe = CreateCanvas("PauseMenuCanvas", 40);
-            GameObject dim = AutomotiveLayout.Modal(modalSafe, theme, new Vector2(640f, 800f), out RectTransform card);
-            Text title = UIBuild.Label("Title", card, Loc.T("pause.title"), font, 44, theme.text, TextAnchor.UpperCenter);
-            Localize(title, "pause.title");
-            ((RectTransform)title.transform).offsetMax = new Vector2(0f, -36f);
-            title.fontStyle = FontStyle.Bold;
-
-            resumeButton = PauseButton("Resume", card, -130f, "pause.resume", font, out _);
-            restartButton = PauseButton("Restart", card, -226f, "pause.restart", font, out _);
-            calibrateButton = PauseButton("Calibrate", card, -322f, "pause.pedals", font, out _);
-            languageButton = PauseButton("Language", card, -418f, "pause.language", font, out _);
-            noticeButton = PauseButton("Notice", card, -514f, "pause.notice", font, out _);
-            menuButton = PauseButton("MainMenu", card, -610f, "pause.mainMenu", font, out _);
-            AutomotiveLayout.Primary(resumeButton, theme);
-            pauseMenu = dim;
-            pauseMenu.SetActive(false);
-        }
-
-        HoldButton PauseButton(string name, Transform card, float y, string key, Font font, out Text label)
-        {
-            Vector2 c = new Vector2(0.5f, 1f);
-            HoldButton button = UIBuild.Button(name, card, c, c, new Vector2(0f, y), new Vector2(440f, 80f), Loc.T(key), theme, 32, out label);
-            Localize(label, key);
-            return button;
-        }
-
-        static void Localize(Text text, string key) => text.gameObject.AddComponent<LocalizedText>().Key = key;
-
-        /// <summary>Small on/off lamp: lit while the pedal is logically pressed (digital), next to its amount bar.</summary>
-        Image Lamp(string name, Transform parent, Vector2 position)
-        {
-            RectTransform rect = UIBuild.Rect(name, parent, new Vector2(1f, 1f), new Vector2(0.5f, 0.5f), position, new Vector2(22f, 22f));
-            return UIBuild.Panel(rect, UISprites.Circle, new Color(1f, 1f, 1f, 0.15f));
-        }
-
-        static Image Icon(string name, Transform parent, Sprite sprite, Vector2 size, Color color)
-        {
-            RectTransform rect = UIBuild.Rect(name, parent, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, size);
-            var image = rect.gameObject.AddComponent<Image>();
-            image.sprite = sprite;
-            image.color = color;
-            image.raycastTarget = false;
-            return image;
-        }
-
-        Image Bar(string name, Transform parent, Vector2 position, string labelKey, Color color, Font font)
-        {
-            Vector2 topLeftAnchor = new Vector2(0f, 1f);
-            RectTransform labelRect = UIBuild.Rect(name + "Label", parent, topLeftAnchor, topLeftAnchor, position + new Vector2(0f, 12f), new Vector2(110f, 30f));
-            Localize(UIBuild.Label("Text", labelRect, Loc.T(labelKey), font, 22, theme.textMuted, TextAnchor.MiddleLeft), labelKey);
-            RectTransform back = UIBuild.Rect(name + "Bar", parent, topLeftAnchor, new Vector2(0f, 0.5f), position + new Vector2(110f, -4f), new Vector2(200f, 14f));
-            UIBuild.Panel(back, theme.RoundedPanel, new Color(1f, 1f, 1f, 0.15f));
-            RectTransform fillRect = UIBuild.Rect("Fill", back, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), Vector2.zero, new Vector2(200f, 14f));
-            Image fill = UIBuild.Panel(fillRect, theme.RoundedPanel, color);
+            Text label = CabinStyle.Localized(key, card, key, 26, CabinStyle.Text2, TextAnchor.MiddleLeft);
+            Place(label, 32f, y, 140f, 32f);
+            RectTransform back = CabinStyle.Rect(key + "Bar", card, TL, TL, new Vector2(176f, y - 8f), new Vector2(236f, 16f));
+            CabinStyle.Fill(back, CabinStyle.Solid, new Color(1f, 1f, 1f, 0.08f));
+            RectTransform fillRect = CabinStyle.Rect("Fill", back, C, C, Vector2.zero, Vector2.zero);
+            UIBuild.Stretch(fillRect);
+            Image fill = CabinStyle.Fill(fillRect, CabinStyle.Solid, color);
             fill.type = Image.Type.Filled;
             fill.fillMethod = Image.FillMethod.Horizontal;
             fill.fillAmount = 0f;
             return fill;
         }
 
-        TouchPedalButton Pedal(string name, Transform parent, Vector2 anchor, Vector2 pivot, Vector2 size, string labelKey, Color color, Font font)
+        static void Place(Graphic g, float x, float y, float w, float h)
         {
-            RectTransform rect = UIBuild.Rect(name, parent, anchor, pivot, Vector2.zero, size);
-            UIBuild.Panel(rect, theme.RoundedPanel, theme.panel, raycast: true);
-            RectTransform fillRect = UIBuild.Rect("Fill", rect, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
+            var r = (RectTransform)g.transform;
+            r.anchorMin = r.anchorMax = TL;
+            r.pivot = TL;
+            r.anchoredPosition = new Vector2(x, y);
+            r.sizeDelta = new Vector2(w, h);
+        }
+
+        void BuildGuidance()
+        {
+            RectTransform pill = CabinStyle.Rect("Guidance", frame, TC, TC, new Vector2(0f, -160f), new Vector2(960f, 88f));
+            CabinStyle.Fill(pill, CabinStyle.Glass, Color.white);
+            CabinStyle.Icon("Map", pill, new Vector2(-420f, 0f), 40f, CabinStyle.Text2, UISprites.TriangleUp);
+            guidanceText = CabinStyle.Label("Text", pill, "", CabinStyle.Caption, CabinStyle.Text2);
+            ((RectTransform)guidanceText.transform).offsetMin = new Vector2(80f, 0f);
+            guidancePill = pill.gameObject;
+        }
+
+        void BuildToast()
+        {
+            toastRoot = CabinStyle.Rect("Toast", frame, TC, TC, new Vector2(0f, -160f), new Vector2(1100f, 112f));
+            CabinStyle.Fill(toastRoot, CabinStyle.Glass, Color.white);
+            toastLit = CabinStyle.AddLitEdge(toastRoot, CabinStyle.Amber);
+            toastIcon = CabinStyle.Fill(CabinStyle.Rect("Dot", toastRoot, new Vector2(0f, 0.5f), C, new Vector2(56f, 0f), new Vector2(26f, 26f)), CabinStyle.CircleSolid, CabinStyle.Amber);
+            toastText = CabinStyle.Label("Text", toastRoot, "", CabinStyle.Body, CabinStyle.TextColor, TextAnchor.MiddleLeft, FontStyle.Bold);
+            toastText.resizeTextForBestFit = true;
+            toastText.resizeTextMinSize = 24;
+            toastText.resizeTextMaxSize = CabinStyle.Body;
+            var tr = (RectTransform)toastText.transform;
+            tr.offsetMin = new Vector2(96f, 8f);
+            tr.offsetMax = new Vector2(-40f, -8f);
+            toastRoot.gameObject.SetActive(false);
+        }
+
+        void BuildDrawer()
+        {
+            drawerButton = CabinStyle.Button("Vehicle", frame, BL, BL, Vector2.zero, Vector2.one * CabinStyle.Touch, "hud.vehicle", out _, ButtonStyle.Glass, 28);
+            drawerLit = CabinStyle.AddLitEdge((RectTransform)drawerButton.transform, CabinStyle.Ice);
+            RectTransform panel = CabinStyle.Rect("VehicleDrawer", frame, BL, BL, new Vector2(144f, 0f), new Vector2(664f, 232f));
+            CabinStyle.Fill(panel, CabinStyle.Glass, Color.white, raycast: true);
+            drawerPanel = panel.gameObject;
+            headlightTile = Tile(panel, 0, "Headlights", "hud.headlights", out headlightLit, out headlightState);
+            hazardTile = Tile(panel, 1, "Hazard", "hud.hazard", out hazardLit, out hazardState);
+            wiperTile = Tile(panel, 2, "Wipers", "hud.wipers", out wiperLit, out wiperState);
+            drawerPanel.SetActive(false);
+        }
+
+        HoldButton Tile(RectTransform panel, int index, string icon, string key, out Image lit, out Text state)
+        {
+            HoldButton b = CabinStyle.Button(icon, panel, BL, BL, new Vector2(16f + index * 216f, 16f), new Vector2(200f, 200f), null, out _, ButtonStyle.Ghost);
+            CabinStyle.Fill((RectTransform)b.transform, CabinStyle.Solid, new Color(0f, 0f, 0f, 0.25f), raycast: true);
+            b.normalColor = new Color(0f, 0f, 0f, 0.25f);
+            b.pressedColor = new Color(1f, 1f, 1f, 0.1f);
+            CabinStyle.Icon(icon, b.transform, new Vector2(0f, 46f), 56f, CabinStyle.TextColor, UISprites.Circle);
+            Text label = CabinStyle.Localized("Label", b.transform, key, 30, CabinStyle.TextColor, TextAnchor.MiddleCenter, FontStyle.Bold);
+            ((RectTransform)label.transform).anchoredPosition = new Vector2(0f, -22f);
+            ((RectTransform)label.transform).sizeDelta = new Vector2(-16f, -150f);
+            state = CabinStyle.Label("State", b.transform, "", 26, CabinStyle.Text2);
+            ((RectTransform)state.transform).anchoredPosition = new Vector2(0f, -64f);
+            ((RectTransform)state.transform).sizeDelta = new Vector2(-16f, -160f);
+            lit = CabinStyle.AddLitEdge((RectTransform)b.transform, CabinStyle.Ice);
+            return b;
+        }
+
+        void BuildGearGate()
+        {
+            const float slot = 112f, gap = 6f, pad = 12f;
+            RectTransform gate = CabinStyle.Rect("GearGate", frame, TR, TR, new Vector2(0f, -200f), new Vector2(150f, pad * 2f + slot * 4f + gap * 3f));
+            CabinStyle.Fill(gate, CabinStyle.Glass, Color.white);
+            gearThumb = CabinStyle.Rect("Thumb", gate, TC, TC, new Vector2(0f, -pad), new Vector2(126f, slot));
+            CabinStyle.Fill(gearThumb, CabinStyle.Solid, new Color(0.14f, 0.22f, 0.29f, 1f));
+            CabinStyle.SetLit(CabinStyle.AddLitEdge(gearThumb, CabinStyle.Ice), true); // the selected gear always glows
+            for (int i = 0; i < 4; i++)
+            {
+                var gear = (TransmissionGear)i;
+                gearButtons[i] = CabinStyle.Button("Gear_" + gear, gate, TC, TC, new Vector2(0f, -pad - i * (slot + gap)), new Vector2(126f, slot), null, out _, ButtonStyle.Ghost);
+                gearLabels[i] = CabinStyle.Label("Label", gearButtons[i].transform, gear.ToString(), 56, CabinStyle.Text2, TextAnchor.MiddleCenter, FontStyle.Bold);
+            }
+        }
+
+        void BuildParkingBrake()
+        {
+            parkingBrakeButton = CabinStyle.Button("ParkingBrake", frame, TR, TR, new Vector2(0f, -710f), new Vector2(150f, 150f), null, out _);
+            parkingBrakeGlyph = CabinStyle.Label("Glyph", parkingBrakeButton.transform, "(P)", 50, CabinStyle.Text2, TextAnchor.MiddleCenter, FontStyle.Bold);
+            ((RectTransform)parkingBrakeGlyph.transform).anchoredPosition = new Vector2(0f, 14f);
+            parkingBrakeLabel = CabinStyle.Localized("Label", parkingBrakeButton.transform, "hud.parkingBrake.short", 24, CabinStyle.Text2, TextAnchor.MiddleCenter, FontStyle.Bold);
+            ((RectTransform)parkingBrakeLabel.transform).anchoredPosition = new Vector2(0f, -46f);
+            ((RectTransform)parkingBrakeLabel.transform).sizeDelta = new Vector2(0f, -110f);
+            parkingBrakeLit = CabinStyle.AddLitEdge((RectTransform)parkingBrakeButton.transform, CabinStyle.Red);
+        }
+
+        void BuildPedals(MobilePedalController mobilePedals)
+        {
+            RectTransform root = CabinStyle.Rect("TouchPedals", frame, BR, BR, new Vector2(-190f, 0f), new Vector2(514f, 420f));
+            touchPedalRoot = root.gameObject;
+            acceleratorPedal = Pedal(root, "Accelerator", BR, Vector2.zero, new Vector2(190f, 420f), "hud.accelerator", CabinStyle.Teal, out acceleratorPedalLit);
+            brakePedal = Pedal(root, "Brake", BR, new Vector2(-214f, 0f), new Vector2(300f, 290f), "hud.brake", CabinStyle.Red, out brakePedalLit);
+            if (mobilePedals != null) mobilePedals.SetPedals(brakePedal, acceleratorPedal);
+            touchPedalRoot.SetActive(showTouchPedals);
+        }
+
+        TouchPedalButton Pedal(RectTransform parent, string name, Vector2 anchor, Vector2 pos, Vector2 size, string key, Color color, out Image lit)
+        {
+            RectTransform rect = CabinStyle.Rect(name, parent, anchor, anchor, pos, size);
+            CabinStyle.Fill(rect, CabinStyle.Glass, Color.white, raycast: true);
+            RectTransform fillRect = CabinStyle.Rect("Fill", rect, C, C, Vector2.zero, Vector2.zero);
             UIBuild.Stretch(fillRect);
-            Image fill = UIBuild.Panel(fillRect, theme.RoundedPanel, new Color(color.r, color.g, color.b, 0.75f));
+            Image fill = CabinStyle.Fill(fillRect, CabinStyle.Solid, new Color(color.r, color.g, color.b, 0.45f));
             fill.type = Image.Type.Filled;
             fill.fillMethod = Image.FillMethod.Vertical;
             fill.fillOrigin = (int)Image.OriginVertical.Bottom;
             fill.fillAmount = 0f;
-            Localize(UIBuild.Label("Label", rect, Loc.T(labelKey), font, 30, theme.text), labelKey);
+            RectTransform tread = CabinStyle.Rect("Tread", rect, C, C, Vector2.zero, Vector2.zero);
+            UIBuild.Stretch(tread);
+            tread.offsetMin = new Vector2(28f, 92f);
+            tread.offsetMax = new Vector2(-28f, -28f);
+            Image t = CabinStyle.Fill(tread, CabinStyle.Tread, Color.white);
+            t.type = Image.Type.Tiled;
+            Text label = CabinStyle.Localized("Label", rect, key, 30, CabinStyle.Text2, TextAnchor.LowerCenter, FontStyle.Bold);
+            ((RectTransform)label.transform).offsetMin = new Vector2(8f, 26f);
+            lit = CabinStyle.AddLitEdge(rect, color);
             var pedal = rect.gameObject.AddComponent<TouchPedalButton>();
             pedal.SetFill(fill);
             return pedal;
         }
 
+        // ================================================================== state
+
+        void ApplyHudMode()
+        {
+            bool practice = DriverPreferences.Hud == HudMode.Practice;
+            if (practiceCard != null) practiceCard.SetActive(practice);
+            if (guidancePill != null) guidancePill.SetActive(practice && guidanceEnabled);
+            if (minimapFrame != null) minimapFrame.SetActive(practice && DriverPreferences.Minimap && (cameraPopover == null || !cameraPopover.activeSelf));
+            if (toastRoot != null) toastRoot.anchoredPosition = new Vector2(0f, practice && guidanceEnabled ? -270f : -160f);
+            if (touchSteering != null) touchSteering.angularGain = DriverPreferences.CurrentSteeringGain;
+        }
+
         void OnEnable() => Subscribe();
         void OnDisable() => Unsubscribe();
+
+        void Start()
+        {
+            if (cameraController != null && DriverPreferences.ChaseViewByDefault) cameraController.SetMode(CameraViewMode.Chase);
+        }
 
         void Subscribe()
         {
@@ -384,28 +435,36 @@ namespace DrivingSim.UI
             vehicle.ShiftRejected += OnShiftRejected;
             vehicle.GearChanged += OnGearChanged;
             vehicle.ParkingBrakeChanged += OnParkingBrake;
-            if (accessories != null)
-            {
-                accessories.Feedback += ShowToast;
-                accessories.Changed += RefreshAccessoryButtons;
-            }
-            if (turnLeftButton != null) turnLeftButton.Pressed += OnTurnLeft;
-            if (turnRightButton != null) turnRightButton.Pressed += OnTurnRight;
-            if (parkingBrakeButton != null) parkingBrakeButton.Pressed += OnParkingBrakeButton;
-            if (headlightButton != null) headlightButton.Pressed += OnHeadlights;
-            if (hazardButton != null) hazardButton.Pressed += OnHazard;
-            if (wiperButton != null) wiperButton.Pressed += OnWipers;
-            if (pauseButton != null) pauseButton.Pressed += TogglePause;
-            if (resumeButton != null) resumeButton.Pressed += TogglePause;
-            if (restartButton != null) restartButton.Pressed += OnRestart;
-            if (calibrateButton != null) calibrateButton.Pressed += OnCalibrate;
-            if (languageButton != null) languageButton.Pressed += OnLanguage;
-            if (noticeButton != null) noticeButton.Pressed += OnNotice;
-            if (menuButton != null) menuButton.Pressed += OnMainMenu;
-            LocalizationService.LanguageChanged += OnLanguageChanged;
+            if (accessories != null) { accessories.Feedback += ShowToast; accessories.Changed += RefreshAccessories; }
             if (footPedals != null) footPedals.SafetyChanged += OnPedalSafety;
-            RefreshAccessoryButtons();
+            LocalizationService.LanguageChanged += OnLanguageChanged;
+            DriverPreferences.Changed += ApplyHudMode;
+
+            pauseButton.Pressed += TogglePause;
+            turnLeftButton.Pressed += OnTurnLeft;
+            turnRightButton.Pressed += OnTurnRight;
+            cameraButton.Pressed += ToggleCameraPopover;
+            drawerButton.Pressed += ToggleDrawer;
+            parkingBrakeButton.Pressed += OnParkingBrakeButton;
+            headlightTile.Pressed += OnHeadlights;
+            hazardTile.Pressed += OnHazard;
+            wiperTile.Pressed += OnWipers;
+            viewCockpit.Pressed += OnViewCockpit;
+            viewChase.Pressed += OnViewChase;
+            lookLeft.HeldChanged += OnLookLeft;
+            lookRight.HeldChanged += OnLookRight;
+            fovDown.Pressed += OnFovDown;
+            fovUp.Pressed += OnFovUp;
+            for (int i = 0; i < gearButtons.Length; i++)
+            {
+                var gear = (TransmissionGear)i;
+                gearButtons[i].Pressed += () => vehicle.RequestGear(gear);
+            }
+            ApplyHudMode();
+            RefreshAccessories();
             RefreshParkingBrake();
+            RefreshGear(vehicle.Gear);
+            RefreshCamera();
         }
 
         void Unsubscribe()
@@ -415,87 +474,119 @@ namespace DrivingSim.UI
             vehicle.ShiftRejected -= OnShiftRejected;
             vehicle.GearChanged -= OnGearChanged;
             vehicle.ParkingBrakeChanged -= OnParkingBrake;
-            if (accessories != null)
-            {
-                accessories.Feedback -= ShowToast;
-                accessories.Changed -= RefreshAccessoryButtons;
-            }
-            if (turnLeftButton != null) turnLeftButton.Pressed -= OnTurnLeft;
-            if (turnRightButton != null) turnRightButton.Pressed -= OnTurnRight;
-            if (parkingBrakeButton != null) parkingBrakeButton.Pressed -= OnParkingBrakeButton;
-            if (headlightButton != null) headlightButton.Pressed -= OnHeadlights;
-            if (hazardButton != null) hazardButton.Pressed -= OnHazard;
-            if (wiperButton != null) wiperButton.Pressed -= OnWipers;
-            if (pauseButton != null) pauseButton.Pressed -= TogglePause;
-            if (resumeButton != null) resumeButton.Pressed -= TogglePause;
-            if (restartButton != null) restartButton.Pressed -= OnRestart;
-            if (calibrateButton != null) calibrateButton.Pressed -= OnCalibrate;
-            if (languageButton != null) languageButton.Pressed -= OnLanguage;
-            if (noticeButton != null) noticeButton.Pressed -= OnNotice;
-            if (menuButton != null) menuButton.Pressed -= OnMainMenu;
-            LocalizationService.LanguageChanged -= OnLanguageChanged;
+            if (accessories != null) { accessories.Feedback -= ShowToast; accessories.Changed -= RefreshAccessories; }
             if (footPedals != null) footPedals.SafetyChanged -= OnPedalSafety;
+            LocalizationService.LanguageChanged -= OnLanguageChanged;
+            DriverPreferences.Changed -= ApplyHudMode;
+
+            pauseButton.Pressed -= TogglePause;
+            turnLeftButton.Pressed -= OnTurnLeft;
+            turnRightButton.Pressed -= OnTurnRight;
+            cameraButton.Pressed -= ToggleCameraPopover;
+            drawerButton.Pressed -= ToggleDrawer;
+            parkingBrakeButton.Pressed -= OnParkingBrakeButton;
+            headlightTile.Pressed -= OnHeadlights;
+            hazardTile.Pressed -= OnHazard;
+            wiperTile.Pressed -= OnWipers;
+            viewCockpit.Pressed -= OnViewCockpit;
+            viewChase.Pressed -= OnViewChase;
+            lookLeft.HeldChanged -= OnLookLeft;
+            lookRight.HeldChanged -= OnLookRight;
+            fovDown.Pressed -= OnFovDown;
+            fovUp.Pressed -= OnFovUp;
+            foreach (HoldButton b in gearButtons) if (b != null) b.ClearPressedHandlers();
             if (paused) SetPaused(false);
         }
 
-        void OnShiftRejected(TransmissionGear gear, ShiftResult result) => ShowToast(DrivingMessages.ShiftFeedback(gear, result));
-        void OnGearChanged(TransmissionGear gear) => ShowToast(DrivingMessages.ShiftFeedback(gear, ShiftResult.Accepted));
-        void OnParkingBrake(bool engaged)
-        {
-            ShowToast(DrivingMessages.ParkingBrake(engaged));
-            RefreshParkingBrake();
-        }
-
+        // ---- handlers ----
+        void OnShiftRejected(TransmissionGear gear, ShiftResult result) => ShowToast(DrivingMessages.ShiftFeedback(gear, result), ToastKind.Warning);
+        void OnGearChanged(TransmissionGear gear) => RefreshGear(gear);
+        void OnParkingBrake(bool engaged) { ShowToast(DrivingMessages.ParkingBrake(engaged), ToastKind.Info); RefreshParkingBrake(); }
         void OnParkingBrakeButton() => vehicle.SetParkingBrake(!vehicle.ParkingBrakeEngaged);
-
-        void RefreshParkingBrake()
-        {
-            if (parkingBrakeButton == null) return;
-            bool engaged = vehicle.ParkingBrakeEngaged;
-            parkingBrakeButton.SetToggled(engaged); // red while engaged
-            if (parkingBrakeLabel != null) parkingBrakeLabel.text = Loc.T(engaged ? "hud.parkingBrake.engaged" : "hud.parkingBrake.released");
-        }
         void OnTurnLeft() { if (accessories != null) accessories.ToggleTurnSignal(TurnSignal.Left); }
         void OnTurnRight() { if (accessories != null) accessories.ToggleTurnSignal(TurnSignal.Right); }
         void OnHeadlights() { if (accessories != null) accessories.ToggleHeadlights(); }
         void OnHazard() { if (accessories != null) accessories.ToggleHazard(); }
         void OnWipers() { if (accessories != null) accessories.CycleWipers(); }
+        void OnViewCockpit() { if (cameraController != null) cameraController.SetMode(CameraViewMode.Cockpit); RefreshCamera(); }
+        void OnViewChase() { if (cameraController != null) cameraController.SetMode(CameraViewMode.Chase); RefreshCamera(); }
+        void OnLookLeft(bool held) { if (cameraController != null) cameraController.SetLookLeft(held); }
+        void OnLookRight(bool held) { if (cameraController != null) cameraController.SetLookRight(held); }
+        void OnFovDown() { if (cameraController != null) cameraController.AdjustCockpitFov(-cameraController.fovStep); RefreshCamera(); }
+        void OnFovUp() { if (cameraController != null) cameraController.AdjustCockpitFov(cameraController.fovStep); RefreshCamera(); }
 
-        void OnRestart()
+        void ToggleDrawer()
         {
-            SetPaused(false);
-            vehicle.ResetVehicle();
+            bool open = !drawerPanel.activeSelf;
+            drawerPanel.SetActive(open);
+            CabinStyle.SetLit(drawerLit, open);
+            if (open) SetCameraPopover(false);
         }
 
-        void OnMainMenu()
+        void ToggleCameraPopover() => SetCameraPopover(!cameraPopover.activeSelf);
+
+        void SetCameraPopover(bool open)
         {
-            // GameFlow restores time scale and input gates before loading the menu scene.
-            if (!DrivingSim.Flow.GameFlow.LoadMainMenu()) ShowToast(Loc.T("toast.menuUnavailable"));
+            cameraPopover.SetActive(open);
+            CabinStyle.SetLit(cameraLit, open);
+            if (open && drawerPanel.activeSelf) { drawerPanel.SetActive(false); CabinStyle.SetLit(drawerLit, false); }
+            if (!open && cameraController != null) { cameraController.SetLookLeft(false); cameraController.SetLookRight(false); }
+            RefreshCamera();
+            ApplyHudMode();
         }
 
-        void OnLanguage()
+        void OnPedalSafety(PedalSafetyState state)
         {
-            SetPaused(false);
-            if (startupFlow != null) startupFlow.OpenLanguageSelection();
-        }
-
-        void OnNotice()
-        {
-            SetPaused(false);
-            if (startupFlow != null) startupFlow.OpenDisclaimer();
+            if (state == PedalSafetyState.FailSafe) ShowToast(Loc.T("toast.pedal.failSafe"), ToastKind.Safety);
+            else if (state == PedalSafetyState.AwaitingRearm) ShowToast(Loc.T("toast.pedal.rearm"), ToastKind.Warning);
+            else ShowToast(Loc.T("toast.pedal.restored"), ToastKind.Info);
         }
 
         void OnLanguageChanged(Language _)
         {
-            RefreshAccessoryButtons();
+            RefreshAccessories();
             RefreshParkingBrake();
+            RefreshCamera();
+        }
+
+        void RefreshGear(TransmissionGear gear)
+        {
+            int index = Mathf.Clamp((int)gear, 0, 3);
+            if (gearThumb != null) gearThumb.anchoredPosition = new Vector2(0f, -12f - index * 118f);
+            for (int i = 0; i < gearLabels.Length; i++)
+                if (gearLabels[i] != null) gearLabels[i].color = i == index ? CabinStyle.TextColor : CabinStyle.Text3;
             shownGear = (TransmissionGear)(-1);
         }
 
-        void OnCalibrate()
+        void RefreshParkingBrake()
         {
-            SetPaused(false);
-            if (calibration != null) calibration.Open();
+            bool on = vehicle != null && vehicle.ParkingBrakeEngaged;
+            CabinStyle.SetLit(parkingBrakeLit, on);
+            if (parkingBrakeGlyph != null) parkingBrakeGlyph.color = on ? CabinStyle.Red : CabinStyle.Text2;
+            if (parkingBrakeLabel != null) parkingBrakeLabel.color = on ? CabinStyle.Red : CabinStyle.Text2;
+            parkingToastShown = false;
+        }
+
+        void RefreshAccessories()
+        {
+            if (accessories == null) return;
+            SetTile(headlightLit, headlightState, accessories.HeadlightsOn, CabinStyle.Ice, Loc.T(accessories.HeadlightsOn ? "hud.on" : "hud.off"));
+            SetTile(hazardLit, hazardState, accessories.Hazard, CabinStyle.Amber, Loc.T(accessories.Hazard ? "hud.on" : "hud.off"));
+            SetTile(wiperLit, wiperState, accessories.Wipers != WiperMode.Off, CabinStyle.Ice, VehicleAccessories.WiperName(accessories.Wipers));
+        }
+
+        static void SetTile(Image lit, Text state, bool on, Color color, string text)
+        {
+            CabinStyle.SetLit(lit, on, color);
+            if (state != null) { state.text = text; state.color = on ? color : CabinStyle.Text2; }
+        }
+
+        void RefreshCamera()
+        {
+            bool cockpit = cameraController == null || cameraController.Mode == CameraViewMode.Cockpit;
+            CabinStyle.SetLit(viewCockpitLit, cockpit);
+            CabinStyle.SetLit(viewChaseLit, !cockpit);
+            if (fovText != null && cameraController != null) fovText.text = Loc.T("camera.fov", Mathf.RoundToInt(cameraController.cockpitFov));
         }
 
         public void TogglePause() => SetPaused(!paused);
@@ -507,67 +598,106 @@ namespace DrivingSim.UI
             Time.timeScale = paused ? 0f : 1f;
             if (paused) DrivingInputGate.BlockDriving(this);
             else DrivingInputGate.Release(this);
-            if (pauseMenu != null) pauseMenu.SetActive(paused);
+            if (pauseMenu != null) pauseMenu.SetVisible(paused);
+            if (paused) { SetCameraPopover(false); if (drawerPanel.activeSelf) ToggleDrawer(); }
         }
 
-        public void ShowToast(string message)
+        public void ShowToast(string message) => ShowToast(message, ToastKind.Warning);
+
+        public void ShowToast(string message, ToastKind kind)
         {
             if (toastRoot == null || string.IsNullOrEmpty(message)) return;
+            Color c = kind == ToastKind.Safety ? CabinStyle.Red : kind == ToastKind.Info ? CabinStyle.Ice : CabinStyle.Amber;
             toastText.text = message;
-            toastRoot.SetActive(true);
-            toastUntil = Time.unscaledTime + 2.6f;
+            CabinStyle.SetLit(toastLit, true, c);
+            toastIcon.color = c;
+            toastRoot.gameObject.SetActive(true);
+            toastUntil = Time.unscaledTime + (kind == ToastKind.Safety ? 4f : 2.6f);
         }
 
-        void RefreshAccessoryButtons()
+        /// <summary>Practice HUD guidance toward a point (the rig sets the Test Town intersection).</summary>
+        public void SetGuidance(Vector3 target, string key = "hud.guide.intersection")
         {
-            if (accessories == null) return;
-            if (headlightButton != null) headlightButton.SetToggled(accessories.HeadlightsOn);
-            if (hazardButton != null) hazardButton.SetToggled(accessories.Hazard);
-            if (wiperButton != null) wiperButton.SetToggled(accessories.Wipers != WiperMode.Off);
-            if (wiperLabel != null) wiperLabel.text = VehicleAccessories.WiperName(accessories.Wipers);
-            if (turnLeftButton != null) turnLeftButton.SetToggled(accessories.TurnSignal == TurnSignal.Left);
-            if (turnRightButton != null) turnRightButton.SetToggled(accessories.TurnSignal == TurnSignal.Right);
+            guidanceEnabled = true;
+            guidanceTarget = target;
+            guidanceKey = key;
+            ApplyHudMode();
         }
+
+        // ================================================================== per frame
 
         void Update()
         {
-            if (KeyboardShim.WasPressed(KeyId.Escape) && (calibration == null || !calibration.IsOpen)) TogglePause();
-            if (toastRoot != null && toastRoot.activeSelf && Time.unscaledTime > toastUntil) toastRoot.SetActive(false);
+            bool settingsOpen = pauseMenu != null && pauseMenu.SettingsOpen;
+            if (KeyboardShim.WasPressed(KeyId.Escape) && (calibration == null || !calibration.IsOpen) && !settingsOpen) TogglePause();
+            if (toastRoot != null && toastRoot.gameObject.activeSelf && Time.unscaledTime > toastUntil) toastRoot.gameObject.SetActive(false);
             if (vehicle == null || !vehicle.IsInitialized) return;
-
-            int speed = Mathf.RoundToInt(Mathf.Abs(vehicle.SignedSpeedKmh));
-            if (speed != shownSpeed) { shownSpeed = speed; speedText.text = speed.ToString(); }
-            if (vehicle.Gear != shownGear) { shownGear = vehicle.Gear; gearText.text = shownGear.ToString(); }
 
             if (accessories != null)
             {
-                turnLeftIcon.color = accessories.LeftLampLit ? theme.indicatorAmber : theme.textMuted;
-                turnRightIcon.color = accessories.RightLampLit ? theme.indicatorAmber : theme.textMuted;
+                CabinStyle.SetLit(turnLeftLit, accessories.LeftLampLit);
+                CabinStyle.SetLit(turnRightLit, accessories.RightLampLit);
+                turnLeftIcon.color = accessories.LeftLampLit ? CabinStyle.Amber : CabinStyle.Text2;
+                turnRightIcon.color = accessories.RightLampLit ? CabinStyle.Amber : CabinStyle.Text2;
             }
 
             bool driveGear = vehicle.Gear == TransmissionGear.D || vehicle.Gear == TransmissionGear.R;
-            if (vehicle.ParkingBrakeEngaged && driveGear && vehicle.Throttle > 0.1f && !toastRoot.activeSelf)
-                ShowToast(DrivingMessages.ParkingBrakeStillOn);
+            if (vehicle.ParkingBrakeEngaged && driveGear && vehicle.Throttle > 0.1f && !parkingToastShown)
+            {
+                ShowToast(DrivingMessages.ParkingBrakeStillOn, ToastKind.Warning);
+                parkingToastShown = true;
+            }
 
+            if (brakePedal != null) CabinStyle.SetLit(brakePedalLit, brakePedal.IsPressed);
+            if (acceleratorPedal != null) CabinStyle.SetLit(acceleratorPedalLit, acceleratorPedal.IsPressed);
+
+            if (touchSteering != null && touchSteering.IsSteering && (cameraPopover.activeSelf || drawerPanel.activeSelf))
+            {
+                SetCameraPopover(false);
+                if (drawerPanel.activeSelf) ToggleDrawer();
+            }
+            UpdateHalo();
+            if (practiceCard != null && practiceCard.activeSelf) UpdatePractice();
+            if (guidancePill != null && guidancePill.activeSelf) UpdateGuidance();
+            if (minimapFrame != null && minimapFrame.activeSelf)
+            {
+                if (mapImage.texture == null && minimap != null && minimap.Texture != null) mapImage.texture = minimap.Texture;
+                carMarker.localRotation = Quaternion.Euler(0f, 0f, -vehicle.transform.eulerAngles.y);
+            }
+        }
+
+        void UpdateHalo()
+        {
+            bool show = DriverPreferences.SteeringHalo && touchSteering != null && touchSteering.IsSteering && !paused;
+            if (halo.gameObject.activeSelf != show) halo.gameObject.SetActive(show);
+            if (!show) return;
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, touchSteering.ActivePointerPixels, null, out Vector2 local))
+                halo.anchoredPosition = local;
+            // UI rotation is counter-clockwise; the wheel turns clockwise for positive angles.
+            halo.localRotation = Quaternion.Euler(0f, 0f, -vehicle.SteeringWheelAngleDeg);
+        }
+
+        void UpdatePractice()
+        {
+            int speed = Mathf.RoundToInt(Mathf.Abs(vehicle.SignedSpeedKmh));
+            if (speed != shownSpeed) { shownSpeed = speed; speedText.text = speed.ToString(); }
+            if (vehicle.Gear != shownGear) { shownGear = vehicle.Gear; gearText.text = shownGear.ToString(); }
+            float angle = vehicle.SteeringWheelAngleDeg, max = Mathf.Max(vehicle.MaxSteeringWheelAngleDeg, 1f);
+            steerText.text = (angle >= 0f ? "+" : "") + angle.ToString("F0") + "°";
+            float w = Mathf.Clamp01(Mathf.Abs(angle) / max) * SteerBarHalf;
+            steerFill.pivot = new Vector2(angle < 0f ? 1f : 0f, 0.5f);
+            steerFill.sizeDelta = new Vector2(w, 16f);
             brakeBar.fillAmount = vehicle.Brake;
             acceleratorBar.fillAmount = vehicle.Throttle;
-            pedalSourceText.text = PedalStatusText();
-            bool footActive = footPedals != null && footPedals.IsActive;
-            brakeLamp.color = footActive && footPedals.BrakePressed ? theme.brakeRed : new Color(1f, 1f, 1f, 0.15f);
-            acceleratorLamp.color = footActive && footPedals.AcceleratorPressed
-                ? (footPedals.AcceleratorSuppressed ? theme.warning : theme.acceleratorGreen)
-                : new Color(1f, 1f, 1f, 0.15f);
+            sourceText.text = PedalStatusText();
+        }
 
-            float angle = vehicle.SteeringWheelAngleDeg, max = Mathf.Max(vehicle.MaxSteeringWheelAngleDeg, 1f);
-            steeringMarker.anchoredPosition = new Vector2(Mathf.Clamp(angle / max, -1f, 1f) * SteeringTrackHalfWidth, 12f);
-            bool dragging = touchSteering != null && touchSteering.IsSteering;
-            steeringText.text = Loc.T("hud.steering", (angle >= 0f ? "+" : "") + angle.ToString("F0"), angle / 360f) + (dragging ? Loc.T("hud.steering.active") : "");
-            UpdateSteeringRing();
-
-            // The map texture is created when the minimap camera wakes up (Play Mode), so attach it lazily.
-            if (mapImage != null && mapImage.texture == null && minimap != null && minimap.Texture != null) mapImage.texture = minimap.Texture;
-            UpdateNavigation();
-            if (carMarker != null) carMarker.localRotation = Quaternion.Euler(0f, 0f, -vehicle.transform.eulerAngles.y);
+        void UpdateGuidance()
+        {
+            Vector3 to = guidanceTarget - vehicle.transform.position;
+            to.y = 0f;
+            bool ahead = Vector3.Dot(to, vehicle.transform.forward) > 0f;
+            guidanceText.text = ahead && to.magnitude > 15f ? Loc.T(guidanceKey, to.magnitude) : Loc.T("hud.guide.free");
         }
 
         string PedalStatusText()
@@ -588,27 +718,11 @@ namespace DrivingSim.UI
             return conflict ? Loc.T("hud.source.brakePriority", Loc.T("hud.source.keyboardTouch")) : Loc.T("hud.source.keyboardTouch");
         }
 
-        void OnPedalSafety(PedalSafetyState state)
+        // ---- used by the pause menu ----
+        internal void RestartDrive()
         {
-            if (state == PedalSafetyState.FailSafe) ShowToast(Loc.T("toast.pedal.failSafe"));
-            else if (state == PedalSafetyState.AwaitingRearm) ShowToast(Loc.T("toast.pedal.rearm"));
-            else ShowToast(Loc.T("toast.pedal.restored"));
-        }
-
-        void UpdateNavigation()
-        {
-            Vector3 toTarget = destination - vehicle.transform.position;
-            toTarget.y = 0f;
-            float distance = toTarget.magnitude;
-            if (distance < arrivalRadiusM)
-            {
-                navText.text = Loc.T("nav.arrived", Loc.T(destinationNameKey));
-                navArrow.localRotation = Quaternion.identity;
-                return;
-            }
-            float bearing = Vector3.SignedAngle(Vector3.ProjectOnPlane(vehicle.transform.forward, Vector3.up), toTarget, Vector3.up);
-            navArrow.localRotation = Quaternion.Euler(0f, 0f, -bearing);
-            navText.text = Loc.T("nav.distance", Loc.T(destinationNameKey), distance);
+            SetPaused(false);
+            vehicle.ResetVehicle();
         }
     }
 }
