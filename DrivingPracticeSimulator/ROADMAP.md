@@ -124,3 +124,74 @@ Both work to these rules, which go into `INTEGRATION.md` before Phase C starts:
 - **Traffic light and sign visuals:** Codex supplies prefabs exposing a small interface (set lamp state, show sign
   value). Gameplay drives the state.
 - A validation tool (editor menu) reports decoration that overlaps lanes or keep-out zones.
+
+## Future feature: map selection with free driving and practice missions (planned, not started)
+
+**Status:** confirmed requirement (2026-10-31). **Not implemented.** Same gate as Phases C–F: no map
+code until the Unity baseline is verified. Map content that needs AI traffic also depends on Phases C–E.
+
+### Requirement
+- The player chooses a **driving map**. Each map offers **free driving** and **practice missions**
+  as separate modes.
+- Planned maps:
+
+| Map (id) | Content | Depends on |
+|---|---|---|
+| Basic driving practice ground (`practice_ground`) | Closed course, e.g. starting/stopping, slope start, right-angle and parallel parking, lane keeping (exact items to be decided) | Baseline only (no AI) |
+| Korean urban roads with AI traffic (`urban`) | Signalized intersections, crosswalks, multi-lane roads, AI vehicles | Phases C–E |
+| Residential streets and narrow alleys (`residential`) | Narrow two-way streets, parked cars, blind corners, low speed limits, school zones | Phase C lane graph; light AI from Phase D/E |
+| Suburban and winding roads (`suburban`) | Curves, grades, rural intersections, higher speeds | Lane graph; optional light AI |
+
+### Architecture: one driving core, many environments
+Goal: a new map adds **environment data only**. Vehicle physics, input, cameras, HUD, localization and the
+startup flow exist once and are never copied per map.
+
+- **Persistent core (built once per session):** vehicle (`VehicleController` + `VehiclePhysicsConfig`),
+  input (`PointerInputHub`, keyboard, foot pedals, touch, `VehicleInputRouter`), cameras, HUD,
+  `StartupFlow`, localization. Today `PhysicsTestRig.Assemble` builds the environment and the core
+  together; it will be split into `DrivingCoreBuilder` (core) and an environment loader. This split is the
+  first map task, done only after the baseline is verified, and covered by the existing PlayMode tests.
+- **Environment content (one per map):** a Unity scene loaded **additively**
+  (`SceneManager.LoadSceneAsync(..., LoadSceneMode.Additive)`; Addressables later if APK size requires).
+  It contains roads, `RoadNetwork` lane data, signals and signs, decoration, lighting, the AI traffic
+  spawner config and spawn points. **It must not contain** a vehicle, input components, cameras, HUD,
+  `EventSystem` or `StartupFlow`.
+- **`MapDefinition` (ScriptableObject):** `id`, `nameKey` / `descriptionKey` (localization keys),
+  environment scene reference, thumbnail (Codex), spawn points per mode, list of missions, traffic
+  profile (none / light / normal), minimap bounds, optional speed-limit defaults. The map list comes from
+  a `MapCatalog` asset, not hardcoded.
+- **`IMapEnvironment` (one component in each environment scene):** exposes spawn points, `RoadNetwork`,
+  the traffic spawner and minimap bounds. The core places the existing vehicle at a spawn point; it never
+  instantiates a second one.
+- **Modes:** `DrivingSession` holds the selected map and mode.
+  - *Free driving:* spawn, drive, optional AI traffic, no scoring.
+  - *Practice missions:* `MissionDefinition` assets (per map) with start pose, goal, rules and scoring
+    hooks. Mission logic and scoring live in `DrivingSim.Core` (EditMode-testable), reusing the Phase F
+    assessment and fault-attribution rules.
+- **Switching maps:** unload the old environment scene, load the new one, reset the vehicle
+  (`Rigidbody` velocity, gear to P, parking brake on) at the new spawn. Input and HUD stay alive.
+- **Per-map physics differences** (e.g. surface friction) come only from data on the environment
+  (physic materials, `MapDefinition` values), never from a forked vehicle or input script.
+- **UI ownership:** map/mode selection screens are Codex's design; Claude provides the data
+  (`MapCatalog`, `MapDefinition`) and an interface like the startup views
+  (`IMapSelectionView.Show(maps, onSelected(map, mode), onCancelled)`). Map names and descriptions are
+  localization keys (`map.*`, `mode.*`, `mission.*`).
+
+### Acceptance criteria (when implemented)
+- PlayMode test per map: loads additively, exactly one `VehicleController`, one `VehicleInputRouter`,
+  one main camera, one `EventSystem` exist; the vehicle spawns on a valid spawn point and passes
+  the baseline creep/brake checks.
+- Switching maps twice leaves no leftover objects from the previous environment and no duplicate
+  core components; input still works.
+- EditMode: catalog validation (unique ids, every key exists in `strings.json`, every map has at
+  least one free-driving spawn, every mission references an existing map).
+- Editor validation: an environment scene that contains forbidden core components fails the check.
+- Free driving and missions are selectable separately for each map; a map without missions shows
+  free driving only.
+
+### Order (after the baseline gate)
+1. Split the core from the environment (`DrivingCoreBuilder` + loader); the current test ground
+   becomes the first environment. No behavior change; the existing PlayMode tests must still pass.
+2. `MapDefinition` / `MapCatalog` / `IMapEnvironment` + free driving on the practice ground.
+3. Mission framework + first practice-ground missions.
+4. Urban map with Phases C–E traffic; then residential and suburban maps.

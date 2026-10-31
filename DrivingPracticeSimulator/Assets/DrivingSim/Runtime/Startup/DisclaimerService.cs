@@ -69,6 +69,13 @@ namespace DrivingSim.Startup
             loaded = true;
         }
 
+        /// <summary>Drops the cached record so the next read comes from disk.</summary>
+        public static void Reload()
+        {
+            loaded = false;
+            record = null;
+        }
+
         [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetStatics()
         {

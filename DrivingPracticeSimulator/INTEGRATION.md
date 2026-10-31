@@ -13,13 +13,21 @@ compile fixes; any change to a public signature will be recorded in the change l
 | Gameplay, physics, input, AI traffic, tests, Unity integration | Claude Code | branch `ccr-21c0ed33-uzs8xd` |
 | Localization **system** (loading, keys, persistence, events, APIs) | Claude Code | `Runtime/Localization`, `Core/Localization.cs` |
 | Korean and English **wording**, typography, text fitting | Codex | edits the `ko` / `en` values in `strings.json` |
-| Visual design of the language, disclaimer and settings screens, HUD look | Codex | Codex's design branch (name TBD) |
+| Visual design of the language, disclaimer and settings screens, HUD look | Codex | branch `codex/ui-visual-polish` |
 | Road network data and lane paths | Claude Code | see §7 |
 | Decorative environment assets | Codex | must follow §7 |
+| Map/mode selection **screens** (future) | Codex | data and interfaces from Claude, see §7a |
+| Map system, environment loading, missions (future) | Claude Code | `ROADMAP.md`, "Future feature: map selection" |
 
 - Codex works on its own branch. Claude reviews it for compatibility with this contract before
   anything is integrated. Nothing is merged unreviewed, and neither side overwrites the other's files.
 - Status of record: `PROGRESS.md`.
+
+### Visual direction (approved 2026-10-31, implemented by Codex)
+Minimal Automotive as the foundation: polished, modern automotive UI, subtle glass effects,
+restrained ice-blue accents, realistic cockpit visibility, clean instrument clusters. No excessive
+neon or arcade styling. Claude does not implement visual changes; gameplay code stays independent of
+the look (§5, §6). Functional colors keep their meaning (§5) even if the hues change.
 
 ## 2. Startup flow (first launch)
 
@@ -106,6 +114,7 @@ Rules for implementations:
 | `LocalizationService.LanguageChanged` | `event Action<Language>`: refresh texts |
 | `LocalizationService.In(language, key)` | Text in a specific language (bilingual screens) |
 | `LocalizationService.Reload()` | Re-read `strings.json` at runtime |
+| `LocalizationService.ClearSavedChoice()` | Dev/testing: show the language screen again on next launch |
 | `LocalizedText` component | Put on a uGUI `Text` with a fixed key; refreshes on language change |
 
 - Missing translation → Korean → `[key]`, so gaps are visible, not blank.
@@ -131,7 +140,7 @@ in code missing from the file, or `disclaimer.body` differs from the approved wo
   is then asked again. A test pins the approved wording.
 - Storage: `persistentDataPath/disclaimer_acknowledgment.json` = `{ version, acknowledgedUtc, language }`.
 - API (`DrivingSim.Startup.DisclaimerService`): `IsAcknowledged`, `Record`, `Acknowledge()` (StartupFlow only),
-  `ClearAcknowledgment()` (dev/testing), `Acknowledged` event.
+  `ClearAcknowledgment()` and `Reload()` (dev/testing), `Acknowledged` event.
 
 ## 5. HUD and interaction rules
 
@@ -165,6 +174,17 @@ Summary (full version in `ROADMAP.md`, "Compatibility contract with Codex"):
 - Traffic light and sign prefabs expose a small interface (lamp state, sign value) that gameplay drives.
 - An editor validation tool reports decoration overlapping lanes or keep-out zones.
 
+## 7a. Map system (future, not implemented)
+
+Planned in `ROADMAP.md`. Contract so visual and environment work stays compatible:
+- One persistent driving core (vehicle, input, cameras, HUD, startup flow, localization). Each map is an
+  **environment scene loaded additively**. Environment scenes contain no vehicle, input components,
+  cameras, HUD, `EventSystem` or `StartupFlow`; an editor check will enforce this.
+- Codex may build environment art and decoration inside those scenes under §7 rules, and the map/mode
+  selection screens through a view interface (planned `IMapSelectionView`, same pattern as §2).
+- Map, mode and mission names are localization keys (`map.*`, `mode.*`, `mission.*`), added when the
+  feature starts.
+
 ## 8. Codex change checklist (for review)
 - [ ] EditMode tests pass (incl. `LocalizationTests`); no new compile errors.
 - [ ] No hardcoded user-visible strings; new texts added as keys (coordinated).
@@ -176,3 +196,4 @@ Summary (full version in `ROADMAP.md`, "Compatibility contract with Codex"):
 | Date | Change |
 |---|---|
 | 2026-10-31 | First version: startup flow + view interfaces, localization data/API, disclaimer, HUD rules, road contract summary |
+| 2026-10-31 | Codex branch `codex/ui-visual-polish`; approved visual direction; §7a map system contract (future). New APIs: `LocalizationService.ClearSavedChoice()` and `DisclaimerService.Reload()` (dev/testing). `StartupFlow.OpenLanguageSelection()` / `OpenDisclaimer()` now do nothing while another startup screen is open |

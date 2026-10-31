@@ -60,6 +60,22 @@ namespace DrivingSim.Localization
         /// <summary>The text of a key in a specific language (e.g. bilingual first-launch screens).</summary>
         public static string In(Language language, string key) => Table.Get(key, language);
 
+        /// <summary>
+        /// Development/testing: forget the saved choice so the language screen shows again on the next
+        /// launch. The current language stays as it is until a new one is chosen.
+        /// </summary>
+        public static void ClearSavedChoice()
+        {
+            EnsureInitialized();
+            hasSavedChoice = false;
+            try
+            {
+                PlayerPrefs.DeleteKey(PrefsKey);
+                PlayerPrefs.Save();
+            }
+            catch (Exception e) { Debug.LogWarning($"[Localization] Could not clear the saved language: {e.Message}"); }
+        }
+
         /// <summary>Reloads strings.json (after editing it while the game runs).</summary>
         public static void Reload()
         {

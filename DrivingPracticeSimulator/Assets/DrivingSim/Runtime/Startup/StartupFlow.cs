@@ -63,12 +63,20 @@ namespace DrivingSim.Startup
 
         public static bool NeedsFirstLaunchFlow => !LocalizationService.HasSavedChoice || !DisclaimerService.IsAcknowledged;
 
-        /// <summary>Settings: change language. Gameplay stays blocked while the screen is open.</summary>
-        public void OpenLanguageSelection() => ShowLanguage(firstLaunch: false);
+        /// <summary>
+        /// Settings: change language. Gameplay stays blocked while the screen is open.
+        /// Ignored while another startup screen is open (one modal at a time).
+        /// </summary>
+        public void OpenLanguageSelection()
+        {
+            if (IsShowingScreen) return;
+            ShowLanguage(firstLaunch: false);
+        }
 
-        /// <summary>Settings: read the notice again.</summary>
+        /// <summary>Settings: read the notice again. Ignored while another startup screen is open.</summary>
         public void OpenDisclaimer()
         {
+            if (IsShowingScreen) return;
             ResolveViews();
             Block();
             IsShowingScreen = true;
