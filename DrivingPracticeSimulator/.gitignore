@@ -33,3 +33,7 @@ crashlytics-build.properties
 
 # Screenshots written by PlayMode tests
 /TestScreenshots/
+
+# Blender autosave backups
+*.blend1
+*.blend2

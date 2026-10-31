@@ -8,16 +8,16 @@ compile fixes; any change to a public signature will be recorded in the change l
 
 ## 1. Ownership and branches
 
-**Revised 2026-10-31 (user decision):** Claude owns all UI/UX; Codex owns 3D art.
+**Revised 2026-10-31 (user decisions):** Claude = gameplay, UI/UX, Unity integration, testing.
+Codex = 3D meshes, materials (textures + manifest), textures, environment art. Pipeline: Blender → FBX → Unity (Claude).
 
 | Area | Owner | Notes |
 |---|---|---|
-| Gameplay, physics, input, AI traffic, tests, Unity integration, scene flow | Claude Code | branch `ccr-21c0ed33-uzs8xd` |
-| **All UI/UX**: design system, every screen, HUD, touch controls, menus, calibration UX, dialogs, animations | Claude Code | full redesign from scratch; Codex's UI code is a functional reference only |
-| Localization system **and** Korean/English wording | Claude Code | `strings.json` keys and values |
+| Gameplay, physics, input, AI traffic, scene flow, layout data (`TestTownLayout.json`) | Claude Code | branch `ccr-21c0ed33-uzs8xd` |
+| **All UI/UX**: design system, every screen, HUD, touch controls, menus, calibration UX, dialogs, animations, wording (ko/en) | Claude Code | design proposal "Cabin Light" awaiting approval |
+| Unity integration: scenes, prefabs, colliders, layers, lights, import settings, material generation, tests, APK | Claude Code | `Editor/Art*`, `ProjectConfigurator` |
+| **3D meshes, textures, `materials.json`, Blender sources**: cockpit and vehicle, Korean roads, sidewalks, intersections, markings, buildings, street furniture, traffic lights, signs, lighting look, mobile optimization | Codex | branch **`codex/3d-environment`**; must follow **`ASSET_SPEC.md`** |
 | Greybox geometry and anchor points for testing | Claude Code | temporary; replaced by Codex art |
-| **3D art**: cockpit/interior, vehicle body, Korean roads, sidewalks, intersections, markings, buildings, street furniture, traffic-light and sign models, materials, textures, lighting, mobile optimization | Codex | new branch (suggested `codex/environment-assets`); must follow §9 |
-| Integrating Codex's assets into the playable project | Claude Code | review against §9 before merge |
 
 - Codex works on its own branch and does not modify vehicle physics, input, traffic AI, localization, UI
   code or UI behavior. Claude reviews every Codex branch against this contract before integrating it. Nothing is merged unreviewed, and neither side overwrites the other's files.
@@ -159,9 +159,10 @@ in code missing from the file, or `disclaimer.body` differs from the approved wo
 
 ## 6. What Codex should not change without review
 
-`Core/`, `Runtime/Controls/`, `Runtime/Vehicle/`, `Runtime/Startup/` logic, `Runtime/Localization/` code,
-input/physics config defaults, `strings.json` **keys**, asmdefs, CI workflow. Visual files, prefabs, themes,
-fonts and `strings.json` **values** are Codex's.
+Codex changes only `Assets/DrivingSim/Art/**` (FBX, textures, `Materials/materials.json`) and `ArtSource/**`.
+Everything else is Claude's, including all code, UI, `strings.json`, scenes, prefabs, `Resources/Layouts/`,
+`ProjectSettings/`, `Packages/`, asmdefs and CI. Codex never changes vehicle physics, input handling, traffic AI,
+localization logic or UI behavior.
 
 ## 7. Road and environment compatibility (Phases C–E)
 
@@ -187,70 +188,26 @@ Planned in `ROADMAP.md`. Contract so visual and environment work stays compatibl
 
 ## 9. 3D asset contract (Codex → Claude)
 
-Everything here is what gameplay code binds to. If an asset can't meet a rule, raise it before producing it.
+The full, authoritative specification is **`ASSET_SPEC.md`** (version 1). It covers:
+- vehicle dimensions, origin, collision envelope and cockpit bindings;
+- the camera and FOV;
+- the Test Town geometry from `Resources/Layouts/TestTownLayout.json`, with keep-out zones;
+- URP Mobile material rules and the `materials.json` manifest;
+- folders, naming, layers and ownership;
+- Android budgets and the import test.
 
-### 9.1 General
-- Units and axes: 1 unit = 1 m, Y up, +Z forward, +X right. FBX (binary) or prefab. Scale factor 1, no
-  non-uniform scale on prefab roots, transforms applied.
-- Location: `Assets/DrivingSim/Art/<Vehicle|Environment|Props|Signals|Materials|Textures>/…`. Commit `.meta` files.
-- **Visual only:** no scripts, no Rigidbody, no WheelCollider. Colliders only where §9.3 says. No new packages,
-  ProjectSettings, asmdef, `strings.json` or code changes. Do not edit `Core/`, `Runtime/`, `Editor/`, `Tests/`.
-- Third-party assets only with a license that allows commercial redistribution (e.g. CC0); include the license file.
+It supersedes the earlier draft of this section.
 
-### 9.2 Rendering (URP Mobile, decided 2026-10-31)
-- Pipeline: URP, created by `DrivingSim → Configure Project` (`Settings/URP/DrivingSim_MobileURP.asset`):
-  HDR off, MSAA 2x, one shadow cascade over 60 m, no depth/opaque textures, no post-processing for now.
-- Shaders: **URP/Lit** or **URP/Simple Lit** (preferred for props), **URP/Unlit** for emissive lamps/signs if
-  unlit is enough. No custom shaders, Shader Graph or transparency-heavy materials without agreement.
-- Glass: URP/Lit, Surface Type Transparent, alpha ≤ 0.15, no refraction. Keep transparent overdraw small.
-- Emission (lamps, signals, indicators): use the `_EmissionColor` property; gameplay switches it on/off.
-- Textures: max 1024² (one 2048² atlas allowed for the cockpit), ASTC on Android, mipmaps on for world textures,
-  shared atlases across props. Lighting: one realtime directional light (gameplay), baked lightmaps later by agreement.
+Shared dependencies, changed only by agreement:
+- `TestTownLayout.json` and its generator (Claude);
+- the anchor and object names in `ASSET_SPEC.md` §1–2 (bound by gameplay code);
+- the layer list (§5), set by `ProjectConfigurator`;
+- the `materials.json` schema (§4), read by `ArtMaterialBuilder`.
 
-### 9.3 Vehicle (compact sedan, left-hand drive)
-- Prefab origin = vehicle root: ground level, centered, midway between the axles. Wheelbase 2.65 m, track 1.55 m,
-  wheel radius 0.31 m, body about 4.40 × 1.76 m. Driver seat on the **left**, X = −0.37.
-- Required named child transforms (empty or mesh pivots), positions in root space:
+**Acceptance gate:** Codex's import-test kit (`ASSET_SPEC.md` §8) must pass `ArtImportValidator` in Unity before
+detailed assets are accepted.
 
-| Name | Position / rule |
-|---|---|
-| `DriverEye` | (−0.37, 1.22, −0.30), camera anchor |
-| `SteeringWheelPivot` | (−0.37, 0.90, 0.12); wheel spins about its local Z; column tilt 22°; rim radius ≈ 0.19 m |
-| `SpeedNeedlePivot` | needle rotates about local Z; 0 km/h at rest pose |
-| `ClusterDisplay` | quad (≈ 0.40 × 0.16 m) where gameplay draws gear/speed; leave a material slot named `ClusterDisplay` |
-| `Mirror_Rear`, `Mirror_Left`, `Mirror_Right` | quads facing the driver, material slot `MirrorGlass` (gameplay assigns the live mirror image) |
-| `Wiper_L`, `Wiper_R` | wiper pivots, rest pose down, rotate about local Z |
-| `Wheel_FL`, `Wheel_FR`, `Wheel_RL`, `Wheel_RR` | wheel meshes with pivots at hub centers, axle along X |
-| `HeadLight`, `TailLight`, `BrakeLight`, `Indicator_FL/FR/RL/RR`, `Indicator_Dash_L/R` | renderers with emissive materials |
-
-- Interior on layer `CockpitInterior` (hidden from mirror cameras and the chase view). Exterior body on `Vehicle`.
-- Sightlines from `DriverEye`: windshield clear for at least ±35° horizontally except the A-pillars; dash top at
-  least 0.18 m below eye height; mirrors visible without head movement.
-- Separate meshes: `Glass` (windshield, side, rear), `Interior`, `Body`. No colliders (physics uses its own).
-- Budget: cockpit ≤ 40k triangles, exterior body ≤ 30k, ≤ 8 materials per vehicle.
-
-### 9.4 Environment (Korean town)
-- Claude's greybox layout is the source of truth for lanes, curbs, stop lines, crosswalks and intersection
-  boundaries; art aligns to it and never moves them. Road surface top at y = 0, sidewalk top at y = 0.15.
-- Typical urban lane width 3.25 m; markings follow Korean rules (yellow center lines, white lane/edge/stop lines,
-  zebra crosswalks). Exact dimensions come with the greybox layout.
-- Modular kit on a 1 m grid. Colliders: simple box/capsule colliders as separate child objects on curbs,
-  buildings and poles only. Decoration (trees, benches, signs' faces) has none unless agreed.
-- Layers: `Road`, `Sidewalk`, `Building`, `Decoration`, `Signal` (created by Configure Project when the town lands).
-- Budget (mobile, 30 FPS on a mid-range phone): ≤ 150 draw calls and ≤ 300k triangles on screen including the
-  cockpit; LOD0/LOD1 + cull for buildings; static batching friendly (mark static, share materials).
-
-### 9.5 Traffic lights and signs
-- Korean horizontal heads, 3-lamp (red, yellow, green) and 4-lamp (red, yellow, left arrow, green). Children:
-  `Lamp_Red`, `Lamp_Yellow`, `Lamp_LeftArrow`, `Lamp_Green`, each a renderer with an emissive material.
-  Pole with arm; lamp head bottom ≥ 4.5 m above the road. Gameplay drives the lamps; no animation in the asset.
-- Signs: sign face as a separate quad/material so the symbol texture can change.
-
-### 9.6 Delivery and review
-- Deliver on Codex's own branch with a short note listing assets, triangle counts, materials and texture sizes.
-- Screenshots from Unity if available; otherwise say so. Claude integrates and reports actual results.
-
-## 8. Codex change checklist (for review)
+## 8. Codex change checklist (for review; asset batches use ASSET_SPEC.md §7)
 - [ ] EditMode tests pass (incl. `LocalizationTests`); no new compile errors.
 - [ ] No hardcoded user-visible strings; new texts added as keys (coordinated).
 - [ ] Startup views implement the interfaces and follow §2 rules (modal, no auto-acknowledge, no dismiss in Required).
@@ -325,3 +282,4 @@ The UI implementation commit is `6f003f4873419585308c7c57839068734e3878c7`, base
 
 **Verification boundary:** source/asset checks pass against the reviewed base (63 protected files unchanged, original key preservation, exact bilingual notice bodies, placeholders, glyph coverage and theme references). Required/review acknowledgment guards were reviewed in source. Unity compilation, importer correctness, callbacks in execution, Android builds/touch/readability/FPS and combined-branch compatibility remain unverified. Full file inventory and integration sample: UI_HANDOFF.md and Tools/ui-design/changed-files.txt.
 | 2026-10-31 | Role change: Claude owns all UI/UX and wording; Codex owns 3D art. Added §9 3D asset contract and URP Mobile rendering rules. Codex UI branch merged after review as a functional reference |
+| 2026-10-31 | Responsibilities: Claude = gameplay, UI/UX, integration, testing; Codex = meshes, materials, textures, environment art on `codex/3d-environment`. §9 now points to ASSET_SPEC.md v1 (Blender → FBX pipeline, authoritative TestTownLayout.json, import-test gate) |

@@ -62,6 +62,7 @@ namespace DrivingSim.EditorTools
             PlayerSettings.companyName = CompanyName;
             PlayerSettings.productName = ProductName;
             PlayerSettings.bundleVersion = BundleVersion;
+            PlayerSettings.colorSpace = ColorSpace.Linear; // PBR textures (ASSET_SPEC.md §4) assume linear lighting
             log.AppendLine($"- Company/product: {CompanyName} / {ProductName}, version {BundleVersion}");
 
             // Landscape only, either way up.
@@ -79,6 +80,7 @@ namespace DrivingSim.EditorTools
             log.AppendLine($"- Android: {AndroidPackageId}, IL2CPP, ARM64, min API {MinAndroidApiLevel}");
 
             bool inputChanged = SetActiveInputHandler(ActiveInputHandlerBoth, log);
+            EnsureLayers(log);
             ConfigureUrp(log); // before shaders: the URP Unlit shader resolves only with a pipeline assigned
             AddAlwaysIncludedShaders(RuntimeShaders, log);
 
@@ -127,6 +129,32 @@ namespace DrivingSim.EditorTools
             }
             QualitySettings.SetQualityLevel(current, false);
             log.AppendLine("- URP Mobile: assigned to Graphics and all quality levels (HDR off, MSAA 2x, 1 cascade, 60 m shadows)");
+        }
+
+        /// <summary>Fixed user layers (ASSET_SPEC.md §5). Index = layer number; only empty slots are filled.</summary>
+        public static readonly (int index, string name)[] Layers =
+        {
+            (8, "Vehicle"), (9, "CockpitInterior"), (10, "Road"), (11, "Sidewalk"),
+            (12, "Building"), (13, "Decoration"), (14, "Signal"),
+        };
+
+        static void EnsureLayers(StringBuilder log)
+        {
+            Object[] assets = AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset");
+            if (assets == null || assets.Length == 0) { log.AppendLine("- WARNING: TagManager not found; layers unchanged"); return; }
+            var serialized = new SerializedObject(assets[0]);
+            SerializedProperty layers = serialized.FindProperty("layers");
+            if (layers == null) { log.AppendLine("- WARNING: layers property not found"); return; }
+            foreach (var (index, name) in Layers)
+            {
+                if (index >= layers.arraySize) continue;
+                SerializedProperty slot = layers.GetArrayElementAtIndex(index);
+                if (slot.stringValue == name) continue;
+                if (!string.IsNullOrEmpty(slot.stringValue)) { log.AppendLine($"- WARNING: layer {index} is '{slot.stringValue}', expected '{name}'"); continue; }
+                slot.stringValue = name;
+                log.AppendLine($"- Layer {index}: {name}");
+            }
+            serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
         static bool SetActiveInputHandler(int value, StringBuilder log)
