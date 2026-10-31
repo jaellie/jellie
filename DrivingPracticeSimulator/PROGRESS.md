@@ -406,3 +406,4 @@ Unity Personal + game-ci/cli v0.1.72 기준(소스 코드로 확인). **비밀�
 - Host integration must hide the menu (canvas 60) before opening calibration (canvas 50). Scene loading, mission running, concurrency, availability and return navigation remain host responsibilities.
 - Static preservation checks rerun; Unity compilation/runtime, test execution and Android behavior remain **unverified**. This update changes no gameplay, UI implementation or asset files.
 | 2026-10-31 | 역할 변경: UI/UX 전체와 문구는 Claude, 3D 아트는 Codex. Codex UI 브랜치(1c3a9b8) 검토 후 병합(문서 충돌 2건 수동 해결). URP Mobile 설정, 메인 메뉴 → Test Town 씬 흐름과 환경 카탈로그(테스트 타운만 플레이 가능, 나머지 4개 맵은 계획), 일시정지 메뉴의 메인 메뉴 연결, INTEGRATION.md §9 3D 에셋 계약. 새 UI 디자인은 사용자 승인 대기. Unity 미검증 |
+| 2026-10-31 | 새 UI/UX 디자인 제안 "Cabin Light" 인터랙티브 프로토타입(`Tools/ui-prototype/cabin-light.html`, 브라우저용, Unity 아님). 사용자 승인 전에는 Unity UI 재구현을 시작하지 않음 |
