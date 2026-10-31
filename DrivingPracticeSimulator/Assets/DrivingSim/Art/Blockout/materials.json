@@ -1,0 +1,510 @@
+{
+  "materials": [
+    {
+      "name": "M_BO_Cabin_Dark",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.1,
+        0.12,
+        0.14,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Cabin_Trim",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.27,
+        0.3,
+        0.32,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Fabric",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.16,
+        0.18,
+        0.2,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Metal",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.5,
+        0.54,
+        0.56,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Display",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.025,
+        0.04,
+        0.045,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Mirror",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.24,
+        0.36,
+        0.42,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Glass",
+      "shader": "simplelit",
+      "surface": "transparent",
+      "baseColor": [
+        0.68,
+        0.8,
+        0.84,
+        0.04
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": true
+    },
+    {
+      "name": "M_BO_Marker",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.77,
+        0.87,
+        0.89,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Asphalt",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.22,
+        0.24,
+        0.25,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Pavers",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.54,
+        0.53,
+        0.5,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Curb",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.66,
+        0.66,
+        0.62,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_White",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.9,
+        0.91,
+        0.87,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Yellow",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.95,
+        0.65,
+        0.08,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Building",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.64,
+        0.62,
+        0.56,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Brick",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.46,
+        0.39,
+        0.34,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Concrete",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.57,
+        0.6,
+        0.6,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Window",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.19,
+        0.29,
+        0.34,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Sign",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.1,
+        0.28,
+        0.32,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_StreetMetal",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.24,
+        0.28,
+        0.28,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Leaf",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.28,
+        0.39,
+        0.22,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Bark",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.36,
+        0.28,
+        0.21,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    },
+    {
+      "name": "M_BO_Signal_Off",
+      "shader": "simplelit",
+      "surface": "opaque",
+      "baseColor": [
+        0.025,
+        0.04,
+        0.035,
+        1
+      ],
+      "baseMap": "",
+      "normalMap": "",
+      "maskMap": "",
+      "emissionMap": "",
+      "emissionColor": [
+        0,
+        0,
+        0
+      ],
+      "smoothness": 0.15,
+      "metallic": 0,
+      "doubleSided": false
+    }
+  ]
+}

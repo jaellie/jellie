@@ -1,0 +1,85 @@
+{
+  "status": "PROVISIONAL; Blender checked, Unity NOT RUN",
+  "branch": "codex/3d-environment",
+  "changes": "New isolated flat-color blockout only; no existing gameplay/UI/manifest files modified",
+  "fbxCount": 2,
+  "blenderSources": 2,
+  "textures": 0,
+  "lods": 0,
+  "triangleCounts": {
+    "cockpit": 1629,
+    "intersection": 2572
+  },
+  "filesExcludingThisReport": [
+    {
+      "path": "DrivingPracticeSimulator/ArtSource/Blockout/BO_Cockpit.blend",
+      "bytes": 186387,
+      "sha256": "2cd27a6696fee600f955d3d741572eb98574d7f1813dc9a033f97dfc4202fcd4"
+    },
+    {
+      "path": "DrivingPracticeSimulator/ArtSource/Blockout/BO_Intersection.blend",
+      "bytes": 186411,
+      "sha256": "b1384ffe92c2f10c52309bcad79ab384defbc6469eae628be03e3d8117788ebd"
+    },
+    {
+      "path": "DrivingPracticeSimulator/ArtSource/Blockout/HANDOFF.md",
+      "bytes": 7717,
+      "sha256": "1dcea51ce5524fd6f250799542c962c0e1b23bdf677e01859498a4093e360261"
+    },
+    {
+      "path": "DrivingPracticeSimulator/ArtSource/Blockout/Previews/BO_DriverEye.png",
+      "bytes": 2172528,
+      "sha256": "efe39a1eeff0de953258a38682b1420dd4a5767d025a5c70edaf0f3c50647733"
+    },
+    {
+      "path": "DrivingPracticeSimulator/ArtSource/Blockout/Previews/BO_Intersection_Overview.png",
+      "bytes": 2141728,
+      "sha256": "88ab60fa9e863eb15b944d9dc08b26a0eea2817ca786df0691beca5d7c60f24b"
+    },
+    {
+      "path": "DrivingPracticeSimulator/ArtSource/Blockout/TestTownLayout.reference.json",
+      "bytes": 20978,
+      "sha256": "3eb75be147d9f3cac3699db5f4b53363b5d8dee976ec2efb43a8713555e28203"
+    },
+    {
+      "path": "DrivingPracticeSimulator/ArtSource/Blockout/asset-report.json",
+      "bytes": 19406,
+      "sha256": "4390cc84a408fa882f810980a8bf4eff1f33a6f761c7533a39abfdc245718128"
+    },
+    {
+      "path": "DrivingPracticeSimulator/ArtSource/Blockout/build_blockout.py",
+      "bytes": 20054,
+      "sha256": "dc01551b2f0c136b340917beff9556e6b90009a84eef5b0f57cd92e43a313b00"
+    },
+    {
+      "path": "DrivingPracticeSimulator/ArtSource/Blockout/render_blockout.py",
+      "bytes": 2673,
+      "sha256": "a4ae6a4180b814dae247ce2899b543f5ee93f1accde31e351a43314a127d7e4a"
+    },
+    {
+      "path": "DrivingPracticeSimulator/ArtSource/Blockout/validate_blockout.py",
+      "bytes": 7319,
+      "sha256": "abe7a9b6171b91b45b36f785322039008822a99cfc421b5f155df8b9c79571a8"
+    },
+    {
+      "path": "DrivingPracticeSimulator/ArtSource/Blockout/validation-report.json",
+      "bytes": 5651,
+      "sha256": "bf9ea748ad0991cf82419df0cf906765845a3f600ad7ddc58e52260f53c4e0d1"
+    },
+    {
+      "path": "DrivingPracticeSimulator/Assets/DrivingSim/Art/Blockout/SM_BO_Cockpit.fbx",
+      "bytes": 120668,
+      "sha256": "4763f7ed8d488d3cba9f5ca2dcbfb42fad93f4db00975f4686adf9627a2ed4af"
+    },
+    {
+      "path": "DrivingPracticeSimulator/Assets/DrivingSim/Art/Blockout/SM_BO_Intersection.fbx",
+      "bytes": 212652,
+      "sha256": "1dce84f5bbd32a62b9c0f8c3a45021101e16fc3f0c856bc9236915ba93e1bf03"
+    },
+    {
+      "path": "DrivingPracticeSimulator/Assets/DrivingSim/Art/Blockout/materials.json",
+      "bytes": 9056,
+      "sha256": "d96a62b8d4808ecfe5b2a844a0fa0e2784afd717d952eb135c324925dd8ce059"
+    }
+  ]
+}

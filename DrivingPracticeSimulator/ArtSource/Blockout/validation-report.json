@@ -1,0 +1,197 @@
+{
+  "status": "Blender-side validation only; Unity import, compilation, gameplay and Android NOT RUN",
+  "assetChecks": [
+    {
+      "file": "Assets/DrivingSim/Art/Blockout/SM_BO_Cockpit.fbx",
+      "triangles": 1629,
+      "objects": 25,
+      "materials": 8,
+      "BlenderFBXRoundTrip": "PASS"
+    },
+    {
+      "file": "Assets/DrivingSim/Art/Blockout/SM_BO_Intersection.fbx",
+      "triangles": 2572,
+      "objects": 47,
+      "materials": 14,
+      "BlenderFBXRoundTrip": "PASS"
+    }
+  ],
+  "decorationTrianglesCheckedAgainstKeepOuts": 1008,
+  "eyeClearanceMeters": 0.2250000238418579,
+  "driverView": {
+    "eyeLocalUnity": [
+      -0.37,
+      1.22,
+      -0.3
+    ],
+    "verticalFOV": 65,
+    "pitchDown": 4,
+    "previewVehiclePositionUnity": [
+      4.875,
+      0,
+      -35
+    ],
+    "sightlines": {
+      "wheel_rim_top": {
+        "targetLocalUnity": [
+          -0.37,
+          1.0761649323676896,
+          0.19117525274902328
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": 0.0,
+        "pitchFromCameraDegrees": -12.322066756921458,
+        "withinDefault20x9Frustum": true
+      },
+      "wheel_center": {
+        "targetLocalUnity": [
+          -0.37,
+          0.9,
+          0.12
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": 0.0,
+        "pitchFromCameraDegrees": -33.30395170777684,
+        "withinDefault20x9Frustum": false
+      },
+      "cluster_center": {
+        "targetLocalUnity": [
+          -0.37,
+          1.09,
+          0.47
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": 0.0,
+        "pitchFromCameraDegrees": -5.58294461152553,
+        "withinDefault20x9Frustum": true
+      },
+      "mirror_rear": {
+        "targetLocalUnity": [
+          0,
+          1.4,
+          0.62
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": 21.90870472398906,
+        "pitchFromCameraDegrees": 14.288420618879101,
+        "withinDefault20x9Frustum": true
+      },
+      "mirror_left": {
+        "targetLocalUnity": [
+          -1,
+          1.02,
+          0.55
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": -36.544971346558256,
+        "pitchFromCameraDegrees": -6.704478566334593,
+        "withinDefault20x9Frustum": true
+      },
+      "mirror_right": {
+        "targetLocalUnity": [
+          1,
+          1.02,
+          0.55
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": 58.182964527916326,
+        "pitchFromCameraDegrees": -3.0713644278388763,
+        "withinDefault20x9Frustum": false
+      },
+      "road_center_X0": {
+        "targetLocalUnity": [
+          0.0,
+          0,
+          35
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": 0.6005286927215479,
+        "pitchFromCameraDegrees": 2.020702322202522,
+        "withinDefault20x9Frustum": true
+      },
+      "crosswalk_S_near": {
+        "targetLocalUnity": [
+          -1.625,
+          0.005,
+          21
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": -3.371979760227826,
+        "pitchFromCameraDegrees": 0.7408973208931622,
+        "withinDefault20x9Frustum": true
+      },
+      "crosswalk_S_far": {
+        "targetLocalUnity": [
+          -1.625,
+          0.005,
+          25
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": -2.8398147786946186,
+        "pitchFromCameraDegrees": 1.2539272753171131,
+        "withinDefault20x9Frustum": true
+      },
+      "crosswalk_N": {
+        "targetLocalUnity": [
+          -1.625,
+          0.005,
+          47
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": -1.5198591458900463,
+        "pitchFromCameraDegrees": 2.529078323850982,
+        "withinDefault20x9Frustum": true
+      },
+      "signal_NB": {
+        "targetLocalUnity": [
+          -1.625,
+          4.75,
+          50.5
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": -1.4151885978357603,
+        "pitchFromCameraDegrees": 7.9737817336744605,
+        "withinDefault20x9Frustum": true
+      },
+      "stop_line_NB": {
+        "targetLocalUnity": [
+          -1.525,
+          0.005,
+          18.775
+        ],
+        "clearBeforeTarget": true,
+        "firstHitDistance": null,
+        "yawFromStraightAheadDegrees": -3.465055275115029,
+        "pitchFromCameraDegrees": 0.3620598485602309,
+        "withinDefault20x9Frustum": true
+      }
+    },
+    "closerApproachCheck": {
+      "vehicleZ": -23,
+      "targetUnity": [
+        3.25,
+        0.005,
+        -14
+      ],
+      "clearBeforeTarget": false,
+      "note": "Central near-road may be masked by the exact cluster geometry; review in Unity before changing specified anchors/dimensions."
+    }
+  },
+  "knownLimits": [
+    "All mirrors/displays/signals are flat placeholders, not live outputs.",
+    "Wipers are in the specified up-glass binding pose, not gameplay rest.",
+    "Exact left mirror quad/eye specification slightly exceeds the stated 2.10m exterior width; needs Claude review.",
+    "Default gameplay spawn at z=-80 is outside this approximately 40m-per-approach visual slice."
+  ]
+}

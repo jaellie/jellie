@@ -1,0 +1,903 @@
+{
+  "status": "PROVISIONAL; Blender-exported; NOT Unity-verified",
+  "referenceCommit": "f80c00d8e63e30745a1e6af5cfe52c46da1b6356",
+  "layoutSHA256": "3eb75be147d9f3cac3699db5f4b53363b5d8dee976ec2efb43a8713555e28203",
+  "assets": [
+    {
+      "file": "Assets/DrivingSim/Art/Blockout/SM_BO_Cockpit.fbx",
+      "triangles": 1629,
+      "objects": [
+        {
+          "name": "BO_Interior_Dashboard",
+          "triangles": 88,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Cabin_Dark",
+            "M_BO_Metal"
+          ]
+        },
+        {
+          "name": "BO_Interior_Seats",
+          "triangles": 176,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Fabric",
+            "M_BO_Cabin_Dark",
+            "M_BO_Metal"
+          ]
+        },
+        {
+          "name": "BO_Interior_Doors",
+          "triangles": 136,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Cabin_Dark"
+          ]
+        },
+        {
+          "name": "BO_Interior_Headliner",
+          "triangles": 12,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Cabin_Trim"
+          ]
+        },
+        {
+          "name": "BO_Interior_Pillars",
+          "triangles": 140,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Cabin_Trim"
+          ]
+        },
+        {
+          "name": "BO_Interior_Console",
+          "triangles": 20,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Cabin_Dark"
+          ]
+        },
+        {
+          "name": "BO_Glass_Interior",
+          "triangles": 6,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Glass"
+          ]
+        },
+        {
+          "name": "BO_SteeringWheel",
+          "triangles": 912,
+          "originUnity": [
+            -0.3700000047683716,
+            0.8999999761581421,
+            0.11999999731779099
+          ],
+          "materials": [
+            "M_BO_Cabin_Dark",
+            "M_BO_Marker"
+          ]
+        },
+        {
+          "name": "BO_Cluster_Panel",
+          "triangles": 4,
+          "originUnity": [
+            -0.3700000047683716,
+            1.090000033378601,
+            0.4699999988079071
+          ],
+          "materials": [
+            "M_BO_Display",
+            "M_BO_Cabin_Dark"
+          ]
+        },
+        {
+          "name": "BO_Cluster_Display",
+          "triangles": 2,
+          "originUnity": [
+            -0.28999999165534973,
+            1.090000033378601,
+            0.4699999988079071
+          ],
+          "materials": [
+            "M_BO_Display"
+          ]
+        },
+        {
+          "name": "BO_Cluster_Needle",
+          "triangles": 1,
+          "originUnity": [
+            -0.44999998807907104,
+            1.090999960899353,
+            0.46399998664855957
+          ],
+          "materials": [
+            "M_BO_Marker"
+          ]
+        },
+        {
+          "name": "BO_MirrorGlass_Rear",
+          "triangles": 2,
+          "originUnity": [
+            -0.0,
+            1.399999976158142,
+            0.6200000047683716
+          ],
+          "materials": [
+            "M_BO_Mirror"
+          ]
+        },
+        {
+          "name": "BO_MirrorGlass_Left",
+          "triangles": 2,
+          "originUnity": [
+            -1.0,
+            1.0199999809265137,
+            0.550000011920929
+          ],
+          "materials": [
+            "M_BO_Mirror"
+          ]
+        },
+        {
+          "name": "BO_MirrorGlass_Right",
+          "triangles": 2,
+          "originUnity": [
+            1.0,
+            1.0199999809265137,
+            0.550000011920929
+          ],
+          "materials": [
+            "M_BO_Mirror"
+          ]
+        },
+        {
+          "name": "BO_Interior_MirrorHousing_Rear",
+          "triangles": 40,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Cabin_Dark"
+          ]
+        },
+        {
+          "name": "BO_Interior_Wiper_L",
+          "triangles": 40,
+          "originUnity": [
+            -0.5,
+            1.0,
+            0.9750000238418579
+          ],
+          "materials": [
+            "M_BO_Cabin_Dark"
+          ]
+        },
+        {
+          "name": "BO_Interior_Wiper_R",
+          "triangles": 40,
+          "originUnity": [
+            0.11999999731779099,
+            1.0,
+            0.9750000238418579
+          ],
+          "materials": [
+            "M_BO_Cabin_Dark"
+          ]
+        },
+        {
+          "name": "BO_Lamp_Dash_Indicator_L",
+          "triangles": 2,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Display"
+          ]
+        },
+        {
+          "name": "BO_Lamp_Dash_Indicator_R",
+          "triangles": 2,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Display"
+          ]
+        },
+        {
+          "name": "BO_Lamp_Dash_ParkingBrake",
+          "triangles": 2,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Display"
+          ]
+        },
+        {
+          "name": "BO_DriverEye",
+          "triangles": 0,
+          "originUnity": [
+            -0.3700000047683716,
+            1.2200000286102295,
+            -0.30000001192092896
+          ],
+          "materials": []
+        },
+        {
+          "name": "BO_SteeringWheelPivot",
+          "triangles": 0,
+          "originUnity": [
+            -0.3700000047683716,
+            0.8999999761581421,
+            0.11999999731779099
+          ],
+          "materials": []
+        },
+        {
+          "name": "BO_Mirror_Rear",
+          "triangles": 0,
+          "originUnity": [
+            -0.0,
+            1.399999976158142,
+            0.6200000047683716
+          ],
+          "materials": []
+        },
+        {
+          "name": "BO_Mirror_Left",
+          "triangles": 0,
+          "originUnity": [
+            -1.0,
+            1.0199999809265137,
+            0.550000011920929
+          ],
+          "materials": []
+        },
+        {
+          "name": "BO_Mirror_Right",
+          "triangles": 0,
+          "originUnity": [
+            1.0,
+            1.0199999809265137,
+            0.550000011920929
+          ],
+          "materials": []
+        }
+      ]
+    },
+    {
+      "file": "Assets/DrivingSim/Art/Blockout/SM_BO_Intersection.fbx",
+      "triangles": 2572,
+      "objects": [
+        {
+          "name": "BO_Road_X0",
+          "triangles": 102,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Asphalt"
+          ]
+        },
+        {
+          "name": "BO_Marking_X0_White",
+          "triangles": 104,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_White"
+          ]
+        },
+        {
+          "name": "BO_Marking_X0_Yellow",
+          "triangles": 12,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Yellow"
+          ]
+        },
+        {
+          "name": "BO_Sidewalk_X0",
+          "triangles": 208,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Pavers"
+          ]
+        },
+        {
+          "name": "BO_Curb_X0",
+          "triangles": 224,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Curb"
+          ]
+        },
+        {
+          "name": "BO_Sidewalk_BlockGround_X0_NE",
+          "triangles": 26,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Curb"
+          ]
+        },
+        {
+          "name": "BO_Sidewalk_BlockGround_X0_NW",
+          "triangles": 26,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Curb"
+          ]
+        },
+        {
+          "name": "BO_Sidewalk_BlockGround_X0_SE",
+          "triangles": 26,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Curb"
+          ]
+        },
+        {
+          "name": "BO_Sidewalk_BlockGround_X0_SW",
+          "triangles": 26,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Curb"
+          ]
+        },
+        {
+          "name": "BO_Bldg_NE_1",
+          "triangles": 64,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Concrete",
+            "M_BO_Window",
+            "M_BO_Sign"
+          ]
+        },
+        {
+          "name": "BO_Bldg_NE_2",
+          "triangles": 76,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Building",
+            "M_BO_Concrete",
+            "M_BO_Window",
+            "M_BO_Sign"
+          ]
+        },
+        {
+          "name": "BO_Bldg_NW_1",
+          "triangles": 64,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Brick",
+            "M_BO_Concrete",
+            "M_BO_Window",
+            "M_BO_Sign"
+          ]
+        },
+        {
+          "name": "BO_Bldg_NW_2",
+          "triangles": 76,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Concrete",
+            "M_BO_Window",
+            "M_BO_Sign"
+          ]
+        },
+        {
+          "name": "BO_Bldg_SE_1",
+          "triangles": 64,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Brick",
+            "M_BO_Concrete",
+            "M_BO_Window",
+            "M_BO_Sign"
+          ]
+        },
+        {
+          "name": "BO_Bldg_SE_2",
+          "triangles": 76,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Concrete",
+            "M_BO_Window",
+            "M_BO_Sign"
+          ]
+        },
+        {
+          "name": "BO_Bldg_SW_1",
+          "triangles": 64,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Building",
+            "M_BO_Concrete",
+            "M_BO_Window",
+            "M_BO_Sign"
+          ]
+        },
+        {
+          "name": "BO_Bldg_SW_2",
+          "triangles": 76,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Brick",
+            "M_BO_Concrete",
+            "M_BO_Window",
+            "M_BO_Sign"
+          ]
+        },
+        {
+          "name": "BO_Prop_Streetlight_1_1",
+          "triangles": 68,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Tree_1_1",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Bark",
+            "M_BO_Leaf"
+          ]
+        },
+        {
+          "name": "BO_Prop_Streetlight_-1_1",
+          "triangles": 68,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Tree_-1_1",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Bark",
+            "M_BO_Leaf"
+          ]
+        },
+        {
+          "name": "BO_Prop_Streetlight_1_-1",
+          "triangles": 68,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Tree_1_-1",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Bark",
+            "M_BO_Leaf"
+          ]
+        },
+        {
+          "name": "BO_Prop_Streetlight_-1_-1",
+          "triangles": 68,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Tree_-1_-1",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Bark",
+            "M_BO_Leaf"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_NB_PoleArm",
+          "triangles": 56,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_NB_Housing",
+          "triangles": 12,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_NB_red",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_NB_yellow",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_NB_left_arrow",
+          "triangles": 5,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_NB_green",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_SB_PoleArm",
+          "triangles": 56,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_SB_Housing",
+          "triangles": 12,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_SB_red",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_SB_yellow",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_SB_left_arrow",
+          "triangles": 5,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_SB_green",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_EB_PoleArm",
+          "triangles": 56,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_EB_Housing",
+          "triangles": 12,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_EB_red",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_EB_yellow",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_EB_green",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_WB_PoleArm",
+          "triangles": 56,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_WB_Housing",
+          "triangles": 12,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_StreetMetal"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_WB_red",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_WB_yellow",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        },
+        {
+          "name": "BO_Signal_SIG_X0_WB_green",
+          "triangles": 44,
+          "originUnity": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "materials": [
+            "M_BO_Signal_Off"
+          ]
+        }
+      ]
+    }
+  ]
+}
