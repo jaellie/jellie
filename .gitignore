@@ -1,0 +1,4 @@
+
+# precompile-check dependencies
+DrivingPracticeSimulator/Tools/precompile-check/node_modules/
+DrivingPracticeSimulator/Tools/precompile-check/package-lock.json

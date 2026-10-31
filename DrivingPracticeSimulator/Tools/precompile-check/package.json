@@ -1,0 +1,6 @@
+{
+  "name": "precompile-check",
+  "private": true,
+  "description": "Static C# checks run without Unity (syntax parse, type-name audit). Not a compiler.",
+  "dependencies": { "web-tree-sitter": "0.22.6", "tree-sitter-wasms": "0.1.11" }
+}
