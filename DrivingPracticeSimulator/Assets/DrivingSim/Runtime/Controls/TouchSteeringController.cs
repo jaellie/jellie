@@ -5,17 +5,19 @@ namespace DrivingSim.Controls
 {
     public enum SteeringGestureMode
     {
-        /// <summary>Move the finger/mouse in circles around the steering center, like turning a real wheel.</summary>
+        /// <summary>Draw circles anywhere (not on UI): the turning of the stroke turns the wheel. Default.</summary>
+        CircularAnywhere,
+        /// <summary>Move in circles around the fixed steering center; gestures must start inside the ring.</summary>
         Circular,
         /// <summary>Legacy: horizontal drag distance turns the wheel.</summary>
         HorizontalDrag,
     }
 
     /// <summary>
-    /// Pointer steering without grabbing an on-screen wheel model. In Circular mode a gesture must
-    /// start inside the steering ring (not on UI); after that its angle around the ring center is
-    /// tracked anywhere on screen and accumulated into the steering-wheel angle, including full
-    /// revolutions. Releasing keeps the angle; the next gesture continues from it. Only one pointer
+    /// Pointer steering without grabbing an on-screen wheel model. CircularAnywhere (default): a
+    /// gesture may start anywhere that is not UI, and the turning of the stroke is accumulated, so
+    /// one loop of any size turns the wheel once. Circular: the angle around the fixed ring center is
+    /// accumulated; gestures start inside the ring. Both include full revolutions. Releasing keeps the angle; the next gesture continues from it. Only one pointer
     /// steers at a time. The steering wheel angle then maps to the front wheels through the steering
     /// ratio, and the vehicle's yaw comes from the wheel physics.
     /// </summary>
@@ -24,7 +26,7 @@ namespace DrivingSim.Controls
         const int NoPointer = int.MinValue;
 
         [SerializeField] PointerInputHub hub;
-        public SteeringGestureMode mode = SteeringGestureMode.Circular;
+        public SteeringGestureMode mode = SteeringGestureMode.CircularAnywhere;
 
         [Header("Circular gesture")]
         [Tooltip("Steering center in normalized screen coordinates (0-1, origin bottom-left).")]
@@ -38,6 +40,12 @@ namespace DrivingSim.Controls
         [Tooltip("Larger single-sample steps are treated as tracking jumps and discarded.")]
         [Range(20f, 170f)] public float maxStepDeg = 90f;
 
+        [Header("Circular anywhere (stroke turning)")]
+        [Tooltip("Minimum pointer travel, as a fraction of screen height, before its direction is measured (filters jitter).")]
+        [Range(0.002f, 0.05f)] public float minSegment = 0.012f;
+        [Tooltip("Sharper direction changes in one segment (reversals) are discarded.")]
+        [Range(45f, 170f)] public float maxTurnDeg = 100f;
+
         [Header("Horizontal drag (legacy mode)")]
         [Min(10f)] public float degreesPerScreenHeight = 100f;
         public bool invert;
@@ -45,6 +53,7 @@ namespace DrivingSim.Controls
         public Rect drivingArea = new Rect(0f, 0f, 1f, 1f);
 
         readonly CircularSteeringGesture gesture = new CircularSteeringGesture { YAxisUp = true };
+        readonly TraceSteeringGesture trace = new TraceSteeringGesture { YAxisUp = true };
         int activePointer = NoPointer;
 
         public bool IsSteering => activePointer != NoPointer;
@@ -64,6 +73,7 @@ namespace DrivingSim.Controls
         {
             activePointer = NoPointer;
             gesture.Reset();
+            trace.Reset();
         }
 
         public void PollInput(float deltaTime, ref DrivingInputFrame frame)
@@ -73,6 +83,9 @@ namespace DrivingSim.Controls
             gesture.Gain = angularGain;
             gesture.MaxStepDeg = maxStepDeg;
             gesture.DeadZoneRadius = RadiusPixels * deadZoneFraction;
+            trace.Gain = angularGain;
+            trace.MinSegment = minSegment * Mathf.Max(Screen.height, 1);
+            trace.MaxTurnDeg = maxTurnDeg;
             Vector2 center = CenterPixels;
 
             float delta = 0f;
@@ -86,13 +99,17 @@ namespace DrivingSim.Controls
                     activePointer = p.Id;
                     ActiveSource = p.Source;
                     gesture.Reset();
+                    trace.Reset();
                 }
                 if (p.Id != activePointer) continue;
 
                 seen = true;
-                delta += mode == SteeringGestureMode.Circular
-                    ? gesture.Sample(p.Position.x, p.Position.y, center.x, center.y)
-                    : p.Delta.x / Mathf.Max(Screen.height, 1) * degreesPerScreenHeight * (invert ? -1f : 1f);
+                switch (mode)
+                {
+                    case SteeringGestureMode.CircularAnywhere: delta += trace.Sample(p.Position.x, p.Position.y); break;
+                    case SteeringGestureMode.Circular: delta += gesture.Sample(p.Position.x, p.Position.y, center.x, center.y); break;
+                    default: delta += p.Delta.x / Mathf.Max(Screen.height, 1) * degreesPerScreenHeight * (invert ? -1f : 1f); break;
+                }
                 if (p.Phase == PointerPhase.Ended || p.Phase == PointerPhase.Canceled) Release();
             }
 

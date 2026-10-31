@@ -6,7 +6,7 @@ physical setup, and the test plan.
 
 > **Verification status.** The C# code has **not been compiled or run**: there is no Unity Editor
 > in the environment where it was written. The same algorithms run in the browser preview
-> (`Tools/browser-preview/index.html`), where the automated suite (74 checks, steering included) passes in headless Chromium
+> (`Tools/browser-preview/index.html`), where the automated suite (79 checks, steering included) passes in headless Chromium
 > **with simulated key events**. No physical keyboard, no foot, and no Android device have been
 > tested.
 
@@ -141,7 +141,7 @@ None of this has been tested.
 ## Test plan
 
 **Automated, run:** browser preview, `node Tools/browser-preview/run-tests.js` (instructions in the
-file). Headless Chromium with simulated keys, mouse and touch: **74/74 passed**. That's
+file). Headless Chromium with simulated keys, mouse and touch: **79/79 passed**. That's
 Unity↔preview config-equality checks (read from the C# source), circular steering checks and
 calibration/validation/pedal checks.
 

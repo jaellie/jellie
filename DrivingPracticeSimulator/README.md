@@ -68,18 +68,23 @@ The car creeps forward. Add **W** to accelerate.
 
 ## Driving controls beyond the keyboard
 
-**Circular steering.** Turn the wheel by drawing circles, as if gripping a real steering wheel.
-A gesture starts inside the **steering ring** (center at 50 % width / 43 % height from the bottom,
-radius 27 % of screen height, drawn faintly on the HUD with an optional mini wheel). Its angle around
-the ring center, `atan2(y − cy, x − cx)`, is unwrapped across ±180° and accumulated **1:1**: one
-circle = one turn of the wheel, so center → full lock (540°) is 1.5 circles. Clockwise = right.
-Points inside the inner dead zone (22 % of the radius) are ignored. A single step over 90° is
-discarded as a tracking jump, and the next sample re-anchors. Releasing keeps the angle; the next
-gesture continues from it, wherever you grip. After the gesture starts, the pointer may leave the
-ring (only the angle matters) and never activates buttons it crosses. Works with touch, the
-**middle mouse button**, and optionally the left button (`PointerInputHub.leftMouseAsTouch`). The
-old horizontal drag remains as `TouchSteeringController.mode = HorizontalDrag`. The scroll wheel is
-never used.
+**Circular steering.** Turn the wheel by drawing circles, as if turning a real steering wheel.
+Default mode (`TouchSteeringController.mode = CircularAnywhere`): a gesture may start **anywhere
+that is not a button**, and the code accumulates how much the stroke's direction of travel turns.
+One loop of any size, anywhere = one turn of the wheel (gain 1:1). Clockwise = right. A straight
+stroke = 0°, so a plain left/right drag never steers. Motion shorter than 1.2 % of the screen height
+is ignored as jitter. A turn sharper than 100° within one segment (a reversal) is discarded. The first
+segment of each gesture only sets the direction, so a few degrees of the first motion aren't counted.
+Releasing keeps the angle; the next gesture continues from it. A gesture never activates buttons
+it crosses.
+
+The faint **steering ring** with its mini wheel stays fixed at 50 % width / 43 % height (radius 27 %
+of height) as a visual indicator of the current wheel angle. Its opacity was reduced, since it
+overlaps the car in third-person view. The wheel glyph can be hidden. Other modes:
+`Circular` (the previous behavior: start inside the ring; angle measured around its center with
+`atan2`, ±180° unwrap, 22 % dead zone, 90° jump guard) and `HorizontalDrag` (legacy). Touch, the
+**middle mouse button** and optionally the left button (`PointerInputHub.leftMouseAsTouch`) work in
+all modes. The scroll wheel is never used.
 
 **Middle mouse on UI.** Unity UI ignores middle clicks. `MiddleMouseUIRouter` sends a
 middle press that starts on a control to that control as one left-button touch (its own pointer

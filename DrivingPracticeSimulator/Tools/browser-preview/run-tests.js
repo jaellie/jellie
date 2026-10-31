@@ -26,6 +26,7 @@ const results = []; const check = (group, name, ok, detail = '') => results.push
     ['steerRateDegPerSec', kb, js.st.keyRate], ['highSpeedSteerScale', steer, js.st.hi], ['frontWheelMaxSlewDegPerSec', steer, js.st.slew]];
   const circ = js.st.circle;
   const vec = touch.match(/circleCenter\s*=\s*new Vector2\(([0-9.]+)f,\s*([0-9.]+)f\)/);
+  pairs.push(['minSegment', touch, js.st.trace.minSegment], ['maxTurnDeg', touch, js.st.trace.maxTurn]);
   pairs.push(['circleRadius', touch, circ.radius], ['deadZoneFraction', touch, circ.dead], ['angularGain', touch, circ.gain], ['maxStepDeg', touch, circ.maxStep]);
   check('config', `circleCenter: Unity (${vec[1]}, ${vec[2]}) = preview (${circ.cx}, ${circ.cy})`, parseFloat(vec[1]) === circ.cx && parseFloat(vec[2]) === circ.cy);
   for (const [f, src, v] of pairs) check('config', `${f}: Unity ${csNum(src, f)} = preview ${v}`, csNum(src, f) === v);
@@ -62,64 +63,92 @@ const results = []; const check = (group, name, ok, detail = '') => results.push
   }
   const near = (v, t, tol = 2) => Math.abs(v - t) <= tol;
 
+  // Default mode: circles anywhere. The first short segment of a gesture only sets the direction (one 7.5° step here).
   await circle('middle', -90, 360, 48);
   let a1 = await sw();
-  check('circular', 'One clockwise circle = +360°', near(a1, 360), `${a1.toFixed(1)}°`);
+  check('circular', 'One clockwise circle ≈ +360° (first segment only sets direction)', a1 > 345 && a1 <= 361, `${a1.toFixed(1)}°`);
   check('circular', 'Cockpit wheel shows the accumulated angle', near(await P('__preview.wheelSpinDeg'), a1, 0.5), `${(await P('__preview.wheelSpinDeg')).toFixed(1)}°`);
   await circle('middle', -90, -360, 48);
   let a2 = await sw();
-  check('circular', 'One counter-clockwise circle undoes it', near(a2, 0), `${a2.toFixed(1)}°`);
+  check('circular', 'One counter-clockwise circle undoes it', near(a2, 0, 9), `${a2.toFixed(1)}°`);
   await circle('middle', 0, 900, 120);
   check('circular', 'Multiple clockwise circles stop at full right lock (+540°)', (await sw()) === 540);
   check('circular', 'Front wheels at lock = 35° (inner)', near(await P('__preview.S.front'), 35, 0.5) || (await (async () => { await sleep(400); return near(await P('__preview.S.front'), 35, 0.01); })()));
   await circle('middle', 0, -1440, 192);
   check('circular', 'Counter-clockwise circles reach full left lock (−540°), 3 turns lock to lock', (await sw()) === -540);
   await circle('middle', 0, 540, 72);
-  check('circular', 'Back to center after 1.5 clockwise circles', near(await sw(), 0));
+  check('circular', 'Back near center after 1.5 clockwise circles', near(await sw(), 0, 9), `${(await sw()).toFixed(1)}°`);
 
   const b0 = await sw();
   await circle('middle', 0, 90, 12);                      // release here...
   await circle('middle', 180, 90, 12);                    // ...re-grip on the opposite side
-  check('circular', 'Release and re-grip elsewhere: continues, no jump', near((await sw()) - b0, 180), `+${((await sw()) - b0).toFixed(1)}°`);
+  const rg = (await sw()) - b0;
+  check('circular', 'Release and re-grip elsewhere: continues, no jump', rg > 160 && rg <= 181, `+${rg.toFixed(1)}° for two 90° arcs`);
   await sleep(2500);
-  check('circular', 'Released while stopped: angle kept', near((await sw()) - b0, 180, 0.01));
+  check('circular', 'Released while stopped: angle kept', near((await sw()) - b0, rg, 0.01));
 
   const b1 = await sw();
-  await circle('middle', 150, 60, 12);
-  check('circular', 'Crossing the ±180° boundary: smooth, no 360° jump', near((await sw()) - b1, 60), `+${((await sw()) - b1).toFixed(1)}°`);
+  await circle('middle', 60, 60, 12);                     // stroke direction passes through ±180° (moving left at the bottom)
+  const bd = (await sw()) - b1;
+  check('circular', 'Stroke direction crossing ±180°: smooth, no 360° jump', bd > 50 && bd <= 61, `+${bd.toFixed(1)}°`);
 
   const b2 = await sw();
   await line('middle', hud(R.cx - 150, R.cy + 2), hud(R.cx + 150, R.cy + 2), 30);
-  check('circular', 'Passing straight through the center: no jump', Math.abs((await sw()) - b2) < 25, `${((await sw()) - b2).toFixed(1)}°`);
+  check('circular', 'Straight stroke through the center: no steering, no jump', Math.abs((await sw()) - b2) < 3, `${((await sw()) - b2).toFixed(1)}°`);
 
   const b3 = await sw();
   await line('middle', hud(R.cx - 100, R.cy - 100), hud(R.cx + 100, R.cy - 100), 20);
-  check('circular', 'Rightward stroke across the top = +90° (proportional to angle swept, not binary)', near((await sw()) - b3, 90, 3), `+${((await sw()) - b3).toFixed(1)}°`);
+  check('circular', 'Straight left→right stroke is not a left/right command (≈0°)', Math.abs((await sw()) - b3) < 3, `${((await sw()) - b3).toFixed(1)}°`);
+  const b3b = await sw();
+  await circle('middle', 200, 45, 9, 140);
+  const arc = (await sw()) - b3b;
+  check('circular', 'Small arc = proportionally small turn', arc > 30 && arc <= 46, `45° arc → +${arc.toFixed(1)}°`);
+
+  // Anywhere: a small loop far from the ring, on the road at the left
+  await P('__preview.S.sw = 0');
+  const b3c = await sw();
+  const far = (d) => hud(200 + 50 * Math.cos(d * Math.PI / 180), 330 + 50 * Math.sin(d * Math.PI / 180));
+  { const p0 = far(0); await page.mouse.move(p0.x, p0.y); await page.mouse.down({ button: 'middle' });
+    for (let i = 1; i <= 36; i++) { const p = far(i * 10); await page.mouse.move(p.x, p.y); } await page.mouse.up({ button: 'middle' }); }
+  const fl = (await sw()) - b3c;
+  check('circular', 'Small loop (r = 50 px) far outside the ring also turns the wheel ≈ once', fl > 340 && fl <= 361, `+${fl.toFixed(1)}°`);
+  await page.screenshot({ path: path.join(dir, 'shots/v7-ring.png') });
+  await circle('middle', 0, -720, 96);                    // back toward center for the following checks
 
   const b4 = await sw();
   await circle('left', 0, 90, 12);
   check('circular', 'Left mouse ignored by default', near(await sw(), b4, 0.01));
   await P("document.getElementById('opt-left').click()");
   await circle('left', 0, 90, 12);
-  check('circular', 'Left mouse steers when enabled (optional)', near((await sw()) - b4, 90), `+${((await sw()) - b4).toFixed(1)}°`);
+  check('circular', 'Left mouse steers when enabled (optional)', near((await sw()) - b4, 90, 9), `+${((await sw()) - b4).toFixed(1)}°`);
   await P("document.getElementById('opt-left').click()");
 
   const b5 = await sw();
   await touchCircle(0, -180, 24);
-  check('circular', 'Touchscreen circle (CDP touch events) steers', near((await sw()) - b5, -180, 3), `${((await sw()) - b5).toFixed(1)}°`);
+  check('circular', 'Touchscreen circle (CDP touch events) steers', near((await sw()) - b5, -180, 9), `${((await sw()) - b5).toFixed(1)}°`);
 
   // UI conflicts: a gesture starting outside the ring or on a button never steers.
   const b6 = await sw();
+  // Ring-center mode (option) keeps the old rule: gestures start inside the ring, exact angle around the center.
+  await P("__preview.setMode('center')");
   const outside = hud(R.cx + R.r + 60, R.cy);
   await line('middle', outside, hud(R.cx + R.r + 60, R.cy + 80), 10);
-  check('circular', 'Gesture starting outside the ring: no steering', near(await sw(), b6, 0.01));
+  check('circular', 'Ring-center mode: gesture starting outside the ring does nothing', near(await sw(), b6, 0.01));
+  await circle('middle', -90, 360, 48);
+  check('circular', 'Ring-center mode: one circle = exactly +360°', near((await sw()) - b6, 360), `+${((await sw()) - b6).toFixed(1)}°`);
+  await circle('middle', -90, -360, 48);
+  await P("__preview.setMode('anywhere')");
   const gearR = await (await page.$('#gears .btn[data-g="R"]')).boundingBox();
   await line('middle', { x: gearR.x + 20, y: gearR.y + 20 }, onRing(0), 10);
   check('circular', 'Gesture starting on a gear button: no steering, gear untouched without brake', near(await sw(), b6, 0.01) && (await P('__preview.S.gear')) === 'P');
   await page.keyboard.down('KeyS'); await sleep(400);
   const gearD = await (await page.$('#gears .btn[data-g="D"]')).boundingBox();
   const b6b = await sw();
-  await line('middle', onRing(-60, 100), { x: gearD.x + gearD.width / 2, y: gearD.y + gearD.height / 2 }, 16);   // ends on the D button
+  { const p0 = onRing(-150, 100); await page.mouse.move(p0.x, p0.y); await page.mouse.down({ button: 'middle' });
+    for (let i = 1; i <= 12; i++) { const p = onRing(-150 + i * 10, 100); await page.mouse.move(p.x, p.y); }     // arc (steers)…
+    const end = { x: gearD.x + gearD.width / 2, y: gearD.y + gearD.height / 2 }, s0 = onRing(-30, 100);
+    for (let i = 1; i <= 10; i++) await page.mouse.move(s0.x + (end.x - s0.x) * i / 10, s0.y + (end.y - s0.y) * i / 10); // …then onto D
+    await page.mouse.up({ button: 'middle' }); }
   const gearAfter = await P('__preview.S.gear'); await page.keyboard.up('KeyS');
   check('circular', 'Steering gesture dragged onto the D button keeps steering and never presses it', gearAfter === 'P' && !near(await sw(), b6b, 1), `gear ${gearAfter}, wheel ${b6b.toFixed(0)}° → ${(await sw()).toFixed(0)}°`);
 

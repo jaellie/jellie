@@ -243,20 +243,21 @@ namespace DrivingSim.UI
             steeringGlyph = UIBuild.Rect("WheelGlyph", steeringRing, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(150f, 150f));
             var rim = steeringGlyph.gameObject.AddComponent<Image>();
             rim.sprite = UISprites.Ring;
-            rim.color = new Color(1f, 1f, 1f, 0.55f);
+            rim.color = new Color(1f, 1f, 1f, 0.32f);
             rim.raycastTarget = false;
             RectTransform spokeH = UIBuild.Rect("Spoke", steeringGlyph, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(140f, 6f));
-            UIBuild.Panel(spokeH, null, new Color(1f, 1f, 1f, 0.45f));
+            UIBuild.Panel(spokeH, null, new Color(1f, 1f, 1f, 0.26f));
             RectTransform spokeV = UIBuild.Rect("SpokeDown", steeringGlyph, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(6f, 70f));
-            UIBuild.Panel(spokeV, null, new Color(1f, 1f, 1f, 0.45f));
+            UIBuild.Panel(spokeV, null, new Color(1f, 1f, 1f, 0.26f));
             RectTransform top = UIBuild.Rect("TopMark", steeringGlyph, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(12f, 20f));
-            UIBuild.Panel(top, null, theme.indicatorAmber);
+            UIBuild.Panel(top, null, new Color(theme.indicatorAmber.r, theme.indicatorAmber.g, theme.indicatorAmber.b, 0.6f));
         }
 
         void UpdateSteeringRing()
         {
             if (steeringRing == null) return;
-            bool circular = touchSteering != null && touchSteering.mode == SteeringGestureMode.Circular;
+            // The ring is the fixed visual wheel; with CircularAnywhere the gesture itself may start anywhere.
+            bool circular = touchSteering != null && touchSteering.mode != SteeringGestureMode.HorizontalDrag;
             if (steeringRing.gameObject.activeSelf != circular) steeringRing.gameObject.SetActive(circular);
             if (!circular) return;
 
@@ -266,7 +267,8 @@ namespace DrivingSim.UI
             float diameter = touchSteering.circleRadius * 2f * referenceHeight;
             steeringRing.sizeDelta = new Vector2(diameter, diameter);
             steeringDeadZone.sizeDelta = Vector2.one * diameter * touchSteering.deadZoneFraction;
-            steeringRingImage.color = new Color(1f, 1f, 1f, touchSteering.IsSteering ? 0.6f : 0.28f);
+            steeringRingImage.color = new Color(1f, 1f, 1f, touchSteering.IsSteering ? 0.35f : 0.14f); // faint: it overlaps the road and car
+            steeringDeadZone.gameObject.SetActive(touchSteering.mode == SteeringGestureMode.Circular);
 
             steeringGlyph.gameObject.SetActive(showSteeringWheelGlyph);
             // UI z rotation is counter-clockwise; the wheel turns clockwise for positive angles.

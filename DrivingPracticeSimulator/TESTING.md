@@ -74,15 +74,15 @@ Active Input Handling must include the Input System. Regenerate the scene first.
 
 | # | Test | Steps | Pass criteria | Measured |
 |---|------|-------|---------------|----------|
-| S1 | One clockwise circle | Middle button down inside the ring, draw one full circle clockwise, release. | Wheel +360° (± a few °). Cockpit wheel and HUD glyph turn exactly once | |
+| S1 | One clockwise circle | Middle button down anywhere on the road (not a button), draw one full circle clockwise, release. Repeat small/large and far from the ring. | Wheel ≈ +360° (a few degrees less: the first segment only sets the direction). Cockpit wheel and HUD glyph turn once | |
 | S2 | One counter-clockwise circle | Same, counter-clockwise. | Back to 0° | |
 | S3 | Multiple circles / full lock | Keep circling clockwise, then counter-clockwise. | Clamps at +540° and −540° (3 turns lock to lock). Front wheels ±35° (inner) | |
 | S4 | Release and re-grip | Turn 90°, release, grip on the opposite side of the ring, turn 90°. | +180° total, no jump at the second grip | |
 | S5 | ±180° boundary | Circle through the 9 o'clock position (left side). | Smooth, no 360° jump | |
-| S6 | Through the center | Drag in a straight line across the center. | Only a few degrees of change, no jump | |
+| S6 | Straight strokes | Drag straight left/right/through the ring center. | ≈ 0°: steering only comes from turning motion | |
 | S7 | Small motion | Move a few pixels along the ring. | Proportionally small change (never a left/right step) | |
 | S8 | Touch (device) | Same as S1–S4 with a finger. Hold a pedal with another finger. | Same results. Only one pointer steers | |
-| S9 | UI conflicts | Start a gesture outside the ring or on a button. Drag a steering gesture over the gear selector. | No steering from outside / buttons. No button presses from a steering gesture | |
+| S9 | UI conflicts | Start a gesture on a button. Drag a steering gesture over the gear selector. | No steering from buttons. No button presses from a steering gesture. (`Circular` mode only: gestures outside the ring do nothing) | |
 | S10 | Release while stopped / moving | Release at ≈ 180° stopped, then at 30 km/h. | Stopped: no change. Moving: held 0.6 s, then smooth return | |
 | S11 | U-turn / reverse | Full lock at creep; R with right lock. | Rear-axle path diameter ≈ 9.1 m; nose swings left in reverse | |
 
@@ -92,7 +92,7 @@ The browser preview runs S1–S7, S9–S11 and mouse/touch variants automaticall
 
 **Window → General → Test Runner → EditMode → Run All.** They cover the transmission
 interlocks, steering accumulation/clamping/self-centering/speed scaling, creep/throttle/brake
-curves, resistance signs, Ackermann symmetry the speedometer dial mapping, pedal calibration analysis, pedal state machine (brake priority, re-engage delay, fail-safe), validation session, circular steering gesture (unwrap, dead zone, jump guard, re-grip), steering release grace and turn-signal auto-cancel (`Assets/DrivingSim/Tests/EditMode`).
+curves, resistance signs, Ackermann symmetry the speedometer dial mapping, pedal calibration analysis, pedal state machine (brake priority, re-engage delay, fail-safe), validation session, circular steering gestures (ring-center: unwrap, dead zone, jump guard, re-grip; anywhere: loops of any size/position, straight = 0, reversal, jitter), steering release grace and turn-signal auto-cancel (`Assets/DrivingSim/Tests/EditMode`).
 
 ## Tuning notes
 
