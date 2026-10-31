@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace DrivingSim.EditorTools
 {
@@ -31,7 +32,14 @@ namespace DrivingSim.EditorTools
         /// not found by the build's dependency scan. "Standard" is deliberately not listed: every world
         /// material is a saved asset, and always-including Standard compiles all its variants.
         /// </summary>
-        static readonly string[] RuntimeShaders = { "Unlit/Texture", "Unlit/Color", "GUI/Text Shader", "Sprites/Default" };
+        static readonly string[] RuntimeShaders =
+        {
+            "Universal Render Pipeline/Unlit", "Unlit/Texture", "Unlit/Color", "GUI/Text Shader", "Sprites/Default",
+        };
+
+        public const string UrpFolder = "Assets/DrivingSim/Settings/URP";
+        public const string UrpAssetPath = UrpFolder + "/DrivingSim_MobileURP.asset";
+        public const string UrpRendererPath = UrpFolder + "/DrivingSim_MobileURP_Renderer.asset";
 
         [MenuItem("DrivingSim/Configure Project", priority = -10)]
         public static void ConfigureFromMenu()
@@ -71,11 +79,54 @@ namespace DrivingSim.EditorTools
             log.AppendLine($"- Android: {AndroidPackageId}, IL2CPP, ARM64, min API {MinAndroidApiLevel}");
 
             bool inputChanged = SetActiveInputHandler(ActiveInputHandlerBoth, log);
+            ConfigureUrp(log); // before shaders: the URP Unlit shader resolves only with a pipeline assigned
             AddAlwaysIncludedShaders(RuntimeShaders, log);
 
             AssetDatabase.SaveAssets();
             report = log.ToString();
             return inputChanged;
+        }
+
+        /// <summary>
+        /// Creates (once) and assigns a mobile-oriented URP asset: no HDR, 2x MSAA, one shadow cascade
+        /// over 60 m, no depth/opaque textures. Every quality level uses it. Materials made by
+        /// RuntimeMaterialSource pick "Universal Render Pipeline/Lit" once the pipeline is active.
+        /// </summary>
+        static void ConfigureUrp(StringBuilder log)
+        {
+            PhysicsTestSceneMenu.EnsureFolder(UrpFolder);
+            var asset = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(UrpAssetPath);
+            if (asset == null)
+            {
+                var renderer = AssetDatabase.LoadAssetAtPath<UniversalRendererData>(UrpRendererPath);
+                if (renderer == null)
+                {
+                    renderer = ScriptableObject.CreateInstance<UniversalRendererData>();
+                    AssetDatabase.CreateAsset(renderer, UrpRendererPath);
+                }
+                asset = UniversalRenderPipelineAsset.Create(renderer);
+                AssetDatabase.CreateAsset(asset, UrpAssetPath);
+                log.AppendLine($"- URP: created {UrpAssetPath}");
+            }
+
+            asset.supportsHDR = false;
+            asset.msaaSampleCount = 2;
+            asset.renderScale = 1f;
+            asset.shadowDistance = 60f;
+            asset.shadowCascadeCount = 1;
+            asset.supportsCameraDepthTexture = false;
+            asset.supportsCameraOpaqueTexture = false;
+            EditorUtility.SetDirty(asset);
+
+            GraphicsSettings.defaultRenderPipeline = asset;
+            int current = QualitySettings.GetQualityLevel();
+            for (int i = 0; i < QualitySettings.names.Length; i++)
+            {
+                QualitySettings.SetQualityLevel(i, false);
+                QualitySettings.renderPipeline = asset;
+            }
+            QualitySettings.SetQualityLevel(current, false);
+            log.AppendLine("- URP Mobile: assigned to Graphics and all quality levels (HDR off, MSAA 2x, 1 cascade, 60 m shadows)");
         }
 
         static bool SetActiveInputHandler(int value, StringBuilder log)

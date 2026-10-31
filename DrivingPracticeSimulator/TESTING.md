@@ -1,6 +1,6 @@
 # Milestone 1 Test Procedures
 
-Run in **Play Mode** in `Assets/DrivingSim/Scenes/PhysicsTest.unity`. The telemetry overlay (F1)
+Run in **Play Mode** in `Assets/DrivingSim/Scenes/TestTown.unity (plus Scenes/MainMenu.unity)`. The telemetry overlay (F1)
 shows live values, and `VehicleTestProbe` logs measurements to the Console.
 
 The "expected" numbers come from a point-mass calculation using the same formulas and default
@@ -36,7 +36,7 @@ Test ground layout (spawn at the origin, facing +Z / north):
 
 ## Phase B: first-person cockpit
 
-Re-run **DrivingSim → Create Physics Test Scene** first (older scenes have no cockpit).
+Re-run **DrivingSim → Create Scenes (Main Menu + Test Town)** first (older scenes have no cockpit).
 
 | # | Test | Steps | Pass criteria | Measured |
 |---|------|-------|---------------|----------|

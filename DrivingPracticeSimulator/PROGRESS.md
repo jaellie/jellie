@@ -52,6 +52,9 @@
 | CI 워크플로 (GameCI): 설정 → 테스트 → Android APK | ✅ | YAML 문법 검사, GitHub 실행 #1·#2 (Unity 건너뜀) | - | - | - |
 | 프로젝트 설정 스크립트 (`DrivingSim → Configure Project`) | ✅ | 없음 | ❌ | 없음 | - |
 | 스크린샷 캡처 테스트 (1인칭, 3인칭) | ✅ | 없음 | ❌ | PlayMode 작성, 미실행 | - |
+| URP Mobile 설정 (Configure Project에서 생성·적용) | ✅ | 없음 | ❌ | 없음 | ❌ |
+| 씬 흐름: 메인 메뉴 → 환경 선택 → 자유 주행 → Test Town (임시 메뉴 화면) | ✅ | 없음 | ❌ | EditMode 카탈로그 테스트 작성, 미실행 | ❌ |
+| Codex UI 브랜치 병합 (기능 참고용, 디자인은 새로 제작 예정) | ✅ 병합 | 정적 검사(Codex) | ❌ | Codex UI 테스트 6개 미실행 | ❌ |
 | AI 교통 (Phase C~F) | ❌ 미착수 (기준선 검증 후) | - | - | - | - |
 | 맵 선택 + 맵별 자유 주행/연습 미션 | ❌ 미착수 (계획만, 기준선 검증 후) | - | - | - | - |
 
@@ -64,7 +67,7 @@
 - 화면: 가로, UI는 한국어.
 - 아트: 지금은 전부 코드로 만든 기본 도형과 placeholder.
 - 비주얼 방향(2026-10-31 승인, Codex 담당): Minimal Automotive 기반, 세련된 현대 자동차 UI, 은은한 글래스 효과, 절제된 아이스 블루 포인트, 실제와 같은 운전석 시야, 깔끔한 계기판. 과한 네온·아케이드 느낌 금지. **Claude는 비주얼 작업을 하지 않습니다.**
-- 씬은 코드로 생성: Unity 메뉴 **DrivingSim → Create Physics Test Scene**.
+- 씬은 코드로 생성: Unity 메뉴 **DrivingSim → Create Scenes (Main Menu + Test Town)**.
 
 ### 원래 계획한 마일스톤과 현재 위치
 | 단계 | 내용 | 상태 |
@@ -355,7 +358,7 @@ Unity Personal + game-ci/cli v0.1.72 기준(소스 코드로 확인). **비밀�
 4. 등록했다고 알려주면 Claude가 워크플로를 실행하고, 로그를 읽고, 확인된 오류만 고칩니다.
 - 보안: 워크플로는 개발 브랜치 push와 수동 실행에서만 돌고(포크 PR 없음), 외부 액션은 커밋 SHA로 고정, 토큰 권한은 읽기 + 테스트 결과 체크 쓰기뿐입니다. GitHub는 로그에서 Secret 값을 가립니다. Personal 좌석은 CLI가 작업 끝에 반납합니다.
 - 참고: Unity Personal 사용 조건(매출 기준 등)은 계정 소유자가 확인해야 합니다.
-- 대안 B(로컬, PC 필요): Unity Hub로 6000.0.85f1 + Android Build Support 설치 → `DrivingPracticeSimulator/` 열기 → **DrivingSim → Configure Project**(재시작 요청 시 재시작) → **DrivingSim → Create Physics Test Scene** → Play. 테스트: Window → General → Test Runner → EditMode·PlayMode Run All. APK: File → Build Profiles → Android → Build. Console 빨간 오류와 테스트 결과를 전달.
+- 대안 B(로컬, PC 필요): Unity Hub로 6000.0.85f1 + Android Build Support 설치 → `DrivingPracticeSimulator/` 열기 → **DrivingSim → Configure Project**(재시작 요청 시 재시작) → **DrivingSim → Create Scenes (Main Menu + Test Town)** → Play. 테스트: Window → General → Test Runner → EditMode·PlayMode Run All. APK: File → Build Profiles → Android → Build. Console 빨간 오류와 테스트 결과를 전달.
 
 ## 검증 결과 (확인된 것만 기록)
 
@@ -402,3 +405,4 @@ Unity Personal + game-ci/cli v0.1.72 기준(소스 코드로 확인). **비밀�
 - Read-only three-way comparison found one textual conflict each in INTEGRATION.md and PROGRESS.md with Claude's c143105; no other changed-path overlaps at the reviewed commits. No merge was applied. Preserve Claude's newer protected services/startup tests and ROADMAP plan during separately approved integration.
 - Host integration must hide the menu (canvas 60) before opening calibration (canvas 50). Scene loading, mission running, concurrency, availability and return navigation remain host responsibilities.
 - Static preservation checks rerun; Unity compilation/runtime, test execution and Android behavior remain **unverified**. This update changes no gameplay, UI implementation or asset files.
+| 2026-10-31 | 역할 변경: UI/UX 전체와 문구는 Claude, 3D 아트는 Codex. Codex UI 브랜치(1c3a9b8) 검토 후 병합(문서 충돌 2건 수동 해결). URP Mobile 설정, 메인 메뉴 → Test Town 씬 흐름과 환경 카탈로그(테스트 타운만 플레이 가능, 나머지 4개 맵은 계획), 일시정지 메뉴의 메인 메뉴 연결, INTEGRATION.md §9 3D 에셋 계약. 새 UI 디자인은 사용자 승인 대기. Unity 미검증 |

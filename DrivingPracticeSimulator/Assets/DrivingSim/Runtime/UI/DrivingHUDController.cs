@@ -309,9 +309,7 @@ namespace DrivingSim.UI
             calibrateButton = PauseButton("Calibrate", card, -322f, "pause.pedals", font, out _);
             languageButton = PauseButton("Language", card, -418f, "pause.language", font, out _);
             noticeButton = PauseButton("Notice", card, -514f, "pause.notice", font, out _);
-            menuButton = PauseButton("MainMenu", card, -610f, "pause.mainMenu", font, out Text menuLabel);
-            menuButton.Interactable = false;
-            menuLabel.color = theme.textMuted;
+            menuButton = PauseButton("MainMenu", card, -610f, "pause.mainMenu", font, out _);
             AutomotiveLayout.Primary(resumeButton, theme);
             pauseMenu = dim;
             pauseMenu.SetActive(false);
@@ -403,6 +401,7 @@ namespace DrivingSim.UI
             if (calibrateButton != null) calibrateButton.Pressed += OnCalibrate;
             if (languageButton != null) languageButton.Pressed += OnLanguage;
             if (noticeButton != null) noticeButton.Pressed += OnNotice;
+            if (menuButton != null) menuButton.Pressed += OnMainMenu;
             LocalizationService.LanguageChanged += OnLanguageChanged;
             if (footPedals != null) footPedals.SafetyChanged += OnPedalSafety;
             RefreshAccessoryButtons();
@@ -433,6 +432,7 @@ namespace DrivingSim.UI
             if (calibrateButton != null) calibrateButton.Pressed -= OnCalibrate;
             if (languageButton != null) languageButton.Pressed -= OnLanguage;
             if (noticeButton != null) noticeButton.Pressed -= OnNotice;
+            if (menuButton != null) menuButton.Pressed -= OnMainMenu;
             LocalizationService.LanguageChanged -= OnLanguageChanged;
             if (footPedals != null) footPedals.SafetyChanged -= OnPedalSafety;
             if (paused) SetPaused(false);
@@ -465,6 +465,12 @@ namespace DrivingSim.UI
         {
             SetPaused(false);
             vehicle.ResetVehicle();
+        }
+
+        void OnMainMenu()
+        {
+            // GameFlow restores time scale and input gates before loading the menu scene.
+            if (!DrivingSim.Flow.GameFlow.LoadMainMenu()) ShowToast(Loc.T("toast.menuUnavailable"));
         }
 
         void OnLanguage()

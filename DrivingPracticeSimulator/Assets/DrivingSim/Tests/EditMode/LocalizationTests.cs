@@ -77,7 +77,7 @@ namespace DrivingSim.Tests
         public void EveryKeyUsedInCode_ExistsInStringsJson()
         {
             var table = new StringTable(LoadData().entries);
-            var pattern = new Regex("\"((?:gear|shift|parkingBrake|signal|hazard|headlights|wipers|camera|hud|toast|nav|pause|wizard|disclaimer|language|common)\\.[A-Za-z0-9.]*[A-Za-z0-9])\"");
+            var pattern = new Regex("\"((?:gear|shift|parkingBrake|signal|hazard|headlights|wipers|camera|hud|toast|nav|pause|wizard|disclaimer|language|common|map|menu|environments)\\.[A-Za-z0-9.]*[A-Za-z0-9])\"");
             var missing = new List<string>();
             foreach (string file in Directory.GetFiles(Root, "*.cs", SearchOption.AllDirectories))
             {

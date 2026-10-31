@@ -1,5 +1,7 @@
 using System.IO;
 using System.Linq;
+using DrivingSim.Core;
+using DrivingSim.Flow;
 using DrivingSim.TestBed;
 using DrivingSim.Vehicle;
 using UnityEditor;
@@ -13,14 +15,41 @@ namespace DrivingSim.EditorTools
         const string Root = "Assets/DrivingSim";
         const string ConfigPath = Root + "/Settings/CompactSedan_PhysicsConfig.asset";
         const string MaterialFolder = Root + "/Generated/Materials";
-        public const string ScenePath = Root + "/Scenes/PhysicsTest.unity";
+        /// <summary>The driving scene ("Test Town"); its name must match EnvironmentCatalog.TestTownScene.</summary>
+        public const string ScenePath = Root + "/Scenes/" + EnvironmentCatalog.TestTownScene + ".unity";
+        public const string MainMenuScenePath = Root + "/Scenes/" + EnvironmentCatalog.MainMenuScene + ".unity";
 
-        [MenuItem("DrivingSim/Create Physics Test Scene", priority = 0)]
-        public static void CreatePhysicsTestScene()
+        [MenuItem("DrivingSim/Create Scenes (Main Menu + Test Town)", priority = 0)]
+        public static void CreateScenesFromMenu()
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
-            VehiclePhysicsConfig config = CreateScene();
+            VehiclePhysicsConfig config = CreateScenes();
+            EditorSceneManager.OpenScene(MainMenuScenePath);
             Selection.activeObject = config;
+        }
+
+        /// <summary>Generates both scenes and sets the build order: Main Menu first, then Test Town.</summary>
+        public static VehiclePhysicsConfig CreateScenes()
+        {
+            CreateMainMenuScene();
+            VehiclePhysicsConfig config = CreateScene();
+            EditorBuildSettings.scenes = new[]
+            {
+                new EditorBuildSettingsScene(MainMenuScenePath, true),
+                new EditorBuildSettingsScene(ScenePath, true),
+            };
+            AssetDatabase.SaveAssets();
+            return config;
+        }
+
+        /// <summary>An almost empty scene: everything is built at runtime by MainMenuBootstrap.</summary>
+        public static void CreateMainMenuScene()
+        {
+            EnsureFolder(Path.GetDirectoryName(MainMenuScenePath).Replace('\\', '/'));
+            var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            new GameObject("MainMenu").AddComponent<MainMenuBootstrap>();
+            EditorSceneManager.SaveScene(scene, MainMenuScenePath);
+            Debug.Log($"[DrivingSim] Created {MainMenuScenePath}.");
         }
 
         /// <summary>Generates and saves the test scene without dialogs (menu and CI). Returns the vehicle config asset.</summary>

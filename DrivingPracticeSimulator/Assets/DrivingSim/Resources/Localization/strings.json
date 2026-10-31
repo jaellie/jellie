@@ -350,8 +350,8 @@
     },
     {
       "key": "pause.mainMenu",
-      "ko": "메인 메뉴 · 준비 중",
-      "en": "Main menu · Coming soon"
+      "ko": "메인 메뉴",
+      "en": "Main menu"
     },
     {
       "key": "wizard.indicator.brake",
@@ -931,6 +931,62 @@
       "ko": "공간 확인 · 후진 주차",
       "en": "Check clearance · Reverse park",
       "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "map.testTown.title",
+      "ko": "테스트 타운",
+      "en": "Test Town",
+      "note": "Prototype environment; the only playable map for now"
+    },
+    {
+      "key": "map.testTown.description",
+      "ko": "기본 조작을 연습하는 시험용 주행 공간입니다. 자유 주행만 가능합니다.",
+      "en": "A prototype area for practicing the basic controls. Free driving only."
+    },
+    {
+      "key": "map.practiceGround.title",
+      "ko": "기능 연습장",
+      "en": "Driving Practice Ground"
+    },
+    {
+      "key": "map.practiceGround.description",
+      "ko": "출발과 정지, 경사로, 주차를 연습하는 폐쇄 코스입니다.",
+      "en": "A closed course for starting, stopping, slopes and parking."
+    },
+    {
+      "key": "map.urban.title",
+      "ko": "도심 도로",
+      "en": "City Streets"
+    },
+    {
+      "key": "map.urban.description",
+      "ko": "신호 교차로, 횡단보도, AI 차량이 있는 한국 도심 도로입니다.",
+      "en": "Korean city roads with signalized intersections, crosswalks and AI traffic."
+    },
+    {
+      "key": "map.residential.title",
+      "ko": "주택가와 골목",
+      "en": "Residential Streets & Alleys"
+    },
+    {
+      "key": "map.residential.description",
+      "ko": "좁은 양방향 도로, 주차 차량, 보이지 않는 모퉁이를 지나갑니다.",
+      "en": "Narrow two-way streets, parked cars and blind corners."
+    },
+    {
+      "key": "map.suburban.title",
+      "ko": "교외와 굽은 길",
+      "en": "Suburban & Winding Roads"
+    },
+    {
+      "key": "map.suburban.description",
+      "ko": "굽은 길과 경사, 교외 교차로를 달립니다.",
+      "en": "Curves, grades and rural intersections."
+    },
+    {
+      "key": "toast.menuUnavailable",
+      "ko": "메인 메뉴를 열 수 없습니다.",
+      "en": "Can't open the main menu right now."
     }
   ]
 }

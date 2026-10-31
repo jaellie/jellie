@@ -21,7 +21,7 @@ namespace DrivingSim.EditorTools
             {
                 ProjectConfigurator.Apply(out string report);
                 Debug.Log(report);
-                PhysicsTestSceneMenu.CreateScene();
+                PhysicsTestSceneMenu.CreateScenes();
                 AssetDatabase.SaveAssets();
 
                 // unity-builder lists (and chmods) its build folder afterwards; leave a small marker there.
@@ -45,14 +45,15 @@ namespace DrivingSim.EditorTools
             }
         }
 
-        /// <summary>Builds a debug-signed Android APK of the test scene.</summary>
+        /// <summary>Builds a debug-signed Android APK: Main Menu (first) and Test Town.</summary>
         public static void BuildAndroid()
         {
             try
             {
                 ProjectConfigurator.Apply(out string report);
                 Debug.Log(report);
-                if (!File.Exists(PhysicsTestSceneMenu.ScenePath)) PhysicsTestSceneMenu.CreateScene();
+                if (!File.Exists(PhysicsTestSceneMenu.ScenePath) || !File.Exists(PhysicsTestSceneMenu.MainMenuScenePath))
+                    PhysicsTestSceneMenu.CreateScenes();
 
                 string path = Argument("-customBuildPath");
                 if (string.IsNullOrEmpty(path)) path = DefaultApkPath;
@@ -66,7 +67,7 @@ namespace DrivingSim.EditorTools
 
                 var options = new BuildPlayerOptions
                 {
-                    scenes = new[] { PhysicsTestSceneMenu.ScenePath },
+                    scenes = new[] { PhysicsTestSceneMenu.MainMenuScenePath, PhysicsTestSceneMenu.ScenePath },
                     locationPathName = path,
                     target = BuildTarget.Android,
                     targetGroup = BuildTargetGroup.Android,

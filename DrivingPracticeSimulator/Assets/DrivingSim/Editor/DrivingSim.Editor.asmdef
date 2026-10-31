@@ -3,7 +3,9 @@
     "rootNamespace": "DrivingSim.EditorTools",
     "references": [
         "DrivingSim.Core",
-        "DrivingSim.Runtime"
+        "DrivingSim.Runtime",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [
         "Editor"

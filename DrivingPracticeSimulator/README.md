@@ -27,10 +27,10 @@ package to the version it suggests (core packages such as URP are tied to the ed
    Unity generates `Library/` and the rest of `ProjectSettings/` on first open.
 2. If Unity asks to enable the new Input System backend, choose **Yes** (it restarts).
    The keyboard code works with *Input System*, *Input Manager (Old)* or *Both*.
-3. Menu **DrivingSim → Create Physics Test Scene**. This:
+3. Menu **DrivingSim → Create Scenes (Main Menu + Test Town)**. This:
    - creates `Assets/DrivingSim/Settings/CompactSedan_PhysicsConfig.asset` (all vehicle parameters)
    - creates flat-color materials in `Assets/DrivingSim/Generated/Materials/`
-   - builds and saves `Assets/DrivingSim/Scenes/PhysicsTest.unity`, and adds it to Build Settings.
+   - builds and saves `Assets/DrivingSim/Scenes/TestTown.unity (plus Scenes/MainMenu.unity)`, and adds it to Build Settings.
 4. Press **Play**.
 
 *Other option:* add the `PhysicsTestBootstrap` component to an empty GameObject in any scene.
@@ -39,7 +39,7 @@ It builds the same rig at runtime with in-memory defaults (nothing is saved).
 *URP:* the URP package is installed, but Milestone 1 does not create a URP pipeline asset, so the
 project renders with the Built-in pipeline until one is assigned. To switch:
 **Assets → Create → Rendering → URP Asset (with Universal Renderer)**, then assign it in
-**Project Settings → Graphics** and **Quality**, then run *Create Physics Test Scene* again
+**Project Settings → Graphics** and **Quality**, then run *Create Scenes* again
 (the generated materials then use `Universal Render Pipeline/Lit`).
 
 ## Automated tests in CI (GitHub Actions + GameCI)
@@ -47,7 +47,7 @@ project renders with the Built-in pipeline until one is assigned. To switch:
 `.github/workflows/unity-tests.yml` ("Unity CI") runs on every push to the development branch or by
 manual dispatch, on Unity 6000.0.85f1, in one job:
 1. **Configure** (`game-ci/unity-builder` v6.0.0, `CIEntryPoints.Configure`): compiles, applies
-   `DrivingSim → Configure Project`, generates `Scenes/PhysicsTest.unity`. Artifact `generated-project-files`.
+   `DrivingSim → Configure Project`, generates `Scenes/TestTown.unity (plus Scenes/MainMenu.unity)`. Artifact `generated-project-files`.
 2. **Tests** (`game-ci/unity-test-runner` v4.4.0): EditMode + PlayMode. Check "Unity test results",
    artifact `unity-test-results` (results, logs, `TestScreenshots/` cockpit and chase views).
 3. **Android** (`CIEntryPoints.BuildAndroid`): debug-signed IL2CPP ARM64 APK. Artifact `android-apk`.
@@ -60,7 +60,7 @@ and skips Unity.
 
 **Local fallback (Unity Hub on a PC/Mac):** install Unity 6000.0.85f1 with Android Build Support →
 open `DrivingPracticeSimulator/` → run **DrivingSim → Configure Project** (restart Unity if it asks) →
-**DrivingSim → Create Physics Test Scene** → Play. Tests: Window → General → Test Runner → EditMode
+**DrivingSim → Create Scenes (Main Menu + Test Town)** → Play. Tests: Window → General → Test Runner → EditMode
 and PlayMode → Run All. APK: File → Build Profiles → Android → Build.
 
 PlayMode smoke tests (`Tests/PlayMode`): P holds the car, leaving P without the brake is
@@ -239,7 +239,7 @@ to any real car.**
 - **Project Settings → Player → Active Input Handling = Input System Package (New)** or **Both**.
   Drag steering, the middle-mouse touch, the foot-pedal keyboard and the calibration wizard need
   the Input System. Without it, only the keyboard driving keys work.
-- Re-run **DrivingSim → Create Physics Test Scene** to get the HUD, pointer hub, pedals and lights.
+- Re-run **DrivingSim → Create Scenes (Main Menu + Test Town)** to get the HUD, pointer hub, pedals and lights.
 - On first Play the calibration wizard opens. Press **건너뛰기** to skip; it won't open again
   (PlayerPrefs `DrivingSim.PedalWizardDone`).
 
@@ -254,6 +254,6 @@ to any real car.**
 - No ABS: full brake from high speed can lock the wheels.
 - Mirror and cockpit shaders are looked up with `Shader.Find`. For device builds, add
   `Unlit/Texture` (Built-in) or `Universal Render Pipeline/Unlit` to *Always Included Shaders*.
-- Existing scenes made before Phase B have no cockpit. Re-run **DrivingSim → Create Physics Test Scene**.
+- Existing scenes made before Phase B have no cockpit. Re-run **DrivingSim → Create Scenes (Main Menu + Test Town)**.
 - The IMGUI overlay's Korean feedback lines rely on OS font fallback. A proper Korean UI font
   (e.g. Noto Sans KR via TextMeshPro) is planned for the UI milestone.
