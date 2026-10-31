@@ -6,7 +6,7 @@ physical setup, and the test plan.
 
 > **Verification status.** The C# code has **not been compiled or run**: there is no Unity Editor
 > in the environment where it was written. The same algorithms run in the browser preview
-> (`Tools/browser-preview/index.html`), where 56 automated checks pass in headless Chromium
+> (`Tools/browser-preview/index.html`), where the automated suite (74 checks, steering included) passes in headless Chromium
 > **with simulated key events**. No physical keyboard, no foot, and no Android device have been
 > tested.
 
@@ -141,8 +141,8 @@ None of this has been tested.
 ## Test plan
 
 **Automated, run:** browser preview, `node Tools/browser-preview/run-tests.js` (instructions in the
-file). Headless Chromium with simulated keys and mouse: **56/56 passed**. That's 20 Unity↔preview
-config-equality checks (read from the C# source), 10 steering checks and 26
+file). Headless Chromium with simulated keys, mouse and touch: **74/74 passed**. That's
+Unity↔preview config-equality checks (read from the C# source), circular steering checks and
 calibration/validation/pedal checks.
 
 **Automated, not run:** Unity EditMode tests (`Tests/EditMode`), which need Unity.
@@ -161,7 +161,7 @@ calibration/validation/pedal checks.
 | 10 | Inconsistent calibration presses | preview; `PedalCalibrationTests` | ✅ / not run |
 | 11 | Overlapping calibration sets | preview; EditMode | ✅ / not run |
 | 12 | Presses outside the regions | preview (driving + validation) | ✅ |
-| 13 | Touch/drag steering while braking | preview (middle-mouse drag); **touch on device** | ✅ mouse / touch not tested |
+| 13 | Steering while braking | preview (middle-mouse circle); emulated touch circle separately | ✅ (real touchscreen not tested) |
 | 14 | Middle-mouse steering while accelerating | preview | ✅ |
 | 15 | Android external keyboard | **hardware only** | not tested |
 | 16 | Restart after saving | preview (reload, localStorage); Unity uses a JSON file | ✅ / Unity not run |

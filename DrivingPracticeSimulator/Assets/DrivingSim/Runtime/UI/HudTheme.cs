@@ -60,6 +60,27 @@ namespace DrivingSim.UI
         public static Sprite RoundedRect => roundedRect != null ? roundedRect : (roundedRect = CreateRoundedRect(64, 18));
         public static Sprite Circle => circle != null ? circle : (circle = CreateRoundedRect(64, 32));
 
+        static Sprite ring;
+        /// <summary>Thin ring (outline circle) for the steering gesture area.</summary>
+        public static Sprite Ring => ring != null ? ring : (ring = CreateRing(128, 5f));
+
+        static Sprite CreateRing(int size, float thickness)
+        {
+            var texture = new Texture2D(size, size, TextureFormat.RGBA32, false) { wrapMode = TextureWrapMode.Clamp, name = "UI_Ring" };
+            var pixels = new Color32[size * size];
+            float c = size * 0.5f, outer = c - 1f;
+            for (int y = 0; y < size; y++)
+                for (int x = 0; x < size; x++)
+                {
+                    float r = Mathf.Sqrt((x + 0.5f - c) * (x + 0.5f - c) + (y + 0.5f - c) * (y + 0.5f - c));
+                    float inside = Mathf.Clamp01(outer - r + 0.5f) * Mathf.Clamp01(r - (outer - thickness) + 0.5f);
+                    pixels[y * size + x] = new Color32(255, 255, 255, (byte)(inside * 255f));
+                }
+            texture.SetPixels32(pixels);
+            texture.Apply(false, true);
+            return Sprite.Create(texture, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 100f);
+        }
+
         static Sprite triangleRight;
         static Sprite triangleLeft;
         static Sprite triangleUp;

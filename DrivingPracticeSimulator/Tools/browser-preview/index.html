@@ -43,6 +43,11 @@ h1 { font-family: var(--f-display); font-weight: 700; font-size: 26px; margin: 0
 .hud { position: absolute; left: 0; top: 0; width: 1120px; height: 630px; transform-origin: 0 0; pointer-events: none;
   font-family: var(--f-body); color: var(--hud-ink); }
 .hud * { box-sizing: border-box; }
+.ring { position: absolute; pointer-events: none; overflow: visible; }
+.ring .ring-outline { fill: none; stroke: rgba(255,255,255,.3); stroke-width: 2.5; }
+.ring.active .ring-outline { stroke: rgba(255,255,255,.65); }
+.ring .ring-dead { fill: none; stroke: rgba(255,255,255,.25); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.ring .ring-rim { fill: none; stroke: rgba(255,255,255,.55); stroke-width: 4; }
 .hud .ctl { pointer-events: auto; cursor: pointer; touch-action: none; }
 .p { position: absolute; background: var(--hud); border-radius: 12px; }
 .btn { position: absolute; background: var(--hud); border-radius: 12px; display: grid; place-items: center; font-weight: 600;
@@ -127,6 +132,15 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
 
   <div class="stage" id="stage" tabindex="0" aria-label="Driving view">
     <div class="hud" id="hud">
+      <svg class="ring" id="ring" viewBox="-100 -100 200 200" aria-hidden="true">
+        <circle r="98" class="ring-outline" id="ringOutline"></circle>
+        <circle id="ringDead" r="22" class="ring-dead"></circle>
+        <g id="ringWheel">
+          <circle r="44" class="ring-rim"></circle>
+          <path d="M-44 0 H44 M0 0 V44" class="ring-rim"></path>
+          <rect x="-4" y="-50" width="8" height="12" rx="2" fill="var(--amber)"></rect>
+        </g>
+      </svg>
       <button type="button" class="btn ctl" id="b-pause" style="left:16px;top:16px;width:56px;height:56px;font-size:20px" aria-label="Pause">II</button>
       <div class="p speed" style="left:82px;top:16px;width:184px;height:88px"><b id="spd">0</b><span>km/h</span><i id="gearBig">P</i></div>
       <div class="p debug" id="debug" hidden></div>
@@ -174,7 +188,9 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
           <button type="button" class="btn ctl" id="p-cal">페달 보정 / 발 페달 설정</button>
           <button type="button" class="btn ctl" aria-disabled="true">메인 메뉴 (준비 중)</button>
           <label><input type="checkbox" id="opt-mid" checked> 마우스 가운데 버튼 = 터치</label>
-          <label><input type="checkbox" id="opt-left"> 왼쪽 마우스 드래그로도 조향</label>
+          <label><input type="checkbox" id="opt-left"> 왼쪽 마우스로도 조향</label>
+          <label><input type="checkbox" id="opt-glyph" checked> 조향 링에 핸들 그림 표시</label>
+          <label><input type="checkbox" id="opt-horiz"> 가로 드래그 방식 (이전 방식)</label>
           <label><input type="checkbox" id="opt-dbg"> 개발용 텔레메트리</label>
         </div>
       </div>
@@ -203,11 +219,11 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
       </ul>
     </div>
     <div class="note">
-      <h2>조향 · 마우스</h2>
+      <h2>조향 · 원을 그리며 돌리기</h2>
       <ul>
-        <li>핸들 ±540° (총 3바퀴), 앞바퀴 최대 35°. 화면 높이만큼 드래그 = 핸들 100°</li>
-        <li>도로 위를 드래그 (손가락 또는 <b>마우스 휠 클릭</b>). 끝까지 꺾으려면 길게 3~4번 끌기</li>
-        <li>정지 중에는 핸들이 그대로, 주행 중 손을 떼면 0.6초 뒤 천천히 복원</li>
+        <li>가운데 <b>조향 링</b> 안에서 시작해 손가락이나 <b>마우스 휠 클릭</b>으로 원을 그리세요. 시계 방향 = 오른쪽</li>
+        <li>한 바퀴 그리면 핸들도 한 바퀴. 핸들 ±540° (끝까지 1.5바퀴, 총 3바퀴), 앞바퀴 최대 35°</li>
+        <li>손을 떼도 각도 유지, 다시 잡으면 이어서. 정지 중엔 그대로, 주행 중엔 0.6초 뒤 천천히 복원</li>
       </ul>
     </div>
     <div class="note">
@@ -235,7 +251,9 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
   const C = {
     m: 1300, g: 9.81, r: 0.31, L: 2.65, T: 1.55, len: 4.4, wid: 1.76,
     st: { maxW: 540, maxF: 35, ssA: 20, ssB: 100, hi: 0.45, slew: 120, center: true, scMin: 2, scFull: 30, scGain: 1.0, scMax: 240, scRev: 0.3, snap: 0.5, grace: 0.6,
-          dragPerHeight: 100, keyRate: 270 },
+          dragPerHeight: 100, keyRate: 270,
+          // Circular gesture (TouchSteeringController): center normalized from bottom-left, radius × screen height.
+          circle: { cx: 0.5, cy: 0.43, radius: 0.27, dead: 0.22, gain: 1, maxStep: 90 } },
     us: 0.0025, // understeer gradient (s²/m²) standing in for tire behavior in this kinematic model
     tr: { th: 0.2, stopped: 1, park: 1, dir: 2 },
     pt: { maxF: 4400, kw: 85, texp: 1.7, vmaxF: 170, rScale: 0.6, vmaxR: 20, creep: 450, fade: 9, rCreep: 0.8, coast: 150 },
@@ -570,7 +588,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
   // Input
   // =====================================================================
   const keys = new Set(), pressed = [];
-  const opt = { mid: true, left: false, dbg: false };
+  const opt = { mid: true, left: false, dbg: false, glyph: true, horizontal: false };
   // Pedal mapping (PedalKeyMapping v2): { brake, acc, validated, source }. Older saves become unvalidated.
   let mapping = null, pedalsOn = store.get('dps.pedalsOn') !== '0', pedalReliable = true;
   try {
@@ -605,6 +623,21 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
 
   // Pointer layer: touch, middle mouse (simulated touch), optional left mouse.
   const inp = { kThr: 0, kBrk: 0, fBrk: 0, fThr: 0, fKeys: null, touchThr: 0, touchBrk: 0, steerId: null, steerKind: '', lastX: 0, drag: 0, lookL: false, lookR: false };
+  // Circular steering gesture (port of CircularSteeringGesture). Browser Y points down, so
+  // clockwise on screen already increases atan2 (YAxisUp = false in the C# version).
+  const ring = () => { const k = C.st.circle; return { cx: k.cx * 1120, cy: (1 - k.cy) * 630, r: k.radius * 630, dead: k.radius * 630 * k.dead }; };
+  const gesture = { has: false, last: 0,
+    reset() { this.has = false; },
+    sample(x, y) {
+      const g = ring(), dx = x - g.cx, dy = y - g.cy;
+      if (dx * dx + dy * dy < g.dead * g.dead) { this.has = false; return 0; }   // unstable near the center
+      const a = Math.atan2(dy, dx) * 180 / Math.PI;
+      if (!this.has) { this.has = true; this.last = a; return 0; }                // anchor on grip / re-grip
+      let d = ((a - this.last + 180) % 360); if (d <= 0) d += 360; d -= 180;     // unwrap across ±180°
+      this.last = a;
+      return Math.abs(d) > C.st.circle.maxStep ? 0 : d * C.st.circle.gain;        // discard tracking jumps
+    } };
+  const toHud = e => { const r = stage.getBoundingClientRect(), k = r.width / 1120; return { x: (e.clientX - r.left) / k, y: (e.clientY - r.top) / k }; };
   const isControl = el => !!(el && el.closest && el.closest('.ctl, .modal'));
   stage.addEventListener('mousedown', e => { if (e.button === 1) e.preventDefault(); });    // no autoscroll
   stage.addEventListener('auxclick', e => e.preventDefault());
@@ -615,18 +648,22 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
     const middle = e.pointerType === 'mouse' && e.button === 1 && opt.mid;
     const left = e.pointerType === 'mouse' && e.button === 0 && opt.left;
     if (!touch && !middle && !left) return;
+    const h = toHud(e), g = ring();
+    if (!opt.horizontal && Math.hypot(h.x - g.cx, h.y - g.cy) > g.r) return;   // gestures start inside the steering ring
     e.preventDefault();
     inp.steerId = e.pointerId; inp.steerKind = middle ? 'middle' : left ? 'left' : 'touch'; inp.lastX = e.clientX;
+    gesture.reset(); gesture.sample(h.x, h.y);
     try { stage.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
   });
   stage.addEventListener('pointermove', e => {
     if (e.pointerId !== inp.steerId) return;
     if (inp.steerKind === 'middle' && !(e.buttons & 4)) { endSteer(); return; }
     if (inp.steerKind === 'left' && !(e.buttons & 1)) { endSteer(); return; }
-    // Normalized by height: one stage height of drag = 100° of wheel (TouchSteeringController.degreesPerScreenHeight).
-    inp.drag += (e.clientX - inp.lastX) / stage.clientHeight * C.st.dragPerHeight; inp.lastX = e.clientX;
+    if (opt.horizontal) inp.drag += (e.clientX - inp.lastX) / stage.clientHeight * C.st.dragPerHeight;   // legacy mode
+    else { const h = toHud(e); inp.drag += gesture.sample(h.x, h.y); }
+    inp.lastX = e.clientX;
   });
-  function endSteer() { inp.steerId = null; inp.steerKind = ''; }
+  function endSteer() { inp.steerId = null; inp.steerKind = ''; gesture.reset(); }
   stage.addEventListener('pointerup', e => { if (e.pointerId === inp.steerId) endSteer(); });
   stage.addEventListener('pointercancel', e => { if (e.pointerId === inp.steerId) endSteer(); });
 
@@ -661,7 +698,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
   onPress($('b-pause'), () => setPaused(true)); onPress($('p-resume'), () => setPaused(false));
   onPress($('p-restart'), () => { setPaused(false); reset(); toast('리셋: P, 주차 브레이크 체결'); });
   onPress($('p-cal'), () => { setPaused(false); openWizard(); });
-  for (const [id, k] of [['opt-mid', 'mid'], ['opt-left', 'left'], ['opt-dbg', 'dbg']]) {
+  for (const [id, k] of [['opt-mid', 'mid'], ['opt-left', 'left'], ['opt-dbg', 'dbg'], ['opt-glyph', 'glyph'], ['opt-horiz', 'horizontal']]) {
     $(id).addEventListener('change', e => { opt[k] = e.target.checked; $('debug').hidden = !opt.dbg; });
   }
 
@@ -1092,8 +1129,15 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
     $('lamp-b').classList.toggle('lit', pedalsActive() && pm.brakePressed);
     $('lamp-a').classList.toggle('lit', pedalsActive() && pm.accPressed && !pm.suppressed);
     $('lamp-a').classList.toggle('sup', pedalsActive() && pm.suppressed);
+    const rg = ring(), rs = $('ring');
+    rs.hidden = opt.horizontal;
+    Object.assign(rs.style, { left: `${rg.cx - rg.r}px`, top: `${rg.cy - rg.r}px`, width: `${rg.r * 2}px`, height: `${rg.r * 2}px` });
+    $('ringDead').setAttribute('r', String(98 * C.st.circle.dead));
+    rs.classList.toggle('active', inp.steerId !== null);
+    $('ringWheel').style.display = opt.glyph ? '' : 'none';
+    $('ringWheel').setAttribute('transform', `rotate(${S.sw})`);
     $('steerMark').style.left = `calc(50% + ${clamp(S.sw / C.st.maxW, -1, 1) * 100}px)`;
-    $('steerText').textContent = `${S.sw >= 0 ? '+' : ''}${S.sw.toFixed(0)}° (${(S.sw / 360).toFixed(2)}회전)${inp.steerId !== null ? ' · 드래그' : ''}`;
+    $('steerText').textContent = `${S.sw >= 0 ? '+' : ''}${S.sw.toFixed(0)}° (${(S.sw / 360).toFixed(2)}회전)${inp.steerId !== null ? ' · 조향 중' : ''}`;
     const cx = S.x + Math.sin(S.h) * C.L / 2, cz = S.z + Math.cos(S.h) * C.L / 2, dx = DEST.x - cx, dz = DEST.z - cz, dist = Math.hypot(dx, dz);
     if (dist < 4) { $('navText').textContent = `${DEST.name} 도착`; $('navArrow').style.transform = ''; }
     else {
@@ -1128,7 +1172,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--rule)
 
   reset(); setView('chase'); resize();
   toast('브레이크(S)를 밟고 오른쪽 D를 누르세요.');
-  window.__preview = { S, C, inp, opt, wiz, pm, get mapping() { return mapping; }, get view() { return view; }, get pedalsActive() { return pedalsActive(); }, get wheelSpinDeg() { return -wheelSpin.rotation.z / DEG; }, setView, openWizard };
+  window.__preview = { S, C, inp, opt, wiz, pm, get mapping() { return mapping; }, get view() { return view; }, get pedalsActive() { return pedalsActive(); }, get wheelSpinDeg() { return -wheelSpin.rotation.z / DEG; }, ring, setView, openWizard };
   requestAnimationFrame(frame);
 })();
 </script>

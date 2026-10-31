@@ -33,6 +33,10 @@ namespace DrivingSim.UI
         [Header("Touch pedals")]
         public bool showTouchPedals = true;
 
+        [Header("Steering ring")]
+        [Tooltip("Show the compact wheel glyph inside the steering ring (the ring outline always shows in circular mode).")]
+        public bool showSteeringWheelGlyph = true;
+
         // Built references
         [SerializeField] Text speedText;
         [SerializeField] Text gearText;
@@ -53,6 +57,10 @@ namespace DrivingSim.UI
         [SerializeField] Text pedalSourceText;
         [SerializeField] Image brakeLamp;
         [SerializeField] Image acceleratorLamp;
+        [SerializeField] RectTransform steeringRing;
+        [SerializeField] Image steeringRingImage;
+        [SerializeField] RectTransform steeringDeadZone;
+        [SerializeField] RectTransform steeringGlyph;
         [SerializeField] RectTransform steeringMarker;
         [SerializeField] Text steeringText;
         [SerializeField] RectTransform carMarker;
@@ -210,7 +218,59 @@ namespace DrivingSim.UI
             toastRoot = toast.gameObject;
             toastRoot.SetActive(false);
 
+            BuildSteeringRing(safe.parent);
             BuildPauseMenu(safe, font);
+        }
+
+        /// <summary>
+        /// Circular steering area, drawn on the full-screen canvas so it lines up with screen pixels.
+        /// Not a raycast target: it never blocks buttons, and buttons placed over it still win.
+        /// </summary>
+        void BuildSteeringRing(Transform canvasRoot)
+        {
+            steeringRing = UIBuild.Rect("SteeringRing", canvasRoot, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(100f, 100f));
+            steeringRing.SetAsFirstSibling();
+            steeringRingImage = steeringRing.gameObject.AddComponent<Image>();
+            steeringRingImage.sprite = UISprites.Ring;
+            steeringRingImage.raycastTarget = false;
+
+            steeringDeadZone = UIBuild.Rect("DeadZone", steeringRing, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(20f, 20f));
+            var dead = steeringDeadZone.gameObject.AddComponent<Image>();
+            dead.sprite = UISprites.Ring;
+            dead.color = new Color(1f, 1f, 1f, 0.25f);
+            dead.raycastTarget = false;
+
+            steeringGlyph = UIBuild.Rect("WheelGlyph", steeringRing, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(150f, 150f));
+            var rim = steeringGlyph.gameObject.AddComponent<Image>();
+            rim.sprite = UISprites.Ring;
+            rim.color = new Color(1f, 1f, 1f, 0.55f);
+            rim.raycastTarget = false;
+            RectTransform spokeH = UIBuild.Rect("Spoke", steeringGlyph, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(140f, 6f));
+            UIBuild.Panel(spokeH, null, new Color(1f, 1f, 1f, 0.45f));
+            RectTransform spokeV = UIBuild.Rect("SpokeDown", steeringGlyph, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(6f, 70f));
+            UIBuild.Panel(spokeV, null, new Color(1f, 1f, 1f, 0.45f));
+            RectTransform top = UIBuild.Rect("TopMark", steeringGlyph, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(12f, 20f));
+            UIBuild.Panel(top, null, theme.indicatorAmber);
+        }
+
+        void UpdateSteeringRing()
+        {
+            if (steeringRing == null) return;
+            bool circular = touchSteering != null && touchSteering.mode == SteeringGestureMode.Circular;
+            if (steeringRing.gameObject.activeSelf != circular) steeringRing.gameObject.SetActive(circular);
+            if (!circular) return;
+
+            // Canvas scales by height (1080 reference units), so a fraction of screen height maps directly.
+            const float referenceHeight = 1080f;
+            steeringRing.anchorMin = steeringRing.anchorMax = touchSteering.circleCenter;
+            float diameter = touchSteering.circleRadius * 2f * referenceHeight;
+            steeringRing.sizeDelta = new Vector2(diameter, diameter);
+            steeringDeadZone.sizeDelta = Vector2.one * diameter * touchSteering.deadZoneFraction;
+            steeringRingImage.color = new Color(1f, 1f, 1f, touchSteering.IsSteering ? 0.6f : 0.28f);
+
+            steeringGlyph.gameObject.SetActive(showSteeringWheelGlyph);
+            // UI z rotation is counter-clockwise; the wheel turns clockwise for positive angles.
+            steeringGlyph.localRotation = Quaternion.Euler(0f, 0f, -vehicle.SteeringWheelAngleDeg);
         }
 
         void BuildPauseMenu(Transform safe, Font font)
@@ -438,7 +498,8 @@ namespace DrivingSim.UI
             float angle = vehicle.SteeringWheelAngleDeg, max = Mathf.Max(vehicle.MaxSteeringWheelAngleDeg, 1f);
             steeringMarker.anchoredPosition = new Vector2(Mathf.Clamp(angle / max, -1f, 1f) * SteeringTrackHalfWidth, 12f);
             bool dragging = touchSteering != null && touchSteering.IsSteering;
-            steeringText.text = $"{(angle >= 0f ? "+" : "")}{angle:F0}°  ({angle / 360f:F2}회전){(dragging ? "  · 드래그" : "")}";
+            steeringText.text = $"{(angle >= 0f ? "+" : "")}{angle:F0}°  ({angle / 360f:F2}회전){(dragging ? "  · 조향 중" : "")}";
+            UpdateSteeringRing();
 
             // The map texture is created when the minimap camera wakes up (Play Mode), so attach it lazily.
             if (mapImage != null && mapImage.texture == null && minimap != null && minimap.Texture != null) mapImage.texture = minimap.Texture;

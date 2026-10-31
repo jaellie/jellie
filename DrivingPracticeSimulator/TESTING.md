@@ -57,7 +57,7 @@ Active Input Handling must include the Input System. Regenerate the scene first.
 
 | # | Test | Steps | Pass criteria | Measured |
 |---|------|-------|---------------|----------|
-| C1 | **Middle-drag steering** | Hold the wheel button on the road, drag right one screen height, release. Drag right again. | Wheel ≈ +100° after the first drag and stays on release. Second drag adds to it. Bottom indicator shows "· 드래그" while held | |
+| C1 | **Middle-button circular steering** | See S1–S4. | Bottom indicator shows "· 조향 중" while held | |
 | C2 | **Scroll wheel ignored** | Scroll up/down over the road and over buttons. | Nothing changes | |
 | C3 | **Middle-click UI** | Middle-click P/R/N/D (with S held), 1인칭, 전조등, the turn arrows. Hold middle on 왼쪽 보기 in the cockpit. | Each acts **once** per click. Look holds while held and stops when you slide off. **No steering** while clicking or holding UI | |
 | C4 | **Drag across UI** | Start a middle drag on the road and move it across the gear selector. | Keeps steering. No gear change | |
@@ -70,25 +70,29 @@ Active Input Handling must include the Input System. Regenerate the scene first.
 | G2 | **Parking brake button** | Tap the red (P) button under the gear selector, tap again. Then calibrate pedals so Space becomes a pedal key and try again. | Toggles 체결/해제 each tap (red while engaged). Still works when Space is a pedal key. The wizard warns when Space is taken | |
 | H1 | **HUD** | Check every HUD element at 16:9 and 20:9 (Game view sizes), and with a notch simulator. | No overlaps. Everything inside the safe area. Indicators blink. Wiper label cycles. Mini-map follows. Pause stops time | |
 
-## Steering (realistic multi-turn)
+## Steering (circular gestures, realistic multi-turn)
 
 | # | Test | Steps | Pass criteria | Measured |
 |---|------|-------|---------------|----------|
-| S1 | Small drag | Middle-drag 20 px on a 1080p Game view. | Wheel moves ≈ 2°, front wheels ≈ 0.1°. Car barely changes direction | |
-| S2 | Multiple drags | Several long drags right. | Angle accumulates. Full lock (+540°) after ≈ 3–4 long swipes. Cockpit wheel visibly turns 1.5 times | |
-| S3 | Full lock both ways | Continue to −540°. | Clamps at ±540°. Front wheels ±35° (inner) | |
-| S4 | Release while stopped | Release at any angle, wait 5 s. | No movement | |
-| S5 | Release while moving | At 30 km/h release at ≈ 180°. | No change for 0.6 s, then a smooth return over ≈ 1–2 s. Never past center | |
-| S6 | U-turn | Full lock at creep speed. | Rear-axle path diameter ≈ 9.1 m (geometric); outer front wheel ≈ 6 m radius | |
-| S7 | Reverse | R, full right lock. | Car backs in an arc, nose swings left. Self-centering weak | |
+| S1 | One clockwise circle | Middle button down inside the ring, draw one full circle clockwise, release. | Wheel +360° (± a few °). Cockpit wheel and HUD glyph turn exactly once | |
+| S2 | One counter-clockwise circle | Same, counter-clockwise. | Back to 0° | |
+| S3 | Multiple circles / full lock | Keep circling clockwise, then counter-clockwise. | Clamps at +540° and −540° (3 turns lock to lock). Front wheels ±35° (inner) | |
+| S4 | Release and re-grip | Turn 90°, release, grip on the opposite side of the ring, turn 90°. | +180° total, no jump at the second grip | |
+| S5 | ±180° boundary | Circle through the 9 o'clock position (left side). | Smooth, no 360° jump | |
+| S6 | Through the center | Drag in a straight line across the center. | Only a few degrees of change, no jump | |
+| S7 | Small motion | Move a few pixels along the ring. | Proportionally small change (never a left/right step) | |
+| S8 | Touch (device) | Same as S1–S4 with a finger. Hold a pedal with another finger. | Same results. Only one pointer steers | |
+| S9 | UI conflicts | Start a gesture outside the ring or on a button. Drag a steering gesture over the gear selector. | No steering from outside / buttons. No button presses from a steering gesture | |
+| S10 | Release while stopped / moving | Release at ≈ 180° stopped, then at 30 km/h. | Stopped: no change. Moving: held 0.6 s, then smooth return | |
+| S11 | U-turn / reverse | Full lock at creep; R with right lock. | Rear-axle path diameter ≈ 9.1 m; nose swings left in reverse | |
 
-The browser preview runs S1–S7 automatically (`Tools/browser-preview`, see PEDALS.md).
+The browser preview runs S1–S7, S9–S11 and mouse/touch variants automatically (`Tools/browser-preview`).
 
 ## EditMode unit tests
 
 **Window → General → Test Runner → EditMode → Run All.** They cover the transmission
 interlocks, steering accumulation/clamping/self-centering/speed scaling, creep/throttle/brake
-curves, resistance signs, Ackermann symmetry the speedometer dial mapping, pedal calibration analysis, pedal state machine (brake priority, re-engage delay, fail-safe), validation session, steering release grace and turn-signal auto-cancel (`Assets/DrivingSim/Tests/EditMode`).
+curves, resistance signs, Ackermann symmetry the speedometer dial mapping, pedal calibration analysis, pedal state machine (brake priority, re-engage delay, fail-safe), validation session, circular steering gesture (unwrap, dead zone, jump guard, re-grip), steering release grace and turn-signal auto-cancel (`Assets/DrivingSim/Tests/EditMode`).
 
 ## Tuning notes
 

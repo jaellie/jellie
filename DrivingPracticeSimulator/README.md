@@ -68,12 +68,18 @@ The car creeps forward. Add **W** to accelerate.
 
 ## Driving controls beyond the keyboard
 
-**Drag steering (PUBG-style).** Drag horizontally anywhere that isn't a button to turn the steering
-wheel. Rotation accumulates across drags and isn't reset on release. One screen height of drag =
-540° (`TouchSteeringController.degreesPerScreenHeight`). Works with touchscreen fingers and the
-**middle mouse button** (wheel click) as a simulated touch. Left-mouse drag steering is off by
-default (`PointerInputHub.leftMouseAsTouch`) so left-click keeps its normal desktop behavior.
-The scroll wheel is never used.
+**Circular steering.** Turn the wheel by drawing circles, as if gripping a real steering wheel.
+A gesture starts inside the **steering ring** (center at 50 % width / 43 % height from the bottom,
+radius 27 % of screen height, drawn faintly on the HUD with an optional mini wheel). Its angle around
+the ring center, `atan2(y − cy, x − cx)`, is unwrapped across ±180° and accumulated **1:1**: one
+circle = one turn of the wheel, so center → full lock (540°) is 1.5 circles. Clockwise = right.
+Points inside the inner dead zone (22 % of the radius) are ignored. A single step over 90° is
+discarded as a tracking jump, and the next sample re-anchors. Releasing keeps the angle; the next
+gesture continues from it, wherever you grip. After the gesture starts, the pointer may leave the
+ring (only the angle matters) and never activates buttons it crosses. Works with touch, the
+**middle mouse button**, and optionally the left button (`PointerInputHub.leftMouseAsTouch`). The
+old horizontal drag remains as `TouchSteeringController.mode = HorizontalDrag`. The scroll wheel is
+never used.
 
 **Middle mouse on UI.** Unity UI ignores middle clicks. `MiddleMouseUIRouter` sends a
 middle press that starts on a control to that control as one left-button touch (its own pointer
