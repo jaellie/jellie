@@ -371,6 +371,10 @@ namespace DrivingSim.UI
                 warnings.Add($"가속 1회 감지 키 (미포함): {Names(acceleratorAnalysis.Occasional)}");
             List<int> shortcuts = brakeSet.Concat(acceleratorSet).Where(IsShortcutKey).ToList();
             if (shortcuts.Count > 0) warnings.Add($"페달 전용이 되어 단축키로 쓰지 않는 키: {Names(shortcuts)}");
+#if ENABLE_INPUT_SYSTEM
+            if (brakeSet.Contains((int)Key.Space) || acceleratorSet.Contains((int)Key.Space))
+                warnings.Add("Space가 페달 키가 되었습니다. 주차 브레이크는 화면의 (P) 버튼으로 조작하세요.");
+#endif
             if (brakeSet.Count == 0 || acceleratorSet.Count == 0) warnings.Add("브레이크와 가속 모두 키가 하나 이상 있어야 저장할 수 있습니다.");
             warningText.text = string.Join("\n", warnings);
         }

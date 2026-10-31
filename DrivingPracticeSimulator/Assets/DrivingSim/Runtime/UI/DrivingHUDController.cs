@@ -42,6 +42,8 @@ namespace DrivingSim.UI
         [SerializeField] HoldButton turnRightButton;
         [SerializeField] Text navText;
         [SerializeField] RectTransform navArrow;
+        [SerializeField] HoldButton parkingBrakeButton;
+        [SerializeField] Text parkingBrakeLabel;
         [SerializeField] HoldButton headlightButton;
         [SerializeField] HoldButton hazardButton;
         [SerializeField] HoldButton wiperButton;
@@ -159,6 +161,11 @@ namespace DrivingSim.UI
 
             // P/R/N/D on the right edge, under the mini-map
             GearSelectorUI.Create(safe, vehicle, theme, new Vector2(-24f, -70f), new Vector2(100f, 86f), 8f);
+            // Parking brake directly under the selector (selector bottom = -70 - 192 in this anchor space).
+            // Needed on touch screens, and when Space has been claimed by a foot pedal.
+            parkingBrakeButton = UIBuild.Button("ParkingBrake", safe, new Vector2(1f, 0.5f), new Vector2(1f, 1f), new Vector2(-24f, -274f),
+                new Vector2(116f, 96f), "(P)\n체결", theme, 28, out parkingBrakeLabel);
+            parkingBrakeButton.pressedColor = theme.brakeRed;
 
             // Touch pedals (alternative to the foot keyboard)
             touchPedalRoot = UIBuild.Rect("TouchPedals", safe, bottomRight, bottomRight, new Vector2(-148f, 24f), new Vector2(370f, 260f)).gameObject;
@@ -283,6 +290,7 @@ namespace DrivingSim.UI
             }
             if (turnLeftButton != null) turnLeftButton.Pressed += OnTurnLeft;
             if (turnRightButton != null) turnRightButton.Pressed += OnTurnRight;
+            if (parkingBrakeButton != null) parkingBrakeButton.Pressed += OnParkingBrakeButton;
             if (headlightButton != null) headlightButton.Pressed += OnHeadlights;
             if (hazardButton != null) hazardButton.Pressed += OnHazard;
             if (wiperButton != null) wiperButton.Pressed += OnWipers;
@@ -291,6 +299,7 @@ namespace DrivingSim.UI
             if (restartButton != null) restartButton.Pressed += OnRestart;
             if (calibrateButton != null) calibrateButton.Pressed += OnCalibrate;
             RefreshAccessoryButtons();
+            RefreshParkingBrake();
         }
 
         void Unsubscribe()
@@ -307,6 +316,7 @@ namespace DrivingSim.UI
             }
             if (turnLeftButton != null) turnLeftButton.Pressed -= OnTurnLeft;
             if (turnRightButton != null) turnRightButton.Pressed -= OnTurnRight;
+            if (parkingBrakeButton != null) parkingBrakeButton.Pressed -= OnParkingBrakeButton;
             if (headlightButton != null) headlightButton.Pressed -= OnHeadlights;
             if (hazardButton != null) hazardButton.Pressed -= OnHazard;
             if (wiperButton != null) wiperButton.Pressed -= OnWipers;
@@ -319,7 +329,21 @@ namespace DrivingSim.UI
 
         void OnShiftRejected(TransmissionGear gear, ShiftResult result) => ShowToast(DrivingMessagesKo.ShiftFeedback(gear, result));
         void OnGearChanged(TransmissionGear gear) => ShowToast(DrivingMessagesKo.ShiftFeedback(gear, ShiftResult.Accepted));
-        void OnParkingBrake(bool engaged) => ShowToast(DrivingMessagesKo.ParkingBrake(engaged));
+        void OnParkingBrake(bool engaged)
+        {
+            ShowToast(DrivingMessagesKo.ParkingBrake(engaged));
+            RefreshParkingBrake();
+        }
+
+        void OnParkingBrakeButton() => vehicle.SetParkingBrake(!vehicle.ParkingBrakeEngaged);
+
+        void RefreshParkingBrake()
+        {
+            if (parkingBrakeButton == null) return;
+            bool engaged = vehicle.ParkingBrakeEngaged;
+            parkingBrakeButton.SetToggled(engaged); // red while engaged
+            if (parkingBrakeLabel != null) parkingBrakeLabel.text = engaged ? "(P)\n체결" : "(P)\n해제";
+        }
         void OnTurnLeft() { if (accessories != null) accessories.ToggleTurnSignal(TurnSignal.Left); }
         void OnTurnRight() { if (accessories != null) accessories.ToggleTurnSignal(TurnSignal.Right); }
         void OnHeadlights() { if (accessories != null) accessories.ToggleHeadlights(); }

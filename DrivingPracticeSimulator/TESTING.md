@@ -74,6 +74,7 @@ Active Input Handling must include the Input System. Regenerate the scene first.
 | P7 | **Reserved keys** | If a shortcut key (e.g. Space, 4, V) ended up in a pedal mapping, press it. | It acts only as a pedal | |
 | P8 | **Rollover** | Press many keys at once on the floor keyboard. | Note whether the wizard showed the rollover warning and whether the live counts drop keys | |
 | G1 | **Gear selector** | Tap R with the brake released. Then hold brake and tap R, N, D, P. Tap P at 10 km/h. | Rejections show Korean messages. Accepted gear turns blue. Physics behaves as before | |
+| G2 | **Parking brake button** | Tap the red (P) button under the gear selector, tap again. Then calibrate pedals so Space becomes a pedal key and try again. | Toggles 체결/해제 each tap (red while engaged). Still works when Space is a pedal key. The wizard warns when Space is taken | |
 | H1 | **HUD** | Check every HUD element at 16:9 and 20:9 (Game view sizes), and with a notch simulator. | No overlaps. Everything inside the safe area. Indicators blink. Wiper label cycles. Mini-map follows. Pause stops time | |
 
 ## EditMode unit tests

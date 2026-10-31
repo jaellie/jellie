@@ -36,6 +36,6 @@ namespace DrivingSim.Vehicle
 
         public static string ParkingBrake(bool engaged) => engaged ? "주차 브레이크 체결" : "주차 브레이크 해제";
 
-        public const string ParkingBrakeStillOn = "주차 브레이크가 체결되어 있습니다. 해제 후 출발하세요.";
+        public const string ParkingBrakeStillOn = "주차 브레이크가 체결되어 있습니다. 오른쪽 (P) 버튼이나 Space로 해제하세요.";
     }
 }

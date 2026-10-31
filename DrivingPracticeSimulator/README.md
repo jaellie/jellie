@@ -98,7 +98,8 @@ whatever the source (keyboard W+S, touch, foot pedals).
 
 Built in code by `DrivingHUDController` (1920×1080 reference, safe-area aware):
 pause + speed/gear (top-left), turn indicators + navigation (top-center), camera buttons +
-mini-map (top-right), vertical **P R N D** selector with the selected gear in blue (right edge),
+mini-map (top-right), vertical **P R N D** selector with the selected gear in blue and the
+**(P) parking brake** button under it (right edge),
 touch pedals (bottom-right), headlights / hazard / wipers + brake and accelerator bars + input
 source (bottom-left), look-left/right + steering indicator (bottom-center). Tapping a gear asks the
 transmission, so the brake and speed interlocks still apply and a rejection shows in Korean.
