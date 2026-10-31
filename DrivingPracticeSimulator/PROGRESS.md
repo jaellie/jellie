@@ -368,3 +368,15 @@ Unity Personal + game-ci/cli v0.1.72 기준(소스 코드로 확인). **비밀�
 | 2026-10-31 | Claude/Codex 협업 방식, 언어 선택·면책 고지 요구사항, AI 교통 요구사항과 Phase C~F 순서·결정론 원칙, 기준선 검증 관문, Claude 환경에서 Unity 실행 불가 확인 추가 |
 | 2026-10-31 | GameCI 요구사항 확인(Personal: Secrets 3개), Unity 6000.0.85f1 고정, CI 워크플로·PlayMode 스모크 테스트 추가, 현지화 기능 계층·문자열 이동·첫 실행 고지(임시 화면)·INTEGRATION.md 작성. Unity 미검증 |
 | 2026-10-31 | GameCI 라이선스 재확인(소스 코드): Personal은 `UNITY_EMAIL`+`UNITY_PASSWORD` 2개, `.ulf` 불필요(CI에서 기기 바인딩으로 실패), 2FA 끈 CI 전용 계정. 워크플로를 2개 Secrets와 CLI v0.1.72 고정으로 수정. 기능별 구현/테스트/미검증 표 추가. CI 실행 #1(건너뜀 경로) 기록 |
+
+
+## Codex UI branch handoff — 2026-10-31
+
+- Branch: `codex/ui-visual-polish`, based on `69692df`. GitHub integration access is confirmed; the earlier access-blocked note above is historical.
+- Implemented (written, **Unity unverified**): Minimal Automotive HUD presentation, Premium Simulation menu/settings/environment selection with separate Free Driving/Missions views, styled startup views, Korean font, original UI sprites, responsive/safe-area presentation and calibration layout polish.
+- User approved 34 additive menu/environment localization keys; total 177, original 143 preserved. Approved notice bodies unchanged.
+- No changes to vehicle physics, steering, transmission, calibration algorithms, input routing, camera behavior, StartupFlow or localization system. No city/AI work. No gameplay branch update or merge.
+- Menus are presentation-only; map/mission launch host remains for Claude integration. The isolated UI harness deliberately disables every environment/mission launch.
+- Static checks passed for 63 unchanged protected files, key/placeholder/notice consistency, current glyph coverage and all modern Hangul syllables, theme GUIDs, and preservation of non-presentation methods. This is **not** a Unity compile.
+- Six UI presentation tests added to existing PlayMode assembly, **not run**. Unity compilation, all Unity tests, importer behavior, Android touch/readability/performance remain **not run/unverified**.
+- Full inventory, new assets/dependencies, key list, review steps and host API: `UI_HANDOFF.md`. Static preview images are labeled **not Unity**.

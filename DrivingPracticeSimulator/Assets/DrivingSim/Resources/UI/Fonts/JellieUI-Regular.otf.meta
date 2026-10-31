@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 25c75f315c22b9a12080e0f6030d3c30
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  fontTextureCase: -2
+  includeFontData: 1
+  fontNames:
+  - Jellie UI
+  fontRenderingMode: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

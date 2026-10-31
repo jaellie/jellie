@@ -99,13 +99,7 @@ namespace DrivingSim.UI
         void Build(Transform safe)
         {
             Font font = theme.Font;
-            RectTransform dim = UIBuild.Rect("Wizard", safe, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
-            UIBuild.Stretch(dim);
-            UIBuild.Panel(dim, null, new Color(0f, 0f, 0f, 0.6f), raycast: true);
-            root = dim.gameObject;
-
-            RectTransform card = UIBuild.Rect("Card", dim, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1280f, 900f));
-            UIBuild.Panel(card, theme.RoundedPanel, theme.panelStrong);
+            root = AutomotiveLayout.Modal(safe, theme, new Vector2(1400f, 960f), out RectTransform card);
 
             titleText = Block("Title", card, 30f, 64f, font, 44, theme.text);
             titleText.fontStyle = FontStyle.Bold;
@@ -117,12 +111,12 @@ namespace DrivingSim.UI
             brakeIndicator = Indicator("Brake", indicators, -300f, "wizard.indicator.brake", font);
             acceleratorIndicator = Indicator("Accelerator", indicators, 300f, "wizard.indicator.accelerator", font);
 
-            keysText = Block("Keys", card, 400f, 250f, font, 24, theme.text);
+            keysText = AutomotiveLayout.ScrollBlock("Keys", card, 400f, 300f, 24, theme.text, theme);
             keysText.alignment = TextAnchor.UpperLeft;
-            warningText = Block("Warnings", card, 650f, 120f, font, 22, theme.warning);
+            warningText = AutomotiveLayout.ScrollBlock("Warnings", card, 706f, 120f, 22, theme.warning, theme);
             warningText.alignment = TextAnchor.UpperLeft;
 
-            float width = 232f, gap = 12f, total = width * 5f + gap * 4f;
+            float width = 252f, gap = 12f, total = width * 5f + gap * 4f;
             for (int i = 0; i < buttons.Length; i++)
             {
                 float x = -total * 0.5f + width * 0.5f + i * (width + gap);
@@ -134,7 +128,7 @@ namespace DrivingSim.UI
 
         Text Block(string name, RectTransform card, float top, float height, Font font, int size, Color color)
         {
-            RectTransform rect = UIBuild.Rect(name, card, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -top), new Vector2(1180f, height));
+            RectTransform rect = UIBuild.Rect(name, card, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -top), new Vector2(1280f, height));
             return UIBuild.Label("Text", rect, "", font, size, color);
         }
 

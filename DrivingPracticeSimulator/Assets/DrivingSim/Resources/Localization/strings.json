@@ -335,8 +335,8 @@
     },
     {
       "key": "pause.pedals",
-      "ko": "페달 보정 / 발 페달 설정",
-      "en": "Pedal calibration"
+      "ko": "페달 설정",
+      "en": "Pedal setup"
     },
     {
       "key": "pause.language",
@@ -350,8 +350,8 @@
     },
     {
       "key": "pause.mainMenu",
-      "ko": "메인 메뉴 (준비 중)",
-      "en": "Main menu (coming soon)"
+      "ko": "메인 메뉴 · 준비 중",
+      "en": "Main menu · Coming soon"
     },
     {
       "key": "wizard.indicator.brake",
@@ -375,13 +375,13 @@
     },
     {
       "key": "wizard.intro.start",
-      "ko": "보정 시작",
-      "en": "Start"
+      "ko": "설정 시작",
+      "en": "Set up pedals"
     },
     {
       "key": "wizard.intro.review",
       "ko": "현재 설정 확인",
-      "en": "Review current setup"
+      "en": "Review saved setup"
     },
     {
       "key": "wizard.intro.reset",
@@ -440,8 +440,8 @@
     },
     {
       "key": "wizard.capture.liftFoot",
-      "ko": "발을 완전히 떼고 다시 밟으세요",
-      "en": "Lift your foot completely, then press again"
+      "ko": "발을 완전히 뗀 후 다시 밟아 주세요",
+      "en": "Lift your foot fully, then press again"
     },
     {
       "key": "wizard.capture.seen",
@@ -495,8 +495,8 @@
     },
     {
       "key": "wizard.review.test",
-      "ko": "실제 테스트",
-      "en": "Live test"
+      "ko": "페달 작동 테스트",
+      "en": "Test pedals"
     },
     {
       "key": "wizard.review.brakeKeys",
@@ -510,8 +510,8 @@
     },
     {
       "key": "wizard.review.tableHeader",
-      "ko": "키 · 브레이크 감지(누름 횟수) · 가속 감지(누름 횟수) · 비고",
-      "en": "Key · brake presses seen (key-downs) · accelerator presses seen (key-downs) · notes"
+      "ko": "키 · 브레이크 감지 (키 입력) · 가속 감지 (키 입력) · 상태",
+      "en": "Key · Brake detections (key-downs) · Accelerator detections (key-downs) · Status"
     },
     {
       "key": "wizard.review.note.ambiguousExcluded",
@@ -550,8 +550,8 @@
     },
     {
       "key": "wizard.review.warn.rollover",
-      "ko": "동시에 누른 키 중 일부가 보고되지 않는 키보드일 수 있습니다 (롤오버/고스팅). 한 키만 감지돼도 페달이 동작하도록 설계되어 있습니다.",
-      "en": "This keyboard may drop some simultaneous keys (rollover/ghosting). A pedal works as long as any one of its keys is reported."
+      "ko": "키보드에서 일부 동시 입력이 누락될 수 있습니다. 각 페달의 키가 하나라도 감지되면 작동합니다.",
+      "en": "Some simultaneous key presses may not register. Each pedal works when at least one assigned key is detected."
     },
     {
       "key": "wizard.review.warn.merged",
@@ -590,8 +590,8 @@
     },
     {
       "key": "wizard.validate.title",
-      "ko": "4단계: 실제 테스트",
-      "en": "Step 4: Live test"
+      "ko": "4단계: 페달 작동 테스트",
+      "en": "Step 4: Test pedals"
     },
     {
       "key": "wizard.validate.retry",
@@ -605,8 +605,8 @@
     },
     {
       "key": "wizard.validate.save",
-      "ko": "저장",
-      "en": "Save"
+      "ko": "설정 저장",
+      "en": "Save setup"
     },
     {
       "key": "wizard.validate.pressBrake",
@@ -635,18 +635,18 @@
     },
     {
       "key": "wizard.validate.passedShort",
-      "ko": "통과",
-      "en": "Passed"
+      "ko": "테스트 통과",
+      "en": "Test passed"
     },
     {
       "key": "wizard.validate.failed",
-      "ko": "테스트 실패: {0}",
-      "en": "Test failed: {0}"
+      "ko": "테스트 미통과: {0}",
+      "en": "Check your setup: {0}"
     },
     {
       "key": "wizard.validate.failedShort",
-      "ko": "실패",
-      "en": "Failed"
+      "ko": "다시 확인해 주세요",
+      "en": "Check your setup"
     },
     {
       "key": "wizard.validate.counts",
@@ -660,8 +660,8 @@
     },
     {
       "key": "wizard.validate.conflict",
-      "ko": "\n충돌: 둘 다 눌림 → 브레이크 우선, 가속 차단",
-      "en": "\nConflict: both pressed → brake wins, accelerator blocked"
+      "ko": "\n양쪽 페달 감지: 브레이크 우선 · 가속 차단",
+      "en": "\nBoth pedals detected: brake takes priority; accelerator blocked"
     },
     {
       "key": "wizard.fail.brakePromptGotAccelerator",
@@ -686,17 +686,17 @@
     {
       "key": "wizard.status.validated",
       "ko": "검증 완료",
-      "en": "tested"
+      "en": "Verified setup"
     },
     {
       "key": "wizard.status.unvalidated",
-      "ko": "검증 안 됨 (운전에 사용되지 않음)",
-      "en": "not tested (not used for driving)"
+      "ko": "미검증 · 주행에 사용되지 않음",
+      "en": "Not tested · Unavailable for driving"
     },
     {
       "key": "wizard.status.keyboardChanged",
-      "ko": "다른 키보드가 연결됨: 실제 테스트를 다시 하세요",
-      "en": "different keyboard connected: run the live test again"
+      "ko": "다른 키보드 연결됨 · 다시 테스트해 주세요",
+      "en": "Keyboard changed · Test pedals again"
     },
     {
       "key": "wizard.status.none",
@@ -727,6 +727,210 @@
       "key": "wizard.noKeyboard",
       "ko": "키보드가 감지되지 않습니다. 연결을 확인하세요.",
       "en": "No keyboard detected. Check the connection."
+    },
+    {
+      "key": "menu.brand",
+      "ko": "JELLIE · 운전 연습",
+      "en": "JELLIE · DRIVING PRACTICE",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "menu.tagline",
+      "ko": "운전의 기본을,\n차분하게.",
+      "en": "Find your rhythm.\nBuild confidence.",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "menu.intro",
+      "ko": "나만의 속도로 익히는 운전 연습.\n연습 환경을 고르고 시작하세요.",
+      "en": "Practice at your own pace.\nChoose an environment to begin.",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "menu.chooseEnvironment",
+      "ko": "연습 환경 선택",
+      "en": "Choose environment",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "menu.settings",
+      "ko": "설정",
+      "en": "Settings",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "menu.environments",
+      "ko": "연습 환경",
+      "en": "PRACTICE ENVIRONMENTS",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "menu.back",
+      "ko": "메인 메뉴",
+      "en": "Main menu",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.title",
+      "ko": "어디에서 연습할까요?",
+      "en": "Where would you like to practice?",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.empty",
+      "ko": "연습 환경 없음",
+      "en": "No environments available",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.emptyDescription",
+      "ko": "이용 가능한 연습 환경을 준비 중입니다.",
+      "en": "Practice environments are being prepared.",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.preview",
+      "ko": "연습 환경 미리보기",
+      "en": "Environment preview",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.ready",
+      "ko": "이용 가능",
+      "en": "Available",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.planned",
+      "ko": "준비 중",
+      "en": "Planned",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.plannedDescription",
+      "ko": "이 연습 환경은 준비 중입니다.",
+      "en": "This practice environment is in development.",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.freeDriving",
+      "ko": "자유 주행",
+      "en": "Free Driving",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.missions",
+      "ko": "미션",
+      "en": "Missions",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.freeDescription",
+      "ko": "정해진 경로와 시간 제한 없이,\n원하는 조작을 자유롭게 연습하세요.",
+      "en": "Explore the controls at your own pace,\nwithout a set route or time limit.",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.noMissions",
+      "ko": "이 환경의 미션은 준비 중입니다.",
+      "en": "Missions for this environment are coming later.",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.startFreeDriving",
+      "ko": "자유 주행 시작",
+      "en": "Start Free Driving",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.startMission",
+      "ko": "미션 시작",
+      "en": "Start Mission",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.unavailable",
+      "ko": "아직 시작할 수 없습니다",
+      "en": "Not available yet",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.launchPending",
+      "ko": "시작 요청 중…",
+      "en": "Requesting launch…",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.skills.title",
+      "ko": "기초 주행 연습장",
+      "en": "Driving skills ground",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.skills.description",
+      "ko": "조작을 익히고, 기본기를 다지는 공간.",
+      "en": "Learn the controls. Build the basics.",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.skills.details",
+      "ko": "직선 주행 · 회전 · 주차 연습",
+      "en": "Straight driving · Turning · Parking",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.city.title",
+      "ko": "도심 도로",
+      "en": "City roads",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.parking.title",
+      "ko": "주차 연습장",
+      "en": "Parking area",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.suburban.title",
+      "ko": "외곽 도로",
+      "en": "Suburban roads",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.mission.startStop",
+      "ko": "출발과 정지",
+      "en": "Start & stop",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.mission.startStopDetail",
+      "ko": "출발 · 제동 · 정지 유지",
+      "en": "Pull away · Brake · Hold",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.mission.turns",
+      "ko": "기본 회전",
+      "en": "Basic turns",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.mission.turnsDetail",
+      "ko": "저속 회전 · 조향 연습",
+      "en": "Low-speed turns · Steering",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.mission.parking",
+      "ko": "주차 기초",
+      "en": "Parking basics",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
+    },
+    {
+      "key": "environments.mission.parkingDetail",
+      "ko": "공간 확인 · 후진 주차",
+      "en": "Check clearance · Reverse park",
+      "note": "Additive UI key approved by user; see UI_HANDOFF.md. Catalog/launch functionality is owned by gameplay."
     }
   ]
 }

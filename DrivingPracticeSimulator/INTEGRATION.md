@@ -13,7 +13,7 @@ compile fixes; any change to a public signature will be recorded in the change l
 | Gameplay, physics, input, AI traffic, tests, Unity integration | Claude Code | branch `ccr-21c0ed33-uzs8xd` |
 | Localization **system** (loading, keys, persistence, events, APIs) | Claude Code | `Runtime/Localization`, `Core/Localization.cs` |
 | Korean and English **wording**, typography, text fitting | Codex | edits the `ko` / `en` values in `strings.json` |
-| Visual design of the language, disclaimer and settings screens, HUD look | Codex | Codex's design branch (name TBD) |
+| Visual design of the language, disclaimer and settings screens, HUD look | Codex | branch `codex/ui-visual-polish` |
 | Road network data and lane paths | Claude Code | see §7 |
 | Decorative environment assets | Codex | must follow §7 |
 
@@ -176,3 +176,15 @@ Summary (full version in `ROADMAP.md`, "Compatibility contract with Codex"):
 | Date | Change |
 |---|---|
 | 2026-10-31 | First version: startup flow + view interfaces, localization data/API, disclaimer, HUD rules, road contract summary |
+
+## UI implementation appendix — codex/ui-visual-polish
+
+User-approved visual implementation and **34 additive `menu.*` / `environments.*` keys** are documented in `UI_HANDOFF.md`. The original 143 keys and approved notice bodies are preserved. No existing system signature, protected logic, package, assembly definition or CI file changes.
+
+Designed startup views keep `PlaceholderLanguageView.Create` and `PlaceholderDisclaimerView.Create` for source compatibility; StartupFlow still owns language choice and acknowledgment. HudTheme.Default now loads `Resources/UI/MidnightTheme`; missing assets retain fallback behavior.
+
+`PracticeMenuView` is a presentation-only API. The new `PracticeEnvironmentOption`, `PracticeMissionOption` and `PracticeLaunchRequest` types are proposed handoff types for Claude's catalog/launch adapter, not changes to RoadNetwork or a mission implementation. The UI emits requests, holds its input gate and never loads a scene. Claude must review/wire the host before game integration. All entries are unavailable in the isolated UI preview.
+
+Unity compilation, tests, asset import and Android interaction are still unverified. See `UI_HANDOFF.md` for full changed-file inventory, dependencies, review steps, and exact integration requirements.
+
+Concurrent update note: Claude’s `c143105` adds the future map-system contract and startup service/test changes. This branch remains based on `69692df`; preserve those newer changes and reconcile this appendix with §7a when integration is separately approved. Menu DTOs here are presentation proposals pending the gameplay-owned IMapSelectionView/catalog API.

@@ -40,17 +40,21 @@ namespace DrivingSim.UI
             scaler.referenceResolution = ReferenceResolution;
             scaler.matchWidthOrHeight = 1f; // landscape: scale by height
 
-            var safe = new GameObject("SafeArea", typeof(RectTransform), typeof(SafeAreaFitter));
+            var safe = new GameObject("SafeArea", typeof(RectTransform));
             safe.transform.SetParent(canvasObject.transform, false);
             Stretch((RectTransform)safe.transform);
+            safe.AddComponent<SafeAreaFitter>();
 
-            Font font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            Transform content = AutomotiveLayout.Frame(safe.transform);
+            Font font = HudTheme.Default.Font;
             var overlay = canvasObject.AddComponent<CameraControlsOverlay>();
             overlay.controller = controller;
 
             // Top-right cluster: [view] [FOV - / value / +]
-            RectTransform topRight = Row("TopRight", safe.transform, new Vector2(1f, 1f), new Vector2(-24f, -24f));
+            RectTransform topRight = Row("TopRight", content, new Vector2(1f, 1f), new Vector2(-24f, -24f));
             overlay.viewButton = MakeButton("ViewButton", topRight, new Vector2(170f, 84f), Loc.T("camera.toFirstPerson"), font, out overlay.viewLabel);
+
+            AutomotiveLayout.DecorateButton(overlay.viewButton, "Camera", HudTheme.Default);
 
             var fovGroup = Row("FovGroup", topRight, new Vector2(1f, 1f), Vector2.zero);
             overlay.cockpitOnlyGroup = fovGroup.gameObject;
@@ -60,8 +64,8 @@ namespace DrivingSim.UI
 
             // Look buttons flank the steering indicator at the bottom center, clear of the
             // right-edge gear selector and the pedal zones.
-            overlay.lookLeftButton = MakeBottomButton("LookLeft", safe.transform, new Vector2(-340f, 24f), "camera.lookLeft", font);
-            overlay.lookRightButton = MakeBottomButton("LookRight", safe.transform, new Vector2(340f, 24f), "camera.lookRight", font);
+            overlay.lookLeftButton = MakeBottomButton("LookLeft", content, new Vector2(-340f, 24f), "camera.lookLeft", font);
+            overlay.lookRightButton = MakeBottomButton("LookRight", content, new Vector2(340f, 24f), "camera.lookRight", font);
 
             // At runtime AddComponent already ran OnEnable before the references above existed.
             if (Application.isPlaying && overlay.isActiveAndEnabled) overlay.Subscribe();
@@ -207,7 +211,11 @@ namespace DrivingSim.UI
             text.font = font;
             text.fontSize = fontSize;
             text.alignment = TextAnchor.MiddleCenter;
-            text.color = Color.white;
+            text.color = HudTheme.Default.text;
+            text.supportRichText = false;
+            text.resizeTextForBestFit = true;
+            text.resizeTextMinSize = 24;
+            text.resizeTextMaxSize = fontSize;
             text.text = value;
             text.raycastTarget = false;
             return text;
