@@ -49,7 +49,9 @@
 | HUD, 세로 기어 선택기, (P) 버튼 | ✅ | 미리보기 | ❌ | 없음 | ❌ |
 | 현지화 (한국어/영어, 저장, 변경 이벤트) | ✅ | 정적 (키 143개, 중복 0, 자리표시자 불일치 0, 코드 키 139개 존재) | ❌ | EditMode 작성, 미실행 | ❌ |
 | 첫 실행 고지 + 언어 선택 (임시 화면) | ✅ | 없음 (미리보기에 미포함) | ❌ | PlayMode `StartupFlowPlayModeTests` 7개 작성, 미실행 | ❌ |
-| CI 워크플로 (GameCI) | ✅ | YAML 문법 검사, GitHub에서 실행 #1 (Unity 건너뜀) | - | - | - |
+| CI 워크플로 (GameCI): 설정 → 테스트 → Android APK | ✅ | YAML 문법 검사, GitHub 실행 #1·#2 (Unity 건너뜀) | - | - | - |
+| 프로젝트 설정 스크립트 (`DrivingSim → Configure Project`) | ✅ | 없음 | ❌ | 없음 | - |
+| 스크린샷 캡처 테스트 (1인칭, 3인칭) | ✅ | 없음 | ❌ | PlayMode 작성, 미실행 | - |
 | AI 교통 (Phase C~F) | ❌ 미착수 (기준선 검증 후) | - | - | - | - |
 | 맵 선택 + 맵별 자유 주행/연습 미션 | ❌ 미착수 (계획만, 기준선 검증 후) | - | - | - | - |
 
@@ -353,7 +355,7 @@ Unity Personal + game-ci/cli v0.1.72 기준(소스 코드로 확인). **비밀�
 4. 등록했다고 알려주면 Claude가 워크플로를 실행하고, 로그를 읽고, 확인된 오류만 고칩니다.
 - 보안: 워크플로는 개발 브랜치 push와 수동 실행에서만 돌고(포크 PR 없음), 외부 액션은 커밋 SHA로 고정, 토큰 권한은 읽기 + 테스트 결과 체크 쓰기뿐입니다. GitHub는 로그에서 Secret 값을 가립니다. Personal 좌석은 CLI가 작업 끝에 반납합니다.
 - 참고: Unity Personal 사용 조건(매출 기준 등)은 계정 소유자가 확인해야 합니다.
-- 대안 B(로컬): Unity Hub로 6000.0.85f1 설치 → 프로젝트 열기 → Console 빨간 오류 전체 전달 → Test Runner에서 EditMode·PlayMode 실행 결과 전달.
+- 대안 B(로컬, PC 필요): Unity Hub로 6000.0.85f1 + Android Build Support 설치 → `DrivingPracticeSimulator/` 열기 → **DrivingSim → Configure Project**(재시작 요청 시 재시작) → **DrivingSim → Create Physics Test Scene** → Play. 테스트: Window → General → Test Runner → EditMode·PlayMode Run All. APK: File → Build Profiles → Android → Build. Console 빨간 오류와 테스트 결과를 전달.
 
 ## 검증 결과 (확인된 것만 기록)
 
@@ -376,3 +378,4 @@ Unity Personal + game-ci/cli v0.1.72 기준(소스 코드로 확인). **비밀�
 | 2026-10-31 | GameCI 요구사항 확인(Personal: Secrets 3개), Unity 6000.0.85f1 고정, CI 워크플로·PlayMode 스모크 테스트 추가, 현지화 기능 계층·문자열 이동·첫 실행 고지(임시 화면)·INTEGRATION.md 작성. Unity 미검증 |
 | 2026-10-31 | GameCI 라이선스 재확인(소스 코드): Personal은 `UNITY_EMAIL`+`UNITY_PASSWORD` 2개, `.ulf` 불필요(CI에서 기기 바인딩으로 실패), 2FA 끈 CI 전용 계정. 워크플로를 2개 Secrets와 CLI v0.1.72 고정으로 수정. 기능별 구현/테스트/미검증 표 추가. CI 실행 #1(건너뜀 경로) 기록 |
 | 2026-10-31 | 맵 선택 요구사항(4개 맵, 자유 주행/미션 분리, 코어 하나·환경 교체 구조)을 ROADMAP에 향후 기능으로 추가(구현 안 함). 비주얼 방향과 Codex 브랜치 기록. 시작 흐름 PlayMode 테스트 7개, 시작 화면 중복 열기 방지, 테스트용 API 2개 추가. Unity 미검증 |
+| 2026-10-31 | 첫 플레이 가능 3D 프로토타입 범위 승인. 1단계: `ProjectConfigurator`(입력 Both, 가로 화면, IL2CPP ARM64, 패키지 ID, 런타임 셰이더), `CIEntryPoints`(Configure, BuildAndroid), CI를 설정 → 테스트 → APK 3단계로 확장(unity-builder v6.0.0 SHA 고정), 스크린샷 캡처 PlayMode 테스트. 3D 마을·운전석 개선은 컴파일 기준선 확인 후. Unity 미검증 |

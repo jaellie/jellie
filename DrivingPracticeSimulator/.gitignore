@@ -30,3 +30,6 @@
 *.aab
 *.unitypackage
 crashlytics-build.properties
+
+# Screenshots written by PlayMode tests
+/TestScreenshots/

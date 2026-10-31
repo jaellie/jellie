@@ -13,13 +13,19 @@ namespace DrivingSim.EditorTools
         const string Root = "Assets/DrivingSim";
         const string ConfigPath = Root + "/Settings/CompactSedan_PhysicsConfig.asset";
         const string MaterialFolder = Root + "/Generated/Materials";
-        const string ScenePath = Root + "/Scenes/PhysicsTest.unity";
+        public const string ScenePath = Root + "/Scenes/PhysicsTest.unity";
 
         [MenuItem("DrivingSim/Create Physics Test Scene", priority = 0)]
         public static void CreatePhysicsTestScene()
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            VehiclePhysicsConfig config = CreateScene();
+            Selection.activeObject = config;
+        }
 
+        /// <summary>Generates and saves the test scene without dialogs (menu and CI). Returns the vehicle config asset.</summary>
+        public static VehiclePhysicsConfig CreateScene()
+        {
             VehiclePhysicsConfig config = GetOrCreateConfig();
             EnsureFolder(MaterialFolder);
             EnsureFolder(Path.GetDirectoryName(ScenePath).Replace('\\', '/'));
@@ -30,8 +36,8 @@ namespace DrivingSim.EditorTools
             EditorSceneManager.SaveScene(vehicle.gameObject.scene, ScenePath);
             AddToBuildSettings(ScenePath);
             AssetDatabase.SaveAssets();
-            Selection.activeObject = config;
             Debug.Log($"[DrivingSim] Created {ScenePath}. Press Play and drive with the keyboard. Vehicle parameters: {ConfigPath}");
+            return config;
         }
 
         [MenuItem("DrivingSim/Select Vehicle Physics Config", priority = 20)]
