@@ -189,6 +189,7 @@ const T = {
   't.pbrake':['주차 브레이크가 걸려 있어요','The parking brake is on'],
   't.pbrakeOff':['주차 브레이크를 풀었어요','Parking brake released'],
   't.pbrakeOn':['주차 브레이크를 걸었어요','Parking brake set'],
+  't.curb':['연석에 닿았어요 · 핸들을 반대로 돌리세요','You hit the curb · Steer the other way'],
   'pause.title':['일시정지','Paused'],'pause.resume':['계속하기','Resume'],'pause.restart':['처음부터','Restart'],
   'pause.settings':['설정','Settings'],'pause.pedals':['발 페달 설정','Foot pedal setup'],'pause.menu':['메인 메뉴','Main menu'],
   'pause.where':['테스트 타운 · 자유 주행','Test Town · Free driving'],
@@ -246,7 +247,7 @@ const S = {
   lang:'ko', screen:'language', prev:'home',
   hud:'minimal', halo:true, minimap:true, view:'cockpit', fov:65,
   gear:'P', pbrake:true, ind:0, hazard:false, lights:false, wipers:0, drawer:false, camPop:false,
-  speed:0, steer:0, brake:0, accel:0, travel:0, heading:0, paused:false, dialog:null,
+  speed:0, steer:0, brake:0, accel:0, travel:0, heading:0, lat:5.1, yaw:0, onCurb:false, paused:false, dialog:null,
   env:'test_town', mode:'free', setTab:'hud', noticeMode:'required',
   cal:{step:0, b:0, a:0, demoBad:false, tb:0, ta:0, checks:[false,false,false]},
   loadP:0
@@ -894,10 +895,10 @@ function act(a, v, el) {
     case 'mode': S.mode = v; render(); break;
     case 'pause': go('pause'); break;
     case 'resume': go(S.hud === 'practice' ? 'practice' : 'drive'); break;
-    case 'restart': Object.assign(S, {speed:0, steer:0, gear:'P', pbrake:true, travel:0, heading:0}); go(S.hud === 'practice' ? 'practice' : 'drive'); break;
+    case 'restart': Object.assign(S, {speed:0, steer:0, gear:'P', pbrake:true, travel:0, heading:0, lat:5.1, yaw:0}); go(S.hud === 'practice' ? 'practice' : 'drive'); break;
     case 'askMenu': S.dialog = 'menu'; render(); break;
     case 'dlgCancel': S.dialog = null; render(); break;
-    case 'dlgMenu': Object.assign(S, {speed:0, steer:0, gear:'P', pbrake:true}); go('home'); break;
+    case 'dlgMenu': Object.assign(S, {speed:0, steer:0, gear:'P', pbrake:true, travel:0, lat:5.1, yaw:0}); go('home'); break;
     case 'gear': shift(v); break;
     case 'pbrake': S.pbrake = !S.pbrake; toast(S.pbrake ? 't.pbrakeOn' : 't.pbrakeOff', 'info'); updateHud(); break;
     case 'ind': S.hazard = false; S.ind = S.ind === +v ? 0 : +v; updateHud(); break;
@@ -1033,9 +1034,19 @@ function simulate(dt) {
   } else v *= Math.max(0, 1 - dt * 0.3);
   if (S.brake > 0) { const d = 28 * dt * S.brake; v = Math.abs(v) <= d ? 0 : v - Math.sign(v) * d; }
   S.speed = v;
-  S.travel += v / 3.6 * dt;
+  // Kinematic bicycle model: ±540° at the wheel = ±35° at the front wheels, wheelbase 2.65 m.
+  const ms = v / 3.6, delta = (S.steer / 540) * 35 * Math.PI / 180;
+  S.yaw = Math.max(-1.2, Math.min(1.2, S.yaw + ms * Math.tan(delta) / 2.65 * dt));
+  S.travel += ms * Math.cos(S.yaw) * dt;
+  S.lat += ms * Math.sin(S.yaw) * dt;
+  const limit = 6.8 - 0.9; // curb face minus half the car width
+  if (Math.abs(S.lat) > limit) {
+    S.lat = Math.sign(S.lat) * limit; S.yaw *= 0.3; S.speed *= 0.2;
+    if (!S.onCurb) toast('t.curb');
+    S.onCurb = true;
+  } else if (Math.abs(S.lat) < limit - 0.3) S.onCurb = false;
   if (!steerPtr && Math.abs(v) > 2) S.steer *= Math.max(0, 1 - dt * 1.0);
-  S.heading += (S.steer / 540) * 0.6 * (v / 3.6) / 2.65 * dt;
+  S.heading = S.yaw;
 }
 
 /* ---------------- scene rendering ---------------- */
@@ -1053,14 +1064,18 @@ function drawScene(now) {
   const look = S.look || 0;
   const hor = drive ? (S.view === 'chase' ? 430 : 470) : 600;
   const travel = drive ? S.travel : now / 1000 * 6;
-  const curve = drive ? Math.max(-1, Math.min(1, S.steer / 540)) * Math.min(1, Math.abs(S.speed) / 25) : Math.sin(now / 9000) * 0.25;
-  const vx = 1200 - curve * 380 - look * 520 + (menu ? 300 : 0);
+  const curve = drive ? 0 : Math.sin(now / 9000) * 0.25; // drive: straight street; the car moves, not the road
+  const F = 1500, CH = 1.25;
+  const yaw = drive ? S.yaw + look * 0.6 : 0, lat = drive ? S.lat : 0;
+  const cyw = Math.cos(yaw), syw = Math.sin(yaw);
+  const cx0 = 1200 + (menu ? 300 : 0);
+  const vx = cx0 - curve * 380 - Math.tan(yaw) * F;
   // sky
   let g = ctx.createLinearGradient(0, 0, 0, hor);
   g.addColorStop(0, '#0A1624'); g.addColorStop(.62, '#1D3650'); g.addColorStop(.9, '#5D7A93'); g.addColorStop(1, '#B89A86');
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, hor);
   // buildings (parallax)
-  const par = (curve * 260 + look * 400) * -1 + (menu ? 300 : 0);
+  const par = -curve * 260 - Math.tan(yaw) * F * 0.9 + (menu ? 300 : 0);
   BUILDINGS.forEach((b, i) => {
     const x = b.x + par, y = hor - b.h;
     ctx.fillStyle = `rgb(${14 + b.hue * 10},${22 + b.hue * 12},${32 + b.hue * 14})`;
@@ -1074,10 +1089,11 @@ function drawScene(now) {
   g = ctx.createLinearGradient(0, hor, 0, H); g.addColorStop(0, '#2A2F35'); g.addColorStop(1, '#15181B');
   ctx.fillStyle = g; ctx.fillRect(0, hor, W, H - hor);
   // road in perspective
-  const F = 1500, CH = 1.25;
-  const P = (X, d) => { const bend = curve * 0.0016 * d * d; return [vx + (X + bend - (drive ? 0 : 0)) * F / d, hor + CH * F / d]; };
+  // Project road point (X across, d along the road from the car) into the camera at (lat, yaw).
+  const Dz = (X, d) => (X + curve * 0.0016 * d * d - lat) * syw + d * cyw;
+  const P = (X, d) => { const dx = X + curve * 0.0016 * d * d - lat; const z = Math.max(0.3, dx * syw + d * cyw); return [cx0 + (dx * cyw - d * syw) * F / z, hor + CH * F / z]; };
   const poly = (pts, fill) => { ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.fillStyle = fill; ctx.fill(); };
-  const strip = (x0, x1, d0, d1, fill) => { const a = P(x0, d0), b = P(x1, d0), c = P(x1, d1), e = P(x0, d1); poly([a, b, c, e], fill); };
+  const strip = (x0, x1, d0, d1, fill) => { if (Math.min(Dz(x0, d0), Dz(x1, d0)) < 0.4) return; const a = P(x0, d0), b = P(x1, d0), c = P(x1, d1), e = P(x0, d1); poly([a, b, c, e], fill); };
   const ds = []; for (let d = 2.2; d < 260; d *= 1.08) ds.push(d);
   for (let i = 0; i < ds.length - 1; i++) {
     const d0 = ds[i], d1 = ds[i + 1];
@@ -1098,8 +1114,8 @@ function drawScene(now) {
     strip(-6.8, -0.1, Math.max(2.3, cw - 1.2), cw - 0.8, '#E8EBEE');
     for (let x = -6.3; x < 6.6; x += 1.0) strip(x, x + 0.5, Math.max(2.3, cw), cw + 4, '#E3E6E9');
     const lightIdx = Math.floor(now / 5000) % 3;
-    const [px, py] = P(6.6, cw + 5), base = hor + CH * F / (cw + 5);
-    const sc = F / (cw + 5);
+    const [px, py] = P(6.6, cw + 5), base = py;
+    const sc = F / Math.max(0.3, Dz(6.6, cw + 5));
     ctx.fillStyle = '#1A1F24';
     ctx.fillRect(px - 0.12 * sc, base - 5.6 * sc, 0.24 * sc, 5.6 * sc);
     ctx.fillRect(px - 4.5 * sc, base - 5.6 * sc, 4.5 * sc, 0.16 * sc);
@@ -1115,7 +1131,8 @@ function drawScene(now) {
   for (let z = -(travel % 30); z < 220; z += 30) {
     if (z < 3) continue;
     [-8.5, 8.5].forEach(X => {
-      const [x, y] = P(X, z), sc = F / z;
+      if (Dz(X, z) < 1) return;
+      const [x, y] = P(X, z), sc = F / Dz(X, z);
       ctx.fillStyle = '#12161A'; ctx.fillRect(x - 0.08 * sc, y - 7 * sc, 0.16 * sc, 7 * sc);
       ctx.beginPath(); ctx.arc(x, y - 7 * sc, 0.3 * sc, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255,224,180,.9)'; ctx.shadowColor = 'rgba(255,214,160,.8)'; ctx.shadowBlur = 24; ctx.fill(); ctx.shadowBlur = 0;
     });
@@ -1217,7 +1234,7 @@ function drawMini(cv) {
   c.clearRect(0, 0, w, h);
   c.save(); c.beginPath(); c.roundRect ? c.roundRect(0, 0, w, h, 36) : c.rect(0, 0, w, h); c.clip();
   c.fillStyle = '#0E161E'; c.fillRect(0, 0, w, h);
-  c.translate(w / 2, h * 0.62); c.rotate(-S.heading);
+  c.translate(w / 2, h * 0.62); c.rotate(-S.heading); c.translate(-S.lat * 3, 0);
   const ty = (S.travel * 1.2) % 120;
   c.strokeStyle = '#33424F'; c.lineWidth = 34;
   for (let y = -600; y < 600; y += 120) { c.beginPath(); c.moveTo(-600, y + ty); c.lineTo(600, y + ty); c.stroke(); }
