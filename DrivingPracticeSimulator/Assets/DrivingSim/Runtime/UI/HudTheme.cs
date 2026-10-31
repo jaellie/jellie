@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DrivingSim.UI
 {
@@ -11,15 +12,16 @@ namespace DrivingSim.UI
     public class HudTheme : ScriptableObject
     {
         [Header("Colors")]
-        public Color panel = new Color(0.07f, 0.09f, 0.12f, 0.72f);
-        public Color panelStrong = new Color(0.07f, 0.09f, 0.12f, 0.88f);
-        public Color text = new Color(0.95f, 0.97f, 1f);
-        public Color textMuted = new Color(0.62f, 0.68f, 0.76f);
+        public Color panel = new Color(0.027f, 0.067f, 0.114f, 0.78f);
+        public Color panelStrong = new Color(0.045f, 0.085f, 0.14f, 1f);
+        public Color text = new Color(0.92f, 0.97f, 1f);
+        public Color iceBlue = new Color(0.725f, 0.867f, 0.957f);
+        public Color textMuted = new Color(0.65f, 0.76f, 0.84f);
         [Tooltip("Selected gear and active toggles.")]
-        public Color accentBlue = new Color(0.18f, 0.48f, 1f);
+        public Color accentBlue = new Color(0.12f, 0.40f, 0.64f);
         public Color indicatorAmber = new Color(1f, 0.66f, 0.1f);
         public Color brakeRed = new Color(0.95f, 0.3f, 0.26f);
-        public Color acceleratorGreen = new Color(0.25f, 0.8f, 0.45f);
+        public Color acceleratorGreen = new Color(0.12f, 0.73f, 0.66f);
         public Color warning = new Color(1f, 0.82f, 0.3f);
 
         [Header("Sprites (optional; generated if empty)")]
@@ -39,8 +41,12 @@ namespace DrivingSim.UI
             {
                 if (fallback == null)
                 {
-                    fallback = CreateInstance<HudTheme>();
-                    fallback.name = "HudTheme (defaults)";
+                    fallback = Resources.Load<HudTheme>("UI/MidnightTheme");
+                    if (fallback == null)
+                    {
+                        fallback = CreateInstance<HudTheme>();
+                        fallback.name = "HudTheme (defaults)";
+                    }
                 }
                 return fallback;
             }
@@ -48,7 +54,20 @@ namespace DrivingSim.UI
 
         public Sprite RoundedPanel => roundedPanel != null ? roundedPanel : UISprites.RoundedRect;
         public Sprite Circle => circle != null ? circle : UISprites.Circle;
-        public Font Font => font != null ? font : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        static Font bundledFont;
+        public Font Font
+        {
+            get
+            {
+                if (font != null) return font;
+                if (bundledFont == null) bundledFont = Resources.Load<Font>("UI/Fonts/JellieUI-Regular");
+                return bundledFont != null ? bundledFont : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            }
+        }
+
+        public Sprite LeftArrow => turnArrowLeft != null ? turnArrowLeft : UISprites.TriangleLeft;
+        public Sprite RightArrow => turnArrowRight != null ? turnArrowRight : UISprites.TriangleRight;
+        public Sprite CarMarker => carMarker != null ? carMarker : UISprites.TriangleUp;
     }
 
     /// <summary>Placeholder sprites generated at runtime (no texture assets needed).</summary>
@@ -186,7 +205,9 @@ namespace DrivingSim.UI
             text.text = value;
             text.raycastTarget = false;
             text.horizontalOverflow = HorizontalWrapMode.Wrap;
-            text.verticalOverflow = VerticalWrapMode.Overflow;
+            text.verticalOverflow = VerticalWrapMode.Truncate;
+            text.supportRichText = false;
+            text.lineSpacing = 1.12f;
             return text;
         }
 
@@ -200,6 +221,12 @@ namespace DrivingSim.UI
             button.pressedColor = theme.accentBlue;
             image.color = theme.panel;
             text = Label("Label", rect, label, theme.Font, fontSize, theme.text);
+            var labelRect = (RectTransform)text.transform;
+            labelRect.offsetMin = new Vector2(14f, 8f);
+            labelRect.offsetMax = new Vector2(-14f, -8f);
+            text.resizeTextForBestFit = true;
+            text.resizeTextMinSize = Mathf.Clamp(fontSize - 6, 10, fontSize);
+            text.resizeTextMaxSize = fontSize;
             return button;
         }
     }

@@ -12,8 +12,8 @@ namespace DrivingSim.UI
     /// <summary>
     /// Player-facing driving HUD (presentation only; it reads gameplay components and calls their
     /// public methods). Layout, 1920×1080 reference, inside the safe area:
-    /// top-left pause + speed/gear · top-center turn indicators + navigation · top-right camera
-    /// buttons + mini-map · right edge P/R/N/D · bottom-right touch pedals · bottom-left lights +
+    /// top-left pause + navigation · top-center turn indicators · top-right camera
+    /// buttons + mini-map · right edge P/R/N/D · bottom-right touch pedals · bottom-left speed/gear, lights +
     /// pedal status · bottom-center look buttons + steering indicator. Drags on non-button areas still steer.
     /// </summary>
     public class DrivingHUDController : MonoBehaviour
@@ -122,38 +122,42 @@ namespace DrivingSim.UI
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1920f, 1080f);
             scaler.matchWidthOrHeight = 1f;
-            var safe = new GameObject("SafeArea", typeof(RectTransform), typeof(SafeAreaFitter));
+            var safe = new GameObject("SafeArea", typeof(RectTransform));
             safe.transform.SetParent(canvasObject.transform, false);
             UIBuild.Stretch((RectTransform)safe.transform);
+            safe.AddComponent<SafeAreaFitter>(); // Apply after parenting/stretching, so the initial safe area is retained.
             return safe.transform;
         }
 
         void Build(Transform safe, MobilePedalController mobilePedals)
         {
+            safe = AutomotiveLayout.Frame(safe);
             Font font = theme.Font;
             Vector2 topLeft = new Vector2(0f, 1f), topRight = new Vector2(1f, 1f), top = new Vector2(0.5f, 1f);
             Vector2 bottomLeft = Vector2.zero, bottomRight = new Vector2(1f, 0f), bottom = new Vector2(0.5f, 0f);
 
             // Pause + speed/gear
             pauseButton = UIBuild.Button("Pause", safe, topLeft, topLeft, new Vector2(24f, -24f), new Vector2(96f, 96f), "II", theme, 40, out _);
-            RectTransform speedPanel = UIBuild.Rect("SpeedPanel", safe, topLeft, topLeft, new Vector2(136f, -24f), new Vector2(300f, 150f));
+            AutomotiveLayout.DecorateButton(pauseButton, "Pause", theme, iconOnly: true);
+            RectTransform speedPanel = UIBuild.Rect("SpeedPanel", safe, bottomLeft, bottomLeft, new Vector2(24f, 268f), new Vector2(300f, 150f));
             UIBuild.Panel(speedPanel, theme.RoundedPanel, theme.panel);
-            speedText = UIBuild.Label("Speed", speedPanel, "0", font, 84, theme.text, TextAnchor.MiddleLeft);
-            ((RectTransform)speedText.transform).offsetMin = new Vector2(24f, 30f);
+            speedText = UIBuild.Label("Speed", speedPanel, "0", font, 78, theme.text, TextAnchor.MiddleLeft);
+            ((RectTransform)speedText.transform).offsetMin = new Vector2(24f, 50f);
+            ((RectTransform)speedText.transform).offsetMax = new Vector2(-110f, -8f);
             speedText.fontStyle = FontStyle.Bold;
             Text unit = UIBuild.Label("Unit", speedPanel, "km/h", font, 26, theme.textMuted, TextAnchor.LowerLeft);
             ((RectTransform)unit.transform).offsetMin = new Vector2(26f, 14f);
-            gearText = UIBuild.Label("Gear", speedPanel, "P", font, 72, theme.accentBlue, TextAnchor.MiddleRight);
+            gearText = UIBuild.Label("Gear", speedPanel, "P", font, 72, theme.iceBlue, TextAnchor.MiddleRight);
             ((RectTransform)gearText.transform).offsetMax = new Vector2(-28f, 0f);
             gearText.fontStyle = FontStyle.Bold;
 
             // Turn indicators + navigation
-            turnLeftButton = UIBuild.Button("TurnLeft", safe, top, top, new Vector2(-340f, -24f), new Vector2(110f, 96f), "", theme, 10, out _);
-            turnLeftIcon = Icon("Arrow", turnLeftButton.transform, UISprites.TriangleLeft, new Vector2(56f, 56f), theme.textMuted);
-            turnRightButton = UIBuild.Button("TurnRight", safe, top, top, new Vector2(340f, -24f), new Vector2(110f, 96f), "", theme, 10, out _);
-            turnRightIcon = Icon("Arrow", turnRightButton.transform, UISprites.TriangleRight, new Vector2(56f, 56f), theme.textMuted);
+            turnLeftButton = UIBuild.Button("TurnLeft", safe, top, top, new Vector2(-80f, -24f), new Vector2(110f, 96f), "", theme, 10, out _);
+            turnLeftIcon = Icon("Arrow", turnLeftButton.transform, theme.LeftArrow, new Vector2(56f, 56f), theme.textMuted);
+            turnRightButton = UIBuild.Button("TurnRight", safe, top, top, new Vector2(80f, -24f), new Vector2(110f, 96f), "", theme, 10, out _);
+            turnRightIcon = Icon("Arrow", turnRightButton.transform, theme.RightArrow, new Vector2(56f, 56f), theme.textMuted);
 
-            RectTransform nav = UIBuild.Rect("Navigation", safe, top, top, new Vector2(0f, -24f), new Vector2(520f, 96f));
+            RectTransform nav = UIBuild.Rect("Navigation", safe, topLeft, topLeft, new Vector2(136f, -24f), new Vector2(350f, 96f));
             UIBuild.Panel(nav, theme.RoundedPanel, theme.panel);
             navArrow = UIBuild.Rect("NavArrow", nav, new Vector2(0f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(56f, 0f), new Vector2(48f, 48f));
             var arrowImage = navArrow.gameObject.AddComponent<Image>();
@@ -161,18 +165,21 @@ namespace DrivingSim.UI
             arrowImage.color = theme.accentBlue;
             arrowImage.raycastTarget = false;
             navText = UIBuild.Label("NavText", nav, "", font, 30, theme.text, TextAnchor.MiddleLeft);
+            navText.resizeTextForBestFit = true;
+            navText.resizeTextMinSize = 24;
+            navText.resizeTextMaxSize = 30;
             ((RectTransform)navText.transform).offsetMin = new Vector2(100f, 0f);
 
             // Mini-map (below the camera buttons from CameraControlsOverlay)
-            RectTransform mapFrame = UIBuild.Rect("MiniMap", safe, topRight, topRight, new Vector2(-24f, -128f), new Vector2(260f, 260f));
+            RectTransform mapFrame = UIBuild.Rect("MiniMap", safe, topRight, topRight, new Vector2(-24f, -128f), new Vector2(200f, 200f));
             UIBuild.Panel(mapFrame, theme.RoundedPanel, theme.panelStrong);
-            RectTransform mapImageRect = UIBuild.Rect("Map", mapFrame, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(244f, 244f));
+            RectTransform mapImageRect = UIBuild.Rect("Map", mapFrame, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(184f, 184f));
             mapImage = mapImageRect.gameObject.AddComponent<RawImage>();
             mapImage.raycastTarget = false;
             if (minimap != null) mapImage.texture = minimap.Texture;
             carMarker = UIBuild.Rect("CarMarker", mapFrame, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(26f, 32f));
             var marker = carMarker.gameObject.AddComponent<Image>();
-            marker.sprite = UISprites.TriangleUp;
+            marker.sprite = theme.CarMarker;
             marker.color = theme.accentBlue;
             marker.raycastTarget = false;
 
@@ -185,18 +192,22 @@ namespace DrivingSim.UI
             parkingBrakeButton.pressedColor = theme.brakeRed;
 
             // Touch pedals (alternative to the foot keyboard)
-            touchPedalRoot = UIBuild.Rect("TouchPedals", safe, bottomRight, bottomRight, new Vector2(-148f, 24f), new Vector2(370f, 260f)).gameObject;
+            touchPedalRoot = UIBuild.Rect("TouchPedals", safe, bottomRight, bottomRight, new Vector2(-152f, 24f), new Vector2(344f, 260f)).gameObject;
             TouchPedalButton brakePedal = Pedal("Brake", touchPedalRoot.transform, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(180f, 200f), "hud.brake", theme.brakeRed, font);
             TouchPedalButton acceleratorPedal = Pedal("Accelerator", touchPedalRoot.transform, new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(150f, 260f), "hud.accelerator", theme.acceleratorGreen, font);
             if (mobilePedals != null) mobilePedals.SetPedals(brakePedal, acceleratorPedal);
             touchPedalRoot.SetActive(showTouchPedals);
 
             // Lights and pedal status (bottom-left)
-            headlightButton = UIBuild.Button("Headlights", safe, bottomLeft, bottomLeft, new Vector2(24f, 24f), new Vector2(140f, 80f), Loc.T("hud.headlights"), theme, 28, out Text headlightLabel);
+            headlightButton = UIBuild.Button("Headlights", safe, bottomLeft, bottomLeft, new Vector2(24f, 24f), new Vector2(140f, 96f), Loc.T("hud.headlights"), theme, 28, out Text headlightLabel);
             Localize(headlightLabel, "hud.headlights");
-            hazardButton = UIBuild.Button("Hazard", safe, bottomLeft, bottomLeft, new Vector2(176f, 24f), new Vector2(140f, 80f), Loc.T("hud.hazard"), theme, 28, out Text hazardLabel);
+            hazardButton = UIBuild.Button("Hazard", safe, bottomLeft, bottomLeft, new Vector2(176f, 24f), new Vector2(140f, 96f), Loc.T("hud.hazard"), theme, 28, out Text hazardLabel);
             Localize(hazardLabel, "hud.hazard");
-            wiperButton = UIBuild.Button("Wipers", safe, bottomLeft, bottomLeft, new Vector2(328f, 24f), new Vector2(170f, 80f), Loc.T("hud.wipers"), theme, 26, out wiperLabel);
+            wiperButton = UIBuild.Button("Wipers", safe, bottomLeft, bottomLeft, new Vector2(328f, 24f), new Vector2(170f, 96f), Loc.T("hud.wipers"), theme, 26, out wiperLabel);
+
+            AutomotiveLayout.DecorateButton(headlightButton, "Headlights", theme, stacked: true);
+            AutomotiveLayout.DecorateButton(hazardButton, "Hazard", theme, stacked: true);
+            AutomotiveLayout.DecorateButton(wiperButton, "Wipers", theme, stacked: true);
 
             RectTransform pedals = UIBuild.Rect("PedalStatus", safe, bottomLeft, bottomLeft, new Vector2(24f, 120f), new Vector2(474f, 124f));
             UIBuild.Panel(pedals, theme.RoundedPanel, theme.panel);
@@ -227,7 +238,7 @@ namespace DrivingSim.UI
             toastRoot = toast.gameObject;
             toastRoot.SetActive(false);
 
-            BuildSteeringRing(safe.parent);
+            BuildSteeringRing(safe.root);
             BuildPauseMenu(safe, font);
         }
 
@@ -246,18 +257,18 @@ namespace DrivingSim.UI
             steeringDeadZone = UIBuild.Rect("DeadZone", steeringRing, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(20f, 20f));
             var dead = steeringDeadZone.gameObject.AddComponent<Image>();
             dead.sprite = UISprites.Ring;
-            dead.color = new Color(1f, 1f, 1f, 0.25f);
+            dead.color = new Color(1f, 1f, 1f, 0.1f);
             dead.raycastTarget = false;
 
             steeringGlyph = UIBuild.Rect("WheelGlyph", steeringRing, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(150f, 150f));
             var rim = steeringGlyph.gameObject.AddComponent<Image>();
             rim.sprite = UISprites.Ring;
-            rim.color = new Color(1f, 1f, 1f, 0.32f);
+            rim.color = new Color(1f, 1f, 1f, 0.16f);
             rim.raycastTarget = false;
             RectTransform spokeH = UIBuild.Rect("Spoke", steeringGlyph, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(140f, 6f));
-            UIBuild.Panel(spokeH, null, new Color(1f, 1f, 1f, 0.26f));
+            UIBuild.Panel(spokeH, null, new Color(1f, 1f, 1f, 0.12f));
             RectTransform spokeV = UIBuild.Rect("SpokeDown", steeringGlyph, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(6f, 70f));
-            UIBuild.Panel(spokeV, null, new Color(1f, 1f, 1f, 0.26f));
+            UIBuild.Panel(spokeV, null, new Color(1f, 1f, 1f, 0.12f));
             RectTransform top = UIBuild.Rect("TopMark", steeringGlyph, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(12f, 20f));
             UIBuild.Panel(top, null, new Color(theme.indicatorAmber.r, theme.indicatorAmber.g, theme.indicatorAmber.b, 0.6f));
         }
@@ -276,7 +287,7 @@ namespace DrivingSim.UI
             float diameter = touchSteering.circleRadius * 2f * referenceHeight;
             steeringRing.sizeDelta = new Vector2(diameter, diameter);
             steeringDeadZone.sizeDelta = Vector2.one * diameter * touchSteering.deadZoneFraction;
-            steeringRingImage.color = new Color(1f, 1f, 1f, touchSteering.IsSteering ? 0.35f : 0.14f); // faint: it overlaps the road and car
+            steeringRingImage.color = new Color(1f, 1f, 1f, touchSteering.IsSteering ? 0.12f : 0.055f); // faint: it overlaps the road and car
             steeringDeadZone.gameObject.SetActive(touchSteering.mode == SteeringGestureMode.Circular);
 
             steeringGlyph.gameObject.SetActive(showSteeringWheelGlyph);
@@ -286,11 +297,8 @@ namespace DrivingSim.UI
 
         void BuildPauseMenu(Transform safe, Font font)
         {
-            RectTransform dim = UIBuild.Rect("PauseMenu", safe, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
-            UIBuild.Stretch(dim);
-            UIBuild.Panel(dim, null, new Color(0f, 0f, 0f, 0.55f), raycast: true); // blocks steering behind the menu
-            RectTransform card = UIBuild.Rect("Card", dim, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(560f, 752f));
-            UIBuild.Panel(card, theme.RoundedPanel, theme.panelStrong);
+            Transform modalSafe = CreateCanvas("PauseMenuCanvas", 40);
+            GameObject dim = AutomotiveLayout.Modal(modalSafe, theme, new Vector2(640f, 800f), out RectTransform card);
             Text title = UIBuild.Label("Title", card, Loc.T("pause.title"), font, 44, theme.text, TextAnchor.UpperCenter);
             Localize(title, "pause.title");
             ((RectTransform)title.transform).offsetMax = new Vector2(0f, -36f);
@@ -304,7 +312,8 @@ namespace DrivingSim.UI
             menuButton = PauseButton("MainMenu", card, -610f, "pause.mainMenu", font, out Text menuLabel);
             menuButton.Interactable = false;
             menuLabel.color = theme.textMuted;
-            pauseMenu = dim.gameObject;
+            AutomotiveLayout.Primary(resumeButton, theme);
+            pauseMenu = dim;
             pauseMenu.SetActive(false);
         }
 
